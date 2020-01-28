@@ -29,14 +29,14 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView
     public function display()
     {
 
-    // Users local settings for decimal seperator and number grouping seperator
-        $dec_sep = $GLOBALS['sugar_config']['default_decimal_seperator'];
+    // Users local settings for decimal separator and number grouping separator
+        $dec_sep = $GLOBALS['sugar_config']['default_decimal_separator'];
         $user_dec_sep = $GLOBALS['current_user']->getPreference('dec_sep');
-        $dec_sep = (empty($user_dec_sep) ? $GLOBALS['sugar_config']['default_decimal_seperator'] : $user_dec_sep);
+        $dec_sep = (empty($user_dec_sep) ? $GLOBALS['sugar_config']['default_decimal_separator'] : $user_dec_sep);
 
-        $num_grp_sep = $GLOBALS['sugar_config']['default_number_grouping_seperator'];
+        $num_grp_sep = $GLOBALS['sugar_config']['default_number_grouping_separator'];
         $user_num_grp_sep = $GLOBALS['current_user']->getPreference('num_grp_sep');
-        $num_grp_sep = (empty($user_num_grp_sep) ? $GLOBALS['sugar_config']['default_number_grouping_seperator'] : $user_num_grp_sep);
+        $num_grp_sep = (empty($user_num_grp_sep) ? $GLOBALS['sugar_config']['default_number_grouping_separator'] : $user_num_grp_sep);
 
         $custom_markers_dir = 'themes/default/images/jjwg_Markers/'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

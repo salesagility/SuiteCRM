@@ -25,7 +25,6 @@ class Design extends Module
     }
 
     /**
-     * @param integer $browserWidth in pixels
      * @return string
      * @see \SuiteCRM\Enumerator\DesignBreakPoint
      */
@@ -42,6 +41,7 @@ class Design extends Module
         } elseif ($browserWidth < 750) {
             $breakpoint = DesignBreakPoint::xs;
         }
+
         return $breakpoint;
     }
 

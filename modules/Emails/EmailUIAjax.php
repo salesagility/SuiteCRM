@@ -1690,7 +1690,6 @@ eoq;
             if (isset($_REQUEST['contactData'])) {
                 $contacts = $json->decode(from_HTML($_REQUEST['contactData']));
                 if ($contacts) {
-                    //_ppd($contacts);
                     $email->et->setContacts($contacts);
                 }
             }

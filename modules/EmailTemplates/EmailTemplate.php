@@ -465,7 +465,6 @@ class EmailTemplate extends SugarBean
                 if (strpos($field_name, "user_") === 0) {
                     $userFieldName = substr($field_name, 5);
                     $value = $user->$userFieldName;
-                //_pp($userFieldName."[{$value}]");
                 } else {
                     if (isset($focus->{$field_name})) {
                         $value = $focus->{$field_name};

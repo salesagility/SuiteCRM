@@ -294,7 +294,7 @@ class ListViewDataEmails extends ListViewData
                     continue;
                 }
 
-                // strip out the suffix to the the field names
+                // strip out the suffix to the field names
                 if ((stristr($filteredField, 'advanced') !== false) || (stristr($filteredField, 'basic') !== false)) {
                     $f = str_ireplace('_advanced', '', $filteredField);
                     $f = str_ireplace('_basic', '', $f);

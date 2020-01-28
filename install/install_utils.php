@@ -791,6 +791,9 @@ function handleSugarConfig()
         $sugar_config['dbconfigoption']                 = array_merge($sugar_config['dbconfigoption'], $_SESSION['setup_db_options']);
     }
 
+    $sugar_config['dbconfig']['collation']          = $_SESSION['setup_db_collation'];
+    $sugar_config['dbconfig']['charset']            = $_SESSION['setup_db_charset'];
+
     $sugar_config['cache_dir']                      = $cache_dir;
     $sugar_config['default_charset']                = $mod_strings['DEFAULT_CHARSET'];
     $sugar_config['default_email_client']           = 'sugar';
@@ -1361,10 +1364,6 @@ function insert_default_settings()
 
     //insert default tracker settings
     $db->query("INSERT INTO config (category, name, value) VALUES ('tracker', 'Tracker', '1')");
-
-
-
-    $db->query("INSERT INTO config (category, name, value) VALUES ( 'system', 'skypeout_on', '1')");
 }
 
 
@@ -1657,8 +1656,8 @@ function pullSilentInstallVarsIntoSession()
     $needles = array('demoData','setup_db_create_database','setup_db_create_sugarsales_user','setup_license_key_users',
         'setup_license_key_expire_date','setup_license_key', 'setup_num_lic_oc',
         'default_currency_iso4217', 'default_currency_name', 'default_currency_significant_digits',
-        'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_seperator',
-        'default_export_charset', 'default_language', 'default_locale_name_format', 'default_number_grouping_seperator',
+        'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_separator',
+        'default_export_charset', 'default_language', 'default_locale_name_format', 'default_number_grouping_separator',
         'export_delimiter', 'cache_dir', 'setup_db_options',
         'setup_fts_type', 'setup_fts_host', 'setup_fts_port', 'setup_fts_index_settings'. 'setup_fts_transport');
     copyFromArray($sugar_config_si, $needles, $derived);

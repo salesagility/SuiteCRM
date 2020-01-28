@@ -1,8 +1,10 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'modules/EmailTemplates/EmailTemplateParser.php';
 
-class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -53,11 +55,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         global $current_user;
 
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('email_templates');
-        $state->pushGlobals();
-
         $this->setOutputCallback(function ($msg) {
         });
 
@@ -75,10 +72,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertNotNull($template->retrieve($output['data']['id']));
 
         $this->assertEquals($current_user->id, $template->assigned_user_id);
-
-        $state->popTable('email_templates');
-        $state->popTable('aod_index');
-        $state->popGlobals();
     }
 
     public function testaddDomainToRelativeImagesSrc()
@@ -99,10 +92,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testrepairEntryPointImages()
     {
         global $sugar_config;
-
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('email_templates');
-        $state->pushTable('aod_index');
 
         $sugar_config['site_url'] = 'https://foobar.com';
 
@@ -129,14 +118,11 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = '<img src="https://foobar.com/public/' . $ids[0] . '.png" alt="" style="font-size:14px;" width="381" height="339" />';
         $expected .= '<img alt="test.png" src="https://foobar.com/public/' . $ids[1] . '.png" width="118" height="105" />';
         $this->assertEquals($expected, from_html($template->body_html));
-
-        $state->popTable('aod_index');
-        $state->popTable('email_templates');
     }
 
     public function testEmailTemplate()
     {
-        // execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and attributes
         $emailTemplate = new EmailTemplate();
 
         $this->assertInstanceOf('EmailTemplate', $emailTemplate);
@@ -175,11 +161,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
         $emailTemplate = new EmailTemplate();
 
         // test with empty string params
@@ -191,17 +172,13 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = " SELECT  email_templates.*  , jt0.user_name assigned_user_name , jt0.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM email_templates   LEFT JOIN  users jt0 ON email_templates.assigned_user_id=jt0.id AND jt0.deleted=0\n\n AND jt0.deleted=0 where (email_templates.name=\"\") AND email_templates.deleted=0";
         $actual = $emailTemplate->create_export_query('email_templates.id', 'email_templates.name=""');
         $this->assertSame($expected, $actual);
-        
-        
-        // clean up
-        $state->popGlobals();
     }
 
     public function testfill_in_additional_list_fields()
     {
         $emailTemplate = new EmailTemplate();
 
-        // execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $emailTemplate->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -271,7 +248,7 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $emailTemplate = new EmailTemplate();
 
-        // execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $emailTemplate->fill_in_additional_parent_fields();
             $this->assertTrue(true);

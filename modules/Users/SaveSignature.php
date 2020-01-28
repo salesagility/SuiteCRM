@@ -55,8 +55,6 @@ $us->signature_html = $_REQUEST['description'];
 if (empty($us->user_id) && isset($_REQUEST['the_user_id'])) {
     $us->user_id = $_REQUEST['the_user_id'];
 }
-//_pp($_REQUEST);
-//_pp($us);
 $us->save();
 
 $js = '

@@ -49,7 +49,6 @@ global $current_user;
 $focus = new Email();
 // Get Group User IDs
 $groupUserQuery = 'SELECT name, group_id FROM inbound_email ie INNER JOIN users u ON (ie.group_id = u.id AND u.is_group = 1)';
-_pp($groupUserQuery);
 $r = $focus->db->query($groupUserQuery);
 $groupIds = '';
 while ($a = $focus->db->fetchByAssoc($r)) {
@@ -61,7 +60,6 @@ $query = 'SELECT emails.id AS id FROM emails';
 $query .= " WHERE emails.deleted = 0 AND emails.status = 'unread' AND emails.assigned_user_id IN ({$groupIds})";
 //$query .= ' LIMIT 1';
 
-//_ppd($query);
 $r2 = $focus->db->query($query);
 $count = 0;
 $a2 = $focus->db->fetchByAssoc($r2);

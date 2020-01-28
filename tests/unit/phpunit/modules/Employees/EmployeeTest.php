@@ -1,6 +1,8 @@
 <?php
 
-class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,8 +15,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testEmployee()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $employee = new Employee();
         $this->assertInstanceOf('Employee', $employee);
         $this->assertInstanceOf('Person', $employee);
@@ -25,7 +26,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('users', 'table_name', $employee);
         $this->assertAttributeEquals(true, 'new_schema', $employee);
     }
-
 
     public function testget_summary_text()
     {
@@ -39,12 +39,11 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $employee->get_summary_text());
     }
 
-
     public function testfill_in_additional_list_fields()
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $employee->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -56,7 +55,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_detail_fields()
     {
         $employee = new Employee();
-
 
         //test with a empty employee bean
         $employee->fill_in_additional_detail_fields();
@@ -77,30 +75,14 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
 
-
     public function testverify_data()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-
-        // test
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
-
-        // clean up
-        $state->popTable('email_addresses');
     }
 
     public function testget_list_view_data()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('email_addresses');
-        $state->pushTable('tracker');
-        
-        
         $employee = new Employee();
 
         $expected = array(
@@ -126,18 +108,13 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
-
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('email_addresses');
-        $state->popTable('aod_index');
     }
 
     public function testlist_view_parse_additional_sections()
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $ss = new Sugar_Smarty();
             $employee->list_view_parse_additional_sections($ss, null);
@@ -147,7 +124,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
     }
 
-
     public function testcreate_export_query()
     {
         $employee = new Employee();
@@ -156,7 +132,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name";
         $actual = $employee->create_export_query('', '');
         $this->assertSame($expected, $actual);
-
 
         //test with valid string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE users.user_name=\"\" AND  users.deleted = 0 ORDER BY users.id";
@@ -168,7 +143,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $employee->preprocess_fields_on_save();
             $this->assertTrue(true);
@@ -199,23 +174,11 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete();
     }
 
-
     public function testhasCustomFields()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('email_addresses');
-
-        // test
-        
-        
         $employee = new Employee();
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
-        
-        
-        // clean up
-        $state->popTable('email_addresses');
     }
     
     public function testError()
@@ -245,8 +208,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
-        
-        // clean up
+
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'modules/Campaigns/utils.php';
 
-
-class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class CampaignTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -16,17 +17,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSubscribeUnsubscribeFromNewsLetterCampaign()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('sugarfeed');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('leads_cstm');
-        $state->pushTable('leads');
-        $state->pushTable('campaigns');
-        $state->pushTable('prospect_lists');
-        $state->pushTable('prospect_list_campaigns');
-        $state->pushTable('prospect_lists_prospects');
-        $state->pushGlobals();
-
         $campaign = new Campaign();
         $campaign->name = create_guid();
         $campaign->campaign_type = "NewsLetter";
@@ -64,22 +54,11 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertArrayNotHasKey($campaign->name, $keyed['subscribed']);
         $this->assertArrayHasKey($campaign->name, $keyed['unsubscribed']);
         $this->assertEquals($default_list->id, $keyed['unsubscribed'][$campaign->name]['prospect_list_id']);
-
-        $state->popGlobals();
-        $state->popTable('prospect_lists_prospects');
-        $state->popTable('prospect_list_campaigns');
-        $state->popTable('prospect_lists');
-        $state->popTable('campaigns');
-        $state->popTable('leads');
-        $state->popTable('leads_cstm');
-        $state->popTable('aod_indexevent');
-        $state->popTable('sugarfeed');
     }
 
     public function testCampaign()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $campaign = new Campaign();
         $this->assertInstanceOf('Campaign', $campaign);
         $this->assertInstanceOf('SugarBean', $campaign);
@@ -133,7 +112,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->clear_campaign_prospect_list_relationship('');
             $campaign->clear_campaign_prospect_list_relationship('1');
@@ -147,7 +126,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->mark_relationships_deleted('');
             $campaign->mark_relationships_deleted('1');
@@ -161,7 +140,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -174,7 +153,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -187,7 +166,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->update_currency_id('', '');
             $this->assertTrue(true);
@@ -244,16 +223,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMarkDeleted()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('campaigns');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-
-        // test
-        
         $campaign = new Campaign();
         $campaign->name = 'test';
         $campaign->amount = 100;
@@ -268,13 +237,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $campaign->mark_deleted($campaign->id);
         $result = $campaign->retrieve($campaign->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('campaigns');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testset_notification_body()

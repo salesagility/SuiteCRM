@@ -1,6 +1,8 @@
 <?php
 
-class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,7 +15,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSugarFeed()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $sugarFeed = new SugarFeed();
 
         $this->assertInstanceOf('SugarFeed', $sugarFeed);
@@ -32,11 +34,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
 
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('config');
-
-        // test
         $admin = new Administration();
 
         //test activateModuleFeed method
@@ -48,14 +45,11 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         SugarFeed::disableModuleFeed('Accounts');
         $admin->retrieveSettings('sugarfeed');
         $this->assertEquals(0, $admin->settings['sugarfeed_module_Accounts']);
-        
-        // clean up
-        $state->popTable('config');
     }
 
     public function testflushBackendCache()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             SugarFeed::flushBackendCache();
             $this->assertTrue(true);
@@ -108,12 +102,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpushFeed2()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('sugarfeed');
-
-        // test
         $lead = new Lead();
         $lead->id = 1;
         $lead->assigned_user_id = 1;
@@ -130,19 +118,10 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
-        
-        // clean up
-        $state->popTable('sugarfeed');
-        $state->popTable('aod_index');
     }
 
     public function testpushFeed()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('sugarfeed');
-
-        // test
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 
         //retrieve newly created bean
@@ -158,9 +137,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
-        
-        // clean up
-        $state->popTable('sugarfeed');
     }
 
     public function fetchReplies()
@@ -185,7 +161,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetLinkClass()
     {
-
         //test with invalid LinkType
         $result = SugarFeed::getLinkClass('test');
         $this->assertEquals(false, $result);

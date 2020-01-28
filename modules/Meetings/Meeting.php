@@ -237,7 +237,7 @@ class Meeting extends SugarBean
 
         // Do any external API saving
         // Clear out the old external API stuff if we have changed types
-        if (isset($this->fetched_row) && $this->fetched_row['type'] != $this->type) {
+        if (isset($this->fetched_row) && !is_bool($this->fetched_row) && $this->fetched_row['type'] != $this->type) {
             $this->join_url = '';
             $this->host_url = '';
             $this->external_id = '';
@@ -1035,7 +1035,13 @@ function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = nu
         $dictionaryMeeting = $dictionary['Meeting'];
     }
 
-    if ($dictionaryMeeting['fields']['type']['options'] != "eapm_list") {
+    // Protect against null.
+    if (
+        is_null($dictionaryMeeting)
+        || is_null($dictionaryMeeting['fields'])
+        || is_null($dictionaryMeeting['fields']['type'])
+        || $dictionaryMeeting['fields']['type']['options'] != "eapm_list"
+    ) {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }
 

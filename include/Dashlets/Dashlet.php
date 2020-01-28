@@ -250,8 +250,8 @@ class Dashlet
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
         $template->assign('DELETE_ICON', $this->setDeleteIcon());
         $moduleName = '';
-        if (!is_object($this->seedBean)) {
-            $GLOBALS['log']->warn('incorrect seed bean');
+        if (!isset($this->seedBean) || !is_object($this->seedBean)) {
+            $GLOBALS['log']->info('seedBean not set, or not an object, for Dashlet: ' . get_class($this));
         } else {
             $moduleName = $this->seedBean->module_name;
         }
@@ -398,7 +398,7 @@ class Dashlet
     }
 
     /**
-     * Override this if your dashlet is configurable (this is called when the the configureDashlet form is shown)
+     * Override this if your dashlet is configurable (this is called when the configureDashlet form is shown)
      * Filters the array for only the parameters it needs to save
      *
      * @param array $req the array to pull options from

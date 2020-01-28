@@ -1,12 +1,12 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOR_Field()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aor_Field = new AOR_Field();
         $this->assertInstanceOf('AOR_Field', $aor_Field);
         $this->assertInstanceOf('Basic', $aor_Field);
@@ -23,15 +23,6 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aor_fields');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        
-
         $aor_Field = new AOR_Field();
 
         //preset the required data
@@ -48,20 +39,12 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $post_data['group_order'][] = 'desc';
         $post_data['group_display'][] = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aor_Field->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aor_fields');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 }

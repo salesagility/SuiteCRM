@@ -93,6 +93,7 @@ class ApiTester extends Actor
      * @param string $secret
      * @param string $username
      * @param string $password
+     * @throws ModuleException
      */
     public function loginWithPasswordGrant($client, $secret, $username, $password)
     {
@@ -130,6 +131,7 @@ class ApiTester extends Actor
      * Logins into API with Client Credentials grant type
      * @param string $client
      * @param string $secret
+     * @throws ModuleException
      */
     public function loginWithClientCredentialsGrant($client, $secret)
     {

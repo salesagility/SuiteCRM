@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,19 +38,24 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM;
+namespace SuiteCRM\Exception;
 
-use Exception;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * StateCheckerException
- *
- * @author SalesAgility
+ * Class NotAllowedException
+ * @package SuiteCRM\Exception
  */
-class StateCheckerException extends Exception
+class NotAllowedException extends Exception
 {
+    /**
+     * NotAllowedException constructor.
+     * @param string $message
+     * @param int $code
+     * @param null $previous
+     */
+    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
+    {
+        parent::__construct('[Not Allowed] ' . $message, $code, $previous);
+    }
 }

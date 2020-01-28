@@ -1,6 +1,8 @@
 <?php
 
-class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,7 +15,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOW_WorkFlow()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertInstanceOf('AOW_WorkFlow', $aowWorkFlow);
         $this->assertInstanceOf('Basic', $aowWorkFlow);
@@ -37,12 +39,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testmark_delete_related()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_conditions');
-        $state->pushTable('aow_workflow');
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-
         // Create a workflow and a related condition
         $aowWorkFlow = new AOW_WorkFlow();
         $aowWorkFlow->name = 'test';
@@ -65,24 +61,10 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         BeanFactory::unregisterBean('AOW_Conditions', $conditionID);
         $cond = BeanFactory::getBean('AOW_Conditions', $conditionID);
         $this->assertEmpty($cond);
-
-        $state->popGlobals();
-        $state->popTable('aod_indexevent');
-        $state->popTable('aow_workflow');
-        $state->popTable('aow_conditions');
     }
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_conditions');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aow_workflow');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         $aowWorkFlow->name = 'test';
@@ -98,21 +80,13 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aowWorkFlow->mark_deleted($aowWorkFlow->id);
         $result = $aowWorkFlow->retrieve($aowWorkFlow->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aow_workflow');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aow_conditions');
     }
 
     public function testload_flow_beans()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aowWorkFlow->load_flow_beans();
             $this->assertTrue(true);
@@ -123,23 +97,17 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrun_flows()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
         $aowWorkFlow = new AOW_WorkFlow();
 
         $result = $aowWorkFlow->run_flows();
         $this->assertTrue($result);
-        
-        // clean up
-        $state->popGlobals();
     }
 
     public function testrun_flow()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aowWorkFlow->run_flow();
             $this->assertTrue(true);
@@ -221,73 +189,68 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_query_where()
     {
-//        self::markTestIncomplete('[PHPUnit_Framework_Exception] unserialize(): Error at offset 0 of 5 bytes');
-//        $aowWorkFlow = new AOW_WorkFlow();
-//
-//        //populate required values
-//        $call = new Call();
-//        $aowCondition = new AOW_Condition();
-//        $aowCondition->name = 'test';
-//        $aowCondition->module_path = base64_encode(serialize(array('')));
-//        $aowCondition->field = 'name';
-//        $aowCondition->value = 'testval';
-//
-//        //test with contains operator
-//        $aowCondition->operator = 'Contains';
-//        $aowCondition->value_type = 'Value';
-//        $expected = array(
-//                'where' => array(".name LIKE CONCAT('%', 'testval' ,'%')"),
-//        );
-//        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-//        $this->assertEquals($expected, $query);
-//
-//        //test for starts with operator
-//        $aowCondition->operator = 'Starts_With';
-//        $aowCondition->value_type = 'Value';
-//
-//        $expected = array(
-//            'where' => array(".name LIKE CONCAT('testval' ,'%')"),
-//        );
-//        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-//        $this->assertEquals($expected, $query);
-//
-//        //test for Equal_To operator
-//        $aowCondition->operator = 'Equal_To';
-//        $aowCondition->value_type = 'Value';
-//
-//        $expected = array(
-//                'where' => array(".name = 'testval'"),
-//        );
-//        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-//        $this->assertEquals($expected, $query);
-//
-//        //test with value type Date
-//        $aowCondition->operator = 'Equal_To';
-//        $aowCondition->value_type = 'Date';
-//
-//        $expected = array(
-//                'where' => array('.name = DATE_ADD(calls., INTERVAL   )'),
-//        );
-//
-//
-////        $tmpstate = new SuiteCRM\StateSaver();
-////        $tmpstate->pushErrorLevel();
-////        error_reporting(E_ERROR | E_PARSE);
-//        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-////        $tmpstate->popErrorLevel();
-//
-//        $this->assertEquals($expected, $query);
-//
-//        //test with value type Field
-//        $aowCondition->operator = 'Equal_To';
-//        $aowCondition->value_type = 'Field';
-//
-//        $expected = array(
-//                'where' => array('.name = calls.testval'),
-//        );
-//
-//        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-//        $this->assertEquals($expected, $query);
+        self::markTestIncomplete('[PHPUnit_Framework_Exception] unserialize(): Error at offset 0 of 5 bytes');
+        $aowWorkFlow = new AOW_WorkFlow();
+
+        //populate required values
+        $call = new Call();
+        $aowCondition = new AOW_Condition();
+        $aowCondition->name = 'test';
+        $aowCondition->module_path = base64_encode(serialize(array('')));
+        $aowCondition->field = 'name';
+        $aowCondition->value = 'testval';
+
+        //test with contains operator
+        $aowCondition->operator = 'Contains';
+        $aowCondition->value_type = 'Value';
+        $expected = array(
+                'where' => array(".name LIKE CONCAT('%', 'testval' ,'%')"),
+        );
+        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
+        $this->assertEquals($expected, $query);
+
+        //test for starts with operator
+        $aowCondition->operator = 'Starts_With';
+        $aowCondition->value_type = 'Value';
+
+        $expected = array(
+            'where' => array(".name LIKE CONCAT('testval' ,'%')"),
+        );
+        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
+        $this->assertEquals($expected, $query);
+
+        //test for Equal_To operator
+        $aowCondition->operator = 'Equal_To';
+        $aowCondition->value_type = 'Value';
+
+        $expected = array(
+                'where' => array(".name = 'testval'"),
+        );
+        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
+        $this->assertEquals($expected, $query);
+
+        //test with value type Date
+        $aowCondition->operator = 'Equal_To';
+        $aowCondition->value_type = 'Date';
+
+        $expected = array(
+                'where' => array('.name = DATE_ADD(calls., INTERVAL   )'),
+        );
+
+        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
+        
+        $this->assertEquals($expected, $query);
+
+        //test with value type Field
+        $aowCondition->operator = 'Equal_To';
+        $aowCondition->value_type = 'Field';
+
+        $expected = array(
+                'where' => array('.name = calls.testval'),
+        );
+
+        $query = $aowWorkFlow->build_query_where($aowCondition, $call);
+        $this->assertEquals($expected, $query);
     }
 
     public function testcheck_valid_bean()
@@ -339,11 +302,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrun_actions()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_processed');
-        $state->pushTable('tracker');
-
-        // test
         $aowWorkFlow = new AOW_WorkFlow();
 
         //prepare the required objects and variables
@@ -367,9 +325,5 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $processed->mark_deleted($processed->id);
         $result = $processed->retrieve($processed->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aow_processed');
     }
 }

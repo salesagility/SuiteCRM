@@ -7,7 +7,7 @@ namespace SuiteCRM\Search;
 use Mockery;
 use ReflectionException;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
-use SuiteCRM\StateSaver;
+
 
 /**
  * Class SearchWrapperTest
@@ -163,29 +163,17 @@ class SearchWrapperTest extends SearchTestAbstract
     {
         global $sugar_config;
 
-        $saver = new StateSaver();
-
-        $saver->pushGlobal('sugar_config');
-
         $sugar_config['search']['defaultEngine'] = 'foo';
 
         self::assertEquals('foo', SearchWrapper::getDefaultEngine());
-
-        $saver->popGlobal('sugar_config');
     }
 
     public function testGetController()
     {
         global $sugar_config;
 
-        $saver = new StateSaver();
-
-        $saver->pushGlobal('sugar_config');
-
         $sugar_config['search']['controller'] = 'foo';
 
         self::assertEquals('foo', SearchWrapper::getController());
-
-        $saver->popGlobal('sugar_config');
     }
 }

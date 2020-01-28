@@ -1530,7 +1530,7 @@ class SugarBean
                 $GLOBALS['log']->warn('Children info is not an array');
             }
             foreach ((array)$children_info as $child_info) {
-                if ($child_info['type'] == 'parent') {
+                if (is_array($child_info) && $child_info['type'] == 'parent') {
                     if (!isset($child_info['parent_type'])) {
                         $GLOBALS['log']->fatal('"parent_type" is not set');
                     }

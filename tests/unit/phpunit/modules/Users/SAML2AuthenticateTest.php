@@ -1,67 +1,56 @@
 <?php
-use SuiteCRM\StateSaver;
+
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once __DIR__ . '/../../../../../modules/Users/authentication/SAML2Authenticate/SAML2Authenticate.php';
 
-class SAML2MetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
-
-    public function testEntryPointNoAuth() {
-        $controller = new SugarController();
-        $result = $controller->checkEntryPointRequiresAuth('SAML2Metadata');
+class SAML2MetadataTest extends SuitePHPUnitFrameworkTestCase
+{
+    public function testEntryPointNoAuth()
+    {
+        $result = (new SugarController())->checkEntryPointRequiresAuth('SAML2Metadata');
         $this->assertFalse($result);
     }
 
-    public function testIncompleteSettings() {
-        $state = new StateSaver();
-        $state->pushErrorLevel();
+    public function testIncompleteSettings()
+    {
         // php-saml triggers deprecation warnings, so disable temporarily
         error_reporting(E_ALL & ~E_DEPRECATED);
 
         $failed = false;
+        $settings = ['sp' => [], 'idp' => []];
         try {
-            $settings = array('sp' => array(), 'idp' => array());
-            try {
-                getSAML2Metadata($settings);
-            } catch (Exception $e) {
-                $failed = true;
-            }
-        } finally {
-            $state->popErrorLevel();
+            getSAML2Metadata($settings);
+        } catch (Exception $e) {
+            $failed = true;
         }
 
         $this->assertTrue($failed);
     }
 
-    public function testMinimalValidExample() {
-        $settings = array(
-            'sp' => array(
+    public function testMinimalValidExample()
+    {
+        $settings = [
+            'sp' => [
                 'entityId' => 'someid',
-                'assertionConsumerService' => array(
+                'assertionConsumerService' => [
                     'url' => 'https://someurl',
-                ),
-            ),
-            'idp' => array(
+                ],
+            ],
+            'idp' => [
                 'entityId' => 'someotherid',
-                'singleSignOnService' => array(
+                'singleSignOnService' => [
                     'url' => 'https://localhost/foo',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
-        $state = new StateSaver();
-        $state->pushErrorLevel();
         // php-saml triggers deprecation warnings, so disable temporarily
         error_reporting(E_ALL & ~E_DEPRECATED);
-        try {
-            $xml = getSAML2Metadata($settings);
-        } finally {
-            $state->popErrorLevel();
-        }
+        $xml = getSAML2Metadata($settings);
         $this->assertNotEmpty($xml);
         $this->assertRegexp('/someid/', $xml);
         $this->assertRegexp('/someurl/', $xml);
         $this->assertNotFalse(simplexml_load_string($xml));
     }
 }
-
-?>

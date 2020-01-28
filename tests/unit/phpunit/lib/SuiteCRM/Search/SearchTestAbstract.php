@@ -5,9 +5,9 @@ namespace SuiteCRM\Search;
 use Mockery;
 use ReflectionClass;
 use ReflectionException;
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-abstract class SearchTestAbstract extends StateCheckerPHPUnitTestCaseAbstract
+abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
 {
     /**
      * Call protected/private method of a class.

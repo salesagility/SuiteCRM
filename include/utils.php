@@ -268,8 +268,8 @@ function get_sugar_config_defaults()
         'default_currency_symbol' => return_session_value_or_default('default_currency_symbol', '$'),
         'default_currency_iso4217' => return_session_value_or_default('default_currency_iso4217', 'USD'),
         'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits', 2),
-        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator', ','),
-        'default_decimal_seperator' => return_session_value_or_default('default_decimal_seperator', '.'),
+        'default_number_grouping_separator' => return_session_value_or_default('default_number_grouping_separator', ','),
+        'default_decimal_separator' => return_session_value_or_default('default_decimal_separator', '.'),
         'default_date_format' => 'm/d/Y',
         'default_locale_name_format' => 's f l',
         'default_export_charset' => 'UTF-8',
@@ -553,6 +553,9 @@ function get_notify_template_file($language)
     return $file;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function sugar_config_union($default, $override)
 {
     // a little different then array_merge and array_merge_recursive.  we want
@@ -573,6 +576,9 @@ function sugar_config_union($default, $override)
     return $override;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function make_not_writable($file)
 {
     // Returns true if the given file/dir has been made not writable
@@ -596,10 +602,14 @@ function make_not_writable($file)
     return $ret_val;
 }
 
-/** This function returns the name of the person.
- * It currently returns "first last".  It should not put the space if either name is not available.
+/**
+ * This function returns the name of the person.
+ * It currently returns "first last". It should not put the space if either name is not available.
  * It should not return errors if either name is not available.
  * If no names are present, it will return ""
+ *
+ * @deprecated This function is unused and will be removed in a future release.
+ *
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -646,6 +656,9 @@ function get_languages()
     return $lang;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function get_all_languages()
 {
     global $sugar_config;
@@ -653,6 +666,9 @@ function get_all_languages()
     return $sugar_config['languages'];
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function get_language_display($key)
 {
     global $sugar_config;
@@ -1308,7 +1324,11 @@ function return_mod_list_strings_language($language, $module)
     return $return_value;
 }
 
-/** This function retrieves a theme's language file and returns the array of strings included.
+/**
+ * This function retrieves a theme's language file and returns the array of strings included.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
+ *
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -1969,6 +1989,11 @@ function translate($string, $mod = '', $selectedValue = '')
     return $returnValue;
 }
 
+/**
+ * Converts a number from '1,000' to '1000', and '1,50' (if using commas as a decimal separator) to '1.50'.
+ * 
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function unTranslateNum($num)
 {
     static $dec_sep;
@@ -1977,11 +2002,11 @@ function unTranslateNum($num)
 
     if ($dec_sep == null) {
         $user_dec_sep = $current_user->getPreference('dec_sep');
-        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep);
+        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_separator'] : $user_dec_sep);
     }
     if ($num_grp_sep == null) {
         $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
-        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
+        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $user_num_grp_sep);
     }
 
     $num = preg_replace("'" . preg_quote($num_grp_sep) . "'", '', $num);
@@ -2005,6 +2030,9 @@ function isSSL()
     return false;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function add_http($url)
 {
     if (!preg_match('@://@i', $url)) {
@@ -2202,9 +2230,8 @@ function clean_string($str, $filter = 'STANDARD', $dieOnBadData = true)
         }
 
         return false;
-    } else {
-        return $str;
     }
+    return $str;
 }
 
 function clean_special_arguments()
@@ -2418,11 +2445,10 @@ function securexsskey($value, $die = true)
     if (!empty($matches)) {
         if ($die) {
             die("Bad data passed in; <a href=\"{$sugar_config['site_url']}\">Return to Home</a>");
-        } else {
-            unset($_REQUEST[$value]);
-            unset($_POST[$value]);
-            unset($_GET[$value]);
         }
+        unset($_REQUEST[$value]);
+        unset($_POST[$value]);
+        unset($_GET[$value]);
     }
 }
 
@@ -2466,8 +2492,8 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-    $stateSaver = new SuiteCRM\StateSaver();
-    $stateSaver->pushErrorLevel();
+    $errorLevelStored = error_reporting();
+    error_reporting(0);
 
     $function = function ($matches) {
         return ord($matches[0]);
@@ -2477,7 +2503,7 @@ function convert_id($string)
         LoggerManager::getLogger()->warn('Function not created');
     }
 
-    $stateSaver->popErrorLevel();
+    error_reporting($errorLevelStored);
 
     return preg_replace_callback('|[^A-Za-z0-9\-]|', $function, $string);
 }
@@ -2562,6 +2588,9 @@ function getJSPath($relative_path, $additional_attrs = '')
     return getVersionedPath($relative_path) . (!empty($additional_attrs) ? "&$additional_attrs" : '');
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function getSWFPath($relative_path, $additional_params = '')
 {
     $path = $relative_path;
@@ -2575,6 +2604,9 @@ function getSWFPath($relative_path, $additional_params = '')
     return $path;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function getSQLDate($date_str)
 {
     if (preg_match('/^(\d{1,2})-(\d{1,2})-(\d{4})$/', $date_str, $match)) {
@@ -2595,11 +2627,13 @@ function getSQLDate($date_str)
         }
 
         return "{$match[3]}-{$match[1]}-{$match[2]}";
-    } else {
-        return '';
     }
+    return '';
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function clone_history(&$db, $from_id, $to_id, $to_type)
 {
     global $timedate;
@@ -2663,6 +2697,9 @@ function clone_history(&$db, $from_id, $to_id, $to_type)
     }
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function values_to_keys($array)
 {
     $new_array = array();
@@ -2989,22 +3026,25 @@ function display_notice($msg = false)
     }
 }
 
-/* checks if it is a number that at least has the plus at the beginning.
+/**
+ * Checks if it is a number that at least has the plus at the beginning.
+ * 
+ * @deprecated No longer used, will be removed without replacement in SuiteCRM 7.12.
  */
-
 function skype_formatted($number)
 {
     //kbrill - BUG #15375
     if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Popup') {
         return false;
-    } else {
-        return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
     }
     return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
 
     //	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
 }
 
+/**
+ * @deprecated No longer used, will be removed without replacement in SuiteCRM 7.12.
+ */
 function format_skype($number)
 {
     return preg_replace('/[^\+0-9]/', '', $number);
@@ -3015,6 +3055,9 @@ function insert_charset_header()
     header('Content-Type: text/html; charset=UTF-8');
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function getCurrentURL()
 {
     $href = 'http:';
@@ -3084,6 +3127,7 @@ function br2nl($str)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The ppd stands for Pre Print Die.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppd($mixed)
 {
@@ -3097,6 +3141,7 @@ function _ppd($mixed)
  * @param $mixed var to print_r()
  * @param $die boolean end script flow
  * @param $displayStackTrace also show stack trace
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fatal')
 {
@@ -3128,6 +3173,7 @@ function _ppl($mixed, $die = false, $displayStackTrace = false, $loglevel = 'fat
  * The ppf stands for Pre[formatted] Print Focus [object].
  *
  * @param object bean The focus bean
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppf($bean, $die = false)
 {
@@ -3137,6 +3183,7 @@ function _ppf($bean, $die = false)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _pp($mixed)
 {
@@ -3146,6 +3193,7 @@ function _pp($mixed)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _pstack_trace($mixed = null)
 {
@@ -3155,6 +3203,7 @@ function _pstack_trace($mixed = null)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print Trace.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _ppt($mixed, $textOnly = false)
 {
@@ -3164,6 +3213,7 @@ function _ppt($mixed, $textOnly = false)
  * Private helper function for displaying the contents of a given variable.
  * This function is only intended to be used for SugarCRM internal development.
  * The pp stands for Pre Print Trace Die.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function _pptd($mixed)
 {
@@ -3172,6 +3222,7 @@ function _pptd($mixed)
 /**
  * Private helper function for decoding javascript UTF8
  * This function is only intended to be used for SugarCRM internal development.
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function decodeJavascriptUTF8($str)
 {
@@ -3182,21 +3233,29 @@ function decodeJavascriptUTF8($str)
  * Do not pass in any pararameter to default to a check against the
  * current environment's PHP version.
  *
- * @param string Version to check against, defaults to the current environment's.
+ * @param string $sys_php_version Version to check against, defaults to the current environment's.
+ * @param string $min_php_version Minimum version to check against. Defaults to the SUITECRM_PHP_MIN_VERSION constant.
+ * @param string $rec_php_version Recommended version. Defaults to the SUITECRM_PHP_REC_VERSION constant
  *
- * @return integer1 if version is greater than the recommended PHP version,
- * 0 if version is between minimun and recomended PHP versions,
- * -1 otherwise (less than minimum or buggy version)
+ * @return integer 1 if version is greater than the recommended PHP version,
+ *   0 if version is between minimun and recomended PHP versions,
+ *   -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '')
+function check_php_version($sys_php_version = '', $min_php_version = '', $rec_php_version = '')
 {
     if ($sys_php_version === '') {
         $sys_php_version = constant('PHP_VERSION');
     }
+    if ($min_php_version === '') {
+        $min_php_version = constant('SUITECRM_PHP_MIN_VERSION');
+    }
+    if ($rec_php_version === '') {
+        $rec_php_version = constant('SUITECRM_PHP_REC_VERSION');
+    }
 
     // versions below MIN_PHP_VERSION are not accepted, so return early.
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
-        return - 1;
+    if (version_compare($sys_php_version, $min_php_version, '<') === true) {
+        return -1;
     }
 
     // If there are some bug ridden versions, we should include them here
@@ -3208,8 +3267,8 @@ function check_php_version($sys_php_version = '')
         }
     }
 
-    //If the checked version is between the minimum and recommended versions, return 0
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
+    // If the checked version is between the minimum and recommended versions, return 0.
+    if (version_compare($sys_php_version, $rec_php_version, '<') === true) {
         return 0;
     }
 
@@ -3301,6 +3360,22 @@ function pre_login_check()
     }
 }
 
+/**
+ * Like exit() but will throw an exception if called during tests.
+ *
+ * This is to avoid exit() stopping the test suite without us noticing.
+ *
+ * @param int|string $status
+ * @throws Exception
+ */
+function suite_exit($status = 0)
+{
+    if (defined('SUITE_PHPUNIT_RUNNER'))
+        throw new Exception("exit() called during tests with status: $status");
+    else
+        exit($status);
+}
+
 function sugar_cleanup($exit = false)
 {
     static $called = false;
@@ -3318,10 +3393,9 @@ function sugar_cleanup($exit = false)
     //added this check to avoid errors during install.
     if (empty($sugar_config['dbconfig'])) {
         if ($exit) {
-            exit;
-        } else {
-            return;
+            suite_exit();
         }
+        return;
     }
 
     if (!class_exists('Tracker', true)) {
@@ -3354,7 +3428,7 @@ function sugar_cleanup($exit = false)
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         if ($exit) {
-            exit;
+            suite_exit();
         }
     }
 }
@@ -3591,6 +3665,9 @@ function get_sub_cookies($name)
     return $cookies;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function mark_delete_components($sub_object_array, $run_second_level = false, $sub_sub_array = '')
 {
     if (!empty($sub_object_array)) {
@@ -3612,7 +3689,12 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
 }
 
 /**
- * For translating the php.ini memory values into bytes.  e.g. input value of '8M' will return 8388608.
+ * Translates php.ini memory values into bytes.
+ * For example, an input value of '8M' will return 8388608.
+ * 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
+ * 
+ * @param string $val A string like '8M'.
+ * @return integer The number of bytes represented by that string.
  */
 function return_bytes($val)
 {
@@ -3639,13 +3721,10 @@ function return_bytes($val)
  */
 function url2html($string)
 {
-    //
     $return_string = preg_replace('/(\w+:\/\/)(\S+)/', ' <a href="\\1\\2" target="_new"  style="font-weight: normal;">\\1\\2</a>', $string);
 
     return $return_string;
 }
-
-// End customization by Julian
 
 /**
  * tries to determine whether the Host machine is a Windows machine.
@@ -3741,9 +3820,8 @@ function get_singular_bean_name($bean_name)
     global $beanFiles, $beanList;
     if (array_key_exists($bean_name, $beanList)) {
         return $beanList[$bean_name];
-    } else {
-        return $bean_name;
     }
+    return $bean_name;
 }
 
 /*
@@ -3998,6 +4076,8 @@ function string_format($format, $args, $escape = true)
  * numbers using a DB auto-increment key from offline clients and still
  * have the number be unique (since it is modified by the system_id.
  *
+ * @deprecated This function is unused and will be removed in a future release.
+ *
  * @param   $num       of bean
  * @param   $system_id from system
  *
@@ -4010,12 +4090,14 @@ function format_number_display($num, $system_id)
         $num = unformat_number($num);
         if (isset($system_id) && $system_id == 1) {
             return sprintf('%d', $num);
-        } else {
-            return sprintf('%d-%d', $num, $system_id);
         }
+        return sprintf('%d-%d', $num, $system_id);
     }
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function checkLoginUserStatus()
 {
 }
@@ -4216,7 +4298,8 @@ function sugarArrayMergeRecursive($gimp, $dom)
 }
 
 /**
- * finds the correctly working versions of PHP-JSON.
+ * Finds the correctly working versions of PHP-JSON.
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @return bool True if NOT found or WRONG version
  */
@@ -4365,6 +4448,9 @@ function generate_search_where(
     return $where_clauses;
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function add_quotes($str)
 {
     return "'{$str}'";
@@ -4389,9 +4475,8 @@ function rebuildConfigFile($sugar_config, $sugar_version)
 
     if (write_array_to_file('sugar_config', $sugar_config, 'config.php')) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 /**
@@ -4440,13 +4525,23 @@ function getJavascriptSiteURL()
     return $site_url;
 }
 
-// works nicely with array_map() -- can be used to wrap single quotes around each element in an array
+
+/**
+ * Works nicely with array_map() -- can be used to wrap single quotes around
+ * each element in an array.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function add_squotes($str)
 {
     return "'" . $str . "'";
 }
 
-// recursive function to count the number of levels within an array
+
+/**
+ * Recursive function to count the number of levels within an array.
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function array_depth($array, $depth_count = -1, $depth_array = array())
 {
     ++$depth_count;
@@ -4632,6 +4727,8 @@ function is_freetds()
 /**
  * Chart dashlet helper function that returns the correct CSS file, dependent on the current theme.
  *
+ * @deprecated This function is unused and will be removed in a future release.
+ *
  * @todo this won't work completely right until we impliment css compression and combination
  *       for now, we'll just include the last css file found.
  *
@@ -4646,6 +4743,7 @@ function chartStyle()
  * Chart dashlet helper functions that returns the correct XML color file for charts,
  * dependent on the current theme.
  *
+ * @deprecated This function is unused and will be removed in a future release.
  * @return sugarColors.xml to use
  */
 function chartColors()
@@ -4662,6 +4760,8 @@ function chartColors()
 /**
  * This function is designed to set up the php enviroment
  * for AJAX requests.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function ajaxInit()
 {
@@ -4823,7 +4923,12 @@ function sugar_ucfirst($string, $charset = 'UTF-8')
 }
 
 /**
+ * Given a multienum encoded as a string, convert it to an array of strings,
+ * e.g. `"^Monday^,^Tuesday^,^Wednesday^,^Thursday^"` becomes
+ * `["Monday", "Tuesday", "Wednesday", "Thursday"]`.
  *
+ * @param string|string[] $string The encoded multienum value. If this is already an array, the array will be returned unchanged.
+ * @return string[] An array of strings representing the multienum's values.
  */
 function unencodeMultienum($string)
 {
@@ -4894,7 +4999,7 @@ function create_export_query_relate_link_patch($module, $searchFields, $where)
             $join = $seed->$fieldLink->getJoin($params, true);
             $join_table_alias = 'join_' . $field['name'];
             if (isset($field['db_concat_fields'])) {
-                $db_field = db_concat($join_table_alias, $field['db_concat_fields']);
+                $db_field = DBManager::concat($join_table_alias, $field['db_concat_fields']);
                 $where = preg_replace('/' . $field['name'] . '/', $db_field, $where);
             } else {
                 $where = preg_replace('/(^|[\s(])' . $field['name'] . '/', '${1}' . $join_table_alias . '.' . $field['rname'], $where);
@@ -4935,9 +5040,8 @@ function getVariableFromQueryString($variable, $string)
     $number = preg_match("/{$variable}=([a-zA-Z0-9_-]+)[&]?/", $string, $matches);
     if ($number) {
         return $matches[1];
-    } else {
-        return false;
     }
+    return false;
 }
 
 /**
@@ -4964,22 +5068,24 @@ function should_hide_iframes()
 /**
  * Given a version such as 5.5.0RC1 return RC. If we have a version such as: 5.5 then return GA.
  *
- * @param string $version
+ * @deprecated This function is unused and will be removed in a future release.
  *
+ * @param string $version
  * @return string RC, BETA, GA
  */
 function getVersionStatus($version)
 {
     if (preg_match('/^[\d\.]+?([a-zA-Z]+?)[\d]*?$/si', $version, $matches)) {
         return strtoupper($matches[1]);
-    } else {
-        return 'GA';
     }
+    return 'GA';
 }
 
 /**
  * Return the numeric portion of a version. For example if passed 5.5.0RC1 then return 5.5. If given
  * 5.5.1RC1 then return 5.5.1.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @param string $version
  *
@@ -5106,7 +5212,7 @@ function verify_image_file($path, $jpeg = false)
  */
 function verify_uploaded_image($path, $jpeg_only = false)
 {
-    $supportedExtensions = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg');
+    $supportedExtensions = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'tmp' => 'tmp');
     if (!$jpeg_only) {
         $supportedExtensions['png'] = 'image/png';
     }
@@ -5141,9 +5247,8 @@ function cmp_beans($a, $b)
     }
     if ($a->$sugar_web_service_order_by < $b->$sugar_web_service_order_by) {
         return -1;
-    } else {
-        return 1;
     }
+    return 1;
 }
 
 function order_beans($beans, $field_name)
@@ -5232,17 +5337,17 @@ function getFTSEngineType()
 }
 
 /**
- * @param string $optionName - name of the option to be retrieved from app_list_strings
+ * @deprecated This function is unused and will be removed in a future release.
  *
+ * @param string $optionName - name of the option to be retrieved from app_list_strings
  * @return array - the array to be used in option element
  */
 function getFTSBoostOptions($optionName)
 {
     if (isset($GLOBALS['app_list_strings'][$optionName])) {
         return $GLOBALS['app_list_strings'][$optionName];
-    } else {
-        return array();
     }
+    return array();
 }
 
 /**
@@ -5250,6 +5355,8 @@ function getFTSBoostOptions($optionName)
  *
  * This function walks through an Array and recursively calls utf8_encode on the
  * values of each of the elements.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @param $data Array of data to encode
  *
@@ -5305,6 +5412,8 @@ function get_custom_file_if_exists($file)
  * This will return the URL used to redirect the user to the help documentation.
  * It can be overriden completely by setting the custom_help_url or partially by setting the custom_help_base_url
  * in config.php or config_override.php.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  *
  * @param string $send_edition
  * @param string $send_version
@@ -5418,6 +5527,8 @@ function clean_sensitive_data($defs, $data)
 
 /**
  * Return relations with labels for duplicates.
+ *
+ * @deprecated This function is unused and will be removed in a future release.
  */
 function getDuplicateRelationListWithTitle($def, $var_def, $module)
 {
@@ -5508,58 +5619,70 @@ function sugar_unserialize($value)
 
 define('DEFAULT_UTIL_SUITE_ENCODING', 'UTF-8');
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strlen')) {
         return mb_strlen($input, $encoding);
-    } else {
-        return strlen($input);
     }
+    return strlen($input);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_substr($input, $start, $length = null, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_substr')) {
         return mb_substr($input, $start, $length, $encoding);
-    } else {
-        return substr($input, $start, $length);
     }
+    return substr($input, $start, $length);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strtoupper($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strtoupper')) {
         return mb_strtoupper($input, $encoding);
-    } else {
-        return strtoupper($input);
     }
+    return strtoupper($input);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strtolower($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strtolower')) {
         return mb_strtolower($input, $encoding);
-    } else {
-        return strtolower($input);
     }
+    return strtolower($input);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strpos')) {
         return mb_strpos($haystack, $needle, $offset, $encoding);
-    } else {
-        return strpos($haystack, $needle, $offset);
     }
+    return strpos($haystack, $needle, $offset);
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strrpos')) {
         return mb_strrpos($haystack, $needle, $offset, $encoding);
-    } else {
-        return strrpos($haystack, $needle, $offset);
     }
+    return strrpos($haystack, $needle, $offset);
 }
 
 /**
