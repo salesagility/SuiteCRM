@@ -122,17 +122,17 @@ class SugarAuthenticate
                 $usr->savePreferencesToDB();
             }
             return $this->postLoginAuthenticate();
-        }
-        //if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
-        if (!empty($usr_id)) {
-            if (($logout=$usr->getPreference('loginfailed'))=='') {
-                $usr->setPreference('loginfailed', '1');
-            } else {
-                $usr->setPreference('loginfailed', $logout+1);
+        } else {
+            //if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
+            if (!empty($usr_id)) {
+                if (($logout=$usr->getPreference('loginfailed'))=='') {
+                    $usr->setPreference('loginfailed', '1');
+                } else {
+                    $usr->setPreference('loginfailed', $logout+1);
+                }
+                $usr->savePreferencesToDB();
             }
-            $usr->savePreferencesToDB();
         }
-        
         if (strtolower(get_class($this)) != 'sugarauthenticate') {
             $sa = new SugarAuthenticate();
             $error = (!empty($_SESSION['login_error']))?$_SESSION['login_error']:'';
@@ -206,14 +206,16 @@ class SugarAuthenticate
             $GLOBALS['log']->debug("We have an authenticated user id: ".$_SESSION["authenticated_user_id"]);
 
             $authenticated = $this->postSessionAuthenticate();
-        } elseif (isset($action) && isset($module) && $action == "Authenticate" && $module == "Users") {
-            $GLOBALS['log']->debug("We are authenticating user now");
         } else {
-            $GLOBALS['log']->debug("The current user does not have a session.  Going to the login page");
-            $action = "Login";
-            $module = "Users";
-            $_REQUEST['action'] = $action;
-            $_REQUEST['module'] = $module;
+            if (isset($action) && isset($module) && $action == "Authenticate" && $module == "Users") {
+                $GLOBALS['log']->debug("We are authenticating user now");
+            } else {
+                $GLOBALS['log']->debug("The current user does not have a session.  Going to the login page");
+                $action = "Login";
+                $module = "Users";
+                $_REQUEST['action'] = $action;
+                $_REQUEST['module'] = $module;
+            }
         }
         if (empty($GLOBALS['current_user']->id) && !in_array($action, $allowed_actions)) {
             $GLOBALS['log']->debug("The current user is not logged in going to login page");
@@ -392,9 +394,10 @@ class SugarAuthenticate
                         if ($session_parts[$i] == $client_parts[$i]) {
                             $classCheck = 1;
                             continue;
+                        } else {
+                            $classCheck = 0;
+                            break;
                         }
-                        $classCheck = 0;
-                        break;
                     }
                 }
                 // we have a different IP address

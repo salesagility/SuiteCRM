@@ -511,7 +511,7 @@
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
                               onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            {search_controller}
                             <input type="hidden" class="form-control" name="module" value="Home">
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
@@ -535,7 +535,7 @@
                 <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                        {search_controller}
                         <input type="hidden" class="form-control" name="module" value="Home">
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
@@ -593,7 +593,7 @@
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
                               onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            {search_controller}
                             <input type="hidden" class="form-control" name="module" value="Home">
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
@@ -610,7 +610,7 @@
                 <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                        {search_controller}
                         <input type="hidden" class="form-control" name="module" value="Home">
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
@@ -676,7 +676,7 @@
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
                               onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            {search_controller}
                             <input type="hidden" class="form-control" name="module" value="Home">
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
@@ -693,7 +693,7 @@
                 <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                        {search_controller}
                         <input type="hidden" class="form-control" name="module" value="Home">
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">

@@ -205,8 +205,10 @@ class RepairAndClear
                         echo "<textarea name=\"sql\" rows=\"24\" cols=\"150\" id=\"repairsql\">$qry_str</textarea>";
                         echo "<br /><input type=\"submit\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXECUTE']."\" name=\"raction\" /> <input type=\"submit\" name=\"raction\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXPORT']."\" />";
                     }
-                } elseif ($this->show_output) {
-                    echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+                } else {
+                    if ($this->show_output) {
+                        echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+                    }
                 }
             }
         } else {
@@ -410,11 +412,13 @@ class RepairAndClear
                     $this->_rebuildAuditTablesHelper(new $bean_name());
                 }
             }
-        } elseif (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
-            foreach ($beanFiles as $bean => $file) {
-                if (file_exists($file)) {
-                    require_once($file);
-                    $this->_rebuildAuditTablesHelper(new $bean());
+        } else {
+            if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+                foreach ($beanFiles as $bean => $file) {
+                    if (file_exists($file)) {
+                        require_once($file);
+                        $this->_rebuildAuditTablesHelper(new $bean());
+                    }
                 }
             }
         }
@@ -444,8 +448,10 @@ class RepairAndClear
                     echo $echo;
                 }
             }
-        } elseif ($this->show_output) {
-            echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
+        } else {
+            if ($this->show_output) {
+                echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
+            }
         }
     }
 

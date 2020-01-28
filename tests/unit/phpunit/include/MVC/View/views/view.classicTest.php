@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -49,15 +49,6 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $view->module = 'Home';
         $view->action = 'About';
 
-        
-        // folowing code says: "Test code or tested code did not (only) close its own output buffers"
-//        ob_start();
-//        $ret = $view->display();
-//        $renderedContent = ob_get_contents();
-//        ob_end_clean();
-//        $this->assertEquals(0, strlen($renderedContent), 'Renderered Content was: ' . $renderedContent);
-//        $this->assertTrue($ret);
-        
         $this->markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
 
         //test with a valid module and customized action. it should return true
@@ -71,7 +62,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
-        
+
 
         if (isset($session)) {
             $_SESSION = $session;

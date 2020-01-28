@@ -102,8 +102,9 @@ class CMISRepositoryWrapper
         if (is_array($options) && (count($options) > 0)) {
             $needs_question = strstr($url, "?") === false;
             return $url . ($needs_question ? "?" : "&") . http_build_query($options);
+        } else {
+            return $url;
         }
-        return $url;
     }
 
     public function convertStatusCode($code, $message)
@@ -971,8 +972,9 @@ xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
                 "content" => base64_encode(
                     $content
             ), "content_type" => $content_type));
+        } else {
+            return "";
         }
-        return "";
     }
 
     public static function getSummaryTemplate()

@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -554,13 +553,13 @@ class Localization
      */
     public function getLocaleFormattedNumber($number, $currencySymbol = '', $is_currency = true, $user = null)
     {
-        $fnum        = $number;
+        $fnum = $number;
         $majorDigits = '';
         $minorDigits = '';
-        $dec         = $this->getDecimalSeparator($user);
-        $thou        = $this->getNumberGroupingSeparator($user);
-        $precision   = $this->getPrecision($user);
-        $symbol      = empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
+        $dec = $this->getDecimalSeparator($user);
+        $thou = $this->getNumberGroupingSeparator($user);
+        $precision = $this->getPrecision($user);
+        $symbol = empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
 
         $exNum = explode($dec, $number);
         // handle grouping

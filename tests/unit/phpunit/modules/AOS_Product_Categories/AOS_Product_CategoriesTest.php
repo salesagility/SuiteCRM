@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_Product_CategoriesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

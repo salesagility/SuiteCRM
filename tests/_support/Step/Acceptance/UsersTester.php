@@ -9,7 +9,7 @@ class UsersTester extends \AcceptanceTester
      */
     public function gotoProfile()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickUserMenuItem('Profile');
     }
 
@@ -18,7 +18,7 @@ class UsersTester extends \AcceptanceTester
      */
     public function logoutUser()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickUserMenuItem('#logout_link');
     }
 }

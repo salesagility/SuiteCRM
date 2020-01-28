@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

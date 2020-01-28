@@ -127,11 +127,13 @@ class ViewBackups extends SugarView
                     $run = "confirmed";
                     $input_disabled = "readonly";
                 }
-            } elseif ($run == "confirmed") {
-                ini_set("memory_limit", "-1");
-                ini_set("max_execution_time", "0");
-                zip_dir(".", "$backup_dir/$backup_zip");
-                $run = "done";
+            } else {
+                if ($run == "confirmed") {
+                    ini_set("memory_limit", "-1");
+                    ini_set("max_execution_time", "0");
+                    zip_dir(".", "$backup_dir/$backup_zip");
+                    $run = "done";
+                }
             }
         }
         if (count($errors) > 0) {

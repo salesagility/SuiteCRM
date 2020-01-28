@@ -44,4 +44,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SuiteException extends Exception
 {
+    const NO_ID = 1;
 }

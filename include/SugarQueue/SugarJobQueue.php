@@ -223,11 +223,11 @@ class SugarJobQueue
             if ($this->db->getAffectedRowCount($res) == 0) {
                 // somebody stole our job, try again
                 continue;
+            } else {
+                // to update dates & possible hooks
+                $job->save();
+                break;
             }
-            // to update dates & possible hooks
-            $job->save();
-            break;
-            
             // TODO: commit/check?
         }
         return $job;

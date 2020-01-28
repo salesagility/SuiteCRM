@@ -145,7 +145,7 @@ $mod_strings = array(
     'LBL_BACKUP_FILE_STORED' => 'Backup successfully stored as',
     'LBL_BACKUP_FILENAME_ERROR' => 'Backup filename must be specified.',
     'LBL_BACKUP_FILENAME' => 'Filename:',
-    'LBL_BACKUP_INSTRUCTIONS_1' => "The purpose of this tool is to assist in creating backups of the SuiteCRM application files. (Database backups should also be performed regularly. Please refer to your database vendor's documentation for information on how to backup your database.)",
+    'LBL_BACKUP_INSTRUCTIONS_1' => 'The purpose of this tool is to assist in creating backups of the SuiteCRM application files. (Database backups should also be performed regularly. Please refer to your database vendor\'s documentation for information on how to backup your database.)',
     'LBL_BACKUP_INSTRUCTIONS_2' => 'To backup your SuiteCRM application files in a .zip file, enter the following information:',
     'LBL_BACKUP_RUN_BACKUP' => 'Run Backup',
     'LBL_BACKUPS_TITLE' => 'Backups',
@@ -749,7 +749,6 @@ $mod_strings = array(
     'LBL_SAML_LOGIN_URL_DESC' => 'Enter Login URL',
     'LBL_SAML_LOGOUT_URL_DESC' => 'Enter Logout URL',
 
-    'LBL_GLOBAL_SEARCH_SETTINGS_TITLE' => 'Select the module(s) that users will be able to search against using the Global Search.',
     'LBL_SELECT_MODULES' => 'Advanced',
     'LBL_SELECT_MODULES_TITLE' => 'Drag and drop to select modules and to change the display order. Perform a search to apply the changes.',
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
@@ -779,8 +778,9 @@ $mod_strings = array(
     'LBL_TOTAL_FILES' => 'Total files',
     'LBL_REMOVED_FILES' => 'Removed files',
 
-    'LBL_JJWG_MAPS_ADMIN_HEADER' => 'Google Maps',
-    'LBL_JJWG_MAPS_ADMIN_DESC' => 'Manage your geocoding, testing geocoding, view geocoding result totals and configure advanced settings.',
+    'LBL_GOOGLE_SUITE_ADMIN_HEADER' => 'Google Suite',
+    'LBL_GOOGLE_SUITE_ADMIN_DESC' => 'Manage your Google Suite Integration.',
+
     'LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE' => 'Google Maps Settings',
     'LBL_JJWG_MAPS_ADMIN_CONFIG_DESC' => 'Configuration settings to adjust your Google Maps',
     'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE' => 'Geocoded Counts',
@@ -788,10 +788,16 @@ $mod_strings = array(
     'LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_TITLE' => 'Geocode Addresses',
     'LBL_JJWG_MAPS_ADMIN_GEOCODE_ADDRESSES_DESC' => 'Geocode your object addreses. This process may take a few minutes!',
     'LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_TITLE' => 'Geocoding Test',
-    'LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_DESC' => 'Run a single geocoding test with detailed display results',
+    'LBL_JJWG_MAPS_ADMIN_GEOCODING_TEST_DESC' => 'Run a single geocoding test with detailed display results.',
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE' => 'Address Cache',
-    'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC' => 'View currently cached Address information',
+    'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC' => 'Provides access to Address Cache information. This is only cache.',
 
+    // Google Calendar
+    'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE' => 'Google Calendar Settings',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_DESC' => 'Configuration settings to adjust your Google Calendar',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON' => 'Upload Google API Credentials File',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP' => 'Upload the JSON Credentials file you downloaded from Google Developers Console.',
+    'LBL_GOOGLE_CALENDAR_GET_API_KEY' => 'Get API Credentials',
 
     'LBL_DISPLAY_SIDEBAR' => 'Display Sidebar',
     'LBL_COLOUR_ADMIN_PAGEHEADER' => 'Page header colour',
@@ -913,4 +919,59 @@ $mod_strings = array(
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
     'LBL_PWDSEC_CHARS' => 'Characters',
 
+    // SearchWrapper
+    'LBL_SEARCH_HEADER' => 'Search Settings',
+    'LBL_SEARCH_HEADER_DESC' => 'Manage your search preferences',
+    'LBL_SEARCH_WRAPPER' => 'Search Settings',
+    'LBL_SEARCH_WRAPPER_DESC' => 'Configure the global search preferences for the system',
+
+    // Elasticsearch Settings
+    'LBL_ELASTIC_SEARCH' => 'Elasticsearch',
+    'LBL_ELASTIC_SEARCH_SETTINGS' => 'Elasticsearch',
+    'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences',
+    'LBL_ELASTIC_SEARCH_SETTINGS_HELP' => 'Elasticsearch requires an external server set up to work. Read the <a href="https://docs.suitecrm.com/admin/administration-panel/search/elasticsearch/">documentation</a> to learn how.',
+    'LBL_ELASTIC_SEARCH_GENERAL' => 'General',
+    'LBL_ELASTIC_SEARCH_ENABLE' => 'Enable Elasticsearch.',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION' => 'Test connection',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION_SUCCESS' => 'Connection successful.',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION_FAIL' => 'Connection failed.',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION_ERROR' => 'Failed perform ping request.',
+    'LBL_ELASTIC_SEARCH_SERVER' => 'Server',
+    'LBL_ELASTIC_SEARCH_HOST' => 'Host',
+    'LBL_ELASTIC_SEARCH_USER' => 'Username',
+    'LBL_ELASTIC_SEARCH_PASS' => 'Password',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS' => 'Schedulers',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_HELP' => 'The following ElasticSearch schedulers were detected:',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_LAST_RUN' => 'last run:',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_NEVER_RUN' => 'This job has never run',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_NOT_FOUND' => 'No schedulers found. Consider creating one.',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_DESC' => 'The ElasticSearch module uses schedulers to keep the database and the indexing engine synchronised.',
+    'LBL_ELASTIC_SEARCH_INDEX' => 'Index',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_HELP' => 'Schedule an indexing',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL' => 'Schedule full indexing',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART' => 'Schedule partial indexing',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_SUCCESS' => 'A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_FAIL' => 'Failed to start full index.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_SUCCESS' => 'A partial indexing has been scheduled and will start in the next 60 seconds.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL' => 'Failed to start partial index.',
+
+    // SearchWrapper Settings
+    'LBL_SEARCH_INTERFACE' => 'Search Interface',
+    'LBL_SEARCH_ENGINE' => 'Search Engine',
+    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search.',
+    'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
+
+    'LBL_SEARCH_MODULES' => 'Search Modules',
+    'LBL_SEARCH_MODULES_HELP' => 'Select the module(s) that users will be able to search against using the Global Search.',
+
+    // Search Engines Translations
+    'LBL_LEGACY_SEARCH_ENGINES' => 'Legacy Search',
+    'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines (new)',
+    'LBL_BASIC_SEARCH_ENGINE' => 'Basic Search',
+    'LBL_BASIC_AND_AOD_ENGINE' => 'Basic + Advanced Search',
+    'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
+    'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
+
+    // Ajax Submit
+    'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
 );

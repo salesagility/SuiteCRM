@@ -74,6 +74,7 @@ function make_sugar_config(&$sugar_config)
     global $disable_persistent_connections;
     global $display_email_template_variable_chooser;
     global $display_inbound_email_buttons;
+    global $google_auth_json;
     global $history_max_viewed;
     global $host_name;
     global $import_dir;
@@ -147,6 +148,7 @@ function make_sugar_config(&$sugar_config)
         'disable_persistent_connections' => empty($disable_persistent_connections) ? false : $disable_persistent_connections,
         'display_email_template_variable_chooser' => empty($display_email_template_variable_chooser) ? false : $display_email_template_variable_chooser,
         'display_inbound_email_buttons' => empty($display_inbound_email_buttons) ? false : $display_inbound_email_buttons,
+        'google_auth_json' => empty($google_auth_json) ? '' : $google_auth_json,
         'history_max_viewed' => empty($history_max_viewed) ? 50 : $history_max_viewed,
         'host_name' => empty($host_name) ? 'localhost' : $host_name,
         'import_dir' => $import_dir, // this must be set!!
@@ -330,6 +332,7 @@ function get_sugar_config_defaults()
                 'oauth_tokens',
             )
         ),
+        'google_auth_json' => '',
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,
@@ -1325,7 +1328,7 @@ function return_mod_list_strings_language($language, $module)
  * This function retrieves a theme's language file and returns the array of strings included.
  *
  * @deprecated This function is unused and will be removed in a future release.
- * 
+ *
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -3233,7 +3236,7 @@ function decodeJavascriptUTF8($str)
  * @param string $sys_php_version Version to check against, defaults to the current environment's.
  * @param string $min_php_version Minimum version to check against. Defaults to the SUITECRM_PHP_MIN_VERSION constant.
  * @param string $rec_php_version Recommended version. Defaults to the SUITECRM_PHP_REC_VERSION constant
- * 
+ *
  * @return integer 1 if version is greater than the recommended PHP version,
  *   0 if version is between minimun and recomended PHP versions,
  *   -1 otherwise (less than minimum or buggy version)
@@ -4065,7 +4068,7 @@ function string_format($format, $args, $escape = true)
  * have the number be unique (since it is modified by the system_id.
  *
  * @deprecated This function is unused and will be removed in a future release.
- * 
+ *
  * @param   $num       of bean
  * @param   $system_id from system
  *
@@ -4517,7 +4520,7 @@ function getJavascriptSiteURL()
 /**
  * Works nicely with array_map() -- can be used to wrap single quotes around
  * each element in an array.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function add_squotes($str)
@@ -4748,7 +4751,7 @@ function chartColors()
 /**
  * This function is designed to set up the php enviroment
  * for AJAX requests.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function ajaxInit()
@@ -4914,7 +4917,7 @@ function sugar_ucfirst($string, $charset = 'UTF-8')
  * Given a multienum encoded as a string, convert it to an array of strings,
  * e.g. `"^Monday^,^Tuesday^,^Wednesday^,^Thursday^"` becomes
  * `["Monday", "Tuesday", "Wednesday", "Thursday"]`.
- * 
+ *
  * @param string|string[] $string The encoded multienum value. If this is already an array, the array will be returned unchanged.
  * @return string[] An array of strings representing the multienum's values.
  */
@@ -5343,7 +5346,7 @@ function getFTSBoostOptions($optionName)
  *
  * This function walks through an Array and recursively calls utf8_encode on the
  * values of each of the elements.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  *
  * @param $data Array of data to encode

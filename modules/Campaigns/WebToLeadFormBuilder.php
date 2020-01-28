@@ -354,10 +354,14 @@ HTML;
             if (count($colsFirst) > count($colsSecond) || count($colsFirst) == count($colsSecond)) {
                 $columns= count($colsFirst);
             }
-        } elseif (!empty($colsFirst)) {
-            $columns= count($colsFirst);
-        } elseif (!empty($colsSecond)) {
-            $columns= count($colsSecond);
+        } else {
+            if (!empty($colsFirst)) {
+                $columns= count($colsFirst);
+            } else {
+                if (!empty($colsSecond)) {
+                    $columns= count($colsSecond);
+                }
+            }
         }
         return $columns;
     }

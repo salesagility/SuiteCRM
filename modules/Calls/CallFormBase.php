@@ -521,10 +521,12 @@ EOQ;
         if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Home') {
             $_REQUEST['return_action'] = 'index';
             handleRedirect('', 'Home');
-        } elseif ($redirect) {
-            handleRedirect($return_id, 'Calls');
         } else {
-            return $focus;
+            if ($redirect) {
+                handleRedirect($return_id, 'Calls');
+            } else {
+                return $focus;
+            }
         }
     } // end handleSave();
 

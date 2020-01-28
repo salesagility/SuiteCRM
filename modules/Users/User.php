@@ -121,6 +121,22 @@ class User extends Person implements EmailInterface
      */
     public $factor_auth_interface;
 
+    /**
+     * Normally a bean returns ID from save() method if it was
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except
+     * the email addresses of it, this User::save() method also
+     * return a false.
+     * It's a confusing ambiguous return value for caller method.
+     *
+     * To handle this issue when save method can not save email
+     * addresses and return false it also set this variable to
+     * true.
+     *
+     * @var bool|null
+     */
+    public $lastSaveErrorIsEmailAddressSaveError = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -591,6 +607,9 @@ class User extends Person implements EmailInterface
      * addresses and return false it also set the variable called
      * User::$lastSaveErrorIsEmailAddressSaveError to true.
      *
+     * @global User $current_user
+     * @global array $sugar_config
+     * @global array $mod_strings
      * @param bool $check_notify
      * @return bool|string
      * @throws SuiteException
@@ -610,6 +629,9 @@ class User extends Person implements EmailInterface
         // only admin user can change 2 factor authentication settings
         if ($smtp_error || $isUpdate && !is_admin($current_user)) {
             $tmpUser = BeanFactory::getBean('Users', $this->id);
+            if (!$tmpUser instanceof User) {
+                LoggerManager::getLogger()->fatal('User update error: Temp User is not retrieved at ID ' . $this->id . ', ' . gettype($tmpUser) . ' given');
+            }
 
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
@@ -618,7 +640,7 @@ class User extends Person implements EmailInterface
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
                 }
             } else {
-                if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                if (($tmpUser instanceof User) && ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface)) {
                     $msg .= 'Current user is not able to change two factor authentication settings.';
                     $GLOBALS['log']->warn($msg);
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
@@ -662,12 +684,17 @@ class User extends Person implements EmailInterface
 
         if (!$this->verify_data()) {
             SugarApplication::appendErrorMessage($this->error_string);
-            header('Location: index.php?action=Error&module=Users');
-            exit;
+            return SugarApplication::redirect('Location: index.php?action=Error&module=Users');
         }
 
-        parent::save($check_notify);
 
+        $retId = parent::save($check_notify);
+        if (!$retId) {
+            LoggerManager::getLogger()->fatal('save error: User is not saved, Person ID is not returned.');
+        }
+        if ($retId !== $this->id) {
+            LoggerManager::getLogger()->fatal('save error: User is not saved properly, returned Person ID does not match to User ID.');
+        }
         // set some default preferences when creating a new user
         if ($setNewUserPreferences) {
             if (!$this->getPreference('calendar_publish_key')) {
@@ -679,27 +706,26 @@ class User extends Person implements EmailInterface
 
         $this->savePreferencesToDB();
 
-
         if ((isset($_POST['old_password']) || $this->portal_only) &&
             (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
             (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
             if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
                 if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
-                    exit;
+                    SugarApplication::redirect("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
                 }
                 if (isset($_POST['page']) && $_POST['page'] === 'Change') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
-                    exit;
+                    SugarApplication::redirect("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
                 }
             }
         }
 
         // User Profile specific save for Email addresses
+        $this->lastSaveErrorIsEmailAddressSaveError = false;
         if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
-            $GLOBALS['log']->error('Email address save error');
+            LoggerManager::getLogger()->fatal('Email address save error');
+            $this->lastSaveErrorIsEmailAddressSaveError = true;
             return false;
         }
 
@@ -949,6 +975,11 @@ class User extends Person implements EmailInterface
             }
             if (isset($_POST['subtheme'])) {
                 $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
+            }
+            if (isset($_POST['gsync_cal'])) {
+                $this->setPreference('syncGCal', 1, 0, 'GoogleSync');
+            } else {
+                $this->setPreference('syncGCal', 0, 0, 'GoogleSync');
             }
             if ($this->user_hash === null) {
                 $newUser = true;

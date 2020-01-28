@@ -239,12 +239,13 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                                 if ($j === 0) {
                                     if ($y === '*' || isset($html_definition->info[$y = strtolower($y)])) {
                                         $nx = $y;
-                                    }
-                                    // $nx stays null; this matters
+                                    } else {
+                                        // $nx stays null; this matters
                                         // if we don't manage to find
                                         // any valid selector content,
                                         // in which case we ignore the
                                         // outer $delim
+                                    }
                                 } elseif ($j % 2) {
                                     // set delimiter
                                     $sdelim = $y;
@@ -277,9 +278,10 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                                 } else {
                                     $nsel .= $delim . $nx;
                                 }
-                            }
-                            // delimiters to the left of invalid
+                            } else {
+                                // delimiters to the left of invalid
                                 // basic selector ignored
+                            }
                         }
                     }
                     if ($nsel !== null) {

@@ -44,14 +44,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../../../../include/phpmailer/class.smtp.php';
 require_once __DIR__ . '/SugarPHPMailerMock.php';
 require_once __DIR__ . '/NonGmailSentFolderHandlerMock.php';
 require_once __DIR__ . '/EmailMock.php';
 
 class EmailTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -59,7 +58,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
+
     public function testSendSaveAndStoreInSentOk()
     {
         // handle non-gmail sent folder (mailbox is set)

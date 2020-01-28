@@ -134,8 +134,10 @@ function get_module_title(
     $iconPath = "";
     if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png', false))) {
         $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png');
-    } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png', false))) {
-        $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
+    } else {
+        if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
+        }
     }
     if (!empty($iconPath)) {
         $the_title .= '<h2>';

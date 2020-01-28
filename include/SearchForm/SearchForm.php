@@ -617,8 +617,9 @@ class SearchForm
         } else {
             if ($return) {
                 return $text;
+            } else {
+                echo $text;
             }
-            echo $text;
         }
     }
 
@@ -658,8 +659,9 @@ class SearchForm
         } else {
             if ($return) {
                 return $text;
+            } else {
+                echo $text;
             }
-            echo $text;
         }
     }
 

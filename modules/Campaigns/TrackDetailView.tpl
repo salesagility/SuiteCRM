@@ -85,8 +85,10 @@
 	<td width="20%" scope="row"><span>{$MOD.LBL_CAMPAIGN_STATUS}</span></td>
 	<td width="30%"><span>{$STATUS}</span></td>
 
+
 	<td width="20%" scope="row"><span>{$MOD.LBL_TEAM}</span></td>
 	<td width="30%"><span>{$TEAM_NAME}</span></td>
+
 
 	</tr><tr>
 	<td width="20%" scope="row"><span>{$MOD.LBL_CAMPAIGN_START_DATE}</span></td>

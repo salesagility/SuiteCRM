@@ -7,7 +7,7 @@ require_once 'install/install_utils.php';
 
 class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

@@ -72,16 +72,18 @@ class One2MRelationship extends M2MRelationship
             } else {
                 if (!is_array($links)) { //Only one link for a self referencing relationship, this is very bad.
                     $this->lhsLinkDef = $this->rhsLinkDef = $links;
-                } elseif (!empty($links[0]) && !empty($links[1])) {
-                    if ((!empty($links[0]['side']) && $links[0]['side'] == "right")
+                } else {
+                    if (!empty($links[0]) && !empty($links[1])) {
+                        if ((!empty($links[0]['side']) && $links[0]['side'] == "right")
                         || (!empty($links[0]['link_type']) && $links[0]['link_type'] == "one")) {
-                        //$links[0] is the RHS
-                        $this->lhsLinkDef = $links[1];
-                        $this->rhsLinkDef = $links[0];
-                    } else {
-                        //$links[0] is the LHS
-                        $this->lhsLinkDef = $links[0];
-                        $this->rhsLinkDef = $links[1];
+                            //$links[0] is the RHS
+                            $this->lhsLinkDef = $links[1];
+                            $this->rhsLinkDef = $links[0];
+                        } else {
+                            //$links[0] is the LHS
+                            $this->lhsLinkDef = $links[0];
+                            $this->rhsLinkDef = $links[1];
+                        }
                     }
                 }
             }

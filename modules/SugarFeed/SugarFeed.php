@@ -486,17 +486,13 @@ class SugarFeed extends Basic
     {
         global $timedate;
 
-        $nowTs = $timedate->getNow()->ts;
+        $timedate->getInstance()->userTimezone();
+        $currentTime = $timedate->now();
 
-        if (null !== ($userStartDate = $timedate->fromUser($startDate))) {
-            $userStartDateTs = $userStartDate->ts;
-        } else {
-            LoggerManager::getLogger()->warn('Invalid $startDate');
+        $first = strtotime($currentTime);
+        $second = strtotime($startDate);
 
-            return '';
-        }
-
-        $seconds = $nowTs - $userStartDateTs;
+        $seconds = $first - $second;
         $minutes = $seconds / 60;
         $seconds = $seconds % 60;
         $hours = floor($minutes / 60);
@@ -516,7 +512,7 @@ class SugarFeed extends Basic
             }
         } else {
             if ($days == 1) {
-                $result .= $days . ' ' . translate('LBL_TIME_DAY', 'SugarFeed') . ' ';
+                return translate('LBL_TIME_YESTERDAY', 'SugarFeed') . ' ';
             } elseif ($days > 1) {
                 $result .= $days . ' ' . translate('LBL_TIME_DAYS', 'SugarFeed') . ' ';
             } else {

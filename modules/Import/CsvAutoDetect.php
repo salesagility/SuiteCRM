@@ -234,11 +234,13 @@ class CsvAutoDetect
                 $delimiter = $delimiter1;
                 $enclosure = "\"";
                 $found_setting = true;
-            } elseif ($singleQuoteParsedOK) {
-                // otherwise, if single quote parsed ok, let's use it
-                $delimiter = $delimiter2;
-                $enclosure = "'";
-                $found_setting = true;
+            } else {
+                if ($singleQuoteParsedOK) {
+                    // otherwise, if single quote parsed ok, let's use it
+                    $delimiter = $delimiter2;
+                    $enclosure = "'";
+                    $found_setting = true;
+                }
             }
         }
 
@@ -297,15 +299,19 @@ class CsvAutoDetect
                         break;
                     }
                     // check if the CSV item is part of the label or vice versa
-                    elseif (isset($defs['vname']) && isset($mod_strings[$defs['vname']])) {
-                        if (stripos(trim($mod_strings[$defs['vname']], ':'), $val) !== false || stripos($val, trim($mod_strings[$defs['vname']], ':')) !== false) {
-                            $match_count++;
-                            break;
-                        }
-                    } elseif (isset($defs['vname']) && isset($GLOBALS['app_strings'][$defs['vname']])) {
-                        if (stripos(trim($GLOBALS['app_strings'][$defs['vname']], ':'), $val) !== false || stripos($val, trim($GLOBALS['app_strings'][$defs['vname']], ':')) !== false) {
-                            $match_count++;
-                            break;
+                    else {
+                        if (isset($defs['vname']) && isset($mod_strings[$defs['vname']])) {
+                            if (stripos(trim($mod_strings[$defs['vname']], ':'), $val) !== false || stripos($val, trim($mod_strings[$defs['vname']], ':')) !== false) {
+                                $match_count++;
+                                break;
+                            }
+                        } else {
+                            if (isset($defs['vname']) && isset($GLOBALS['app_strings'][$defs['vname']])) {
+                                if (stripos(trim($GLOBALS['app_strings'][$defs['vname']], ':'), $val) !== false || stripos($val, trim($GLOBALS['app_strings'][$defs['vname']], ':')) !== false) {
+                                    $match_count++;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }

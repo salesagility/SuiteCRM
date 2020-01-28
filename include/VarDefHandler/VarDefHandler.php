@@ -127,10 +127,12 @@ class VarDefHandler
                     } else {
                         $label_name = $this->module_object->$relName->getRelatedModuleName();
                     }
-                } elseif (!empty($value_array['vname'])) {
-                    $label_name = $value_array['vname'];
                 } else {
-                    $label_name = $value_array['name'];
+                    if (!empty($value_array['vname'])) {
+                        $label_name = $value_array['vname'];
+                    } else {
+                        $label_name = $value_array['name'];
+                    }
                 }
 
 
@@ -170,9 +172,9 @@ class VarDefHandler
         }
         if ($use_singular == true) {
             return convert_module_to_singular($this->options_array);
+        } else {
+            return $this->options_array;
         }
-        return $this->options_array;
-        
 
         //end get_vardef_array
     }

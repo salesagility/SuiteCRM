@@ -130,7 +130,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
 
-            
+
         if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
         } else {

@@ -1,6 +1,6 @@
 <?php
-if (! defined('sugarEntry') || ! sugarEntry) {
-    die('Not A Valid Entry Point') ;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 /**
  *
@@ -99,10 +99,14 @@ class ParserSearchFields extends ModuleBuilderParser
         $searchFields = array();
         if (!empty($this->packageName) && file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) { //we are in Module builder
             include("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php");
-        } elseif (file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php")) {
-            include("custom/modules/{$this->moduleName}/metadata/SearchFields.php");
-        } elseif (file_exists("modules/{$this->moduleName}/metadata/SearchFields.php")) {
-            include("modules/{$this->moduleName}/metadata/SearchFields.php");
+        } else {
+            if (file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php")) {
+                include("custom/modules/{$this->moduleName}/metadata/SearchFields.php");
+            } else {
+                if (file_exists("modules/{$this->moduleName}/metadata/SearchFields.php")) {
+                    include("modules/{$this->moduleName}/metadata/SearchFields.php");
+                }
+            }
         }
 
         return $searchFields;

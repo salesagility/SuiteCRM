@@ -43,7 +43,7 @@ define("CREDENTIAL_CATEGORY", "ml");
 define("CREDENTIAL_USERNAME", "username");
 define("CREDENTIAL_PASSWORD", "password");
 
-require_once('include/nusoap/nusoap.php');
+require_once('include/nusoap/nusoap.php'); // TODO: is it needed?
 require_once('include/utils/zip_utils.php');
 require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
 require_once('ModuleInstall/ModuleInstaller.php');
@@ -92,8 +92,9 @@ class PackageManager
         if (!empty($name_value_list)) {
             $name_value_list = PackageManager::fromNameValueList($name_value_list);
             return $name_value_list['description'];
+        } else {
+            return '';
         }
-        return '';
     }
 
     /**
@@ -243,8 +244,9 @@ class PackageManager
         $result = PackageManagerComm::login($terms_checked);
         if (is_array($result)) {
             return $result;
+        } else {
+            return true;
         }
-        return true;
     }
 
     public function setCredentials($username, $password, $systemname)
@@ -296,8 +298,9 @@ class PackageManager
         if (!empty($release_id) || !empty($package_id)) {
             $documents = PackageManagerComm::getDocumentation($package_id, $release_id);
             return $documents;
+        } else {
+            return null;
         }
-        return null;
     }
 
     /**
@@ -790,8 +793,9 @@ class PackageManager
         if (is_file($license_file)) {
             $contents = file_get_contents($license_file);
             return $contents;
+        } else {
+            return null;
         }
-        return null;
     }
 
     /**

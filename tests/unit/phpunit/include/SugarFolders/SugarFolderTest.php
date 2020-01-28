@@ -44,7 +44,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 {
     protected $folderId = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         include_once __DIR__ . '/../../../../../modules/Users/User.php';

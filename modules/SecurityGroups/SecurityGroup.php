@@ -50,8 +50,8 @@ class SecurityGroup extends SecurityGroup_sugar
                     and secu.user_id = '$user_id'
                 where secg.deleted = 0
             )";
-        }
-        return " EXISTS (SELECT  1
+        } else {
+            return " EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -63,6 +63,7 @@ class SecurityGroup extends SecurityGroup_sugar
                                AND secr.module = '$module'
                        WHERE   secr.record_id = " . $table_name . '.id
                                AND secg.deleted = 0) ';
+        }
     }
 
     /**
@@ -105,14 +106,15 @@ class SecurityGroup extends SecurityGroup_sugar
             and secu.user_id = '" . $user_id . "'
     where secg.deleted = 0
 ) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
-        }
-        return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
+        } else {
+            return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
     inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
             and secu.user_id = '" . $user_id . "'
     inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0
              and secr.module = '" . $module . "'
     where secg.deleted = 0
 ) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
+        }
     }
 
     /**

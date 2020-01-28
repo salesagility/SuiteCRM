@@ -223,12 +223,16 @@ class Calendar
             
         if ($this->view == "day") {
             $this->time_step = SugarConfig::getInstance()->get('calendar.day_timestep', 15);
-        } elseif ($this->view == "week" || $this->view == "shared") {
-            $this->time_step = SugarConfig::getInstance()->get('calendar.week_timestep', 30);
-        } elseif ($this->view == "month") {
-            $this->time_step = SugarConfig::getInstance()->get('calendar.month_timestep', 60);
         } else {
-            $this->time_step = 60;
+            if ($this->view == "week" || $this->view == "shared") {
+                $this->time_step = SugarConfig::getInstance()->get('calendar.week_timestep', 30);
+            } else {
+                if ($this->view == "month") {
+                    $this->time_step = SugarConfig::getInstance()->get('calendar.month_timestep', 60);
+                } else {
+                    $this->time_step = 60;
+                }
+            }
         }
         $this->cells_per_day = 24 * (60 / $this->time_step);
         $this->calculate_grid_start_ts();
@@ -353,11 +357,13 @@ class Calendar
         $user_ids = $current_user->getPreference('shared_ids');
         if (!empty($user_ids) && count($user_ids) != 0 && !isset($_REQUEST['shared_ids'])) {
             $this->shared_ids = $user_ids;
-        } elseif (isset($_REQUEST['shared_ids']) && count($_REQUEST['shared_ids']) > 0) {
-            $this->shared_ids = $_REQUEST['shared_ids'];
-            $current_user->setPreference('shared_ids', $_REQUEST['shared_ids']);
         } else {
-            $this->shared_ids = array($current_user->id);
+            if (isset($_REQUEST['shared_ids']) && count($_REQUEST['shared_ids']) > 0) {
+                $this->shared_ids = $_REQUEST['shared_ids'];
+                $current_user->setPreference('shared_ids', $_REQUEST['shared_ids']);
+            } else {
+                $this->shared_ids = array($current_user->id);
+            }
         }
     }
     
@@ -369,12 +375,16 @@ class Calendar
         if ($this->view == "agendaWeek" || $this->view == "shared") {
             $week_start = CalendarUtils::get_first_day_of_week($this->date_time);
             $this->grid_start_ts = $week_start->format('U') + $week_start->getOffset();
-        } elseif ($this->view == "month") {
-            $month_start = $this->date_time->get_day_by_index_this_month(0);
-            $week_start = CalendarUtils::get_first_day_of_week($month_start);
-            $this->grid_start_ts = $week_start->format('U') + $week_start->getOffset(); // convert to timestamp, ignore tz
-        } elseif ($this->view == "agendaDay") {
-            $this->grid_start_ts = $this->date_time->format('U') + $this->date_time->getOffset();
+        } else {
+            if ($this->view == "month") {
+                $month_start = $this->date_time->get_day_by_index_this_month(0);
+                $week_start = CalendarUtils::get_first_day_of_week($month_start);
+                $this->grid_start_ts = $week_start->format('U') + $week_start->getOffset(); // convert to timestamp, ignore tz
+            } else {
+                if ($this->view == "agendaDay") {
+                    $this->grid_start_ts = $this->date_time->format('U') + $this->date_time->getOffset();
+                }
+            }
         }
     }
     
@@ -401,13 +411,15 @@ class Calendar
         if ($this->view == 'agendaWeek'|| $this->view == 'basicWeek'  || $this->view == 'sharedWeek') {
             $start_date_time = CalendarUtils::get_first_day_of_week($this->date_time);
             $end_date_time = $start_date_time->get("+7 days");
-        } elseif ($this->view == 'month' || $this->view == "sharedMonth") {
-            $start_date_time = $this->date_time->get_day_by_index_this_month(0);
-            $end_date_time = $start_date_time->get("+".$start_date_time->format('t')." days");
-            $start_date_time = CalendarUtils::get_first_day_of_week($start_date_time);
-            $end_date_time = CalendarUtils::get_first_day_of_week($end_date_time)->get("+7 days");
         } else {
-            $end_date_time = $this->date_time->get("+1 day");
+            if ($this->view == 'month' || $this->view == "sharedMonth") {
+                $start_date_time = $this->date_time->get_day_by_index_this_month(0);
+                $end_date_time = $start_date_time->get("+".$start_date_time->format('t')." days");
+                $start_date_time = CalendarUtils::get_first_day_of_week($start_date_time);
+                $end_date_time = CalendarUtils::get_first_day_of_week($end_date_time)->get("+7 days");
+            } else {
+                $end_date_time = $this->date_time->get("+1 day");
+            }
         }
         
         $start_date_time = $start_date_time->get("-5 days"); // 5 days step back to fetch multi-day activities that
@@ -439,16 +451,22 @@ class Calendar
             
         if ($this->view == 'month' || $this->view == "sharedMonth") {
             $day = $this->date_time->get_day_by_index_this_month(0)->get($sign."1 month")->get_day_begin(1);
-        } elseif ($this->view == 'agendaWeek' || $this->view == 'sharedWeek' || $this->view == 'basicWeek') {
-            $day = CalendarUtils::get_first_day_of_week($this->date_time);
-            $day = $day->get($sign."7 days");
-        } elseif ($this->view == 'agendaDay' || $this->view == 'basicDay') {
-            $day = $this->date_time->get($sign."1 day")->get_day_begin();
-        } elseif ($this->view == 'year') {
-            $day = $this->date_time->get($sign."1 year")->get_day_begin();
         } else {
-            $calendarStrings = return_module_language($GLOBALS['current_language'], 'Calendar');
-            return $calendarStrings['ERR_NEIGHBOR_DATE'];
+            if ($this->view == 'agendaWeek' || $this->view == 'sharedWeek' || $this->view == 'basicWeek') {
+                $day = CalendarUtils::get_first_day_of_week($this->date_time);
+                $day = $day->get($sign."7 days");
+            } else {
+                if ($this->view == 'agendaDay' || $this->view == 'basicDay') {
+                    $day = $this->date_time->get($sign."1 day")->get_day_begin();
+                } else {
+                    if ($this->view == 'year') {
+                        $day = $this->date_time->get($sign."1 year")->get_day_begin();
+                    } else {
+                        $calendarStrings = return_module_language($GLOBALS['current_language'], 'Calendar');
+                        return $calendarStrings['ERR_NEIGHBOR_DATE'];
+                    }
+                }
+            }
         }
         return $day->get_date_str();
     }

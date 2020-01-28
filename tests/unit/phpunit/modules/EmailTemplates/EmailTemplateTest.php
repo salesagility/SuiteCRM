@@ -6,7 +6,7 @@ require_once 'modules/EmailTemplates/EmailTemplateParser.php';
 
 class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

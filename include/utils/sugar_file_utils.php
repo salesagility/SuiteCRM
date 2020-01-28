@@ -127,8 +127,9 @@ function sugar_fopen($filename, $mode, $use_include_path = false, $context = nul
 
     if (empty($context)) {
         return fopen($filename, $mode, $use_include_path);
+    } else {
+        return fopen($filename, $mode, $use_include_path, $context);
     }
-    return fopen($filename, $mode, $use_include_path, $context);
 }
 
 /**
@@ -236,8 +237,9 @@ function sugar_file_get_contents($filename, $use_include_path = false, $context 
 
     if (empty($context)) {
         return file_get_contents($filename, $use_include_path);
+    } else {
+        return file_get_contents($filename, $use_include_path, $context);
     }
-    return file_get_contents($filename, $use_include_path, $context);
 }
 
 /**
@@ -303,8 +305,9 @@ function sugar_chmod($filename, $mode = null)
         }
         if (isset($mode) && $mode > 0) {
             return @chmod($filename, $mode);
+        } else {
+            return false;
         }
-        return false;
     }
 
     return true;
@@ -325,13 +328,15 @@ function sugar_chown($filename, $user = '')
     if (!is_windows()) {
         if (strlen($user)) {
             return chown($filename, $user);
-        }
-        if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
-            $user = $GLOBALS['sugar_config']['default_permissions']['user'];
+        } else {
+            if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
+                $user = $GLOBALS['sugar_config']['default_permissions']['user'];
 
-            return chown($filename, $user);
+                return chown($filename, $user);
+            } else {
+                return false;
+            }
         }
-        return false;
     }
 
     return true;
@@ -352,13 +357,15 @@ function sugar_chgrp($filename, $group = '')
     if (!is_windows()) {
         if (!empty($group)) {
             return chgrp($filename, $group);
-        }
-        if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
-            $group = $GLOBALS['sugar_config']['default_permissions']['group'];
+        } else {
+            if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
+                $group = $GLOBALS['sugar_config']['default_permissions']['group'];
 
-            return chgrp($filename, $group);
+                return chgrp($filename, $group);
+            } else {
+                return false;
+            }
         }
-        return false;
     }
 
     return true;

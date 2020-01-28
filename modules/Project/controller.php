@@ -105,8 +105,10 @@ class ProjectController extends SugarController
 
         if ($_POST['milestone'] == 'Milestone') {
             $milestone_flag = '1';
-        } elseif ($_POST['milestone'] == 'Task') {
-            $milestone_flag = '0';
+        } else {
+            if ($_POST['milestone'] == 'Task') {
+                $milestone_flag = '0';
+            }
         }
 
         $dateformat = $current_user->getPreference('datef');

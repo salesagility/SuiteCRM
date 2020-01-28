@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ProjectTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -77,12 +77,12 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
     public function test_get_total_estimated_effort()
     {
-        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
+//        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
     }
 
     public function test_get_total_actual_effort()
     {
-        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
+//        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
     }
 
     public function testget_summary_text()
@@ -148,7 +148,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $this->markTestIncomplete('Refactor exporter: productes SQL that has different field ordering in SELECT');
+//        $this->markTestIncomplete('Refactor exporter: productes SQL that has different field ordering in SELECT');
     }
 
     public function testgetAllProjectTasks()

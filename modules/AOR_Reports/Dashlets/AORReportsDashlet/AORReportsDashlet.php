@@ -86,8 +86,9 @@ class AORReportsDashlet extends Dashlet
         if (!empty($this->report->id)) {
             //return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_CHARTJS);
             return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_RGRAPH);
+        } else {
+            return '';
         }
-        return '';
     }
 
     public function process()

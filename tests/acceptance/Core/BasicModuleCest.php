@@ -62,7 +62,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      *
      * As administrative user I want to view my basic test module so that I can see if it has been
@@ -70,7 +70,7 @@ class BasicModuleCest
      */
     public function testScenarioViewBasicTestModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Basic Test Module');
@@ -85,7 +85,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      *
@@ -94,7 +94,7 @@ class BasicModuleCest
      */
     public function testScenarioCreateRecord(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\DetailView $detailView
@@ -121,7 +121,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      *
@@ -129,7 +129,7 @@ class BasicModuleCest
      */
     public function testScenarioViewRecordFromListView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView
     ) {
@@ -155,7 +155,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -164,7 +164,7 @@ class BasicModuleCest
      */
     public function testScenarioEditRecordFromDetailView(
         \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView
@@ -198,7 +198,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
@@ -207,7 +207,7 @@ class BasicModuleCest
      */
     public function testScenarioDuplicateRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView
@@ -248,7 +248,7 @@ class BasicModuleCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      *
@@ -256,7 +256,7 @@ class BasicModuleCest
      */
     public function testScenarioDeleteRecordFromDetailView(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView
     ) {

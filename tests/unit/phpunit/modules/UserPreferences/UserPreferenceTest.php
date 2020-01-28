@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -37,7 +37,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 
         //test setPreference method
         $userPreference->setPreference('test', 'test val', 'test_category');
-        
+
         if (!isset($_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'])) {
             LoggerManager::getLogger()->warn('no session');
             $result = null;
@@ -45,7 +45,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         } else {
             $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
         }
-        
+
         $this->assertEquals('test val', $result);
 
         //test getPreference method

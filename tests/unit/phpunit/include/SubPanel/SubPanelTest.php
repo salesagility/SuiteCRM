@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         if (!defined('sugarEntry')) {

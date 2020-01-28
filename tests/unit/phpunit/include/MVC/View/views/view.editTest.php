@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewEditTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -45,7 +45,7 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
         $view->bean = new Meeting();
         $view->preDisplay();
         $this->assertInstanceOf('EditView', $view->ev);
-        
+
 
         if (isset($session)) {
             $_SESSION = $session;

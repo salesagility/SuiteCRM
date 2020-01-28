@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -192,9 +192,9 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckNonce()
     {
-        self::markTestIncomplete('wrong test');
-        $result = OAuthToken::checkNonce('test', 'test', 123);
-        $this->assertEquals(1, $result);
+//        self::markTestIncomplete('wrong test');
+//        $result = OAuthToken::checkNonce('test', 'test', 123);
+//        $this->assertEquals(1, $result);
     }
 
     public function testdeleteByConsumer()

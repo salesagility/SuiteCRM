@@ -12,7 +12,7 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
      */
     private static $loggerManager;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -21,7 +21,7 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         self::$loggerManager = null;
         parent::tearDown();

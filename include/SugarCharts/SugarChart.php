@@ -244,12 +244,18 @@ class SugarChart
         // steps will be 10^n, 2*10^n, 5*10^n (where n >= 0)
         if ($baseval > 0 && $baseval <= 1) {
             $step = 2 * pow(10, $exp-1);
-        } elseif ($baseval > 1 && $baseval <= 3) {
-            $step = 5 * pow(10, $exp-1);
-        } elseif ($baseval > 3 && $baseval <= 6) {
-            $step = 10 * pow(10, $exp-1);
-        } elseif ($baseval > 6 && $baseval <= 10) {
-            $step = 20 * pow(10, $exp-1);
+        } else {
+            if ($baseval > 1 && $baseval <= 3) {
+                $step = 5 * pow(10, $exp-1);
+            } else {
+                if ($baseval > 3 && $baseval <= 6) {
+                    $step = 10 * pow(10, $exp-1);
+                } else {
+                    if ($baseval > 6 && $baseval <= 10) {
+                        $step = 20 * pow(10, $exp-1);
+                    }
+                }
+            }
         }
 
         // edge cases for values less than 10
@@ -397,8 +403,10 @@ class SugarChart
     {
         if ($value < $this->chart_yAxis['yMin']) {
             $this->chart_yAxis['yMin'] = $value;
-        } elseif ($value > $this->chart_yAxis['yMax']) {
-            $this->chart_yAxis['yMax'] = $value;
+        } else {
+            if ($value > $this->chart_yAxis['yMax']) {
+                $this->chart_yAxis['yMax'] = $value;
+            }
         }
     }
 
@@ -536,10 +544,12 @@ class SugarChart
             if (isset($drill_down) && $drill_down) {
                 if ($this->group_by[0] == 'm') {
                     $additional_param = '&date_closed_advanced=' . urlencode($key);
-                } elseif ($this->group_by[0] == 'sales_stage') {
-                    $additional_param = '&sales_stage_advanced[]='.urlencode(array_search($key, $GLOBALS['app_list_strings']['sales_stage_dom']));
                 } else {
-                    $additional_param = "&" . $this->group_by[0] . "=" . urlencode($key);
+                    if ($this->group_by[0] == 'sales_stage') {
+                        $additional_param = '&sales_stage_advanced[]='.urlencode(array_search($key, $GLOBALS['app_list_strings']['sales_stage_dom']));
+                    } else {
+                        $additional_param = "&" . $this->group_by[0] . "=" . urlencode($key);
+                    }
                 }
                 $url = $this->constructURL() . $additional_param;
 
@@ -605,11 +615,13 @@ class SugarChart
                         if (isset($objectInSaleStage[$group_by]) && $objectInSaleStage[$group_by] == $groupByKey) {
                             if ($drill_down == 'user_name') {
                                 $drill_down_param = '&assigned_user_id[]=' . urlencode($objectInSaleStage['assigned_user_id']);
-                            } elseif ($drill_down == 'm') {
-                                $drill_down_param = '&date_closed_advanced=' . urlencode($objectInSaleStage[$drill_down]);
                             } else {
-                                $paramValue = (isset($objectInSaleStage[$drill_down . "_dom_option"]) && $objectInSaleStage[$drill_down . "_dom_option"] != '') ? $objectInSaleStage[$drill_down . "_dom_option"] : $objectInSaleStage[$drill_down];
-                                $drill_down_param = '&' . $drill_down . '=' . urlencode($paramValue);
+                                if ($drill_down == 'm') {
+                                    $drill_down_param = '&date_closed_advanced=' . urlencode($objectInSaleStage[$drill_down]);
+                                } else {
+                                    $paramValue = (isset($objectInSaleStage[$drill_down . "_dom_option"]) && $objectInSaleStage[$drill_down . "_dom_option"] != '') ? $objectInSaleStage[$drill_down . "_dom_option"] : $objectInSaleStage[$drill_down];
+                                    $drill_down_param = '&' . $drill_down . '=' . urlencode($paramValue);
+                                }
                             }
 
                             if ($this->is_currency) {
@@ -670,10 +682,12 @@ class SugarChart
 
         if ($this->chart_properties['type'] == 'group by chart') {
             $data .= $this->xmlDataForGroupByChart();
-        } elseif ($this->chart_properties['type'] == 'bar chart' || $this->chart_properties['type'] == 'horizontal bar chart') {
-            $data .= $this->xmlDataBarChart();
         } else {
-            $data .= $this->xmlDataGenericChart();
+            if ($this->chart_properties['type'] == 'bar chart' || $this->chart_properties['type'] == 'horizontal bar chart') {
+                $data .= $this->xmlDataBarChart();
+            } else {
+                $data .= $this->xmlDataGenericChart();
+            }
         }
 
         return $data;

@@ -76,8 +76,9 @@ class Favorites extends Basic
             $favorite_record->save();
 
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

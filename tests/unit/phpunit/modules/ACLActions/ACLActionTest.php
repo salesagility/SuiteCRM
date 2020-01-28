@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -13,7 +13,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
     }

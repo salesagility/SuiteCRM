@@ -80,7 +80,7 @@
             <table id="aor_condition_parenthesis_table">
                 <tbody id="aor_condition_parenthesis_btn" class="connectedSortableConditions">
                 <tr class="parentheses-btn"><td class="condition-sortable-handle">
-                    <span title="{$MOD.LBL_INSERT_PARENTHESIS}">( ... ) {$MOD.LBL_INSERT_PARENTHESIS}</span>
+                    <span title="{$MOD.LBL_ADD_PARENTHESIS}">( ... ) {$MOD.LBL_ADD_PARENTHESIS}</span>
                     </td></tr>
                 </tbody>
             </table>

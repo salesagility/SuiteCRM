@@ -133,9 +133,11 @@ class Monitor implements Trackable
         if (!isset($this->metrics[$name])) {
             $GLOBALS['log']->error($GLOBALS['app_strings']['ERR_UNDEFINED_METRIC'] . "($name)");
             throw new Exception($GLOBALS['app_strings']['ERR_UNDEFINED_METRIC'] . "($name)");
-        } elseif ($this->metrics[$name]->isMutable()) {
-            $this->$name = is_object($value) ? get_class($value) : $value;
-            $this->dirty = true;
+        } else {
+            if ($this->metrics[$name]->isMutable()) {
+                $this->$name = is_object($value) ? get_class($value) : $value;
+                $this->dirty = true;
+            }
         }
     }
 

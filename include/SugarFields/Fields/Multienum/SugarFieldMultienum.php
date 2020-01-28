@@ -55,9 +55,10 @@ class SugarFieldMultienum extends SugarFieldEnum
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
+        } else {
+            $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+            return $this->fetch($this->findTemplate('SearchView'));
         }
-        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
-        return $this->fetch($this->findTemplate('SearchView'));
     }
 
     /**
@@ -86,13 +87,15 @@ class SugarFieldMultienum extends SugarFieldEnum
             }
 
             $bean->$field = encodeMultienumValue($params[$prefix.$field]);
-        } elseif (isset($params[$prefix.$field.'_multiselect']) && $params[$prefix.$field.'_multiselect']==true) {
-            // if the value in db is not empty and
-            // if the data is not set in params (means the user has deselected everything) and
-            // if the corresponding multiselect flag is true
-            // then set field to ''
-            if (!empty($bean->$field)) {
-                $bean->$field = '';
+        } else {
+            if (isset($params[$prefix.$field.'_multiselect']) && $params[$prefix.$field.'_multiselect']==true) {
+                // if the value in db is not empty and
+                // if the data is not set in params (means the user has deselected everything) and
+                // if the corresponding multiselect flag is true
+                // then set field to ''
+                if (!empty($bean->$field)) {
+                    $bean->$field = '';
+                }
             }
         }
     }
@@ -121,8 +124,9 @@ class SugarFieldMultienum extends SugarFieldEnum
             $sanitizedValue = parent::importSanitize($enum_value, $vardef, $focus, $settings);
             if ($sanitizedValue  === false) {
                 return false;
+            } else {
+                $enum_list[$key] = $sanitizedValue;
             }
-            $enum_list[$key] = $sanitizedValue;
         }
         $value = encodeMultienumValue($enum_list);
 

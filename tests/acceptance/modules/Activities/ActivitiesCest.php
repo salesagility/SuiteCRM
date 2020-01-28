@@ -30,9 +30,9 @@ class ActivitiesCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Step\Acceptance\AccountsTester $accounts
      * @param \Step\Acceptance\Calls $calls
-     * @param \Step\Acceptance\NavigationBar $NavigationBar
+     * @param \Step\Acceptance\NavigationBarTester $NavigationBar
      *
      * As a user I want to see the due date on the activities module
      */
@@ -40,9 +40,9 @@ class ActivitiesCest
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\Accounts $accounts,
+        \Step\Acceptance\AccountsTester $accounts,
         \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\NavigationBar $NavigationBar
+        \Step\Acceptance\NavigationBarTester $NavigationBar
     ) {
         $I->wantTo('See the due date field on Account Activities subpanel');
 

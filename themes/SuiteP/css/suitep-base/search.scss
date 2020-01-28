@@ -1,0 +1,69 @@
+#SearchSettings {
+  .modules-container {
+    max-height: 300px;
+    overflow-x: auto;
+    column-count: 3;
+    margin-top: 10px
+  }
+}
+
+#search-time {
+  margin-top: 20px
+}
+
+.td-container {
+  padding: 10px;
+}
+
+// ~ ~ ~ ~
+// Visual fixes for module selector
+// ~ ~ ~ ~
+
+.settings-buttons {
+  margin-top: 10px;
+}
+
+.search-module-selector {
+  position: relative;
+
+  .yui-dt-hd, .yui-dt-bd {
+    width: 50% !important;
+
+    min-width: 300px !important;
+
+    table {
+      width: 100% !important;
+    }
+  }
+
+  .yui-dt-hd *, .yui-dt-hd {
+    background-color: transparent !important;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .yui-dt-bd {
+    overflow-x: auto;
+    overflow-y: scroll;
+  }
+
+  .edit tr td table tr td {
+    padding: 10px;
+    margin-right: 0;
+  }
+
+  .view tr {
+    padding: 0;
+  }
+
+  .yui-dt0-col-label .yui-dt-liner{
+    overflow: auto;
+  }
+}
+
+#GlobalSearchSettings {
+  background-color: transparent;
+  & * {
+    border: none;
+  }
+}

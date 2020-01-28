@@ -685,22 +685,26 @@ class jjwg_MapsController extends SugarController
                 $map_distance = $map->distance;
             }
             // Else if a 'relate_id' use it as the Relate Center Point (Lng/Lat)
-            elseif (@(is_guid($_REQUEST['relate_id']) && !empty($_REQUEST['relate_module']))) {
-                // Define map variables
-                $map_parent_type = $_REQUEST['relate_module'];
-                $map_parent_id = $_REQUEST['relate_id'];
-                $map_module_type = (!empty($_REQUEST['display_module'])) ? $_REQUEST['display_module'] : $_REQUEST['relate_module'];
-                $map_distance = (!empty($_REQUEST['distance'])) ? $_REQUEST['distance'] : $this->settings['map_default_distance'];
-                $map_unit_type = (!empty($_REQUEST['unit_type'])) ? $_REQUEST['unit_type'] : $this->settings['map_default_unit_type'];
-            }
-            // Else if a 'quick_address' use it as the Center Point (Lng/Lat)
-            elseif (!empty($_REQUEST['quick_address']) && !empty($_REQUEST['display_module'])) {
-                // Define map variables / No Parent
-                $map_parent_type = null;
-                $map_parent_id = null;
-                $map_module_type = (!empty($_REQUEST['display_module'])) ? $_REQUEST['display_module'] : $_REQUEST['relate_module'];
-                $map_distance = (!empty($_REQUEST['distance'])) ? $_REQUEST['distance'] : $this->settings['map_default_distance'];
-                $map_unit_type = (!empty($_REQUEST['unit_type'])) ? $_REQUEST['unit_type'] : $this->settings['map_default_unit_type'];
+            else {
+                if (@(is_guid($_REQUEST['relate_id']) && !empty($_REQUEST['relate_module']))) {
+                    // Define map variables
+                    $map_parent_type = $_REQUEST['relate_module'];
+                    $map_parent_id = $_REQUEST['relate_id'];
+                    $map_module_type = (!empty($_REQUEST['display_module'])) ? $_REQUEST['display_module'] : $_REQUEST['relate_module'];
+                    $map_distance = (!empty($_REQUEST['distance'])) ? $_REQUEST['distance'] : $this->settings['map_default_distance'];
+                    $map_unit_type = (!empty($_REQUEST['unit_type'])) ? $_REQUEST['unit_type'] : $this->settings['map_default_unit_type'];
+                }
+                // Else if a 'quick_address' use it as the Center Point (Lng/Lat)
+                else {
+                    if (!empty($_REQUEST['quick_address']) && !empty($_REQUEST['display_module'])) {
+                        // Define map variables / No Parent
+                        $map_parent_type = null;
+                        $map_parent_id = null;
+                        $map_module_type = (!empty($_REQUEST['display_module'])) ? $_REQUEST['display_module'] : $_REQUEST['relate_module'];
+                        $map_distance = (!empty($_REQUEST['distance'])) ? $_REQUEST['distance'] : $this->settings['map_default_distance'];
+                        $map_unit_type = (!empty($_REQUEST['unit_type'])) ? $_REQUEST['unit_type'] : $this->settings['map_default_unit_type'];
+                    }
+                }
             }
 
             // Define display object, note - 'Accounts_Members' is a special display type
@@ -1114,8 +1118,9 @@ class jjwg_MapsController extends SugarController
             $marker['html'] = preg_replace('/\n\r/', ' ', $marker['html']);
             //var_dump($marker['html']);
             return $marker;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -1161,8 +1166,9 @@ class jjwg_MapsController extends SugarController
             $marker['html'] = preg_replace('/\n\r/', ' ', $marker['html']);
             //var_dump($marker['html']);
             return $marker;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -1198,8 +1204,9 @@ class jjwg_MapsController extends SugarController
             $area['html'] = preg_replace('/\n\r/', ' ', $area['html']);
             //var_dump($marker['html']);
             return $area;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

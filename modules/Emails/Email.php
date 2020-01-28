@@ -1237,7 +1237,7 @@ class Email extends Basic
 
                     $filename = $docRev->filename;
                     $docGUID = preg_replace('/[^a-z0-9\-]/', "", $docRev->id);
-                    $fileLocation = "upload://{$docGUID}";
+                    $fileLocation = "upload/{$docGUID}";
                     $mime_type = $docRev->file_mime_type;
                     $mail->AddAttachment(
                         $fileLocation,
@@ -1256,7 +1256,7 @@ class Email extends Basic
                         $note->name = $filename;
                         $note->filename = $filename;
                         $note->file_mime_type = $mime_type;
-                        $dest = "upload://{$note->id}";
+                        $dest = "upload/{$note->id}";
                         if (!copy($fileLocation, $dest)) {
                             $GLOBALS['log']->debug("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $dest");
                         }
@@ -1278,7 +1278,7 @@ class Email extends Basic
                     if (!empty($note->id)) {
                         $filename = $note->filename;
                         $noteGUID = preg_replace('/[^a-z0-9\-]/', "", $note->id);
-                        $fileLocation = "upload://{$noteGUID}";
+                        $fileLocation = "upload/{$noteGUID}";
                         $mime_type = $note->file_mime_type;
                         if (!$note->embed_flag) {
                             $mail->AddAttachment($fileLocation, $filename, 'base64', $mime_type);
@@ -1596,7 +1596,7 @@ class Email extends Basic
             }
 
             $GLOBALS['log']->debug('-------------------------------> Email called save()');
-            
+
             if (empty($this->date_sent_received)) {
                 global $timedate;
 
@@ -1617,7 +1617,7 @@ class Email extends Basic
                 $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}";
                 LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");
             }
-            
+
 
             if ((!isset($this->date_sent_received) || !$this->date_sent_received) && in_array($this->status, ['sent', 'replied'])) {
                 $this->date_sent_received = TimeDate::getInstance()->nowDb();
@@ -3040,11 +3040,11 @@ class Email extends Basic
                 $mime_type = 'text/plain';
                 if ($note->object_name == 'Note') {
                     if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
-                        $file_location = "file://" . $note->file->temp_file_location;
+                        $file_location = "file/" . $note->file->temp_file_location;
                         $filename = $note->file->original_file_name;
                         $mime_type = $note->file->mime_type;
                     } else { // attachment coming from template/forward
-                        $file_location = "upload://{$note->id}";
+                        $file_location = "upload/{$note->id}";
                         // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
                         $filename = !empty($note->filename) ? $note->filename : $note->name;
                         $mime_type = $note->file_mime_type;
@@ -3053,7 +3053,7 @@ class Email extends Basic
                     $filePathName = $note->id;
                     // cn: bug 9723 - Emails with documents send GUID instead of Doc name
                     $filename = $note->getDocumentRevisionNameForDisplay();
-                    $file_location = "upload://$note->id";
+                    $file_location = "upload/$note->id";
                     $mime_type = $note->file_mime_type;
                 }
 
@@ -3099,17 +3099,17 @@ class Email extends Basic
         $mail->prepForOutbound();
         ////	END I18N TRANSLATION
         ///////////////////////////////////////////////////////////////////////
-        
+
         $validator = new EmailFromValidator();
         if (!$validator->isValid($this)) {
-            
+
             // if an email is invalid before sending,
             // maybe at this point sould "return false;" because the email having
             // invalid from address and/or name but we will trying to send it..
             // and we should log the problem at least:
-            
+
             // (needs EmailFromValidation and EmailFromFixer.. everywhere where from name and/or from email address get a value)
-            
+
             $errors = $validator->getErrorsAsText();
             $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}";
             LoggerManager::getLogger()->error("Invalid email from address or name detected before sending. $details");
@@ -4763,7 +4763,7 @@ eoq;
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $app_strings;
-        
+
         LoggerManager::getLogger()->deprecated(__FUNCTION__ . ' is deprecated.');
 
         $ret = false;

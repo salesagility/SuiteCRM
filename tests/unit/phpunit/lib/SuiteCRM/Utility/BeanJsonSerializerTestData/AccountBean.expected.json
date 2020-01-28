@@ -1,0 +1,64 @@
+{
+  "id": "11111111-1111-1111-1111-111111111111",
+  "meta": {
+    "created": {
+      "date": "2018-06-12 11:01:34",
+      "user_id": 1,
+      "user_name": "Administrator"
+    },
+    "modified": {
+      "date": "2018-06-12 11:01:34",
+      "user_id": 1,
+      "user_name": "Administrator"
+    },
+    "assigned": {
+      "user_id": "seed_max_id",
+      "user_name": "Max Jensen"
+    }
+  },
+  "name": {
+    "name": "Super Star Holdings Inc"
+  },
+  "description": "",
+  "account_type": "Customer",
+  "industry": "Construction",
+  "annual_revenue": "",
+  "phone": {
+    "fax": "",
+    "office": "(554) 356-2192",
+    "alternate": ""
+  },
+  "address": {
+    "billing": {
+      "street": "345 Sugar Blvd.",
+      "city": "Alabama",
+      "state": "CA",
+      "postalcode": 48357,
+      "country": "USA"
+    },
+    "shipping": {
+      "street": "345 Sugar Blvd.",
+      "city": "Alabama",
+      "state": "CA",
+      "postalcode": 48357,
+      "country": "USA"
+    }
+  },
+  "rating": "",
+  "website": "www.theinfo.cn",
+  "ownership": "",
+  "employees": "",
+  "ticker_symbol": "",
+  "parent": {
+    "id": "",
+    "name": ""
+  },
+  "sic_code": "",
+  "campaign": {
+    "id": "",
+    "name": ""
+  },
+  "email": [
+    "hr.kid@example.tv"
+  ]
+}

@@ -527,11 +527,13 @@ class AOW_WorkFlowController extends SugarController
 
         if (file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')) {
             require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
-        } elseif (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
-            require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
         } else {
-            echo '';
-            die;
+            if (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
+                require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
+            } else {
+                echo '';
+                die;
+            }
         }
 
         $custom_action_name = "custom" . $action_name;

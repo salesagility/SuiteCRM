@@ -267,16 +267,20 @@ class actionSendEmail extends actionBase
                             $idName = $field['id_name'];
                             $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
-                        } elseif ($field['type'] == 'link') {
-                            $relField = $field['name'];
-                            if (isset($field['module']) && $field['module'] != '') {
-                                $rel_module = $field['module'];
-                            } elseif ($bean->load_relationship($relField)) {
-                                $rel_module = $bean->$relField->getRelatedModuleName();
-                            }
-                            $linkedBeans = $bean->get_linked_beans($relField, $rel_module);
                         } else {
-                            $linkedBeans = $bean->get_linked_beans($field['link'], $field['module']);
+                            if ($field['type'] == 'link') {
+                                $relField = $field['name'];
+                                if (isset($field['module']) && $field['module'] != '') {
+                                    $rel_module = $field['module'];
+                                } else {
+                                    if ($bean->load_relationship($relField)) {
+                                        $rel_module = $bean->$relField->getRelatedModuleName();
+                                    }
+                                }
+                                $linkedBeans = $bean->get_linked_beans($relField, $rel_module);
+                            } else {
+                                $linkedBeans = $bean->get_linked_beans($field['link'], $field['module']);
+                            }
                         }
                         if ($linkedBeans) {
                             foreach ($linkedBeans as $linkedBean) {
@@ -413,16 +417,18 @@ class actionSendEmail extends actionBase
                         }
                     }
                 }
-            } elseif ($bean_arr['type'] == 'link') {
-                if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
-                    $bean_arr['module'] = getRelatedModule($bean->module_dir, $bean_arr['name']);
-                }
-                if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
-                    $linkedBeans = $bean->get_linked_beans($bean_arr['name'], $bean_arr['module'], array(), 0, 1);
-                    if ($linkedBeans) {
-                        $linkedBean = $linkedBeans[0];
-                        if (!isset($object_arr[$linkedBean->module_dir])) {
-                            $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+            } else {
+                if ($bean_arr['type'] == 'link') {
+                    if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
+                        $bean_arr['module'] = getRelatedModule($bean->module_dir, $bean_arr['name']);
+                    }
+                    if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
+                        $linkedBeans = $bean->get_linked_beans($bean_arr['name'], $bean_arr['module'], array(), 0, 1);
+                        if ($linkedBeans) {
+                            $linkedBean = $linkedBeans[0];
+                            if (!isset($object_arr[$linkedBean->module_dir])) {
+                                $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+                            }
                         }
                     }
                 }

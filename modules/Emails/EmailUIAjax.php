@@ -602,6 +602,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 $out = trim($json->encode($ret, false));
                 echo $out;
+            } else {
             }
 
             break;
@@ -1311,9 +1312,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            }
+            } else {
                 echo "NOOP";
-
+            }
             break;
 
         case "saveOutbound":
@@ -1573,8 +1574,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            }
+            } else {
                 echo "NOOP: no search criteria found";
+            }
 
             break;
 

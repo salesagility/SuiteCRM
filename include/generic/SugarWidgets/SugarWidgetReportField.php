@@ -87,8 +87,9 @@ class SugarWidgetReportField extends SugarWidgetField
                 $layout_def['widget_class'] = 'Field'.$layout_def['type'];
             }
             return $this->layout_manager->getClassFromWidgetDef($layout_def);
+        } else {
+            return $this;
         }
-        return $this;
     }
 
 
@@ -102,8 +103,9 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
+        } else {
+            return 'display not found:'.$func_name;
         }
-        return 'display not found:'.$func_name;
     }
 
     public function _get_column_select_special($layout_def)
@@ -138,10 +140,12 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (! empty($layout_def['table_alias'])) {
             $alias = $layout_def['table_alias'].".".$layout_def['name'];
-        } elseif (! empty($layout_def['name'])) {
-            $alias = $layout_def['name'];
         } else {
-            $alias = "*";
+            if (! empty($layout_def['name'])) {
+                $alias = $layout_def['name'];
+            } else {
+                $alias = "*";
+            }
         }
 
         if (! empty($layout_def['group_function'])) {
@@ -220,8 +224,9 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $order_by." ASC";
+        } else {
+            return $order_by." DESC";
         }
-        return $order_by." DESC";
     }
 
 
@@ -252,8 +257,10 @@ class SugarWidgetReportField extends SugarWidgetField
                 $sort_by = $layout_def['table_key'].":".$layout_def['name'];
                 if (! empty($layout_def['column_function'])) {
                     $sort_by .= ':'.$layout_def['column_function'];
-                } elseif (! empty($layout_def['group_function'])) {
-                    $sort_by .= ':'.$layout_def['group_function'];
+                } else {
+                    if (! empty($layout_def['group_function'])) {
+                        $sort_by .= ':'.$layout_def['group_function'];
+                    }
                 }
             }
         } else {
@@ -287,8 +294,9 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
+        } else {
+            return '';
         }
-        return '';
     }
 
     public function _get_column_alias($layout_def)
@@ -311,10 +319,14 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (! empty($layout_def['group_function']) && $layout_def['group_function'] != 'weighted_amount' && $layout_def['group_function'] != 'weighted_sum') {
             array_push($alias_arr, $layout_def['group_function']);
-        } elseif (! empty($layout_def['column_function'])) {
-            array_push($alias_arr, $layout_def['column_function']);
-        } elseif (! empty($layout_def['qualifier'])) {
-            array_push($alias_arr, $layout_def['qualifier']);
+        } else {
+            if (! empty($layout_def['column_function'])) {
+                array_push($alias_arr, $layout_def['column_function']);
+            } else {
+                if (! empty($layout_def['qualifier'])) {
+                    array_push($alias_arr, $layout_def['qualifier']);
+                }
+            }
         }
 
         if (! empty($layout_def['name'])) {
@@ -331,12 +343,15 @@ class SugarWidgetReportField extends SugarWidgetField
             $alias_map[$alias] = $short_alias;
             $used_aliases[$short_alias] = 1;
             return $short_alias;
-        } elseif (! empty($alias_map[$alias])) {
-            return $alias_map[$alias];
+        } else {
+            if (! empty($alias_map[$alias])) {
+                return $alias_map[$alias];
+            } else {
+                $alias_map[$alias] = $short_alias.'_'.$used_aliases[$short_alias];
+                $used_aliases[$short_alias]++;
+                return $alias_map[$alias];
+            }
         }
-        $alias_map[$alias] = $short_alias.'_'.$used_aliases[$short_alias];
-        $used_aliases[$short_alias]++;
-        return $alias_map[$alias];
     }
 
     public function queryFilterEmpty($layout_def)

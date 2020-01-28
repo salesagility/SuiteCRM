@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class MeetingTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -119,7 +119,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $this->markTestIncomplete('export query produces queries which fields chagne order in different enironments');
+//        $this->markTestIncomplete('export query produces queries which fields chagne order in different enironments');
     }
 
     public function testfill_in_additional_detail_fields()

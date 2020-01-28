@@ -48,6 +48,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarView
 {
+    const NO_ERROR = 0;
+    const ERR_EMPTY_SCOPE = 1;
+    const ERR_EMPTY_MODULE_DIR = 2;
+    const ERR_NOT_ARRAY = 3;
+    const ERR_NOT_SUB_ARRAY = 4;
+    const WARN_SCOPE_EXISTS = 5;
+
     /**
      * @var array $view_object_map
      * This array is meant to hold an objects/data that we would like to pass between
@@ -125,15 +132,23 @@ class SugarView
     public $fileResources;
 
     /**
+     *
+     * @var array
+     */
+    private $settings = [];
+
+    /**
      * SugarView constructor.
+     * @deprecated since version 7.11
      */
     public function __construct()
     {
+        LoggerManager::getLogger()->deprecated();
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
-     *     please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0
+     * please update your code, use __construct instead
      */
     public function SugarView()
     {
@@ -775,22 +790,23 @@ class SugarView
 
         if ($retModTabs) {
             return $ss->fetch($themeObject->getTemplate('_headerModuleList.tpl'));
-        }
-        $ss->display($headerTpl);
+        } else {
+            $ss->display($headerTpl);
 
-        $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
+            $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
 
-        $messages = SugarApplication::getErrorMessages();
-        if (!empty($messages)) {
-            foreach ($messages as $message) {
-                echo '<p class="error">' . $message . '</p>';
+            $messages = SugarApplication::getErrorMessages();
+            if (!empty($messages)) {
+                foreach ($messages as $message) {
+                    echo '<p class="error">' . $message . '</p>';
+                }
             }
-        }
 
-        $messages = SugarApplication::getSuccessMessages();
-        if (!empty($messages)) {
-            foreach ($messages as $message) {
-                echo '<p class="success">' . $message . '</p>';
+            $messages = SugarApplication::getSuccessMessages();
+            if (!empty($messages)) {
+                foreach ($messages as $message) {
+                    echo '<p class="success">' . $message . '</p>';
+                }
             }
         }
     }
@@ -939,6 +955,14 @@ EOHTML;
             $config_js = $this->getSugarConfigJS();
             if (!empty($config_js)) {
                 echo "<script>\n" . implode("\n", $config_js) . "</script>\n";
+            }
+
+            if ($this->hasDomJS()) {
+                echo "
+                        <script type='text/javascript'>
+                        SUGAR.append(SUGAR, { settings:".$this->getDomJS()." } );
+                        </script>
+                        ";
             }
 
             if (isset($sugar_config['email_sugarclient_listviewmaxselect'])) {
@@ -1191,8 +1215,9 @@ EOHTML;
             return $this->options['show_all'];
         } elseif (!empty($this->options) && isset($this->options[$option])) {
             return $this->options[$option];
+        } else {
+            return $default;
         }
-        return $default;
     }
 
     /**
@@ -1438,8 +1463,9 @@ EOHTML;
             return $defaultTab;
         } elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
             return $defaultTab;
+        } else {
+            return $this->module;
         }
-        return $this->module;
     }
 
     /**
@@ -1682,8 +1708,9 @@ EOHTML;
     {
         if (SugarThemeRegistry::current()->directionality == "ltr") {
             return "<span class='pointer'>&raquo;</span>";
+        } else {
+            return "<span class='pointer'>&laquo;</span>";
         }
-        return "<span class='pointer'>&laquo;</span>";
     }
 
     /**
@@ -1889,5 +1916,129 @@ EOHTML;
         }
 
         return false;
+    }
+
+    /**
+     *
+     * @param array $data
+     * @param string $scope
+     * @return bool
+     */
+    public function addDomJS($data, $scope)
+    {
+        $ret = self::NO_ERROR;
+        if (!$scope) {
+            throw new InvalidArgumentException('Scope can not be empty', self::ERR_EMPTY_SCOPE);
+        }
+        if (isset($this->settings[$scope])) {
+            LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
+            $ret = self::WARN_SCOPE_EXISTS;
+        }
+        $this->settings[$scope] = $this->mergeDeepArray($data);
+        return $ret;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getDomJS()
+    {
+        $ret = json_encode($this->settings);
+        if ($ret === false) {
+            $err = json_last_error();
+            if ($err) {
+                throw new Exception('JSON Error occured: #' . $err  . ' - ' . json_last_error_msg());
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     *
+     * @return bool
+     */
+    public function hasDomJS()
+    {
+        return !empty($this->settings);
+    }
+
+    /**
+     * Merges multiple arrays, recursively, and returns the merged array.
+     * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
+     *
+     * @param array $arrays
+     * @return array
+     */
+    public function mergeDeepArray($arrays)
+    {
+        $result = array();
+
+        if (!is_array($arrays)) {
+            throw new InvalidArgumentException('Parameter should be an array to merging. ' . gettype($arrays) . ' given.', self::ERR_NOT_ARRAY);
+        }
+
+        foreach ($arrays as $array) {
+            $result = $this->getNextResultsForDeepMerge($array, $result);
+        }
+
+        return $result;
+    }
+
+    /**
+     *
+     * @param array $array
+     * @param array $result
+     * @return array
+     */
+    protected function getNextResultsForDeepMerge($array, $result)
+    {
+        if (!is_array($array)) {
+            throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
+        }
+        foreach ($array as $key => $value) {
+            // Renumber integer keys as array_merge_recursive() does. Note that PHP
+            // automatically converts array keys that are integer strings (e.g., '1')
+            // to integers.
+            if (is_integer($key)) {
+                $result[] = $value;
+            } elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
+                // Recurse when both values are arrays.
+                $result[$key] = $this->mergeDeepArray([$result[$key], $value]);
+            } else {
+                // Otherwise, use the latter value, overriding any previous value.
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     *
+     * @param string $module_dir
+     * @return array
+     */
+    public function getVardefsData($module_dir)
+    {
+        if (!$module_dir) {
+            throw new InvalidArgumentException('Module DIR can not be empty', self::ERR_EMPTY_MODULE_DIR);
+        }
+        $data = array();
+        $bean = SugarModule::get($module_dir)->loadBean();
+
+        if ($bean) {
+            foreach ($bean->field_defs as $field_name => $def) {
+                $data[$module_dir][$field_name] = $def;
+                if (isset($def['required'])) {
+                    $data[$module_dir][$field_name]['required'] = $def['required'];
+                } else {
+                    $data[$module_dir][$field_name]['required'] = false;
+                }
+            }
+        } else {
+            LoggerManager::getLogger()->warn('Could not retrive a bean from DIR: ' . $module_dir);
+        }
+        unset($bean);
+        return array($data);
     }
 }

@@ -185,8 +185,9 @@ class TemplateDragDropChooser extends Template
 
         if (isset($this->args['return_array']) && $this->args['return_array']) {
             return $html_str_arr;
+        } else {
+            return $str;
         }
-        return $str;
     }
 
     /*

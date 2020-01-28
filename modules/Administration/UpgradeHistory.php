@@ -149,19 +149,21 @@ class UpgradeHistory extends SugarBean
         $result = $this->db->query($query);
         if (empty($result)) {
             return null;
-        }
-        $temp_version = 0;
-        $id = '';
-        while ($row = $this->db->fetchByAssoc($result)) {
-            if (!$this->is_right_version_greater(explode('.', $row['version']), explode('.', $temp_version))) {
-                $temp_version = $row['version'];
-                $id = $row['id'];
+        } else {
+            $temp_version = 0;
+            $id = '';
+            while ($row = $this->db->fetchByAssoc($result)) {
+                if (!$this->is_right_version_greater(explode('.', $row['version']), explode('.', $temp_version))) {
+                    $temp_version = $row['version'];
+                    $id = $row['id'];
+                }
+            }//end while
+            if ($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false)) {
+                return array('id' => $id, 'version' => $temp_version);
+            } else {
+                return null;
             }
-        }//end while
-        if ($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false)) {
-            return array('id' => $id, 'version' => $temp_version);
         }
-        return null;
     }
 
     public function getAll()
@@ -190,8 +192,9 @@ class UpgradeHistory extends SugarBean
                 //we have found a match
                 //if the patch_to_check version is greater than the found version
                 return ($this->is_right_version_greater(explode('.', $history_object->version), explode('.', $patch_to_check->version)));
+            } else {
+                return true;
             }
-            return true;
         }
         //we will only go through this loop if we have not found another UpgradeHistory object
         //with a matching unique_key in the database
@@ -222,8 +225,9 @@ class UpgradeHistory extends SugarBean
         if (is_file($check_path)) {
             if (file_exists($recent_path)) {
                 return true;
+            } else {
+                return false;
             }
-            return false;
         } elseif (is_dir($check_path)) {
             $status = false;
 
@@ -260,16 +264,23 @@ class UpgradeHistory extends SugarBean
     {
         if (count($left) == 0 && count($right) == 0) {
             return $equals_is_greater;
-        } elseif (count($left) == 0 || count($right) == 0) {
-            return true;
-        } elseif ($left[0] == $right[0]) {
-            array_shift($left);
-            array_shift($right);
-            return $this->is_right_version_greater($left, $right, $equals_is_greater);
-        } elseif ($left[0] < $right[0]) {
-            return true;
+        } else {
+            if (count($left) == 0 || count($right) == 0) {
+                return true;
+            } else {
+                if ($left[0] == $right[0]) {
+                    array_shift($left);
+                    array_shift($right);
+                    return $this->is_right_version_greater($left, $right, $equals_is_greater);
+                } else {
+                    if ($left[0] < $right[0]) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
         }
-        return false;
     }
 
     /**

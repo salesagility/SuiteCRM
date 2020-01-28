@@ -87,7 +87,7 @@ class SyncInboundEmailAccountsSubActionHandler
     public function __construct(SyncInboundEmailAccountsPage $sync, ImapHandlerInterface $imap)
     {
         global $mod_strings;
-        
+
         $this->imap = $imap;
         $this->sync = $sync;
 
@@ -285,7 +285,7 @@ class SyncInboundEmailAccountsSubActionHandler
     protected function handleIMAPErrors()
     {
         global $mod_strings;
-        
+
         $errs = $this->imap->getErrors();
         if ($errs) {
             foreach ($errs as $err) {

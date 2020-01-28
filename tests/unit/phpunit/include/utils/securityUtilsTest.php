@@ -5,7 +5,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/security_utils.php';
 class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
