@@ -233,7 +233,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 
         // Test for invalid user id exception handling
         try {
-            $return = $object->callMethod('getUserMeetings', ['INVALID']);
+            $return = $object->callMethod('getUserMeetings', ['INVALID!+']);
             $this->assertTrue(false, 'It should throws an exception.');
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::INVALID_USER_ID, $e->getCode());
