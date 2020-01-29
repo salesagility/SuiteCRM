@@ -2317,7 +2317,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->id = 'testBean_1';
+        $bean->id = 'testBean_1+!';
         $bean->modified_by_name = 'testing';
         $results = null;
         try {
