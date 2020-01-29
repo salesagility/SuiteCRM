@@ -46,6 +46,6 @@ class UserRepository implements UserRepositoryInterface
             throw new \InvalidArgumentException('The password is invalid: ' . $password);
         }
 
-        return new UserEntity();
+        return new UserEntity($user->id);
     }
 }
