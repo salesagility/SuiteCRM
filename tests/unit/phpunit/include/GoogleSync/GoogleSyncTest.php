@@ -553,7 +553,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         }
         // -- another test
         try {
-            $object->callMethod('delEvent', [$Google_Event, 'INVALID_ID']);
+            $object->callMethod('delEvent', [$Google_Event, 'INVALID_ID+!']);
             $this->assertTrue(false, 'It should throw an exception.');
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::RECORD_VALIDATION_FAILURE, $e->getCode());
