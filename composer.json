@@ -47,7 +47,7 @@
     "psr/container": "^1.0",
     "psr/log": "^1.0",
     "slim/slim": "^3.8",
-    "smarty/smarty": "^2.6",
+    "smarty/smarty": "^3.1",
     "soundasleep/html2text": "~0.5",
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
