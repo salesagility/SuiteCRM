@@ -304,14 +304,14 @@ $dictionary['emails_text'] = array(
             'name'			=> 'from_addr',
             'vname'			=> 'LBL_FROM',
             'type'			=> 'varchar',
-            'len'			=> 255,
+            'len'			=> 250,
             'comment'		=> 'Email address of person who send the email',
         ),
         'reply_to_addr' => array(
             'name'			=> 'reply_to_addr',
             'vname'			=> 'LBL_REPLY_TO',
             'type'			=> 'varchar',
-            'len'			=> 255,
+            'len'			=> 250,
             'comment'		=> 'reply to email address',
         ),
         'to_addrs' => array(

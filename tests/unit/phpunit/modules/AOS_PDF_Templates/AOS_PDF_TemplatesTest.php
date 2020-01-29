@@ -15,7 +15,7 @@ class AOS_PDF_TemplatesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOS_PDF_Templates()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosPdfTemplates = new AOS_PDF_Templates();
         $this->assertInstanceOf('AOS_PDF_Templates', $aosPdfTemplates);
         $this->assertInstanceOf('Basic', $aosPdfTemplates);

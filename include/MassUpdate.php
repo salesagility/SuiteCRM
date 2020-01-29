@@ -1303,7 +1303,7 @@ EOQ;
 
         $javascriptend = <<<EOQ
 		 
-	<span id="date_start_trigger" class="suitepicon suitepicon-module-calendar" onclick="return false;"></span>
+	<span id="{$varname}_trigger" class="suitepicon suitepicon-module-calendar" onclick="return false;"></span>
 EOQ;
         $dtscript = getVersionedScript('include/SugarFields/Fields/Datetimecombo/Datetimecombo.js');
         $html = <<<EOQ

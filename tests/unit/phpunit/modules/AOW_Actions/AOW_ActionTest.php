@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
@@ -16,8 +15,7 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testAOW_Action()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowAction = new AOW_Action();
         $this->assertInstanceOf('AOW_Action', $aowAction);
         $this->assertInstanceOf('Basic', $aowAction);

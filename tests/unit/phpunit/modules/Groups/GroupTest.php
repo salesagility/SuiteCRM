@@ -15,8 +15,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGroup()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        //execute the constructor and check for the Object type and attributes
         $group = new Group();
         $this->assertInstanceOf('Group', $group);
         $this->assertInstanceOf('User', $group);
@@ -33,7 +32,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
 
         $group = new Group();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $group->mark_deleted('');
             $this->assertTrue(true);

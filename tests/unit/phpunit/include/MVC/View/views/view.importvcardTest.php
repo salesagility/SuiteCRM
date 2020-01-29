@@ -6,7 +6,7 @@ class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcard();
         $this->assertInstanceOf('ViewImportvcard', $view);
         $this->assertInstanceOf('SugarView', $view);

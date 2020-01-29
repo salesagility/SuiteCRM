@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
@@ -17,7 +16,6 @@ class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
     public function testdisplay()
     {
         //execute the method with required child objects preset and check for the Object type and type attribute
-
         $view = new ViewVcard();
         $view->module = 'Contacts';
         $view->bean = new Contact();

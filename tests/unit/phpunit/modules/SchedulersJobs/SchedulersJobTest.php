@@ -15,10 +15,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSchedulersJob()
     {
-
-
-        
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $schedulersJob = new SchedulersJob();
 
         $this->assertInstanceOf('SchedulersJob', $schedulersJob);
@@ -33,9 +30,6 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'process_save_dates', $schedulersJob);
         $this->assertAttributeEquals(30, 'min_interval', $schedulersJob);
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
-        
-
-
     }
 
     public function testcheck_date_relationships_load()
@@ -100,7 +94,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
     {
         $schedulersJob = new SchedulersJob();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $schedulersJob->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -111,8 +105,6 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfailJob()
     {
-
-        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->failJob();
@@ -126,15 +118,10 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(SchedulersJob::JOB_FAILURE, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-
-
-
     }
 
     public function testsucceedJob()
     {
-
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->succeedJob();
@@ -148,19 +135,13 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(SchedulersJob::JOB_SUCCESS, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-
-
-
     }
 
     public function testonFailureRetry()
     {
-
-
         $schedulersJob = new SchedulersJob();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $schedulersJob->onFailureRetry();
             $this->assertTrue(true);
@@ -169,21 +150,13 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
-        
-
     }
 
     public function testOnFinalFailure()
     {
-
-        
-        
-        //
-        
-        
         $schedulersJob = new SchedulersJob();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $schedulersJob->onFinalFailure();
             $this->assertTrue(true);
@@ -192,13 +165,10 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
-        
-
     }
 
     public function testresolveJob()
     {
-
         $schedulersJob = new SchedulersJob();
 
         //test for JOB_FAILURE
@@ -220,15 +190,10 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(SchedulersJob::JOB_SUCCESS, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-
-
-
     }
 
     public function testpostponeJobAndMark_deleted()
     {
-
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->postponeJob('test message', 1);
@@ -246,15 +211,10 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
         $result = $schedulersJob->retrieve($schedulersJob->id);
         $this->assertEquals(null, $result);
-        
-
-
-
     }
 
     public function testunexpectedExit()
     {
-
         $schedulersJob = new SchedulersJob();
 
         //create conditions to mark job_done as false
@@ -270,16 +230,10 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(SchedulersJob::JOB_FAILURE, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-
-
-
     }
 
     public function testrunJobId()
     {
-
-
         //test with invalid job id
         $result = SchedulersJob::runJobId('1', '');
         $this->assertEquals('Job 1 not found.', $result);
@@ -302,19 +256,13 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Job '.$schedulersJob->id.' belongs to another client, can not run as test_client.', $result);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-
-
-
     }
 
     public function testerrorHandler()
     {
-
         $schedulersJob = new SchedulersJob();
 
         //execute the method with different Error Types
-
         $schedulersJob->errors = '';
         $schedulersJob->errorHandler(E_USER_WARNING, 'test err', 'testfile', '1');
         $this->assertEquals("Warning [512]: test err in testfile on line 1\n", $schedulersJob->errors);
@@ -330,14 +278,10 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->errors = '';
         $schedulersJob->errorHandler(E_RECOVERABLE_ERROR, 'test err', 'testfile', '1');
         $this->assertEquals("Recoverable Error [4096]: test err in testfile on line 1\n", $schedulersJob->errors);
-        
-
-
     }
 
     public function testrunJob()
     {
-
         //test without a valid user
         $schedulersJob = new SchedulersJob();
         $schedulersJob->target = 'function::processAOW_Workflow';

@@ -15,8 +15,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
     public function testContact()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $contact = new Contact();
         $this->assertInstanceOf('Contact', $contact);
         $this->assertInstanceOf('Person', $contact);
@@ -68,10 +67,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
         $actual = $contact->listviewACLHelper();
         $this->assertSame($expected, $actual);
-
-
-        
-
     }
 
     /**
@@ -95,7 +90,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         */
         $this->assertTrue(true, "NEEDS FIXING!");
     }
-
 
     public function testaddress_popup_create_new_list_query()
     {
@@ -151,12 +145,11 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals("", $contact->report_to_name);
     }
 
-
     public function testload_contacts_users_relationship()
     {
         $contact = new Contact();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->load_contacts_users_relationship();
             $this->assertTrue(true);
@@ -167,7 +160,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-
         $contact = new Contact();
 
         //test with attributes preset and verify attributes are set accordingly
@@ -196,11 +188,6 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
         $this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
         $this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
-
-        
-
-
-
     }
 
     public function testbuild_generic_where_clause()
@@ -250,7 +237,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
     {
         $contact = new Contact();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->save_relationship_changes(true);
             $contact->save_relationship_changes(false);
@@ -284,12 +271,11 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-
     public function testprocess_sync_to_outlook()
     {
         $contact = new Contact();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->process_sync_to_outlook("all");
             $this->assertTrue(true);
@@ -297,7 +283,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->process_sync_to_outlook("1");
             $this->assertTrue(true);

@@ -14,7 +14,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
 
     public function testTask()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $task = new Task();
 
         $this->assertInstanceOf('Task', $task);
@@ -80,7 +80,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
     {
         $task = new Task();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -96,15 +96,13 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task = new Task();
         $task->contact_id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-
     }
 
     public function testfill_in_additional_parent_fields()
@@ -113,7 +111,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_parent_fields();
             $this->assertTrue(true);

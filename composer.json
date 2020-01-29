@@ -37,6 +37,7 @@
     "league/uri": "^4.2",
     "onelogin/php-saml": "^3.0.0",
     "paragonie/random_compat": "^2.0",
+    "psr/container": "^1.0",
     "psr/log": "^1.0",
     "slim/slim": "^3.8",
     "smarty/smarty": "^2.6",
@@ -55,7 +56,6 @@
   },
   "require-dev": {
     "codeception/codeception": "^2.0",
-    "phpunit/phpunit": "^4.8",
     "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",

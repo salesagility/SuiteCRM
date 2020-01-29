@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class CallTest extends SuitePHPUnitFrameworkTestCase
@@ -16,7 +15,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCall()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $call = new Call();
         $this->assertInstanceOf('Call', $call);
         $this->assertInstanceOf('SugarBean', $call);
@@ -36,9 +35,6 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testACLAccess()
     {
-
-
-
         $call = new Call();
 
         //test without setting recurring_source attribute
@@ -48,9 +44,6 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         //test with recurring_source attribute set
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
-        
-
-
     }
 
     public function testSaveAndMarkDeleted()
@@ -139,9 +132,6 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(-1, $call->email_reminder_time);
         $this->assertEquals(false, $call->email_reminder_checked);
         $this->assertEquals('Accounts', $call->parent_type);
-
-
-
     }
 
     public function testget_list_view_data()
@@ -281,7 +271,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
     {
         $call = new Call();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $call->save_relationship_changes(true);
             $this->assertTrue(true);

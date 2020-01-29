@@ -189,6 +189,8 @@ class InboundEmail extends SugarBean
      */
     public function __construct(ImapHandlerInterface $imapHandler = null, MailMimeParser $mailParser = null)
     {
+        global $sugar_config;
+
         if (null === $mailParser) {
             $mailParser = new MailMimeParser();
         }
@@ -221,7 +223,10 @@ class InboundEmail extends SugarBean
 
         $this->smarty = new Sugar_Smarty();
         $this->overview = new Overview();
-        $this->imagePrefix = "{$GLOBALS['sugar_config']['site_url']}/cache/images/";
+
+        if (isset($sugar_config['site_url'])) {
+            $this->imagePrefix = $sugar_config['site_url'] . '/cache/images/';
+        }
     }
 
     /**
@@ -275,8 +280,6 @@ class InboundEmail extends SugarBean
         );
         $raw = $this->generateFlatArrayFromMultiDimArray($multiDImArray, $this->retrieveDelimiter());
         sort($raw);
-        //_pp(explode(",", $this->mailbox));
-        //_ppd($raw);
         $raw = $this->filterMailBoxFromRaw(explode(",", $this->mailbox), $raw);
         $this->mailbox = implode(',', $raw);
         if (!empty($this->email_password)) {
@@ -1397,7 +1400,6 @@ class InboundEmail extends SugarBean
                         $this->pop3socket,
                         1024
                     ); // 8kb max buffer - shouldn't be more than 80 chars via pop3...
-                    //_pp(trim($buf));
 
                     if (trim($buf) == '.') {
                         $GLOBALS['log']->debug("*** GOT '.'");
@@ -1557,7 +1559,6 @@ class InboundEmail extends SugarBean
                         $this->pop3socket,
                         1024
                     ); // 8kb max buffer - shouldn't be more than 80 chars via pop3...
-                    //_pp(trim($buf));
 
                     if (trim($buf) == '.') {
                         $GLOBALS['log']->debug("*** GOT '.'");
@@ -1574,7 +1575,6 @@ class InboundEmail extends SugarBean
 
             // get cached UIDLs
             $cacheUIDLs = $this->pop3_getCacheUidls();
-            //			_pp($UIDLs);_pp($cacheUIDLs);
 
             // new email cache values we should deal with
             $diff = array_diff_assoc($UIDLs, $cacheUIDLs);
@@ -3442,7 +3442,7 @@ class InboundEmail extends SugarBean
             if ($this->getAutoreplyStatus($contactAddr)
                 && $this->checkOutOfOffice($email->name)
                 && $this->checkFilterDomain($email)
-            ) { // if we haven't sent this guy 10 replies in 24hours
+            ) { // if we haven't sent this user 10 replies in 24hours
 
                 if (!empty($this->stored_options)) {
                     $storedOptions = unserialize(base64_decode($this->stored_options));
@@ -4234,7 +4234,6 @@ class InboundEmail extends SugarBean
      */
     public function buildBreadCrumbs($parts, $subtype, $breadcrumb = '0')
     {
-        //_pp('buildBreadCrumbs building for '.$subtype.' with BC at '.$breadcrumb);
         // loop through available parts in the array
         foreach ($parts as $k => $part) {
             // mark passage through level
@@ -4246,15 +4245,12 @@ class InboundEmail extends SugarBean
 
             // found a multi-part/mixed 'part' - keep digging
             if ($part->type == 1 && (strtoupper($part->subtype) == 'RELATED' || strtoupper($part->subtype) == 'ALTERNATIVE' || strtoupper($part->subtype) == 'MIXED')) {
-                //_pp('in loop: going deeper with subtype: '.$part->subtype.' $k is: '.$k);
                 $thisBc = $this->buildBreadCrumbs($part->parts, $subtype, $thisBc);
 
                 return $thisBc;
             } elseif (strtolower($part->subtype) == strtolower($subtype)) { // found the subtype we want, return the breadcrumb value
-                //_pp('found '.$subtype.' bc! returning: '.$thisBc);
                 return $thisBc;
             }
-            //_pp('found '.$part->subtype.' instead');
         }
     }
 
@@ -5952,7 +5948,11 @@ class InboundEmail extends SugarBean
             $r = $this->db->query($q, true);
             $a = $this->db->fetchByAssoc($r);
 
-            return $a['id'];
+            if ($a === false) {
+                return null;
+            } else {
+                return $a['id'];
+            }
         }
 
         return false;
@@ -6145,7 +6145,7 @@ class InboundEmail extends SugarBean
         $storedOptions = unserialize(base64_decode($this->stored_options));
 
         //TODO figure out if the since date is UDT
-        if ($storedOptions['only_since']) {// POP3 does not support Unseen flags
+        if (!is_bool($storedOptions) && $storedOptions['only_since']) {// POP3 does not support Unseen flags
             if (!isset($storedOptions['only_since_last']) && !empty($storedOptions['only_since_last'])) {
                 $q = "SELECT last_run FROM schedulers WHERE job = '{$this->job_name}'";
                 $r = $this->db->query($q, true);
@@ -7103,7 +7103,6 @@ class InboundEmail extends SugarBean
 
             $email->to_addrs = $meta['toaddrs'];
             $email->date_sent_received = $meta['date_start'];
-            //_ppf($email,true);
 
             $this->email = $email;
             $this->email->email2init();
@@ -7496,7 +7495,6 @@ eoq;
             $arr[$k2]->date = $timedate->fromString($arr[$k2]->date)->asDb();
             $retArr[] = $arr[$k2];
         }
-        //_pp("final count: ".count($retArr));
 
         $finalReturn = array();
         $finalReturn['retArr'] = $retArr;

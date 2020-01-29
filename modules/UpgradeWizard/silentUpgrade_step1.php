@@ -846,7 +846,26 @@ if ($upgradeType !== constant('DCE_INSTANCE')) {
                 } else {
                     $new_upgrade->description .= ' Silent Upgrade was used to upgrade the instance.';
                 }
-                $new_upgrade->save();
+
+                // Running db insert query as bean save will throw logic hook errors due to dependencies that are not set yet
+                $customID = create_guid();
+                $new_upgrade->date_entered = $GLOBALS['timedate']->nowDb();
+
+                $customIDQuoted = $db->quoted($customID);
+                $fileNameQuoted = $db->quoted($new_upgrade->filename);
+                $md5Quoted = $db->quoted($new_upgrade->md5sum);
+                $typeQuoted = $db->quoted($new_upgrade->type);
+                $statusQuoted = $db->quoted($new_upgrade->status);
+                $versionQuoted = $db->quoted($new_upgrade->version);
+                $nameQuoted = $db->quoted($new_upgrade->name);
+                $descriptionQuoted = $db->quoted($new_upgrade->description);
+                $manifestQuoted = $db->quoted($new_upgrade->manifest);
+                $dateQuoted = $db->quoted($new_upgrade->date_entered);
+
+                $upgradeHistoryInsert = "INSERT INTO upgrade_history (id, filename, md5sum, type, status, version, name, description, id_name, manifest, date_entered, enabled) 
+                                                     VALUES ($customIDQuoted, $fileNameQuoted, $md5Quoted, $typeQuoted, $statusQuoted, $versionQuoted, $nameQuoted, $descriptionQuoted, NULL, $manifestQuoted, $dateQuoted, '1')";
+                $result = $db->query($upgradeHistoryInsert, true, "Error writing upgrade history");
+
                 set_upgrade_progress('commit', 'in_progress', 'upgradeHistory', 'done');
                 set_upgrade_progress('commit', 'done', 'commit', 'done');
             }

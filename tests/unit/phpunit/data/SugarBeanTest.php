@@ -7,20 +7,16 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 /** @noinspection PhpUndefinedClassInspection */
 class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 {
-
-
     /**
      * @var array
      */
     protected $fieldDefsStore;
-    
 
     public function setUp()
     {
         parent::setUp();
         $this->fieldDefsStore();
     }
-
 
     public function tearDown()
     {
@@ -843,7 +839,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testBuildSubQueriesForUnion()
     {
-
         // test
         $bean = new SugarBeanMock();
         $panel =
@@ -1486,7 +1481,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testIsOwner()
     {
-
         // test
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
@@ -1559,7 +1553,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetCustomTableName()
     {
-
         // test
         $GLOBALS['log']->reset();
         $bean = new Contact();
@@ -1599,7 +1592,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetObjectName()
     {
-
         // test
         $GLOBALS['log']->reset();
         $bean = new Contact();
@@ -1638,7 +1630,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetIndices()
     {
-
         // test
         $GLOBALS['log']->reset();
         $bean = new Contact();
@@ -1717,7 +1708,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetPrimaryFieldDefinition()
     {
-
         // test
         $GLOBALS['log']->reset();
         $bean = new Contact();
@@ -1766,7 +1756,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetFieldDefinition()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -1817,7 +1806,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetFieldValue()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -1856,7 +1844,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testUnPopulateDefaultValues()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -1979,7 +1966,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testClone()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -2007,7 +1993,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetLinkedFields()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -2054,7 +2039,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetFieldDefinitions()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -2069,7 +2053,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testLoadRelationship()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -2196,7 +2179,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetLinkedBeans()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -2239,7 +2221,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetImportRequiredFields()
     {
-
         // test
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
@@ -2265,13 +2246,11 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
-
     /**
      * @see SugarBean::create_tables()
      */
     public function testCreateTables()
     {
-
         // test
         $bean = new Contact();
         ob_start();
@@ -2300,7 +2279,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testIsAuditEnabled()
     {
-
         // test
         $bean = new SugarBeanMock();
         $results = $bean->is_AuditEnabled();
@@ -2317,7 +2295,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetAuditTableNames()
     {
-
         // test
         $bean = new Contact();
         $results = $bean->get_audit_table_name();
@@ -2985,7 +2962,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testHasBeenModifiedSince()
     {
-
         // test
         $bean = new Contact();
         $results = $bean->has_been_modified_since(null, null);

@@ -562,13 +562,15 @@ class Email extends Basic
      */
     public function __construct()
     {
-        global $current_user;
+        global $current_user, $sugar_config;
         $this->cachePath = sugar_cached('modules/Emails');
         parent::__construct();
 
         $this->emailAddress = new SugarEmailAddress();
 
-        $this->imagePrefix = rtrim($GLOBALS['sugar_config']['site_url'], "/") . "/cache/images/";
+        if (isset($sugar_config['site_url'])) {
+            $this->imagePrefix = $sugar_config['site_url'] . '/cache/images/';
+        }
     }
 
     /**
@@ -2831,9 +2833,11 @@ class Email extends Basic
     {
         global $current_user;
 
-        // User preferences should takee precedence over everything else
+        // User preferences should take precedence over everything else
         $emailSettings = $current_user->getPreference('emailSettings', 'Emails');
-        $alwaysSendEmailsInPlainText = $emailSettings['sendPlainText'] === '1';
+        // Protect against accessing emailSettings as an array if it's null.
+        $sendPlainText = is_null($emailSettings) ? null : $emailSettings['sendPlainText'];
+        $alwaysSendEmailsInPlainText = $sendPlainText === '1';
 
         $sendEmailsInPlainText = false;
         if (isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {

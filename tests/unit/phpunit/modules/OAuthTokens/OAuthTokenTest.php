@@ -15,7 +15,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function test__construct()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $oauthToken = new OAuthToken();
 
         $this->assertInstanceOf('OAuthToken', $oauthToken);
@@ -70,7 +70,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndOthers()
     {
-
         $oauthToken = OAuthToken::generate();
 
         $oauthToken->save();
@@ -91,10 +90,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
         //test mark_deleted method
         $this->mark_deleted($oauthToken->id);
-        
-
-
-
     }
 
     public function load($id)
@@ -140,8 +135,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreateAuthorized()
     {
-
-        
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
 
@@ -161,10 +154,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
         //finally mark deleted for cleanup
         $oauthToken->mark_deleted($oauthToken->id);
-        
-
-        
-
     }
 
     public function copyAuthData($token)
@@ -192,7 +181,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcleanup()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             OAuthToken::cleanup();
             $this->assertTrue(true);
@@ -210,7 +199,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteByConsumer()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             OAuthToken::deleteByConsumer('1');
             $this->assertTrue(true);
@@ -221,7 +210,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteByUser()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             OAuthToken::deleteByUser('1');
             $this->assertTrue(true);

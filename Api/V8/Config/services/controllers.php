@@ -9,7 +9,7 @@ use Api\V8\Service\ModuleService;
 use Api\V8\Service\RelationshipService;
 use Api\V8\Service\UserPreferencesService;
 use Api\V8\Service\UserService;
-use Interop\Container\ContainerInterface as Container;
+use Psr\Container\ContainerInterface as Container;
 use League\OAuth2\Server\ResourceServer;
 
 use Api\Core\Loader\CustomLoader;

@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class LogicHookTest extends SuitePHPUnitFrameworkTestCase
@@ -41,7 +40,6 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('LogicHook', $result);
         $this->assertInstanceOf('User', $result->bean);
     }
-
 
     public function testgetHooksMap()
     {
@@ -464,7 +462,6 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-
     public function testcall_custom_logic()
     {
         //execute the method and test if it doesn't throws an exception
@@ -478,7 +475,6 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
-
 
     public function testprocess_hooks()
     {

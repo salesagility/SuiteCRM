@@ -34,8 +34,6 @@ class ViewQuickeditTest extends SuitePHPUnitFrameworkTestCase
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
 
-
-
         if (isset($_request)) {
             $_REQUEST = $_request;
         } else {

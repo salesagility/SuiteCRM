@@ -6,7 +6,6 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 /** @noinspection PhpUndefinedClassInspection */
 class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
-
     /**
      * @var SugarEmailAddress
      */
@@ -49,7 +48,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-
     /**
      * Test for save() method.
      */
@@ -74,8 +72,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $GLOBALS['log'] = $logger;
 
-
-
         DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
         foreach ($tableEmailAddrBeanRel as $row) {
             $query = "INSERT email_addr_bean_rel INTO (";
@@ -87,7 +83,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             DBManagerFactory::getInstance()->query($query);
         }
     }
-
 
     /**
      * Tests for constructor.
@@ -105,7 +100,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($countBefore, $countAfter - 1);
     }
 
-
     /**
      * Tests old constructor.
      */
@@ -122,7 +116,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($countBefore, $countAfter - 1);
     }
 
-
     /**
      * Test for handleLegacySave() method.
      */
@@ -131,7 +124,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
-
 
         $c = new Contact();
 
@@ -169,15 +161,12 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('0', $this->ea->addresses[1]['opt_out']);
         self::assertNull($this->ea->addresses[1]['email_address_id']);
 
-
-
         if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);
         }
     }
-
 
     /**
      * Test for handleLegacyRetrieve() method.
@@ -197,7 +186,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             'email1' => 'test5@email.com',
         ), $c->fetched_row);
     }
-
 
     /**
      * Test for populateLegacyFields() method.
@@ -230,8 +218,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(0, $c->invalid_email);
         self::assertEquals('test6@email.com', $c->email2);
     }
-
-
 
     /**
      * Test for saveEmail() method.
@@ -938,8 +924,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testAddAddress()
     {
-
-
         $query = "SELECT * FROM email_addr_bean_rel";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
@@ -1208,8 +1192,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $rows[] = $row;
         }
         $tableEmailAddresses = $rows;
-
-
 
 
         $db = DBManagerFactory::getInstance();

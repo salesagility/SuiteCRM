@@ -15,7 +15,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testDocumentRevision()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $documentRevision = new DocumentRevision();
         $this->assertInstanceOf('DocumentRevision', $documentRevision);
         $this->assertInstanceOf('SugarBean', $documentRevision);
@@ -84,7 +84,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
     {
         $documentRevision = new DocumentRevision();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $documentRevision->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -97,7 +97,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
     {
         $documentRevision = new DocumentRevision();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $documentRevision->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -125,7 +125,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
     {
         $documentRevision = new DocumentRevision();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $documentRevision->fill_document_name_revision('dummy_id');
             $this->assertTrue(true);
@@ -140,7 +140,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         
         $xTemplateSection = null;
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $ss = new Sugar_Smarty();
             $documentRevision->list_view_parse_additional_sections($ss, $xTemplateSection);

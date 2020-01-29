@@ -15,8 +15,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testACLRole()
     {
-
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $aclRole = new ACLRole();
         $this->assertInstanceOf('ACLRole', $aclRole);
         $this->assertInstanceOf('SugarBean', $aclRole);
@@ -110,7 +109,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         //test with empty value
         $result = $aclRole->getRoleActions('');
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $exp = [
           'Accounts',
           'Alerts',
@@ -128,6 +127,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
           'EmailTemplates',
           'EmailMarketing',
           'Emails',
+            'Employees',
           'FP_events',
           'AOD_Index',
           'AOD_IndexEvent',
@@ -173,7 +173,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         //test with non empty but non existing role id value, initially no roles exist.
         $result = $aclRole->getRoleActions('1');
-        $this->assertTrue(is_array($result));
+        $this->assertInternalType('array', $result);
         $this->assertEquals($exp, array_keys($result));
     }
 

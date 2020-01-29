@@ -4,7 +4,6 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Campaigns/utils.php';
 
-
 class CampaignTest extends SuitePHPUnitFrameworkTestCase
 {
     public function setUp()
@@ -59,8 +58,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCampaign()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $campaign = new Campaign();
         $this->assertInstanceOf('Campaign', $campaign);
         $this->assertInstanceOf('SugarBean', $campaign);
@@ -114,7 +112,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->clear_campaign_prospect_list_relationship('');
             $campaign->clear_campaign_prospect_list_relationship('1');
@@ -128,7 +126,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->mark_relationships_deleted('');
             $campaign->mark_relationships_deleted('1');
@@ -142,7 +140,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -155,7 +153,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -168,7 +166,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     {
         $campaign = new Campaign();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $campaign->update_currency_id('', '');
             $this->assertTrue(true);

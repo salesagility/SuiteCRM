@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class DocumentTest extends SuitePHPUnitFrameworkTestCase
@@ -16,8 +15,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testDocument()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $document = new Document();
         $this->assertInstanceOf('Document', $document);
         $this->assertInstanceOf('File', $document);
@@ -86,7 +84,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     {
         $document = new Document();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $document->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -117,7 +115,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
         $xTemplateSection = null;
         
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $ss = new Sugar_Smarty();
             $document->list_view_parse_additional_sections($ss, $xTemplateSection);
@@ -193,7 +191,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     {
         $document = new Document();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $document->mark_relationships_deleted(1);
             $this->assertTrue(true);

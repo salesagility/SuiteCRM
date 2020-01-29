@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
@@ -58,7 +57,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->ACLFilter();
         } catch (Exception $e) {
@@ -66,7 +65,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
 
         if (isset($session)) {
             $_SESSION = $session;
@@ -100,7 +98,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->setupPrint();
         } catch (Exception $e) {
@@ -119,7 +117,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->preProcess();
         } catch (Exception $e) {
@@ -127,7 +125,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
 
         if (isset($session)) {
             $_SESSION = $session;
@@ -138,11 +135,9 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleOfflineClient()
     {
-
-
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->handleOfflineClient();
         } catch (Exception $e) {
@@ -226,7 +221,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->loadDisplaySettings();
         } catch (Exception $e) {
@@ -240,7 +235,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->loadLicense();
         } catch (Exception $e) {
@@ -259,7 +254,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $SugarApplication->loadGlobals();
         } catch (Exception $e) {
@@ -287,7 +282,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             if (!headers_sent()) {
                 $SugarApplication->startSession();
@@ -314,7 +309,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             if ($this->sessionStartedOk) {
                 $SugarApplication->endSession();
@@ -400,7 +395,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vars = $SugarApplication->createLoginVars();
         } catch (Exception $e) {

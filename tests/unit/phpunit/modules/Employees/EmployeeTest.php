@@ -15,8 +15,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testEmployee()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $employee = new Employee();
         $this->assertInstanceOf('Employee', $employee);
         $this->assertInstanceOf('Person', $employee);
@@ -27,7 +26,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('users', 'table_name', $employee);
         $this->assertAttributeEquals(true, 'new_schema', $employee);
     }
-
 
     public function testget_summary_text()
     {
@@ -41,12 +39,11 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $employee->get_summary_text());
     }
 
-
     public function testfill_in_additional_list_fields()
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $employee->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -58,7 +55,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     public function testfill_in_additional_detail_fields()
     {
         $employee = new Employee();
-
 
         //test with a empty employee bean
         $employee->fill_in_additional_detail_fields();
@@ -79,26 +75,14 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
 
-
     public function testverify_data()
     {
-
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
-
-
-
     }
 
     public function testget_list_view_data()
     {
-        // save state
-
-
-
-
-        
-        
         $employee = new Employee();
 
         $expected = array(
@@ -124,18 +108,13 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
-
-
-
-
-
     }
 
     public function testlist_view_parse_additional_sections()
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $ss = new Sugar_Smarty();
             $employee->list_view_parse_additional_sections($ss, null);
@@ -145,7 +124,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-
     public function testcreate_export_query()
     {
         $employee = new Employee();
@@ -154,7 +132,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name";
         $actual = $employee->create_export_query('', '');
         $this->assertSame($expected, $actual);
-
 
         //test with valid string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE users.user_name=\"\" AND  users.deleted = 0 ORDER BY users.id";
@@ -166,7 +143,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     {
         $employee = new Employee();
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $employee->preprocess_fields_on_save();
             $this->assertTrue(true);
@@ -197,19 +174,11 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete();
     }
 
-
     public function testhasCustomFields()
     {
-
-        
-        
         $employee = new Employee();
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
-        
-        
-
-
     }
     
     public function testError()
@@ -239,7 +208,6 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
-        
 
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }
