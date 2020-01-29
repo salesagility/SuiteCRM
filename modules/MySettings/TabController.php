@@ -85,7 +85,7 @@ class TabController
                             unset($tabs[$id]);
                         }
                     }
-                    ACLController :: filterModuleList($tabs);
+                    ACLController::filterModuleList($tabs);
                     $tabs = self::get_key_array($tabs);
                     $system_tabs_result = $tabs;
                 } else {
