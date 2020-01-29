@@ -1,7 +1,0 @@
-# `chrome` environment config goes here
-modules:
-  enabled:
-    - \SuiteCRM\Test\Driver\WebDriver
-  config:
-    \SuiteCRM\Test\Driver\WebDriver:
-      browser: chrome

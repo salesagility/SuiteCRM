@@ -76,7 +76,6 @@ class CalendarUtils
                 'parent_name',
                 'parent_id',
                 'parent_type',
-                'priority'
             ),
             'Calls' => array(
                 'name',
@@ -87,7 +86,6 @@ class CalendarUtils
                 'parent_name',
                 'parent_id',
                 'parent_type',
-                'priority'
             ),
             'Tasks' => array(
                 'name',
@@ -269,7 +267,7 @@ class CalendarUtils
         $arr = array();
 
         $type = $params['type'];
-        $interval = intval($params['interval']);
+        $interval = (int)$params['interval'];
         if ($interval < 1) {
             $interval = 1;
         }

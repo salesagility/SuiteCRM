@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Invoices extends \AcceptanceTester
 {
     /**
-     * Navigate to invoices module
-     */
-    public function gotoInvoices()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Invoices');
-    }
-
-    /**
      * Create an invoice
      *
      * @param $name

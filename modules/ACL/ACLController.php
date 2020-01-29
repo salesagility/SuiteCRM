@@ -94,7 +94,7 @@ class ACLController
                 $action,
                 $type,
                 $is_owner,
-                    $in_group
+                $in_group
                 ) || ACLAction::userHasAccess(
                     $current_user->id,
                     'Meetings',
@@ -118,7 +118,7 @@ class ACLController
                 $action,
                 $type,
                 $is_owner,
-                    $in_group
+                $in_group
                 ) || ACLAction::userHasAccess(
                     $current_user->id,
                     'Meetings',
@@ -390,8 +390,8 @@ class ACLController
         echo '<script>function set_focus(){}</script><p class="error">' . translate('LBL_NO_ACCESS', 'ACL') . '</p>';
         if ($redirect_home) {
             echo translate(
-                    'LBL_REDIRECT_TO_HOME',
-                    'ACL'
+                'LBL_REDIRECT_TO_HOME',
+                'ACL'
                 ) . ' <span id="seconds_left">3</span> ' . translate(
                     'LBL_SECONDS',
                     'ACL'

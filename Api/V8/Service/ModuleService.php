@@ -111,6 +111,7 @@ class ModuleService
         $offset = $number !== 0 ? ($number - 1) * $size : $number;
         $realRowCount = $this->beanManager->countRecords($module, $where);
         $limit = $size === BeanManager::DEFAULT_ALL_RECORDS ? BeanManager::DEFAULT_LIMIT : $size;
+        $deleted = $params->getDeleted();
 
         $beanListResponse = $this->beanManager->getList($module)
             ->orderBy($orderBy)
@@ -118,6 +119,7 @@ class ModuleService
             ->offset($offset)
             ->limit($limit)
             ->max($size)
+            ->deleted($deleted)
             ->fetch();
 
         $data = [];

@@ -125,7 +125,7 @@ $install_script = true;
 $css = 'install/install.css';
 $icon = 'include/images/sugar_icon.ico';
 $sugar_md = 'include/images/sugar_md_open.png';
-$loginImage = 'include/images/sugarcrm_login.png';
+$loginImage = 'include/images/suitecrm_login.png';
 $common = 'install/installCommon.js';
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -266,7 +266,7 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
 
         // TODO--low: validate file size & image width/height and save, show status result to client js
 
-        if (!empty($_REQUEST['callback'] === 'uploadLogoCallback')) {
+        if (isset($_REQUEST['callback']) && $_REQUEST['callback'] === 'uploadLogoCallback') {
             echo "<script>window.top.window.uploadLogoCallback" . json_encode($result) . ");</script>";
         }
 
@@ -644,15 +644,15 @@ EOQ;
 
     if ($next_step == 9999) {
         $the_file = 'SilentInstall';
+    } elseif ($next_step == 9191) {
+        $_SESSION['oc_server_url']	= $_REQUEST['oc_server_url'];
+        $_SESSION['oc_username']    = $_REQUEST['oc_username'];
+        $_SESSION['oc_password']   	= $_REQUEST['oc_password'];
+        $the_file = 'oc_convert.php';
+    } elseif ($next_step === 9) {
+        $the_file = $workflow[4];
     } else {
-        if ($next_step == 9191) {
-            $_SESSION['oc_server_url']	= $_REQUEST['oc_server_url'];
-            $_SESSION['oc_username']    = $_REQUEST['oc_username'];
-            $_SESSION['oc_password']   	= $_REQUEST['oc_password'];
-            $the_file = 'oc_convert.php';
-        } else {
-            $the_file = $workflow[$next_step];
-        }
+        $the_file = $workflow[$next_step];
     }
 
     switch ($the_file) {
@@ -790,12 +790,12 @@ EOQ;
 }
 
 
-$the_file = clean_string($the_file, 'FILE');
+$the_file = 'install/' . clean_string($the_file, 'FILE');
 
-installerHook('pre_installFileRequire', array('the_file' => $the_file));
-
-// change to require to get a good file load error message if the file is not available.
-
-require('install/' . $the_file);
-
-installerHook('post_installFileRequire', array('the_file' => $the_file));
+if (is_file($the_file)) {
+    installerHook('pre_installFileRequire', ['the_file' => $the_file]);
+    require($the_file);
+    installerHook('post_installFileRequire', ['the_file' => $the_file]);
+} else {
+    LoggerManager::getLogger()->fatal('Install file not found: ' . $the_file);
+}

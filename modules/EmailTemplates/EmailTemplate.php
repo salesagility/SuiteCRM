@@ -121,19 +121,7 @@ class EmailTemplate extends SugarBean
         parent::__construct();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function EmailTemplate()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     /**
@@ -289,7 +277,7 @@ class EmailTemplate extends SugarBean
 
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     public function create_export_query($order_by, $where)
@@ -922,15 +910,16 @@ class EmailTemplate extends SugarBean
 
         // repair the images url at entry points, change to a public direct link for remote email clients..
 
-        $siteUrlQuoted = str_replace(array(':', '/'), array('\:', '\/'), $sugar_config['site_url']);
-        $regex = '/&lt;img src=&quot;(' . $siteUrlQuoted . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=[^&]+)&quot;/';
+        $html = from_html($this->body_html);
+        $siteUrl = $sugar_config['site_url'];
+        $regex = '#<img[^>]*[\s]+src=[\s]*["\'](' . preg_quote($siteUrl) . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=.+?)["\']#si';
 
-        if (preg_match($regex, $this->body_html, $match)) {
+        if (preg_match($regex, $html, $match)) {
             $splits = explode('.', $match[1]);
             $fileExtension = end($splits);
             $this->makePublicImage($match[2], $fileExtension);
-            $directLink = '&lt;img src=&quot;' . $sugar_config['site_url'] . '/public/' . $match[2] . '.' . $fileExtension . '&quot;';
-            $this->body_html = str_replace($match[0], $directLink, $this->body_html);
+            $newSrc = $sugar_config['site_url'] . '/public/' . $match[2] . '.' . $fileExtension;
+            $this->body_html = to_html(str_replace($match[1], $newSrc, $html));
             $this->imageLinkReplaced = true;
             $this->repairEntryPointImages();
         }

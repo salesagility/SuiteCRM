@@ -54,21 +54,7 @@ class Company extends Basic
         $this->emailAddress = new SugarEmailAddress();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be removed in 8.0,
-     *     please update your code, use __construct instead
-     */
-    public function Company()
-    {
-        $deprecatedMessage =
-            'PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * @see parent::save()
@@ -85,8 +71,13 @@ class Company extends Basic
         $this->add_address_streets('billing_address_street');
         $this->add_address_streets('shipping_address_street');
         $ori_in_workflow = empty($this->in_workflow) ? false : true;
-        $this->emailAddress->handleLegacySave($this);
-        $record_id = parent::save($check_notify);
+	$this->emailAddress->handleLegacySave($this);
+
+        if (empty($this->id)) {
+	    $this->id = create_guid();
+            $this->new_with_id = true;
+	}
+
         $override_email = array();
         if (!empty($this->email1_set_in_workflow)) {
             $override_email['emailAddress0'] = $this->email1_set_in_workflow;
@@ -111,6 +102,7 @@ class Company extends Basic
             );
         }
 
+	$record_id = parent::save($check_notify);
         return $record_id;
     }
 

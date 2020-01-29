@@ -292,7 +292,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
             $this->_view,
             $this->_moduleName,
             null,
-                MB_HISTORYMETADATALOCATION
+            MB_HISTORYMETADATALOCATION
         )
         ) {
             foreach (array(MB_WORKINGMETADATALOCATION, MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $type) {
@@ -307,7 +307,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 
         $GLOBALS ['log']->debug(get_class($this) . "->save(): writing to " . $this->getFileName(
             $this->_view,
-                $this->_moduleName,
+            $this->_moduleName,
             null,
             MB_WORKINGMETADATALOCATION
         ));
@@ -324,7 +324,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
             $this->_view,
             $this->_moduleName,
             null,
-                MB_HISTORYMETADATALOCATION
+            MB_HISTORYMETADATALOCATION
         )
         ) {
             foreach (array(MB_WORKINGMETADATALOCATION, MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $type) {

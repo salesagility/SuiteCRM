@@ -54,7 +54,7 @@ class SugarView
     const ERR_NOT_ARRAY = 3;
     const ERR_NOT_SUB_ARRAY = 4;
     const WARN_SCOPE_EXISTS = 5;
-    
+
     /**
      * @var array $view_object_map
      * This array is meant to hold an objects/data that we would like to pass between
@@ -136,7 +136,7 @@ class SugarView
      * @var array
      */
     private $settings = [];
-    
+
     /**
      * SugarView constructor.
      * @deprecated since version 7.11
@@ -144,22 +144,6 @@ class SugarView
     public function __construct()
     {
         LoggerManager::getLogger()->deprecated();
-    }
-    
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0
-     * please update your code, use __construct instead
-     */
-    public function SugarView()
-    {
-        $deprecatedMessage =
-            'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
     }
 
     /**
@@ -397,7 +381,7 @@ class SugarView
         $GLOBALS['app']->headerDisplayed = true;
 
         $themeObject = SugarThemeRegistry::current();
-        $theme = $themeObject->__toString();
+        $theme = (string)$themeObject;
 
         $ss = new Sugar_Smarty();
         $ss->assign("APP", $app_strings);
@@ -724,7 +708,7 @@ class SugarView
             foreach ($groupTabs as $key => $tabGroup) {
                 if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array(
                     $tabGroup['modules'][$moduleTab],
-                        $tabGroup['extra']
+                    $tabGroup['extra']
                 )
                 ) {
                     unset($groupTabs[$key]['modules'][$moduleTab]);
@@ -1243,7 +1227,7 @@ EOHTML;
     protected function _checkModule()
     {
         if (!empty($this->module) && !file_exists('modules/' . $this->module)) {
-            $error = str_replace("[module]", "$this->module", $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
+            $error = str_replace("[module]", (string)$this->module, $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
             $GLOBALS['log']->fatal($error);
             echo $error;
             die();
@@ -1643,19 +1627,16 @@ EOHTML;
             if (!empty($iconPath) && !$browserTitle) {
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
-                        . "$firstParam";
-                } else {
-                    return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
+                        . (string)$firstParam;
                 }
-            } else {
-                return $firstParam;
+                return (string)$firstParam . "&nbsp;" . $app_strings['LBL_SEARCH'];
             }
+            return $firstParam;
+        }
+        if (!empty($iconPath) && !$browserTitle) {
+            //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
         } else {
-            if (!empty($iconPath) && !$browserTitle) {
-                //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
-            } else {
-                return $firstParam;
-            }
+            return $firstParam;
         }
     }
 
@@ -1976,7 +1957,7 @@ EOHTML;
     public function mergeDeepArray($arrays)
     {
         $result = array();
-        
+
         if (!is_array($arrays)) {
             throw new InvalidArgumentException('Parameter should be an array to merging. ' . gettype($arrays) . ' given.', self::ERR_NOT_ARRAY);
         }
@@ -1987,7 +1968,7 @@ EOHTML;
 
         return $result;
     }
-    
+
     /**
      *
      * @param array $array

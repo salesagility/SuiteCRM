@@ -127,7 +127,7 @@ class FactorAuthEmailCode implements FactorAuthInterface
         if (!$mailer->send()) {
             $ret = false;
             $GLOBALS['log']->fatal(
-                    'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
+                'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
                     $mailer->ErrorInfo
             );
         } else {

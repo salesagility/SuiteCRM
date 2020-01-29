@@ -14,19 +14,12 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAudit()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         //execute the contructor and check for the Object type and  attributes
         $audit = new Audit();
         $this->assertInstanceOf('Audit', $audit);
         $this->assertInstanceOf('SugarBean', $audit);
         $this->assertAttributeEquals('Audit', 'module_dir', $audit);
         $this->assertAttributeEquals('Audit', 'object_name', $audit);
-        
-        // clean up
     }
 
     public function testget_summary_text()
@@ -44,10 +37,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_export_query()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         $audit = new Audit();
 
@@ -68,10 +57,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         
-        
-        
-        
-        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -89,10 +74,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_detail_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -112,10 +93,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         
-        
-        
-        
-        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -134,10 +111,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         
-        
-        
-        
-        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -155,10 +128,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_audit_link()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.

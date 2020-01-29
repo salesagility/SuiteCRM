@@ -23,33 +23,25 @@ class SurveysCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Surveys $surveys
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to view the surveys module.
      */
     public function testScenarioViewSurveysModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Surveys $surveys,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the surveys module for testing');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to surveys list-view
         $I->loginAsAdmin();
-        $surveys->gotoSurveys();
+        $I->visitPage('Surveys', 'index');
         $listView->waitForListViewVisible();
 
         $I->see('Surveys', '.module-title-text');

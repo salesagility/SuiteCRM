@@ -74,20 +74,6 @@ class ParserLabel
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function ParserLabel($moduleName, $packageName = '')
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($moduleName, $packageName);
-    }
-
-    /**
      * Takes in the request params from a save request and processes
      * them for the save.
      *
@@ -226,7 +212,7 @@ class ParserLabel
                 // obtain $mod_strings
                 include $filename;
             } elseif ($forRelationshipLabel) {
-                $fh = fopen($filename, 'a');
+                $fh = fopen($filename, 'ab');
                 fclose($fh);
             }
         } else {
@@ -305,7 +291,7 @@ class ParserLabel
                 }
 
                 try {
-                    $file_contents = fopen($extension_filename, 'w');
+                    $file_contents = fopen($extension_filename, 'wb');
                     fputs($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
@@ -352,7 +338,7 @@ class ParserLabel
 
                 $failed_to_write = false;
                 try {
-                    $file_contents = fopen($relationships_filename, 'w');
+                    $file_contents = fopen($relationships_filename, 'wb');
                     fputs($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {

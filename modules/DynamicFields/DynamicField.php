@@ -70,21 +70,6 @@ class DynamicField
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     * @param string $module
-     */
-    public function DynamicField($module = '')
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($module);
-    }
-
-    /**
      * @return array|bool|int|mixed|string
      */
     public function getModuleName()
@@ -489,14 +474,14 @@ class DynamicField
                     }
                     if ($isUpdate) {
                         if ($first) {
-                            $query .= " $name=$quote" . $this->db->quote($val) . "$quote";
+                            $query .= " $name=$quote" . $this->db->quote($val) . (string)$quote;
                         } else {
-                            $query .= " ,$name=$quote" . $this->db->quote($val) . "$quote";
+                            $query .= " ,$name=$quote" . $this->db->quote($val) . (string)$quote;
                         }
                     }
                     $first = false;
                     $queryInsert .= " ,$name";
-                    $values .= " ,$quote" . $this->db->quote($val) . "$quote";
+                    $values .= " ,$quote" . $this->db->quote($val) . (string)$quote;
                 }
             }
             if ($isUpdate) {
@@ -750,7 +735,7 @@ class DynamicField
     {
         //Hack for the broken cases module
         $vBean = $bean_name == 'aCase' ? 'Case' : $bean_name;
-        $file_loc = "$this->base_path/sugarfield_{$field->name}.php";
+        $file_loc = "$this->base_path/_override_sugarfield_{$field->name}.php";
 
         $out = "<?php\n // created: " . date('Y-m-d H:i:s') . "\n";
         foreach ($def_override as $property => $val) {

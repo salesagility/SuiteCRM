@@ -384,7 +384,7 @@ $_SERVER['PHP_SELF'] = 'silentUpgrade.php';
 ///////////////////////////////////////////////////////////////////////////////
 ////	USAGE
 $usage_dce =<<<eoq1
-Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSugarInstance]
+Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSuiteCRMInstance]
 
 On Command Prompt Change directory to where silentUpgrade.php resides. Then type path to
 php.exe followed by -f silentUpgrade.php and the arguments.
@@ -405,7 +405,7 @@ Arguments:
 eoq1;
 
 $usage_regular =<<<eoq2
-Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSugarInstance] [admin-user]
+Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSuiteCRMInstance] [admin-user]
 
 On Command Prompt Change directory to where silentUpgrade.php resides. Then type path to
 php.exe followed by -f silentUpgrade.php and the arguments.
@@ -416,7 +416,7 @@ Example:
 Arguments:
     upgradeZipFile                       : Upgrade package file.
     logFile                              : Silent Upgarde log file.
-    pathToSugarInstance                  : Sugar Instance instance being upgraded.
+    pathToSuiteCRMInstance                  : Suite Instance instance being upgraded.
     admin-user                           : admin user performing the upgrade
 eoq2;
 ////	END USAGE
@@ -496,7 +496,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
 
     //load up entrypoint from original template
     require_once("{$argv[4]}/include/entryPoint.php");
-    require_once("{$argv[4]}/include/utils/zip_utils.php");
+    require_once("{$argv[4]}/include/utils/php_zip_utils.php");
     require_once("{$argv[4]}/modules/Administration/UpgradeHistory.php");
     // We need to run the silent upgrade as the admin user,
     global $current_user;

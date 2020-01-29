@@ -5,15 +5,6 @@ namespace Step\Acceptance;
 class Leads extends \AcceptanceTester
 {
     /**
-     * Navigate to leads module
-     */
-    public function gotoLeads()
-    {
-        $I = new NavigationBarTester($this->getScenario());
-        $I->clickAllMenuItem('Leads');
-    }
-
-    /**
      * Create a lead
      *
      * @param $name

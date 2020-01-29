@@ -373,7 +373,7 @@ function loginLicense()
 
             unset($_SESSION['license_seats_needed']);
             loadLicense();
-            set_last_check_date_config_setting("$current_date_time");
+            set_last_check_date_config_setting((string)$current_date_time);
             include('sugar_version.php');
 
             $newVersion = '';

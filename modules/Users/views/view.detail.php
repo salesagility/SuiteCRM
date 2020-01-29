@@ -51,19 +51,7 @@ class UsersViewDetail extends ViewDetail
         parent::__construct();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function UsersViewDetail()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     public function preDisplay()
@@ -131,7 +119,7 @@ class UsersViewDetail extends ViewDetail
                     $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='duplicate_button' title='" . $app_strings['LBL_DUPLICATE_BUTTON_TITLE'] . "' accessKey='" . $app_strings['LBL_DUPLICATE_BUTTON_KEY'] . "' class='button' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.isDuplicate.value=true; this.form.action.value='EditView'\" type='submit' name='Duplicate' value='" . $app_strings['LBL_DUPLICATE_BUTTON_LABEL'] . "'>");
 
                     if ($this->bean->id != $current_user->id) {
-                        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='delete_button' type='button' class='button' onclick='confirmDelete();' value='" . $app_strings['LBL_DELETE_BUTTON_LABEL'] . "' />");
+                        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='delete_button' title='" . $app_strings['LBL_DELETE_BUTTON_LABEL'] . "' type='button' class='button' onclick='confirmDelete();' value='" . $app_strings['LBL_DELETE_BUTTON_LABEL'] . "' />");
                     }
 
                     if (!$this->bean->portal_only && !$this->bean->is_group && !$this->bean->external_auth_only

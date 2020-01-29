@@ -16,8 +16,6 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
-        
-        
 
         //execute the contructor and check for the Object type and  attributes
         $campaignTracker = new CampaignTracker();
@@ -30,7 +28,6 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $campaignTracker);
         
         // clean up
-        
         $state->popTable('aod_index');
     }
 

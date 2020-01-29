@@ -144,6 +144,17 @@ class ImapHandlerFactory
 
         return $testSettings;
     }
+
+    /**
+     * Delete's test settings file.
+     * @return void
+     */
+    public function deleteTestSettings()
+    {
+        if (file_exists(__DIR__ . self::SETTINGS_KEY_FILE)) {
+            unlink(__DIR__ . self::SETTINGS_KEY_FILE);
+        }
+    }
     
     /**
      *

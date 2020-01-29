@@ -47,21 +47,6 @@ class actionSendEmail extends actionBase
         $this->clearLastEmailsStatus();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function actionSendEmail($id = '')
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($id);
-    }
-
-
     public function loadJS()
     {
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
@@ -92,7 +77,7 @@ class actionSendEmail extends actionBase
         $html .= "<tr>";
         $html .= '<td id="relate_label" scope="row" valign="top"><label>' . translate(
             "LBL_INDIVIDUAL_EMAILS",
-                "AOW_Actions"
+            "AOW_Actions"
         ) . ':</label>';
         $html .= '</td>';
         $html .= "<td valign='top'>";
@@ -110,7 +95,7 @@ class actionSendEmail extends actionBase
 
         $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate(
             "LBL_EMAIL_TEMPLATE",
-                "AOW_Actions"
+            "AOW_Actions"
         ) . ':<span class="required">*</span></label></td>';
         $html .= "<td valign='top'>";
         $html .= "<select name='aow_actions_param[".$line."][email_template]' id='aow_actions_param_email_template".$line."' onchange='show_edit_template_link(this,".$line.");' >".get_select_options_with_id($email_templates_arr, $params['email_template'])."</select>";
@@ -122,7 +107,7 @@ class actionSendEmail extends actionBase
         $html .= "<tr>";
         $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate(
             "LBL_EMAIL",
-                "AOW_Actions"
+            "AOW_Actions"
         ) . ':<span class="required">*</span></label></td>';
         $html .= '<td valign="top" scope="row">';
 

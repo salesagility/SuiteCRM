@@ -1,5 +1,7 @@
 <?php
 
+require_once 'modules/EmailTemplates/EmailTemplateParser.php';
+
 class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     protected function setUp()
@@ -9,6 +11,74 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+
+    public function testEmailTemplateParser()
+    {
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body_html = to_html('<h1>Hello $contact_name</h1>');
+        $emailTemplate->body = 'Hello $contact_name';
+        $emailTemplate->subject = 'Hello $contact_name';
+        $campaign = new Campaign();
+
+        $related = [new Lead(), new Contact(), new Prospect()];
+        foreach ($related as $bean) {
+            $bean->name = 'foobar';
+
+            $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
+            $result = $parser->parseVariables();
+            $this->assertEquals('<h1>Hello foobar</h1>', from_html($result['body_html']));
+            $this->assertEquals('Hello foobar', $result['body']);
+            $this->assertEquals('Hello foobar', $result['subject']);
+        }
+    }
+
+    public function testEmailTemplateParserUser()
+    {
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->body = 'Hello $contact_user_full_name';
+        $campaign = new Campaign();
+
+        $bean = new User();
+        $bean->first_name = 'foo';
+        $bean->last_name = 'bar';
+        $bean->fill_in_additional_detail_fields();
+
+        $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
+        $result = $parser->parseVariables();
+        $this->assertEquals('Hello foo bar', $result['body']);
+    }
+
+    public function testcreateCopyTemplate()
+    {
+        global $current_user;
+
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('email_templates');
+        $state->pushGlobals();
+
+        $this->setOutputCallback(function ($msg) {
+        });
+
+        $current_user->id = create_guid();
+        $_REQUEST['func'] = 'createCopy';
+        $_POST['name'] = 'Name';
+        $_POST['subject'] = 'Subject';
+        $_POST['body_html'] = 'BodyHTML';
+        require('modules/EmailTemplates/EmailTemplateData.php');
+
+        $output = json_decode($this->getActualOutput(), true);
+        $this->assertNotEmpty($output['data']);
+        $this->assertNotEmpty($output['data']['id']);
+        $template = new EmailTemplate();
+        $this->assertNotNull($template->retrieve($output['data']['id']));
+
+        $this->assertEquals($current_user->id, $template->assigned_user_id);
+
+        $state->popTable('email_templates');
+        $state->popTable('aod_index');
+        $state->popGlobals();
     }
 
     public function testaddDomainToRelativeImagesSrc()
@@ -24,6 +94,44 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = from_html($template->body_html);
         $this->assertContains('src="https://foobar.com/public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png"', $result);
+    }
+
+    public function testrepairEntryPointImages()
+    {
+        global $sugar_config;
+
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('email_templates');
+        $state->pushTable('aod_index');
+
+        $sugar_config['site_url'] = 'https://foobar.com';
+
+        $ids = [create_guid(), create_guid()];
+        $html = '<img src="https://foobar.com/index.php?entryPoint=download&type=Notes&id=' . $ids[0] . '&filename=test2.png" alt="" style="font-size:14px;" width="381" height="339">';
+        $html .= '<img alt="test.png" src="https://foobar.com/index.php?entryPoint=download&type=Notes&id=' . $ids[1] . '&filename=test.png" width="118" height="105">';
+
+        foreach ($ids as $id) {
+            file_put_contents('upload/' . $id, 'IAmAnImage:' . $id);
+        }
+
+        $template = new EmailTemplate();
+        $template->body_html = to_html($html);
+        $template->new_with_id = true;
+        $template->save();
+        $this->assertNotNull($template->retrieve($template->id));
+
+        foreach ($ids as $id) {
+            $this->assertTrue(is_file('public/' . $id . '.png'));
+            unlink('public/' . $id . '.png');
+            unlink('upload/' . $id);
+        }
+
+        $expected = '<img src="https://foobar.com/public/' . $ids[0] . '.png" alt="" style="font-size:14px;" width="381" height="339" />';
+        $expected .= '<img alt="test.png" src="https://foobar.com/public/' . $ids[1] . '.png" width="118" height="105" />';
+        $this->assertEquals($expected, from_html($template->body_html));
+
+        $state->popTable('aod_index');
+        $state->popTable('email_templates');
     }
 
     public function testEmailTemplate()
@@ -44,11 +152,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgenerateFieldDefsJS()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-
         $emailTemplate = new EmailTemplate();
 
         //execute the method and verify that it retunrs expected results
@@ -57,8 +160,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //$this->assertSame($expected,$actual);
 
         $this->assertGreaterThan(0, strlen($actual));
-        
-        // clean up
     }
 
     public function testget_summary_text()
@@ -75,16 +176,11 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-
-
-    // save state
-
+        // save state
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
         // test
-        
-        
         $emailTemplate = new EmailTemplate();
 
         //test with empty string params
@@ -99,18 +195,11 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         // clean up
-        
         $state->popGlobals();
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -120,8 +209,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
@@ -184,12 +271,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_parent_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        
-        
-        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -199,8 +280,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
-        // clean up
     }
 
     public function testget_list_view_data()

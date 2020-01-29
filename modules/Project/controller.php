@@ -89,11 +89,12 @@ class ProjectController extends SugarController
     //Create new project task
     public function action_update_GanttChart()
     {
-        global $current_user, $db;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
 
         $task_name = $_POST['task_name'];
         $project_id = $_POST['project_id'];
-        $override_business_hours = intval($_POST['override_business_hours']);
+        $override_business_hours = (int)$_POST['override_business_hours'];
         $task_id = $_POST['task_id'];
         $predecessor = $_POST['predecessor'];
         $rel_type = $_POST['rel_type'];

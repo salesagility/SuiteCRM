@@ -64,10 +64,7 @@
      public function testdisplay()
      {
          $state = new SuiteCRM\StateSaver();
-         
-         
-         //
-         
+
          //execute the method with essential parameters set. it should return some html.
          $view = new ViewEdit();
          $view->module = 'Users';

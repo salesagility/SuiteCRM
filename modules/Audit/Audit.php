@@ -66,19 +66,7 @@ class Audit extends SugarBean
         parent::__construct();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Audit()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     public $new_schema = true;
@@ -153,7 +141,7 @@ class Audit extends SugarBean
                             }
                             $temp_list[$field['name']]=$date_created;
                         }
-                        if (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string') && ($row['data_type'] == "enum" || $row['data_type'] == "multienum")) {
+                        if (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string' || $field['name'] == 'before_value_text' || $field['name'] == 'after_value_text') && ($row['data_type'] == "enum" || $row['data_type'] == "multienum")) {
                             global $app_list_strings;
                             $enum_keys = unencodeMultienum($temp_list[$field['name']]);
                             $enum_values = array();

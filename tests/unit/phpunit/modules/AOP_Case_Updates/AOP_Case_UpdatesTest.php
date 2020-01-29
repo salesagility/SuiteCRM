@@ -39,8 +39,6 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_indexevent');
         $state->pushTable('aop_case_updates');
         $state->pushGlobals();
-        
-        
 
         $aopCaseUpdates = new AOP_Case_Updates();
         $aopCaseUpdates->name = 'test name';
@@ -57,7 +55,6 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aopCaseUpdates->mark_deleted($aopCaseUpdates->id);
         
         // clean up
-        
         $state->popGlobals();
         $state->popTable('aop_case_updates');
         $state->popTable('aod_indexevent');

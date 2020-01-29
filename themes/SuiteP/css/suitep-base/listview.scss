@@ -1801,11 +1801,13 @@ div.qtip.qtip-default {
 .search_form .view .dateTimeRangeChoice {
   display: block;
   float: left;
+  margin-top: 5px;
 }
 
 .search_form .view .dateTimeRangeChoice select {
-  width: 90px;
+  width: auto;
   margin-right: 4px;
+  padding-right: 30px;
 }
 
 .search_form .view .dateTimeRangeChoiceClear {
@@ -1831,6 +1833,12 @@ div.qtip.qtip-default {
   width: 80%;
 }
 
+.search_form .view .col-xs-12 input[type="text"].dateRangeInput,
+.search_form .view .col-xs-12 input[type="text"].date_input,{
+    width: auto;
+    margin-top: 5px;
+}
+
 .search_form .view .templateGroupChooser {
   width: 100%;
 }
@@ -1850,7 +1858,7 @@ div.qtip.qtip-default {
 .search_form.non-popup select,
 .search_form.non-popup textarea {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
@@ -1934,8 +1942,8 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     background-color: $navbar-alert-count-bg;
     padding: 0;
     position: absolute;
-    right: -8px;
-    top: -5px;
+    right: 1px;
+    top: -4px;
   }
 
 }
@@ -1981,11 +1989,16 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   width: 80%;
 }
 
+.search_form .view .col-xs-12 input[type="text"].dateRangeInput {
+    width: auto;
+    margin-top: 5px;
+}
+
 .search_form.non-popup input[type="text"],
 .search_form.non-popup select,
 .search_form.non-popup textarea {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
@@ -3383,13 +3396,18 @@ ul.clickMenu > li > span.searchAppliedAlert {
   width: 80%;
 }
 
+.search_form .view .col-xs-12 input[type="text"].dateRangeInput {
+    width: auto;
+    margin-top: 5px;
+}
+
 .search_form .view .col-xs-12 textarea {
   width: 80%;
 }
 
 .search_form.non-popup input[type="text"] {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
@@ -3397,7 +3415,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .search_form.non-popup select {
   border: none;
-  height: 20px;
+  height: auto;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;

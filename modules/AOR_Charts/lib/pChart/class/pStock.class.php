@@ -21,12 +21,12 @@
    var $pChartObject;
    var $pDataObject;
 
-   /* Class creator */
-   function pStock($pChartObject,$pDataObject)
-    {
-     $this->pChartObject = $pChartObject;
-     $this->pDataObject  = $pDataObject;
-    }
+     /* Class creator */
+     public function __construct($pChartObject, $pDataObject)
+     {
+         $this->pChartObject = $pChartObject;
+         $this->pDataObject = $pDataObject;
+     }
 
    /* Draw a stock chart */
    function drawStockChart($Format="")

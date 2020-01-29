@@ -93,7 +93,7 @@
 								<span class='suitepicon suitepicon-action-right'></span>
 							</button>
 						{else}
-							<button type='button' id='listViewNextButton_{$action_menu_location}' name='listViewNextButton' class='button' title='{$navStrings.next}' disabled='disabled'>
+							<button type='button' id='listViewNextButton_{$action_menu_location}' name='listViewNextButton' class='list-view-pagination-button' title='{$navStrings.next}' disabled='disabled'>
 								<span class='suitepicon suitepicon-action-right'></span>
 							</button>
 						{/if}

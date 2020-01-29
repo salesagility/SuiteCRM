@@ -118,7 +118,7 @@ if(!$focus->campaign_type == "NewsLetter"){
     $smarty->assign("CREATED_BY", $focus->created_by_name);
     $smarty->assign("MODIFIED_BY", $focus->modified_by_name);
     $smarty->assign("TRACKER_URL", $sugar_config['site_url'] . '/campaign_tracker.php?track=' . $focus->tracker_key);
-    $smarty->assign("TRACKER_COUNT", intval($focus->tracker_count));
+    $smarty->assign("TRACKER_COUNT", (int)$focus->tracker_count);
     $smarty->assign("TRACKER_TEXT", $focus->tracker_text);
     $smarty->assign("REFER_URL", $focus->refer_url);
     $smarty->assign("IMPRESSIONS", $focus->impressions);
@@ -212,7 +212,9 @@ $campaign_id = $focus->id;
     //custom chart code
     require_once('include/SugarCharts/SugarChartFactory.php');
     $sugarChart = SugarChartFactory::getInstance();
-    $resources = $sugarChart->getChartResources();
-    $smarty->assign('chartResources', $resources);
+    if ($sugarChart) {
+        $resources = $sugarChart->getChartResources();
+        $smarty->assign('chartResources', $resources);
+    }
 
 echo $smarty->fetch('modules/Campaigns/RoiDetailView.tpl');

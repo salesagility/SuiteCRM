@@ -57,12 +57,12 @@ global $app_strings;
 global $current_user, $focus;
 
 echo getClassicModuleTitle(
-        "Administration",
-        array(
+    "Administration",
+    array(
             "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
            $mod_strings['LBL_MODULE_NAME'],
            ),
-        false
+    false
         );
 
 if ($current_user->is_admin) {
@@ -174,7 +174,7 @@ EOQ;
     
     $sugar_smarty->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
     $sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
-    $sugar_smarty->assign("THEME", SugarThemeRegistry::current()->__toString());
+    $sugar_smarty->assign("THEME", (string)SugarThemeRegistry::current());
     $sugar_smarty->assign("ID", $focus->id);
     $sugar_smarty->assign('NAME', $focus->name);
     $sugar_smarty->assign('STATUS', $focus->status);

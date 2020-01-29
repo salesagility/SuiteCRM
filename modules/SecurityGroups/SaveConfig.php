@@ -52,17 +52,15 @@ require_once('modules/Administration/Administration.php');
 require_once('modules/SecurityGroups/SecurityGroup.php');
 
 if (!empty($_REQUEST['remove_default_id'])) {
-    $focus = new SecurityGroup();
-    $focus->removeDefaultGroup($_REQUEST['remove_default_id']);
+    SecurityGroup::removeDefaultGroup($_REQUEST['remove_default_id']);
 } else {
     if (!empty($_REQUEST['default_group'])) {
-        $focus = new SecurityGroup();
-        $focus->saveDefaultGroup($_REQUEST['default_group'], $_REQUEST['default_module']);
+        SecurityGroup::saveDefaultGroup($_REQUEST['default_group'], $_REQUEST['default_module']);
     }
 
 
 
-    require('modules/Configurator/Configurator.php');
+    require_once('modules/Configurator/Configurator.php');
     $cfg = new Configurator();
     
     // save securitysuite_additive setting

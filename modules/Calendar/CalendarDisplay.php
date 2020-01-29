@@ -125,7 +125,7 @@ class CalendarDisplay
         $ss->assign('cells_per_day', $cal->cells_per_day);
         $ss->assign('activityColors', json_encode($this->checkActivity($this->activity_colors)));
         $ss->assign('dashlet', $cal->dashlet);
-        $ss->assign('grid_start_ts', intval($cal->grid_start_ts));
+        $ss->assign('grid_start_ts', (int)$cal->grid_start_ts);
         
         $ss->assign('year', $cal->date_time->format('Y'));
         $ss->assign('month', $cal->date_time->format('m'));

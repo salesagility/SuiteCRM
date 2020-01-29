@@ -81,6 +81,9 @@ class Administration extends SugarBean
         $smtp_error = false;
         $this->retrieveSettings();
 
+        if (!$sugar_config['email_warning_notifications']) {
+            $displayWarning = false;
+        }
 
         //If sendmail has been configured by setting the config variable ignore this warning
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
@@ -102,20 +105,6 @@ class Administration extends SugarBean
 
 
         return $smtp_error;
-    }
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Administration()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
     }
 
     /**

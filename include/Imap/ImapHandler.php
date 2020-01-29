@@ -717,16 +717,26 @@ class ImapHandler implements ImapHandlerInterface
     public function search($criteria, $options = SE_FREE, $charset = null)
     {
         // Default to class charset if none is specified
-        $emailCharset = (!empty($charset)) ? $charset : $this->charset;
+        $emailCharset = !empty($charset) ? $charset : $this->charset;
 
         $this->logCall(__FUNCTION__, func_get_args());
 
-        $ret = imap_search($this->getStream(), $criteria, $options, $emailCharset);
+        try {
+            $ret = imap_search($this->getStream(), $criteria, $options, $emailCharset);
+        } catch (Exception $e) {
+            if (strpos($e, ' [BADCHARSET (US-ASCII)]')) {
+                LoggerManager::getLogger()->debug("Encoding changed dynamically from {$emailCharset} to US-ASCII");
+
+                $emailCharset = 'US-ASCII';
+                $ret = imap_search($this->getStream(), $criteria, $options, $emailCharset);
+            }
+        }
 
         if (!$ret) {
             $this->log('IMAP search error');
         }
         $this->logReturn(__FUNCTION__, $ret);
+
         return $ret;
     }
 

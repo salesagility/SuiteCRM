@@ -23,7 +23,7 @@ class HistoryCest
             $this->fakeData = Faker\Factory::create();
         }
 
-        $this->fakeDataSeed = rand(0, 2048);
+        $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
@@ -34,7 +34,6 @@ class HistoryCest
      * @param \Step\Acceptance\AccountsTester $accounts
      * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\NavigationBarTester $NavigationBar
-     * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As a user I want to see the due date on the activities module
      */
@@ -44,18 +43,13 @@ class HistoryCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\AccountsTester $accounts,
         \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\NavigationBarTester $NavigationBar,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\NavigationBarTester $NavigationBar
     ) {
         $I->wantTo('See the due date field on Account History subpanel');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
         $I->loginAsAdmin();
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Create account
@@ -72,7 +66,7 @@ class HistoryCest
         $calls->createCallRelateModule($callName, $account_name, "Account", array("status" => "Held"));
 
         // Navigate to the Account's Detail View and confirm the due date contains data
-        $accounts->gotoAccounts();
+        $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
 
         // Select record from list view
@@ -84,10 +78,11 @@ class HistoryCest
         $listView->clickNameLink($account_name);
 
         //Click on History subpanel
+        $I->waitForElementVisible(['id'=>'subpanel_title_history']);
         $I->click(['id'=>'subpanel_title_history']);
-        $I->waitForElementVisible('#History_createnoteorattachment_button', 60);
+        $I->waitForElementVisible('#History_createnoteorattachment_button');
         $I->expect('the due date is visible');
-        $I->see('01/19/2038', '//*[@id="list_subpanel_history"]/table/tbody/tr/td[9]');
+        $I->seeInSource('01/19/2038');
 
         // Delete the Account
         $detailView->clickActionMenuItem('Delete');
@@ -99,7 +94,7 @@ class HistoryCest
         $listView->waitForListViewVisible();
 
         // Select record from list view
-        $I->wait(4);
+        $I->wait(3);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $listView->fillField('#name_basic', $callName);
