@@ -44,6 +44,7 @@
     "onelogin/php-saml": "^3.0.0",
     "phpmailer/phpmailer": "^6.0",
     "paragonie/random_compat": "^2.0",
+    "psr/container": "^1.0",
     "psr/log": "^1.0",
     "slim/slim": "^3.8",
     "smarty/smarty": "^2.6",

@@ -522,72 +522,6 @@ EOQ;
 </div>
 EOQ;
 
-        $out .= <<<EOQ
-
-EOQ;
-
-        $out .=<<<EOQ3
-        </div>
-	</div>
-
-        <div class="floatbox full" id="fb0">
-            <h2>{$mod_strings['LBL_MORE_OPTIONS_TITLE']}</h2>
-        </div>
-EOQ3;
-
-        // --------------------------
-        //  Advanced Database Configuration
-	// --------------------------------->
-
-	require_once('install/suite_install/collations.php');
-
-        $collationCB = "<select name='setup_db_collation' id='setup_db_collation' class='select' onChange='document.getElementById(\"setup_db_charset\").value = document.getElementById(\"setup_db_collation\").value.split(\"_\")[0];'>";
-        $charset = "<select name='setup_db_charset' id='setup_db_charset' class='select'>";
-
-	if(isset($collations)) {
-            if(isset($_SESSION['setup_db_type']) && $_SESSION['setup_db_type'] == "mysql") {
-                foreach($collations['mysql'] as $collation) {
-                    $collationCB .= "<option value='" . $collation['name'] . "' >" . $collation['name'] . "</option>";
-                    $charset .= "<option value='" . $collation['charset'] . "' >" . $collation['charset'] . "</option>";
-                }
-            }
-        }
-
-	$collationCB .= "</select>";
-        $charset .= "</select>";
-
-	$out .=<<<EOQ3
-        <div class="floatbox full" id="fb2">
-          <div class="form_section">
-            <!-- smtp settings -->
-            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_DBCONF_ADV_DB_CFG_TITLE']}</h3>
-            <div style="display: none;">
-
-	    <br>
-            <!--
-            <p>{$mod_strings['LBL_WIZARD_SMTP_DESC']}</p>
-            -->
-
-	    <!-- smtp types toggler buttons -->
-
-	    <p style="display: inline;">
-
-	    <div>
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_DBCONF_COLLATION']}</label>
-                    {$collationCB}
-                </div>
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_DBCONF_CHARSET']}</label>
-                    {$charset}
-                </div>
-            </div>
-            <div class="clear"></div>
-          </div>
-        </div>
-
-EOQ3;
-
         // ------------------
         //  Choose Demo Data
         // ------------------------->
@@ -1258,10 +1192,56 @@ EOQ;
 </table>
 </div>
 EOQ;
+        $out .= "</div>";
 
-        $out.= "</div>";
+        // --------------------------
+        //  Advanced Database Configuration
+        // --------------------------------->
 
+        require_once(__DIR__ . '/suite_install/collations.php');
 
+        $collationCB = "<select name='setup_db_collation' id='setup_db_collation' class='select' onChange='document.getElementById(\"setup_db_charset\").value = document.getElementById(\"setup_db_collation\").value.split(\"_\")[0];'>";
+        $charset = "<select name='setup_db_charset' id='setup_db_charset' class='select'>";
+
+        if (isset($collations) && isset($_SESSION['setup_db_type']) && $_SESSION['setup_db_type'] == "mysql") {
+                foreach ($collations['mysql'] as $collation) {
+                    $collationCB .= "<option value='" . $collation['name'] . "' >" . $collation['name'] . "</option>";
+                    $charset .= "<option value='" . $collation['charset'] . "' >" . $collation['charset'] . "</option>";
+                }
+        }
+
+        $collationCB .= '</select>';
+        $charset .= '</select>';
+
+        $out .= <<<EOQ3
+        <div class="floatbox full" id="fb5">
+          <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_DBCONF_ADV_DB_CFG_TITLE']}</h3>
+          <div class="form_section" style="display: none;">
+            <!-- smtp settings -->
+	    <br>
+            <!--
+            <p>{$mod_strings['LBL_WIZARD_SMTP_DESC']}</p>
+            -->
+
+	    <!-- smtp types toggler buttons -->
+
+	    <p style="display: inline;">
+
+	    <div>
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_DBCONF_COLLATION']}</label>
+                    {$collationCB}
+                </div>
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_DBCONF_CHARSET']}</label>
+                    {$charset}
+                </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+
+EOQ3;
 
         return $out;
     }

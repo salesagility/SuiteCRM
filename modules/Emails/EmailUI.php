@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Utility\SuiteValidator;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -113,7 +115,7 @@ class EmailUI
     ////	CORE
     /**
      * Renders the frame for emails
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl")
     {
@@ -278,10 +280,10 @@ class EmailUI
             !empty($defaultSignatureId)
         );
         if (!empty($defaultSignatureId)) {
-            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
+            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
                     </span>';
         } else {
-            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:hidden;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
+            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:hidden;"><input class="button" onclick="SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
                     </span>';
         }
         $this->smarty->assign('signatureButtons', $signatureButtons);
@@ -699,7 +701,7 @@ HTML;
      * returned is the minimum set needed by the quick compose UI.
      *
      * @param String $type Drives which tinyMCE options will be included.
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function _generateComposeConfigData($type = "email_compose_light")
     {
@@ -856,6 +858,7 @@ HTML;
     /**
      * Saves changes to a user's address book
      * @param array contacts
+     * @throws SuiteException
      */
     public function setContacts($contacts)
     {
@@ -864,7 +867,13 @@ HTML;
         $oldContacts = $this->getContacts();
 
         foreach ($contacts as $cid => $contact) {
-            if (!in_array($contact['id'], $oldContacts)) {
+            if (!in_array($contact['id'], $oldContacts, true)) {
+                $contactId = $contact['id'];
+                $isValidator = new SuiteValidator();
+                if (!$isValidator->isValidId($contactId)) {
+                    throw new SuiteException('Invalid contact ID: ' . $contactId);
+                }
+
                 $q = "INSERT INTO address_book (assigned_user_id, bean, bean_id) VALUES ('{$current_user->id}', '{$contact['module']}', '{$contact['id']}')";
                 $r = $this->db->query($q, true);
             }
@@ -874,18 +883,23 @@ HTML;
     /**
      * Removes contacts from the user's address book
      * @param array ids
+     * @throws SuiteException
      */
     public function removeContacts($ids)
     {
         global $current_user;
 
-        $concat = "";
+        $concat = '';
 
         foreach ($ids as $id) {
             if (!empty($concat)) {
-                $concat .= ", ";
+                $concat .= ', ';
             }
 
+            $isValidator = new SuiteValidator();
+            if (!$isValidator->isValidId($id)) {
+                throw new SuiteException('Invalid contact ID' . $id);
+            }
             $concat .= "'{$id}'";
         }
 
@@ -1056,7 +1070,7 @@ HTML;
     /**
      * @param bool $useRequestedRecord
      * @return array
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function getUserPreferencesJS($useRequestedRecord = false)
     {
@@ -3602,7 +3616,7 @@ eoq;
             $hiddenCount = $totalCount - $defaultNum;
             $frontStr = substr($tempStr, 0, $position);
             $backStr = substr($tempStr, $position, -1);
-            $str = htmlentities($frontStr) . '<a class="utilsLink" onclick="javascript: SUGAR.email2.detailView.displayAllAddrs(this);">...[' . $mod_strings['LBL_EMAIL_DETAIL_VIEW_SHOW'] . $hiddenCount . $mod_strings['LBL_EMAIL_DETAIL_VIEW_MORE'] . ']</a><span style="display: none;">' . htmlentities($backStr) . '</span>';
+            $str = htmlentities($frontStr) . '<a class="utilsLink" onclick="SUGAR.email2.detailView.displayAllAddrs(this);">...[' . $mod_strings['LBL_EMAIL_DETAIL_VIEW_SHOW'] . $hiddenCount . $mod_strings['LBL_EMAIL_DETAIL_VIEW_MORE'] . ']</a><span style="display: none;">' . htmlentities($backStr) . '</span>';
         }
 
         return $str;

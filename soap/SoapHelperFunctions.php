@@ -1075,9 +1075,12 @@ function check_for_duplicate_contacts($seed)
     //This query is looking for the id of Contact records that do not have a primary email address based on the matching
     //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
     //that it is the duplicate record
+    $trimmed_first = DBManagerFactory::getInstance()->quoted($trimmed_first);
+    $trimmed_last = DBManagerFactory::getInstance()->quoted($trimmed_last);
+
     $query = "SELECT c.id as id FROM contacts c
 LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
-WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND c.deleted = 0 AND eabr.id IS NULL";
+WHERE c.first_name = $trimmed_first AND c.last_name = $trimmed_last AND c.deleted = 0 AND eabr.id IS NULL";
 
     //Apply the limit query filter to this since we only need the first record
     $result = DBManagerFactory::getInstance()->getOne($query);

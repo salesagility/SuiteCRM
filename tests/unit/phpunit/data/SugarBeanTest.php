@@ -2317,7 +2317,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->id = 'testBean_1';
+        $bean->id = 'testBean_1+!';
         $bean->modified_by_name = 'testing';
         $results = null;
         try {
@@ -2346,7 +2346,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->id = 'testBean_1';
+        $bean->id = 'testBean_1+!';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
             'email_addresses' => array(
@@ -2385,7 +2385,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->id = 'testBean_1';
+        $bean->id = 'testBean_1+!';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
             'email_addresses' => array(
@@ -2426,7 +2426,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $bean->id = 'testBean_1';
+        $bean->id = 'testBean_1+!';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
             'email_addresses' => array(
@@ -2468,7 +2468,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->fieldDefsStore('temp1');
         $this->fieldDefsRestore();
         $bean = BeanFactory::getBean('Contacts');
-        $bean->id = 'testBean_1';
+        $bean->id = 'testBean_1+!';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array_merge($bean->field_defs, $bean->field_defs = array(
             'email_addresses' => array(
@@ -2507,9 +2507,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->fieldDefsRestore('temp1', true);
 
         // cleanup
-        $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'testBean_1'");
-        $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
-        $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
+        $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'testBean_1+!'");
+        $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1+!'");
+        $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1+!'");
         $this->db->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
         
 
