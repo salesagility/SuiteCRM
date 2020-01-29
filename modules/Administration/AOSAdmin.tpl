@@ -18,7 +18,7 @@
         <tr>
             <td  scope="row" width="200">{$MOD.LBL_AOS_ADMIN_CONTRACT_RENEWAL_REMINDER}: </td>
             <td  >
-                <input type='text' size='10' name='aos_contracts_renewalReminderPeriod' value='{$config.aos.contracts.renewalReminderPeriod}' > <span>{$MOD.LBL_AOS_DAYS}</span>
+                <input type='number' size='10' name='aos_contracts_renewalReminderPeriod' value='{$config.aos.contracts.renewalReminderPeriod}' > <span>{$MOD.LBL_AOS_DAYS}</span>
             </td>
         </tr>
     </table>
@@ -30,7 +30,7 @@
         <tr>
             <td  scope="row" width="200">{$MOD.LBL_AOS_ADMIN_INITIAL_INVOICE_NUMBER}: </td>
             <td  >
-                <input type='text' size='10' name='aos_invoices_initialNumber' value='{$config.aos.invoices.initialNumber}' >
+                <input type='number' size='10' name='aos_invoices_initialNumber' value='{$config.aos.invoices.initialNumber}' >
             </td>
         </tr>
     </table>
@@ -41,7 +41,7 @@
         <tr>
             <td  scope="row" width="200">{$MOD.LBL_AOS_ADMIN_INITIAL_QUOTE_NUMBER}: </td>
             <td  >
-                <input type='text' size='10' name='aos_quotes_initialNumber' value='{$config.aos.quotes.initialNumber}' >
+                <input type='number' size='10' name='aos_quotes_initialNumber' value='{$config.aos.quotes.initialNumber}' >
             </td>
         </tr>
     </table>

@@ -7,11 +7,6 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ExceptionTest extends SuitePHPUnitFrameworkTestCase
 {
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
     /**#
      * @var Exception $exception
      */

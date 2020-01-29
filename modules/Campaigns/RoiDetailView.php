@@ -136,7 +136,7 @@ $campaign_id = $focus->id;
       if (empty($opp_data1['opp_count'])) {
           $opp_data1['opp_count']=0;
       }
-      //_ppd($opp_data1);
+
      $smarty->assign("OPPORTUNITIES_WON", $opp_data1['opp_count']);
           
             $camp_query1  = "select camp.name, count(*) click_thru_link";
@@ -200,7 +200,6 @@ $campaign_id = $focus->id;
     //$cache_file_name	= $current_user->getUserPrivGuid()."_campaign_response_by_activity_type_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
     $cache_file_name_roi	= $current_user->getUserPrivGuid()."_campaign_response_by_roi_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
     $chart= new campaign_charts();
-    //_ppd($roi_vals);
     $smarty->assign("MY_CHART_ROI", $chart->campaign_response_roi($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $focus->id, true, true));
     //end chart
     //custom chart code
