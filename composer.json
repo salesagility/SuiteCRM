@@ -37,7 +37,7 @@
     "google/apiclient": "^2.0",
     "google/recaptcha": "^1.1",
     "justinrainbow/json-schema": "^5.2",
-    "league/oauth2-server": "^5.1",
+    "league/oauth2-server": "^6.1",
     "league/uri": "^4.2.3",
     "monolog/monolog": "^1.23",
     "nesbot/carbon": "^1.31",
