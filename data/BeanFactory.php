@@ -223,7 +223,8 @@ class BeanFactory
         return [
             'moduleName' => $module,
             'beanName' => self::getBeanName($module),
-            'customBeanName' => self::getBeanClass($module),
+            'customBeanName' => self::getCustomBeanName($module),
+            'beanClass' => self::getBeanClass($module),
             'objectName' => self::getObjectName($module),
             'customObjectName' => self::getCustomObjectName($module),
             'classFile' => self::getBeanFile($module),
@@ -232,7 +233,7 @@ class BeanFactory
     }
 
     /**
-     * Gets the core bean name/class for given module.
+     * Gets the core bean name/class for given module or false.
      *
      * @param $module
      *
@@ -250,7 +251,25 @@ class BeanFactory
     }
 
     /**
-     * Gets core bean class or custom bean class if exists for given module.
+     * Gets custom bean name/class for given module or false.
+     *
+     * @param $module
+     *
+     * @return string|bool
+     */
+    public static function getCustomBeanName($module)
+    {
+        global $customBeanList;
+
+        if (empty($customBeanList[$module])) {
+            return false;
+        }
+
+        return $customBeanList[$module];
+    }
+
+    /**
+     * Gets custom bean class if exists or core if not for given module.
      *
      * @param $module
      *
@@ -268,7 +287,7 @@ class BeanFactory
     }
 
     /**
-     * Returns the object name / dictionary key for a given module.
+     * Returns the core object name / dictionary key for a given module.
      * This should normally be the same as the bean name, but may not for special case modules (ex. Case vs aCase).
      *
      * @param string $module
@@ -287,7 +306,8 @@ class BeanFactory
     }
 
     /**
-     * Gets custom object name for given module.
+     * Returns the custom object name / dictionary key for a given module.
+     * This should normally be the same as the bean name, but may not for special case modules (ex. Case vs aCase).
      *
      * @param string $module
      *
@@ -298,14 +318,14 @@ class BeanFactory
         global $customObjectList;
 
         if (empty($customObjectList[$module])) {
-            return self::getObjectName($module);
+            return self::getCustomBeanName($module);
         }
 
         return $customObjectList[$module];
     }
 
     /**
-     * Gets core bean file as string for given module.
+     * Gets core bean file path as string for given module or false.
      *
      * @param string $module
      *
@@ -325,7 +345,7 @@ class BeanFactory
     }
 
     /**
-     * Gets custom bean file as string for given module.
+     * Gets custom bean file path as string for given module or false.
      *
      * @param string $module
      *
