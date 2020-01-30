@@ -34,7 +34,7 @@ class WebDriver extends \Codeception\Module\WebDriver
      * @param int $timeout
      * @throws Exception
      */
-    public function waitForElementVisible($element, $timeout = 3)
+    public function waitForElementVisible($element, $timeout = 5)
     {
         parent::waitForElementVisible($element, $timeout);
     }
@@ -44,7 +44,7 @@ class WebDriver extends \Codeception\Module\WebDriver
      * @param int $timeout
      * @throws Exception
      */
-    public function waitForElementNotVisible($element, $timeout = 3)
+    public function waitForElementNotVisible($element, $timeout = 5)
     {
         parent::waitForElementNotVisible($element, $timeout);
     }
@@ -55,7 +55,7 @@ class WebDriver extends \Codeception\Module\WebDriver
      * @param null $selector
      * @throws Exception
      */
-    public function waitForText($text, $timeout = 3, $selector = null)
+    public function waitForText($text, $timeout = 5, $selector = null)
     {
         parent::waitForText($text, $timeout, $selector);
     }
