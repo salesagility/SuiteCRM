@@ -41,9 +41,13 @@ class BeanFactoryTest extends TestCase
         $extensionContents = '<?php' . PHP_EOL;
         $compiledIncludePath = 'custom/application/Ext/Include';
         $extIncludePath = 'custom/Extension/application/Ext/Include';
-        $extIncludeDir = dir($extIncludePath);
-
         $noExtensions = true;
+
+        if (!file_exists($extIncludePath)) {
+            mkdir_recursive($extIncludePath, true);
+        }
+
+        $extIncludeDir = dir($extIncludePath);
         while ($file = $extIncludeDir->read()) {
             if ($this->shouldSkipFileEntry($file, $extIncludePath)) {
                 continue;
