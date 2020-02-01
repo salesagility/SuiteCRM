@@ -23,11 +23,13 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
      */
     public function tearDown()
     {
+        global $reload_vardefs;
+
         $this->removeCoreModuleAllExtension();
 
-        $this->refreshGlobals();
+        $this->refreshModuleGlobals();
 
-        $GLOBALS['reload_vardefs'] = true;
+        $reload_vardefs = true;
 
         parent::tearDown();
     }
@@ -36,7 +38,7 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
      */
     public function moduleConfigProvider()
     {
-        $this->refreshGlobals();
+        $this->refreshModuleGlobals();
 
         global $beanList, $customBeanList, $objectList, $customObjectList, $beanFiles, $customBeanFiles;
 
@@ -250,7 +252,7 @@ EOT;
     /**
      * @return void
      */
-    public function refreshGlobals()
+    public function refreshModuleGlobals()
     {
         $beanList = $customBeanList = $objectList = $customObjectList = $beanFiles = $customBeanFiles = [];
 
