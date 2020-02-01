@@ -4,6 +4,7 @@ use SuiteCRM\Test\BeanFactoryTestCase;
 
 /**
  * Class BeanFactoryTest
+ * TODO: BeanFactoryTest::convertParams
  * TODO: BeanFactoryTest::testInitBeanRegistry
  * TODO: BeanFactoryTest::testHasEncodeFlag
  * TODO: BeanFactoryTest::testHasDeletedFlag
