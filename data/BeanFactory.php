@@ -102,16 +102,8 @@ class BeanFactory
      */
     public static function getBean($module, $id = null, $params = [], $deleted = true)
     {
-        // Check if params is an array, if not use old arguments
-        if (isset($params) && !is_array($params)) {
-            $params = [
-                'encode' => $params,
-            ];
-        }
-
-        // Pull values from $params array
+        $params = self::convertParams($params);
         $encode = self::hasEncodeFlag($params);
-
         $deleted = self::hasDeletedFlag($params, $deleted);
 
         self::initBeanRegistry($module);
@@ -137,19 +129,36 @@ class BeanFactory
             }
 
             self::registerBean($module, $bean, $id);
-        } else {
-            ++self::$hits;
 
-            ++self::$touched[$module][$id];
+            return $bean;
+        }
 
-            $bean = self::$loadedBeans[$module][$id];
+        ++self::$hits;
 
-            if ($deleted && $bean->deleted) {
-                return false;
-            }
+        ++self::$touched[$module][$id];
+
+        $bean = self::$loadedBeans[$module][$id];
+
+        if ($deleted && $bean->deleted) {
+            return false;
         }
 
         return $bean;
+    }
+
+    /**
+     * @param array|bool $params
+     * @return array
+     */
+    protected static function convertParams($params)
+    {
+        if (!is_array($params)) {
+            $params = [
+                'encode' => $params,
+            ];
+        }
+
+        return $params;
     }
 
     /**
