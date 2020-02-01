@@ -67,6 +67,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     {
         global $dictionary;
 
+        $GLOBALS['reload_vardefs'] = false;
+
         // test dup3
         include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
         $bean = new AM_ProjectTemplates_sugar();
@@ -311,7 +313,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals('', $bean->optimistic_lock);
         self::assertEquals(array(), $bean->list_fields);
-        self::assertNotTrue(isset($bean->added_custom_field_defs));
+        self::assertTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
 
 
@@ -427,7 +429,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertNotEquals(true, $bean->optimistic_lock);
         self::assertEquals(array(), $bean->list_fields);
-        self::assertNotTrue(isset($bean->added_custom_field_defs));
+        self::assertTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
 
 
@@ -543,7 +545,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertNotEquals(true, $bean->optimistic_lock);
         self::assertEquals(array(), $bean->list_fields);
-        self::assertNotTrue(isset($bean->added_custom_field_defs));
+        self::assertTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
     }
 
