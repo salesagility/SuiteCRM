@@ -23,13 +23,9 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
      */
     public function tearDown()
     {
-        global $reload_vardefs;
-
         $this->removeCoreModuleAllExtension();
 
         $this->refreshModuleGlobals();
-
-        $reload_vardefs = true;
 
         parent::tearDown();
     }

@@ -69,6 +69,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test dup3
         include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
+        $GLOBALS['reload_vardefs'] = true;
         $bean = new AM_ProjectTemplates_sugar();
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertEquals('AM_ProjectTemplates', $bean->module_name);
