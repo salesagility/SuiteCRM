@@ -46,7 +46,7 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
     {
         $this->refreshModuleGlobals();
 
-        global $beanList, $customBeanList, $objectList, $customObjectList, $beanFiles, $customBeanFiles;
+        global $customBeanList, $objectList, $customObjectList, $beanFiles, $customBeanFiles;
 
         $moduleList = $this->getModuleList();
 
