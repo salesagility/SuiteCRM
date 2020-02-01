@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-// include the the dependencies and related or used beans at least once to let IDE to see it
+// include the dependencies and related or used beans at least once to let IDE to see it
 include_once 'modules/InboundEmail/InboundEmail.php';
 include_once 'modules/Emails/Email.php';
 include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsEmptyException.php';

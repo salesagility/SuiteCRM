@@ -1028,8 +1028,6 @@ HTML;
 
         $r = $user->db->query($union);
 
-        //_pp($union);
-
         while ($a = $user->db->fetchByAssoc($r)) {
             $c = array();
 
@@ -1561,7 +1559,7 @@ HTML;
                 $attachmentHtmlData = $meta['attachments'];
                 $actualAttachmentInfo = array();
                 $this->parseAttachmentInfo($actualAttachmentInfo, $attachmentHtmlData);
-                if (sizeof($actualAttachmentInfo) > 0) {
+                if (count($actualAttachmentInfo) > 0) {
                     foreach ($actualAttachmentInfo as $key => $value) {
                         $info_vars = array();
                         parse_str($value, $info_vars);
@@ -3498,7 +3496,7 @@ eoq;
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, "w")) {
-            fputs($fh, $the_string);
+            fwrite($fh, $the_string);
             fclose($fh);
 
             return true;
@@ -3610,7 +3608,7 @@ eoq;
     }
 
     /**
-     * Unify the seperator as ,
+     * Unify the separator as ,
      *
      * @param String $str email address string
      * @return String converted string

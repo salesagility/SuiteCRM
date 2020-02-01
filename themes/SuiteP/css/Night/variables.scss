@@ -965,8 +965,10 @@ $navbar-link-color-hover: $color-50;
 $navbar-main-menu-bg: $color-9;
 $navbar-menu-link-color: $color-81;
 $navbar-menu-link-color-hover: $color-50;
-$navbar-menu-seperator: $color-18;
-$navbar-menu-current-seperator: $color-50;
+$navbar-menu-separator: $color-18;
+$navbar-menu-current-separator: $color-50;
+$navbar-menu-seperator: $navbar-menu-separator; //needed for backward compatibility
+$navbar-menu-current-seperator: $navbar-menu-current-separator; //needed for backward compatibility
 $navbar-mobile-toolbar-color: $color-81;
 
 $navbar-home-color: $navbar-link-color;
@@ -987,7 +989,8 @@ $navbar-quick-create-btn-bg: $color-33;
 $navbar-quick-create-menu-bg: $color-33;
 $navbar-quick-create-menu-color: $color-81;
 $navbar-quick-create-menu-color-hover: $color-81;
-$navbar-quick-create-menu-seperator: $color-20;
+$navbar-quick-create-menu-separator: $color-20;
+$navbar-quick-create-menu-seperator: $navbar-quick-create-menu-separator; //needed for backward compatibility
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
 
 $navbar-alert-color: $navbar-link-color;
@@ -998,7 +1001,7 @@ $navbar-alert-body-color: $main-font-color;
 $navbar-alert-body-bg: $main-bg;
 $navbar-alert-title-bg: $color-9;
 $navbar-alert-title-color: $main-font-color;
-$navbar-alert-seperator: $navbar-menu-seperator;
+$navbar-alert-separator: $navbar-menu-separator;
 $navbar-alert-count-bg: $color-81;
 
 $navbar-user-color: $navbar-link-color;
@@ -1043,7 +1046,8 @@ $default-tab-color-hover: $color-81;
 $default-tab-color: $color-81;
 $action-tab-bg: $color-50;
 $action-tab-bg-hover: $color-50;
-$action-tab-seperator: $color-53;
+$action-tab-separator: $color-53;
+$action-tab-seperator: $action-tab-separator; //needed for backward compatibility
 $action-tab-color: $color-81;
 $action-tab-color-hover: $color-81;
 $tab-bg: $panel-bg;
@@ -1087,6 +1091,7 @@ $list-view-action-button-disabled-color: $disabled-btn-color;
 $list-view-action-menu-bg: $color-20;
 $list-view-action-menu-link-bg: $color-14;
 $list-view-action-menu-separator: $color-27;
+$list-view-action-menu-seperator: $list-view-action-menu-separator; //needed for backward compatibility
 $list-view-choose-columns-displayed: $color-42;
 $list-view-choose-columns-hidden: $color-56;
 $list-view-data-icon-font-size: 18px;

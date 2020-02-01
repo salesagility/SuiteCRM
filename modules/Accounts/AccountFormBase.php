@@ -51,39 +51,48 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class AccountFormBase
 {
+    protected $db = null;
+
+    public function __construct()
+    {
+        $this->db = DBManagerFactory::getInstance();
+    }
+
     public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
 
         $focus = new Account();
         $query = '';
-        $baseQuery = 'select id, name, website, billing_address_city  from accounts where deleted!=1 and ';
-        if (!empty($_POST[$prefix.'name'])) {
-            $query = $baseQuery ."  name like '".$_POST[$prefix.'name']."%'";
+
+        $name = $_POST[$prefix.'name'];
+        $shippingAddressCity = $_POST[$prefix.'shipping_address_city'];
+        $billingAddressCity = $_POST[$prefix.'billing_address_city'];
+
+        $baseQuery = 'SELECT id, name, website, billing_address_city FROM accounts WHERE deleted != 1 AND ';
+
+        if (!empty($name)) {
+            $nameQuoted = $this->db->quoted($name . '%');
+            $query = $baseQuery ." name LIKE " . $nameQuoted;
         }
 
-        if (!empty($_POST[$prefix.'billing_address_city']) || !empty($_POST[$prefix.'shipping_address_city'])) {
-            $temp_query = '';
-            if (!empty($_POST[$prefix.'billing_address_city'])) {
-                if (empty($temp_query)) {
-                    $temp_query =  "  billing_address_city like '".$_POST[$prefix.'billing_address_city']."%'";
-                } else {
-                    $temp_query .= "or billing_address_city like '".$_POST[$prefix.'billing_address_city']."%'";
-                }
+        if (!empty($billingAddressCity) || !empty($shippingAddressCity)) {
+            $tempQuery = '';
+
+            if (!empty($billingAddressCity)) {
+                $billingAddressCityQuoted = $this->db->quoted($billingAddressCity . '%');
+                $tempQuery += (empty($temp_query)) ?: 'OR ';
+                $tempQuery = "billing_address_city LIKE " . $billingAddressCityQuoted;
             }
-            if (!empty($_POST[$prefix.'shipping_address_city'])) {
-                if (empty($temp_query)) {
-                    $temp_query = "  shipping_address_city like '".$_POST[$prefix.'shipping_address_city']."%'";
-                } else {
-                    $temp_query .= "or shipping_address_city like '".$_POST[$prefix.'shipping_address_city']."%'";
-                }
+
+            if (!empty($shippingAddressCity)) {
+                $shippingAddressCityQuoted = $this->db->quoted($shippingAddressCity . '%');
+                $tempQuery += (empty($temp_query)) ?: 'OR ';
+                $tempQuery = "shipping_address_city LIKE " . $shippingAddressCityQuoted;
             }
-            if (empty($query)) {
-                $query .= $baseQuery;
-            } else {
-                $query .= ' AND ';
-            }
-            $query .=   ' ('. $temp_query . ' ) ';
+
+            $query .= (empty($query)) ? $baseQuery : ' AND ';
+            $query .=   ' ('. $tempQuery . ' ) ';
         }
 
         if (!empty($query)) {
@@ -91,16 +100,19 @@ class AccountFormBase
             $db = DBManagerFactory::getInstance();
             $result = $db->query($query);
             $i=-1;
+
             while (($row=$db->fetchByAssoc($result)) != null) {
                 $i++;
                 $rows[$i] = $row;
             }
+
             if ($i==-1) {
                 return null;
             }
 
             return $rows;
         }
+
         return null;
     }
 
@@ -118,7 +130,7 @@ class AccountFormBase
             global $mod_strings;
         }
         global $app_strings;
-        $cols = sizeof($rows[0]) * 2 + 1;
+        $cols = count($rows[0]) * 2 + 1;
         if ($action != 'ShowDuplicates') {
             $form = "<form action='index.php' method='post' id='dupAccounts'  name='dupAccounts'><input type='hidden' name='selectedAccount' value=''>";
             $form .= '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';
@@ -441,7 +453,7 @@ EOQ;
                         $get .= "&Accounts$field=".urlencode($focus->$field);
                     }
                 }
-            
+
 
                 if ($focus->hasCustomFields()) {
                     foreach ($focus->field_defs as $name=>$field) {
@@ -498,7 +510,7 @@ EOQ;
 
         $focus->save($check_notify);
         $return_id = $focus->id;
-    
+
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 
 

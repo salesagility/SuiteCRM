@@ -122,7 +122,7 @@ function getControl(
 
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
-            fputs($fh, $contents);
+            fwrite($fh, $contents);
             fclose($fh);
         }
     }

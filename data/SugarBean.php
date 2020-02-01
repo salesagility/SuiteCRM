@@ -1530,7 +1530,7 @@ class SugarBean
                 $GLOBALS['log']->warn('Children info is not an array');
             }
             foreach ((array)$children_info as $child_info) {
-                if ($child_info['type'] == 'parent') {
+                if (is_array($child_info) && $child_info['type'] == 'parent') {
                     if (!isset($child_info['parent_type'])) {
                         $GLOBALS['log']->fatal('"parent_type" is not set');
                     }
@@ -1682,14 +1682,14 @@ class SugarBean
                 return true;
             }
             return false;
-        } elseif (isset($this->assigned_user_id)) {
+        } elseif (!empty($this->assigned_user_id)) {
             if ($this->assigned_user_id == $user_id) {
                 return true;
             }
             return false;
         }
         //other wise if there is a created_by that is the owner
-        if (isset($this->created_by) && $this->created_by == $user_id) {
+        if (!empty($this->created_by) && $this->created_by == $user_id) {
             return true;
         }
 

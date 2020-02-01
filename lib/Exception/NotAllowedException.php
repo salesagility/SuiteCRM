@@ -1,10 +1,11 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,33 +38,24 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-var abouter = function(){
-	return {
-		display:function(){
-			abouter.div = document.getElementById('abouterdiv');
-			abouter.div.style.display ='';
-			abouter.div.src = "index.php?module=Home&action=PopupSugar&to_pdf=true&style=" + abouter.style;
-		},
-		ab:function(index, style){
-			if(abouter.starter == 3){
-				abouter.style = style;
-				abouter.display();
-			}else{
-				if(index == abouter.starter + 1){
-					abouter.starter++;
-				}else{
-					abouter.starter= 0;
-				}
-			}
+namespace SuiteCRM\Exception;
 
-		}
+use SuiteCRM\Enumerator\ExceptionCode;
 
-
-
-	}
-
-
-
-}();
-abouter.starter = 0;
-abouter.style = 'inc';
+/**
+ * Class NotAllowedException
+ * @package SuiteCRM\Exception
+ */
+class NotAllowedException extends Exception
+{
+    /**
+     * NotAllowedException constructor.
+     * @param string $message
+     * @param int $code
+     * @param null $previous
+     */
+    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
+    {
+        parent::__construct('[Not Allowed] ' . $message, $code, $previous);
+    }
+}

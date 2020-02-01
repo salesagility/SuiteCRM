@@ -74,11 +74,8 @@ class Imap implements ImapInterface
      */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, array $params = null)
     {
-        $state = new StateSaver();
-        $state->pushErrorLevel();
-        error_reporting(0);
         $this->resource = imap_open($mailbox, $username, $password, $options, $n_retries, $params);
-        $state->popErrorLevel();
+
         return $this->resource;
     }
 }

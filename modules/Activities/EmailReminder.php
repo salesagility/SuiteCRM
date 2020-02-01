@@ -134,25 +134,23 @@ class EmailReminder
 
         if (!empty($bean->created_by)) {
             $user_id = $bean->created_by;
+        } elseif (!empty($bean->assigned_user_id)) {
+            $user_id = $bean->assigned_user_id;
         } else {
-            if (!empty($bean->assigned_user_id)) {
-                $user_id = $bean->assigned_user_id;
-            } else {
-                $user_id = $GLOBALS['current_user']->id;
-            }
+            $user_id = $GLOBALS['current_user']->id;
         }
         $user = BeanFactory::getBean('Users', $user_id);
 
         $OBCharset = $GLOBALS['locale']->getPrecedentPreference('default_email_charset');
-        require_once("include/SugarPHPMailer.php");
+        require_once __DIR__ . '/../../include/SugarPHPMailer.php';
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
 
         if (empty($admin->settings['notify_send_from_assigning_user'])) {
             $from_address = $admin->settings['notify_fromaddress'];
-            $from_name = $admin->settings['notify_fromname'] ? "" : $admin->settings['notify_fromname'];
+            $from_name = $admin->settings['notify_fromname'] ? '' : $admin->settings['notify_fromname'];
         } else {
-            $from_address = $user->emailAddress->getReplyToAddress($user);
+            $from_address = (new SugarEmailAddress())->getReplyToAddress($user);
             $from_name = $user->full_name;
         }
 

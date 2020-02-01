@@ -1,11 +1,12 @@
 <?php
 
-class AOK_KnowledgeBaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOK_KnowledgeBaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testAOK_KnowledgeBase()
     {
-
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $aok_KnowledgeBase = new AOK_KnowledgeBase();
         $this->assertInstanceOf('AOK_KnowledgeBase', $aok_KnowledgeBase);
         $this->assertInstanceOf('Basic', $aok_KnowledgeBase);

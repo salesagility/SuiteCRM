@@ -87,11 +87,7 @@ function handleSubs($subs, $email, $json, $user = null)
     return $out;
 }
 
-/*********************************************************************************
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
+
 //increate timeout for phpo script execution
 ini_set('max_execution_time', 300);
 //ajaxInit();
@@ -1692,7 +1688,6 @@ eoq;
             if (isset($_REQUEST['contactData'])) {
                 $contacts = $json->decode(from_HTML($_REQUEST['contactData']));
                 if ($contacts) {
-                    //_ppd($contacts);
                     $email->et->setContacts($contacts);
                 }
             }

@@ -18,9 +18,9 @@ matrix:
       before_script: composer install
       script: composer validate
     - name: "code coverage"
-      php: "7.0"
+      php: "7.3"
       dist: xenial
-      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage --ci; cat codeception.dist.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; ./vendor/bin/robo code:coverage --ci; cat codeception.dist.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
 services:
   - mysql
@@ -103,7 +103,8 @@ script:
 after_script:
   - ./build/push_output.sh
   - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@var/log/apache2/error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@install.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   - echo $TRAVIS_COMMIT_RANGE
 
 branches:

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,53 +38,24 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\Exception;
 
-namespace SuiteCRM;
-
-use PHPUnit_Framework_TestCase;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * StateCheckerPHPUnitTestCaseAbstract
- *
- * @author SalesAgility
+ * Class NotFoundException
+ * @package SuiteCRM\Exception
  */
-abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_TestCase
+class NotFoundException extends Exception
 {
-    use StateCheckerTrait;
-    
-    protected static $verbose = true;
-    
     /**
-     * Collect state information and storing a hash
+     * NotFoundException constructor.
+     * @param string $message
+     * @param int $code
+     * @param null $previous
      */
-    protected function setUp()
+    public function __construct($message = '', $code = ExceptionCode::API_CONTENT_NEGOTIATION_FAILED, $previous = null)
     {
-        if (self::$verbose) {
-            $currentTestName = get_class($this) . '::' . $this->getName(false);
-            fwrite(STDOUT, "\t" . $currentTestName  . " ..");
-            for ($i = 60; $i > strlen($currentTestName); $i--) {
-                fwrite(STDOUT, ".");
-            }
-        }
-        
-        $this->beforeStateCheck();
-        parent::setUp();
-    }
-    
-    /**
-     * Collect state information and comparing hash
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        $this->afterStateCheck();
-        
-        if (self::$verbose) {
-            fwrite(STDOUT, " [done]\n");
-        }
+        parent::__construct('[Not Found] ' . $message, $code, $previous);
     }
 }
