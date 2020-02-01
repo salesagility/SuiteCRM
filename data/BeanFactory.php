@@ -118,8 +118,6 @@ class BeanFactory
 
         $beanClass = self::getBeanClass($module);
 
-        self::loadBeanFile($module);
-
         if (!self::loadBeanFile($module)) {
             return false;
         }
