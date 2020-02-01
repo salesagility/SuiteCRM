@@ -48,11 +48,7 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
 
         global $beanList, $customBeanList, $objectList, $customObjectList, $beanFiles, $customBeanFiles;
 
-        $moduleList = $this->testAllModules
-            ? $beanList
-            : [
-                $this->testSingleModule => $beanList[$this->testSingleModule],
-            ];
+        $moduleList = $this->getModuleList();
 
         $modulesConfig = [];
         foreach ($moduleList as $moduleName => $moduleClass) {
@@ -91,6 +87,20 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
         }
 
         return $modulesConfig;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getModuleList()
+    {
+        global $beanList;
+
+        return $this->testAllModules
+            ? $beanList
+            : [
+                $this->testSingleModule => $beanList[$this->testSingleModule],
+            ];
     }
 
     /**
