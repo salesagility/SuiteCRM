@@ -25,6 +25,8 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
     {
         $this->removeCoreModuleAllExtension();
 
+        $this->refreshGlobals();
+
         parent::tearDown();
     }
     /**
