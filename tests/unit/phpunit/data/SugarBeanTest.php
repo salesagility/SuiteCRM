@@ -432,7 +432,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertNotEquals(true, $bean->optimistic_lock);
         self::assertEquals(array(), $bean->list_fields);
-        self::assertTrue(isset($bean->added_custom_field_defs));
+        self::assertNotTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
 
 
@@ -548,7 +548,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertNotEquals(true, $bean->optimistic_lock);
         self::assertEquals(array(), $bean->list_fields);
-        self::assertTrue(isset($bean->added_custom_field_defs));
+        self::assertNotTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
     }
 
