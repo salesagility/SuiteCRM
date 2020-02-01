@@ -27,6 +27,8 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
 
         $this->refreshGlobals();
 
+        $GLOBALS['reload_vardefs'] = true;
+
         parent::tearDown();
     }
     /**
