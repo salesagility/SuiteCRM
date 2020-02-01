@@ -8,6 +8,16 @@ use SuiteCRM\Exception\Exception;
 class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
 {
     /**
+     * @var bool
+     */
+    protected $testAllModules = false;
+
+    /**
+     * @var string
+     */
+    protected $testSingleModule = 'Accounts';
+
+    /**
      * @return void
      * @throws Exception in TestCaseAbstract::setup
      */
@@ -38,8 +48,14 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
 
         global $beanList, $customBeanList, $objectList, $customObjectList, $beanFiles, $customBeanFiles;
 
+        $moduleList = $this->testAllModules
+            ? $beanList
+            : [
+                $this->testSingleModule => $beanList[$this->testSingleModule],
+            ];
+
         $modulesConfig = [];
-        foreach ($beanList as $moduleName => $moduleClass) {
+        foreach ($moduleList as $moduleName => $moduleClass) {
             if ($this->shouldSkipModule($moduleClass)) {
                 continue;
             }
