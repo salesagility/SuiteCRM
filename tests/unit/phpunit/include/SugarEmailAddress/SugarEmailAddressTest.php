@@ -1610,12 +1610,15 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_POST['return_module'] = 'Contacts';
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
-        self::assertNotEquals($result, false);
+        self::assertEquals($result, false);
 
-        self::assertNotFalse(strpos(
+        self::assertFalse(strpos(
             $result,
-            '[{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","confirm_opt_in":"not-opt-in","date_created":null,"date_modified":null,"id":"test_email_bean_rel_1","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"0","deleted":"0"}]'
+            '[{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"test_email_bean_rel_1","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"0","deleted":"0"},{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"1","deleted":"0"}]'
         ));
+
+        self::assertEquals($result, false);
+
         // test
         $_POST['return_id'] = 'non-exists-id';
         $_POST['return_module'] = 'Contacts';
