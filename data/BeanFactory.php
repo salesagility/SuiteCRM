@@ -120,7 +120,7 @@ class BeanFactory
 
         self::loadBeanFile($module);
 
-        if (empty($beanClass) || !class_exists($beanClass)) {
+        if (!self::loadBeanFile($module)) {
             return false;
         }
 
