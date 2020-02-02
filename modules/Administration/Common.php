@@ -164,11 +164,12 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
             }
 
             if (sugar_file_put_contents($filename, create_field_lang_pak_contents(
-                    $old_contents,
-                    $key,
-                    $value,
-                    $language,
-                    $module))) {
+                $old_contents,
+                $key,
+                $value,
+                $language,
+                $module
+            )) !== false) {
                 $return_value = true;
                 $GLOBALS['log']->info("Successful write to: $filename");
             } else {
@@ -224,14 +225,14 @@ function save_custom_app_list_strings_contents(&$contents, $language, $custom_di
     if ($dir_exists) {
         $filename = "$dirname/$language.lang.php";
 
-        if(sugar_file_put_contents($filename, $contents)) {
+        if (sugar_file_put_contents($filename, $contents) !== false) {
                 $return_value = true;
-                $GLOBALS['log']->info("Successful write to: $filename");
+                LoggerManager::getLogger()->info("Successful write to: $filename");
         } else {
-            $GLOBALS['log']->info("Unable to write edited language pack to file: $filename");
+            LoggerManager::getLogger()->info("Unable to write edited language pack to file: $filename");
         }
     } else {
-        $GLOBALS['log']->info("Unable to create dir: $dirname");
+        LoggerManager::getLogger()->info("Unable to create dir: $dirname");
     }
     if ($return_value) {
         $cache_key = 'app_list_strings.'.$language;
@@ -260,17 +261,14 @@ function save_custom_app_list_strings(&$app_list_strings, $language)
     if ($dir_exists) {
         $filename = "$dirname/$language.lang.php";
 
-        if ($handle) {
-            $contents =create_dropdown_lang_pak_contents(
-                $app_list_strings,
-                $language
-            );
+        $contents =create_dropdown_lang_pak_contents(
+            $app_list_strings,
+            $language
+        );
 
-            if (sugar_file_put_contents($filename, $contents)) {
-                $return_value = true;
-                $GLOBALS['log']->info("Successful write to: $filename");
-            }
-
+        if (sugar_file_put_contents($filename, $contents) !== false) {
+            $return_value = true;
+            $GLOBALS['log']->info("Successful write to: $filename");
         } else {
             $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
         }

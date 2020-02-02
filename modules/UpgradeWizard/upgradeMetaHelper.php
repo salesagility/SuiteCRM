@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once(__DIR__.'/../../include/utils/sugar_file_utils.php');
+require_once 'include/utils/sugar_file_utils.php';
 
 class UpgradeMetaHelper
 {
