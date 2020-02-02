@@ -603,11 +603,11 @@ if (!is_null($_SESSION['scenarios'])) {
 
 //Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios
 $fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'], true).';';
-$fp = sugar_file_put_contents('custom/include/tabConfig.php', $fileContents);
+sugar_file_put_contents('custom/include/tabConfig.php', $fileContents);
 
 //Write the dashlets to custom so that the dashlets are not shown for the un-selected scenarios
 $fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets, true).';';
-$fp = sugar_file_put_contents('custom/modules/Home/dashlets.php', $fileContents);
+sugar_file_put_contents('custom/modules/Home/dashlets.php', $fileContents);
 
 
 // End of the scenario implementations
