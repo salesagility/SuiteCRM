@@ -162,24 +162,15 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
             } else {
                 $old_contents = '';
             }
-            $handle = sugar_fopen($filename, 'wb');
 
-
-            if ($handle) {
-                $contents =create_field_lang_pak_contents(
+            if (sugar_file_put_contents($filename, create_field_lang_pak_contents(
                     $old_contents,
                     $key,
                     $value,
                     $language,
-                    $module
-                );
-
-                if (fwrite($handle, $contents)) {
-                    $return_value = true;
-                    $GLOBALS['log']->info("Successful write to: $filename");
-                }
-
-                fclose($handle);
+                    $module))) {
+                $return_value = true;
+                $GLOBALS['log']->info("Successful write to: $filename");
             } else {
                 $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
             }
@@ -232,17 +223,12 @@ function save_custom_app_list_strings_contents(&$contents, $language, $custom_di
 
     if ($dir_exists) {
         $filename = "$dirname/$language.lang.php";
-        $handle = @sugar_fopen($filename, 'wt');
 
-        if ($handle) {
-            if (fwrite($handle, $contents)) {
+        if(sugar_file_put_contents($filename, $contents)) {
                 $return_value = true;
                 $GLOBALS['log']->info("Successful write to: $filename");
-            }
-
-            fclose($handle);
         } else {
-            $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
+            $GLOBALS['log']->info("Unable to write edited language pack to file: $filename");
         }
     } else {
         $GLOBALS['log']->info("Unable to create dir: $dirname");
@@ -273,7 +259,6 @@ function save_custom_app_list_strings(&$app_list_strings, $language)
 
     if ($dir_exists) {
         $filename = "$dirname/$language.lang.php";
-        $handle = @sugar_fopen($filename, 'wt');
 
         if ($handle) {
             $contents =create_dropdown_lang_pak_contents(
@@ -281,12 +266,11 @@ function save_custom_app_list_strings(&$app_list_strings, $language)
                 $language
             );
 
-            if (fwrite($handle, $contents)) {
+            if (sugar_file_put_contents($filename, $contents)) {
                 $return_value = true;
                 $GLOBALS['log']->info("Successful write to: $filename");
             }
 
-            fclose($handle);
         } else {
             $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
         }
