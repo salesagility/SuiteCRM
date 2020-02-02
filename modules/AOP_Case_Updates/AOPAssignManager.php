@@ -309,10 +309,7 @@ class AOPAssignManager
     \$lastUser = {$arrayString};
 ?>
 eoq;
-        if ($fh = @sugar_fopen($file, 'w')) {
-            fwrite($fh, $content);
-            fclose($fh);
-        }
+        sugar_file_put_contents($file, $content);
 
         return true;
     }
