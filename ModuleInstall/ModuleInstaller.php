@@ -475,7 +475,7 @@ class ModuleInstaller
     public function rebuildExt($ext, $filename)
     {
         $this->log(translate('LBL_MI_REBUILDING') . " $ext...");
-        $this->merge_files("Ext/$ext/", $filename);
+        $this->merge_files("Ext/$ext", $filename);
     }
 
     /**
@@ -1358,7 +1358,10 @@ class ModuleInstaller
                 }
 
                 $relName = strpos($filename, "MetaData") !== false ? substr($filename, 0, strlen($filename) - 12) : $filename;
-                sugar_file_put_contents("custom/Extension/application/Ext/TableDictionary/$relName.php", $str . "include('custom/metadata/$filename');\n\n?>");
+                sugar_file_put_contents(
+                    "custom/Extension/application/Ext/TableDictionary/$relName.php",
+                    $str . "include('custom/metadata/$filename');\n\n?>"
+                );
             }
 
 
@@ -1723,7 +1726,7 @@ class ModuleInstaller
     {
         foreach ($languages as $language=>$value) {
             $this->log(translate('LBL_MI_REBUILDING') . " Language...$language");
-            $this->merge_files('Ext/Language/', $language.'.lang.ext.php', $language);
+            $this->merge_files('Ext/Language', $language.'.lang.ext.php', $language);
             if ($modules!="") {
                 foreach ($modules as $module) {
                     LanguageManager::clearLanguageCache($module, $language);
@@ -1742,7 +1745,7 @@ class ModuleInstaller
     public function rebuild_dashletcontainers()
     {
         $this->log(translate('LBL_MI_REBUILDING') . " DC Actions...");
-        $this->merge_files('Ext/DashletContainer/Containers/', 'dcactions.ext.php');
+        $this->merge_files('Ext/DashletContainer/Containers', 'dcactions.ext.php');
     }
 
     public function rebuild_tabledictionary()

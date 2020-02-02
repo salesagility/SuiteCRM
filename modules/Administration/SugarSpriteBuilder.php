@@ -401,8 +401,11 @@ background-position: -{$offset_x}px -{$offset_y}px;
                 if ($this->cssMinify) {
                     $css_content = cssmin::minify($css_content);
                 }
-                sugar_file_put_contents("$outputDir/$cssFileName", $css_content,
-                    $fileMode == 'a' ? FILE_APPEND : 0);
+                sugar_file_put_contents(
+                    "$outputDir/$cssFileName",
+                    $css_content,
+                    $fileMode == 'a' ? FILE_APPEND : 0
+                );
 
                 /* save metadata */
                 $add_php_tag = (file_exists("$outputDir/$metaFileName") && $isRepeat) ? false : true;
