@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once 'include/SugarCache/SugarCache.php';
+
 if (!class_exists("ZipArchive")) {
     require_once('include/pclzip/pclzip.lib.php');
     if (isset($GLOBALS['log']) && class_implements($GLOBALS['log'], 'LoggerTemplate')) {
@@ -64,6 +66,8 @@ if (!class_exists("ZipArchive")) {
                     die("Error: " . $archive->errorInfo(true));
                 }
                 return false;
+            } else {
+                SugarCache::cleanDir($zip_dir);
             }
         } else {
             if ($archive->extract(PCLZIP_OPT_PATH, $zip_dir) == 0) {
@@ -71,6 +75,8 @@ if (!class_exists("ZipArchive")) {
                     die("Error: " . $archive->errorInfo(true));
                 }
                 return false;
+            } else {
+                SugarCache::cleanDir($zip_dir);
             }
         }
     }
@@ -100,6 +106,10 @@ if (!class_exists("ZipArchive")) {
                 }
 
                 return false;
+            } else {
+                if ((new SplFileInfo($archive_file))->getExtension() == 'php') {
+                    SugarCache::cleanFile($to_dir.'/'.$archive_file);
+                }
             }
         } else {
             if ($archive->extract(
@@ -114,6 +124,10 @@ if (!class_exists("ZipArchive")) {
                 }
 
                 return false;
+            } else {
+                if ((new SplFileInfo($archive_file))->getExtension() == 'php') {
+                    SugarCache::cleanFile($to_dir.'/'.$archive_file);
+                }
             }
         }
     }
