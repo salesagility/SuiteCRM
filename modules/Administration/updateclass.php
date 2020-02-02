@@ -60,7 +60,6 @@ foreach ($beanFiles as $classname => $filename) {
         sugar_rename($filename, $newfilename);
         
         //Create a new SugarBean that extends CoreBean
-        $fileHandle = sugar_fopen($filename, 'w') ;
         $newclass = <<<FABRICE
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
@@ -114,7 +113,6 @@ else{
 }
 ?>
 FABRICE;
-        fwrite($fileHandle, $newclass);
-        fclose($fileHandle);
+        sugar_file_put_contents($filename, $newclass);
     }
 }
