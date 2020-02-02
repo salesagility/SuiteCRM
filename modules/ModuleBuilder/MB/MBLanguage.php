@@ -249,9 +249,7 @@ class MBLanguage
                 }
             }
 
-            $fp = sugar_fopen($app_save_path . '/'. $lang, 'w');
-            fwrite($fp, $appFile);
-            fclose($fp);
+            sugar_file_put_contents($app_save_path . '/'. $lang, $appFile);
         }
     }
 

@@ -1381,9 +1381,7 @@ class ModuleInstaller
                 }
 
                 $relName = strpos($filename, "MetaData") !== false ? substr($filename, 0, strlen($filename) - 12) : $filename;
-                $out = sugar_fopen("custom/Extension/application/Ext/TableDictionary/$relName.php", 'w') ;
-                fwrite($out, $str . "include('custom/metadata/$filename');\n\n?>") ;
-                fclose($out) ;
+                sugar_file_put_contents("custom/Extension/application/Ext/TableDictionary/$relName.php", $str . "include('custom/metadata/$filename');\n\n?>");
             }
 
 
@@ -1872,9 +1870,7 @@ class ModuleInstaller
                     if (!file_exists("custom/$extpath")) {
                         mkdir_recursive("custom/$extpath", true);
                     }
-                    $out = sugar_fopen("custom/$extpath/$name", 'w');
-                    fwrite($out, $extension);
-                    fclose($out);
+                    sugar_file_put_contents("custom/$extpath/$name", $extension);
                 } else {
                     if (file_exists("custom/$extpath/$name")) {
                         unlink("custom/$extpath/$name");
@@ -1905,9 +1901,7 @@ class ModuleInstaller
             if (!file_exists("custom/$extpath")) {
                 mkdir_recursive("custom/$extpath", true);
             }
-            $out = sugar_fopen("custom/$extpath/$name", 'w');
-            fwrite($out, $extension);
-            fclose($out);
+            sugar_file_put_contents("custom/$extpath/$name", $extension);
         } else {
             if (file_exists("custom/$extpath/$name")) {
                 unlink("custom/$extpath/$name");
@@ -1948,7 +1942,7 @@ class ModuleInstaller
             if (!file_exists("custom/Extension/application/Ext/Include")) {
                 mkdir_recursive("custom/Extension/application/Ext/Include", true);
             }
-            file_put_contents("custom/Extension/application/Ext/Include/{$this->id_name}.php", $str);
+            sugar_file_put_contents("custom/Extension/application/Ext/Include/{$this->id_name}.php", $str);
         }
     }
 

@@ -310,9 +310,7 @@ class MBPackage
         }
         if (mkdir_recursive($path)) {
             $manifest = $this->getManifest() . $this->buildInstall($path);
-            $fp = sugar_fopen($this->getBuildDir() . '/manifest.php', 'w');
-            fwrite($fp, $manifest);
-            fclose($fp);
+            sugar_file_put_contents($this->getBuildDir() . '/manifest.php', $manifest);
         }
         if (file_exists('modules/ModuleBuilder/MB/LICENSE.txt')) {
             copy('modules/ModuleBuilder/MB/LICENSE.txt', $this->getBuildDir() . '/LICENSE.txt');
@@ -1039,9 +1037,7 @@ class MBPackage
             if (mkdir_recursive($tmppath)) {
                 copy_recursive($this->getPackageDir(), $tmppath . '/' . $this->name);
                 $manifest = $this->getManifest(true, $export) . $this->exportProjectInstall($package, $export);
-                $fp = sugar_fopen($tmppath . '/manifest.php', 'w');
-                fwrite($fp, $manifest);
-                fclose($fp);
+                sugar_file_put_contents($tmppath . '/manifest.php', $manifest);
                 if (file_exists('modules/ModuleBuilder/MB/LICENSE.txt')) {
                     copy('modules/ModuleBuilder/MB/LICENSE.txt', $tmppath . '/LICENSE.txt');
                 } else {
@@ -1050,9 +1046,7 @@ class MBPackage
                     }
                 }
                 $readme_contents = $this->readme;
-                $readmefp = sugar_fopen($tmppath . '/README.txt', 'w');
-                fwrite($readmefp, $readme_contents);
-                fclose($readmefp);
+                sugar_file_put_contents($tmppath . '/README.txt', $readme_contents);
             }
         }
         require_once 'include/utils/zip_utils.php';
