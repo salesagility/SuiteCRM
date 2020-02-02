@@ -3743,7 +3743,7 @@ function fix_dropdown_list()
                     //Now write out the file contents
                     //Create backup just in case
                     copy($file, $file . '.php_bak');
-                    if (!sugar_file_put_contents($file, $contents)) {
+                    if (sugar_file_put_contents($file, $contents) === false) {
                         $GLOBALS['log']->error("Unable to update file contents in fix_dropdown_list for {$file}");
                     } //if-else
                 }
@@ -3861,7 +3861,7 @@ function fix_dropdown_list()
                 if ($touched) {
                     //Create a backup just in case
                     copy($file, $file . '.bak');
-                    if (!sugar_file_put_contents($file, $contents)) {
+                    if (sugar_file_put_contents($file, $out) === false) {
                         //If we can't update the file, just return
                         $GLOBALS['log']->error("Unable to update file contents in fix_dropdown_list.");
                         return;

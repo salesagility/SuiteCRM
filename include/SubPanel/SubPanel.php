@@ -316,8 +316,10 @@ class SubPanel
         //  	$GLOBALS['log']->debug('SubPanel.php->saveSubPanelDefOverride(): '.$name);
         $newValue = override_value_to_string($name, 'override_subpanel_name', $filename);
         mkdir_recursive('custom/Extension/modules/'. $panel->parent_bean->module_dir . '/Ext/Layoutdefs', true);
-        sugar_file_put_contents('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$extname.php",
-		"<?php\n//auto-generated file DO NOT EDIT\n$newValue\n?>");
+        sugar_file_put_contents(
+            'custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$extname.php",
+            "<?php\n//auto-generated file DO NOT EDIT\n$newValue\n?>"
+        );
         require_once('ModuleInstall/ModuleInstaller.php');
         $moduleInstaller = new ModuleInstaller();
         $moduleInstaller->silent = true; // make sure that the ModuleInstaller->log() function doesn't echo while rebuilding the layoutdefs

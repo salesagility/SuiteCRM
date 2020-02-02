@@ -489,19 +489,25 @@ class MBModule
         $smarty->assign('class', $class) ;
 
         if (! file_exists($path . '/' . $class [ 'name' ] . '.php')) {
-            sugar_file_put_contents($path . '/' . $class ['name'] . '.php', 
-                $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl'));
+            sugar_file_put_contents(
+                $path . '/' . $class ['name'] . '.php',
+                $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl')
+            );
         }
         //write vardefs
-        sugar_file_put_contents($path . '/vardefs.php', 
-           $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/vardef.tpl')) ;
+        sugar_file_put_contents(
+            $path . '/vardefs.php',
+            $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/vardef.tpl')
+        );
         
         if (! file_exists($path . '/metadata')) {
             mkdir_recursive($path . '/metadata') ;
         }
         if (! empty($this->config [ 'studio' ])) {
-            sugar_file_put_contents($path . '/metadata/studio.php',
-                $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Studio.tpl')) ;
+            sugar_file_put_contents(
+                $path . '/metadata/studio.php',
+                $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Studio.tpl')
+            );
         } else {
             if (file_exists($path . '/metadata/studio.php')) {
                 unlink($path . '/metadata/studio.php') ;
@@ -516,8 +522,10 @@ class MBModule
         $smarty->assign('showvCard', in_array('person', array_keys($this->config[ 'templates' ]))) ;
         $smarty->assign('showimport', $this->config['importable']);
         //write sugar generated class
-        sugar_file_put_contents($path . '/' . 'Menu.php',
-            $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Menu.tpl')) ;
+        sugar_file_put_contents(
+            $path . '/' . 'Menu.php',
+            $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Menu.tpl')
+        );
     }
 
     public function addInstallDefs(&$installDefs)
