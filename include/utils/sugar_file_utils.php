@@ -133,6 +133,28 @@ function sugar_fopen($filename, $mode, $use_include_path = false, $context = nul
 }
 
 /**
+ * sugar_fclose
+ * Call this function instead of fclose to make sure the closed file
+ * is removed from caches
+ *
+ * @param resource $handle - Handle of the file to close
+ *
+ * @return bool - Returns true on success, false otherwise
+ */
+function sugar_fclose($handle)
+{
+    $filename = stream_get_meta_data($handle)['uri'];
+
+    $result = fclose($handle);
+
+    if ((new SplFileInfo($filename))->getExtension() == 'php') {
+        SugarCache::cleanFile($filename);
+    }
+
+    return $result;
+}
+
+/**
  * sugar_file_put_contents
  * Call this function instead of file_put_contents to apply pre-configured permission
  * settings when creating the file.  This method is basically
@@ -161,7 +183,9 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
     }
 
     $result = file_put_contents($filename, $data, $flags, $context);
-    SugarCache::cleanFile($filename);
+    if ((new SplFileInfo($filename))->getExtension() == 'php') {
+        SugarCache::cleanFile($filename);
+    }
 
     return $result;
 }
@@ -207,7 +231,11 @@ function sugar_file_put_contents_atomic($filename, $data, $mode = 'wb')
     }
 
     if (file_exists($filename)) {
-        return sugar_chmod($filename, 0755);
+        $result = sugar_chmod($filename, 0755);
+        if ((new SplFileInfo($filename))->getExtension() == 'php') {
+            SugarCache::cleanFile($filename);
+        }
+        return $result;
     }
 
     return false;
