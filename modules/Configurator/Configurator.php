@@ -224,9 +224,7 @@ class Configurator
             $GLOBALS['log']->fatal("Unable to write to the config_override.php file. Check the file permissions");
             return;
         }
-        $fp = sugar_fopen('config_override.php', 'w');
-        fwrite($fp, $override);
-        fclose($fp);
+        sugar_file_put_contents('config_override.php', $override);
     }
 
     public function overrideClearDuplicates($array_name, $key)
