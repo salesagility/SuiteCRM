@@ -62,7 +62,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         global $sugar_config;
 
         $engine = new ElasticSearchEngine();
-        $searchString = "hello search";
+        $searchString = "hello search*";
         $size = 30;
         $from = 5;
 
@@ -96,7 +96,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         global $sugar_config;
 
         $engine = new ElasticSearchEngine();
-        $searchString = "test";
+        $searchString = "test*";
         $size = 30;
 
         $query = SearchQuery::fromString($searchString, $size);
