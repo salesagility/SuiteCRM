@@ -119,7 +119,7 @@ class SearchResults
         foreach ($hits as $module => $beans) {
             foreach ((array)$beans as $bean) {
                 $obj = BeanFactory::getBean($module, $bean);
-                
+
                 // if a search found a bean but suitecrm does not, it could happens
                 // maybe the bean is deleted but elsasticsearch is not re-indexing yet.
                 // so at this point we trying to rebuild the index and try again to get bean:
@@ -127,7 +127,7 @@ class SearchResults
                     ElasticSearch\ElasticSearchIndexer::repairElasticsearchIndex();
                     $obj = BeanFactory::getBean($module, $bean);
                 }
-                
+
                 if (!$obj) {
                     throw new Exception('Error retrieveing bean: ' . $module . ' [' . $bean . ']');
                 }
@@ -140,7 +140,7 @@ class SearchResults
 
         return $parsed;
     }
-    
+
     /**
      *
      * @param SugarBean $obj
@@ -156,7 +156,7 @@ class SearchResults
         }
         return $obj;
     }
-    
+
     /**
      * Update related links in a bean to show it on results page
      *
@@ -168,13 +168,16 @@ class SearchResults
     {
         if ($fieldDef['type'] == 'relate' && isset($fieldDef['link']) && isset($fieldDef['id_name']) && $fieldDef['id_name']) {
             $relId = $this->getRelatedId($obj, $fieldDef['id_name'], $fieldDef['link']);
-            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
+            if (!empty($relId)) {
+                $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId,
+                    'DetailView');
+            }
         } elseif ($fieldDef['name'] == 'name') {
             $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
         }
         return $obj;
     }
-    
+
     /**
      * resolve related record ID
      *
@@ -190,14 +193,22 @@ class SearchResults
             $link2 = $obj->$link;
             $link2Focus = $link2->getFocus();
             $relId = $link2Focus->$relField;
+            if (is_object($relId)) {
+                if (method_exists($relId, "getFocus")) {
+                    $relId = $relId->getFocus()->id;
+                } else {
+                    $relId = null;
+                }
+            }
         } elseif (isset($obj->$relField)) {
             $relId = $obj->$relField;
         } else {
+            $relId = null;
             LoggerManager::getLogger()->warn('Unresolved related ID for field: '. $relField);
         }
         return $relId;
     }
-    
+
     /**
      *
      * @global array $sugar_config
