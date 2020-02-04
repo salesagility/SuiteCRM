@@ -417,37 +417,36 @@ function display_field_value($value)
  */
 function show_field($field_def)
 {
-//filter condition for fields in vardefs that can participate in merge.
-$filter_for_valid_editable_attributes =
-    array(
+    //filter condition for fields in vardefs that can participate in merge.
+    $valid_editable_attrs = array(
         array('type'=>'datetimecombo','source'=>'db'),
-         array('type'=>'datetime','source'=>'db'),
-         array('type'=>'varchar','source'=>'db'),
-         array('type'=>'enum','source'=>'db'),
-         array('type'=>'multienum','source'=>'db'),
-         array('type'=>'text','source'=>'db'),
-         array('type'=>'date','source'=>'db'),
-         array('type'=>'time','source'=>'db'),
-         array('type'=>'bool','source'=>'db'),
-         array('type'=>'int','source'=>'db'),
-         array('type'=>'long','source'=>'db'),
-         array('type'=>'double','source'=>'db'),
-         array('type'=>'float','source'=>'db'),
-         array('type'=>'short','source'=>'db'),
-         array('dbType'=>'varchar','source'=>'db'),
-         array('dbType'=>'double','source'=>'db'),
-         array('type'=>'relate'),
+        array('type'=>'datetime','source'=>'db'),
+        array('type'=>'varchar','source'=>'db'),
+        array('type'=>'enum','source'=>'db'),
+        array('type'=>'multienum','source'=>'db'),
+        array('type'=>'text','source'=>'db'),
+        array('type'=>'date','source'=>'db'),
+        array('type'=>'time','source'=>'db'),
+        array('type'=>'bool','source'=>'db'),
+        array('type'=>'int','source'=>'db'),
+        array('type'=>'long','source'=>'db'),
+        array('type'=>'double','source'=>'db'),
+        array('type'=>'float','source'=>'db'),
+        array('type'=>'short','source'=>'db'),
+        array('dbType'=>'varchar','source'=>'db'),
+        array('dbType'=>'double','source'=>'db'),
+        array('type'=>'relate'),
     );
 
     //following attributes will be ignored from the merge process.
-    $invalid_attribute_by_name= array(
+    $invalid_attr_by_name= array(
         'modified_user_id'=>'modified_user_id', 
         'created_by'=>'created_by',
         'deleted'=>'deleted',
     );
 
     //field in invalid attributes list?
-    if (isset($invalid_attribute_by_name[$field_def['name']])) {
+    if (isset($invalid_attr_by_name[$field_def['name']])) {
         return false;
     }
     //field has 'duplicate_merge property set to disabled?'
@@ -475,7 +474,7 @@ $filter_for_valid_editable_attributes =
         $field_def['dbType']=$field_def['type'];
     }
 
-    foreach ($filter_for_valid_editable_attributes as $attribute_set) {
+    foreach ($valid_editable_attrs as $attribute_set) {
         $b_all=false;
         foreach ($attribute_set as $attr=>$value) {
             if (isset($field_def[$attr]) and $field_def[$attr]==$value) {
@@ -491,6 +490,7 @@ $filter_for_valid_editable_attributes =
     }
     return false;
 }
+
 /* if the attribute of type relate and name is empty fetch using the vardef entries.
  *
  */
