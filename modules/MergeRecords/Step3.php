@@ -42,9 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-
-
-
 require_once('include/JSON.php');
 $timedate = TimeDate::getInstance();
 global $app_strings;
@@ -54,35 +51,6 @@ global $current_language;
 global $urlPrefix;
 global $currentModule;
 global $theme;
-global $filter_for_valid_editable_attributes;
-global $invalid_attribute_by_name;
-//filter condition for fields in vardefs that can participate in merge.
-$filter_for_valid_editable_attributes =
-    array(
-        array('type'=>'datetimecombo','source'=>'db'),
-         array('type'=>'datetime','source'=>'db'),
-         array('type'=>'varchar','source'=>'db'),
-         array('type'=>'enum','source'=>'db'),
-         array('type'=>'multienum','source'=>'db'),
-         array('type'=>'text','source'=>'db'),
-         array('type'=>'date','source'=>'db'),
-         array('type'=>'time','source'=>'db'),
-         array('type'=>'bool','source'=>'db'),
-         array('type'=>'int','source'=>'db'),
-         array('type'=>'long','source'=>'db'),
-         array('type'=>'double','source'=>'db'),
-         array('type'=>'float','source'=>'db'),
-         array('type'=>'short','source'=>'db'),
-         array('dbType'=>'varchar','source'=>'db'),
-         array('dbType'=>'double','source'=>'db'),
-         array('type'=>'relate'),
-    );
-
-$filter_for_valid_related_attributes   = array( array('type'=>'link'),);
-$filter_for_invalid_related_attributes   = array(array('type'=>'link','link_type'=>'one'));
-
-//following attributes will be ignored from the merge process.
-$invalid_attribute_by_name= array('date_entered'=>'date_entered','date_modified'=>'date_modified','modified_user_id'=>'modified_user_id', 'created_by'=>'created_by','deleted'=>'deleted');
 
 $merge_ids_array = array();
 if (isset($_REQUEST['change_parent']) && $_REQUEST['change_parent']=='1') {
@@ -167,7 +135,7 @@ foreach ($temp_field_array as $field_array) {
         $b_values_different = false;
         $section_name='merge_row_similar';
 
-        //Prcoess locaton of the field. if values are different show field in first section. else 2nd.
+        //Process locaton of the field. if values are different show field in first section, else 2nd.
         $select_row_curr_field_value = $focus->merge_bean->$tempName;
         foreach ($merge_ids_array as $id) {
             if (($mergeBeanArray[$id]->$tempName=='' and $select_row_curr_field_value =='') or $mergeBeanArray[$id]->$tempName == $select_row_curr_field_value) {
@@ -449,7 +417,35 @@ function display_field_value($value)
  */
 function show_field($field_def)
 {
-    global $filter_for_valid_editable_attributes,$invalid_attribute_by_name;
+//filter condition for fields in vardefs that can participate in merge.
+$filter_for_valid_editable_attributes =
+    array(
+        array('type'=>'datetimecombo','source'=>'db'),
+         array('type'=>'datetime','source'=>'db'),
+         array('type'=>'varchar','source'=>'db'),
+         array('type'=>'enum','source'=>'db'),
+         array('type'=>'multienum','source'=>'db'),
+         array('type'=>'text','source'=>'db'),
+         array('type'=>'date','source'=>'db'),
+         array('type'=>'time','source'=>'db'),
+         array('type'=>'bool','source'=>'db'),
+         array('type'=>'int','source'=>'db'),
+         array('type'=>'long','source'=>'db'),
+         array('type'=>'double','source'=>'db'),
+         array('type'=>'float','source'=>'db'),
+         array('type'=>'short','source'=>'db'),
+         array('dbType'=>'varchar','source'=>'db'),
+         array('dbType'=>'double','source'=>'db'),
+         array('type'=>'relate'),
+    );
+
+    //following attributes will be ignored from the merge process.
+    $invalid_attribute_by_name= array(
+        'modified_user_id'=>'modified_user_id', 
+        'created_by'=>'created_by',
+        'deleted'=>'deleted',
+    );
+
     //field in invalid attributes list?
     if (isset($invalid_attribute_by_name[$field_def['name']])) {
         return false;
