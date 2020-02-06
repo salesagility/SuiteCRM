@@ -5895,7 +5895,7 @@ if (!class_exists('TCPDF', false)) {
                             //Strip first binary header
                             $font = substr($font, 6);
                         }
-                        if ($header and (ord($font{$info['length1']}) == 128)) {
+                        if ($header and (ord($font[$info['length1']]) == 128)) {
                             //Strip second binary header
                             $font = substr($font, 0, $info['length1']).substr($font, ($info['length1'] + 6));
                         }
@@ -10552,7 +10552,7 @@ if (!class_exists('TCPDF', false)) {
                     case 'V':
                     case 'L':
                     case 'C': {
-                        $line{$len-1} = strtolower($cmd);
+                        $line[$len-1] = strtolower($cmd);
                         $this->_out($line);
                         break;
                     }
