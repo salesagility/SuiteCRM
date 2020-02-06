@@ -1,5 +1,5 @@
 <?php
-// created: 2020-02-06 11:17:35
+// created: 2020-02-06 12:00:06
 $md5_string_calculated = array (
   './.codecov.yml' => '04511b2fcf7a7e5b04232c7b0d743697',
   './.env.dist' => '2a0a83a29f439ceacef6fd9f0eb2ea5e',
@@ -12,7 +12,7 @@ $md5_string_calculated = array (
   './.gitignore' => '0f515637362239411c512ab1bcb8055c',
   './.htaccess' => '95bf2972ad71d0f9d22ae6ef8a9b13a2',
   './.travis.yml' => 'accb0f2bee7eb238b102e42ac1bd8577',
-  './Api/Core/Config/ApiConfig.php' => 'ec963f76550f9975ea58292db2f250a0',
+  './Api/Core/Config/ApiConfig.php' => '1deb31e00bc7c3becf5321b6ad391ced',
   './Api/Core/Config/slim.php' => 'b2827381c1aee4dce054128c77984c8f',
   './Api/Core/Loader/ContainerLoader.php' => '6d5e0db5708f5e34bec7ba8fb8196bdc',
   './Api/Core/Loader/CustomLoader.php' => '318e170f91b6af19720eede0664b3d23',
@@ -603,7 +603,7 @@ $md5_string_calculated = array (
   './download.php' => 'bc7e12c050b97eb187199233cf4d01de',
   './emailmandelivery.php' => 'e079e094dd3d4e361670a179f50b1fdd',
   './export.php' => 'a7364fa8acd13057d4b77f596d9fdb39',
-  './files.md5' => 'a5bac20f4626671b098f94c2877365aa',
+  './files.md5' => '8cf4d8694417734671fbe81eab769eca',
   './ical_server.php' => '36acd0eb4bdabcdb8c70497b5cc79d16',
   './include/Dashlets/Dashlet.php' => '39a44606998cd874f5f361b534454a0c',
   './include/Dashlets/DashletCacheBuilder.php' => '98a49e1176f330a59598e764ce0c6359',
@@ -8396,7 +8396,7 @@ $md5_string_calculated = array (
   './soap.php' => '35a50ef71a33ba9afb4f7a798ad8c808',
   './sugar_version.json' => 'bdfbcefae2f9af559bef6a36367df7bb',
   './sugar_version.php' => 'db7b6c8d51f87879fce1e6172eedfbed',
-  './suitecrm.log' => '6c8693d35d01ab2a6255991e8058506e',
+  './suitecrm.log' => 'd00f6c74a0d2409332afb4f7e36dbf2d',
   './suitecrm_version.php' => 'c17b8a61445d84823ae5d7e3e03d7eea',
   './tests/README.md' => 'e11ad63666c95648ca0d39cd1772d426',
   './tests/SuiteCRM/Enumerator/DatabaseDriver.php' => '6f28a4faba2459e7369baa6b0f347066',
