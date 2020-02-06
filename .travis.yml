@@ -8,22 +8,9 @@ matrix:
     - name: "PHP 5.6 / MySQL 5.7"
       php: "5.6"
       dist: xenial
-    - name: "PHP 7.3 / MySQL 5.7"
-      php: "7.3"
-      dist: xenial
     - name: "PHP 7.4 / MySQL 5.7"
       php: "7.4"
       dist: xenial
-    # Run composer validate to make sure the composer.json and composer.lock are in sync.
-    - name: "composer validate"
-      php: "7.2"
-      dist: xenial
-      before_script: composer install
-      script: composer validate
-    - name: "code coverage"
-      php: "7.3"
-      dist: xenial
-      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; ./vendor/bin/robo code:coverage --ci; cat codeception.dist.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
 services:
   - mysql
@@ -84,7 +71,7 @@ script:
 
   # Run the unit tests
   - sudo chmod -R 777 .
-  - ./vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
+  - ./vendor/bin/phpunit --colors --configuration ./tests/phpunit.xml.dist ./tests/unit/phpunit
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
@@ -101,13 +88,10 @@ script:
   - ./vendor/bin/codecept run tests/api/V8/ -f --ext DotReporter
   # RUN Basic Acceptance test
   - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
-  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f --ext DotReporter
+  - ./vendor/bin/codecept run acceptance --env travis-ci-hub --ext DotReporter
 
 after_script:
   - ./build/push_output.sh
-  - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@install.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   - echo $TRAVIS_COMMIT_RANGE
 
 branches:
