@@ -898,16 +898,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.124",
+            "version": "v0.125",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "7bdd526abda4d802e973816cd7b4f3f3bc75fa03"
+                "reference": "5c55c1a08610c22de13a5374d4aef408aa470f6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/7bdd526abda4d802e973816cd7b4f3f3bc75fa03",
-                "reference": "7bdd526abda4d802e973816cd7b4f3f3bc75fa03",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/5c55c1a08610c22de13a5374d4aef408aa470f6e",
+                "reference": "5c55c1a08610c22de13a5374d4aef408aa470f6e",
                 "shasum": ""
             },
             "require": {
@@ -931,7 +931,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2020-01-25T00:24:16+00:00"
+            "time": "2020-02-03T00:24:38+00:00"
         },
         {
             "name": "google/auth",
@@ -6251,9 +6251,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This VCard PHP class can generate a vCard with some data. When using an iOS device it will export as a .ics file because iOS devices don't support the default .vcf files.",
@@ -6833,8 +6833,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -6875,8 +6875,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -6924,8 +6924,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Utility class for timing",
