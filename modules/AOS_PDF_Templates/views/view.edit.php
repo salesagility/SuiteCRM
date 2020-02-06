@@ -278,7 +278,7 @@ HTML;
 			strict_loading_mode : true,
 			convert_urls : false,
 			plugin_insertdate_dateFormat : '{DATE '+df+'}',
-			pagebreak_separator : "<pagebreak />",
+			pagebreak_separator : "<div style=\"page-break-before: always;\">&nbsp;</div>",
 			extended_valid_elements : "textblock,barcode[*]",
 			custom_elements: "textblock",
 		});
