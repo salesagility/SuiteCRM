@@ -6876,7 +6876,7 @@ if (!class_exists('TCPDF', false)) {
                 $strarr = array();
                 $strlen = strlen($str);
                 for ($i=0; $i < $strlen; ++$i) {
-                    $strarr[] = ord($str{$i});
+                    $strarr[] = ord($str[$i]);
                 }
                 // insert new value on cache
                 $this->cache_UTF8StringToArray['_'.$str] = $strarr;
@@ -6888,7 +6888,7 @@ if (!class_exists('TCPDF', false)) {
             $str .= ''; // force $str to be a string
             $length = strlen($str);
             for ($i = 0; $i < $length; ++$i) {
-                $char = ord($str{$i}); // get one string character at time
+                $char = ord($str[$i]); // get one string character at time
                 if (count($bytes) == 0) { // get starting octect
                     if ($char <= 0x7F) {
                         $unicode[] = $char; // use the character "as is" because is ASCII
@@ -7286,7 +7286,7 @@ if (!class_exists('TCPDF', false)) {
                 $j = 0;
                 for ($i = 0; $i < 256; ++$i) {
                     $t = $rc4[$i];
-                    $j = ($j + $t + ord($k{$i})) % 256;
+                    $j = ($j + $t + ord($k[$i])) % 256;
                     $rc4[$i] = $rc4[$j];
                     $rc4[$j] = $t;
                 }
@@ -7306,7 +7306,7 @@ if (!class_exists('TCPDF', false)) {
                 $rc4[$a] = $rc4[$b];
                 $rc4[$b] = $t;
                 $k = $rc4[($rc4[$a] + $rc4[$b]) % 256];
-                $out .= chr(ord($text{$i}) ^ $k);
+                $out .= chr(ord($text[$i]) ^ $k);
             }
             return $out;
         }
