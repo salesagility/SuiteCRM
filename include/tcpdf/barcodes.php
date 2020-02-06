@@ -742,7 +742,7 @@ class TCPDFBarcode
         $k = 0;
         for ($i = 0; $i < $len; ++$i) {
             $w += 1;
-            if (($i == ($len - 1)) or (($i < ($len - 1)) and ($seq[$i] != $seq{($i+1)}))) {
+            if (($i == ($len - 1)) or (($i < ($len - 1)) and ($seq[$i] != $seq[($i+1)]))) {
                 if ($seq[$i] == '1') {
                     $t = true; // bar
                 } else {
@@ -971,7 +971,7 @@ class TCPDFBarcode
                 $new_code = '';
                 $hclen = (strlen($code) / 2);
                 for ($i = 0; $i < $hclen; ++$i) {
-                    $new_code .= chr((int)($code{(2 * $i)} . $code{(2 * $i + 1)}));
+                    $new_code .= chr((int)($code[(2 * $i)] . $code[(2 * $i + 1)]));
                 }
                 $code = $new_code;
                 break;
