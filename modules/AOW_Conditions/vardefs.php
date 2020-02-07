@@ -24,12 +24,12 @@
 
 
 $dictionary['AOW_Condition'] = array(
-	'table'=>'aow_conditions',
-	'audited'=>false,
-	'duplicate_merge'=>true,
-	'fields'=>array (
+    'table'=>'aow_conditions',
+    'audited'=>false,
+    'duplicate_merge'=>true,
+    'fields'=>array(
   'aow_workflow_id' =>
-  array (
+  array(
     'required' => false,
     'name' => 'aow_workflow_id',
     'vname' => 'LBL_AOW_WORKFLOW_ID',
@@ -47,8 +47,8 @@ $dictionary['AOW_Condition'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'condition_order' => 
-  array (
+  'condition_order' =>
+  array(
     'required' => false,
     'name' => 'condition_order',
     'vname' => 'LBL_ORDER',
@@ -69,14 +69,14 @@ $dictionary['AOW_Condition'] = array(
     'disable_num_format' => '',
   ),
   'module_path' =>
-  array (
+  array(
     'name' => 'module_path',
     'type' => 'longtext',
     'vname' => 'LBL_MODULE_PATH',
     'isnull' => true,
   ),
-  'field' => 
-  array (
+  'field' =>
+  array(
     'required' => false,
     'name' => 'field',
     'vname' => 'LBL_FIELD',
@@ -97,8 +97,8 @@ $dictionary['AOW_Condition'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
-  'operator' => 
-  array (
+  'operator' =>
+  array(
     'required' => false,
     'name' => 'operator',
     'vname' => 'LBL_OPERATOR',
@@ -121,7 +121,7 @@ $dictionary['AOW_Condition'] = array(
     'dependency' => false,
   ),
     'value_type' =>
-    array (
+    array(
     'required' => false,
     'name' => 'value_type',
     'vname' => 'LBL_VALUE_TYPE',
@@ -139,8 +139,8 @@ $dictionary['AOW_Condition'] = array(
     'len' => '255',
     'size' => '20',
     ),
-  'value' => 
-  array (
+  'value' =>
+  array(
     'required' => false,
     'name' => 'value',
     'vname' => 'LBL_VALUE',
@@ -159,7 +159,7 @@ $dictionary['AOW_Condition'] = array(
     'size' => '20',
   ),
   'aow_workflow' =>
-  array (
+  array(
     'name' => 'aow_workflow',
     'type' => 'link',
     'relationship' => 'aow_workflow_aow_conditions',
@@ -168,7 +168,7 @@ $dictionary['AOW_Condition'] = array(
     'source'=>'non-db',
   ),
 ),
-	'relationships'=>array (
+    'relationships'=>array(
 ),
     'indices' => array(
         array(
@@ -177,10 +177,10 @@ $dictionary['AOW_Condition'] = array(
             'fields' => array('aow_workflow_id'),
         ),
     ),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+    'optimistic_locking'=>true,
+        'unified_search'=>true,
+    );
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOW_Conditions','AOW_Condition', array('basic'));
+VardefManager::createVardef('AOW_Conditions', 'AOW_Condition', array('basic'));

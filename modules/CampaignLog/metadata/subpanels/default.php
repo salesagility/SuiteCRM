@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,70 +37,69 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 $subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelAddToProspectListButton','create'=>'true'),			
-	),
+    'top_buttons' => array(
+        array('widget_class' => 'SubPanelAddToProspectListButton','create'=>'true'),
+    ),
 
-	'where' => '',
+    'where' => '',
 
 
-	'list_fields' => array(
-		'recipient_name'=>array(
-			'vname' => 'LBL_LIST_RECIPIENT_NAME',
-			'width' => '14%',
-			'sortable'=>false,
-		),
-		'recipient_email'=>array(
-			'vname' => 'LBL_LIST_RECIPIENT_EMAIL',
-			'width' => '14%',
-			'sortable'=>false,
-		),		
-		'marketing_name'=>array(			
-			'vname' => 'LBL_LIST_MARKETING_NAME',
-			'width' => '14%',
-			'sortable'=>false,		
-		),
-		'activity_type' => array(
-			'vname' => 'LBL_ACTIVITY_TYPE',
-			'width' => '14%',
-		),
-		'activity_date' => array(
-			'vname' => 'LBL_ACTIVITY_DATE',
-			'width' => '14%',
-		),
-		'related_name' => array(
-			'widget_class' => 'SubPanelDetailViewLink',
-			'target_record_key' => 'related_id',
-			'target_module_key' => 'related_type',		
+    'list_fields' => array(
+        'recipient_name'=>array(
+            'vname' => 'LBL_LIST_RECIPIENT_NAME',
+            'width' => '14%',
+            'sortable'=>false,
+        ),
+        'recipient_email'=>array(
+            'vname' => 'LBL_LIST_RECIPIENT_EMAIL',
+            'width' => '14%',
+            'sortable'=>false,
+        ),
+        'marketing_name'=>array(
+            'vname' => 'LBL_LIST_MARKETING_NAME',
+            'width' => '14%',
+            'sortable'=>false,
+        ),
+        'activity_type' => array(
+            'vname' => 'LBL_ACTIVITY_TYPE',
+            'width' => '14%',
+        ),
+        'activity_date' => array(
+            'vname' => 'LBL_ACTIVITY_DATE',
+            'width' => '14%',
+        ),
+        'related_name' => array(
+            'widget_class' => 'SubPanelDetailViewLink',
+            'target_record_key' => 'related_id',
+            'target_module_key' => 'related_type',
             'parent_id' =>'target_id',
-            'parent_module'=>'target_type',         
-			'vname' => 'LBL_RELATED',
-			'width' => '20%',
-			'sortable'=>false,
-		),
-		'hits' => array(
-			'vname' => 'LBL_HITS',
-			'width' => '5%',
-		),		
-		'target_id'=>array(
-			'usage' =>'query_only',
-		),
-		'target_type'=>array(
-			'usage' =>'query_only',
-		),
-		'related_id'=>array(
-			'usage' =>'query_only',
-		),
-		'related_type'=>array(
-			'usage' =>'query_only',
-		),
-	),
-);		
-
+            'parent_module'=>'target_type',
+            'vname' => 'LBL_RELATED',
+            'width' => '20%',
+            'sortable'=>false,
+        ),
+        'hits' => array(
+            'vname' => 'LBL_HITS',
+            'width' => '5%',
+        ),
+        'target_id'=>array(
+            'usage' =>'query_only',
+        ),
+        'target_type'=>array(
+            'usage' =>'query_only',
+        ),
+        'related_id'=>array(
+            'usage' =>'query_only',
+        ),
+        'related_type'=>array(
+            'usage' =>'query_only',
+        ),
+    ),
+);

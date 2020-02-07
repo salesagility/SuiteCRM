@@ -1,11 +1,14 @@
 <?php
- if(!defined('sugarEntry'))define('sugarEntry', true);
-/*********************************************************************************
+ if (!defined('sugarEntry')) {
+     define('sugarEntry', true);
+ }
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 //change directories to where this file is located.
 //this is to make sure it can find dce_config.php
@@ -52,8 +55,10 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 if (!is_windows()) {
     require_once 'include/utils.php';
     $cronUser = getRunningUser();
-
-    if (array_key_exists('cron', $sugar_config) && array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
+ 
+    if ($cronUser == '') {
+        $GLOBALS['log']->warning('cron.php: can\'t determine running user. No cron user checks will occur.');
+    } elseif (array_key_exists('cron', $sugar_config) && array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
         if (!in_array($cronUser, $sugar_config['cron']['allowed_cron_users'])) {
             $GLOBALS['log']->fatal("cron.php: running as $cronUser is not allowed in allowed_cron_users ".
                                    "in config.php. Exiting.");
@@ -64,15 +69,14 @@ if (!is_windows()) {
             }
             sugar_die('cron.php running with user that is not in allowed_cron_users in config.php');
         }
-    }
-    else {
+    } else {
         $GLOBALS['log']->warning('cron.php: missing expected allowed_cron_users entry in config.php. ' .
                                  'No cron user checks will occur.');
     }
 }
 
-if(empty($current_language)) {
-	$current_language = $sugar_config['default_language'];
+if (empty($current_language)) {
+    $current_language = $sugar_config['default_language'];
 }
 
 $app_list_strings = return_app_list_strings_language($current_language);
@@ -86,10 +90,10 @@ $GLOBALS['log']->debug('--------------------------------------------> at cron.ph
 $cron_driver = !empty($sugar_config['cron_class'])?$sugar_config['cron_class']:'SugarCronJobs';
 $GLOBALS['log']->debug("Using $cron_driver as CRON driver");
 
-if(file_exists("custom/include/SugarQueue/$cron_driver.php")) {
-   require_once "custom/include/SugarQueue/$cron_driver.php";
+if (file_exists("custom/include/SugarQueue/$cron_driver.php")) {
+    require_once "custom/include/SugarQueue/$cron_driver.php";
 } else {
-   require_once "include/SugarQueue/$cron_driver.php";
+    require_once "include/SugarQueue/$cron_driver.php";
 }
 
 $jobq = new $cron_driver();
@@ -101,14 +105,16 @@ sugar_cleanup(false);
 // some jobs have annoying habit of calling sugar_cleanup(), and it can be called only once
 // but job results can be written to DB after job is finished, so we have to disconnect here again
 // just in case we couldn't call cleanup
-if(class_exists('DBManagerFactory')) {
-	$db = DBManagerFactory::getInstance();
-	$db->disconnect();
+if (class_exists('DBManagerFactory')) {
+    $db = DBManagerFactory::getInstance();
+    $db->disconnect();
 }
 
 // If we have a session left over, destroy it
-if(session_id()) {
+if (session_id()) {
     session_destroy();
 }
 
-if($exit_on_cleanup) exit($jobq->runOk()?0:1);
+if ($exit_on_cleanup) {
+    exit($jobq->runOk()?0:1);
+}

@@ -2,7 +2,6 @@
 
 namespace SuiteCRM\Enumerator;
 
-
 class DatabaseDriver
 {
     const NO_DRIVER = 'NO_DRIVER';

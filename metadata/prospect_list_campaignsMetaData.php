@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,67 +37,67 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$dictionary['prospect_list_campaigns'] = array ( 
+$dictionary['prospect_list_campaigns'] = array(
 
-	'table' => 'prospect_list_campaigns',
+    'table' => 'prospect_list_campaigns',
 
-	'fields' => array (
-		array (
-			'name' => 'id',
-			'type' => 'varchar',
-			'len' => '36',
-		),
-		array (
-			'name' => 'prospect_list_id',
-			'type' => 'varchar',
-			'len' => '36',
-		),
-		array (
-			'name' => 'campaign_id',
-			'type' => 'varchar',
-			'len' => '36',
-		),
-       array ('name' => 'date_modified','type' => 'datetime'),
-		array (
-			'name' => 'deleted',
-			'type' => 'bool',
-			'len' => '1',
-			'default' => '0'
-		),
-		
-	),
-	
-	'indices' => array (
-		array (
-			'name' => 'prospect_list_campaignspk',
-			'type' => 'primary',
-			'fields' => array ( 'id' )
-		),
-		array (
-			'name' => 'idx_pro_id',
-			'type' => 'index',
-			'fields' => array ('prospect_list_id')
-		),
-		array (
-			'name' => 'idx_cam_id',
-			'type' => 'index',
-			'fields' => array ('campaign_id')
-		),
-		array (
-			'name' => 'idx_prospect_list_campaigns', 
-			'type'=>'alternate_key', 
-			'fields'=>array('prospect_list_id','campaign_id')
-		),		
-	),
+    'fields' => array(
+        array(
+            'name' => 'id',
+            'type' => 'varchar',
+            'len' => '36',
+        ),
+        array(
+            'name' => 'prospect_list_id',
+            'type' => 'varchar',
+            'len' => '36',
+        ),
+        array(
+            'name' => 'campaign_id',
+            'type' => 'varchar',
+            'len' => '36',
+        ),
+       array('name' => 'date_modified','type' => 'datetime'),
+        array(
+            'name' => 'deleted',
+            'type' => 'bool',
+            'len' => '1',
+            'default' => '0'
+        ),
+        
+    ),
+    
+    'indices' => array(
+        array(
+            'name' => 'prospect_list_campaignspk',
+            'type' => 'primary',
+            'fields' => array( 'id' )
+        ),
+        array(
+            'name' => 'idx_pro_id',
+            'type' => 'index',
+            'fields' => array('prospect_list_id')
+        ),
+        array(
+            'name' => 'idx_cam_id',
+            'type' => 'index',
+            'fields' => array('campaign_id')
+        ),
+        array(
+            'name' => 'idx_prospect_list_campaigns',
+            'type'=>'alternate_key',
+            'fields'=>array('prospect_list_id','campaign_id')
+        ),
+    ),
 
- 	'relationships' => array (
-		'prospect_list_campaigns' => array('lhs_module'=> 'ProspectLists', 'lhs_table'=> 'prospect_lists', 'lhs_key' => 'id',
-		'rhs_module'=> 'Campaigns', 'rhs_table'=> 'campaigns', 'rhs_key' => 'id',
-		'relationship_type'=>'many-to-many',
-		'join_table'=> 'prospect_list_campaigns', 'join_key_lhs'=>'prospect_list_id', 'join_key_rhs'=>'campaign_id')
-	)
+    'relationships' => array(
+        'prospect_list_campaigns' => array('lhs_module'=> 'ProspectLists', 'lhs_table'=> 'prospect_lists', 'lhs_key' => 'id',
+        'rhs_module'=> 'Campaigns', 'rhs_table'=> 'campaigns', 'rhs_key' => 'id',
+        'relationship_type'=>'many-to-many',
+        'join_table'=> 'prospect_list_campaigns', 'join_key_lhs'=>'prospect_list_id', 'join_key_rhs'=>'campaign_id')
+    )
 );

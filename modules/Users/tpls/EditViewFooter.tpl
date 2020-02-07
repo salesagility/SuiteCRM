@@ -463,10 +463,36 @@
             </tr>
         </table>
     </div>
+    <div id="google_options" style="display:{$HIDE_IF_GAUTH_UNCONFIGURED}">
+        <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+            <tr>
+                <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_GOOGLE_API_SETTINGS}</h4></th>
+            </tr>
+            <tr>
+                <td width="17%" scope="row">
+                    <slot>{$MOD.LBL_GOOGLE_API_TOKEN}:</slot>&nbsp;{sugar_help text=$MOD.LBL_GOOGLE_API_TOKEN_HELP}
+                </td>
+                    <td width="20%">
+                    <slot>Current API Token is: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span> &nbsp;&nbsp;<input style="display:{$GOOGLE_API_TOKEN_ENABLE_NEW}" class="btn btn-primary btn-sm" id="google_gettoken" type="button" value="{$GOOGLE_API_TOKEN_BTN}" onclick="window.open('{$GOOGLE_API_TOKEN_NEW_URL}', '_self')" /></slot>
+                </td>
+                <td width="63%">
+                    <slot>&nbsp;</slot>
+                </td>
+            </tr>
+            <tr>
+                <td width="17%" scope="row">
+                    <slot>{$MOD.LBL_GSYNC_CAL}:</slot>
+                </td>
+                <td>
+                    <slot><input tabindex='12' name='gsync_cal' class="checkbox" type="checkbox" {$GSYNC_CAL}></slot>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 {if $ID}
     <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};' class="user-tab-content">
-        <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
+        <div style="text-align:center; width: 100%">{sugar_getimage name="loading"}</div>
     </div>
 {/if}
 <div class="user-tab-content">
@@ -516,6 +542,12 @@
                     <td width="17%" scope="row"><span>{$MOD.LBL_SUBPANEL_TABS}
                             :</span>&nbsp;{sugar_help text=$MOD.LBL_SUBPANEL_TABS_DESCRIPTION }</td>
                     <td width="83%" colspan="3"><input type="checkbox" name="user_subpanel_tabs" {$SUBPANEL_TABS}
+                                                       tabindex='13'></td>
+                </tr>
+                <tr>
+                    <td width="17%" scope="row"><span>{$MOD.LBL_COUNT_COLLAPSED_SUBPANELS}
+                            :</span>&nbsp;{sugar_help text=$MOD.LBL_COUNT_COLLAPSED_SUBPANELS_DESCRIPTION }</td>
+                    <td width="83%" colspan="3"><input type="checkbox" name="user_count_collapsed_subpanels" {$COUNT_COLLAPSED_SUBPANELS}
                                                        tabindex='13'></td>
                 </tr>
             </tbody>

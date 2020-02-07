@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -79,6 +79,14 @@ $mod_strings['LBL_MAP_LAST_STATUS'] = 'Last Geocode Status';
 $mod_strings['LBL_GEOCODED_COUNTS'] = 'Module Geocoded Counts';
 $mod_strings['LBL_CRON_URL'] = 'Cron URL:';
 $mod_strings['LBL_MODULE_HEADING'] = 'Module';
+
+$mod_strings['LBL_N/A'] = 'N/A';
+$mod_strings['LBL_ZERO_RESULTS'] = 'Zero Results';
+$mod_strings['LBL_OK'] = 'Ok';
+$mod_strings['LBL_INVALID_REQUEST'] = 'Invalid Request';
+$mod_strings['LBL_APPROXIMATE'] = 'Approximate';
+$mod_strings['LBL_EMPTY'] = 'Empty';
+
 $mod_strings['LBL_MODULE_TOTAL_HEADING'] = 'Total';
 $mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'The table shown belown shows the number of module objects geocoded, grouped by geocoding response. Keep in mind that the standard Google Maps usage limit is 2500 requests per day . This module will cache the addresses geocoding information during processing to reduce the overall number of requests needed.';

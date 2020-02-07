@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,71 +34,71 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs ['Meetings'] =
-array (
+array(
   'EditView' =>
-  array (
+  array(
     'templateMeta' =>
-    array (
+    array(
         'includes' => array(
             array('file' => 'modules/Reminders/Reminders.js'),
         ),
       'maxColumns' => '2',
       'form' =>
-      array (
+      array(
         'hidden' =>
-        array (
+        array(
           0 => '<input type="hidden" name="isSaveAndNew" value="false">',
         ),
         'buttons' =>
-        array (
+        array(
           0 =>
-          array (
-			'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" id ="SAVE_HEADER" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.meetings.fill_invitees();document.EditView.action.value=\'Save\'; document.EditView.return_action.value=\'DetailView\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}document.EditView.return_id.value=\'\'; {/if} formSubmitCheck();"type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
-		  ),
+          array(
+            'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" id ="SAVE_HEADER" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.meetings.fill_invitees();document.EditView.action.value=\'Save\'; document.EditView.return_action.value=\'DetailView\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}document.EditView.return_id.value=\'\'; {/if} formSubmitCheck();"type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
+          ),
           1 => 'CANCEL',
           2 =>
-          array (
+          array(
              'customCode' => '<input title="{$MOD.LBL_SEND_BUTTON_TITLE}" id="save_and_send_invites_header" class="button" onclick="document.EditView.send_invites.value=\'1\';SUGAR.meetings.fill_invitees();document.EditView.action.value=\'Save\';document.EditView.return_action.value=\'EditView\';document.EditView.return_module.value=\'{$smarty.request.return_module}\'; formSubmitCheck();"type="button" name="button" value="{$MOD.LBL_SEND_BUTTON_LABEL}">',
-		  ),
-          3 => 
-          array (
+          ),
+          3 =>
+          array(
             'customCode' => '{if $fields.status.value != "Held"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" id="close_and_create_new_header" class="button" onclick="SUGAR.meetings.fill_invitees(); document.EditView.status.value=\'Held\'; document.EditView.action.value=\'Save\'; document.EditView.return_module.value=\'Meetings\'; document.EditView.isDuplicate.value=true; document.EditView.isSaveAndNew.value=true; document.EditView.return_action.value=\'EditView\'; document.EditView.return_id.value=\'{$fields.id.value}\'; formSubmitCheck();"type="button" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
            ),
         ),
         'headerTpl' => 'modules/Meetings/tpls/header.tpl',
 
           'buttons_footer' =>
-        array (
+        array(
           0 =>
-          array (
-			'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" id ="SAVE_FOOTER" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.meetings.fill_invitees();document.EditView.action.value=\'Save\'; document.EditView.return_action.value=\'DetailView\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}document.EditView.return_id.value=\'\'; {/if} formSubmitCheck();"type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
-		  ),
+          array(
+            'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" id ="SAVE_FOOTER" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.meetings.fill_invitees();document.EditView.action.value=\'Save\'; document.EditView.return_action.value=\'DetailView\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}document.EditView.return_id.value=\'\'; {/if} formSubmitCheck();"type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
+          ),
           1 => 'CANCEL',
           2 =>
-          array (
+          array(
              'customCode' => '<input title="{$MOD.LBL_SEND_BUTTON_TITLE}" id="save_and_send_invites_footer" class="button" onclick="document.EditView.send_invites.value=\'1\';SUGAR.meetings.fill_invitees();document.EditView.action.value=\'Save\';document.EditView.return_action.value=\'EditView\';document.EditView.return_module.value=\'{$smarty.request.return_module}\'; formSubmitCheck();"type="button" name="button" value="{$MOD.LBL_SEND_BUTTON_LABEL}">',
-		  ),
+          ),
           3 =>
-          array (
+          array(
             'customCode' => '{if $fields.status.value != "Held"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" id="close_and_create_new_footer" class="button" onclick="SUGAR.meetings.fill_invitees(); document.EditView.status.value=\'Held\'; document.EditView.action.value=\'Save\'; document.EditView.return_module.value=\'Meetings\'; document.EditView.isDuplicate.value=true; document.EditView.isSaveAndNew.value=true; document.EditView.return_action.value=\'EditView\'; document.EditView.return_id.value=\'{$fields.id.value}\'; formSubmitCheck();"type="button" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
            ),
         ),
         'footerTpl' => 'modules/Meetings/tpls/footer.tpl',
       ),
       'widths' =>
-      array (
+      array(
         0 =>
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 =>
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -109,19 +110,19 @@ function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.E
       'useTabs' => false,
     ),
     'panels' =>
-    array (
+    array(
       'lbl_meeting_information' =>
-      array (
-        array (
-          array (
+      array(
+        array(
+          array(
             'name' => 'name',
 
           ),
-          array (
+          array(
             'name' => 'status',
             'fields' =>
-            array (
-              array (
+            array(
+              array(
                 'name' => 'status',
               ),
             ),
@@ -129,44 +130,44 @@ function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.E
       ),
       
       
-      array (
-          array (
+      array(
+          array(
             'name' => 'date_start',
             'type' => 'datetimecombo',
             'displayParams' =>
-            array (
+            array(
               'required' => true,
               'updateCallback' => 'SugarWidgetScheduler.update_time();',
             ),
           ),
           
-          array (
+          array(
             'name' => 'parent_name',
             'label' => 'LBL_LIST_RELATED_TO',
           ),
         ),
         
         
-      array (
-          array (
+      array(
+          array(
             'name' => 'date_end',
             'type' => 'datetimecombo',
             'displayParams' =>
-            array (
+            array(
               'required' => true,
               'updateCallback' => 'SugarWidgetScheduler.update_time();',
             ),
           ),
           
-          array (
+          array(
             'name' => 'location',
             'comment' => 'Meeting location',
             'label' => 'LBL_LOCATION',
           ),
-        ),      
+        ),
         
-        array(        
-          array (
+        array(
+          array(
             'name' => 'duration',
             'customCode' => '
                 @@FIELD@@
@@ -194,14 +195,14 @@ function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.E
 //          ),
 //        ),
           array(
-              array (
+              array(
                   'name' => 'reminders',
                   'customCode' => '{include file="modules/Reminders/tpls/reminders.tpl"}',
                   'label' => 'LBL_REMINDERS',
               ),
           ),
-        array (
-          array (
+        array(
+          array(
             'name' => 'description',
             'comment' => 'Full text of the note',
             'label' => 'LBL_DESCRIPTION',
@@ -209,9 +210,9 @@ function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.E
         ),
       ),
       'LBL_PANEL_ASSIGNMENT' =>
-      array (
-        array (
-          array (
+      array(
+        array(
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),

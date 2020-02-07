@@ -40,8 +40,6 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\Enumerator\ExceptionCode;
-
 /**
  * Class NotAllowedException
  * @package SuiteCRM\API\v8\Exception
@@ -51,5 +49,4 @@ class NotAllowedException extends ApiException
     const MSG_PREFIX = '[Not Allowed]';
     const DEFAULT_CODE = 8005;
     const HTTP_STATUS = 403;
-    
 }

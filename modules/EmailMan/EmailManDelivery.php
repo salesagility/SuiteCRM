@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +35,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -105,6 +105,7 @@ if ($test) {
     $select_query .= " join prospect_list_campaigns plc on em.campaign_id = plc.campaign_id";
     $select_query .= " join prospect_lists pl on pl.id = plc.prospect_list_id ";
     $select_query .= " WHERE em.list_id = pl.id and pl.list_type = 'test'";
+    $select_query .= " AND pl.deleted = 0 AND plc.deleted = 0 AND em.deleted = 0";
     $select_query .= " AND em.send_date_time <= " . $db->now();
     $select_query .= " AND (em.in_queue ='0' OR em.in_queue IS NULL OR (em.in_queue ='1' AND em.in_queue_date <= " . $db->convert($db->quoted($timedate->fromString("-1 day")->asDb()), "datetime") . "))";
     $select_query .= " AND em.campaign_id='{$campaign_id}'";
@@ -117,6 +118,7 @@ if ($test) {
     $select_query = " SELECT *";
     $select_query .= " FROM $emailman->table_name";
     $select_query .= " WHERE send_date_time <= " . $db->now();
+    $select_query .= " AND deleted = 0";
     $select_query .= " AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " . $db->convert($db->quoted($timedate->fromString("-1 day")->asDb()), "datetime") . ")) " . ($confirmOptInEnabled ? ' OR related_confirm_opt_in = 1 ' : ' AND related_confirm_opt_in = 0');
 
     if (!empty($campaign_id)) {
@@ -130,7 +132,6 @@ DBManager::setQueryLimit(0);
 //end bug fix
 
 do {
-
     $no_items_in_queue = true;
 
     $result = $db->limitQuery($select_query, 0, $max_emails_per_run);
@@ -170,7 +171,6 @@ do {
         //find the template associated with marketing message. make sure that template has a subject and
         //a non-empty body
         if (!isset($template_status[$row['marketing_id']])) {
-
             $current_emailmarketing = new EmailMarketing();
             $current_emailmarketing->retrieve($row['marketing_id']);
 
@@ -265,8 +265,7 @@ do {
                 $emailAddress = new EmailAddress();
                 $emailAddress->email_address = $emailAddress->getAddressesByGUID($row['related_id'], $row['related_type']);
                 
-                $date = new DateTime();
-                $now = $date->format($timedate::DB_DATETIME_FORMAT);
+                $now = TimeDate::getInstance()->nowDb();
                     
                 if (!$emailman->sendOptInEmail($emailAddress, $row['related_type'], $row['related_id'])) {
                     $GLOBALS['log']->fatal("Confirm Opt In Email delivery FAILURE:" . print_r($row, true));
@@ -315,7 +314,6 @@ if (isset($temp_user)) {
 if (isset($_REQUEST['return_module']) && isset($_REQUEST['return_action']) && isset($_REQUEST['return_id'])) {
     $from_wiz = ' ';
     if (isset($_REQUEST['from_wiz']) && $_REQUEST['from_wiz']) {
-
         if (isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) {
             $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=Wi" .
                     "zardMarketing&return_id=" . $_REQUEST['campaign_id'] . "&campaign_id=" . $_REQUEST['campaign_id'] .

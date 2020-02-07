@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,40 +41,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton {
+class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
+{
+    public $form_value = '';
 
-    var $form_value = '';
-
-    public function getWidgetId($buttonSuffix = true) {
+    public function getWidgetId($buttonSuffix = true)
+    {
         global $app_strings;
         $this->form_value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
         return parent::getWidgetId();
     }
 
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false) {
+    public function &_get_form($defines, $additionalFormFields = null, $nonbutton = false)
+    {
         if ((ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true) ||
                 $defines['module'] == "Activities" & !ACLController::checkAccess("Emails", 'edit', true))) {
             $temp = '';
             return $temp;
         }
 
-        global $app_strings, $current_user, $sugar_config, $beanList, $beanFiles;
+        global $app_strings, $current_user;
         $title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
-        //$accesskey = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_KEY'];
         $value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
-        $parent_type = $defines['focus']->module_dir;
-        $parent_id = $defines['focus']->id;
 
         //martin Bug 19660
-        $userPref = $current_user->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
+        $client = $current_user->getEmailClient();
+
+        /** @var Person|Company|Opportunity $bean */
+        $bean = $defines['focus'];
+
         if ($client != 'sugar') {
-            $bean = $defines['focus'];
             // awu: Not all beans have emailAddress property, we must account for this
             if (isset($bean->emailAddress)) {
                 $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
@@ -87,12 +82,45 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             // Generate the compose package for the quick create options.
             require_once 'modules/Emails/EmailUI.php';
 
+
+            // Opportunities does not have an email1 field
+            // we need to use the related account email instead
+            if ($bean->module_name === 'Opportunities') {
+                $relatedAccountId = $bean->account_id;
+                /** @var Account $relatedAccountBean */
+                $relatedAccountBean = BeanFactory::getBean('Accounts', $relatedAccountId);
+                if (!empty($relatedAccountBean) && !empty($relatedAccountBean->email1)) {
+                    $bean->email1 = $relatedAccountBean->email1;
+                    $bean->name = $relatedAccountBean->name;
+                }
+            }
+
             $emailUI = new EmailUI();
-            $button = $emailUI->populateComposeViewFields($defines['focus'])
-                . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'] . '</a>';
+            $emailUI->appendTick = false;
+            $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
+            . $bean->module_name . '" data-record-id="'
+            . $bean->id . '" data-module-name="'
+            . $bean->name .'" data-email-address="'
+            . $bean->email1 .'">'
+            . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
+            . '</a>';
         }
 
         return $button;
     }
 
+    public function display($defines, $additionalFormFields = null, $nonbutton = false)
+    {
+        $focus = new Meeting;
+        if (!$focus->ACLAccess('EditView')) {
+            return '';
+        }
+        
+        $inputID = $this->getWidgetId();
+
+        $button = $this->_get_form($defines, $additionalFormFields);
+        $button .= "<a id='$inputID'>$this->form_value</a>";
+
+        return $button;
+    }
 }

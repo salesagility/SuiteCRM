@@ -90,7 +90,7 @@ abstract class AbstractField implements FieldInterface
         }
 
         if ($dateValue > $offset && 0 === $stepSize) {
-          return false;
+            return false;
         }
 
         for ($i = $offset; $i <= $to; $i+= $stepSize) {

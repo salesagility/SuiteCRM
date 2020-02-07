@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,8 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-YAHOO.namespace("SUGAR");(function(){var sw=YAHOO.SUGAR,Event=YAHOO.util.Event,Connect=YAHOO.util.Connect,Dom=YAHOO.util.Dom;sw.MessageBox={progressTemplate:"{body}<br><div class='sugar-progress-wrap'><div class='sugar-progress-bar'/></div>",promptTemplate:"{body}:<input id='sugar-message-prompt' class='sugar-message-prompt' name='sugar-message-prompt'></input>",show:function(config){var myConf=sw.MessageBox.config={type:'message',modal:true,width:240,id:'sugarMsgWindow',close:true,title:"Alert",msg:" ",buttons:[]};if(config['type']&&config['type']=="prompt"){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_CANCEL"),handler:YAHOO.SUGAR.MessageBox.hide},{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:config['fn']?function(){var returnValue=config['fn'](YAHOO.util.Dom.get("sugar-message-prompt").value);if(typeof(returnValue)=="undefined"||returnValue){YAHOO.SUGAR.MessageBox.hide();}}:YAHOO.SUGAR.MessageBox.hide,isDefault:true}];}else if((config['type']&&config['type']=="alert")){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:config['fn']?function(){YAHOO.SUGAR.MessageBox.hide();config['fn']();}:YAHOO.SUGAR.MessageBox.hide,isDefault:true}]}else if((config['type']&&config['type']=="confirm")){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_YES"),handler:config['fn']?function(){config['fn']('yes');YAHOO.SUGAR.MessageBox.hide();}:YAHOO.SUGAR.MessageBox.hide,isDefault:true},{text:SUGAR.language.get("app_strings","LBL_EMAIL_NO"),handler:config['fn']?function(){config['fn']('no');YAHOO.SUGAR.MessageBox.hide();}:YAHOO.SUGAR.MessageBox.hide}];}
+ */YAHOO.namespace("SUGAR");(function(){var sw=YAHOO.SUGAR,Event=YAHOO.util.Event,Connect=YAHOO.util.Connect,Dom=YAHOO.util.Dom;sw.MessageBox={progressTemplate:"{body}<br><div class='sugar-progress-wrap'><div class='sugar-progress-bar'/></div>",promptTemplate:"{body}:<input id='sugar-message-prompt' class='sugar-message-prompt' name='sugar-message-prompt'></input>",show:function(config){var myConf=sw.MessageBox.config={type:'message',modal:true,width:240,id:'sugarMsgWindow',close:true,title:"Alert",msg:" ",buttons:[]};if(config['type']&&config['type']=="prompt"){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_CANCEL"),handler:YAHOO.SUGAR.MessageBox.hide},{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:config['fn']?function(){var returnValue=config['fn'](YAHOO.util.Dom.get("sugar-message-prompt").value);if(typeof(returnValue)=="undefined"||returnValue){YAHOO.SUGAR.MessageBox.hide();}}:YAHOO.SUGAR.MessageBox.hide,isDefault:true}];}else if((config['type']&&config['type']=="alert")){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:config['fn']?function(){YAHOO.SUGAR.MessageBox.hide();config['fn']();}:YAHOO.SUGAR.MessageBox.hide,isDefault:true}]}else if((config['type']&&config['type']=="confirm")){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_YES"),handler:config['fn']?function(){config['fn']('yes');YAHOO.SUGAR.MessageBox.hide();}:YAHOO.SUGAR.MessageBox.hide,isDefault:true},{text:SUGAR.language.get("app_strings","LBL_EMAIL_NO"),handler:config['fn']?function(){config['fn']('no');YAHOO.SUGAR.MessageBox.hide();}:YAHOO.SUGAR.MessageBox.hide}];}
 else if((config['type']&&config['type']=="plain")){myConf['buttons']=[];}
 for(var i in config){myConf[i]=config[i];}
 if(sw.MessageBox.panel){sw.MessageBox.panel.destroy();}
@@ -66,8 +65,7 @@ return false;var target=Event.getTarget(e);return(this.isValidHandleChild(target
 continue;if(targetTable.getContainerEl().id==id){if(targetTable!=this.newTable){this.newIndex=targetTable.getRecordSet().getLength()-1;var destEl=Dom.get(targetTable.getLastTrEl());destEl.parentNode.insertBefore(this.getEl(),destEl);}
 this.newTable=targetTable
 return true;}}
-if(this.newTable&&this.newTable.getRecord(id)){var targetRow=this.newTable.getRecord(id);var destEl=Dom.get(id);destEl.parentNode.insertBefore(this.getEl(),destEl);this.newIndex=this.newTable.getRecordIndex(targetRow);}},endDrag:function(){if(this.newTable!=null&&this.newIndex!=null){this.getEl().style.display="none";this.table.appendChild(this.getEl());this.newTable.addRow(this.row.getData(),this.newIndex);try{this.ddtable.deleteRow(this.row);}catch(e){if(typeof(console)!="undefined"&&console.log)
-{console.log(e);}}
+if(this.newTable&&this.newTable.getRecord(id)){var targetRow=this.newTable.getRecord(id);var destEl=Dom.get(id);destEl.parentNode.insertBefore(this.getEl(),destEl);this.newIndex=this.newTable.getRecordIndex(targetRow);}},endDrag:function(){if(this.newTable!=null&&this.newIndex!=null){this.getEl().style.display="none";this.table.appendChild(this.getEl());this.newTable.addRow(this.row.getData(),this.newIndex);try{this.ddtable.deleteRow(this.row);}catch(e){if(typeof(console)!="undefined"&&console.log){console.log(e);}}
 this.ddtable.render();}
 this.newTable=this.newIndex=null
 var clickEl=this.getEl();Dom.setStyle(clickEl,"opacity","");}});sw.AsyncPanel=function(el,params){if(params)
@@ -80,8 +78,7 @@ this.callback(o);},_loadFailed:function(o){this.setBody(this.failureText);}});sw
 sw.ClosableTab.superclass.constructor.call(this,el,conf);else
 sw.ClosableTab.superclass.constructor.call(this,el);this.setAttributeConfig("TabView",{value:parent});this.get("labelEl").parentNode.href="javascript:void(0);";}
 YAHOO.extend(sw.ClosableTab,YAHOO.widget.Tab,{close:function(){this.closeEvent.fire();var parent=this.get("TabView");parent.removeTab(this);},initAttributes:function(attr){sw.ClosableTab.superclass.initAttributes.call(this,attr);this.setAttributeConfig("closeMsg",{value:attr.closeMsg||""});this.setAttributeConfig("label",{value:attr.label||this._getLabel(),method:function(value){var labelEl=this.get("labelEl");if(!labelEl){this.set(LABEL_EL,this._createLabelEl());}
-labelEl.innerHTML=value;var closeButton=document.createElement('a');closeButton.href="javascript:void(0);";Dom.addClass(closeButton,"sugar-tab-close");Event.addListener(closeButton,"click",function(e,tab){if(tab.get("closeMsg")!="")
-{if(confirm(tab.get("closeMsg"))){tab.close();}}
+labelEl.innerHTML=value;var closeButton=document.createElement('a');closeButton.href="javascript:void(0);";Dom.addClass(closeButton,"sugar-tab-close");Event.addListener(closeButton,"click",function(e,tab){if(tab.get("closeMsg")!=""){if(confirm(tab.get("closeMsg"))){tab.close();}}
 else{tab.close();}},this);labelEl.appendChild(closeButton);}});}});sw.Tree=function(parentEl,baseRequestParams,rootParams){this.baseRequestParams=baseRequestParams;sw.Tree.superclass.constructor.call(this,parentEl);if(rootParams){if(typeof rootParams=="string")
 this.sendTreeNodeDataRequest(this.getRoot(),rootParams);else
 this.sendTreeNodeDataRequest(this.getRoot(),"");}}

@@ -4,10 +4,10 @@
 
 include_once('include/utils.php');
 
-class jjwg_AreasController extends SugarController {
-
-    function action_area_edit_map() {
-
+class jjwg_AreasController extends SugarController
+{
+    public function action_area_edit_map()
+    {
         $this->view = 'area_edit_map';
         $jjwg_Areas = get_module_info('jjwg_Areas');
 
@@ -17,11 +17,10 @@ class jjwg_AreasController extends SugarController {
         }
         $GLOBALS['polygon'] = $jjwg_Areas->define_polygon();
         $GLOBALS['loc'] = $jjwg_Areas->define_area_loc();
-        
     }
 
-    function action_area_detail_map() {
-
+    public function action_area_detail_map()
+    {
         $this->view = 'area_detail_map';
         $jjwg_Areas = get_module_info('jjwg_Areas');
 
@@ -32,5 +31,4 @@ class jjwg_AreasController extends SugarController {
         $GLOBALS['polygon'] = $jjwg_Areas->define_polygon();
         $GLOBALS['loc'] = $jjwg_Areas->define_area_loc();
     }
-
 }

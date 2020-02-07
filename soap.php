@@ -54,7 +54,6 @@ require_once('modules/Opportunities/Opportunity.php');
 require_once('service/core/SoapHelperWebService.php');
 require_once('modules/Cases/Case.php');
 //ignore notices
-error_reporting(E_ALL ^ E_NOTICE);
 
 
 global $HTTP_RAW_POST_DATA;
@@ -68,8 +67,8 @@ $server = new soap_server;
 $server->configureWSDL('sugarsoap', $NAMESPACE, $sugar_config['site_url'].'/soap.php');
 
 //New API is in these files
-if(!empty($administrator->settings['portal_on'])) {
-	require_once('soap/SoapPortalUsers.php');
+if (!empty($administrator->settings['portal_on'])) {
+    require_once('soap/SoapPortalUsers.php');
 }
 
 require_once('soap/SoapSugarUsers.php');
@@ -82,7 +81,7 @@ require_once('soap/SoapDeprecated.php');
 /* Begin the HTTP listener service and exit. */
 ob_clean();
 
-if (!isset($HTTP_RAW_POST_DATA)){
+if (!isset($HTTP_RAW_POST_DATA)) {
     $HTTP_RAW_POST_DATA = file_get_contents('php://input');
 }
 
@@ -91,10 +90,10 @@ $resourceManager = ResourceManager::getInstance();
 $resourceManager->setup('Soap');
 $observers = $resourceManager->getObservers();
 //Call set_soap_server for SoapResourceObserver instance(s)
-foreach($observers as $observer) {
-   if(method_exists($observer, 'set_soap_server')) {
-   	  $observer->set_soap_server($server);
-   }
+foreach ($observers as $observer) {
+    if (method_exists($observer, 'set_soap_server')) {
+        $observer->set_soap_server($server);
+    }
 }
 
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';

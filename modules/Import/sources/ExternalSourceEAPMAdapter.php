@@ -1,11 +1,12 @@
 <?php
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/Import/sources/ImportDataSource.php');
@@ -94,23 +95,19 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
      */
     public function loadDataSet($maxResults = 0)
     {
-         if ( !$eapmBean = EAPM::getLoginInfo($this->_eapmName,true) )
-         {
+        if (!$eapmBean = EAPM::getLoginInfo($this->_eapmName, true)) {
             throw new Exception("Authentication error with {$this->_eapmName}");
-         }
+        }
 
         $api = ExternalAPIFactory::loadAPI($this->_eapmName);
         $api->loadEAPM($eapmBean);
         $conn = $api->getConnector();
 
         $feed = $conn->getList(array('maxResults' => $maxResults, 'startIndex' => $this->_offset));
-        if($feed !== FALSE)
-        {
+        if ($feed !== false) {
             $this->_totalRecordCount = $feed['totalResults'];
             $this->_recordSet = $feed['records'];
-        }
-        else
-        {
+        } else {
             throw new Exception("Unable to retrieve {$this->_eapmName} feed.");
         }
     }
@@ -155,7 +152,6 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
 
     public function valid()
     {
-        return (current($this->_recordSet) !== FALSE);
+        return (current($this->_recordSet) !== false);
     }
 }
-

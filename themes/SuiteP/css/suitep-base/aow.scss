@@ -58,7 +58,6 @@
 
 #aow_conditionLines td:first-of-type {
   display: inline-block;
-  width: 48px;
 }
 
 #aow_conditionLines td:not(:first-of-type) {
@@ -90,7 +89,7 @@
 
 #aow_conditionLines td:first-of-type button {
   margin-top: 8px;
-  height: 48px;
+  line-height: 30px;
 }
 
 #aow_conditionLines input {
@@ -116,6 +115,16 @@
 #aow_conditionLines select {
   width: 95%;
   margin-top: 8px;
+}
+
+/** fix datetimes **/
+#aow_conditionLines > tbody > tr > td > table.dateTime {
+  display: inline-block;
+  background-color: $detail-view-field-bg;
+
+  .dateTimeComboColumn {
+    display: inline-block;
+  }
 }
 
 @media (max-width: 1800px) {
@@ -159,7 +168,6 @@
   #aow_conditionLines select[id$="][3]"] {
     width: 24%;
   }
-
 }
 
 [field="action_lines"] {
@@ -433,7 +441,7 @@
 
 [data-workflow-action] .lines tbody > tr > td:first-of-type button {
   margin-top: 8px;
-  height: 48px;
+  line-height: 30px;
 }
 
 [data-workflow-action] .lines select {

@@ -39,11 +39,9 @@
  */
 namespace SuiteCRM\API\JsonApi\v1;
 
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
-use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
  * Class JsonApi
@@ -73,7 +71,8 @@ class JsonApi implements LoggerAwareInterface, JsonApiResponseInterface
     /**
      * @return string
      */
-    public function getSchemaPath() {
+    public function getSchemaPath()
+    {
         return __DIR__ . '/schema.json';
     }
 

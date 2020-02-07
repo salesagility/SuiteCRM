@@ -1,12 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -22,7 +24,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 
@@ -35,20 +37,20 @@ $dashletData['AOS_PDF_TemplatesDashlet']['searchFields'] = array('date_entered' 
 
 
 
-                                                          'assigned_user_id' => array('type'    => 'assigned_user_name', 
+                                                          'assigned_user_id' => array('type'    => 'assigned_user_name',
                                                                                       'default' => $current_user->name));
-$dashletData['AOS_PDF_TemplatesDashlet']['columns'] =  array(   'name' => array('width'   => '40', 
+$dashletData['AOS_PDF_TemplatesDashlet']['columns'] =  array(   'name' => array('width'   => '40',
                                                                       'label'   => 'LBL_LIST_NAME',
                                                                       'link'    => true,
-                                                                      'default' => true), 
-                                                      'date_entered' => array('width'   => '15', 
+                                                                      'default' => true),
+                                                      'date_entered' => array('width'   => '15',
                                                                               'label'   => 'LBL_DATE_ENTERED',
                                                                               'default' => true),
-                                                      'date_modified' => array('width'   => '15', 
-                                                                              'label'   => 'LBL_DATE_MODIFIED'),    
-                                                      'created_by' => array('width'   => '8', 
+                                                      'date_modified' => array('width'   => '15',
+                                                                              'label'   => 'LBL_DATE_MODIFIED'),
+                                                      'created_by' => array('width'   => '8',
                                                                             'label'   => 'LBL_CREATED'),
-                                                      'assigned_user_name' => array('width'   => '8', 
+                                                      'assigned_user_name' => array('width'   => '8',
                                                                                      'label'   => 'LBL_LIST_ASSIGNED_USER'),
 
 

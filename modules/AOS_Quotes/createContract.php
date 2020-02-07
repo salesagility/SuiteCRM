@@ -22,26 +22,26 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-    if(!(ACLController::checkAccess('AOS_Contracts', 'edit', true))){
+    if (!(ACLController::checkAccess('AOS_Contracts', 'edit', true))) {
         ACLController::displayNoAccess();
         die;
     }
 
-	require_once('modules/AOS_Quotes/AOS_Quotes.php');
-	require_once('modules/AOS_Contracts/AOS_Contracts.php');
-	
-	//Setting values in Quotes
-	$quote = new AOS_Quotes();
-	$quote->retrieve($_REQUEST['record']);
+    require_once('modules/AOS_Quotes/AOS_Quotes.php');
+    require_once('modules/AOS_Contracts/AOS_Contracts.php');
 
-	//Setting Contract Values
-	$contract = new AOS_Contracts();
-	$contract->name = $quote->name;
-	$contract->assigned_user_id = $quote->assigned_user_id;
-	$contract->total_contract_value = format_number($quote->total_amount);
-	$contract->contract_account_id = $quote->billing_account_id;
+    //Setting values in Quotes
+    $quote = new AOS_Quotes();
+    $quote->retrieve($_REQUEST['record']);
+
+    //Setting Contract Values
+    $contract = new AOS_Contracts();
+    $contract->name = $quote->name;
+    $contract->assigned_user_id = $quote->assigned_user_id;
+    $contract->total_contract_value = format_number($quote->total_amount);
+    $contract->contract_account_id = $quote->billing_account_id;
     $contract->contact_id = $quote->billing_contact_id;
-	$contract->opportunity_id = $quote->opportunity_id;
+    $contract->opportunity_id = $quote->opportunity_id;
 
     $contract->total_amt = $quote->total_amt;
     $contract->subtotal_amount = $quote->subtotal_amount;
@@ -66,12 +66,24 @@
         $row['id'] = '';
         $row['parent_id'] = $contract->id;
         $row['parent_type'] = 'AOS_Contracts';
-        if($row['total_amt'] != null) $row['total_amt'] = format_number($row['total_amt']);
-        if($row['discount_amount'] != null) $row['discount_amount'] = format_number($row['discount_amount']);
-        if($row['subtotal_amount'] != null) $row['subtotal_amount'] = format_number($row['subtotal_amount']);
-        if($row['tax_amount'] != null) $row['tax_amount'] = format_number($row['tax_amount']);
-        if($row['subtotal_tax_amount'] != null) $row['subtotal_tax_amount'] = format_number($row['subtotal_tax_amount']);
-        if($row['total_amount'] != null) $row['total_amount'] = format_number($row['total_amount']);
+        if ($row['total_amt'] != null) {
+            $row['total_amt'] = format_number($row['total_amt']);
+        }
+        if ($row['discount_amount'] != null) {
+            $row['discount_amount'] = format_number($row['discount_amount']);
+        }
+        if ($row['subtotal_amount'] != null) {
+            $row['subtotal_amount'] = format_number($row['subtotal_amount']);
+        }
+        if ($row['tax_amount'] != null) {
+            $row['tax_amount'] = format_number($row['tax_amount']);
+        }
+        if ($row['subtotal_tax_amount'] != null) {
+            $row['subtotal_tax_amount'] = format_number($row['subtotal_tax_amount']);
+        }
+        if ($row['total_amount'] != null) {
+            $row['total_amount'] = format_number($row['total_amount']);
+        }
         $group_contract = new AOS_Line_Item_Groups();
         $group_contract->populateFromRow($row);
         $group_contract->save();
@@ -86,11 +98,11 @@
         $row['id'] = '';
         $row['parent_id'] = $contract->id;
         $row['parent_type'] = 'AOS_Contracts';
-        if($row['product_cost_price'] != null){
+        if ($row['product_cost_price'] != null) {
             $row['product_cost_price'] = format_number($row['product_cost_price']);
         }
         $row['product_list_price'] = format_number($row['product_list_price']);
-        if($row['product_discount'] != null){
+        if ($row['product_discount'] != null) {
             $row['product_discount'] = format_number($row['product_discount']);
             $row['product_discount_amount'] = format_number($row['product_discount_amount']);
         }
@@ -105,12 +117,12 @@
         $prod_contract->save();
     }
 
-	//Setting contract quote relationship
-	require_once('modules/Relationships/Relationship.php');
-	$key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Contracts', $GLOBALS['db']);
-	if (!empty($key)) {
-		$quote->load_relationship($key);
-		$quote->$key->add($contract->id);
-	} 
-	ob_clean();
-	header('Location: index.php?module=AOS_Contracts&action=EditView&record='.$contract->id);
+    //Setting contract quote relationship
+    require_once('modules/Relationships/Relationship.php');
+    $key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Contracts', $GLOBALS['db']);
+    if (!empty($key)) {
+        $quote->load_relationship($key);
+        $quote->$key->add($contract->id);
+    }
+    ob_clean();
+    header('Location: index.php?module=AOS_Contracts&action=EditView&record='.$contract->id);

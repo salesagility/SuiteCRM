@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,45 +34,49 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
-require_once('include/MVC/View/views/view.list.php');
 
-class HomeViewList extends ViewList{
- 	function ActivitiesViewList(){
- 		parent::__construct();
- 		
- 	}
+class HomeViewList extends ViewList
+{
+    public function ActivitiesViewList()
+    {
+        parent::__construct();
+    }
 
- 	function display(){
- 		global $mod_strings, $export_module, $current_language, $theme, $current_user, $dashletData, $sugar_flavor;
-         $this->processMaxPostErrors();
- 		include('modules/Home/index.php');
- 	}
+    public function display()
+    {
+        global $mod_strings, $export_module, $current_language, $theme, $current_user, $dashletData, $sugar_flavor;
+        $this->processMaxPostErrors();
+        include('modules/Home/index.php');
+    }
 
-    function processMaxPostErrors() {
-        if($this->checkPostMaxSizeError()){
+    public function processMaxPostErrors()
+    {
+        if ($this->checkPostMaxSizeError()) {
             $this->errors[] = $GLOBALS['app_strings']['UPLOAD_ERROR_HOME_TEXT'];
             $contentLength = $_SERVER['CONTENT_LENGTH'];
 
             $maxPostSize = ini_get('post_max_size');
-            if (stripos($maxPostSize,"k"))
+            if (stripos($maxPostSize, "k")) {
                 $maxPostSize = (int) $maxPostSize * pow(2, 10);
-            elseif (stripos($maxPostSize,"m"))
+            } elseif (stripos($maxPostSize, "m")) {
                 $maxPostSize = (int) $maxPostSize * pow(2, 20);
+            }
 
             $maxUploadSize = ini_get('upload_max_filesize');
-            if (stripos($maxUploadSize,"k"))
+            if (stripos($maxUploadSize, "k")) {
                 $maxUploadSize = (int) $maxUploadSize * pow(2, 10);
-            elseif (stripos($maxUploadSize,"m"))
+            } elseif (stripos($maxUploadSize, "m")) {
                 $maxUploadSize = (int) $maxUploadSize * pow(2, 20);
+            }
 
             $max_size = min($maxPostSize, $maxUploadSize);
             if ($contentLength > $max_size) {
-                $errMessage = string_format($GLOBALS['app_strings']['UPLOAD_MAXIMUM_EXCEEDED'],array($contentLength,  $max_size));
+                $errMessage = string_format($GLOBALS['app_strings']['UPLOAD_MAXIMUM_EXCEEDED'], array($contentLength,  $max_size));
             } else {
                 $errMessage =$GLOBALS['app_strings']['UPLOAD_REQUEST_ERROR'];
             }
@@ -80,6 +85,4 @@ class HomeViewList extends ViewList{
             $this->displayErrors();
         }
     }
-
 }
-

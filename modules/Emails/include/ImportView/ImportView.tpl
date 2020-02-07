@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,7 +41,7 @@
 
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
-<form class="email-import-view" id="EditView" name="EditView" method="POST" action="index.php?module=Emails&action=send">
+<form class="email-import-view" id="EditView" name="EditNonImported" method="POST" action="index.php?module=Emails&action=send">
     <input type="hidden" name="module" value="Emails">
     <input type="hidden" name="action" value="Import">
     <input type="hidden" name="record" value="">

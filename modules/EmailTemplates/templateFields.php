@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 function generateFieldDefsJS2()
@@ -42,12 +44,13 @@ function generateFieldDefsJS2()
 
     foreach ($app_list_strings['moduleList'] as $key => $name) {
         if (isset($beanList[$key]) && isset($beanFiles[$beanList[$key]]) && !str_begin($key, 'AOW_')) {
-
             require_once($beanFiles[$beanList[$key]]);
             $focus = new $beanList[$key];
             $loopControl[$key][$key] = $focus;
             $prefixes[$key] = strtolower($focus->object_name) . '_';
-            if ($focus->object_name == 'Case') $prefixes[$key] = 'a' . strtolower($focus->object_name) . '_';
+            if ($focus->object_name == 'Case') {
+                $prefixes[$key] = 'a' . strtolower($focus->object_name) . '_';
+            }
         }
     }
 
@@ -68,7 +71,6 @@ function generateFieldDefsJS2()
     foreach ($loopControl as $collectionKey => $beans) {
         $collection[$collectionKey] = array();
         foreach ($beans as $beankey => $bean) {
-
             foreach ($bean->field_defs as $key => $field_def) {
                 if (    /*($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||*/
                     ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
@@ -94,8 +96,9 @@ function generateFieldDefsJS2()
                         break;
                     }
                 }
-                if ($dup)
+                if ($dup) {
                     $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                }
             }
         }
     }
@@ -123,19 +126,20 @@ function genDropDownJS2()
 
     foreach ($app_list_strings['moduleList'] as $key => $name) {
         if (isset($beanList[$key]) && isset($beanFiles[$beanList[$key]]) && !str_begin($key, 'AOW_') && !str_begin($key, 'zr2_')) {
-
             if ($key == 'Contacts') {
                 $dropdown .= "<option value='" . $key . "'>
 						" . $lblContactAndOthers . "
 		  	       </option>";
-            } else if (isset($app_list_strings['moduleListSingular'][$key])) {
-                $dropdown .= "<option value='" . $key . "'>
+            } else {
+                if (isset($app_list_strings['moduleListSingular'][$key])) {
+                    $dropdown .= "<option value='" . $key . "'>
 						" . $app_list_strings['moduleListSingular'][$key] . "
 		  	       </option>";
-            } else {
-                $dropdown .= "<option value='" . $key . "'>
+                } else {
+                    $dropdown .= "<option value='" . $key . "'>
 						" . $app_list_strings['moduleList'][$key] . "
 		  	       </option>";
+                }
             }
         }
     }

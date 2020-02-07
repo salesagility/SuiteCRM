@@ -38,6 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-function translated_prefix($key){
+function translated_prefix($key)
+{
     return '[translated]' . $key;
 }

@@ -50,6 +50,16 @@ class OAuth2Clients extends SugarBean
     /**
      * @var string
      */
+    public $secret;
+
+    /**
+     * @var string
+     */
+    public $redirect_uri;
+
+    /**
+     * @var string
+     */
     public $table_name = 'oauth2clients';
 
     /**
@@ -72,7 +82,7 @@ class OAuth2Clients extends SugarBean
      */
     public function get_summary_text()
     {
-        return "$this->name";
+        return (string)$this->name;
     }
 
     /**
@@ -84,7 +94,7 @@ class OAuth2Clients extends SugarBean
     public function save($check_notify = false)
     {
         if (!empty($_REQUEST['new_secret'])) {
-            $this->secret = crypt($_REQUEST['new_secret']);
+            $this->secret = hash('sha256', $_REQUEST['new_secret']);
         }
         $this->setDurationValue();
         return parent::save();

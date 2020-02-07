@@ -3,7 +3,7 @@
 
 ### **Code of Conduct**
 
-This project and all community members are expected to uphold the [SuiteCRM Code of Conduct.](CODE_OF_CONDUCT.md)
+This project and all community members are expected to uphold the [SuiteCRM Code of Conduct.](https://github.com/salesagility/SuiteCRM/blob/master/CODE_OF_CONDUCT.md)
 
 #### **Bug Reporting**
 
@@ -21,17 +21,17 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * To provide a code contribution for an issue you will need to set up your own fork of the SuiteCRM repository, make your code changes, commit the changes and make a Pull Request to the appropriate branch on the SuiteCM repository. See our [Quick Guide to Fork SuiteCRM.](https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Quick_Guide_to_Fork_SuiteCRM) Once you have set up your forked repository you can begin making commits to the project.
 
-* Determine which base branch your bug fix should use. If your bug is present in both hotfix and hotfix-7.8.x then use the hotfix-7.8.x branch. If however, your bug is specific to hotfix, then you can use the hotfix branch.
+* Determine which base branch your bug fix should use. If your bug is present in both hotfix and hotfix-7.8.x then you will need to make a seperate pull request for each branch.
 
-* Separate each issue fix into a new branch in your repository (Either from the hotfix-7.8.x or hotfix branch) and name it with the issue ID e.g. bugfix_3062 or issue-1234.
+* Separate each fix into a new branch in your repository and name it with the issue ID e.g. bugfix_3062 or issue-1234.
 
 * When committing to your individual bugfix branch, please try and use the following as your commit message 
 ```Fixed #1234 - <the subject of the issue>```. E.g. ```Fixed #1436 - Reports with nested Parentheses are removing parameters```. By using this format we can easily include all bug fixes within major and minor release notes on our [Wiki](https://suitecrm.com/wiki/index.php/Main_Page).
 
-* If you are new to Writing Commit Messages in git follow the guide [here](http://chris.beams.io/posts/git-commit/#seven-rules)
+* If you are new to Writing Commit Messages in git, follow the guide [here.](http://chris.beams.io/posts/git-commit/#seven-rules)
 
 * After you have made your commits and pushed them up to your forked repository you then create a [Pull Request](https://help.github.com/articles/about-pull-requests/) to be reviewed and merged into the SuiteCRM repository. Make a new Pull Request for each issue you fix – do not combine multiple bugfixes into one Pull Request.
-  Ensure that in your Pull Request that the base fork is salesagility/SuiteCRM and base branch is either hotfix or hotfix-7.8.x. and the head fork is your repository and the base branch is your unique bugfix branch e.g. bugfix_1234
+  Ensure that your Pull Request fork is salesagility/SuiteCRM, base branch is either hotfix or hotfix-7.8.x, the head fork is your repository, and the base branch is your unique bugfix branch e.g. bugfix_1234.
   We will automatically reject any Pull Requests made to the wrong branch!
 
 * If you have not signed our CLA [Contributor License Agreement](https://www.clahub.com/agreements/salesagility/SuiteCRM) then your pull request will fail a check and we will be unable to merge it into the project. You will only be required to sign this once.
@@ -45,13 +45,10 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 * Changes that can be considered a new feature or enhancement should be made to the develop branch instead of the hotfix or hotfix-7.8.x. branch.
 
 * To contribute a feature to SuiteCRM, similar to providing a Bug Fix, you must create a forked repository of SuiteCRM and set up your git and development environment.
-  Once done, create a new branch from **develop** and name it relevant to the feature's purpose e.g campaign-wizard-ui. Following our [Code Standards,](https://suitecrm.com/wiki/index.php/Coding_Standards) develop the new feature and ensure your forked repository is kept up to date with minor/major releases. See our [Quick Guide to Fork SuiteCRM.](https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Quick_Guide_to_Fork_SuiteCRM) to update your repository.
-  Make sure your commit messages are relevant and descriptive. When ready to submit for review make a Pull Request detailing your feature's functionality.
-  Ensure that in your Pull Request that the base fork is **salesagility/SuiteCRM** and base branch is **develop** and the head fork is your repository and the base branch is your feature branch.
+  Once done, create a new branch from **develop** and name it relevant to the feature's purpose e.g campaign-wizard-ui. Following our [Code Standards,](https://suitecrm.com/wiki/index.php/Coding_Standards) develop the new feature and ensure your forked repository is kept up to date with minor/major releases. See our [Quick Guide to Fork SuiteCRM](https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Quick_Guide_to_Fork_SuiteCRM) to update your repository.
+  Make sure your commit messages are relevant and descriptive. When ready to submit for review, make a Pull Request detailing your feature's functionality.
+  Ensure that your Pull Requests base fork is **salesagility/SuiteCRM**, the base branch is **develop**, the head fork is your repository, and the base branch is your feature branch.
   Add any new PHPUnit tests to the new feature branch if required e.g new modules or classes.
-  
-  We will review the code and provide feedback within the Pull Request and issues relating to your feature. If the feature is to be included in the core product we will request for the forked repo to have an Issues tab so we can raise any bugs from our testing. This will also allow you to fix those issues using the below commit message format similar to how to submit bug fixes to the hotfix-7.8.x branch.
-  ```$ git commit -m "Fixed #1436 - Reports with nested Parentheses are removing parameters"```. You can add an Issues tab to your forked repository via the 'Settings' tab.
 
 ### Issue and Pull Request Labels
 
@@ -84,6 +81,9 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 | --- | --- | --- |
 | `Assessed` | [search][search-suitecrm-label-Assessed] | Pull requests that have been confirmed to fix the original issue by a SalesAgility member. |
 | `Ready to Merge` | [search][search-suitecrm-label-Ready-to-Merge] | Pull requests that have both been assessed and code reviewed by SalesAgility. |
+| `Needs Tests` | [search][search-suitecrm-label-needs-tests] | Pull requests that require addition acceptance or unit tests before they can be merged. |
+| `Community Contribution` | [search][search-suitecrm-label-Community-Contribution] | Pull requests that have been created by a member of the community. |
+| `Enhancement` | [search][search-suitecrm-label-Community-Contribution] | Pull requests that add additional features or functionality. These pull requests will need to be reviewed by SalesAgility before being merged. |
 | `In Review` | [search][search-suitecrm-label-In-Review] | Currently in-review and requires additional work from creator |
 | `Wrong Branch` | [search][search-suitecrm-label-Wrong-Branch] | Pull requests that have been created to the wrong branch. |
 | `duplicate` | [search][search-suitecrm-label-duplicate] | Duplicate of other pull requests. |
@@ -103,6 +103,9 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 [search-suitecrm-label-Assessed]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3AAssessed
 [search-suitecrm-label-Ready-to-Merge]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3A%22Ready+to+Merge%22
+[search-suitecrm-label-Needs-Tests]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3A%22Needs+Tests%22
+[search-suitecrm-label-Community-Contribution]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3A%22Community+Contribution%22
+[search-suitecrm-label-Enhancement]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3AEnhancement
 [search-suitecrm-label-In-Review]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3A%22In+Review%22
 [search-suitecrm-label-Wrong-Branch]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3A%22Wrong+Branch%22
 [search-suitecrm-label-duplicate]: https://github.com/salesagility/SuiteCRM/pulls?q=is%3Aopen+is%3Apr+label%3Aduplicate

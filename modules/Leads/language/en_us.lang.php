@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -135,7 +135,7 @@ $mod_strings = array(
     'LBL_LIST_PHONE' => 'Office Phone',
     'LBL_LIST_REFERED_BY' => 'Referred By',
     'LBL_LIST_STATUS' => 'Status',
-    'LBL_LIST_TITLE' => 'Title',
+    'LBL_LIST_TITLE' => 'Job Title',
     'LBL_MOBILE_PHONE' => 'Mobile:',
     'LBL_MODULE_NAME' => 'Leads',
     'LBL_MODULE_TITLE' => 'Leads: Home',
@@ -174,7 +174,7 @@ $mod_strings = array(
     'LBL_STATE' => 'State:',
     'LBL_STATUS_DESCRIPTION' => 'Status Description:',
     'LBL_STATUS' => 'Status:',
-    'LBL_TITLE' => 'Title:',
+    'LBL_TITLE' => 'Job Title:',
     'LNK_IMPORT_VCARD' => 'Create Lead From vCard',
     'LNK_LEAD_LIST' => 'View Leads',
     'LNK_NEW_ACCOUNT' => 'Create Account',
@@ -233,4 +233,3 @@ $mod_strings = array(
     'LBL_EDIT_INLINE' => 'Edit' /*for 508 compliance fix*/,
     'LBL_FP_EVENTS_LEADS_1_FROM_FP_EVENTS_TITLE' => 'Events',
 );
-

@@ -577,7 +577,6 @@ table.view {
   text-align: left;
   vertical-align: baseline;
   white-space: pre-wrap;
-  line-height: 10px;
 }
 
 #lineItems {
@@ -626,14 +625,19 @@ slot {
   font-weight: 400;
   background-color: $detail-view-field-bg;
   color: $main-font-color;
-  padding: 0px 10px;
+  padding: 10px 10px;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
-  line-height: 38px;
   text-align: left;
   min-height: 38px;
   vertical-align: baseline;
   white-space: inherit;
+}
+
+.detail-view-field span {
+  line-height: normal;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .detail-view-field a {
@@ -1198,12 +1202,6 @@ p.error {
   margin: 0;
 }
 
-.error {
-  border: none;
-  color: $alert-danger-text;
-  background: transparent;
-}
-
 .error:empty {
   padding: 0;
 }
@@ -1221,7 +1219,7 @@ div.content p.error {
 
 .error a {
   font-weight: 600;
-  color: $link-color;
+  color: white;
   text-decoration: underline;
 }
 
@@ -1235,7 +1233,7 @@ div.content p.error {
 }
 
 .error a:hover {
-  color: $link-color-hover;
+  color: black;
 }
 
 .success {
@@ -2069,7 +2067,6 @@ ul.clickMenu li a:hover {
 }
 
 ul.clickMenu > li > span {
-  display: inline-block;
   cursor: pointer;
 }
 
@@ -2626,6 +2623,10 @@ input#btn_ActionLine.button[type="button"] {
 
 .col-sm-6 .edit-view-field input[type="text"].datetimecombo_date {
   width: 84px;
+}
+
+.col-sm-6 .edit-view-field input[type="text"].date_input {
+    width: auto;
 }
 
 .col-sm-6 .edit-view-field .datetimecombo_time_section {
@@ -3530,6 +3531,10 @@ select#sales_stage_advanced {
     width: 100%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+
   [type="date"] img {
     margin-left: 8px;
   }
@@ -3540,6 +3545,10 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field[type="date"] input[type="text"] {
     width: 92%;
+  }
+
+  .col-sm-6 .edit-view-field[type="date"] input[type="text"].date_input {
+      width: auto;
   }
 }
 
@@ -3631,6 +3640,10 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 100%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
   }
 
   .email-address-options-container {
@@ -3736,6 +3749,10 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+
   .email-address-options-container {
     margin-top: 0;
   }
@@ -3787,6 +3804,9 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
@@ -3847,6 +3867,9 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
@@ -4315,6 +4338,11 @@ h3 span {
   cursor: pointer;
 }
 
+.fix-inlineEdit-textarea {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
 .inlineEditIcon {
   color: #F08377;
   padding-left: 3px;
@@ -4649,7 +4677,6 @@ object {
 }
 
 #report-editview-footer .tab-panels {
-  width: 100%;
 }
 
 .noGraphDataPoints {
@@ -5421,7 +5448,7 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
   top: 100px;
   padding: 20px;
   width: 100%;
-  z-index: 103100;
+  position: fixed;
 }
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_start_trigger_c"] {

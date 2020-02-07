@@ -7,9 +7,9 @@
                 {*column*}
                 {*<!-- COLUMN -->*}
                 {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-                    <div class="col-xs-12 col-sm-6 edit-view-row-item">
+                    <div class="col-xs-12 col-sm-6 edit-view-row-item" data-field="{{$colData.field.name}}">
                 {{else}}
-                    <div class="col-xs-12 col-sm-12 edit-view-row-item">
+                    <div class="col-xs-12 col-sm-12 edit-view-row-item" data-field="{{$colData.field.name}}">
                 {{/if}}
 
                 {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
@@ -32,6 +32,7 @@
                         {{/if}}
 
                                 {*label*}
+                                {minify}
                                 {{if isset($colData.field.customLabel)}}
                                 <label for="{{$fields[$colData.field.name].name}}">{{$colData.field.customLabel}}</label>
                                 {{elseif isset($colData.field.label)}}
@@ -59,6 +60,7 @@
                                     {{/if}}
                                     {sugar_help text=$popupText WIDTH=-1}
                                 {{/if}}
+                                {/minify}
                             </div>
                         {{/if}}
 

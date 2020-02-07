@@ -42,14 +42,13 @@
 namespace SuiteCRM;
 
 use Exception;
-use Throwable;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Description of LangException
+ * LangException
  *
  * @author gyula
  * @todo should it implement or an interface enough for it?

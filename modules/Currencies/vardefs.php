@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,15 +37,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['Currency'] = array('table' => 'currencies',
-	'comment' => 'Currencies allow Sugar to store and display monetary values in various denominations'
-                               ,'fields' => array (
+    'comment' => 'Currencies allow Sugar to store and display monetary values in various denominations'
+                               ,'fields' => array(
   'id' =>
-  array (
+  array(
     'name' => 'id',
     'vname' => 'LBL_NAME',
     'type' => 'id',
@@ -51,7 +54,7 @@ $dictionary['Currency'] = array('table' => 'currencies',
     'comment' => 'Unique identifer'
     ),
   'name' =>
-  array (
+  array(
     'name' => 'name',
     'vname' => 'LBL_LIST_NAME',
     'type' => 'varchar',
@@ -61,7 +64,7 @@ $dictionary['Currency'] = array('table' => 'currencies',
     'importable' => 'required',
   ),
   'symbol' =>
-  array (
+  array(
     'name' => 'symbol',
     'vname' => 'LBL_LIST_SYMBOL',
     'type' => 'varchar',
@@ -71,7 +74,7 @@ $dictionary['Currency'] = array('table' => 'currencies',
      'importable' => 'required',
   ),
   'iso4217' =>
-  array (
+  array(
     'name' => 'iso4217',
     'vname' => 'LBL_LIST_ISO4217',
     'type' => 'varchar',
@@ -79,18 +82,18 @@ $dictionary['Currency'] = array('table' => 'currencies',
      'comment' => '3-letter identifier specified by ISO 4217 (ex: USD)',
   ),
   'conversion_rate' =>
-  array (
+  array(
     'name' => 'conversion_rate',
     'vname' => 'LBL_LIST_RATE',
     'type' => 'float',
     'dbType' => 'double',
     'default' => '0',
      'required' => true,
-	 'comment' => 'Conversion rate factor (relative to stored value)',
-	 'importable' => 'required',
+     'comment' => 'Conversion rate factor (relative to stored value)',
+     'importable' => 'required',
   ),
   'status' =>
-  array (
+  array(
     'name' => 'status',
     'vname' => 'LBL_STATUS',
     'type' => 'enum',
@@ -101,7 +104,7 @@ $dictionary['Currency'] = array('table' => 'currencies',
     'importable' => 'required',
   ),
   'deleted' =>
-  array (
+  array(
     'name' => 'deleted',
     'vname' => 'LBL_DELETED',
     'type' => 'bool',
@@ -110,7 +113,7 @@ $dictionary['Currency'] = array('table' => 'currencies',
     'comment' => 'Record deletion indicator'
   ),
   'date_entered' =>
-  array (
+  array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
@@ -119,7 +122,7 @@ $dictionary['Currency'] = array('table' => 'currencies',
 
   ),
   'date_modified' =>
-  array (
+  array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
@@ -127,20 +130,19 @@ $dictionary['Currency'] = array('table' => 'currencies',
     'comment' => 'Date record last modified'
   ),
   'created_by' =>
-  array (
+  array(
     'name' => 'created_by',
     'reportable' => false,
     'vname' => 'LBL_CREATED_BY',
     'type' => 'id',
     'len'  => '36',
     'required' => true,
-  	'comment' => 'User ID who created record'
+    'comment' => 'User ID who created record'
   ),
 )
-                                                      , 'indices' => array (
+                                                      , 'indices' => array(
    array('name' =>'currenciespk', 'type' =>'primary', 'fields'=>array('id')),
    array('name' =>'idx_currency_name', 'type' =>'index', 'fields'=>array('name','deleted'))
                                                       )
 
                             );
-

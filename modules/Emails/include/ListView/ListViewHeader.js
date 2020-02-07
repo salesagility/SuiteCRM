@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if(!SUGAR.Emails) {
@@ -45,7 +45,7 @@ if(!SUGAR.Emails) {
  * @param {string} moduleName
  * @param {string} actionUrl
  * @param {function} successCallback
- * @param {function} errorCallback (optional)
+ * @param {boolean} errorCallback (optional)
  * @param {string} loadingTitle (optional)
  * @param {string} errorMessage (optional)
  */
@@ -121,15 +121,30 @@ SUGAR.Emails.handleSelectedListViewItems =  function(
 
 $(document).ready(function () {
 
-  var query = JSON.parse($('[name=current_query_by_page]').val());
-  var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
+  $.ajax({
+    type: "GET",
+    cache: false,
+    url: 'index.php?module=Emails&action=GetFolders'
+  }).done(function (data) {
+    let query = JSON.parse($('[name=current_query_by_page]').val());
+    let jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
+    let response = JSON.parse(data);
+    let responses = response.response;
 
-  if(typeof query.folder === 'undefined' ||  query.folder === '') {
-    jQueryBtnEmailsCurrentFolder.remove();
-  } else if(query.folder === null) {
-    jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
-  } else {
-    jQueryBtnEmailsCurrentFolder.text(query.folder);
-  }
+    if(typeof query.folder === 'undefined' ||  query.folder === '') {
+      jQueryBtnEmailsCurrentFolder.remove();
+    } else if(query.folder === null) {
+      jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
+    }
 
+    for (let i = 0; i < (responses.length); i++) {
+      if (responses[i].id === query.folders_id) {
+        jQueryBtnEmailsCurrentFolder.text(responses[(i)].text);
+      } else if (responses[i].id === query.inbound_email_record) {
+        let regExp = /\(([^)]+)\)/;
+        let match = regExp.exec(responses[(i)].text);
+        jQueryBtnEmailsCurrentFolder.text(query.folder + ' ' + match[0]);
+      }
+    }
+  });
 });

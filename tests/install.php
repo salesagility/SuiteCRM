@@ -8,8 +8,8 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
     define('SUITE_PHPUNIT_RUNNER', true);
-// This is global bootstrap for autoloading
-// get silent config
+    // This is global bootstrap for autoloading
+    // get silent config
     $file_config = file_get_contents(__DIR__ . '/travis_config_si.php');
     $write_config = file_put_contents(__DIR__ . '/../config_si.php', $file_config);
 
@@ -17,7 +17,7 @@ if (!defined('sugarEntry')) {
         throw new Exception('Unable to copy silent config file');
     }
 
-// Install db
+    // Install db
     /* DEFINE SOME VARIABLES FOR INSTALLER */
     $_SERVER['HTTP_HOST'] = 'localhost';
     $_SERVER['REQUEST_URI'] = 'install.php';
@@ -26,7 +26,7 @@ if (!defined('sugarEntry')) {
     $_SERVER['SERVER_PORT'] = '80';
     $_REQUEST['goto'] = 'SilentInstall';
     $_REQUEST['cli'] = true;
-// this will fix warning in modules/Users/Save.php:295 during installation
+    // this will fix warning in modules/Users/Save.php:295 during installation
     $_POST['email_reminder_checked'] = false;
     try {
         ob_start();

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once __DIR__ . '/../../soap/SoapHelperFunctions.php';
 require_once __DIR__ . '/../../include/json_config.php';
+require_once __DIR__ . '/../../include/utils.php';
 require_once __DIR__ . '/JsonRPCServerUtils.php';
 
 /**
@@ -175,11 +176,7 @@ class JsonRPCServerCalls
 
                     // get fields to match enum vals
                     if (empty($app_list_strings)) {
-                        if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] !== '') {
-                            $current_language = $_SESSION['authenticated_user_language'];
-                        } else {
-                            $current_language = $sugar_config['default_language'];
-                        }
+                        $current_language = get_current_language();
                         $app_list_strings = return_app_list_strings_language($current_language);
                     }
 

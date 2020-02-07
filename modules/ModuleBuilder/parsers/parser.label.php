@@ -74,20 +74,6 @@ class ParserLabel
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function ParserLabel($moduleName, $packageName = '')
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($moduleName, $packageName);
-    }
-
-    /**
      * Takes in the request params from a save request and processes
      * them for the save.
      *
@@ -226,7 +212,7 @@ class ParserLabel
                 // obtain $mod_strings
                 include $filename;
             } elseif ($forRelationshipLabel) {
-                $fh = fopen($filename, 'a');
+                $fh = fopen($filename, 'ab');
                 fclose($fh);
             }
         } else {
@@ -237,12 +223,12 @@ class ParserLabel
 
         //$charset = (isset($app_strings['LBL_CHARSET'])) ? $app_strings['LBL_CHARSET'] : $GLOBALS['sugar_config']['default_charset'] ;
 
-            foreach ($labels as $key => $value) {
-                if (!isset($mod_strings [ $key ]) || strcmp($value, $mod_strings [ $key ]) != 0) {
-                    $mod_strings [$key] = to_html(strip_tags(from_html($value))); // must match encoding used in view.labels.php
-                    $changed = true;
-                }
+        foreach ($labels as $key => $value) {
+            if (!isset($mod_strings [ $key ]) || strcmp($value, $mod_strings [ $key ]) != 0) {
+                $mod_strings [$key] = to_html(strip_tags(from_html($value))); // must match encoding used in view.labels.php
+                $changed = true;
             }
+        }
 
         if ($changed) {
             $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels: writing new mod_strings to $filename");
@@ -295,12 +281,17 @@ class ParserLabel
                     }
                 }
 
+                // Fix for issue #551 - save new labels
+                foreach ($labels as $key => $value) {
+                    $mod_strings[$key] = $value;
+                }
+
                 foreach ($mod_strings as $key => $val) {
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
                 }
 
                 try {
-                    $file_contents = fopen($extension_filename, 'w');
+                    $file_contents = fopen($extension_filename, 'wb');
                     fputs($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
@@ -336,13 +327,18 @@ class ParserLabel
                     }
                 }
 
+                // Fix for issue #551 - save new labels
+                foreach ($labels as $key => $value) {
+                    $mod_strings[$key] = $value;
+                }
+
                 foreach ($mod_strings as $key => $val) {
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
                 }
 
                 $failed_to_write = false;
                 try {
-                    $file_contents = fopen($relationships_filename, 'w');
+                    $file_contents = fopen($relationships_filename, 'wb');
                     fputs($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {

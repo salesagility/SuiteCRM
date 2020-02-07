@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,15 +34,15 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $db;
+$db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
     die("Not a Valid Entry Point");
@@ -50,8 +50,10 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     require_once("data/BeanFactory.php");
     $file_type = ''; // bug 45896
     require_once("data/BeanFactory.php");
-    ini_set('zlib.output_compression',
-        'Off');//bug 27089, if use gzip here, the Content-Length in header may be incorrect.
+    ini_set(
+        'zlib.output_compression',
+        'Off'
+    );//bug 27089, if use gzip here, the Content-Length in header may be incorrect.
     // cn: bug 8753: current_user's preferred export charset not being honored
     $GLOBALS['current_user']->retrieve($_SESSION['authenticated_user_id']);
     $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
@@ -70,6 +72,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         }
         $bean_name = $beanList[$module];
+        if ($bean_name == 'aCase') {
+            $bean_name = 'Case';
+        }
         if (!file_exists('modules/' . $module . '/' . $bean_name . '.php')) {
             die($app_strings['ERROR_TYPE_NOT_VALID']);
         }
@@ -106,7 +111,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             header('Location: ' . $focusRevision->doc_url);
             sugar_die("Remote file detected, location header sent.");
         }
-
     } // if
     $temp = explode("_", $_REQUEST['id'], 2);
     if (is_array($temp)) {
@@ -130,7 +134,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     }
 
     if (!file_exists($local_location) || strpos($local_location, "..")) {
-
         if (isset($image_field)) {
             header("Content-Type: image/png");
             header("Content-Disposition: attachment; filename=\"No-Image.png\"");
@@ -146,7 +149,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     } else {
         $doQuery = true;
 
-        if ($file_type == 'documents') {
+        if ($file_type == 'documents' && !isset($image_field)) {
             // cn: bug 9674 document_revisions table has no 'name' column.
             $query = "SELECT filename name FROM document_revisions INNER JOIN documents ON documents.id = document_revisions.document_id ";
             $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "' ";
@@ -168,7 +171,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
             $query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
 
-            //$query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
+        //$query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
         } elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type']) && $file_type != 'temp') { //make sure not email temp file.
             $query = "SELECT filename name FROM " . $file_type . " ";
             $query .= "WHERE " . $file_type . ".id= '" . $db->quote($_REQUEST['id']) . "'";
@@ -183,8 +186,8 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         if ($doQuery && isset($query)) {
-            $rs = $GLOBALS['db']->query($query);
-            $row = $GLOBALS['db']->fetchByAssoc($rs);
+            $rs = DBManagerFactory::getInstance()->query($query);
+            $row = DBManagerFactory::getInstance()->fetchByAssoc($rs);
 
             if (empty($row)) {
                 die($app_strings['ERROR_NO_RECORD']);
@@ -206,7 +209,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             } else {
                 $download_location = "upload://{$_REQUEST['id']}";
             }
-
         } else {
             if (isset($_REQUEST['tempName']) && isset($_REQUEST['isTempFile'])) {
                 // downloading a temp file (email 2.0)
@@ -225,8 +227,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             $name = str_replace("+", "_", $name);
         }
 
-        header("Pragma: public");
-        header("Cache-Control: maxage=1, post-check=0, pre-check=0");
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
         if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
             $mime = getimagesize($download_location);
             if (!empty($mime)) {
@@ -236,10 +239,10 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            if($_REQUEST['preview'] === "yes"){ 
-                header( "Content-Disposition: inline; filename=\"".$name."\";"); }
-            else{
-                header("Content-Disposition: attachment; filename=\"" . $name . "\";");
+            if (isset($_REQUEST['preview']) && $_REQUEST['preview'] === 'yes') {
+                header('Content-Disposition: inline; filename="' . $name . '";');
+            } else {
+                header('Content-Disposition: attachment; filename="' . $name . '";');
             }
         }
         // disable content type sniffing in MSIE

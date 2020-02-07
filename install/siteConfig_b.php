@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,70 +37,74 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 
-if( !isset( $install_script ) || !$install_script ){
+if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-if( is_file("config.php") ){
+if (is_file("config.php")) {
+    if (!empty($sugar_config['default_theme'])) {
+        $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
+    }
 
+    if (!empty($sugar_config['disable_persistent_connections'])) {
+        $_SESSION['disable_persistent_connections'] =
+        $sugar_config['disable_persistent_connections'];
+    }
+    if (!empty($sugar_config['default_language'])) {
+        $_SESSION['default_language'] = $sugar_config['default_language'];
+    }
+    if (!empty($sugar_config['translation_string_prefix'])) {
+        $_SESSION['translation_string_prefix'] = $sugar_config['translation_string_prefix'];
+    }
+    if (!empty($sugar_config['default_charset'])) {
+        $_SESSION['default_charset'] = $sugar_config['default_charset'];
+    }
 
+    if (!empty($sugar_config['default_currency_name'])) {
+        $_SESSION['default_currency_name'] = $sugar_config['default_currency_name'];
+    }
+    if (!empty($sugar_config['default_currency_symbol'])) {
+        $_SESSION['default_currency_symbol'] = $sugar_config['default_currency_symbol'];
+    }
+    if (!empty($sugar_config['default_currency_iso4217'])) {
+        $_SESSION['default_currency_iso4217'] = $sugar_config['default_currency_iso4217'];
+    }
 
-	if(!empty($sugar_config['default_theme']))
-      $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
+    if (!empty($sugar_config['rss_cache_time'])) {
+        $_SESSION['rss_cache_time'] = $sugar_config['rss_cache_time'];
+    }
+    if (!empty($sugar_config['languages'])) {
+        // We need to encode the languages in a way that can be retrieved later.
+        $language_keys = array();
+        $language_values = array();
 
-	if(!empty($sugar_config['disable_persistent_connections']))
-		$_SESSION['disable_persistent_connections'] =
-		$sugar_config['disable_persistent_connections'];
-	if(!empty($sugar_config['default_language']))
-		$_SESSION['default_language'] = $sugar_config['default_language'];
-	if(!empty($sugar_config['translation_string_prefix']))
-		$_SESSION['translation_string_prefix'] = $sugar_config['translation_string_prefix'];
-	if(!empty($sugar_config['default_charset']))
-		$_SESSION['default_charset'] = $sugar_config['default_charset'];
+        foreach ($sugar_config['languages'] as $key=>$value) {
+            $language_keys[] = $key;
+            $language_values[] = $value;
+        }
 
-	if(!empty($sugar_config['default_currency_name']))
-		$_SESSION['default_currency_name'] = $sugar_config['default_currency_name'];
-	if(!empty($sugar_config['default_currency_symbol']))
-		$_SESSION['default_currency_symbol'] = $sugar_config['default_currency_symbol'];
-	if(!empty($sugar_config['default_currency_iso4217']))
-		$_SESSION['default_currency_iso4217'] = $sugar_config['default_currency_iso4217'];
-
-	if(!empty($sugar_config['rss_cache_time']))
-		$_SESSION['rss_cache_time'] = $sugar_config['rss_cache_time'];
-	if(!empty($sugar_config['languages']))
-	{
-		// We need to encode the languages in a way that can be retrieved later.
-		$language_keys = Array();
-		$language_values = Array();
-
-		foreach($sugar_config['languages'] as $key=>$value)
-		{
-			$language_keys[] = $key;
-			$language_values[] = $value;
-		}
-
-		$_SESSION['language_keys'] = urlencode(implode(",",$language_keys));
-		$_SESSION['language_values'] = urlencode(implode(",",$language_values));
-	}
+        $_SESSION['language_keys'] = urlencode(implode(",", $language_keys));
+        $_SESSION['language_values'] = urlencode(implode(",", $language_values));
+    }
 }
 
 ////	errors
 $errors = '';
-if( isset($validation_errors) ){
-    if( count($validation_errors) > 0 ){
+if (isset($validation_errors)) {
+    if (count($validation_errors) > 0) {
         $errors  = '<div id="errorMsgs">';
         $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
-        foreach( $validation_errors as $error ){
-			$errors .= '<li>' . $error . '</li>';
+        foreach ($validation_errors as $error) {
+            $errors .= '<li>' . $error . '</li>';
         }
-		$errors .= '</ul></div>';
+        $errors .= '</ul></div>';
     }
 }
 
@@ -159,7 +166,7 @@ $checked = '';
 $out .= <<<EOQ
    <tr style='display:none'><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_sugarbeet_automatic_checks" value="yes" /></td>
-       <td><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUGAR_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
+       <td><b>{$mod_strings['LBL_SITECFG_SUITE_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUITE_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
    <tbody id="setup_site_session_section_pre">
    <tr><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_custom_session_path" value="yes" onclick="javascript:toggleSession();" {$customSession} /></td>
@@ -236,4 +243,3 @@ $out .= <<<EOQ
 EOQ;
 
 echo $out;
-

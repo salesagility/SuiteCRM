@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,17 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
-$dictionary["documents_contacts"] = array (
+$dictionary["documents_contacts"] = array(
   'true_relationship_type' => 'many-to-many',
-  'relationships' => 
-  array (
-    'documents_contacts' => 
-    array (
+  'relationships' =>
+  array(
+    'documents_contacts' =>
+    array(
       'lhs_module' => 'Documents',
       'lhs_table' => 'documents',
       'lhs_key' => 'id',
@@ -57,71 +58,70 @@ $dictionary["documents_contacts"] = array (
     ),
   ),
   'table' => 'documents_contacts',
-  'fields' => 
-  array (
-    0 => 
-    array (
+  'fields' =>
+  array(
+    0 =>
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
-    array (
+    1 =>
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
-    array (
+    2 =>
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
       'default' => '0',
       'required' => true,
     ),
-    3 => 
-    array (
+    3 =>
+    array(
       'name' => 'document_id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
-    array (
+    4 =>
+    array(
       'name' => 'contact_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' => 
-  array (
-    0 => 
-    array (
+  'indices' =>
+  array(
+    0 =>
+    array(
       'name' => 'documents_contactsspk',
       'type' => 'primary',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'id',
       ),
     ),
-    1 => 
-    array (
+    1 =>
+    array(
       'name' => 'documents_contacts_contact_id',
       'type' => 'alternate_key',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'contact_id',
         1 => 'document_id',
       ),
     ),
-    2 => 
-    array (
+    2 =>
+    array(
       'name' => 'documents_contacts_document_id',
       'type' => 'alternate_key',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'document_id',
         1 => 'contact_id',
       ),
     ),
   ),
 );
-

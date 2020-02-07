@@ -40,8 +40,6 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\Enumerator\ExceptionCode;
-
 /**
  * Class IdAlreadyExistsException
  * @package SuiteCRM\API\v8\Exception
@@ -51,5 +49,4 @@ class IdAlreadyExistsException extends ApiException
     const MSG_PREFIX = '[IdAlreadyExists]';
     const DEFAULT_CODE = 8060;
     const HTTP_STATUS = 403;
-    
 }

@@ -294,7 +294,7 @@ abstract class DBManager
     }
 
     /**
-     * Returns this instance's DBHelper
+     * Returns this instance's DBManager
      * Actually now returns $this
      * @deprecated
      * @return DBManager
@@ -515,7 +515,7 @@ abstract class DBManager
         $sql = $this->insertSQL($bean);
         $tablename = $bean->getTableName();
         $msg = "Error inserting into table: $tablename:";
-
+        
         return $this->query($sql, true, $msg);
     }
 
@@ -528,43 +528,47 @@ abstract class DBManager
      * @param bool $execute Execute or return query?
      * @return bool query result
      */
-	public function insertParams($table, $field_defs, $data, $field_map = null, $execute = true)
-	{
-		$values = array();
-		if(!is_array($field_defs) && !is_object($field_defs)) {
+    public function insertParams($table, $field_defs, $data, $field_map = null, $execute = true)
+    {
+        $values = array();
+        if (!is_array($field_defs) && !is_object($field_defs)) {
             $GLOBALS['log']->fatal('$filed_defs should be an array');
-        } else {foreach ((array)$field_defs as $field => $fieldDef){
+        } else {
+            foreach ((array)$field_defs as $field => $fieldDef) {
+                if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') {
+                    continue;
+                }//custom fields handle there save seperatley
+                if (!empty($field_map) && !empty($field_map[$field]['custom_type'])) {
+                    continue;
+                }
 
-			if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') { continue;
-			}//custom fields handle there save seperatley
-			if(!empty($field_map) && !empty($field_map[$field]['custom_type'])) {continue;}
+                if (isset($data[$field])) {
+                    // clean the incoming value..
+                    $val = from_html($data[$field]);
+                } else {
+                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                        $val = $fieldDef['default'];
+                    } else {
+                        $val = null;
+                    }
+                }
 
-			if(isset($data[$field])) {
-				// clean the incoming value..
-				$val = from_html($data[$field]);
-			} else {
-				if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
-					$val = $fieldDef['default'];
-				} else {
-					$val = null;
-				}
-			}
-
-			//handle auto increment values here - we may have to do something like nextval for oracle
-			if (!empty($fieldDef['auto_increment'])) {
-				$auto = $this->getAutoIncrementSQL($table, $fieldDef['name']);
-				if(!empty($auto)) {
-					$values[$field] = $auto;
-				}
-			} elseif ($fieldDef['name'] == 'deleted') {
-				$values['deleted'] = (int)$val;
-			} else {
-				// need to do some thing about types of values
-				if(!is_null($val) || !empty($fieldDef['required'])) {
-					$values[$field] = $this->massageValue($val, $fieldDef);
-				}
-			}
-		}}
+                //handle auto increment values here - we may have to do something like nextval for oracle
+                if (!empty($fieldDef['auto_increment'])) {
+                    $auto = $this->getAutoIncrementSQL($table, $fieldDef['name']);
+                    if (!empty($auto)) {
+                        $values[$field] = $auto;
+                    }
+                } elseif (isset($fieldDef['name']) && $fieldDef['name'] == 'deleted') {
+                    $values['deleted'] = (int)$val;
+                } else {
+                    // need to do some thing about types of values
+                    if (!is_null($val) || !empty($fieldDef['required'])) {
+                        $values[$field] = $this->massageValue($val, $fieldDef);
+                    }
+                }
+            }
+        }
 
         if (empty($values)) {
             return $execute ? true : '';
@@ -768,7 +772,6 @@ abstract class DBManager
      */
     protected function isNullable($vardef)
     {
-
         if (isset($vardef['isnull']) && (strtolower($vardef['isnull']) == 'false' || $vardef['isnull'] === false)
             && !empty($vardef['required'])
         ) {
@@ -841,6 +844,11 @@ abstract class DBManager
                     continue;
                 }
             }
+            if (isset($value['type']) == false || $value['type'] == false) {
+                $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
+                continue;
+            }
+
 
             $name = strtolower($value['name']);
             // add or fix the field defs per what the DB is expected to give us back
@@ -973,7 +981,6 @@ abstract class DBManager
                         $this->query($rename, true, "Cannot rename index");
                     }
                     $sql .= is_array($rename) ? join("\n", $rename) . "\n" : $rename . "\n";
-
                 } else {
                     // ok we need this field lets create it
                     $sql .= "/*MISSING INDEX IN DATABASE - $name -{$value['type']}  ROW */\n";
@@ -1036,7 +1043,9 @@ abstract class DBManager
                         continue;
                     }
                 } else {
-                    if (array_map('strtolower', $fielddef1[$key]) == array_map('strtolower', $fielddef2[$key])) {
+                    $f1 = fixIndexArrayFormat($fielddef1[$key]);
+                    $f2 = fixIndexArrayFormat($fielddef2[$key]);
+                    if (array_map('strtolower', $f1) == array_map('strtolower', $f2)) {
                         continue;
                     }
                 }
@@ -1055,50 +1064,6 @@ abstract class DBManager
 
         return true;
     }
-
-    /**
-     * Compare a field in two tables
-     * @deprecated
-     * @param  string $name field name
-     * @param  string $table1
-     * @param  string $table2
-     * @return array  array with keys 'msg','table1','table2'
-     */
-    public function compareFieldInTables($name, $table1, $table2)
-    {
-        $row1 = $this->describeField($name, $table1);
-        $row2 = $this->describeField($name, $table2);
-        $returnArray = array(
-            'table1' => $row1,
-            'table2' => $row2,
-            'msg' => 'error',
-        );
-
-        $ignore_filter = array('Key' => 1);
-        if ($row1) {
-            if (!$row2) {
-                // Exists on table1 but not table2
-                $returnArray['msg'] = 'not_exists_table2';
-            } else {
-                if (sizeof($row1) != sizeof($row2)) {
-                    $returnArray['msg'] = 'no_match';
-                } else {
-                    $returnArray['msg'] = 'match';
-                    foreach ($row1 as $key => $value) {
-                        //ignore keys when checking we will check them when we do the index check
-                        if (!isset($ignore_filter[$key]) && (!isset($row2[$key]) || $row1[$key] !== $row2[$key])) {
-                            $returnArray['msg'] = 'no_match';
-                        }
-                    }
-                }
-            }
-        } else {
-            $returnArray['msg'] = 'not_exists_table1';
-        }
-
-        return $returnArray;
-    }
-
 
     /**
      * Creates an index identified by name on the given fields.
@@ -1309,191 +1274,6 @@ abstract class DBManager
         $msg = "Error deleting column(s) on table: $tablename:";
 
         return $this->query($sql, true, $msg);
-    }
-
-    /**
-     * Generate a set of Insert statements based on the bean given
-     *
-     * @deprecated
-     *
-     * @param  SugarBean $bean the bean from which table we will generate insert stmts
-     * @param  string $select_query the query which will give us the set of objects that
-     * we want to place into our insert statement
-     * @param  int $start the first row to query
-     * @param  int $count the number of rows to query
-     * @param  string $table the table to query from
-     * @param bool $is_related_query
-     * @return string SQL insert statement
-     */
-    public function generateInsertSQL(
-        SugarBean $bean,
-        $select_query,
-        $start,
-        $count = -1,
-        $table = '',
-        $is_related_query = false
-    ) {
-        $this->log->info('call to DBManager::generateInsertSQL() is deprecated');
-
-        if (!$table) {
-            $GLOBALS['log']->fatal('empty table name');
-        }
-
-        global $sugar_config;
-
-        $rows_found = 0;
-        $count_query = $bean->create_list_count_query($select_query);
-        if (!empty($count_query)) {
-            // We have a count query.  Run it and get the results.
-            $result = $this->query($count_query, true, "Error running count query for $this->object_name List: ");
-            $assoc = $this->fetchByAssoc($result);
-            if (!empty($assoc['c'])) {
-                $rows_found = $assoc['c'];
-            }
-        }
-        if ($count == -1) {
-            $count = $sugar_config['list_max_entries_per_page'];
-        }
-        $next_offset = $start + $count;
-
-        $result = $this->limitQuery($select_query, $start, $count);
-        // get basic insert
-        $sql = "INSERT INTO " . $table;
-        $custom_sql = "INSERT INTO " . $table . "_cstm";
-
-        // get field definitions
-        $fields = $bean->getFieldDefinitions();
-        $custom_fields = array();
-
-        if ($bean->hasCustomFields()) {
-            foreach ($fields as $fieldDef) {
-                if ($fieldDef['source'] == 'custom_fields') {
-                    $custom_fields[$fieldDef['name']] = $fieldDef['name'];
-                }
-            }
-            if (!empty($custom_fields)) {
-                $custom_fields['id_c'] = 'id_c';
-                $id_field = array('name' => 'id_c', 'custom_type' => 'id',);
-                $fields[] = $id_field;
-            }
-        }
-
-        // get column names and values
-        $row_array = array();
-        $columns = array();
-        $cstm_row_array = array();
-        $cstm_columns = array();
-        $built_columns = false;
-        while (($row = $this->fetchByAssoc($result)) != null) {
-            $values = array();
-            $cstm_values = array();
-            if (!$is_related_query) {
-                foreach ($fields as $fieldDef) {
-                    if (isset($fieldDef['source']) && $fieldDef['source'] != 'db' && $fieldDef['source'] != 'custom_fields') {
-                        continue;
-                    }
-                    $val = $row[$fieldDef['name']];
-
-                    //handle auto increment values here only need to do this on insert not create
-                    if ($fieldDef['name'] == 'deleted') {
-                        $values['deleted'] = $val;
-                        if (!$built_columns) {
-                            $columns[] = 'deleted';
-                        }
-                    } else {
-                        $type = $fieldDef['type'];
-                        if (!empty($fieldDef['custom_type'])) {
-                            $type = $fieldDef['custom_type'];
-                        }
-                        // need to do some thing about types of values
-                        if ($this->dbType == 'mysql' && $val == '' && ($type == 'datetime' || $type == 'date' || $type == 'int' || $type == 'currency' || $type == 'decimal')) {
-                            if (!empty($custom_fields[$fieldDef['name']])) {
-                                $cstm_values[$fieldDef['name']] = 'null';
-                            } else {
-                                $values[$fieldDef['name']] = 'null';
-                            }
-                        } else {
-                            if (isset($type) && $type == 'int') {
-                                if (!empty($custom_fields[$fieldDef['name']])) {
-                                    $cstm_values[$fieldDef['name']] = $GLOBALS['db']->quote(from_html($val));
-                                } else {
-                                    $values[$fieldDef['name']] = $GLOBALS['db']->quote(from_html($val));
-                                }
-                            } else {
-                                if (!empty($custom_fields[$fieldDef['name']])) {
-                                    $cstm_values[$fieldDef['name']] = "'" . $GLOBALS['db']->quote(from_html($val)) . "'";
-                                } else {
-                                    $values[$fieldDef['name']] = "'" . $GLOBALS['db']->quote(from_html($val)) . "'";
-                                }
-                            }
-                        }
-                        if (!$built_columns) {
-                            if (!empty($custom_fields[$fieldDef['name']])) {
-                                $cstm_columns[] = $fieldDef['name'];
-                            } else {
-                                $columns[] = $fieldDef['name'];
-                            }
-                        }
-                    }
-
-                }
-            } else {
-                foreach ($row as $key => $val) {
-                    if ($key != 'orc_row') {
-                        $values[$key] = "'$val'";
-                        if (!$built_columns) {
-                            $columns[] = $key;
-                        }
-                    }
-                }
-            }
-            $built_columns = true;
-            if (!empty($values)) {
-                $row_array[] = $values;
-            }
-            if (!empty($cstm_values) && !empty($cstm_values['id_c']) && (strlen($cstm_values['id_c']) > 7)) {
-                $cstm_row_array[] = $cstm_values;
-            }
-        }
-
-        //if (sizeof ($values) == 0) return ""; // no columns set
-
-        // get the entire sql
-        $sql .= "(" . implode(",", $columns) . ") ";
-        $sql .= "VALUES";
-        for ($i = 0; $i < count($row_array); $i++) {
-            $sql .= " (" . implode(",", $row_array[$i]) . ")";
-            if ($i < (count($row_array) - 1)) {
-                $sql .= ", ";
-            }
-        }
-        //custom
-        // get the entire sql
-        $custom_sql .= "(" . implode(",", $cstm_columns) . ") ";
-        $custom_sql .= "VALUES";
-
-        for ($i = 0; $i < count($cstm_row_array); $i++) {
-            $custom_sql .= " (" . implode(",", $cstm_row_array[$i]) . ")";
-            if ($i < (count($cstm_row_array) - 1)) {
-                $custom_sql .= ", ";
-            }
-        }
-
-        return array(
-            'data' => $sql,
-            'cstm_sql' => $custom_sql, /*'result_count' => $row_count, */
-            'total_count' => $rows_found,
-            'next_offset' => $next_offset
-        );
-    }
-
-    /**
-     * @deprecated
-     * Disconnects all instances
-     */
-    public function disconnectAll()
-    {
-        DBManagerFactory::disconnectAll();
     }
 
     /**
@@ -1846,14 +1626,14 @@ abstract class DBManager
         $sqlStr = '';
         foreach ($tokens as $key => $val) {
             switch ($val) {
-                case '?' :
-                case '!' :
-                case '&' :
+                case '?':
+                case '!':
+                case '&':
                     $count++;
                     $sqlStr .= '?';
                     break;
 
-                default :
+                default:
                     //escape any special characters
                     $tokens[$key] = preg_replace('/\\\([&?!])/', "\\1", $val);
                     $sqlStr .= $tokens[$key];
@@ -1956,8 +1736,13 @@ abstract class DBManager
     public function insertSQL(SugarBean $bean)
     {
         // get column names and values
-        $sql = $this->insertParams($bean->getTableName(), $bean->getFieldDefinitions(), get_object_vars($bean),
-            isset($bean->field_name_map) ? $bean->field_name_map : null, false);
+        $sql = $this->insertParams(
+            $bean->getTableName(),
+            $bean->getFieldDefinitions(),
+            get_object_vars($bean),
+            isset($bean->field_name_map) ? $bean->field_name_map : null,
+            false
+        );
 
         return $sql;
     }
@@ -1974,55 +1759,66 @@ abstract class DBManager
         $primaryField = $bean->getPrimaryFieldDefinition();
         $columns = array();
         $fields = $bean->getFieldDefinitions();
-		// get column names and values
-		if(!is_array($fields) && !is_object($fields)) {
+        // get column names and values
+        if (!is_array($fields) && !is_object($fields)) {
             $GLOBALS['log']->fatal('Field Definition should be an array.');
-        } else {foreach ((array)$fields as $field => $fieldDef) {
-			if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') { continue;
-			}// Do not write out the id field on the update statement.
-    		// We are not allowed to change ids.
-    		if (empty($fieldDef['name']) || $fieldDef['name'] == $primaryField['name']) {continue;}
+        } else {
+            foreach ((array)$fields as $field => $fieldDef) {
+                if (isset($fieldDef['source']) && $fieldDef['source'] != 'db') {
+                    continue;
+                }// Do not write out the id field on the update statement.
+                // We are not allowed to change ids.
+                if (empty($fieldDef['name']) || $fieldDef['name'] == $primaryField['name']) {
+                    continue;
+                }
 
-    		// If the field is an auto_increment field, then we shouldn't be setting it.  This was added
-    		// specially for Bugs and Cases which have a number associated with them.
-    		if (!empty($bean->field_name_map[$field]['auto_increment'])) {continue;}
+                // If the field is an auto_increment field, then we shouldn't be setting it.  This was added
+                // specially for Bugs and Cases which have a number associated with them.
+                if (!empty($bean->field_name_map[$field]['auto_increment'])) {
+                    continue;
+                }
 
-    		//custom fields handle their save separately
-    		if(isset($bean->field_name_map) && !empty($bean->field_name_map[$field]['custom_type'])) { continue;}
+                //custom fields handle their save separately
+                if (isset($bean->field_name_map) && !empty($bean->field_name_map[$field]['custom_type'])) {
+                    continue;
+                }
 
-    		// no need to clear deleted since we only update not deleted records anyway
-    		if($fieldDef['name'] == 'deleted' && empty($bean->deleted)) {continue;}
+                // no need to clear deleted since we only update not deleted records anyway
+                if ($fieldDef['name'] == 'deleted' && empty($bean->deleted)) {
+                    continue;
+                }
 
-    		if(isset($bean->$field)) {
-    			$val = from_html($bean->$field);
-    		} else {
-    			continue;
-    		}
+                if (isset($bean->$field)) {
+                    $val = from_html($bean->$field);
+                } else {
+                    continue;
+                }
 
-    		if(!empty($fieldDef['type']) && $fieldDef['type'] == 'bool'){
-    			$val = $bean->getFieldValue($field);
-    		}
+                if (!empty($fieldDef['type']) && $fieldDef['type'] == 'bool') {
+                    $val = $bean->getFieldValue($field);
+                }
 
-    		if(strlen($val) == 0) {
-    			if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
-    				$val = $fieldDef['default'];
-    			} else {
-    				$val = null;
-    			}
-    		}
+                if (strlen($val) == 0) {
+                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                        $val = $fieldDef['default'];
+                    } else {
+                        $val = null;
+                    }
+                }
 
-    		if(!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
-			    $val = $this->truncate($val, $fieldDef['len']);
-			}
-		$columnName = $this->quoteIdentifier($fieldDef['name']);
-    		if(!is_null($val) || !empty($fieldDef['required'])) {
-    			$columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
-    		} elseif($this->isNullable($fieldDef)) {
-    			$columns[] = "{$columnName}=NULL";
-    		} else {
-    		    $columns[] = "{$columnName}=".$this->emptyValue($fieldDef['type']);
-    		}
-		}}
+                if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+                    $val = $this->truncate($val, $fieldDef['len']);
+                }
+                $columnName = $this->quoteIdentifier($fieldDef['name']);
+                if (!is_null($val) || !empty($fieldDef['required'])) {
+                    $columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
+                } elseif ($this->isNullable($fieldDef)) {
+                    $columns[] = "{$columnName}=NULL";
+                } else {
+                    $columns[] = "{$columnName}=".$this->emptyValue($fieldDef['type']);
+                }
+            }
+        }
 
         if (sizeof($columns) == 0) {
             return "";
@@ -2136,8 +1932,8 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return intval($val);
-                case 'bigint' :
+                    return (int)$val;
+                case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
                         if (isset($fieldDef['default'])) {
@@ -2157,7 +1953,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return floatval($val);
+                    return (float)$val;
                 case 'time':
                 case 'date':
                     // empty date can't be '', so convert it to either NULL or empty date value
@@ -2264,14 +2060,11 @@ abstract class DBManager
                     if ($char == ")") {
                         $level--;
                         $selectField .= $char;
-
-
                     } else {
                         $selectField .= $char;
                     }
                 }
             }
-
         }
         $fields[$this->getFieldNameFromSelect($selectField)] = $selectField;
 
@@ -2288,19 +2081,15 @@ abstract class DBManager
         if (strncasecmp($string, "DISTINCT ", 9) == 0) {
             $string = substr($string, 9);
         }
-        if (stripos($string, " as ") !== false) //"as" used for an alias
-        {
+        if (stripos($string, " as ") !== false) { //"as" used for an alias
             return trim(substr($string, strripos($string, " as ") + 4));
         } else {
-            if (strrpos($string, " ") != 0) //Space used as a delimiter for an alias
-            {
+            if (strrpos($string, " ") != 0) { //Space used as a delimiter for an alias
                 return trim(substr($string, strrpos($string, " ")));
             } else {
-                if (strpos($string, ".") !== false) //No alias, but a table.field format was used
-                {
+                if (strpos($string, ".") !== false) { //No alias, but a table.field format was used
                     return substr($string, strpos($string, ".") + 1);
-                } else //Give up and assume the whole thing is the field name
-                {
+                } else { //Give up and assume the whole thing is the field name
                     return $string;
                 }
             }
@@ -2522,22 +2311,24 @@ abstract class DBManager
         }
     }
 
-	/**
-	 * Returns the defintion for a single column
-	 *
-	 * @param  array  $fieldDef Vardef-format field def
-	 * @param  bool   $ignoreRequired  Optional, true if we should ignore this being a required field
-	 * @param  string $table           Optional, table name
-	 * @param  bool   $return_as_array Optional, true if we should return the result as an array instead of sql
-	 * @return string or array if $return_as_array is true
-	 */
-	protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
-	{
-		if(!isset($fieldDef['name'])) {
-	        $GLOBALS['log']->fatal('"name" field does not exists in field definition.');
-	        $name = null;
-        } else {$name = $fieldDef['name'];}
-		$type = $this->getFieldType($fieldDef);
+    /**
+     * Returns the defintion for a single column
+     *
+     * @param  array  $fieldDef Vardef-format field def
+     * @param  bool   $ignoreRequired  Optional, true if we should ignore this being a required field
+     * @param  string $table           Optional, table name
+     * @param  bool   $return_as_array Optional, true if we should return the result as an array instead of sql
+     * @return string or array if $return_as_array is true
+     */
+    protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
+    {
+        if (!isset($fieldDef['name'])) {
+            $GLOBALS['log']->fatal('"name" field does not exists in field definition.');
+            $name = null;
+        } else {
+            $name = $fieldDef['name'];
+        }
+        $type = $this->getFieldType($fieldDef);
         $colType = $this->getColumnType($type);
 
         if ($parts = $this->getTypeParts($colType)) {
@@ -2623,21 +2414,22 @@ abstract class DBManager
         }
     }
 
-	/**
-	 * Returns SQL defintions for all columns in a table
-	 *
-	 * @param  array  $fieldDefs  Vardef-format field def
-	 * @param  bool   $ignoreRequired Optional, true if we should ignor this being a required field
-	 * @param  string $tablename      Optional, table name
-	 * @return string SQL column definitions
-	 */
-	protected function columnSQLRep($fieldDefs, $ignoreRequired , $tablename= null){
+    /**
+     * Returns SQL defintions for all columns in a table
+     *
+     * @param  array  $fieldDefs  Vardef-format field def
+     * @param  bool   $ignoreRequired Optional, true if we should ignor this being a required field
+     * @param  string $tablename      Optional, table name
+     * @return string SQL column definitions
+     */
+    protected function columnSQLRep($fieldDefs, $ignoreRequired, $tablename= null)
+    {
         // set $ignoreRequired = false by default
         if (!is_bool($ignoreRequired)) {
             $ignoreRequired = false;
         }
 
-		$columns = array();
+        $columns = array();
 
         if ($this->isFieldArray($fieldDefs)) {
             foreach ($fieldDefs as $fieldDef) {
@@ -2916,7 +2708,7 @@ abstract class DBManager
         $values['parent_id'] = $this->massageValue($bean->id, $fieldDefs['parent_id']);
         $values['field_name'] = $this->massageValue($changes['field_name'], $fieldDefs['field_name']);
         $values['data_type'] = $this->massageValue($changes['data_type'], $fieldDefs['data_type']);
-        if ($changes['data_type'] == 'text') {
+        if ($changes['data_type'] == 'text' || $changes['data_type'] == 'multienum') {
             $values['before_value_text'] = $this->massageValue($changes['before'], $fieldDefs['before_value_text']);
             $values['after_value_text'] = $this->massageValue($changes['after'], $fieldDefs['after_value_text']);
         } else {
@@ -2964,7 +2756,6 @@ abstract class DBManager
         }
 
         if ($fetched_row) {
-
             $field_defs = $bean->field_defs;
 
             if (is_array($field_filter)) {
@@ -3000,29 +2791,42 @@ abstract class DBManager
                     $before_value = $this->fromConvert($before_value, $field_type);
                 }
                 //if the type and values match, do nothing.
-                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue($after_value,
-                        $field_type))
+                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
+                    $after_value,
+                    $field_type
+                ))
                 ) {
                     $change = false;
                     if (trim($before_value) !== trim($after_value)) {
+                        // decode value for field type of 'text' or 'varchar' to check before audit if the value contain trip tags or special character
+                        if ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'text') {
+                            $decode_before_value = strip_tags(html_entity_decode($before_value));
+                            $decode_after_value = strip_tags(html_entity_decode($after_value));
+                            if ($decode_before_value == $decode_after_value) {
+                                continue;
+                            }
+                            $change = true;
+                        }
                         // Bug #42475: Don't directly compare numeric values, instead do the subtract and see if the comparison comes out to be "close enough", it is necessary for floating point numbers.
                         // Manual merge of fix 95727f2eed44852f1b6bce9a9eccbe065fe6249f from DBHelper
                         // This fix also fixes Bug #44624 in a more generic way and therefore eliminates the need for fix 0a55125b281c4bee87eb347709af462715f33d2d in DBHelper
-                        if ($this->isNumericType($field_type)) {
-                            $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
-                            $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
-                            // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero
-                            $error = ($denominator == 0) ? $numerator : $numerator / $denominator;
-                            if ($error >= 0.0000000001) {    // Smaller than 10E-10
-                                $change = true;
-                            }
-                        } else {
-                            if ($this->isBooleanType($field_type)) {
-                                if ($this->_getBooleanValue($before_value) != $this->_getBooleanValue($after_value)) {
+                        else {
+                            if ($this->isNumericType($field_type)) {
+                                $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
+                                $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
+                                // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero
+                                $error = ($denominator == 0) ? $numerator : $numerator / $denominator;
+                                if ($error >= 0.0000000001) {    // Smaller than 10E-10
                                     $change = true;
                                 }
                             } else {
-                                $change = true;
+                                if ($this->isBooleanType($field_type)) {
+                                    if ($this->_getBooleanValue($before_value) != $this->_getBooleanValue($after_value)) {
+                                        $change = true;
+                                    }
+                                } else {
+                                    $change = true;
+                                }
                             }
                         }
                         if ($change) {
@@ -3063,32 +2867,6 @@ abstract class DBManager
     public function full_text_indexing_setup()
     {
         // Most DBs have nothing to setup, so provide default empty function
-    }
-
-    /**
-     * Quotes a string for storing in the database
-     * @deprecated
-     * Return value will be not surrounded by quotes
-     *
-     * @param  string $string
-     * @return string
-     */
-    public function escape_quote($string)
-    {
-        return $this->quote($string);
-    }
-
-    /**
-     * Quotes a string for storing in the database
-     * @deprecated
-     * Return value will be not surrounded by quotes
-     *
-     * @param  string $string
-     * @return string
-     */
-    public function quoteFormEmail($string)
-    {
-        return $this->quote($string);
     }
 
     /**
@@ -3766,7 +3544,7 @@ abstract class DBManager
      * @param  bool $execute Execute or return SQL?
      * @return resource query result
      */
-    abstract function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
+    abstract public function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
 
 
     /**
@@ -3781,7 +3559,7 @@ abstract class DBManager
      * @param string $column
      * @param string $newname
      */
-    abstract function renameColumnSQL($tablename, $column, $newname);
+    abstract public function renameColumnSQL($tablename, $column, $newname);
 
     /**
      * Returns definitions of all indies for passed table.

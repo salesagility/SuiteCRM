@@ -1,53 +1,120 @@
 {
   "name": "salesagility/suitecrm",
   "description": "SuiteCRM",
+  "homepage": "https://suitecrm.com",
   "type": "project",
   "license": "GPL-3.0",
   "authors": [],
   "minimum-stability": "dev",
+  "support": {
+    "issues": "https://github.com/salesagility/SuiteCRM/issues",
+    "wiki": "https://docs.suitecrm.com",
+    "forum": "https://suitecrm.com/suitecrm/forum",
+    "chat": "https://gitter.im/suitecrm/Lobby",
+    "source": "https://github.com/salesagility/SuiteCRM"
+  },
   "config": {
     "vendor-dir": "vendor",
     "platform": {
-      "php": "5.5.9"
+      "php": "5.6.0"
+    },
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "preferred-install": {
+      "elasticsearch/elasticsearch": "dist"
     }
   },
   "require": {
-    "php": ">=5.5.9",
-    "ext-json": "*",
-    "ext-gd": "*",
+    "php": ">=5.6.0",
     "ext-curl": "*",
+    "ext-gd": "*",
+    "ext-json": "*",
     "ext-openssl": "*",
-    "slim/slim": "^3.8",
-    "tuupola/slim-jwt-auth": "^2.0",
-    "league/url": "^3.3",
-    "psr/log": "^1.0",
-    "league/oauth2-server": "^5.1",
+    "ext-zip": "*",
+    "consolidation/robo": "^1.4",
+    "elasticsearch/elasticsearch": "^5.3",
+    "ezyang/htmlpurifier": "^4.10",
+    "fullcalendar/fullcalendar": "^3.9",
+    "google/apiclient": "^2.0",
+    "google/recaptcha": "^1.1",
     "justinrainbow/json-schema": "^5.2",
-    "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
-    "google/recaptcha": "^1.1"
+    "league/oauth2-server": "^5.1",
+    "league/uri": "^4.2.3",
+    "monolog/monolog": "^1.23",
+    "mpdf/mpdf": "^6.1",
+    "nesbot/carbon": "^1.31",
+    "onelogin/php-saml": "^3.0.0",
+    "paragonie/random_compat": "^2.0",
+    "phpmailer/phpmailer": "^6.0",
+    "psr/log": "^1.0",
+    "slim/slim": "^3.8",
+    "smarty/smarty": "^2.6",
+    "soundasleep/html2text": "~0.5",
+    "symfony/options-resolver": "^3.4",
+    "symfony/validator": "^3.4",
+    "symfony/yaml": "^3.4",
+    "tedivm/jshrink": "^1.3",
+    "tuupola/slim-jwt-auth": "^2.0",
+    "wikimedia/composer-merge-plugin": "^1.4",
+    "zf1/zend-gdata": "^1.12",
+    "zf1/zend-loader": "^1.12",
+    "zf1/zend-oauth": "^1.12",
+    "zf1/zend-registry": "^1.12",
+    "tinymce/tinymce": "^4.9"
   },
   "require-dev": {
-    "leafo/scssphp": "dev-master",
-    "mikey179/vfsStream": "1.4.*",
-    "codeception/codeception": "^2.0",
-    "fzaninotto/Faker": "^1.6",
+    "browserstack/browserstack-local": "^1.1",
+    "codeception/codeception": "^3.0",
+    "filp/whoops": "^2.3",
+    "flow/jsonpath": "^0.4",
+    "friendsofphp/php-cs-fixer": "^2.15",
+    "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
-    "browserstack/browserstack-local": "dev-master"
+    "leafo/scssphp": "^0.7.7",
+    "mikey179/vfsstream": "1.6.*",
+    "mockery/mockery": "^1.1.0"
   },
-  "scripts": {},
+  "scripts": {
+    "post-install-cmd": [
+      "rm -R -f vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests"
+    ]
+  },
   "prefer-stable": true,
   "autoload": {
+    "files": [
+      "deprecated.php"
+    ],
     "psr-4": {
       "SuiteCRM\\": [
         "lib/",
         "include/",
         "tests/SuiteCRM/",
-        "tests/unit/lib/SuiteCRM/"
+        "tests/unit/phpunit/lib/SuiteCRM/"
       ],
       "SuiteCRM\\Custom\\": [
         "custom/lib"
+      ],
+      "SuiteCRM\\Modules\\": [
+        "modules/"
       ]
-    }
+    },
+    "classmap": [
+      "Api/"
+    ]
   },
-  "extra": {}
+  "extra": {
+    "merge-plugin": {
+      "include": [
+        "composer.ext.json",
+        "custom/Extension/application/Ext/Composer/*/*.json"
+      ],
+      "recurse": true,
+      "replace": false,
+      "ignore-duplicates": false,
+      "merge-dev": true,
+      "merge-extra": false,
+      "merge-extra-deep": false,
+      "merge-scripts": false
+    }
+  }
 }

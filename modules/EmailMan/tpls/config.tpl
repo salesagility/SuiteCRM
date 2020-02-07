@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -196,10 +196,23 @@ function change_state(radiobutton) {
 												<input type='hidden' id="notify_allow_default_outbound_hidden_input" name='notify_allow_default_outbound' value='0'>
 												<input id="notify_allow_default_outbound" name='notify_allow_default_outbound' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_allow_default_outbound_on}>
 											</td>
-											<td width="20%">&nbsp;</td>
-											<td width="30%">&nbsp;</td>
 										</tr>
 									</table>
+                                                                                        
+                                                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                                                            <tr>
+                                                                                <td width="20%" scope="row">
+                                                                                    {$MOD.LBL_ALLOW_SEND_AS_USER}&nbsp;
+                                                                                    <img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_SEND_AS_USER_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+                                                                                </td>
+                                                                                <td width="30%">
+                                                                                    <input type='hidden' id="mail_allowusersend_hidden_input" name='mail_allowusersend' value='0'>
+                                                                                    <input id='mail_allowusersend' name='mail_allowusersend' type="checkbox" class="checkbox" value="1" tabindex='1' {$mail_allow_user_send}>
+                                                                                </td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </table>
 								</div>
 							</td>
 						</tr>
@@ -238,10 +251,18 @@ function change_state(radiobutton) {
 						</tr>
 						<tr>
 							<td width="20%" scope="row" valign='top'>
+								{$MOD.LBL_EMAIL_WARNING_NOTIFICATIONS}:&nbsp;
+							</td>
+							<td width="30%"  valign='top'>
+								<input type='checkbox' class='checkbox' name='email_warning_notifications' value="1" {$LBL_EMAIL_WARNING_NOTIFICATIONS}>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" scope="row" valign='top'>
 								{$MOD.LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS}:&nbsp;
 							</td>
 							<td width="30%"  valign='top'>
-								<input type='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
+								<input type='checkbox' class='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
 							</td>
 
 							<td scope="row" width="20%">
@@ -441,7 +462,7 @@ function change_state(radiobutton) {
 								{$MOD.LBL_SECURITY_STYLE}
 							</td>
 							<td width="40%" NOWRAP valign="middle" >
-								<input type="checkbox" value="1" name="style" id="style" {$styleChecked}>&nbsp; &lt;style&gt;
+								<input type="checkbox" value="1" name="style" id="style" {if isset($styleChecked)}{$styleChecked}{else}{log msg="styleChecked is not set"}{/if}>&nbsp; &lt;style&gt;
 							</td>
 						</tr>
 						<tr>

@@ -38,24 +38,16 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/* * *******************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- * ****************************************************************************** */
 require_once('data/SugarBean.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
 class Administration extends SugarBean
 {
-    public $settings;
+    public $settings = array();
     public $table_name = "config";
     public $object_name = "Administration";
     public $new_schema = true;
@@ -89,11 +81,20 @@ class Administration extends SugarBean
         $smtp_error = false;
         $this->retrieveSettings();
 
+        if (!$sugar_config['email_warning_notifications']) {
+            $displayWarning = false;
+        }
+
         //If sendmail has been configured by setting the config variable ignore this warning
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
 
+        // remove php notice from installer
+        if (!array_key_exists('mail_smtpserver', $this->settings)) {
+            $this->settings['mail_smtpserver'] = '';
+        }
+
         if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
-            if ($this->settings['notify_on']) {
+            if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
                 $smtp_error = true;
             }
         }
@@ -102,25 +103,19 @@ class Administration extends SugarBean
             displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
         }
 
+
         return $smtp_error;
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @param bool $category
+     * @param bool $clean
+     * @return $this|null
      */
-    public function Administration()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
     public function retrieveSettings($category = false, $clean = false)
     {
+        $categoryQuoted = $this->db->quote($category);
+
         // declare a cache for all settings
         $settings_cache = sugar_cache_retrieve('admin_settings_cache');
 
@@ -137,7 +132,7 @@ class Administration extends SugarBean
         }
 
         if (!empty($category)) {
-            $query = "SELECT category, name, value FROM {$this->table_name} WHERE category = '{$category}'";
+            $query = "SELECT category, name, value FROM {$this->table_name} WHERE category = '$categoryQuoted'";
         } else {
             $query = "SELECT category, name, value FROM {$this->table_name}";
         }
@@ -164,6 +159,11 @@ class Administration extends SugarBean
             $oe->getSystemMailerSettings();
 
             foreach ($oe->field_defs as $def) {
+                // fixes installer php notice
+                if (!array_key_exists($def, $this->settings)) {
+                    $this->settings[$def] = '';
+                }
+
                 if (strpos($def, "mail_") !== false) {
                     $this->settings[$def] = $oe->$def;
                 }
@@ -209,22 +209,33 @@ class Administration extends SugarBean
         $this->retrieveSettings(false, true);
     }
 
+    /**
+     * @param $category string
+     * @param $key string
+     * @param $value string
+     * @return int
+     */
     public function saveSetting($category, $key, $value)
     {
-        $result = $this->db->query("SELECT count(*) AS the_count FROM config WHERE category = '{$category}' AND name = '{$key}'");
+        $categoryQuoted = $this->db->quote($category);
+        $keyQuoted = $this->db->quote($key);
+        $valueQuoted = $this->db->quote($value);
+
+        $result = $this->db->query("SELECT count(*) AS the_count FROM config WHERE category = '$categoryQuoted' AND name = '$keyQuoted'");
         $row = $this->db->fetchByAssoc($result);
         $row_count = $row['the_count'];
 
-        if ($category . "_" . $key == 'ldap_admin_password' || $category . "_" . $key == 'proxy_password') {
-            $value = $this->encrpyt_before_save($value);
+        if ($category . "_" . $keyQuoted === 'ldap_admin_password' || $categoryQuoted . "_" . $keyQuoted === 'proxy_password') {
+            $valueQuoted = $this->encrpyt_before_save($value);
         }
 
         if ($row_count == 0) {
-            $result = $this->db->query("INSERT INTO config (value, category, name) VALUES ('$value','$category', '$key')");
+            $result = $this->db->query("INSERT INTO config (value, category, name) VALUES ('$valueQuoted','$categoryQuoted', '$keyQuoted')");
         } else {
-            $result = $this->db->query("UPDATE config SET value = '{$value}' WHERE category = '{$category}' AND name = '{$key}'");
+            $result = $this->db->query("UPDATE config SET value = '$valueQuoted' WHERE category = '$categoryQuoted' AND name = '$keyQuoted'");
         }
         sugar_cache_clear('admin_settings_cache');
+
         return $this->db->getAffectedRowCount($result);
     }
 

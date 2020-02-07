@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -45,44 +48,44 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['ProjectTask'] = array ('column_fields' => array(
-		'id',
-		'date_entered',
-		'date_modified',
-		'assigned_user_id',
-		'modified_user_id',
-		'created_by',
-		'name',
-		'date_start',
-		'date_finish',
-		'project_id',
-		'duration',
-		'duration_unit',
-		'priority',
-		'status',
-		'description',
+$fields_array['ProjectTask'] = array('column_fields' => array(
+        'id',
+        'date_entered',
+        'date_modified',
+        'assigned_user_id',
+        'modified_user_id',
+        'created_by',
+        'name',
+        'date_start',
+        'date_finish',
+        'project_id',
+        'duration',
+        'duration_unit',
+        'priority',
+        'status',
+        'description',
         'project_task_id',
         'actual_duration',
-		'milestone_flag',
-		'percent_complete',
-		'estimated_effort',
-		'utilization', 
-		'order_number',
-		'task_number',
-		'deleted',
-	),
+        'milestone_flag',
+        'percent_complete',
+        'estimated_effort',
+        'utilization',
+        'order_number',
+        'task_number',
+        'deleted',
+    ),
         'list_fields' =>  array(
-		'id',
-		'parent_id',
-		'parent_name',
-		'priority',
-		'name',
-		'date_start',
-		'date_finish',
-		'percent_complete',
-		'status',
-		'assigned_user_id',
-		'assigned_user_name',
-	),
+        'id',
+        'parent_id',
+        'parent_name',
+        'priority',
+        'name',
+        'date_start',
+        'date_finish',
+        'percent_complete',
+        'status',
+        'assigned_user_id',
+        'assigned_user_name',
+    ),
     'required_fields' =>  array('name'=>1, 'project_id'=>2, 'project_task_id'=>3, 'duration'=>4, 'duration_unit'=>5),
 );

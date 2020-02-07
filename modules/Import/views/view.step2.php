@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,29 +37,29 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: view handler for step 2 of the import process
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 
 require_once('modules/Import/views/ImportView.php');
 
 
 class ImportViewStep2 extends ImportView
 {
- 	protected $pageTitleKey = 'LBL_STEP_2_TITLE';
+    protected $pageTitleKey = 'LBL_STEP_2_TITLE';
 
 
- 	/**
+    /**
      * @see SugarView::display()
      */
- 	public function display()
+    public function display()
     {
         global $mod_strings, $app_list_strings, $app_strings, $current_user, $import_bean_map, $import_mod_strings;
 
@@ -66,55 +69,53 @@ class ImportViewStep2 extends ImportView
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
         $this->ss->assign("IMP", $import_mod_strings);
         $this->ss->assign("CURRENT_STEP", $this->currentStep);
-        $this->ss->assign("TYPE",( !empty($_REQUEST['type']) ? $_REQUEST['type'] : "import" ));
-        $this->ss->assign("CUSTOM_DELIMITER", ( !empty($_REQUEST['custom_delimiter']) ? $_REQUEST['custom_delimiter'] : "," ));
-        $this->ss->assign("CUSTOM_ENCLOSURE",htmlentities(
-            ( !empty($_REQUEST['custom_enclosure']) && $_REQUEST['custom_enclosure'] != 'other'
+        $this->ss->assign("TYPE", (!empty($_REQUEST['type']) ? $_REQUEST['type'] : "import"));
+        $this->ss->assign("CUSTOM_DELIMITER", (!empty($_REQUEST['custom_delimiter']) ? $_REQUEST['custom_delimiter'] : ","));
+        $this->ss->assign("CUSTOM_ENCLOSURE", htmlentities(
+            (!empty($_REQUEST['custom_enclosure']) && $_REQUEST['custom_enclosure'] != 'other'
                 ? $_REQUEST['custom_enclosure'] :
-                ( !empty($_REQUEST['custom_enclosure_other'])
-                    ? $_REQUEST['custom_enclosure_other'] : "" ) )));
+                (!empty($_REQUEST['custom_enclosure_other'])
+                    ? $_REQUEST['custom_enclosure_other'] : ""))
+        ));
 
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         $this->ss->assign("HEADER", $app_strings['LBL_IMPORT']." ". $mod_strings['LBL_MODULE_NAME']);
         $this->ss->assign("JAVASCRIPT", $this->_getJS());
         $this->ss->assign("SAMPLE_URL", "<a href=\"javascript: void(0);\" onclick=\"window.location.href='index.php?entryPoint=export&module=".urlencode($_REQUEST['import_module'])."&action=index&all=true&sample=true'\" >".$mod_strings['LBL_EXAMPLE_FILE']."</a>");
 
-        $displayBackBttn = isset($_REQUEST['action']) && $_REQUEST['action'] == 'Step2' && isset($_REQUEST['current_step']) && $_REQUEST['current_step']!=='2'? TRUE : FALSE; //bug 51239
+        $displayBackBttn = isset($_REQUEST['action']) && $_REQUEST['action'] == 'Step2' && isset($_REQUEST['current_step']) && $_REQUEST['current_step']!=='2'? true : false; //bug 51239
         $this->ss->assign("displayBackBttn", $displayBackBttn);
 
         // get user defined import maps
         $is_admin = is_admin($current_user);
-        if($is_admin)
+        if ($is_admin) {
             $savedMappingHelpText = $mod_strings['LBL_MY_SAVED_ADMIN_HELP'];
-        else
+        } else {
             $savedMappingHelpText = $mod_strings['LBL_MY_SAVED_HELP'];
+        }
 
-        $this->ss->assign('savedMappingHelpText',$savedMappingHelpText);
-        $this->ss->assign('is_admin',$is_admin);
+        $this->ss->assign('savedMappingHelpText', $savedMappingHelpText);
+        $this->ss->assign('is_admin', $is_admin);
 
         $import_map_seed = new ImportMap();
-        $custom_imports_arr = $import_map_seed->retrieve_all_by_string_fields( array('assigned_user_id' => $current_user->id, 'is_published' => 'no','module' => $_REQUEST['import_module']));
+        $custom_imports_arr = $import_map_seed->retrieve_all_by_string_fields(array('assigned_user_id' => $current_user->id, 'is_published' => 'no','module' => $_REQUEST['import_module']));
 
-        if( count($custom_imports_arr) )
-        {
+        if (count($custom_imports_arr)) {
             $custom = array();
-            foreach ( $custom_imports_arr as $import)
-            {
+            foreach ($custom_imports_arr as $import) {
                 $custom[] = array( "IMPORT_NAME" => $import->name,"IMPORT_ID"   => $import->id);
             }
-            $this->ss->assign('custom_imports',$custom);
+            $this->ss->assign('custom_imports', $custom);
         }
 
         // get globally defined import maps
-        $published_imports_arr = $import_map_seed->retrieve_all_by_string_fields(array('is_published' => 'yes', 'module' => $_REQUEST['import_module'],) );
-        if ( count($published_imports_arr) )
-        {
+        $published_imports_arr = $import_map_seed->retrieve_all_by_string_fields(array('is_published' => 'yes', 'module' => $_REQUEST['import_module'],));
+        if (count($published_imports_arr)) {
             $published = array();
-            foreach ( $published_imports_arr as $import)
-            {
+            foreach ($published_imports_arr as $import) {
                 $published[] = array("IMPORT_NAME" => $import->name, "IMPORT_ID"   => $import->id);
             }
-            $this->ss->assign('published_imports',$published);
+            $this->ss->assign('published_imports', $published);
         }
         //End custom mapping
 
@@ -122,18 +123,17 @@ class ImportViewStep2 extends ImportView
         $instructions = array();
         $lang_key = "CUSTOM";
 
-        for ($i = 1; isset($mod_strings["LBL_{$lang_key}_NUM_$i"]);$i++)
-        {
+        for ($i = 1; isset($mod_strings["LBL_{$lang_key}_NUM_$i"]);$i++) {
             $instructions[] = array(
                 "STEP_NUM"         => $mod_strings["LBL_NUM_$i"],
                 "INSTRUCTION_STEP" => $mod_strings["LBL_{$lang_key}_NUM_$i"],
             );
         }
 
-        $this->ss->assign("instructions",$instructions);
+        $this->ss->assign("instructions", $instructions);
 
         $content = $this->ss->fetch('modules/Import/tpls/step2.tpl');
-        $this->ss->assign("CONTENT",$content);
+        $this->ss->assign("CONTENT", $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
 
@@ -176,12 +176,12 @@ document.getElementById('gonext').onclick = function(){
 
 }
 
-function publishMapping(elem, publish, mappingId)
+function publishMapping(elem, publish, mappingId, importModule)
 {
     if( typeof(elem.publish) != 'undefined' )
         publish = elem.publish;
 
-    var url = 'index.php?action=mapping&module=Import&publish=' + publish + '&import_map_id=' + mappingId;
+    var url = 'index.php?action=mapping&module=Import&publish=' + publish + '&import_map_id=' + mappingId + '&import_module=' + importModule;
     var callback = {
                         success: function(o)
                         {
@@ -241,5 +241,3 @@ if(deselectEl)
 EOJAVASCRIPT;
     }
 }
-
-

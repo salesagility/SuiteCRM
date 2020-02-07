@@ -41,7 +41,6 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\LangException;
 use SuiteCRM\LangText;
 
@@ -73,7 +72,7 @@ class ApiException extends LangException
     protected $detail;
 
     /**
-     * 
+     *
      * @param string $message
      * @param integer $code
      * @param \Exception $previous
@@ -107,17 +106,18 @@ class ApiException extends LangException
      */
     public function setSource($source)
     {
-        if(is_string($source)) {
+        if (is_string($source)) {
             $source = ['pointer' => $source];
         }
         $this->source = $source;
     }
     
     /**
-     * 
+     *
      * @return array
      */
-    public function getSource() {
+    public function getSource()
+    {
         return $this->source;
     }
 

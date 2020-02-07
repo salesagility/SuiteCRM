@@ -64,7 +64,7 @@ class Today implements ByPreMadeFilterInterpreter
     public function getByPreMadeFilter()
     {
         $today = new \DateTime();
-        $today = $today->setTime(0,0,0);
+        $today = $today->setTime(0, 0, 0);
         return 'date_entered >= "'. $today->format(DATE_ATOM) . '"';
     }
 }

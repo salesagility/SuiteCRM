@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 {{include file=$headerTpl}}
@@ -494,6 +494,32 @@ class="yui-navset detailview_tabs"
                         </td>
                         <td>
                             <span></span>{$MOD.LBL_FDOW_TEXT}&nbsp;</td>
+                    </tr>
+                </table>
+            </div>
+            <div id='google_options'>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="detail view">
+                    <tr>
+                        <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_GOOGLE_API_SETTINGS}</h4></th>
+                    </tr>
+                    <tr>
+                        <td width="17%" scope="row">
+                            <slot>{$MOD.LBL_GOOGLE_API_TOKEN}:</slot>&nbsp;{sugar_help text=$MOD.LBL_GOOGLE_API_TOKEN_HELP}
+                        </td>
+                            <td width="20%">
+                            Current API Token is: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span>
+                        </td>
+                        <td width="63%">
+                            <slot>&nbsp;</slot>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="17%" scope="row">
+                            <slot>{$MOD.LBL_GSYNC_CAL}:</slot>
+                        </td>
+                        <td>
+                            <slot><input class="checkbox" type="checkbox" disabled {$GSYNC_CAL}></slot>
+                        </td>
                     </tr>
                 </table>
             </div>

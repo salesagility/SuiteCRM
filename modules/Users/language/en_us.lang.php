@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -180,7 +180,7 @@ $mod_strings = array(
     'LBL_LIST_MEMBERSHIP' => 'Membership',
     'LBL_LIST_NAME' => 'Name',
     'LBL_LIST_STATUS' => 'Status',
-    'LBL_LIST_TITLE' => 'Title',
+    'LBL_LIST_TITLE' => 'Job Title',
     'LBL_LIST_USER_NAME' => 'User Name',
     'LBL_LOCALE_DEFAULT_NAME_FORMAT' => 'Name Display Format',
     'LBL_LOCALE_DESC_FIRST' => '[First]',
@@ -214,6 +214,7 @@ $mod_strings = array(
     'LBL_MODULE_TITLE' => 'Users: Home',
     'LBL_NAME' => 'Full Name',
     'LBL_SIGNATURE_NAME' => 'Name',
+    'LBL_NAVIGATION_PARADIGM_DESCRIPTION' => 'Select to be able to view modules in the navigation bar based on pre-defined groups. When selected, the "Filter Menu By" feature will appear in the "More" menu.',
     'LBL_USE_GROUP_TABS' => 'Module Menu Filters',
     'LBL_NEW_FORM_TITLE' => 'New User',
     'LBL_NEW_PASSWORD' => 'New Password',
@@ -291,13 +292,15 @@ $mod_strings = array(
     'LBL_SUBPANEL_TABS_DESCRIPTION' => 'In Detail Views, group Subpanels into tabs and display one tab at a time.',
     'LBL_SORT_MODULES' => 'Sort modules alphabetically',
     'LBL_SORT_MODULES_DESCRIPTION' => 'Order modules by name in the navigation drop down.',
-    'LBL_SUGAR_LOGIN' => 'Is SuiteCRM User',
+    'LBL_COUNT_COLLAPSED_SUBPANELS' => 'Show collapsed subpanel hint',
+    'LBL_COUNT_COLLAPSED_SUBPANELS_DESCRIPTION' => 'When subpanels are collapsed, shows a hint to indicate if the subpanel is empty or contains records.',
+    'LBL_SUITE_LOGIN' => 'Is SuiteCRM User',
     'LBL_THEME' => 'Themes',
     'LBL_TIME_FORMAT_TEXT' => 'Set the display format for time stamps',
     'LBL_TIME_FORMAT' => 'Time Format',
     'LBL_TIMEZONE_TEXT' => 'Set the current time zone',
     'LBL_TIMEZONE' => 'Time Zone',
-    'LBL_TITLE' => 'Title',
+    'LBL_TITLE' => 'Job Title',
     'LBL_USE_REAL_NAMES' => 'Show Full Names',
     'LBL_USE_REAL_NAMES_DESC' => 'Display users\' full names instead of their User Names in assignment fields.',
     'LBL_USER_INFORMATION' => 'User Profile',
@@ -679,4 +682,12 @@ $mod_strings = array(
     'ERR_USER_FACTOR_SMTP_REQUIRED' => 'SMTP server settings required first.',
     'ERR_USER_FACTOR_CHANGE_DISABLED' => 'Current user is not able to change two factor authentication settings.',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
+    // for Google Token/Synchronization settings
+    'LBL_GOOGLE_API_SETTINGS' => 'Google Account Synchronization',
+    'LBL_GOOGLE_API_TOKEN' => 'Google API Token',
+    'LBL_GOOGLE_API_TOKEN_HELP' => 'Use this to authorize SuiteCRM to access your Google Calendar. This is required for synchronization. Don\'t forget to check the "Enable Calendar Sync" checkbox when done.',
+    'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
+    'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
+    // END Google Token/Synchronization settings
+
 ); // END STRINGS DEFS

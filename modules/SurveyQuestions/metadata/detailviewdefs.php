@@ -43,4 +43,3 @@ $viewdefs [$module_name] = array(
         ),
     ),
 );
-?>

@@ -30,7 +30,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     {
         return $this->getEnvironmentVariableOrDefault(
             'INSTANCE_URL',
-            'http://localhost/'
+            'http://localhost'
         );
     }
 
@@ -189,10 +189,10 @@ class PhpBrowserDriverHelper extends \Codeception\Module
         $lowerCase = strtoupper($variable);
 
         $env = getenv($upperCase);
-        if($env === false) {
+        if ($env === false) {
             $webDriver = $this->moduleContainer->getModule('PhpBrowser');
             $config = $webDriver->_getConfig();
-            if(empty($config[$upperCase])) {
+            if (empty($config[$upperCase])) {
                 // return default
                 return $default;
             } else {

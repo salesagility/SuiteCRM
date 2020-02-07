@@ -39,7 +39,6 @@
  */
 namespace SuiteCRM\API\JsonApi\v1\Enumerator;
 
-
 /**
  * Class LinksMessage
  * @package SuiteCRM\API\JsonApi\v1

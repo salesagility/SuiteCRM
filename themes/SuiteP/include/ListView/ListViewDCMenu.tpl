@@ -93,7 +93,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 		{counter start=0 name="colCounter" print=false assign="colCounter"}
 		{foreach from=$displayColumns key=colHeader item=params}
 			<th scope='col' width='{$params.width}%'>
-				<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+				<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
                 {if false}
                     {if $params.url_sort}
                         <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1' title="{$arrowAlt}">

@@ -39,7 +39,6 @@
  */
 namespace SuiteCRM\API\JsonApi\v1\Enumerator;
 
-
 /**
  * Class SugarBeanRelationshipType
  * @package SuiteCRM\API\JsonApi\v1
@@ -50,7 +49,8 @@ class SugarBeanRelationshipType extends RelationshipType
      * @param \Link2 $sugarBeanLink
      * @return string
      */
-    public static function fromSugarBeanLink(\Link2 $sugarBeanLink) {
+    public static function fromSugarBeanLink(\Link2 $sugarBeanLink)
+    {
         return $sugarBeanLink->getType() === "one" ? self::TO_ONE : self::TO_MANY;
     }
 }

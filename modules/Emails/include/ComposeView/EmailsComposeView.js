@@ -87,24 +87,43 @@
      */
     self.handleQTipBarClick = function () {
       var module = $('#qtip_bar_module');
-      var contact_name = $('#qtip_bar_name');
-      var contact_email_address = $('#qtip_bar_email_address');
-
-      contact_name.val('');
-      contact_name.val('');
-      contact_email_address.val('');
       module.val($(this).attr('data-open-popup-module'));
 
       var fields = {
         'id': 'qtip_bar_id',
         'name': 'qtip_bar_name'
-      };
+      }
 
       if (typeof $(this).attr('data-open-popup-email-address-field') === "undefined") {
         fields['email1'] = 'qtip_bar_email_address';
       } else {
         fields[$(this).attr('data-open-popup-email-address-field')] = 'qtip_bar_email_address';
       }
+
+        $.fn.EmailsComposeView.setEmailAddressFieldFromPopup = function(resultData) {
+            var contact_name = resultData.name_to_value_array.qtip_bar_name;
+            var contact_email_address = resultData.name_to_value_array.qtip_bar_email_address;
+
+            if (trim(contact_email_address) !== '') {
+                var formatted_email_address = '';
+                if (trim(contact_name) !== '') {
+                    // use name <email address> format
+                    formatted_email_address = contact_name + ' <' + contact_email_address + '>';
+                } else {
+                    // use email address
+                    formatted_email_address = contact_email_address;
+                }
+
+                if (trim($(self.active_elementQTipBar).val()) === '') {
+                    $(self.active_elementQTipBar).val(formatted_email_address);
+                } else {
+                    $(self.active_elementQTipBar).val(
+                        $(self.active_elementQTipBar).val() + ', ' +
+                        formatted_email_address
+                    );
+                }
+            }
+        };
 
       var popupWindow = open_popup(
         $(this).attr('data-open-popup-module'),
@@ -114,54 +133,13 @@
         true,
         false,
         {
-          "call_back_function": 'set_return',
+          "call_back_function": '$.fn.EmailsComposeView.setEmailAddressFieldFromPopup',
           "form_name": "ComposeView",
           "field_to_name_array": fields
         },
         "single",
         false
       );
-
-      popupWindow.addEventListener("beforeunload", function () {
-        "use strict";
-        setTimeout(function () {
-          if (trim(contact_email_address.val()) === '') {
-            var mb = messageBox();
-            mb.hideHeader();
-            mb.setBody(SUGAR.language.translate('Emails', 'LBL_INSERT_ERROR_BLANK_EMAIL'));
-            mb.show();
-
-            mb.on('ok', function () {
-              "use strict";
-              mb.remove();
-            });
-
-            mb.on('cancel', function () {
-              "use strict";
-              mb.remove();
-            });
-          } else {
-            var formatted_email_address = '';
-            if (trim(contact_name.val()) !== '') {
-              // use name <email address> format
-              formatted_email_address = contact_name.val() + ' <' + contact_email_address.val() + '>';
-            } else {
-              // use email address
-              formatted_email_address = contact_email_address.val();
-            }
-
-            if (trim($(self.active_elementQTipBar).val()) === '') {
-              $(self.active_elementQTipBar).val(formatted_email_address);
-            } else {
-              $(self.active_elementQTipBar).val(
-                $(self.active_elementQTipBar).val() + ', ' +
-                formatted_email_address
-              );
-            }
-          }
-
-        }, 300);
-      });
     };
 
     /**
@@ -456,14 +434,10 @@
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
-      var html = $(self).find('#description_html').val();
 
       editor.on('init', function () {
         this.getDoc().body.style.fontName = 'tahoma';
         this.getDoc().body.style.fontSize = '13px';
-        if (html !== null) {
-          editor.setContent('<p></p>' + html);
-        }
       });
 
       editor.on('change', function () {
@@ -496,6 +470,7 @@
       var mb = messageBox();
       mb.hideHeader();
       mb.hideFooter();
+      document.activeElement.blur();
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       mb.show();
       mb.on('ok', function () {
@@ -754,6 +729,37 @@
         fileInputID = document_attachment_id;
       }
 
+      $.fn.EmailsComposeView.selectDocumentFromPopup = function(resultData) {
+        set_return(resultData);
+        if (fileInputID.val().length === 0) {
+          // id is empty
+          fileGroupContainer.remove();
+          self.updateDocumentIDs();
+        } else {
+          // id is full
+          if (fileGroupContainer.find('.attachment-remove').length === 0) {
+            var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
+            fileGroupContainer.append(removeAttachment);
+            // handle when user removes attachment
+            removeAttachment.click(function () {
+              fileGroupContainer.remove();
+              self.updateDocumentIDs();
+            });
+          }
+
+          fileInput.val(fileInputID.val());
+          fileLabel.empty();
+
+          var fileContainer = $('<div class="attachment-file-container"></div>');
+          fileContainer.appendTo(fileLabel);
+          fileContainer.append('<span class="attachment-name"> ' + fileInputName.val() + ' </span>');
+
+          fileLabel.removeClass('attachment-blank');
+
+          self.updateDocumentIDs();
+        }
+      };
+
       //language=JQuery-CSS
       var document_attachment_name = $('[name=document_attachment_name]');
       var fileInputName = undefined;
@@ -784,7 +790,7 @@
           true,
           false,
           {
-            "call_back_function": 'set_return',
+            "call_back_function": '$.fn.EmailsComposeView.selectDocumentFromPopup',
             "form_name": "ComposeView",
             "field_to_name_array": {
               "id": "document_attachment_id",
@@ -795,37 +801,6 @@
           false
         );
 
-        popupWindow.onbeforeunload = function () {
-          setTimeout(function () {
-            if (fileInputID.val().length === 0) {
-              // id is empty
-              fileGroupContainer.remove();
-              self.updateDocumentIDs();
-            } else {
-              // id is full
-              if (fileGroupContainer.find('.attachment-remove').length === 0) {
-                var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
-                fileGroupContainer.append(removeAttachment);
-                // handle when user removes attachment
-                removeAttachment.click(function () {
-                  fileGroupContainer.remove();
-                  self.updateDocumentIDs();
-                });
-              }
-
-              fileInput.val(fileInputID.val());
-              fileLabel.empty();
-
-              var fileContainer = $('<div class="attachment-file-container"></div>');
-              fileContainer.appendTo(fileLabel);
-              fileContainer.append('<span class="attachment-name"> ' + fileInputName.val() + ' </span>');
-
-              fileLabel.removeClass('attachment-blank');
-
-              self.updateDocumentIDs();
-            }
-          }, 300);
-        }
       };
 
       // Mimic the file attachment behaviour
@@ -1262,6 +1237,7 @@
     }).done(function (jsonResponse) {
       var response = JSON.parse(jsonResponse);
       if (typeof response.data !== "undefined") {
+        $('.file-attachments').empty();
         $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
       }
       if (typeof response.errors !== "undefined") {
@@ -1294,7 +1270,6 @@
 
   $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse = function (response) {
     var isDraft = (typeof response.data.draft !== undefined && response.data.draft ? true : false);
-    $('.file-attachments').empty();
     var inputName = 'template_attachment[]';
     var removeName = 'temp_remove_attachment[]';
     if (isDraft) {
@@ -1306,13 +1281,6 @@
         .attr('type', 'hidden')
         .attr('name', 'removeAttachment')
         .appendTo($('.file-attachments'));
-      if (!isDraft) {
-        $('<input>')
-          .attr('type', 'hidden')
-          .attr('name', 'ignoreParentAttachments')
-          .attr('value', '1')
-          .appendTo($('.file-attachments'));
-      }
       for (i = 0; i < response.data.attachments.length; i++) {
         var id = response.data.attachments[i]['id'];
         var fileGroupContainer = $('<div></div>')

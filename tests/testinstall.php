@@ -22,7 +22,7 @@ try {
     ob_start();
     require_once 'install.php';
     ob_end_clean();
-} catch(\Exception $e) {
+} catch (\Exception $e) {
     echo "\nINSTALLATION FAILED! file: " . $e->getFile() . ' - line: ' . $e->getLine()
         . "\n" . $e->getMessage()
         . "\n" . str_repeat('-', 120)

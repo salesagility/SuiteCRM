@@ -1,35 +1,35 @@
 <?php
 $module_name = 'OutboundEmailAccounts';
 $viewdefs [$module_name] =
-    array (
+    array(
         'EditView' =>
-            array (
+            array(
                 'templateMeta' =>
-                    array (
+                    array(
                         'maxColumns' => '2',
                         'widths' =>
-                            array (
+                            array(
                                 0 =>
-                                    array (
+                                    array(
                                         'label' => '10',
                                         'field' => '30',
                                     ),
                                 1 =>
-                                    array (
+                                    array(
                                         'label' => '10',
                                         'field' => '30',
                                     ),
                             ),
                         'useTabs' => false,
                         'tabDefs' =>
-                            array (
+                            array(
                                 'DEFAULT' =>
-                                    array (
+                                    array(
                                         'newTab' => false,
                                         'panelDefault' => 'expanded',
                                     ),
                                 'LBL_EDITVIEW_PANEL1' =>
-                                    array (
+                                    array(
                                         'newTab' => false,
                                         'panelDefault' => 'expanded',
                                     ),
@@ -37,11 +37,11 @@ $viewdefs [$module_name] =
                         'syncDetailEditViews' => true,
                     ),
                 'panels' =>
-                    array (
+                    array(
                         'default' =>
-                            array (
+                            array(
                                 0 =>
-                                    array (
+                                    array(
                                         0 => 'name',
                                         //1 => 'assigned_user_name',
                                     ),
@@ -51,7 +51,7 @@ $viewdefs [$module_name] =
 //        ),
                             ),
                         'lbl_editview_panel1' =>
-                            array (
+                            array(
                                 
                                 array(
                                         'name' => 'smtp_from_name',
@@ -68,47 +68,47 @@ $viewdefs [$module_name] =
                                     'label' => 'LBL_CHOOSE_EMAIL_PROVIDER',
                                 ),
 
-                                array (
+                                array(
                                     0 =>
-                                        array (
+                                        array(
                                             'name' => 'mail_smtpserver',
                                             'label' => 'LBL_SMTP_SERVERNAME',
                                         ),
                                     1 =>
-                                        array (
+                                        array(
                                             'name' => 'mail_smtpport',
                                             'label' => 'LBL_SMTP_PORT',
                                         ),
                                 ),
 
-                                array (
+                                array(
                                     0 =>
-                                        array (
+                                        array(
                                             'name' => 'mail_smtpauth_req',
                                             'label' => 'LBL_SMTP_AUTH',
                                         ),
                                     1 =>
-                                        array (
+                                        array(
                                             'name' => 'mail_smtpssl',
                                             'studio' => 'visible',
                                             'label' => 'LBL_SMTP_PROTOCOL',
                                         ),
                                 ),
 
-                                array (
-                                    array (
+                                array(
+                                    array(
                                         'name' => 'mail_smtpuser',
                                         'label' => 'LBL_USERNAME',
                                     ),
                                 ),
                                 array(
-                                    array (
+                                    array(
                                         'name' => 'password_change',
                                         'label' => 'LBL_PASSWORD',
                                     ),
                                 ),
                                 array(
-                                    array (
+                                    array(
                                         'name' => 'sent_test_email_btn',
                                         'label' => 'LBL_SEND_TEST_EMAIL',
                                     ),
@@ -117,4 +117,3 @@ $viewdefs [$module_name] =
                     ),
             ),
     );
-

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once 'modules/ModuleBuilder/MB/MBModule.php';
@@ -97,7 +97,6 @@ class MBPackage
         global $app_list_strings;
         $packLangFilePath = $this->getPackageDir() . '/language/application/' . $language . '.lang.php';
         if (file_exists($packLangFilePath)) {
-
             require($packLangFilePath);
         }
     }
@@ -240,7 +239,6 @@ class MBPackage
         }
 
         return "\n" . '$installdefs = ' . var_export_helper($installdefs) . ';';
-
     }
 
     /**
@@ -305,18 +303,16 @@ class MBPackage
     public function build($export = true, $clean = false)
     {
         $this->loadModules();
-        require_once 'include/utils/zip_utils.php';
+        require_once 'include/utils/php_zip_utils.php';
         $path = $this->getBuildDir() . '/SugarModules';
         if ($clean && file_exists($path)) {
             rmdir_recursive($path);
         }
         if (mkdir_recursive($path)) {
-
             $manifest = $this->getManifest() . $this->buildInstall($path);
             $fp = sugar_fopen($this->getBuildDir() . '/manifest.php', 'w');
             fwrite($fp, $manifest);
             fclose($fp);
-
         }
         if (file_exists('modules/ModuleBuilder/MB/LICENSE.txt')) {
             copy('modules/ModuleBuilder/MB/LICENSE.txt', $this->getBuildDir() . '/LICENSE.txt');
@@ -405,7 +401,6 @@ class MBPackage
                 $this->modules[$module]->save();
             }
         }
-
     }
 
     /**
@@ -434,7 +429,6 @@ class MBPackage
         }
 
         return false;
-
     }
 
     /**
@@ -608,12 +602,12 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path . $generalPath), RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($path . $generalPath),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         /* @var $fInfo SplFileInfo */
         foreach (new RegexIterator($recursiveIterator, "/\.php$/i") as $fInfo) {
-
             $newPath = substr($fInfo->getPathname(), strrpos($fInfo->getPathname(), $generalPath));
 
             $installdefs['copy'][] = array(
@@ -630,7 +624,6 @@ class MBPackage
      */
     public function getColumnsName()
     {
-
         $meta = new FieldsMetaData();
         $arr = array();
         foreach ($meta->getFieldDefinitions() as $key => $value) {
@@ -651,7 +644,6 @@ class MBPackage
      */
     public function exportCustom($modules, $export = true, $clean = true)
     {
-
         $path = $this->getBuildDir();
         if ($clean && file_exists($path)) {
             rmdir_recursive($path);
@@ -661,7 +653,7 @@ class MBPackage
             $pathmod = "$path/SugarModules/modules/$module";
             if (mkdir_recursive($pathmod)) {
                 if (file_exists("custom/modules/$module")) {
-                    copy_recursive("custom/modules/$module", "$pathmod");
+                    copy_recursive("custom/modules/$module", (string)$pathmod);
                     //Don't include cached extension files
                     if (is_dir("$pathmod/Ext")) {
                         rmdir_recursive("$pathmod/Ext");
@@ -696,7 +688,7 @@ class MBPackage
                 copy('LICENSE.txt', $path . '/LICENSE.txt');
             }
         }
-        require_once 'include/utils/zip_utils.php';
+        require_once 'include/utils/php_zip_utils.php';
         $date = date('Y_m_d_His');
         $zipDir = $this->getZipDir();
         if (!file_exists($zipDir)) {
@@ -844,7 +836,7 @@ class MBPackage
                             $return[$value][$va] = $mod_strings['LBL_EC_VIEWS'];
                             break;
                         case 'SugarFeeds':
-                            $return[$value][$va] = $mod_strings['LBL_EC_SUGARFEEDS'];
+                            $return[$value][$va] = $mod_strings['LBL_EC_SUITEFEEDS'];
                             break;
                         case 'Dashlets':
                             $return[$value][$va] = $mod_strings['LBL_EC_DASHLETS'];
@@ -917,12 +909,12 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($extPath), RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($extPath),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         /* @var $fileInfo SplFileInfo */
         foreach ($recursiveIterator as $fileInfo) {
-
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {
                 //get the filename in lowercase for easier comparison
                 $fn = $fileInfo->getFilename();
@@ -1031,7 +1023,6 @@ class MBPackage
         );
 
         return "\n" . '$installdefs = ' . var_export_helper($installdefs) . ';';
-
     }
 
     /**
@@ -1064,7 +1055,7 @@ class MBPackage
                 fclose($readmefp);
             }
         }
-        require_once 'include/utils/zip_utils.php';
+        require_once 'include/utils/php_zip_utils.php';
         $date = date('Y_m_d_His');
         $zipDir = 'custom/modulebuilder/packages/ExportProjectZips';
         if (!file_exists($zipDir)) {
@@ -1137,7 +1128,6 @@ class MBPackage
         $metadataOnly = false,
         $exportedModulesFilter = array()
     ) {
-
         $path =
             $metadataOnly ? 'custom' . DIRECTORY_SEPARATOR . 'metadata' . DIRECTORY_SEPARATOR :
                 'custom' . DIRECTORY_SEPARATOR;
@@ -1155,7 +1145,8 @@ class MBPackage
         }
 
         $recursiveIterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST
+            new RecursiveDirectoryIterator($path),
+            RecursiveIteratorIterator::SELF_FIRST
         );
 
         /**
@@ -1164,7 +1155,6 @@ class MBPackage
         foreach ($recursiveIterator as $fileInfo) {
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {
                 foreach ($relationships as $k => $v) {
-
                     if (strpos($fileInfo->getFilename(), $k) !== false) {   //filter by modules being exported
                         if ($this->filterExportedRelationshipFile(
                             $fileInfo->getFilename(),
@@ -1190,5 +1180,4 @@ class MBPackage
     {
         return rmdir_recursive($this->getBuildDir());
     }
-
 }

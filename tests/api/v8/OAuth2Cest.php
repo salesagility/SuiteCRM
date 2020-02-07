@@ -9,14 +9,14 @@ class OAuth2Cest
 {
     /**
      * As a Rest API Client, I want to ensure that I get the correct response when I send incorrect details
-     * @param apiTester $I
+     * @param ApiTester $I
      * @param \Helper\PhpBrowserDriverHelper $browserDriverHelper
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
      * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioInvalidLogin(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
+    public function TestScenarioInvalidLogin(ApiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
         $I->sendPOST(
             $browserDriverHelper->getInstanceURL().'/api/oauth/access_token',
@@ -30,14 +30,14 @@ class OAuth2Cest
 
     /**
      * I want to ensure that I get the correct response when I send incorrect client details
-     * @param apiTester $I
+     * @param ApiTester $I
      * @param \Helper\PhpBrowserDriverHelper $browserDriverHelper
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
      * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioInvalidClient(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
+    public function TestScenarioInvalidClient(ApiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
         $I->sendPOST(
             $I->getInstanceURL().'/api/oauth/access_token',
@@ -55,13 +55,13 @@ class OAuth2Cest
 
     /**
      * I want to make sure only the allowed grant types can be requested for any client
-     * @param apiTester $I
+     * @param ApiTester $I
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
      * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioGrantTypeNotAllowed(apiTester $I)
+    public function TestScenarioGrantTypeNotAllowed(ApiTester $I)
     {
         $I->sendPOST(
             $I->getInstanceURL().'/api/oauth/access_token',
@@ -78,26 +78,26 @@ class OAuth2Cest
 
     /**
      * As a Rest API Client, I want to login so that I can get a JWT token
-     * @param apiTester $I
+     * @param ApiTester $I
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
      * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioLoginWithPasswordGrant(apiTester $I)
+    public function TestScenarioLoginWithPasswordGrant(ApiTester $I)
     {
         $I->loginAsAdminWithPassword();
     }
 
     /**
      * I want to be able to login with Client Credentials grant type
-     * @param apiTester $I
+     * @param ApiTester $I
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
      * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioLoginWithClientCredentialsGrant(apiTester $I)
+    public function TestScenarioLoginWithClientCredentialsGrant(ApiTester $I)
     {
         $I->loginAsAdminWithClientCredentials();
 

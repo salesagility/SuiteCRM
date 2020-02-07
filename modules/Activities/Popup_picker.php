@@ -68,22 +68,6 @@ class Popup_Picker
     {
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
-     *     please update your code, use __construct instead
-     */
-    public function Popup_Picker()
-    {
-        $deprecatedMessage =
-            'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
     public function process_page()
     {
         global $focus;
@@ -120,19 +104,20 @@ class Popup_Picker
         }
         foreach ($focus->get_linked_fields() as $field => $def) {
             if ($focus->load_relationship($field)) {
-
                 $relTable = BeanFactory::getBean($focus->$field->getRelatedModuleName())->table_name;
                 if (array_key_exists($relTable, $activitiesRels)) {
                     $varname = 'focus_' . $relTable . '_list';
                     $$varname =
                         sugarArrayMerge($$varname, $focus->get_linked_beans($field, $activitiesRels[$relTable]));
                 }
-
             }
         }
 
         foreach ($focus_tasks_list as $task) {
-            $sort_date_time='';
+            if (!$task->ACLAccess('list')) {
+                continue;
+            }
+
             if (empty($task->date_due) || $task->date_due == '0000-00-00') {
                 $date_due = '';
             } else {
@@ -184,6 +169,9 @@ class Popup_Picker
         } // end Tasks
 
         foreach ($focus_meetings_list as $meeting) {
+            if (!$meeting->ACLAccess('list')) {
+                continue;
+            }
 
             if (empty($meeting->contact_id) && empty($meeting->contact_name)) {
                 $meeting_contacts = $meeting->get_linked_beans('contacts', 'Contact');
@@ -212,7 +200,6 @@ class Popup_Picker
                     'sort_value' => $timedate->fromDb($meeting->fetched_row['date_start'])->ts,
                     'image' => SugarThemeRegistry::current()->getImageURL('Meetings.svg')
                 );
-
             } else {
                 $open_activity_list[] = array(
                     'name' => $meeting->name,
@@ -234,6 +221,9 @@ class Popup_Picker
         } // end Meetings
 
         foreach ($focus_calls_list as $call) {
+            if (!$call->ACLAccess('list')) {
+                continue;
+            }
 
             if (empty($call->contact_id) && empty($call->contact_name)) {
                 $call_contacts = $call->get_linked_beans('contacts', 'Contact');
@@ -262,7 +252,6 @@ class Popup_Picker
                     'sort_value' => $timedate->fromDb($call->fetched_row['date_start'])->ts,
                     'image' => SugarThemeRegistry::current()->getImageURL('Calls.svg')
                 );
-
             } else {
                 $open_activity_list[] = array(
                     'name' => $call->name,
@@ -284,7 +273,9 @@ class Popup_Picker
         } // end Calls
 
         foreach ($focus_emails_list as $email) {
-
+            if (!$email->ACLAccess('list')) {
+                continue;
+            }
             if (empty($email->contact_id) && empty($email->contact_name)) {
                 $email_contacts = $email->get_linked_beans('contacts', 'Contact');
                 if (!empty($email_contacts[0]->id) && !empty($email_contacts[0]->name)) {
@@ -293,9 +284,9 @@ class Popup_Picker
                 }
             }
             $ts = '';
-            if (!empty($email->fetched_row['date_sent'])) {
+            if (!empty($email->fetched_row['date_sent_received'])) {
                 //emails can have an empty date sent field
-                $ts = $timedate->fromDb($email->fetched_row['date_sent'])->ts;
+                $ts = $timedate->fromDb($email->fetched_row['date_sent_received'])->ts;
             } elseif (!empty($email->fetched_row['date_entered'])) {
                 $ts = $timedate->fromDb($email->fetched_row['date_entered'])->ts;
             }
@@ -312,13 +303,12 @@ class Popup_Picker
                 'parent_name' => $email->parent_name,
                 'contact_id' => $email->contact_id,
                 'contact_name' => $email->contact_name,
-                'date_modified' => $email->date_entered,
+                'date_modified' => $email->date_sent_received,
                 'description' => $this->getEmailDetails($email),
                 'date_type' => $mod_strings['LBL_DATA_TYPE_SENT'],
                 'sort_value' => $ts,
                 'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
             );
-
         } //end Emails
 
         // Bug 46439 'No email archived when clicking on View Summary' (All condition)
@@ -353,18 +343,20 @@ class Popup_Picker
                     'parent_name' => $email->parent_name,
                     'contact_id' => $email->contact_id,
                     'contact_name' => $email->contact_name,
-                    'date_modified' => $email->date_start . ' ' . $email->time_start,
+                    'date_modified' => $email->date_sent_received . ' ' . $email->time_start,
                     'description' => $this->getEmailDetails($email),
                     'date_type' => $mod_strings['LBL_DATA_TYPE_SENT'],
-                    'sort_value' => strtotime($email->fetched_row['date_sent'] . ' GMT'),
+                    'sort_value' => strtotime($email->fetched_row['date_sent_received'] . ' GMT'),
                     'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
                 );
             }
         } //end Unlinked Emails
 
         foreach ($focus_notes_list as $note) {
+            if (!$note->ACLAccess('list')) {
+                continue;
+            }
             if ($note->ACLAccess('view')) {
-
                 $summary_list[] = array(
                     'name' => $note->name,
                     'id' => $note->id,
@@ -390,7 +382,6 @@ class Popup_Picker
                     $summary_list[$count]['fileurl'] = UploadFile::get_url($note->filename, $note->id);
                 }
             }
-
         } // end Notes
 
 
@@ -435,7 +426,8 @@ class Popup_Picker
         $charset = isset($app_strings['LBL_CHARSET']) ? $app_strings['LBL_CHARSET'] : $sugar_config['default_charset'];
         $template->assign('charset', $charset);
 
-        $title = getClassicModuleTitle($focus->module_dir,
+        $title = getClassicModuleTitle(
+            $focus->module_dir,
             array(translate('LBL_MODULE_NAME', $focus->module_dir), $focus->name),
             false
         );
@@ -444,7 +436,6 @@ class Popup_Picker
 
 
         return $template->fetch('modules/Activities/tpls/PopupBody.tpl');
-
     }
 
     /**

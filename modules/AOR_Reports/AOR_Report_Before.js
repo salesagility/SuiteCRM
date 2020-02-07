@@ -89,7 +89,7 @@ $(document).ready(function(){
           }
           if(target.closest('#fieldLines').length > 0){
             dropFieldLine(node);
-          }else if(target.closest('#conditionLines').length > 0){
+          }else if(target.closest('#aor_conditionLines').length > 0){
             var conditionLineTarget = ConditionOrderHandler.getConditionLineByPageEvent(e);
             var conditionLineNew = dropConditionLine(node);
             if(conditionLineTarget) {
@@ -172,7 +172,9 @@ $(document).ready(function(){
           if(relData[field]['type'] == 'relationship') {
             modulePath = field;
             if (node) {
-              modulePath = node.module_path + ":" + field;
+              if (node.module_path) {
+                modulePath = node.module_path + ":" + field;
+              }
               modulePathDisplay = node.module_path_display + " : "+relData[field]['module_label'];
             }else{
               modulePathDisplay = $('#report_module option:selected').text() + ' : ' + relData[field]['module_label'];

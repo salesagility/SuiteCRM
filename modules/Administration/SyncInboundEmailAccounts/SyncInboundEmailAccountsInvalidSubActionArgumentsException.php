@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -68,13 +68,15 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
      * @param int $code
      * @param Exception|null $previous
      */
-    public function __construct($message = "", $code = 0, \Exception $previous = null) {
+    public function __construct($message = "", $code = 0, \Exception $previous = null)
+    {
         parent::__construct(
             ($message ? $message . " - " : "") .
             "An action called with wrong parameters, incorrectly called action was: " .
-            $this->getCallerMethod(), $code, $previous
+            $this->getCallerMethod(),
+            $code,
+            $previous
         );
-
     }
 
     /**
@@ -87,12 +89,11 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
      * @param int $step
      * @return mixed
      */
-    protected function getCallerMethod($step = 2) {
-
+    protected function getCallerMethod($step = 2)
+    {
         $trace = debug_backtrace();
         $function = $trace[$step ? $step : $this->callerMethodDistance]['function'];
 
         return $function;
     }
-
 }

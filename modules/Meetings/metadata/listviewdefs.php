@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,33 +34,33 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$listViewDefs ['Meetings'] = 
-array (
-  'SET_COMPLETE' => 
-  array (
+$listViewDefs ['Meetings'] =
+array(
+  'SET_COMPLETE' =>
+  array(
     'width' => '1%',
     'label' => 'LBL_LIST_CLOSE',
     'link' => true,
     'sortable' => false,
     'default' => true,
-    'related_fields' => 
-    array (
+    'related_fields' =>
+    array(
       0 => 'status',
     ),
   ),
-  'NAME' => 
-  array (
+  'NAME' =>
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_SUBJECT',
     'link' => true,
     'default' => true,
   ),
-  'CONTACT_NAME' => 
-  array (
+  'CONTACT_NAME' =>
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_CONTACT',
     'link' => true,
@@ -68,8 +69,8 @@ array (
     'default' => true,
     'ACLTag' => 'CONTACT',
   ),
-  'PARENT_NAME' => 
-  array (
+  'PARENT_NAME' =>
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_RELATED_TO',
     'dynamic_module' => 'PARENT_TYPE',
@@ -78,48 +79,48 @@ array (
     'default' => true,
     'sortable' => false,
     'ACLTag' => 'PARENT',
-    'related_fields' => 
-    array (
+    'related_fields' =>
+    array(
       0 => 'parent_id',
       1 => 'parent_type',
     ),
   ),
-  'DATE_START' => 
-  array (
+  'DATE_START' =>
+  array(
     'width' => '15%',
     'label' => 'LBL_LIST_DATE',
     'link' => false,
     'default' => true,
-    'related_fields' => 
-    array (
+    'related_fields' =>
+    array(
       0 => 'time_start',
     ),
   ),
-  'ASSIGNED_USER_NAME' => 
-  array (
+  'ASSIGNED_USER_NAME' =>
+  array(
     'width' => '2%',
     'label' => 'LBL_LIST_ASSIGNED_TO_NAME',
     'module' => 'Employees',
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'DIRECTION' => 
-  array (
+  'DIRECTION' =>
+  array(
     'type' => 'enum',
     'label' => 'LBL_LIST_DIRECTION',
     'width' => '10%',
     'default' => false,
   ),
-  'STATUS' => 
-  array (
+  'STATUS' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_STATUS',
     'link' => false,
     'default' => false,
   ),
-  'DATE_ENTERED' => array (
-	'width' => '10%',
-	'label' => 'LBL_DATE_ENTERED',
-	'default' => true
-  ),  
+  'DATE_ENTERED' => array(
+    'width' => '10%',
+    'label' => 'LBL_DATE_ENTERED',
+    'default' => true
+  ),
 );

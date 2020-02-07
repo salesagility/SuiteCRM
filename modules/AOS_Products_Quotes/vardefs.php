@@ -56,6 +56,7 @@ $dictionary['AOS_Products_Quotes'] = array(
                 array(
                     'name' => 'getCurrencyDropDown',
                     'returns' => 'html',
+                    'onListView' => true,
                 ),
             ),
         'part_number' => array(

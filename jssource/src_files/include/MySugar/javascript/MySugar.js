@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -197,12 +197,6 @@ initMySugar = function () {
           configureDlg.configFixedCenter(null, false);
           SUGAR.util.evalScript(result['body']);
 
-          // calculate the scroll and dashlet popup positions
-          var rlTop = 200;
-          var newTop = $("#dashlet_" + dashletId).offset().top - rlTop;
-          if (newTop + $('#dlg').outerHeight(true) > $('#dlg_mask').height()) {
-            newTop -= (newTop + $('#dlg').outerHeight(true) - $('#dlg_mask').height() + rlTop);
-          }
 
           // animate to position
           $('html, body').animate({

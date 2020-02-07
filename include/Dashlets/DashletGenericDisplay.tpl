@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -52,7 +52,7 @@
                 <tr>
                     <td align='left'>&nbsp;</td>
                     <td align='right' nowrap='nowrap'>
-                        {if $pageData.urls.startPage}
+                        {if isset($pageData.urls.startPage) && $pageData.urls.startPage}
 							<button title='{$navStrings.start}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								<span class="suitepicon suitepicon-action-first"></span>
 							</button>
@@ -112,7 +112,7 @@
             {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
             {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
             {else}<th scope='col' data-hide="{$datahide}">{/if}
-				<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+				<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
                 {if $params.sortable|default:true}
 					<!-- dashlet: {$dashletId} -->
 	                <a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}&sugar_body_only=1&id={$dashletId}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())' class='listViewThLinkS1' title="{$arrowAlt}">{sugar_translate label=$params.label module=$pageData.bean.moduleDir}</a>&nbsp;&nbsp;

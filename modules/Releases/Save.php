@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +37,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 
 
 
@@ -53,23 +56,17 @@ $focus = new Release();
 
 $focus->retrieve($_REQUEST['record']);
 
-foreach($focus->column_fields as $field)
-{
-	if(isset($_REQUEST[$field]))
-	{
-		$focus->$field = $_REQUEST[$field];
-
-	}
+foreach ($focus->column_fields as $field) {
+    if (isset($_REQUEST[$field])) {
+        $focus->$field = $_REQUEST[$field];
+    }
 }
 
-foreach($focus->additional_column_fields as $field)
-{
-	if(isset($_REQUEST[$field]))
-	{
-		$value = $_REQUEST[$field];
-		$focus->$field = $value;
-
-	}
+foreach ($focus->additional_column_fields as $field) {
+    if (isset($_REQUEST[$field])) {
+        $value = $_REQUEST[$field];
+        $focus->$field = $value;
+    }
 }
 
 
@@ -78,14 +75,22 @@ $focus->save();
 $return_id = $focus->id;
 
 $edit='';
-if(isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") $return_module = $_REQUEST['return_module'];
-else $return_module = "Releases";
-if(isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") $return_action = $_REQUEST['return_action'];
-else $return_action = "DetailView";
-if(isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") $return_id = $_REQUEST['return_id'];
-if(!empty($_REQUEST['edit'])) {
-	$return_id='';
-	$edit='&edit=true';
+if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {
+    $return_module = $_REQUEST['return_module'];
+} else {
+    $return_module = "Releases";
+}
+if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") {
+    $return_action = $_REQUEST['return_action'];
+} else {
+    $return_action = "DetailView";
+}
+if (isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") {
+    $return_id = $_REQUEST['return_id'];
+}
+if (!empty($_REQUEST['edit'])) {
+    $return_id='';
+    $edit='&edit=true';
 }
 
 $GLOBALS['log']->debug("Saved record with id of ".$return_id);

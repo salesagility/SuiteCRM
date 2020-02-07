@@ -88,7 +88,6 @@ if (isset($_REQUEST['loginErrorMessage'])) {
         $sugar_smarty->assign('LOGIN_ERROR_MESSAGE', $mod_strings[$_REQUEST['loginErrorMessage']]);
     } else {
         if (isset($app_strings[$_REQUEST['loginErrorMessage']])) {
-
             $sugar_smarty->assign('LOGIN_ERROR_MESSAGE', $app_strings[$_REQUEST['loginErrorMessage']]);
         }
     }

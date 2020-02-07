@@ -78,7 +78,7 @@ class SpecialOperator extends Operator
      */
     public function isValid($operator)
     {
-        if(!is_string($operator)) {
+        if (!is_string($operator)) {
             throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][SpecialOperator][isValid][expected type to be string] $operator'
             );
@@ -94,7 +94,7 @@ class SpecialOperator extends Operator
      */
     public function isOperator($operator)
     {
-        if(!is_string($operator)) {
+        if (!is_string($operator)) {
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][SpecialOperator][isOperator][expected type to be string] $operator');
         }
 

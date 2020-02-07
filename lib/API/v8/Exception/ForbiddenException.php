@@ -40,17 +40,13 @@
 
 namespace SuiteCRM\API\v8\Exception;
 
-use SuiteCRM\Enumerator\ExceptionCode;
-
 /**
  * Class ForbiddenException
  * @package SuiteCRM\API\v8\Exception
  */
 class ForbiddenException extends ApiException
 {
-    
     const MSG_PREFIX = '[Forbidden]';
     const DEFAULT_CODE = 8020;
     const HTTP_STATUS = 403;
-    
 }

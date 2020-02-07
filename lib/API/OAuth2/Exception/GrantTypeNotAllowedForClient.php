@@ -65,5 +65,4 @@ class GrantTypeNotAllowedForClient extends OAuth2
     {
         return 'Grant Type Not Allowed For Client';
     }
-
 }

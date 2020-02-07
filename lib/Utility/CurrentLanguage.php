@@ -40,13 +40,11 @@
 
 namespace SuiteCRM\Utility;
 
-
 class CurrentLanguage
 {
-
-    public function getCurrentLanguage() {
+    public function getCurrentLanguage()
+    {
         global $current_language;
         return $current_language;
     }
-
 }

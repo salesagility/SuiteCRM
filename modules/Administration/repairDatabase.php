@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -95,6 +97,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             }
 
             echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+            ElasticSearchIndexer::repairElasticsearchIndex();
         }
     } else {
         if (!$export && empty($_REQUEST['repair_silent'])) {
@@ -114,7 +117,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             if (file_exists($file)) {
                 require_once($file);
                 unset($GLOBALS['dictionary'][$bean]);
-                $focus = new $bean ();
+                $focus = new $bean();
                 if (($focus instanceof SugarBean) && !isset($repairedTables[$focus->table_name])) {
                     $sql .= $db->repairTable($focus, $execute);
                     $repairedTables[$focus->table_name] = true;
@@ -173,6 +176,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
                 echo $ss->fetch('modules/Administration/templates/RepairDatabase.tpl');
             } else {
                 echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+                ElasticSearchIndexer::repairElasticsearchIndex();
             }
         }
     }

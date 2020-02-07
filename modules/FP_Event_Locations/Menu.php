@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
@@ -26,5 +28,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('FP_Event_Locations', 'edit', true))$module_menu[]=Array("index.php?module=FP_Event_Locations&action=EditView&return_module=FP_Event_Locations&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'FP_Event_Locations');
-if(ACLController::checkAccess('FP_Event_Locations', 'list', true))$module_menu[]=Array("index.php?module=FP_Event_Locations&action=index", $mod_strings['LNK_LIST'],"List", 'FP_Event_Locations');
+if (ACLController::checkAccess('FP_Event_Locations', 'edit', true)) {
+    $module_menu[]=array("index.php?module=FP_Event_Locations&action=EditView&return_module=FP_Event_Locations&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'FP_Event_Locations');
+}
+if (ACLController::checkAccess('FP_Event_Locations', 'list', true)) {
+    $module_menu[]=array("index.php?module=FP_Event_Locations&action=index", $mod_strings['LNK_LIST'],"List", 'FP_Event_Locations');
+}

@@ -365,7 +365,7 @@
 					data.height = 350;
 					data.params.frameborder = '0';
 					data.type = 'iframe';
-					src = 'http://maps.google.com/maps/ms?msid=' + src.match(/msid=(.+)/)[1] + "&output=embed";
+					src = 'http://maps.googleapis.com/maps/ms?msid=' + src.match(/msid=(.+)/)[1] + "&output=embed";
 					setVal('src', src);
 					setVal('media_type', data.type);
 				}

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -121,7 +121,7 @@ $mod_strings = array(
     'CURRENT_LOGO_HELP' => 'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
     'NEW_LOGO' => 'Select Logo:',
     'NEW_LOGO_HELP' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
-    'NEW_LOGO_HELP_NO_SPACE' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions. Image file name must not contain a space character.',
+    'NEW_LOGO_HELP_NO_SPACE' => 'The image file format can be either .png or .jpg. The maximum height is 170px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
     'SLOW_QUERY_TIME_MSEC' => 'Slow query time threshold (msec)',
     'STACK_TRACE_ERRORS' => 'Display stack trace of errors',
     'UPLOAD_MAX_SIZE' => 'Maximum upload size',
@@ -205,9 +205,9 @@ $mod_strings = array(
     'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files.<br>If the number of rows in an import file exceeds this number, the user will be alerted.<br>If no number is entered, an unlimited number of rows are allowed.',
     'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0". The minimum is 1 month; the maximum is 12 months.',
     'LBL_PDFMODULE_NAME' => 'PDF Settings',
-    'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
-    'SUGARPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
-    'SUGARPDF_LOGO_SETTINGS' => 'Images',
+    'SUITEPDF_BASIC_SETTINGS' => 'Document Properties',
+    'SUITEPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
+    'SUITEPDF_LOGO_SETTINGS' => 'Images',
 
     'PDF_AUTHOR' => 'Author',
     'PDF_AUTHOR_INFO' => 'The Author appears in the document properties.',
@@ -321,7 +321,7 @@ More help : www.tcpdf.org',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
-    'LBL_REMOVE' => 'rem',
+    'LBL_REMOVE' => 'Remove',
     'LBL_JS_CONFIRM_DELETE_FONT' => 'Are you sure that you want to delete this font?',
 
     'LBL_ADDFONT_TITLE' => 'Add a PDF Font',
@@ -366,5 +366,4 @@ More help : www.tcpdf.org',
     'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
     'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
-
 );

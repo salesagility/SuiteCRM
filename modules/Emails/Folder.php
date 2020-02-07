@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
 
 /**
  * Class Folder
@@ -74,7 +75,8 @@ class Folder
     /**
      * Folder constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = DBManagerFactory::getInstance();
         $this->id = null;
         $this->type = "inbound";
@@ -89,8 +91,8 @@ class Folder
      */
     public function retrieve($folderId = -1)
     {
-        if(isValidId($folderId)) {
-
+        $isValidator = new SuiteValidator();
+        if ($isValidator->isValidId($folderId)) {
             $result = $this->db->query("SELECT * FROM folders WHERE id='" . $folderId . "'");
             $row = $this->db->fetchByAssoc($result);
 
@@ -109,9 +111,7 @@ class Folder
                 $this->id = $row['parent_folder'];
                 $this->type = $row['folder_type'];
                 $this->mailbox = $row['name'];
-
             }
-
         } else {
             throw new SuiteException("Invalid or empty Email Folder ID");
         }
@@ -124,10 +124,9 @@ class Folder
      * @return Folder
      * @throws SuiteException
      */
-    public function retrieveFromRequest($request) {
-
+    public function retrieveFromRequest($request)
+    {
         if (isset($request['folders_id']) && !empty($request['folders_id'])) {
-
             $foldersId = $request['folders_id'];
             $this->retrieve($foldersId);
         } else {
@@ -140,15 +139,16 @@ class Folder
     /**
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
     /**
      * @return null|string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
-
 }

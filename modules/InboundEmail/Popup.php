@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,76 +34,79 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+/**
 
  * Description:
- ********************************************************************************/
+ */
 // cn: bug 6078: zlib breaks test-settings
 $iniError = '';
-if(ini_get('zlib.output_compression') == 1) { // ini_get() returns 1/0, not value
-	if(!ini_set('zlib.output_compression', 'Off')) { // returns False on failure
-		$iniError = $mod_strings['ERR_INI_ZLIB'];
-	}
+if (ini_get('zlib.output_compression') == 1) { // ini_get() returns 1/0, not value
+    if (!ini_set('zlib.output_compression', 'Off')) { // returns False on failure
+        $iniError = $mod_strings['ERR_INI_ZLIB'];
+    }
 }
 
 // hack to allow "&", "%" and "+" through a $_GET var
 // set by ie_test_open_popup() javascript call
-foreach($_REQUEST as $k => $v) {
-	$v = str_replace('::amp::', '&', $v);
-	$v = str_replace('::plus::', '+', $v);
-	$v = str_replace('::percent::', '%', $v);
-	$_REQUEST[$k] = $v;
+foreach ($_REQUEST as $k => $v) {
+    $v = str_replace('::amp::', '&', $v);
+    $v = str_replace('::plus::', '+', $v);
+    $v = str_replace('::percent::', '%', $v);
+    $_REQUEST[$k] = $v;
 }
 
-if(ob_get_level() > 0) {
-	ob_end_clean();
+if (ob_get_level() > 0) {
+    ob_end_clean();
 }
 
-if(ob_get_level() < 1) {
-	ob_start();
+if (ob_get_level() < 1) {
+    ob_start();
 }
 
 
 require_once('modules/InboundEmail/language/'.$current_language.'.lang.php');
 global $theme;
 
-$title				= '';
-$msg				= '';
-$tls				= '';
-$cert				= '';
-$ssl				= '';
-$notls				= '';
-$novalidate_cert	= '';
-$useSsl				= false;
+$title                = '';
+$msg                = '';
+$tls                = '';
+$cert                = '';
+$ssl                = '';
+$notls                = '';
+$novalidate_cert    = '';
+$useSsl                = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	TITLES
 
 $popupBoolean = false;
 if (isset($_REQUEST['target']) && $_REQUEST['target'] == 'Popup') {
-	$popupBoolean = true;
+    $popupBoolean = true;
 }
 if (isset($_REQUEST['target1']) && $_REQUEST['target1'] == 'Popup') {
-	$popupBoolean = true;
+    $popupBoolean = true;
 }
 
-if($popupBoolean) {
-	$title = '';
-	$msg = $mod_strings['LBL_TEST_WAIT_MESSAGE'];
+if ($popupBoolean) {
+    $title = '';
+    $msg = $mod_strings['LBL_TEST_WAIT_MESSAGE'];
 }
 
-if(isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
-	$msg .= $mod_strings['LBL_FIND_SSL_WARN'];
-	$useSsl = true;
+if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
+    $msg .= $mod_strings['LBL_FIND_SSL_WARN'];
+    $useSsl = true;
 }
-
-
+        
 $ie                 = new InboundEmail();
-if(!empty($_REQUEST['ie_id'])) {
+if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
 }
 $ie->email_user     = $_REQUEST['email_user'];
@@ -111,13 +114,13 @@ $ie->server_url     = $_REQUEST['server_url'];
 $ie->port           = $_REQUEST['port'];
 $ie->protocol       = $_REQUEST['protocol'];
 //Bug 23083.Special characters in email password results in IMAP authentication failure
-if(!empty($_REQUEST['email_password'])) {
+if (!empty($_REQUEST['email_password'])) {
     $ie->email_password = html_entity_decode($_REQUEST['email_password'], ENT_QUOTES);
     $ie->email_password = str_rot13($ie->email_password);
 }
 $ie->mailbox        = 'INBOX';
 
-if($popupBoolean) {
+if ($popupBoolean) {
     $msg = $ie->connectMailserver(true);
 }
 
@@ -128,19 +131,19 @@ if($popupBoolean) {
 ////	COMMON CODE
 echo /*'
 <HTML>
-	<HEAD>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>SugarCRM - Commercial Open Source CRM</title>
-		'.SugarThemeRegistry::current()->getCSS().'
-		<script type="text/javascript">
-				function setMailbox(box) {
-					var mb = opener.document.getElementById("mailbox");
-					mb.value = box;
-				}
-		</script>
+    <HEAD>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>SugarCRM - Commercial Open Source CRM</title>
+        '.SugarThemeRegistry::current()->getCSS().'
+        <script type="text/javascript">
+                function setMailbox(box) {
+                    var mb = opener.document.getElementById("mailbox");
+                    mb.value = box;
+                }
+        </script>
 
-	</HEAD>
-	<body style="margin: 10px">*/'
+    </HEAD>
+    <body style="margin: 10px">*/'
 	<p>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>
@@ -162,15 +165,15 @@ echo /*'
 				</td>
 			</tr>';
 
-if($popupBoolean) {
-/*	echo '	<tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>
-				<td></td>
-				<td>
-					<form name="form">
-					<input name="close" type="button" title="'.$mod_strings['LBL_CLOSE_POPUP'].'"  value="    '.$mod_strings['LBL_CLOSE_POPUP'].'    " onClick="window.close()">
-					</form>
-				</td>
-			</tr>';*/
+if ($popupBoolean) {
+    /*	echo '	<tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>
+    				<td></td>
+    				<td>
+    					<form name="form">
+    					<input name="close" type="button" title="'.$mod_strings['LBL_CLOSE_POPUP'].'"  value="    '.$mod_strings['LBL_CLOSE_POPUP'].'    " onClick="window.close()">
+    					</form>
+    				</td>
+    			</tr>';*/
 }
 
 echo '	</table>';

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
@@ -27,7 +29,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings;
 
 $dashletMeta['AOW_ProcessedDashlet'] = array('module'		=> 'AOW_Processed',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOW_Processed'), 
+                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOW_Processed'),
                                           'description' => 'A customizable view into AOW_Processed',
                                           'icon'        => 'icon_AOW_Processed_32.gif',
                                           'category'    => 'Module Views');

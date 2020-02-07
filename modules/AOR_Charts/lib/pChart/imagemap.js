@@ -169,7 +169,8 @@ if(document.all)
   }
 
  /* Fade general functions */
- function fadeIn(TooltipDivID)  { currentTimerMode = 1; initialiseTimer(TooltipDivID); } function fadeOut(TooltipDivID) { currentTimerMode = 2; initialiseTimer(TooltipDivID); } function initialiseTimer(TooltipDivID)
+ function fadeIn(TooltipDivID)  { currentTimerMode = 1; initialiseTimer(TooltipDivID); }
+ function fadeOut(TooltipDivID) { currentTimerMode = 2; initialiseTimer(TooltipDivID); } function initialiseTimer(TooltipDivID)
   { if ( timerID == null ) { timerID = setInterval("fade('"+TooltipDivID+"')",timerInterval); } }
 
 
