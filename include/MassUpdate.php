@@ -567,6 +567,23 @@ eoq;
                         case "enum":
                         case "dynamicenum":
                         case "multienum":
+                            if (isset($this->sugarbean->field_defs[$field['name']]['function'])) {
+                                $function = $this->sugarbean->field_defs[$field['name']]['function'];
+                                if (is_array($function) && isset($function['name'])) {
+                                    $function = $this->sugarbean->field_defs[$field['name']]['function']['name'];
+                                } else {
+                                    $function = $this->sugarbean->field_defs[$field['name']]['function'];
+                                }
+
+                                if (
+                                    isset($this->sugarbean->field_defs[$field['name']]['function']['include']) &&
+                                    file_exists($this->sugarbean->field_defs[$field['name']]['function']['include'])
+                                ) {
+                                    require_once($this->sugarbean->field_defs[$field['name']]['function']['include']);
+                                }
+
+                                $field['options'] = call_user_func($function, $this->sugarbean, $field['name'], '', 'EditView');
+                            }
                             if (!empty($field['isMultiSelect'])) {
                                 $even = !$even;
                                 $newhtml .= $this->addStatusMulti(
