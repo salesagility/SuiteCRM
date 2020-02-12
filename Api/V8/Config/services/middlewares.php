@@ -35,22 +35,31 @@ return CustomLoader::mergeCustomArray([
             sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
         );
 
-        if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
-            $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
-            $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
-            $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
+//BUG-FIX FOR ISSUE ID #7935
+    if(isset(ApiConfig::OAUTH2_ENCRYPTION_KEY)){
+                $BackUpKey = ApiConfig::OAUTH2_ENCRYPTION_KEY;
+
+    $apiConfig =  file_get_contents('Api/Core/Config/ApiConfig.php');
+
+            if(empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
+            $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . $BackUpKey;
 
             $configFileContents = str_replace(
                 $oldKey,
                 $key,
                 $apiConfig
             );
+
             file_put_contents(
-                'Api/Core/Config/ApiConfig.php',
-                $configFileContents,
-                LOCK_EX
+                'Api/Core/Config/ApiConfig.php', $configFileContents, LOCK_EX
             );
         }
+}
+
+    else{
+        $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
+        }
+//END OF BUG-FIX ISSUE #7935
 
         $server->setEncryptionKey(ApiConfig::OAUTH2_ENCRYPTION_KEY);
 
