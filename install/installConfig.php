@@ -1077,13 +1077,13 @@ EOQ;
                 <!--
                 <div class="formrow">
                     <label>{$mod_strings['LBL_NUMBER_GROUPING_SEP']}</label>
-                    <input type="text" name="default_number_grouping_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_separator']}">
+                    <input type="text" name="default_number_grouping_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_seperator']}">
                 </div>
 
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_DECIMAL_SEP']}</label>
-                    <input type="text" name="default_decimal_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_separator']}">
+                    <input type="text" name="default_decimal_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_seperator']}">
                 </div>
 
                 <div class="clear"></div>
