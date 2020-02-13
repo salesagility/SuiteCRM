@@ -24,4 +24,5 @@ $sugar_config_si  = array(
     'setup_site_url' => 'http://localhost',
     'setup_system_name' => 'SuiteCRM Travis Build',
     'show_log_trace' => true,
+    'strict_id_validation' => true,
 );
