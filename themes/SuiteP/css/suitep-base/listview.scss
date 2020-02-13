@@ -495,7 +495,7 @@ a.listViewTdToolsS1 {
 }
 
 .table-responsive.list > tbody > tr > td svg {
-	width:20px;
+  width:20px;
 }
 
 .table-responsive.list > tbody > tr > td a:hover {
@@ -710,8 +710,8 @@ a.listViewTdToolsS1 {
 #massassign_form .button {
   margin-right: 10px;
   input {
-	  height:25px;
-	  line-height:25px;
+    height:25px;
+    line-height:25px;
   }
 }
 
@@ -867,7 +867,7 @@ a.listViewTdToolsS1 {
   left: 0;
   right: auto;
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   padding: 0;
   width: auto;
@@ -877,7 +877,7 @@ a.listViewTdToolsS1 {
   left: 0;
   right: auto;
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   padding: 0;
   width: auto;
@@ -933,7 +933,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkTop > .sugar_action_button > .subnav li {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
   padding: 0;
@@ -941,7 +941,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkTop > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
 
@@ -949,7 +949,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop .clickMenu li .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
 
@@ -965,7 +965,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop > .sugar_action_button > .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: auto;
 }
@@ -979,7 +979,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop > .sugar_action_button > .subnav li {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
 
@@ -995,7 +995,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
 
@@ -1019,7 +1019,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkBottom > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
 
@@ -1027,7 +1027,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom .clickMenu li .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
 
@@ -1043,7 +1043,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom > .sugar_action_button > .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: auto;
 }
@@ -1057,7 +1057,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom > .sugar_action_button > .subnav li {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
 
@@ -1074,7 +1074,7 @@ a.listViewTdToolsS1 {
 #actionLinkBottom > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
   line-height: 24px;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   width: 100%;
 }
 
@@ -1087,7 +1087,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop .menuItem {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
   padding: 0;
@@ -1103,7 +1103,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom .menuItem {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
   padding: 0;
@@ -1119,7 +1119,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop .sugar_action_button .subnav.ddopen a {
   display: block;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   float: none;
 }
 
@@ -1147,7 +1147,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom .sugar_action_button .subnav.ddopen a {
   display: block;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   float: none;
 }
 
@@ -1159,7 +1159,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
   display: block;
-  color: $default-btn-color;
+  color: $dropdown-link-active-color;
   float: none;
   background-color: $list-view-action-menu-link-bg;
   width: 100%;

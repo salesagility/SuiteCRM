@@ -854,13 +854,13 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-primary {
   background-color: $primary-btn-bg;
-  color: $default-btn-color;
+  color: $dropdown-bg;
   border: 1px solid $primary-btn-bg;
 }
 
 .btn-primary:hover {
   background-color: $primary-btn-bg;
-  color: $default-btn-color;
+  color: $dropdown-bg;
   border: 1px solid $primary-btn-bg;
 }
 
