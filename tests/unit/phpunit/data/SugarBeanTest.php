@@ -2337,7 +2337,12 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse(isset($bean->date_entered));
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+
+        $GLOBALS['sugar_config']['strict_id_validation'] = false;
+        self::assertTrue($isValidator->isValidId($bean->id));
+        $GLOBALS['sugar_config']['strict_id_validation'] = true;
         self::assertFalse($isValidator->isValidId($bean->id));
+
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
         
@@ -2515,6 +2520,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         BeanFactory::getBean('Users')->field_defs = $userFieldDefs;
         BeanFactory::getBean('Contacts')->field_defs = $contactFieldDefs;
+
+        $GLOBALS['sugar_config']['strict_id_validation'] = false;
     }
 
     /**
