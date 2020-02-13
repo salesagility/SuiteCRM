@@ -163,6 +163,21 @@
       outline: none;
     }
 
+    .vertical-seperator {
+      background-color: transparent;
+      border-bottom: none;
+      border-left: 1px solid $email-panel-color;
+      border-right: none;
+      border-top: none;
+      color: $email-panel-color;
+      cursor: default;
+      font-size: $email-panel-font-size;
+      @include panel-email-compose-button-margin();
+      @include panel-email-compose-button-padding();
+      outline: none;
+      height: $email-panel-font-size;
+    }
+
     .vertical-separator {
       background-color: transparent;
       border-bottom: none;
