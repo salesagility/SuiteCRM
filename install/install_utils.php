@@ -1656,8 +1656,8 @@ function pullSilentInstallVarsIntoSession()
     $needles = array('demoData','setup_db_create_database','setup_db_create_sugarsales_user','setup_license_key_users',
         'setup_license_key_expire_date','setup_license_key', 'setup_num_lic_oc',
         'default_currency_iso4217', 'default_currency_name', 'default_currency_significant_digits',
-        'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_separator',
-        'default_export_charset', 'default_language', 'default_locale_name_format', 'default_number_grouping_separator',
+        'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_seperator',
+        'default_export_charset', 'default_language', 'default_locale_name_format', 'default_number_grouping_seperator',
         'export_delimiter', 'cache_dir', 'setup_db_options',
         'setup_fts_type', 'setup_fts_host', 'setup_fts_port', 'setup_fts_index_settings'. 'setup_fts_transport');
     copyFromArray($sugar_config_si, $needles, $derived);
