@@ -7,16 +7,18 @@ $md-breakpoint: 1024px;
 $lg-breakpoint: 1200px;
 
 /// Colors
-$main-bg: $color-51;
+$main-bg: $color-80;
 
 // All panels
 $main-alternate-bg: $color-80;
 
-$primary: $color-20;
-$danger: $color-50;
-$danger-hover: $color-50;
+$primary: $color-81;
+
+$danger: $color-86;
+
+$danger-hover: $color-81;
 $success: $color-5;
-$info: $color-35;
+$info: $color-89;
 $warning: $color-47;
 
 $selection-color: $color-80;
@@ -39,12 +41,12 @@ $bootstrap-sass-asset-helper: false !default;
 
 $gray-base:              $color-1 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
-$gray-dark:              $color-3;   // $color-3
+$gray-dark:              lighten($gray-base, 20%) !default;   // $color-3
 $gray:                   lighten($gray-base, 33.5%) !default; // $color-8
 $gray-light:             lighten($gray-base, 46.7%) !default; // $color-19
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 
-$brand-primary:         $color-20 !default; // $color-4
+$brand-primary:         $color-81 !default; // $color-4
 $brand-success:         $color-10 !default;
 $brand-info:            $color-35 !default;
 $brand-warning:         $color-47 !default;
@@ -179,27 +181,27 @@ $table-border-color:            $color-64 !default;
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              $color-51 !default;
-$btn-default-bg:                 $color-28 !default;
-$btn-default-border:             $color-28 !default;
+$btn-default-color:              $color-81 !default;
+$btn-default-bg:                 $color-87 !default;
+$btn-default-border:             $color-81 !default;
 
-$btn-primary-color:              $color-81 !default;
+$btn-primary-color:              $color-80 !default;
 $btn-primary-bg:                 $brand-primary !default;
 $btn-primary-border:             $brand-primary !default;
 
-$btn-success-color:              $color-81 !default;
+$btn-success-color:              $color-80 !default;
 $btn-success-bg:                 $brand-success !default;
 $btn-success-border:             $brand-success !default;
 
-$btn-info-color:                 $color-81 !default;
+$btn-info-color:                 $color-80 !default;
 $btn-info-bg:                    $brand-info !default;
 $btn-info-border:                $brand-info !default;
 
-$btn-warning-color:              $color-81 !default;
+$btn-warning-color:              $color-80 !default;
 $btn-warning-bg:                 $brand-warning !default;
 $btn-warning-border:             $brand-warning !default;
 
-$btn-danger-color:               $color-81 !default;
+$btn-danger-color:               $color-80 !default;
 $btn-danger-bg:                  $brand-danger !default;
 $btn-danger-border:              $brand-danger !default;
 
@@ -221,7 +223,7 @@ $input-bg:                       $color-80 !default;
 $input-bg-disabled:              $gray-lighter !default;
 
 //** Text color for `<input>`s
-$input-color:                    $color-81 !default;
+$input-color:                    $gray !default;
 //** `<input>` border color
 $input-border:                   $color-62 !default;
 
@@ -235,7 +237,7 @@ $input-border-radius-large:      $border-radius-large !default;
 $input-border-radius-small:      $border-radius-small !default;
 
 //** Border color for inputs on focus
-$input-border-focus:             $color-34 !default;
+$input-border-focus:             $color-81 !default;
 
 //** Placeholder text color
 $input-color-placeholder:        $color-31 !default;
@@ -403,7 +405,7 @@ $navbar-collapse-max-height:       340px !default;
 
 $navbar-default-color:             $color-19 !default;
 $navbar-default-bg:                $color-52 !default;
-$navbar-default-border:            lighten($navbar-default-bg, 6.5%) !default;
+$navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
 
 // Navbar links
 $navbar-default-link-color:                $color-19 !default;
@@ -421,14 +423,14 @@ $navbar-default-brand-hover-bg:            transparent !default;
 
 // Navbar toggle
 $navbar-default-toggle-hover-bg:           $color-64 !default;
-$navbar-default-toggle-icon-bar-bg:        $color-81 !default;
+$navbar-default-toggle-icon-bar-bg:        $color-25 !default;
 $navbar-default-toggle-border-color:       $color-64 !default;
 
 
 //=== Inverted navbar
 // Reset inverted navbar basics
 $navbar-inverse-color:                      lighten($gray-light, 15%) !default;
-$navbar-inverse-bg:                         $color-7 !default;
+$navbar-inverse-bg:                         $color-81 !default;
 $navbar-inverse-border:                     darken($navbar-inverse-bg, 10%) !default;
 
 // Inverted navbar links
@@ -447,7 +449,7 @@ $navbar-inverse-brand-hover-bg:             transparent !default;
 
 // Inverted navbar toggle
 $navbar-inverse-toggle-hover-bg:            $color-3 !default;
-$navbar-inverse-toggle-icon-bar-bg:         $color-81 !default;
+$navbar-inverse-toggle-icon-bar-bg:         $color-80 !default;
 $navbar-inverse-toggle-border-color:        $color-3 !default;
 
 
@@ -545,7 +547,7 @@ $state-warning-text:             $color-26 !default;
 $state-warning-bg:               $color-79 !default;
 $state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%) !default;
 
-$state-danger-text:              $color-58 !default;
+$state-danger-text:              $color-81 !default;
 $state-danger-bg:                $color-73 !default;
 $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%) !default;
 
@@ -614,9 +616,9 @@ $label-warning-bg:            $brand-warning !default;
 $label-danger-bg:             $brand-danger !default;
 
 //** Default label text color
-$label-color:                 $color-81 !default;
+$label-color:                 $color-80 !default;
 //** Default text color of a linked label
-$label-link-hover-color:      $color-81 !default;
+$label-link-hover-color:      $color-80 !default;
 
 
 //== Modals
@@ -684,7 +686,7 @@ $alert-danger-border:         $state-danger-border !default;
 //** Background color of the whole progress component
 $progress-bg:                 $color-51 !default;
 //** Progress bar text color
-$progress-bar-color:          $color-81 !default;
+$progress-bar-color:          $color-80 !default;
 //** Variable for setting rounded corners on progress bar.
 $progress-border-radius:      $border-radius-base !default;
 
@@ -746,13 +748,13 @@ $panel-border-radius:         $border-radius-base !default;
 
 //** Border color for elements within panels
 $panel-inner-border:          $color-64 !default;
-$panel-footer-bg:             $color-48 !default;
+$panel-footer-bg:             $color-51 !default;
 
-$panel-default-text:          $color-81 !default;
+$panel-default-text:          $gray-dark !default;
 $panel-default-border:        transparent !default;
 $panel-default-heading-bg:    $color-51 !default;
 
-$panel-primary-text:          $color-81 !default;
+$panel-primary-text:          $color-80 !default;
 $panel-primary-border:        $brand-primary !default;
 $panel-primary-heading-bg:    $brand-primary !default;
 
@@ -857,7 +859,7 @@ $carousel-caption-color:                      $color-80 !default;
 //##
 
 $close-font-weight:           bold !default;
-$close-color:                 $color-81 !default;
+$close-color:                 $color-1 !default;
 $close-text-shadow:           0 1px 0 $color-80 !default;
 
 
@@ -912,7 +914,7 @@ $page-title-space: 40px; // normal 40px
 $main-font-color: $color-81;
 $main-header-font-color: $main-font-color;
 
-$link-color: $danger;
+$link-color: $color-81;
 $link-color-hover: $danger-hover;
 
 $page-title-spacing: 30px; // 30px normal
@@ -924,26 +926,31 @@ $footer-btn-bg: $color-64;
 $scroll-bar-thumb-color: rgba(165, 232, 214, 1);
 
 // Login
-$login-top-bar-bg: $color-7;
+$login-top-bar-bg: $color-81;
 
 
 // Buttons
 $default-btn-color: $color-81;
+$listview-action-submenu-text-color: $color-51;
 $default-text-disabled-bg: $color-52;
 $default-text-disabled-color: $color-52;
 $default-text-disabled-border-color: $color-45;
 $default-input-group-color: $color-40;
-$default-btn-bg: $color-83;
-$default-btn-bg-hover: $color-28;
+$default-btn-bg: $color-87;
+$default-btn-bg-hover: $color-87;
 
 $primary-btn-bg: $primary;
-$primary-btn-bg-hover: $color-20;
+$primary-btn-bg-hover: $color-81;
 
 $info-btn-bg: $info;
-$info-btn-bg-hover: $color-29;
+$info-btn-bg-hover: $color-22;
 
 $danger-btn-bg: $danger;
-$danger-btn-bg-hover: $color-43;
+
+$danger-btn-bg-hover: $color-88;
+
+
+
 $danger-btn-color: $btn-default-color;
 $danger-btn-color-hover: $btn-default-color;
 
@@ -957,46 +964,47 @@ $disabled-btn-bg: $color-19;
 
 // Navbar
 $navbar-bg: $navbar-inverse-bg;
-$navbar-link-color: $color-81;
-$navbar-link-color-hover: $color-50;
-$navbar-main-menu-bg: $color-9;
-$navbar-menu-link-color: $color-81;
-$navbar-menu-link-color-hover: $color-50;
+$navbar-link-color: $color-80;
+$navbar-link-color-hover: $color-82;
+$navbar-main-menu-bg: $color-81;
+$navbar-menu-link-color: $color-80;
+$navbar-menu-link-color-hover: $color-82;
 $navbar-menu-seperator: $color-18;
-$navbar-menu-current-seperator: $color-50;
-$navbar-mobile-toolbar-color: $color-81;
+$navbar-menu-current-seperator: $color-82;
+$navbar-mobile-toolbar-color: $color-80;
 
 $navbar-home-color: $navbar-link-color;
 $navbar-home-color-hover: $navbar-link-color-hover;
 
-$navbar-search-bg: $color-11;
+
+$navbar-search-bg: $color-80;
 $navbar-search-btn-bg: $color-23;
-$navbar-search-text-color: $color-32;
-$navbar-search-color: $color-59;
-$navbar-search-btn-color: $navbar-link-color;
+$navbar-search-text-color: $color-81;
+$navbar-search-color: $color-81;
+$navbar-search-btn-color: $color-81;
 $navbar-search-btn-color-hover: $navbar-link-color-hover;
-$navbar-search-query-btn-color: $navbar-link-color;
+$navbar-search-query-btn-color: $color-81;
 $navbar-search-query-btn-color-hover: $navbar-link-color-hover;
 
 $navbar-quick-create-link-color: $color-81;
 $navbar-quick-create-mobile-btn-bg: $color-33;
-$navbar-quick-create-btn-bg: $color-33;
-$navbar-quick-create-menu-bg: $color-33;
+$navbar-quick-create-btn-bg: $color-86;
+$navbar-quick-create-menu-bg: $color-86;
 $navbar-quick-create-menu-color: $color-81;
 $navbar-quick-create-menu-color-hover: $color-81;
-$navbar-quick-create-menu-seperator: $color-20;
+$navbar-quick-create-menu-seperator: $color-81;
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
 
 $navbar-alert-color: $navbar-link-color;
 $navbar-alert-color-hover: $navbar-link-color-hover;
 $navbar-alert-count-link-color: $color-81;
-$navbar-alert-link-color: $color-81;
+$navbar-alert-link-color: $color-80;
 $navbar-alert-body-color: $main-font-color;
 $navbar-alert-body-bg: $main-bg;
 $navbar-alert-title-bg: $color-9;
 $navbar-alert-title-color: $main-font-color;
 $navbar-alert-seperator: $navbar-menu-seperator;
-$navbar-alert-count-bg: $color-81;
+$navbar-alert-count-bg: $color-82;
 
 $navbar-user-color: $navbar-link-color;
 $navbar-user-color-hover: $navbar-link-color-hover;
@@ -1014,13 +1022,12 @@ $navbar-links-padding: 14px; /// 14px normal or 8px small
 $home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
 
 // Sidebar
-$sidebar-bg: $color-20;
+$sidebar-bg: $color-87;
 $sidebar-btn-bg: $color-28;
-$sidebar-btn-bg-hover: $color-24;
+$sidebar-btn-bg-hover: $color-28;
 $sidebar-btn-color: $color-81;
 $side-bar-header-color: $color-81;
-$side-bar-link-color-hover: $color-81;
-$side-bar-link-color-hover: $color-14;
+$side-bar-link-color-hover: $color-87;
 
 $side-bar-action-height: 48px;
 $side-bar-action-font-size: 13px;
@@ -1031,34 +1038,38 @@ $side-bar-links-height: 18px;
 $side-bar-links-font-size: 13px;
 $side-bar-links-icon-font-size: $side-bar-links-height;
 
-
 // Tabs
-$active-tab-bg: $color-20;
-$active-tab-bg-hover:$color-20;
-$active-tab-color-hover:$color-81;
+$active-tab-bg: $color-81;
+$active-tab-bg-hover:$color-81;
+$active-tab-color-hover:$color-80;
 $active-tab-border: transparent;
-$default-tab-bg: $color-39;
-$default-tab-bg-hover: $color-39;
+$default-tab-bg: $color-87;
+$default-tab-bg-hover: $color-87;
 $default-tab-color-hover: $color-81;
-$default-tab-color: $color-81;
-$action-tab-bg: $color-50;
-$action-tab-bg-hover: $color-50;
+$default-tab-color: $color-80;
+
+$action-tab-bg: $color-86;
+
+$action-tab-bg-hover: $color-88;
+
 $action-tab-seperator: $color-53;
-$action-tab-color: $color-81;
+
+$action-tab-color: $color-80;
+
 $action-tab-color-hover: $color-81;
 $tab-bg: $panel-bg;
 $tab-height: 10px; // 32p normal 24px small
 $tab-margin-bottom: 5px;
 
 // Panels
-$panel-collapsed-bg: $color-39;
-$panel-expanded-bg: $color-13;
+$panel-collapsed-bg: $color-28;
+$panel-expanded-bg: $color-87;
 $panel-header-height: 32px;
 $panel-header-font-size: 14px;
 $panel-collapsed-color: $color-81;
-$panel-expanded-color: $panel-collapsed-color;
-$panel-button-bg: $color-28;
-$panel-button-bg-hover: $color-20;
+$panel-expanded-color: $color-81;
+$panel-button-bg: $color-87;
+$panel-button-bg-hover: $color-87;
 $panel-button-bg-disabled: $disabled-btn-bg;
 $panel-button-color: $color-81;
 $campaign-pagination-bg-hover: $color-22;
@@ -1066,35 +1077,38 @@ $campaign-pagination-bg-hover: $color-22;
 // Detail view
 $detail-view-field-bg: $color-51;
 $detail-view-module-title-space: 12px;
-$opt-in-tick-color-not-sent: $color-54;
+$opt-in-tick-color-not-sent: $color-35;
 $opt-in-tick-color-failed: $color-49;
-$opt-in-tick-color-sent: $color-54;
+$opt-in-tick-color-sent: $color-35;
 $confirm-opt-in-tick-color-in-confirmed: $color-16;
 
-
 // List View
-$list-view-toolbar-bg: $color-39;
-$list-view-header-bg: $color-20;
-$list-view-header-color: $color-81;
+$list-view-toolbar-bg: $color-87;
+$list-view-header-bg: $color-81;
+$list-view-header-action-btn-hover-bg: $color-87;
+$list-view-header-color: $color-80;
 $list-view-pagination-color: $color-81;
+
 $list-view-button-color: $color-81;
-$list-view-text-color: $color-46;
-$list-view-link-color: $color-46;
-$list-view-link-hover-color: $color-43;
+
+$list-view-text-color: $color-81;
+$list-view-link-color: $color-81;
+$list-view-link-hover-color: $color-81;
 $list-view-action-button-disabled-bg: $disabled-btn-bg;
-$list-view-action-button-bg: $color-83;
-$list-view-action-button-bg-hover: $color-28;
 $list-view-action-button-disabled-color: $disabled-btn-color;
-$list-view-action-menu-bg: $color-20;
-$list-view-action-menu-link-bg: $color-14;
+$list-view-action-button-bg: $color-87;
+$list-view-action-button-bg-hover: $color-87;
+$list-view-action-menu-bg: $color-81;
+$list-view-action-menu-link: $color-80;
+$list-view-action-menu-link-bg: $color-81;
 $list-view-action-menu-separator: $color-27;
 $list-view-choose-columns-displayed: $color-42;
 $list-view-choose-columns-hidden: $color-56;
-$list-view-data-icon-font-size: 18px;
 $list-view-data-icon-color: $main-font-color;
+$list-view-data-icon-font-size: 18px;
 $page-list-view-font-size: 12px;
 $mass-update-text-color: $main-font-color;
-$list-view-action-button-border-color: transparent;
+$list-view-action-button-border-color: $color-81;
 
 // mass assign form
 $mass-assign-color: $main-font-color;
@@ -1110,32 +1124,33 @@ $global-search-height: 38px;
 
 $input-bg: $color-44;
 $input-select-option: $color-80;
-$input-select-bg: $color-34;
-$input-select-border: $color-34;
-$input-border: $color-34;
+$input-select-bg: $color-87;
+$input-select-border: $color-81;
+$input-border: $color-81;
 
-$select-size-background-url: "../../../../../themes/SuiteP/css/Night/select.ico";
-$select-form-control-background-url: "../../../../../themes/SuiteP/css/Night/select.ico";
-$select-background-url: "../../../../../themes/SuiteP/css/Night/select.ico";
-$saved-search-select-background-url: "../../../../../themes/SuiteP/css/Night/select.ico";
-$select-ui-widget-control-background-url: "../../../../../themes/SuiteP/css/Night/select.ico";
+$select-size-background-url: "../../../../../themes/SuiteP/css/Noon/select.ico";
+$select-form-control-background-url: "../../../../../themes/SuiteP/css/Noon/select.ico";
+$select-background-url: "../../../../../themes/SuiteP/css/Noon/select.ico";
+$saved-search-select-background-url: "../../../../../themes/SuiteP/css/Noon/select.ico";
+$select-ui-widget-control-background-url: "../../../../../themes/SuiteP/css/Noon/select.ico";
+
 
 // tables
-$table-header-bg: $color-20;
-$table-nav-bg: $color-39;
+$table-header-bg: $color-81;
+$table-nav-bg: $color-87;
 $table-focus-bg: $color-54; // also hover
 $table-row-bg: $main-bg;
-$table-alternate-row-bg: $main-bg;
+$table-alternate-row-bg: $color-64;
 $table-row-bg: $main-alternate-bg;
 
 
 // Dashlets
 $dashlet-title-bg: $color-13;
-$dashlet-title-color: $color-8;
-$dashlet-toolbar-bg: $color-39;
-$dashlet-pagination-bg: $color-28;
-$dashlet-header-bg: $color-20;
-$dashlet-btn-color: $color-81;
+$dashlet-title-color: $color-80;
+$dashlet-toolbar-bg: $color-87;
+$dashlet-pagination-bg: $color-87;
+$dashlet-header-bg: $color-81;
+$dashlet-btn-color: $color-80;
 
 $dashlet-title-height: 30px; // 48px normal 40px small
 $dashlet-header-height: 32px; // 32px normal 24px small
@@ -1146,27 +1161,27 @@ $dashlet-header-toolset-icon-font-size: 18px;
 $dashlet-action-color: $main-font-color;
 $dashlet-action-icon-font-size: 18px;
 
-$add-dashlet-tab-color: $color-81;
+$add-dashlet-tab-color: $color-80;
 
 // Campaigns
-$campaign-type-color: $color-80;
-$campaign-type-bg: $color-50;
+$campaign-type-color: $color-81;
+$campaign-type-bg: $color-86;
 $campaign-type-bg-hover: $color-22;
 $campaign-progression-color: $color-81;
 $campaign-progression-color-hover: $color-81;
-$campaign-progression-bg: $color-50;
-$campaign-progression-bg-hover: $color-22;
+$campaign-progression-bg: $color-86;
+$campaign-progression-bg-hover: $color-88;
 $campaign-progression-bg-active: $color-22;
 
 // Cases
 $case-internal-bg: $color-57;
-$case-internal-color: $color-7;
+$case-internal-color: $color-81;
 $case-internal-border-color: transparent;
 $case-user-bg: $color-38;
-$case-user-color: $color-7;
+$case-user-color: $color-81;
 $case-user-border-color: transparent;
 $case-contact-bg: $color-47;
-$case-contact-color: $color-7;
+$case-contact-color: $color-81;
 $case-contact-border-color: transparent;
 
 // Full Calendar and YUI popup calendar
@@ -1178,17 +1193,17 @@ $calendar-slot-border-color: $color-64;
 $calendar-month-slot-height: 52px;
 $calendar-today-bg: $color-79;
 $calendar-today-color: $default-btn-color;
-$calendar-title-bg: $color-20;
+$calendar-title-bg: $color-81;
 $calendar-title-color: $default-btn-color;
 $calendar-title-height: 48px;
 $calendar-user-height: 32px;
 $calendar-user-bg: $color-36;
 $calendar-user-height: 40px;
-$calendar-header-bg: $color-39;
-$calendar-header-color: $btn-primary-color;
+$calendar-header-bg: $color-87;
+$calendar-header-color: $color-81;
 // YUI Popup calendar
-$calendar-month-day-header-bg: $color-20;
-$calendar-month-day-header-color: $color-81;
+$calendar-month-day-header-bg: $color-81;
+$calendar-month-day-header-color: $color-51;
 $calendar-year-body-bg: $calendar-slot-bg;
 $calendar-year-body-border-color: $calendar-slot-bg;
 $calendar-other-month-day-header-bg: $color-60;
@@ -1199,7 +1214,7 @@ $calendar-nav-button-bg: $color-13;
 $calendar-body-bg: $main-alternate-bg;
 $calendar-body-color: $color-6;
 $calendar-body-header-color: $gray-lighter;
-
+$calendar-border-color: $color-31;
 $calendar-other-month-day-body-bg: $calendar-header-bg;
 $calendar-other-month-day-body-color: $color-12;
 $calendar-tip-bg: $color-65;
@@ -1209,17 +1224,17 @@ $calendar-selected-bg: $danger-btn-bg;
 $calendar-selected-color: $default-btn-color;
 $calendar-hover-bg: $danger-btn-bg-hover;
 $calendar-hover-color: $danger-btn-color-hover;
-$calendar-arrow-button-bg: $btn-info-bg;
+$calendar-arrow-button-bg: $info;
 $calendar-arrow-button-color: $btn-info-color;
 
 // Qtip popups in the full calendar
 $qtip-font-size: 12px;
-$qtip-btn-color: $color-45;
+$qtip-btn-color: $color-51;
 $qtip-btn-hover: $color-37;
-$qtip-title-bg: $color-13;
-$qtip-title-color: $color-45;
-$qtip-content-bg: $color-12;
-$qtip-content-color: $color-45;
+$qtip-title-bg: $color-9;
+$qtip-title-color: $color-51;
+$qtip-content-bg: $color-11;
+$qtip-content-color: $color-51;
 
 
 // yui
@@ -1256,7 +1271,7 @@ $aor-droparea: $color-75;
 $line-item-group-width: 100%;
 
 // Workflow
-$workflow-action-bg: $color-39;
+$workflow-action-bg: $color-87;
 
 $email-template-bg: $color-55;
 
@@ -1286,3 +1301,18 @@ $notification-text: $danger-btn-color !default;
 // Required *
 $required-bg: transparent;
 $required-color: $color-49;
+
+$icon-fill: $color-81;
+$footer-link-color: $color-81;
+$back-to-top-color: $color-81;
+$subpanel-action-button-color: $color-80;
+$subpanel-action-pagination-color: $color-80;
+$action-caret-color: $color-81;
+$action-ddopen-color: $color-80;
+$action-ddopen-link-color: $color-80;
+$action-ddopen-color-a: $color-80;
+$container-close-color: $color-80;
+$error-background-color: $color-82;
+$quick-create-top-dropdown-menu-color: $color-88;
+$inline-edit-text-decoration: underline;
+$navigation-hover-color: $color-82;

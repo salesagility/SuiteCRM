@@ -577,6 +577,7 @@ table.view {
   text-align: left;
   vertical-align: baseline;
   white-space: pre-wrap;
+  line-height: 10px;
 }
 
 #lineItems {
@@ -1202,6 +1203,12 @@ p.error {
   margin: 0;
 }
 
+.error {
+  border: none;
+  color: $alert-danger-text;
+  background: transparent;
+}
+
 .error:empty {
   padding: 0;
 }
@@ -1219,7 +1226,7 @@ div.content p.error {
 
 .error a {
   font-weight: 600;
-  color: white;
+  color: $link-color;
   text-decoration: underline;
 }
 
@@ -1233,7 +1240,7 @@ div.content p.error {
 }
 
 .error a:hover {
-  color: black;
+  color: $link-color-hover;
 }
 
 .success {
@@ -2462,13 +2469,13 @@ input[type=text].cstm_code {
 }
 
 .headerlinks a:link {
-  color: $default-btn-color;
+  color: $navbar-link-color;
   padding: 14px 5px 14px 0;
   width: 100%;
 }
 
 .headerlinks a:visited {
-  color: $default-btn-color;
+  color: $navbar-link-color;
   padding: 14px 5px 14px 0;
   width: 100%;
 }
@@ -2623,10 +2630,6 @@ input#btn_ActionLine.button[type="button"] {
 
 .col-sm-6 .edit-view-field input[type="text"].datetimecombo_date {
   width: 84px;
-}
-
-.col-sm-6 .edit-view-field input[type="text"].date_input {
-    width: auto;
 }
 
 .col-sm-6 .edit-view-field .datetimecombo_time_section {
@@ -3298,7 +3301,7 @@ ul::-webkit-scrollbar-thumb { /* 5 */
 }
 
 .headerlinks a:hover {
-  color: $default-btn-color;
+  color: $navbar-link-color-hover;
 }
 
 table {
@@ -3531,10 +3534,6 @@ select#sales_stage_advanced {
     width: 100%;
   }
 
-  .col-sm-6 .edit-view-field input[type="text"].date_input {
-      width: auto;
-  }
-
   [type="date"] img {
     margin-left: 8px;
   }
@@ -3545,10 +3544,6 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field[type="date"] input[type="text"] {
     width: 92%;
-  }
-
-  .col-sm-6 .edit-view-field[type="date"] input[type="text"].date_input {
-      width: auto;
   }
 }
 
@@ -3640,10 +3635,6 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 100%;
-  }
-
-  .col-sm-6 .edit-view-field input[type="text"].date_input {
-      width: auto;
   }
 
   .email-address-options-container {
@@ -3749,10 +3740,6 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
-  .col-sm-6 .edit-view-field input[type="text"].date_input {
-      width: auto;
-  }
-
   .email-address-options-container {
     margin-top: 0;
   }
@@ -3804,9 +3791,6 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
-  .col-sm-6 .edit-view-field input[type="text"].date_input {
-      width: auto;
-  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
@@ -3867,9 +3851,6 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
-  .col-sm-6 .edit-view-field input[type="text"].date_input {
-      width: auto;
-  }
 
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
@@ -5448,7 +5429,7 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
   top: 100px;
   padding: 20px;
   width: 100%;
-  position: fixed;
+  z-index: 103100;
 }
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_start_trigger_c"] {

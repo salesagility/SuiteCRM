@@ -251,13 +251,13 @@
     border-color: transparent;
   }
   .headerlinks a:link {
-    color: $default-btn-color;
+    color: $navbar-link-color;
     padding: 0;
     width: 100%;
   }
 
   .headerlinks a:visited {
-    color: $default-btn-color;
+    color: $navbar-link-color;
     padding: 0;
     width: 100%;
   }
@@ -2193,7 +2193,6 @@
     display: inline-block;
     visibility: visible;
     text-align: right;
-    margin-top: 6px;
   }
 }
 
@@ -2345,7 +2344,7 @@
   .globalLinks-desktop .dropdown-toggle {
     margin-left: 0;
     border: none;
-    width: auto;
+    width: 48px;
     height: 48px;
   }
 }
