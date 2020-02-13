@@ -2,11 +2,11 @@
 $sugar_config_si  = array(
     'dbUSRData' => 'create',
     'default_date_format' => 'd/m/Y',
-    'default_decimal_separator' => '.',
+    'default_decimal_seperator' => '.',
     'default_export_charset' => 'ISO-8859-1',
     'default_language' => 'en_us',
     'default_locale_name_format' => 's f l',
-    'default_number_grouping_separator' => ',',
+    'default_number_grouping_seperator' => ',',
     'default_time_format' => 'H:i',
     'export_delimiter' => ',',
     'setup_db_admin_password' => 'automated_tests',
