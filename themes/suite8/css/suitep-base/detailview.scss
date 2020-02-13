@@ -404,6 +404,7 @@ table.footable > tbody > tr.footable-empty > td {
     @include hideWhenPrinting()
   }
 
+
   .tab-content > .active.tab-pane-NOBOOTSTRAPTOGGLER {
     display: block !important;
     opacity: 1 !important;
