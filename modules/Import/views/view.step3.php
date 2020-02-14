@@ -122,6 +122,10 @@ class ImportViewStep3 extends ImportView
 
         $uploadFileName = $_REQUEST['file_name'];
 
+        if (strpos($uploadFileName, 'phar://') === 0) {
+            return;
+        }
+
         // Now parse the file and look for errors
         $importFile = new ImportFile($uploadFileName, $delimiter, html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), false);
 

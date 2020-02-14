@@ -281,7 +281,7 @@ class OutboundEmail
             $a = $this->db->fetchByAssoc($r);
 
             if (!empty($a)) {
-                $opts = unserialize(base64_decode($a['stored_options']));
+                $opts = sugar_unserialize(base64_decode($a['stored_options']));
 
                 if (isset($opts['outbound_email'])) {
                     $mailer = "AND id = '{$opts['outbound_email']}'";
@@ -317,7 +317,7 @@ class OutboundEmail
 
         $results = array();
         while ($row = $this->db->fetchByAssoc($rs)) {
-            $opts = unserialize(base64_decode($row['stored_options']));
+            $opts = sugar_unserialize(base64_decode($row['stored_options']));
             if (isset($opts['outbound_email']) && $opts['outbound_email'] == $this->id) {
                 $results[] = $row['id'];
             }
@@ -344,7 +344,7 @@ class OutboundEmail
             $a = $this->db->fetchByAssoc($r);
 
             if (!empty($a)) {
-                $opts = unserialize(base64_decode($a['stored_options']));
+                $opts = sugar_unserialize(base64_decode($a['stored_options']));
 
                 if (isset($opts['outbound_email'])) {
                     $mailer = "id = '{$opts['outbound_email']}'";
