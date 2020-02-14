@@ -3098,7 +3098,7 @@ eoq;
             $toArray = $ie->email->email2ParseAddressesForAddressesOnly($ret['to']);
         } // else
         foreach ($ieAccountsFull as $k => $v) {
-            $storedOptions = unserialize(base64_decode($v->stored_options));
+            $storedOptions = sugar_unserialize(base64_decode($v->stored_options));
             if (array_search_insensitive($storedOptions['from_addr'], $toArray)) {
                 if ($v->is_personal) {
                     $foundInPersonalAccounts = true;
@@ -3144,7 +3144,7 @@ eoq;
 
         $ieAccountsFrom = array();
         foreach ($ieAccountsFull as $k => $v) {
-            $storedOptions = unserialize(base64_decode($v->stored_options));
+            $storedOptions = sugar_unserialize(base64_decode($v->stored_options));
             $storedOptionsName = from_html($storedOptions['from_name']);
 
             $selected = false;

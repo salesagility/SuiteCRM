@@ -1077,7 +1077,7 @@ class Email extends Basic
             // passed -> user -> system default
             $ie = new InboundEmail();
             $ie->retrieve($request['fromAccount']);
-            $storedOptions = unserialize(base64_decode($ie->stored_options));
+            $storedOptions = sugar_unserialize(base64_decode($ie->stored_options));
             $fromName = "";
             $fromAddress = "";
             $replyToName = "";
