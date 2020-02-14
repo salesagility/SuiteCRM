@@ -412,12 +412,26 @@ function add_to_prospect_list($query_panel, $parent_module, $parent_type, $paren
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$child_id);
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$link_attribute);
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$link_type);
-    require_once('include/SubPanel/SubPanelTiles.php');
+    require_once __DIR__ . '/../include/SubPanel/SubPanelTiles.php';
 
+    $allowed_module = ACLController::checkModuleAllowed($parent_module, 'list');
+    $parent_types = explode(' ', $parent_type);
+    $disabled_types = ACLController::disabledModuleList($parent_types, false, 'list');
+    foreach ($disabled_types as $disabled_type) {
+        unset($parent_types[$disabled_type]);
+    }
+
+    if ($allowed_module === false) {
+        return false;
+    }
 
     if (!class_exists($parent_type)) {
-        require_once('modules/'.cleanDirName($parent_module).'/'.cleanDirName($parent_type).'.php');
+        require_once __DIR__ . '/../modules/'
+            . cleanDirName($parent_module)
+            . '/' . cleanDirName((string)$parent_types)
+            . '.php';
     }
+
     $focus = new $parent_type();
     $focus->retrieve($parent_id);
     if (empty($focus->id)) {
