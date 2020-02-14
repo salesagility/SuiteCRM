@@ -97,7 +97,7 @@ if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTE
 if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
     $run = $_REQUEST['run'];
 
-    if ($run == "upload") {
+    if ($run === 'upload') {
         $perform = false;
         if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
             require_once('ModuleInstall/PackageManager.php');
@@ -106,8 +106,12 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
             $perform = true;
             $base_filename = urldecode($tempFile);
         } elseif (!empty($_REQUEST['load_module_from_dir'])) {
+            $moduleDir = $_REQUEST['load_module_from_dir'];
+            if (strpos($moduleDir, 'phar://') === 0) {
+                die();
+            }
             //copy file to proper location then call performSetup
-            copy($_REQUEST['load_module_from_dir'].'/'.$_REQUEST['upgrade_zip_escaped'], "upload://".$_REQUEST['upgrade_zip_escaped']);
+            copy($moduleDir . '/' . $_REQUEST['upgrade_zip_escaped'], "upload://" . $_REQUEST['upgrade_zip_escaped']);
 
             $perform = true;
             $base_filename = urldecode($_REQUEST['upgrade_zip_escaped']);

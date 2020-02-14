@@ -154,7 +154,7 @@ class EmailsViewCompose extends ViewEdit
             );
         }
 
-        $emailSignatures = unserialize(base64_decode($user->getPreference('account_signatures', 'Emails')));
+        $emailSignatures = sugar_unserialize(base64_decode($user->getPreference('account_signatures', 'Emails')));
 
         if (isset($emailSignatures[$email->mailbox_id])) {
             $emailSignatureId = $emailSignatures[$email->mailbox_id];
