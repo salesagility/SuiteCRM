@@ -592,14 +592,10 @@ function executemd5($filesmd5, $md5calculated)
     global $skip_md5_diff;
     global $sod_guid;
 
-    $md5_string_calculated = [];
     $md5_string = [];
 
     if (file_exists('files.md5')) {
         include 'files.md5';
-        if (isset($md5_string_calculated)) {
-            $md5_string = $md5_string_calculated;
-        }
     }
     //create dir for md5s
     $md5_directory = create_cache_directory('diagnostic/' . $sod_guid . '/diagnostic' . $curdatetime . '/md5/');
