@@ -360,6 +360,10 @@ td {
   border: none;
 }
 
+#case_updates textarea {
+  resize:both;
+}
+
 textarea {
   resize: vertical; /* user can resize vertically, but width is fixed */
 }
