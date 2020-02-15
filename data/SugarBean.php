@@ -3629,22 +3629,24 @@ class SugarBean
         //walk through the fields and for every relationship field add their relationship_info field
         //relationshipfield-aliases are resolved in SugarBean::create_new_list_query
         // through their relationship_info field
-        $addrelate = array();
-        foreach ($fields as $field => $value) {
-            if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) &&
-                $this->field_defs[$field]['source'] == 'non-db'
-            ) {
-                $addrelatefield = $this->get_relationship_field($field);
-                if ($addrelatefield) {
-                    $addrelate[$addrelatefield] = true;
+        if (isset($parentbean)) {
+            $addrelate = array();
+            foreach ($fields as $field => $value) {
+                if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) &&
+                    $this->field_defs[$field]['source'] == 'non-db'
+                ) {
+                    $addrelatefield = $this->get_relationship_field($field, $parentbean->module_name);
+                    if ($addrelatefield) {
+                        $addrelate[$addrelatefield] = true;
+                    }
+                }
+                if (!empty($this->field_defs[$field]['id_name'])) {
+                    $addrelate[$this->field_defs[$field]['id_name']] = true;
                 }
             }
-            if (!empty($this->field_defs[$field]['id_name'])) {
-                $addrelate[$this->field_defs[$field]['id_name']] = true;
-            }
-        }
 
-        $fields = array_merge($addrelate, $fields);
+            $fields = array_merge($addrelate, $fields);
+        }
 
         foreach ($fields as $field => $value) {
             //alias is used to alias field names
@@ -4039,16 +4041,26 @@ class SugarBean
     }
 
     /**
-     * @param $field
+     * @param string $field
+     * @param string $parentModule
+     *
+     * Method takes relationship field $field as parameter and looks in the field_defs
+     * for the matching relationship_info field, which defines the link for this field
+     *
+     * The method checks that the relationship_info related module matches the $parentModule
+     * parameter. This is a requirement for the Accept Status field (Meetings, Calls, Events),
+     * as for this field there exist multiple relationship_info field: for meetings, calls and
+     * events
      *
      * @return bool|string
      */
-    public function get_relationship_field($field)
+    public function get_relationship_field($field, $parentModule)
     {
         foreach ($this->field_defs as $field_def => $value) {
             if (isset($value['relationship_fields']) &&
                 in_array($field, $value['relationship_fields']) &&
-                (!isset($value['link_type']) || $value['link_type'] != 'relationship_info')
+                $this->load_relationship($value['link']) &&
+                $this->{$value['link']}->getRelatedModuleName() == $parentModule
             ) {
                 return $field_def;
             }
