@@ -69,6 +69,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test dup3
         include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
+        $GLOBALS['reload_vardefs'] = true;
         $bean = new AM_ProjectTemplates_sugar();
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertEquals('AM_ProjectTemplates', $bean->module_name);
@@ -141,7 +142,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
 
         // test
-
+        $GLOBALS['reload_vardefs'] = false;
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         self::assertInstanceOf(DBManager::class, $bean->db);
@@ -162,6 +163,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(isset($bean->acl_fields));
 
         // test
+        $GLOBALS['reload_vardefs'] = false;
         $dictionary['']['optimistic_locking'] = true;
         $bean = BeanFactory::getBean('Users');
         self::assertInstanceOf(DBManager::class, $bean->db);
@@ -183,6 +185,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $dictionary['']['optimistic_locking'] = null;
 
         // test
+        $GLOBALS['reload_vardefs'] = false;
         $bean = BeanFactory::getBean('Users');
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertNotEquals('', $bean->module_name);
