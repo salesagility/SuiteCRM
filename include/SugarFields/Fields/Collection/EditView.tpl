@@ -1,11 +1,9 @@
 {*
-/**
- *
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2019 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,35 +34,47 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ ********************************************************************************/
 
 *}
-<link rel="stylesheet" type="text/css" href="include/javascript/yui-old/assets/container.css" />
-<script type="text/javascript" src='{sugar_getjspath file="include/SugarFields/Fields/Collection/SugarFieldCollection.js"}'></script>
-<div id='{{sugarvar key='name'}}_div' name='{{sugarvar key='name'}}_div'><img src="{sugar_getimagepath file='sqsWait.gif'}" alt="loading..." id="{{sugarvar key="name"}}_loading_img" style="display:none"></div>
+
+<div id='{{sugarvar key='name'}}_image_div' name='{{sugarvar key='name'}}_image_div'><img src="{sugar_getimagepath file='sqsWait.gif'}" alt="loading..." id="{{sugarvar key="name"}}_loading_img" style="display:none"></div>
+<div id='{{sugarvar key='name'}}_div' name='{{sugarvar key='name'}}_div'></div>
 <script type="text/javascript">
-//{literal}
+    document.getElementById('{{sugarvar key="name"}}_image_div').parentElement.previousElementSibling.style.width="10%";
+    document.getElementById('{{sugarvar key="name"}}_image_div').parentElement.style.width="90%";
+{literal}
     var callback = {
         success:function(o){
-            //{/literal}
-            //collection['{{sugarvar key="name"}}'] = new SUGAR.collection('{{sugarvar key="name"}}', "{{sugarvar key='module'}}", '{{$displayParams.popupData}}');
+           {/literal}
+
             document.getElementById('{{sugarvar key="name"}}_loading_img').style.display="none";
             document.getElementById('{{sugarvar key="name"}}_div').innerHTML = o.responseText;
             SUGAR.util.evalScript(o.responseText);
-            {* //TODO: Expression Engine removed from Tokyo so SUGAR.forms no longer exists.
-			{{if !empty($required)}}
-            SUGAR.forms.FormValidator.add('EditView', '{{sugarvar key="name"}}_field', 'isRequiredCollection(\${{sugarvar key="name"}}_field)', SUGAR.language.get('app_strings', 'ERROR_MISSING_COLLECTION_SELECTION'));
-            {{/if}} *}
-            //{literal}
+            {literal}
         },
         failure:function(o){
             alert(SUGAR.language.get('app_strings','LBL_AJAX_FAILURE'));
         }
     }
-    //{/literal}
+    {/literal}
+    var action_type = 'editview';
+    if (document.getElementById('{{sugarvar key="name"}}_collection_action_type'))
+        if (document.getElementById('{{sugarvar key="name"}}_collection_action_type').value != '')
+            var action_type = document.getElementById('{{sugarvar key="name"}}_collection_action_type').value;
     document.getElementById('{{sugarvar key="name"}}_loading_img').style.display="inline";
-    postData = '&displayParams=' + '{{$displayParamsJSON}}' + '&vardef=' + '{{$vardefJSON}}' + '&module_dir=' + document.forms.EditView.module.value + '&bean_id=' + document.forms.EditView.record.value + '&action_type=editview';
-    //{literal}
+{literal}
+    if (typeof(document.forms.EditView) == 'undefined')
+        for(var s=0; s < document.forms.length; s++){
+            if (document.forms[s].getAttribute("name").indexOf('QuickCreate') >= 0) {
+                var formnamefound = document.forms[s].getAttribute("name");
+            }
+        }
+     else
+         var formnamefound = 'EditView';
+{/literal}
+    postData = '&displayParams=' + '{{$displayParamsJSON}}' + '&vardef=' + '{{$vardefJSON}}' + '&module_dir=' + document.forms[formnamefound].module.value + '&bean_id=' + document.forms[formnamefound].record.value + '&action_type=' + action_type;
+    {literal}
     YAHOO.util.Connect.asyncRequest('POST', 'index.php?action=viewsugarfieldcollection', callback, postData);
-//{/literal}
+{/literal}
 </script>

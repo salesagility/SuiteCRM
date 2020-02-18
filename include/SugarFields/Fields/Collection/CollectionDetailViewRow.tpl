@@ -2,6 +2,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2019 Salesagility Ltd.
  *
@@ -37,25 +38,27 @@
  ********************************************************************************/
 
 *}
-<div id='{{sugarvar key='name'}}_div' name='{{sugarvar key='name'}}_div'><img src="{sugar_getimagepath file='sqsWait.gif'}" alt="Loading..." id="{{sugarvar key="name"}}_loading_img" style="display:none"></div>
-<script type="text/javascript">
-{literal}
-    var callback = {
-        success:function(o){
-           {/literal}
-            document.getElementById('{{sugarvar key="name"}}_loading_img').style.display="none";
-            document.getElementById('{{sugarvar key="name"}}_div').innerHTML = o.responseText;
-            SUGAR.util.evalScript(o.responseText);
-           {literal}
-        },
-        failure:function(o){
-            alert(SUGAR.language.get('app_strings','LBL_AJAX_FAILURE'));
-        }
-    }
-   {/literal}
-    document.getElementById('{{sugarvar key="name"}}_loading_img').style.display="inline";
-    postData = '&displayParams=' + '{{$displayParamsJSON}}' + '&vardef=' + '{{$vardefJSON}}' + '&module_dir=' + document.forms.DetailView.module.value + '&bean_id=' + document.forms.DetailView.record.value + '&action_type=detailview';
-   {literal}
-    YAHOO.util.Connect.asyncRequest('POST', 'index.php?action=viewsugarfieldcollection', callback, postData);
-{/literal}
-</script>
+<div id="{$displayParams.formName}_{$vardef.name}" name="{$displayParams.formName}_{$vardef.name}">
+<table id="table_collection_{$vardef.name}" style="border-collapse:separate;border-top:solid 1px #999999;border-left:solid 1px #999999;border-right:solid 1px #999999; margin-top: 5px !important;border-radius: 6px;">
+    <tr style="font-weight: bold;" id="lineLabel_{$displayParams.formName}_{$vardef.name}" name="lineLabel_{$displayParams.formName}_{$vardef.name}">
+        {foreach item=extra_field from=$displayParams.collection_field_list key=key_extra}
+            {if $extra_field.displayParams.hidden != 'hidden'}
+                <th style="padding: 5px 5px 10px 5px !important; text-align: center;{if $extra_field.displayParams.size != ''}width:{$extra_field.displayParams.size}{/if}">
+                    {$extra_field.label}
+                </th>
+            {/if}
+        {/foreach}
+   </tr>
+    {foreach item=extra_value from=$count_values key=key_extra_value}
+        <tr id="lineFields_{$displayParams.formName}_{$vardef.name}_{$extra_value}">
+            {foreach item=extra_field from=$displayParams.to_display.$extra_value key=key_extra}
+                {if $extra_field.hidden != 'hidden'}
+                    <td nowrap style="padding: 5px 5px 10px 5px !important; vertical-align: middle;text-align: right;">
+                        {$extra_field.field}
+                    </td>
+                {/if}
+            {/foreach}
+       </tr>
+   {/foreach}
+</table>
+</div>
