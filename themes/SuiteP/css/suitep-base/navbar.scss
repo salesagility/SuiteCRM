@@ -225,6 +225,22 @@
     }
   }
 
+  .navbar-inverse .nav > .topnav > span.notCurrentTab > a:hover {
+    color: $navigation-hover-color;
+  }
+
+  .navbar-inverse .nav > .topnav > span.currentModule.notCurrentTab > a {
+    background-color: $color-86;
+    color: $color-81;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .navbar-inverse .nav > .topnav > span.currentModule.notCurrentTab > a:hover {
+    background-color: $color-86;
+    color: $color-81;
+  }
+
   .navbar-right {
     .dropdown-menu {
       border-top-left-radius: 3px;

@@ -724,6 +724,22 @@ slot {
   color: $main-font-color;
 }
 
+//.col-sm-6 .edit-view-field input[type="text"] {
+//  border-color: $main-font-color;
+//}
+//
+//.edit textarea {
+//  border-color: $main-font-color;
+//}
+//
+//.col-sm-12 .col-sm-8.edit-view-field textarea {
+//  border-color: $main-font-color;
+//}
+//
+//.col-sm-12 .col-sm-8.edit-view-field input.sqsEnabled {
+//  border-color: $main-font-color;
+//}
+
 select {
   font-weight: normal;
   color: $main-font-color;
@@ -3545,6 +3561,10 @@ select#sales_stage_advanced {
   .col-sm-6 .edit-view-field[type="date"] input[type="text"] {
     width: 92%;
   }
+
+  .col-sm-6 .edit-view-field[type="date"] input[type="text"].date_input {
+    width: auto;
+  }
 }
 
 @media (min-width: 768px) {
@@ -5429,7 +5449,6 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
   top: 100px;
   padding: 20px;
   width: 100%;
-  z-index: 103100;
 }
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_start_trigger_c"] {
