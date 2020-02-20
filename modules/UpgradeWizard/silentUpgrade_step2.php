@@ -308,17 +308,7 @@ if (isset($argv[4])) {
     exit(1);
 }
 
-$unzip_dir = sugar_cached("upgrades/temp");
-
-include "$unzip_dir/manifest.php";
-if (is_file("$unzip_dir/manifest.php")) {
-    include "{$argv[1]}/manifest.php";
-}
-
-if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
-    $zip_from_dir = $manifest['copy_files']['from_dir'];
-}
-
+$unzip_dir = sugar_cached('upgrades/temp');
 
 $install_file = $sugar_config['upload_dir'] . '/upgrades/patch/' . basename($argv[1]);
 sugar_mkdir($sugar_config['upload_dir'] . '/upgrades/patch', 0775, true);
@@ -485,6 +475,7 @@ if (version_compare($sugar_version, '6.5.0', '<') && function_exists('repairUpgr
     repairUpgradeHistoryTable();
 }
 
+
 //TAKE OUT TRASH
 if (empty($errors)) {
     set_upgrade_progress('end', 'in_progress', 'unlinkingfiles', 'in_progress');
@@ -493,6 +484,15 @@ if (empty($errors)) {
     removeSilentUpgradeVarsCache();
     logThis('Taking out the trash, done.', $path);
 }
+
+// Clear language cache
+$repair = new RepairAndClear();
+$repair->clearJsLangFiles();
+$repair->clearLanguageCache();
+
+// Rebuild .htaccess
+require_once __DIR__ . '/../../install/install_utils.php';
+handleHtaccess();
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	RECORD ERRORS

@@ -195,7 +195,7 @@ if (!$imap->isAvailable()) {
     }
     
     //this function will copy as much information as possible from the first step in wizard
-    //onto the the second step in wizard
+    //onto the second step in wizard
     function copy_down() {
         document.getElementById("name").value = document.getElementById("notify_fromname").value;
         document.getElementById("email_user").value = document.getElementById("notify_fromaddress").value;

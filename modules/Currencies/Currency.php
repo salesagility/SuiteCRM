@@ -260,7 +260,7 @@ class Currency extends SugarBean
  *
  * This method is a wrapper designed exclusively for formatting currency values
  * with the assumption that the method caller wants a currency formatted value
- * matching his/her user preferences(if set) or the system configuration defaults
+ * matching their user preferences(if set) or the system configuration defaults
  *(if user preferences are not defined).
  *
  * @param $amount The amount to be formatted
@@ -337,7 +337,7 @@ function format_number($amount, $round = null, $decimals = null, $params = array
     static $override_currency_id = null;
     static $currency;
 
-    $seps = get_number_seperators();
+    $seps = get_number_separators();
     $num_grp_sep = $seps[0];
     $dec_sep = $seps[1];
 
@@ -460,7 +460,7 @@ function unformat_number($string)
         }
     }
 
-    $seps = get_number_seperators();
+    $seps = get_number_separators();
     // remove num_grp_sep and replace decimal separator with decimal
     $string = trim(str_replace(array($seps[0], $seps[1], $currency->symbol), array('', '.', ''), $string));
     if (preg_match('/^[+-]?\d(\.\d+)?[Ee]([+-]?\d+)?$/', $string)) {
@@ -471,28 +471,34 @@ function unformat_number($string)
     $out_number = trim($string[0]);
     if ($out_number == '') {
         return '';
-    } else {
-        return (float)$out_number;
     }
+    return (float)$out_number;
 }
 
 // deprecated use format_number() above
 function format_money($amount, $for_display = true)
 {
     // This function formats an amount for display.
-    // Later on, this should be converted to use proper thousand and decimal seperators
+    // Later on, this should be converted to use proper thousand and decimal separators
     // Currently, it stays closer to the existing format, and just rounds to two decimal points
     if (isset($amount)) {
         if ($for_display) {
             return sprintf("%0.02f", $amount);
-        } else {
-            // If it's an editable field, don't use a thousand seperator.
-            // Or perhaps we will want to, but it doesn't matter right now.
-            return sprintf("%0.02f", $amount);
         }
-    } else {
-        return;
+        // If it's an editable field, don't use a thousand separator.
+        // Or perhaps we will want to, but it doesn't matter right now.
+        return sprintf("%0.02f", $amount);
     }
+    return;
+}
+
+/**
+ * @deprecated
+ * @param bool $reset_sep
+ */
+function get_number_seperators($reset_sep = false)
+{
+    get_number_separators($reset_sep);
 }
 
 /**
@@ -500,7 +506,7 @@ function format_money($amount, $for_display = true)
  *(default ".").  Special case: when num_grp_sep is ".", it will return NULL as the num_grp_sep.
  * @return array Two element array, first item is num_grp_sep, 2nd item is dec_sep
  */
-function get_number_seperators($reset_sep = false)
+function get_number_separators($reset_sep = false)
 {
     global $current_user, $sugar_config;
 
@@ -525,7 +531,8 @@ function get_number_seperators($reset_sep = false)
         $num_grp_sep = $sugar_config['default_number_grouping_seperator'];
         if (!empty($current_user->id)) {
             $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
-            $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
+            $num_grp_sep = (empty($user_num_grp_sep)
+                ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
         }
     }
 
@@ -609,11 +616,10 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
             $html .= $currency->getJavascript();
         }
         return $html;
-    } else {
-        $currency = new Currency();
-        $currency->retrieve($value);
-        return $currency->name;
     }
+    $currency = new Currency();
+    $currency->retrieve($value);
+    return $currency->name;
 }
 
 function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $view='DetailView')
@@ -650,16 +656,15 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
-    } else {
-        $currency = new Currency();
-        if (isset($focus->currency_id)) {
-            $currency_id = $focus->currency_id;
-        } else {
-            $currency_id = -99;
-        }
-        $currency->retrieve($currency_id);
-        return $currency->name;
     }
+    $currency = new Currency();
+    if (isset($focus->currency_id)) {
+        $currency_id = $focus->currency_id;
+    } else {
+        $currency_id = -99;
+    }
+    $currency->retrieve($currency_id);
+    return $currency->name;
 }
 
 function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $view='DetailView')
@@ -696,14 +701,13 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
-    } else {
-        $currency = new Currency();
-        if (isset($focus->currency_id)) {
-            $currency_id = $focus->currency_id;
-        } else {
-            $currency_id = -99;
-        }
-        $currency->retrieve($currency_id);
-        return $currency->name;
     }
+    $currency = new Currency();
+    if (isset($focus->currency_id)) {
+        $currency_id = $focus->currency_id;
+    } else {
+        $currency_id = -99;
+    }
+    $currency->retrieve($currency_id);
+    return $currency->name;
 }

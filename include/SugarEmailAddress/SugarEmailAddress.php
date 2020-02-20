@@ -820,7 +820,7 @@ class SugarEmailAddress extends SugarBean
         }
 
         $emailCaps = "'" . $this->db->quote(strtoupper($email)) . "'";
-        $q = "SELECT * FROM email_addr_bean_rel eabl JOIN email_addresses ea ON (ea.id = eabl.email_address_id)
+        $q = "SELECT * FROM email_addr_bean_rel eabl JOIN email_addresses ea ON (ea.id = eabl.email_address_id and ea.deleted = 0)
                 WHERE ea.email_address_caps = $emailCaps and eabl.deleted=0 ";
         $r = $this->db->query($q);
 
@@ -833,10 +833,11 @@ class SugarEmailAddress extends SugarBean
                         require_once($beanFiles[$className]);
                     }
 
-                    $bean = new $className();
-                    $bean->retrieve($a['bean_id']);
+                    $bean = BeanFactory::getBean($a['bean_module'], $a['bean_id']);
+                    if ($bean !== false) {
+                        $return[] = $bean;
+                    }
 
-                    $return[] = $bean;
                 } else {
                     $GLOBALS['log']->fatal("SUGAREMAILADDRESS: could not find valid class file for [ {$className} ]");
                 }
@@ -1617,7 +1618,7 @@ class SugarEmailAddress extends SugarBean
         if ($this->view == "QuickCreate") {
             // Fixed #1120 - fixed email validation for: Accounts -> Contacts subpanel -> Select -> Create Contact -> Save.
             // If email is required it should highlight this field and show an error message.
-            // It didnt because the the form was named form_DCSubpanelQuickCreate_Contacts instead of expected form_SubpanelQuickCreate_Contacts
+            // It didnt because the form was named form_DCSubpanelQuickCreate_Contacts instead of expected form_SubpanelQuickCreate_Contacts
             if ($this->object_name = 'EmailAddress' && $saveModule == 'Contacts') {
                 $form = 'form_' . $this->view . '_' . $module;
             } else {

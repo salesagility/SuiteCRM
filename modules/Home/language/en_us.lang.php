@@ -64,7 +64,6 @@ $mod_strings = array(
     'LNK_NEW_MEETING' => 'Schedule Meeting',
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_NEW_BUG' => 'Report Bug',
-    'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
     'LNK_NEW_SEND_EMAIL' => 'Compose Email',
     'LBL_NO_ACCESS' => 'You do not have access to this area. Contact your site administrator to obtain access',
     'LBL_NO_RESULTS_IN_MODULE' => '-- No Results --',
@@ -244,5 +243,7 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_EXCEPTION_NO_NODES_AVAILABLE' => 'Failed to connect to the Elasticsearch server.',
     'LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH' => 'An error internal to the Search has occurred.',
     'LBL_ELASTIC_SEARCH_EXCEPTION_DEFAULT' => 'An unknown error has occurred while performing the search.',
-    'LBL_ELASTIC_SEARCH_EXCEPTION_END_MESSAGE' => 'Contact an administrator if the problem persists. More information available in the logs.'
+    'LBL_ELASTIC_SEARCH_EXCEPTION_END_MESSAGE' => 'Contact an administrator if the problem persists. More information available in the logs.',
+
+    'LBL_ELASTIC_SEARCH_DEFAULT' => 'No results matching your search criteria. Try broadening your search.'
 );

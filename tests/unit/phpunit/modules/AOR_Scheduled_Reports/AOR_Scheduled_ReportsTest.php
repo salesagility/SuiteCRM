@@ -1,6 +1,8 @@
 <?php
 
-class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,12 +15,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
     public function testSaveAndGet_email_recipients()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aor_scheduled_reports');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        $state->pushGlobals();
-
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
@@ -43,18 +39,11 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
         $aorScheduledReports->mark_deleted($aorScheduledReports->id);
         unset($aorScheduledReports);
-
-        // clean up
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aor_scheduled_reports');
     }
     
     public function testAOR_Scheduled_Reports()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertInstanceOf('AOR_Scheduled_Reports', $aorScheduledReports);
         $this->assertInstanceOf('Basic', $aorScheduledReports);
@@ -66,6 +55,21 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $this->assertAttributeEquals(true, 'new_schema', $aorScheduledReports);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aorScheduledReports);
         $this->assertAttributeEquals(false, 'importable', $aorScheduledReports);
+    }
+
+    public function test_ReportRelation() {
+        $_POST['aor_fields_field'] = [];
+        $report = new AOR_Report();
+        $report->name = "Foobar";
+        $report->save();
+
+        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports->save();
+        $aorScheduledReports->load_relationships();
+        $aorScheduledReports->aor_report->add($report);
+        $aorScheduledReports->retrieve($aorScheduledReports->id);
+        $this->assertEquals($report->name, $aorScheduledReports->aor_report_name);
+        $this->assertEquals($report->id, $aorScheduledReports->aor_report_id);
     }
 
     public function testbean_implements()

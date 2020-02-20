@@ -45,7 +45,7 @@
      public $_pm;
 
      /**
-      * Constructor: this class is called from the the ajax call and handles invoking the correct
+      * Constructor: this class is called from the ajax call and handles invoking the correct
       * functionality on the server.
       */
      public function __construct()

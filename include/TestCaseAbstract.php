@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,24 +38,60 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM;
-
-use Codeception\Test\Unit;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use PHPUnit_Framework_TestCase;
+use SuiteCRM\Exception\Exception;
+
 /**
- * StateCheckerUnit
- *
- * Implementation of state checker Codeception tests.
- *
- * @author SalesAgility
+ * Class TestCaseAbstract
+ * @package SuiteCRM
  */
-abstract class StateCheckerUnitAbstract extends Unit
+abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
 {
-    use StateCheckerTrait;
-    use StateCheckerCodeceptionTrait;
+    use DatabaseTransactions;
+    use RefreshDatabase;
+
+    protected static $verbose = true;
+    protected static $cleanupStrategy = 'transaction';
+
+    /**
+     * @throws Exception
+     */
+    protected function setUp()
+    {
+        if (self::$verbose) {
+            $currentTestName = get_class($this) . '::' . $this->getName(false);
+            fwrite(STDOUT, "\t" . $currentTestName . ' ..');
+            for ($i = 60, $iMax = strlen($currentTestName); $i > $iMax; $i--) {
+                fwrite(STDOUT, '.');
+            }
+        }
+
+        if (self::$cleanupStrategy === 'transaction') {
+            $this->startDBTransaction();
+        } elseif (self::$cleanupStrategy === 'refresh') {
+            $this->refreshDatabase();
+        } else {
+            throw new Exception('Failed to cleanup database, invalid cleanup strategy specified.');
+        }
+        parent::setUp();
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        if (self::$cleanupStrategy === 'transaction') {
+            $this->rollbackDBTransaction();
+        }
+
+        if (self::$verbose) {
+            fwrite(STDOUT, " [done]\n");
+        }
+    }
 }

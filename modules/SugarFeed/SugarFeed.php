@@ -146,7 +146,7 @@ class SugarFeed extends Basic
             }
             $d = dir($baseDir);
             while ($file = $d->read()) {
-                if ($file{0} == '.') {
+                if ($file[0] == '.') {
                     continue;
                 }
                 if (substr($file, -4) == '.php') {
@@ -220,7 +220,7 @@ class SugarFeed extends Basic
                 if (file_exists($baseDir.$module.'/SugarFeeds/')) {
                     $dFeed = dir($baseDir.$module.'/SugarFeeds/');
                     while ($file = $dFeed->read()) {
-                        if ($file{0} == '.') {
+                        if ($file[0] == '.') {
                             continue;
                         }
                         if (substr($file, -4) == '.php') {
@@ -326,7 +326,7 @@ class SugarFeed extends Basic
             }
             $d = dir($dirName);
             while ($file = $d->read()) {
-                if ($file{0} == '.') {
+                if ($file[0] == '.') {
                     continue;
                 }
                 if (substr($file, -4) == '.php') {

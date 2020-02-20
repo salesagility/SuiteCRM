@@ -57,7 +57,6 @@ ARGS:
   2) $_REQUEST['return_module']; :
   3) $_REQUEST['return_action']; :
 */
-//_ppd($_REQUEST);
 
 
 require_once('include/formbase.php');
@@ -84,8 +83,8 @@ require_once('include/formbase.php');
      }
  }
 
+$focus->retrieve($record);
 if ($bean_name === 'Team') {
-    $focus->retrieve($record);
     $focus->remove_user_from_team($linked_id);
 } else {
 

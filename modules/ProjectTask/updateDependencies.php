@@ -49,7 +49,14 @@ class updateDependencies
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("", "project_task.project_id = '".$bean->project_id."' AND project_task.predecessors = '".$bean->project_task_id."'");
 
-        if ($bean->date_finish != $bean->fetched_row['date_finish']) { //if the end date of a current task is changed
+        // Make sure the fetched row exists.
+        if ($bean->fetched_row === false) {
+            $fetchedDateFinish = null;
+        } else {
+            $fetchedDateFinish = $bean->fetched_row['date_finish'];
+        }
+
+        if ($bean->date_finish != $fetchedDateFinish) { //if the end date of a current task is changed
 
             $diff = $this->count_days($bean->date_finish, $bean->fetched_row['date_finish']); //Gets the difference in days
 
