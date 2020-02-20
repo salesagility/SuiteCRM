@@ -3078,14 +3078,17 @@ table.subpanel-table li.sugar_action_button:hover {
 
 table.subpanel-table .pagination .sugar_action_button:hover {
   background-color: $list-view-header-bg;
+  color: $subpanel-text-hover;
 }
 
 table.subpanel-table .pagination li.sugar_action_button:hover > form > a {
   background-color: $list-view-header-bg;
+  color: $subpanel-text-hover;
 }
 
 table.subpanel-table .pagination .sugar_action_button:hover > form > a {
   background-color: $list-view-header-bg;
+  color: $subpanel-text-hover;
 }
 
 table.subpanel-table ul.subpanel a:hover {

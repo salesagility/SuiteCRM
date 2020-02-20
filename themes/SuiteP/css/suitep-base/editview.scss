@@ -1221,8 +1221,8 @@ p.error {
 
 .error {
   border: none;
-  color: $alert-danger-text;
-  background: transparent;
+  color: $alert-danger-text-color;
+  background: $error-background-color;
 }
 
 .error:empty {
@@ -1236,13 +1236,13 @@ div.content p.error {
 
 .required a:link {
   font-weight: 600;
-  color: $link-color;
+  color: $alert-danger-text-color;
   text-decoration: underline;
 }
 
 .error a {
   font-weight: 600;
-  color: $link-color;
+  color: $alert-danger-text-color;
   text-decoration: underline;
 }
 
@@ -2075,6 +2075,10 @@ ul.clickMenu li a {
   color: $panel-button-color;
   display:inline;
   margin: 0 4px 0 0;
+}
+
+.subpanel-table .clickMenu  > .sugar_action_button:hover > .suitepicon {
+  color: $subpanel-text-hover;
 }
 
 ul.clickMenu li a.clearSearchIcon {

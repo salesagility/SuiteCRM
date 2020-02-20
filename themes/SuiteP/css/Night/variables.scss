@@ -674,6 +674,7 @@ $alert-warning-border:        $state-warning-border !default;
 
 $alert-danger-bg:             $state-danger-bg !default;
 $alert-danger-text:           $state-danger-text !default;
+$alert-danger-text-color:     $color-81;
 $alert-danger-border:         $state-danger-border !default;
 
 
@@ -936,6 +937,7 @@ $default-input-group-color: $color-40;
 $default-btn-bg: $color-83;
 $default-btn-bg-hover: $color-28;
 $text-hover-listview: $color-81;
+$subpanel-text-hover: $color-90;
 
 $primary-btn-bg: $primary;
 $primary-btn-bg-hover: $color-20;
@@ -1289,3 +1291,4 @@ $required-bg: transparent;
 $required-color: $color-49;
 
 $navigation-hover-color: $color-81;
+$error-background-color: $color-46;

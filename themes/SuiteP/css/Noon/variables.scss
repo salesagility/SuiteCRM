@@ -676,6 +676,7 @@ $alert-warning-border:        $state-warning-border !default;
 
 $alert-danger-bg:             $state-danger-bg !default;
 $alert-danger-text:           $state-danger-text !default;
+$alert-danger-text-color:     $color-81;
 $alert-danger-border:         $state-danger-border !default;
 
 
@@ -939,6 +940,7 @@ $default-input-group-color: $color-40;
 $default-btn-bg: $color-87;
 $default-btn-bg-hover: $color-87;
 $text-hover-listview: $color-82;
+$subpanel-text-hover: $color-90;
 
 $primary-btn-bg: $primary;
 $primary-btn-bg-hover: $color-81;
@@ -1089,6 +1091,7 @@ $list-view-header-bg: $color-81;
 $list-view-header-action-btn-hover-bg: $color-87;
 $list-view-header-color: $color-80;
 $list-view-pagination-color: $color-81;
+$list-view-buttons-hover: $color-80;
 
 $list-view-button-color: $color-81;
 
