@@ -307,13 +307,13 @@ YAHOO.util.Event.onDOMReady(function(){
 
 
 
-<link type="text/css" href="{sugar_getjspath file="vendor/fullcalendar/fullcalendar/dist/fullcalendar.css"}" rel="stylesheet" />
-<link type="text/css" href="{sugar_getjspath file="vendor/fullcalendar/fullcalendar/dist/fullcalendar.print.css"}" media='print' rel="stylesheet" />
+<link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.css"}" rel="stylesheet" />
+<link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.print.css"}" media='print' rel="stylesheet" />
 
 <script src='{sugar_getjspath file="include/javascript/qtip/jquery.qtip.min.js"}'></script>
-<script src='{sugar_getjspath file="vendor/moment/moment/min/moment.min.js"}'></script>
-<script src='{sugar_getjspath file="vendor/fullcalendar/fullcalendar/dist/fullcalendar.min.js"}'></script>
-<script src='{sugar_getjspath file="vendor/fullcalendar/fullcalendar/dist/locale-all.js"}'></script>
+<script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lib/moment.min.js"}'></script>
+<script src='{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.min.js"}'></script>
+<script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lang-all.js"}'></script>
 
 <div id='calendarContainer'></div>
 {sugar_getscript file="modules/Calendar/Cal.js"}
