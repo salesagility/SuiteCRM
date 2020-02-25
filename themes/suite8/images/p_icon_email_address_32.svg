@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="28px"
+   height="28px"
+   viewBox="0 0 28 28"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.91 r"
+   sodipodi:docname="p_icon_email_address_32.svg"
+   inkscape:export-filename="/var/www/html/sdk/instances/suitecrm-development-mysql/themes/suite8/images/p_icon_email_address_32.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     id="namedview15"
+     showgrid="false"
+     inkscape:zoom="8.4285714"
+     inkscape:cx="14.118644"
+     inkscape:cy="14"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="admin_email_settings" />
+  <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4">admin_email_settings</title>
+  <desc
+     id="desc6">Created with Sketch.</desc>
+  <defs
+     id="defs8" />
+  <g
+     id="Page-1"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="admin_email_settings">
+      <circle
+         id="Oval-7"
+         stroke="#534D64"
+         cx="14"
+         cy="14"
+         r="13"
+         style="stroke:#c4c3cf;stroke-opacity:0.94117647;stroke-width:0.9;stroke-miterlimit:4;stroke-dasharray:none"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         d="M7.45493333,7.548 C6.75242667,7.548 6.16917333,8.04144 6.03178667,8.70234667 L14,16.67056 L21.9684267,8.70234667 C21.8299733,8.04229333 21.2475733,7.548 20.5450667,7.548 L7.45408,7.548 M6,9.69882667 L6,18.6464533 L10.47424,14.1722133 L6,9.69818667 M22,9.69818667 L17.5908267,14.1071467 L22,18.51632 L22,9.69648 M17.0766933,14.6197867 L14.2574933,17.4389867 C14.11584,17.58064 13.8850133,17.58064 13.74336,17.4389867 L10.9892267,14.6848533 L6.06336,19.6105067 C6.24512,20.2063467 6.79744,20.63728 7.45408,20.63728 L20.5450667,20.63728 C21.2392533,20.63728 21.81504,20.1555733 21.9624533,19.5072533 L17.07584,14.62064"
+         id="path13"
+         fill="#5C566C"
+         style="fill:#c4c3c7;fill-opacity:1" />
+    </g>
+  </g>
+</svg>

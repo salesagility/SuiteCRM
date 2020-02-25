@@ -1,0 +1,253 @@
+/**** Tabs ***/
+
+.content {
+
+  .nav-tabs {
+    border: hidden;
+  }
+
+  .dropdown-menu {
+    padding: 4px 10px 4px 10px;
+    overflow: visible;
+    min-width: 200px;
+  }
+
+  .dropdown-menu > li {
+    overflow: visible;
+    width: 100%;
+  }
+
+  #tab-actions .dropdown-menu > li > input[type=button],
+  .dropdown-menu > li > a {
+    font-size: $page-font-size;
+    font-weight: normal;
+    cursor: pointer;
+    margin: 0;
+    letter-spacing: normal;
+    line-height: $tab-height;
+  }
+
+  .nav-tabs > li > a,
+  .nav-tabs > li > a:focus,
+  .nav-tabs > li > a:hover {
+    font-size: $page-font-size;
+    font-weight: 400;
+    background-color: $default-tab-bg-hover;
+    color: $default-tab-color-hover;
+    cursor: pointer;
+    margin: 0 2px 0 2px;
+    border-color: $active-tab-border;
+    letter-spacing: 2px;
+    line-height: $tab-height;
+  }
+
+  .nav-tabs > li.active > a,
+  .nav-tabs > li.active > a:focus,
+  .nav-tabs > li.active > a:hover {
+    font-size: $page-font-size;
+    font-weight: 400;
+    background-color: $active-tab-bg-hover;
+    color: $active-tab-color-hover;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-color: $active-tab-border;
+    letter-spacing: 2px;
+    line-height: $tab-height;
+  }
+
+  .nav-tabs > li.active:nth-of-type(1) > a,
+  .nav-tabs > li:nth-of-type(1) > a {
+    margin-left: 0;
+  }
+
+  #overflow-menu > li > span.notCurrentTabLeft, #overflow-menu > li > span.notCurrentTabRight {
+    display: none;
+    visibility: collapse;
+  }
+
+  #overflow-menu > li {
+    line-height: normal;
+    height: auto;
+  }
+
+  #overflow-menu > li a {
+    font-size: 14px;
+    font-weight: normal;
+    padding: 12px 15px 12px 15px;
+    margin: 0;
+    clear: both;
+  }
+
+  #overflow-menu > li > ul {
+    display: none;
+    padding: 0;
+    margin: 0;
+    height: 0;
+    visibility: collapse;
+  }
+
+  #overflow-menu > li > ul > li {
+    display: none;
+    padding: 0;
+    margin: 0;
+    height: 0;
+    visibility: collapse;
+  }
+
+  .nav > li > a.first-tab-xs {
+    background-repeat: no-repeat;
+    padding-right: $tab-height;
+    border-bottom: none;
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li > a {
+    border-bottom: 1px solid #93A0AB;
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li:last-of-type > a {
+    border-bottom: none;
+  }
+
+  #first-tab-menu-xs.dropdown-menu {
+    border-top-right-radius: 4px;
+  }
+
+  #first-tab-menu-xs.dropdown-menu {
+    background-color: $active-tab-bg;
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li {
+    background-color: $active-tab-bg;
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li > a {
+    background-color: $active-tab-bg;
+  }
+
+  /*Override bootstrap (needs to be stacked)*/
+  .dropdown-menu > li > a,
+  .dropdown-menu > li > a:focus,
+  .dropdown-menu > li > a:hover {
+    background-color: $action-tab-bg;
+    color: $action-tab-color;
+    text-decoration: none;
+  }
+
+  #tab-actions > a {
+    background-color: $action-tab-bg;
+    color: $action-tab-color;
+    cursor: pointer;
+    border-color: $action-tab-bg;
+    border-bottom: $action-tab-seperator;
+  }
+
+  #tab-actions > a .suitepicon-action-caret {
+    line-height: 4px;
+    font-size: 10px;
+    margin-left: 8px;
+  }
+
+  #tab-actions > a:hover {
+    background-color: $action-tab-bg-hover;
+    border-color: $action-tab-bg-hover;
+    color: $action-tab-color-hover;
+    cursor: pointer;
+  }
+
+  #tab-actions:only-child > .dropdown-menu {
+    left: 0;
+    right: auto;
+  }
+
+  #tab-actions > .dropdown-menu {
+    left: auto;
+    right: 0;
+    background-color: $action-tab-bg;
+    margin-right: 2px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  #tab-actions > .dropdown-menu li {
+    background-color: $action-tab-bg;
+    border-bottom: 1px solid $action-tab-seperator;
+  }
+
+  #tab-actions > .dropdown-menu li:last-of-type {
+    border-bottom: none;
+  }
+
+  #tab-actions > .dropdown-menu input {
+    text-align: left;
+    width: 100%;
+  }
+
+  #tab-actions > .dropdown-menu a {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > .dropdown-menu .button {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > .dropdown-menu .button:hover {
+    background-color: $action-tab-bg-hover;
+  }
+
+  #tab-actions > .dropdown-menu .button:focus {
+    background-color: $action-tab-bg-hover;
+  }
+
+  #tab-actions > .dropdown-menu .button:active {
+    background-color: $action-tab-bg-hover;
+  }
+
+  #tab-actions > .dropdown-menu .open > .dropdown-toggle.btn-primary {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > .dropdown-menu li:last-of-type a {
+    background-color: $action-tab-bg;
+    border: none;
+  }
+
+  #EditView_tabs .tab-content {
+    background-color: $tab-bg;
+    padding: 24px;
+    margin-bottom: $tab-margin-bottom;
+    border: 1px solid transparent;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .detail-view .tab-content {
+    background-color: $tab-bg;
+    padding: 24px;
+    margin-bottom: $tab-margin-bottom;
+    border: 1px solid transparent;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+}
+
+.dashboard .tab-content {
+  background-color: $tab-bg;
+  padding: 0px 24px 24px 24px ;
+  margin-bottom: 30px;
+  border: 1px solid transparent;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+
+.tab-content .tab-pane-NOBOOTSTRAPTOGGLER:not(.active) {
+  display: none;
+}

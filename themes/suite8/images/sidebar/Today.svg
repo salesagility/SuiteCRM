@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32px" height="112px" viewBox="0 0 32 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>sb_today</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sb_today">
+            <ellipse id="Oval-7" stroke="#F5F5F5" cx="16" cy="16" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#534D64" cx="16" cy="56" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#F08377" cx="16" cy="96" rx="15" ry="15"></ellipse>
+            <polygon id="Page-1" fill="#F08377" points="16.08 84.84736 18.45472 92.16736 26.16 92.16736 19.92 96.68 22.29472 104 16.08 99.48736 9.84 104 12.21472 96.68 6 92.16736 13.68 92.16736"></polygon>
+            <polygon id="Page-1" fill="#534D64" points="16.08 44.84736 18.45472 52.16736 26.16 52.16736 19.92 56.68 22.29472 64 16.08 59.48736 9.84 64 12.21472 56.68 6 52.16736 13.68 52.16736"></polygon>
+            <polygon id="Page-1" fill="#F5F5F5" points="16.08 4.84736 18.45472 12.16736 26.16 12.16736 19.92 16.68 22.29472 24 16.08 19.48736 9.84 24 12.21472 16.68 6 12.16736 13.68 12.16736"></polygon>
+        </g>
+    </g>
+</svg>

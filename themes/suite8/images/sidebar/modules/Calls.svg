@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="20px"
+   height="20px"
+   viewBox="0 0 29 29"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Calls.svg"
+   inkscape:export-filename="/var/www/html/sdk/instances/suitecrm-development-mysql/themes/suite8/images/actions/Calls.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <metadata
+     id="metadata25">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>sb_schedule_call</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview23"
+     showgrid="false"
+     inkscape:zoom="5.9599"
+     inkscape:cx="10.040462"
+     inkscape:cy="17.366838"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="sb_schedule_call" />
+  <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4">sb_schedule_call</title>
+  <desc
+     id="desc6">Created with Sketch.</desc>
+  <defs
+     id="defs8" />
+  <g
+     style="fill:none;stroke:none"
+     id="sb_schedule_call"
+     transform="translate(0,-82)">
+    <path
+       style="fill:#f5f5f5"
+       inkscape:connector-curvature="0"
+       id="path21"
+       d="m 24.3727,102.20642 c -0.08894,-0.0901 -0.173223,-0.17905 -0.258668,-0.26886 l -0.492259,-0.50247 c -1.981866,-1.949208 -2.759915,-2.746504 -2.842152,-2.802203 -0.08982,-0.08544 -0.178764,-0.170892 -0.268876,-0.25867 -0.974894,-0.917152 -1.652916,-0.185764 -2.535657,1.149284 -0.08078,0.123065 -0.157184,0.239422 -0.226591,0.34878 -0.0023,0.0032 -0.0046,0.0067 -0.0069,0.01135 -0.02625,0.03966 -0.04782,0.07407 -0.0729,0.112561 -0.995598,1.54589 -0.912486,1.58001 -1.259808,1.49807 -0.01487,-0.002 -0.02741,-0.007 -0.042,-0.0116 -1.130328,-0.35315 -1.000265,-0.4214 -3.194431,-2.65406 -2.231496,-2.194166 -2.300901,-2.064394 -2.654056,-3.194431 -0.0046,-0.01342 -0.0082,-0.02712 -0.01135,-0.042 -0.08224,-0.347614 -0.04782,-0.265376 1.497773,-1.259809 0.03879,-0.02508 0.07524,-0.04782 0.112863,-0.0729 0.0035,-0.0023 0.0069,-0.0046 0.01135,-0.0069 0.109354,-0.07058 0.224549,-0.145811 0.34878,-0.226591 1.335048,-0.883032 2.066436,-1.561929 1.149284,-2.535949 -0.08894,-0.08982 -0.173223,-0.178764 -0.258669,-0.268583 -0.0557,-0.08224 -0.854161,-0.860286 -2.8022,-2.842151 L 10.062498,87.885787 C 9.9726785,87.800344 9.8837342,87.714897 9.7936227,87.627118 8.7093703,86.606439 7.7056061,87.338995 6.6633475,88.961291 5.6324624,90.56638 5.2930139,91.54244 5.290681,91.550314 c -0.4660127,1.474151 0.4135206,3.276377 0.7838809,3.896074 1.2802224,2.156256 1.7791882,3.059703 4.6213401,5.857532 2.797825,2.84214 3.701271,3.34111 5.857527,4.62133 0.619698,0.37037 2.421924,1.2499 3.894909,0.78389 0.0079,-0.002 0.983058,-0.34178 2.589023,-1.37267 1.623463,-1.04226 2.356018,-2.04603 1.335339,-3.13028 l 0,0 z" />
+  </g>
+</svg>

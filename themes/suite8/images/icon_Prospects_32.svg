@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="30px"
+   height="30px"
+   viewBox="0 0 30 30"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon_Prospects_32.svg"
+   inkscape:export-filename="/var/www/html/sdk/instances/suitecrm-development-mysql/themes/suite8/images/icon_Prospects_32.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>acc_target_list</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="7.8666667"
+     inkscape:cx="15"
+     inkscape:cy="15"
+     inkscape:window-x="98"
+     inkscape:window-y="80"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4">acc_target_list</title>
+  <desc
+     id="desc6">Created with Sketch.</desc>
+  <defs
+     id="defs8" />
+  <g
+     id="Page-1"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="acc_target_list"
+       fill="#778591">
+      <g
+         id="g12"
+         transform="translate(2.000000, 2.000000)">
+        <path
+           d="M12.9822899,0.282608696 C5.95965217,0.282608696 0.282608696,5.99507246 0.282608696,13.0177101 C0.282608696,20.0418551 5.95965217,25.7173913 12.9822899,25.7173913 C20.0418551,25.7173913 25.7173913,20.0418551 25.7173913,13.0177101 C25.7173913,5.99507246 20.0418551,0.282608696 12.9822899,0.282608696 L12.9822899,0.282608696 Z M12.9822899,21.495971 C8.32527536,21.495971 4.50402899,17.6762319 4.50402899,13.0192174 C4.50402899,8.32527536 8.32527536,4.54095652 12.9822899,4.54095652 C17.6762319,4.54095652 21.4605507,8.32527536 21.4605507,13.0192174 C21.4605507,17.6762319 17.6762319,21.495971 12.9822899,21.495971 L12.9822899,21.495971 Z"
+           id="Fill-1" />
+        <path
+           d="M12.9822899,9.08907246 C10.8348406,9.08907246 9.05214493,10.8363478 9.05214493,13.0192174 C9.05214493,15.1651594 10.8348406,16.9478551 12.9822899,16.9478551 C15.1651594,16.9478551 16.9109275,15.1651594 16.9109275,13.0192174 C16.9109275,10.8348406 15.1651594,9.08907246 12.9822899,9.08907246 L12.9822899,9.08907246 Z"
+           id="Fill-2" />
+      </g>
+    </g>
+  </g>
+</svg>

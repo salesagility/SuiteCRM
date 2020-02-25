@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="30px"
+   height="30px"
+   viewBox="0 0 30 30"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon_AOBH_BusinessHours_32.svg">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>business_hours</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="31.466667"
+     inkscape:cx="7.4395635"
+     inkscape:cy="13.291206"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4">business_hours</title>
+  <desc
+     id="desc6">Created with Sketch.</desc>
+  <defs
+     id="defs8" />
+  <g
+     id="Page-1"
+     style="fill:#778591;fill-opacity:1"
+     stroke-width="1"
+     stroke="none"
+     fill-rule="evenodd"
+     fill="none">
+    <g
+       id="business_hours"
+       style="fill:#778591;fill-opacity:1"
+       fill="#FFFFFF">
+      <g
+         id="g12"
+         transform="translate(2.000000, 2.000000)"
+         style="fill:#778591;fill-opacity:1">
+        <path
+           d="M25.6304848,12.7845152 L25.6304848,12.7786061 C25.616697,5.8259697 19.9553939,0.172545455 13,0.172545455 C6.04460606,0.172545455 0.38330303,5.8259697 0.369515152,12.7786061 L0.369515152,12.7845152 L0.369515152,12.7876667 L0.369515152,12.8030303 C0.369515152,19.7678788 6.03515152,25.4335152 13,25.4335152 C19.9648485,25.4335152 25.6304848,19.7678788 25.6304848,12.8030303 L25.6304848,12.7876667 L25.6304848,12.7845152 L25.6304848,12.7845152 Z M13.9604242,23.4685455 L13.9604242,21.7773636 C13.9604242,21.2467273 13.5310303,20.8173333 13,20.8173333 C12.4689697,20.8173333 12.0395758,21.2467273 12.0395758,21.7773636 L12.0395758,23.4685455 C6.89393939,23.0084242 2.78515152,18.895303 2.33290909,13.7449394 L4.00557576,13.7449394 C4.53660606,13.7449394 4.96560606,13.3155455 4.96560606,12.7845152 C4.96560606,12.2534848 4.53660606,11.8244848 4.00557576,11.8244848 L2.33448485,11.8244848 C2.80209091,6.69224242 6.903,2.59606061 12.0383939,2.13751515 L12.0383939,3.79166667 C12.0383939,4.32269697 12.4673939,4.75169697 12.9984242,4.75169697 C13.5294545,4.75169697 13.9588485,4.32269697 13.9588485,3.79166667 L13.9588485,2.13751515 C19.0938485,2.59606061 23.1947576,6.69224242 23.6623636,11.8244848 L21.9912727,11.8244848 C21.4606364,11.8244848 21.0312424,12.2534848 21.0312424,12.7845152 C21.0312424,13.3155455 21.4606364,13.7449394 21.9912727,13.7449394 L23.6639394,13.7449394 C23.2148485,18.8937273 19.1076364,23.0084242 13.9604242,23.4685455 L13.9604242,23.4685455 Z"
+           id="Fill-1"
+           style="fill:#778591;fill-opacity:1" />
+        <path
+           d="M18.7042424,6.2289697 L12.9476061,12.2660909 L9.07439394,8.125 C8.71118182,7.73736364 8.10333333,7.71727273 7.71727273,8.08048485 C7.32924242,8.44369697 7.30954545,9.0499697 7.67275758,9.43760606 L12.2412727,14.3204848 C12.421303,14.5127273 12.6738182,14.6234242 12.9385455,14.625 L12.9428788,14.625 C13.2060303,14.625 13.4569697,14.5174545 13.6385758,14.3279697 L20.0972121,7.55418182 C20.4631818,7.17087879 20.4478182,6.5630303 20.0649091,6.19666667 C19.6784545,5.83069697 19.0706061,5.84606061 18.7042424,6.2289697 L18.7042424,6.2289697 Z"
+           id="Fill-2"
+           style="fill:#778591;fill-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>

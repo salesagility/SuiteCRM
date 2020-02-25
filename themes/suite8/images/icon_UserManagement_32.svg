@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>admin_user_management</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="admin_user_management">
+            <circle id="Oval-7" stroke="#534D64" cx="14" cy="14" r="13"></circle>
+            <g id="Page-1" transform="translate(7.000000, 5.000000)" fill="#5C566C">
+                <path d="M13.7108462,13.8977833 C13.2259615,11.1352833 10.9447692,9.11653333 8.27884615,9.11653333 L5.51303846,9.11653333 C2.78707692,9.11653333 0.484884615,11.1993167 0.0409230769,14.025 C-0.180923077,15.4481833 0.868807692,16.7231833 2.22223077,16.7231833 L11.5505385,16.7231833 C12.9241538,16.7231833 13.9736154,15.40625 13.7318462,13.9819333 L13.7108462,13.8977833 Z" id="Fill-1"></path>
+                <path d="M4.05838462,6.84193333 C5.63392308,8.5 8.17788462,8.54193333 9.79326923,6.92721667 L9.83311538,6.88528333 C11.2266538,5.48306667 11.3677308,3.20846667 10.136,1.63681667 C8.45976923,-0.488183333 5.35096154,-0.445966667 3.73557692,1.7221 C2.60507692,3.25181667 2.72596154,5.44085 4.03846154,6.8221 L4.05838462,6.84193333 Z" id="Fill-2"></path>
+            </g>
+        </g>
+    </g>
+</svg>
