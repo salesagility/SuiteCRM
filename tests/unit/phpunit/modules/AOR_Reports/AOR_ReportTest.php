@@ -176,7 +176,9 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             ]
         ];
         $totals = ['label' => [10, 20, 30]];
-        $actual = (BeanFactory::newBean('AOR_Reports'))->getTotalHTML($fields, $totals);
+        /** @noinspection OneTimeUseVariablesInspection */
+        $reportBean = (BeanFactory::newBean('AOR_Reports'));
+        $actual = $reportBean->getTotalHTML($fields, $totals);
 
         $this->assertContains('sugar_field', $actual);
         $this->assertContains('duration_hours', $actual);

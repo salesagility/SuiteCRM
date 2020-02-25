@@ -668,7 +668,9 @@ class EmailsController extends SugarController
         if (!empty($_REQUEST['inbound_email_record'])) {
             $emailID = $_REQUEST['inbound_email_record'];
         } elseif (!empty($_REQUEST['record'])) {
-            $emailID = (BeanFactory::newBean('Emails'))->retrieve($_REQUEST['record']);
+            /** @noinspection OneTimeUseVariablesInspection */
+            $emailBean = BeanFactory::newBean('Emails');
+            $emailID = $emailBean->retrieve($_REQUEST['record']);
         } else {
             throw new SugarControllerException('No Inbound Email record in request');
         }
