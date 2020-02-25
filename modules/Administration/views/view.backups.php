@@ -94,7 +94,10 @@ class ViewBackups extends SugarView
         
             $backup_dir = $_REQUEST['backup_dir'];
             $backup_zip = $_REQUEST['backup_zip'];
-        
+            if (strpos($backup_dir, 'phar://') === 0) {
+                $errors[] = $mod_strings['LBL_BACKUP_DIRECTORY_WRITABLE'];
+                return $errors;
+            }
             if ($run == "confirm") {
                 if ($backup_dir == "") {
                     $errors[] = $mod_strings['LBL_BACKUP_DIRECTORY_ERROR'];
@@ -103,7 +106,7 @@ class ViewBackups extends SugarView
                     $errors[] = $mod_strings['LBL_BACKUP_FILENAME_ERROR'];
                 }
         
-                if (sizeof($errors) > 0) {
+                if (count($errors) > 0) {
                     return($errors);
                 }
         
@@ -123,7 +126,7 @@ class ViewBackups extends SugarView
                 if (is_dir("$backup_dir/$backup_zip")) {
                     $errors[] = $mod_strings['LBL_BACKUP_FILE_AS_SUB'];
                 }
-                if (sizeof($errors) == 0) {
+                if (count($errors) == 0) {
                     $run = "confirmed";
                     $input_disabled = "readonly";
                 }
@@ -136,7 +139,7 @@ class ViewBackups extends SugarView
                 }
             }
         }
-        if (sizeof($errors) > 0) {
+        if (count($errors) > 0) {
             foreach ($errors as $error) {
                 print("<font color=\"red\">$error</font><br>");
             }

@@ -545,7 +545,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             }
 
             $end_record = $start_record + $this->records_per_page;
-            // back up the the last page.
+            // back up the last page.
             if ($end_record > $row_count + 1) {
                 $end_record = $row_count + 1;
             }

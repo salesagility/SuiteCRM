@@ -1,11 +1,12 @@
 <?php
 
-class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class FavoritesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testFavorites()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $favorites = new Favorites();
         $this->assertInstanceOf('Favorites', $favorites);
         $this->assertInstanceOf('Basic', $favorites);

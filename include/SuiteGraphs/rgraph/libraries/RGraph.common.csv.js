@@ -7,7 +7,7 @@
     * |                                                                                |
     * | RGraph is dual licensed under the Open Source GPL (General Public License)     |
     * | v2.0 license and a commercial license which means that you're not bound by     |
-    * | the terms of the GPL. The commercial license is just £99 (GBP) and you can     |
+    * | the terms of the GPL. The commercial license is just ï¿½99 (GBP) and you can     |
     * | read about it here:                                                            |
     * |                      http://www.rgraph.net/license                             |
     * o--------------------------------------------------------------------------------o
@@ -38,7 +38,7 @@
         this.data      = null;
         this.numrows   = null;
         this.numcols   = null;
-        this.seperator = arguments[2] || ',';
+        this.separator = arguments[2] || ',';
         this.endofline = arguments[3] || /\r?\n/;
 
 
@@ -95,7 +95,7 @@
                     continue;
     
                 } else if (char === split && !inDoubleQuotes && !inSingleQuotes) {
-// TODO look ahead in order to allow for multi-character seperators
+// TODO look ahead in order to allow for multi-character separators
                     arr.push(field);
                     field = '';
                     continue;
@@ -126,7 +126,7 @@
         */
         this.fetch = function ()
         {
-            var sep = this.seperator;
+            var sep = this.separator;
             var eol = this.endofline;
             var obj = this;
 

@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -154,7 +148,7 @@ if (!empty($focus->status)) {
 }
 $emails=array();
 $mailboxes=get_campaign_mailboxes($emails);
-//_ppd($emails[$focus->inbound_email_id]);
+
 if (!empty($focus->inbound_email_id) && isset($mailboxes[$focus->inbound_email_id])) {
     $xtpl->assign("FROM_MAILBOX_NAME", $mailboxes[$focus->inbound_email_id]."&nbsp;&lt;{$emails[$focus->inbound_email_id]}&gt;");
 }

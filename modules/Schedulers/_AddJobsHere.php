@@ -181,7 +181,7 @@ function pollMonitoredInboxes()
                                 if ($ieX->isMailBoxTypeCreateCase()) {
                                     $userId = "";
                                     if ($distributionMethod == 'roundRobin') {
-                                        if (sizeof($users) == 1) {
+                                        if (count($users) == 1) {
                                             $userId = $users[0];
                                             $lastRobin = $users[0];
                                         } else {
@@ -196,7 +196,7 @@ function pollMonitoredInboxes()
                                             }
                                         } // else
                                     } else {
-                                        if (sizeof($users) == 1) {
+                                        if (count($users) == 1) {
                                             foreach ($users as $k => $value) {
                                                 $userId = $value;
                                             } // foreach
@@ -388,7 +388,7 @@ function trimTracker()
             continue;
         }
 
-        $timeStamp = db_convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
+        $timeStamp = DBManager::convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
         if ($tableName == 'tracker_sessions') {
             $query = "DELETE FROM $tableName WHERE date_end < $timeStamp";
         } else {

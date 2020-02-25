@@ -122,6 +122,10 @@ class ImportViewStep3 extends ImportView
 
         $uploadFileName = $_REQUEST['file_name'];
 
+        if (strpos($uploadFileName, 'phar://') === 0) {
+            return;
+        }
+
         // Now parse the file and look for errors
         $importFile = new ImportFile($uploadFileName, $delimiter, html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), false);
 
@@ -186,7 +190,7 @@ class ImportViewStep3 extends ImportView
         // we export it as email_address, but import as email1
         $field_map['email_address'] = 'email1';
 
-        // build each row; row count is determined by the the number of fields in the import file
+        // build each row; row count is determined by the number of fields in the import file
         $columns = array();
         $mappedFields = array();
 

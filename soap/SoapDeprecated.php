@@ -393,7 +393,7 @@ function add_leads_matching_email_address(&$output_list, $email_address, &$seed_
 }
 
 /**
- * Return a list of modules related to the specifed contact record
+ * Return a list of modules related to the specified contact record
  *
  * This function does not require a session be created first.
  *
@@ -595,7 +595,7 @@ function user_list($user, $password)
  * @param string $name -- Name to search for.
  * @param string $where -- Where clause defaults to ''
  * @param int $msi_id -- Response array index
- * @return array -- Resturns a list of contacts that have the provided name.
+ * @return array -- Returns a list of contacts that have the provided name.
  */
 function contact_by_search($name, $where = '', $msi_id = '0')
 {

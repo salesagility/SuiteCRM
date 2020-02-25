@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 
 
@@ -270,7 +264,7 @@ $subpanel = new SubPanelTiles($focus, 'Campaigns');
                     }
                 }//end if (isset($subpane['function_parameters'])){
             }//end foreach($subpanels as $subpane_key => $subpane){
-        }//_pp($subpanel->subpanel_definitions->layout_defs);
+        }
     }//end else
 
 $deletedCampaignLogLeadsCount = $focus->getDeletedCampaignLogLeadsCount();

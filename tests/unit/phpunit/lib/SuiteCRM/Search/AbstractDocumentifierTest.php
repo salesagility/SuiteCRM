@@ -42,7 +42,7 @@ namespace SuiteCRM\Test;
 
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\SearchTestAbstract;
-use SuiteCRM\StateSaver;
+
 
 require_once __DIR__ . "/AbstractDocumentifierMock.php";
 require_once __DIR__ . "/SearchTestAbstract.php";
@@ -55,11 +55,6 @@ class AbstractDocumentifierTest extends SearchTestAbstract
 
     public function testSanitizePhone()
     {
-        $state = new StateSaver();
-        $state->pushTable('reminders');
-        $state->pushTable('reminders_invitees');
-
-
         $data1 = "(+44) 012321323";
         $expe1 = "+44012321323";
 
@@ -72,18 +67,10 @@ class AbstractDocumentifierTest extends SearchTestAbstract
         self::assertEquals($expe1, $this->documentifier->sanitizePhone($data1));
         self::assertEquals($expe2, $this->documentifier->sanitizePhone($data2));
         self::assertEquals($expe3, $this->documentifier->sanitizePhone($data3));
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
     }
 
     public function testFixPhone()
     {
-        $state = new StateSaver();
-        $state->pushTable('reminders');
-        $state->pushTable('reminders_invitees');
-
-
         $document = [
             'name' => 'foo',
             'phone' => [
@@ -100,13 +87,9 @@ class AbstractDocumentifierTest extends SearchTestAbstract
             ],
         ];
 
-
         $this->documentifier->fixPhone($document);
 
         self::assertEquals($expected, $document);
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
     }
 
     protected function setUp()

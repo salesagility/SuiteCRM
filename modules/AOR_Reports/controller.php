@@ -188,10 +188,10 @@ class AOR_ReportsController extends SugarController
             sugar_die('');
         }
 
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $errorLevelStored = error_reporting();
         error_reporting(0);
-        $state->popErrorLevel();
+        require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+        error_reporting($errorLevelStored);
 
         $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $graphs = $_POST["graphsForPDF"];

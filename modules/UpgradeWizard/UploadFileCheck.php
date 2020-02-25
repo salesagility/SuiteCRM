@@ -57,6 +57,10 @@ $file_name = $json->decode(html_entity_decode($_REQUEST['file_name']));
      $file_name = $file_name['jsonObject'];
  }
 
+if (strpos($file_name, 'phar://') === 0) {
+    return;
+}
+
 $filesize = '';
 if (file_exists($file_name)) {
     $filesize =filesize($file_name);

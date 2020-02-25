@@ -7,7 +7,7 @@
     * |                                                                                |
     * | RGraph is dual licensed under the Open Source GPL (General Public License)     |
     * | v2.0 license and a commercial license which means that you're not bound by     |
-    * | the terms of the GPL. The commercial license is just £99 (GBP) and you can     |
+    * | the terms of the GPL. The commercial license is just ï¿½99 (GBP) and you can     |
     * | read about it here:                                                            |
     * |                      http://www.rgraph.net/license                             |
     * o--------------------------------------------------------------------------------o
@@ -65,7 +65,7 @@
                     this.data[i] = RGraph.arrayClone(arguments[1][i]);
                 }
     
-            // Handle multiple data sets being supplied as seperate arguments
+            // Handle multiple data sets being supplied as separate arguments
             } else {
 
                 // Store the data set(s)
@@ -103,7 +103,7 @@
         //        this.data[i] = arguments[1][i];
         //    }
 
-        // Handle multiple data sets being supplied as seperate arguments
+        // Handle multiple data sets being supplied as separate arguments
         //} else {
             // Store the data set(s)
             //for (var i=1; i<arguments.length; ++i) {

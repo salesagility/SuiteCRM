@@ -117,7 +117,6 @@ class ElasticsearchCest
         $I->see('SEARCH');
         $I->see('Results');
         $I->see('No results matching your search criteria. Try broadening your search.');
-        $I->see('Search performed in');
         
         $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'acc');
         $I->click('#search-wrapper-form > table > tbody > tr:nth-child(1) > td > input.button.primary');
@@ -125,7 +124,6 @@ class ElasticsearchCest
         $I->see('SEARCH');
         $I->see('Results');
         $I->see('No results matching your search criteria. Try broadening your search.');
-        $I->see('Search performed in');
     }
     
     /**

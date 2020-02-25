@@ -54,8 +54,9 @@ if (!isset($_REQUEST['mode']) || ($_REQUEST['mode'] == "")) {
     die("No mode specified.");
 }
 
-if (!file_exists($base_tmp_upgrade_dir)) {
-    mkdir($base_tmp_upgrade_dir, 0755, true);
+if (!file_exists($base_tmp_upgrade_dir) && !mkdir($base_tmp_upgrade_dir, 0755,
+        true) && !is_dir($base_tmp_upgrade_dir)) {
+    throw new \RuntimeException(sprintf('Directory "%s" was not created', $base_tmp_upgrade_dir));
 }
 
 $unzip_dir      = mk_temp_dir($base_tmp_upgrade_dir);

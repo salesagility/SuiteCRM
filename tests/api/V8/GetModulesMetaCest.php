@@ -1,15 +1,19 @@
 <?php
+
 namespace Test\Api\V8;
 
 use ApiTester;
+use ArrayIterator;
 use Codeception\Example;
+use Codeception\Exception\ModuleException;
+use Exception;
 
 class GetModulesMetaCest
 {
     /**
      * @param ApiTester $I
      *
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function _before(ApiTester $I)
     {
@@ -21,11 +25,11 @@ class GetModulesMetaCest
      * @param Example $example
      *
      * @dataProvider shouldWorkDataProvider
-     * @throws \Exception
+     * @throws Exception
      */
     public function shouldWork(ApiTester $I, Example $example)
     {
-        /** @var \ArrayIterator $iterator */
+        /** @var ArrayIterator $iterator */
         $iterator = $example->getIterator();
 
         $I->sendGET($I->getInstanceURL() . $iterator->offsetGet('endPoint'));
@@ -34,7 +38,7 @@ class GetModulesMetaCest
         $I->seeResponseContainsJson(['type' => 'modules']);
         $I->seeResponseContainsJson(
             [
-                'attributes' =>
+                'data' =>
                     [
                         'Accounts' => [
                             'label' => 'Accounts',

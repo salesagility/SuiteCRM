@@ -43,7 +43,6 @@
  */
 require_once('modules/AOD_Index/AOD_Index_sugar.php');
 require_once('modules/AOD_Index/LuceneUtils.php');
-requireLucene();
 
 class AOD_Index extends AOD_Index_sugar
 {

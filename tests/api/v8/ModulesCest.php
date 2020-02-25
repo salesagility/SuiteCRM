@@ -1197,7 +1197,7 @@ class ModulesCest
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         // Replace the relationships with just one of the related items
-        // We should only see the the item we have posted in the responses
+        // We should only see the item we have posted in the responses
         $payload = json_encode(
             array(
                 'data' => array(
@@ -1260,7 +1260,7 @@ class ModulesCest
         $I->sendJsonApiContentNegotiation();
 
         // Replace the relationships with just one of the related items
-        // We should only see the the item we have posted in the responses
+        // We should only see the item we have posted in the responses
         $payload = json_encode(
             array(
                 'data' => array()
