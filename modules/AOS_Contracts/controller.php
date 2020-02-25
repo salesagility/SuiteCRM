@@ -64,7 +64,7 @@ class AOS_ContractsController extends SugarController
         }
 
         if (isset($_REQUEST['contact_id'])) {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($_REQUEST['contact_id']);
             $this->bean->contact = $contact->name;
             $this->bean->contact_id = $contact->id;

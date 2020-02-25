@@ -357,14 +357,14 @@ function format_number($amount, $round = null, $decimals = null, $params = array
         if (!empty($params['currency_id'])) {
             if ($override_currency_id != $params['currency_id']) {
                 $override_currency_id = $params['currency_id'];
-                $currency = new Currency();
+                $currency = BeanFactory::newBean('Currencies');
                 $currency->retrieve($override_currency_id);
                 $last_override_currency = $currency;
             } else {
                 $currency = $last_override_currency;
             }
         } elseif (!isset($current_users_currency)) { // else use current user's
-            $current_users_currency = new Currency();
+            $current_users_currency = BeanFactory::newBean('Currencies');
             if ($current_user->getPreference('currency')) {
                 $current_users_currency->retrieve($current_user->getPreference('currency'));
             } else {
@@ -448,7 +448,7 @@ function unformat_number($string)
     static $currency = null;
     if (!isset($currency)) {
         global $current_user;
-        $currency = new Currency();
+        $currency = BeanFactory::newBean('Currencies');
         if (!empty($current_user->id)) {
             if ($current_user->getPreference('currency')) {
                 $currency->retrieve($current_user->getPreference('currency'));
@@ -617,7 +617,7 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
         }
         return $html;
     }
-    $currency = new Currency();
+    $currency = BeanFactory::newBean('Currencies');
     $currency->retrieve($value);
     return $currency->name;
 }
@@ -657,7 +657,7 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
     }
-    $currency = new Currency();
+    $currency = BeanFactory::newBean('Currencies');
     if (isset($focus->currency_id)) {
         $currency_id = $focus->currency_id;
     } else {
@@ -702,7 +702,7 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
     }
-    $currency = new Currency();
+    $currency = BeanFactory::newBean('Currencies');
     if (isset($focus->currency_id)) {
         $currency_id = $focus->currency_id;
     } else {

@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$focus = new EmailMarketing();
+$focus = BeanFactory::newBean('EmailMarketing');
 
 if (!isset($_REQUEST['record'])) {
     sugar_die("A record number must be specified to delete the marketing campaign.");

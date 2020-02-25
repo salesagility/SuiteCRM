@@ -205,7 +205,7 @@ $beanFiles['Role'] = 'modules/Roles/Role.php';
 $beanFiles['Document'] = 'modules/Documents/Document.php';
 $beanFiles['DocumentRevision'] = 'modules/DocumentRevisions/DocumentRevision.php';
 $beanFiles['FieldsMetaData'] = 'modules/DynamicFields/FieldsMetaData.php';
-//$beanFiles['Audit']           = 'modules/Audit/Audit.php';
+$beanFiles['Audit'] = 'modules/Audit/Audit.php';
 
 // deferred
 //$beanFiles['Queue'] = 'modules/Queues/Queue.php';
