@@ -501,7 +501,7 @@ class EmailTemplate extends SugarBean
      * @param string $value
      * @return string
      */
-    public function _convertToType($type, $value)
+    public static function _convertToType($type, $value)
     {
         switch ($type) {
             case 'currency':
