@@ -5714,7 +5714,7 @@ class SugarBean
                 //Fields hidden by Dependent Fields
                 if (isset($value['hidden']) && $value['hidden'] === true) {
                     $return_array[$cache[$field]] = "";
-                } elseif (((!empty($value['type']) && ($value['type'] == 'enum' || $value['type'] == 'radioenum')))
+                } elseif (((!empty($value['type']) && ($value['type'] == 'enum' || $value['type'] == 'radioenum' || $value['type'] == 'dynamicenum')))
                     //cn: if $field is a _dom, detect and return VALUE not KEY
                     //cl: empty function check for meta-data enum types that have values loaded from a function
                     && empty($value['function'])) {
