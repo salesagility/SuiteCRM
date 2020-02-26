@@ -81,14 +81,14 @@ class AccountFormBase
 
             if (!empty($billingAddressCity)) {
                 $billingAddressCityQuoted = $this->db->quoted($billingAddressCity . '%');
-                $tempQuery += (empty($temp_query)) ?: 'OR ';
-                $tempQuery = "billing_address_city LIKE " . $billingAddressCityQuoted;
+                $tempQuery .= (empty($temp_query)) ?: 'OR ';
+                $tempQuery .= "billing_address_city LIKE " . $billingAddressCityQuoted;
             }
 
             if (!empty($shippingAddressCity)) {
                 $shippingAddressCityQuoted = $this->db->quoted($shippingAddressCity . '%');
-                $tempQuery += (empty($temp_query)) ?: 'OR ';
-                $tempQuery = "shipping_address_city LIKE " . $shippingAddressCityQuoted;
+                $tempQuery .= (empty($temp_query)) ?: 'OR ';
+                $tempQuery .= "shipping_address_city LIKE " . $shippingAddressCityQuoted;
             }
 
             $query .= (empty($query)) ? $baseQuery : ' AND ';
