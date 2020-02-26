@@ -3627,6 +3627,9 @@ class SugarBean
         $used_join_key = array();
 
         //walk through the fields and for every relationship field add their relationship_info field
+        //in case these fields have source 'non-db'. The module name of the parent bean is passed to
+        //make sure that relationship_info fields are only added when the module name of the
+        //relationship_info field matches the parent module, for which this query is being built.
         //relationshipfield-aliases are resolved in SugarBean::create_new_list_query
         // through their relationship_info field
         if (isset($parentbean)) {
