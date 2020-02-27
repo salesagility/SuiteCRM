@@ -70,14 +70,14 @@ class LeadsController extends SugarController
                     continue;
                 }
                 //check for matches from custom fields to non-custom fields
-				elseif(substr($key, strlen($key)-2) == "_c")
-				{
-					$standardfield_c = substr($key, 0, -2);
-					if(isset($this->bean->field_defs[$standardfield_c])){
-						$this->bean->$standardfield_c = $prospect->$key;
-					}
-				}
-            }
+                elseif(substr($key, strlen($key)-2) == '_c')
+                {
+                    $standardfield_c = substr($key, 0, -2);
+                    if(isset($this->bean->field_defs[$standardfield_c])){
+                        $this->bean->$standardfield_c = $prospect->$key;
+                    }
+                }
+                }
             $_POST['is_converted']=true;
         }
         return true;
