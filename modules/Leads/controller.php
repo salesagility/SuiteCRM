@@ -77,7 +77,7 @@ class LeadsController extends SugarController
                         $this->bean->$standardfield_c = $prospect->$key;
                     }
                 }
-                }
+            }
             $_POST['is_converted']=true;
         }
         return true;
