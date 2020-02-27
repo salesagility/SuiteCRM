@@ -63,15 +63,20 @@ class LeadsController extends SugarController
     {
         //IF we have a prospect id leads convert it to a lead
         if (empty($this->bean->id) && !empty($_REQUEST['return_module']) &&$_REQUEST['return_module'] == 'Prospects') {
-            $prospect=BeanFactory::newBean('Prospects');
+            $prospect=new Prospect();
             $prospect->retrieve($_REQUEST['return_id']);
             foreach ($prospect->field_defs as $key=>$value) {
                 if ($key == 'id' or $key=='deleted') {
                     continue;
                 }
-                if (isset($this->bean->field_defs[$key])) {
-                    $this->bean->$key = $prospect->$key;
-                }
+                //check for matches from custom fields to non-custom fields
+				elseif(substr($key, strlen($key)-2) == "_c")
+				{
+					$standardfield_c = substr($key, 0, -2);
+					if(isset($this->bean->field_defs[$standardfield_c])){
+						$this->bean->$standardfield_c = $prospect->$key;
+					}
+				}
             }
             $_POST['is_converted']=true;
         }
