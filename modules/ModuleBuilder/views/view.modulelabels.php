@@ -83,7 +83,7 @@ class ViewModulelabels extends SugarView
         }
         //need to change the following to interface with MBlanguage.
 
-        $smarty->assign('MOD', $mbModule->getModStrings($selected_lang));
+        $smarty->assign('MOD_LABELS', $mbModule->getModStrings($selected_lang));
         $smarty->assign('APP', $GLOBALS['app_strings']);
         $smarty->assign('selected_lang', $selected_lang);
         $smarty->assign('view_package', $package_name);
