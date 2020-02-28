@@ -80,20 +80,6 @@ $viewdefs['Users']['DetailView'] = array(
                         ),
                 ),
         ),
-    'useTabs' => true,
-    'tabDefs' =>
-        array(
-            'LBL_USER_INFORMATION' =>
-                array(
-                    'newTab' => true,
-                    'panelDefault' => 'expanded',
-                ),
-            'LBL_EMPLOYEE_INFORMATION' =>
-                array(
-                    'newTab' => true,
-                    'panelDefault' => 'expanded',
-                ),
-        ),
     'panels' =>
         array(
             'LBL_USER_INFORMATION' =>
