@@ -150,7 +150,7 @@
                     </script>
                 </td>
             </tr>
-            {foreach from=$parameters item=condition}
+            {foreach from=$parameters item=condition key=key}
             <tr>
                 <td scope='row'>
                     {$MOD.LBL_PARAMETERS}
@@ -158,9 +158,9 @@
                 <td>
                     <div id="parameterOptions{$id}">
 
-                            <input type='hidden' name='parameter_id[{$condition.key}]' value='{$condition.id}'>
-                            <input type='hidden' name='parameter_operator[{$condition.key}]' value='{$condition.operator}'>
-                            <input type='hidden' name='parameter_type[{$condition.key}]' value='{$condition.value_type}'>
+                            <input type='hidden' name='parameter_id[{$key}]' value='{$condition.id}'>
+                            <input type='hidden' name='parameter_operator[{$key}]' value='{$condition.operator}'>
+                            <input type='hidden' name='parameter_type[{$key}]' value='{$condition.value_type}'>
 
                         {if $condition.value_type == "Period"}
                             {$condition.module_display} - <em>{$condition.field_display}</em> - {$condition.operator_display}
