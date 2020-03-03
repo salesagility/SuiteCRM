@@ -7,7 +7,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     public function testAOD_Index()
     {
         // Execute the constructor and check for the Object type and type attribute
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
         $this->assertInstanceOf('AOD_Index', $aod_index);
         $this->assertInstanceOf('Basic', $aod_index);
         $this->assertInstanceOf('SugarBean', $aod_index);
@@ -23,7 +23,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
     public function testisEnabled()
     {
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
 
         // execute the method and verify that it returns true
         $result = $aod_index->isEnabled();
@@ -33,7 +33,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     public function testfind()
     {
         self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
 
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -48,7 +48,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
 
         // test
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
         $last_optimized = $aod_index->last_optimised;
@@ -60,7 +60,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetIndex()
     {
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
         $result = $aod_index->getIndex();
 
         //execute the method and verify it returns a different instance of samme type
@@ -72,7 +72,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     {
         $user = new User(1);
 
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
         $result = $aod_index->getDocumentForBean($user);
 
         //execute the method and verify that it returns an array
@@ -86,7 +86,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
         
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
@@ -121,7 +121,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
     public function testindex()
     {
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
@@ -138,7 +138,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
         
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
@@ -194,7 +194,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
             'Tasks' => 'Task'
         );
 
-        $aod_index = new AOD_Index();
+        $aod_index = BeanFactory::newBean('AOD_Index');
 
         //execute the method and verify that it retunrs expected results
         $actual = $aod_index->getIndexableModules();

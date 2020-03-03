@@ -104,7 +104,7 @@ if (!empty($_REQUEST['assigned_user_id'])) {
 
 $typeOfPerson = !empty($_REQUEST['typeOfPerson']) ? $_REQUEST['typeOfPerson'] : 'Lead';
  $person = new $typeOfPerson();
- $fieldsMetaData = new FieldsMetaData();
+ $fieldsMetaData = BeanFactory::newBean('EditCustomFields');
  $xtpl=new XTemplate('modules/Campaigns/WebToLeadForm.html');
  $xtpl->assign("MOD", $mod_strings);
  $xtpl->assign("APP", $app_strings);

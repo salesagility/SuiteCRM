@@ -54,7 +54,7 @@ class AOS_QuotesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOS_QuotesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_QuotesDashlet']['columns'];
 
-        $this->seedBean = new AOS_Quotes();
+        $this->seedBean = BeanFactory::newBean('AOS_Quotes');
     }
 
     /**

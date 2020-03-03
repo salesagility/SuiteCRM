@@ -79,7 +79,7 @@ class ViewAdminwizard extends SugarView
         
         $configurator = new Configurator();
         $sugarConfig = SugarConfig::getInstance();
-        $focus = new Administration();
+        $focus = BeanFactory::newBean('Administration');
         $focus->retrieveSettings();
         
         $ut = $GLOBALS['current_user']->getPreference('ut');

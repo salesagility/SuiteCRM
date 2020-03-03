@@ -63,7 +63,7 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
             if (!empty($_SESSION['is_valid_session']) && $this->is_valid_ip_address('ip_address') && $_SESSION['type'] == 'user') {
                 global $current_user;
                 require_once('modules/Users/User.php');
-                $current_user = new User();
+                $current_user = BeanFactory::newBean('Users');
                 $current_user->retrieve($_SESSION['user_id']);
                 $this->login_success();
                 $GLOBALS['log']->info('Begin: SoapHelperWebServices->validate_authenticated - passed');

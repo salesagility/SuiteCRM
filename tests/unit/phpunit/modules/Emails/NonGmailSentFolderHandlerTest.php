@@ -84,7 +84,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function storeInSentFolderNoIE()
     {
         $handler = new NonGmailSentFolderHandler();
-        $ret = $handler->storeInSentFolder(new InboundEmail(), null);
+        $ret = $handler->storeInSentFolder(BeanFactory::newBean('InboundEmail'), null);
         $this->assertFalse($ret);
         $this->assertEquals(NonGmailSentFolderHandler::ERR_NO_IE_FOUND, $handler->getLastError());
     }
@@ -92,7 +92,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function storeInSentFolderIsPop3()
     {
         $handler = new NonGmailSentFolderHandler();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $ie->id = '123';
         $ie->protocol = 'pop3';
         $ret = $handler->storeInSentFolder($ie, null);
@@ -103,7 +103,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function storeInSentFolderIsGmail()
     {
         $handler = new NonGmailSentFolderHandler();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $ie->id = '123';
         $ie->protocol = 'smtp';
         $mail = new SugarPHPMailer();
@@ -116,7 +116,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function storeInSentFolderOk()
     {
         $handler = new NonGmailSentFolderHandler();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $ie->id = '123';
         $ie->protocol = 'smtp';
         $mail = new SugarPHPMailer();
@@ -129,7 +129,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function testGetProblemOfStoringInNonGmailSentFolderNoIEID()
     {
         $handler = new NonGmailSentFolderHandlerMock();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $mail = new SugarPHPMailer();
         unset($ie->id);
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
@@ -139,7 +139,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function testGetProblemOfStoringInNonGmailSentFolderNoIEIDValue()
     {
         $handler = new NonGmailSentFolderHandlerMock();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $mail = new SugarPHPMailer();
         $ie->id = '';
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
@@ -149,7 +149,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function testGetProblemOfStoringInNonGmailSentFolderIsPop3()
     {
         $handler = new NonGmailSentFolderHandlerMock();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $mail = new SugarPHPMailer();
         $ie->id = 123;
         $ie->protocol = 'pop3';
@@ -160,7 +160,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function testGetProblemOfStoringInNonGmailSentFolderIsGmail()
     {
         $handler = new NonGmailSentFolderHandlerMock();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $mail = new SugarPHPMailer();
         $ie->id = 123;
         $ie->protocol = 'pop3';
@@ -172,7 +172,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function testConnectToNonGmailServer()
     {
         $handler = new NonGmailSentFolderHandlerMock();
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $mail = new SugarPHPMailer();
         $sentFolder = null;
         try {
