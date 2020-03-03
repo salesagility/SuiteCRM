@@ -164,7 +164,7 @@
 
                         {if $condition.value_type == "Period"}
                             {$condition.module_display} - <em>{$condition.field_display}</em> - {$condition.operator_display}
-                            <select name='parameter_value[]'>
+                            <select name='parameter_value[{$key}]'>
                                 {html_options options=$date_time_period_list selected=$condition.value}
                             </select>
                         {elseif $condition.value_type == "Relate"}
