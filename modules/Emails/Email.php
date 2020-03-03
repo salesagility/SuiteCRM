@@ -992,11 +992,7 @@ class Email extends Basic
 
             if (isset($request['parent_type']) && !empty($request['parent_type']) &&
                 isset($request['parent_id']) && !empty($request['parent_id']) &&
-                ($request['parent_type'] == 'Accounts' ||
-                $request['parent_type'] == 'Contacts' ||
-                $request['parent_type'] == 'Leads' ||
-                $request['parent_type'] == 'Users' ||
-                $request['parent_type'] == 'Prospects')) {
+                in_array($request['parent_type'], ['Accounts', 'Cases', 'Contacts', 'Leads', 'Users', 'Prospects'])) {
                 if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
                     $className = $beanList[$request['parent_type']];
                     if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
