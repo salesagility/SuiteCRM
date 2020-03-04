@@ -102,8 +102,10 @@ class ModuleListProvider
         $modulesWithAccess = [];
         $moduleActions = \ACLAction::getUserActions($current_user->id, true);
 
+        $isAdm = is_admin($current_user);
+
         foreach ($moduleActions as $moduleName => $value) {
-            if (!in_array($moduleName, $modules, true)) {
+            if (! ($isAdm || in_array($moduleName, $modules, true))) {
                 continue;
             }
             $access = $this->buildAccessArray($moduleName, $value['module']);
@@ -144,7 +146,7 @@ class ModuleListProvider
     {
         global $current_user;
 
-        if (is_admin(is_admin($current_user))) {
+        if (is_admin($current_user)) {
             return true;
         }
 
