@@ -331,8 +331,9 @@ function getModuleField(
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language, $module);
 
-    // if aor condition
-    if (strstr($aow_field, 'aor_conditions_value') !== false) {
+    // if aor/aow value condition
+    if (false !== strpos($aow_field, 'aor_conditions_value')
+        || false !== strpos($aow_field, 'aow_conditions_value')) {
         // get aor condition row
         $aor_row = str_replace('aor_conditions_value', '', $aow_field);
         $aor_row = str_replace('[', '', $aor_row);
