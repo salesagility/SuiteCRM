@@ -504,6 +504,10 @@ class SugarView
                 continue;
             }
 
+            if ($key === 'training') {
+                $value['linkinfo']['Support Forum'] .= '" target="_blank"';
+            }
+
             foreach ($value as $linkattribute => $attributevalue) {
                 // get the main link info
                 if ($linkattribute == 'linkinfo') {
