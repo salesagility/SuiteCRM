@@ -600,7 +600,7 @@ class ListViewDisplay
     {
         global $app_strings;
         unset($_REQUEST[session_name()]);
-        unset($_REQUEST['PHPSESSID']);
+        unset($_REQUEST[session_name()]);
         $current_query_by_page = htmlentities(json_encode($_REQUEST));
 
         $js = <<<EOF

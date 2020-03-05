@@ -590,13 +590,13 @@ class SugarApplication
 
     public function startSession()
     {
-        $sessionIdCookie = isset($_COOKIE['PHPSESSID']) ? $_COOKIE['PHPSESSID'] : null;
+        $sessionIdCookie = isset($_COOKIE[session_name()]) ? $_COOKIE[session_name()] : null;
         if (isset($_REQUEST['MSID'])) {
             session_id($_REQUEST['MSID']);
             session_start();
             if (!isset($_SESSION['user_id'])) {
-                if (isset($_COOKIE['PHPSESSID'])) {
-                    self::setCookie('PHPSESSID', '', time() - 42000, '/');
+                if (isset($_COOKIE[session_name()])) {
+                    self::setCookie(session_name(), '', time() - 42000, '/');
                 }
                 sugar_cleanup(false);
                 session_destroy();

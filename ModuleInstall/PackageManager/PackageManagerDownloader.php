@@ -64,7 +64,7 @@ class PackageManagerDownloader
         $download_server .= PACKAGE_MANAGER_DOWNLOAD_PAGE;
         $ch = curl_init($download_server . '?filename='. $file_name);
         $fp = sugar_fopen($save_dir . $file_name, 'w');
-        curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID='.$session_id. ';');
+        curl_setopt($ch, CURLOPT_COOKIE, session_name().'='.$session_id. ';');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);

@@ -357,7 +357,7 @@ class SavedSearch extends SugarBean
             return null;
         }
 
-        $ignored_inputs = array('PHPSESSID', 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs');
+        $ignored_inputs = array(session_name(), 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs');
 
         $contents = $_REQUEST;
 

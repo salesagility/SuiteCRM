@@ -110,7 +110,7 @@ class MassUpdate
 
         unset($_REQUEST['current_query_by_page']);
         unset($_REQUEST[session_name()]);
-        unset($_REQUEST['PHPSESSID']);
+        unset($_REQUEST[session_name()]);
         $query = json_encode($_REQUEST);
 
         if (!isset($_REQUEST['module'])) {

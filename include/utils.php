@@ -4946,7 +4946,7 @@ function get_alt_hot_key()
 
 function can_start_session()
 {
-    if (!empty($_GET['PHPSESSID'])) {
+    if (!empty($_GET[session_name()])) {
         return true;
     }
     $session_id = session_id();

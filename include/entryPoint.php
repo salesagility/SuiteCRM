@@ -153,11 +153,11 @@ if (empty($GLOBALS['installing'])) {
     $use_current_user_login = false;
 
     // Allow for the session information to be passed via the URL for printing.
-    if (isset($_GET['PHPSESSID'])) {
-        if (!empty($_COOKIE['PHPSESSID']) && strcmp($_GET['PHPSESSID'], $_COOKIE['PHPSESSID']) == 0) {
-            session_id($_REQUEST['PHPSESSID']);
+    if (isset($_GET[session_name()])) {
+        if (!empty($_COOKIE[session_name()]) && strcmp($_GET[session_name()], $_COOKIE[session_name()]) == 0) {
+            session_id($_REQUEST[session_name()]);
         } else {
-            unset($_GET['PHPSESSID']);
+            unset($_GET[session_name()]);
         }
     }
 
