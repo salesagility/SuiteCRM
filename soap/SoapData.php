@@ -99,9 +99,9 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $sugar_config['list_max_entries_per_page'] = $max_results;
     }
 
-    $date_query = "(m1.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
+    $date_query = "(m1.date_modified > " . DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
     if (isset($deletion_date) && !empty($deletion_date)) {
-        $date_query .= " OR ({0}.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
+        $date_query .= " OR ({0}.date_modified > " . DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
     }
 
     $in = '';
