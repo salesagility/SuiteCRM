@@ -1498,7 +1498,7 @@ class AOR_Report extends Basic
      */
     public function build_report_query_where($query = array())
     {
-        global $beanList, $app_list_strings, $sugar_config, $current_user;
+        global $beanList, $app_list_strings, $sugar_config, $timedate;
 
         $aor_sql_operator_list['Equal_To'] = '=';
         $aor_sql_operator_list['Not_Equal_To'] = '!=';
@@ -1705,14 +1705,23 @@ class AOR_Report extends Basic
                                 }
                             }
 
-                            if ($params[1] != 'now') {
+                            if ($params[1] !== 'now') {
                                 switch ($params[3]) {
-                                    case 'business_hours':
-                                        //business hours not implemented for query, default to hours
-                                        $params[3] = 'hours';
-                                        // no break
+                                    case 'business_hours';
+                                        if ($params[0] === 'now') {
+                                            $businessHours = BeanFactory::getBean('AOBH_BusinessHours');
+                                            $amount = $params[2];
+
+                                            if ($params[1] !== 'plus') {
+                                                $amount = 0 - $amount;
+                                            }
+                                            $value = $businessHours->addBusinessHours($amount);
+                                            $value = "'" . $timedate->asDb($value) . "'";
+                                            break;
+                                        }
+                                        $params[3] = 'hour';
                                     default:
-                                        if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                                        if ($sugar_config['dbconfig']['db_type'] === 'mssql') {
                                             $value = "DATEADD(" . $params[3] . ",  " . $app_list_strings['aor_date_operator'][$params[1]] . " $params[2], $value)";
                                         } else {
                                             $value = "DATE_ADD($value, INTERVAL " . $app_list_strings['aor_date_operator'][$params[1]] . " $params[2] " . $params[3] . ")";
