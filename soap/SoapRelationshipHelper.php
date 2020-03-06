@@ -279,8 +279,8 @@ function server_save_relationships($list, $from_date, $to_date)
 {
     require_once('include/utils/db_utils.php');
     global  $beanList, $beanFiles;
-    $from_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
-    $to_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime');
+    $from_date = DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
+    $to_date = DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime');
     global $sugar_config;
     $db = DBManagerFactory::getInstance();
 
@@ -307,7 +307,7 @@ function server_save_relationships($list, $from_date, $to_date)
             if ($name == 'date_modified') {
                 $value = $to_date;
             } else {
-                $value = DBManager::convert("'".DBManagerFactory::getInstance()->quote($name_value['value'])."'", 'varchar');
+                $value = DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($name_value['value'])."'", 'varchar');
             }
             if ($name != 'resolve') {
                 if (empty($insert)) {
