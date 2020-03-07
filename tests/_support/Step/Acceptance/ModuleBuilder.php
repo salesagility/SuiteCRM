@@ -33,8 +33,8 @@ class ModuleBuilder extends Administration
             $I->fillField(['name' => 'description'], 'test module');
             $I->click('Save');
 
-            // Close confirmation window
-            $I->closePopupSuccess();
+            // Wait until confirmation window has disappeared
+            $this->waitUntilPopupSuccessDisappeared();
 
             // Create new module
             $I->click('New Module');
@@ -67,9 +67,6 @@ class ModuleBuilder extends Administration
 
             $I->wait(1);
             $I->click('Save'); // Will this be an issue with languages?
-
-            // Close popup
-            $I->closePopupSuccess();
 
             // Deploy module
 
@@ -118,13 +115,14 @@ class ModuleBuilder extends Administration
         $I->waitForElementVisible(['name' => 'savebtn']);
     }
 
-    public function closePopupSuccess(): void
+    /**
+     * Wait until confirmation window has disappeared
+     */
+    public function waitUntilPopupSuccessDisappeared()
     {
         $I = $this;
-        $I->wait(1);
-        $I->executeJS('return typeof document.getElementById("sugarMsgWindow") !== "undefined";');
-        $I->waitForText('This operation is completed successfully', null, '#sugarMsgWindow_c');
-        $I->click('.container-close');
+        $I->waitForElementNotVisible('#sugarMsgWindow_c');
+        $I->waitForElementNotVisible('#sugarMsgWindow_mask');
     }
 
     /**
@@ -148,9 +146,6 @@ class ModuleBuilder extends Administration
         if ($packageExists) {
             $I->acceptPopup();
         }
-
-        // Close popup
-        $I->closePopupSuccess();
 
         // Wait for page to refresh and look for new package link
         $I->waitForElement('#newPackageLink');
