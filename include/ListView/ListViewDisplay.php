@@ -353,17 +353,9 @@ class ListViewDisplay
                 }
             }
         } else {
-            // delete
-            if (
-                ACLController::checkAccess($this->seed->module_dir, 'delete', true)
-                && $this->delete
-            ) {
-                if ($this->show_action_dropdown_as_delete) {
-                    $menuItems[] = $this->buildDeleteLink($location);
-                } else {
-                    $menuItems[] = $this->buildBulkActionButton($location);
-                }
-            }
+
+            // Bulk Action button always
+            $menuItems[] = $this->buildBulkActionButton($location);
 
             // Compose email
             if (isset($this->email) && $this->email === true) {
@@ -412,10 +404,10 @@ class ListViewDisplay
                 $menuItems[] = $item;
             }
 
-
+            // delete
             if (
-                $this->delete
-                && !$this->show_action_dropdown_as_delete
+                ACLController::checkAccess($this->seed->module_dir, 'delete', true)
+                && $this->delete
             ) {
                 $menuItems[] = $this->buildDeleteLink($location);
             }
@@ -620,66 +612,66 @@ class ListViewDisplay
                 alert('{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
                 return false;
             }
-			if ( document.forms['targetlist_form'] ) {
-				var form = document.forms['targetlist_form'];
-				form.reset;
-			} else
-				var form = document.createElement ( 'form' ) ;
-			form.setAttribute ( 'name' , 'targetlist_form' );
-			form.setAttribute ( 'method' , 'post' ) ;
-			form.setAttribute ( 'action' , 'index.php' );
-			document.body.appendChild ( form ) ;
-			if ( !form.module ) {
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'module' );
-			    input.setAttribute ( 'value' , '{$this->seed->module_dir}' );
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'action' );
-			    input.setAttribute ( 'value' , 'TargetListUpdate' );
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			}
-			if ( !form.uids ) {
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'uids' );
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			}
-			if ( !form.prospect_list ) {
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'prospect_list' );
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			}
-			if ( !form.return_module ) {
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'return_module' );
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			}
-			if ( !form.return_action ) {
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'return_action' );
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			}
-			if ( !form.select_entire_list ) {
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'select_entire_list' );
-			    input.setAttribute ( 'value', document.MassUpdate.select_entire_list.value);
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			}
-			if ( !form.current_query_by_page ) {
-			    var input = document.createElement('input');
-			    input.setAttribute ( 'name' , 'current_query_by_page' );
-			    input.setAttribute ( 'value', '{$current_query_by_page}' );
-			    input.setAttribute ( 'type' , 'hidden' );
-			    form.appendChild ( input ) ;
-			}
-			open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist','form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'} } );
+            if ( document.forms['targetlist_form'] ) {
+                var form = document.forms['targetlist_form'];
+                form.reset;
+            } else
+                var form = document.createElement ( 'form' ) ;
+            form.setAttribute ( 'name' , 'targetlist_form' );
+            form.setAttribute ( 'method' , 'post' ) ;
+            form.setAttribute ( 'action' , 'index.php' );
+            document.body.appendChild ( form ) ;
+            if ( !form.module ) {
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'module' );
+                input.setAttribute ( 'value' , '{$this->seed->module_dir}' );
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'action' );
+                input.setAttribute ( 'value' , 'TargetListUpdate' );
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+            }
+            if ( !form.uids ) {
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'uids' );
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+            }
+            if ( !form.prospect_list ) {
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'prospect_list' );
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+            }
+            if ( !form.return_module ) {
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'return_module' );
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+            }
+            if ( !form.return_action ) {
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'return_action' );
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+            }
+            if ( !form.select_entire_list ) {
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'select_entire_list' );
+                input.setAttribute ( 'value', document.MassUpdate.select_entire_list.value);
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+            }
+            if ( !form.current_query_by_page ) {
+                var input = document.createElement('input');
+                input.setAttribute ( 'name' , 'current_query_by_page' );
+                input.setAttribute ( 'value', '{$current_query_by_page}' );
+                input.setAttribute ( 'type' , 'hidden' );
+                form.appendChild ( input ) ;
+            }
+            open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist','form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'} } );
 EOF;
         $js = str_replace(array("\r","\n"), '', $js);
         return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"targetlist_listview_". $loc ." \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL']}</a>";
