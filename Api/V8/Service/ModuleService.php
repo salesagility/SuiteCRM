@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Service;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -127,8 +128,17 @@ class ModuleService
             ->fields($this->beanManager->filterAcceptanceFields($bean, $fields))
             ->fetch();
 
-        $data = [];
+
+        $beanArray = [];
         foreach ($beanListResponse->getBeans() as $bean) {
+            $bean = $this->beanManager->getBeanSafe(
+                $params->getModuleName(),
+                $bean->id
+            );
+            $beanArray[] = $bean;
+        }
+        $data = [];
+        foreach ($beanArray as $bean) {
             $dataResponse = $this->getDataResponse(
                 $bean,
                 $fields,
@@ -189,13 +199,12 @@ class ModuleService
         }
 
         $this->setRecordUpdateParams($bean, $attributes);
-
-        foreach ($attributes as $property => $value) {
-            $bean->$property = $value;
-        }
+        $fileUpload = $this->processAttributes($bean, $attributes);
 
         $bean->save();
-        
+        if ($fileUpload) {
+            $this->addFileToNote($bean->id, $attributes);
+        }
         $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
@@ -208,6 +217,50 @@ class ModuleService
         $response->setData($dataResponse);
 
         return $response;
+    }
+
+    /**
+     * @param $beanId
+     * @param $attributes
+     * @throws \Exception
+     */
+    private function addFileToNote($beanId, $attributes)
+    {
+        global $sugar_config, $log;
+
+        \BeanFactory::unregisterBean('Notes', $beanId);
+        $bean = $this->beanManager->getBeanSafe('Notes', $beanId);
+
+        // Write file to upload dir
+        try {
+            // Checking file extension
+            $extPos = strrpos($attributes['filename'], '.');
+            $fileExtension = substr($attributes['filename'], $extPos + 1);
+
+            if ($extPos === false || empty($fileExtension) || in_array($fileExtension, $sugar_config['upload_badext'],
+                    true)) {
+                throw new \Exception('File upload failed: File extension is not included or is not valid.');
+            }
+
+            $fileName = $bean->id;
+            $fileContents = $attributes['filecontents'];
+            $targetPath = 'upload/' . $fileName;
+            $content = base64_decode($fileContents);
+
+            $file = fopen($targetPath, 'wb');
+            fwrite($file, $content);
+            fclose($file);
+        } catch (\Exception $e) {
+            $log->error('addFileToNote: ' . $e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+
+        // Fill in file details for use with upload checks
+        $mimeType = mime_content_type($targetPath);
+        $bean->filename = $attributes['filename'];
+        $bean->uploadfile = $attributes['filename'];
+        $bean->file_mime_type = $mimeType;
+        $bean->save();
     }
 
     /**
@@ -228,15 +281,13 @@ class ModuleService
         }
 
         $this->setRecordUpdateParams($bean, $attributes);
-
-        foreach ($attributes as $property => $value) {
-            $bean->$property = $value;
-        }
-
+        $fileUpload = $this->processAttributes($bean, $attributes);
         $bean->save();
-        
-        $bean->retrieve($bean->id);
 
+        if ($fileUpload) {
+            $this->addFileToNote($bean->id, $attributes);
+        }
+        $bean->retrieve($bean->id);
 
         $dataResponse = $this->getDataResponse(
             $bean,
@@ -248,6 +299,30 @@ class ModuleService
         $response->setData($dataResponse);
 
         return $response;
+    }
+
+    /**
+     * @param $bean
+     * @param $attributes
+     * @return bool
+     */
+    protected function processAttributes(&$bean, $attributes)
+    {
+        $createFile = false;
+
+        foreach ($attributes as $property => $value) {
+
+            if ($property === 'filecontents') {
+                continue;
+            } elseif ($property === 'filename') {
+                $createFile = true;
+                continue;
+            }
+
+            $bean->$property = $value;
+        }
+
+        return $createFile;
     }
 
     /**

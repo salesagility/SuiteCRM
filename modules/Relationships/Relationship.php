@@ -209,8 +209,6 @@ class Relationship extends SugarBean
             $this->load_relationship_meta();
         }
 
-        //		_ppd($GLOBALS['relationships']);
-
         if (array_key_exists($relationship_name, $GLOBALS['relationships'])) {
             foreach ($GLOBALS['relationships'][$relationship_name] as $field=>$value) {
                 $this->$field = $value;

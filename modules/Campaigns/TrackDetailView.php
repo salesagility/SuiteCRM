@@ -264,7 +264,7 @@ $subpanel = new SubPanelTiles($focus, 'Campaigns');
                     }
                 }//end if (isset($subpane['function_parameters'])){
             }//end foreach($subpanels as $subpane_key => $subpane){
-        }//_pp($subpanel->subpanel_definitions->layout_defs);
+        }
     }//end else
 
 $deletedCampaignLogLeadsCount = $focus->getDeletedCampaignLogLeadsCount();

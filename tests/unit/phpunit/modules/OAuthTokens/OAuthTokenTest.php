@@ -1,6 +1,8 @@
 <?php
 
-class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,7 +15,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function test__construct()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $oauthToken = new OAuthToken();
 
         $this->assertInstanceOf('OAuthToken', $oauthToken);
@@ -68,12 +70,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndOthers()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-
-        // test
         $oauthToken = OAuthToken::generate();
 
         $oauthToken->save();
@@ -94,10 +90,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test mark_deleted method
         $this->mark_deleted($oauthToken->id);
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
     }
 
     public function load($id)
@@ -143,13 +135,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreateAuthorized()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('tracker');
-
-        // test
-        
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
 
@@ -169,10 +154,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //finally mark deleted for cleanup
         $oauthToken->mark_deleted($oauthToken->id);
-        
-        // clean up
-        
-        $state->popTable('tracker');
     }
 
     public function copyAuthData($token)
@@ -200,7 +181,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcleanup()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             OAuthToken::cleanup();
             $this->assertTrue(true);
@@ -218,7 +199,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdeleteByConsumer()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             OAuthToken::deleteByConsumer('1');
             $this->assertTrue(true);
@@ -229,7 +210,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdeleteByUser()
     {
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             OAuthToken::deleteByUser('1');
             $this->assertTrue(true);

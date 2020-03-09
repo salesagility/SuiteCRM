@@ -18,9 +18,9 @@ matrix:
       before_script: composer install
       script: composer validate
     - name: "code coverage"
-      php: "7.0"
+      php: "7.3"
       dist: xenial
-      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 1;" >> config_override.php  ; ./vendor/bin/robo code:coverage --ci; cat codeception.dist.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+      script: ./vendor/bin/codecept run install --env travis-ci-hub -f --ext DotReporter; ./vendor/bin/robo code:coverage --ci; cat codeception.dist.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
 services:
   - mysql
@@ -109,7 +109,7 @@ after_script:
   # ElasticSearch Indexing logs
   - cat search_index.log
   - sudo cat /var/log/apache2/error.log
- - echo $TRAVIS_COMMIT_RANGE
+  - echo $TRAVIS_COMMIT_RANGE
 
 branches:
   only:

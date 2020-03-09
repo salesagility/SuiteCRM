@@ -442,7 +442,7 @@ class SugarChart
         if (is_null($decimals)) {
             $decimals = $locale->getPrecision();
         }
-        $seps = get_number_seperators();
+        $seps = get_number_separators();
         $thousands_sep = $seps[0];
         $decimal_point = $seps[1];
         return number_format($number, $decimals, $decimal_point, $thousands_sep);

@@ -2,7 +2,7 @@
 namespace Api\V8\Factory;
 
 use Api\V8\Middleware\ParamsMiddleware;
-use Interop\Container\ContainerInterface as Container;
+use Psr\Container\ContainerInterface as Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Api\V8\BeanDecorator\BeanManager;

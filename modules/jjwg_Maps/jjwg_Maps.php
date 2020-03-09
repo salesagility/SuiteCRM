@@ -1113,13 +1113,18 @@ class jjwg_Maps extends jjwg_Maps_sugar
                 $GLOBALS['log']->debug(__METHOD__.' Project to Opportunity');
                 $result = $this->db->limitQuery($query, 0, 1);
                 $opportunity = $this->db->fetchByAssoc($result);
-                // Find Account - Assume only one related Account for the Opportunity
-                $query = "SELECT accounts.*, accounts_cstm.* FROM accounts LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c " .
-                        " LEFT JOIN accounts_opportunities ON accounts.id = accounts_opportunities.account_id AND accounts_opportunities.deleted = 0 " .
-                        " WHERE accounts.deleted = 0 AND accounts_opportunities.opportunity_id = '" . $opportunity['id'] . "'";
-                $GLOBALS['log']->debug(__METHOD__.' Opportunity to Account');
-                $result = $this->db->limitQuery($query, 0, 1);
-                $fields = $this->db->fetchByAssoc($result);
+                if ($opportunity === false) {
+                    $result = null;
+                    $fields = null;
+                } else {
+                    // Find Account - Assume only one related Account for the Opportunity
+                    $query = "SELECT accounts.*, accounts_cstm.* FROM accounts LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c " .
+                            " LEFT JOIN accounts_opportunities ON accounts.id = accounts_opportunities.account_id AND accounts_opportunities.deleted = 0 " .
+                            " WHERE accounts.deleted = 0 AND accounts_opportunities.opportunity_id = '" . $opportunity['id'] . "'";
+                    $GLOBALS['log']->debug(__METHOD__.' Opportunity to Account');
+                    $result = $this->db->limitQuery($query, 0, 1);
+                    $fields = $this->db->fetchByAssoc($result);
+                }
             }
 
             if (!empty($fields)) {
@@ -1134,8 +1139,13 @@ class jjwg_Maps extends jjwg_Maps_sugar
             $result = $this->db->limitQuery($query, 0, 1);
             $meeting = $this->db->fetchByAssoc($result);
 
-            $parent_type = $meeting['parent_type'];
-            $parent_id = $meeting['parent_id'];
+            if ($meeting === false) {
+                $parent_type = null;
+                $parent_id = null;
+            } else {
+                $parent_type = $meeting['parent_type'];
+                $parent_id = $meeting['parent_id'];
+            }
             $GLOBALS['log']->debug(__METHOD__.' Meeting $parent_type: '.$parent_type);
             $GLOBALS['log']->debug(__METHOD__.' Meeting $parent_id: '.$parent_id);
 
@@ -1162,7 +1172,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
 
         // If related account address has already been geocoded
-        if (!empty($address) && $fields['jjwg_maps_geocode_status_c'] == 'OK' &&
+        if (!empty($address) && !is_bool($fields) && $fields['jjwg_maps_geocode_status_c'] == 'OK' &&
                 !empty($fields['jjwg_maps_lat_c']) && !empty($fields['jjwg_maps_lng_c'])) {
             $aInfo = array(
                 'address' => $address,

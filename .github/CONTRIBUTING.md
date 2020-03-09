@@ -15,13 +15,13 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * If you're unable to find an open issue that relates to your problem, [open a new one.](https://github.com/salesagility/SuiteCRM/issues/new) Please be sure to follow the issue template as much as possible.
 
-* **Ensure that the bug you are reporting is a core SuiteCRM issue** and not specific to your individual setup. For these types of issues please use the [Community Forum.](https://www.suitecrm.com/forum/suite-forum)
+* **Ensure that the bug you are reporting is a core SuiteCRM issue** and not specific to your individual setup. For these types of issues please use the [Community Forum.](https://community.suitecrm.com/)
 
 #### **Did you fix a bug?**
 
 * To provide a code contribution for an issue you will need to set up your own fork of the SuiteCRM repository, make your code changes, commit the changes and make a Pull Request to the appropriate branch on the SuiteCM repository. See our [Quick Guide to Fork SuiteCRM.](https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Quick_Guide_to_Fork_SuiteCRM) Once you have set up your forked repository you can begin making commits to the project.
 
-* Determine which base branch your bug fix should use. If your bug is present in both hotfix and hotfix-7.10.x then you will need to make a seperate pull request for each branch.
+* Determine which base branch your bug fix should use. If your bug is present in both hotfix and hotfix-7.10.x then you will need to make a separate pull request for each branch.
 
 * Separate each fix into a new branch in your repository and name it with the issue ID e.g. bugfix_3062 or issue-1234.
 
@@ -56,7 +56,7 @@ This project and all community members are expected to uphold the [SuiteCRM Code
 
 * By using [GitHub search](https://help.github.com/articles/searching-issues/) you can use labels to help find issues and pull requests that you are interested in. If for example, you are interested in which PR's will be included in the next release of SuiteCRM, you can use the [open issues "Resolved: Next Release"](https://github.com/salesagility/SuiteCRM/issues?q=is%3Aopen+is%3Aissue+label%3A%22Resolved%3A+Next+Release%22) label.
 
-* We encourage users whom feel an issue should be raised as a higher priority for a next release that they should make a comment to that affect. This also applies to incorrect labelling.
+* We encourage users who feel an issue should be raised as a higher priority for a next release that they should make a comment to that affect. This also applies to incorrect labelling.
 
 #### General Labels
 

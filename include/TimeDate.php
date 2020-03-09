@@ -495,7 +495,6 @@ class TimeDate
         return explode(' ', $datetime, 2);
     }
 
-
     /**
      * Get user date format in Javascript form
      * @return string
@@ -2011,13 +2010,6 @@ class TimeDate
         $result = array();
         $transitions = $tz->getTransitions($year_date->ts, $year_end->ts);
         $idx = 0;
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-            // <5.3.0 ignores parameters, advance manually to current year
-            $start_ts = $year_date->ts;
-            while (isset($transitions[$idx]) && $transitions[$idx]["ts"] < $start_ts) {
-                $idx++;
-            }
-        }
         // get DST start
         while (isset($transitions[$idx]) && !$transitions[$idx]["isdst"]) {
             $idx++;

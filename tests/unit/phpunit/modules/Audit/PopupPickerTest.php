@@ -1,20 +1,13 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 require_once 'modules/Audit/Popup_picker.php';
 
-class PopupPickerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testProcessPage()
     {
-        $state = new \SuiteCRM\StateSaver();
-        
-        $state->pushGlobals();
-        $state->pushTable('sugarfeed');
-        $state->pushTable('contacts');
-        $state->pushTable('contacts_cstm');
-        $state->pushTable('aod_indexevent');
-        
-        
         global $focus;
         $focus = BeanFactory::getBean('Contacts');
         $focus->name = 'test';
@@ -36,11 +29,5 @@ class PopupPickerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertContains('<div class=\'moduleTitle\'>', $output);
         $this->assertContains('<img src="themes/default/images/print.gif', $output);
         $this->assertContains('Fields audited in this module: Lawful Basis Date Reviewed, Do Not Call, Office Phone, Assigned User, Lawful Basis, Lawful Basis Source', $output);
-        
-        $state->popTable('aod_indexevent');
-        $state->popTable('contacts_cstm');
-        $state->popTable('contacts');
-        $state->popTable('sugarfeed');
-        $state->popGlobals();
     }
 }

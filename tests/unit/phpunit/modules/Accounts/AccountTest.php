@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AccountTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -46,7 +47,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAccount()
     {
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $Account = new Account();
         $this->assertInstanceOf('Account', $Account);
         $this->assertInstanceOf('Company', $Account);
@@ -103,7 +104,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $Account->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -116,7 +117,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $Account->fill_in_additional_detail_fields();
             $this->assertTrue(true);

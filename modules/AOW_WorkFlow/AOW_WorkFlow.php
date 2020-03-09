@@ -539,7 +539,8 @@ class AOW_WorkFlow extends Basic
                                         LoggerManager::getLogger()->warn('Date operator is not set in app_list_string[' . $params1 . ']');
                                     }
 
-                                    $value = "DATE_ADD($value, INTERVAL ".$dateOp." $params2 ".$params3.")";
+                                    $field = 'DATE_FORMAT('.$field.", '%Y-%m-%d %H:%i')";
+                                    $value = "DATE_FORMAT(DATE_ADD($value, INTERVAL ".$dateOp." $params2 ".$params3."), '%Y-%m-%d %H:%i')";
                                 }
                                 break;
                         }
@@ -633,7 +634,7 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        if (!isset($bean->date_entered)) {
+        if (!isset($bean->date_entered) && $bean->fetched_row !== false) {
             $bean->date_entered = $bean->fetched_row['date_entered'];
         }
 

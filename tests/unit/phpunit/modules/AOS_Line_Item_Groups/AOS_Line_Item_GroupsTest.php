@@ -1,6 +1,8 @@
 <?php
 
-class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,7 +15,7 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
 
     public function testAOS_Line_Item_Groups()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $this->assertInstanceOf('AOS_Line_Item_Groups', $aosLineItemGroup);
         $this->assertInstanceOf('Basic', $aosLineItemGroup);
@@ -30,12 +32,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
 
     public function testsave_groups()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        $state->pushTable('aos_line_item_groups');
-        $state->pushTable('tracker');
-        $state->pushTable('aod_index');
-        
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 
         //populate required values
@@ -58,19 +54,10 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         foreach ($line_item_groups as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
-        $state->popTable('aos_line_item_groups');
     }
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aos_line_item_groups');
-        $state->pushTable('tracker');
-        
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $aosLineItemGroup->name = 'test';
         $aosLineItemGroup->total_amount = 100;
@@ -86,9 +73,5 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $aosLineItemGroup->mark_deleted($aosLineItemGroup->id);
         $result = $aosLineItemGroup->retrieve($aosLineItemGroup->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        $state->popTable('tracker');
-        $state->popTable('aos_line_item_groups');
     }
 }

@@ -1,4 +1,9 @@
 <?php
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,96 +43,91 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-$subpanel_layout = array(
+$subpanel_layout = [
     'where' => '',
-
-    'fill_in_additional_fields'	=> true,
-    'list_fields' => array(
-        'object_image'=>array(
+    'fill_in_additional_fields' => true,
+    'list_fields' => [
+        'object_image' => [
             'vname' => 'LBL_OBJECT_IMAGE',
-            'widget_class'			=> 'SubPanelIcon',
-            'width'					=> '2%',
-        ),
-        'name' => array(
-             'vname'				=> 'LBL_LIST_SUBJECT',
-             'widget_class'			=> 'SubPanelDetailViewLink',
-             'width'				=> '30%',
-             'parent_info'          => true,
-        ),
-        'status' => array(
-             'vname'				=> 'LBL_LIST_STATUS',
-             'width'				=> '15%',
-        ),
-        'category_id' => array(
-            'vname'				=> 'LBL_LIST_CATEGORY',
-            'width'				=> '15%',
-        ),
-        'reply_to_status' => array(
-             'usage'				=> 'query_only',
-             'force_exists'			=> true,
-        ),
-        'contact_name'=>array(
-             'widget_class'         => 'SubPanelDetailViewLink',
-             'target_record_key'    => 'contact_id',
-             'target_module'        => 'Contacts',
-             'module'               => 'Contacts',
-             'vname'                => 'LBL_LIST_CONTACT',
-             'width'                => '11%',
-             'sortable'             => false,
-             'force_exists'			=> true,
-        ),
-        'contact_id' => array(
+            'widget_class' => 'SubPanelIcon',
+            'width' => '2%',
+        ],
+        'name' => [
+            'vname' => 'LBL_LIST_SUBJECT',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '30%',
+            'parent_info' => true,
+        ],
+        'status' => [
+            'vname' => 'LBL_LIST_STATUS',
+            'width' => '15%',
+        ],
+        'category_id' => [
+            'vname' => 'LBL_LIST_CATEGORY',
+            'width' => '15%',
+        ],
+        'reply_to_status' => [
             'usage' => 'query_only',
             'force_exists' => true,
-        ),
-        'contact_name_owner' => array(
+        ],
+        'contact_name' => [
+            'widget_class' => 'SubPanelDetailViewLink',
+            'target_record_key' => 'contact_id',
+            'target_module' => 'Contacts',
+            'module' => 'Contacts',
+            'vname' => 'LBL_LIST_CONTACT',
+            'width' => '11%',
+            'sortable' => false,
+            'force_exists' => true,
+        ],
+        'contact_id' => [
             'usage' => 'query_only',
             'force_exists' => true,
-        ),
-        'contact_name_mod' => array(
+        ],
+        'contact_name_owner' => [
             'usage' => 'query_only',
             'force_exists' => true,
-        ),
-        'parent_id' => array(
+        ],
+        'contact_name_mod' => [
             'usage' => 'query_only',
             'force_exists' => true,
-        ),
-        'parent_type' => array(
+        ],
+        'parent_id' => [
             'usage' => 'query_only',
             'force_exists' => true,
-        ),
-        'date_modified' => array(
+        ],
+        'parent_type' => [
+            'usage' => 'query_only',
+            'force_exists' => true,
+        ],
+        'date_modified' => [
             'vname' => 'LBL_LIST_DATE_MODIFIED',
             'width' => '10%',
-        ),
-        'date_entered' => array(
+        ],
+        'date_entered' => [
             'vname' => 'LBL_LIST_DATE_ENTERED',
             'width' => '10%',
-        ),
-        'assigned_user_name' => array(
+        ],
+        'assigned_user_name' => [
             'name' => 'assigned_user_name',
             'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'assigned_user_id',
             'target_module' => 'Employees',
-        ),
-        'edit_button' => array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'width' => '2%',
-        ),
-        'remove_button' => array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'width' => '2%',
-        ),
-        'filename' => array(
+        ],
+        'filename' => [
             'usage' => 'query_only',
             'force_exists' => true,
-        ),
-    ), // end list_fields
-);
+        ],
+    ],
+];

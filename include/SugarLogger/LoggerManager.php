@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Log management
  *
@@ -70,10 +71,7 @@ class LoggerManager
      */
     private static $_level = 'fatal';
 
-    /**
-     * This is a list of different loggers that have been loaded
-     * @var array
-     */
+    //this is a list of different loggers that have been loaded
     protected static $_loggers = [];
 
     /**
@@ -82,18 +80,12 @@ class LoggerManager
      */
     private static $_instance;
 
-    /**
-     * These are the mappings for levels to different log types
-     * @var array
-     */
+    //these are the mappings for levels to different log types
     private static $_logMapping = [
         'default' => 'SugarLogger',
     ];
 
-    /**
-     * These are the log level mappings anything with a lower value than your current log level will be logged
-     * @var array
-     */
+    // These are the log level mappings anything with a lower value than your current log level will be logged
     private static $_levelMapping = [
         'debug' => 100,
         'info' => 70,
@@ -140,7 +132,7 @@ class LoggerManager
                     (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)
                 ))) {
             //now we get the logger type this allows for having a file logger an email logger, a firebug logger or any other logger you wish you can set different levels to log differently
-            $logger = (!empty(self::$_logMapping[$method])) ?
+            $logger = !empty(self::$_logMapping[$method]) ?
                 self::$_logMapping[$method] : self::$_logMapping['default'];
             //if we haven't instantiated that logger let's instantiate
             if (!isset(self::$_loggers[$logger])) {
@@ -276,7 +268,9 @@ class LoggerManager
 
     public static function getLogLevel()
     {
-        return self::$_instance->_level;
+        $instance = self::$_instance;
+
+        return $instance::$_level;
     }
 
     /**

@@ -1,54 +1,17 @@
 <?php
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
-use SuiteCRM\StateSaver;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 use SuiteCRM\Utility\SuiteValidator;
 
 require_once __DIR__ . '/../../../../../include/GoogleSync/GoogleSync.php';
 require_once __DIR__ . '/GoogleSyncMock.php';
 
-class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
+class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 {
     /** @var UnitTester */
     protected $tester;
-    
-    /**
-     *
-     * @var StateSaver
-     */
-    protected $state;
-    
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->state = new StateSaver();
-        $this->state->pushGlobals();
-        $this->state->pushTable('aod_indexevent');
-        $this->state->pushTable('meetings');
-        $this->state->pushTable('meetings_cstm');
-        $this->state->pushTable('vcals');
-        $this->state->pushTable('aod_index');
-        $this->state->pushTable('users');
-        $this->state->pushTable('user_preferences');
-        $this->state->pushTable('reminders');
-        $this->state->pushTable('reminders_invitees');
-    }
-    
-    protected function tearDown()
-    {
-        $this->state->popTable('reminders_invitees');
-        $this->state->popTable('reminders');
-        $this->state->popTable('user_preferences');
-        $this->state->popTable('users');
-        $this->state->popTable('aod_index');
-        $this->state->popTable('vcals');
-        $this->state->popTable('meetings_cstm');
-        $this->state->popTable('meetings');
-        $this->state->popTable('aod_indexevent');
-        $this->state->popGlobals();
-        parent::tearDown();
-    }
-    
+
     /**
      *
      * @param string $googleAuthJson
@@ -117,10 +80,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetAuthJson()
     {
-        $state = new \SuiteCrm\StateSaver();
-        $state->pushGlobals();
-
-    
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
@@ -150,9 +109,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
         $ret = $object->callMethod('getAuthJson', [null]);
         $this->assertFalse($ret);
-        
-        // cleanup after test
-        $state->popGlobals();
     }
 
     /**
@@ -226,18 +182,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetUserMeetings()
     {
-        $state = new StateSaver();
-        $state->pushTable('meetings');
-        $state->pushTable('meetings_cstm');
-        $state->pushTable('users');
-        $state->pushTable('user_preferences');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aod_index');
-        $state->pushTable('vcals');
-        $state->pushTable('tracker');
-        
-        
-
         // Create a User
         $user = BeanFactory::getBean('Users');
         $user->last_name = 'UNIT_TESTS';
@@ -289,23 +233,13 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
         // Test for invalid user id exception handling
         try {
-            $return = $object->callMethod('getUserMeetings', ['INVALID']);
+            $return = $object->callMethod('getUserMeetings', ['INVALID!+']);
             $this->assertTrue(false, 'It should throws an exception.');
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::INVALID_USER_ID, $e->getCode());
         }
         
         $this->assertEquals(3, count($return_count));
-
-        // clean up after tests
-        $state->popTable('meetings');
-        $state->popTable('meetings_cstm');
-        $state->popTable('users');
-        $state->popTable('user_preferences');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
-        $state->popTable('vcals');
-        $state->popTable('tracker');
     }
 
     /**
@@ -382,16 +316,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetMeetingByEventId()
     {
-        $state = new StateSaver();
-        $state->pushTable('meetings');
-        $state->pushTable('meetings_cstm');
-        $state->pushTable('vcals');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        
-        
-
         $db = DBManagerFactory::getInstance();
 
 
@@ -462,14 +386,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         // --- separated test
         $ret4 = $object->callMethod('getMeetingByEventId', ['NOTHING_MATCHES']);
         $this->assertNull($ret4);
-        
-        // cleanup after tests
-        $state->popTable('meetings');
-        $state->popTable('meetings_cstm');
-        $state->popTable('vcals');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
-        $state->popTable('tracker');
     }
 
     /**
@@ -637,7 +553,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         }
         // -- another test
         try {
-            $object->callMethod('delEvent', [$Google_Event, 'INVALID_ID']);
+            $object->callMethod('delEvent', [$Google_Event, 'INVALID_ID+!']);
             $this->assertTrue(false, 'It should throw an exception.');
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::RECORD_VALIDATION_FAILURE, $e->getCode());
@@ -676,11 +592,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testCreateSuitecrmMeetingEvent()
     {
-        $state = new StateSaver();
-        $state->pushTable('reminders');
-        $state->pushTable('reminders_invitees');
-        $state->pushTable('tracker');
-        
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
         date_default_timezone_set('Etc/UTC');
@@ -743,11 +654,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('1', $return->duration_hours);
         $this->assertEquals('0', $return->duration_minutes);
         $this->assertEquals('FAKEUSER', $return->assigned_user_id);
-
-        // clean up after test
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
-        $state->popTable('tracker');
     }
 
     public function testUpdateGoogleCalendarEvent()
@@ -1045,11 +951,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSetSyncUsers()
     {
-        $state = new StateSaver();
-        $state->pushTable('users');
-        $state->pushTable('user_preferences');
-
-
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
         
@@ -1129,10 +1030,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         ], $tempData);
 
         $this->assertGreaterThanOrEqual(2, $countOfSyncUsers); // TODO: check how many user should be counted!?
-
-        // clean up after tests
-        $state->popTable('users');
-        $state->popTable('user_preferences');
     }
 
     /**
@@ -1223,16 +1120,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testWipeLocalSyncData()
     {
-        $state = new StateSaver();
-        $state->pushTable('meetings');
-        $state->pushTable('meetings_cstm');
-        $state->pushTable('users');
-        $state->pushTable('user_preferences');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('aod_index');
-        $state->pushTable('vcals');
-        $state->pushTable('tracker');
-
         // Create a User
         $user = BeanFactory::getBean('Users');
         $user->last_name = 'UNIT_TESTS';
@@ -1273,14 +1160,5 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $row = $db->fetchByAssoc($result);
         $this->assertEquals('', $row['gsync_id']);
         $this->assertEquals('', $row['gsync_lastsync']);
-
-        $state->popTable('meetings');
-        $state->popTable('meetings_cstm');
-        $state->popTable('users');
-        $state->popTable('user_preferences');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
-        $state->popTable('vcals');
-        $state->popTable('tracker');
     }
 }

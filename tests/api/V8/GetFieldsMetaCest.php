@@ -94,7 +94,7 @@ class GetFieldsMetaCest
             [
                 'shouldNotWork01' => 'withInvalidModuleName',
                 'endPoint' => '/Api/V8/meta/fields/FooBar',
-                'detail' => '[SuiteCRM] [API] [Not Allowed] The API user does not have access to this module.',
+                'detail' => '[SuiteCRM] [Not Allowed] The API user does not have access to this module.',
             ],
         ];
     }

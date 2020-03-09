@@ -43,7 +43,7 @@ if (!defined('sugarEntry')) {
 
 
 /**
- * This class is an implemenatation class for all the rest services
+ * This class is an implementation class for all the rest services
  */
 require_once('service/v3_1/SugarWebServiceImplv3_1.php');
 require_once('SugarWebServiceUtilv4.php');
@@ -164,8 +164,8 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
 
             $num_grp_sep = $current_user->getPreference('num_grp_sep');
             $dec_sep = $current_user->getPreference('dec_sep');
-            $nameValueArray['user_number_seperator'] = self::$helperObject->get_name_value('user_number_seperator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep);
-            $nameValueArray['user_decimal_seperator'] = self::$helperObject->get_name_value('user_decimal_seperator', empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep);
+            $nameValueArray['user_number_separator'] = self::$helperObject->get_name_value('user_number_separator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep);
+            $nameValueArray['user_decimal_separator'] = self::$helperObject->get_name_value('user_decimal_separator', empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep);
 
             $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries', $sugar_config['wl_list_max_entries_per_page']);
             $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries', $sugar_config['wl_list_max_entries_per_subpanel']);

@@ -29,7 +29,7 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView
     public function display()
     {
 
-    // Users local settings for decimal seperator and number grouping seperator
+    // Users local settings for decimal separator and number grouping separator
         $dec_sep = $GLOBALS['sugar_config']['default_decimal_seperator'];
         $user_dec_sep = $GLOBALS['current_user']->getPreference('dec_sep');
         $dec_sep = (empty($user_dec_sep) ? $GLOBALS['sugar_config']['default_decimal_seperator'] : $user_dec_sep);

@@ -7,7 +7,7 @@
     * |                                                                                |
     * | RGraph is dual licensed under the Open Source GPL (General Public License)     |
     * | v2.0 license and a commercial license which means that you're not bound by     |
-    * | the terms of the GPL. The commercial license is just £99 (GBP) and you can     |
+    * | the terms of the GPL. The commercial license is just ï¿½99 (GBP) and you can     |
     * | read about it here:                                                            |
     * |                      http://www.rgraph.net/license                             |
     * o--------------------------------------------------------------------------------o
@@ -994,7 +994,7 @@
             }
     
     
-            // Size can be specified seperately for the scale now
+            // Size can be specified separately for the scale now
             if (typeof(prop['chart.text.size.scale']) == 'number') {
                 size = prop['chart.text.size.scale'];
             }

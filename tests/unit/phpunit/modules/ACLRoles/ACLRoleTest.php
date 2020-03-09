@@ -1,6 +1,8 @@
 <?php
 
-class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,8 +15,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLRole()
     {
-
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $aclRole = new ACLRole();
         $this->assertInstanceOf('ACLRole', $aclRole);
         $this->assertInstanceOf('SugarBean', $aclRole);
@@ -41,9 +42,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetAction()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('acl_roles_actions');
-        
         $aclRole = new ACLRole();
 
         //take count of relationship initially and then after method execution and test if relationship count increases
@@ -52,9 +50,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
         $this->assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
-        
-        // clean up
-        $state->popTable('acl_roles_actions');
     }
 
     public function testmark_relationships_deleted()
