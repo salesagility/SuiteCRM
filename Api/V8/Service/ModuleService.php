@@ -60,7 +60,8 @@ class ModuleService
 
     /**
      * @param GetModuleParams $params
-     * @param $path
+     * @param                 $path
+     *
      * @return DocumentResponse
      * @throws AccessDeniedException
      */
@@ -86,8 +87,7 @@ class ModuleService
 
     /**
      * @param GetModulesParams $params
-     * @param Request $request
-     * @param int $row_offset starting position
+     * @param Request          $request
      *
      * @return DocumentResponse
      * @throws AccessDeniedException
@@ -124,13 +124,10 @@ class ModuleService
         }
 
         // Detect if bean has email field
-        if ((property_exists($bean, 'email1')
-                && strpos($where, 'email1') !== false)
-            || (property_exists($bean, 'email2')
-                && strpos($where, 'email2') !== false)
+        if ((property_exists($bean, 'email1') && strpos($where, 'email1') !== false)
+            || (property_exists($bean, 'email2') && strpos($where, 'email2') !== false)
         ) {
-            $selectedFields = strtolower($module) . '.' . implode(','
-                    . strtolower($module[0]) . '.', $fields);
+            $selectedFields = strtolower($module) . '.' . implode(',' . strtolower($module[0]) . '.', $fields);
             $selectedModule = strtolower($module);
 
             // Selects Module or COUNT(*) and will add one to the query.
@@ -141,12 +138,11 @@ class ModuleService
 
             // Email where clause
             $fromQuery
-                = 'FROM email_addresses join email_addr_bean_rel on email_addresses.id = email_addr_bean_rel.email_address_id join '
-                . $selectedModule . ' on ' . $selectedModule
-                . '.id = email_addr_bean_rel.bean_id ';
+                = 'FROM email_addresses JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id JOIN '
+                . $selectedModule . ' ON ' . $selectedModule . '.id = email_addr_bean_rel.bean_id ';
             $modifiedWhere = str_replace('accounts.email1',
                 'email_addresses.email_address', $where);
-            $where = (string)$modifiedWhere;
+            $where = $modifiedWhere;
 
             /** @noinspection TypeUnsafeComparisonInspection */
             // Sets and adds deleted to the query
@@ -173,8 +169,7 @@ class ModuleService
                 $query .= ' ORDER BY ' . $order_by;
             }
 
-            $result = $bean->process_list_query($query, $offset, $limit, -1,
-                $where);
+            $result = $bean->process_list_query($query, $offset, $limit, -1, $where);
             $beanResult['row_count'] = $result['row_count'];
             $beanList = [];
 
@@ -223,12 +218,8 @@ class ModuleService
         if ($data && $limit !== BeanManager::DEFAULT_LIMIT) {
             $totalPages = ceil($realRowCount / $size);
 
-            $paginationMeta
-                = $this->paginationHelper->getPaginationMeta($totalPages,
-                count($data));
-            $paginationLinks
-                = $this->paginationHelper->getPaginationLinks($request,
-                $totalPages, $number);
+            $paginationMeta = $this->paginationHelper->getPaginationMeta($totalPages, count($data));
+            $paginationLinks = $this->paginationHelper->getPaginationLinks($request, $totalPages, $number);
 
             $response->setMeta($paginationMeta);
             $response->setLinks($paginationLinks);
@@ -239,7 +230,7 @@ class ModuleService
 
     /**
      * @param CreateModuleParams $params
-     * @param Request $request
+     * @param Request            $request
      *
      * @return DocumentResponse
      * @throws \InvalidArgumentException When bean is already exist.
