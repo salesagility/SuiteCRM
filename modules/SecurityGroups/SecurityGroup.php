@@ -263,12 +263,8 @@ class SecurityGroup extends SecurityGroup_sugar
 
             if (in_array($focus->module_dir, array_keys($security_modules))) {
                 $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
-                    . 'SELECT DISTINCT ';
-                if ($focus->db->dbType == 'mysql') {
-                    $query .= ' uuid() ';
-                } elseif ($focus->db->dbType == 'mssql') {
-                    $query .= ' lower(newid()) ';
-                }
+			. 'SELECT DISTINCT ';
+		$query .= "'" . create_guid() . "' " ;
                 $currentUserId = isset($current_user->id) ? $current_user->id : null;
                 $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',"
                     . $focus->db->convert('', 'today') . ',0 '
@@ -296,12 +292,8 @@ class SecurityGroup extends SecurityGroup_sugar
                 //if(in_array($focus->module_dir,$security_modules)) {
                 if (in_array($focus->module_dir, array_keys($security_modules))) {
                     $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
-                        . 'SELECT DISTINCT ';
-                    if ($focus->db->dbType == 'mysql') {
-                        $query .= ' uuid() ';
-                    } elseif ($focus->db->dbType == 'mssql') {
-                        $query .= ' lower(newid()) ';
-                    }
+			    . 'SELECT DISTINCT ';
+		    $query .= "'" . create_guid() . "'" ;
                     $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',"
                         . $focus->db->convert('', 'today') . ',0 '
                         . 'from securitygroups_users u '
@@ -434,14 +426,12 @@ class SecurityGroup extends SecurityGroup_sugar
 
         /* can speed this up by doing one query */
         //should be just one query but need a unique guid for each insert
-        //WE NEED A UNIQUE GUID SO USE THE BUILT IN SQL GUID METHOD
+	//WE NEED A UNIQUE GUID SO USE THE BUILT IN SQL GUID METHOD
+	//There are DB who don't have uuid-generating capabilities, 
+	//so we use a generic function
         $query = 'INSERT INTO securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
-            . 'SELECT DISTINCT ';
-        if ($focus->db->dbType == 'mysql') {
-            $query .= ' uuid() ';
-        } elseif ($focus->db->dbType == 'mssql') {
-            $query .= ' lower(newid()) ';
-        }
+		. 'SELECT DISTINCT ';
+	$query .= "'". create_guid() . "'" ;
         $query .= ",r.securitygroup_id,'$focus_id','$focus_module_dir'," . $focus->db->convert('', 'today') . ',0 '
             . 'from securitygroups_records r '
             . 'inner join securitygroups g on r.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) '
@@ -556,11 +546,7 @@ class SecurityGroup extends SecurityGroup_sugar
 
         $query = 'INSERT INTO securitygroups_default (id, securitygroup_id, module, date_modified, deleted) '
             . 'VALUES ( ';
-        if ($db->dbType === 'mysql') {
-            $query .= ' uuid() ';
-        } elseif ($db->dbType === 'mssql') {
-            $query .= ' lower(newid()) ';
-        }
+	$query .= "'" . create_guid() . "'" ;
         $query .= ",'" . htmlspecialchars($group_id, ENT_QUOTES) . "', '" . htmlspecialchars(
             $module,
                 ENT_QUOTES

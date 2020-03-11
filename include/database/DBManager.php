@@ -2389,7 +2389,7 @@ abstract class DBManager
                 'char',
                 'clob',
                 'blob',
-                'text'
+//                'text'
             ))) {
                 $colType = "$colBaseType(${fieldDef['len']})";
             } elseif (($colBaseType == 'decimal' || $colBaseType == 'float')) {

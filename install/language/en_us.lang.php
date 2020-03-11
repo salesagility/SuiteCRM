@@ -256,6 +256,7 @@ $mod_strings = array(
     'LBL_MSSQL_SQLSRV' => 'SQL Server (Microsoft SQL Server Driver for PHP)',
     'LBL_MYSQL' => 'MySQL',
     'LBL_MYSQLI' => 'MySQL (mysqli extension)',
+    'LBL_PGSQL' => 'Postgresql',
     'LBL_NEXT' => 'Next',
     'LBL_NO' => 'No',
     'LBL_PERFORM_ADMIN_PASSWORD' => 'Setting site admin password',

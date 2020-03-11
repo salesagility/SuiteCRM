@@ -105,6 +105,7 @@ $uw_files = array(
     'include/database/MssqlManager.php',
     'include/database/MysqlManager.php',
     'include/database/DBManagerFactory.php',
+    'include/database/PostgreSQLManager.php',
 );
 
 $uw_files = array_merge($uw_files, $uwFiles);
