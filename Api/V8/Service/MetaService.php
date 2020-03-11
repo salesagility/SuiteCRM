@@ -122,7 +122,7 @@ class MetaService
             $oauth2Token->retrieve_by_string_fields(
                 ['access_token' => $request->getAttribute('oauth_access_token_id')]
             );
-    
+
             global $current_user;
             $current_user = $this->beanManager->getBeanSafe('Users', $oauth2Token->assigned_user_id);
         }
