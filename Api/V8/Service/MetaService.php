@@ -99,6 +99,34 @@ class MetaService
      */
     public function getModuleList(Request $request)
     {
+        if (! isset($GLOBALS['app_list_strings'])) {
+            /*
+             * since SugarApplication::preLoadLanguages() only sets
+             *   $GLOBALS['current_language']
+             *   and
+             *   $GLOBALS['app_strings']
+             * via entryPoint.php, we need to set
+             *   $GLOBALS['app_list_strings']
+             */
+            global $app_list_strings;
+            $app_list_strings = return_app_list_strings_language($GLOBALS['current_language']);
+        }
+        if (! isset($GLOBALS['current_user']) || $GLOBALS['current_user']->id === null) {
+            /*
+             * since
+             *   $GLOBALS['current_user']
+             * has not been set yet we need to get the API user here
+             */
+            $oauth2Token = $this->beanManager->newBeanSafe('OAuth2Tokens');
+
+            $oauth2Token->retrieve_by_string_fields(
+                ['access_token' => $request->getAttribute('oauth_access_token_id')]
+            );
+    
+            global $current_user;
+            $current_user = $this->beanManager->getBeanSafe('Users', $oauth2Token->assigned_user_id);
+        }
+
         $modules = $this->moduleListProvider->getModuleList();
 
         $dataResponse = new DataResponse('modules', '');
