@@ -57,7 +57,7 @@ else if(myField.selectionStart||myField.selectionStart=='0'){var startPos=myFiel
 +myValue
 +myField.value.substring(endPos,myField.value.length);}else{myField.value+=myValue;}}
 function insert_variable_html(text){SuiteEditor.insert(text);}
-function insert_variable_html_link(text,url){var thelink="<a href='"+url+"' > "+text+" </a>";insert_variable_html(thelink);}
+function insert_variable_html_link(text,url){var thelink="<a href='"+url+"' >"+text+"</a>";insert_variable_html(thelink);}
 function insert_variable(text,elemId,forceIntoSubject){if(typeof forceIntoSubject==='undefined'){forceIntoSubject=false;}
 if(elemId=='template_subject'||forceIntoSubject){var $subject=$('#'+elemId);var value=$subject.val();var caret=parseInt($subject.attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$subject.val(before+$('select[name=variable_name]').val()+after);return;}
 if(!elemId){throw'not element for insert variable';}
