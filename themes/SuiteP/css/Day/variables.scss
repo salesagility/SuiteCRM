@@ -966,7 +966,7 @@ $navbar-menu-link-color: $color-80;
 $navbar-menu-link-color-hover: $color-50;
 $navbar-menu-separator: $color-18;
 $navbar-menu-current-separator: $color-80;
-$navbar-menu-seperator: $navbar-menu-seperator; //needed for backward compatibility
+$navbar-menu-seperator: $navbar-menu-separator; //needed for backward compatibility
 $navbar-menu-current-seperator: $navbar-menu-current-separator; //needed for backward compatibility
 $navbar-mobile-toolbar-color: $color-80;
 
@@ -1001,7 +1001,7 @@ $navbar-alert-body-bg: $main-bg;
 $navbar-alert-title-bg: $color-9;
 $navbar-alert-title-color: $main-font-color;
 $navbar-alert-separator: $navbar-menu-separator;
-$navbar-alert-seperator: $navbar-menu-separator;
+$navbar-alert-seperator: $navbar-alert-separator;
 $navbar-alert-count-bg: $color-4;
 
 $navbar-user-color: $navbar-link-color;

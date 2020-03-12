@@ -234,7 +234,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             $GLOBALS['log']->debug("user_id is: ");
             $GLOBALS['log']->debug($user_id);
             $GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
-            $opp = new Opportunity();
+            $opp = BeanFactory::newBean('Opportunities');
             $where="";
             //build the where clause for the query that matches $user
             $count = count($user_id);
@@ -275,7 +275,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             global $current_user;
             $salesStages = array("Closed Lost"=>$app_list_strings['sales_stage_dom']["Closed Lost"],"Closed Won"=>$app_list_strings['sales_stage_dom']["Closed Won"],"Other"=>$other);
             if ($current_user->getPreference('currency')) {
-                $currency = new Currency();
+                $currency = BeanFactory::newBean('Currencies');
                 $currency->retrieve($current_user->getPreference('currency'));
                 $div = $currency->conversion_rate;
                 $symbol = $currency->symbol;
@@ -416,7 +416,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
 
         $user_id = $ids;
 
-        $opp = new Opportunity();
+        $opp = BeanFactory::newBean('Opportunities');
         $where="";
         //build the where clause for the query that matches $user
         $count = count($user_id);

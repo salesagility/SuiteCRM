@@ -60,6 +60,6 @@ class SurveyQuestionOptionsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['SurveyQuestionOptionsDashlet']['searchFields'];
         $this->columns = $dashletData['SurveyQuestionOptionsDashlet']['columns'];
 
-        $this->seedBean = new SurveyQuestionOptions();
+        $this->seedBean = BeanFactory::newBean('SurveyQuestionOptions');
     }
 }

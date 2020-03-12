@@ -546,7 +546,7 @@ class SugarFolder
 
         $return = array();
 
-        $email = new Email(); //Needed for email specific functions.
+        $email = BeanFactory::newBean('Emails'); //Needed for email specific functions.
 
         while ($a = $this->db->fetchByAssoc($r)) {
             $temp = array();

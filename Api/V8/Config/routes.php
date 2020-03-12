@@ -24,15 +24,15 @@ $app->group('', function () use ($app) {
          * Logout
          */
         $app->post('/logout', LogoutController::class);
-        
+
         $app
             ->get('/search-defs/module/{moduleName}', 'Api\V8\Controller\ListViewSearchController:getModuleSearchDefs')
             ->add($paramsMiddlewareFactory->bind(Param\ListViewSearchParams::class));
-        
+
         $app
             ->get('/listview/columns/{moduleName}', 'Api\V8\Controller\ListViewController:getListViewColumns')
             ->add($paramsMiddlewareFactory->bind(Param\ListViewColumnsParams::class));
-        
+
         $app->get('/current-user', 'Api\V8\Controller\UserController:getCurrentUser');
 
         $app->get('/meta/modules', 'Api\V8\Controller\MetaController:getModuleList');
@@ -43,6 +43,11 @@ $app->group('', function () use ($app) {
         $app
             ->get('/user-preferences/{id}', 'Api\V8\Controller\UserPreferencesController:getUserPreferences')
             ->add($paramsMiddlewareFactory->bind(Param\GetUserPreferencesParams::class));
+
+        /**
+         * Get swagger schema
+         */
+        $app->get('/meta/swagger.json', 'Api\V8\Controller\MetaController:getSwaggerSchema');
 
         /**
          * Get module records
@@ -118,7 +123,7 @@ $app->group('', function () use ($app) {
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(Param\DeleteRelationshipParams::class));
-        
+
         // add custom routes
         $app->group('/custom', function () use ($app) {
             $app = CustomLoader::loadCustomRoutes($app);

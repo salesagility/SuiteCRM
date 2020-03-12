@@ -378,7 +378,6 @@ class LayoutManager
     public function widgetQuery($widget_def, $use_default = false)
     {
         $theclass = $this->getClassFromWidgetDef($widget_def, $use_default);
-        //				_pp($theclass);
         return $theclass->query($widget_def);
     }
 

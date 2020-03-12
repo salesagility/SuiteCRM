@@ -192,3 +192,4 @@ travis.php.ini export-ignore
 /.phpcs.xml export-ignore
 /.gitattributes export-ignore
 /custom/modules/unified_search_modules_display.php export-ignore
+/.env.dist export-ignore

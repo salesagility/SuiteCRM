@@ -9,7 +9,7 @@ use Api\V8\OAuth2\Repository\ClientRepository;
 use Api\V8\OAuth2\Repository\RefreshTokenRepository;
 use Api\V8\OAuth2\Repository\ScopeRepository;
 use Api\V8\OAuth2\Repository\UserRepository;
-use Interop\Container\ContainerInterface as Container;
+use Psr\Container\ContainerInterface as Container;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;

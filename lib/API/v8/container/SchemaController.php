@@ -39,7 +39,7 @@
  * @param $container
  * @return \SuiteCRM\API\v8\Controller\ApiController
  */
-use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Slim\Exception\ContainerValueNotFoundException;
 

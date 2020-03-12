@@ -258,7 +258,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      */
     public function createUser($name)
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->user_name = $name;
         foreach ($this->ldapUserInfo as $key=>$value) {
             $user->$key = $value;
@@ -292,7 +292,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         }
 
         global $login_error;
-        $GLOBALS['ldap_config']  = new Administration();
+        $GLOBALS['ldap_config']  = BeanFactory::newBean('Administration');
         $GLOBALS['ldap_config']->retrieveSettings('ldap');
         $GLOBALS['log']->debug("Starting user load for ". $name);
         if (empty($name) || empty($password)) {

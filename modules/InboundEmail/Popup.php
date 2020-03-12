@@ -105,7 +105,7 @@ if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] =
     $useSsl = true;
 }
         
-$ie                 = new InboundEmail();
+$ie                 = BeanFactory::newBean('InboundEmail');
 if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
 }
