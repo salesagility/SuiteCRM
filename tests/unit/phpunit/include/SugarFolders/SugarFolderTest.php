@@ -595,12 +595,16 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetUserFolders()
     {
+        $this->markTestIncomplete(
+            'This test requires a review'
+        );
+
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
 
-        $parentFolderOne->name        = 'Parent Folder';
+        $parentFolderOne->name = 'Parent Folder';
         $parentFolderOne->folder_type = 'inbound';
 
         $saved = $parentFolderOne->save();
@@ -619,29 +623,29 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $childFolder = new SugarFolder($user);
 
         $fields = array(
-            'name'             => 'Child Folder',
-            'parent_folder'    => $parentFolderOne->id
+            'name' => 'Child Folder',
+            'parent_folder' => $parentFolderOne->id,
         );
 
         $subChildFolderOne = new SugarFolder($user);
 
         $fields = array(
-            'name'             => 'Sub Child Folder One',
-            'parent_folder'    => $childFolder->id
+            'name' => 'Sub Child Folder One',
+            'parent_folder' => $childFolder->id,
         );
 
         $subChildFolderTwo = new SugarFolder($user);
 
         $fields = array(
-            'name'             => 'Sub Child Folder Two',
-            'parent_folder'    => $childFolder->id
+            'name' => 'Sub Child Folder Two',
+            'parent_folder' => $childFolder->id,
         );
 
         $anotherChildFolder = new SugarFolder($user);
 
         $fields = array(
-            'name'             => 'Another Child Folder',
-            'parent_folder'    => $parentFolderOne->id
+            'name' => 'Another Child Folder',
+            'parent_folder' => $parentFolderOne->id,
         );
 
         $subs = array($anotherChildFolder->id, $parentFolderOne->id, $childFolder->id, $subChildFolderOne->id, $subChildFolderTwo->id);

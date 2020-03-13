@@ -94,8 +94,9 @@ class ViewBackups extends SugarView
         
             $backup_dir = $_REQUEST['backup_dir'];
             $backup_zip = $_REQUEST['backup_zip'];
-            if (strpos($backup_dir, 'phar://') === 0) {
+            if (strpos($backup_dir, 'phar://') !== false) {
                 $errors[] = $mod_strings['LBL_BACKUP_DIRECTORY_WRITABLE'];
+
                 return $errors;
             }
             if ($run == "confirm") {
