@@ -78,7 +78,7 @@ function implodeVersion($version, $size = 0, $lastSymbol = '', $delimiter = '')
     $parsedVersion = array_slice($parsedVersion, 0, $size);
     if ($lastSymbol !== '') {
         array_pop($parsedVersion);
-        array_push($parsedVersion, $lastSymbol);
+        $parsedVersion[] = $lastSymbol;
     }
 
     return implode($delimiter, $parsedVersion);
@@ -176,8 +176,6 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
 function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
 {
     logThis('Starting file copy process...', $path);
-    global $sugar_version;
-    $backwardModules='';
 
     $modules = getAllModules();
     $backwardModules = array();
@@ -192,13 +190,13 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
         }
     }
 
+    $zipPath = clean_path($unzip_dir . '/' . $zip_from_dir);
     $newFiles = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator(
-            clean_path($unzip_dir . '/' . $zip_from_dir),
+            $zipPath,
             RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST
         )
     );
-    $zipPath = clean_path($unzip_dir . '/' . $zip_from_dir);
 
     // handle special do-not-overwrite conditions
     $doNotOverwrite = array();
@@ -236,8 +234,6 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
                 $_SESSION['sugar_version_file'] = $srcFile;
                 continue;
             }
-
-            //logThis('Copying file to destination: ' . $targetFile, $path);
 
             if (!copy($srcFile, $targetFile)) {
                 logThis('*** ERROR: could not copy file: ' . $targetFile, $path);
@@ -723,10 +719,7 @@ function deleteChance()
  */
 function upgradeUWFiles($file)
 {
-    global $base_tmp_upgrade_dir;
-
     $cacheUploadUpgradesTemp = mk_temp_dir(sugar_cached("upgrades/temp"));
-    $_SESSION['unzip_dir'] = strstr($cacheUploadUpgradesTemp, $base_tmp_upgrade_dir);
 
     unzip($file, $cacheUploadUpgradesTemp);
 
@@ -1140,7 +1133,7 @@ function checkSystemCompliance()
 
     if (check_php_version() === 1) {
         $ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} ".constant('PHP_VERSION')." )</span></b>";
-    };
+    }
 
     // database and connect
     $canInstall = $db->canInstall();
@@ -1346,7 +1339,7 @@ function updateQuickCreateDefs()
             continue;
         }
         if (file_exists('modules/' . $e . '/metadata/studio.php')) {
-            array_push($studio_modules, $e);
+            $studio_modules[] = $e;
         }
     }
 
@@ -2298,7 +2291,6 @@ function upgradeSugarCache($file)
  */
 function unlinkUploadFiles()
 {
-    return;
     //	logThis('at unlinkUploadFiles()');
 //
 //	if(isset($_SESSION['install_file']) && !empty($_SESSION['install_file'])) {
@@ -2830,7 +2822,7 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
                             if (!$resumeAfterFound) {
                                 if (strpos($query, ",") != false) {
                                     $queArray = explode(",", $query);
-                                    for ($i=0; $i<count($resumeFromQuery); $i++) {
+                                    for ($i=0, $iMax = count($resumeFromQuery); $i< $iMax; $i++) {
                                         if (strcasecmp(trim($resumeFromQuery[$i]), trim($queArray[$i]))==0) {
                                             $resumeAfterFound = true;
                                         } else {
@@ -3118,7 +3110,7 @@ function didThisStepRunBefore($step, $SubStep='')
     if (file_exists($upgrade_progress_file)) {
         include($upgrade_progress_file);
         if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) >0) {
-            for ($i=1; $i<=count($upgrade_config); $i++) {
+            for ($i=1, $iMax = count($upgrade_config); $i<= $iMax; $i++) {
                 if (is_array($upgrade_config[$i])) {
                     foreach ($upgrade_config[$i] as $key=>$val) {
                         if ($key==$step) {
