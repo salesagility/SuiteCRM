@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUser.php');
+require_once __DIR__ . '/../../../../modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUser.php';
 
 /**
  * Class SAML2AuthenticateUser
@@ -54,42 +54,51 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
      * Does the actual authentication of the user and returns an id that will be used
      * to load the current user (loadUserOnSession)
      *
-     * @param STRING $name
-     * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @param string $name
+     * @param string $password
+     * @param bool $fallback - is this authentication a fallback from a failed authentication
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (SAML2 default is false)
-     * @return STRING id - used for loading the user
+     * @return string id - used for loading the user
      */
-    public function authenticateUser($name, $password, $fallback=false, $checkPasswordMD5 = false)
+    public function authenticateUser($name, $password, $fallback = false, $checkPasswordMD5 = false)
     {
-        $row = User::findUserPassword($name, null, "(portal_only IS NULL OR portal_only !='1') AND (is_group IS NULL OR is_group !='1') AND status !='Inactive'", $checkPasswordMD5);
+        if (!isset($_SESSION['samlNameId']) || $_SESSION['samlNameId'] !== $name) {
+            return '';
+        }
+
+        $row = User::findUserPassword($name, null,
+            "(portal_only IS NULL OR portal_only !='1') AND (is_group IS NULL OR is_group !='1') AND status !='Inactive'",
+            $checkPasswordMD5);
 
         // set the ID in the seed user.  This can be used for retrieving the full user record later
         //if it's falling back on Sugar Authentication after the login failed on an external authentication return empty if the user has external_auth_disabled for them
         if (empty($row) || empty($row['external_auth_only'])) {
             return '';
-        } else {
-            return $row['id'];
         }
+
+        return $row['id'];
     }
 
     /**
      * this is called when a user logs in
      *
-     * @param STRING $name
-     * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @param string $name
+     * @param string $password
+     * @param bool $fallback - is this authentication a fallback from a failed authentication
+     * @param array $PARAMS
      * @return boolean
      */
     public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array())
     {
-        $GLOBALS['log']->debug("Starting user load for ". $name);
+        $GLOBALS['log']->debug('Starting user load for ' . $name);
         $user_id = $this->authenticateUser($name, null, $fallback);
         if (empty($user_id)) {
-            $GLOBALS['log']->fatal('SECURITY: User authentication for '.$name.' failed');
+            $GLOBALS['log']->fatal('SECURITY: User authentication for ' . $name . ' failed');
+
             return false;
         }
         $this->loadUserOnSession($user_id);
+
         return true;
     }
 }

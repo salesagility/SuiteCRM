@@ -122,7 +122,7 @@ class ImportViewStep3 extends ImportView
 
         $uploadFileName = $_REQUEST['file_name'];
 
-        if (strpos($uploadFileName, 'phar://') === 0) {
+        if (strpos($uploadFileName, 'phar://') !== false) {
             return;
         }
 
