@@ -116,7 +116,13 @@ class ACLRole extends SugarBean
             "FROM acl_roles ".
             "INNER JOIN acl_roles_users ON acl_roles_users.user_id = '$user_id' ".
                 "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
-            "WHERE acl_roles.deleted=0 ";
+                "WHERE acl_roles.deleted=0 ".
+ 			"UNION " .
+				"SELECT acl_roles.name " .
+				"FROM acl_roles " .
+				"INNER JOIN securitygroups_users ON securitygroups_users.user_id = '$user_id' AND  securitygroups_users.deleted = 0 ".
+				"INNER JOIN securitygroups_acl_roles ON securitygroups_acl_roles.role_id=acl_roles.id AND securitygroups_users.securitygroup_id = securitygroups_acl_roles.securitygroup_id and securitygroups_acl_roles.deleted = 0 ".
+				"WHERE acl_roles.deleted=0";
 
         $result = DBManagerFactory::getInstance()->query($query);
         $user_roles = array();
@@ -152,7 +158,13 @@ class ACLRole extends SugarBean
                 "FROM acl_roles ".
                 "INNER JOIN acl_roles_users ON acl_roles_users.user_id = '$user_id' ".
                     "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
-                "WHERE acl_roles.deleted=0 ";
+                "WHERE acl_roles.deleted=0 ".
+ 			"UNION " .
+				"SELECT acl_roles.* " .
+				"FROM acl_roles " .
+				"INNER JOIN securitygroups_users ON securitygroups_users.user_id = '$user_id' AND  securitygroups_users.deleted = 0 ".
+				"INNER JOIN securitygroups_acl_roles ON securitygroups_acl_roles.role_id=acl_roles.id AND securitygroups_users.securitygroup_id = securitygroups_acl_roles.securitygroup_id and securitygroups_acl_roles.deleted = 0 ".
+				"WHERE acl_roles.deleted=0";
 
             $result = DBManagerFactory::getInstance()->query($query);
             $user_roles = array();
