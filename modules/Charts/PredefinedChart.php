@@ -409,20 +409,20 @@ class PredefinedChart
                 "AND opportunities.deleted=0";
         $query = "SELECT sales_stage," .
                 $dbInstance->convert(
-                        'opportunities.date_closed',
-                        'date_format',
-                        array("'%Y-%m'"),
-                        array("'YYYY-MM'")
-                    ) . " as m, " .
+                    'opportunities.date_closed',
+                    'date_format',
+                    array("'%Y-%m'"),
+                    array("'YYYY-MM'")
+                ) . " as m, " .
                 "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
         $query .= "WHERE ".$where;
         $query .= " GROUP BY sales_stage," .
                 $dbInstance->convert(
-                        'opportunities.date_closed',
-                        'date_format',
-                        array("'%Y-%m'"),
-                        array("'YYYY-MM'")
-                    ) . " ORDER BY m";
+                    'opportunities.date_closed',
+                    'date_format',
+                    array("'%Y-%m'"),
+                    array("'YYYY-MM'")
+                ) . " ORDER BY m";
         return $query;
     }
 
