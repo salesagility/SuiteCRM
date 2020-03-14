@@ -451,10 +451,18 @@ echo get_validate_chart_js();
         $opp = BeanFactory::newBean('Opportunities');
         //build the where clause for the query that matches $date_start and $date_end
         $dbInstance = DBManagerFactory::getInstance();
-        $where .= "AND opportunities.date_closed >= ".$dbInstance->convert("'".$date_start."'", 'date')." AND opportunities.date_closed <= ".$dbInstance->convert("'".$date_end."'", 'date')." AND opportunities.deleted=0";
-        $query = "SELECT sales_stage,".$dbInstance->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
+        $where .= "AND opportunities.date_closed >= " .
+                $dbInstance->convert("'".$date_start."'", 'date')." " .
+                "AND opportunities.date_closed <= " . $dbInstance->convert("'".$date_end."'", 'date') . " " .
+                "AND opportunities.deleted=0";
+        $query = "SELECT sales_stage," .
+                $dbInstance->convert('opportunities.date_closed', 'date_format',
+                        array("'%Y-%m'"), array("'YYYY-MM'")) . " as m, " .
+                "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
         $query .= "WHERE ".$where;
-        $query .= " GROUP BY sales_stage,".$dbInstance->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))."ORDER BY m";
+        $query .= " GROUP BY sales_stage," .
+                $dbInstance->convert('opportunities.date_closed', 'date_format',
+                        array("'%Y-%m'"), array("'YYYY-MM'")) . " ORDER BY m";
         return $query;
     }
 

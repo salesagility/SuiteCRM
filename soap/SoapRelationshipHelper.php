@@ -345,7 +345,8 @@ function server_save_relationships($list, $from_date, $to_date)
         $insert = "INSERT INTO $table_name $insert) VALUES $insert_values)";
         $update = "UPDATE $table_name SET $update WHERE id=";
         $delete = "DELETE FROM $table_name WHERE id=";
-        $select_by_id_date = "SELECT id FROM $table_name WHERE id ='".$dbInstance->quote($id)."' AND date_modified > $from_date AND date_modified<= $to_date";
+        $select_by_id_date = "SELECT id FROM $table_name WHERE id ='".$dbInstance->quote($id)."' " .
+                "AND date_modified > $from_date AND date_modified<= $to_date";
         $select_by_id = "SELECT id FROM $table_name WHERE id ='".$dbInstance->quote($id)."'";
         $select_by_values = "SELECT id FROM $table_name WHERE $select_values";
         $updated = false;

@@ -100,9 +100,17 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     }
 
     $dbInstance = DBManagerFactory::getInstance();
-    $date_query = "(m1.date_modified > " . $dbInstance->convert("'".$dbInstance->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". $dbInstance->convert("'".$dbInstance->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
+    $date_query = "(m1.date_modified > " .
+            $dbInstance->convert("'".$dbInstance->quote($from_date)."'", 'datetime'). " " .
+            "AND m1.date_modified <= " .
+                    $dbInstance->convert("'".$dbInstance->quote($to_date)."'", 'datetime')." " .
+            "AND {0}.deleted = $deleted)";
     if (isset($deletion_date) && !empty($deletion_date)) {
-        $date_query .= " OR ({0}.date_modified > " . $dbInstance->convert("'".$dbInstance->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". $dbInstance->convert("'".$dbInstance->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
+        $date_query .= " OR ({0}.date_modified > " .
+                $dbInstance->convert("'".$dbInstance->quote($deletion_date)."'", 'datetime'). " " .
+                "AND {0}.date_modified <= ".
+                        $dbInstance->convert("'".$dbInstance->quote($to_date)."'", 'datetime')." " .
+                "AND {0}.deleted = 1)";
     }
 
     $in = '';

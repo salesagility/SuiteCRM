@@ -245,7 +245,8 @@ EOD;
     {
         $dbInstace = DBManagerFactory::getInstance();
         $query = "SELECT sales_stage,".
-            $dbInstace->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
+            $dbInstace->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
+                " as m, " .
             "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
         $query .= " WHERE opportunities.date_closed >= ".$dbInstace->convert("'".$this->obm_date_start."'", 'date') .
             " AND opportunities.date_closed <= ".$dbInstace->convert("'".$this->obm_date_end."'", 'date') .
