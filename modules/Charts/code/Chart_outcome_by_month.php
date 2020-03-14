@@ -282,7 +282,13 @@ echo get_validate_chart_js();
                     ) . " as m, " .
                     "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
             $query .= "WHERE ".$where;
-            $query .= " GROUP BY sales_stage,".$dbInstance->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))."ORDER BY m";
+            $query .= " GROUP BY sales_stage, " .
+                    $dbInstance->convert(
+                        'opportunities.date_closed',
+                        'date_format',
+                        array("'%Y-%m'"),
+                        array("'YYYY-MM'")
+                    ) . " ORDER BY m";
             //Now do the db queries
             //query for opportunity data that matches $datay and $user
 
