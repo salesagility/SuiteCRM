@@ -85,7 +85,7 @@ $contactForm = new ContactFormBase();
 $GLOBALS['check_notify'] = false;
 
 
-$query = 'select id, first_name, last_name, title from contacts where deleted=0 ';
+$query = 'select contacts.id, first_name, last_name, title, accounts.name, primary_address_city from contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id and accounts_contacts.deleted = 0 LEFT JOIN accounts ON accounts_contacts.account_id=accounts.id AND accounts_contacts.deleted=0 AND accounts.deleted=0 where contacts.deleted=0 ';
 $duplicates = $_POST['duplicate'];
 $count = count($duplicates);
 $db = DBManagerFactory::getInstance();
@@ -98,7 +98,7 @@ if ($count > 0) {
         }
         $first = false;
         $duplicateIdQuoted = $db->quote($duplicate_id);
-        $query .= "id='$duplicateIdQuoted' ";
+        $query .= "contacts.id='$duplicateIdQuoted' ";
     }
     $query .= ')';
 }
