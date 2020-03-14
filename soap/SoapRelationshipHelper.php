@@ -279,10 +279,10 @@ function server_save_relationships($list, $from_date, $to_date)
 {
     require_once('include/utils/db_utils.php');
     global  $beanList, $beanFiles;
-    $from_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
-    $to_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime');
+    $dbInstance = DBManagerFactory::getInstance();
+    $from_date = $dbInstance->convert("'".$dbInstance->quote($from_date)."'", 'datetime');
+    $to_date = $dbInstance->convert("'".$dbInstance->quote($to_date)."'", 'datetime');
     global $sugar_config;
-    $db = DBManagerFactory::getInstance();
 
     $ids = array();
     $add = 0;
@@ -302,12 +302,12 @@ function server_save_relationships($list, $from_date, $to_date)
         $resolve = 1;
 
         foreach ($record['name_value_list'] as $name_value) {
-            $name = DBManagerFactory::getInstance()->quote($name_value['name']);
+            $name = $dbInstance->quote($name_value['name']);
 
             if ($name == 'date_modified') {
                 $value = $to_date;
             } else {
-                $value = DBManager::convert("'".DBManagerFactory::getInstance()->quote($name_value['value'])."'", 'varchar');
+                $value = $dbInstance->convert("'".$dbInstance->quote($name_value['value'])."'", 'varchar');
             }
             if ($name != 'resolve') {
                 if (empty($insert)) {
@@ -345,26 +345,26 @@ function server_save_relationships($list, $from_date, $to_date)
         $insert = "INSERT INTO $table_name $insert) VALUES $insert_values)";
         $update = "UPDATE $table_name SET $update WHERE id=";
         $delete = "DELETE FROM $table_name WHERE id=";
-        $select_by_id_date = "SELECT id FROM $table_name WHERE id ='".DBManagerFactory::getInstance()->quote($id)."' AND date_modified > $from_date AND date_modified<= $to_date";
-        $select_by_id = "SELECT id FROM $table_name WHERE id ='".DBManagerFactory::getInstance()->quote($id)."'";
+        $select_by_id_date = "SELECT id FROM $table_name WHERE id ='".$dbInstance->quote($id)."' AND date_modified > $from_date AND date_modified<= $to_date";
+        $select_by_id = "SELECT id FROM $table_name WHERE id ='".$dbInstance->quote($id)."'";
         $select_by_values = "SELECT id FROM $table_name WHERE $select_values";
         $updated = false;
 
 
-        $result = $db->query($select_by_id_date);
+        $result = $dbInstance->query($select_by_id_date);
         //see if we have a matching id in the date_range
-        if (!($row = $db->fetchByAssoc($result))) {
+        if (!($row = $dbInstance->fetchByAssoc($result))) {
             //if not lets check if we have one that matches the values
 
-            $result = $db->query($select_by_values);
-            if (!($row = $db->fetchByAssoc($result))) {
-                $result = $db->query($select_by_id);
-                if ($row = $db->fetchByAssoc($result)) {
-                    $db->query($update ."'".DBManagerFactory::getInstance()->quote($row['id'])."'");
+            $result = $dbInstance->query($select_by_values);
+            if (!($row = $dbInstance->fetchByAssoc($result))) {
+                $result = $dbInstance->query($select_by_id);
+                if ($row = $dbInstance->fetchByAssoc($result)) {
+                    $dbInstance->query($update ."'".$dbInstance->quote($row['id'])."'");
                     $ids[] = $row['id'];
                     $modify++;
                 } else {
-                    $db->query($insert);
+                    $dbInstance->query($insert);
                     $add++;
                     $ids[] = $row['id'];
                 }

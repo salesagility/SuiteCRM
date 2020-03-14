@@ -348,8 +348,9 @@ echo get_validate_chart_js();
             }
 
             //build the where clause for the query that matches $date_start and $date_end
-            $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
-						AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
+            $dbInstance = DBManagerFactory::getInstance();
+            $where .= "	AND opportunities.date_closed >= ". $dbInstance->convert("'".$date_start."'", 'date') ."
+						AND opportunities.date_closed <= ". $dbInstance->convert("'".$date_end."'", 'date');
             $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
             //Now do the db queries
@@ -595,8 +596,9 @@ echo get_validate_chart_js();
         }
 
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
-					AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
+        $dbInstance = DBManagerFactory::getInstance();
+        $where .= "	AND opportunities.date_closed >= ". $dbInstance->convert("'".$date_start."'", 'date') ."
+					AND opportunities.date_closed <= ". $dbInstance->convert("'".$date_end."'", 'date');
         $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
         //Now do the db queries

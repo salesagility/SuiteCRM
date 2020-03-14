@@ -243,17 +243,18 @@ EOD;
      */
     protected function constructQuery()
     {
+        $dbInstace = DBManagerFactory::getInstance();
         $query = "SELECT sales_stage,".
-            DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
+            $dbInstace->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
             "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
-        $query .= " WHERE opportunities.date_closed >= ".DBManager::convert("'".$this->obm_date_start."'", 'date') .
-            " AND opportunities.date_closed <= ".DBManager::convert("'".$this->obm_date_end."'", 'date') .
+        $query .= " WHERE opportunities.date_closed >= ".$dbInstace->convert("'".$this->obm_date_start."'", 'date') .
+            " AND opportunities.date_closed <= ".$dbInstace->convert("'".$this->obm_date_end."'", 'date') .
             " AND opportunities.deleted=0";
         if (count($this->obm_ids) > 0) {
             $query .= " AND opportunities.assigned_user_id IN ('" . implode("','", $this->obm_ids) . "')";
         }
         $query .= " GROUP BY sales_stage,".
-            DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
+            $dbInstace->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
             " ORDER BY m";
 
         return $query;

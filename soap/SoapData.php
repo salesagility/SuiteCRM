@@ -99,18 +99,19 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $sugar_config['list_max_entries_per_page'] = $max_results;
     }
 
-    $date_query = "(m1.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
+    $dbInstance = DBManagerFactory::getInstance();
+    $date_query = "(m1.date_modified > " . $dbInstance->convert("'".$dbInstance->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". $dbInstance->convert("'".$dbInstance->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
     if (isset($deletion_date) && !empty($deletion_date)) {
-        $date_query .= " OR ({0}.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
+        $date_query .= " OR ({0}.date_modified > " . $dbInstance->convert("'".$dbInstance->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". $dbInstance->convert("'".$dbInstance->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
     }
 
     $in = '';
     if (isset($ids) && !empty($ids)) {
         foreach ($ids as $value) {
             if (empty($in)) {
-                $in .= "('" . DBManagerFactory::getInstance()->quote($value) . "'";
+                $in .= "('" . $dbInstance->quote($value) . "'";
             } else {
-                $in .= ",'" . DBManagerFactory::getInstance()->quote($value) . "'";
+                $in .= ",'" . $dbInstance->quote($value) . "'";
             }
         }
         $in .=')';
@@ -125,7 +126,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         //if(isset($in) && !empty($in)){
         $query .= " AND";
         //}
-        $query .= " m2.id = '".DBManagerFactory::getInstance()->quote($module_id)."'";
+        $query .= " m2.id = '".$dbInstance->quote($module_id)."'";
     }
     if ($related_module == 'Meetings' || $related_module == 'Calls') {
         $query = string_format($query, array('m1'));

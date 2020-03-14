@@ -228,7 +228,7 @@ class campaign_charts
             $focus = BeanFactory::newBean('Campaigns');
             $focus->retrieve($campaign_id);
             $opp_count=0;
-            $opp_query  = "select count(*) opp_count,sum(" . DBManager::convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
+            $opp_query  = "select count(*) opp_count,sum(" . DBManagerFactory::getInstance()->convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
             $opp_query .= " from opportunities";
             $opp_query .= " where campaign_id='$campaign_id'";
             $opp_query .= " and sales_stage='Prospecting'";
@@ -236,7 +236,7 @@ class campaign_charts
 
             $opp_result=$focus->db->query($opp_query);
             $opp_data=$focus->db->fetchByAssoc($opp_result);
-//            if (empty($opp_data['opp_count'])) $opp_data['opp_count']=0;
+            //if (empty($opp_data['opp_count'])) $opp_data['opp_count']=0;
             if (empty($opp_data['total_value'])) {
                 $opp_data['total_value']=0;
             }
@@ -383,7 +383,7 @@ class campaign_charts
             $focus = BeanFactory::newBean('Campaigns');
             $focus->retrieve($campaign_id);
             $opp_count=0;
-            $opp_query  = "select count(*) opp_count,sum(" . DBManager::convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
+            $opp_query  = "select count(*) opp_count,sum(" . DBManagerFactory::getInstance()->convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
             $opp_query .= " from opportunities";
             $opp_query .= " where campaign_id='$campaign_id'";
             $opp_query .= " and sales_stage='Prospecting'";
@@ -391,7 +391,7 @@ class campaign_charts
 
             $opp_result=$focus->db->query($opp_query);
             $opp_data=$focus->db->fetchByAssoc($opp_result);
-//            if (empty($opp_data['opp_count'])) $opp_data['opp_count']=0;
+            //if (empty($opp_data['opp_count'])) $opp_data['opp_count']=0;
             if (empty($opp_data['total_value'])) {
                 $opp_data['total_value']=0;
             }

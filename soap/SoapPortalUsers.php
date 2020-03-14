@@ -273,18 +273,19 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
                         // MFH - Added Support For Custom Fields in Searches
                         $cstm = isset($sugar->field_defs[$name]['source']) && $sugar->field_defs[$name]['source'] == 'custom_fields' ? '_cstm' : '';
 
+                        $dbInstance = DBManagerFactory::getInstance();
                         $where .=  "$sugar->table_name$cstm.$name $operator ";
                         if ($sugar->field_defs['name']['type'] == 'datetime') {
-                            $where .= DBManager::convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
+                            $where .= $dbInstance->convert("'".$dbInstance->quote($value)."'", 'datetime');
                         } else {
                             if (empty($value)) {
                                 $tmp = array();
                                 foreach ($value_array as $v) {
-                                    $tmp[] = DBManagerFactory::getInstance()->quote($v);
+                                    $tmp[] = $dbInstance->quote($v);
                                 }
                                 $where .= "('" . implode("', '", $tmp) . "')";
                             } else {
-                                $where .= "'".DBManagerFactory::getInstance()->quote($value)."'";
+                                $where .= "'".$dbInstance->quote($value)."'";
                             }
                         }
                     }

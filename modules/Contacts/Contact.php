@@ -304,7 +304,7 @@ class Contact extends Person implements EmailInterface
         $custom_join = $this->getCustomJoin();
         // MFH - BUG #14208 creates alias name for select
         $select_query = "SELECT ";
-        $select_query .= DBManager::concat($this->table_name, array('first_name', 'last_name')) . " name, ";
+        $select_query .= DBManagerFactory::getInstance()->concat($this->table_name, array('first_name', 'last_name')) . " name, ";
         $select_query .= "
 				$this->table_name.*,
                 accounts.name as account_name,

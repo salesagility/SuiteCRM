@@ -308,26 +308,27 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
         }
 
         // Cast to integer
+        $dbInstance = DBManagerFactory::getInstance();
         $deleted = (int)$deleted;
-        $query = "(m1.date_modified > " . DBManager::convert(
-            "'" . DBManagerFactory::getInstance()->quote($from_date) . "'",
+        $query = "(m1.date_modified > " . $dbInstance->convert(
+            "'" . $dbInstance->quote($from_date) . "'",
             'datetime'
-        ) . " AND m1.date_modified <= " . DBManager::convert(
-            "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
+        ) . " AND m1.date_modified <= " . $dbInstance->convert(
+            "'" . $dbInstance->quote($to_date) . "'",
             'datetime'
                 ) . " AND {0}.deleted = $deleted)";
         if (isset($deletion_date) && !empty($deletion_date)) {
-            $query .= " OR ({0}.date_modified > " . DBManager::convert(
-                "'" . DBManagerFactory::getInstance()->quote($deletion_date) . "'",
+            $query .= " OR ({0}.date_modified > " . $dbInstance->convert(
+                "'" . $dbInstance->quote($deletion_date) . "'",
                 'datetime'
-            ) . " AND {0}.date_modified <= " . DBManager::convert(
-                "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
+            ) . " AND {0}.date_modified <= " . $dbInstance->convert(
+                "'" . $dbInstance->quote($to_date) . "'",
                 'datetime'
                     ) . " AND {0}.deleted = 1)";
         }
 
         if (!empty($current_user->id)) {
-            $query .= " AND m2.id = '" . DBManagerFactory::getInstance()->quote($current_user->id) . "'";
+            $query .= " AND m2.id = '" . $dbInstance->quote($current_user->id) . "'";
         }
 
         //if($related_module == 'Meetings' || $related_module == 'Calls' || $related_module = 'Contacts'){
