@@ -153,7 +153,7 @@ array(
             'label' => 'LBL_BILLING_CONTACT',
             'displayParams' =>
             array(
-              'initial_filter' => '&account_name="+this.form.{$fields.billing_account.name}.value+"',
+              'initial_filter' => '&account_name="+this.form.{$fields.billing_account.name}.value+"&account_id="+this.form.{$fields.billing_account_id.name}.value+"',
             ),
           ),
           1 => '',
