@@ -369,10 +369,6 @@ installStatus($mod_strings['STAT_CREATE_DEFAULT_SETTINGS']);
     installerHook('post_createDefaultSchedulers');
 
 
-installLog($mod_strings['LBL_CREATE_DEFAULT_ENC_KEY']);
-createEncryptionKey();
-
-
     echo $mod_strings['LBL_PERFORM_DONE'];
 
 
