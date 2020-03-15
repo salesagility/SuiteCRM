@@ -2278,26 +2278,6 @@ function create_writable_dir($dirname)
 }
 
 /**
- * Create default OAuth2 encryption key
- * @throws Exception
- */
-function createEncryptionKey()
-{
-    $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
-    $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
-    $configFileContents = str_replace(
-        "OAUTH2_ENCRYPTION_KEY = '",
-        $key,
-        $apiConfig
-    );
-    file_put_contents(
-        'Api/Core/Config/ApiConfig.php',
-        $configFileContents,
-        LOCK_EX
-    );
-}
-
-/**
  * Enable the InsideView connector for the four default modules.
  */
 function enableInsideViewConnector()
