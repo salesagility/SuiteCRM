@@ -172,6 +172,7 @@ function make_sugar_config(&$sugar_config)
             'l s f' => 'l s f',
             'l f s' => 'l f s',
         ) : $nameFormats,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
@@ -387,6 +388,7 @@ function get_sugar_config_defaults()
         'list_max_entries_per_subpanel' => 10,
         'lock_default_user_name' => false,
         'log_memory_usage' => false,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
