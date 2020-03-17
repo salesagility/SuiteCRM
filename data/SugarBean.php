@@ -2067,12 +2067,12 @@ class SugarBean
             // Link2 style
             if ($begin_index != 0 || $end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by)) {
                 return array_values($this->$field_name->getBeans(array(
-                        'where' => $optional_where,
-                        'deleted' => $deleted,
-                        'offset' => $begin_index,
-                        'limit' => ($end_index - $begin_index),
-                        'order_by' => $order_by
-                    )));
+                    'where' => $optional_where,
+                    'deleted' => $deleted,
+                    'offset' => $begin_index,
+                    'limit' => ($end_index - $begin_index),
+                    'order_by' => $order_by
+                )));
             }
             return array_values($this->$field_name->getBeans());
         }
