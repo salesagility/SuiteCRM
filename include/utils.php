@@ -1060,6 +1060,11 @@ function return_app_list_strings_language($language)
     // Check for cached value
     $cache_entry = sugar_cache_retrieve($cache_key);
     if (!empty($cache_entry)) {
+
+        if (!empty($sugar_config['disable_translations'])) {
+            return disable_translations($cache_entry);
+        }
+
         return $cache_entry;
     }
 
@@ -1120,6 +1125,12 @@ function return_app_list_strings_language($language)
     $return_value = $app_list_strings;
     $app_list_strings = $temp_app_list_strings;
 
+    if (!empty($sugar_config['disable_translations'])) {
+        $app_list_strings = disable_translations($app_list_strings);
+
+        return disable_translations($return_value);
+    }
+
     sugar_cache_put($cache_key, $return_value);
 
     return $return_value;
@@ -1178,6 +1189,11 @@ function return_application_language($language)
     // Check for cached value
     $cache_entry = sugar_cache_retrieve($cache_key);
     if (!empty($cache_entry)) {
+
+        if (!empty($sugar_config['disable_translations'])) {
+            return disable_translations($cache_entry);
+        }
+
         return $cache_entry;
     }
 
@@ -1250,6 +1266,12 @@ function return_application_language($language)
     $return_value = $app_strings;
     $app_strings = $temp_app_strings;
 
+    if (!empty($sugar_config['disable_translations'])) {
+        $app_strings = disable_translations($app_strings);
+
+        return disable_translations($return_value);
+    }
+
     sugar_cache_put($cache_key, $return_value);
 
     return $return_value;
@@ -1277,11 +1299,17 @@ function return_module_language($language, $module, $refresh = false)
         return array();
     }
 
+
     if (!$refresh) {
         $cache_key = LanguageManager::getLanguageCacheKey($module, $language);
         // Check for cached value
         $cache_entry = sugar_cache_retrieve($cache_key);
         if (!empty($cache_entry) && is_array($cache_entry)) {
+
+            if (!empty($sugar_config['disable_translations'])) {
+                return disable_translations($cache_entry);
+            }
+
             return $cache_entry;
         }
     }
@@ -1335,11 +1363,38 @@ function return_module_language($language, $module, $refresh = false)
         $mod_strings = $temp_mod_strings;
     }
 
-    $cache_key = LanguageManager::getLanguageCacheKey($module, $language);
-    sugar_cache_put($cache_key, $return_value);
+    if (!empty($sugar_config['disable_translations'])) {
+        $mod_strings = disable_translations($mod_strings);
+
+        return disable_translations($return_value);
+    } else {
+        $cache_key = LanguageManager::getLanguageCacheKey($module, $language);
+        sugar_cache_put($cache_key, $return_value);
+    }
 
     return $return_value;
 }
+
+function disable_translations($strings)
+{
+
+    if (empty($strings)) {
+        return $strings;
+    }
+
+    $unTranslated = [];
+
+    foreach ($strings as $languageKey => $languageValue) {
+        $unTranslated[$languageKey] = $languageKey;
+
+        if (is_array($languageValue)) {
+            $unTranslated[$languageKey] = disable_translations($languageValue);
+        }
+    }
+
+    return $unTranslated;
+}
+
 
 /** This function retrieves an application language file and returns the array of strings included in the $mod_list_strings var.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
