@@ -4117,9 +4117,14 @@ function string_format($format, $args, $escape = true)
                 }
             }
             $args[$i] = implode("','", $values);
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+       }
+        else if ($escape){       
+            $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
         }
-
-        $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
+        else{       
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+        }
     }
 
     return $result;
