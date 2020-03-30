@@ -2062,6 +2062,7 @@
     width: 28%;
     float:right;
     padding-right: 0.5%;
+    margin-top: 6px;
   }
 
   .desktop-toolbar .navbar-brand-container {
@@ -2192,7 +2193,6 @@
     display: inline-block;
     visibility: visible;
     text-align: right;
-    margin-top: 6px;
   }
 }
 
@@ -2369,7 +2369,7 @@
   }
   .desktop-bar {
     width: 39%;
-    padding-top: 10px;
+    padding-top: 4px;
   }
   .navbar-form.searchform .input-group-btn {
     background: $navbar-search-bg;
