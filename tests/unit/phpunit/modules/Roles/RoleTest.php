@@ -10,13 +10,13 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testRole()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         $this->assertInstanceOf('Role', $role);
         $this->assertInstanceOf('SugarBean', $role);
@@ -32,7 +32,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         //test without setting name
         $this->assertEquals(null, $role->get_summary_text());
@@ -44,7 +44,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         //test with empty string params
         $expected = ' SELECT  roles.*  FROM roles  where roles.deleted=0';
@@ -59,7 +59,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSet_module_relationshipAndQuery_modules()
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         $role->id = 1;
         $mod_ids = array('Accounts', 'Leads');
@@ -78,7 +78,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function clear_module_relationship($id)
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         $role->id = $id;
         $role->clear_module_relationship($id);
@@ -91,7 +91,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
     public function testSet_user_relationshipAndCheck_user_role_count()
     {
         // test
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         $role->id = 1;
         $user_ids = array('1', '2');
@@ -117,7 +117,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function get_users($id)
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         $role->id = $id;
         $result = $role->get_users();
@@ -127,7 +127,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function clear_user_relationship($role_id, $user_id)
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         //get related records count and verify that records are removed
         $result = $role->clear_user_relationship($role_id, $user_id);
@@ -136,7 +136,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testquery_user_allowed_modules()
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         $result = $role->query_user_allowed_modules('1');
         $this->assertTrue(is_array($result));
@@ -144,7 +144,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testquery_user_disallowed_modules()
     {
-        $role = new Role();
+        $role = BeanFactory::newBean('Roles');
 
         $allowed = array('Accounts' => 'Accounts', 'Leads' => 'Leads');
         $result = $role->query_user_disallowed_modules(null, $allowed);

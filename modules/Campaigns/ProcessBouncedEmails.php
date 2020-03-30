@@ -88,7 +88,7 @@ function retrieveErrorReportAttachment(Email $email)
 function createBouncedCampaignLogEntry($row, $email, $email_description)
 {
     $GLOBALS['log']->debug("Creating bounced email campaign log");
-    $bounce = new CampaignLog();
+    $bounce = BeanFactory::newBean('CampaignLog');
     $bounce->campaign_id=$row['campaign_id'];
     $bounce->target_tracker_key=$row['target_tracker_key'];
     $bounce->target_id= $row['target_id'];
@@ -192,7 +192,7 @@ function markEmailAddressInvalid($email_address)
 function getExistingCampaignLogEntry($identifier)
 {
     $row = false;
-    $targeted = new CampaignLog();
+    $targeted = BeanFactory::newBean('CampaignLog');
     $where="campaign_log.activity_type='targeted' and campaign_log.target_tracker_key='{$identifier}'";
     $query=$targeted->create_new_list_query('', $where);
     $result=$targeted->db->query($query);
@@ -257,7 +257,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                     //invalid email or send error entry for this tracker key.
                     $query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'";
                     $query_log .=" and (activity_type='invalid email' or activity_type='send error')";
-                    $targeted = new CampaignLog();
+                    $targeted = BeanFactory::newBean('CampaignLog');
                     $result_log=$targeted->db->query($query_log);
                     $row_log=$targeted->db->fetchByAssoc($result_log);
 

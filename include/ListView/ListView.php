@@ -1450,7 +1450,7 @@ class ListView
                 $delete_link = '&nbsp;';
             }
 
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->retrieveSettings('system');
 
             $user_merge = $current_user->getPreference('mailmerge_on');

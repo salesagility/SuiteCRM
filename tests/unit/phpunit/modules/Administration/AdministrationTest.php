@@ -10,13 +10,13 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAdministration()
     {
         // Execute the constructor and check for the Object type and type attribute
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $this->assertInstanceOf('Administration', $admin);
         $this->assertInstanceOf('SugarBean', $admin);
 
@@ -31,7 +31,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieveSettings()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
 
         //execute with default parameters and test if it returns object itself
         $result = $admin->retrieveSettings();
@@ -50,7 +50,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($admin, $result);
 
         //execute with a valid category and clean=true and test if it returns object itself.
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $result = $admin->retrieveSettings('notify', true);
         $this->assertInstanceOf('Administration', $result);
         $this->assertSame($admin, $result);
@@ -61,7 +61,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('environment dependency');
 
         // test
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
 
         $_POST['proxy_test'] = 'test value';
 
@@ -76,7 +76,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('environment dependency');
 
         // test
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
 
         //execute the method and verify that sets the correct config key
         $result = $admin->saveSetting('category', 'key', 'test value');
@@ -87,7 +87,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_config_prefix()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
 
         //test with empty string
         $expected = array(false, false);

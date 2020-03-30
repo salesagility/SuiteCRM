@@ -49,8 +49,8 @@ class OpportunityFormBase
     public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
-    
-        $focus = new Opportunity();
+
+        $focus = BeanFactory::newBean('Opportunities');
         $query = '';
         $baseQuery = 'select id, name, sales_stage,amount, date_closed  from opportunities where deleted!=1 and (';
 
@@ -179,7 +179,7 @@ EOQ;
             return '';
         }
         if (empty($lead)) {
-            $lead = new Lead();
+            $lead = BeanFactory::newBean('Leads');
         }
         global $mod_strings, $sugar_config;
         $showaccount = $showaccount && $sugar_config['require_accounts'];
@@ -294,7 +294,7 @@ EOQ;
 </tr>
 EOQ;
         //carry forward custom lead fields to opportunities during Lead Conversion
-        $tempOpp = new Opportunity();
+        $tempOpp = BeanFactory::newBean('Opportunities');
         if (method_exists($lead, 'convertCustomFieldsForm')) {
             $lead->convertCustomFieldsForm($the_form, $tempOpp, $prefix);
         }
@@ -317,7 +317,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Opportunity());
+        $javascript->setSugarBean(BeanFactory::newBean('Opportunities'));
         $javascript->addRequiredFields($prefix);
         $the_form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -427,7 +427,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Opportunity());
+        $javascript->setSugarBean(BeanFactory::newBean('Opportunities'));
         $javascript->addRequiredFields($prefix);
         $the_form .=$javascript->getScript();
 
@@ -439,11 +439,11 @@ EOQ;
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $current_user;
-    
-    
+
+
         require_once('include/formbase.php');
-    
-        $focus = new Opportunity();
+
+        $focus = BeanFactory::newBean('Opportunities');
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
         }
@@ -469,7 +469,7 @@ EOQ;
             clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $_POST['duplicate_parent_id'], $focus->id);
         }
         $return_id = $focus->id;
-    
+
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if ($redirect) {
             handleRedirect($return_id, "Opportunities");

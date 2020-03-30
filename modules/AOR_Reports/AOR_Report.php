@@ -114,15 +114,15 @@ class AOR_Report extends Basic
         $return_id = parent::save($check_notify);
 
         require_once('modules/AOR_Fields/AOR_Field.php');
-        $field = new AOR_Field();
+        $field = BeanFactory::newBean('AOR_Fields');
         $field->save_lines($_POST, $this, 'aor_fields_');
 
         require_once('modules/AOR_Conditions/AOR_Condition.php');
-        $condition = new AOR_Condition();
+        $condition = BeanFactory::newBean('AOR_Conditions');
         $condition->save_lines($_POST, $this, 'aor_conditions_');
 
         require_once('modules/AOR_Charts/AOR_Chart.php');
-        $chart = new AOR_Chart();
+        $chart = BeanFactory::newBean('AOR_Charts');
         $chart->save_lines($_POST, $this, 'aor_chart_');
 
         return $return_id;
@@ -211,7 +211,7 @@ class AOR_Report extends Basic
         $mainGroupField = null;
 
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             $path = unserialize(base64_decode($field->module_path));
@@ -442,7 +442,7 @@ class AOR_Report extends Basic
         }
 
         if ($field_id != '' && empty($subgroup)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($field_id);
 
             $field_label = str_replace(' ', '_', $field->label);
@@ -685,7 +685,7 @@ class AOR_Report extends Basic
         $fields = array();
         $i = 0;
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             $path = unserialize(base64_decode($field->module_path));
@@ -894,7 +894,7 @@ class AOR_Report extends Basic
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->limitQuery($sql, 0, 1);
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             if ($field->field_function != 'COUNT' || $field->format != '') {
@@ -951,7 +951,7 @@ class AOR_Report extends Basic
     {
         global $app_list_strings;
 
-        $currency = new Currency();
+        $currency = BeanFactory::newBean('Currencies');
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
@@ -1066,7 +1066,7 @@ class AOR_Report extends Basic
         $fields = array();
         $i = 0;
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             $path = unserialize(base64_decode($field->module_path));
@@ -1265,7 +1265,7 @@ class AOR_Report extends Basic
             $result = $this->db->query($sql);
             $i = 0;
             while ($row = $this->db->fetchByAssoc($result)) {
-                $field = new AOR_Field();
+                $field = BeanFactory::newBean('AOR_Fields');
                 $field->retrieve($row['id']);
 
                 $field->label = str_replace(' ', '_', $field->label) . $i;
@@ -1525,7 +1525,7 @@ class AOR_Report extends Basic
             $tiltLogicOp = true;
 
             while ($row = $this->db->fetchByAssoc($result)) {
-                $condition = new AOR_Condition();
+                $condition = BeanFactory::newBean('AOR_Conditions');
                 $condition->retrieve($row['id']);
 
                 $path = unserialize(base64_decode($condition->module_path));

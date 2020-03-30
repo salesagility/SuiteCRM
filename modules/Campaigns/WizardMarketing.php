@@ -59,7 +59,7 @@ global $sugar_version, $sugar_config;
 
 
 /**************************** GENERAL SETUP WORK*******************/
-$campaign_focus = new Campaign();
+$campaign_focus = BeanFactory::newBean('Campaigns');
 if (isset($_REQUEST['campaign_id']) && !empty($_REQUEST['campaign_id'])) {
     $campaign_focus->retrieve($_REQUEST['campaign_id']);
 } else {
@@ -103,7 +103,7 @@ $ss->assign("DEC_SEP", $seps[1]);
 //$campaign_focus->load_relationship('emailmarketing');
 //$mrkt_ids = $campaign_focus->emailmarketing->get();
 
-$mrkt_focus = new EmailMarketing();
+$mrkt_focus = BeanFactory::newBean('EmailMarketing');
 
 //override marketing by session stored selection earlier..
 
@@ -353,7 +353,7 @@ $pl_count = 0;
 $pl_lists = 0;
 if (!empty($prospectlists)) {
     foreach ($prospectlists as $prospect_id) {
-        $pl_focus = new ProspectList();
+        $pl_focus = BeanFactory::newBean('ProspectLists');
         $pl_focus->retrieve($prospect_id);
 
         if (($pl_focus->list_type == 'default') || ($pl_focus->list_type == 'seed')) {
@@ -689,7 +689,7 @@ if ($has_campaign || $inboundEmail) {
         //$ss->parse("main.NoInbound.tracker_url");
 
         // create tracker URL fields
-        $campaignTracker = new CampaignTracker();
+        $campaignTracker = BeanFactory::newBean('CampaignTrackers');
         if (isset($_REQUEST['campaign_tracker_id']) && $_REQUEST['campaign_tracker_id']) {
             $campaignTracker->retrieve((int) $_REQUEST['campaign_tracker_id']);
         }
@@ -740,7 +740,7 @@ if (!empty($mrkt_focus->id)) {
     $etid = $old_id;
 }
 if (!empty($etid)) {
-    $note = new Note();
+    $note = BeanFactory::newBean('Notes');
     $where = "notes.parent_id='{$etid}' AND notes.filename IS NOT NULL";
     $notes_list = $note->get_full_list("", $where, true);
 

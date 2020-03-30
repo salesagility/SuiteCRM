@@ -116,7 +116,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $is_currency = true;
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
-        $this->currency = new Currency();
+        $this->currency = BeanFactory::newBean('Currencies');
         $currency = $this->currency;
         $currency_symbol = $currency->getDefaultCurrencySymbol();
         $currency->retrieve($currency->retrieveIDBySymbol($currency_symbol));

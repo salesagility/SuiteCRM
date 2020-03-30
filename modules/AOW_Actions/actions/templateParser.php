@@ -55,7 +55,7 @@ class aowTemplateParser extends templateParser
         if (!empty($person)) {
             $focus = $person[0];
         } else {
-            $focus = new Contact();
+            $focus = BeanFactory::newBean('Contacts');
         }
         $string = aowTemplateParser::parse_template_bean($string, 'contact', $focus);
 

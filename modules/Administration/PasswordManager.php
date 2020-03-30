@@ -75,7 +75,7 @@ echo getClassicModuleTitle(
 require_once('modules/Configurator/Configurator.php');
 $configurator = new Configurator();
 $sugarConfig = SugarConfig::getInstance();
-$focus = new Administration();
+$focus = BeanFactory::newBean('Administration');
 $configurator->parseLoggerSettings();
 $valid_public_key = true;
 if (!empty($_POST['saveConfig'])) {
@@ -202,7 +202,7 @@ if ($mail->Mailer == 'smtp' && $mail->Host == '') {
     $sugar_smarty->assign("SMTP_SERVER_NOT_SET", '0');
 }
 
-$focus = new InboundEmail();
+$focus = BeanFactory::newBean('InboundEmail');
 $focus->checkImap();
 $storedOptions = unserialize(base64_decode($focus->stored_options));
 $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name', true);

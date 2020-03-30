@@ -50,7 +50,7 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSetLawfulBasis()
     {
-        $person = new Contact();
+        $person = BeanFactory::newBean('Contacts');
         $person->last_name = 'Smith';
 
         // Test when  basis is not a string

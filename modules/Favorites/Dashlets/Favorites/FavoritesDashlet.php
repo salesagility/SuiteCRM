@@ -68,7 +68,7 @@ class FavoritesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['FavoritesDashlet']['searchFields'];
         $this->columns = $dashletData['FavoritesDashlet']['columns'];
 
-        $this->seedBean = new Favorites();
+        $this->seedBean = BeanFactory::newBean('Favorites');
     }
 
     /**

@@ -55,7 +55,7 @@ class UsersController extends SugarController
     protected function action_resetPreferences()
     {
         if ($_REQUEST['record'] == $GLOBALS['current_user']->id || ($GLOBALS['current_user']->isAdminForModule('Users'))) {
-            $u = new User();
+            $u = BeanFactory::newBean('Users');
             $u->retrieve($_REQUEST['record']);
             $u->resetPreferences();
             if ($u->id == $GLOBALS['current_user']->id) {
@@ -72,7 +72,7 @@ class UsersController extends SugarController
             $GLOBALS['current_user']->isAdminForModule('Users')
             )
         ) {
-            $u = new User();
+            $u = BeanFactory::newBean('Users');
             $u->retrieve($_REQUEST['record']);
             $u->status = 'Inactive';
             $u->employee_status = 'Terminated';

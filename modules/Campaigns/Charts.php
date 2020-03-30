@@ -80,7 +80,7 @@ class campaign_charts
                 $GLOBALS['log']->debug("user_id is: ");
                 $GLOBALS['log']->debug("cache_file_name is: $xmlFile");
 
-                $focus = new Campaign();
+                $focus = BeanFactory::newBean('Campaigns');
 
                 $query = "SELECT activity_type,target_type, count(*) hits ";
                 $query .= " FROM campaign_log ";
@@ -228,7 +228,7 @@ class campaign_charts
             $GLOBALS['log']->debug("user_id is: ");
             $GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
 
-            $focus = new Campaign();
+            $focus = BeanFactory::newBean('Campaigns');
             $focus->retrieve($campaign_id);
             $opp_count=0;
             $opp_query  = "select count(*) opp_count,sum(" . DBManagerFactory::getInstance()->convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
@@ -328,7 +328,7 @@ class campaign_charts
         $currency_id = $focus->currency_id;
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if (!empty($currency_id)) {
-            $cur = new Currency();
+            $cur = BeanFactory::newBean('Currencies');
             $cur->retrieve($currency_id);
             $currency_symbol = $cur->symbol;
         }
@@ -386,7 +386,7 @@ class campaign_charts
             $GLOBALS['log']->debug("user_id is: ");
             $GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
 
-            $focus = new Campaign();
+            $focus = BeanFactory::newBean('Campaigns');
             $focus->retrieve($campaign_id);
             $opp_count=0;
             $opp_query  = "select count(*) opp_count,sum(" . DBManagerFactory::getInstance()->convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
@@ -484,7 +484,7 @@ class campaign_charts
         $currency_id = $focus->currency_id;
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if (!empty($currency_id)) {
-            $cur = new Currency();
+            $cur = BeanFactory::newBean('Currencies');
             $cur->retrieve($currency_id);
             $currency_symbol = $cur->symbol;
         }

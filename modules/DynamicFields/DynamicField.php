@@ -603,7 +603,7 @@ class DynamicField
         $object_name = $this->module;
         $db_name = $field->name;
 
-        $fmd = new FieldsMetaData();
+        $fmd = BeanFactory::newBean('EditCustomFields');
         $id = $fmd->retrieve($object_name . $db_name, true, false);
         $is_update = false;
         $label = strtoupper($field->label);

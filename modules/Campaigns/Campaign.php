@@ -250,7 +250,7 @@ class Campaign extends SugarBean
 
             //US DOLLAR
         if (isset($this->amount) && !empty($this->amount)) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($this->currency_id);
             $this->amount_usdollar = $currency->convertToDollar($this->amount);
         }
@@ -381,7 +381,7 @@ class Campaign extends SugarBean
         }
 
         //get select query from email man
-        $man = new EmailMan();
+        $man = BeanFactory::newBean('EmailMan');
         $listquery= $man->create_queue_items_query('', str_replace(array("WHERE","where"), "", $query_array['where']), null, $query_array);
         return $listquery;
     }

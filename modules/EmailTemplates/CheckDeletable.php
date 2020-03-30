@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/EmailTemplates/EmailTemplate.php');
 
-$focus = new EmailTemplate();
+$focus = BeanFactory::newBean('EmailTemplates');
 if ($_REQUEST['from'] == 'DetailView') {
     if (!isset($_REQUEST['record'])) {
         sugar_die("A record number must be specified to delete the template.");

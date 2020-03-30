@@ -27,7 +27,7 @@ class ViewMultieditTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewMultiedit();
         $view->action = 'AjaxFormSave';
         $view->module = 'Users';
-        $view->bean = new User();
+        $view->bean = BeanFactory::newBean('Users');
         $view->bean->id = 1;
         ob_start();
         $view->display();

@@ -38,7 +38,7 @@ class ProjectController extends SugarController
         include_once('modules/Project/gantt.php');
         include_once('modules/Project/project_table.php');
 
-        $project = new Project();
+        $project = BeanFactory::newBean('Project');
         $project->retrieve($_POST["pid"]);
         
         //Get project tasks
@@ -222,7 +222,7 @@ class ProjectController extends SugarController
     public function action_delete_task()
     {
         $id = $_POST['task_id'];
-        $task = new ProjectTask();
+        $task = BeanFactory::newBean('ProjectTask');
         $task->retrieve($id);
         $task->deleted = '1';
         $task->save();
@@ -262,7 +262,7 @@ class ProjectController extends SugarController
         $orderArray = json_decode($jArray, true);
 
         foreach ($orderArray as $id => $order_number) {
-            $task = new ProjectTask();
+            $task = BeanFactory::newBean('ProjectTask');
             $task->retrieve($id);
             $task->order_number = $order_number;
             $task->save();
@@ -272,7 +272,7 @@ class ProjectController extends SugarController
     public function action_get_predecessors()
     {
         global $mod_strings;
-        $project = new Project();
+        $project = BeanFactory::newBean('Project');
         $project->retrieve($_REQUEST["project_id"]);
         //Get project tasks
         $Task = BeanFactory::getBean('ProjectTask');
@@ -287,7 +287,7 @@ class ProjectController extends SugarController
 
     public function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration, $order_number)
     {
-        $task = new ProjectTask();
+        $task = BeanFactory::newBean('ProjectTask');
         $task->name = $name;
         $task->date_start = $start;
         $task->date_finish = $end;
@@ -309,7 +309,7 @@ class ProjectController extends SugarController
 
     public function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration)
     {
-        $task = new ProjectTask();
+        $task = BeanFactory::newBean('ProjectTask');
         $task->retrieve($id);
         $task->name = $name;
         $task->date_start = $start;
@@ -457,7 +457,7 @@ class ProjectController extends SugarController
                         $taskarr[$t]['end_date'] = $task->date_finish;
                         $taskarr[$t]['project_id'] = $task->project_id;//parent projects id
                         //get the project name (don't think this is really necessary)
-                        $project = new Project();
+                        $project = BeanFactory::newBean('Project');
                         $project->retrieve($task->project_id);
                         $taskarr[$t]['project_name'] = $project->name;//parent projects id
 

@@ -9,7 +9,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         parent::setUp();
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
     
     protected function tearDown()
@@ -31,7 +31,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         //execute the method with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
         $view->module = 'Users';
-        $view->bean = new User();
+        $view->bean = BeanFactory::newBean('Users');
         $view->ss = new Sugar_Smarty();
         $view->preDisplay();
         $this->assertInstanceOf('DetailView2', $view->dv);
@@ -40,7 +40,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         //execute the method again for a different module with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
         $view->module = 'Meetings';
-        $view->bean = new Meeting();
+        $view->bean = BeanFactory::newBean('Meetings');
         $view->ss = new Sugar_Smarty();
         $view->preDisplay();
         $this->assertInstanceOf('DetailView2', $view->dv);
@@ -52,7 +52,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewDetail();
         $view->module = 'Users';
-        $view->bean = new User();
+        $view->bean = BeanFactory::newBean('Users');
         $view->bean->id = 1;
         $view->ss = new Sugar_Smarty();
         $view->preDisplay();

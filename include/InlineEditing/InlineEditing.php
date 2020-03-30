@@ -285,7 +285,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         if ($currency_id != '' && !stripos($fieldname, '_USD')) {
             $userCurrencyId = $current_user->getPreference('currency');
             if ($currency_id != $userCurrencyId) {
-                $currency = new Currency();
+                $currency = BeanFactory::newBean('Currencies');
                 $currency->retrieve($currency_id);
                 $value = $currency->convertToDollar($value);
                 $currency->retrieve($userCurrencyId);

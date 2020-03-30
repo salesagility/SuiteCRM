@@ -67,7 +67,7 @@ if (empty($_REQUEST['time_start'])) {
     }
 }
 
-$marketing = new EmailMarketing();
+$marketing = BeanFactory::newBean('EmailMarketing');
 if (isset($_POST['record']) && !empty($_POST['record'])) {
     $marketing->retrieve($_POST['record']);
 }

@@ -49,7 +49,7 @@ function getTemplateValidationMessages($templateId)
     if (!$templateId) {
         $msgs[] = 'LBL_NO_SELECTED_TEMPLATE';
     } else {
-        $template = new EmailTemplate();
+        $template = BeanFactory::newBean('EmailTemplates');
         $template->retrieve($templateId);
         if (!$template->subject) {
             $msgs[] = 'LBL_NO_SUBJECT';
@@ -76,7 +76,7 @@ if ($func == 'getTemplateValidation') {
                 $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
             }
         }
-        $marketing = new EmailMarketing();
+        $marketing = BeanFactory::newBean('EmailMarketing');
         $marketing->retrieve($marketingId);
         $templateId = $marketing->template_id;
     }
@@ -89,22 +89,20 @@ if ($func == 'getTemplateValidation') {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
-        } else {
-            if ($func != 'createEmailMarketing') {
-                $marketing = new EmailMarketing();
-                $marketing->save();
-                $marketingId = $marketing->id;
-            }
+        } elseif ($func != 'createEmailMarketing') {
+            $marketing = BeanFactory::newBean('EmailMarketing');
+            $marketing->save();
+            $marketingId = $marketing->id;
         }
     }
     if (!empty($_POST['templateId'])) {
         $templateId = $db->quote($_POST['templateId']);
     }
 
-    //$campaign = new Campaign();
+    //$campaign = BeanFactory::newBean('Campaigns');
     //$campaign->retrieve($campaignId);
 
-    $marketing = new EmailMarketing();
+    $marketing = BeanFactory::newBean('EmailMarketing');
     $marketing->retrieve($marketingId);
     $marketing->campaign_id = $campaignId;
     if (!empty($_POST['templateId'])) {

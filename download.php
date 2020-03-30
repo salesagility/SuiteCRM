@@ -87,7 +87,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         // Pull up the document revision, if it's of type Document
         if (isset($focus->object_name) && $focus->object_name == 'Document') {
             // It's a document, get the revision that really stores this file
-            $focusRevision = new DocumentRevision();
+            $focusRevision = BeanFactory::newBean('DocumentRevisions');
             $focusRevision->retrieve($_REQUEST['id']);
 
             if (empty($focusRevision->id)) {

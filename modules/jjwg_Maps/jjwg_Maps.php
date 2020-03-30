@@ -304,7 +304,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
             $GLOBALS['sugar_config']['resource_management']['default_limit'] = 20000;
         }
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings('jjwg', true);
         $settings = $admin->settings;
 
@@ -410,7 +410,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      */
     public function saveConfiguration($data = array())
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         //$admin->retrieveSettings('jjwg', true);
         //$settings = $admin->settings;
         $category = 'jjwg';
@@ -936,7 +936,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         // Add proxy option if user enabled proxy
-        $admin_config = new Administration();
+        $admin_config = BeanFactory::newBean('Administration');
         $admin_config->retrieveSettings('proxy');
         if (!empty($admin_config->settings['proxy_on'])) {
             $proxy_host = $admin_config->settings['proxy_host'];

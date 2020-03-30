@@ -12,34 +12,34 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testSubscribeUnsubscribeFromNewsLetterCampaign()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
         $campaign->name = create_guid();
         $campaign->campaign_type = "NewsLetter";
         $campaign->save();
         $campaign->load_relationship('prospectlists');
 
         // Add the lists to the campaign
-        $exempt_list = new ProspectList();
+        $exempt_list = BeanFactory::newBean('ProspectLists');
         $exempt_list->list_type = "exempt";
         $exempt_list->save();
         $campaign->prospectlists->add($exempt_list->id);
 
-        $default_list = new ProspectList();
+        $default_list = BeanFactory::newBean('ProspectLists');
         $default_list->list_type = "default";
         $default_list->save();
         $campaign->prospectlists->add($default_list->id);
 
-        $test_list = new ProspectList();
+        $test_list = BeanFactory::newBean('ProspectLists');
         $test_list->list_type = "test";
         $test_list->save();
         $campaign->prospectlists->add($test_list->id);
 
-        $lead = new Lead();
+        $lead = BeanFactory::newBean('Leads');
         $lead->save();
 
         // Subscribe
@@ -59,7 +59,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     public function testCampaign()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
         $this->assertInstanceOf('Campaign', $campaign);
         $this->assertInstanceOf('SugarBean', $campaign);
 
@@ -72,7 +72,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlist_view_parse_additional_sections()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //test with attributes preset and verify template variables are set accordingly
         $tpl = new Sugar_Smarty();
@@ -82,7 +82,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //test without setting name
         $this->assertEquals(null, $campaign->get_summary_text());
@@ -95,7 +95,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     public function testcreate_export_query()
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //test with empty string params
         $expected = "SELECT\n            campaigns.*,\n            users.user_name as assigned_user_name  FROM campaigns LEFT JOIN users\n                      ON campaigns.assigned_user_id=users.id where  campaigns.deleted=0 ORDER BY campaigns.name";
@@ -110,7 +110,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testclear_campaign_prospect_list_relationship()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -124,7 +124,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmark_relationships_deleted()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -138,7 +138,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -151,7 +151,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -164,7 +164,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testupdate_currency_id()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -177,7 +177,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //execute the method and verify that it returns expected results
         $expected = array(
@@ -208,7 +208,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_generic_where_clause()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //test with blank parameter
         $expected = "campaigns.name like '%'";
@@ -223,7 +223,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndMarkDeleted()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
         $campaign->name = 'test';
         $campaign->amount = 100;
 
@@ -241,7 +241,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_notification_body()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //test with attributes preset and verify template variables are set accordingly
         $campaign->name = 'test';
@@ -261,7 +261,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testtrack_log_leads()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         $expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type = 'lead' AND archived = 0 AND target_id IS NOT NULL ";
         $actual = $campaign->track_log_leads();
@@ -270,7 +270,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testtrack_log_entries()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //test without parameters
         $expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type='targeted' AND archived=0 ";
@@ -285,7 +285,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_queue_items()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //without parameters
         $expected = " SELECT emailman.*,
@@ -435,7 +435,7 @@ WHERE  emailman.campaign_id = ''
 
     public function testbean_implements()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
         $this->assertEquals(false, $campaign->bean_implements('')); //test with blank value
         $this->assertEquals(false, $campaign->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $campaign->bean_implements('ACL')); //test with valid value
@@ -443,7 +443,7 @@ WHERE  emailman.campaign_id = ''
 
     public function testcreate_list_count_query()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
 
         //test without parameters
         $expected = '';
@@ -463,7 +463,7 @@ WHERE  emailman.campaign_id = ''
 
     public function testgetDeletedCampaignLogLeadsCount()
     {
-        $campaign = new Campaign();
+        $campaign = BeanFactory::newBean('Campaigns');
         $result = $campaign->getDeletedCampaignLogLeadsCount();
         $this->assertEquals(0, $result);
     }

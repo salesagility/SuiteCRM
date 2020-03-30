@@ -13,7 +13,7 @@ class SugarWebServiceUtilv4Test extends SuitePHPUnitFrameworkTestCase
         require_once('service/v4_1/SugarWebServiceUtilv4_1.php');
         $helperObject = new SugarWebServiceUtilv4_1();
         require_once('modules/Cases/Case.php');
-        $seed = new aCase();
+        $seed = \BeanFactory::newBean('Cases');
         $module_name = 'Cases';
         $fields = array('status', 'state', 'name');
         $return = $helperObject->get_return_module_fields($seed, $module_name, $fields);

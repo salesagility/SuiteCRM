@@ -10,13 +10,13 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testaCase()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $this->assertInstanceOf('aCase', $aCase);
         $this->assertInstanceOf('Basic', $aCase);
         $this->assertInstanceOf('SugarBean', $aCase);
@@ -32,7 +32,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $this->assertEquals(null, $aCase->get_summary_text());
 
         $aCase->name = 'test';
@@ -44,7 +44,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('environment dependency');
 
 
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
@@ -52,7 +52,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave_relationship_changes()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -67,7 +67,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_case_contact_relationship()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -80,7 +80,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -93,7 +93,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $aCase->assigned_user_id = 1;
         $aCase->created_by = 1;
         $aCase->modified_user_id = 1;
@@ -107,7 +107,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_contacts()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $result = $aCase->get_contacts();
         $this->assertFalse(is_array($result));
         $this->assertEquals(false, $result);
@@ -115,7 +115,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $current_theme = SugarThemeRegistry::current();
         //test without setting attributes
         $expected = array(
@@ -171,7 +171,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_generic_where_clause()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
 
         //test with string
         $expected = "(cases.name like 'test%' or accounts.name like 'test%')";
@@ -186,7 +186,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_notification_body()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
 
         $aCase->name = 'test';
         $aCase->priority = 'P1';
@@ -203,7 +203,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $this->assertEquals(false, $aCase->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aCase->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aCase->bean_implements('ACL')); //test with valid value
@@ -211,7 +211,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $aCase->name = 'test';
         $aCase->priority = 'P1';
 
@@ -229,14 +229,14 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetEmailSubjectMacro()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $result = $aCase->getEmailSubjectMacro();
         $this->assertEquals('[CASE:%1]', $result);
     }
 
     public function testgetAccount()
     {
-        $aCase = new aCase();
+        $aCase = BeanFactory::newBean('Cases');
         $result = $aCase->getAccount(1);
         $this->assertTrue(is_array($result));
         $this->assertEquals(array('account_name' => '', 'account_id' => ''), $result);

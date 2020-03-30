@@ -205,7 +205,7 @@ class Call extends SugarBean
         }
         if (empty($_REQUEST['send_invites'])) {
             if (!empty($this->id)) {
-                $old_record = new Call();
+                $old_record = BeanFactory::newBean('Calls');
                 $old_record->retrieve($this->id);
                 $old_assigned_user_id = $old_record->assigned_user_id;
             }
@@ -304,7 +304,7 @@ class Call extends SugarBean
         // First, get the list of IDs.
         $query = "SELECT contact_id as id from calls_contacts where call_id='$this->id' AND deleted=0";
 
-        $contact = new Contact();
+        $contact = BeanFactory::newBean('Contacts');
         return $this->build_related_list($query, $contact);
     }
 
@@ -607,7 +607,7 @@ class Call extends SugarBean
 
     public function get_call_users()
     {
-        $template = new User();
+        $template = BeanFactory::newBean('Users');
         // First, get the list of IDs.
         $query = "SELECT calls_users.required, calls_users.accept_status, calls_users.user_id from calls_users where calls_users.call_id='$this->id' AND calls_users.deleted=0";
         $GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
@@ -615,7 +615,7 @@ class Call extends SugarBean
         $list = array();
 
         while ($row = $this->db->fetchByAssoc($result)) {
-            $template = new User(); // PHP 5 will retrieve by reference, always over-writing the "old" one
+            $template = BeanFactory::newBean('Users'); // PHP 5 will retrieve by reference, always over-writing the "old" one
             $record = $template->retrieve($row['user_id']);
             $template->required = $row['required'];
             $template->accept_status = $row['accept_status'];
@@ -703,7 +703,7 @@ class Call extends SugarBean
         }
 
         foreach ($this->users_arr as $user_id) {
-            $notify_user = new User();
+            $notify_user = BeanFactory::newBean('Users');
             $notify_user->retrieve($user_id);
             $notify_user->new_assigned_user_name = $notify_user->full_name;
             $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
@@ -711,7 +711,7 @@ class Call extends SugarBean
         }
 
         foreach ($this->contacts_arr as $contact_id) {
-            $notify_user = new Contact();
+            $notify_user = BeanFactory::newBean('Contacts');
             $notify_user->retrieve($contact_id);
             $notify_user->new_assigned_user_name = $notify_user->full_name;
             $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
@@ -719,7 +719,7 @@ class Call extends SugarBean
         }
 
         foreach ($this->leads_arr as $lead_id) {
-            $notify_user = new Lead();
+            $notify_user = BeanFactory::newBean('Leads');
             $notify_user->retrieve($lead_id);
             $notify_user->new_assigned_user_name = $notify_user->full_name;
             $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");

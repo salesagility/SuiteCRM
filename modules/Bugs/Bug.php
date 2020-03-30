@@ -400,7 +400,7 @@ function getReleaseDropDown()
 {
     static $releases = null;
     if (!$releases) {
-        $seedRelease = new Release();
+        $seedRelease = BeanFactory::newBean('Releases');
         $releases = $seedRelease->get_releases(true, "Active");
     }
     return $releases;

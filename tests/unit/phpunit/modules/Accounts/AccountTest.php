@@ -10,12 +10,12 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testgetProductsServicesPurchasedQuery()
     {
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
 
         //without account id
         $expected = "
@@ -48,7 +48,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
     public function testAccount()
     {
         // Execute the constructor and check for the Object type and type attribute
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
         $this->assertInstanceOf('Account', $Account);
         $this->assertInstanceOf('Company', $Account);
         $this->assertInstanceOf('SugarBean', $Account);
@@ -59,7 +59,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
     public function testget_summary_text()
     {
         //test without name setting attribute
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
         $name = $Account->get_summary_text();
         $this->assertEquals(null, $name);
 
@@ -83,13 +83,13 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
         //This method cannot be tested because Query has a wrong column name which makes the function to die.
 
-        /*$Account = new Account();
+        /*$Account = BeanFactory::newBean('Accounts');
         $Account->clear_account_case_relationship('','');*/
     }
 
     public function testremove_redundant_http()
     {
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
 
         //this method has no implementation. so test for exceptions only.
         try {
@@ -146,7 +146,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
             'SHIPPING_ADDRESS_STREET' => null,
         );
 
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
 
         //execute the method and verify that it retunrs expected results
         $actual = $Account->get_list_view_data();
@@ -158,7 +158,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_generic_where_clause()
     {
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
 
         //execute the method with a string as parameter and verify that it retunrs expected results
         $expected = "accounts.name like 'value%'";
@@ -175,7 +175,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
     {
         $this->markTestIncomplete('Needs to clearify');
         
-//        $Account = new Account();
+//        $Account = BeanFactory::newBean('Accounts');
 //
 //        // execute the method with empty strings and verify that it retunrs expected results
 //        $expected = "SELECT
@@ -192,17 +192,17 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_notification_body()
     {
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
 
         //execute the method and test if populates provided sugar_smarty
-        $result = $Account->set_notification_body(new Sugar_Smarty(), new Account());
+        $result = $Account->set_notification_body(new Sugar_Smarty(), BeanFactory::newBean('Accounts'));
         $this->assertInstanceOf('Sugar_Smarty', $result);
         $this->assertNotEquals(new Sugar_Smarty(), $result);
     }
 
     public function testbean_implements()
     {
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
 
         $this->assertTrue($Account->bean_implements('ACL')); //test with valid value
         $this->assertFalse($Account->bean_implements('')); //test with empty value
@@ -211,7 +211,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_unlinked_email_query()
     {
-        $Account = new Account();
+        $Account = BeanFactory::newBean('Accounts');
 
         //without setting type parameter
         $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear

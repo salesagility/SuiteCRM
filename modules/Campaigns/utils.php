@@ -363,7 +363,7 @@ function campaign_log_lead_or_contact_entry($campaign_id, $parent_bean, $child_b
     //create campaign tracker id and retrieve related bio bean
     $tracker_id = create_guid();
     //create new campaign log record.
-    $campaign_log = new CampaignLog();
+    $campaign_log = BeanFactory::newBean('CampaignLog');
     $campaign_log->campaign_id = $campaign_id;
     $campaign_log->target_tracker_key = $tracker_id;
     $campaign_log->related_id = $parent_bean->id;
@@ -663,7 +663,7 @@ function process_subscriptions($subscription_string_to_parse)
                     //--if we are in here then user is subscribing to a list in which they are exempt.
                     // we need to remove the user from this unsubscription list.
                     //Begin by retrieving unsubscription prospect list
-                    $exempt_subscription_list = new ProspectList();
+                    $exempt_subscription_list = BeanFactory::newBean('ProspectLists');
 
 
                     $exempt_result = $exempt_subscription_list->retrieve($exempt_id);
@@ -690,7 +690,7 @@ function process_subscriptions($subscription_string_to_parse)
             //do nothing, user is already subscribed
         } else {
             //user is not subscribed already, so add to subscription list
-            $subscription_list = new ProspectList();
+            $subscription_list = BeanFactory::newBean('ProspectLists');
             $subs_result = $subscription_list->retrieve($prospect_list);
             if ($subs_result == null) {//error happened while retrieving this list, iterate and continue
                 return;
@@ -755,7 +755,7 @@ function process_subscriptions($subscription_string_to_parse)
         //unsubscribe subscripted newsletter
         foreach ($pl_arr as $subscription_list) {
             //create a new instance of the prospect list
-            $exempt_list = new ProspectList();
+            $exempt_list = BeanFactory::newBean('ProspectLists');
             $exempt_list->retrieve($subscription_list['id']);
             $exempt_list->load_relationship($relationship);
             //if list type is default, then delete the relationship
@@ -811,7 +811,7 @@ function process_subscriptions($subscription_string_to_parse)
 
         //Start with email components
         //monitored mailbox section
-        $focus = new Administration();
+        $focus = BeanFactory::newBean('Administration');
         $focus->retrieveSettings(); //retrieve all admin settings.
 
 
@@ -935,7 +935,7 @@ function process_subscriptions($subscription_string_to_parse)
  */
  function campaign_log_mail_merge($campaign_id, $targets)
  {
-     $campaign= new Campaign();
+     $campaign= BeanFactory::newBean('Campaigns');
      $campaign->retrieve($campaign_id);
 
      if (empty($campaign->id)) {
@@ -1041,7 +1041,7 @@ function write_mail_merge_log_entry($campaign_id, $pl_row)
                     $rel_bean->retrieve($id);
 
                     //create new campaign log record.
-                    $campaign_log = new CampaignLog();
+                    $campaign_log = BeanFactory::newBean('CampaignLog');
                     $campaign_log->campaign_id = $campaign_id;
                     $campaign_log->target_tracker_key = $tracker_id;
                     $campaign_log->target_id = $rel_bean->id;

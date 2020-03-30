@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      global $current_user;
      global $app_strings;
      $mail = new SugarPHPMailer();
-     $emailTemp = new EmailTemplate();
+     $emailTemp = BeanFactory::newBean('EmailTemplates');
      $mail->setMailerForSystem();
      $emailTemp->disable_row_level_security = true;
 

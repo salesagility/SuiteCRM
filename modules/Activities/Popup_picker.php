@@ -341,7 +341,7 @@ class Popup_Picker
             }
             $query .= $queryArray['join'];
             $query .= $queryArray['where'];
-            $emails = new Email();
+            $emails = BeanFactory::newBean('Emails');
             $focus_unlinked_emails_list = $emails->process_list_query($query, 0);
             $focus_unlinked_emails_list = $focus_unlinked_emails_list['list'];
             foreach ($focus_unlinked_emails_list as $email) {

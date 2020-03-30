@@ -840,7 +840,7 @@ class SubPanelDefinitions
      */
     public function set_hidden_subpanels($panels)
     {
-        $administration = new Administration();
+        $administration = BeanFactory::newBean('Administration');
         $serialized = base64_encode(serialize($panels));
         $administration->saveSetting('MySettings', 'hide_subpanels', $serialized);
     }
@@ -859,7 +859,7 @@ class SubPanelDefinitions
         if (empty($hidden_subpanels)) {
 
             //create Administration object and retrieve any settings for panels
-            $administration = new Administration();
+            $administration = BeanFactory::newBean('Administration');
             $administration->retrieveSettings('MySettings');
 
             if (isset($administration->settings) && isset($administration->settings['MySettings_hide_subpanels'])) {

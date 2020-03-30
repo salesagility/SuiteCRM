@@ -623,7 +623,7 @@ class User extends Person implements EmailInterface
         $isUpdate = !empty($this->id) && !$this->new_with_id;
 
         //No SMTP server is set up Error.
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $smtp_error = $admin->checkSmtpError();
 
         // only admin user can change 2 factor authentication settings
@@ -1642,7 +1642,7 @@ EOQ;
         // First, get the list of IDs.
         $query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
 
-        $meeting = new Meeting();
+        $meeting = BeanFactory::newBean('Meetings');
         return $this->build_related_list($query, $meeting);
     }
 
@@ -1651,7 +1651,7 @@ EOQ;
         // First, get the list of IDs.
         $query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
 
-        return $this->build_related_list($query, new Call());
+        return $this->build_related_list($query, BeanFactory::newBean('Calls'));
     }
 
     /**
@@ -1755,7 +1755,7 @@ EOQ;
 
     public function getSystemDefaultNameAndEmail()
     {
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $return = $email->getSystemDefaultEmail();
         $prefAddr = $return['email'];
         $fullName = $return['name'];
@@ -1790,7 +1790,7 @@ EOQ;
     {
         $user = $this;
         if (!empty($id)) {
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($id);
         }
 
@@ -2272,7 +2272,7 @@ EOQ;
             'message' => ''
         );
 
-        $emailTemp = new EmailTemplate();
+        $emailTemp = BeanFactory::newBean('EmailTemplates');
         $emailTemp->disable_row_level_security = true;
         if ($emailTemp->retrieve($templateId) == '') {
             $result['message'] = $mod_strings['LBL_EMAIL_TEMPLATE_MISSING'];
@@ -2304,7 +2304,7 @@ EOQ;
         $itemail = $this->emailAddress->getPrimaryAddress($this);
         //retrieve IT Admin Email
         //retrieve email defaults
-        $emailObj = new Email();
+        $emailObj = BeanFactory::newBean('Emails');
         $defaults = $emailObj->getSystemDefaultEmail();
         require_once('include/SugarPHPMailer.php');
         $mail = new SugarPHPMailer();

@@ -10,13 +10,13 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testCall()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $this->assertInstanceOf('Call', $call);
         $this->assertInstanceOf('SugarBean', $call);
 
@@ -35,7 +35,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testACLAccess()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         //test without setting recurring_source attribute
         $this->assertTrue($call->ACLAccess(''));
@@ -48,7 +48,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndMarkDeleted()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         $call->name = 'test';
         $call->id = $call->save();
@@ -65,7 +65,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_contacts()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $call->id = 1;
 
         //execute the method and verify if it returns an array
@@ -75,7 +75,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         //test without setting name
         $this->assertEquals(null, $call->get_summary_text());
@@ -89,7 +89,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         //test with empty string params
         $expected = "SELECT \n			calls.*,\n			users.user_name as assigned_user_name FROM calls \n			LEFT JOIN users\n			ON calls.assigned_user_id=users.id where  calls.deleted=0   ORDER BY calls.name";
@@ -104,7 +104,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         //test with empty string params
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where calls.deleted=0 ORDER BY calls.name';
@@ -120,7 +120,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         //execute the method and verify it sets up the intended fields
         $call->fill_in_additional_detail_fields();
@@ -138,7 +138,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency (php5/php7)');
 
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         $call->assigned_user_id = 1;
         $call->created_by = 1;
@@ -174,7 +174,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_notification_body()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         //test with attributes preset and verify template variables are set accordingly
 
@@ -200,7 +200,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_call_users()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $call->id = 1;
 
         //execute the method and verify it returns an array
@@ -210,7 +210,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_invite_calls()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $user = new User(1);
 
         //execute the method and verify it returns an array
@@ -220,11 +220,11 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_accept_status()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $call->id = 1;
 
         //test for calls Users and delete the created linked records afterwards
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->id = '1';
 
         $call->set_accept_status($user, 'test');
@@ -237,7 +237,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_notification_recipients()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         //test without setting any user list
         $result = $call->get_notification_recipients();
@@ -252,7 +252,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $this->assertEquals(false, $call->bean_implements('')); //test with blank value
         $this->assertEquals(false, $call->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $call->bean_implements('ACL')); //test with valid value
@@ -261,7 +261,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
     public function testlistviewACLHelper()
     {
         self::markTestIncomplete('environment dependency');
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $call->listviewACLHelper();
         $this->assertSame($expected, $actual);
@@ -269,7 +269,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave_relationship_changes()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -282,7 +282,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetDefaultStatus()
     {
-        $call = new Call();
+        $call = BeanFactory::newBean('Calls');
         $result = $call->getDefaultStatus();
         $this->assertEquals('Planned', $result);
     }

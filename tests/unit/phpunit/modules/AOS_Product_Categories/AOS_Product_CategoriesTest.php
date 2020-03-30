@@ -10,13 +10,13 @@ class AOS_Product_CategoriesTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOS_Product_Categories()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aosProductCategories = new AOS_Product_Categories();
+        $aosProductCategories = BeanFactory::newBean('AOS_Product_Categories');
         $this->assertInstanceOf('AOS_Product_Categories', $aosProductCategories);
         $this->assertInstanceOf('Basic', $aosProductCategories);
         $this->assertInstanceOf('SugarBean', $aosProductCategories);
@@ -31,7 +31,7 @@ class AOS_Product_CategoriesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        $aosProductCategories = new AOS_Product_Categories();
+        $aosProductCategories = BeanFactory::newBean('AOS_Product_Categories');
         $aosProductCategories->name = 'test';
         $aosProductCategories->parent_category_id = 1;
 

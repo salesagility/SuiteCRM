@@ -120,7 +120,7 @@ if (empty($_REQUEST ['silent'])) {
     echo $mod_strings ['LBL_REBUILD_REL_UPD_WARNING'];
 }
 
-$rel = new Relationship();
+$rel = BeanFactory::newBean('Relationships');
 Relationship::delete_cache();
 $rel->build_relationship_cache();
 

@@ -137,7 +137,7 @@ class SugarFeedDashlet extends DashletGeneric
                 unset($this->selectedCategories[0]);
             }
         }
-        $this->seedBean = new SugarFeed();
+        $this->seedBean = BeanFactory::newBean('SugarFeed');
     }
 
     /**
@@ -442,7 +442,7 @@ class SugarFeedDashlet extends DashletGeneric
     public function deleteUserFeed()
     {
         if (!empty($_REQUEST['record'])) {
-            $feed = new SugarFeed();
+            $feed = BeanFactory::newBean('SugarFeed');
             $feed->retrieve($_REQUEST['record']);
             if (is_admin($GLOBALS['current_user']) || $feed->created_by == $GLOBALS['current_user']->id) {
                 $feed->mark_deleted($_REQUEST['record']);
@@ -707,7 +707,7 @@ enableQS(false);
     // This is called from the include/MySugar/DashletsDialog/DashletsDialog.php and determines if we should display the SugarFeed dashlet as an option or not
     public static function shouldDisplay()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         if (!isset($admin->settings['sugarfeed_enabled']) || $admin->settings['sugarfeed_enabled'] != '1') {

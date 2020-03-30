@@ -56,7 +56,7 @@ class AM_ProjectTemplatesController extends SugarController
 
 
         //Get the project template
-        $template = new AM_ProjectTemplates();
+        $template = BeanFactory::newBean('AM_ProjectTemplates');
         $template->retrieve($template_id);
 
         $override_business_hours = (int)$template->override_business_hours;
@@ -109,7 +109,7 @@ class AM_ProjectTemplatesController extends SugarController
 
 
         //create project from template
-        $project = new Project();
+        $project = BeanFactory::newBean('Project');
         $project->name = $project_name;
         $project->estimated_start_date = $start;
         $project->status = $template->status;
@@ -155,7 +155,7 @@ class AM_ProjectTemplatesController extends SugarController
         //Create new project tasks from the template tasks
         $count=1;
         while ($row = $db->fetchByAssoc($tasks)) {
-            $project_task = new ProjectTask();
+            $project_task = BeanFactory::newBean('ProjectTask');
             $project_task->name = $row['name'];
             $project_task->status = $row['status'];
             $project_task->priority = strtolower($row['priority']);
@@ -259,7 +259,7 @@ class AM_ProjectTemplatesController extends SugarController
         include_once('modules/AM_ProjectTemplates/gantt.php');
         include_once('modules/AM_ProjectTemplates/project_table.php');
 
-        $project_template = new AM_ProjectTemplates();
+        $project_template = BeanFactory::newBean('AM_ProjectTemplates');
         $pid = $_POST["pid"];
         $project_template->retrieve($pid);
         
@@ -335,7 +335,7 @@ class AM_ProjectTemplatesController extends SugarController
             }
         }
 
-        $project_template = new AM_ProjectTemplates();
+        $project_template = BeanFactory::newBean('AM_ProjectTemplates');
         $project_template->retrieve($project_id);
 
 
@@ -388,7 +388,7 @@ class AM_ProjectTemplatesController extends SugarController
     public function action_delete_task()
     {
         $id = $_POST['task_id'];
-        $task = new AM_TaskTemplates();
+        $task = BeanFactory::newBean('AM_TaskTemplates');
         $task->retrieve($id);
         $task->deleted = '1';
         $task->save();
@@ -428,7 +428,7 @@ class AM_ProjectTemplatesController extends SugarController
         $orderArray = json_decode($jArray, true);
 
         foreach ($orderArray as $id => $order_number) {
-            $task = new AM_TaskTemplates();
+            $task = BeanFactory::newBean('AM_TaskTemplates');
             $task->retrieve($id);
             $task->order_number = $order_number;
             $task->save();
@@ -438,7 +438,7 @@ class AM_ProjectTemplatesController extends SugarController
     public function action_get_predecessors()
     {
         global $mod_strings;
-        $project_template = new AM_ProjectTemplates();
+        $project_template = BeanFactory::newBean('AM_ProjectTemplates');
         $project_template->retrieve($_REQUEST["project_id"]);
 
         //Get tasks
@@ -454,7 +454,7 @@ class AM_ProjectTemplatesController extends SugarController
 
     public function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration, $order_number)
     {
-        $task = new AM_TaskTemplates();
+        $task = BeanFactory::newBean('AM_TaskTemplates');
         $task->name = $name;
         //$task->date_start = $start;
         //$task->date_finish = $end;
@@ -473,7 +473,7 @@ class AM_ProjectTemplatesController extends SugarController
         $task->order_number = $order_number;
         $task_id = $task->save();
 
-        $project_template = new AM_ProjectTemplates();
+        $project_template = BeanFactory::newBean('AM_ProjectTemplates');
         $project_template->retrieve($project_id);
         $project_template->load_relationship('am_tasktemplates_am_projecttemplates');
         $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates', 'AM_TaskTemplates');
@@ -482,7 +482,7 @@ class AM_ProjectTemplatesController extends SugarController
 
     public function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration)
     {
-        $task = new AM_TaskTemplates();
+        $task = BeanFactory::newBean('AM_TaskTemplates');
 
         $task->retrieve($id);
         $task->name = $name;

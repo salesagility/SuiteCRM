@@ -109,7 +109,7 @@ class ConfiguratorViewEdit extends ViewEdit
         
         $configurator = $this->configurator;
         $sugarConfig = SugarConfig::getInstance();
-        $focus = new Administration();
+        $focus = BeanFactory::newBean('Administration');
         $configurator->parseLoggerSettings();
         
         $focus->retrieveSettings();

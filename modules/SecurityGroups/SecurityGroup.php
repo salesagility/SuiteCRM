@@ -363,7 +363,7 @@ class SecurityGroup extends SecurityGroup_sugar
                 if (!in_array($_REQUEST['relate_to'], array_keys($security_modules))) {
                     //check to see if relate_to is the relationship name
                     require_once 'modules/Relationships/Relationship.php';
-                    $relationship = new Relationship();
+                    $relationship = BeanFactory::newBean('Relationships');
                     $rel_module = $relationship->get_other_module(
                         $_REQUEST['relate_to'],
                         $focus_module_dir,
@@ -614,7 +614,7 @@ class SecurityGroup extends SecurityGroup_sugar
         $module_blacklist = array('SchedulersJobs', 'Schedulers', 'Trackers');
 
         require_once 'modules/Relationships/Relationship.php';
-        $rs = new Relationship();
+        $rs = BeanFactory::newBean('Relationships');
         $query = "SELECT lhs_module, rhs_module FROM $rs->table_name WHERE deleted=0 AND (lhs_module = 'SecurityGroups' OR rhs_module='SecurityGroups')";
         $GLOBALS['log']->debug("SecuritySuite: Get SecuritySuite Enabled Modules: $query");
         $result = $rs->db->query($query);

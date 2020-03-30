@@ -119,7 +119,7 @@ class EntryPointConfirmOptInHandler
         $msg = '';
 
         foreach ($uids as $uid) {
-            $emailMan = new EmailMan();
+            $emailMan = BeanFactory::newBean('EmailMan');
             if (!$emailMan->addOptInEmailToEmailQueue($module, $uid)) {
                 $errors++;
             } elseif ($emailMan->getLastOptInWarn()) {

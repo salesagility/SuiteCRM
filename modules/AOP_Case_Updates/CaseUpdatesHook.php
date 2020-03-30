@@ -112,7 +112,7 @@ class CaseUpdatesHook
             return;
         }
         $case->update_text = '';
-        $case_update = new AOP_Case_Updates();
+        $case_update = BeanFactory::newBean('AOP_Case_Updates');
         $case_update->name = $text;
         $case_update->internal = $case->internal;
         $case->internal = false;
@@ -255,7 +255,7 @@ class CaseUpdatesHook
                 $this->linkAccountAndCase($email->parent_id, $emailBean->account_id);
             }
         }
-        $caseUpdate = new AOP_Case_Updates();
+        $caseUpdate = BeanFactory::newBean('AOP_Case_Updates');
         $caseUpdate->name = $email->name;
         $caseUpdate->contact_id = $contact_id;
         $updateText = $this->unquoteEmail($email->description_html ? $email->description_html : $email->description);
@@ -367,13 +367,13 @@ class CaseUpdatesHook
         $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail called');
         require_once 'include/SugarPHPMailer.php';
         $mailer = new SugarPHPMailer();
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         $mailer->prepForOutbound();
         $mailer->setMailerForSystem();
 
-        $emailTemplate = new EmailTemplate();
+        $emailTemplate = BeanFactory::newBean('EmailTemplates');
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_closure_email_template_id']);
 
@@ -517,13 +517,13 @@ class CaseUpdatesHook
         }
         require_once 'include/SugarPHPMailer.php';
         $mailer = new SugarPHPMailer();
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         $mailer->prepForOutbound();
         $mailer->setMailerForSystem();
 
-        $emailTemplate = new EmailTemplate();
+        $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_creation_email_template_id']);
@@ -571,7 +571,7 @@ class CaseUpdatesHook
     private function logEmail($email, SugarPHPMailer $mailer, $caseId = null)
     {
         require_once 'modules/Emails/Email.php';
-        $emailObj = new Email();
+        $emailObj = BeanFactory::newBean('Emails');
         $emailObj->to_addrs_names = $email;
         $emailObj->type = 'out';
         $emailObj->deleted = '0';
@@ -604,7 +604,7 @@ class CaseUpdatesHook
     public function sendCaseUpdate(AOP_Case_Updates $caseUpdate)
     {
         global $current_user, $sugar_config;
-        $email_template = new EmailTemplate();
+        $email_template = BeanFactory::newBean('EmailTemplates');
 
         $module = null;
         if (isset($_REQUEST['module'])) {

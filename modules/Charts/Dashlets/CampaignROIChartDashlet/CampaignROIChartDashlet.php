@@ -92,7 +92,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
 
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
         if ($GLOBALS['current_user']->getPreference('currency')) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
@@ -239,7 +239,7 @@ EOD;
 
         $chartData = array();
 
-        $focus = new Campaign();
+        $focus = BeanFactory::newBean('Campaigns');
         $focus->retrieve($campaign_id);
         $opp_count=0;
         $opp_query  = "select count(*) opp_count,sum(" . DBManagerFactory::getInstance()->convert("amount_usdollar", "IFNULL", array(0)).")  total_value";

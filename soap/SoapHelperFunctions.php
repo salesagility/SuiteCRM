@@ -103,7 +103,7 @@ function get_field_list($value, $translate = true)
     } //if
 
     if (isset($value->module_dir) && $value->module_dir == 'Bugs') {
-        $seedRelease = new Release();
+        $seedRelease = BeanFactory::newBean('Releases');
         $options = $seedRelease->get_releases(true, "Active");
         $options_ret = array();
         foreach ($options as $name => $value) {
@@ -225,7 +225,7 @@ function new_get_field_list($value, $translate = true)
     } //if
 
     if ($value->module_dir == 'Bugs') {
-        $seedRelease = new Release();
+        $seedRelease = BeanFactory::newBean('Releases');
         $options = $seedRelease->get_releases(true, "Active");
         $options_ret = array();
         foreach ($options as $name => $value) {
@@ -961,7 +961,7 @@ function add_create_account($seed)
     $assigned_user_id = $current_user->id;
 
     // check if it already exists
-    $focus = new Account();
+    $focus = BeanFactory::newBean('Accounts');
     if ($focus->ACLAccess('Save')) {
         $class = get_class($seed);
         $temp = new $class();
@@ -1154,7 +1154,7 @@ if (!function_exists("get_encoded")) {
     function decrypt_string($string)
     {
         if (function_exists('openssl_decrypt')) {
-            $focus = new Administration();
+            $focus = BeanFactory::newBean('Administration');
             $focus->retrieveSettings();
             $key = '';
             if (!empty($focus->settings['ldap_enc_key'])) {
