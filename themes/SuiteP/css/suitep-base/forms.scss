@@ -294,6 +294,12 @@ fieldset[disabled] .btn-primary.active {
   width: 100%;
 }
 
+[field="condition_lines"].col-sm-10 {
+  display: block;
+  width: 100%;
+  background-color: $body-bg;
+}
+
 #conditionLines {
   display: block;
 }
