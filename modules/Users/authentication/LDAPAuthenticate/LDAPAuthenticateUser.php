@@ -72,7 +72,16 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
             $port = DEFAULT_PORT;
         }
         $GLOBALS['log']->debug("ldapauth: Connecting to LDAP server: $server");
-        $ldapconn = ldap_connect($server, $port);
+        $slashPos = strpos($server, '://');		// check for ldap(s):// style syntax
+        if ($slashPos === false) {
+             $ldapconn = ldap_connect($server, $port);	// use the old way
+        } else {
+            if ($slashPos < 4) {
+                $GLOBAL['log']->fatal("ldapauth.ldap_rdn_lookup: Malformed LDAP server URI ($server)");
+                return false;
+            }
+            $ldapconn = ldap_connect("$server:$port");  // use the new way
+        }
         $error = ldap_errno($ldapconn);
         if ($this->loginError($error)) {
             return '';
@@ -362,7 +371,17 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         if (!$port) {
             $port = DEFAULT_PORT;
         }
-        $ldapconn = ldap_connect($server, $port);
+        $slashPos = strpos($server, '://');		// check for ldap(s):// style syntax
+        if ($slashPos === false) {
+             $ldapconn = ldap_connect($server, $port);	// use the old way
+        } else {
+            if ($slashPos < 4) {
+                $GLOBAL['log']->fatal("ldapauth.ldap_rdn_lookup: Malformed LDAP server URI ($server)");
+                return false;
+            }
+            $ldapconn = ldap_connect("$server:$port");  // use the new way
+        }
+
         $error = ldap_errno($ldapconn);
         if ($this->loginError($error)) {
             return false;
