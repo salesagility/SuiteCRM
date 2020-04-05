@@ -71,16 +71,20 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         if (!$port) {
             $port = DEFAULT_PORT;
         }
-        $GLOBALS['log']->debug("ldapauth: Connecting to LDAP server: $server");
-        $slashPos = strpos($server, '://');		// check for ldap(s):// style syntax
+        LoggerManager::getLogger()->debug('ldapauth: Connecting to LDAP server: $server');
+        // check for ldap(s):// style syntax
+        $slashPos = strpos($server, '://');
         if ($slashPos === false) {
-             $ldapconn = ldap_connect($server, $port);	// use the old way
+            // use the old way
+            $ldapconn = ldap_connect($server, $port);
         } else {
             if ($slashPos < 4) {
-                $GLOBAL['log']->fatal("ldapauth.ldap_rdn_lookup: Malformed LDAP server URI ($server)");
+                LoggerManager::getLogger()->fatal('ldapauth.ldap_rdn_lookup: Malformed LDAP server URI ($server)');
+
                 return false;
             }
-            $ldapconn = ldap_connect("$server:$port");  // use the new way
+            // use the new way, ignore the port
+            $ldapconn = ldap_connect($server);
         }
         $error = ldap_errno($ldapconn);
         if ($this->loginError($error)) {
@@ -371,15 +375,20 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         if (!$port) {
             $port = DEFAULT_PORT;
         }
-        $slashPos = strpos($server, '://');		// check for ldap(s):// style syntax
+
+        // check for ldap(s):// style syntax
+        $slashPos = strpos($server, '://');
         if ($slashPos === false) {
-             $ldapconn = ldap_connect($server, $port);	// use the old way
+            // use the old way
+            $ldapconn = ldap_connect($server, $port);
         } else {
             if ($slashPos < 4) {
-                $GLOBAL['log']->fatal("ldapauth.ldap_rdn_lookup: Malformed LDAP server URI ($server)");
+                LoggerManager::getLogger()->fatal('ldapauth.ldap_rdn_lookup: Malformed LDAP server URI ($server)');
+
                 return false;
             }
-            $ldapconn = ldap_connect("$server:$port");  // use the new way
+            // use the new way, ignore the port
+            $ldapconn = ldap_connect($server);
         }
 
         $error = ldap_errno($ldapconn);
