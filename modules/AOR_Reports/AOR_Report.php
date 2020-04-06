@@ -1414,7 +1414,8 @@ class AOR_Report extends Basic
         if (!isset($query['join'][$alias])) {
             switch ($type) {
                 case 'custom':
-                    $customTable = $module->get_custom_table_name();
+                    $tmpModule = BeanFactory::getBean($module->module_dir);
+                    $customTable = $tmpModule->get_custom_table_name();
                     $query['join'][$alias] =
                         'LEFT JOIN ' .
                         $db->quoteIdentifier($customTable) .' '. $db->quoteIdentifier($alias) .
