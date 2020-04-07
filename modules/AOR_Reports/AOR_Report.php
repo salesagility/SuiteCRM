@@ -474,6 +474,12 @@ class AOR_Report extends Basic
 
             if ($data['type'] == 'relate' && isset($data['id_name'])) {
                 $field->field = $data['id_name'];
+                $data_new = $field_module->field_defs[$field->field];
+                if (isset($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
+                    $data_new['type'] = 'link';
+                    $data_new['relationship'] = $data['link'];
+                }
+                $data = $data_new;
             }
 
             if ($data['type'] == 'currency' && !stripos(
