@@ -756,17 +756,17 @@ class AOR_Report extends Basic
 
             $html .= '<td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%">';
             if ($offset == 0) {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' disabled='disabled'>
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' disabled='disabled'>
                     <span class='suitepicon suitepicon-action-first'></span>
                 </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' disabled='disabled'>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' disabled='disabled'>
                     <span class='suitepicon suitepicon-action-left'></span>
                 </button>";
             } else {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(\"" . $this->id . "\",0,\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",0,"' . $group_value . '","' . $tableIdentifier . "\")'>
                     <span class='suitepicon suitepicon-action-first'></span>
                 </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(\"" . $this->id . "\"," . $previous_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' onclick='changeReportPage(\"" . $this->id . '",' . $previous_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
                     <span class='suitepicon suitepicon-action-left'></span>
                 </button>";
             }
@@ -774,17 +774,17 @@ class AOR_Report extends Basic
             $html .= ' <div class="pageNumbers">(' . $start . ' - ' . $end . ' of ' . $total_rows . ')</div>';
             $html .= '</td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%">';
             if ($next_offset < $total_rows) {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $next_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",' . $next_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
                        <span class='suitepicon suitepicon-action-right'></span>
                     </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $last_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",' . $last_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
                         <span class='suitepicon suitepicon-action-last'></span>
                     </button>";
             } else {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
-                        <span class='suitepicon suitepicon-action-next'></span>
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='list-view-pagination-button'  disabled='disabled'>
+                        <span class='suitepicon suitepicon-action-right'></span>
                     </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='list-view-pagination-button'  disabled='disabled'>
                        <span class='suitepicon suitepicon-action-last'></span>
                     </button>";
             }
