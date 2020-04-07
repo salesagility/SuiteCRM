@@ -285,7 +285,7 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARTEMPLATE']}</h3>";
         }
-        if (!in_array(translate('LBL_ALL_MODULES'), (array)$this->module_list) && !empty($this->module_list)) {
+        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.tpl');
             }
@@ -314,7 +314,7 @@ class RepairAndClear
             echo "<h3>{$mod_strings['LBL_QR_CLEARJS']}</h3>";
         }
 
-        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
+        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
@@ -328,7 +328,7 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARJSLANG']}</h3>";
         }
-        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
+        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('jsLanguage/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
@@ -403,7 +403,7 @@ class RepairAndClear
             echo "<h3> {$mod_strings['LBL_QR_REBUILDAUDIT']}</h3>";
         }
 
-        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
+        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $bean_name) {
                 if (isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
                     require_once($beanFiles[$bean_name]);
