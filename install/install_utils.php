@@ -972,7 +972,10 @@ function handleHtaccess()
 {
     global $mod_strings;
     global $sugar_config;
-    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
+    $ignoreCase = '';
+    if (!empty($_SERVER['SERVER_SOFTWARE']) && (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)) {
+        $ignoreCase = '(?i)';
+    }
     $htaccess_file = '.htaccess';
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
