@@ -506,7 +506,12 @@ class AOR_Report extends Basic
                     $query_array
                 );
             } else {
-                $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+                if ($data['type'] == 'link' && $data['source'] == 'non-db') {
+                    $select_field = $this->db->quoteIdentifier($field_module->table_name.':'.$data['relationship']) . '.id';
+                }
+                else {
+                	$select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+                }
             }
 
             if ($field->sort_by != '') {
