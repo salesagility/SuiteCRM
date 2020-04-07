@@ -522,9 +522,7 @@ class AOR_Report extends Basic
                 $select_field = $field->field_function . '(' . $select_field . ')';
             }
 
-            if ($field->group_by == 1) {
-                $query_array['group_by'][] = $select_field;
-            }
+            $query_array['group_by'][] = $select_field;
 
             $query_array['select'][] = $select_field . " AS '" . $field_label . "'";
             if (isset($extra['select']) && $extra['select']) {
