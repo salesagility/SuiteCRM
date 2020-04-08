@@ -162,9 +162,12 @@ class SAML2Authenticate extends SugarAuthenticate
 
     /**
      * Called when a user requests to logout, and use SAML2 logout
+     * @param bool $redirect
+     * @param bool $exit
+     * @param bool $clean
      * @throws OneLogin_Saml2_Error
      */
-    public function logout()
+    public function logout(bool $redirect = true, bool $exit = true, bool $clean = true)
     {
         if ($this->samlLogoutAuth && $this->samlLogoutAuth->getSLOurl()) {
             $this->samlLogoutAuth->logout(

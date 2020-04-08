@@ -401,19 +401,28 @@ class SugarAuthenticate
     }
 
 
-
-
     /**
      * Called when a user requests to logout
-     *
+     * @param bool $redirect
+     * @param bool $exit
+     * @param bool $clean
      */
-    public function logout()
+    public function logout(bool $redirect = true, bool $exit = true, bool $clean = true)
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         session_destroy();
-        ob_clean();
-        header('Location: index.php?module=Users&action=Login');
-        sugar_cleanup(true);
+
+        if ($clean === true){
+            ob_clean();
+        }
+
+        if ($redirect === true) {
+            header('Location: index.php?module=Users&action=Login');
+        }
+
+        sugar_cleanup($exit);
     }
 
 

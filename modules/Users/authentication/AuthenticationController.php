@@ -221,11 +221,14 @@ class AuthenticationController
     /**
      * Called when a user requests to logout. Should invalidate the session and redirect
      * to the login page.
+     * @param bool $redirect
+     * @param bool $exit
+     * @param bool $clean
      */
-    public function logout()
+    public function logout(bool $redirect = true, bool $exit = true, bool $clean = true)
     {
         $GLOBALS['current_user']->call_custom_logic('before_logout');
-        $this->authController->logout();
+        $this->authController->logout($redirect, $exit, $clean);
         LogicHook::initialize();
         $GLOBALS['logic_hook']->call_custom_logic('Users', 'after_logout');
     }
