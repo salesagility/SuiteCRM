@@ -1124,15 +1124,7 @@ class AOR_Report extends Basic
                         if (false !== strpos($t, 'checkbox')) {
                             $csv .= $row[$name];
                         } else {
-                            $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField(
-                                $att['module'],
-                                $att['field'],
-                                $att['field'],
-                                'DetailView',
-                                $row[$name],
-                                '',
-                                $currency_id
-                            ))));
+                            $csv .= $this->encloseForCSV(trim(strip_tags($t)));
                         }
                     }
                     $csv .= $delimiter;
