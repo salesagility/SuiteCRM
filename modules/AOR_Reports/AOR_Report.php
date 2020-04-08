@@ -1465,6 +1465,7 @@ class AOR_Report extends Basic
 
     public function build_report_access_query(SugarBean $module, $alias)
     {
+        $tempTableName = $module->table_name;
         $module->table_name = $alias;
         $where = '';
         if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
@@ -1488,6 +1489,8 @@ class AOR_Report extends Basic
             }
             /* END - SECURITY GROUPS */
         }
+
+        $module->table_name = $tempTableName;
 
         return $where;
     }
