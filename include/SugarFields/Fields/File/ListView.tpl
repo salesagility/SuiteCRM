@@ -50,6 +50,8 @@
 {if strlen($imageURL)>1}{sugar_getimage name=$imageName alt=$imageName other_attributes='border="0" '}{/if}
 {/if}
 </a>&nbsp;
+{if !empty($parentFieldArray.filename.value)}
 <a href="index.php?preview=yes&entryPoint=download&id={$parentFieldArray.ID}&type={if empty($vardef.displayParams.module)}{$displayParams.module}{else}{$vardef.displayParams.module}{/if}" class="tabDetailViewDFLink" target='_blank' style="border-bottom: 0px;">
 	<i class="glyphicon glyphicon-eye-open"></i>
 </a>
+{/if}
