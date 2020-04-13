@@ -2574,9 +2574,8 @@ class SugarBean
                     }
                 }
                 if ($reformatted) {
-                    $GLOBALS['log']->deprecated('Formatting correction: ' . $this->module_dir . '->' . $field .
-                        ' had formatting automatically corrected. This will be removed in the future, ' .
-                        'please upgrade your external code');
+                    $GLOBALS['log']->info('Formatting correction: ' . $this->module_dir . '->' . $field .
+                        ' had formatting automatically corrected.');
                 }
             }
         }
