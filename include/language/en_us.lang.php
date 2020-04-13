@@ -1043,16 +1043,23 @@ $app_strings = array(
     'LBL_EMAIL_CODE' => 'Email Code:',
     'LBL_SEND' => 'Send',
     'LBL_LOGOUT' => 'Logout',
+    'LBL_LOGOUT_SUCCESS' => 'Logout Success',
     'LBL_TOUR_NEXT' => 'Next',
     'LBL_TOUR_SKIP' => 'Skip',
     'LBL_TOUR_BACK' => 'Back',
     'LBL_TOUR_TAKE_TOUR' => 'Take the tour',
-    'LBL_MOREDETAIL' => 'More Detail' /*for 508 compliance fix*/,
-    'LBL_EDIT_INLINE' => 'Edit Inline' /*for 508 compliance fix*/,
-    'LBL_VIEW_INLINE' => 'View' /*for 508 compliance fix*/,
-    'LBL_BASIC_SEARCH' => 'Filter' /*for 508 compliance fix*/,
-    'LBL_Blank' => ' ' /*for 508 compliance fix*/,
-    'LBL_ID_FF_ADD' => 'Add' /*for 508 compliance fix*/,
+    'LBL_MOREDETAIL' => 'More Detail'
+    /*for 508 compliance fix*/,
+    'LBL_EDIT_INLINE' => 'Edit Inline'
+    /*for 508 compliance fix*/,
+    'LBL_VIEW_INLINE' => 'View'
+    /*for 508 compliance fix*/,
+    'LBL_BASIC_SEARCH' => 'Filter'
+    /*for 508 compliance fix*/,
+    'LBL_Blank' => ' '
+    /*for 508 compliance fix*/,
+    'LBL_ID_FF_ADD' => 'Add'
+    /*for 508 compliance fix*/,
     'LBL_ID_FF_ADD_EMAIL' => 'Add Email Address' /*for 508 compliance fix*/,
     'LBL_HIDE_SHOW' => 'Hide/Show' /*for 508 compliance fix*/,
     'LBL_DELETE_INLINE' => 'Delete' /*for 508 compliance fix*/,
