@@ -4577,9 +4577,11 @@ function whetherNeedToSkipDir($dir, $skipDirs)
 function dirInArray($dir, $dirsArray)
 {
     $dir = clean_path($dir);
+    $cwd = clean_path(getcwd());
+
     foreach ($dirsArray as $aDir) {
         // Match the substring only at the beginning of the path:
-        if (strpos($dir, getcwd() . '/' . $aDir) === 0) {
+        if (strpos($dir, $cwd . '/' . $aDir) === 0) {
             return true;
         }
     }

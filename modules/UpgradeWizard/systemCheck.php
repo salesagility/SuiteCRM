@@ -80,6 +80,7 @@ $filesOut = "
 
 $isWindows = is_windows();
 foreach ($files as $file) {
+    $file = $file->getPathname();
     if (dirInArray($file, $skipDirs)) {
         continue;
     }
