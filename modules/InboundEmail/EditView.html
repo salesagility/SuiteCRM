@@ -209,14 +209,36 @@
 		</tr>
 		<tr>
 			<td valign="top" scope="row">
-				<slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_CREATE_CASE}:&nbsp;{TIPS.LBL_CREATE_CASE_HELP}</span></td>
-			<td valign="top"  width="35%"><slot style="{MAILBOX_TYPE_STYLE}">
-			     <input name='is_create_case' id='is_create_case' onclick="showCreateCaseRow();"tabindex='45' type='checkbox' {IS_CREATE_CASE} {IE_DISABLED}></span></td>
+				<slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_REPLY_ASSIGNING_BEHAVIOR}:&nbsp;{TIPS.LBL_REPLY_ASSIGNING_BEHAVIOR_HELP}</span>
+			</td>
+			<td valign="top"  width="35%">
+				<span>
+					<select name='assignment_behavior' tabindex='315' {IE_DISABLED}>
+						{REPLY_ASSIGNING_BEHAVIOR}
+					</select>
+				</span>
+			</td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				{MOD.LBL_REPLY_TO_NAME}:&nbsp;
 			</td>
 			<td valign="top"  width="35%">
 				<input tabindex="320" name="reply_to_name" value="{REPLY_TO_NAME}" {IE_DISABLED}>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" scope="row">
+				<slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_CREATE_CASE}:&nbsp;{TIPS.LBL_CREATE_CASE_HELP}</span>
+			</td>
+			<td valign="top"  width="35%">
+				<slot style="{MAILBOX_TYPE_STYLE}">
+					<input name='is_create_case' id='is_create_case' onclick="showCreateCaseRow();"tabindex='45' type='checkbox' {IS_CREATE_CASE} {IE_DISABLED}>
+				</span>
+			</td>
+			<td valign="top" scope="row" width="15%" NOWRAP>
+				{MOD.LBL_REPLY_TO_ADDR}:&nbsp;
+			</td>
+			<td valign="top"  width="35%">
+				<input tabindex="340" name="reply_to_addr" value="{REPLY_TO_ADDR}" {IE_DISABLED}>&nbsp;
 			</td>
 		</tr>
 		<tr id="createCaseRow" style="{CREATE_CASE_ROW_STYLE}">
@@ -279,19 +301,8 @@
 					<select tabindex='330' id="create_case_template_id" name='create_case_template_id' onchange="show_edit_template_link(this, 'create_case_edit_template');" {IE_DISABLED}>{CREATE_CASE_EMAIL_TEMPLATE_OPTIONS}</select>
 					<input type="button" class="button" onclick="javascript:open_email_template_form('create_case_template_id')" value="{MOD.LBL_CREATE_TEMPLATE}" {IE_DISABLED}>
 					<input type="button" class="button" name='create_case_edit_template' id='create_case_edit_template' style="{CREATE_CASE_EDIT_TEMPLATE}" onclick="javascript:edit_email_template_form('create_case_template_id')" value="{MOD.LBL_EDIT_TEMPLATE}">
+					<br><br><br>
 				</span>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" scope="row">
-				<span>&nbsp;</span></td>
-			<td valign="top"  width="35%"><span>
-				&nbsp;</span></td>
-			<td valign="top" scope="row" width="15%" NOWRAP>
-				{MOD.LBL_REPLY_TO_ADDR}:&nbsp;
-			</td>
-			<td valign="top"  width="35%">
-				<input tabindex="340" name="reply_to_addr" value="{REPLY_TO_ADDR}" {IE_DISABLED}>&nbsp;
 			</td>
 		</tr>
 		<tr style="MAILBOX_TYPE_STYLE">

@@ -229,6 +229,7 @@ $xtpl->assign('TLS', $tls);
 $xtpl->assign('CERT', $ca);
 $xtpl->assign('MARK_READ', $delete_seen);
 $xtpl->assign('ALLOW_OUTBOUND_GROUP_USAGE', $allow_outbound_group_usage);
+$xtpl->assign('ASSIGNMENT_BEHAVIOR', $app_list_strings['inboundmail_assign_replies_to_admin'][$focus->assignment_behavior]);
 
 // deferred
 //$xtpl->assign('QUEUE', $queue);
