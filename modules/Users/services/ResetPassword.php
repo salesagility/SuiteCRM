@@ -13,7 +13,7 @@ class ResetPassword
      * @param string|null $username
      * @param string|null $useremail
      * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws BadFunctionCallException
      */
     public function reset(?string $username, ?string $useremail): void
     {
@@ -47,7 +47,7 @@ class ResetPassword
      * @param string|null $username
      * @param string|null $useremail
      * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws BadFunctionCallException
      */
     public function sendResetLink(?string $username, ?string $useremail): void
     {
@@ -86,6 +86,7 @@ class ResetPassword
      * @param string $username
      * @param string $useremail
      * @param array $mod_strings
+     * @throws InvalidArgumentException
      */
     protected function validateInput(?string $username, ?string $useremail, array $mod_strings): void
     {
@@ -98,6 +99,7 @@ class ResetPassword
      * @param string|null $useremail
      * @param User|null $user
      * @param array $mod_strings
+     * @throws InvalidArgumentException
      */
     protected function validateUser(?string $useremail, ?User $user, array $mod_strings): void
     {
@@ -150,6 +152,7 @@ class ResetPassword
      * @param array $result
      * @param User|null $current_user
      * @param array $mod_strings
+     * @throws BadFunctionCallException
      */
     protected function handleResult(array $result, ?User $current_user, array $mod_strings): void
     {
