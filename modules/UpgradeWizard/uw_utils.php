@@ -42,8 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
-
 /**
  * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time
  *
@@ -1175,9 +1173,7 @@ function checkSystemCompliance()
     }
 
     // imap
-    $imapFactory = new ImapHandlerFactory();
-    $imap = $imapFactory->getImapHandler();
-    if ($imap->isAvailable()) {
+    if (function_exists('imap_open')) {
         $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
     } else {
         $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_IMAP']}</span></b>";
