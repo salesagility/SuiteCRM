@@ -191,6 +191,12 @@ class SugarController
         'listview' => 'ListView'
     );
 
+    public $breadcrumbs = Array(
+        'entryPointFile' => '',
+        'processTasksHistory' => '',
+        'handleActionTasksHistory' => '',
+    );
+
     /**
      * Constructor. This ie meant to load up the module, action, record as well
      * as the mapping arrays.
@@ -453,6 +459,7 @@ class SugarController
     {
         $GLOBALS['action'] = $this->action;
         $GLOBALS['module'] = $this->module;
+        $this->breadcrumbs['processTasksHistory'] = '';
 
         //check to ensure we have access to the module.
         if ($this->hasAccess) {
@@ -465,7 +472,9 @@ class SugarController
             $processed = false;
             if (!$this->_processed) {
                 foreach ($this->process_tasks as $process) {
+                    $this->breadcrumbs['processTasksHistory'] .= $process . '…';
                     $this->$process();
+                    $this->breadcrumbs['processTasksHistory'] .= 'ok. ';
                     if ($this->_processed) {
                         break;
                     }
@@ -474,6 +483,7 @@ class SugarController
 
             $this->redirect();
         } else {
+            $this->breadcrumbs['processTasksHistory'] .= 'no access!';
             $this->no_access();
         }
     }
@@ -489,22 +499,27 @@ class SugarController
      */
     protected function handle_action()
     {
+        $this->breadcrumbs['handleActionTasksHistory'] = '';
+
         $processed = false;
         foreach ($this->tasks as $task) {
+            $this->breadcrumbs['handleActionTasksHistory'] .= $task . '…';
             $processed = ($this->$task() || $processed);
+            $this->breadcrumbs['handleActionTasksHistory'] .= 'ok. ';
         }
         $this->_processed = $processed;
     }
 
     /**
      * Perform an action prior to the specified action.
-     * This can be overridde in a sub-class
+     * This can be overridden in a sub-class
      */
     private function pre_action()
     {
         $function = $this->getPreActionMethodName();
         if ($this->hasFunction($function)) {
-            $GLOBALS['log']->debug('Performing pre_action');
+            $this->breadcrumbs['handleActionTasksHistory'] .= $function. ' ';
+            $GLOBALS['log']->debug('Performing pre_action' . $function . ' MODULE: ' . $this->module);
             $this->$function();
 
             return true;
@@ -515,13 +530,14 @@ class SugarController
 
     /**
      * Perform the specified action.
-     * This can be overridde in a sub-class
+     * This can be overridden in a sub-class
      */
     private function do_action()
     {
         $function = $this->getActionMethodName();
         if ($this->hasFunction($function)) {
-            $GLOBALS['log']->debug('Performing action: ' . $function . ' MODULE: ' . $this->module);
+            $this->breadcrumbs['handleActionTasksHistory'] .= $function. ' ';
+            $GLOBALS['log']->debug('Performing do_action: ' . $function . ' MODULE: ' . $this->module);
             $this->$function();
 
             return true;
@@ -532,13 +548,14 @@ class SugarController
 
     /**
      * Perform an action after to the specified action has occurred.
-     * This can be overridde in a sub-class
+     * This can be overridden in a sub-class
      */
     private function post_action()
     {
         $function = $this->getPostActionMethodName();
         if ($this->hasFunction($function)) {
-            $GLOBALS['log']->debug('Performing post_action');
+            $this->breadcrumbs['handleActionTasksHistory'] .= $function. ' ';
+            $GLOBALS['log']->debug('Performing post_action' . $function . ' MODULE: ' . $this->module);
             $this->$function();
 
             return true;
@@ -621,6 +638,7 @@ class SugarController
     protected function redirect()
     {
         if (!empty($this->redirect_url)) {
+            $this->breadcrumbs['processTasksHistory'] .= 'redirect…';
             SugarApplication::redirect($this->redirect_url);
         }
     }
@@ -1012,12 +1030,14 @@ class SugarController
      */
     private function handleEntryPoint()
     {
+        $this->breadcrumbs['entryPointFile'] = '';
         if (!empty($_REQUEST['entryPoint'])) {
             $this->loadMapping('entry_point_registry');
             $entryPoint = $_REQUEST['entryPoint'];
 
             if (!empty($this->entry_point_registry[$entryPoint])) {
-                require_once($this->entry_point_registry[$entryPoint]['file']);
+                $this->breadcrumbs['entryPointFile'] = $this->entry_point_registry[$entryPoint]['file'];
+                require_once($this->breadcrumbs['entryPointFile']);
                 $this->_processed = true;
                 $this->view = '';
             }
