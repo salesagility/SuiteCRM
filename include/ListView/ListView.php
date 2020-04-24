@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -883,9 +883,10 @@ class ListView
         if ($this->query_where_has_changed || isset($GLOBALS['record_has_changed'])) {
             $this->setSessionVariable($localVarName, 'offset', 0);
         }
+        // this might return several kinds of values: 0, '', 'end', etc
         $offset = $this->getSessionVariable($localVarName, 'offset');
-        if (isset($offset)) {
-            return (int)$offset;
+        if (isset($offset) && ($offset !== '')) {
+            return $offset;
         }
 
         return 0;
@@ -935,7 +936,7 @@ class ListView
         if (isset($_SESSION[$this->getSessionVariableName($localVarName, $varName)])) {
             return $_SESSION[$this->getSessionVariableName($localVarName, $varName)];
         }
-        return "";
+        return '';
     }
 
     public function getUserVariable($localVarName, $varName)
