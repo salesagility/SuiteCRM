@@ -41,4 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['Audit'] = array();
+$dictionary['Audit'] = array(
+    'table' => 'does_not_exist',
+);
