@@ -590,6 +590,12 @@ class SugarApplication
 
     public function startSession()
     {
+        $sessionName = 'LEGACYSESSID';
+        if (!empty($GLOBALS['sugar_config']['session_name'])) {
+            $sessionName = $GLOBALS['sugar_config']['session_name'];
+        }
+        session_name($sessionName);
+
         $sessionIdCookie = isset($_COOKIE[session_name()]) ? $_COOKIE[session_name()] : null;
         if (isset($_REQUEST['MSID'])) {
             session_id($_REQUEST['MSID']);

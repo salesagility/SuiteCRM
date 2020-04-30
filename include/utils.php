@@ -273,6 +273,7 @@ function get_sugar_config_defaults()
      */
 
     $sugar_config_defaults = array(
+        'disableAjaxUI' => true,
         'admin_export_only' => false,
         'export_delimiter' => ',',
         'export_excel_compatible' => false,
