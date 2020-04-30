@@ -225,6 +225,7 @@ $mod_strings = array(
     'LBL_DIAGNOSTIC_SUITELOG' => 'SuiteCRM Log File',
     'LBL_DIAGNOSTIC_TITLE' => 'Diagnostic Tool',
     'LBL_DIAGNOSTIC_VARDEFS' => 'SuiteCRM schema output (VARDEFS)',
+    'LBL_DIAGNOSTIC_VIEWFULLPHPINFO' => 'View full phpinfo',
     'LBL_DISABLED' => 'Disabled',
     'LBL_DISPLAY_TABS' => 'Display Tabs',
     'LBL_DO_OVERWRITE_FILES' => 'Do Not Overwrite Files',
