@@ -484,6 +484,10 @@ class Opportunity extends SugarBean
         return $ret_array;
     }
 }
+
+/**
+ * @deprecated This function is unused and will be removed in a future release.
+ */
 function getCurrencyType()
 {
 }

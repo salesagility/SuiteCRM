@@ -150,9 +150,7 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
             array(
                 'name' => 'amount',
                 'vname' => 'LBL_AMOUNT',
-                //'function'=>array('vname'=>'getCurrencyType'),
                 'type' => 'currency',
-//    'disable_num_format' => true,
                 'dbType' => 'double',
                 'comment' => 'Unconverted amount of the opportunity',
                 'importable' => 'required',

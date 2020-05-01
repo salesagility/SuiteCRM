@@ -264,17 +264,4 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $result = $opportunity->get_account_detail('1');
         $this->assertTrue(is_array($result));
     }
-
-    public function testgetCurrencyType()
-    {
-        // Execute the method and test that it works and doesn't throw an exception.
-        try {
-            getCurrencyType();
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-        }
-
-        $this->markTestIncomplete('This method has no implementation');
-    }
 }
