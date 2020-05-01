@@ -216,8 +216,8 @@ if ($facebook_enabled) {
         $date = date("Y-m-d H:i:s", strtotime($single['created_time']));
 
 
-        $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $message . "' AND date_entered = '" . $date . "'";
-        $results = $db->query($sql_check);
+        $sql_check = "SELECT * FROM sugarfeed WHERE description = '?' AND date_entered = '?'";
+        $results = $db->pQuery($sql_check, [$message, $date]);
 
         while ($row = $db->fetchByAssoc($results)) {
             $found_record = $row;
