@@ -43,12 +43,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 //for users
+/**
+ * @deprecated This function is unused and will be removed in a future release. It was moved to UserEditView.js.
+ */
 function user_get_validate_record_js()
 {
 }
+/**
+ * @deprecated This function is unused and will be removed in a future release. It was moved to UserEditView.js.
+ */
 function user_get_chooser_js()
 {
 }
+/**
+ * @deprecated This function is unused and will be removed in a future release. It was moved to UserEditView.js.
+ */
 function user_get_confsettings_js()
 {
 };

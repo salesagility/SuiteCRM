@@ -48,7 +48,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-require_once('modules/Users/Forms.php');
 require_once('modules/Configurator/Configurator.php');
 
 class ViewWizard extends SugarView
@@ -78,7 +77,6 @@ class ViewWizard extends SugarView
         $favicon = $themeObject->getImageURL('sugar_icon.ico', false);
         $this->ss->assign('FAVICON_URL', getJSPath($favicon));
         $this->ss->assign('CSS', '<link rel="stylesheet" type="text/css" href="'.SugarThemeRegistry::current()->getCSSURL('wizard.css').'" />');
-        $this->ss->assign('JAVASCRIPT', user_get_validate_record_js().user_get_chooser_js().user_get_confsettings_js());
         $this->ss->assign('PRINT_URL', 'index.php?'.$GLOBALS['request_string']);
         $this->ss->assign('SKIP_WELCOME', isset($_REQUEST['skipwelcome']) && $_REQUEST['skipwelcome'] == 1);
         $this->ss->assign('ID', $current_user->id);

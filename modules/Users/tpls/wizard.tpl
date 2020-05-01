@@ -535,7 +535,6 @@ function hideOverlay() {
 -->
 </script>
 {/literal}
-{$JAVASCRIPT}
 {literal}
 <script type="text/javascript" language="Javascript">
     {/literal}

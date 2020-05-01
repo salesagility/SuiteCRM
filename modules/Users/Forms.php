@@ -53,24 +53,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * Create javascript to validate the data entered into a record.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
+ *
+ * @deprecated This function is unused and will be removed in a future release. It was moved to UserEditView.js.
  */
 function user_get_validate_record_js()
 {
-    // NO LONGER USED, MOVED TO UserEditView.js
     return '';
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release. It was moved to UserEditView.js.
+ */
 function user_get_chooser_js()
 {
-    // NO LONGER USED, MOVED TO UserEditView.js
     return '';
 }
 
+/**
+ * @deprecated This function is unused and will be removed in a future release. It was moved to UserEditView.js.
+ */
 function user_get_confsettings_js()
 {
-    // NO LONGER USED, MOVED TO UserEditView.js
     return '';
 }
