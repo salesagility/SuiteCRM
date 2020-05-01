@@ -75,13 +75,11 @@ class ACLRole extends SugarBean
         self::__construct();
     }
 
-
     // bug 16790 - missing get_summary_text method led Tracker to display SugarBean's "base implementation"
     public function get_summary_text()
     {
         return (string)$this->name;
     }
-
 
     /**
      * function setAction($role_id, $action_id, $access)
@@ -99,29 +97,26 @@ class ACLRole extends SugarBean
         $this->set_relationship('acl_roles_actions', $relationship_data, true, true, $additional_data);
     }
 
-
     /**
-     * static  getUserRoles($user_id)
-     * returns a list of ACLRoles for a given user id
+     * Returns a list of ACLRoles for a given user id
      *
      * @param GUID $user_id
-     * @return a list of ACLRole objects
+     * @param boolean $getAsNameArray
+     * @return ACLRole[]|string[] a list of ACLRole objects or role names.
      */
     public function getUserRoles($user_id, $getAsNameArray = true)
     {
+        $query = "SELECT acl_roles.* 
+            FROM acl_roles
+            INNER JOIN acl_roles_users ON acl_roles_users.user_id = '?'
+                AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0
+            WHERE acl_roles.deleted = 0";
 
-        //if we don't have it loaded then lets check against the db
-        $additional_where = '';
-        $query = "SELECT acl_roles.* ".
-            "FROM acl_roles ".
-            "INNER JOIN acl_roles_users ON acl_roles_users.user_id = '$user_id' ".
-                "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
-            "WHERE acl_roles.deleted=0 ";
-
-        $result = DBManagerFactory::getInstance()->query($query);
+        $db = DBManagerFactory::getInstance();
+        $result = $db->pQuery($query, [$user_id]);
         $user_roles = array();
 
-        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
+        while ($row = $db->fetchByAssoc($result)) {
             $role = BeanFactory::newBean('ACLRoles');
             $role->populateFromRow($row);
             if ($getAsNameArray) {
@@ -177,10 +172,9 @@ class ACLRole extends SugarBean
     public function getAllRoles($returnAsArray = false)
     {
         $db = DBManagerFactory::getInstance();
-        $query = "SELECT acl_roles.* FROM acl_roles
-                    WHERE acl_roles.deleted=0 ORDER BY name";
+        $query = "SELECT acl_roles.* FROM acl_roles WHERE deleted = 0 ORDER BY name";
 
-        $result = $db->query($query);
+        $result = $db->pQuery($query);
         $roles = array();
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -272,8 +266,8 @@ class ACLRole extends SugarBean
         //we need to delete the actions relationship by hand (special case)
         $date_modified = DBManagerFactory::getInstance()->convert("'" . TimeDate::getInstance()->nowDb() . "'",
             'datetime');
-        $query =  "UPDATE acl_roles_actions SET deleted=1 , date_modified=$date_modified WHERE role_id = '$id' AND deleted=0";
-        $this->db->query($query);
+        $query =  "UPDATE acl_roles_actions SET deleted = 1, date_modified = ? WHERE role_id = '?' AND deleted = 0;";
+        $this->db->pQuery($query, [$date_modified, $id]);
         parent::mark_relationships_deleted($id);
     }
 
