@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,28 +36,13 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
-require_once('modules/ModuleBuilder/Module/StudioModule.php');
-require_once('modules/ModuleBuilder/Module/StudioBrowser.php') ;
-require_once('include/ytree/ExtNode.php') ;
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
+require_once 'modules/ModuleBuilder/Module/StudioModule.php';
+require_once 'modules/ModuleBuilder/Module/StudioBrowser.php';
+require_once 'include/ytree/ExtNode.php';
 
 class ViewHistory extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-        
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
     //STUDIO LABELS ONLY//
     //TODO Bundle Studio and ModuleBuilder label handling to increase maintainability.
     public function display()
@@ -70,15 +54,30 @@ class ViewHistory extends SugarView
             $root->add_node($this->buildStudioNode($studioMod));
         }
         $json = getJSONobj();
-        echo($json->encode($root));
+        echo $json->encode($root);
     }
-    
+
     /**
+     * @param $module StudioModule
      *
      * @return ExtNode built from the passed StudioModule
-     * @param $module StudioModule
      */
     public function buildStudioNode($module)
     {
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

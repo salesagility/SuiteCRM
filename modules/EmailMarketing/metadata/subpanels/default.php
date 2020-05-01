@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,54 +40,48 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+    ],
 
     'where' => '',
 
-
-    'list_fields'=> array(
-        'name' => array(
+    'list_fields' => [
+        'name' => [
             'vname' => 'LBL_LIST_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '40%',
-        ),
-        'date_start'=>array(
+        ],
+        'date_start' => [
             'vname' => 'LBL_LIST_DATE_START',
             'width' => '20%',
-
-        ),
-        'status'=>array(
+        ],
+        'status' => [
             'vname' => 'LBL_LIST_STATUS',
             'width' => '15%',
-        ),
-        'template_name'=>array(
+        ],
+        'template_name' => [
             'vname' => 'LBL_LIST_TEMPLATE_NAME',
             'width' => '15%',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'template_id',
             'target_module' => 'EmailTemplates',
-         
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'EmailMarketing',
             'width' => '5%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'EmailMarketing',
             'width' => '5%',
-        ),
-        'time_start'=>array(
-            'usage'=>'query_only'
-        ),
-    ),
-);
+        ],
+        'time_start' => [
+            'usage' => 'query_only'
+        ],
+    ],
+];

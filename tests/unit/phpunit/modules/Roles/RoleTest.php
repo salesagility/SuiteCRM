@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class RoleTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -30,7 +33,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $role);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $role = new Role();
 
@@ -42,7 +45,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $role->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $role = new Role();
 
@@ -57,12 +60,12 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testSet_module_relationshipAndQuery_modules()
+    public function testSetModuleRelationshipAndQueryModules()
     {
         $role = new Role();
 
         $role->id = 1;
-        $mod_ids = array('Accounts', 'Leads');
+        $mod_ids = ['Accounts', 'Leads'];
 
         //test set_module_relationship.
         //creates related records
@@ -70,7 +73,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
         //get the related records count
         $result = $role->query_modules();
-        $this->assertGreaterThanOrEqual(2, count((array)$result));
+        $this->assertGreaterThanOrEqual(2, count((array) $result));
 
         //test clear_module_relationship method
         $this->clear_module_relationship($role->id);
@@ -85,27 +88,27 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
         //get related records count and verify that records are removed
         $result = $role->query_modules();
-        $this->assertEquals(0, count((array)$result));
+        $this->assertEquals(0, count((array) $result));
     }
 
-    public function testSet_user_relationshipAndCheck_user_role_count()
+    public function testSetUserRelationshipAndCheckUserRoleCount()
     {
         // test
         $role = new Role();
 
         $role->id = 1;
-        $user_ids = array('1', '2');
+        $user_ids = ['1', '2'];
 
         //create related records
         $role->set_user_relationship($role->id, $user_ids, 1);
 
         //get the related records count
         $result = $role->check_user_role_count('1');
-        $this->assertGreaterThanOrEqual(1, count((array)$result));
+        $this->assertGreaterThanOrEqual(1, count((array) $result));
 
         //get the related records count
         $result = $role->check_user_role_count('2');
-        $this->assertGreaterThanOrEqual(1, count((array)$result));
+        $this->assertGreaterThanOrEqual(1, count((array) $result));
 
         //test get_users method
         $this->get_users($role->id);
@@ -131,10 +134,10 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
         //get related records count and verify that records are removed
         $result = $role->clear_user_relationship($role_id, $user_id);
-        $this->assertEquals(0, count((array)$result));
+        $this->assertEquals(0, count((array) $result));
     }
 
-    public function testquery_user_allowed_modules()
+    public function testqueryUserAllowedModules()
     {
         $role = new Role();
 
@@ -142,11 +145,11 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testquery_user_disallowed_modules()
+    public function testqueryUserDisallowedModules()
     {
         $role = new Role();
 
-        $allowed = array('Accounts' => 'Accounts', 'Leads' => 'Leads');
+        $allowed = ['Accounts' => 'Accounts', 'Leads' => 'Leads'];
         $result = $role->query_user_disallowed_modules(null, $allowed);
 
         $this->assertTrue(is_array($result));

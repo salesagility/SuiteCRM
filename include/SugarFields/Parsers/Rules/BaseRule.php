@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,16 +41,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * BaseRule.php
+ * BaseRule.php.
  *
  * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.
-
+ *
+ *
  * @author Collin Lee
  */
-
 class BaseRule
 {
     public function __construct()
@@ -76,11 +75,11 @@ class BaseRule
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match('/.*?_c$/s', $mixed['name'])) {
             return true;
-        } else {
-            if (!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
-                return true;
-            }
         }
+        if (!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -88,11 +87,11 @@ class BaseRule
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'])) {
             return true;
-        } else {
-            if (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
-                return true;
-            }
         }
+        if (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -100,11 +99,11 @@ class BaseRule
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'], $matches)) {
             return $matches;
-        } else {
-            if (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
-                return $matches;
-            }
         }
+        if (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
+            return $matches;
+        }
+
         return null;
     }
 }

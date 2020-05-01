@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,19 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 logThis('At upload.php');
 
 //set the upgrade progress status.
 set_upgrade_progress('upload', 'in_progress');
-
 
 $stop = true; // flag to show "next"
 $run = isset($_REQUEST['run']) ? $_REQUEST['run'] : '';
 $out = '';
 
 if (file_exists('ModuleInstall/PackageManager/PackageManagerDisplay.php')) {
-    require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
+    require_once 'ModuleInstall/PackageManager/PackageManagerDisplay.php';
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,8 +63,8 @@ switch ($run) {
         $perform = false;
         $tempFile = '';
 
-        if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
-            require_once('ModuleInstall/PackageManager/PackageManager.php');
+        if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != '') {
+            require_once 'ModuleInstall/PackageManager/PackageManager.php';
             $pm = new PackageManager();
             $tempFile = '';
             $perform = false;
@@ -89,7 +88,7 @@ switch ($run) {
             global $sugar_config;
             $upload_maxsize_backup = $sugar_config['upload_maxsize'];
             $sugar_config['upload_maxsize'] = 60000000;
-            /* End Bug 51722 */
+            // End Bug 51722
             if (!$upload->confirm_upload()) {
                 logThis('ERROR: no file uploaded!');
                 echo $mod_strings['ERR_UW_NO_FILE_UPLOADED'];
@@ -99,50 +98,52 @@ switch ($run) {
                     $out = "<b><span class='error'>{$mod_strings['ERR_UW_PHP_FILE_ERRORS'][$error]}</span></b><br />";
                 }
             } else {
-                $tempFile = "upload://".$upload->get_stored_file_name();
+                $tempFile = 'upload://' . $upload->get_stored_file_name();
                 if (!$upload->final_move($tempFile)) {
                     logThis('ERROR: could not move temporary file to final destination!');
                     unlinkUWTempFiles();
                     $out = "<b><span class='error'>{$mod_strings['ERR_UW_NOT_VALID_UPLOAD']}</span></b><br />";
                 } else {
-                    logThis('File uploaded to '.$tempFile);
+                    logThis('File uploaded to ' . $tempFile);
                     $base_filename = urldecode(basename($tempFile));
                     $perform = true;
                 }
             }
-            /* Bug 51722 - Restore the upload size in the config */
+            // Bug 51722 - Restore the upload size in the config
             $sugar_config['upload_maxsize'] = $upload_maxsize_backup;
-            /* End Bug 51722 */
+            // End Bug 51722
         }
         if ($perform) {
             $manifest_file = extractManifest($tempFile);
 
             if (is_file($manifest_file)) {
-                require_once($manifest_file);
+                require_once $manifest_file;
                 $error = validate_manifest($manifest);
                 if (!empty($error)) {
                     $out = "<b><span class='error'>{$error}</span></b><br />";
+
                     break;
                 }
                 $upgrade_zip_type = $manifest['type'];
 
                 // exclude the bad permutations
-                if ($upgrade_zip_type != "patch") {
-                    logThis('ERROR: incorrect patch type found: '.$upgrade_zip_type);
+                if ($upgrade_zip_type != 'patch') {
+                    logThis('ERROR: incorrect patch type found: ' . $upgrade_zip_type);
                     unlinkUWTempFiles();
                     $out = "<b><span class='error'>{$mod_strings['ERR_UW_ONLY_PATCHES']}</span></b><br />";
+
                     break;
                 }
 
-                sugar_mkdir("$base_upgrade_dir/$upgrade_zip_type", 0775, true);
-                $target_path = "$base_upgrade_dir/$upgrade_zip_type/$base_filename";
-                $target_manifest = remove_file_extension($target_path) . "-manifest.php";
+                sugar_mkdir("{$base_upgrade_dir}/{$upgrade_zip_type}", 0775, true);
+                $target_path = "{$base_upgrade_dir}/{$upgrade_zip_type}/{$base_filename}";
+                $target_manifest = remove_file_extension($target_path) . '-manifest.php';
 
-                if (isset($manifest['icon']) && $manifest['icon'] != "") {
+                if (isset($manifest['icon']) && $manifest['icon'] != '') {
                     logThis('extracting icons.');
                     $icon_location = extractFile($tempFile, $manifest['icon']);
                     $path_parts = pathinfo($icon_location);
-                    copy($icon_location, remove_file_extension($target_path) . "-icon." . pathinfo($icon_location, PATHINFO_EXTENSION));
+                    copy($icon_location, remove_file_extension($target_path) . '-icon.' . pathinfo($icon_location, PATHINFO_EXTENSION));
                 }
 
                 if (rename($tempFile, $target_path)) {
@@ -152,18 +153,20 @@ switch ($run) {
                 } else {
                     logThis('ERROR: cannot copy manifest.php to final destination.');
                     $out .= "<b><span class='error'>{$mod_strings['ERR_UW_UPLOAD_ERR']}</span></b><br />";
+
                     break;
                 }
             } else {
                 logThis('ERROR: no manifest.php file found!');
                 unlinkUWTempFiles();
                 $out = "<b><span class='error'>{$mod_strings['ERR_UW_NO_MANIFEST']}</span></b><br />";
+
                 break;
             }
             $_SESSION['install_file'] = basename($tempFile);
-            logThis('zip file moved to ['.$_SESSION['install_file'].']');
+            logThis('zip file moved to [' . $_SESSION['install_file'] . ']');
             //rrs serialize manifest for saving in the db
-            $serial_manifest = array();
+            $serial_manifest = [];
             $serial_manifest['manifest'] = (isset($manifest) ? $manifest : '');
             $serial_manifest['installdefs'] = (isset($installdefs) ? $installdefs : '');
             $serial_manifest['upgrade_manifest'] = (isset($upgrade_manifest) ? $upgrade_manifest : '');
@@ -177,23 +180,22 @@ switch ($run) {
         }
 
     break; // end 'upload'
-
     case 'delete':
         logThis('running delete');
 
-        if (!isset($_REQUEST['install_file']) || ($_REQUEST['install_file'] == "")) {
-            logThis('ERROR: trying to delete non-existent file: ['.$_REQUEST['install_file'].']');
+        if (!isset($_REQUEST['install_file']) || ($_REQUEST['install_file'] == '')) {
+            logThis('ERROR: trying to delete non-existent file: [' . $_REQUEST['install_file'] . ']');
             $error = $mod_strings['ERR_UW_NO_FILE_UPLOADED'];
         }
 
         // delete file in upgrades/patch
-        $delete_me = 'upload://upgrades/patch/'.basename(urldecode($_REQUEST['install_file']));
+        $delete_me = 'upload://upgrades/patch/' . basename(urldecode($_REQUEST['install_file']));
         if (@unlink($delete_me)) {
-            logThis('unlinking: '.$delete_me);
-            $out = basename($delete_me).$mod_strings['LBL_UW_FILE_DELETED'];
+            logThis('unlinking: ' . $delete_me);
+            $out = basename($delete_me) . $mod_strings['LBL_UW_FILE_DELETED'];
         } else {
-            logThis('ERROR: could not delete ['.$delete_me.']');
-            $error = $mod_strings['ERR_UW_FILE_NOT_DELETED'].$delete_me;
+            logThis('ERROR: could not delete [' . $delete_me . ']');
+            $error = $mod_strings['ERR_UW_FILE_NOT_DELETED'] . $delete_me;
         }
 
         if (!empty($error)) {
@@ -208,7 +210,6 @@ switch ($run) {
 }
 ////	END UPLOAD FILE PROCESSING FORM
 ///////////////////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	READY TO INSTALL UPGRADES
@@ -230,14 +231,14 @@ $frozen = $out;
 
 if (!$stop) {
     if (!empty($GLOBALS['top_message'])) {
-        $GLOBALS['top_message'] .= "<br />";
+        $GLOBALS['top_message'] .= '<br />';
     } else {
         $GLOBALS['top_message'] = '';
     }
     $GLOBALS['top_message'] .= "<b>{$mod_strings['LBL_UPLOAD_SUCCESS']}</b>";
 } else {
     if (!$frozen) {
-        $GLOBALS['top_message'] .= "<br />";
+        $GLOBALS['top_message'] .= '<br />';
     } else {
         $GLOBALS['top_message'] = "<b>{$frozen}</b>";
     }
@@ -247,7 +248,7 @@ if (!$stop) {
 ////	UPLOAD FORM
 $form = '';
 if (empty($GLOBALS['sugar_config']['disable_uw_upload'])) {
-    $form =<<<eoq
+    $form = <<<eoq
 <form name="the_form" id='the_form' enctype="multipart/form-data" action="index.php" method="post">
 	<input type="hidden" name="module" value="UpgradeWizard">
 	<input type="hidden" name="action" value="index">
@@ -276,10 +277,10 @@ if (empty($GLOBALS['sugar_config']['disable_uw_upload'])) {
 </form>
 eoq;
 }
-$hidden_fields = "<input type=\"hidden\" name=\"module\" value=\"UpgradeWizard\">";
-$hidden_fields .= "<input type=\"hidden\" name=\"action\" value=\"index\">";
+$hidden_fields = '<input type="hidden" name="module" value="UpgradeWizard">';
+$hidden_fields .= '<input type="hidden" name="action" value="index">';
 $hidden_fields .= "<input type=\"hidden\" name=\"step\" value=\"{$_REQUEST['step']}\">";
-$hidden_fields .= "<input type=\"hidden\" name=\"run\" value=\"upload\">";
+$hidden_fields .= '<input type="hidden" name="run" value="upload">';
 $form2 = '';
 /*  Removing Install From Sugar tab from Upgradewizard.
 if(class_exists("PackageManagerDisplay")) {
@@ -290,7 +291,7 @@ if ($form2 == null) {
     $form2 = $form;
 }
 $json = getVersionedScript('include/JSON.js');
-$form3 =<<<eoq2
+$form3 = <<<eoq2
 <br>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
@@ -359,7 +360,7 @@ $form3 =<<<eoq2
 }
 </script>
 eoq2;
-$form5 =<<<eoq5
+$form5 = <<<'eoq5'
 <br>
 <div id="upgradeDiv" style="display:none">
     <table cellspacing="0" cellpadding="0" border="0">
@@ -370,22 +371,20 @@ $form5 =<<<eoq5
  </div>
 
 eoq5;
-$uwMain = $form2.$form3.$form5;
+$uwMain = $form2 . $form3 . $form5;
 ////	END UPLOAD FORM
 ///////////////////////////////////////////////////////////////////////////////
 //set the upgrade progress status. actually it should be set when a file is uploaded
 //set_upgrade_progress('upload','done');
 
+$showBack = true;
+$showCancel = true;
+$showRecheck = false;
+$showNext = true;
 
-$showBack		= true;
-$showCancel		= true;
-$showRecheck	= false;
-$showNext		= true;
-
-$stepBack		= $_REQUEST['step'] - 1;
-$stepNext		= $_REQUEST['step'] + 1;
-$stepCancel		= -1;
-$stepRecheck	= $_REQUEST['step'];
-
+$stepBack = $_REQUEST['step'] - 1;
+$stepNext = $_REQUEST['step'] + 1;
+$stepCancel = -1;
+$stepRecheck = $_REQUEST['step'];
 
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';

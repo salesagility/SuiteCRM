@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -70,9 +69,6 @@ class AOW_Action extends Basic
         parent::__construct();
     }
 
-
-
-
     public function save_lines($post_data, $parent, $key = '')
     {
         if (!isset($post_data[$key . 'action'])) {
@@ -82,9 +78,9 @@ class AOW_Action extends Basic
             $postDataAtKeyAction = $post_data[$key . 'action'];
         }
 
-        $line_count = count((array)$postDataAtKeyAction);
+        $line_count = count((array) $postDataAtKeyAction);
         $j = 0;
-        for ($i = 0; $i < $line_count; ++$i) {
+        for ($i = 0; $i < $line_count; $i++) {
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -92,10 +88,10 @@ class AOW_Action extends Basic
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
-                        $action->$field_name = $post_data[$key . $field_name][$i];
+                        $action->{$field_name} = $post_data[$key . $field_name][$i];
                     }
                 }
-                $params = array();
+                $params = [];
                 foreach ($post_data[$key . 'param'][$i] as $param_name => $param_value) {
                     if ($param_name == 'value') {
                         foreach ($param_value as $p_id => $p_value) {

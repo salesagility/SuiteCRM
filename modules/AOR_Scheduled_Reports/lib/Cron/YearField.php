@@ -3,7 +3,7 @@
 namespace Cron;
 
 /**
- * Year field.  Allows: * , / -
+ * Year field.  Allows: * , / -.
  */
 class YearField extends AbstractField
 {

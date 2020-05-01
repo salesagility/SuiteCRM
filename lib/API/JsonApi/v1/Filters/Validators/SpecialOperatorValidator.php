@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,16 +44,16 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\InvalidArgumentException;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\SpecialOperator;
 
 /**
- * Class SpecialOperatorValidator
- * @package SuiteCRM\API\JsonApi\v1\Filters\Validators
+ * Class SpecialOperatorValidator.
  */
 class SpecialOperatorValidator implements ValidatorInterface
 {
-
     /**
      * @param mixed $value
-     * @return bool|void
+     *
      * @throws \SuiteCRM\Exception\InvalidArgumentException
+     *
+     * @return bool|void
      */
     public function isValid($value)
     {

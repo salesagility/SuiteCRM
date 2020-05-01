@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,26 +43,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: Handles getting a list of fields to duplicate check and doing the duplicate checks
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  */
-
 class ImportDuplicateCheck
 {
+    // holds current field when a duplicate has been found
+    public $_dupedFields = [];
     /**
-     * Private reference to the bean we're dealing with
+     * Private reference to the bean we're dealing with.
      */
     private $_focus;
 
-    /*
-     * holds current field when a duplicate has been found
-     */
-    public $_dupedFields =array();
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param object $focus bean
      */
@@ -72,40 +67,7 @@ class ImportDuplicateCheck
     }
 
     /**
-     * Returns an array of indices for the current module
-     *
-     * @return array
-     */
-    private function _getIndexVardefs()
-    {
-        $indexes = $this->_focus->getIndices();
-
-        //grab any custom indexes if they exist
-        if ($this->_focus->hasCustomFields()) {
-            $custmIndexes = $this->_focus->db->helper->get_indices($this->_focus->table_name.'_cstm');
-            $indexes = array_merge($custmIndexes, $indexes);
-        }
-
-        if ($this->_focus->getFieldDefinition('email1')) {
-            $indexes[] = array(
-                'name' => 'special_idx_email1',
-                'type' => 'index',
-                'fields' => array('email1')
-                );
-        }
-        if ($this->_focus->getFieldDefinition('email2')) {
-            $indexes[] = array(
-                'name' => 'special_idx_email2',
-                'type' => 'index',
-                'fields' => array('email2')
-                );
-        }
-
-        return $indexes;
-    }
-
-    /**
-     * Returns an array with an element for each index
+     * Returns an array with an element for each index.
      *
      * @return array
      */
@@ -114,24 +76,24 @@ class ImportDuplicateCheck
         $super_language_pack = sugarLangArrayMerge(
             return_module_language($GLOBALS['current_language'], $this->_focus->module_dir),
             $GLOBALS['app_strings']
-            );
+        );
 
-        $index_array = array();
+        $index_array = [];
         foreach ($this->_getIndexVardefs() as $index) {
-            if ($index['type'] == "index") {
-                $labelsArray = array();
+            if ($index['type'] == 'index') {
+                $labelsArray = [];
                 foreach ($index['fields'] as $field) {
                     if ($field == 'deleted') {
                         continue;
                     }
                     $fieldDef = $this->_focus->getFieldDefinition($field);
-                    if (isset($fieldDef['vname']) && isset($super_language_pack[$fieldDef['vname']])) {
+                    if (isset($fieldDef['vname'], $super_language_pack[$fieldDef['vname']])) {
                         $labelsArray[$fieldDef['name']] = $super_language_pack[$fieldDef['vname']];
                     } else {
                         $labelsArray[$fieldDef['name']] = $fieldDef['name'];
                     }
                 }
-                $index_array[$index['name']] = str_replace(":", "", implode(", ", $labelsArray));
+                $index_array[$index['name']] = str_replace(':', '', implode(', ', $labelsArray));
             }
         }
 
@@ -139,9 +101,11 @@ class ImportDuplicateCheck
     }
 
     /**
-     * Checks to see if the given bean is a duplicate based off the given fields
+     * Checks to see if the given bean is a duplicate based off the given fields.
      *
      * @param  array $indexlist
+     * @param mixed $fieldList
+     *
      * @return bool true if this bean is a duplicate or false if it isn't
      */
     public function isADuplicateRecordByFields($fieldList)
@@ -150,22 +114,22 @@ class ImportDuplicateCheck
             if ($field == 'email1' || $field == 'email2') {
                 $emailAddress = new SugarEmailAddress();
                 $email = $field;
-                if ($emailAddress->getCountEmailAddressByBean($this->_focus->$email, $this->_focus, ($field == 'email1')) > 0) {
+                if ($emailAddress->getCountEmailAddressByBean($this->_focus->{$email}, $this->_focus, ($field == 'email1')) > 0) {
                     return true;
                 }
             } else {
-                $index_fields = array('deleted' => '0');
+                $index_fields = ['deleted' => '0'];
                 if (is_array($field)) {
                     foreach ($field as $tmpField) {
                         if ($tmpField == 'deleted') {
                             continue;
                         }
-                        if (strlen($this->_focus->$tmpField) > 0) {
-                            $index_fields[$tmpField] = $this->_focus->$tmpField;
+                        if (strlen($this->_focus->{$tmpField}) > 0) {
+                            $index_fields[$tmpField] = $this->_focus->{$tmpField};
                         }
                     }
-                } elseif ($field != 'deleted' && strlen($this->_focus->$field) > 0) {
-                    $index_fields[$field] = $this->_focus->$field;
+                } elseif ($field != 'deleted' && strlen($this->_focus->{$field}) > 0) {
+                    $index_fields[$field] = $this->_focus->{$field};
                 }
 
                 if (count($index_fields) <= 1) {
@@ -185,9 +149,10 @@ class ImportDuplicateCheck
     }
 
     /**
-     * Checks to see if the given bean is a duplicate based off the given indexes
+     * Checks to see if the given bean is a duplicate based off the given indexes.
      *
      * @param  array $indexlist
+     *
      * @return bool true if this bean is a duplicate or false if it isn't
      */
     public function isADuplicateRecord($indexlist)
@@ -205,9 +170,9 @@ class ImportDuplicateCheck
 
         //lets strip the indexes of the name field in the value and leave only the index name
         $origIndexList = $indexlist;
-        $indexlist=array();
-        $fieldlist=array();
-        $customIndexlist=array();
+        $indexlist = [];
+        $fieldlist = [];
+        $customIndexlist = [];
         foreach ($origIndexList as $iv) {
             if (empty($iv)) {
                 continue;
@@ -229,7 +194,7 @@ class ImportDuplicateCheck
         //this is a special handling of the name fields on people objects, the rest of the fields are checked individually
         if (in_array('full_name', $indexlist)) {
             $newfocus = loadBean($this->_focus->module_dir);
-            $result = $newfocus->retrieve_by_string_fields(array('deleted' =>'0', 'first_name'=>$this->_focus->first_name, 'last_name'=>$this->_focus->last_name), true);
+            $result = $newfocus->retrieve_by_string_fields(['deleted' => '0', 'first_name' => $this->_focus->first_name, 'last_name' => $this->_focus->last_name], true);
 
             if (!is_null($result)) {
                 //set dupe field to full_name and name fields
@@ -251,12 +216,12 @@ class ImportDuplicateCheck
                 $emailAddress = new SugarEmailAddress();
                 $email = $index['fields'][0];
                 if ($emailAddress->getCountEmailAddressByBean(
-                    $this->_focus->$email,
+                    $this->_focus->{$email},
                     $this->_focus,
                     ($index['name'] == 'special_idx_email1')
-                        ) > 0) {
+                ) > 0) {
                     foreach ($index['fields'] as $field) {
-                        if ($field !='deleted') {
+                        if ($field != 'deleted') {
                             $this->_dupedFields[] = $field;
                         }
                     }
@@ -265,19 +230,19 @@ class ImportDuplicateCheck
             // Adds a hook so you can define a method in the bean to handle dupe checking
             elseif (isset($index['dupeCheckFunction'])) {
                 $functionName = substr_replace($index['dupeCheckFunction'], '', 0, 9);
-                if (method_exists($this->_focus, $functionName) && $this->_focus->$functionName($index) === true) {
-                    return $this->_focus->$functionName($index);
+                if (method_exists($this->_focus, $functionName) && $this->_focus->{$functionName}($index) === true) {
+                    return $this->_focus->{$functionName}($index);
                 }
             } else {
-                $index_fields = array('deleted' => '0');
+                $index_fields = ['deleted' => '0'];
                 //search only for the field we have selected
                 foreach ($index['fields'] as $field) {
-                    if ($field == 'deleted' ||  !in_array($field, $fieldlist)) {
+                    if ($field == 'deleted' || !in_array($field, $fieldlist)) {
                         continue;
                     }
                     if (!in_array($field, $index_fields)) {
-                        if (isset($this->_focus->$field) && strlen($this->_focus->$field) > 0) {
-                            $index_fields[$field] = $this->_focus->$field;
+                        if (isset($this->_focus->{$field}) && strlen($this->_focus->{$field}) > 0) {
+                            $index_fields[$field] = $this->_focus->{$field};
                         }
                     }
                 }
@@ -308,27 +273,24 @@ class ImportDuplicateCheck
         return false;
     }
 
-
     public function getDuplicateCheckIndexedFiles()
     {
-        require_once('include/export_utils.php');
+        require_once 'include/export_utils.php';
         $import_fields = $this->_focus->get_importable_fields();
-        $importable_keys = array_keys($import_fields);//
+        $importable_keys = array_keys($import_fields);
 
-        $index_array = array();
-        $fields_used = array();
-        $mstr_exclude_array = array('all'=>array('team_set_id','id','deleted'),'contacts'=>array('email2'), array('leads'=>'reports_to_id'), array('prospects'=>'tracker_key'));
+        $index_array = [];
+        $fields_used = [];
+        $mstr_exclude_array = ['all' => ['team_set_id', 'id', 'deleted'], 'contacts' => ['email2'], ['leads' => 'reports_to_id'], ['prospects' => 'tracker_key']];
 
         //create exclude array from subset of applicable mstr_exclude_array elements
-        $exclude_array =  isset($mstr_exclude_array[strtolower($this->_focus->module_dir)])?array_merge($mstr_exclude_array[strtolower($this->_focus->module_dir)], $mstr_exclude_array['all']) : $mstr_exclude_array['all'];
-
-
+        $exclude_array = isset($mstr_exclude_array[strtolower($this->_focus->module_dir)]) ? array_merge($mstr_exclude_array[strtolower($this->_focus->module_dir)], $mstr_exclude_array['all']) : $mstr_exclude_array['all'];
 
         //process all fields belonging to indexes
         foreach ($this->_getIndexVardefs() as $index) {
-            if ($index['type'] == "index") {
+            if ($index['type'] == 'index') {
                 foreach ($index['fields'] as $field) {
-                    $fieldName='';
+                    $fieldName = '';
 
                     //skip this field if it is the deleted field, not in the importable keys array, or a field in the exclude array
                     if (!in_array($field, $importable_keys) || in_array($field, $exclude_array)) {
@@ -344,8 +306,7 @@ class ImportDuplicateCheck
                     //get the proper export label
                     $fieldName = translateForExport($fieldDef['name'], $this->_focus);
 
-
-                    $index_array[$index['name'].'::'.$fieldDef['name']] = $fieldName;
+                    $index_array[$index['name'] . '::' . $fieldDef['name']] = $fieldName;
                     $fields_used[] = $fieldDef['name'];
                 }
             }
@@ -359,6 +320,40 @@ class ImportDuplicateCheck
         }
 
         asort($index_array);
+
         return $index_array;
+    }
+
+    /**
+     * Returns an array of indices for the current module.
+     *
+     * @return array
+     */
+    private function _getIndexVardefs()
+    {
+        $indexes = $this->_focus->getIndices();
+
+        //grab any custom indexes if they exist
+        if ($this->_focus->hasCustomFields()) {
+            $custmIndexes = $this->_focus->db->helper->get_indices($this->_focus->table_name . '_cstm');
+            $indexes = array_merge($custmIndexes, $indexes);
+        }
+
+        if ($this->_focus->getFieldDefinition('email1')) {
+            $indexes[] = [
+                'name' => 'special_idx_email1',
+                'type' => 'index',
+                'fields' => ['email1']
+            ];
+        }
+        if ($this->_focus->getFieldDefinition('email2')) {
+            $indexes[] = [
+                'name' => 'special_idx_email2',
+                'type' => 'index',
+                'fields' => ['email2']
+            ];
+        }
+
+        return $indexes;
     }
 }

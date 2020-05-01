@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class ContactsParseRule extends BaseRule
 {
@@ -50,16 +48,12 @@ class ContactsParseRule extends BaseRule
     {
     }
 
-
-
-
-
     public function preParse($panels, $view)
     {
         if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+            foreach ($panels as $name => $panel) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         if ($this->matches($column, '/^(last_)?name$/')) {
                             $panels[$name][$rowCount][$key] = 'full_name';
                         }
@@ -71,19 +65,20 @@ class ContactsParseRule extends BaseRule
         return $panels;
     }
 
-    public function parsePanels(& $panels, $view)
+    public function parsePanels(&$panels, $view)
     {
         if ($view == 'EditView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+            foreach ($panels as $name => $panel) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         if ($this->matches($column, '/portal_password1/si')) {
-                            $panels[$name][$rowCount][$key] = array('name'=>'portal_password1', 'type'=>'password', 'customCode'=>'<input id="portal_password1" name="portal_password1" type="password" size="32" maxlength="32" value="{$fields.portal_password.value}">', 'label'=>'LBL_PORTAL_PASSWORD');
+                            $panels[$name][$rowCount][$key] = ['name' => 'portal_password1', 'type' => 'password', 'customCode' => '<input id="portal_password1" name="portal_password1" type="password" size="32" maxlength="32" value="{$fields.portal_password.value}">', 'label' => 'LBL_PORTAL_PASSWORD'];
                         }
                     } //foreach
                 } //foreach
             } //foreach
         }
+
         return $panels;
     }
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,12 +41,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains a variety of utility functions used to display UI
  * components such as form headers and footers.  Intended to be modified on a per
  * theme basis.
- ********************************************************************************/
+ */
 
 /**
  * Create javascript to validate the data entered into a record.
@@ -61,7 +61,7 @@ function get_validate_record_js()
 
     $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
 
-    $the_script  = <<<EOQ
+    $the_script = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 function verify_data(form) {
@@ -69,7 +69,7 @@ function verify_data(form) {
 	var errorMessage = "";
 
 	if (isError == true) {
-		alert("$err_missing_required_fields" + errorMessage);
+		alert("{$err_missing_required_fields}" + errorMessage);
 		return false;
 	}
 	return true;
@@ -89,7 +89,8 @@ EOQ;
  */
 function get_new_record_form()
 {
-    require_once('modules/ProspectLists/ProspectListFormBase.php');
+    require_once 'modules/ProspectLists/ProspectListFormBase.php';
     $accountForm = new ProspectListFormBase();
+
     return $accountForm->getForm('', 'ProspectLists');
 }

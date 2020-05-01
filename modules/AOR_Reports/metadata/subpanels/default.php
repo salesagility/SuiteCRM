@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
  * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,40 +22,37 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'AOR_Reports'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'AOR_Reports'],
+    ],
 
     'where' => '',
 
-    'list_fields' => array(
-        'name'=>array(
+    'list_fields' => [
+        'name' => [
             'vname' => 'LBL_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '45%',
-        ),
-        'date_modified'=>array(
+        ],
+        'date_modified' => [
             'vname' => 'LBL_DATE_MODIFIED',
             'width' => '45%',
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'AOR_Reports',
             'width' => '4%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'AOR_Reports',
             'width' => '5%',
-        ),
-    ),
-);
+        ],
+    ],
+];

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,21 +40,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Users/UserViewHelper.php');
-
+require_once 'modules/Users/UserViewHelper.php';
 
 class UsersViewEdit extends ViewEdit
 {
     public $useForSubpanel = true;
+
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function preDisplay()
     {
@@ -73,7 +68,7 @@ class UsersViewEdit extends ViewEdit
 
         if ($userType != 'Regular') {
             $oldType = $this->type;
-            $this->type = $oldType.'group';
+            $this->type = $oldType . 'group';
         }
         $metadataFile = parent::getMetaDataFile();
         if ($userType != 'Regular') {
@@ -86,7 +81,6 @@ class UsersViewEdit extends ViewEdit
     public function display()
     {
         global $current_user, $app_list_strings, $mod_strings;
-
 
         //lets set the return values
         if (isset($_REQUEST['return_module'])) {
@@ -105,8 +99,8 @@ class UsersViewEdit extends ViewEdit
             $this->ss->assign('RETURN_MODULE', $_REQUEST['return_module']);
             $this->ss->assign('RETURN_ACTION', $_REQUEST['return_action']);
             $this->ss->assign('RETURN_ID', $_REQUEST['record']);
-            $this->bean->id = "";
-            $this->bean->user_name = "";
+            $this->bean->id = '';
+            $this->bean->user_name = '';
             $this->ss->assign('ID', '');
         } else {
             if (isset($_REQUEST['return_module'])) {
@@ -115,14 +109,13 @@ class UsersViewEdit extends ViewEdit
                 $this->ss->assign('RETURN_MODULE', $this->bean->module_dir);
             }
 
-            $return_id = isset($_REQUEST['return_id'])?$_REQUEST['return_id']:$this->bean->id;
+            $return_id = isset($_REQUEST['return_id']) ? $_REQUEST['return_id'] : $this->bean->id;
             if (isset($return_id)) {
-                $return_action = isset($_REQUEST['return_action'])?$_REQUEST['return_action']:'DetailView';
+                $return_action = isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : 'DetailView';
                 $this->ss->assign('RETURN_ID', $return_id);
                 $this->ss->assign('RETURN_ACTION', $return_action);
             }
         }
-
 
         ///////////////////////////////////////////////////////////////////////////////
         ////	REDIRECTS FROM COMPOSE EMAIL SCREEN
@@ -145,7 +138,6 @@ class UsersViewEdit extends ViewEdit
         ////	END NEW USER CREATION ONLY
         ///////////////////////////////////////////////////////////////////////////////
 
-
         // FIXME: Translate error prefix
         if (isset($_REQUEST['error_string'])) {
             LoggerManager::getLogger()->warn('Using error string in request is deprecated: ' . $_REQUEST[
@@ -158,9 +150,6 @@ class UsersViewEdit extends ViewEdit
             $this->ss->assign('ERROR_PASSWORD', '<span id="error_pwd" class="error">Error: ' . $mod_strings['LBL_ERROR'
                 ] . '</span>');
         }
-
-
-
 
         // Build viewable versions of a few fields for non-admins
         if (!empty($this->bean->id)) {
@@ -188,7 +177,7 @@ class UsersViewEdit extends ViewEdit
         $processFormName = '';
         if (isset($this->fieldHelper->usertype) && (
             $this->fieldHelper->usertype == 'GROUP'
-            )) {
+        )) {
             $this->ev->formName = 'EditViewGroup';
 
             $processSpecial = true;
@@ -196,7 +185,7 @@ class UsersViewEdit extends ViewEdit
         }
 
         //Bug#51609 Replace {php} code block in EditViewHeader.tpl
-        $action_button = array();
+        $action_button = [];
         $APP = $this->ss->get_template_vars('APP');
         $PWDSETTINGS = $this->ss->get_template_vars('PWDSETTINGS');
         $REGEX = $this->ss->get_template_vars('REGEX');
@@ -207,7 +196,7 @@ class UsersViewEdit extends ViewEdit
         $RETURN_ID = $this->ss->get_template_vars('RETURN_ID');
 
         $minpwdlength = !empty($PWDSETTINGS['minpwdlength']) ? $PWDSETTINGS['minpwdlength'] : '';
-        $maxpwdlength =  !empty($PWDSETTINGS['maxpwdlength']) ? $PWDSETTINGS['maxpwdlength'] : '';
+        $maxpwdlength = !empty($PWDSETTINGS['maxpwdlength']) ? $PWDSETTINGS['maxpwdlength'] : '';
         $action_button_header[] = <<<EOD
                     <input type="button" id="SAVE_HEADER" title="{$APP['LBL_SAVE_BUTTON_TITLE']}" accessKey="{$APP['LBL_SAVE_BUTTON_KEY']}"
                           class="button primary" onclick="var _form = $('#EditView')[0]; if (!set_password(_form,newrules('{$minpwdlength}','{$maxpwdlength}','{$REGEX}'))) return false; if (!Admin_check()) return false; _form.action.value='Save'; {$CHOOSER_SCRIPT} {$REASSIGN_JS} if(verify_data(EditView)) _form.submit();"
@@ -260,34 +249,31 @@ EOD
             $this->ss->assign('scroll_to_cal', true);
         }
 
-
-
         $this->ss->assign('SUBTHEMES', $this->bean->getSubThemes());
         $this->ss->assign('SUBTHEME', $this->bean->getSubTheme());
 
-
-        require_once('modules/Emails/EmailUI.php');
+        require_once 'modules/Emails/EmailUI.php';
         $efocus = new Email();
         $efocus->email2init();
         //$efocus->et->preflightUser($current_user);
         $out = $efocus->et->displayEmailFrame('modules/Users/_baseEmail.tpl');
         echo $out;
-        echo "<script>var composePackage = null;</script>";
+        echo '<script>var composePackage = null;</script>';
 
         $this->ev->process($processSpecial, $processFormName);
 
         echo $this->ev->display($this->showTitle);
     }
 
-
     /**
-     * getHelpText
+     * getHelpText.
      *
      * This is a protected function that returns the help text portion.  It is called from getModuleTitle.
      * We override the function from SugarView.php to make sure the create link only appears if the current user
      * meets the valid criteria.
      *
      * @param $module String the formatted module name
+     *
      * @return $theTitle String the HTML for the help text
      */
     protected function getHelpText($module)
@@ -297,7 +283,7 @@ EOD
         if ($GLOBALS['current_user']->isAdminForModule('Users')
         ) {
             $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
-            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            $url = ajaxLink("index.php?module={$module}&action=EditView&return_module={$module}&return_action=DetailView");
             $theTitle = <<<EOHTML
 &nbsp;
 <img src='{$createImageURL}' alt='{$GLOBALS['app_strings']['LNK_CREATE']}'>
@@ -306,6 +292,7 @@ EOD
 </a>
 EOHTML;
         }
+
         return $theTitle;
     }
 }

@@ -39,8 +39,6 @@
 
 namespace SuiteCRM\Test;
 
-use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
-
 class AbstractDocumentifierMock extends \SuiteCRM\Search\Index\Documentify\AbstractDocumentifier
 {
     /**

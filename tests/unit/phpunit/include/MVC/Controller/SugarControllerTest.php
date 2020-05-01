@@ -3,6 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Test\TestLogger;
 
+/**
+ * @internal
+ */
 class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -102,22 +105,21 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(true);
     }
 
-    public function testpre_save()
+    public function testpreSave()
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
+
         $testUserId = 1;
-        $query = "SELECT date_modified FROM users WHERE id = '$testUserId' LIMIT 1";
+        $query = "SELECT date_modified FROM users WHERE id = '{$testUserId}' LIMIT 1";
         $resource = DBManagerFactory::getInstance()->query($query);
         $row = $resource->fetch_assoc();
         $testUserDateModified = $row['date_modified'];
-        
-        
+
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
-        $SugarController->record = "1";
+        $SugarController->record = '1';
         $SugarController->loadBean();
 
         //execute the method and check if it either works or throws an mysql exception.
@@ -129,33 +131,33 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
+
         // cleanup
         if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
         }
-        
-        $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
+
+        $query = "UPDATE users SET date_modified = '{$testUserDateModified}' WHERE id = '{$testUserId}' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
     }
 
-    public function testaction_save()
+    public function testactionSave()
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
+
         $testUserId = 1;
-        $query = "SELECT date_modified FROM users WHERE id = '$testUserId' LIMIT 1";
+        $query = "SELECT date_modified FROM users WHERE id = '{$testUserId}' LIMIT 1";
         $resource = DBManagerFactory::getInstance()->query($query);
         $row = $resource->fetch_assoc();
         $testUserDateModified = $row['date_modified'];
 
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
-        $SugarController->record = "1";
+        $SugarController->record = '1';
         $SugarController->loadBean();
 
         //execute the method and check if it either works or throws an mysql exception.
@@ -168,7 +170,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
+
         // cleanup
         if (isset($session)) {
             $_SESSION = $session;
@@ -176,11 +178,11 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
             unset($_SESSION);
         }
 
-        $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
+        $query = "UPDATE users SET date_modified = '{$testUserDateModified}' WHERE id = '{$testUserId}' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
     }
 
-    public function testaction_spot()
+    public function testactionSpot()
     {
         $SugarController = new SugarController();
 

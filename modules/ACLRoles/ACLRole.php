@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class ACLRole extends SugarBean
 {
     public $module_dir = 'ACLRoles';
@@ -50,22 +48,20 @@ class ACLRole extends SugarBean
     public $new_schema = true;
     public $disable_row_level_security = true;
     public $disable_custom_fields = true;
-    public $relationship_fields = array(
-                                    'user_id'=>'users'
-                                );
+    public $relationship_fields = [
+        'user_id' => 'users'
+    ];
 
     public $created_by;
-
 
     // bug 16790 - missing get_summary_text method led Tracker to display SugarBean's "base implementation"
     public function get_summary_text()
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
-
     /**
-     * function setAction($role_id, $action_id, $access)
+     * function setAction($role_id, $action_id, $access).
      *
      * Sets the relationship between a role and an action and sets the access level of that relationship
      *
@@ -75,32 +71,32 @@ class ACLRole extends SugarBean
      */
     public function setAction($role_id, $action_id, $access)
     {
-        $relationship_data = array('role_id'=>$role_id, 'action_id'=>$action_id,);
-        $additional_data = array('access_override'=>$access);
+        $relationship_data = ['role_id' => $role_id, 'action_id' => $action_id];
+        $additional_data = ['access_override' => $access];
         $this->set_relationship('acl_roles_actions', $relationship_data, true, true, $additional_data);
     }
 
-
     /**
      * static  getUserRoles($user_id)
-     * returns a list of ACLRoles for a given user id
+     * returns a list of ACLRoles for a given user id.
      *
      * @param GUID $user_id
+     * @param mixed $getAsNameArray
+     *
      * @return a list of ACLRole objects
      */
     public function getUserRoles($user_id, $getAsNameArray = true)
     {
-
         //if we don't have it loaded then lets check against the db
         $additional_where = '';
-        $query = "SELECT acl_roles.* ".
-            "FROM acl_roles ".
-            "INNER JOIN acl_roles_users ON acl_roles_users.user_id = '$user_id' ".
-                "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
-            "WHERE acl_roles.deleted=0 ";
+        $query = 'SELECT acl_roles.* ' .
+            'FROM acl_roles ' .
+            "INNER JOIN acl_roles_users ON acl_roles_users.user_id = '{$user_id}' " .
+                'AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ' .
+            'WHERE acl_roles.deleted=0 ';
 
         $result = DBManagerFactory::getInstance()->query($query);
-        $user_roles = array();
+        $user_roles = [];
 
         while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
             $role = new ACLRole();
@@ -117,52 +113,53 @@ class ACLRole extends SugarBean
 
     /**
      * static  getUserRoleNames($user_id)
-     * returns a list of Role names for a given user id
+     * returns a list of Role names for a given user id.
      *
      * @param GUID $user_id
+     *
      * @return array a list of ACLRole Names
      */
     public function getUserRoleNames($user_id)
     {
-        $user_roles = sugar_cache_retrieve("RoleMembershipNames_".$user_id);
+        $user_roles = sugar_cache_retrieve('RoleMembershipNames_' . $user_id);
 
         if (!$user_roles) {
             //if we don't have it loaded then lets check against the db
             $additional_where = '';
-            $query = "SELECT acl_roles.* ".
-                "FROM acl_roles ".
-                "INNER JOIN acl_roles_users ON acl_roles_users.user_id = '$user_id' ".
-                    "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
-                "WHERE acl_roles.deleted=0 ";
+            $query = 'SELECT acl_roles.* ' .
+                'FROM acl_roles ' .
+                "INNER JOIN acl_roles_users ON acl_roles_users.user_id = '{$user_id}' " .
+                    'AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ' .
+                'WHERE acl_roles.deleted=0 ';
 
             $result = DBManagerFactory::getInstance()->query($query);
-            $user_roles = array();
+            $user_roles = [];
 
             while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
                 $user_roles[] = $row['name'];
             }
 
-            sugar_cache_put("RoleMembershipNames_".$user_id, $user_roles);
+            sugar_cache_put('RoleMembershipNames_' . $user_id, $user_roles);
         }
 
         return $user_roles;
     }
 
-
     /**
-     * static getAllRoles($returnAsArray = false)
+     * static getAllRoles($returnAsArray = false).
      *
-     * @param boolean $returnAsArray - should it return the results as an array of arrays or as an array of ACLRoles
+     * @param bool $returnAsArray - should it return the results as an array of arrays or as an array of ACLRoles
+     *
      * @return either an array of array representations of acl roles or an array of ACLRoles
      */
     public function getAllRoles($returnAsArray = false)
     {
         $db = DBManagerFactory::getInstance();
-        $query = "SELECT acl_roles.* FROM acl_roles
-                    WHERE acl_roles.deleted=0 ORDER BY name";
+        $query = 'SELECT acl_roles.* FROM acl_roles
+                    WHERE acl_roles.deleted=0 ORDER BY name';
 
         $result = $db->query($query);
-        $roles = array();
+        $roles = [];
 
         while ($row = $db->fetchByAssoc($result)) {
             $role = new ACLRole();
@@ -173,36 +170,39 @@ class ACLRole extends SugarBean
                 $roles[] = $role;
             }
         }
+
         return $roles;
     }
 
     /**
-     * static getRoleActions($role_id)
+     * static getRoleActions($role_id).
      *
      * gets the actions of a given role
      *
      * @param GUID $role_id
+     * @param mixed $type
+     *
      * @return array of actions
      */
-    public function getRoleActions($role_id, $type='module')
+    public function getRoleActions($role_id, $type = 'module')
     {
         global $beanList;
         //if we don't have it loaded then lets check against the db
         $additional_where = '';
         $db = DBManagerFactory::getInstance();
-        $query = "SELECT acl_actions.*";
+        $query = 'SELECT acl_actions.*';
         //only if we have a role id do we need to join the table otherwise lets use the ones defined in acl_actions as the defaults
         if (!empty($role_id)) {
-            $query .=" ,acl_roles_actions.access_override ";
+            $query .= ' ,acl_roles_actions.access_override ';
         }
-        $query .=" FROM acl_actions ";
+        $query .= ' FROM acl_actions ';
 
         if (!empty($role_id)) {
-            $query .=		" LEFT JOIN acl_roles_actions ON acl_roles_actions.role_id = '$role_id' AND  acl_roles_actions.action_id = acl_actions.id AND acl_roles_actions.deleted = 0";
+            $query .= " LEFT JOIN acl_roles_actions ON acl_roles_actions.role_id = '{$role_id}' AND  acl_roles_actions.action_id = acl_actions.id AND acl_roles_actions.deleted = 0";
         }
-        $query .= " WHERE acl_actions.deleted=0 ORDER BY acl_actions.category, acl_actions.name";
+        $query .= ' WHERE acl_actions.deleted=0 ORDER BY acl_actions.category, acl_actions.name';
         $result = $db->query($query);
-        $role_actions = array();
+        $role_actions = [];
 
         while ($row = $db->fetchByAssoc($result)) {
             $action = new ACLAction();
@@ -219,15 +219,73 @@ class ACLRole extends SugarBean
             //end
 
             if (!isset($role_actions[$action->category])) {
-                $role_actions[$action->category] = array();
+                $role_actions[$action->category] = [];
             }
 
             $role_actions[$action->category][$action->acltype][$action->name] = $action->toArray();
         }
 
         // Sort by translated categories
-        uksort($role_actions, "ACLRole::langCompare");
+        uksort($role_actions, 'ACLRole::langCompare');
+
         return $role_actions;
+    }
+
+    /**
+     * function mark_relationships_deleted($id).
+     *
+     * special case to delete acl_roles_actions relationship
+     *
+     * @param ACLRole GUID $id
+     */
+    public function mark_relationships_deleted($id)
+    {
+        //we need to delete the actions relationship by hand (special case)
+        $date_modified = DBManagerFactory::getInstance()->convert(
+            "'" . TimeDate::getInstance()->nowDb() . "'",
+            'datetime'
+        );
+        $query = "UPDATE acl_roles_actions SET deleted=1 , date_modified={$date_modified} WHERE role_id = '{$id}' AND deleted=0";
+        $this->db->query($query);
+        parent::mark_relationships_deleted($id);
+    }
+
+    /**
+     *  toArray()
+     * returns this role as an array.
+     *
+     * @param mixed $dbOnly
+     * @param mixed $stringOnly
+     * @param mixed $upperKeys
+     *
+     * @return array of fields with id, name, description
+     */
+    public function toArray($dbOnly = false, $stringOnly = false, $upperKeys = false)
+    {
+        $array_fields = ['id', 'name', 'description'];
+        $arr = [];
+        foreach ($array_fields as $field) {
+            if (isset($this->{$field})) {
+                $arr[$field] = $this->{$field};
+            } else {
+                $arr[$field] = '';
+            }
+        }
+
+        return $arr;
+    }
+
+    /**
+     * fromArray($arr)
+     * converts an array into an role mapping name value pairs into files.
+     *
+     * @param array $arr
+     */
+    public function fromArray($arr)
+    {
+        foreach ($arr as $name => $value) {
+            $this->{$name} = $value;
+        }
     }
 
     private static function langCompare($a, $b)
@@ -239,55 +297,7 @@ class ACLRole extends SugarBean
         if ($a == $b) {
             return 0;
         }
+
         return ($a < $b) ? -1 : 1;
-    }
-    /**
-     * function mark_relationships_deleted($id)
-     *
-     * special case to delete acl_roles_actions relationship
-     *
-     * @param ACLRole GUID $id
-     */
-    public function mark_relationships_deleted($id)
-    {
-        //we need to delete the actions relationship by hand (special case)
-        $date_modified = DBManagerFactory::getInstance()->convert("'" . TimeDate::getInstance()->nowDb() . "'",
-            'datetime');
-        $query =  "UPDATE acl_roles_actions SET deleted=1 , date_modified=$date_modified WHERE role_id = '$id' AND deleted=0";
-        $this->db->query($query);
-        parent::mark_relationships_deleted($id);
-    }
-
-    /**
-     *  toArray()
-        * returns this role as an array
-        *
-        * @return array of fields with id, name, description
-        */
-    public function toArray($dbOnly = false, $stringOnly = false, $upperKeys=false)
-    {
-        $array_fields = array('id', 'name', 'description');
-        $arr = array();
-        foreach ($array_fields as $field) {
-            if (isset($this->$field)) {
-                $arr[$field] = $this->$field;
-            } else {
-                $arr[$field] = '';
-            }
-        }
-        return $arr;
-    }
-
-    /**
-    * fromArray($arr)
-    * converts an array into an role mapping name value pairs into files
-    *
-    * @param Array $arr
-    */
-    public function fromArray($arr)
-    {
-        foreach ($arr as $name=>$value) {
-            $this->$name = $value;
-        }
     }
 }

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,14 +46,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 ini_set('zlib.output_compression', 'Off');
 
 ob_start();
-require_once('include/export_utils.php');
+require_once 'include/export_utils.php';
 global $sugar_config;
 global $current_user;
 global $app_list_strings;
 
 $the_module = clean_string($_REQUEST['module']);
 
-if ($sugar_config['disable_export'] 	|| (!empty($sugar_config['admin_export_only']) && !(is_admin($current_user) || (ACLController::moduleSupportsACL($the_module)  && ACLAction::getUserAccessLevel($current_user->id, $the_module, 'access') == ACL_ALLOW_ENABLED &&
+if ($sugar_config['disable_export'] || (!empty($sugar_config['admin_export_only']) && !(is_admin($current_user) || (ACLController::moduleSupportsACL($the_module) && ACLAction::getUserAccessLevel($current_user->id, $the_module, 'access') == ACL_ALLOW_ENABLED &&
     (ACLAction::getUserAccessLevel($current_user->id, $the_module, 'admin') == ACL_ALLOW_ADMIN ||
      ACLAction::getUserAccessLevel($current_user->id, $the_module, 'admin') == ACL_ALLOW_ADMIN_DEV))))) {
     die($GLOBALS['app_strings']['ERR_EXPORT_DISABLED']);
@@ -76,7 +77,7 @@ if (!empty($app_list_strings['moduleList'][$_REQUEST['module']])) {
 }
 
 if (!empty($_REQUEST['members'])) {
-    $filename .= '_'.'members';
+    $filename .= '_' . 'members';
 }
 ///////////////////////////////////////////////////////////////////////////////
 ////	BUILD THE EXPORT FILE

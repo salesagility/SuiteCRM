@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,53 +42,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $theme;
-
-
-
-
-
-
-
-
 
 class Popup_Picker
 {
-
-
-    /*
-     *
-     */
+    //
     public function __construct()
     {
     }
 
-
-
-
-    /*
-     *
-     */
+    //
     public function _get_where_clause()
     {
         $where = '';
         if (isset($_REQUEST['query'])) {
-            $where_clauses = array();
+            $where_clauses = [];
 
-            append_where_clause($where_clauses, "name", "campaigns.name");
-            append_where_clause($where_clauses, "campaign_type", "campaign_type");
+            append_where_clause($where_clauses, 'name', 'campaigns.name');
+            append_where_clause($where_clauses, 'campaign_type', 'campaign_type');
             $where = generate_where_statement($where_clauses);
         }
 
         return $where;
     }
 
-    /**
-     *
-     */
     public function process_page()
     {
         global $theme;
@@ -102,8 +80,6 @@ class Popup_Picker
 
         $where = $this->_get_where_clause();
 
-
-
         $name = empty($_REQUEST['name']) ? '' : $_REQUEST['name'];
         $status = empty($_REQUEST['status']) ? '' : $_REQUEST['status'];
         $campaign_type = empty($_REQUEST['campaign_type']) ? '' : $_REQUEST['campaign_type'];
@@ -111,25 +87,25 @@ class Popup_Picker
         $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 
-        $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
+        $button = "<form action='index.php' method='post' name='form' id='form'>\n";
         //START:FOR MULTI-SELECT
-        $multi_select=false;
+        $multi_select = false;
         if (!empty($_REQUEST['mode']) && strtoupper($_REQUEST['mode']) == 'MULTISELECT') {
-            $multi_select=true;
-            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('Prospects',document.MassUpdate,'mass[]','" .$app_strings['ERR_NOTHING_SELECTED']."');\" title='"
-                .$app_strings['LBL_SELECT_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
+            $multi_select = true;
+            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('Prospects',document.MassUpdate,'mass[]','" . $app_strings['ERR_NOTHING_SELECTED'] . "');\" title='"
+                . $app_strings['LBL_SELECT_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_SELECT_BUTTON_LABEL'] . "  ' />\n";
         }
         //END:FOR MULTI-SELECT
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                . $app_strings['LBL_CLEAR_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_CLEAR_BUTTON_LABEL'] . "  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-            .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' accesskey='"
+            . $app_strings['LBL_CANCEL_BUTTON_KEY'] . "' value='  "
+            . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  ' />\n";
         $button .= "</form>\n";
 
         $form = new XTemplate('modules/Campaigns/Popup_picker.html');
@@ -140,7 +116,7 @@ class Popup_Picker
 
         $form->assign('request_data', $request_data);
 
-        $form->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['campaign_type_dom'], ""));
+        $form->assign('TYPE_OPTIONS', get_select_options_with_id($app_list_strings['campaign_type_dom'], ''));
         ob_start();
         insert_popup_header($theme);
         $output_html .= ob_get_contents();
@@ -160,8 +136,8 @@ class Popup_Picker
         $ListView->show_export_button = false;
         $ListView->process_for_popups = true;
         $ListView->setXTemplate($form);
-        $ListView->multi_select_popup=$multi_select;  //FOR MULTI-SELECT
-        $ListView->xTemplate->assign("TAG_TYPE", "A"); //FOR MULTI-SELECT
+        $ListView->multi_select_popup = $multi_select;  //FOR MULTI-SELECT
+        $ListView->xTemplate->assign('TAG_TYPE', 'A'); //FOR MULTI-SELECT
         $ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE']); //FOR MULTI-SELECT
         $ListView->setHeaderText($button); //FOR MULTI-SELECT
         $ListView->setQuery($where, '', 'name', 'CAMPAIGN');
@@ -174,6 +150,7 @@ class Popup_Picker
         ob_end_clean();
 
         $output_html .= insert_popup_footer();
+
         return $output_html;
     }
 } // end of class Popup_Picker

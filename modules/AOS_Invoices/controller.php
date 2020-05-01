@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,11 +19,9 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
- 
-require_once('include/MVC/Controller/SugarController.php');
+require_once 'include/MVC/Controller/SugarController.php';
 
 class AOS_InvoicesController extends SugarController
 {
@@ -34,22 +31,21 @@ class AOS_InvoicesController extends SugarController
 
         $this->view = 'edit';
         $GLOBALS['view'] = $this->view;
-        
+
         if (isset($_REQUEST['aos_quotes_id'])) {
             $query = "SELECT * FROM aos_quotes WHERE id = '{$_REQUEST['aos_quotes_id']}'";
             $result = $this->bean->db->query($query, true);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->name = $row['name'];
-            
+
             if (isset($row['billing_account_id'])) {
                 $_REQUEST['account_id'] = $row['billing_account_id'];
             }
-                
+
             if (isset($row['billing_contact_id'])) {
                 $_REQUEST['contact_id'] = $row['billing_contact_id'];
             }
         }
-
 
         if (isset($_REQUEST['account_id'])) {
             $query = "SELECT * FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
@@ -68,13 +64,13 @@ class AOS_InvoicesController extends SugarController
             $this->bean->shipping_address_postalcode = $row['shipping_address_postalcode'];
             $this->bean->shipping_address_country = $row['shipping_address_country'];
         }
-        
+
         if (isset($_REQUEST['contact_id'])) {
             $query = "SELECT id,first_name,last_name FROM contacts WHERE id = '{$_REQUEST['contact_id']}'";
             $result = $this->bean->db->query($query, true);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->billing_contact_id = $row['id'];
-            $this->bean->billing_contact = $row['first_name'].' '.$row['last_name'];
+            $this->bean->billing_contact = $row['first_name'] . ' ' . $row['last_name'];
         }
     }
 }

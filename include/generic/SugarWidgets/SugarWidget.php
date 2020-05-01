@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,18 +41,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 //TODO move me out of generic
 
-
-
 /**
- * Generic Sugar widget
+ * Generic Sugar widget.
+ *
  * @api
  */
 class SugarWidget
 {
-    public $layout_manager = null;
+    public $layout_manager;
     public $widget_id;
     protected $form_value;
     protected $parent_bean;
@@ -69,7 +67,8 @@ class SugarWidget
 
     /**
      * getSubpanelWidgetId
-     * This is a utility function to return a widget's unique id
+     * This is a utility function to return a widget's unique id.
+     *
      * @return id String label of the widget's unique id
      */
     public function getWidgetId()
@@ -79,10 +78,12 @@ class SugarWidget
 
     /**
      * setSubpanelWidgetId
-     * This is a utility function to set the id for a widget
+     * This is a utility function to set the id for a widget.
+     *
      * @param id String value to set the widget's unique id
+     * @param mixed $id
      */
-    public function setWidgetId($id='')
+    public function setWidgetId($id = '')
     {
         $this->widget_id = $id;
     }
@@ -91,6 +92,7 @@ class SugarWidget
     {
         return $this->form_value;
     }
+
     public function getParentBean()
     {
         return $this->parent_bean;
@@ -100,18 +102,21 @@ class SugarWidget
     {
         $this->parent_bean = $parent_bean;
     }
+
     /**
      * getTruncatedColumnAlias
      * This function ensures that a column alias is no more than 28 characters.  Should the column_name
      * argument exceed 28 charcters, it creates an alias using the first 22 characters of the column_name
      * plus an md5 of the first 6 characters of the lowercased column_name value.
      *
+     * @param mixed $column_name
      */
     protected function getTruncatedColumnAlias($column_name)
     {
         if (empty($column_name) || !is_string($column_name) || strlen($column_name) < 28) {
             return $column_name;
         }
+
         return strtoupper(substr($column_name, 0, 22) . substr(md5(strtolower($column_name)), 0, 6));
     }
 }

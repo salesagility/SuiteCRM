@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,18 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-
-require_once('include/ListView/ListViewSmarty.php');
+require_once 'include/ListView/ListViewSmarty.php';
 
 global $app_strings, $app_list_strings, $current_language, $currentModule, $mod_strings;
 
-echo getClassicModuleTitle('SavedSearch', array($mod_strings['LBL_MODULE_TITLE']), false);
+echo getClassicModuleTitle('SavedSearch', [$mod_strings['LBL_MODULE_TITLE']], false);
 echo get_form_header($mod_strings['LBL_SEARCH_FORM_TITLE'], '', false);
 
 $search_form = new XTemplate('modules/SavedSearch/SearchForm.html');
@@ -65,7 +58,7 @@ if (isset($_REQUEST['name'])) {
 if (isset($_REQUEST['search_module'])) {
     $search_form->assign('search_module', to_html($_REQUEST['search_module']));
 }
-    
+
 $search_form->parse('main');
 $search_form->out('main');
 
@@ -73,15 +66,14 @@ if (!isset($where)) {
     $where = "assigned_user_id = {$current_user->id}";
 }
 
-
-echo '<br />' .get_form_header($mod_strings['LBL_LIST_FORM_TITLE'], '', false);
+echo '<br />' . get_form_header($mod_strings['LBL_LIST_FORM_TITLE'], '', false);
 
 $savedSearch = new SavedSearch();
 $lv = new ListViewSmarty();
 if (file_exists('custom/modules/SavedSearch/metadata/listviewdefs.php')) {
-    require_once('custom/modules/SavedSearch/metadata/listviewdefs.php');
+    require_once 'custom/modules/SavedSearch/metadata/listviewdefs.php';
 } else {
-    require_once('modules/SavedSearch/metadata/listviewdefs.php');
+    require_once 'modules/SavedSearch/metadata/listviewdefs.php';
 }
 
 $lv->displayColumns = $listViewDefs['SavedSearch'];

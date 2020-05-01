@@ -5,12 +5,12 @@ use Faker\Generator;
 class EmailTemplatesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class EmailTemplatesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the emailTemplate module.
+     * As an administrator I want to view the emailTemplate module
      */
     public function testScenarioViewEmailTemplatesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the emailTemplate module for testing');
 

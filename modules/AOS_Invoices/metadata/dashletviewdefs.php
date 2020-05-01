@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
@@ -30,89 +31,74 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 $dashletData['AOS_InvoicesDashlet']['searchFields'] =
-array(
-'date_entered' =>
-    array(
+[
+    'date_entered' => [
         'default' => ''
-        ),
-'billing_account' =>
-    array(
+    ],
+    'billing_account' => [
         'default' => ''
-        ),
-'assigned_user_id' =>
-    array(
+    ],
+    'assigned_user_id' => [
         'type' => 'assigned_user_name',
         'default' => $current_user->name
-        )
-    );
+    ]
+];
 $dashletData['AOS_InvoicesDashlet']['columns'] =
-array(
-'number'=>
-    array(
+[
+    'number' => [
         'width' => '5',
-        'label'   => 'LBL_LIST_NUM',
+        'label' => 'LBL_LIST_NUM',
         'default' => true
-        ),
-'name' =>
-    array(
-        'width'   => '20',
-        'label'   => 'LBL_LIST_NAME',
-        'link'    => true,
-        'default' => true
-        ),
-        
-'billing_account' =>
-    array(
+    ],
+    'name' => [
         'width' => '20',
-        'label'   => 'LBL_BILLING_ACCOUNT'
-        ),
-'billing_contact' =>
-    array(
-        'width' => '15',
-        'label'   => 'LBL_BILLING_CONTACT'
-        ),
-'status' =>
-    array(
-        'width'   => '15',
-        'label'   => 'LBL_STATUS',
+        'label' => 'LBL_LIST_NAME',
+        'link' => true,
         'default' => true
-        ),
-'total_amount' =>
-    array(
-        'width'   => '15',
-        'label'   => 'LBL_GRAND_TOTAL',
+    ],
+
+    'billing_account' => [
+        'width' => '20',
+        'label' => 'LBL_BILLING_ACCOUNT'
+    ],
+    'billing_contact' => [
+        'width' => '15',
+        'label' => 'LBL_BILLING_CONTACT'
+    ],
+    'status' => [
+        'width' => '15',
+        'label' => 'LBL_STATUS',
+        'default' => true
+    ],
+    'total_amount' => [
+        'width' => '15',
+        'label' => 'LBL_GRAND_TOTAL',
         'currency_format' => true,
         'default' => true
-        ),
-'due_date' =>
-    array(
+    ],
+    'due_date' => [
         'width' => '15',
-        'label'   => 'LBL_DUE_DATE',
+        'label' => 'LBL_DUE_DATE',
         'default' => true
-        ),
-'invoice_date' =>
-    array(
+    ],
+    'invoice_date' => [
         'width' => '15',
-        'label'   => 'LBL_INVOICE_DATE'
-        ),
-'date_entered' =>
-    array(
-        'width'   => '15',
-        'label'   => 'LBL_DATE_ENTERED'
-        ),
-'date_modified' =>
-    array(
-        'width'   => '15',
-        'label'   => 'LBL_DATE_MODIFIED'
-        ),
-'created_by' =>
-    array(
-        'width'   => '8',
-        'label'   => 'LBL_CREATED'
-        ),
-'assigned_user_name' =>
-    array(
-        'width'   => '8',
-        'label'   => 'LBL_LIST_ASSIGNED_USER'
-        ),
-    );
+        'label' => 'LBL_INVOICE_DATE'
+    ],
+    'date_entered' => [
+        'width' => '15',
+        'label' => 'LBL_DATE_ENTERED'
+    ],
+    'date_modified' => [
+        'width' => '15',
+        'label' => 'LBL_DATE_MODIFIED'
+    ],
+    'created_by' => [
+        'width' => '8',
+        'label' => 'LBL_CREATED'
+    ],
+    'assigned_user_name' => [
+        'width' => '8',
+        'label' => 'LBL_LIST_ASSIGNED_USER'
+    ],
+];

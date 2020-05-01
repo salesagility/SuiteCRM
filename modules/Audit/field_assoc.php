@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,44 +42,35 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $genericAssocFieldsArray;
 global $moduleAssocFieldsArray;
 
-$genericAssocFieldsArray = array('assigned_user_id' =>
-                                array('table_name' => 'users',
-                                    'select_field_name' => 'user_name',
-                                    'select_field_join'  => 'id',
-                                ),
-                                  'account_id' =>
-                                  array('table_name' => 'accounts',
-                                    'select_field_name' => 'name',
-                                    'select_field_join'  => 'id',
-                                  ),
-                                  'contact_id' =>
-                                  array('table_name' => 'contacts',
-                                    'select_field_name' =>
-                                            array('first_name',
-                                                  'last_name',
-                                            ),
-                                    'select_field_join'  => 'id',
-                                  ),
-                                  'fixed_in_release' =>
-                                  array('table_name' => 'releases',
-                                    'select_field_name' => 'name',
-                                    'select_field_join'  => 'id',
-                                  ),
-                                  'found_in_release' =>
-                                  array('table_name' => 'releases',
-                                    'select_field_name' => 'name',
-                                    'select_field_join'  => 'id',
-                                  ),
-                            );
-$moduleAssocFieldsArray = array('Account' =>
-                                array('parent_id' =>
-                                    array('table_name' => 'accounts',
-                                        'select_field_name' => 'name',
-                                        'select_field_join'  => 'id',
-                                    )
-                                ),
-                            );
+$genericAssocFieldsArray = ['assigned_user_id' => ['table_name' => 'users',
+    'select_field_name' => 'user_name',
+    'select_field_join' => 'id',
+],
+    'account_id' => ['table_name' => 'accounts',
+        'select_field_name' => 'name',
+        'select_field_join' => 'id',
+    ],
+    'contact_id' => ['table_name' => 'contacts',
+        'select_field_name' => ['first_name',
+            'last_name',
+        ],
+        'select_field_join' => 'id',
+    ],
+    'fixed_in_release' => ['table_name' => 'releases',
+        'select_field_name' => 'name',
+        'select_field_join' => 'id',
+    ],
+    'found_in_release' => ['table_name' => 'releases',
+        'select_field_name' => 'name',
+        'select_field_join' => 'id',
+    ],
+];
+$moduleAssocFieldsArray = ['Account' => ['parent_id' => ['table_name' => 'accounts',
+    'select_field_name' => 'name',
+    'select_field_join' => 'id',
+]
+],
+];

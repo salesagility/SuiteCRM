@@ -5,12 +5,12 @@ use Faker\Generator;
 class SpotsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class SpotsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the spots module.
+     * As an administrator I want to view the spots module
      */
     public function testScenarioViewSpotsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the spots module for testing');
 

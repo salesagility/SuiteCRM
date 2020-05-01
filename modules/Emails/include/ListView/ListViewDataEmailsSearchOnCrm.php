@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -46,7 +44,6 @@ include_once 'modules/Emails/include/ListView/ListViewDataEmailsSearchAbstract.p
 
 class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
 {
-
     /**
      * @param array $filterFields
      * @param array $request $_REQUEST
@@ -60,6 +57,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
      * @param User $currentUser
      * @param string $idField
      * @param int $offset
+     *
      * @return array
      */
     public function search($filterFields, $request, $where, InboundEmail $inboundEmail, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset)
@@ -72,7 +70,6 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
 
         $filterFields = $this->lvde->fixFieldsInFilter($filterFields, $request, $where);
 
-
         // Filter imported emails based on the UID of the results from the IMap server
 
         if (!empty($where)) {
@@ -84,25 +81,20 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
             $inboundEmailIdQuoted = '';
             LoggerManager::getLogger()->warn('Unable to quote Inbound Email ID, Inbound Email is not set.');
         }
-        $crmWhere = $where . "mailbox_id LIKE " ."'" . $inboundEmailIdQuoted . "'";
-
+        $crmWhere = $where . 'mailbox_id LIKE ' . "'" . $inboundEmailIdQuoted . "'";
 
         // Populates CRM fields
 
         $crmQueryArray = $this->lvde->getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect);
 
-
         // get crm emails query
 
         $crmEmailsQuery = $this->lvde->getCrmEmailsQuery($crmQueryArray, $params);
 
-
-
-
         $this->lvde->setVariableName($seed->object_name, $crmWhere, $this->lvde->listviewName, $id);
 
         SugarVCR::erase($seed->module_dir);
-        $this->lvde->seed =& $seed;
+        $this->lvde->seed = &$seed;
         $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
         $_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = $seed->module_dir;
         if (empty($request['action']) || $request['action'] != 'Popup') {
@@ -123,25 +115,25 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         // still empty? try to use settings passed in $param
         if (empty($order['orderBy']) && !empty($params['orderBy'])) {
             $order['orderBy'] = $params['orderBy'];
-            $order['sortOrder'] =  (empty($params['sortOrder']) ? '' : $params['sortOrder']);
+            $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
         }
 
         if (empty($params['skipOrderSave'])) { // don't save preferences if told so
             $currentUser->setPreference('listviewOrder', $order, 0, $this->lvde->var_name); // save preference
         }
 
-        $data = array();
+        $data = [];
 
-        $rows = array();
+        $rows = [];
         $count = 0;
-        $idIndex = array();
+        $idIndex = [];
         $id_list = '';
 
         $crmEmails = $this->lvde->db->query($crmEmailsQuery);
 
         while (($row = $this->lvde->db->fetchByAssoc($crmEmails)) != null) {
             if ($count < $limit) {
-                $id_list .= ',\''.$row[$idField].'\'';
+                $id_list .= ',\'' . $row[$idField] . '\'';
                 $idIndex[$row[$idField]][] = count($rows);
                 $rows[] = $seed->convertRow($row);
             }
@@ -149,27 +141,27 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         }
 
         if (!empty($id_list)) {
-            $id_list = '('.substr($id_list, 1).')';
+            $id_list = '(' . substr($id_list, 1) . ')';
         }
 
         SugarVCR::store($this->lvde->seed->module_dir, $crmEmailsQuery);
         if ($count != 0) {
             //NOW HANDLE SECONDARY QUERIES
             if (!empty($ret_array['secondary_select'])) {
-                $secondary_query = $ret_array['secondary_select'] . $ret_array['secondary_from'] . ' WHERE '.$this->lvde->seed->table_name.'.id IN ' .$id_list;
+                $secondary_query = $ret_array['secondary_select'] . $ret_array['secondary_from'] . ' WHERE ' . $this->lvde->seed->table_name . '.id IN ' . $id_list;
                 if (isset($ret_array['order_by'])) {
                     $secondary_query .= ' ' . $ret_array['order_by'];
                 }
 
                 $secondary_result = $this->lvde->db->query($secondary_query);
 
-                $ref_id_count = array();
+                $ref_id_count = [];
                 while ($row = $this->lvde->db->fetchByAssoc($secondary_result)) {
                     $ref_id_count[$row['ref_id']][] = true;
-                    foreach ($row as $name=>$value) {
+                    foreach ($row as $name => $value) {
                         //add it to every row with the given id
                         foreach ($idIndex[$row['ref_id']] as $index) {
-                            $rows[$index][$name]=$value;
+                            $rows[$index][$name] = $value;
                         }
                     }
                 }
@@ -184,10 +176,10 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
             if (!empty($filter_fields['parent_name']) && !empty($filter_fields['parent_id']) && !empty($filter_fields['parent_type'])) {
                 foreach ($idIndex as $id => $rowIndex) {
                     if (!isset($post_retrieve[$rows[$rowIndex[0]]['parent_type']])) {
-                        $post_retrieve[$rows[$rowIndex[0]]['parent_type']] = array();
+                        $post_retrieve[$rows[$rowIndex[0]]['parent_type']] = [];
                     }
                     if (!empty($rows[$rowIndex[0]]['parent_id'])) {
-                        $post_retrieve[$rows[$rowIndex[0]]['parent_type']][] = array('child_id' => $id , 'parent_id'=> $rows[$rowIndex[0]]['parent_id'], 'parent_type' => $rows[$rowIndex[0]]['parent_type'], 'type' => 'parent');
+                        $post_retrieve[$rows[$rowIndex[0]]['parent_type']][] = ['child_id' => $id, 'parent_id' => $rows[$rowIndex[0]]['parent_id'], 'parent_type' => $rows[$rowIndex[0]]['parent_type'], 'type' => 'parent'];
                     }
                 }
                 if (isset($post_retrieve)) {
@@ -195,13 +187,13 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
                     foreach ($parent_fields as $child_id => $parent_data) {
                         //add it to every row with the given id
                         foreach ($idIndex[$child_id] as $index) {
-                            $rows[$index]['parent_name']= $parent_data['parent_name'];
+                            $rows[$index]['parent_name'] = $parent_data['parent_name'];
                         }
                     }
                 }
             }
 
-            $pageData = array();
+            $pageData = [];
 
             reset($rows);
             while ($row = current($rows)) {
@@ -221,10 +213,10 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
                 $data[$dataIndex] = $temp->get_list_view_data();
                 $detailViewAccess = $temp->ACLAccess('DetailView');
                 $editViewAccess = $temp->ACLAccess('EditView');
-                $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
+                $pageData['rowAccess'][$dataIndex] = ['view' => $detailViewAccess, 'edit' => $editViewAccess];
                 $additionalDetailsAllow = $this->lvde->additionalDetails && $detailViewAccess && (file_exists(
                     'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
-                        ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
+                ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
                 $additionalDetailsEdit = $editViewAccess;
                 if ($additionalDetailsAllow) {
                     if ($this->lvde->additionalDetailsAjax) {
@@ -234,7 +226,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
                         if (file_exists('custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php')) {
                             $additionalDetailsFile = 'custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php';
                         }
-                        require_once($additionalDetailsFile);
+                        require_once $additionalDetailsFile;
                         $ar = $this->lvde->getAdditionalDetails(
                             $data[$dataIndex],
                             (empty($this->lvde->additionalDetailsFunction) ? 'additionalDetails' : $this->lvde->additionalDetailsFunction) . $this->lvde->seed->object_name,
@@ -263,12 +255,12 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         $totalCount = $count + $offset;
 
         if ($count >= $limit && $totalCounted) {
-            $totalCount  = $this->lvde->getTotalCount($crmEmailsQuery);
+            $totalCount = $this->lvde->getTotalCount($crmEmailsQuery);
         }
         SugarVCR::recordIDs($this->lvde->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
-        $module_names = array(
+        $module_names = [
             'Prospects' => 'Targets'
-        );
+        ];
         $endOffset = (floor(($totalCount - 1) / $limit)) * $limit;
         $pageData['ordering'] = $order;
         $pageData['ordering']['sortOrder'] = $this->lvde->getReverseSortOrder($pageData['ordering']['sortOrder']);
@@ -276,10 +268,10 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         $pageData['queries'] = $this->lvde->callGenerateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted);
         //join url parameters from array to a string
         $pageData['urls'] = $this->lvde->callGenerateURLS($pageData['queries']);
-        $pageData['offsets'] = array( 'current'=>$offset, 'next'=>$nextOffset, 'prev'=>$prevOffset, 'end'=>$endOffset, 'total'=>$totalCount, 'totalCounted'=>$totalCounted);
-        $pageData['bean'] = array('objectName' => $seed->object_name, 'moduleDir' => $seed->module_dir, 'moduleName' => strtr($seed->module_dir, $module_names));
+        $pageData['offsets'] = ['current' => $offset, 'next' => $nextOffset, 'prev' => $prevOffset, 'end' => $endOffset, 'total' => $totalCount, 'totalCounted' => $totalCounted];
+        $pageData['bean'] = ['objectName' => $seed->object_name, 'moduleDir' => $seed->module_dir, 'moduleName' => strtr($seed->module_dir, $module_names)];
         $pageData['stamp'] = $this->lvde->stamp;
-        $pageData['access'] = array('view' => $this->lvde->seed->ACLAccess('DetailView'), 'edit' => $this->lvde->seed->ACLAccess('EditView'));
+        $pageData['access'] = ['view' => $this->lvde->seed->ACLAccess('DetailView'), 'edit' => $this->lvde->seed->ACLAccess('EditView')];
         $pageData['idIndex'] = $idIndex;
         if (!$this->lvde->seed->ACLAccess('ListView')) {
             $pageData['error'] = 'ACL restricted access';
@@ -287,40 +279,39 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
 
         $queryString = '';
 
-        if ((isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
-            (isset($request["type_basic"]) && (count($request["type_basic"]) > 1 || $request["type_basic"][0] != "")) ||
-            (isset($request["module"]) && $request["module"] == "MergeRecords")) {
-            $queryString = "-advanced_search";
+        if ((isset($request['searchFormTab']) && $request['searchFormTab'] == 'advanced_search') ||
+            (isset($request['type_basic']) && (count($request['type_basic']) > 1 || $request['type_basic'][0] != '')) ||
+            (isset($request['module']) && $request['module'] == 'MergeRecords')) {
+            $queryString = '-advanced_search';
         } else {
-            if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search") {
+            if (isset($request['searchFormTab']) && $request['searchFormTab'] == 'basic_search') {
                 // TODO: figure out what was the SearchFormReports???
-                if ($seed->module_dir == "Reports") {
+                if ($seed->module_dir == 'Reports') {
                     $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
                 } else {
                     $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
                 } // TODO: figure out which SearchForm is it?
 
-                $basicSearchFields = array();
+                $basicSearchFields = [];
 
-                if (isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
+                if (isset($searchMetaData['searchdefs'], $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
                     $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
                 }
 
                 foreach ($basicSearchFields as $basicSearchField) {
                     $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
-                    $field_name .= "_basic";
-                    if (isset($request[$field_name])  && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
+                    $field_name .= '_basic';
+                    if (isset($request[$field_name]) && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
                         // Ensure the encoding is UTF-8
                         $queryString = htmlentities($request[$field_name], null, 'UTF-8');
+
                         break;
                     }
                 }
             }
         }
 
-        
-
-        $ret =  array('data'=>$data , 'pageData'=>$pageData, 'query' => $queryString);
+        $ret = ['data' => $data, 'pageData' => $pageData, 'query' => $queryString];
 
         return $ret;
     }

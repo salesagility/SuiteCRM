@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,11 +43,11 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
-require_once('include/MVC/View/views/view.detail.php');
+require_once 'include/MVC/View/views/view.detail.php';
 
 class ViewQuick extends ViewDetail
 {
-    public $type ='detail';
+    public $type = 'detail';
 
     public function __construct()
     {
@@ -60,9 +59,6 @@ class ViewQuick extends ViewDetail
         $this->options['show_javascript'] = false;
     }
 
-
-
-
     public function display()
     {
         $this->dv->showVCRControl = false;
@@ -73,6 +69,6 @@ class ViewQuick extends ViewDetail
         }
         $this->dv->process();
         ob_clean();
-        echo json_encode(array('title'=> $this->bean->name, 'url'=>'index.php?module=' . $this->bean->module_dir . '&action=DetailView&record=' . $this->bean->id ,'html'=> $this->dv->display(false)));
+        echo json_encode(['title' => $this->bean->name, 'url' => 'index.php?module=' . $this->bean->module_dir . '&action=DetailView&record=' . $this->bean->id, 'html' => $this->dv->display(false)]);
     }
 }

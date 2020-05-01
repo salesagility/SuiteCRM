@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -82,25 +81,24 @@ class EmailFromValidator
     const EX_ERROR_CODE_IS_NOT_IMPLEMENTED = 101;
 
     /**
-     *
      * @var Email;
      */
     protected $email;
 
     /**
-     *
      * @var array
      */
     protected $errors;
-
 
     /**
      * Specially use before email sending.
      *
      * @param Email $email
      * @param bool $tryToFix
-     * @return bool
+     *
      * @throws EmailValidatorException
+     *
+     * @return bool
      */
     public function isValid(Email $email, $tryToFix = true)
     {
@@ -124,7 +122,36 @@ class EmailFromValidator
     }
 
     /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        $errorsArray = $this->errors;
+        $this->clearErrors();
+
+        return $errorsArray;
+    }
+
+    /**
+     * @throws \SuiteCRM\ErrorMessageException
      *
+     * @return array
+     */
+    public function getErrorsAsText()
+    {
+        $txts = [];
+        $errorsArray = $this->getErrors();
+        foreach ($errorsArray as $error) {
+            $txts[] = $this->getErrorAsText($error);
+        }
+
+        return [
+            'messages' => implode("\n", $txts),
+            'codes' => implode(', ', $errorsArray)
+        ];
+    }
+
+    /**
      * @param Email $email
      */
     protected function setEmail(Email $email)
@@ -133,9 +160,9 @@ class EmailFromValidator
     }
 
     /**
+     * @throws EmailValidatorException
      *
      * @return Email
-     * @throws EmailValidatorException
      */
     protected function getEmail()
     {
@@ -155,22 +182,19 @@ class EmailFromValidator
         return $this->email;
     }
 
-    /**
-     *
-     */
     protected function clearErrors()
     {
         $this->errors = [];
     }
 
     /**
-     *
      * @param $error
+     *
      * @throws InvalidArgumentException
      */
     protected function addError($error)
     {
-        if ($error !== (int)$error) {
+        if ($error !== (int) $error) {
             throw new InvalidArgumentException(
                 'Error code should be an integer, ' . gettype($error) . ' given',
                 self::EX_ERROR_CODE_TYRE_IS_INCORRECT
@@ -182,7 +206,6 @@ class EmailFromValidator
     }
 
     /**
-     *
      * @param array $errors
      */
     protected function addErrors($errors)
@@ -192,61 +215,35 @@ class EmailFromValidator
     }
 
     /**
-     *
-     * @return array
-     */
-    public function getErrors()
-    {
-        $errorsArray = $this->errors;
-        $this->clearErrors();
-
-        return $errorsArray;
-    }
-
-    /**
-     * @return array
-     * @throws \SuiteCRM\ErrorMessageException
-     */
-    public function getErrorsAsText()
-    {
-        $txts = [];
-        $errorsArray = $this->getErrors();
-        foreach ($errorsArray as $error) {
-            $txts[] = $this->getErrorAsText($error);
-        }
-
-        return [
-            'messages' => implode("\n", $txts),
-            'codes' => implode(', ', $errorsArray)
-        ];
-    }
-
-    /**
      * @param $error
-     * @return string
+     *
      * @throws \SuiteCRM\ErrorMessageException
+     *
+     * @return string
      */
     protected function getErrorAsText($error)
     {
-        if ($error !== (int)$error) {
+        if ($error !== (int) $error) {
             throw new InvalidArgumentException(
                 'Error code should be an integer, ' . gettype($error) . ' given',
                 self::EX_ERROR_CODE_TYRE_IS_INCORRECT
             );
         }
         $lbl = $this->getErrorTextLabel($error);
+
         return LangText::get($lbl, null, LangText::USING_ALL_STRINGS, true, false, 'Emails');
     }
 
     /**
-     *
      * @param int $error
-     * @return string
+     *
      * @throws InvalidArgumentException
+     *
+     * @return string
      */
     protected function getErrorTextLabel($error)
     {
-        if ($error !== (int)$error) {
+        if ($error !== (int) $error) {
             throw new InvalidArgumentException(
                 'Error code should be an integer, ' . gettype($error) . ' given',
                 self::EX_ERROR_CODE_TYRE_IS_INCORRECT
@@ -255,69 +252,91 @@ class EmailFromValidator
         switch ($error) {
             case self::ERR_FIELD_FROM_IS_NOT_SET:
                 $lbl = 'ERR_FIELD_FROM_IS_NOT_SET';
+
                 break;
             case self::ERR_FIELD_FROM_IS_EMPTY:
                 $lbl = 'ERR_FIELD_FROM_IS_EMPTY';
+
                 break;
             case self::ERR_FIELD_FROM_IS_INVALID:
                 $lbl = 'ERR_FIELD_FROM_IS_INVALID';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_IS_NOT_SET:
                 $lbl = 'ERR_FIELD_FROM_ADDR_IS_NOT_SET';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_IS_EMPTY:
                 $lbl = 'ERR_FIELD_FROM_ADDR_IS_EMPTY';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_IS_INVALID:
                 $lbl = 'ERR_FIELD_FROM_ADDR_IS_INVALID';
+
                 break;
             case self::ERR_FIELD_FROMNAME_IS_NOT_SET:
                 $lbl = 'ERR_FIELD_FROMNAME_IS_NOT_SET';
+
                 break;
             case self::ERR_FIELD_FROMNAME_IS_EMPTY:
                 $lbl = 'ERR_FIELD_FROMNAME_IS_EMPTY';
+
                 break;
             case self::ERR_FIELD_FROMNAME_IS_INVALID:
                 $lbl = 'ERR_FIELD_FROMNAME_IS_INVALID';
+
                 break;
             case self::ERR_FIELD_FROM_NAME_IS_NOT_SET:
                 $lbl = 'ERR_FIELD_FROM_NAME_IS_NOT_SET';
+
                 break;
             case self::ERR_FIELD_FROM_NAME_IS_EMPTY:
                 $lbl = 'ERR_FIELD_FROM_NAME_IS_EMPTY';
+
                 break;
             case self::ERR_FIELD_FROM_NAME_IS_INVALID:
                 $lbl = 'ERR_FIELD_FROM_NAME_IS_INVALID';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_INVALID';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME';
+
                 break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME:
                 $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME';
+
                 break;
             default:
                 throw new InvalidArgumentException(
@@ -330,7 +349,6 @@ class EmailFromValidator
     }
 
     /**
-     *
      * @return bool
      */
     protected function hasErrors()
@@ -339,8 +357,8 @@ class EmailFromValidator
     }
 
     /**
-     *
      * @param string $emailAddress
+     *
      * @return bool
      */
     protected function isValidEmailAddress($emailAddress)
@@ -349,9 +367,9 @@ class EmailFromValidator
     }
 
     /**
-     *
      * @param string $nonEmailAddress
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isValidNonEmailAddress($nonEmailAddress)
     {
@@ -363,10 +381,9 @@ class EmailFromValidator
         return $valid;
     }
 
-
     /**
-     *
      * @param string $fromAddress
+     *
      * @return bool
      */
     protected function isValidFromAddress($fromAddress)
@@ -375,9 +392,9 @@ class EmailFromValidator
     }
 
     /**
-     *
      * @param string $fromName
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isValidFromName($fromName)
     {
@@ -385,10 +402,11 @@ class EmailFromValidator
     }
 
     /**
-     *
      * @param string $fromAddrName
-     * @return boolean
+     *
      * @throws EmailValidatorException
+     *
+     * @return bool
      */
     protected function isValidFromAddrName($fromAddrName)
     {
@@ -448,12 +466,12 @@ class EmailFromValidator
         return $valid;
     }
 
-
     /**
-     * validate field 'From' - should be a valid email address
+     * validate field 'From' - should be a valid email address.
+     *
+     * @throws EmailValidatorException
      *
      * @return array
-     * @throws EmailValidatorException
      */
     protected function validateFrom()
     {
@@ -466,15 +484,15 @@ class EmailFromValidator
             $this->addError(self::ERR_FIELD_FROM_IS_INVALID);
         }
 
-
         return $this->getErrors();
     }
 
     /**
-     * validate field 'from_addr' - should be a valid email address
+     * validate field 'from_addr' - should be a valid email address.
+     *
+     * @throws EmailValidatorException
      *
      * @return array
-     * @throws EmailValidatorException
      */
     protected function validateFromAddr()
     {
@@ -491,10 +509,11 @@ class EmailFromValidator
     }
 
     /**
-     * validate field 'FromName' - should be a valid name string
+     * validate field 'FromName' - should be a valid name string.
+     *
+     * @throws EmailValidatorException
      *
      * @return array
-     * @throws EmailValidatorException
      */
     protected function validateFromName()
     {
@@ -511,10 +530,11 @@ class EmailFromValidator
     }
 
     /**
-     * validate field 'from_name' - should be a valid name string
+     * validate field 'from_name' - should be a valid name string.
+     *
+     * @throws EmailValidatorException
      *
      * @return array
-     * @throws EmailValidatorException
      */
     protected function validateFrom_Name()
     {
@@ -532,10 +552,11 @@ class EmailFromValidator
 
     /**
      * validate field 'from_addr_name' - should be a valid name string and email address pair
-     * where email address in between '<' and '>' characters
+     * where email address in between '<' and '>' characters.
+     *
+     * @throws EmailValidatorException
      *
      * @return array
-     * @throws EmailValidatorException
      */
     protected function validateFromAddrName()
     {

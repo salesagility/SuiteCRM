@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOD_Index()
+    public function testAODIndex()
     {
         // Execute the constructor and check for the Object type and type attribute
         $aod_index = new AOD_Index();
@@ -85,7 +88,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     public function testcommit()
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-        
+
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -137,7 +140,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     public function testremove()
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-        
+
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -153,7 +156,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetIndexableModules()
     {
-        $expected = array(
+        $expected = [
             'AM_ProjectTemplates' => 'AM_ProjectTemplates',
             'AM_TaskTemplates' => 'AM_TaskTemplates',
             'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
@@ -192,7 +195,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
             'SurveyResponses' => 'SurveyResponses',
             'Surveys' => 'Surveys',
             'Tasks' => 'Task'
-        );
+        ];
 
         $aod_index = new AOD_Index();
 

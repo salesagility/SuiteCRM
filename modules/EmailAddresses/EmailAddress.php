@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,22 +36,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 /**
- * Stub class, exists only to allow Link class easily use the SugarEmailAddress class
+ * Stub class, exists only to allow Link class easily use the SugarEmailAddress class.
  */
 class EmailAddress extends SugarEmailAddress
 {
     /**
-     * @var bool $disable_row_level_security
+     * @var bool
      */
     public $disable_row_level_security;
-    
+
     /**
      * EmailAddress constructor.
      */
@@ -73,12 +70,13 @@ class EmailAddress extends SugarEmailAddress
      * @param string $invalid
      * @param string $optOut
      * @param bool $in_workflow
+     *
      * @return null|string
      */
     public function save(
         $id = '',
         $module = '',
-        $new_addrs = array(),
+        $new_addrs = [],
         $primary = '',
         $replyTo = '',
         $invalid = '',
@@ -87,8 +85,8 @@ class EmailAddress extends SugarEmailAddress
     ) {
         if (func_num_args() > 1) {
             return parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
-        } else {
-            return SugarBean::save($id);
         }
+
+        return SugarBean::save($id);
     }
 }

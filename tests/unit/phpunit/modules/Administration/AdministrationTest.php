@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AdministrationTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -25,8 +28,8 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('config', 'table_name', $admin);
         $this->assertAttributeEquals(true, 'new_schema', $admin);
         $this->assertAttributeEquals(true, 'disable_custom_fields', $admin);
-        $this->assertAttributeEquals(array('disclosure', 'notify', 'system', 'portal', 'proxy', 'massemailer', 'ldap', 'captcha', 'sugarpdf'), 'config_categories', $admin);
-        $this->assertAttributeEquals(array('notify_send_by_default', 'mail_smtpauth_req', 'notify_on', 'portal_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on'), 'checkbox_fields', $admin);
+        $this->assertAttributeEquals(['disclosure', 'notify', 'system', 'portal', 'proxy', 'massemailer', 'ldap', 'captcha', 'sugarpdf'], 'config_categories', $admin);
+        $this->assertAttributeEquals(['notify_send_by_default', 'mail_smtpauth_req', 'notify_on', 'portal_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on'], 'checkbox_fields', $admin);
     }
 
     public function testretrieveSettings()
@@ -85,17 +88,17 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($actual, 'test value');
     }
 
-    public function testget_config_prefix()
+    public function testgetConfigPrefix()
     {
         $admin = new Administration();
 
         //test with empty string
-        $expected = array(false, false);
+        $expected = [false, false];
         $actual = $admin->get_config_prefix('');
         $this->assertSame($expected, $actual);
 
         //test with a valid string
-        $expected = array('category', 'test');
+        $expected = ['category', 'test'];
         $actual = $admin->get_config_prefix('category_test');
         $this->assertSame($expected, $actual);
     }

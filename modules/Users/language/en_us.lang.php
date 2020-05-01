@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'ERR_NO_2FACTOR_EMAIL_TMPL' => 'Two-factor email template is not set, please change settings on password management page.',
     'ERR_NO_2FACTOR_EMAIL_TMPL_CODE' => 'Two-factor email template should contain a $code at least.',
     'LBL_DELETE_USER_CONFIRM' => 'When the User record is deleted, the corresponding Employee record will also be deleted. After the user is deleted, any workflow definitions and reports involving the user might need to be updated.<br/><br/> Deleting a User record cannot be undone.',
@@ -323,7 +321,7 @@ $mod_strings = array(
     'LBL_AFFECTED' => 'affected',
     'LBL_USER_NAME_FOR_ROLE' => 'Users/Teams/Roles',
     'LBL_SESSION_EXPIRED' => 'You have been logged out because your session has expired.',
-// INBOUND EMAIL STRINGS
+    // INBOUND EMAIL STRINGS
     'LBL_ASSIGN_TO_USER' => 'Assign To User',
     'LBL_BASIC' => 'Inbound Setup',
     'LBL_LOGIN' => 'User Name',
@@ -343,9 +341,9 @@ $mod_strings = array(
     'LBL_TEST_SETTINGS' => 'Test Settings',
     'LBL_TEST_SUCCESSFUL' => 'Connection completed successfully.',
     'LBL_TOGGLE_ADV' => 'Show Advanced',
-// END INBOUND EMAIL STRINGS
+    // END INBOUND EMAIL STRINGS
     'LBL_LDAP_EXTENSION_ERROR' => 'LDAP Error: Extensions not loaded',
-// PROJECT RESOURCES STRINGS
+    // PROJECT RESOURCES STRINGS
     'LBL_RESOURCE_NAME' => 'Name',
     'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
     'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administrator has not yet configured the default outbound account. Unable to send test email.',
@@ -419,7 +417,7 @@ $mod_strings = array(
     'LBL_DELETED' => 'Deleted',
     'LBL_HIDEOPTIONS' => 'Hide Options',
     'LBL_SHOWOPTIONS' => 'Show Options',
-    'LBL_SUITE_PRINT' => "Print this page",
+    'LBL_SUITE_PRINT' => 'Print this page',
 
     'LBL_QUICK_ACCOUNT' => 'Create Account',
     'LBL_QUICK_CONTACT' => 'Create Contact',
@@ -429,8 +427,8 @@ $mod_strings = array(
     'LBL_QUICK_CALL' => 'Log Call',
     'LBL_QUICK_TASK' => 'Create Task',
     'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
-    'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
-    'LBL_PRIMARY_GROUP' => "Primary Group",
+    'LBL_LIST_NONINHERITABLE' => 'Not Inheritable',
+    'LBL_PRIMARY_GROUP' => 'Primary Group',
     'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
     'LBL_EMAIL_INFORMATION' => 'EMAIL',
     'LBL_FW' => 'FW:',
@@ -689,5 +687,4 @@ $mod_strings = array(
     'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
     'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
     // END Google Token/Synchronization settings
-
-); // END STRINGS DEFS
+]; // END STRINGS DEFS

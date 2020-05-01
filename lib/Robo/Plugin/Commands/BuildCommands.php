@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +39,9 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
-use SuiteCRM\Utility\OperatingSystem;
-use SuiteCRM\Robo\Traits\RoboTrait;
 use Robo\Task\Base\loadTasks;
+use SuiteCRM\Robo\Traits\RoboTrait;
+use SuiteCRM\Utility\OperatingSystem;
 
 class BuildCommands extends \Robo\Tasks
 {
@@ -51,30 +50,33 @@ class BuildCommands extends \Robo\Tasks
 
     // define public methods as commands
 
-
     /**
-     * Compile a theme (SASS) based in SuiteP
+     * Compile a theme (SASS) based in SuiteP.
+     *
      * @param array $opts optional command line arguments
      * theme - The name of the theme you want to compile css
      * color-scheme - set which color scheme you wish to build
+     *
      * @throws \RuntimeException
      */
     public function buildTheme(array $opts = ['theme' => '', 'color-scheme' => ''])
     {
         if (empty($opts['theme'])) {
             $this->say("Please specify the name of the theme you want to compile with '--theme=SuiteP'");
+
             return;
         }
         $this->say("Compile {$opts['theme']} Theme (SASS)");
         if (empty($opts['color-scheme'])) {
-            /** Look for Subthemes in the {$opts['theme']} theme Dir **/
+            /** Look for Subthemes in the {$opts['theme']} theme Dir */
             $std = "themes/{$opts['theme']}/css/";
             $this->locateSubTheme($std);
-            /** Look for Subthemes in the custom/theme Dir **/
+            /** Look for Subthemes in the custom/theme Dir */
             // Good opportunity to refactor here.
             // Does the same as above just looks in the custom directory.
             $ctd = "custom/themes/{$opts['theme']}/css/";
             $this->locateSubTheme($ctd);
+
             return;
         }
 
@@ -92,11 +94,12 @@ class BuildCommands extends \Robo\Tasks
         $this->say("Compile {$opts['theme']} Theme (SASS) Complete");
     }
 
-
     /**
-     * Build SuiteP theme
+     * Build SuiteP theme.
+     *
      * @param array $opts optional command line arguments
      * color-scheme - set which color scheme you wish to build
+     *
      * @throws \RuntimeException
      */
     public function buildSuiteP(array $opts = ['color-scheme' => ''])
@@ -107,6 +110,7 @@ class BuildCommands extends \Robo\Tasks
     /**
      * @param string $colorScheme eg Dawn
      * @param string $location eg Directory to work from
+     *
      * @throws \RuntimeException
      */
     private function buildColorScheme($colorScheme, $location)

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,16 +41,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Saves an Account record and then redirects the browser to the
  * defined return URL.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-require_once('include/SugarFolders/SugarFolders.php');
+require_once 'include/SugarFolders/SugarFolders.php';
 $folder = new SugarFolder();
 $_REQUEST['name'] = $_REQUEST['groupFolderAddName'];
 $_REQUEST['parent_folder'] = $_REQUEST['groupFoldersAdd'];
@@ -63,7 +63,7 @@ if (empty($_REQUEST['record'])) {
 $body1 = "
 	<script type='text/javascript'>
 		function refreshOpener() {
-			window.opener.refresh_group_folder_list('$folder->id','$folder->name')
+			window.opener.refresh_group_folder_list('{$folder->id}','{$folder->name}')
 			window.close();
 		} // fn
 		refreshOpener();

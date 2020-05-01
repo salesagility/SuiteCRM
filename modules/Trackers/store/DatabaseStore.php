@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,39 +41,38 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-require_once('modules/Trackers/store/Store.php');
+require_once 'modules/Trackers/store/Store.php';
 
 /**
  * Database
  * This is an implementation of the Store interface where the storage uses
- * the configured database instance as defined in DBManagerFactory::getInstance() method
- *
+ * the configured database instance as defined in DBManagerFactory::getInstance() method.
  */
 class DatabaseStore implements Store
 {
     public function flush($monitor)
     {
         $metrics = $monitor->getMetrics();
-        $columns = array();
-        $values = array();
-        foreach ($metrics as $name=>$metric) {
-            if (!empty($monitor->$name)) {
+        $columns = [];
+        $values = [];
+        foreach ($metrics as $name => $metric) {
+            if (!empty($monitor->{$name})) {
                 $columns[] = $name;
                 if ($metrics[$name]->_type == 'int') {
-                    $values[] = (int)$monitor->$name;
+                    $values[] = (int) $monitor->{$name};
                 } elseif ($metrics[$name]->_type == 'double') {
-                    $values[] = (float)$monitor->$name;
+                    $values[] = (float) $monitor->{$name};
                 } elseif ($metrics[$name]->_type == 'datetime') {
-                    $values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->$name), "datetime");
+                    $values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->{$name}), 'datetime');
                 } else {
-                    $values[] = DBManagerFactory::getInstance()->quoted($monitor->$name);
+                    $values[] = DBManagerFactory::getInstance()->quoted($monitor->{$name});
                 }
             }
         } //foreach
@@ -88,7 +87,7 @@ class DatabaseStore implements Store
             $values[] = $id;
         }
 
-        $query = "INSERT INTO $monitor->table_name (" .implode(",", $columns). " ) VALUES ( ". implode(",", $values). ')';
+        $query = "INSERT INTO {$monitor->table_name} (" . implode(',', $columns) . ' ) VALUES ( ' . implode(',', $values) . ')';
         DBManagerFactory::getInstance()->query($query);
     }
 }

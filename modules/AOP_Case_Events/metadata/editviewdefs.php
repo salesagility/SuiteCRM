@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,43 +37,43 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 $moduleName = 'AOP_Case_Events';
-$viewdefs [$moduleName] =
-    array(
-        'EditView' => array(
-                'templateMeta' => array(
-                        'maxColumns' => '2',
-                        'widths' => array(
-                                0 => array(
-                                        'label' => '10',
-                                        'field' => '30',
-                                    ),
-                                1 => array(
-                                        'label' => '10',
-                                        'field' => '30',
-                                    ),
-                            ),
-                        'useTabs' => false,
-                        'tabDefs' => array(
-                                'DEFAULT' => array(
-                                        'newTab' => false,
-                                        'panelDefault' => 'expanded',
-                                    ),
-                            ),
-                    ),
-                'panels' => array(
-                        'default' => array(
-                                0 => array(
-                                        0 => 'name',
-                                        1 => 'assigned_user_name',
-                                    ),
-                                1 => array(
-                                        0 => 'description',
-                                        1 => array(
-                                                'name' => 'case_name',
-                                                'label' => 'LBL_CASE_NAME',
-                                            ),
-                                    ),
-                            ),
-                    ),
-            ),
-    );
+$viewdefs[$moduleName] =
+    [
+        'EditView' => [
+            'templateMeta' => [
+                'maxColumns' => '2',
+                'widths' => [
+                    0 => [
+                        'label' => '10',
+                        'field' => '30',
+                    ],
+                    1 => [
+                        'label' => '10',
+                        'field' => '30',
+                    ],
+                ],
+                'useTabs' => false,
+                'tabDefs' => [
+                    'DEFAULT' => [
+                        'newTab' => false,
+                        'panelDefault' => 'expanded',
+                    ],
+                ],
+            ],
+            'panels' => [
+                'default' => [
+                    0 => [
+                        0 => 'name',
+                        1 => 'assigned_user_name',
+                    ],
+                    1 => [
+                        0 => 'description',
+                        1 => [
+                            'name' => 'case_name',
+                            'label' => 'LBL_CASE_NAME',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ];

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * view.showduplicates.php
+ * view.showduplicates.php.
  *
  * This is the SugarView subclass to handle displaying the list of duplicate Leads found when attempting to create
  * a new Lead.  This class is called from the LeadFormBase class handleSave function.
@@ -59,20 +58,19 @@ class ViewShowDuplicates extends SugarView
         global $mod_strings;
 
         if (!isset($_SESSION['SHOW_DUPLICATES'])) {
-            $GLOBALS['log']->error("Unauthorized access to this area.");
-            sugar_die("Unauthorized access to this area.");
+            $GLOBALS['log']->error('Unauthorized access to this area.');
+            sugar_die('Unauthorized access to this area.');
         }
 
         parse_str($_SESSION['SHOW_DUPLICATES'], $_POST);
-        $post = array_map("securexss", $_POST);
+        $post = array_map('securexss', $_POST);
         foreach ($post as $k => $v) {
             $_POST[$k] = $v;
         }
         unset($_SESSION['SHOW_DUPLICATES']);
 
-
         $lead = new Lead();
-        require_once('modules/Leads/LeadFormBase.php');
+        require_once 'modules/Leads/LeadFormBase.php';
         $leadForm = new LeadFormBase();
         $GLOBALS['check_notify'] = false;
 
@@ -82,7 +80,7 @@ class ViewShowDuplicates extends SugarView
         $count = count($duplicates);
         $db = DBManagerFactory::getInstance();
         if ($count > 0) {
-            $query .= "and (";
+            $query .= 'and (';
             $first = true;
             foreach ($duplicates as $duplicate_id) {
                 if (!$first) {
@@ -90,15 +88,15 @@ class ViewShowDuplicates extends SugarView
                 }
                 $first = false;
                 $duplicateIdQuoted = $db->quote($duplicate_id);
-                $query .= "id='$duplicateIdQuoted' ";
+                $query .= "id='{$duplicateIdQuoted}' ";
             }
             $query .= ')';
         }
 
-        $duplicateLeads = array();
+        $duplicateLeads = [];
         $result = $db->query($query);
-        $i=0;
-        while (($row=$db->fetchByAssoc($result)) != null) {
+        $i = 0;
+        while (($row = $db->fetchByAssoc($result)) != null) {
             $duplicateLeads[$i] = $row;
             $i++;
         }
@@ -107,14 +105,14 @@ class ViewShowDuplicates extends SugarView
 
         $input = '';
         foreach ($lead->column_fields as $field) {
-            if (!empty($_POST['Leads'.$field])) {
-                $input .= "<input type='hidden' name='$field' value='${_POST['Leads'.$field]}'>\n";
+            if (!empty($_POST['Leads' . $field])) {
+                $input .= "<input type='hidden' name='{$field}' value='${_POST['Leads' . $field]}'>\n";
             }
         }
 
         foreach ($lead->additional_column_fields as $field) {
-            if (!empty($_POST['Leads'.$field])) {
-                $input .= "<input type='hidden' name='$field' value='${_POST['Leads'.$field]}'>\n";
+            if (!empty($_POST['Leads' . $field])) {
+                $input .= "<input type='hidden' name='{$field}' value='${_POST['Leads' . $field]}'>\n";
             }
         }
 
@@ -127,7 +125,6 @@ class ViewShowDuplicates extends SugarView
             $input .= "<input type='hidden' name='relate_id' value='{$_POST['Leadsrelate_id']}'>\n";
         }
 
-
         $emailAddress = new SugarEmailAddress();
         $input .= $emailAddress->getEmailAddressWidgetDuplicatesView($lead);
 
@@ -135,14 +132,14 @@ class ViewShowDuplicates extends SugarView
         if (!empty($_POST['return_module'])) {
             $this->ss->assign('RETURN_MODULE', $_POST['return_module']);
         } else {
-            $get .= "Leads";
+            $get .= 'Leads';
         }
 
-        $get .= "&return_action=";
+        $get .= '&return_action=';
         if (!empty($_POST['return_action'])) {
             $this->ss->assign('RETURN_ACTION', $_POST['return_action']);
         } else {
-            $get .= "DetailView";
+            $get .= 'DetailView';
         }
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -158,19 +155,19 @@ class ViewShowDuplicates extends SugarView
         ////	END INBOUND EMAIL WORKFLOW
         ///////////////////////////////////////////////////////////////////////////////
         if (!empty($_POST['popup'])) {
-            $input .= '<input type="hidden" name="popup" value="'.$_POST['popup'].'">';
+            $input .= '<input type="hidden" name="popup" value="' . $_POST['popup'] . '">';
         } else {
             $input .= '<input type="hidden" name="popup" value="false">';
         }
 
         if (!empty($_POST['to_pdf'])) {
-            $input .= '<input type="hidden" name="to_pdf" value="'.$_POST['to_pdf'].'">';
+            $input .= '<input type="hidden" name="to_pdf" value="' . $_POST['to_pdf'] . '">';
         } else {
             $input .= '<input type="hidden" name="to_pdf" value="false">';
         }
 
         if (!empty($_POST['create'])) {
-            $input .= '<input type="hidden" name="create" value="'.$_POST['create'].'">';
+            $input .= '<input type="hidden" name="create" value="' . $_POST['create'] . '">';
         } else {
             $input .= '<input type="hidden" name="create" value="false">';
         }
@@ -187,8 +184,8 @@ class ViewShowDuplicates extends SugarView
             $template = 'custom/' . $template;
         }
 
-        $saveLabel = string_format($app_strings['LBL_SAVE_OBJECT'], array($this->module));
-        $this->ss->assign('TITLE', getClassicModuleTitle('Leads', array($this->module, $saveLabel), true));
+        $saveLabel = string_format($app_strings['LBL_SAVE_OBJECT'], [$this->module]);
+        $this->ss->assign('TITLE', getClassicModuleTitle('Leads', [$this->module, $saveLabel], true));
         $this->ss->display($template);
     }
 }

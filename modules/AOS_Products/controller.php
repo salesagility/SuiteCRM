@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,9 +42,8 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
- require_once('include/MVC/Controller/SugarController.php');
-  
-  
+ require_once 'include/MVC/Controller/SugarController.php';
+
  class AOS_ProductsController extends SugarController
  {
      public function action_editview()

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $aow_actions_list[] = 'CreateRecord';
 $aow_actions_list[] = 'ModifyRecord';
 $aow_actions_list[] = 'SendEmail';
 $aow_actions_list[] = 'ComputeField';
 
-
 if (file_exists('custom/modules/AOW_Actions/Ext/Actions/actions.ext.php')) {
-    require('custom/modules/AOW_Actions/Ext/Actions/actions.ext.php');
+    require 'custom/modules/AOW_Actions/Ext/Actions/actions.ext.php';
 }

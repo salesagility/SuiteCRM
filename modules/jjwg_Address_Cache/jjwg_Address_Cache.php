@@ -4,22 +4,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/jjwg_Maps/jjwg_Maps.php');
-require_once('modules/jjwg_Address_Cache/jjwg_Address_Cache_sugar.php');
+require_once 'modules/jjwg_Maps/jjwg_Maps.php';
+require_once 'modules/jjwg_Address_Cache/jjwg_Address_Cache_sugar.php';
 
 class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
 {
-
     /**
      * @var settings array
      */
-    public $settings = array();
-
+    public $settings = [];
 
     /**
-     * Constructor
+     * Constructor.
+     *
+     * @param mixed $init
      */
-    public function __construct($init=true)
+    public function __construct($init = true)
     {
         parent::__construct();
         // Admin Config Setting
@@ -32,7 +32,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
      * Load Configuration Settings using Administration Module
      * See jjwg_Maps module for setting config
      * $GLOBALS['jjwg_config_defaults']
-     * $GLOBALS['jjwg_config']
+     * $GLOBALS['jjwg_config'].
      */
     public function configuration()
     {
@@ -41,10 +41,11 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
     }
 
     /**
-     * Get the Address Info from the Address Cache Module
+     * Get the Address Info from the Address Cache Module.
+     *
      * @param $aInfo array of geocode info (lng, lat, status, address)
      */
-    public function getAddressCacheInfo($aInfo = array())
+    public function getAddressCacheInfo($aInfo = [])
     {
         if (is_array($aInfo)) {
             if (!isset($aInfo['address'])) {
@@ -56,12 +57,12 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
 
             $address = $aInfoAddress;
         } else {
-            $address = (string)$aInfo;
+            $address = (string) $aInfo;
         }
 
         if (!empty($this->settings['address_cache_get_enabled']) && !empty($address)) {
-            $query = "SELECT " . $this->table_name . ".* FROM " . $this->table_name . " WHERE " .
-                    $this->table_name . ".deleted = 0 AND " .
+            $query = 'SELECT ' . $this->table_name . '.* FROM ' . $this->table_name . ' WHERE ' .
+                    $this->table_name . '.deleted = 0 AND ' .
                     $this->table_name . ".name='" . $this->db->quote($address) . "'";
             //var_dump($query);
             $cache_result = $this->db->limitQuery($query, 0, 1);
@@ -81,30 +82,29 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
                 }
             }
         }
+
         return false;
     }
 
     /**
-     * Save New Address Info to the Address Cache Module / Table
+     * Save New Address Info to the Address Cache Module / Table.
+     *
      * @param $aInfo array of geocode info (lng, lat, status, address)
      */
-    public function saveAddressCacheInfo($aInfo = array())
+    public function saveAddressCacheInfo($aInfo = [])
     {
-
         // Bug: $current_user object not properly set for some reason
         if (empty($GLOBALS['current_user']->id) && !empty($_SESSION['authenticated_user_id'])) {
             $GLOBALS['current_user']->id = $_SESSION['authenticated_user_id'];
         }
 
         if (!empty($this->settings['address_cache_save_enabled'])) {
-
             // Check for existing address cache data (prevent duplicates)
             $address_cache = $this->getAddressCacheInfo($aInfo);
 
             if (empty($address_cache)) {
                 if (!empty($aInfo['address']) && !($aInfo['lng'] == 0 && $aInfo['lat'] == 0) &&
                         $this->is_valid_lng($aInfo['lng']) && $this->is_valid_lat($aInfo['lat'])) {
-
                     // Note: The modules 'name' field is used for the 'address'
                     // 'status' is not saved in the cache table.
                     $cache = new jjwg_Address_Cache();
@@ -115,45 +115,45 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
                     $cache->description = '';
                     $cache->assigned_user_id = $GLOBALS['current_user']->id;
                     $cache->save(false);
+
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     /**
-     *
      * Delete all Address Cache records
-     * Complete delete, not a soft delete
+     * Complete delete, not a soft delete.
      */
     public function deleteAllAddressCache()
     {
-
         // Delete all from jjwg_address_cache
-        $query = "TRUNCATE TABLE jjwg_address_cache;";
+        $query = 'TRUNCATE TABLE jjwg_address_cache;';
         $delete_result = $this->db->query($query);
-        $query = "TRUNCATE TABLE jjwg_address_cache_audit;";
+        $query = 'TRUNCATE TABLE jjwg_address_cache_audit;';
         $delete_audit_result = $this->db->query($query);
     }
 
     /**
+     * Check for valid longitude.
      *
-     * Check for valid longitude
      * @param $lng float
      */
     public function is_valid_lng($lng)
     {
-        return (is_numeric($lng) && $lng >= -180 && $lng <= 180);
+        return is_numeric($lng) && $lng >= -180 && $lng <= 180;
     }
 
     /**
+     * Check for valid latitude.
      *
-     * Check for valid latitude
      * @param $lat float
      */
     public function is_valid_lat($lat)
     {
-        return (is_numeric($lat) && $lat >= -90 && $lat <= 90);
+        return is_numeric($lat) && $lat >= -90 && $lat <= 90;
     }
 }

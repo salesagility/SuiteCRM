@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,12 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
- * Config manager
+ * Config manager.
+ *
  * @api
  */
 class SugarConfig
 {
-    public $_cached_values = array();
+    public $_cached_values = [];
 
     public static function getInstance()
     {
@@ -55,6 +56,7 @@ class SugarConfig
         if (is_null($instance)) {
             $instance = new SugarConfig();
         }
+
         return $instance;
     }
 
@@ -68,13 +70,14 @@ class SugarConfig
                 SugarArray::staticGet($GLOBALS['sugar_config'], $key, $default) :
                 $default;
         }
+
         return $this->_cached_values[$key];
     }
 
     public function clearCache($key = null)
     {
         if (is_null($key)) {
-            $this->_cached_values = array();
+            $this->_cached_values = [];
         } else {
             unset($this->_cached_values[$key]);
         }

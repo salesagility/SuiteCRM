@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testjjwg_Markers()
+    public function testjjwgMarkers()
     {
         // Execute the constructor and check for the Object type and  attributes
         $jjwgMarkers = new jjwg_Markers();
@@ -33,24 +36,24 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0, count($jjwgMarkers->settings));
     }
 
-    public function testdefine_loc()
+    public function testdefineLoc()
     {
         $jjwgMarkers = new jjwg_Markers();
 
         //test without pre settting attributes
-        $result = $jjwgMarkers->define_loc(array());
+        $result = $jjwgMarkers->define_loc([]);
         $this->assertEquals('N/A', $result['name']);
         $this->assertTrue(is_numeric($result['lat']));
         $this->assertTrue(is_numeric($result['lng']));
         $this->assertEquals('company', $result['image']);
 
         //test with required attributes preset
-        $marker = array('name' => 'test', 'lat' => 50, 'lng' => 100, 'image' => null);
+        $marker = ['name' => 'test', 'lat' => 50, 'lng' => 100, 'image' => null];
         $result = $jjwgMarkers->define_loc($marker);
         $this->assertSame($marker, $result);
     }
 
-    public function testis_valid_lng()
+    public function testisValidLng()
     {
         $jjwgMarkers = new jjwg_Markers();
 
@@ -64,7 +67,7 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgMarkers->is_valid_lng(-180));
     }
 
-    public function testis_valid_lat()
+    public function testisValidLat()
     {
         $jjwgMarkers = new jjwg_Markers();
 

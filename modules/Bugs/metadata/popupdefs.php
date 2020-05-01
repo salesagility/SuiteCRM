@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,56 +40,53 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$popupMeta = array(
+$popupMeta = [
     'moduleMain' => 'Bug',
     'varName' => 'BUG',
     'orderBy' => 'bugs.name',
-    'whereClauses' => array(
+    'whereClauses' => [
         'name' => 'bugs.name',
         'bug_number' => 'bugs.bug_number'
-    ),
-    'listviewdefs' => array(
-        'BUG_NUMBER' => array(
+    ],
+    'listviewdefs' => [
+        'BUG_NUMBER' => [
             'width' => '5',
             'label' => 'LBL_LIST_NUMBER',
             'link' => true,
-            'default' => true),
-        'NAME' => array(
+            'default' => true],
+        'NAME' => [
             'width' => '32',
             'label' => 'LBL_LIST_SUBJECT',
             'default' => true,
-            'link' => true),
-        'PRIORITY' => array(
+            'link' => true],
+        'PRIORITY' => [
             'width' => '10',
             'label' => 'LBL_LIST_PRIORITY',
-            'default' => true),
-        'STATUS' => array(
+            'default' => true],
+        'STATUS' => [
             'width' => '10',
             'label' => 'LBL_LIST_STATUS',
-            'default' => true),
-        'TYPE' => array(
+            'default' => true],
+        'TYPE' => [
             'width' => '10',
             'label' => 'LBL_LIST_TYPE',
-            'default' => true),
-        'PRODUCT_CATEGORY' => array(
+            'default' => true],
+        'PRODUCT_CATEGORY' => [
             'width' => '10',
             'label' => 'LBL_PRODUCT_CATEGORY',
-            'default' => true),
-        'ASSIGNED_USER_NAME' => array(
+            'default' => true],
+        'ASSIGNED_USER_NAME' => [
             'width' => '9',
             'label' => 'LBL_LIST_ASSIGNED_USER',
-            'default' => true)
-          
-    ),
-    'searchdefs'   => array(
+            'default' => true]
+    ],
+    'searchdefs' => [
         'bug_number',
         'name',
         'priority',
         'status',
         'type',
         'product_category',
-        array('name' => 'assigned_user_id', 'type' => 'enum', 'label' => 'LBL_ASSIGNED_TO', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
-    )
-);
+        ['name' => 'assigned_user_id', 'type' => 'enum', 'label' => 'LBL_ASSIGNED_TO', 'function' => ['name' => 'get_user_array', 'params' => [false]]],
+    ]
+];

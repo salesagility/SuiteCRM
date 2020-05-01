@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/templates/TemplateGroupChooser.php');
-
+require_once 'include/templates/TemplateGroupChooser.php';
 
 class SavedSearch extends SugarBean
 {
@@ -66,12 +63,12 @@ class SavedSearch extends SugarBean
     public $table_name = 'saved_search';
 
     public $module_dir = 'SavedSearch';
-    public $field_defs = array();
-    public $field_defs_map = array();
+    public $field_defs = [];
+    public $field_defs_map = [];
 
     public $columns;
 
-    public function __construct($columns = array(), $orderBy = null, $sortOrder = 'DESC')
+    public function __construct($columns = [], $orderBy = null, $sortOrder = 'DESC')
     {
         parent::__construct();
         $this->columns = $columns;
@@ -99,7 +96,7 @@ class SavedSearch extends SugarBean
 				  	assigned_user_id = \'' . $current_user->id . '\' AND
 					search_module =  \'' . $module . '\'
 				  ORDER BY name';
-        $result = $db->query($query, true, "Error filling in saved search list: ");
+        $result = $db->query($query, true, 'Error filling in saved search list: ');
 
         $savedSearchArray['_none'] = $app_strings['LBL_NONE'];
         while ($row = $db->fetchByAssoc($result, -1, false)) {
@@ -144,8 +141,8 @@ class SavedSearch extends SugarBean
         $chooser->args['id'] = 'edit_tabs';
         $chooser->args['left_size'] = 7;
         $chooser->args['right_size'] = 7;
-        $chooser->args['values_array'][0] = array();
-        $chooser->args['values_array'][1] = array();
+        $chooser->args['values_array'][0] = [];
+        $chooser->args['values_array'][1] = [];
 
         if (isset($_REQUEST['saved_search_select']) && $_REQUEST['saved_search_select'] != '_none') {
             $this->retrieveSavedSearch($_REQUEST['saved_search_select']);
@@ -218,7 +215,7 @@ class SavedSearch extends SugarBean
                     assigned_user_id = \'' . $current_user->id . '\' AND
                     search_module =  \'' . $module . '\'
                   ORDER BY name';
-        $result = $db->query($query, true, "Error filling in saved search list: ");
+        $result = $db->query($query, true, 'Error filling in saved search list: ');
 
         $savedSearchArray['_none'] = $app_strings['LBL_NONE'];
         $savedSearchData['hasOptions'] = false;
@@ -241,7 +238,7 @@ class SavedSearch extends SugarBean
         $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $selectedSearch));
 
         $savedSearchData['module'] = $module;
-        
+
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
     }
 
@@ -257,7 +254,7 @@ class SavedSearch extends SugarBean
         $saved_search_name = '';
         $header .= $this->contents['search_module'];
         if (empty($_SESSION['LastSavedView'])) {
-            $_SESSION['LastSavedView'] = array();
+            $_SESSION['LastSavedView'] = [];
         }
         $_SESSION['LastSavedView'][$this->contents['search_module']] = $id;
         $saved_search_id = $id;
@@ -311,7 +308,7 @@ class SavedSearch extends SugarBean
         $query = 'SELECT id, name, contents, search_module FROM saved_search
 				  WHERE
 				  	id = \'' . $id . '\'';
-        $result = $db->query($query, true, "Error filling in saved search list: ");
+        $result = $db->query($query, true, 'Error filling in saved search list: ');
 
         $header = 'Location: index.php?action=index&module=';
         $contents = '';
@@ -319,7 +316,7 @@ class SavedSearch extends SugarBean
         while ($row = $db->fetchByAssoc($result, false)) {
             $header .= $row['search_module'];
             if (empty($_SESSION['LastSavedView'])) {
-                $_SESSION['LastSavedView'] = array();
+                $_SESSION['LastSavedView'] = [];
             }
             $_SESSION['LastSavedView'][$row['search_module']] = $row['id'];
             $contents = unserialize(base64_decode($row['contents']));
@@ -357,7 +354,7 @@ class SavedSearch extends SugarBean
             return null;
         }
 
-        $ignored_inputs = array('PHPSESSID', 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs');
+        $ignored_inputs = ['PHPSESSID', 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs'];
 
         $contents = $_REQUEST;
 
@@ -373,6 +370,7 @@ class SavedSearch extends SugarBean
         foreach ($contents as $input => $value) {
             if (in_array($input, $ignored_inputs)) {
                 unset($contents[$input]);
+
                 continue;
             }
 
@@ -389,7 +387,7 @@ class SavedSearch extends SugarBean
                     } else {
                         if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
                             if (preg_match('/[^\d]/', $value)) {
-                                require_once('modules/Currencies/Currency.php');
+                                require_once 'modules/Currencies/Currency.php';
                                 $contents[$input] = unformat_number($value);
                                 //Flag this value as having been unformatted
                                 $contents[$input . '_unformatted_number'] = true;
@@ -422,7 +420,7 @@ class SavedSearch extends SugarBean
 
         $saved_search_id = $focus->save();
 
-        $GLOBALS['log']->debug("Saved record with id of " . $focus->id);
+        $GLOBALS['log']->debug('Saved record with id of ' . $focus->id);
         $orderBy = empty($contents['orderBy']) ? 'name' : $contents['orderBy'];
 
         $contentsSortOrder = null;
@@ -453,12 +451,11 @@ class SavedSearch extends SugarBean
             LoggerManager::getLogger()->warn('SavedSearch::handleSave() - contents showSSDIV is not set');
         }
 
-
         $search_query =
-                "&orderBy=" . $orderBy .
-                "&sortOrder=" . $contentsSortOrder .
-                "&query=" . $requestQuery .
-                "&searchFormTab=" . $requestSearchFormTab .
+                '&orderBy=' . $orderBy .
+                '&sortOrder=' . $contentsSortOrder .
+                '&query=' . $requestQuery .
+                '&searchFormTab=' . $requestSearchFormTab .
                 '&showSSDIV=' . $contentsShowSSDIV;
 
         if ($redirect) {
@@ -470,9 +467,9 @@ class SavedSearch extends SugarBean
     {
         $_SESSION['LastSavedView'][$return_module] = $saved_search_id;
         $return_action = 'index';
-        $ajaxLoad = empty($_REQUEST['ajax_load']) ? "" : "&ajax_load=" . $_REQUEST['ajax_load'];
+        $ajaxLoad = empty($_REQUEST['ajax_load']) ? '' : '&ajax_load=' . $_REQUEST['ajax_load'];
         //Reduce the params to avoid the problems caused by URL max length in IE ( the reduced params can be get from saved search according to saved_search_id).
-        SugarApplication::headerRedirect("Location: index.php?action=$return_action&module=$return_module&saved_search_select={$saved_search_id}{$search_query}&advanced={$advanced}$ajaxLoad");
+        SugarApplication::headerRedirect("Location: index.php?action={$return_action}&module={$return_module}&saved_search_select={$saved_search_id}{$search_query}&advanced={$advanced}$ajaxLoad");
         die();
     }
 
@@ -483,7 +480,6 @@ class SavedSearch extends SugarBean
         $this->search_module = $app_list_strings['moduleList'][$this->contents['search_module']];
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
     }
-
 
     public function retrieveSavedSearch($id)
     {
@@ -511,7 +507,7 @@ class SavedSearch extends SugarBean
                             $val = $timedate->to_display_date($val, false);
                         } else {
                             if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->contents[$key . '_unformatted_number']) && preg_match('/^\d+$/', $val)) {
-                                require_once('modules/Currencies/Currency.php');
+                                require_once 'modules/Currencies/Currency.php';
                                 $val = format_number($val);
                                 if ($type == 'currency' && isset($this->contents[$key . '_currency_symbol'])) {
                                     $val = $this->contents[$key . '_currency_symbol'] . $val;

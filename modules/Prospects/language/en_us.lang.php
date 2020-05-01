@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_MODULE_NAME' => 'Targets',
     'LBL_MODULE_ID' => 'Targets',
     'LBL_INVITEE' => 'Direct Reports',
@@ -126,7 +124,7 @@ $mod_strings = array(
     'ERR_DELETE_RECORD' => 'A record number must be specified to delete the contact.',
     'LBL_SALUTATION' => 'Salutation',
     'LBL_CREATED_OPPORTUNITY' => 'Created a new opportunity',
-    'LNK_SELECT_ACCOUNT' => "Select Account",
+    'LNK_SELECT_ACCOUNT' => 'Select Account',
     'LNK_NEW_PROSPECT' => 'Create Target',
     'LNK_PROSPECT_LIST' => 'View Targets',
     'LNK_NEW_CAMPAIGN' => 'Create Campaign',
@@ -141,7 +139,7 @@ $mod_strings = array(
     'LBL_CONVERT_BUTTON_TITLE' => 'Convert Target',
     'LBL_CONVERT_BUTTON_LABEL' => 'Convert Target',
     'LNK_NEW_CONTACT' => 'New Contact',
-    'LBL_CREATED_CONTACT' => "Created a new contact",
+    'LBL_CREATED_CONTACT' => 'Created a new contact',
     'LBL_CAMPAIGNS' => 'Campaigns',
     'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE' => 'Campaign Log',
     'LBL_TRACKER_KEY' => 'Tracker Key',
@@ -154,4 +152,4 @@ $mod_strings = array(
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     //For export labels
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_FP_EVENTS_TITLE' => 'Events',
-);
+];

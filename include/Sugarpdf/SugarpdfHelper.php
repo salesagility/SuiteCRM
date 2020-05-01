@@ -1,96 +1,100 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
- *
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-
-
+    /**
+     * SugarCRM Community Edition is a customer relationship management program developed by
+     * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+     *
+     * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+     * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+     *
+     * This program is free software; you can redistribute it and/or modify it under
+     * the terms of the GNU Affero General Public License version 3 as published by the
+     * Free Software Foundation with the addition of the following permission added
+     * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+     * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+     * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT
+     * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+     * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+     * details.
+     *
+     * You should have received a copy of the GNU Affero General Public License along with
+     * this program; if not, see http://www.gnu.org/licenses or write to the Free
+     * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+     * 02110-1301 USA.
+     *
+     * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+     * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+     *
+     * The interactive user interfaces in modified source and object code versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU Affero General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the "Powered by
+     * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+     * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+     * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+     *
+     * @param mixed $html
+     * @param mixed $options
+     */
     function wrapTD($html, $options)
     {
-        return wrapTag("td", $html, $options);
+        return wrapTag('td', $html, $options);
     }
 
     function wrapTR($html, $options)
     {
-        return wrapTag("tr", $html, $options);
+        return wrapTag('tr', $html, $options);
     }
 
     function wrapTable($html, $options)
     {
-        return wrapTag("table", $html, $options);
+        return wrapTag('table', $html, $options);
     }
 
     function wrapB($html)
     {
-        return "<b>".$html."</b>";
+        return '<b>' . $html . '</b>';
     }
 
     function wrapI($html)
     {
-        return "<i>".$html."</i>";
+        return '<i>' . $html . '</i>';
     }
     function wrapTag($tag, $html, $options)
     {
         // Wrap the tags defined in the options array (like b, i, font... tags)
         if (!empty($options)) {
-            foreach ($options as $k=>$v) {
+            foreach ($options as $k => $v) {
                 if (is_array($v)) {
-                    $html = wrapTag($k, (string)$html, $v);
+                    $html = wrapTag($k, (string) $html, $v);
                 }
             }
         }
         // wrap the HTML content with the passed tag
-        $return = "<$tag ";
+        $return = "<{$tag} ";
         if (!empty($options)) {
-            foreach ($options as $k=>$v) {
+            foreach ($options as $k => $v) {
                 if (!is_array($v)) {
-                    $return .= " $k=".'"'.$v.'"';
+                    $return .= " {$k}=" . '"' . $v . '"';
                 }
             }
         }
-        return $return.">".$html."</$tag>";
+
+        return $return . '>' . $html . "</{$tag}>";
     }
 
     /**
      * This function prepare a string to be ready for the PDF printing.
+     *
      * @param $string
+     *
      * @return string
      */
     function prepare_string($string)
@@ -100,12 +104,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
         // return $locale->translateCharset($string, 'UTF-8', $locale->getExportCharset());
         return $string;
     }
-     /**
+    /**
      * Copy of format_number() from currency with fix for sugarpdf.
-     * @return String formatted currency value
+     *
      * @see modules/Currencies/Currency.php
+     *
+     * @param mixed $amount
+     * @param null|mixed $round
+     * @param null|mixed $decimals
+     * @param mixed $params
+     *
+     * @return string formatted currency value
      */
-    function format_number_sugarpdf($amount, $round = null, $decimals = null, $params = array())
+    function format_number_sugarpdf($amount, $round = null, $decimals = null, $params = [])
     {
         global $app_strings, $current_user, $sugar_config, $locale;
         static $current_users_currency = null;
@@ -206,5 +217,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
         if (!empty($params['percentage']) && $params['percentage']) {
             $amount .= $app_strings['LBL_PERCENTAGE_SYMBOL'];
         }
+
         return $amount;
     } //end function format_number

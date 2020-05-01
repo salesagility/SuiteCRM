@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,49 +36,54 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 interface HistoryInterface
 {
-
     /**
-     * Get the most recent item in the history
+     * Get the most recent item in the history.
+     *
      * @return string Id of the first item
      */
     public function getFirst();
 
     /**
-     * Get the next oldest item in the history
+     * Get the next oldest item in the history.
+     *
      * @return string Id of the next item
      */
     public function getNext();
 
     /**
-     * Get the nth item in the history (where the zeroeth record is the most recent)
-     * @param integer $n
+     * Get the nth item in the history (where the zeroeth record is the most recent).
+     *
+     * @param int $n
+     *
      * @return string Id of the nth item
      */
     public function getNth($n);
 
     /**
-     * Restore the historical layout identified by timestamp
-     * @param integer $timestamp
-     * @return integer Timestamp if successful, null if failure (if the file could not be copied for some reason)
+     * Restore the historical layout identified by timestamp.
+     *
+     * @param int $timestamp
+     *
+     * @return int Timestamp if successful, null if failure (if the file could not be copied for some reason)
      */
     public function restoreByTimestamp($timestamp);
 
     /**
-     * Undo the restore - revert back to the layout before the restore
+     * Undo the restore - revert back to the layout before the restore.
      */
     public function undoRestore();
 
     /**
-     * Add an item to the history
+     * Add an item to the history.
+     *
      * @param string $path
+     *
      * @return string   An timestamp for this newly added item
      */
     public function append($path);

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,25 +36,25 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
 use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\ForbiddenException;
 
-/** Class ResourceIdentifier
- * @package SuiteCRM\API\JsonApi\v1\Resource
+/** Class ResourceIdentifier.
  * @see http://jsonapi.org/format/1.0/#document-resource-identifier-objects
  */
 class Relationship extends ResourceIdentifier
 {
-    /** @var string $link */
+    /** @var string */
     protected $name;
 
-    /** @var RelationshipType $relationshipType */
+    /** @var RelationshipType */
     protected $relationshipType = RelationshipType::TO_ONE;
 
-    /** @var ResourceIdentifier[] $link */
+    /** @var ResourceIdentifier[] */
     protected $link;
 
     /**
@@ -85,20 +84,23 @@ class Relationship extends ResourceIdentifier
     public function setRelationshipType($type = RelationshipType::TO_ONE)
     {
         if ($type !== RelationshipType::TO_ONE && $type !== RelationshipType::TO_MANY) {
-            throw new ApiException('[Relationship] [Unsupported Relationship Type] '. $type);
+            throw new ApiException('[Relationship] [Unsupported Relationship Type] ' . $type);
         }
         $this->relationshipType = $type;
     }
 
     /**
      * @param ResourceIdentifier $related
-     * @return Resource
+     *
      * @throws ForbiddenException
      * @throws \SuiteCRM\API\v8\Exception\ApiException
+     *
+     * @return resource
      */
     public function withResourceIdentifier(ResourceIdentifier $related)
     {
         $this->withResourceObject($related);
+
         return clone $this;
     }
 
@@ -107,25 +109,30 @@ class Relationship extends ResourceIdentifier
      */
     public function toJsonApiResponse()
     {
-        $payload = array();
+        $payload = [];
         if ($this->getRelationshipType() === RelationshipType::TO_ONE) {
             $payload = $this->link->toJsonApiResponse();
         } else {
             if ($this->getRelationshipType() === RelationshipType::TO_MANY) {
                 foreach ($this->link as $link) {
-                    $response =  $link->toJsonApiResponse();
+                    $response = $link->toJsonApiResponse();
                     if (empty($response) === false) {
                         $payload[] = $response;
                     }
                 }
             }
         }
+
         return $payload;
     }
 
     /**
-     * Sets the link property up
+     * Sets the link property up.
+     *
      * @parm Resource|ResourceIdentiifer
+     *
+     * @param mixed $related
+     *
      * @throws \SuiteCRM\API\v8\Exception\ApiException
      */
     private function withResourceObject($related)
@@ -133,7 +140,7 @@ class Relationship extends ResourceIdentifier
         if ($this->getType() === null) {
             $this->type = $related->getType();
         } elseif ($this->getType() !== $related->getType()) {
-            throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
+            throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "' . $related->getType() . '"');
         }
 
         $this->id = $related->getId();
@@ -152,7 +159,7 @@ class Relationship extends ResourceIdentifier
         if ($this->getType() === null) {
             $this->type = $related->getType();
         } elseif ($this->getType() !== $related->getType()) {
-            throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
+            throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "' . $related->getType() . '"');
         }
 
         return clone $this;

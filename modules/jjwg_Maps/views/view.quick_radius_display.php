@@ -11,16 +11,13 @@ class Jjwg_MapsViewQuick_Radius_Display extends SugarView
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
-        $url = 'index.php?module='.$GLOBALS['currentModule'].'&action=map_markers';
+        $url = 'index.php?module=' . $GLOBALS['currentModule'] . '&action=map_markers';
         foreach (array_keys($_REQUEST) as $key) {
             // Exclude certain request parameters
-            if (!in_array($key, array('action', 'module', 'entryPoint', 'record', 'relate_id'))) {
-                $url .= '&'.$key.'='.urlencode($_REQUEST[$key]);
+            if (!in_array($key, ['action', 'module', 'entryPoint', 'record', 'relate_id'])) {
+                $url .= '&' . $key . '=' . urlencode($_REQUEST[$key]);
             }
         } ?>
 <h2><?php echo htmlspecialchars($_REQUEST['quick_address']); ?><div class="clear"></div></h2>

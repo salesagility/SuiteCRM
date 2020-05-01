@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 if (!class_exists('Tracker')) {
     require_once 'data/SugarBean.php';
 
@@ -52,28 +48,28 @@ if (!class_exists('Tracker')) {
         public $acltype = 'Tracker';
         public $acl_category = 'Trackers';
         public $disable_custom_fields = true;
-        public $column_fields = array(
-        "id",
-        "monitor_id",
-        "user_id",
-        "module_name",
-        "item_id",
-        "item_summary",
-        "date_modified",
-        "action",
-        "session_id",
-        "visible"
-    );
+        public $column_fields = [
+            'id',
+            'monitor_id',
+            'user_id',
+            'module_name',
+            'item_id',
+            'item_summary',
+            'date_modified',
+            'action',
+            'session_id',
+            'visible'
+        ];
 
         public function __construct()
         {
             global $dictionary;
-            if (isset($this->module_dir) && isset($this->object_name) && !isset($GLOBALS['dictionary'][$this->object_name])) {
+            if (isset($this->module_dir, $this->object_name) && !isset($GLOBALS['dictionary'][$this->object_name])) {
                 $path = 'modules/Trackers/vardefs.php';
                 if (defined('TEMPLATE_URL')) {
                     $path = SugarTemplateUtilities::getFilePath($path);
                 }
-                require_once($path);
+                require_once $path;
             }
             parent::__construct();
         }
@@ -91,19 +87,19 @@ if (!class_exists('Tracker')) {
             if (defined('TEMPLATE_URL')) {
                 $path = SugarTemplateUtilities::getFilePath($path);
             }
-            require_once($path);
+            require_once $path;
             if (empty($_SESSION['breadCrumbs'])) {
                 $breadCrumb = new BreadCrumbStack($user_id, $modules);
                 $_SESSION['breadCrumbs'] = $breadCrumb;
-                $GLOBALS['log']->info(string_format($GLOBALS['app_strings']['LBL_BREADCRUMBSTACK_CREATED'], array($user_id)));
+                $GLOBALS['log']->info(string_format($GLOBALS['app_strings']['LBL_BREADCRUMBSTACK_CREATED'], [$user_id]));
             } else {
                 $breadCrumb = $_SESSION['breadCrumbs'];
                 $module_query = '';
                 if (!empty($modules)) {
                     $history_max_viewed = 10;
-                    $module_query = is_array($modules) ? ' AND module_name IN (\'' . implode("','", $modules) . '\')' :  ' AND module_name = \'' . $modules . '\'';
+                    $module_query = is_array($modules) ? ' AND module_name IN (\'' . implode("','", $modules) . '\')' : ' AND module_name = \'' . $modules . '\'';
                 } else {
-                    $history_max_viewed = (!empty($GLOBALS['sugar_config']['history_max_viewed']))? $GLOBALS['sugar_config']['history_max_viewed'] : 50;
+                    $history_max_viewed = (!empty($GLOBALS['sugar_config']['history_max_viewed'])) ? $GLOBALS['sugar_config']['history_max_viewed'] : 50;
                 }
 
                 $query = 'SELECT item_id, item_summary, module_name, id FROM ' . $this->table_name . ' WHERE id = (SELECT MAX(id) as id FROM ' . $this->table_name . ' WHERE user_id = \'' . $user_id . '\' AND deleted = 0 AND visible = 1' . $module_query . ')';
@@ -114,19 +110,20 @@ if (!class_exists('Tracker')) {
             }
 
             $list = $breadCrumb->getBreadCrumbList($modules);
-            $GLOBALS['log']->info("Tracker: retrieving ".count($list)." items");
+            $GLOBALS['log']->info('Tracker: retrieving ' . count($list) . ' items');
+
             return $list;
         }
 
         public function makeInvisibleForAll($item_id)
         {
-            $query = "UPDATE $this->table_name SET visible = 0 WHERE item_id = '$item_id' AND visible = 1";
+            $query = "UPDATE {$this->table_name} SET visible = 0 WHERE item_id = '{$item_id}' AND visible = 1";
             $this->db->query($query, true);
             $path = 'modules/Trackers/BreadCrumbStack.php';
             if (defined('TEMPLATE_URL')) {
                 $path = SugarTemplateUtilities::getFilePath($path);
             }
-            require_once($path);
+            require_once $path;
             if (!empty($_SESSION['breadCrumbs'])) {
                 $breadCrumbs = $_SESSION['breadCrumbs'];
                 $breadCrumbs->popItem($item_id);
@@ -143,13 +140,14 @@ if (!class_exists('Tracker')) {
             if (!empty($_SESSION['lpage'])) {
                 $time_on_last_page = time() - $_SESSION['lpage'];
             }
-            $_SESSION['lpage']=time();
+            $_SESSION['lpage'] = time();
         }
-
 
         /**
          * bean_implements
-         * Override method to support ACL roles
+         * Override method to support ACL roles.
+         *
+         * @param mixed $interface
          */
         public function bean_implements($interface)
         {

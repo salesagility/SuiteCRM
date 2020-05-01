@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,15 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-
-
-
-
-
 global $timedate;
 global $app_strings;
 global $app_list_strings;
@@ -63,7 +55,7 @@ $ListView = new ListView();
 $seedProjectTask = new ProjectTask();
 $where = "project_task.assigned_user_id='{$current_user->id}'"
     . " AND (project_task.status IS NULL OR (project_task.status!='Completed' AND project_task.status!='Deferred'))"
-    . " AND (project_task.date_start IS NULL OR project_task.date_start <= '$today')";
+    . " AND (project_task.date_start IS NULL OR project_task.date_start <= '{$today}')";
 $ListView->initNewXTemplate(
     'modules/ProjectTask/MyProjectTasks.html',
     $current_module_strings
@@ -74,9 +66,9 @@ if (is_admin($current_user)
     && $_REQUEST['module'] != 'DynamicLayout'
     && !empty($_SESSION['editinplace'])) {
     $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=MyTasks&from_module=Tasks'>"
-        . SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])
+        . SugarThemeRegistry::current()->getImage('EditLayout', "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])
         . '</a>';
 }
-$ListView->setHeaderTitle($current_module_strings['LBL_LIST_MY_PROJECT_TASKS'].$header_text);
-$ListView->setQuery($where, "", "date_due,priority desc", "PROJECT_TASK");
-$ListView->processListView($seedProjectTask, "main", "PROJECT_TASK");
+$ListView->setHeaderTitle($current_module_strings['LBL_LIST_MY_PROJECT_TASKS'] . $header_text);
+$ListView->setQuery($where, '', 'date_due,priority desc', 'PROJECT_TASK');
+$ListView->processListView($seedProjectTask, 'main', 'PROJECT_TASK');

@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-require_once('include/Dashlets/Dashlet.php');
+require_once 'include/Dashlets/Dashlet.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
 
 class AORReportsDashlet extends Dashlet
@@ -14,7 +14,7 @@ class AORReportsDashlet extends Dashlet
     public $charts;
     public $onlyCharts;
 
-    public function __construct($id, $def = array())
+    public function __construct($id, $def = [])
     {
         global $current_user, $app_strings;
 
@@ -27,15 +27,15 @@ class AORReportsDashlet extends Dashlet
             $this->title = $def['dashletTitle'];
         }
 
-        $this->params = array();
+        $this->params = [];
         if (!empty($def['parameter_id'])) {
             foreach ($def['parameter_id'] as $key => $parameterId) {
-                $this->params[$parameterId] = array(
+                $this->params[$parameterId] = [
                     'id' => $parameterId,
                     'operator' => $def['parameter_operator'][$key],
                     'type' => $def['parameter_type'][$key],
                     'value' => $def['parameter_value'][$key]
-                );
+                ];
             }
         }
         if (!empty($def['aor_report_id'])) {
@@ -43,7 +43,7 @@ class AORReportsDashlet extends Dashlet
             $this->report->user_parameters = $this->params;
         }
         $this->onlyCharts = !empty($def['onlyCharts']);
-        $this->charts = !empty($def['charts']) ? $def['charts'] : array();
+        $this->charts = !empty($def['charts']) ? $def['charts'] : [];
     }
 
     public function display()
@@ -57,12 +57,12 @@ class AORReportsDashlet extends Dashlet
         $dashletSmarty->assign('report_id', $this->report->id);
         $dashletSmarty->assign('chartHTML', $this->getChartHTML());
         $dashletSmarty->assign('onlyCharts', $this->onlyCharts);
-        $dashletSmarty->assign('parameters', json_encode(array(
+        $dashletSmarty->assign('parameters', json_encode([
             'ids' => isset($this->def['parameter_id']) ? $this->def['parameter_id'] : null,
             'operators' => isset($this->def['parameter_operator']) ? $this->def['parameter_operator'] : null,
             'types' => isset($this->def['parameter_type']) ? $this->def['parameter_type'] : null,
             'values' => isset($this->def['parameter_value']) ? $this->def['parameter_value'] : null
-        )));
+        ]));
 
         return $dashletSmarty->fetch($dashletTemplate);
     }
@@ -72,9 +72,9 @@ class AORReportsDashlet extends Dashlet
         if (!empty($this->report->id)) {
             //return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_CHARTJS);
             return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_RGRAPH);
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     public function process()
@@ -99,7 +99,7 @@ class AORReportsDashlet extends Dashlet
         $optionsSmarty->assign('aor_date_type_list', $app_list_strings['aor_date_type_list']);
         $optionsSmarty->assign('date_time_period_list', $app_list_strings['date_time_period_list']);
 
-        $charts = array();
+        $charts = [];
         if (!empty($this->report->id)) {
             foreach ($this->report->get_linked_beans('aor_charts', 'AOR_Charts') as $chart) {
                 $charts[$chart->id] = $chart->name;
@@ -108,9 +108,9 @@ class AORReportsDashlet extends Dashlet
         $conditions = getConditionsAsParameters($this->report, $this->params);
         $i = 0;
         foreach ($conditions as $condition) {
-            if ($condition["value_type"] == "Date") {
-                if ($condition["additionalConditions"][0] == "now") {
-                    $conditions[$i]["value"] = date("d/m/Y");
+            if ($condition['value_type'] == 'Date') {
+                if ($condition['additionalConditions'][0] == 'now') {
+                    $conditions[$i]['value'] = date('d/m/Y');
                 }
             }
 
@@ -127,7 +127,7 @@ class AORReportsDashlet extends Dashlet
 
     public function saveOptions($req)
     {
-        $allowedKeys = array_flip(array(
+        $allowedKeys = array_flip([
             'aor_report_id',
             'dashletTitle',
             'charts',
@@ -136,7 +136,7 @@ class AORReportsDashlet extends Dashlet
             'parameter_value',
             'parameter_type',
             'parameter_operator'
-        ));
+        ]);
 
         // Fix for issue #1700 - save value as db type
         for ($i = 0; $i < count($req['parameter_value']); $i++) {

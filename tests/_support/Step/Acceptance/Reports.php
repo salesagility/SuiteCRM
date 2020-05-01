@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Reports extends \AcceptanceTester
 {
     /**
-     * Go to user profile
+     * Go to user profile.
      */
     public function gotoProfile()
     {
@@ -14,7 +14,7 @@ class Reports extends \AcceptanceTester
     }
 
     /**
-     * Create a report
+     * Create a report.
      *
      * @param $name
      * @param $module

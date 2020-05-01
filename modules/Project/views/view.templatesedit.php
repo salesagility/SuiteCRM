@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,31 +37,32 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class ProjectViewTemplatesEdit extends ViewEdit
 {
+    public function display()
+    {
+        $this->bean->is_template = 1;
+        $this->ev->ss->assign('is_template', 1);
+
+        parent::display();
+    }
+
     /**
      * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
      */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-        
-        $crumbs = array();
+
+        $crumbs = [];
         $crumbs[] = $this->_getModuleTitleListParam($browserTitle);
         if (!empty($this->bean->id)) {
-            $crumbs[] =  "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>";
+            $crumbs[] = "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>";
         }
         $crumbs[] = $mod_strings['LBL_PROJECT_TEMPLATE'];
-        return $crumbs;
-    }
-    
-    public function display()
-    {
-        $this->bean->is_template = 1;
-        $this->ev->ss->assign("is_template", 1);
 
-        parent::display();
+        return $crumbs;
     }
 }

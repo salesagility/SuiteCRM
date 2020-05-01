@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -48,20 +46,20 @@ global $mod_strings;
 global $current_user;
 global $sugar_config;
 
-$xtpl=new XTemplate('modules/Administration/Updater.html');
-$xtpl->assign("MOD", $mod_strings);
-$xtpl->assign("APP", $app_strings);
+$xtpl = new XTemplate('modules/Administration/Updater.html');
+$xtpl->assign('MOD', $mod_strings);
+$xtpl->assign('APP', $app_strings);
 
-if (isset($_REQUEST['useraction']) && ($_REQUEST['useraction']=='Save' || $_REQUEST['useraction']=='CheckNow')) {
+if (isset($_REQUEST['useraction']) && ($_REQUEST['useraction'] == 'Save' || $_REQUEST['useraction'] == 'CheckNow')) {
     if (!empty($_REQUEST['type']) && $_REQUEST['type'] == 'automatic') {
         set_CheckUpdates_config_setting('automatic');
     } else {
         set_CheckUpdates_config_setting('manual');
     }
 
-    $beat=false;
+    $beat = false;
     if (!empty($_REQUEST['beat'])) {
-        $beat=true;
+        $beat = true;
     }
     if ($beat != get_sugarbeat()) {
         set_sugarbeat($beat);
@@ -69,22 +67,21 @@ if (isset($_REQUEST['useraction']) && ($_REQUEST['useraction']=='Save' || $_REQU
 }
 
 echo getClassicModuleTitle(
-    "Administration",
-    array(
-            "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
-           $mod_strings['LBL_SUITE_UPDATE_TITLE'],
-           ),
+    'Administration',
+    [
+        "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . '</a>',
+        $mod_strings['LBL_SUITE_UPDATE_TITLE'],
+    ],
     false
-        );
+);
 
 if (get_sugarbeat()) {
-    $xtpl->assign("SEND_STAT_CHECKED", "checked");
+    $xtpl->assign('SEND_STAT_CHECKED', 'checked');
 }
 
-if (get_CheckUpdates_config_setting()=='automatic') {
-    $xtpl->assign("AUTOMATIC_CHECKED", "checked");
+if (get_CheckUpdates_config_setting() == 'automatic') {
+    $xtpl->assign('AUTOMATIC_CHECKED', 'checked');
 }
-
 
 /*if (isset($_REQUEST['useraction']) && $_REQUEST['useraction']=='CheckNow') {
     check_now(get_sugarbeat());
@@ -94,17 +91,17 @@ if (get_CheckUpdates_config_setting()=='automatic') {
 
 $xtpl->parse('main.stats');
 
-$has_updates= false;
+$has_updates = false;
 if (!empty($license->settings['license_latest_versions'])) {
     $encodedVersions = $license->settings['license_latest_versions'];
 
     $versions = unserialize(base64_decode($encodedVersions));
-    include('sugar_version.php');
+    include 'sugar_version.php';
     if (!empty($versions)) {
         foreach ($versions as $version) {
             if (compareVersions($version['version'], $sugar_version)) {
                 $has_updates = true;
-                $xtpl->assign("VERSION", $version);
+                $xtpl->assign('VERSION', $version);
                 $xtpl->parse('main.updates.version');
             }
         }
@@ -117,8 +114,8 @@ if (!empty($license->settings['license_latest_versions'])) {
 }
 
 //return module and index.
-$xtpl->assign("RETURN_MODULE", "Administration");
-$xtpl->assign("RETURN_ACTION", "index");
+$xtpl->assign('RETURN_MODULE', 'Administration');
+$xtpl->assign('RETURN_ACTION', 'index');
 
-$xtpl->parse("main");
-$xtpl->out("main");
+$xtpl->parse('main');
+$xtpl->out('main');

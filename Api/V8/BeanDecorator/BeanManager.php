@@ -1,8 +1,9 @@
 <?php
+
 namespace Api\V8\BeanDecorator;
 
-use \SugarBean;
-use \Person;
+use Person;
+use SugarBean;
 
 class BeanManager
 {
@@ -33,8 +34,9 @@ class BeanManager
     /**
      * @param string $module
      *
+     * @throws \InvalidArgumentException when the module is invalid
+     *
      * @return \SugarBean
-     * @throws \InvalidArgumentException When the module is invalid.
      */
     public function newBeanSafe($module)
     {
@@ -53,11 +55,11 @@ class BeanManager
 
     /**
      * @param string $module
-     * @param string|null $id
+     * @param null|string $id
      * @param array $params
-     * @param boolean $deleted
+     * @param bool $deleted
      *
-     * @return \SugarBean|boolean
+     * @return bool|\SugarBean
      */
     public function getBean($module, $id = null, array $params = [], $deleted = true)
     {
@@ -68,11 +70,12 @@ class BeanManager
      * @param string $module
      * @param string $id
      * @param array $params
-     * @param boolean $deleted
+     * @param bool $deleted
+     *
+     * @throws \DomainException when bean id is empty or bean is not found by name
+     * @throws \InvalidArgumentException when bean is not found with the given id
      *
      * @return \SugarBean
-     * @throws \DomainException When bean id is empty or bean is not found by name.
-     * @throws \InvalidArgumentException When bean is not found with the given id.
      */
     public function getBeanSafe(
         $module,
@@ -119,9 +122,9 @@ class BeanManager
      * @param \SugarBean $relatedBean
      * @param string $relationship
      *
-     * @throws \RuntimeException If relationship cannot be loaded or created between beans.
+     * @throws \RuntimeException if relationship cannot be loaded or created between beans
      */
-    public function createRelationshipSafe(\SugarBean $sourceBean, \SugarBean $relatedBean, $relationship)
+    public function createRelationshipSafe(SugarBean $sourceBean, SugarBean $relatedBean, $relationship)
     {
         if (!$sourceBean->load_relationship($relationship)) {
             throw new \RuntimeException(
@@ -148,9 +151,9 @@ class BeanManager
      * @param \SugarBean $relatedBean
      * @param string $relationship
      *
-     * @throws \RuntimeException If relationship cannot be loaded or deleted between beans.
+     * @throws \RuntimeException if relationship cannot be loaded or deleted between beans
      */
-    public function deleteRelationshipSafe(\SugarBean $sourceBean, \SugarBean $relatedBean, $relationship)
+    public function deleteRelationshipSafe(SugarBean $sourceBean, SugarBean $relatedBean, $relationship)
     {
         if (!$sourceBean->load_relationship($relationship)) {
             throw new \RuntimeException(
@@ -176,10 +179,11 @@ class BeanManager
      * @param \SugarBean $sourceBean
      * @param \SugarBean $relatedBean
      *
+     * @throws \DomainException in case link field is not found
+     *
      * @return string
-     * @throws \DomainException In case link field is not found.
      */
-    public function getLinkedFieldName(\SugarBean $sourceBean, \SugarBean $relatedBean)
+    public function getLinkedFieldName(SugarBean $sourceBean, SugarBean $relatedBean)
     {
         $linkedFields = $sourceBean->get_linked_fields();
         $relationship = \Relationship::retrieve_by_modules(
@@ -212,25 +216,26 @@ class BeanManager
      * @param string $module
      * @param string $where
      *
-     * @return integer
+     * @return int
      */
     public function countRecords($module, $where)
     {
         $rowCount = $this->db->fetchRow(
             $this->db->query(
                 sprintf(
-                    "SELECT COUNT(*) AS cnt FROM %s %s",
+                    'SELECT COUNT(*) AS cnt FROM %s %s',
                     $this->newBeanSafe($module)->getTableName(),
-                    $where === '' ? '' : 'WHERE ' .  $where
+                    $where === '' ? '' : 'WHERE ' . $where
                 )
             )
-        )["cnt"];
+        )['cnt'];
 
-        return (int)$rowCount;
+        return (int) $rowCount;
     }
 
     /**
      * @param SugarBean $bean
+     *
      * @return array
      */
     public function getDefaultFields(SugarBean $bean)
@@ -241,6 +246,7 @@ class BeanManager
     /**
      * @param SugarBean $bean
      * @param array $fields
+     *
      * @return array
      */
     public function filterAcceptanceFields(SugarBean $bean, array $fields)
@@ -252,13 +258,13 @@ class BeanManager
         return array_filter(
             $fields,
             static function ($field) use ($bean) {
-                return (
+                return
                     in_array($field, array_column($bean->field_defs, 'name'), true)
                     && (
                         empty($bean->field_defs[$field]['link_type'])
                         || $bean->field_defs[$field]['link_type'] !== 'relationship_info'
                     )
-                );
+                ;
             }
         );
     }

@@ -3,9 +3,12 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/progress_bar_utils.php';
+/**
+ * @internal
+ */
 class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testprogress_bar_flush()
+    public function testprogressBarFlush()
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -17,7 +20,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplay_flow_bar()
+    public function testdisplayFlowBar()
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -31,7 +34,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function teststart_flow_bar()
+    public function teststartFlowBar()
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -45,7 +48,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdestroy_flow_bar()
+    public function testdestroyFlowBar()
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -59,7 +62,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplay_progress_bar()
+    public function testdisplayProgressBar()
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -73,7 +76,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testupdate_progress_bar()
+    public function testupdateProgressBar()
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed

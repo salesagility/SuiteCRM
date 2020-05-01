@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -69,7 +68,8 @@ class UpgradeCommands extends \Robo\Tasks
     protected $adminUser;
 
     /**
-     * [upgradeZipFile] [logFile] [pathToSuiteCRMInstance] [adminUser]
+     * [upgradeZipFile] [logFile] [pathToSuiteCRMInstance] [adminUser].
+     *
      * @param string $upgradeZip The full path to the upgrade zip
      * @param string $logFile The full path to the upgrade log
      * @param string $crmPath The full path to the CRM

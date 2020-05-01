@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,15 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 $filePath = 'modules/Home/QuickSearch.php';
 if (file_exists('custom/' . $filePath)) {
-    require_once('custom/' . $filePath);
+    require_once 'custom/' . $filePath;
     $quicksearchQuery = new quicksearchQueryCustom();
     $conditionEqual = quicksearchQueryCustom::CONDITION_EQUAL;
 } else {
-    require_once($filePath);
+    require_once $filePath;
     $quicksearchQuery = new quicksearchQuery();
     $conditionEqual = quicksearchQuery::CONDITION_EQUAL;
 }
@@ -56,14 +54,14 @@ if (file_exists('custom/' . $filePath)) {
 $json = getJSONobj();
 $data = $json->decode(html_entity_decode($_REQUEST['data']));
 if (isset($_REQUEST['query']) && !empty($_REQUEST['query'])) {
-    foreach ($data['conditions'] as $k=>$v) {
+    foreach ($data['conditions'] as $k => $v) {
         if (empty($data['conditions'][$k]['value']) && ($data['conditions'][$k]['op'] != $conditionEqual)) {
-            $data['conditions'][$k]['value']=urldecode($_REQUEST['query']);
+            $data['conditions'][$k]['value'] = urldecode($_REQUEST['query']);
         }
     }
 }
 
 $method = !empty($data['method']) ? $data['method'] : 'query';
 if (method_exists($quicksearchQuery, $method)) {
-    echo $quicksearchQuery->$method($data);
+    echo $quicksearchQuery->{$method}($data);
 }

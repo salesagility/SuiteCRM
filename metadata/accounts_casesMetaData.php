@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,16 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['accounts_cases'] = array( 'table' => 'accounts_cases'
-                                  , 'fields' => array(
-       array('name' =>'id', 'type' =>'varchar', 'len'=>'36')
-      , array('name' =>'account_id', 'type' =>'varchar', 'len'=>'36')
-      , array('name' =>'case_id', 'type' =>'varchar', 'len'=>'36')
-      , array('name' => 'date_modified','type' => 'datetime')
-    ,array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'required'=>false, 'default'=>'0')
-                                                      )                                  , 'indices' => array(
-       array('name' =>'accounts_casespk', 'type' =>'primary', 'fields'=>array('id'))
-       , array('name' =>'idx_acc_case_acc', 'type' =>'index', 'fields'=>array('account_id'))
-      , array('name' =>'idx_acc_acc_case', 'type' =>'index', 'fields'=>array('case_id'))
-                                                      )
-                                  );
+$dictionary['accounts_cases'] = ['table' => 'accounts_cases', 'fields' => [
+    ['name' => 'id', 'type' => 'varchar', 'len' => '36'], ['name' => 'account_id', 'type' => 'varchar', 'len' => '36'], ['name' => 'case_id', 'type' => 'varchar', 'len' => '36'], ['name' => 'date_modified', 'type' => 'datetime'], ['name' => 'deleted', 'type' => 'bool', 'len' => '1', 'required' => false, 'default' => '0']
+], 'indices' => [
+    ['name' => 'accounts_casespk', 'type' => 'primary', 'fields' => ['id']], ['name' => 'idx_acc_case_acc', 'type' => 'index', 'fields' => ['account_id']], ['name' => 'idx_acc_acc_case', 'type' => 'index', 'fields' => ['case_id']]
+]
+];

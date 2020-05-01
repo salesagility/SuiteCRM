@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/Calendar/Calendar.php');
-require_once('include/Dashlets/Dashlet.php');
+require_once 'modules/Calendar/Calendar.php';
+require_once 'include/Dashlets/Dashlet.php';
 
 class CalendarDashlet extends Dashlet
 {
@@ -51,6 +49,7 @@ class CalendarDashlet extends Dashlet
 
     /**
      * CalendarDashlet constructor.
+     *
      * @param $id string
      * @param $def array
      */
@@ -89,12 +88,12 @@ class CalendarDashlet extends Dashlet
         ob_start();
 
         if (isset($GLOBALS['cal_strings'])) {
-            return parent::display() . "Only one Calendar dashlet is allowed.";
+            return parent::display() . 'Only one Calendar dashlet is allowed.';
         }
 
-        require_once('modules/Calendar/Calendar.php');
-        require_once('modules/Calendar/CalendarDisplay.php');
-        require_once("modules/Calendar/CalendarGrid.php");
+        require_once 'modules/Calendar/Calendar.php';
+        require_once 'modules/Calendar/CalendarDisplay.php';
+        require_once 'modules/Calendar/CalendarGrid.php';
 
         global $cal_strings, $current_language;
         $cal_strings = return_module_language($current_language, 'Calendar');
@@ -143,11 +142,12 @@ class CalendarDashlet extends Dashlet
 
     /**
      * @param $req array
+     *
      * @return array
      */
     public function saveOptions($req)
     {
-        $options = array();
+        $options = [];
         $options['title'] = $req['title'];
         $options['view'] = $req['view'];
 

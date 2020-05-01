@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
 
 class ViewDisplaydeployresult extends SugarView
 {
@@ -53,25 +51,24 @@ class ViewDisplaydeployresult extends SugarView
         $this->view_print = false;
     }
 
-
-
+    public function display()
+    {
+        $message = $this->view_object_map['message'];
+        echo $message . getVersionedScript('cache/include/javascript/sugar_grp1_yui.js?') . "<script type='text/javascript' language='Javascript'>YAHOO.util.Connect.asyncRequest('GET', 'index.php?module=Administration&action=RebuildRelationship&silent=true');</script>";
+    }
 
     /**
      * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
      */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
 
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
-    public function display()
-    {
-        $message = $this->view_object_map['message'];
-        echo $message.getVersionedScript('cache/include/javascript/sugar_grp1_yui.js?')."<script type='text/javascript' language='Javascript'>YAHOO.util.Connect.asyncRequest('GET', 'index.php?module=Administration&action=RebuildRelationship&silent=true');</script>";
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

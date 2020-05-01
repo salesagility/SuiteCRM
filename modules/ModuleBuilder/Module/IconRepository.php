@@ -20,7 +20,7 @@ class IconRepository
         'ProjectTask' => 'am-tasktemplates',
         AM_ProjectTemplates::class => 'am-tasktemplates',
         'SurveyQuestionOptions' => self::DEFAULT_ICON,
-        'SurveyQuestionResponses' =>  self::DEFAULT_ICON,
+        'SurveyQuestionResponses' => self::DEFAULT_ICON,
         'SurveyQuestions' => self::DEFAULT_ICON,
         'SurveyResponses' => 'survey-responses',
         'Prospects' => 'targets'

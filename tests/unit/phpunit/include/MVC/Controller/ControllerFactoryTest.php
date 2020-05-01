@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ControllerFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testgetController()

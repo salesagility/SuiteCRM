@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,62 +40,61 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-require_once('modules/Import/maps/ImportMapOther.php');
+require_once 'modules/Import/maps/ImportMapOther.php';
 
 class ImportMapGoogle extends ImportMapOther
 {
     /**
-     * String identifier for this import
+     * String identifier for this import.
      */
     public $name = 'google';
-    
+
     /**
-     * Gets the default mapping for a module
+     * Gets the default mapping for a module.
      *
      * @param  string $module
+     *
      * @return array field mappings
      */
     public function getMapping($module)
     {
-        $return_array = array(
-             'first_name' => array('sugar_key' => 'first_name', 'sugar_label' => '', 'default_label' => 'Given Name'),
-             'last_name' => array('sugar_key' => 'last_name', 'sugar_label' => '', 'default_label' => 'Family Name'),
-             'birthday' => array('sugar_key' => 'birthdate', 'sugar_label' => '', 'default_label' => 'Birthday'),
-             'title' => array('sugar_key' => 'title', 'sugar_label' => '', 'default_label' => 'Title'),
-             'notes' => array('sugar_key' => 'description', 'sugar_label' => '', 'default_label' => 'Notes'),
+        $return_array = [
+            'first_name' => ['sugar_key' => 'first_name', 'sugar_label' => '', 'default_label' => 'Given Name'],
+            'last_name' => ['sugar_key' => 'last_name', 'sugar_label' => '', 'default_label' => 'Family Name'],
+            'birthday' => ['sugar_key' => 'birthdate', 'sugar_label' => '', 'default_label' => 'Birthday'],
+            'title' => ['sugar_key' => 'title', 'sugar_label' => '', 'default_label' => 'Title'],
+            'notes' => ['sugar_key' => 'description', 'sugar_label' => '', 'default_label' => 'Notes'],
 
-             'alt_address_street' => array('sugar_key' => 'alt_address_street', 'sugar_label' => '', 'default_label' => 'Home Street'),
-             'alt_address_postcode' => array('sugar_key' => 'alt_address_postalcode', 'sugar_label' => '', 'default_label' => 'Home Postcode'),
-             'alt_address_city' => array('sugar_key' => 'alt_address_city', 'sugar_label' => '', 'default_label' => 'Home City'),
-             'alt_address_state' => array('sugar_key' => 'alt_address_state', 'sugar_label' => '', 'default_label' => 'Home State'),
-             'alt_address_country' => array('sugar_key' => 'alt_address_country', 'sugar_label' => '', 'default_label' => 'Home Country'),
+            'alt_address_street' => ['sugar_key' => 'alt_address_street', 'sugar_label' => '', 'default_label' => 'Home Street'],
+            'alt_address_postcode' => ['sugar_key' => 'alt_address_postalcode', 'sugar_label' => '', 'default_label' => 'Home Postcode'],
+            'alt_address_city' => ['sugar_key' => 'alt_address_city', 'sugar_label' => '', 'default_label' => 'Home City'],
+            'alt_address_state' => ['sugar_key' => 'alt_address_state', 'sugar_label' => '', 'default_label' => 'Home State'],
+            'alt_address_country' => ['sugar_key' => 'alt_address_country', 'sugar_label' => '', 'default_label' => 'Home Country'],
 
-             'primary_address_street' => array('sugar_key' => 'primary_address_street', 'sugar_label' => '', 'default_label' => 'Work Street'),
-             'primary_address_postcode' => array('sugar_key' => 'primary_address_postalcode', 'sugar_label' => '', 'default_label' => 'Work Postcode'),
-             'primary_address_city' => array('sugar_key' => 'primary_address_city', 'sugar_label' => '', 'default_label' => 'Work City'),
-             'primary_address_state' => array('sugar_key' => 'primary_address_state', 'sugar_label' => '', 'default_label' => 'Work State'),
-             'primary_address_country' => array('sugar_key' => 'primary_address_country', 'sugar_label' => '', 'default_label' => 'Work Country'),
+            'primary_address_street' => ['sugar_key' => 'primary_address_street', 'sugar_label' => '', 'default_label' => 'Work Street'],
+            'primary_address_postcode' => ['sugar_key' => 'primary_address_postalcode', 'sugar_label' => '', 'default_label' => 'Work Postcode'],
+            'primary_address_city' => ['sugar_key' => 'primary_address_city', 'sugar_label' => '', 'default_label' => 'Work City'],
+            'primary_address_state' => ['sugar_key' => 'primary_address_state', 'sugar_label' => '', 'default_label' => 'Work State'],
+            'primary_address_country' => ['sugar_key' => 'primary_address_country', 'sugar_label' => '', 'default_label' => 'Work Country'],
 
-             'phone_main' => array('sugar_key' => 'phone_other', 'sugar_label' => '', 'default_label' => 'Main Phone'),
-             'phone_mobile' => array('sugar_key' => 'phone_mobile', 'sugar_label' => '', 'default_label' => 'Mobile Phone'),
-             'phone_home' => array('sugar_key' => 'phone_home', 'sugar_label' => '', 'default_label' => 'Home phone'),
-             'phone_work' => array('sugar_key' => 'phone_work', 'sugar_label' => '', 'default_label' => 'Work phone'),
-             'phone_fax' => array('sugar_key' => 'phone_fax', 'sugar_label' => '', 'default_label' => 'Fax phone'),
+            'phone_main' => ['sugar_key' => 'phone_other', 'sugar_label' => '', 'default_label' => 'Main Phone'],
+            'phone_mobile' => ['sugar_key' => 'phone_mobile', 'sugar_label' => '', 'default_label' => 'Mobile Phone'],
+            'phone_home' => ['sugar_key' => 'phone_home', 'sugar_label' => '', 'default_label' => 'Home phone'],
+            'phone_work' => ['sugar_key' => 'phone_work', 'sugar_label' => '', 'default_label' => 'Work phone'],
+            'phone_fax' => ['sugar_key' => 'phone_fax', 'sugar_label' => '', 'default_label' => 'Fax phone'],
 
-             'email1' => array('sugar_key' => 'email1', 'sugar_label' => 'LBL_EMAIL_ADDRESS', 'default_label' => 'Email Address'),
-             'email2' => array('sugar_key' => 'email2', 'sugar_label' => 'LBL_OTHER_EMAIL_ADDRESS', 'default_label' => 'Other Email'),
+            'email1' => ['sugar_key' => 'email1', 'sugar_label' => 'LBL_EMAIL_ADDRESS', 'default_label' => 'Email Address'],
+            'email2' => ['sugar_key' => 'email2', 'sugar_label' => 'LBL_OTHER_EMAIL_ADDRESS', 'default_label' => 'Other Email'],
 
-             'assigned_user_name' => array('sugar_key' => 'assigned_user_name', 'sugar_help_key' => 'LBL_EXTERNAL_ASSIGNED_TOOLTIP', 'sugar_label' => 'LBL_ASSIGNED_TO_NAME', 'default_label' => 'Assigned To'),
-             'team_name' => array('sugar_key' => 'team_name', 'sugar_help_key' => 'LBL_EXTERNAL_TEAM_TOOLTIP','sugar_label' => 'LBL_TEAMS', 'default_label' => 'Teams'),
-            );
+            'assigned_user_name' => ['sugar_key' => 'assigned_user_name', 'sugar_help_key' => 'LBL_EXTERNAL_ASSIGNED_TOOLTIP', 'sugar_label' => 'LBL_ASSIGNED_TO_NAME', 'default_label' => 'Assigned To'],
+            'team_name' => ['sugar_key' => 'team_name', 'sugar_help_key' => 'LBL_EXTERNAL_TEAM_TOOLTIP', 'sugar_label' => 'LBL_TEAMS', 'default_label' => 'Teams'],
+        ];
 
         if ($module == 'Users') {
-            $return_array['status'] =  array('sugar_key' => 'status', 'sugar_label' => '', 'default_label' => 'Status');
-            $return_array['full_name'] =  array('sugar_key' => 'user_name', 'sugar_label' => '', 'default_label' => 'Full Name');
+            $return_array['status'] = ['sugar_key' => 'status', 'sugar_label' => '', 'default_label' => 'Status'];
+            $return_array['full_name'] = ['sugar_key' => 'user_name', 'sugar_label' => '', 'default_label' => 'Full Name'];
         }
+
         return $return_array;
     }
 }

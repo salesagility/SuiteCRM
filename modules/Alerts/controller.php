@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class AlertsController extends SugarController
 {
     public function action_get()
@@ -46,9 +44,9 @@ class AlertsController extends SugarController
         $bean = BeanFactory::getBean('Alerts');
 
         $this->view_object_map['Flash'] = '';
-        $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered", "alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
+        $this->view_object_map['Results'] = $bean->get_full_list('alerts.date_entered', "alerts.assigned_user_id = '" . $current_user->id . "' AND is_read != '1'");
         if ($this->view_object_map['Results'] == '') {
-            $this->view_object_map['Flash'] =$app_strings['LBL_NOTIFICATIONS_NONE'];
+            $this->view_object_map['Flash'] = $app_strings['LBL_NOTIFICATIONS_NONE'];
         }
         $this->view = 'default';
     }
@@ -66,7 +64,6 @@ class AlertsController extends SugarController
         $reminder_id = '';
         $type = 'info';
 
-
         if (isset($_POST['name'])) {
             $name = $_POST['name'];
         }
@@ -83,7 +80,7 @@ class AlertsController extends SugarController
         }
 
         if ($url_redirect == null) {
-            $url_redirect = 'index.php?fakeid='. uniqid('fake_', true);
+            $url_redirect = 'index.php?fakeid=' . uniqid('fake_', true);
         }
 
         if (isset($_POST['target_module'])) {
@@ -101,7 +98,7 @@ class AlertsController extends SugarController
         if (isset($_POST) && $reminder_id) {
             $bean = BeanFactory::getBean('Alerts');
             $result = $bean->get_full_list(
-                "",
+                '',
                 "alerts.assigned_user_id = '" . $current_user->id . "' AND reminder_id = '" . $reminder_id . "'"
             );
             if (empty($result)) {
@@ -124,7 +121,7 @@ class AlertsController extends SugarController
         $this->view_object_map['Result'] = '';
         $this->view = 'ajax';
 
-        echo json_encode(['result' => (int)$shouldShowReminderPopup], true);
+        echo json_encode(['result' => (int) $shouldShowReminderPopup], true);
     }
 
     public function action_markAsRead()

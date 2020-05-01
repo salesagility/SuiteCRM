@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,15 +36,13 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-use Psr\Container\ContainerExceptionInterface;
 use Slim\Exception\ContainerValueNotFoundException;
 
-/**
+/*
  * @throws ContainerException
  * @throws ContainerValueNotFoundException
  * @return \SuiteCRM\API\JsonApi\v1\Repositories\RelationshipRepository
  */
 $container['RelationshipRepository'] = function () {
-    $class = new \SuiteCRM\API\JsonApi\v1\Repositories\RelationshipRepository();
-    return $class;
+    return new \SuiteCRM\API\JsonApi\v1\Repositories\RelationshipRepository();
 };

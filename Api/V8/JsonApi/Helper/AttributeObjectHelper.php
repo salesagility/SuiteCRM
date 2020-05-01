@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Helper;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -21,7 +22,7 @@ class AttributeObjectHelper
 
     /**
      * @param \SugarBean $bean
-     * @param array|null $fields
+     * @param null|array $fields
      *
      * @return AttributeResponse
      */

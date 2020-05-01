@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateRange.php';
 
 class TemplateDate extends TemplateRange
 {
@@ -54,25 +52,24 @@ class TemplateDate extends TemplateRange
     {
         parent::__construct();
         global $app_strings;
-        $this->dateStrings = array(
-            $app_strings['LBL_NONE']=>'',
-            $app_strings['LBL_YESTERDAY']=> '-1 day',
-            $app_strings['LBL_TODAY']=>'now',
-            $app_strings['LBL_TOMORROW']=>'+1 day',
-            $app_strings['LBL_NEXT_WEEK']=> '+1 week',
-            $app_strings['LBL_NEXT_MONDAY']=>'next monday',
-            $app_strings['LBL_NEXT_FRIDAY']=>'next friday',
-            $app_strings['LBL_TWO_WEEKS']=> '+2 weeks',
-            $app_strings['LBL_NEXT_MONTH']=> '+1 month',
-            $app_strings['LBL_FIRST_DAY_OF_NEXT_MONTH']=> 'first day of next month', // must handle this non-GNU date string in SugarBean->populateDefaultValues; if we don't this will evaluate to 1969...
-            $app_strings['LBL_THREE_MONTHS']=> '+3 months',  //kbrill Bug #17023
-            $app_strings['LBL_SIXMONTHS']=> '+6 months',
-            $app_strings['LBL_NEXT_YEAR']=> '+1 year',
-        );
+        $this->dateStrings = [
+            $app_strings['LBL_NONE'] => '',
+            $app_strings['LBL_YESTERDAY'] => '-1 day',
+            $app_strings['LBL_TODAY'] => 'now',
+            $app_strings['LBL_TOMORROW'] => '+1 day',
+            $app_strings['LBL_NEXT_WEEK'] => '+1 week',
+            $app_strings['LBL_NEXT_MONDAY'] => 'next monday',
+            $app_strings['LBL_NEXT_FRIDAY'] => 'next friday',
+            $app_strings['LBL_TWO_WEEKS'] => '+2 weeks',
+            $app_strings['LBL_NEXT_MONTH'] => '+1 month',
+            $app_strings['LBL_FIRST_DAY_OF_NEXT_MONTH'] => 'first day of next month', // must handle this non-GNU date string in SugarBean->populateDefaultValues; if we don't this will evaluate to 1969...
+            $app_strings['LBL_THREE_MONTHS'] => '+3 months',  //kbrill Bug #17023
+            $app_strings['LBL_SIXMONTHS'] => '+6 months',
+            $app_strings['LBL_NEXT_YEAR'] => '+1 year',
+        ];
     }
 
-
-    public function get_db_default($modify=false)
+    public function get_db_default($modify = false)
     {
         return '';
     }
@@ -82,19 +79,20 @@ class TemplateDate extends TemplateRange
     {
         global $timedate;
         $name = $this->name;
-        $returnXTPL = array();
+        $returnXTPL = [];
         if (!empty($this->help)) {
             $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
         }
         $returnXTPL['USER_DATEFORMAT'] = $timedate->get_user_date_format();
         $returnXTPL['CALENDAR_DATEFORMAT'] = $timedate->get_cal_date_format();
-        if (isset($this->bean->$name)) {
-            $returnXTPL[strtoupper($this->name)] = $this->bean->$name;
+        if (isset($this->bean->{$name})) {
+            $returnXTPL[strtoupper($this->name)] = $this->bean->{$name};
         } else {
             if (empty($this->bean->id) && !empty($this->default_value) && !empty($this->dateStrings[$this->default_value])) {
                 $returnXTPL[strtoupper($this->name)] = $timedate->asUserDate($timedate->getNow(true)->modify($this->dateStrings[$this->default_value]), false);
             }
         }
+
         return $returnXTPL;
     }
 
@@ -105,6 +103,7 @@ class TemplateDate extends TemplateRange
             $def['display_default'] = $def['default'];
             $def['default'] = '';
         }
+
         return $def;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,13 +44,12 @@ require_once __DIR__ . '/../../modules/Users/User.php';
 require_once __DIR__ . '/../../modules/Meetings/Meeting.php';
 
 /**
- * Implements Google Calendar Syncing
+ * Implements Google Calendar Syncing.
  *
  * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
  * GNU Affero General Public License version 3
  * @author Benjamin Long <ben@offsite.guru>
  */
-
 class GoogleSyncHelper
 {
     /**
@@ -71,11 +69,13 @@ class GoogleSyncHelper
             return false;
         }
         if (empty($meeting) && $event->status !== 'cancelled' && $event->getStart()->getDateTime() !== null) { // We only pull if the Google Event is not deleted/cancelled and not an all day event.
-            return "pull";
-        } elseif (empty($event) && $meeting->deleted == '0') {
-            return "push";
+            return 'pull';
         }
-        return "skip";
+        if (empty($event) && $meeting->deleted == '0') {
+            return 'push';
+        }
+
+        return 'skip';
     }
 
     /**
@@ -90,7 +90,7 @@ class GoogleSyncHelper
      */
     public function getTimeStrings(Meeting $meeting, Google_Service_Calendar_Event $event)
     {
-        $timeArray = array();
+        $timeArray = [];
 
         // Get the last modified time from google event
         $timeArray['gModified'] = strtotime($event->getUpdated());
@@ -123,28 +123,30 @@ class GoogleSyncHelper
         if ($timeArray['gModified'] > $timeArray['sModified']) {
             if ($event->status == 'cancelled') {
                 // if the remote event is deleted, delete it here
-                return "pull_delete";
+                return 'pull_delete';
             }
-            return "pull";
+
+            return 'pull';
         }
         if ($meeting->deleted == '1') {
-            return "push_delete";
+            return 'push_delete';
         }
-        return "push";
+
+        return 'push';
     }
 
     /**
-    * Helper method for GoogleSync::pushPullSkip.
-    *
-    * Takes two calendar events and the timeArray from getTimeStrings, and returns bool (should we skip this record).
-    *
-    * @param Meeting $meeting Meeting Bean
-    * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object
-    * @param array $timeArray from getTimeStrings
-    * @param array $syncedList from GoogleSyncBase Class
-    *
-    * @return bool should we skip this record
-    */
+     * Helper method for GoogleSync::pushPullSkip.
+     *
+     * Takes two calendar events and the timeArray from getTimeStrings, and returns bool (should we skip this record).
+     *
+     * @param Meeting $meeting Meeting Bean
+     * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object
+     * @param array $timeArray from getTimeStrings
+     * @param array $syncedList from GoogleSyncBase Class
+     *
+     * @return bool should we skip this record
+     */
     public function isSkippable(Meeting $meeting, Google_Service_Calendar_Event $event, array $timeArray, array $syncedList)
     {
         $ret = false;
@@ -168,7 +170,7 @@ class GoogleSyncHelper
     }
 
     /**
-     * Helper Method for GoogleSyncBase::updateSuitecrmMeetingEvent
+     * Helper Method for GoogleSyncBase::updateSuitecrmMeetingEvent.
      *
      * Creates reminders for event from google event reminders
      *
@@ -179,8 +181,8 @@ class GoogleSyncHelper
      */
     public function createSuitecrmReminders(array $overrides, Meeting $meeting)
     {
-        $reminders = array();
-        $invitees = array();
+        $reminders = [];
+        $invitees = [];
 
         foreach ($overrides as $override) {
             if ($override->getMethod() == 'popup') {
@@ -208,16 +210,16 @@ class GoogleSyncHelper
                 $invitees[] = $reminderInvitee;
             }
         }
-        $ret = array($reminders, $invitees);
-        return $ret;
+
+        return [$reminders, $invitees];
     }
 
     /**
-     * Helper Method for GoogleSyncBase::setUsersGoogleCalendar
+     * Helper Method for GoogleSyncBase::setUsersGoogleCalendar.
      *
      * Wipe the Google Sync data (gsync_id and gsync_lastsync fields) from the users SuiteCRM records
      *
-     * @param string $assigned_user_id The user who's events need to be fixed.
+     * @param string $assigned_user_id the user who's events need to be fixed
      *
      * @return bool True on success, False on failure
      */

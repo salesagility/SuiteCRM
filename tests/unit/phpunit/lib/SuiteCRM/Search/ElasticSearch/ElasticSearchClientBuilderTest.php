@@ -1,5 +1,7 @@
-<?php /** @noinspection PhpUnhandledExceptionInspection */
-/**
+<?php
+
+/** @noinspection PhpUnhandledExceptionInspection */
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,6 +42,9 @@
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\SearchTestAbstract;
 
+/**
+ * @internal
+ */
 class ElasticSearchClientBuilderTest extends SearchTestAbstract
 {
     public function testGetClient()
@@ -119,8 +124,6 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         ];
 
         self::assertEquals($expected, $actual);
-
-
     }
 
     public function testLoadSugarConfig3()
@@ -138,20 +141,6 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         ];
 
         self::assertEquals($expected, $actual);
-
-
-    }
-
-    private function loadFromSugarConfig()
-    {
-        $builder = new ElasticSearchClientBuilder();
-        return self::invokeMethod($builder, 'loadFromSugarConfig');
-    }
-
-    private function sanitizeHost(array $host)
-    {
-        $builder = new ElasticSearchClientBuilder();
-        return self::invokeMethod($builder, 'sanitizeHost', [$host]);
     }
 
     public function testUrlParser1()
@@ -279,5 +268,19 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
             $this->fail('Exception not thrown!');
         } catch (InvalidArgumentException $e) {
         }
+    }
+
+    private function loadFromSugarConfig()
+    {
+        $builder = new ElasticSearchClientBuilder();
+
+        return self::invokeMethod($builder, 'loadFromSugarConfig');
+    }
+
+    private function sanitizeHost(array $host)
+    {
+        $builder = new ElasticSearchClientBuilder();
+
+        return self::invokeMethod($builder, 'sanitizeHost', [$host]);
     }
 }

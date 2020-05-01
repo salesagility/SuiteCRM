@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-$dictionary['Favorites'] = array(
+$dictionary['Favorites'] = [
     'table' => 'favorites',
     'audited' => false,
     'duplicate_merge' => false,
-    'fields' => array(
-
-        'parent_id' => array(
+    'fields' => [
+        'parent_id' => [
             'name' => 'parent_id',
             'vname' => 'LBL_PARENT_FAVORITE_ID',
             'type' => 'id',
@@ -51,9 +49,9 @@ $dictionary['Favorites'] = array(
             'reportable' => false,
             'audited' => true,
             'comment' => 'Favorite ID of the parent of this account',
-        ),
+        ],
 
-        'parent_type' => array(
+        'parent_type' => [
             'name' => 'parent_type',
             'vname' => 'LBL_PARENT_TYPE',
             'type' => 'parent_type',
@@ -63,14 +61,13 @@ $dictionary['Favorites'] = array(
             'options' => 'parent_type_display',
             'len' => 255,
             'comment' => 'The Sugar object to which the call is related',
-        ),
-
-    ),
-    'relationships' => array(),
+        ],
+    ],
+    'relationships' => [],
     'optimistic_locking' => true,
     'unified_search' => false,
-);
+];
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Favorites', 'Favorites', array('basic', 'assignable'));
+VardefManager::createVardef('Favorites', 'Favorites', ['basic', 'assignable']);

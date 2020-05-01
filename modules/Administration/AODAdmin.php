@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,29 +49,28 @@ global $app_strings;
 global $theme;
 
 if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 }
 
-require_once('modules/Configurator/Configurator.php');
-
+require_once 'modules/Configurator/Configurator.php';
 
 echo getClassicModuleTitle(
-    "Administration",
-    array(
-        "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
+    'Administration',
+    [
+        "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . '</a>',
         $mod_strings['LBL_AOD_ADMIN_MANAGE_AOD'],
-    ),
+    ],
     false
 );
 
 $cfg = new Configurator();
 $sugar_smarty = new Sugar_Smarty();
-$errors = array();
+$errors = [];
 
 if (!array_key_exists('aod', $cfg->config)) {
-    $cfg->config['aod'] = array(
+    $cfg->config['aod'] = [
         'enable_aod' => '',
-    );
+    ];
 }
 if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     $cfg->config['aod']['enable_aod'] = !empty($_REQUEST['enable_aod']);
@@ -82,10 +82,9 @@ $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 $sugar_smarty->assign('LANGUAGES', get_languages());
-$sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
+$sugar_smarty->assign('JAVASCRIPT', get_set_focus_js());
 $sugar_smarty->assign('config', $cfg->config['aod']);
 $sugar_smarty->assign('error', $errors);
-
 
 $buttons = <<<EOQ
     <input title="{$app_strings['LBL_SAVE_BUTTON_TITLE']}"
@@ -98,7 +97,7 @@ $buttons = <<<EOQ
                 &nbsp;<input title="{$mod_strings['LBL_CANCEL_BUTTON_TITLE']}"  onclick="document.location.href='index.php?module=Administration&action=index'" class="button"  type="button" name="cancel" value="  {$app_strings['LBL_CANCEL_BUTTON_LABEL']}  " >
 EOQ;
 
-$sugar_smarty->assign("BUTTONS", $buttons);
+$sugar_smarty->assign('BUTTONS', $buttons);
 
 $sugar_smarty->display('modules/Administration/AODAdmin.tpl');
 

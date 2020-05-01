@@ -1,12 +1,12 @@
 <?php
+
 namespace SuiteCRM\Test;
 
 /**
- * Class TestLogger
+ * Class TestLogger.
  */
 class TestLogger
 {
-
     /**
      * @var array
      */
@@ -32,22 +32,23 @@ class TestLogger
     public function __call($name, $arguments)
     {
         $this->calls[$name][] = $arguments;
-        $this->notes[] = array(
+        $this->notes[] = [
             'entry_date' => date('Y-m-d H:i:s'),
             'level' => $name,
             'message' => array_shift($arguments),
             'arguments' => $arguments,
             'backtrace' => debug_backtrace(),
-        );
+        ];
     }
 
     /**
      * @param string|string[] $levels
+     *
      * @return array
      */
     public function getNotes($levels = 'fatal')
     {
-        $results = array();
+        $results = [];
         if (is_string($levels)) {
             $levels = explode(',', $levels);
             foreach ($levels as &$level) {
@@ -59,15 +60,13 @@ class TestLogger
                 $results[] = $note;
             }
         }
+
         return $results;
     }
 
-    /**
-     *
-     */
     public function reset()
     {
-        $this->calls = array();
-        $this->notes = array();
+        $this->calls = [];
+        $this->notes = [];
     }
 }

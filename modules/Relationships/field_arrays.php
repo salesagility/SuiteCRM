@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,14 +42,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$fields_array['Relationship'] = array('column_fields' => array(
+ */
+$fields_array['Relationship'] = ['column_fields' => [
+    'id',
+    'relationship_name',
+    'lhs_module',
+    'lhs_table',
+    'lhs_key',
+    'rhs_module',
+    'rhs_table',
+    'rhs_key',
+    'join_table',
+    'join_key_lhs',
+    'join_key_rhs',
+    'relationship_type',
+    'relationship_role_column',
+    'relationship_role_column_value',
+    'reverse',
+],
+    'list_fields' => [
         'id',
         'relationship_name',
         'lhs_module',
@@ -64,23 +82,6 @@ $fields_array['Relationship'] = array('column_fields' => array(
         'relationship_role_column',
         'relationship_role_column_value',
         'reverse',
-    ),
-        'list_fields' =>  array(
-        'id',
-        'relationship_name',
-        'lhs_module',
-        'lhs_table',
-        'lhs_key',
-        'rhs_module',
-        'rhs_table',
-        'rhs_key',
-        'join_table',
-        'join_key_lhs',
-        'join_key_rhs',
-        'relationship_type',
-        'relationship_role_column',
-        'relationship_role_column_value',
-        'reverse',
-    ),
-    'required_fields' =>   array("relationship_name"=>1),
-);
+    ],
+    'required_fields' => ['relationship_name' => 1],
+];

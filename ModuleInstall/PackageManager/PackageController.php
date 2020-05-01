@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
- require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
- require_once('ModuleInstall/PackageManager/PackageManager.php');
+ require_once 'ModuleInstall/PackageManager/PackageManagerDisplay.php';
+ require_once 'ModuleInstall/PackageManager/PackageManager.php';
  class PackageController
  {
      public $_pm;
@@ -65,14 +63,15 @@
              $node_id = nl2br($_REQUEST['node_id']);
          }
          $xml = PackageManager::getPackages($node_id);
-         echo 'result = ' . $json->encode(array('packages' => $xml));
+         echo 'result = ' . $json->encode(['packages' => $xml]);
      }
 
      /**
-      * Retrieve a list of packages which belong to the corresponding category
+      * Retrieve a list of packages which belong to the corresponding category.
       *
       * @param category_id   this is passed via POST and is the category id of packages
       *                      we wish to retrieve
+      *
       * @return packages     xml string consisting of the packages and releases which belong to
       *                      the category
       */
@@ -85,12 +84,12 @@
              $category_id = nl2br($_REQUEST['category_id']);
          }
          $xml = PackageManager::getPackages($category_id);
-         echo 'result = ' . $json->encode(array('package_output' => $xml));
+         echo 'result = ' . $json->encode(['package_output' => $xml]);
      }
 
      /**
       * Obtain a list of releases from the server.  This function is currently used for generating the patches/langpacks for upgrade wizard
-      * as well as during installation
+      * as well as during installation.
       */
      public function getReleases()
      {
@@ -109,34 +108,34 @@
          }
          $types = explode(',', $types);
 
-         $filter = array();
+         $filter = [];
          $count = count($types);
          $index = 1;
          $type_str = '';
          foreach ($types as $type) {
-             $type_str .= "'".$type."'";
+             $type_str .= "'" . $type . "'";
              if ($index < $count) {
-                 $type_str .= ",";
+                 $type_str .= ',';
              }
              $index++;
          }
 
-         $filter = array('type' => $type_str);
+         $filter = ['type' => $type_str];
          $filter = PackageManager::toNameValueList($filter);
          $releases = PackageManager::getReleases($category_id, $package_id, $filter);
-         $nodes = array();
-         $release_map = array();
+         $nodes = [];
+         $release_map = [];
          foreach ($releases['packages'] as $release) {
              $release = PackageManager::fromNameValueList($release);
-             $nodes[] = array('description' => $release['description'], 'version' => $release['version'], 'build_number' => $release['build_number'], 'id' => $release['id']);
-             $release_map[$release['id']] = array('package_id' => $release['package_id'], 'category_id' => $release['category_id']);
+             $nodes[] = ['description' => $release['description'], 'version' => $release['version'], 'build_number' => $release['build_number'], 'id' => $release['id']];
+             $release_map[$release['id']] = ['package_id' => $release['package_id'], 'category_id' => $release['category_id']];
          }
          $_SESSION['ML_PATCHES'] = $release_map;
-         echo 'result = ' . $json->encode(array('releases' => $nodes));
+         echo 'result = ' . $json->encode(['releases' => $nodes]);
      }
 
      /**
-      * Obtain a promotion from the depot
+      * Obtain a promotion from the depot.
       */
      public function getPromotion()
      {
@@ -144,15 +143,16 @@
 
          $header = PackageManager::getPromotion();
 
-         echo 'result = ' . $json->encode(array('promotion' => $header));
+         echo 'result = ' . $json->encode(['promotion' => $header]);
      }
 
      /**
-      * Download the given release
+      * Download the given release.
       *
       * @param category_id   this is passed via POST and is the category id of the release we wish to download
       * @param package_id   this is passed via POST and is the package id of the release we wish to download
       * @param release_id   this is passed via POST and is the release id of the release we wish to download
+      *
       * @return bool         true is successful in downloading, false otherwise
       */
      public function download()
@@ -160,7 +160,7 @@
          global $sugar_config;
          $json = getJSONobj();
          $package_id = '';
-         $category_id  = '';
+         $category_id = '';
          $release_id = '';
          if (isset($_REQUEST['package_id'])) {
              $package_id = nl2br($_REQUEST['package_id']);
@@ -171,27 +171,28 @@
          if (isset($_REQUEST['release_id'])) {
              $release_id = nl2br($_REQUEST['release_id']);
          }
-         $GLOBALS['log']->debug("PACKAGE ID: ".$package_id);
-         $GLOBALS['log']->debug("CATEGORY ID: ".$category_id);
-         $GLOBALS['log']->debug("RELEASE ID: ".$release_id);
+         $GLOBALS['log']->debug('PACKAGE ID: ' . $package_id);
+         $GLOBALS['log']->debug('CATEGORY ID: ' . $category_id);
+         $GLOBALS['log']->debug('RELEASE ID: ' . $release_id);
          $result = $this->_pm->download($category_id, $package_id, $release_id);
-         $GLOBALS['log']->debug("RESULT: ".print_r($result, true));
+         $GLOBALS['log']->debug('RESULT: ' . print_r($result, true));
          $success = 'false';
          if ($result != null) {
-             $GLOBALS['log']->debug("Performing Setup");
+             $GLOBALS['log']->debug('Performing Setup');
              $this->_pm->performSetup($result, 'module', false);
-             $GLOBALS['log']->debug("Complete Setup");
+             $GLOBALS['log']->debug('Complete Setup');
              $success = 'true';
          }
-         echo 'result = ' . $json->encode(array('success' => $success));
+         echo 'result = ' . $json->encode(['success' => $success]);
      }
 
      /**
-     * Retrieve a list of categories that are subcategories to the selected category
-     *
-     * @param id - the id of the parent_category, -1 if this is the root
-     * @return array - a list of categories/nodes which are underneath this node
-     */
+      * Retrieve a list of categories that are subcategories to the selected category.
+      *
+      * @param id - the id of the parent_category, -1 if this is the root
+      *
+      * @return array - a list of categories/nodes which are underneath this node
+      */
      public function getCategories()
      {
          $json = getJSONobj();
@@ -199,9 +200,9 @@
          if (isset($_REQUEST['category_id'])) {
              $node_id = nl2br($_REQUEST['category_id']);
          }
-         $GLOBALS['log']->debug("NODE ID: ".$node_id);
+         $GLOBALS['log']->debug('NODE ID: ' . $node_id);
          $nodes = PackageManager::getCategories($node_id);
-         echo 'result = ' . $json->encode(array('nodes' => $nodes));
+         echo 'result = ' . $json->encode(['nodes' => $nodes]);
      }
 
      public function getNodes()
@@ -211,15 +212,17 @@
          if (isset($_REQUEST['category_id'])) {
              $category_id = nl2br($_REQUEST['category_id']);
          }
-         $GLOBALS['log']->debug("CATEGORY ID: ".$category_id);
+         $GLOBALS['log']->debug('CATEGORY ID: ' . $category_id);
          $nodes = PackageManager::getModuleLoaderCategoryPackages($category_id);
          $GLOBALS['log']->debug(var_export($nodes, true));
-         echo 'result = ' . $json->encode(array('nodes' => $nodes));
+         echo 'result = ' . $json->encode(['nodes' => $nodes]);
      }
 
      /**
-      * Check the SugarDepot for updates for the given type as passed in via POST
+      * Check the SugarDepot for updates for the given type as passed in via POST.
+      *
       * @param type      the type to check for
+      *
       * @return array    return an array of releases for each given installed object if an update is found
       */
      public function checkForUpdates()
@@ -231,27 +234,27 @@
          }
          $pm = new PackageManager();
          $updates = $pm->checkForUpdates();
-         $nodes = array();
-         $release_map = array();
+         $nodes = [];
+         $release_map = [];
          if (!empty($updates)) {
              foreach ($updates as $update) {
                  $update = PackageManager::fromNameValueList($update);
-                 $nodes[] = array('label' => $update['name'], 'description' => $update['description'], 'version' => $update['version'], 'build_number' => $update['build_number'], 'id' => $update['id'], 'type' => $update['type']);
-                 $release_map[$update['id']] = array('package_id' => $update['package_id'], 'category_id' => $update['category_id'], 'type' => $update['type']);
+                 $nodes[] = ['label' => $update['name'], 'description' => $update['description'], 'version' => $update['version'], 'build_number' => $update['build_number'], 'id' => $update['id'], 'type' => $update['type']];
+                 $release_map[$update['id']] = ['package_id' => $update['package_id'], 'category_id' => $update['category_id'], 'type' => $update['type']];
              }
          }
          //patches
-         $filter = array(array('name' => 'type', 'value' => "'patch'"));
+         $filter = [['name' => 'type', 'value' => "'patch'"]];
          $releases = $pm->getReleases('', '', $filter);
          if (!empty($releases['packages'])) {
              foreach ($releases['packages'] as $update) {
                  $update = PackageManager::fromNameValueList($update);
-                 $nodes[] = array('label' => $update['name'], 'description' => $update['description'], 'version' => $update['version'], 'build_number' => $update['build_number'], 'id' => $update['id'], 'type' => $update['type']);
-                 $release_map[$update['id']] = array('package_id' => $update['package_id'], 'category_id' => $update['category_id'], 'type' => $update['type']);
+                 $nodes[] = ['label' => $update['name'], 'description' => $update['description'], 'version' => $update['version'], 'build_number' => $update['build_number'], 'id' => $update['id'], 'type' => $update['type']];
+                 $release_map[$update['id']] = ['package_id' => $update['package_id'], 'category_id' => $update['category_id'], 'type' => $update['type']];
              }
          }
          $_SESSION['ML_PATCHES'] = $release_map;
-         echo 'result = ' . $json->encode(array('updates' => $nodes));
+         echo 'result = ' . $json->encode(['updates' => $nodes]);
      }
 
      public function getLicenseText()
@@ -261,23 +264,23 @@
          if (isset($_REQUEST['file'])) {
              $file = hashToFile($_REQUEST['file']);
          }
-         $GLOBALS['log']->debug("FILE : ".$file);
-         echo 'result = ' . $json->encode(array('license_display' => PackageManagerDisplay::buildLicenseOutput($file)));
+         $GLOBALS['log']->debug('FILE : ' . $file);
+         echo 'result = ' . $json->encode(['license_display' => PackageManagerDisplay::buildLicenseOutput($file)]);
      }
 
      /**
-      *  build the list of modules that are currently in the staging area waiting to be installed
+      *  build the list of modules that are currently in the staging area waiting to be installed.
       */
      public function getPackagesInStaging()
      {
          $packages = $this->_pm->getPackagesInStaging('module');
          $json = getJSONobj();
 
-         echo 'result = ' . $json->encode(array('packages' => $packages));
+         echo 'result = ' . $json->encode(['packages' => $packages]);
      }
 
      /**
-      *  build the list of modules that are currently in the staging area waiting to be installed
+      *  build the list of modules that are currently in the staging area waiting to be installed.
       */
      public function performInstall()
      {
@@ -290,7 +293,7 @@
          }
          $json = getJSONobj();
 
-         echo 'result = ' . $json->encode(array('result' => 'success'));
+         echo 'result = ' . $json->encode(['result' => 'success']);
      }
 
      public function authenticate()
@@ -320,15 +323,15 @@
              $password = md5($password);
              $result = PackageManager::authenticate($username, $password, $servername, $terms_checked);
              if (!is_array($result) && $result == true) {
-                 $status  = 'success';
+                 $status = 'success';
              } else {
-                 $status  = $result['faultstring'];
+                 $status = $result['faultstring'];
              }
          } else {
-             $status  = 'failed';
+             $status = 'failed';
          }
 
-         echo 'result = ' . $json->encode(array('status' => $status));
+         echo 'result = ' . $json->encode(['status' => $status]);
      }
 
      public function getDocumentation()
@@ -345,8 +348,8 @@
          }
 
          $documents = PackageManager::getDocumentation($package_id, $release_id);
-         $GLOBALS['log']->debug("DOCUMENTS: ".var_export($documents, true));
-         echo 'result = ' . $json->encode(array('documents' => $documents));
+         $GLOBALS['log']->debug('DOCUMENTS: ' . var_export($documents, true));
+         echo 'result = ' . $json->encode(['documents' => $documents]);
      }
 
      public function downloadedDocumentation()
@@ -357,23 +360,9 @@
          if (isset($_REQUEST['document_id'])) {
              $document_id = nl2br($_REQUEST['document_id']);
          }
-         $GLOBALS['log']->debug("Downloading Document: ".$document_id);
+         $GLOBALS['log']->debug('Downloading Document: ' . $document_id);
          PackageManagerComm::downloadedDocumentation($document_id);
-         echo 'result = ' . $json->encode(array('result' => 'true'));
-     }
-
-     /**
-      * Remove metadata files such as foo-manifest
-      * Enter description here ...
-      * @param unknown_type $file
-      * @param unknown_type $meta
-      */
-     protected function rmMetaFile($file, $meta)
-     {
-         $metafile = pathinfo($file, PATHINFO_DIRNAME)."/". pathinfo($file, PATHINFO_FILENAME)."-$meta.php";
-         if (file_exists($metafile)) {
-             unlink($metafile);
-         }
+         echo 'result = ' . $json->encode(['result' => 'true']);
      }
 
      public function remove()
@@ -384,13 +373,28 @@
          if (isset($_REQUEST['file'])) {
              $file = urldecode(hashToFile($_REQUEST['file']));
          }
-         $GLOBALS['log']->debug("FILE TO REMOVE: ".$file);
+         $GLOBALS['log']->debug('FILE TO REMOVE: ' . $file);
          if (!empty($file)) {
              unlink($file);
-             foreach (array("manifest", "icon") as $meta) {
+             foreach (['manifest', 'icon'] as $meta) {
                  $this->rmMetaFile($file, $meta);
              }
          }
-         echo 'result = ' . $json->encode(array('result' => 'true'));
+         echo 'result = ' . $json->encode(['result' => 'true']);
+     }
+
+     /**
+      * Remove metadata files such as foo-manifest
+      * Enter description here ...
+      *
+      * @param unknown_type $file
+      * @param unknown_type $meta
+      */
+     protected function rmMetaFile($file, $meta)
+     {
+         $metafile = pathinfo($file, PATHINFO_DIRNAME) . '/' . pathinfo($file, PATHINFO_FILENAME) . "-{$meta}.php";
+         if (file_exists($metafile)) {
+             unlink($metafile);
+         }
      }
  }

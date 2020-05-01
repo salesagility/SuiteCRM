@@ -1,8 +1,12 @@
 <?php
+
 namespace Api\Core\Config;
 
 class ApiConfig
 {
+    const OAUTH2_PRIVATE_KEY = 'Api/V8/OAuth2/private.key';
+    const OAUTH2_PUBLIC_KEY = 'Api/V8/OAuth2/public.key';
+    const OAUTH2_ENCRYPTION_KEY = '';
     // we still support 5.5.9
     private static $slimSettings = [
         'Api/Core/Config/slim.php',
@@ -16,19 +20,13 @@ class ApiConfig
         'Api/V8/Config/routes.php',
     ];
 
-    const OAUTH2_PRIVATE_KEY = 'Api/V8/OAuth2/private.key';
-    const OAUTH2_PUBLIC_KEY = 'Api/V8/OAuth2/public.key';
-    const OAUTH2_ENCRYPTION_KEY = '';
-    
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     private static $debugExceptions = false;
-    
+
     /**
-     *
-     * @return boolean
+     * @return bool
      */
     public static function getDebugExceptions()
     {

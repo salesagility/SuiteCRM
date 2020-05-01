@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,21 +36,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/*********************************************************************************
+/*
 
  * Description: This file is used to override the default Meta-data EditView behavior
  * to provide customization specific to the Calls module.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-require_once('modules/AM_ProjectTemplates/AM_ProjectTemplatesListViewSmarty.php');
+require_once 'modules/AM_ProjectTemplates/AM_ProjectTemplatesListViewSmarty.php';
 
 class AM_ProjectTemplatesViewList extends ViewList
 {
@@ -59,21 +57,18 @@ class AM_ProjectTemplatesViewList extends ViewList
     {
         parent::__construct();
     }
-    
-    /*
-     * Override listViewProcess with addition to where clause to exclude project templates
-     */
+
+    // Override listViewProcess with addition to where clause to exclude project templates
     public function listViewProcess()
     {
         $this->processSearchForm();
-                
-        
+
         $this->lv->searchColumns = $this->searchForm->searchColumns;
-        
+
         if (!$this->headers) {
             return;
         }
-            
+
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
             $this->lv->setup($this->seed, 'modules/AM_ProjectTemplates/tpls/ListViewGeneric.tpl', $this->where, $this->params);

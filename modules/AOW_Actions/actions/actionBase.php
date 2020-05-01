@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,11 +18,8 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
 class actionBase
 {
     public $id;
@@ -34,15 +31,15 @@ class actionBase
 
     public function loadJS()
     {
-        return array();
+        return [];
     }
 
-    public function edit_display($line, SugarBean $bean = null, $params = array())
+    public function edit_display($line, SugarBean $bean = null, $params = [])
     {
         return '';
     }
 
-    public function run_action(SugarBean $bean, $params = array(), $in_save=false)
+    public function run_action(SugarBean $bean, $params = [], $in_save = false)
     {
         return true;
     }

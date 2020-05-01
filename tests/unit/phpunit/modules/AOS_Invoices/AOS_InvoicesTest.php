@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOS_Invoices()
+    public function testAOSInvoices()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosInvoices = new AOS_Invoices();
@@ -29,7 +32,7 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $aosInvoices);
     }
 
-    public function testSaveAndMark_deleted()
+    public function testSaveAndMarkDeleted()
     {
         $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';

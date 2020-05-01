@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,11 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $module_name = 'Spots';
 $object_name = 'Spots';
 $_module_name = 'Spots';
-$popupMeta = array('moduleMain' => $module_name,
-                        'varName' => $object_name,
-                        'orderBy' => $_module_name.'.name',
-                        'whereClauses' => array('name' => $_module_name.'.name',
-                                ),
-                            'searchInputs' => array($_module_name.'_number', 'name', 'priority', 'status'),
-
-                        );
+$popupMeta = ['moduleMain' => $module_name,
+    'varName' => $object_name,
+    'orderBy' => $_module_name . '.name',
+    'whereClauses' => ['name' => $_module_name . '.name',
+    ],
+    'searchInputs' => [$_module_name . '_number', 'name', 'priority', 'status'],
+];

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,14 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 /**
- * Class AOS_QuotesViewDetail
+ * Class AOS_QuotesViewDetail.
  */
 class AOS_QuotesViewDetail extends ViewDetail
 {
     /**
-     * @var AOS_Quotes $bean;
+     * @var AOS_Quotes;
      */
     public $bean;
 
@@ -75,7 +73,7 @@ class AOS_QuotesViewDetail extends ViewDetail
 
         $res = $this->bean->db->query($sql);
 
-        $app_list_strings['template_ddown_c_list'] = array();
+        $app_list_strings['template_ddown_c_list'] = [];
         while ($row = $this->bean->db->fetchByAssoc($res)) {
             if ($row['id']) {
                 $app_list_strings['template_ddown_c_list'][$row['id']] = $row['name'];

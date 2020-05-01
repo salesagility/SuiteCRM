@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,41 +44,41 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 $module_name = 'Spots';
-$searchdefs[$module_name] = array(
-    'templateMeta' => array(
+$searchdefs[$module_name] = [
+    'templateMeta' => [
         'maxColumns' => '3',
         'maxColumnsBasic' => '4',
-        'widths' => array(
+        'widths' => [
             'label' => '10',
             'field' => '30'
-        ),
-    ),
-    'layout' => array(
-        'basic_search' => array(
-            'name' => array(
+        ],
+    ],
+    'layout' => [
+        'basic_search' => [
+            'name' => [
                 'name' => 'current_user_only',
                 'label' => 'LBL_CURRENT_USER_FILTER',
                 'type' => 'bool'
-            ),
+            ],
 
-            'favorites_only' =>  array(
+            'favorites_only' => [
                 'name' => 'favorites_only',
                 'label' => 'LBL_FAVORITES_FILTER',
                 'type' => 'bool',
-            ),
-        ),
-        'advanced_search' => array(
-            'name' => array(
+            ],
+        ],
+        'advanced_search' => [
+            'name' => [
                 'name' => 'assigned_user_id',
                 'label' => 'LBL_ASSIGNED_TO',
                 'type' => 'enum',
-                'function' => array(
+                'function' => [
                     'name' => 'get_user_array',
-                    'params' => array(
+                    'params' => [
                         false
-                    )
-                )
-            ),
-        ),
-    ),
-);
+                    ]
+                ]
+            ],
+        ],
+    ],
+];

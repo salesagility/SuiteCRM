@@ -1,5 +1,6 @@
 <?php
-/***CONNECTOR SOURCE***/
+
+// CONNECTOR SOURCE
 $config['name'] = 'Facebook';
 $config['properties']['appid'] = '';
 $config['properties']['secret'] = '';

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,39 +44,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use SuiteCRM\Utility\SuiteValidator;
 
-require_once('include/formbase.php');
-require_once('modules/Leads/LeadFormBase.php');
-
-
+require_once 'include/formbase.php';
+require_once 'modules/Leads/LeadFormBase.php';
 
 global $app_strings, $app_list_strings, $sugar_config, $timedate, $current_user;
 
 $mod_strings = return_module_language($sugar_config['default_language'], 'Leads');
 
-$app_list_strings['record_type_module'] = array('Contact'=>'Contacts', 'Account'=>'Accounts', 'Opportunity'=>'Opportunities', 'Case'=>'Cases', 'Note'=>'Notes', 'Call'=>'Calls', 'Email'=>'Emails', 'Meeting'=>'Meetings', 'Task'=>'Tasks', 'Lead'=>'Leads','Bug'=>'Bugs',
-
-);
+$app_list_strings['record_type_module'] = ['Contact' => 'Contacts', 'Account' => 'Accounts', 'Opportunity' => 'Opportunities', 'Case' => 'Cases', 'Note' => 'Notes', 'Call' => 'Calls', 'Email' => 'Emails', 'Meeting' => 'Meetings', 'Task' => 'Tasks', 'Lead' => 'Leads', 'Bug' => 'Bugs',
+];
 
 /**
- * To make your changes upgrade safe create a file called leadCapture_override.php and place the changes there
+ * To make your changes upgrade safe create a file called leadCapture_override.php and place the changes there.
  */
-$users = array(
-    'PUT A RANDOM KEY FROM THE WEBSITE HERE' => array('name'=>'PUT THE USER_NAME HERE', 'pass'=>'PUT THE USER_HASH FOR THE RESPECTIVE USER HERE'),
-);
+$users = [
+    'PUT A RANDOM KEY FROM THE WEBSITE HERE' => ['name' => 'PUT THE USER_NAME HERE', 'pass' => 'PUT THE USER_HASH FOR THE RESPECTIVE USER HERE'],
+];
 
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     //adding the client ip address
     $_POST['client_id_address'] = query_client_ip();
-    $campaign_id=$_POST['campaign_id'];
+    $campaign_id = $_POST['campaign_id'];
     $campaign = new Campaign();
     $campaign_id = $campaign->db->quote($_POST['campaign_id']);
     $isValidator = new SuiteValidator();
     if (!$isValidator->isValidId($campaign_id)) {
         throw new RuntimeException('Invalid ID requested in Lead Capture');
     }
-    $camp_query  = "select name,id from campaigns where id='$campaign_id'";
-    $camp_query .= " and deleted=0";
-    $camp_result=$campaign->db->query($camp_query);
+    $camp_query = "select name,id from campaigns where id='{$campaign_id}'";
+    $camp_query .= ' and deleted=0';
+    $camp_result = $campaign->db->query($camp_query);
     $camp_data = $campaign->db->fetchByAssoc($camp_result);
     // Bug 41292 - have to select marketing_id for new lead
     $db = DBManagerFactory::getInstance();
@@ -83,8 +81,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $marketing_query = $marketing->create_new_list_query(
         'date_start desc, date_modified desc',
         "campaign_id = '{$campaign_id}' and status = 'active' and date_start < " . $db->convert('', 'today'),
-        array('id')
-        );
+        ['id']
+    );
     $marketing_result = $db->limitQuery($marketing_query, 0, 1, true);
     $marketing_data = $db->fetchByAssoc($marketing_result);
     // .Bug 41292
@@ -111,11 +109,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         if (isset($lead->required_fields['email1'])) {
             $lead->required_fields['webtolead_email1'] = $lead->required_fields['email1'];
         }
-            
+
         //bug: 42398 - have to unset the id from the required_fields since it is not populated in the $_POST
-        unset($lead->required_fields['id']);
-        unset($lead->required_fields['team_name']);
-        unset($lead->required_fields['team_count']);
+        unset($lead->required_fields['id'], $lead->required_fields['team_name'], $lead->required_fields['team_count']);
 
         // Bug #52563 : Web to Lead form redirects to Sugar when duplicate detected
         // prevent duplicates check
@@ -123,18 +119,17 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         // checkRequired needs a major overhaul before it works for web to lead forms.
         $lead = $leadForm->handleSave($prefix, false, false, false, $lead);
-            
+
         if (!empty($lead)) {
-                
-                //create campaign log
+            //create campaign log
             $camplog = new CampaignLog();
-            $camplog->campaign_id  = $campaign_id;
-            $camplog->related_id   = $lead->id;
+            $camplog->campaign_id = $campaign_id;
+            $camplog->related_id = $lead->id;
             $camplog->related_type = $lead->module_dir;
-            $camplog->activity_type = "lead";
+            $camplog->activity_type = 'lead';
             $camplog->target_type = $lead->module_dir;
-            $campaign_log->activity_date=$timedate->now();
-            $camplog->target_id    = $lead->id;
+            $campaign_log->activity_date = $timedate->now();
+            $camplog->target_id = $lead->id;
             if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
             }
@@ -149,7 +144,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             elseif (isset($_POST['webtolead_email1']) && $_POST['webtolead_email1'] != null) {
                 $lead->email1 = $_POST['webtolead_email1'];
             }
-                
+
             if (isset($_POST['email2']) && $_POST['email2'] != null) {
                 $lead->email2 = $_POST['email2'];
             }
@@ -157,7 +152,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             elseif (isset($_POST['webtolead_email2']) && $_POST['webtolead_email2'] != null) {
                 $lead->email2 = $_POST['webtolead_email2'];
             }
-                
+
             $lead->load_relationship('campaigns');
             $lead->campaigns->add($camplog->id);
             if (!empty($GLOBALS['check_notify'])) {
@@ -192,36 +187,35 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 if ($param == 'redirect_url' && $param == 'submit') {
                     continue;
                 }
-                    
+
                 if ($first_iteration) {
                     $first_iteration = false;
                     $query_string .= $first_char;
                 } else {
-                    $query_string .= "&";
+                    $query_string .= '&';
                 }
-                $query_string .= "{$param}=".urlencode($value);
+                $query_string .= "{$param}=" . urlencode($value);
             }
             if (empty($lead)) {
                 if ($first_iteration) {
                     $query_string .= $first_char;
                 } else {
-                    $query_string .= "&";
+                    $query_string .= '&';
                 }
-                $query_string .= "error=1";
+                $query_string .= 'error=1';
             }
-                
-            $redirect_url = $redirect_url.$query_string;
 
+            $redirect_url = $redirect_url . $query_string;
 
             // Check if the headers have been sent, or if the redirect url is greater than 2083 characters (IE max URL length)
             //   and use a javascript form submission if that is the case.
             if (headers_sent() || strlen($redirect_url) > 2083) {
                 echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
-                echo '<form name="redirect" action="' .$_POST['redirect_url']. '" method="GET">';
-    
+                echo '<form name="redirect" action="' . $_POST['redirect_url'] . '" method="GET">';
+
                 foreach ($_POST as $param => $value) {
-                    if ($param != 'redirect_url' ||$param != 'submit') {
-                        echo '<input type="hidden" name="'.$param.'" value="'.$value.'">';
+                    if ($param != 'redirect_url' || $param != 'submit') {
+                        echo '<input type="hidden" name="' . $param . '" value="' . $value . '">';
                     }
                 }
                 if (empty($lead)) {
@@ -242,15 +236,14 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         sugar_cleanup();
         // die to keep code from running into redirect case below
         die();
-    } else {
-        echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
     }
+    echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
 }
 
 if (!empty($_POST['redirect'])) {
     if (headers_sent()) {
         echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
-        echo '<form name="redirect" action="' .$_POST['redirect']. '" method="GET">';
+        echo '<form name="redirect" action="' . $_POST['redirect'] . '" method="GET">';
         echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
         echo '</body></html>';
     } else {

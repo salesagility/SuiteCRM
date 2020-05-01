@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,55 +40,54 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
-require_once('include/utils/array_utils.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateEnum.php';
+require_once 'include/utils/array_utils.php';
 class TemplateRadioEnum extends TemplateEnum
 {
     public $type = 'radioenum';
-    
+
     public function get_html_edit()
     {
         $this->prepare();
         $xtpl_var = strtoupper($this->name);
-        return "{RADIOOPTIONS_".$xtpl_var. "}";
+
+        return '{RADIOOPTIONS_' . $xtpl_var . '}';
     }
-    
+
     public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['dbType'] = 'enum';
         $def['separator'] = '<br>';
+
         return $def;
     }
-    
-    
+
     public function get_xtpl_edit($add_blank = false)
     {
         $name = $this->name;
         $value = '';
-        if (isset($this->bean->$name)) {
-            $value = $this->bean->$name;
+        if (isset($this->bean->{$name})) {
+            $value = $this->bean->{$name};
         } else {
             if (empty($this->bean->id)) {
-                $value= $this->default_value;
+                $value = $this->default_value;
             }
         }
         if (!empty($this->help)) {
             $returnXTPL[$this->name . '_help'] = translate($this->help, $this->bean->module_dir);
         }
-        
+
         global $app_list_strings;
-        $returnXTPL = array();
+        $returnXTPL = [];
         $returnXTPL[strtoupper($this->name)] = $value;
 
-        
-        $returnXTPL[strtoupper('RADIOOPTIONS_'.$this->name)] = $this->generateRadioButtons($value, false);
+        $returnXTPL[strtoupper('RADIOOPTIONS_' . $this->name)] = $this->generateRadioButtons($value, false);
+
         return $returnXTPL;
     }
-    
 
-    public function generateRadioButtons($value = '', $add_blank =false)
+    public function generateRadioButtons($value = '', $add_blank = false)
     {
         global $app_list_strings;
         $radiooptions = '';
@@ -96,14 +95,15 @@ class TemplateRadioEnum extends TemplateEnum
         if ($add_blank) {
             $keyvalues = add_blank_option($keyvalues);
         }
-        $help = (!empty($this->help))?"title='". translate($this->help, $this->bean->module_dir) . "'": '';
-        foreach ($keyvalues as $key=>$displayText) {
-            $selected = ($value == $key)?'checked': '';
-            $radiooptions .= "<input type='radio' id='{$this->name}{$key}' name='$this->name'  $help value='$key' $selected><span onclick='document.getElementById(\"{$this->name}{$key}\").checked = true' style='cursor:default' onmousedown='return false;'>$displayText</span><br>\n";
+        $help = (!empty($this->help)) ? "title='" . translate($this->help, $this->bean->module_dir) . "'" : '';
+        foreach ($keyvalues as $key => $displayText) {
+            $selected = ($value == $key) ? 'checked' : '';
+            $radiooptions .= "<input type='radio' id='{$this->name}{$key}' name='{$this->name}'  {$help} value='{$key}' {$selected}><span onclick='document.getElementById(\"{$this->name}{$key}\").checked = true' style='cursor:default' onmousedown='return false;'>{$displayText}</span><br>\n";
         }
+
         return $radiooptions;
     }
-    
+
     public function get_xtpl_search()
     {
         $searchFor = '';
@@ -111,20 +111,21 @@ class TemplateRadioEnum extends TemplateEnum
             $searchFor = $_REQUEST[$this->name];
         }
         global $app_list_strings;
-        $returnXTPL = array();
+        $returnXTPL = [];
         $returnXTPL[strtoupper($this->name)] = $searchFor;
-        $returnXTPL[strtoupper('RADIOOPTIONS_'.$this->name)] = $this->generateRadioButtons($searchFor, true);
+        $returnXTPL[strtoupper('RADIOOPTIONS_' . $this->name)] = $this->generateRadioButtons($searchFor, true);
+
         return $returnXTPL;
     }
-    
+
     public function get_xtpl_detail()
     {
         $name = $this->name;
-        if (isset($this->bean->$name)) {
+        if (isset($this->bean->{$name})) {
             global $app_list_strings;
             if (isset($app_list_strings[$this->ext1])) {
-                if (isset($app_list_strings[$this->ext1][$this->bean->$name])) {
-                    return $app_list_strings[$this->ext1][$this->bean->$name];
+                if (isset($app_list_strings[$this->ext1][$this->bean->{$name}])) {
+                    return $app_list_strings[$this->ext1][$this->bean->{$name}];
                 }
             }
         } else {
@@ -132,9 +133,10 @@ class TemplateRadioEnum extends TemplateEnum
                 return $this->default_value;
             }
         }
+
         return '';
     }
-    
+
     public function get_db_default($modify = false)
     {
         return '';

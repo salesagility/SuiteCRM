@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,13 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/MVC/Controller/SugarController.php');
+require_once 'include/MVC/Controller/SugarController.php';
 class ConfiguratorController extends SugarController
 {
     /**
-     * Go to the font manager view
+     * Go to the font manager view.
      */
     public function action_FontManager()
     {
@@ -58,7 +56,7 @@ class ConfiguratorController extends SugarController
     }
 
     /**
-     * Delete a font and go back to the font manager
+     * Delete a font and go back to the font manager.
      */
     public function action_deleteFont()
     {
@@ -68,14 +66,14 @@ class ConfiguratorController extends SugarController
         }
         $urlSTR = 'index.php?module=Configurator&action=FontManager';
         if (!empty($_REQUEST['filename'])) {
-            require_once('include/Sugarpdf/FontManager.php');
+            require_once 'include/Sugarpdf/FontManager.php';
             $fontManager = new FontManager();
             $fontManager->filename = $_REQUEST['filename'];
             if (!$fontManager->deleteFont()) {
-                $urlSTR .='&error='.urlencode(implode("<br>", $fontManager->errors));
+                $urlSTR .= '&error=' . urlencode(implode('<br>', $fontManager->errors));
             }
         }
-        header("Location: $urlSTR");
+        header("Location: {$urlSTR}");
     }
 
     public function action_listview()
@@ -86,8 +84,9 @@ class ConfiguratorController extends SugarController
         }
         $this->view = 'edit';
     }
+
     /**
-     * Show the addFont view
+     * Show the addFont view.
      */
     public function action_addFontView()
     {
@@ -97,8 +96,9 @@ class ConfiguratorController extends SugarController
         }
         $this->view = 'addFontView';
     }
+
     /**
-     * Add a new font and show the addFontResult view
+     * Add a new font and show the addFontResult view.
      */
     public function action_addFont()
     {
@@ -107,37 +107,42 @@ class ConfiguratorController extends SugarController
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         if (empty($_FILES['pdf_metric_file']['name'])) {
-            $this->errors[]=translate("ERR_MISSING_REQUIRED_FIELDS")." ".translate("LBL_PDF_METRIC_FILE", "Configurator");
+            $this->errors[] = translate('ERR_MISSING_REQUIRED_FIELDS') . ' ' . translate('LBL_PDF_METRIC_FILE', 'Configurator');
             $this->view = 'addFontView';
+
             return;
         }
         if (empty($_FILES['pdf_font_file']['name'])) {
-            $this->errors[]=translate("ERR_MISSING_REQUIRED_FIELDS")." ".translate("LBL_PDF_FONT_FILE", "Configurator");
+            $this->errors[] = translate('ERR_MISSING_REQUIRED_FIELDS') . ' ' . translate('LBL_PDF_FONT_FILE', 'Configurator');
             $this->view = 'addFontView';
+
             return;
         }
         $path_info = pathinfo($_FILES['pdf_font_file']['name']);
         $path_info_metric = pathinfo($_FILES['pdf_metric_file']['name']);
-        if (($path_info_metric['extension']!="afm" && $path_info_metric['extension']!="ufm") ||
-        ($path_info['extension']!="ttf" && $path_info['extension']!="otf" && $path_info['extension']!="pfb")) {
-            $this->errors[]=translate("JS_ALERT_PDF_WRONG_EXTENSION", "Configurator");
+        if (($path_info_metric['extension'] != 'afm' && $path_info_metric['extension'] != 'ufm') ||
+        ($path_info['extension'] != 'ttf' && $path_info['extension'] != 'otf' && $path_info['extension'] != 'pfb')) {
+            $this->errors[] = translate('JS_ALERT_PDF_WRONG_EXTENSION', 'Configurator');
             $this->view = 'addFontView';
+
             return;
         }
 
-        if ($_REQUEST['pdf_embedded'] == "false") {
+        if ($_REQUEST['pdf_embedded'] == 'false') {
             if (empty($_REQUEST['pdf_cidinfo'])) {
-                $this->errors[]=translate("ERR_MISSING_CIDINFO", "Configurator");
+                $this->errors[] = translate('ERR_MISSING_CIDINFO', 'Configurator');
                 $this->view = 'addFontView';
+
                 return;
             }
-            $_REQUEST['pdf_embedded']=false;
+            $_REQUEST['pdf_embedded'] = false;
         } else {
-            $_REQUEST['pdf_embedded']=true;
-            $_REQUEST['pdf_cidinfo']="";
+            $_REQUEST['pdf_embedded'] = true;
+            $_REQUEST['pdf_cidinfo'] = '';
         }
         $this->view = 'addFontResult';
     }
+
     public function action_saveadminwizard()
     {
         global $current_user;
@@ -161,7 +166,7 @@ class ConfiguratorController extends SugarController
         }
 
         // Bug 37310 - Delete any existing currency that matches the one we've just set the default to during the admin wizard
-        $currency = new Currency;
+        $currency = new Currency();
         $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
         if (!empty($currency->id)
                 && $currency->symbol == $_REQUEST['default_currency_symbol']
@@ -179,7 +184,7 @@ class ConfiguratorController extends SugarController
             if (file_exists('custom/include/tabConfig.php')) {
                 unlink('custom/include/tabConfig.php');
             }
-            require_once('include/tabConfig.php');
+            require_once 'include/tabConfig.php';
             //Remove the custom dashlet so that we can use the complete list of defaults to filter by category
             if (file_exists('custom/modules/Home/dashlets.php')) {
                 unlink('custom/modules/Home/dashlets.php');
@@ -225,12 +230,12 @@ class ConfiguratorController extends SugarController
             }
             //Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios
             $fp = sugar_fopen('custom/include/tabConfig.php', 'w');
-            $fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'], true).';';
+            $fileContents = "<?php \n" . '$GLOBALS["tabStructure"] =' . var_export($GLOBALS['tabStructure'], true) . ';';
             fwrite($fp, $fileContents);
             fclose($fp);
             //Write the dashlets to custom so that the dashlets are not shown for the un-selected scenarios
             $fp = sugar_fopen('custom/modules/Home/dashlets.php', 'w');
-            $fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets, true).';';
+            $fileContents = "<?php \n" . '$defaultDashlets =' . var_export($defaultDashlets, true) . ';';
             fwrite($fp, $fileContents);
             fclose($fp);
             // End of the scenario implementations
@@ -241,7 +246,7 @@ class ConfiguratorController extends SugarController
 
     public function action_saveconfig()
     {
-        require_once('modules/Administration/QuickRepairAndRebuild.php');
+        require_once 'modules/Administration/QuickRepairAndRebuild.php';
 
         global $current_user;
         if (!is_admin($current_user)) {
@@ -249,10 +254,11 @@ class ConfiguratorController extends SugarController
         }
         $configurator = new Configurator();
         if ($configurator->saveConfig() === false) {
-            $this->errors = array(
+            $this->errors = [
                 'company_logo' => $configurator->getError(),
-            );
+            ];
             $this->view = 'edit';
+
             return;
         }
 
@@ -278,7 +284,7 @@ class ConfiguratorController extends SugarController
     }
 
     /**
-     * Define correct view for action
+     * Define correct view for action.
      */
     public function action_historyContactsEmails()
     {
@@ -286,14 +292,14 @@ class ConfiguratorController extends SugarController
     }
 
     /**
-     * Generates custom field_defs for selected fields
+     * Generates custom field_defs for selected fields.
      */
     public function action_historyContactsEmailsSave()
     {
         if (!empty($_POST['modules']) && is_array($_POST['modules'])) {
-            require_once('include/SubPanel/SubPanelDefinitions.php');
+            require_once 'include/SubPanel/SubPanelDefinitions.php';
 
-            $modules = array();
+            $modules = [];
             foreach ($_POST['modules'] as $moduleName => $enabled) {
                 $bean = BeanFactory::getBean($moduleName);
 
@@ -323,6 +329,7 @@ class ConfiguratorController extends SugarController
                     foreach ($subPanelDef['collection_list'] as $v) {
                         if (!empty($v['get_subpanel_data']) && $v['get_subpanel_data'] == 'function:get_emails_by_assign_or_link') {
                             $isValid = true;
+
                             break 2;
                         }
                     }
@@ -333,8 +340,9 @@ class ConfiguratorController extends SugarController
 
                 $bean->load_relationships();
                 foreach ($bean->get_linked_fields() as $fieldName => $fieldDef) {
-                    if ($bean->$fieldName->getRelatedModuleName() == 'Contacts') {
+                    if ($bean->{$fieldName}->getRelatedModuleName() == 'Contacts') {
                         $modules[$moduleName] = !$enabled;
+
                         break;
                     }
                 }

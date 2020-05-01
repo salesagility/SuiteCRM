@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,84 +36,82 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $module_name = 'Emails';
-$viewdefs[$module_name]['DetailView'] = array(
-    'templateMeta' => array(
-        'form' => array(
-            'buttons' => array(
-                0 => array(
-                    'customCode' =>  '<button class="button btn-edit-drafts" title="">{$MOD.LBL_BUTTON_EDIT_EDIT_DRAFT}</button>'
-                ),
+$viewdefs[$module_name]['DetailView'] = [
+    'templateMeta' => [
+        'form' => [
+            'buttons' => [
+                0 => [
+                    'customCode' => '<button class="button btn-edit-drafts" title="">{$MOD.LBL_BUTTON_EDIT_EDIT_DRAFT}</button>'
+                ],
                 'DELETE',
-                array(
-                    'customCode' =>  '<button class="button btn-edit-drafts" title="">{$MOD.LBL_SEND_BUTTON_LABEL}</button>'
-                ),
-            )
-        ),
-        'includes' => array(
-            array(
+                [
+                    'customCode' => '<button class="button btn-edit-drafts" title="">{$MOD.LBL_SEND_BUTTON_LABEL}</button>'
+                ],
+            ]
+        ],
+        'includes' => [
+            [
                 'file' => 'modules/Emails/include/DetailView/edit-draft.js',
-            ),
-        ),
+            ],
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
-        ),
-    ),
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
 
-    'panels' => array(
-
-        'LBL_EMAIL_INFORMATION' => array(
-            array(
-                'from_addr_name' => array(
+    'panels' => [
+        'LBL_EMAIL_INFORMATION' => [
+            [
+                'from_addr_name' => [
                     'name' => 'from_addr_name',
                     'label' => 'LBL_FROM',
-                ),
-            ),
-            array(
-                'to_addrs_names' => array(
+                ],
+            ],
+            [
+                'to_addrs_names' => [
                     'name' => 'to_addrs_names',
                     'label' => 'LBL_TO',
-                ),
-            ),
-            array(
-                'cc_addrs_names' => array(
+                ],
+            ],
+            [
+                'cc_addrs_names' => [
                     'name' => 'cc_addrs_names',
                     'label' => 'LBL_CC',
-                ),
-            ),
-            array(
-                'bcc_addrs_names' => array(
+                ],
+            ],
+            [
+                'bcc_addrs_names' => [
                     'name' => 'bcc_addrs_names',
                     'label' => 'LBL_BCC',
-                ),
-            ),
-            array(
-                'name' => array(
+                ],
+            ],
+            [
+                'name' => [
                     'name' => 'name',
                     'label' => 'LBL_SUBJECT',
-                ),
-            ),
-            array(
-                'description' => array(
+                ],
+            ],
+            [
+                'description' => [
                     'name' => 'description_html',
                     'label' => 'LBL_BODY'
-                ),
-            ),
-            array(
+                ],
+            ],
+            [
                 'parent_name'
-            ),
-            array(
-                'date_entered' => array(
+            ],
+            [
+                'date_entered' => [
                     'name' => 'date_entered',
                     'label' => 'LBL_DATE_ENTERED',
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 'category_id',
-            ),
-        )
-    )
-);
+            ],
+        ]
+    ]
+];

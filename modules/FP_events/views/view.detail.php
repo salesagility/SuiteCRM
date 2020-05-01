@@ -1,19 +1,17 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 class FP_eventsViewDetail extends ViewDetail
 {
     public $currSymbol;
+
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function display()
     {

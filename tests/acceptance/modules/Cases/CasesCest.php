@@ -5,12 +5,12 @@ use Faker\Generator;
 class CasesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class CasesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the cases module.
+     * As an administrator I want to view the cases module
      */
     public function testScenarioViewCasesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the cases module for testing');
 
@@ -55,14 +55,14 @@ class CasesCest
      * @param \Step\Acceptance\Cases $account
      *
      * As administrative user I want to create a case so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateCase(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Cases $cases,
-        \Step\Acceptance\AccountsTester $account
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Cases $cases,
+        Step\Acceptance\AccountsTester $account
     ) {
         $I->wantTo('Create a Case');
 
@@ -73,7 +73,7 @@ class CasesCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $account_name = 'Test_'. $this->fakeData->company();
+        $account_name = 'Test_' . $this->fakeData->company();
         $account->createAccount($account_name);
 
         // Navigate to cases list-view
@@ -82,7 +82,7 @@ class CasesCest
 
         // Create case
         $this->fakeData->seed($this->fakeDataSeed);
-        $cases->createCase('Test_'. $this->fakeData->company(), $account_name);
+        $cases->createCase('Test_' . $this->fakeData->company(), $account_name);
 
         // Delete case
         $detailView->clickActionMenuItem('Delete');

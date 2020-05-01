@@ -1,12 +1,12 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,27 +23,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-/*********************************************************************************
+/*
  * $Id$
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/AOS_Products/AOS_Products.php');
+require_once 'include/Dashlets/DashletGeneric.php';
+require_once 'modules/AOS_Products/AOS_Products.php';
 
 class AOS_ProductsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/AOS_Products/metadata/dashletviewdefs.php');
+        require 'modules/AOS_Products/metadata/dashletviewdefs.php';
 
         parent::__construct($id, $def);
 
@@ -56,6 +55,4 @@ class AOS_ProductsDashlet extends DashletGeneric
 
         $this->seedBean = new AOS_Products();
     }
-
-
 }

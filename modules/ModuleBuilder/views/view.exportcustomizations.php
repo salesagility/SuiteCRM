@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,32 +36,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
 class ViewExportcustomizations extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-        
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
     public function display()
     {
         global $current_user, $mod_strings;
         $smarty = new Sugar_Smarty();
-        $mb = new MBPackage("packageCustom");
-        $mod=$mb->getCustomModules();
+        $mb = new MBPackage('packageCustom');
+        $mod = $mb->getCustomModules();
         foreach ($mod as $key => $value) {
-            $modules[]=$key;
-            $custom[]=$value;
+            $modules[] = $key;
+            $custom[] = $value;
         }
         $nb_mod = count($modules);
         $smarty->assign('mod_strings', $mod_strings);
@@ -76,5 +61,20 @@ class ViewExportcustomizations extends SugarView
         $ajax->addCrumb($mod_strings['LBL_STUDIO'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
         $ajax->addSection('center', $mod_strings['LBL_EC_TITLE'], $smarty->fetch($this->getCustomFilePathIfExists('modules/ModuleBuilder/tpls/exportcustomizations.tpl')));
         echo $ajax->getJavascript();
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

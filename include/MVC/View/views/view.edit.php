@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,39 +36,36 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-require_once('include/EditView/EditView2.php');
+require_once 'include/EditView/EditView2.php';
 
 class ViewEdit extends SugarView
 {
     /**
-     * @var EditView $ev
+     * @var EditView
      */
     public $ev;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $type = 'edit';
 
     /**
-     * @var boolean $useForSubpanel determine whether view can be used for subpanel creates
+     * @var bool determine whether view can be used for subpanel creates
      */
     public $useForSubpanel = false;
 
     /**
-     * @var boolean to determine whether or not SubpanelQuickCreate has a separate display function
+     * @var bool to determine whether or not SubpanelQuickCreate has a separate display function
      */
     public $useModuleQuickCreateTemplate = false;
 
     /**
-     * @var boolean used to passed showTitle to $ev used for backwards compatibility
+     * @var bool used to passed showTitle to used for backwards compatibility
      */
     public $showTitle = true;
 
@@ -81,9 +77,6 @@ class ViewEdit extends SugarView
         parent::__construct();
     }
 
-
-
-
     /**
      * @see SugarView::preDisplay()
      */
@@ -91,12 +84,12 @@ class ViewEdit extends SugarView
     {
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
-        $this->ev->ss =& $this->ss;
+        $this->ev->ss = &$this->ss;
         $this->ev->setup($this->module, $this->bean, $metadataFile);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function display()
     {
@@ -105,7 +98,8 @@ class ViewEdit extends SugarView
     }
 
     /**
-     * Get a new EditView object
+     * Get a new EditView object.
+     *
      * @return EditView
      */
     public function getEditView()

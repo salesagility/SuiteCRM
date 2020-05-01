@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,30 +36,29 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
-require_once('modules/AOS_PDF_Templates/templateParser.php');
-require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
+require_once 'modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
+require_once 'modules/AOS_PDF_Templates/templateParser.php';
+require_once 'modules/AOS_PDF_Templates/AOS_PDF_Templates.php';
 
 global $sugar_config, $current_user;
 
 $bean = BeanFactory::getBean($_REQUEST['module']);
 
 if (!$bean) {
-    sugar_die("Invalid Module");
+    sugar_die('Invalid Module');
 }
 
-$recordIds = array();
+$recordIds = [];
 
 if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
     $order_by = '';
-    require_once('include/MassUpdate.php');
+    require_once 'include/MassUpdate.php';
     $mass = new MassUpdate();
     $mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_post']);
     $ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
     $query = $bean->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
     $result = DBManagerFactory::getInstance()->query($query, true);
-    $uids = array();
+    $uids = [];
     while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
         array_push($recordIds, $val['id']);
     }
@@ -68,14 +66,13 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
     $recordIds = explode(',', $_REQUEST['uid']);
 }
 
-
 $template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
 if (!$template) {
-    sugar_die("Invalid Template");
+    sugar_die('Invalid Template');
 }
 
-$file_name = str_replace(" ", "_", $template->name) . ".pdf";
+$file_name = str_replace(' ', '_', $template->name) . '.pdf';
 
 $format = $template->page_size . ($template->orientation === 'Landscape' ? '-L' : '');
 
@@ -85,14 +82,14 @@ foreach ($recordIds as $recordId) {
     $bean->retrieve($recordId);
     $pdf_history = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
-    $object_arr = array();
+    $object_arr = [];
     $object_arr[$bean->module_dir] = $bean->id;
 
     if ($bean->module_dir === 'Contacts') {
         $object_arr['Accounts'] = $bean->account_id;
     }
 
-    $search = array('@<script[^>]*?>.*?</script>@si',        // Strip out javascript
+    $search = ['@<script[^>]*?>.*?</script>@si',        // Strip out javascript
         '@<[\/\!]*?[^<>]*?>@si',        // Strip out HTML tags
         '@([\r\n])[\s]+@',            // Strip out white space
         '@&(quot|#34);@i',            // Replace HTML entities
@@ -102,9 +99,9 @@ foreach ($recordIds as $recordId) {
         '@&(nbsp|#160);@i',
         '@&(iexcl|#161);@i',
         '@<address[^>]*?>@si'
-    );
+    ];
 
-    $replace = array('',
+    $replace = ['',
         '',
         '\1',
         '"',
@@ -114,7 +111,7 @@ foreach ($recordIds as $recordId) {
         ' ',
         chr(161),
         '<br>'
-    );
+    ];
 
     $text = preg_replace($search, $replace, $template->description);
     $text = preg_replace_callback(
@@ -131,9 +128,10 @@ foreach ($recordIds as $recordId) {
     $header = templateParser::parse_template($header, $object_arr);
     $footer = templateParser::parse_template($footer, $object_arr);
 
-    $printable = str_replace("\n", "<br />", $converted);
+    $printable = str_replace("\n", '<br />', $converted);
 
     ob_clean();
+
     try {
         $note = new Note();
         $note->modified_user_id = $current_user->id;
@@ -171,4 +169,4 @@ foreach ($recordIds as $recordId) {
     }
 }
 
-$pdf->Output($file_name, "D");
+$pdf->Output($file_name, 'D');

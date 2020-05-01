@@ -5,12 +5,12 @@ use Faker\Generator;
 class AOK_KnowledgeBaseCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class AOK_KnowledgeBaseCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the knowledgeBase module.
+     * As an administrator I want to view the knowledgeBase module
      */
     public function testScenarioViewKnowledgeBaseModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the knowledgeBase module for testing');
 
@@ -54,13 +54,13 @@ class AOK_KnowledgeBaseCest
      * @param \Step\Acceptance\KnowledgeBase $knowledgeBase
      *
      * As administrative user I want to create a Knowledge Base so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateKnowledgeBase(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\KnowledgeBase $knowledgeBase
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\KnowledgeBase $knowledgeBase
     ) {
         $I->wantTo('Create a Knowledge Base');
 
@@ -71,7 +71,7 @@ class AOK_KnowledgeBaseCest
 
         // Create Knowledge Base
         $this->fakeData->seed($this->fakeDataSeed);
-        $knowledgeBase->createKnowledgeBase('Test_'. $this->fakeData->company());
+        $knowledgeBase->createKnowledgeBase('Test_' . $this->fakeData->company());
 
         // Delete Knowledge Base
         $detailView->clickActionMenuItem('Delete');

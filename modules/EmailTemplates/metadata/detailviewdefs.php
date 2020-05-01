@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,93 +36,79 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$viewdefs['EmailTemplates']['DetailView'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-    ),
- 'panels' =>array(
-  'default' =>
-  array(
-    
-    array(
-      'name',
-      '',
-    ),
-    
-    array(
-      'type',
-    ),
-    
-    array(
-      
-      array(
-        'name' => 'description',
-        'displayParams' =>
-        array(
-          'rows' => '1',
-          'cols' => '90',
-        ),
-      ),
-    ),
-    
-    array(
-      
-      array(
-        'name' => 'tracker_url',
-        'fields' =>
-        array(
-          'tracker_url',
-          'url_text',
-        ),
-      ),
-    ),
-    
-    array(
-      
-      array(
-        'name' => 'subject',
-        'displayParams' =>
-        array(
-          'rows' => '1',
-          'cols' => '90',
-        ),
-      ),
-    ),
-    
-    array(
-      'text_only',
-    ),
-    
-    array(
-      
-      array(
-        'name' => 'body_html',
-        'displayParams' =>
-        array(
-          'rows' => '20',
-          'cols' => '100',
-        ),
-      ),
-    ),
-    
-    array(
-      
-      array(
-        'name' => 'ATTACHMENTS_JAVASCRIPT',
-        'customCode' => '{$fields.attachments_javascript.value} {$fields.attachments.value}',
-        'description' => 'This field was auto generated',
-      ),
-    ),
-  ),
-)
+$viewdefs['EmailTemplates']['DetailView'] = [
+    'templateMeta' => ['maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
+    'panels' => [
+        'default' => [
+            [
+                'name',
+                '',
+            ],
 
+            [
+                'type',
+            ],
 
-);
+            [
+                [
+                    'name' => 'description',
+                    'displayParams' => [
+                        'rows' => '1',
+                        'cols' => '90',
+                    ],
+                ],
+            ],
+
+            [
+                [
+                    'name' => 'tracker_url',
+                    'fields' => [
+                        'tracker_url',
+                        'url_text',
+                    ],
+                ],
+            ],
+
+            [
+                [
+                    'name' => 'subject',
+                    'displayParams' => [
+                        'rows' => '1',
+                        'cols' => '90',
+                    ],
+                ],
+            ],
+
+            [
+                'text_only',
+            ],
+
+            [
+                [
+                    'name' => 'body_html',
+                    'displayParams' => [
+                        'rows' => '20',
+                        'cols' => '100',
+                    ],
+                ],
+            ],
+
+            [
+                [
+                    'name' => 'ATTACHMENTS_JAVASCRIPT',
+                    'customCode' => '{$fields.attachments_javascript.value} {$fields.attachments.value}',
+                    'description' => 'This field was auto generated',
+                ],
+            ],
+        ],
+    ]
+];

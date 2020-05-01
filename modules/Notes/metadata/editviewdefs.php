@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,16 +36,15 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$viewdefs['Notes']['EditView'] = array(
-    'templateMeta' => array('form' => array('enctype'=> 'multipart/form-data',
-                                            ),
-                            'maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-'javascript' => '{sugar_getscript file="include/javascript/dashlets.js"}
+$viewdefs['Notes']['EditView'] = [
+    'templateMeta' => ['form' => ['enctype' => 'multipart/form-data',
+    ],
+        'maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+        'javascript' => '{sugar_getscript file="include/javascript/dashlets.js"}
 <script>
 function deleteAttachmentCallBack(text)
 	{literal} { {/literal}
@@ -61,29 +59,26 @@ function deleteAttachmentCallBack(text)
 {literal} } {/literal}
 </script>
 <script>toggle_portal_flag(); function toggle_portal_flag()  {literal} { {/literal} {$TOGGLE_JS} {literal} } {/literal} </script>',
-),
-    'panels' =>array(
-        'lbl_note_information' => array(
-                    array('contact_name','parent_name'),
-                    array(
-                        array('name'=>'name', 'displayParams'=>array('size'=>60)),''
-                    ),
+    ],
+    'panels' => [
+        'lbl_note_information' => [
+            ['contact_name', 'parent_name'],
+            [
+                ['name' => 'name', 'displayParams' => ['size' => 60]], ''
+            ],
 
-                    array(
-                        'filename',
+            [
+                'filename',
+            ],
+            [
+                ['name' => 'description', 'label' => 'LBL_NOTE_STATUS'],
+            ],
+        ],
 
-                    ),
-                    array(
-                        array('name' => 'description', 'label' => 'LBL_NOTE_STATUS'),
-                    ),
-
-        ),
-
-
-      'LBL_PANEL_ASSIGNMENT' => array(
-        array(
-            array('name' => 'assigned_user_name','label' => 'LBL_ASSIGNED_TO'),
-        ),
-      ),
-    )
-);
+        'LBL_PANEL_ASSIGNMENT' => [
+            [
+                ['name' => 'assigned_user_name', 'label' => 'LBL_ASSIGNED_TO'],
+            ],
+        ],
+    ]
+];

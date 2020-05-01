@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,9 +39,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $fields
  */
-
-
 function additionalDetailsContact($fields)
 {
     static $mod_strings;
@@ -49,14 +49,14 @@ function additionalDetailsContact($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Contacts');
     }
-     
+
     $overlib_string = '';
     if (!empty($fields['ID'])) {
-        $overlib_string .= '<input type="hidden" value="'. $fields['ID'];
+        $overlib_string .= '<input type="hidden" value="' . $fields['ID'];
         $overlib_string .= '">';
     }
 
-    $overlib_string .= '<h2><img src="index.php?entryPoint=getImage&themeName=' . SugarThemeRegistry::current()->name .'&imageName=Contacts.gif"/> '.$mod_strings['LBL_CONTACT'].'</h2>';
+    $overlib_string .= '<h2><img src="index.php?entryPoint=getImage&themeName=' . SugarThemeRegistry::current()->name . '&imageName=Contacts.gif"/> ' . $mod_strings['LBL_CONTACT'] . '</h2>';
 
     if (!empty($fields['PRIMARY_ADDRESS_STREET']) || !empty($fields['PRIMARY_ADDRESS_CITY']) ||
         !empty($fields['PRIMARY_ADDRESS_STATE']) || !empty($fields['PRIMARY_ADDRESS_POSTALCODE']) ||
@@ -88,28 +88,28 @@ function additionalDetailsContact($fields)
         $overlib_string .= '<br>';
     }
     if (!empty($fields['PHONE_MOBILE'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_MOBILE_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_MOBILE'] . '</span><br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_MOBILE_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_MOBILE'] . '</span><br>';
     }
     if (!empty($fields['PHONE_HOME'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_HOME_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_HOME'] . '</span><br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_HOME_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_HOME'] . '</span><br>';
     }
     if (!empty($fields['PHONE_OTHER'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_OTHER_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_OTHER'] . '</span><br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_OTHER_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_OTHER'] . '</span><br>';
     }
 
     if (!empty($fields['DATE_MODIFIED'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_DATE_MODIFIED'] . '</b> ' . $fields['DATE_MODIFIED'] . '<br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_DATE_MODIFIED'] . '</b> ' . $fields['DATE_MODIFIED'] . '<br>';
     }
-    
+
     if (!empty($fields['DESCRIPTION'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
+        $overlib_string .= '<b>' . $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
         if (strlen($fields['DESCRIPTION']) > 300) {
             $overlib_string .= '...';
         }
     }
-    
-    return array('fieldToAddTo' => 'NAME',
-                 'string' => $overlib_string,
-                 'editLink' => "index.php?action=EditView&module=Contacts&return_module=Contacts&record={$fields['ID']}",
-                 'viewLink' => "index.php?action=DetailView&module=Contacts&return_module=Contacts&record={$fields['ID']}");
+
+    return ['fieldToAddTo' => 'NAME',
+        'string' => $overlib_string,
+        'editLink' => "index.php?action=EditView&module=Contacts&return_module=Contacts&record={$fields['ID']}",
+        'viewLink' => "index.php?action=DetailView&module=Contacts&return_module=Contacts&record={$fields['ID']}"];
 }

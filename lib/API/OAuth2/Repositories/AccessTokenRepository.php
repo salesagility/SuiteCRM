@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM\API\OAuth2\Repositories;
 
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
@@ -49,6 +47,7 @@ use SuiteCRM\API\OAuth2\Entities\AccessTokenEntity;
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
     const ACCESS_TOKEN_FIELD = 'access_token';
+
     /**
      * {@inheritdoc}
      */
@@ -81,9 +80,9 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     {
         // Some logic here to revoke the access token
         $token = new \OAuth2Tokens();
-        $tokens =$token->get_list(
+        $tokens = $token->get_list(
             '',
-            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+            self::ACCESS_TOKEN_FIELD . ' = "' . $tokenId . '"'
         );
         /**
          * @var \OAuth2Tokens $token
@@ -96,6 +95,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
 
     /**
      * {@inheritdoc}
+     *
      * @return bool
      */
     public function isAccessTokenRevoked($tokenId)
@@ -103,9 +103,9 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         global $timedate;
 
         $token = new \OAuth2Tokens();
-        $tokens =$token->get_list(
+        $tokens = $token->get_list(
             '',
-            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+            self::ACCESS_TOKEN_FIELD . ' = "' . $tokenId . '"'
         );
         /**
          * @var \OAuth2Tokens $token
@@ -114,18 +114,21 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             $expires = $timedate->fromUser($token->access_token_expires);
             if (!empty($expires)) {
                 $now = new \DateTime('now', $expires->getTimezone());
-                if ($now > $expires || (bool)$token->token_is_revoked === true) {
+                if ($now > $expires || (bool) $token->token_is_revoked === true) {
                     $token->token_is_revoked = true;
                     $token->save();
+
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     /**
      * {@inheritdoc}
+     *
      * @return AccessTokenEntity
      */
     public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,8 +40,7 @@
 namespace Api\V8\Helper;
 
 /**
- * Class ModuleListProvider
- * @package Api\V8\Helper
+ * Class ModuleListProvider.
  */
 class ModuleListProvider
 {
@@ -64,6 +62,7 @@ class ModuleListProvider
 
     /**
      * @param $modules
+     *
      * @return mixed
      */
     private function addModuleLabels($modules)
@@ -73,11 +72,13 @@ class ModuleListProvider
         foreach ($modules as $moduleName => &$moduleData) {
             $moduleData['label'] = $app_list_strings['moduleList'][$moduleName];
         }
+
         return $modules;
     }
 
     /**
      * @param $modules
+     *
      * @return array
      */
     private function removeInvisibleModules($modules)
@@ -93,6 +94,7 @@ class ModuleListProvider
 
     /**
      * @param $modules
+     *
      * @return mixed
      */
     private function markACLAccess($modules)
@@ -121,6 +123,8 @@ class ModuleListProvider
 
     /**
      * @param $actions
+     * @param mixed $moduleName
+     *
      * @return array
      */
     private function buildAccessArray($moduleName, $actions)
@@ -132,12 +136,14 @@ class ModuleListProvider
             }
             $access[] = $actionName;
         }
+
         return $access;
     }
 
     /**
      * @param $level
      * @param $module
+     *
      * @return bool
      */
     private function hasACL($level, $module)

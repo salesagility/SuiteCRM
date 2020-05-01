@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -60,18 +58,18 @@ function getJSLanguage()
     $lang = clean_path($_REQUEST['lang']);
     $languages = get_languages();
 
-    if (!preg_match("/^\w\w_\w\w$/", $lang) || !isset($languages[$lang])) {
-        if (!preg_match("/^\w\w_\w\w$/", $lang)) {
+    if (!preg_match('/^\\w\\w_\\w\\w$/', $lang) || !isset($languages[$lang])) {
+        if (!preg_match('/^\\w\\w_\\w\\w$/', $lang)) {
             echo 'did not match regex<br/>';
         } else {
-            echo  "$lang was not in list . <pre>".print_r($languages, true).'</pre>';
+            echo  "{$lang} was not in list . <pre>" . print_r($languages, true) . '</pre>';
         }
         echo 'Invalid language specified';
 
         return;
     }
     if (empty($_REQUEST['modulename']) || $_REQUEST['modulename'] === 'app_strings') {
-        $file = sugar_cached('jsLanguage/').$lang.'.js';
+        $file = sugar_cached('jsLanguage/') . $lang . '.js';
         if (!is_file($file)) {
             jsLanguage::createAppStringsCache($lang);
         }
@@ -83,7 +81,7 @@ function getJSLanguage()
 
             return;
         }
-        $file = sugar_cached('jsLanguage/').$module.'/'.$lang.'.js';
+        $file = sugar_cached('jsLanguage/') . $module . '/' . $lang . '.js';
         if (!is_file($file)) {
             jsLanguage::createModuleStringsCache($module, $lang);
         }
@@ -93,7 +91,7 @@ function getJSLanguage()
     header('Content-Type: application/javascript');
     header('Cache-Control: max-age=31556940, private');
     header('Pragma: ');
-    header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + 31556940));
+    header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 31556940));
 
     readfile($file);
 }

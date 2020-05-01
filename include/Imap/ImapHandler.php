@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,11 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 require_once __DIR__ . '/ImapHandlerInterface.php';
 
@@ -53,39 +50,32 @@ require_once __DIR__ . '/ImapHandlerInterface.php';
  */
 class ImapHandler implements ImapHandlerInterface
 {
-
     /**
-     *
      * @var LoggerManager
      */
     protected $logger;
 
     /**
-     *
-     * @var resource|boolean
+     * @var bool|resource
      */
     protected $stream;
 
     /**
-     *
      * @var bool
      */
     protected $logErrors;
 
     /**
-     *
      * @var bool
      */
     protected $logCalls;
 
     /**
-     *
      * @var string
      */
     protected $charset;
 
     /**
-     *
      * @param bool $logErrors
      * @param bool $logCalls
      * @param null $charset
@@ -100,76 +90,7 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
-     * @param resource $stream
-     * @param bool $validate
-     */
-    protected function setStream($stream, $validate = true)
-    {
-        if ($validate && !is_resource($stream)) {
-            $this->logger->error('ImapHandler trying to set a non valid resource az stream.');
-        }
-        $this->stream = $stream;
-    }
-
-    /**
-     *
-     * @param bool $validate
-     * @return resource
-     */
-    protected function getStream($validate = true)
-    {
-        if ($validate && !is_resource($this->stream)) {
-            $this->logger->error('ImapHandler trying to use a non valid resource stream.');
-        }
-
-        return $this->stream;
-    }
-
-    /**
-     *
-     * @param array|string $errors
-     */
-    protected function log($errors)
-    {
-        if (is_string($errors)) {
-            $this->log([$errors]);
-        } elseif ($errors && $this->logErrors) {
-            foreach ($errors as $error) {
-                if ($error) {
-                    $this->logger->warn('An Imap error detected: ' . json_encode($error));
-                }
-            }
-        }
-    }
-
-    /**
-     *
-     * @param string $func
-     * @param array $args
-     */
-    protected function logCall($func, $args)
-    {
-        if ($this->logCalls) {
-            $this->logger->debug('IMAP wrapper called: ' . __CLASS__ . "::$func(" . json_encode($args) . ')');
-        }
-    }
-
-    /**
-     *
-     * @param string $func
-     * @param mixed $ret
-     */
-    protected function logReturn($func, $ret)
-    {
-        if ($this->logCalls) {
-            $this->logger->debug('IMAP wrapper return: ' . __CLASS__ . "::$func(...) => " . json_encode($ret));
-        }
-    }
-
-    /**
-     *
-     * @return boolean
+     * @return bool
      */
     public function close()
     {
@@ -183,7 +104,6 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @return array
      */
     public function getAlerts()
@@ -197,8 +117,7 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
-     * @return resource|boolean
+     * @return bool|resource
      */
     public function getConnection()
     {
@@ -210,7 +129,6 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @return array
      */
     public function getErrors()
@@ -224,8 +142,7 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
-     * @return string|boolean
+     * @return bool|string
      */
     public function getLastError()
     {
@@ -238,9 +155,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $ref
      * @param string $pattern
+     *
      * @return array
      */
     public function getMailboxes($ref, $pattern)
@@ -253,8 +170,7 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
-     * @return boolean
+     * @return bool
      */
     public function isAvailable()
     {
@@ -266,14 +182,14 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
      * @param string $username
      * @param string $password
      * @param int $options
      * @param int $n_retries
-     * @param array|null $params
-     * @return resource|boolean
+     * @param null|array $params
+     *
+     * @return bool|resource
      */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null)
     {
@@ -293,7 +209,6 @@ class ImapHandler implements ImapHandlerInterface
 
         $this->setStream(@imap_open($mailbox, $username, $password, $options, $n_retries, $params));
 
-
         if (!$this->getStream()) {
             $this->log('IMAP open error');
         }
@@ -303,8 +218,7 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
-     * @return boolean
+     * @return bool
      */
     public function ping()
     {
@@ -316,11 +230,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
      * @param int $options
      * @param int $n_retries
-     * @return boolean
+     *
+     * @return bool
      */
     public function reopen($mailbox, $options = 0, $n_retries = 0)
     {
@@ -335,9 +249,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $timeout_type
      * @param int $timeout
+     *
      * @return mixed
      */
     public function setTimeout($timeout_type, $timeout = -1)
@@ -352,14 +266,13 @@ class ImapHandler implements ImapHandlerInterface
         return $ret;
     }
 
-
     /**
-     *
      * @param int $criteria
      * @param int $reverse
      * @param int $options
      * @param string $search_criteria
      * @param string $charset
+     *
      * @return array
      */
     public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null)
@@ -374,8 +287,8 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $uid
+     *
      * @return int
      */
     public function getMessageNo($uid)
@@ -388,11 +301,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $msg_number
      * @param int $fromLength
      * @param int $subjectLength
      * @param string $defaultHost
+     *
      * @return bool|object Returns FALSE on error or, if successful, the information in an object
      */
     public function getHeaderInfo($msg_number, $fromLength = 0, $subjectLength = 0, $defaultHost = null)
@@ -408,9 +321,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $msg_number
      * @param int $options
+     *
      * @return string
      */
     public function fetchHeader($msg_number, $options = 0)
@@ -423,11 +336,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
      * @param string $message
      * @param string $options
      * @param string $internal_date
+     *
      * @return bool
      */
     public function append($mailbox, $message, $options = null, $internal_date = null)
@@ -452,8 +365,8 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $msg_number
+     *
      * @return int
      */
     public function getUid($msg_number)
@@ -481,7 +394,7 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     * @return object|bool Returns FALSE on failure.
+     * @return bool|object returns FALSE on failure
      */
     public function check()
     {
@@ -496,11 +409,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $sequence
      * @param string $flag
      * @param int $options
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function clearFlagFull($sequence, $flag, $options = 0)
     {
@@ -515,9 +428,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function createMailbox($mailbox)
     {
@@ -532,10 +445,10 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $msg_number
      * @param int $options
-     * @return bool Returns TRUE.
+     *
+     * @return bool returns TRUE
      */
     public function delete($msg_number, $options = 0)
     {
@@ -550,9 +463,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function deleteMailbox($mailbox)
     {
@@ -567,10 +480,10 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $msg_number
      * @param string $section
      * @param int $options
+     *
      * @return string
      */
     public function fetchBody($msg_number, $section, $options = 0)
@@ -583,9 +496,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $sequence
      * @param int $options
+     *
      * @return array
      */
     public function fetchOverview($sequence, $options = 0)
@@ -598,9 +511,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $msg_number
      * @param int $options
+     *
      * @return object
      */
     public function fetchStructure($msg_number, $options = 0)
@@ -613,9 +526,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param int $msg_number
      * @param int $options
+     *
      * @return string
      */
     public function getBody($msg_number, $options)
@@ -628,7 +541,7 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     * @return int|bool Return the number of messages in the current mailbox, as an integer, or FALSE on error.
+     * @return bool|int return the number of messages in the current mailbox, as an integer, or FALSE on error
      */
     public function getNumberOfMessages()
     {
@@ -643,9 +556,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
      * @param int $options
+     *
      * @return object
      */
     public function getStatus($mailbox, $options)
@@ -658,11 +571,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $msgList
      * @param string $mailbox
      * @param int $options
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function mailCopy($msgList, $mailbox, $options = 0)
     {
@@ -677,11 +590,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $msgList
      * @param string $mailbox
      * @param int $options
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function mailMove($msgList, $mailbox, $options = 0)
     {
@@ -696,8 +609,8 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $text
+     *
      * @return array
      */
     public function mimeHeaderDecode($text)
@@ -710,10 +623,10 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $old_mbox
      * @param string $new_mbox
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function renameMailbox($old_mbox, $new_mbox)
     {
@@ -728,9 +641,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $headers
      * @param string $defaultHost
+     *
      * @return object
      */
     public function rfc822ParseHeaders($headers, $defaultHost = 'UNKNOWN')
@@ -743,11 +656,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $criteria
      * @param int $options
      * @param string $charset
-     * @return array|bool Return FALSE if it does not understand the search criteria or no messages have been found.
+     *
+     * @return array|bool return FALSE if it does not understand the search criteria or no messages have been found
      */
     public function search($criteria, $options = SE_FREE, $charset = null)
     {
@@ -776,11 +689,11 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $sequence
      * @param string $flag
      * @param int $options
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function setFlagFull($sequence, $flag, $options = NIL)
     {
@@ -795,9 +708,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function subscribe($mailbox)
     {
@@ -812,9 +725,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mailbox
-     * @return bool Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool returns TRUE on success or FALSE on failure
      */
     public function unsubscribe($mailbox)
     {
@@ -829,9 +742,9 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $data
-     * @return string|bool FALSE if text contains invalid modified UTF-7 sequence or text contains a character that is not part of ISO-8859-1 character set.
+     *
+     * @return bool|string FALSE if text contains invalid modified UTF-7 sequence or text contains a character that is not part of ISO-8859-1 character set
      */
     public function utf7Encode($data)
     {
@@ -846,8 +759,8 @@ class ImapHandler implements ImapHandlerInterface
     }
 
     /**
-     *
      * @param string $mime_encoded_text
+     *
      * @return string
      */
     public function utf8($mime_encoded_text)
@@ -857,5 +770,69 @@ class ImapHandler implements ImapHandlerInterface
         $this->logReturn(__FUNCTION__, $ret);
 
         return $ret;
+    }
+
+    /**
+     * @param resource $stream
+     * @param bool $validate
+     */
+    protected function setStream($stream, $validate = true)
+    {
+        if ($validate && !is_resource($stream)) {
+            $this->logger->error('ImapHandler trying to set a non valid resource az stream.');
+        }
+        $this->stream = $stream;
+    }
+
+    /**
+     * @param bool $validate
+     *
+     * @return resource
+     */
+    protected function getStream($validate = true)
+    {
+        if ($validate && !is_resource($this->stream)) {
+            $this->logger->error('ImapHandler trying to use a non valid resource stream.');
+        }
+
+        return $this->stream;
+    }
+
+    /**
+     * @param array|string $errors
+     */
+    protected function log($errors)
+    {
+        if (is_string($errors)) {
+            $this->log([$errors]);
+        } elseif ($errors && $this->logErrors) {
+            foreach ($errors as $error) {
+                if ($error) {
+                    $this->logger->warn('An Imap error detected: ' . json_encode($error));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param string $func
+     * @param array $args
+     */
+    protected function logCall($func, $args)
+    {
+        if ($this->logCalls) {
+            $this->logger->debug('IMAP wrapper called: ' . __CLASS__ . "::{$func}(" . json_encode($args) . ')');
+        }
+    }
+
+    /**
+     * @param string $func
+     * @param mixed $ret
+     */
+    protected function logReturn($func, $ret)
+    {
+        if ($this->logCalls) {
+            $this->logger->debug('IMAP wrapper return: ' . __CLASS__ . "::{$func}(...) => " . json_encode($ret));
+        }
     }
 }

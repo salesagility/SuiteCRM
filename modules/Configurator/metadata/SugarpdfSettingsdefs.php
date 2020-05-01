@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,178 +40,175 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+require_once 'include/Sugarpdf/sugarpdf_config.php';
 
+$SugarpdfSettings = [
+    'sugarpdf_pdf_title' => [
+        'label' => $mod_strings['PDF_TITLE'],
+        'info_label' => $mod_strings['PDF_TITLE_INFO'],
+        'value' => PDF_TITLE,
+        'class' => 'basic',
+        'type' => 'text',
+    ],
+    'sugarpdf_pdf_subject' => [
+        'label' => $mod_strings['PDF_SUBJECT'],
+        'info_label' => $mod_strings['PDF_SUBJECT_INFO'],
+        'value' => PDF_SUBJECT,
+        'class' => 'basic',
+        'type' => 'text',
+    ],
+    'sugarpdf_pdf_author' => [
+        'label' => $mod_strings['PDF_AUTHOR'],
+        'info_label' => $mod_strings['PDF_AUTHOR_INFO'],
+        'value' => PDF_AUTHOR,
+        'class' => 'basic',
+        'type' => 'text',
+        'required' => 'true'
+    ],
+    'sugarpdf_pdf_keywords' => [
+        'label' => $mod_strings['PDF_KEYWORDS'],
+        'info_label' => $mod_strings['PDF_KEYWORDS_INFO'],
+        'value' => PDF_KEYWORDS,
+        'class' => 'basic',
+        'type' => 'text'
+    ],
+    'sugarpdf_pdf_header_logo' => [
+        'label' => $mod_strings['PDF_HEADER_LOGO'],
+        'info_label' => $mod_strings['PDF_HEADER_LOGO_INFO'],
+        'value' => PDF_HEADER_LOGO,
+        'path' => K_PATH_CUSTOM_IMAGES . PDF_HEADER_LOGO,
+        'class' => 'logo',
+        'type' => 'image',
+    ],
+    'new_header_logo' => [
+        'label' => $mod_strings['PDF_NEW_HEADER_LOGO'],
+        'info_label' => $mod_strings['PDF_NEW_HEADER_LOGO_INFO'],
+        'value' => '',
+        'class' => 'logo',
+        'type' => 'file',
+    ],
+    'sugarpdf_pdf_small_header_logo' => [
+        'label' => $mod_strings['PDF_SMALL_HEADER_LOGO'],
+        'info_label' => $mod_strings['PDF_SMALL_HEADER_LOGO_INFO'],
+        'value' => PDF_SMALL_HEADER_LOGO,
+        'path' => K_PATH_CUSTOM_IMAGES . PDF_SMALL_HEADER_LOGO,
+        'class' => 'logo',
+        'type' => 'image',
+    ],
+    'new_small_header_logo' => [
+        'label' => $mod_strings['PDF_NEW_SMALL_HEADER_LOGO'],
+        'info_label' => $mod_strings['PDF_NEW_SMALL_HEADER_LOGO_INFO'],
+        'value' => '',
+        'class' => 'logo',
+        'type' => 'file',
+    ],
+    'sugarpdf_pdf_filename' => [
+        'label' => $mod_strings['PDF_FILENAME'],
+        'info_label' => $mod_strings['PDF_FILENAME_INFO'],
+        'value' => PDF_FILENAME,
+        'class' => 'advanced',
+        'type' => 'text',
+        'required' => 'true'
+    ],
+    'sugarpdf_pdf_compression' => [
+        'label' => $mod_strings['PDF_COMPRESSION'],
+        'info_label' => $mod_strings['PDF_COMPRESSION_INFO'],
+        'value' => PDF_COMPRESSION,
+        'class' => 'advanced',
+        'type' => 'bool',
+    ],
+    'sugarpdf_pdf_jpeg_quality' => [
+        'label' => $mod_strings['PDF_JPEG_QUALITY'],
+        'info_label' => $mod_strings['PDF_JPEG_QUALITY_INFO'],
+        'value' => PDF_JPEG_QUALITY,
+        'class' => 'advanced',
+        'type' => 'percent',
+        'required' => 'true'
+    ],
+    'sugarpdf_pdf_pdf_version' => [
+        'label' => $mod_strings['PDF_PDF_VERSION'],
+        'info_label' => $mod_strings['PDF_PDF_VERSION_INFO'],
+        'value' => PDF_PDF_VERSION,
+        'class' => 'advanced',
+        'type' => 'number',
+        'required' => 'true'
+    ],
 
-require_once('include/Sugarpdf/sugarpdf_config.php');
+    'sugarpdf_pdf_protection' => [
+        'label' => $mod_strings['PDF_PROTECTION'],
+        'info_label' => $mod_strings['PDF_PROTECTION_INFO'],
+        'value' => explode(',', PDF_PROTECTION),
+        'class' => 'advanced',
+        'type' => 'multiselect',
+        'selectList' => ['print' => 'Print', 'modify' => 'Modify', 'copy' => 'Copy', 'annot-forms' => 'Annotations and forms'],
+    ],
 
-$SugarpdfSettings = array(
-    "sugarpdf_pdf_title"=>array(
-        "label"=>$mod_strings["PDF_TITLE"],
-        "info_label"=>$mod_strings["PDF_TITLE_INFO"],
-        "value"=>PDF_TITLE,
-        "class"=>"basic",
-        "type"=>"text",
-    ),
-    "sugarpdf_pdf_subject"=>array(
-        "label"=>$mod_strings["PDF_SUBJECT"],
-        "info_label"=>$mod_strings["PDF_SUBJECT_INFO"],
-        "value"=>PDF_SUBJECT,
-        "class"=>"basic",
-        "type"=>"text",
-    ),
-    "sugarpdf_pdf_author"=>array(
-        "label"=>$mod_strings["PDF_AUTHOR"],
-        "info_label"=>$mod_strings["PDF_AUTHOR_INFO"],
-        "value"=>PDF_AUTHOR,
-        "class"=>"basic",
-        "type"=>"text",
-        "required"=>"true"
-    ),
-    "sugarpdf_pdf_keywords"=>array(
-        "label"=>$mod_strings["PDF_KEYWORDS"],
-        "info_label"=>$mod_strings["PDF_KEYWORDS_INFO"],
-        "value"=>PDF_KEYWORDS,
-        "class"=>"basic",
-        "type"=>"text"
-    ),
-    "sugarpdf_pdf_header_logo"=>array(
-        "label"=>$mod_strings["PDF_HEADER_LOGO"],
-        "info_label"=>$mod_strings["PDF_HEADER_LOGO_INFO"],
-        "value"=>PDF_HEADER_LOGO,
-        "path"=>K_PATH_CUSTOM_IMAGES.PDF_HEADER_LOGO,
-        "class"=>"logo",
-        "type"=>"image",
-    ),
-    "new_header_logo"=>array(
-        "label"=>$mod_strings["PDF_NEW_HEADER_LOGO"],
-        "info_label"=>$mod_strings["PDF_NEW_HEADER_LOGO_INFO"],
-        "value"=>"",
-        "class"=>"logo",
-        "type"=>"file",
-    ),
-    "sugarpdf_pdf_small_header_logo"=>array(
-        "label"=>$mod_strings["PDF_SMALL_HEADER_LOGO"],
-        "info_label"=>$mod_strings["PDF_SMALL_HEADER_LOGO_INFO"],
-        "value"=>PDF_SMALL_HEADER_LOGO,
-        "path"=>K_PATH_CUSTOM_IMAGES.PDF_SMALL_HEADER_LOGO,
-        "class"=>"logo",
-        "type"=>"image",
-    ),
-    "new_small_header_logo"=>array(
-        "label"=>$mod_strings["PDF_NEW_SMALL_HEADER_LOGO"],
-        "info_label"=>$mod_strings["PDF_NEW_SMALL_HEADER_LOGO_INFO"],
-        "value"=>"",
-        "class"=>"logo",
-        "type"=>"file",
-    ),
-    "sugarpdf_pdf_filename"=>array(
-        "label"=>$mod_strings["PDF_FILENAME"],
-        "info_label"=>$mod_strings["PDF_FILENAME_INFO"],
-        "value"=>PDF_FILENAME,
-        "class"=>"advanced",
-        "type"=>"text",
-        "required"=>"true"
-    ),
-    "sugarpdf_pdf_compression"=>array(
-        "label"=>$mod_strings["PDF_COMPRESSION"],
-        "info_label"=>$mod_strings["PDF_COMPRESSION_INFO"],
-        "value"=>PDF_COMPRESSION,
-        "class"=>"advanced",
-        "type"=>"bool",
-    ),
-    "sugarpdf_pdf_jpeg_quality"=>array(
-        "label"=>$mod_strings["PDF_JPEG_QUALITY"],
-        "info_label"=>$mod_strings["PDF_JPEG_QUALITY_INFO"],
-        "value"=>PDF_JPEG_QUALITY,
-        "class"=>"advanced",
-        "type"=>"percent",
-        "required"=>"true"
-    ),
-    "sugarpdf_pdf_pdf_version"=>array(
-        "label"=>$mod_strings["PDF_PDF_VERSION"],
-        "info_label"=>$mod_strings["PDF_PDF_VERSION_INFO"],
-        "value"=>PDF_PDF_VERSION,
-        "class"=>"advanced",
-        "type"=>"number",
-        "required"=>"true"
-    ),
-    
-    
-    "sugarpdf_pdf_protection"=>array(
-        "label"=>$mod_strings["PDF_PROTECTION"],
-        "info_label"=>$mod_strings["PDF_PROTECTION_INFO"],
-        "value"=>explode(",", PDF_PROTECTION),
-        "class"=>"advanced",
-        "type"=>"multiselect",
-        "selectList"=>array("print"=>"Print", "modify"=>"Modify", "copy"=>"Copy", "annot-forms"=>"Annotations and forms"),
-    ),
-    
-    "sugarpdf_pdf_user_password"=>array(
-        "label"=>$mod_strings["PDF_USER_PASSWORD"],
-        "info_label"=>$mod_strings["PDF_USER_PASSWORD_INFO"],
-        "value"=>blowfishDecode(blowfishGetKey('sugarpdf_pdf_user_password'), PDF_USER_PASSWORD),
-        "class"=>"advanced",
-        "type"=>"password"
-    ),
-    "sugarpdf_pdf_owner_password"=>array(
-        "label"=>$mod_strings["PDF_OWNER_PASSWORD"],
-        "info_label"=>$mod_strings["PDF_OWNER_PASSWORD_INFO"],
-        "value"=>blowfishDecode(blowfishGetKey('sugarpdf_pdf_owner_password'), PDF_OWNER_PASSWORD),
-        "class"=>"advanced",
-        "type"=>"password"
-    ),
+    'sugarpdf_pdf_user_password' => [
+        'label' => $mod_strings['PDF_USER_PASSWORD'],
+        'info_label' => $mod_strings['PDF_USER_PASSWORD_INFO'],
+        'value' => blowfishDecode(blowfishGetKey('sugarpdf_pdf_user_password'), PDF_USER_PASSWORD),
+        'class' => 'advanced',
+        'type' => 'password'
+    ],
+    'sugarpdf_pdf_owner_password' => [
+        'label' => $mod_strings['PDF_OWNER_PASSWORD'],
+        'info_label' => $mod_strings['PDF_OWNER_PASSWORD_INFO'],
+        'value' => blowfishDecode(blowfishGetKey('sugarpdf_pdf_owner_password'), PDF_OWNER_PASSWORD),
+        'class' => 'advanced',
+        'type' => 'password'
+    ],
 
-    "sugarpdf_pdf_acl_access"=>array(
-        "label"=>$mod_strings["PDF_ACL_ACCESS"],
-        "info_label"=>$mod_strings["PDF_ACL_ACCESS_INFO"],
-        "value"=>PDF_ACL_ACCESS,
-        "class"=>"advanced",
-        "type"=>"select",
-        "selectList"=>array("edit"=>"Edition","list"=>"List","detail"=>"Detail", "export"=>"Export"),
-        "required"=>"true"
-    ),
-    "sugarpdf_k_small_ratio"=>array(
-        "label"=>$mod_strings["K_SMALL_RATIO"],
-        "info_label"=>$mod_strings["K_SMALL_RATIO_INFO"],
-        "value"=>K_SMALL_RATIO,
-        "class"=>"advanced",
-        "type"=>"number",
-        "required"=>"true"
-    ),
-    "sugarpdf_k_cell_height_ratio"=>array(
-        "label"=>$mod_strings["K_CELL_HEIGHT_RATIO"],
-        "info_label"=>$mod_strings["K_CELL_HEIGHT_RATIO_INFO"],
-        "value"=>K_CELL_HEIGHT_RATIO,
-        "class"=>"advanced",
-        "type"=>"number",
-        "required"=>"true"
-    ),
-    "sugarpdf_pdf_image_scale_ratio"=>array(
-        "label"=>$mod_strings["PDF_IMAGE_SCALE_RATIO"],
-        "info_label"=>$mod_strings["PDF_IMAGE_SCALE_RATIO_INFO"],
-        "value"=>PDF_IMAGE_SCALE_RATIO,
-        "class"=>"advanced",
-        "type"=>"number",
-        "required"=>"true"
-    ),
-    "sugarpdf_pdf_unit"=>array(
-        "label"=>$mod_strings["PDF_UNIT"],
-        "info_label"=>$mod_strings["PDF_UNIT_INFO"],
-        "value"=>PDF_UNIT,
-        "class"=>"advanced",
-        "type"=>"select",
-    //TODO translate
-        "selectList"=>array("mm"=>"Millimeter", "pt"=>"Point", "cm"=>"Centimeter", "in"=>"Inch"),
-        "required"=>"true"
-    ),
-);
+    'sugarpdf_pdf_acl_access' => [
+        'label' => $mod_strings['PDF_ACL_ACCESS'],
+        'info_label' => $mod_strings['PDF_ACL_ACCESS_INFO'],
+        'value' => PDF_ACL_ACCESS,
+        'class' => 'advanced',
+        'type' => 'select',
+        'selectList' => ['edit' => 'Edition', 'list' => 'List', 'detail' => 'Detail', 'export' => 'Export'],
+        'required' => 'true'
+    ],
+    'sugarpdf_k_small_ratio' => [
+        'label' => $mod_strings['K_SMALL_RATIO'],
+        'info_label' => $mod_strings['K_SMALL_RATIO_INFO'],
+        'value' => K_SMALL_RATIO,
+        'class' => 'advanced',
+        'type' => 'number',
+        'required' => 'true'
+    ],
+    'sugarpdf_k_cell_height_ratio' => [
+        'label' => $mod_strings['K_CELL_HEIGHT_RATIO'],
+        'info_label' => $mod_strings['K_CELL_HEIGHT_RATIO_INFO'],
+        'value' => K_CELL_HEIGHT_RATIO,
+        'class' => 'advanced',
+        'type' => 'number',
+        'required' => 'true'
+    ],
+    'sugarpdf_pdf_image_scale_ratio' => [
+        'label' => $mod_strings['PDF_IMAGE_SCALE_RATIO'],
+        'info_label' => $mod_strings['PDF_IMAGE_SCALE_RATIO_INFO'],
+        'value' => PDF_IMAGE_SCALE_RATIO,
+        'class' => 'advanced',
+        'type' => 'number',
+        'required' => 'true'
+    ],
+    'sugarpdf_pdf_unit' => [
+        'label' => $mod_strings['PDF_UNIT'],
+        'info_label' => $mod_strings['PDF_UNIT_INFO'],
+        'value' => PDF_UNIT,
+        'class' => 'advanced',
+        'type' => 'select',
+        //TODO translate
+        'selectList' => ['mm' => 'Millimeter', 'pt' => 'Point', 'cm' => 'Centimeter', 'in' => 'Inch'],
+        'required' => 'true'
+    ],
+];
 
 // Use the OOB directory for images if there is no image in the custom directory
 $small_logo = $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'];
 $logo = $SugarpdfSettings['sugarpdf_pdf_header_logo']['path'];
 if (@getimagesize($logo) === false) {
-    $SugarpdfSettings['sugarpdf_pdf_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_header_logo']['value'];
+    $SugarpdfSettings['sugarpdf_pdf_header_logo']['path'] = K_PATH_IMAGES . $SugarpdfSettings['sugarpdf_pdf_header_logo']['value'];
 }
 if (@getimagesize($small_logo) === false) {
-    $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_small_header_logo']['value'];
+    $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'] = K_PATH_IMAGES . $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['value'];
 }

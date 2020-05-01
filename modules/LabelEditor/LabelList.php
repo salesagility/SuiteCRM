@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 if (isset($_REQUEST['refreshparent'])) {
     echo '<SCRIPT> parent.location.reload();</script>';
 } else {
-    if (isset($_REQUEST['module_name']) && isset($_REQUEST['showlist'])) {
+    if (isset($_REQUEST['module_name'], $_REQUEST['showlist'])) {
         $the_strings = return_module_language($current_language, $_REQUEST['module_name']);
         $mod_name = $_REQUEST['module_name'];
         echo SugarThemeRegistry::current()->getCSS();
@@ -53,8 +54,8 @@ if (isset($_REQUEST['refreshparent'])) {
         if (isset($_REQUEST['sugar_body_only'])) {
             $sugar_body_only = $_REQUEST['sugar_body_only'];
         }
-        foreach ($the_strings as $key=>$value) {
-            echo "<tr><td nowrap>$key &nbsp;=>&nbsp; <a href='index.php?action=EditView&module=LabelEditor&module_name=$mod_name&record=$key&sugar_body_only=$sugar_body_only&style=popup'> $value </a></td></tr>";
+        foreach ($the_strings as $key => $value) {
+            echo "<tr><td nowrap>{$key} &nbsp;=>&nbsp; <a href='index.php?action=EditView&module=LabelEditor&module_name={$mod_name}&record={$key}&sugar_body_only={$sugar_body_only}&style=popup'> {$value} </a></td></tr>";
         }
         echo '</table>';
     } else {
@@ -65,7 +66,7 @@ if (isset($_REQUEST['refreshparent'])) {
             echo '<form name="ListEdit"  name="EditView" method="POST" action="index.php">';
             echo '<input type="hidden" name="action" value="Save">';
             echo '<input type="hidden" name="multi_edit" value="true">';
-            echo '<input type="hidden" name="module_name" value="'.$_REQUEST['module_name'].'">';
+            echo '<input type="hidden" name="module_name" value="' . $_REQUEST['module_name'] . '">';
             echo '<input type="hidden" name="module" value="LabelEditor">';
             echo SugarThemeRegistry::current()->getCSS();
             echo <<<EOQ
@@ -81,8 +82,8 @@ EOQ;
             if (isset($_REQUEST['sugar_body_only'])) {
                 $sugar_body_only = $_REQUEST['sugar_body_only'];
             }
-            foreach ($the_strings as $key=>$value) {
-                echo "<tr><td><span class='dataLabel'>$value</span><br><span style='font-size: 9;'>$key</span><br><input name='$key' value='$value' size='40'></td></tr>";
+            foreach ($the_strings as $key => $value) {
+                echo "<tr><td><span class='dataLabel'>{$value}</span><br><span style='font-size: 9;'>{$key}</span><br><input name='{$key}' value='{$value}' size='40'></td></tr>";
             }
             echo '</table>';
             echo <<<EOQ

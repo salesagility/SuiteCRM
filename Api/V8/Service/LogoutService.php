@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Service;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -23,8 +24,9 @@ class LogoutService
     /**
      * @param string $accessToken
      *
+     * @throws \InvalidArgumentException when access token is not found
+     *
      * @return DocumentResponse
-     * @throws \InvalidArgumentException When access token is not found.
      */
     public function logout($accessToken)
     {

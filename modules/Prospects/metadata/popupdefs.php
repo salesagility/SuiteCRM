@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,25 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $mod_strings;
 
-$popupMeta = array('moduleMain' => 'Prospect',
-                        'varName' => 'PROSPECT',
-                        'orderBy' => 'prospects.last_name, prospects.first_name',
-                        'whereClauses' =>
-                            array('first_name' => 'prospects.first_name',
-                                    'last_name' => 'prospects.last_name'),
-                        'searchInputs' =>
-                            array('first_name', 'last_name'),
-                        'selectDoms' =>
-                            array('LIST_OPTIONS' =>
-                                            array('dom' => 'prospect_list_type_dom', 'searchInput' => 'list_type'),
-                                  ),
-                        'create' =>
-                            array('formBase' => 'ProspectFormBase.php',
-                                    'formBaseClass' => 'ProspectFormBase',
-                                    'getFormBodyParams' => array('','','ProspectSave'),
-                                    'createButton' => 'LNK_NEW_PROSPECT'
-                                  )
-                        );
+$popupMeta = ['moduleMain' => 'Prospect',
+    'varName' => 'PROSPECT',
+    'orderBy' => 'prospects.last_name, prospects.first_name',
+    'whereClauses' => ['first_name' => 'prospects.first_name',
+        'last_name' => 'prospects.last_name'],
+    'searchInputs' => ['first_name', 'last_name'],
+    'selectDoms' => ['LIST_OPTIONS' => ['dom' => 'prospect_list_type_dom', 'searchInput' => 'list_type'],
+    ],
+    'create' => ['formBase' => 'ProspectFormBase.php',
+        'formBaseClass' => 'ProspectFormBase',
+        'getFormBodyParams' => ['', '', 'ProspectSave'],
+        'createButton' => 'LNK_NEW_PROSPECT'
+    ]
+];

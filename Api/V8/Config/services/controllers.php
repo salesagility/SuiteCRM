@@ -1,5 +1,6 @@
 <?php
 
+use Api\Core\Loader\CustomLoader;
 use Api\V8\Controller;
 use Api\V8\Service\ListViewSearchService;
 use Api\V8\Service\ListViewService;
@@ -9,10 +10,8 @@ use Api\V8\Service\ModuleService;
 use Api\V8\Service\RelationshipService;
 use Api\V8\Service\UserPreferencesService;
 use Api\V8\Service\UserService;
-use Psr\Container\ContainerInterface as Container;
 use League\OAuth2\Server\ResourceServer;
-
-use Api\Core\Loader\CustomLoader;
+use Psr\Container\ContainerInterface as Container;
 
 return CustomLoader::mergeCustomArray([
     Controller\ListViewSearchController::class => function (Container $container) {

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,16 +37,22 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Import/sources/ImportDataSource.php');
-
+require_once 'modules/Import/sources/ImportDataSource.php';
 
 class ExternalSourceEAPMAdapter extends ImportDataSource
 {
+    protected $_localeSettings = ['importlocale_charset' => 'UTF-8',
+        'importlocale_dateformat' => 'Y-m-d',
+        'importlocale_timeformat' => 'H:i',
+        'importlocale_timezone' => '',
+        'importlocale_currency' => '',
+        'importlocale_default_currency_significant_digits' => '',
+        'importlocale_num_grp_sep' => '',
+        'importlocale_dec_sep' => '',
+        'importlocale_default_locale_name_format' => ''];
 
     /**
-     * @var string The name of the EAPM object.
+     * @var string the name of the EAPM object
      */
     private $_eapmName = 'Google';
 
@@ -59,24 +64,13 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
     /**
      * @var The record set loaded from the external source
      */
-    private $_recordSet = array();
-
-    protected $_localeSettings = array('importlocale_charset' => 'UTF-8',
-                                       'importlocale_dateformat' => 'Y-m-d',
-                                       'importlocale_timeformat' => 'H:i',
-                                       'importlocale_timezone' => '',
-                                       'importlocale_currency' => '',
-                                       'importlocale_default_currency_significant_digits' => '',
-                                       'importlocale_num_grp_sep' => '',
-                                       'importlocale_dec_sep' => '',
-                                       'importlocale_default_locale_name_format' => '');
-
+    private $_recordSet = [];
 
     public function __construct($eapmName)
     {
         global $current_user, $locale;
         $this->_eapmName = $eapmName;
-      
+
         $this->_localeSettings['importlocale_num_grp_sep'] = $current_user->getPreference('num_grp_sep');
         $this->_localeSettings['importlocale_dec_sep'] = $current_user->getPreference('dec_sep');
         $this->_localeSettings['importlocale_default_currency_significant_digits'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
@@ -86,11 +80,14 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
 
         $this->setSourceName();
     }
+
     /**
      * Return a feed of google contacts using the EAPM and Connectors farmework.
      *
-     * @throws Exception
      * @param  $maxResults
+     *
+     * @throws Exception
+     *
      * @return array
      */
     public function loadDataSet($maxResults = 0)
@@ -103,7 +100,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
         $api->loadEAPM($eapmBean);
         $conn = $api->getConnector();
 
-        $feed = $conn->getList(array('maxResults' => $maxResults, 'startIndex' => $this->_offset));
+        $feed = $conn->getList(['maxResults' => $maxResults, 'startIndex' => $this->_offset]);
         if ($feed !== false) {
             $this->_totalRecordCount = $feed['totalResults'];
             $this->_recordSet = $feed['records'];
@@ -116,7 +113,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
     {
         return '';
     }
-    
+
     public function getTotalRecordCount()
     {
         return $this->_totalRecordCount;
@@ -130,7 +127,8 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
     //Begin Implementation for SPL's Iterator interface
     public function current()
     {
-        $this->_currentRow =  current($this->_recordSet);
+        $this->_currentRow = current($this->_recordSet);
+
         return $this->_currentRow;
     }
 
@@ -138,7 +136,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
     {
         return key($this->_recordSet);
     }
-    
+
     public function rewind()
     {
         reset($this->_recordSet);
@@ -152,6 +150,6 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
 
     public function valid()
     {
-        return (current($this->_recordSet) !== false);
+        return current($this->_recordSet) !== false;
     }
 }

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $current_language;
 global $mod_strings;
 
@@ -49,4 +49,4 @@ global $mod_strings;
 $admin_mod_strings = return_module_language($current_language, 'Administration');
 $mod_strings = sugarArrayMerge($admin_mod_strings, $mod_strings);
 
-include("modules/Administration/Menu.php");
+include 'modules/Administration/Menu.php';

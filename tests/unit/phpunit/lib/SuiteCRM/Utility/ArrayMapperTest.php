@@ -40,12 +40,15 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\ArrayMapper;
 
+/**
+ * @internal
+ */
 class ArrayMapperTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test()
     {
         $array = [
-            'object' => (object)[
+            'object' => (object) [
                 'hey' => 'there',
             ],
             'array' => [

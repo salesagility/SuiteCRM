@@ -1,8 +1,8 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 class FP_eventsViewEdit extends ViewEdit
 {
@@ -10,9 +10,6 @@ class FP_eventsViewEdit extends ViewEdit
     {
         parent::__construct();
     }
-
-
-
 
     public function display()
     {

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
@@ -27,10 +28,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-
-$layout_defs['AOS_Contracts'] = array(
-    'subpanel_setup' => array(
-        'aos_contracts_documents' => array(
+$layout_defs['AOS_Contracts'] = [
+    'subpanel_setup' => [
+        'aos_contracts_documents' => [
             'order' => 100,
             'module' => 'Documents',
             'subpanel_name' => 'default',
@@ -38,21 +38,17 @@ $layout_defs['AOS_Contracts'] = array(
             'sort_by' => 'id',
             'title_key' => 'Documents',
             'get_subpanel_data' => 'documents',
-            'top_buttons' =>
-            array(
-                0 =>
-                array(
+            'top_buttons' => [
+                0 => [
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
-                ),
-                1 =>
-                array(
+                ],
+                1 => [
                     'widget_class' => 'SubPanelTopSelectButton',
                     'mode' => 'MultiSelect',
-                ),
-            ),
-        ),
-        'aos_quotes_aos_contracts' =>
-        array(
+                ],
+            ],
+        ],
+        'aos_quotes_aos_contracts' => [
             'order' => 100,
             'module' => 'AOS_Quotes',
             'subpanel_name' => 'default',
@@ -60,19 +56,16 @@ $layout_defs['AOS_Contracts'] = array(
             'sort_by' => 'id',
             'title_key' => 'AOS_Quotes',
             'get_subpanel_data' => 'aos_quotes_aos_contracts',
-            'top_buttons' =>
-            array(
-                0 =>
-                array(
+            'top_buttons' => [
+                0 => [
                     'widget_class' => 'SubPanelTopCreateButton',
-                ),
-                1 =>
-                array(
+                ],
+                1 => [
                     'widget_class' => 'SubPanelTopSelectButton',
                     'popup_module' => 'AOS_Quotes',
-                        'mode' => 'MultiSelect',
-                ),
-            ),
-        ),
-    ),
-);
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+    ],
+];

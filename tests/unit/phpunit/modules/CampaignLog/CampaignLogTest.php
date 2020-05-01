@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -26,24 +29,24 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $campaignLog);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $campaignLog = new CampaignLog();
 
         //execute the method and verify it returns an array
         $actual = $campaignLog->get_list_view_data();
         $this->assertTrue(is_array($actual));
-        $this->assertSame(array(), $actual);
+        $this->assertSame([], $actual);
     }
 
-    public function testretrieve_email_address()
+    public function testretrieveEmailAddress()
     {
         $campaignLog = new CampaignLog();
         $actual = $campaignLog->retrieve_email_address();
         $this->assertGreaterThanOrEqual('', $actual);
     }
 
-    public function testget_related_name()
+    public function testgetRelatedName()
     {
         $campaignLog = new CampaignLog();
 

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,57 +40,52 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-              array('widget_class'=>'SubPanelTopCreateButton'),
-            array('widget_class'=>'SubPanelTopSelectButton'),
-        ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton'],
+    ],
 
     'where' => '',
 
-
-    'list_fields'=> array(
-        'first_name' => array(
+    'list_fields' => [
+        'first_name' => [
             'usage' => 'query_only',
-        ),
-        'last_name' => array(
+        ],
+        'last_name' => [
             'usage' => 'query_only',
-        ),
-        'full_name'=>array(
+        ],
+        'full_name' => [
             'vname' => 'LBL_LIST_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '40%',
             'sort_by' => 'last_name',
-        ),
-        'title'=>array(
+        ],
+        'title' => [
             'vname' => 'LBL_LIST_TITLE',
             'width' => '25%',
-        ),
-        'email1'=>array(
+        ],
+        'email1' => [
             'vname' => 'LBL_LIST_EMAIL_ADDRESS',
             'width' => '15%',
             'widget_class' => 'SubPanelEmailLink',
             'sortable' => false,
-        ),
-        'phone_work'=>array(
+        ],
+        'phone_work' => [
             'vname' => 'LBL_LIST_PHONE',
             'width' => '10%',
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'Contacts',
             'width' => '5%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Contacts',
             'width' => '5%',
-        ),
-    ),
-);
+        ],
+    ],
+];

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('soap/SoapHelperFunctions.php');
-require_once('modules/MailMerge/MailMerge.php');
+require_once 'soap/SoapHelperFunctions.php';
+require_once 'modules/MailMerge/MailMerge.php';
 
 global $beanList, $beanFiles;
 
@@ -50,12 +49,12 @@ $module = $_POST['mailmerge_module'];
 $document_id = $_POST['document_id'];
 $selObjs = urldecode($_POST['selected_objects_def']);
 
-$item_ids = array();
+$item_ids = [];
 parse_str($selObjs, $item_ids);
 
 $class_name = $beanList[$module];
 $includedir = $beanFiles[$class_name];
-require_once($includedir);
+require_once $includedir;
 $seed = new $class_name();
 
 $fields = get_field_list($seed);
@@ -63,7 +62,7 @@ $fields = get_field_list($seed);
 $document = new Document();
 $document->retrieve($document_id);
 
-$items = array();
+$items = [];
 foreach ($item_ids as $key => $value) {
     $seed->retrieve($key);
     $items[] = $seed;
@@ -72,17 +71,17 @@ foreach ($item_ids as $key => $value) {
 $maxExecutionTime = ini_get('max_execution_time');
 
 set_time_limit(600);
-$dataDir = create_cache_directory("MergedDocuments/");
-$fileName = UploadFile::realpath("upload://$document->document_revision_id");
+$dataDir = create_cache_directory('MergedDocuments/');
+$fileName = UploadFile::realpath("upload://{$document->document_revision_id}");
 $outfile = pathinfo($document->filename, PATHINFO_FILENAME);
 
 $mm = new MailMerge(null, null, $dataDir);
 $mm->SetDataList($items);
 $mm->SetFieldList($fields);
-$mm->Template(array($fileName, $outfile));
+$mm->Template([$fileName, $outfile]);
 $file = $mm->Execute();
 $mm->CleanUp();
 
 set_time_limit($maxExecutionTime);
 
-header("Location: index.php?module=MailMerge&action=Step4&file=" . urlencode($file));
+header('Location: index.php?module=MailMerge&action=Step4&file=' . urlencode($file));

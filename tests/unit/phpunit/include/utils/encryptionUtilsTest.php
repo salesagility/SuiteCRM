@@ -3,6 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/encryption_utils.php';
+/**
+ * @internal
+ */
 class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testsugarEncode()

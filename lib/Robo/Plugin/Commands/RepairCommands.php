@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,17 +42,17 @@ namespace SuiteCRM\Robo\Plugin\Commands;
 use DBManagerFactory;
 use RepairAndClear;
 use Robo\Tasks as RoboTasks;
-use RuntimeException;
 use VardefManager;
 
 /**
- * Class RepairCommands
+ * Class RepairCommands.
  *
  * @category RoboTasks
- * @package  SuiteCRM\Robo\Plugin\Commands
+ *
  * @author   Jose C. Massón <jose AT gcoop DOT coop>
  * @license  GNU GPLv3
- * @link     RepairCommands
+ *
+ * @see     RepairCommands
  */
 class RepairCommands extends RoboTasks
 {
@@ -62,6 +61,7 @@ class RepairCommands extends RoboTasks
      *
      * @param array $opts optional command line arguments
      * @option bool $no-execute - Set if you do not want the command to execute SQL at the end of the repair.
+     *
      * @throws \RuntimeException
      */
     public function repairDatabase(array $opts = ['no-execute' => false])
@@ -82,7 +82,7 @@ class RepairCommands extends RoboTasks
             $focus = new $bean_name();
 
             if (isset($focus->disable_vardefs) && $focus->disable_vardefs === false && isset($focus->module_dir)) {
-                include 'modules/'.$focus->module_dir.'/vardefs.php';
+                include 'modules/' . $focus->module_dir . '/vardefs.php';
                 $sql = $db->repairTable($focus, !$opts['no-execute']);
 
                 if (!empty($sql)) {
@@ -96,6 +96,7 @@ class RepairCommands extends RoboTasks
         if (!$opts['no-execute']) {
             $this->say('Database synchronized with vardefs!');
             $this->say("Executed queries: {$total}");
+
             return;
         }
 
@@ -103,18 +104,17 @@ class RepairCommands extends RoboTasks
         array_map('print_r', $queries);
     }
 
-
-
     /**
      * This Robo task rebuilds the CRM extension files found in custom/Extension.
      *
      * @param array $opts optional command line arguments
      * @option bool $show-output - Set if you want to see the rebuildExtensions() output.
+     *
      * @throws \RuntimeException
      */
     public function repairRebuildExtensions(array $opts = ['show-output' => false])
     {
-        $this->say("Rebuilding Extensions...");
+        $this->say('Rebuilding Extensions...');
         require_once __DIR__ . '/../../../../modules/Administration/QuickRepairAndRebuild.php';
         global $current_user;
         $current_user->is_admin = '1';
@@ -128,11 +128,12 @@ class RepairCommands extends RoboTasks
         $this->say('Extensions rebuilt!');
     }
 
-
     /**
      * Rebuilds relationships defined in modules/MODULE/vardefs.php.
+     *
      * @param array $opts optional command line arguments
      * @option bool $show-output - Set if you want to see the RebuildRelationships output.
+     *
      * @throws \RuntimeException
      */
     public function repairRebuildRelationships(array $opts = ['show-output' => false])

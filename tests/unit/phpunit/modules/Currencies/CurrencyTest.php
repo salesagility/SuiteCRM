@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -76,7 +79,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $currency->retrieveIDBySymbol('\$'));
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlistViewParseAdditionalSections()
     {
         global $isMerge;
 
@@ -94,7 +97,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('<input name="mergecur[]" type="checkbox" value="">', $result->_tpl_vars['PREROW']);
     }
 
-    public function testretrieve_id_by_name()
+    public function testretrieveIdByName()
     {
         $currency = new Currency();
         $this->assertEquals('', $currency->retrieve_id_by_name(''));
@@ -131,16 +134,16 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('�', $currency->getPdfCurrencySymbol());
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $currency = new Currency();
 
         //execute the method and verify that it retunrs expected results
-        $expected = array(
+        $expected = [
             'CONVERSION_RATE' => '0.0000000000',
             'HIDE' => '',
             'UNHIDE' => '',
-        );
+        ];
 
         $actual = $currency->get_list_view_data();
         $this->assertSame($expected, $actual);
@@ -166,45 +169,45 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(-99, $result->id);
     }
 
-    public function testcurrency_format_number()
+    public function testcurrencyFormatNumber()
     {
         $this->assertEquals('$100.00', currency_format_number(100));
-        $this->assertEquals('$100.0', currency_format_number(100, array('round' => 1, 'decimals' => 1)));
+        $this->assertEquals('$100.0', currency_format_number(100, ['round' => 1, 'decimals' => 1]));
     }
 
-    public function testformat_number()
+    public function testformatNumber()
     {
         $this->assertEquals('100.00', format_number(100));
         $this->assertEquals('100.1', format_number(100.09, 1, 1));
-        $this->assertEquals('$100.1', format_number(100.09, 1, 1, array('convert' => 1, 'currency_symbol' => 'R')));
+        $this->assertEquals('$100.1', format_number(100.09, 1, 1, ['convert' => 1, 'currency_symbol' => 'R']));
     }
 
-    public function testformat_place_symbol()
+    public function testformatPlaceSymbol()
     {
         $this->assertEquals('R&nbsp;100', format_place_symbol(100, 'R', true));
         $this->assertEquals('R100', format_place_symbol(100, 'R', false));
         $this->assertEquals('100', format_place_symbol(100, '', false));
     }
 
-    public function testunformat_number()
+    public function testunformatNumber()
     {
         $this->assertEquals('100', unformat_number('$100'));
         $this->assertEquals('100', unformat_number(100));
     }
 
-    public function testformat_money()
+    public function testformatMoney()
     {
         $this->assertEquals('100.00', format_money('100'));
         $this->assertEquals('100.00', format_money('100', false));
     }
 
-    public function testget_number_separators()
+    public function testgetNumberSeparators()
     {
         $this->assertEquals([',', '.'], get_number_separators());
         $this->assertEquals([',', '.'], get_number_separators(false));
     }
 
-    public function testget_number_seperators()
+    public function testgetNumberSeperators()
     {
         $this->assertEquals(null, get_number_seperators(false));
     }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,15 +37,15 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Abstract cache class
+ * Abstract cache class.
+ *
  * @api
  */
 abstract class SugarCacheAbstract
 {
     /**
-     * @var set to false if you don't want to use the local store, true by default.
+     * @var set to false if you don't want to use the local store, true by default
      */
     public $useLocalStore = true;
 
@@ -63,7 +62,7 @@ abstract class SugarCacheAbstract
     /**
      * @var stores locally any cached items so we don't have to hit the external cache as much
      */
-    protected $_localStore = array();
+    protected $_localStore = [];
 
     /**
      * @var records the number of get requests made against the cache
@@ -94,7 +93,7 @@ abstract class SugarCacheAbstract
     protected $_priority = 899;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -107,7 +106,7 @@ abstract class SugarCacheAbstract
     }
 
     /**
-     * Destructor
+     * Destructor.
      */
     public function __destruct()
     {
@@ -117,6 +116,7 @@ abstract class SugarCacheAbstract
      * PHP's magic __get() method, used here for getting the current value from the cache.
      *
      * @param  string $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -127,7 +127,7 @@ abstract class SugarCacheAbstract
 
         $this->_cacheRequests++;
         if (!$this->useLocalStore || !isset($this->_localStore[$key])) {
-            $this->_localStore[$key] = $this->_getExternal($this->_keyPrefix.$key);
+            $this->_localStore[$key] = $this->_getExternal($this->_keyPrefix . $key);
             if (isset($this->_localStore[$key])) {
                 $this->_cacheExternalHits++;
             } else {
@@ -148,11 +148,48 @@ abstract class SugarCacheAbstract
      * PHP's magic __set() method, used here for setting a value for a key in the cache.
      *
      * @param  string $key
+     * @param mixed $value
+     *
      * @return mixed
      */
     public function __set($key, $value)
     {
         $this->set($key, $value);
+    }
+
+    /**
+     * PHP's magic __isset() method, used here for checking for a key in the cache.
+     *
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    public function __isset($key)
+    {
+        return !is_null($this->__get($key));
+    }
+
+    /**
+     * PHP's magic __unset() method, used here for clearing a key in the cache.
+     *
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    public function __unset($key)
+    {
+        unset($this->_localStore[$key]);
+        $this->_clearExternal($this->_keyPrefix . $key);
+    }
+
+    /**
+     * Returns what backend is used for caching, uses normalized class name for lookup.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return strtolower(str_replace('SugarCache', '', get_class($this)));
     }
 
     /**
@@ -169,57 +206,34 @@ abstract class SugarCacheAbstract
             $value = SugarCache::EXTERNAL_CACHE_NULL_VALUE;
         }
 
-
         if ($this->useLocalStore) {
             $this->_localStore[$key] = $value;
         }
 
         if ($ttl === null) {
-            $this->_setExternal($this->_keyPrefix.$key, $value);
+            $this->_setExternal($this->_keyPrefix . $key, $value);
         } else {
             if ($ttl > 0) {
                 //For BC reasons the setExternal signature will remain the same.
                 $previousExpireTimeout = $this->_expireTimeout;
                 $this->_expireTimeout = $ttl;
-                $this->_setExternal($this->_keyPrefix.$key, $value);
+                $this->_setExternal($this->_keyPrefix . $key, $value);
                 $this->_expireTimeout = $previousExpireTimeout;
             }
         }
     }
-    /**
-     * PHP's magic __isset() method, used here for checking for a key in the cache.
-     *
-     * @param  string $key
-     * @return mixed
-     */
-    public function __isset($key)
-    {
-        return !is_null($this->__get($key));
-    }
 
     /**
-     * PHP's magic __unset() method, used here for clearing a key in the cache.
-     *
-     * @param  string $key
-     * @return mixed
-     */
-    public function __unset($key)
-    {
-        unset($this->_localStore[$key]);
-        $this->_clearExternal($this->_keyPrefix.$key);
-    }
-
-    /**
-     * Reset the cache for this request
+     * Reset the cache for this request.
      */
     public function reset()
     {
-        $this->_localStore = array();
+        $this->_localStore = [];
         SugarCache::$isCacheReset = true;
     }
 
     /**
-     * Reset the cache fully
+     * Reset the cache fully.
      */
     public function resetFull()
     {
@@ -228,76 +242,34 @@ abstract class SugarCacheAbstract
     }
 
     /**
-     * Flush the contents of the cache
+     * Flush the contents of the cache.
      */
     public function flush()
     {
-        $this->_localStore = array();
+        $this->_localStore = [];
         $this->_resetExternal();
     }
 
     /**
-     * Returns the number of cache hits made
+     * Returns the number of cache hits made.
      *
      * @return array assocative array with each key have the value
      */
     public function getCacheStats()
     {
-        return array(
-            'requests'     => $this->_cacheRequests,
+        return [
+            'requests' => $this->_cacheRequests,
             'externalHits' => $this->_cacheExternalHits,
-            'localHits'    => $this->_cacheLocalHits,
-            'misses'       => $this->_cacheMisses,
-            );
+            'localHits' => $this->_cacheLocalHits,
+            'misses' => $this->_cacheMisses,
+        ];
     }
-
-    /**
-     * Returns what backend is used for caching, uses normalized class name for lookup
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return strtolower(str_replace('SugarCache', '', get_class($this)));
-    }
-
-    /**
-     * Hook for the child implementations of the individual backends to provide thier own logic for
-     * setting a value from cache
-     *
-     * @param string $key
-     * @param mixed  $value
-     */
-    abstract protected function _setExternal($key, $value);
-
-    /**
-     * Hook for the child implementations of the individual backends to provide thier own logic for
-     * getting a value from cache
-     *
-     * @param  string $key
-     * @return mixed  $value, returns null if the key is not in the cache
-     */
-    abstract protected function _getExternal($key);
-
-    /**
-     * Hook for the child implementations of the individual backends to provide thier own logic for
-     * clearing a value out of thier cache
-     *
-     * @param string $key
-     */
-    abstract protected function _clearExternal($key);
-
-    /**
-     * Hook for the child implementations of the individual backends to provide thier own logic for
-     * clearing thier cache out fully
-     */
-    abstract protected function _resetExternal();
 
     /**
      * Hook for testing if the backend should be used or not. Typically we'll extend this for backend specific
      * checks as well.
      *
-     * @return boolean true if we can use the backend, false if not
+     * @return bool true if we can use the backend, false if not
      */
     public function useBackend()
     {
@@ -319,7 +291,7 @@ abstract class SugarCacheAbstract
     }
 
     /**
-     * Returns the priority level for this backend
+     * Returns the priority level for this backend.
      *
      * @see self::$_priority
      *
@@ -329,4 +301,37 @@ abstract class SugarCacheAbstract
     {
         return $this->_priority;
     }
+
+    /**
+     * Hook for the child implementations of the individual backends to provide thier own logic for
+     * setting a value from cache.
+     *
+     * @param string $key
+     * @param mixed  $value
+     */
+    abstract protected function _setExternal($key, $value);
+
+    /**
+     * Hook for the child implementations of the individual backends to provide thier own logic for
+     * getting a value from cache.
+     *
+     * @param  string $key
+     *
+     * @return mixed  $value, returns null if the key is not in the cache
+     */
+    abstract protected function _getExternal($key);
+
+    /**
+     * Hook for the child implementations of the individual backends to provide thier own logic for
+     * clearing a value out of thier cache.
+     *
+     * @param string $key
+     */
+    abstract protected function _clearExternal($key);
+
+    /**
+     * Hook for the child implementations of the individual backends to provide thier own logic for
+     * clearing thier cache out fully.
+     */
+    abstract protected function _resetExternal();
 }

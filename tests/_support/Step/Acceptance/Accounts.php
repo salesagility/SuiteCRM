@@ -5,9 +5,10 @@ namespace Step\Acceptance;
 class Accounts extends \AcceptanceTester
 {
     /**
-     * Create an account
+     * Create an account.
      *
      * @param string $name
+     *
      * @return string Account ID
      */
     public function createAccount($name)
@@ -18,12 +19,12 @@ class Accounts extends \AcceptanceTester
 
         $query = "INSERT INTO accounts (id, name, account_type, date_entered) VALUES ('?', '?', '?', '?')";
 
-        $db->pQuery($query, array(
+        $db->pQuery($query, [
             $id,
             $name,
             $accountType,
             date('Y-m-d H:i:s')
-        ));
+        ]);
 
         return $id;
     }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,16 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
- * Description:
+ * Description:.
  */
-
-
-
-
-
-
-
 class ProspectList extends SugarBean
 {
     public $field_name_map;
@@ -78,21 +70,23 @@ class ProspectList extends SugarBean
     public $lead_id;
 
     // module name definitions and table relations
-    public $table_name = "prospect_lists";
+    public $table_name = 'prospect_lists';
     public $module_dir = 'ProspectLists';
-    public $rel_prospects_table = "prospect_lists_prospects";
-    public $object_name = "ProspectList";
+    public $rel_prospects_table = 'prospect_lists_prospects';
+    public $object_name = 'ProspectList';
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array(
+    public $additional_column_fields = [
         'assigned_user_name', 'assigned_user_id', 'campaign_id',
-    );
-    public $relationship_fields = array(
-        'campaign_id'=>'campaigns',
+    ];
+    public $relationship_fields = [
+        'campaign_id' => 'campaigns',
         'prospect_list_prospects' => 'prospects',
-    );
+    ];
 
     public $entry_count;
+
+    public $new_schema = true;
 
     public function __construct()
     {
@@ -100,79 +94,74 @@ class ProspectList extends SugarBean
         parent::__construct();
     }
 
-
-
-
-    public $new_schema = true;
-
     public function get_summary_text()
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     public function create_list_query($order_by, $where, $show_deleted = 0)
     {
         $custom_join = $this->getCustomJoin();
 
-        $query = "SELECT ";
-        $query .= "users.user_name as assigned_user_name, ";
-        $query .= "prospect_lists.*";
+        $query = 'SELECT ';
+        $query .= 'users.user_name as assigned_user_name, ';
+        $query .= 'prospect_lists.*';
 
         $query .= $custom_join['select'];
-        $query .= " FROM prospect_lists ";
+        $query .= ' FROM prospect_lists ';
 
-        $query .= "LEFT JOIN users
-					ON prospect_lists.assigned_user_id=users.id ";
+        $query .= 'LEFT JOIN users
+					ON prospect_lists.assigned_user_id=users.id ';
 
         $query .= $custom_join['join'];
 
         $where_auto = '1=1';
         if ($show_deleted == 0) {
-            $where_auto = "$this->table_name.deleted=0";
+            $where_auto = "{$this->table_name}.deleted=0";
         } else {
             if ($show_deleted == 1) {
-                $where_auto = "$this->table_name.deleted=1";
+                $where_auto = "{$this->table_name}.deleted=1";
             }
         }
 
-        if ($where != "") {
-            $query .= "where $where AND ".$where_auto;
+        if ($where != '') {
+            $query .= "where {$where} AND " . $where_auto;
         } else {
-            $query .= "where ".$where_auto;
+            $query .= 'where ' . $where_auto;
         }
 
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
+        if ($order_by != '') {
+            $query .= " ORDER BY {$order_by}";
         } else {
-            $query .= " ORDER BY prospect_lists.name";
+            $query .= ' ORDER BY prospect_lists.name';
         }
 
         return $query;
     }
 
-
     public function create_export_query($order_by, $where)
     {
-        $query = "SELECT
+        $query = 'SELECT
                                 prospect_lists.*,
-                                users.user_name as assigned_user_name ";
-        $query .= "FROM prospect_lists ";
-        $query .= 				"LEFT JOIN users
-                                ON prospect_lists.assigned_user_id=users.id ";
+                                users.user_name as assigned_user_name ';
+        $query .= 'FROM prospect_lists ';
+        $query .= 'LEFT JOIN users
+                                ON prospect_lists.assigned_user_id=users.id ';
 
-        $where_auto = " prospect_lists.deleted=0";
+        $where_auto = ' prospect_lists.deleted=0';
 
-        if ($where != "") {
-            $query .= " WHERE $where AND ".$where_auto;
+        if ($where != '') {
+            $query .= " WHERE {$where} AND " . $where_auto;
         } else {
-            $query .= " WHERE ".$where_auto;
+            $query .= ' WHERE ' . $where_auto;
         }
 
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
+        if ($order_by != '') {
+            $query .= " ORDER BY {$order_by}";
         } else {
-            $query .= " ORDER BY prospect_lists.name";
+            $query .= ' ORDER BY prospect_lists.name';
         }
+
         return $query;
     }
 
@@ -180,12 +169,12 @@ class ProspectList extends SugarBean
     {
         global $beanList, $beanFiles;
 
-        $members = array(	'Accounts' 	=> array('has_custom_fields' => false, 'fields' => array()),
-                    'Contacts' 	=> array('has_custom_fields' => false, 'fields' => array()),
-                    'Users' 	=> array('has_custom_fields' => false, 'fields' => array()),
-                    'Prospects' 	=> array('has_custom_fields' => false, 'fields' => array()),
-                    'Leads' 	=> array('has_custom_fields' => false, 'fields' => array())
-                );
+        $members = ['Accounts' => ['has_custom_fields' => false, 'fields' => []],
+            'Contacts' => ['has_custom_fields' => false, 'fields' => []],
+            'Users' => ['has_custom_fields' => false, 'fields' => []],
+            'Prospects' => ['has_custom_fields' => false, 'fields' => []],
+            'Leads' => ['has_custom_fields' => false, 'fields' => []]
+        ];
 
         // query all custom fields in the fields_meta_data table for the modules which are being exported
         $db = DBManagerFactory::getInstance();
@@ -193,7 +182,7 @@ class ProspectList extends SugarBean
             "select name, custom_module, type, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
             implode("', '", array_keys($members)) . "')",
             true,
-            "ProspectList::create_export_members_query() : error querying custom fields"
+            'ProspectList::create_export_members_query() : error querying custom fields'
         );
 
         // cycle through the custom fields and put them in the members array according to
@@ -204,7 +193,7 @@ class ProspectList extends SugarBean
 
             foreach ($members as $membername => &$memberarr) {
                 $module_name = $beanList[$membername];
-                require_once($beanFiles[$module_name]);
+                require_once $beanFiles[$module_name];
                 $relatedBean = BeanFactory::getBean($membername);
                 // if the field belongs to this module, then query it in the cstm table
                 if ($membername === $val['custom_module'] && $relatedBean->field_defs[$val['name']]['source'] !== 'non-db') {
@@ -220,7 +209,7 @@ class ProspectList extends SugarBean
                 // else, only if for this module no entry exists for this field, query an empty string
                 else {
                     if (!isset($memberarr['fields'][$val['name']])) {
-                        $memberarr['fields'][$fieldname] = "null AS " . $fieldname;
+                        $memberarr['fields'][$fieldname] = 'null AS ' . $fieldname;
                     }
                 }
             }
@@ -231,13 +220,13 @@ class ProspectList extends SugarBean
 				l.account_name AS account_name,
 				ea.email_address AS primary_email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				l.do_not_call AS do_not_call, l.phone_fax AS phone_fax, l.phone_other AS phone_other, l.phone_home AS phone_home, l.phone_mobile AS phone_mobile, l.phone_work AS phone_work
-				".(count($members['Leads']['fields']) ? ', ' : '') . implode(', ', $members['Leads']['fields'])."
+				" . (count($members['Leads']['fields']) ? ', ' : '') . implode(', ', $members['Leads']['fields']) . '
 				FROM prospect_lists_prospects plp
 				INNER JOIN leads l ON plp.related_id=l.id
-				".($members['Leads']['has_custom_fields'] ? 'LEFT join leads_cstm ON l.id = leads_cstm.id_c' : '')."
+				' . ($members['Leads']['has_custom_fields'] ? 'LEFT join leads_cstm ON l.id = leads_cstm.id_c' : '') . "
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=l.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
-				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0
+				WHERE plp.prospect_list_id = {$record_id} AND plp.deleted=0
 				AND l.deleted=0
 				AND (ear.deleted=0 OR ear.deleted IS NULL)";
 
@@ -246,13 +235,13 @@ class ProspectList extends SugarBean
 				'' AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				0 AS do_not_call, u.phone_fax AS phone_fax, u.phone_other AS phone_other, u.phone_home AS phone_home, u.phone_mobile AS phone_mobile, u.phone_work AS phone_work
-				".(count($members['Users']['fields']) ? ', ' : '') . implode(', ', $members['Users']['fields'])."
+				" . (count($members['Users']['fields']) ? ', ' : '') . implode(', ', $members['Users']['fields']) . '
 				FROM prospect_lists_prospects plp
 				INNER JOIN users u ON plp.related_id=u.id
-				".($members['Users']['has_custom_fields'] ? 'LEFT join users_cstm ON u.id = users_cstm.id_c' : '')."
+				' . ($members['Users']['has_custom_fields'] ? 'LEFT join users_cstm ON u.id = users_cstm.id_c' : '') . "
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=u.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
-				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0
+				WHERE plp.prospect_list_id = {$record_id} AND plp.deleted=0
 				AND u.deleted=0
 				AND (ear.deleted=0 OR ear.deleted IS NULL)";
 
@@ -261,14 +250,14 @@ class ProspectList extends SugarBean
 				a.name AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				c.do_not_call AS do_not_call, c.phone_fax AS phone_fax, c.phone_other AS phone_other, c.phone_home AS phone_home, c.phone_mobile AS phone_mobile, c.phone_work AS phone_work
-				".(count($members['Contacts']['fields']) ? ', ' : '') . implode(', ', $members['Contacts']['fields'])."
+				" . (count($members['Contacts']['fields']) ? ', ' : '') . implode(', ', $members['Contacts']['fields']) . '
 FROM prospect_lists_prospects plp
 				INNER JOIN contacts c ON plp.related_id=c.id LEFT JOIN accounts_contacts ac ON ac.contact_id=c.id
 				LEFT JOIN accounts a ON ac.account_id=a.id AND ac.deleted=0
-				".($members['Contacts']['has_custom_fields'] ? 'LEFT join contacts_cstm ON c.id = contacts_cstm.id_c' : '')."
+				' . ($members['Contacts']['has_custom_fields'] ? 'LEFT join contacts_cstm ON c.id = contacts_cstm.id_c' : '') . "
 				LEFT JOIN email_addr_bean_rel ear ON ear.bean_id=c.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
-				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0
+				WHERE plp.prospect_list_id = {$record_id} AND plp.deleted=0
 				AND c.deleted=0
                 AND (ear.deleted=0 OR ear.deleted IS NULL)";
 
@@ -277,13 +266,13 @@ FROM prospect_lists_prospects plp
 				p.account_name AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				p.do_not_call AS do_not_call, p.phone_fax AS phone_fax, p.phone_other AS phone_other, p.phone_home AS phone_home, p.phone_mobile AS phone_mobile, p.phone_work AS phone_work
-				".(count($members['Prospects']['fields']) ? ', ' : '') . implode(', ', $members['Prospects']['fields'])."
+				" . (count($members['Prospects']['fields']) ? ', ' : '') . implode(', ', $members['Prospects']['fields']) . '
 				FROM prospect_lists_prospects plp
 				INNER JOIN prospects p ON plp.related_id=p.id
-				".($members['Prospects']['has_custom_fields'] ? 'LEFT join prospects_cstm ON p.id = prospects_cstm.id_c' : '')."
+				' . ($members['Prospects']['has_custom_fields'] ? 'LEFT join prospects_cstm ON p.id = prospects_cstm.id_c' : '') . "
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=p.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
-				WHERE plp.prospect_list_id = $record_id  AND plp.deleted=0
+				WHERE plp.prospect_list_id = {$record_id}  AND plp.deleted=0
 				AND p.deleted=0
 				AND (ear.deleted=0 OR ear.deleted IS NULL)";
 
@@ -292,61 +281,60 @@ FROM prospect_lists_prospects plp
 				'' AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				0 AS do_not_call, a.phone_fax as phone_fax, a.phone_alternate AS phone_other, '' AS phone_home, '' AS phone_mobile, a.phone_office AS phone_office
-				".(count($members['Accounts']['fields']) ? ', ' : '') . implode(', ', $members['Accounts']['fields'])."
+				" . (count($members['Accounts']['fields']) ? ', ' : '') . implode(', ', $members['Accounts']['fields']) . '
 				FROM prospect_lists_prospects plp
 				INNER JOIN accounts a ON plp.related_id=a.id
-				".($members['Accounts']['has_custom_fields'] ? 'LEFT join accounts_cstm ON a.id = accounts_cstm.id_c' : '')."
+				' . ($members['Accounts']['has_custom_fields'] ? 'LEFT join accounts_cstm ON a.id = accounts_cstm.id_c' : '') . "
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=a.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
-				WHERE plp.prospect_list_id = $record_id  AND plp.deleted=0
+				WHERE plp.prospect_list_id = {$record_id}  AND plp.deleted=0
 				AND a.deleted=0
 				AND (ear.deleted=0 OR ear.deleted IS NULL)";
-        $order_by = "ORDER BY related_type, id, primary_address DESC";
-        $query = "$leads_query UNION ALL $users_query UNION ALL $contacts_query UNION ALL $prospects_query UNION ALL $accounts_query $order_by";
+        $order_by = 'ORDER BY related_type, id, primary_address DESC';
+        $query = "{$leads_query} UNION ALL {$users_query} UNION ALL {$contacts_query} UNION ALL {$prospects_query} UNION ALL {$accounts_query} {$order_by}";
+
         return $query;
     }
 
-    public function save_relationship_changes($is_update, $exclude = array())
+    public function save_relationship_changes($is_update, $exclude = [])
     {
         parent::save_relationship_changes($is_update, $exclude);
-        if ($this->lead_id != "") {
-            $this->set_prospect_relationship($this->id, $this->lead_id, "lead");
+        if ($this->lead_id != '') {
+            $this->set_prospect_relationship($this->id, $this->lead_id, 'lead');
         }
-        if ($this->contact_id != "") {
-            $this->set_prospect_relationship($this->id, $this->contact_id, "contact");
+        if ($this->contact_id != '') {
+            $this->set_prospect_relationship($this->id, $this->contact_id, 'contact');
         }
-        if ($this->prospect_id != "") {
-            $this->set_prospect_relationship($this->id, $this->contact_id, "prospect");
+        if ($this->prospect_id != '') {
+            $this->set_prospect_relationship($this->id, $this->contact_id, 'prospect');
         }
     }
 
     public function set_prospect_relationship($prospect_list_id, &$link_ids, $link_name)
     {
-        $link_field = sprintf("%s_id", $link_name);
+        $link_field = sprintf('%s_id', $link_name);
 
         foreach ($link_ids as $link_id) {
-            $this->set_relationship('prospect_lists_prospects', array( $link_field=>$link_id, 'prospect_list_id'=>$prospect_list_id ));
+            $this->set_relationship('prospect_lists_prospects', [$link_field => $link_id, 'prospect_list_id' => $prospect_list_id]);
         }
     }
 
     public function set_prospect_relationship_single($prospect_list_id, $link_id, $link_name)
     {
-        $link_field = sprintf("%s_id", $link_name);
+        $link_field = sprintf('%s_id', $link_name);
 
-        $this->set_relationship('prospect_lists_prospects', array( $link_field=>$link_id, 'prospect_list_id'=>$prospect_list_id ));
+        $this->set_relationship('prospect_lists_prospects', [$link_field => $link_id, 'prospect_list_id' => $prospect_list_id]);
     }
-
 
     public function clear_prospect_relationship($prospect_list_id, $link_id, $link_name)
     {
-        $link_field = sprintf("%s_id", $link_name);
-        $where_clause = " AND $link_field = '$link_id' ";
+        $link_field = sprintf('%s_id', $link_name);
+        $where_clause = " AND {$link_field} = '{$link_id}' ";
 
         $query = sprintf("DELETE FROM prospect_lists_prospects WHERE prospect_list_id='%s' AND deleted = '0' %s", $prospect_list_id, $where_clause);
 
-        $this->db->query($query, true, "Error clearing prospect/prospect_list relationship: ");
+        $this->db->query($query, true, 'Error clearing prospect/prospect_list relationship: ');
     }
-
 
     public function mark_relationships_deleted($id)
     {
@@ -362,59 +350,58 @@ FROM prospect_lists_prospects plp
         $this->entry_count = $this->get_entry_count();
     }
 
-
     public function update_currency_id($fromid, $toid)
     {
     }
 
-
     public function get_entry_count()
     {
-        $query = "SELECT count(*) AS num FROM prospect_lists_prospects WHERE prospect_list_id='$this->id' AND deleted = '0'";
-        $result = $this->db->query($query, true, "Grabbing prospect_list entry count");
+        $query = "SELECT count(*) AS num FROM prospect_lists_prospects WHERE prospect_list_id='{$this->id}' AND deleted = '0'";
+        $result = $this->db->query($query, true, 'Grabbing prospect_list entry count');
 
         $row = $this->db->fetchByAssoc($result);
 
         if ($row) {
             return $row['num'];
-        } else {
-            return 0;
         }
-    }
 
+        return 0;
+    }
 
     public function get_list_view_data()
     {
         $temp_array = $this->get_list_view_array();
-        $temp_array["ENTRY_COUNT"] = $this->get_entry_count();
+        $temp_array['ENTRY_COUNT'] = $this->get_entry_count();
+
         return $temp_array;
     }
+
     /**
-        builds a generic search based on the query string using or
-        do not include any $this-> because this is called on without having the class instantiated
-    */
+     * builds a generic search based on the query string using or
+     * do not include any $this-> because this is called on without having the class instantiated
+     * @param mixed $the_query_string
+     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = array();
+        $where_clauses = [];
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-        array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
+        array_push($where_clauses, "prospect_lists.name like '{$the_query_string}%'");
 
-        $the_where = "";
+        $the_where = '';
         foreach ($where_clauses as $clause) {
-            if ($the_where != "") {
-                $the_where .= " or ";
+            if ($the_where != '') {
+                $the_where .= ' or ';
             }
             $the_where .= $clause;
         }
 
-        $the_where = "";
+        $the_where = '';
         foreach ($where_clauses as $clause) {
-            if ($the_where != "") {
-                $the_where .= " or ";
+            if ($the_where != '') {
+                $the_where .= ' or ';
             }
             $the_where .= $clause;
         }
-
 
         return $the_where;
     }
@@ -428,6 +415,7 @@ FROM prospect_lists_prospects plp
     {
         $query = "UPDATE prospect_lists_prospects SET deleted = 1 WHERE prospect_list_id = '{$id}' ";
         $this->db->query($query);
+
         return parent::mark_deleted($id);
     }
 
@@ -436,6 +424,7 @@ FROM prospect_lists_prospects plp
         switch ($interface) {
             case 'ACL':return true;
         }
+
         return false;
     }
 }

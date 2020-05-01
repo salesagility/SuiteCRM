@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,28 +37,26 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/DetailView/DetailView2.php');
+require_once 'include/DetailView/DetailView2.php';
 
 class EmailsDetailView extends DetailView2
 {
     /**
-     * @var Email $focus
+     * @var Email
      */
     public $focus;
 
     /**
-     * @var string $formName
+     * @var string
      */
     public $formName = 'EmailsDetailView';
 
     /**
-     * @param String $module
+     * @param string $module
      * @param null $focus
      * @param null $metadataFile
      * @param string $tpl
@@ -68,7 +65,7 @@ class EmailsDetailView extends DetailView2
      */
     public function setup(
         $module,
-        $focus  = null,
+        $focus = null,
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
@@ -78,18 +75,18 @@ class EmailsDetailView extends DetailView2
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @see DetailView2::populateBean()
      */
-    public function populateBean($request = array())
+    public function populateBean($request = [])
     {
         parent::populateBean($request);
         $this->populateFields();
     }
 
     /**
-     * Handles fields special fields like from
-     * @return void
+     * Handles fields special fields like from.
      */
     public function populateFields()
     {
@@ -103,6 +100,7 @@ class EmailsDetailView extends DetailView2
     /**
      * @param bool $showTitle boolean value indicating whether or not to show a title on the resulting page
      * @param bool $ajaxSave boolean value indicating whether or not the operation is an Ajax save request
+     *
      * @return string display for view as HTML
      */
     public function display($showTitle = true, $ajaxSave = false)

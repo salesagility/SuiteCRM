@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,40 +42,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+$viewdefs['Cases']['QuickCreate'] = [
+    'templateMeta' => ['maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
+    'panels' => [
+        [
+            ['name' => 'name', 'displayParams' => ['size' => 65, 'required' => true]],
+            'priority'
+        ],
 
-$viewdefs['Cases']['QuickCreate'] = array(
-'templateMeta' => array('maxColumns' => '2',
-                        'widths' => array(
-                                        array('label' => '10', 'field' => '30'),
-                                        array('label' => '10', 'field' => '30')
-                                        ),
-                       ),
-'panels' =>
+        [
+            'status',
+            ['name' => 'account_name'],
+        ],
 
-array(
-  
-  array(
-    array('name'=>'name', 'displayParams'=>array('size'=>65, 'required'=>true)),
-    'priority'
-  ),
-  
-  array(
-    'status',
-    array('name'=>'account_name'),
-  ),
-  
-  array(
-    'assigned_user_name',
-  ),
-  
-  array(
-    array(
-      'name' => 'description',
-      'displayParams' => array('rows' => '4','cols' => '60'),
-      'nl2br' => true,
-    ),
-  ),
+        [
+            'assigned_user_name',
+        ],
 
-),
-
-);
+        [
+            [
+                'name' => 'description',
+                'displayParams' => ['rows' => '4', 'cols' => '60'],
+                'nl2br' => true,
+            ],
+        ],
+    ],
+];

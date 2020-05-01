@@ -5,12 +5,12 @@ use Faker\Generator;
 class OpportunitiesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class OpportunitiesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the opportunities module.
+     * As an administrator I want to view the opportunities module
      */
     public function testScenarioViewOpportunitiesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the opportunities module for testing');
 
@@ -55,14 +55,14 @@ class OpportunitiesCest
      * @param \Step\Acceptance\AccountsTester $account
      *
      * As administrative user I want to create an opportunity so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateOpportunity(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Opportunities $opportunities,
-        \Step\Acceptance\AccountsTester $account
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Opportunities $opportunities,
+        Step\Acceptance\AccountsTester $account
     ) {
         $I->wantTo('Create an opportunity');
 
@@ -73,7 +73,7 @@ class OpportunitiesCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $account_name = 'Test_'. $this->fakeData->company();
+        $account_name = 'Test_' . $this->fakeData->company();
         $account->createAccount($account_name);
 
         // Navigate to opportunities list-view
@@ -82,7 +82,7 @@ class OpportunitiesCest
 
         // Create opportunity
         $this->fakeData->seed($this->fakeDataSeed);
-        $opportunities->createOpportunity('Test_'. $this->fakeData->company(), $account_name);
+        $opportunities->createOpportunity('Test_' . $this->fakeData->company(), $account_name);
 
         // Delete opportunity
         $detailView->clickActionMenuItem('Delete');

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldTime extends SugarFieldBase
 {
@@ -61,6 +59,7 @@ class SugarFieldTime extends SugarFieldBase
 
         $displayParams['timeFormat'] = $timedate->get_user_time_format();
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
         return $this->fetch('include/SugarFields/Fields/Time/EditView.tpl');
     }
 
@@ -83,17 +82,19 @@ class SugarFieldTime extends SugarFieldBase
 
         $displayParams['timeFormat'] = $timedate->get_user_time_format();
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
         return $this->fetch('include/SugarFields/Fields/Time/SearchView.tpl');
     }
 
     public function save(&$bean, &$inputData, &$field, &$def, $prefix = '')
     {
         global $timedate;
-        if (!isset($inputData[$prefix.$field])) {
-            $bean->$field = '';
+        if (!isset($inputData[$prefix . $field])) {
+            $bean->{$field} = '';
+
             return;
         }
 
-        $bean->$field = $timedate->to_db_time($inputData[$prefix.$field], false);
+        $bean->{$field} = $timedate->to_db_time($inputData[$prefix . $field], false);
     }
 }

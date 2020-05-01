@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,60 +36,56 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 global $app_list_strings;
 $configurator = new Configurator();
-$searchdefs['Prospects'] = array(
-    'templateMeta' => array(
+$searchdefs['Prospects'] = [
+    'templateMeta' => [
         'maxColumns' => '3',
         'maxColumnsBasic' => '4',
-        'widths' => array('label' => '10', 'field' => '30'),
-    ),
-    'layout' => array(
-        'basic_search' => array(
-            array('name' => 'search_name', 'label' => 'LBL_NAME', 'type' => 'name'),
-            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-
-        ),
-        'advanced_search' => array(
+        'widths' => ['label' => '10', 'field' => '30'],
+    ],
+    'layout' => [
+        'basic_search' => [
+            ['name' => 'search_name', 'label' => 'LBL_NAME', 'type' => 'name'],
+            ['name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'],
+        ],
+        'advanced_search' => [
             'first_name',
             'last_name',
-            array('name' => 'phone', 'label' => 'LBL_ANY_PHONE', 'type' => 'name'),
-            array('name' => 'email', 'label' => 'LBL_ANY_EMAIL', 'type' => 'name'),
+            ['name' => 'phone', 'label' => 'LBL_ANY_PHONE', 'type' => 'name'],
+            ['name' => 'email', 'label' => 'LBL_ANY_EMAIL', 'type' => 'name'],
             'assistant',
             'do_not_call',
-            array('name' => 'address_street', 'label' => 'LBL_ANY_ADDRESS', 'type' => 'name'),
-            array('name' => 'address_state', 'label' => 'LBL_STATE', 'type' => 'name'),
-            array('name' => 'address_postalcode', 'label' => 'LBL_POSTAL_CODE', 'type' => 'name'),
-            array(
+            ['name' => 'address_street', 'label' => 'LBL_ANY_ADDRESS', 'type' => 'name'],
+            ['name' => 'address_state', 'label' => 'LBL_STATE', 'type' => 'name'],
+            ['name' => 'address_postalcode', 'label' => 'LBL_POSTAL_CODE', 'type' => 'name'],
+            [
                 'name' => 'primary_address_country',
                 'label' => 'LBL_COUNTRY',
                 'type' => 'name',
                 'options' => 'countries_dom',
-            ),
-            array(
+            ],
+            [
                 'name' => 'assigned_user_id',
                 'type' => 'enum',
                 'label' => 'LBL_ASSIGNED_TO',
-                'function' => array('name' => 'get_user_array', 'params' => array(false))
-            ),
-
-        ),
-    ),
-);
+                'function' => ['name' => 'get_user_array', 'params' => [false]]
+            ],
+        ],
+    ],
+];
 if ($configurator->isConfirmOptInEnabled() || $configurator->isOptInEnabled()) {
     $searchdefs['Prospects']['layout']['advanced_search']['optinprimary'] =
-        array(
+        [
             'name' => 'optinprimary',
             'label' => 'LBL_OPT_IN_FLAG_PRIMARY',
             'type' => 'enum',
             'options' => $app_list_strings['email_confirmed_opt_in_dom'],
             'default' => true,
             'width' => '10%',
-        );
+        ];
 }

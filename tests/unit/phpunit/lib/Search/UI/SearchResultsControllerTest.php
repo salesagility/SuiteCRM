@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,26 +42,27 @@ use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\UI\SearchResultsController;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Description of SearchResultsControllerTest
+ * Description of SearchResultsControllerTest.
  *
  * @author gyula
+ *
+ * @internal
  */
 class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testDisplayFoundOnePage()
     {
         $ids = [];
-        for ($i=0; $i<15; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             $account = BeanFactory::getBean('Accounts');
             $account->name = 'test account ' . $i;
             $ok = $account->save();
-            $this->assertTrue((bool)$ok);
+            $this->assertTrue((bool) $ok);
             $ids[] = $account->id;
         }
         $this->assertEquals(15, count($ids));
@@ -91,17 +91,17 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertContains('Total result(s): 15', $content);
         $this->assertContains('Page 1 of 2', $content);
-        
+
         // add 5 more..
-        for ($i=15; $i<20; $i++) {
+        for ($i = 15; $i < 20; $i++) {
             $account = BeanFactory::getBean('Accounts');
             $account->name = 'test account ' . $i;
             $ok = $account->save();
-            $this->assertTrue((bool)$ok);
+            $this->assertTrue((bool) $ok);
             $ids[] = $account->id;
         }
         $this->assertEquals(20, count($ids));
-        
+
         $request = [
             'search-query-string' => 'test account',
             'query_string' => 'test account',
@@ -127,13 +127,13 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertContains('Total result(s): 20', $content);
         $this->assertContains('Page 2 of 2', $content);
     }
-    
+
     public function testDisplayFoundOne()
     {
         $account = BeanFactory::getBean('Accounts');
         $account->name = 'test account 1';
         $ok = $account->save();
-        $this->assertTrue((bool)$ok);
+        $this->assertTrue((bool) $ok);
 
         $request = [
             'search-query-string' => 'test account',
@@ -159,7 +159,7 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertContains('test account 1', $content);
     }
-    
+
     public function testDisplayNotFound()
     {
         $request = [

@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,15 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description: This file is used to override the default Meta-data EditView behavior
  * to provide customization specific to the Calls module.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-
+ */
 
 class ProjectViewDetail extends ViewDetail
 {
@@ -60,7 +59,7 @@ class ProjectViewDetail extends ViewDetail
     public function display()
     {
         global $beanFiles;
-        require_once($beanFiles['Project']);
+        require_once $beanFiles['Project'];
 
         $focus = new Project();
         $focus->retrieve($_REQUEST['record']);
@@ -73,7 +72,7 @@ class ProjectViewDetail extends ViewDetail
         } else {
             $this->ss->assign('OWNER_ONLY', false);
         }
-        $this->ss->assign("IS_TEMPLATE", 0);
+        $this->ss->assign('IS_TEMPLATE', 0);
 
         parent::display();
     }

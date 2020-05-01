@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testRelease()
@@ -19,7 +22,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $release);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $release = new Release();
 
@@ -31,7 +34,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $release->get_summary_text());
     }
 
-    public function testget_releases()
+    public function testgetReleases()
     {
         $release = new Release();
 
@@ -44,7 +47,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $release = new Release();
 
@@ -57,7 +60,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $release = new Release();
 
@@ -70,26 +73,26 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $release = new Release();
 
         $release->name = 'test';
         $release->status = 'Hidden';
 
-        $expected = array(
-                    'NAME' => 'test',
-                    'STATUS' => 'Hidden',
-                    'ENCODED_NAME' => 'test',
-                    'ENCODED_STATUS' => null,
-        );
+        $expected = [
+            'NAME' => 'test',
+            'STATUS' => 'Hidden',
+            'ENCODED_NAME' => 'test',
+            'ENCODED_STATUS' => null,
+        ];
 
         $actual = $release->get_list_view_data();
 
         $this->assertSame($expected, $actual);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $release = new Release();
 

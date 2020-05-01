@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
  * ResourceObserver.php
  * This class serves as the base class for the notifier/observable pattern used
@@ -63,8 +61,7 @@ class ResourceObserver
     {
         if ($this->dieOnError) {
             die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
-        } else {
-            echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
         }
+        echo $GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE'];
     }
 }

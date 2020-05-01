@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,32 +40,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Contacts/ContactFormBase.php');
+require_once 'modules/Contacts/ContactFormBase.php';
 
 class Popup_Picker
 {
-    /*
-     *
-     */
+    //
     public function _get_where_clause()
     {
         $where = '';
         if (isset($_REQUEST['query'])) {
-            $where_clauses = array();
-            append_where_clause($where_clauses, "first_name", "contacts.first_name");
-            append_where_clause($where_clauses, "last_name", "contacts.last_name");
-            append_where_clause($where_clauses, "account_name", "accounts.name");
-            append_where_clause($where_clauses, "account_id", "accounts.id");
+            $where_clauses = [];
+            append_where_clause($where_clauses, 'first_name', 'contacts.first_name');
+            append_where_clause($where_clauses, 'last_name', 'contacts.last_name');
+            append_where_clause($where_clauses, 'account_name', 'accounts.name');
+            append_where_clause($where_clauses, 'account_id', 'accounts.id');
             $where = generate_where_statement($where_clauses);
         }
+
         return $where;
     }
 
-    /**
-     *
-     */
     public function process_page_for_address()
     {
         global $theme;
@@ -78,7 +72,6 @@ class Popup_Picker
         $where = '';
 
         $where = $this->_get_where_clause();
-
 
         $formBase = new ContactFormBase();
         if (isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save') {
@@ -97,27 +90,27 @@ class Popup_Picker
         // TODO: cleanup the construction of $addform
         $formbody = $formBase->getFormBody('', '', 'EmailEditView');
         $addform = '<table><tr><td nowrap="nowrap" valign="top">'
-            .str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
+            . str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
             . '</td></tr></table>'
             . '<input type="hidden" name="action" value="Popup" />';
         $formSave = <<<EOQ
-		<input type="submit" name="button" class="button" title="$lbl_save_button_title" value="  $lbl_save_button_label  " />
+		<input type="submit" name="button" class="button" title="{$lbl_save_button_title}" value="  {$lbl_save_button_label}  " />
 		<input type="button" name="button" class="button" title="{$app_strings['LBL_CANCEL_BUTTON_TITLE']}" accesskey="{$app_strings['LBL_CANCEL_BUTTON_KEY']}" value="{$app_strings['LBL_CANCEL_BUTTON_LABEL']}" onclick="toggleDisplay('addform');" />
 EOQ;
         $createContact = <<<EOQ
 		<input type="button" id="showAdd" name="showAdd" class="button" value="{$mod_strings['LNK_NEW_CONTACT']}" onclick="toggleDisplay('addform');" />
 EOQ;
         $addformheader = get_form_header($mod_strings['LNK_NEW_CONTACT'], $formSave, false);
-        $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
+        $button = "<form action='index.php' method='post' name='form' id='form'>\n";
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                . $app_strings['LBL_CLEAR_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_CLEAR_BUTTON_LABEL'] . "  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-            .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' accesskey='"
+            . $app_strings['LBL_CANCEL_BUTTON_KEY'] . "' value='  "
+            . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  ' />\n";
         $button .= "</form>\n";
 
         $form = new XTemplate('modules/Contacts/Address_picker.html');
@@ -133,16 +126,16 @@ EOQ;
         $form->assign('request_data', $request_data);
 
         // fill in for mass update
-        $button = "<input type='hidden' name='module' value='Contacts'>".
-                  "<input type='hidden' id='form_action' name='action' value='CloseContactAddressPopup'>".
-                  "<input type='hidden' name='massupdate' value='true'>".
-                  "<input type='hidden' name='delete' value='false'>".
-                  "<input type='hidden' name='mass' value='Array'>".
+        $button = "<input type='hidden' name='module' value='Contacts'>" .
+                  "<input type='hidden' id='form_action' name='action' value='CloseContactAddressPopup'>" .
+                  "<input type='hidden' name='massupdate' value='true'>" .
+                  "<input type='hidden' name='delete' value='false'>" .
+                  "<input type='hidden' name='mass' value='Array'>" .
                   "<input type='hidden' name='Update' value='Update'>";
 
         if (isset($_REQUEST['mass']) && is_array($_REQUEST['mass'])) {
             foreach (array_unique($_REQUEST['mass']) as $record) {
-                $button .= "<input style='display: none' checked type='checkbox' name='mass[]' value='$record'>\n";
+                $button .= "<input style='display: none' checked type='checkbox' name='mass[]' value='{$record}'>\n";
             }
         }
 
@@ -150,25 +143,25 @@ EOQ;
         $button .= "<input type='hidden' name='saved_associated_data' value=''>";
         $button .= "<input type='hidden' name='close_window' value='true'>";
         $button .= "<input type='hidden' name='html' value='change_address'>";
-        $button .= "<input type='hidden' name='account_name' value='$account_name'>";
+        $button .= "<input type='hidden' name='account_name' value='{$account_name}'>";
         // Added ID attribute to each element to use getElementById. To give ID attribute to an element is a good practice.
-        $button .= "<span style='display: none'><textarea name='primary_address_street' id='primary_address_street'>" . str_replace("&lt;br&gt;", "\n", $_REQUEST["primary_address_street"]) . "</textarea></span>";
-        $button .= "<input type='hidden' name='primary_address_city' id='primary_address_city' value='". $_REQUEST["primary_address_city"] ."'>";
-        $button .= "<input type='hidden' name='primary_address_state' id='primary_address_state' value='". $_REQUEST["primary_address_state"] ."'>";
-        $button .= "<input type='hidden' name='primary_address_postalcode' id='primary_address_postalcode' value='". $_REQUEST["primary_address_postalcode"] ."'>";
-        $button .= "<input type='hidden' name='primary_address_country' id='primary_address_country' value='". $_REQUEST["primary_address_country"] ."'>";
+        $button .= "<span style='display: none'><textarea name='primary_address_street' id='primary_address_street'>" . str_replace('&lt;br&gt;', "\n", $_REQUEST['primary_address_street']) . '</textarea></span>';
+        $button .= "<input type='hidden' name='primary_address_city' id='primary_address_city' value='" . $_REQUEST['primary_address_city'] . "'>";
+        $button .= "<input type='hidden' name='primary_address_state' id='primary_address_state' value='" . $_REQUEST['primary_address_state'] . "'>";
+        $button .= "<input type='hidden' name='primary_address_postalcode' id='primary_address_postalcode' value='" . $_REQUEST['primary_address_postalcode'] . "'>";
+        $button .= "<input type='hidden' name='primary_address_country' id='primary_address_country' value='" . $_REQUEST['primary_address_country'] . "'>";
         // Adding an onclick event to remove address for alternate address, as user has selected copy address to primary address
-        $button .= "<input title='".$mod_strings['LBL_COPY_ADDRESS_CHECKED_PRIMARY']."'  class='button' LANGUAGE=javascript type='submit' name='button' value='  ".$mod_strings['LBL_COPY_ADDRESS_CHECKED_PRIMARY']."  ' onclick='clearAddress(\"alt\");'>\n";
+        $button .= "<input title='" . $mod_strings['LBL_COPY_ADDRESS_CHECKED_PRIMARY'] . "'  class='button' LANGUAGE=javascript type='submit' name='button' value='  " . $mod_strings['LBL_COPY_ADDRESS_CHECKED_PRIMARY'] . "  ' onclick='clearAddress(\"alt\");'>\n";
         // Adding a new block of code copy the address to alternate address for contacts
-        $button .= "<span style='display: none'><textarea name='alt_address_street' id='alt_address_street'>" . str_replace("&lt;br&gt;", "\n", $_REQUEST["primary_address_street"]) . "</textarea></span>";
-        $button .= "<input type='hidden' name='alt_address_city' id='alt_address_city' value='". $_REQUEST["primary_address_city"] ."'>";
-        $button .= "<input type='hidden' name='alt_address_state' id='alt_address_state' value='". $_REQUEST["primary_address_state"] ."'>";
-        $button .= "<input type='hidden' name='alt_address_postalcode' id='alt_address_postalcode' value='". $_REQUEST["primary_address_postalcode"] ."'>";
-        $button .= "<input type='hidden' name='alt_address_country' id='alt_address_country' value='". $_REQUEST["primary_address_country"] ."'>";
+        $button .= "<span style='display: none'><textarea name='alt_address_street' id='alt_address_street'>" . str_replace('&lt;br&gt;', "\n", $_REQUEST['primary_address_street']) . '</textarea></span>';
+        $button .= "<input type='hidden' name='alt_address_city' id='alt_address_city' value='" . $_REQUEST['primary_address_city'] . "'>";
+        $button .= "<input type='hidden' name='alt_address_state' id='alt_address_state' value='" . $_REQUEST['primary_address_state'] . "'>";
+        $button .= "<input type='hidden' name='alt_address_postalcode' id='alt_address_postalcode' value='" . $_REQUEST['primary_address_postalcode'] . "'>";
+        $button .= "<input type='hidden' name='alt_address_country' id='alt_address_country' value='" . $_REQUEST['primary_address_country'] . "'>";
         // Adding an onclick event to remove address for primary address, as user has selected copy address to alternate address
         // NOTE => You need to change the label as as per SugarCRM way..
-        $button .= "<input title='".$mod_strings['LBL_COPY_ADDRESS_CHECKED_ALT']."'  class='button' LANGUAGE=javascript type='submit' name='button' value='  ".$mod_strings['LBL_COPY_ADDRESS_CHECKED_ALT']."  ' onclick='clearAddress(\"primary\");'>\n";
-        $button .= "<input title='".$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_CANCEL_BUTTON_KEY']."' class='button' LANGUAGE=javascript onclick=\"window.close()\" type='submit' name='button' value='  ".$app_strings['LBL_CANCEL_BUTTON_LABEL']."  '>\n";
+        $button .= "<input title='" . $mod_strings['LBL_COPY_ADDRESS_CHECKED_ALT'] . "'  class='button' LANGUAGE=javascript type='submit' name='button' value='  " . $mod_strings['LBL_COPY_ADDRESS_CHECKED_ALT'] . "  ' onclick='clearAddress(\"primary\");'>\n";
+        $button .= "<input title='" . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' accessKey='" . $app_strings['LBL_CANCEL_BUTTON_KEY'] . "' class='button' LANGUAGE=javascript onclick=\"window.close()\" type='submit' name='button' value='  " . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  '>\n";
         ob_start();
         insert_popup_header($theme);
         $output_html .= ob_get_contents();
@@ -198,9 +191,9 @@ EOQ;
         // Regular Expression to override sListView
         $exp = '/sListView.save_checks/si';
         $change = 'save_checks';
-        $output_html = preg_replace(array($exp), array($change), $output_html);
+        $output_html = preg_replace([$exp], [$change], $output_html);
 
-        $output_html .= <<<EOJS
+        $output_html .= <<<'EOJS'
         <script type="text/javascript">
         <!--
         // Function to clear address according to the buttons clicked.
@@ -232,6 +225,7 @@ EOQ;
 EOJS;
 
         $output_html .= insert_popup_footer();
+
         return $output_html;
     }
 
@@ -252,26 +246,26 @@ EOJS;
         $last_name = empty($_REQUEST['last_name']) ? '' : $_REQUEST['last_name'];
         $account_name = empty($_REQUEST['account_name']) ? '' : $_REQUEST['account_name'];
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
-        $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
+        $button = "<form action='index.php' method='post' name='form' id='form'>\n";
         //START:FOR MULTI-SELECT
-        $multi_select=false;
+        $multi_select = false;
         if (!empty($_REQUEST['mode']) && strtoupper($_REQUEST['mode']) == 'MULTISELECT') {
-            $multi_select=true;
-            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('Contacts',document.MassUpdate,'mass[]','" .$app_strings['ERR_NOTHING_SELECTED']."');\" title='"
-                .$app_strings['LBL_SELECT_BUTTON_TITLE']."' accesskey='"
-                .$app_strings['LBL_SELECT_BUTTON_KEY']."' value='  "
-                .$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
+            $multi_select = true;
+            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('Contacts',document.MassUpdate,'mass[]','" . $app_strings['ERR_NOTHING_SELECTED'] . "');\" title='"
+                . $app_strings['LBL_SELECT_BUTTON_TITLE'] . "' accesskey='"
+                . $app_strings['LBL_SELECT_BUTTON_KEY'] . "' value='  "
+                . $app_strings['LBL_SELECT_BUTTON_LABEL'] . "  ' />\n";
         }
         //END:FOR MULTI-SELECT
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                . $app_strings['LBL_CLEAR_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_CLEAR_BUTTON_LABEL'] . "  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-            .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' accesskey='"
+            . $app_strings['LBL_CANCEL_BUTTON_KEY'] . "' value='  "
+            . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  ' />\n";
         $button .= "</form>\n";
 
         $form = new XTemplate('modules/Contacts/MailMergePicker.html');
@@ -301,15 +295,15 @@ EOJS;
         // create the listview
         $seed_bean = new Contact();
         $ListView = new ListView();
-        $ListView->display_header_and_footer=false;
+        $ListView->display_header_and_footer = false;
         $ListView->show_export_button = false;
         $ListView->process_for_popups = true;
         $ListView->setXTemplate($form);
-        $ListView->multi_select_popup=$multi_select;
+        $ListView->multi_select_popup = $multi_select;
         if ($multi_select) {
-            $ListView->xTemplate->assign("TAG_TYPE", "SPAN");
+            $ListView->xTemplate->assign('TAG_TYPE', 'SPAN');
         } else {
-            $ListView->xTemplate->assign("TAG_TYPE", "A");
+            $ListView->xTemplate->assign('TAG_TYPE', 'A');
         }
         $ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE']);
         $ListView->setQuery($where, '', 'contacts.last_name, contacts.first_name', 'CONTACT');
@@ -318,24 +312,24 @@ EOJS;
         ob_start();
         $output_html .= get_form_header($mod_strings['LBL_LIST_FORM_TITLE'], $button, false);
         //BEGIN ATHENA CUSTOMIZATION - rsmith
-        require_once('modules/MailMerge/merge_query.php');
-        $rel_module = empty($_REQUEST['rel_module'])?'': $_REQUEST['rel_module'];
-        $id = empty($_REQUEST['id'])?'': $_REQUEST['id'];
+        require_once 'modules/MailMerge/merge_query.php';
+        $rel_module = empty($_REQUEST['rel_module']) ? '' : $_REQUEST['rel_module'];
+        $id = empty($_REQUEST['id']) ? '' : $_REQUEST['id'];
 
         $query = get_merge_query($seed_bean, $rel_module, $id);
-        $result = $seed_bean->db->query($query, true, "Error retrieving $seed_bean->object_name list: ");
+        $result = $seed_bean->db->query($query, true, "Error retrieving {$seed_bean->object_name} list: ");
 
-        $list = array();
+        $list = [];
         while (($row = $seed_bean->db->fetchByAssoc($result)) != null) {
             $seed_bean = new Contact();
-            foreach ($seed_bean->field_defs as $field=>$value) {
+            foreach ($seed_bean->field_defs as $field => $value) {
                 if (isset($row[$field])) {
-                    $seed_bean->$field = $row[$field];
+                    $seed_bean->{$field} = $row[$field];
                 } else {
-                    if (isset($row[$seed_bean->table_name .'.'.$field])) {
-                        $seed_bean->$field = $row[$seed_bean->table_name .'.'.$field];
+                    if (isset($row[$seed_bean->table_name . '.' . $field])) {
+                        $seed_bean->{$field} = $row[$seed_bean->table_name . '.' . $field];
                     } else {
-                        $seed_bean->$field = "";
+                        $seed_bean->{$field} = '';
                     }
                 }
             }
@@ -351,6 +345,7 @@ EOJS;
         ob_end_clean();
 
         $output_html .= insert_popup_footer();
+
         return $output_html;
     }
 }

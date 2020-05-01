@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOP_Case_EventsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOP_Case_Events()
+    public function testAOPCaseEvents()
     {
         // Execute the constructor and check for the Object type and type attribute
         $aopCaseEvents = new AOP_Case_Events();

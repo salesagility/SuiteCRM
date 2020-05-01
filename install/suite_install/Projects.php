@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,13 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 function install_projects()
 {
-    require_once('ModuleInstall/ModuleInstaller.php');
+    require_once 'ModuleInstall/ModuleInstaller.php';
 
-    $hooks = array(
+    $hooks = [
         //Projects
-        array(
+        [
             'module' => 'Projects',
             'hook' => 'before_delete',
             'order' => 1,
@@ -52,9 +50,9 @@ function install_projects()
             'file' => 'modules/Project/delete_project_tasks.php',
             'class' => 'delete_project_tasks',
             'function' => 'delete_tasks',
-        ),
+        ],
         // ProjectTasks
-        array(
+        [
             'module' => 'ProjectTask',
             'hook' => 'before_save',
             'order' => 1,
@@ -62,8 +60,8 @@ function install_projects()
             'file' => 'modules/ProjectTask/updateDependencies.php',
             'class' => 'updateDependencies',
             'function' => 'update_dependency',
-        ),
-        array(
+        ],
+        [
             'module' => 'ProjectTask',
             'hook' => 'after_save',
             'order' => 1,
@@ -71,10 +69,10 @@ function install_projects()
             'file' => 'modules/ProjectTask/updateProject.php',
             'class' => 'updateEndDate',
             'function' => 'update',
-        ),
-    );
+        ],
+    ];
 
     foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
+        check_logic_hook_file($hook['module'], $hook['hook'], [$hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']]);
     }
 }

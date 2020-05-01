@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -49,47 +48,41 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ErrorMessage
 {
-
     /**
-     * integer
+     * integer.
      */
     const DEFAULT_CODE = 1;
 
     /**
-     * string
+     * string.
      */
     const DEFAULT_LOG_LEVEL = 'fatal';
 
     /**
-     *
      * @var string
      */
     protected $message;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     protected $code;
 
     /**
-     *
      * @var string
      */
     protected $level;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     protected $throw;
 
     /**
-     *
      * @param string $message
-     * @param integer|null $code
+     * @param null|int $code
      * @param string $level
-     * @param boolean $throw
+     * @param bool $throw
      */
     public function __construct($message = '', $code = null, $level = self::DEFAULT_LOG_LEVEL, $throw = true)
     {
@@ -97,11 +90,10 @@ class ErrorMessage
     }
 
     /**
-     *
      * @param string $message
-     * @param integer|null $code
+     * @param null|int $code
      * @param string $level
-     * @param boolean $throw
+     * @param bool $throw
      */
     public function setState($message = '', $code = null, $level = self::DEFAULT_LOG_LEVEL, $throw = true)
     {
@@ -112,7 +104,6 @@ class ErrorMessage
     }
 
     /**
-     *
      * @throws ErrorMessageException
      */
     public function handle()
@@ -120,7 +111,7 @@ class ErrorMessage
         if ($this->level) {
             $log = LoggerManager::getLogger();
             $level = $this->level;
-            $log->$level($this->message);
+            $log->{$level}($this->message);
         }
         if ($this->throw) {
             throw new ErrorMessageException($this->message, $this->code);
@@ -128,11 +119,11 @@ class ErrorMessage
     }
 
     /**
-     *
      * @param string $message
      * @param string $level
-     * @param boolean $throw
-     * @param integer $code
+     * @param bool $throw
+     * @param int $code
+     *
      * @throws ErrorMessageException
      */
     public static function handler($message, $level = self::DEFAULT_LOG_LEVEL, $throw = true, $code = self::DEFAULT_CODE)
@@ -142,9 +133,8 @@ class ErrorMessage
     }
 
     /**
-     *
      * @param string $message
-     * @param integer $level
+     * @param int $level
      */
     public static function log($message, $level = self::DEFAULT_LOG_LEVEL)
     {
@@ -152,9 +142,8 @@ class ErrorMessage
     }
 
     /**
-     *
      * @param string $message
-     * @param integer $code
+     * @param int $code
      */
     public static function drop($message, $code = self::DEFAULT_CODE)
     {

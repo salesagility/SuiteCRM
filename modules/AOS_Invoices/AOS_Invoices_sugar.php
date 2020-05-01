@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +19,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 class AOS_Invoices_sugar extends Basic
@@ -32,7 +30,7 @@ class AOS_Invoices_sugar extends Basic
     public $importable = true;
     public $lineItems = true;
 
-    public $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    public $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
     public $id;
     public $name;
@@ -92,23 +90,17 @@ class AOS_Invoices_sugar extends Basic
     public $status;
     public $template_ddown_c;
 
-
-
-
-
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL': return true;
         }
+
         return false;
     }
 }

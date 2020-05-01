@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,40 +40,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 $module_name = 'FP_Event_Locations';
-$listViewDefs [$module_name] =
-array(
-  'DATE_ENTERED' =>
-  array(
-    'type' => 'datetime',
-    'label' => 'LBL_DATE_ENTERED',
-    'width' => '10%',
-    'default' => true,
-  ),
-  'NAME' =>
-  array(
-    'width' => '32%',
-    'label' => 'LBL_NAME',
-    'default' => true,
-    'link' => true,
-  ),
-  'CAPACITY' =>
-  array(
-    'type' => 'varchar',
-    'default' => true,
-    'label' => 'LBL_CAPACITY',
-    'width' => '10%',
-  ),
-  'ASSIGNED_USER_NAME' =>
-  array(
-    'width' => '9%',
-    'label' => 'LBL_ASSIGNED_TO_NAME',
-    'module' => 'Employees',
-    'id' => 'ASSIGNED_USER_ID',
-    'default' => true,
-  ),
-);
+$listViewDefs[$module_name] =
+[
+    'DATE_ENTERED' => [
+        'type' => 'datetime',
+        'label' => 'LBL_DATE_ENTERED',
+        'width' => '10%',
+        'default' => true,
+    ],
+    'NAME' => [
+        'width' => '32%',
+        'label' => 'LBL_NAME',
+        'default' => true,
+        'link' => true,
+    ],
+    'CAPACITY' => [
+        'type' => 'varchar',
+        'default' => true,
+        'label' => 'LBL_CAPACITY',
+        'width' => '10%',
+    ],
+    'ASSIGNED_USER_NAME' => [
+        'width' => '9%',
+        'label' => 'LBL_ASSIGNED_TO_NAME',
+        'module' => 'Employees',
+        'id' => 'ASSIGNED_USER_ID',
+        'default' => true,
+    ],
+];

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,34 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$fields_array['Call'] = array('column_fields' => array("id"
-        , "date_entered"
-        , "date_modified"
-        , "assigned_user_id"
-        , "modified_user_id"
-        , "created_by"
-        , "description"
-        , "status"
-        , "direction"
-        , "name"
-        , "date_start"
-        , "time_start"
-        , "duration_hours"
-        , "duration_minutes"
-        , "date_end"
-        , "parent_type"
-        , "parent_id"
-        ,'reminder_time'
-        ,'outlook_id'
-        ),
-        'list_fields' => array('id', 'duration_hours', 'direction', 'status', 'name', 'parent_type', 'parent_name', 'parent_id', 'date_start', 'time_start', 'assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_id','first_name','last_name','required','outlook_id','accept_status'
-        ),
-        'required_fields' => array("name"=>1, "date_start"=>2, "time_start"=>3,),
-);
+ */
+$fields_array['Call'] = ['column_fields' => ['id', 'date_entered', 'date_modified', 'assigned_user_id', 'modified_user_id', 'created_by', 'description', 'status', 'direction', 'name', 'date_start', 'time_start', 'duration_hours', 'duration_minutes', 'date_end', 'parent_type', 'parent_id', 'reminder_time', 'outlook_id'
+],
+    'list_fields' => ['id', 'duration_hours', 'direction', 'status', 'name', 'parent_type', 'parent_name', 'parent_id', 'date_start', 'time_start', 'assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_id', 'first_name', 'last_name', 'required', 'outlook_id', 'accept_status'
+    ],
+    'required_fields' => ['name' => 1, 'date_start' => 2, 'time_start' => 3],
+];

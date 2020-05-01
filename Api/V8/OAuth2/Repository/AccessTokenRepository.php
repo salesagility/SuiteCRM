@@ -35,7 +35,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
     {
@@ -52,7 +52,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
     {
@@ -75,9 +75,11 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
                     );
                     $userId = $user->id;
                 }
+
                 break;
             case 'client_credentials':
                 $userId = $client->assigned_user_id;
+
                 break;
         }
 
@@ -102,9 +104,9 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @throws InvalidArgumentException When access token is not found.
+     * @throws InvalidArgumentException when access token is not found
      */
     public function revokeAccessToken($tokenId)
     {
@@ -121,7 +123,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isAccessTokenRevoked($tokenId)
     {

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,71 +40,66 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Leads'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Leads'],
+    ],
 
     'where' => '',
-    
-    
 
-    'list_fields'=> array(
-        'accept_status_name' => array(
+    'list_fields' => [
+        'accept_status_name' => [
             'vname' => 'LBL_LIST_ACCEPT_STATUS',
             'width' => '11%',
             'sortable' => false,
-        ),
-        'm_accept_status_fields'=>array(
+        ],
+        'm_accept_status_fields' => [
             'usage' => 'query_only',
-        ),
-        'accept_status_id'=>array(
+        ],
+        'accept_status_id' => [
             'usage' => 'query_only',
-        ),
-        'first_name'=>array(
+        ],
+        'first_name' => [
             'usage' => 'query_only',
-        ),
-        'last_name'=>array(
+        ],
+        'last_name' => [
             'usage' => 'query_only',
-        ),
-        'salutation'=>array(
-            'name'=>'salutation',
+        ],
+        'salutation' => [
+            'name' => 'salutation',
             'usage' => 'query_only',
-        ),
-        'name'=>array(
+        ],
+        'name' => [
             'vname' => 'LBL_LIST_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'module' => 'Leads',
             'width' => '25%',
-        ),
-        'user_name'=>array(
+        ],
+        'user_name' => [
             'vname' => 'LBL_LIST_USER_NAME',
             'width' => '25%',
-        ),
-        'email1'=>array(
+        ],
+        'email1' => [
             'vname' => 'LBL_LIST_EMAIL',
             'width' => '25%',
             'widget_class' => 'SubPanelEmailLink',
-        ),
-        'phone_work'=>array(
+        ],
+        'phone_work' => [
             'vname' => 'LBL_LIST_PHONE',
             'width' => '21%',
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'Leads',
             'width' => '5%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Leads',
             'width' => '5%',
-        ),
-    ),
-);
+        ],
+    ],
+];

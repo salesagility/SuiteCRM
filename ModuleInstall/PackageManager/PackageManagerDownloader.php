@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,40 +36,43 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 define('PACKAGE_MANAGER_DOWNLOAD_SERVER', 'https://depot.sugarcrm.com/depot/');
 define('PACKAGE_MANAGER_DOWNLOAD_PAGE', 'download.php');
 class PackageManagerDownloader
 {
-
     /**
-     * Using curl we will download the file from the depot server
+     * Using curl we will download the file from the depot server.
      *
      * @param session_id		the session_id this file is queued for
      * @param file_name			the file_name to download
      * @param save_dir			(optional) if specified it will direct where to save the file once downloaded
      * @param download_sever	(optional) if specified it will direct the url for the download
+     * @param mixed $session_id
+     * @param mixed $file_name
+     * @param mixed $save_dir
+     * @param mixed $download_server
      *
      * @return the full path of the saved file
      */
     public function download($session_id, $file_name, $save_dir = '', $download_server = '')
     {
         if (empty($save_dir)) {
-            $save_dir = "upload://";
+            $save_dir = 'upload://';
         }
         if (empty($download_server)) {
             $download_server = PACKAGE_MANAGER_DOWNLOAD_SERVER;
         }
         $download_server .= PACKAGE_MANAGER_DOWNLOAD_PAGE;
-        $ch = curl_init($download_server . '?filename='. $file_name);
+        $ch = curl_init($download_server . '?filename=' . $file_name);
         $fp = sugar_fopen($save_dir . $file_name, 'w');
-        curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID='.$session_id. ';');
+        curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID=' . $session_id . ';');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_exec($ch);
         curl_close($ch);
         fclose($fp);
+
         return $save_dir . $file_name;
     }
 }

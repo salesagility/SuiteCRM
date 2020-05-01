@@ -68,9 +68,9 @@ abstract class AbstractIndexer
     /** @var bool when enabled only beans changed after the last indexing should be indexed */
     protected $differentialIndexing = false;
     /** @var AbstractDocumentifier determines how a bean is converted into a document */
-    protected $documentifier = null;
+    protected $documentifier;
     /** @var string[] The modules that have to be indexed */
-    protected $modulesToIndex = null;
+    protected $modulesToIndex;
     /** @var Logger Monolog instance to log on a separate file */
     protected $logger;
     /** @var string where the log files are going to be stored */
@@ -100,7 +100,6 @@ abstract class AbstractIndexer
      * This method should adhere to the options set in the indexer, such as partial indexing.
      *
      * @see AbstractIndexer:getModulesToIndex
-     * @return void
      */
     abstract public function index();
 
@@ -114,8 +113,6 @@ abstract class AbstractIndexer
      *  Additionally, beans that have been removed must be removed from the index too.
      *
      * @param string $module the name of the module, e.g. Accounts, Contacts, etc.
-     *
-     * @return void
      */
     abstract public function indexModule($module);
 
@@ -123,8 +120,6 @@ abstract class AbstractIndexer
      * Indexes a single bean.
      *
      * @param \SugarBean $bean
-     *
-     * @return void
      */
     abstract public function indexBean(\SugarBean $bean);
 
@@ -135,8 +130,6 @@ abstract class AbstractIndexer
      *
      * @param string       $module name of the module, e.g. Accounts, Contacts, etc.
      * @param \SugarBean[] $beans
-     *
-     * @return void
      */
     abstract public function indexBeans($module, array $beans);
 
@@ -144,8 +137,6 @@ abstract class AbstractIndexer
      * Removes a bean from the index.
      *
      * @param \SugarBean $bean
-     *
-     * @return void
      */
     abstract public function removeBean(\SugarBean $bean);
 
@@ -153,15 +144,11 @@ abstract class AbstractIndexer
      * Removes an array of beans from the index.
      *
      * @param array $beans
-     *
-     * @return void
      */
     abstract public function removeBeans(array $beans);
 
     /**
      * Deletes all the records from the index.
-     *
-     * @return void
      */
     abstract public function removeIndex();
 
@@ -262,15 +249,17 @@ abstract class AbstractIndexer
     {
         if (is_array($modules)) {
             $this->modulesToIndex = array_merge($this->modulesToIndex, $modules);
+
             return;
         }
 
         if (is_string($modules)) {
             $this->modulesToIndex[] = $modules;
+
             return;
         }
 
-        throw new InvalidArgumentException("Wrong type provided to AddModulesToIndex");
+        throw new InvalidArgumentException('Wrong type provided to AddModulesToIndex');
     }
 
     /**
@@ -321,6 +310,7 @@ abstract class AbstractIndexer
     {
         try {
             $reflect = new ReflectionClass($obj);
+
             return $reflect->getShortName();
         } catch (\ReflectionException $exception) {
             return get_class($obj);

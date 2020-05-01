@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,14 +40,14 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
 /**
- * Interface ValidatorInterface
- * @package SuiteCRM\API\JsonApi\v1\Filters\Interfaces
+ * Interface ValidatorInterface.
  */
 interface ValidatorInterface
 {
     /**
      * @param mixed $block
-     * @return boolean
+     *
+     * @return bool
      */
     public function isValid($block);
 }

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -48,7 +46,7 @@ require_once 'modules/Emails/include/DetailView/EmailsDetailView.php';
 class EmailsViewDetail extends ViewDetail
 {
     /**
-     * @var Email $bean
+     * @var Email
      */
     public $bean;
 
@@ -59,7 +57,7 @@ class EmailsViewDetail extends ViewDetail
     {
         $metadataFile = $this->getMetaDataFile();
         $this->dv = new EmailsDetailView();
-        $this->dv->ss =&  $this->ss;
+        $this->dv->ss = &$this->ss;
         $this->dv->populateBean($_REQUEST);
         $this->dv->setup(
             $this->module,
@@ -69,7 +67,7 @@ class EmailsViewDetail extends ViewDetail
     }
 
     /**
-     * display view
+     * display view.
      */
     public function display()
     {
@@ -77,6 +75,7 @@ class EmailsViewDetail extends ViewDetail
             case 'unread':
                 $this->bean->status = 'read';
                 $this->bean->save();
+
                 break;
             default:
                 break;

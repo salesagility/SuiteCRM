@@ -1,5 +1,6 @@
 <?php
 
+use Api\Core\Loader\CustomLoader;
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Helper\ModuleListProvider;
 use Api\V8\JsonApi\Helper\AttributeObjectHelper;
@@ -7,7 +8,6 @@ use Api\V8\JsonApi\Helper\PaginationObjectHelper;
 use Api\V8\JsonApi\Helper\RelationshipObjectHelper;
 use Api\V8\Service;
 use Psr\Container\ContainerInterface as Container;
-use Api\Core\Loader\CustomLoader;
 
 return CustomLoader::mergeCustomArray([
     Service\ListViewSearchService::class => function (Container $container) {

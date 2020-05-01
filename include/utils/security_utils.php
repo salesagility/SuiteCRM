@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /*
  * func: query_module_access
  * param: $moduleName
@@ -50,27 +50,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  */
 
-$modules_exempt_from_availability_check['Activities']='Activities';
-$modules_exempt_from_availability_check['History']='History';
-$modules_exempt_from_availability_check['Calls']='Calls';
-$modules_exempt_from_availability_check['Meetings']='Meetings';
-$modules_exempt_from_availability_check['Tasks']='Tasks';
+$modules_exempt_from_availability_check['Activities'] = 'Activities';
+$modules_exempt_from_availability_check['History'] = 'History';
+$modules_exempt_from_availability_check['Calls'] = 'Calls';
+$modules_exempt_from_availability_check['Meetings'] = 'Meetings';
+$modules_exempt_from_availability_check['Tasks'] = 'Tasks';
 //$modules_exempt_from_availability_check['Notes']='Notes';
 
-$modules_exempt_from_availability_check['CampaignLog']='CampaignLog';
-$modules_exempt_from_availability_check['CampaignTrackers']='CampaignTrackers';
-$modules_exempt_from_availability_check['Prospects']='Prospects';
-$modules_exempt_from_availability_check['ProspectLists']='ProspectLists';
-$modules_exempt_from_availability_check['EmailMarketing']='EmailMarketing';
-$modules_exempt_from_availability_check['EmailMan']='EmailMan';
-$modules_exempt_from_availability_check['ProjectTask']='ProjectTask';
-$modules_exempt_from_availability_check['Users']='Users';
-$modules_exempt_from_availability_check['Teams']='Teams';
-$modules_exempt_from_availability_check['SchedulersJobs']='SchedulersJobs';
-$modules_exempt_from_availability_check['DocumentRevisions']='DocumentRevisions';
+$modules_exempt_from_availability_check['CampaignLog'] = 'CampaignLog';
+$modules_exempt_from_availability_check['CampaignTrackers'] = 'CampaignTrackers';
+$modules_exempt_from_availability_check['Prospects'] = 'Prospects';
+$modules_exempt_from_availability_check['ProspectLists'] = 'ProspectLists';
+$modules_exempt_from_availability_check['EmailMarketing'] = 'EmailMarketing';
+$modules_exempt_from_availability_check['EmailMan'] = 'EmailMan';
+$modules_exempt_from_availability_check['ProjectTask'] = 'ProjectTask';
+$modules_exempt_from_availability_check['Users'] = 'Users';
+$modules_exempt_from_availability_check['Teams'] = 'Teams';
+$modules_exempt_from_availability_check['SchedulersJobs'] = 'SchedulersJobs';
+$modules_exempt_from_availability_check['DocumentRevisions'] = 'DocumentRevisions';
 function query_module_access_list(&$user)
 {
-    require_once('modules/MySettings/TabController.php');
+    require_once 'modules/MySettings/TabController.php';
     $controller = new TabController();
     $tabArray = $controller->get_tabs($user);
 
@@ -88,14 +88,14 @@ function get_user_allowed_modules($user_id)
 {
     $role = new Role();
 
-    $allowed = $role->query_user_allowed_modules($user_id);
-    return $allowed;
+    return $role->query_user_allowed_modules($user_id);
 }
 
 function get_user_disallowed_modules($user_id, &$allowed)
 {
     $role = new Role();
     $disallowed = $role->query_user_disallowed_modules($user_id, $allowed);
+
     return $disallowed;
 }
 // grabs client ip address and returns its value
@@ -103,34 +103,42 @@ function query_client_ip()
 {
     if (!empty($GLOBALS['sugar_config']['ip_variable']) && !empty($_SERVER[$GLOBALS['sugar_config']['ip_variable']])) {
         return $_SERVER[$GLOBALS['sugar_config']['ip_variable']];
-    } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
-        return $_SERVER['HTTP_CLIENT_IP'];
-    } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        return $_SERVER['HTTP_X_FORWARDED_FOR'];
-    } elseif (isset($_SERVER['HTTP_X_FORWARDED'])) {
-        return $_SERVER['HTTP_X_FORWARDED'];
-    } elseif (isset($_SERVER['HTTP_FORWARDED_FOR'])) {
-        return $_SERVER['HTTP_FORWARDED_FOR'];
-    } elseif (isset($_SERVER['HTTP_FORWARDED'])) {
-        return $_SERVER['HTTP_FORWARDED'];
-    } elseif (isset($_SERVER['HTTP_FROM'])) {
-        return $_SERVER['HTTP_FROM'];
-    } elseif (isset($_SERVER['REMOTE_ADDR'])) {
-        return $_SERVER['REMOTE_ADDR'];
-    } else {
-        $GLOBALS['log']->warn('query_client_ip(): Unable to detect the IP address of the client.');
-        return null;
     }
+    if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+    if (isset($_SERVER['HTTP_X_FORWARDED'])) {
+        return $_SERVER['HTTP_X_FORWARDED'];
+    }
+    if (isset($_SERVER['HTTP_FORWARDED_FOR'])) {
+        return $_SERVER['HTTP_FORWARDED_FOR'];
+    }
+    if (isset($_SERVER['HTTP_FORWARDED'])) {
+        return $_SERVER['HTTP_FORWARDED'];
+    }
+    if (isset($_SERVER['HTTP_FROM'])) {
+        return $_SERVER['HTTP_FROM'];
+    }
+    if (isset($_SERVER['REMOTE_ADDR'])) {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+    $GLOBALS['log']->warn('query_client_ip(): Unable to detect the IP address of the client.');
+
+    return null;
 }
 
 // sets value to key value
 function get_val_array($arr)
 {
-    $new = array();
+    $new = [];
     if (!empty($arr)) {
-        foreach ($arr as $key=>$val) {
+        foreach ($arr as $key => $val) {
             $new[$key] = $key;
         }
     }
+
     return $new;
 }

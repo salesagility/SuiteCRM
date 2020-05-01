@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testautoload()

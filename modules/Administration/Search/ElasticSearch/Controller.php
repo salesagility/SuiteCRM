@@ -134,7 +134,7 @@ class Controller extends AbstractController
 
             $indexer = new ElasticSearchIndexer($client);
 
-            $return = ['status' => 'fail', 'request' => $config[0],];
+            $return = ['status' => 'fail', 'request' => $config[0]];
 
             $info = $client->info();
             $time = $indexer->ping();
@@ -142,7 +142,7 @@ class Controller extends AbstractController
             $return['status'] = 'success';
             $return['ping'] = $time;
             $return['info'] = $info;
-        } /** @noinspection PhpRedundantCatchClauseInspection */
+        } // @noinspection PhpRedundantCatchClauseInspection
         catch (BadRequest400Exception $exception) {
             $error = json_decode($exception->getMessage());
             $return['error'] = $error->error->reason;
@@ -177,14 +177,13 @@ class Controller extends AbstractController
     /**
      * Returns all the Elasticsearch-related scheduler jobs.
      *
-     * @return Scheduler[]|null
+     * @return null|Scheduler[]
      */
     public function getSchedulers()
     {
         $where = "schedulers.job='function::runElasticSearchIndexerScheduler'";
-        /** @var Scheduler[]|null $schedulers */
-        $schedulers = BeanFactory::getBean('Schedulers')->get_full_list(null, $where);
-        return $schedulers;
+        /** @var null|Scheduler[] $schedulers */
+        return BeanFactory::getBean('Schedulers')->get_full_list(null, $where);
     }
 
     /**
@@ -202,7 +201,7 @@ class Controller extends AbstractController
         $job->assigned_user_id = 1;
 
         $queue = new SugarJobQueue();
-        /** @noinspection PhpParamsInspection */
+        // @noinspection PhpParamsInspection
         $queue->submitJob($job);
 
         $this->yieldJson(['status' => 'success']);

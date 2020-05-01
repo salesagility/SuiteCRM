@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,20 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class jsLanguage
 {
-
     /**
-     * Creates javascript versions of language files
+     * Creates javascript versions of language files.
      */
     public function __construct()
     {
     }
-
-
-
 
     public static function createAppStringsCache($lang = 'en_us')
     {
@@ -66,12 +60,12 @@ class jsLanguage
         $app_strings_encoded = $json->encode($app_strings);
 
         $str = <<<EOQ
-SUGAR.language.setLanguage('app_strings', $app_strings_encoded);
-SUGAR.language.setLanguage('app_list_strings', $app_list_strings_encoded);
+SUGAR.language.setLanguage('app_strings', {$app_strings_encoded});
+SUGAR.language.setLanguage('app_list_strings', {$app_list_strings_encoded});
 EOQ;
 
         $cacheDir = create_cache_directory('jsLanguage/');
-        if ($fh = @sugar_fopen($cacheDir . $lang . '.js', "w")) {
+        if ($fh = @sugar_fopen($cacheDir . $lang . '.js', 'w')) {
             fwrite($fh, $str);
             fclose($fh);
         }
@@ -84,7 +78,7 @@ EOQ;
         // cn: bug 8242 - non-US langpack chokes
         $mod_strings = return_module_language($lang, $moduleDir);
         $mod_strings_encoded = $json->encode($mod_strings);
-        $str = "SUGAR.language.setLanguage('" . $moduleDir . "', " . $mod_strings_encoded . ");";
+        $str = "SUGAR.language.setLanguage('" . $moduleDir . "', " . $mod_strings_encoded . ');';
 
         $cacheDir = create_cache_directory('jsLanguage/' . $moduleDir . '/');
 

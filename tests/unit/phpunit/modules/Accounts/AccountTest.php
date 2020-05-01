@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AccountTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -56,7 +59,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($Account->field_defs));
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         //test without name setting attribute
         $Account = new Account();
@@ -69,7 +72,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test account', $name);
     }
 
-    public function testget_contacts()
+    public function testgetContacts()
     {
         $Account = new Account('');
 
@@ -78,7 +81,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($contacts));
     }
 
-    public function testclear_account_case_relationship()
+    public function testclearAccountCaseRelationship()
     {
         $this->markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
         //This method cannot be tested because Query has a wrong column name which makes the function to die.
@@ -87,7 +90,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $Account->clear_account_case_relationship('','');*/
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $Account = new Account('');
 
@@ -100,7 +103,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $Account = new Account('');
 
@@ -113,11 +116,11 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $this->markTestIncomplete('Breaks on php 7.1');
         $this->
-        $expected = array(
+        {$expected} = [
             'DELETED' => 0,
             'JJWG_MAPS_LNG_C' => '0.00000000',
             'JJWG_MAPS_LAT_C' => '0.00000000',
@@ -131,7 +134,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
             'CITY' => null,
             'BILLING_ADDRESS_STREET' => null,
             'SHIPPING_ADDRESS_STREET' => null,
-        );
+        ];
 
         $Account = new Account();
 
@@ -143,7 +146,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $Account = new Account();
 
@@ -158,10 +161,10 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $this->markTestIncomplete('Needs to clearify');
-        
+
 //        $Account = new Account();
 //
 //        // execute the method with empty strings and verify that it retunrs expected results
@@ -177,7 +180,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $Account = new Account();
 
@@ -187,16 +190,16 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $this->assertNotEquals(new Sugar_Smarty(), $result);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $Account = new Account();
 
         $this->assertTrue($Account->bean_implements('ACL')); //test with valid value
         $this->assertFalse($Account->bean_implements('')); //test with empty value
-        $this->assertFalse($Account->bean_implements('Basic'));//test with invalid value
+        $this->assertFalse($Account->bean_implements('Basic')); //test with invalid value
     }
 
-    public function testget_unlinked_email_query()
+    public function testgetUnlinkedEmailQuery()
     {
         $Account = new Account();
 
@@ -212,7 +215,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
 
         //with type parameter set
-        $expected = array(
+        $expected = [
             'select' => 'SELECT emails.id ',
             'from' => 'FROM emails ',
             'where' => '',
@@ -223,10 +226,10 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 	where eear.deleted=0 and eear.email_id not in
 	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')
 	) derivedemails on derivedemails.email_id = emails.id",
-            'join_tables' => array(''),
-        );
+            'join_tables' => [''],
+        ];
 
-        $actual = $Account->get_unlinked_email_query(array('return_as_array' => 'true'));
+        $actual = $Account->get_unlinked_email_query(['return_as_array' => 'true']);
         $this->assertSame($expected, $actual);
     }
 }

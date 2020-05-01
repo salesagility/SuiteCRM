@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -52,11 +51,10 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * MetaController
+ * MetaController.
  */
 class MetaController extends BaseController
 {
-
     /**
      * @var UserService
      */
@@ -71,10 +69,10 @@ class MetaController extends BaseController
     }
 
     /**
-     *
      * @param Request $request
      * @param Response $response
      * @param array $args
+     *
      * @return Response
      */
     public function getModuleList(Request $request, Response $response, array $args)
@@ -89,11 +87,11 @@ class MetaController extends BaseController
     }
 
     /**
-     *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @param GetFieldListParams $fieldListParams
+     *
      * @return Response
      */
     public function getFieldList(Request $request, Response $response, array $args, GetFieldListParams $fieldListParams)
@@ -110,6 +108,7 @@ class MetaController extends BaseController
     /**
      * @param Request $request
      * @param Response $response
+     *
      * @return Response
      */
     public function getSwaggerSchema(Request $request, Response $response)

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/Dashlets/Dashlet.php');
-
+require_once 'include/Dashlets/Dashlet.php';
 
 class InvadersDashlet extends Dashlet
 {
@@ -51,9 +48,10 @@ class InvadersDashlet extends Dashlet
     public $height = '100'; // height of the pad
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @global string current language
+     *
      * @param guid $id id for the current dashlet (assigned from Home module)
      * @param array $def options saved for this dashlet
      */
@@ -79,7 +77,7 @@ class InvadersDashlet extends Dashlet
     }
 
     /**
-     * Displays the dashlet
+     * Displays the dashlet.
      *
      * @return string html to display dashlet
      */
@@ -91,11 +89,12 @@ class InvadersDashlet extends Dashlet
         $ss->assign('dashletStrings', $this->dashletStrings);
 
         $str = $ss->fetch('modules/Home/Dashlets/InvadersDashlet/InvadersDashlet.tpl');
+
         return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str . '<br />'; // return parent::display for title and such
     }
 
     /**
-     * Displays the javascript for the dashlet
+     * Displays the javascript for the dashlet.
      *
      * @return string javascript to use with this dashlet
      */
@@ -105,12 +104,12 @@ class InvadersDashlet extends Dashlet
         $ss->assign('id', $this->id);
         $ss->assign('dashletStrings', $this->dashletStrings);
 
-        $str = $ss->fetch('modules/Home/Dashlets/InvadersDashlet/InvadersDashletScript.tpl');
-        return $str; // return parent::display for title and such
+        return $ss->fetch('modules/Home/Dashlets/InvadersDashlet/InvadersDashletScript.tpl');
+        // return parent::display for title and such
     }
 
     /**
-     * Displays the configuration form for the dashlet
+     * Displays the configuration form for the dashlet.
      *
      * @return string html to display form
      */
@@ -131,15 +130,16 @@ class InvadersDashlet extends Dashlet
     }
 
     /**
-     * called to filter out $_REQUEST object when the user submits the configure dropdown
+     * called to filter out $_REQUEST object when the user submits the configure dropdown.
      *
      * @param array $req $_REQUEST
+     *
      * @return array filtered options to save
      */
     public function saveOptions($req)
     {
         global $sugar_config, $timedate, $current_user, $theme;
-        $options = array();
+        $options = [];
         $options['title'] = $_REQUEST['title'];
         if (is_numeric($_REQUEST['height'])) {
             if ($_REQUEST['height'] > 0 && $_REQUEST['height'] <= 300) {
@@ -159,7 +159,7 @@ class InvadersDashlet extends Dashlet
 
     /**
      * Used to save text on textarea blur. Accessed via Home/CallMethodDashlet.php
-     * This is an example of how to to call a custom method via ajax
+     * This is an example of how to to call a custom method via ajax.
      */
     public function saveText()
     {
@@ -171,7 +171,7 @@ class InvadersDashlet extends Dashlet
             $optionsArray['savedText'] = '';
         }
         $json = getJSONobj();
-        echo 'result = ' . $json->encode(array('id' => $_REQUEST['id'],
-                                       'savedText' => $optionsArray['savedText']));
+        echo 'result = ' . $json->encode(['id' => $_REQUEST['id'],
+            'savedText' => $optionsArray['savedText']]);
     }
 }

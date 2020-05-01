@@ -1,6 +1,7 @@
 <?php
 
 use Api\Core\Config\ApiConfig;
+use Api\Core\Loader\CustomLoader;
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\AccessTokenEntity;
 use Api\V8\OAuth2\Entity\ClientEntity;
@@ -9,12 +10,11 @@ use Api\V8\OAuth2\Repository\ClientRepository;
 use Api\V8\OAuth2\Repository\RefreshTokenRepository;
 use Api\V8\OAuth2\Repository\ScopeRepository;
 use Api\V8\OAuth2\Repository\UserRepository;
-use Psr\Container\ContainerInterface as Container;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use League\OAuth2\Server\ResourceServer;
-use Api\Core\Loader\CustomLoader;
+use Psr\Container\ContainerInterface as Container;
 
 return CustomLoader::mergeCustomArray([
     AuthorizationServer::class => function (Container $container) {

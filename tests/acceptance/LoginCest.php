@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class LoginCest
+ * Class LoginCest.
  *
  * Test login page
  */

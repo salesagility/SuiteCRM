@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['AOK_Knowledge_Base_Categories'] = array(
+$dictionary['AOK_Knowledge_Base_Categories'] = [
     'table' => 'aok_knowledge_base_categories',
     'audited' => true,
     'duplicate_merge' => true,
-    'fields' => array(
-        'aok_knowledgebase_categories' => array(
+    'fields' => [
+        'aok_knowledgebase_categories' => [
             'name' => 'aok_knowledgebase_categories',
             'type' => 'link',
             'relationship' => 'aok_knowledgebase_categories',
@@ -55,18 +53,18 @@ $dictionary['AOK_Knowledge_Base_Categories'] = array(
             'module' => 'AOK_KnowledgeBase',
             'bean_name' => false,
             'vname' => 'LBL_AOK_KB_TITLE',
-        ),
-    ),
-    'relationships' => array(),
+        ],
+    ],
+    'relationships' => [],
     'optimistic_locking' => true,
     'unified_search' => true,
-);
+];
 
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
 VardefManager::createVardef(
     'AOK_Knowledge_Base_Categories',
     'AOK_Knowledge_Base_Categories',
-    array('basic', 'assignable')
+    ['basic', 'assignable']
 );

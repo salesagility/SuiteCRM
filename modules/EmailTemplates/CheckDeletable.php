@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,19 +40,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-require_once('modules/EmailTemplates/EmailTemplate.php');
+require_once 'modules/EmailTemplates/EmailTemplate.php';
 
 $focus = new EmailTemplate();
 if ($_REQUEST['from'] == 'DetailView') {
     if (!isset($_REQUEST['record'])) {
-        sugar_die("A record number must be specified to delete the template.");
+        sugar_die('A record number must be specified to delete the template.');
     }
     $focus->retrieve($_REQUEST['record']);
     if (check_email_template_in_use($focus)) {
         echo 'true';
+
         return;
     }
     echo 'false';
@@ -83,5 +81,6 @@ function check_email_template_in_use($focus)
     if ($focus->id == $system['generatepasswordtmpl'] || $focus->id == $system['lostpasswordtmpl']) {
         return true;
     }
+
     return false;
 }

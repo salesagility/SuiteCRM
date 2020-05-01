@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,49 +35,60 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $string
+ * @param mixed $type
+ * @param mixed $additional_parameters
+ * @param mixed $additional_parameters_oracle_only
  */
-
-
-
 
 /**
- * @deprecated use DBManager::convert() instead.
+ * @deprecated use DBManager::convert() instead
  */
-function db_convert($string, $type, $additional_parameters=array(), $additional_parameters_oracle_only=array())
+function db_convert($string, $type, $additional_parameters = [], $additional_parameters_oracle_only = [])
 {
     return DBManagerFactory::getInstance()->convert($string, $type, $additional_parameters, $additional_parameters_oracle_only);
 }
 
 /**
- * @deprecated use DBManager::concat() instead.
+ * @deprecated use DBManager::concat() instead
+ *
+ * @param mixed $table
+ * @param mixed $fields
  */
 function db_concat($table, $fields)
 {
     $db = DBManagerFactory::getInstance();
+
     return $db->concat($table, $fields);
 }
 
 /**
- * @deprecated use DBManager::fromConvert() instead.
+ * @deprecated use DBManager::fromConvert() instead
+ *
+ * @param mixed $string
+ * @param mixed $type
  */
 function from_db_convert($string, $type)
 {
     return DBManagerFactory::getInstance()->fromConvert($string, $type);
 }
 
-$toHTML = array(
+$toHTML = [
     '"' => '&quot;',
     '<' => '&lt;',
     '>' => '&gt;',
     "'" => '&#039;',
-);
+];
 $GLOBALS['toHTML_keys'] = array_keys($toHTML);
 $GLOBALS['toHTML_values'] = array_values($toHTML);
-$GLOBALS['toHTML_keys_set'] = implode("", $GLOBALS['toHTML_keys']);
+$GLOBALS['toHTML_keys_set'] = implode('', $GLOBALS['toHTML_keys']);
 /**
- * Replaces specific characters with their HTML entity values
+ * Replaces specific characters with their HTML entity values.
+ *
  * @param string $string String to check/replace
  * @param bool $encode Default true
+ *
  * @return string
  *
  * @todo Make this utilize the external caching mechanism after re-testing (see
@@ -87,7 +97,7 @@ $GLOBALS['toHTML_keys_set'] = implode("", $GLOBALS['toHTML_keys']);
  * Bug 49489 - removed caching of to_html strings as it was consuming memory and
  * never releasing it
  */
-function to_html($string, $encode=true)
+function to_html($string, $encode = true)
 {
     if (empty($string)) {
         return $string;
@@ -99,21 +109,22 @@ function to_html($string, $encode=true)
         if (is_array($toHTML)) {
             $string = str_ireplace($GLOBALS['toHTML_keys'], $GLOBALS['toHTML_values'], $string);
         } else {
-            $string = htmlentities($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
+            $string = htmlentities($string, ENT_HTML401 | ENT_QUOTES, 'UTF-8');
         }
     }
 
     return $string;
 }
 
-
 /**
- * Replaces specific HTML entity values with the true characters
+ * Replaces specific HTML entity values with the true characters.
+ *
  * @param string $string String to check/replace
  * @param bool $encode Default true
+ *
  * @return string
  */
-function from_html($string, $encode=true)
+function from_html($string, $encode = true)
 {
     if (!is_string($string) || !$encode) {
         return $string;
@@ -122,18 +133,19 @@ function from_html($string, $encode=true)
     global $toHTML;
     static $toHTML_values = null;
     static $toHTML_keys = null;
-    static $cache = array();
+    static $cache = [];
     if (!empty($toHTML) && is_array($toHTML) && (!isset($toHTML_values) || !empty($GLOBALS['from_html_cache_clear']))) {
         $toHTML_values = array_values($toHTML);
         $toHTML_keys = array_keys($toHTML);
     }
 
     // Bug 36261 - Decode &amp; so we can handle double encoded entities
-    $string = html_entity_decode($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
+    $string = html_entity_decode($string, ENT_HTML401 | ENT_QUOTES, 'UTF-8');
 
     if (!isset($cache[$string])) {
         $cache[$string] = str_ireplace($toHTML_values, $toHTML_keys, $string);
     }
+
     return $cache[$string];
 }
 
@@ -150,18 +162,20 @@ function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
     return DBManagerFactory::getInstance()->getValidDBName($name, $ensureUnique);
 }
 
-
 /**
- * isValidDBName
+ * isValidDBName.
  *
  * Utility to perform the check during install to ensure a database name entered by the user
  * is valid based on the type of database server
+ *
  * @param string $name Proposed name for the DB
  * @param string $dbType Type of database server
+ *
  * @return bool true or false based on the validity of the DB name
  */
 function isValidDBName($name, $dbType)
 {
     $db = DBManagerFactory::getTypeInstance($dbType);
+
     return $db->isDatabaseNameValid($name);
 }

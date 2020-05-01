@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -25,11 +26,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility <info@salesagility.com>
  */
 
-
-$layout_defs['AOW_WorkFlow'] = array(
-    'subpanel_setup' => array(
-        'aow_processed' =>
-        array(
+$layout_defs['AOW_WorkFlow'] = [
+    'subpanel_setup' => [
+        'aow_processed' => [
             'order' => 100,
             'module' => 'AOW_Processed',
             'subpanel_name' => 'default',
@@ -37,6 +36,6 @@ $layout_defs['AOW_WorkFlow'] = array(
             'sort_by' => 'date_entered',
             'title_key' => 'AOW_Processed',
             'get_subpanel_data' => 'aow_processed',
-        ),
-    ),
-);
+        ],
+    ],
+];

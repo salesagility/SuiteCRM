@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @package Advanced OpenPortal
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,26 +16,23 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 $module_name = 'AOP_Case_Updates';
-$listViewDefs[$module_name] = array(
-    'NAME' => array(
+$listViewDefs[$module_name] = [
+    'NAME' => [
         'width' => '32',
         'label' => 'LBL_NAME',
         'default' => true,
-        'link' => true),
-    'ASSIGNED_USER_NAME' => array(
+        'link' => true],
+    'ASSIGNED_USER_NAME' => [
         'width' => '9',
         'label' => 'LBL_ASSIGNED_TO_NAME',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-    
-);
+        'default' => true],
+];

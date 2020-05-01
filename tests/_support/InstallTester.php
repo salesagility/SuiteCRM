@@ -5,9 +5,9 @@ use Codeception\Lib\Friend;
 use Helper\WebDriverHelper;
 use SuiteCRM\Enumerator\DatabaseDriver;
 
-
 /**
- * Inherited Methods
+ * Inherited Methods.
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,7 +35,7 @@ class InstallTester extends Actor
     use _generated\InstallTesterActions;
 
     /**
-     * Tests the old version detected screen and moves to the next stage in the wizard
+     * Tests the old version detected screen and moves to the next stage in the wizard.
      */
     public function maySeeOldVersionDetected()
     {
@@ -55,7 +55,7 @@ class InstallTester extends Actor
     }
 
     /**
-     * Accept the license agreement and moves to the next stage of the wizard
+     * Accept the license agreement and moves to the next stage of the wizard.
      */
     public function acceptLicense()
     {
@@ -72,9 +72,8 @@ class InstallTester extends Actor
         $I->waitForText('System Environment');
     }
 
-
     /**
-     * Tests the System Environment Stage and moves to the next stage of the wizard
+     * Tests the System Environment Stage and moves to the next stage of the wizard.
      */
     public function seeValidSystemEnvironment()
     {
@@ -88,6 +87,7 @@ class InstallTester extends Actor
 
     /**
      * @param WebDriverHelper $webDriverHelper
+     *
      * @throws Exception
      * Configures the installer based on the webdriver configuration and moves to the next stage of the wizard
      */
@@ -105,11 +105,13 @@ class InstallTester extends Actor
         switch ($webDriverHelper->getDatabaseDriver()) {
             case DatabaseDriver::MYSQL:
                 $I->checkOption('#setup_db_type[value=mysql]');
+
                 break;
             case DatabaseDriver::MSSQL:
                 $I->checkOption('#setup_db_type[value=mssql]');
                 // clear instance field
                 $I->fillField('#setup_db_host_instance', '');
+
                 break;
             default:
                 throw new \RuntimeException('No Database Driver Specified');
@@ -128,13 +130,12 @@ class InstallTester extends Actor
         $I->fillField('[name=setup_site_url]', $webDriverHelper->getInstanceURL());
         $I->fillField('[name=email1]', 'install.tester@example.com');
 
-
         $I->click('Next');
         $I->waitForText('Install', 120);
     }
 
     /**
-     * Waits for the login screen after the installer has finished and moves to the next stage of the wizard
+     * Waits for the login screen after the installer has finished and moves to the next stage of the wizard.
      */
     public function waitForInstallerToFinish()
     {
@@ -145,9 +146,6 @@ class InstallTester extends Actor
         $I->dontSeeErrors();
     }
 
-    /**
-     *
-     */
     public function dontSeeMissingLabels()
     {
         $I = $this;

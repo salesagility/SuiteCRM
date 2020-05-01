@@ -1,15 +1,14 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 function generateFieldDefsJS2()
 {
     global $app_list_strings, $beanList, $beanFiles;
 
-
-    $badFields = array(
+    $badFields = [
         'account_description',
         'contact_id',
         'lead_id',
@@ -37,15 +36,15 @@ function generateFieldDefsJS2()
         'created_by_name',
         'accept_status_id',
         'accept_status_name',
-    );
+    ];
 
-    $loopControl = array();
-    $prefixes = array();
+    $loopControl = [];
+    $prefixes = [];
 
     foreach ($app_list_strings['moduleList'] as $key => $name) {
-        if (isset($beanList[$key]) && isset($beanFiles[$beanList[$key]]) && !str_begin($key, 'AOW_')) {
-            require_once($beanFiles[$beanList[$key]]);
-            $focus = new $beanList[$key];
+        if (isset($beanList[$key], $beanFiles[$beanList[$key]]) && !str_begin($key, 'AOW_')) {
+            require_once $beanFiles[$beanList[$key]];
+            $focus = new $beanList[$key]();
             $loopControl[$key][$key] = $focus;
             $prefixes[$key] = strtolower($focus->object_name) . '_';
             if ($focus->object_name == 'Case') {
@@ -58,21 +57,20 @@ function generateFieldDefsJS2()
     $lead = new Lead();
     $prospect = new Prospect();
 
-    $loopControl['Contacts'] = array(
+    $loopControl['Contacts'] = [
         'Contacts' => $contact,
         'Leads' => $lead,
         'Prospects' => $prospect,
-    );
+    ];
 
     $prefixes['Users'] = 'contact_user_';
 
-
-    $collection = array();
+    $collection = [];
     foreach ($loopControl as $collectionKey => $beans) {
-        $collection[$collectionKey] = array();
+        $collection[$collectionKey] = [];
         foreach ($beans as $beankey => $bean) {
             foreach ($bean->field_defs as $key => $field_def) {
-                if (    /*($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||*/
+                if (    // ($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
                     ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
                     ($field_def['type'] == 'bool') ||
                     (in_array($field_def['name'], $badFields))
@@ -85,28 +83,30 @@ function generateFieldDefsJS2()
                 // valid def found, process
                 $optionKey = strtolower("{$prefixes[$collectionKey]}{$key}");
                 if (isset($field_def['vname'])) {
-                    $optionLabel = preg_replace('/:$/', "", translate($field_def['vname'], $beankey));
+                    $optionLabel = preg_replace('/:$/', '', translate($field_def['vname'], $beankey));
                 } else {
-                    $optionLabel = preg_replace('/:$/', "", $field_def['name']);
+                    $optionLabel = preg_replace('/:$/', '', $field_def['name']);
                 }
                 $dup = 1;
                 foreach ($collection[$collectionKey] as $value) {
                     if ($value['name'] == $optionKey) {
                         $dup = 0;
+
                         break;
                     }
                 }
                 if ($dup) {
-                    $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    $collection[$collectionKey][] = ['name' => $optionKey, 'value' => $optionLabel];
                 }
             }
         }
     }
 
     $json = getJSONobj();
-    $ret = "var field_defs = ";
+    $ret = 'var field_defs = ';
     $ret .= $json->encode($collection, false);
-    $ret .= ";";
+    $ret .= ';';
+
     return $ret;
 }
 
@@ -114,36 +114,35 @@ function genDropDownJS2()
 {
     global $app_list_strings, $beanList, $beanFiles;
 
-    $lblContactAndOthers = implode('/', array(
+    $lblContactAndOthers = implode('/', [
         isset($app_list_strings['moduleListSingular']['Contacts']) ? $app_list_strings['moduleListSingular']['Contacts'] : 'Contact',
         isset($app_list_strings['moduleListSingular']['Leads']) ? $app_list_strings['moduleListSingular']['Leads'] : 'Lead',
         isset($app_list_strings['moduleListSingular']['Prospects']) ? $app_list_strings['moduleListSingular']['Prospects'] : 'Target',
-    ));
+    ]);
 
     $dropdown = '';
 
     array_multisort($app_list_strings['moduleList'], SORT_ASC, $app_list_strings['moduleList']);
 
     foreach ($app_list_strings['moduleList'] as $key => $name) {
-        if (isset($beanList[$key]) && isset($beanFiles[$beanList[$key]]) && !str_begin($key, 'AOW_') && !str_begin($key, 'zr2_')) {
+        if (isset($beanList[$key], $beanFiles[$beanList[$key]]) && !str_begin($key, 'AOW_') && !str_begin($key, 'zr2_')) {
             if ($key == 'Contacts') {
                 $dropdown .= "<option value='" . $key . "'>
-						" . $lblContactAndOthers . "
-		  	       </option>";
+						" . $lblContactAndOthers . '
+		  	       </option>';
             } else {
                 if (isset($app_list_strings['moduleListSingular'][$key])) {
                     $dropdown .= "<option value='" . $key . "'>
-						" . $app_list_strings['moduleListSingular'][$key] . "
-		  	       </option>";
+						" . $app_list_strings['moduleListSingular'][$key] . '
+		  	       </option>';
                 } else {
                     $dropdown .= "<option value='" . $key . "'>
-						" . $app_list_strings['moduleList'][$key] . "
-		  	       </option>";
+						" . $app_list_strings['moduleList'][$key] . '
+		  	       </option>';
                 }
             }
         }
     }
-
 
     return $dropdown;
 }

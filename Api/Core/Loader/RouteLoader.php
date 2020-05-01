@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\Core\Loader;
 
 use Api\Core\Config\ApiConfig;
@@ -8,7 +9,7 @@ use Slim\App;
 class RouteLoader
 {
     /**
-     * Load all app routes
+     * Load all app routes.
      *
      * @param App $app
      */

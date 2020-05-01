@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 }
 
 global $timedate;
@@ -50,7 +51,7 @@ global $timedate;
 $callBean = new Call();
 $callQuery = "SELECT * FROM calls where calls.status != 'Held' and calls.deleted=0";
 
-$result = $callBean->db->query($callQuery, true, "");
+$result = $callBean->db->query($callQuery, true, '');
 $row = $callBean->db->fetchByAssoc($result);
 while ($row != null) {
     $date_end = $timedate->fromDb($row['date_start'])->modify("+{$row['duration_hours']} hours {$row['duration_minutes']} mins")->asDb();
@@ -63,7 +64,7 @@ while ($row != null) {
 $meetingBean = new Meeting();
 $meetingQuery = "SELECT * FROM meetings where meetings.status != 'Held' and meetings.deleted=0";
 
-$result = $meetingBean->db->query($meetingQuery, true, "");
+$result = $meetingBean->db->query($meetingQuery, true, '');
 $row = $meetingBean->db->fetchByAssoc($result);
 while ($row != null) {
     $date_end = $timedate->fromDb($row['date_start'])->modify("+{$row['duration_hours']} hours {$row['duration_minutes']} mins")->asDb();

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -47,33 +46,35 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFactory.php';
 
 /**
- * ImapHandlerFactoryTest
+ * ImapHandlerFactoryTest.
  *
  * @author gyula
+ *
+ * @internal
  */
 class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
-     * FAIL: invalid key argument for save test settings key
+     * FAIL: invalid key argument for save test settings key.
      */
     public function testSaveTestSettingsKeyInvalidKey()
     {
         $factory = new ImapHandlerFactory();
-        
+
         try {
             $factory->saveTestSettingsKey(null);
             $this->assertTrue(false);
         } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
-        
+
         try {
             $factory->saveTestSettingsKey(123);
             $this->assertTrue(false);
         } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
         }
-        
+
         try {
             $factory->saveTestSettingsKey('');
             $this->assertTrue(false);
@@ -81,13 +82,14 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
             $this->assertTrue(true);
         }
     }
-    
+
     /**
-     * FAIL: when key not found in calls settings file
+     * FAIL: when key not found in calls settings file.
      */
     public function testSaveTestSettingsKeyKeyNotFound()
     {
         $factory = new ImapHandlerFactory();
+
         try {
             $factory->saveTestSettingsKey('foo');
             $this->assertTrue(false);
@@ -95,9 +97,9 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
             $this->assertEquals(ImapHandlerException::ERR_KEY_NOT_FOUND, $e->getCode());
         }
     }
-    
+
     /**
-     * OK: should successfully saving a key
+     * OK: should successfully saving a key.
      */
     public function testSaveTestSettingsKeyOK()
     {
@@ -111,9 +113,9 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue($results);
         $factory->deleteTestSettings();
     }
-    
+
     /**
-     * OK: should retrieves an ImapHandler
+     * OK: should retrieves an ImapHandler.
      */
     public function testGetImapHandlerOk()
     {

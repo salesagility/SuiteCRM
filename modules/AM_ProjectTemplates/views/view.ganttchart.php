@@ -14,11 +14,12 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
+ *
  * @Package Gantt chart
+ *
  * @copyright Andrew Mclaughlan 2014
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -38,38 +39,36 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/main_lib.js"></script>';
         echo '<script type="text/javascript" src="include/javascript/qtip/jquery.qtip.min.js"></script>';
 
-
         $project_template = new AM_ProjectTemplates();
 
-        if (!isset($_REQUEST["record"]) || trim($_REQUEST["record"]) == "") {
-            $_REQUEST["record"] = $_REQUEST["project_id"];
+        if (!isset($_REQUEST['record']) || trim($_REQUEST['record']) == '') {
+            $_REQUEST['record'] = $_REQUEST['project_id'];
         }
 
-        $project_template->retrieve($_REQUEST["record"]);
+        $project_template->retrieve($_REQUEST['record']);
         //Get project_template resources (users & contacts)
         $resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1', 'User');
         $resources2 = $project_template->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
         //Combine resources into array of objects
-        $resource_array = array();
+        $resource_array = [];
         foreach ($resources1 as $user) {
-            $resource = new stdClass;
+            $resource = new stdClass();
             $resource->id = $user->id;
             $resource->name = $user->name;
             $resource->type = 'user';
             $resource_array[] = $resource;
         }
         foreach ($resources2 as $contact) {
-            $resource = new stdClass;
+            $resource = new stdClass();
             $resource->id = $contact->id;
             $resource->name = $contact->name;
             $resource->type = 'contact';
             $resource_array[] = $resource;
         }
 
-
         //Get the start and end date of the project in database format
-        $start_date =  Date('Y-m-d');
-        $end_date = Date('Y-m-d', strtotime("+30 days"));
+        $start_date = date('Y-m-d');
+        $end_date = date('Y-m-d', strtotime('+30 days'));
 
         parent::display(); ?>
         <!--Create task pop-up-->
@@ -104,13 +103,13 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
             $tasks = [];
         }
         foreach ($tasks as $task) {
-            echo '<option rel="'.$task->id.'" value="'.$task->order_number.'">'.$task->name.'</opion>';
+            echo '<option rel="' . $task->id . '" value="' . $task->order_number . '">' . $task->name . '</opion>';
         }
         echo '</select>'; ?>
 							<label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE']; ?></label>
 							<?php
                             echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
-									'.get_select_options_with_id($app_list_strings['relationship_type_list'], '').'
+									' . get_select_options_with_id($app_list_strings['relationship_type_list'], '') . '
 							</select>'; ?>
 
 					
@@ -125,9 +124,9 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 							<label for="Resources"><?php echo $mod_strings['LBL_ASSIGNED_USER_ID']; ?></label>
 							<?php
                             echo '<select id="Resources" name="Resources" class="text ui-widget-content ui-corner-all" />';
-        echo '<option value="0">'.$mod_strings['LBL_UNASSIGNED'].'</option>';
+        echo '<option value="0">' . $mod_strings['LBL_UNASSIGNED'] . '</option>';
         foreach ($resource_array as $resource) {
-            echo '<option rel="'.$resource->type.'" value="'.$resource->id.'">'.$resource->name.'</opion>';
+            echo '<option rel="' . $resource->type . '" value="' . $resource->id . '">' . $resource->name . '</opion>';
         }
         echo '</select>'; ?>
 							<label for="%Complete"><?php echo $mod_strings['LBL_PERCENT_COMPLETE']; ?></label>
@@ -152,7 +151,6 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 
 <?php
 
-
        echo '<style>
                     .p_form { font-size: 62.5%; }
                     .p_form label, .p_form input { display:block; }
@@ -163,15 +161,15 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                     .validateTips { border: 1px solid transparent; padding: 0.3em; }
                 </style>';
 
-        echo '<div style="display: none;" id="dialog-confirm" title="'.$mod_strings['LBL_CREATE_PROJECT_TITLE'].'">
+        echo '<div style="display: none;" id="dialog-confirm" title="' . $mod_strings['LBL_CREATE_PROJECT_TITLE'] . '">
                  <p class="validateTips"></p>
                 <p class="p_form">
                      <form id="project_form" name="project_form" action="index.php?module=AM_ProjectTemplates&action=create_project" method="post">
                         <fieldset style="border: none;">
-                             <label for="name">'.$mod_strings['LBL_PROJECT_NAME'].':<span class="required">*</span></label>
+                             <label for="name">' . $mod_strings['LBL_PROJECT_NAME'] . ':<span class="required">*</span></label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="p_name" id="p_name" class="text ui-widget-content ui-corner-all" />
 
-                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':</label>
+                             <label for="start_date">' . $mod_strings['LBL_START_DATE'] . ':</label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="start_date" id="start_date" class="text ui-widget-content ui-corner-all" />
 
                              <script type="text/javascript">
@@ -187,10 +185,10 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                                     startWeekday: 0
                                 });
                                 addForm("project_form");
-                                addToValidate("project_form", "p_name", "name", true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
-                                addToValidate("project_form", "start_date", "date", false,"'.$mod_strings['LBL_START_DATE'].'" );
+                                addToValidate("project_form", "p_name", "name", true,"' . $mod_strings['LBL_PROJECT_NAME'] . '" );
+                                addToValidate("project_form", "start_date", "date", false,"' . $mod_strings['LBL_START_DATE'] . '" );
                             </script>
-							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS'].':</label>&nbsp;
+							 <label for="copy_all_tasks">' . $mod_strings['LBL_COPY_ALL_TASKS'] . ':</label>&nbsp;
                              <input type="checkbox" style="position: relative; vertical-align:middle" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
 							 <span style="position: relative;"  id="copy_all_tasks_help"><span class="suitepicon suitepicon-action-info"></span>
 							 </span>
@@ -238,20 +236,20 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 									//help.qtip("disable");
 
 							</script>
-                             <label for="tasks" id="tasks_label">'.$mod_strings['LBL_COPY_SEL_TASKS'].':</label>
+                             <label for="tasks" id="tasks_label">' . $mod_strings['LBL_COPY_SEL_TASKS'] . ':</label>
                              <select id="tasks" name="tasks[]" multiple style="margin-bottom:12px; width:95%; padding: .4em;" >';
-                                
+
         $this->bean->load_relationship('am_tasktemplates_am_projecttemplates');
         $task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates', 'AM_TaskTemplates');
 
         //From the query above, populates the select box
         foreach ($task_list as $task) {
-            echo '<option value="'.$task->id.'">'.$task->name.'</option>';
+            echo '<option value="' . $task->id . '">' . $task->name . '</option>';
         }
 
         echo '</select><br />
 
-							 <input type="hidden" name="template_id" value="'.$this->bean->id .'" />
+							 <input type="hidden" name="template_id" value="' . $this->bean->id . '" />
 
                         </fieldset>
                      </form>
@@ -267,7 +265,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                     echo '<div style="clear:both;padding:10px;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
                     echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
                 } ?>
-            <input id="record" type="hidden" name="record" value="<?php echo $_REQUEST["record"]; ?>" />
+            <input id="record" type="hidden" name="record" value="<?php echo $_REQUEST['record']; ?>" />
             <div id="project_wrapper">
 
             </div>
@@ -285,6 +283,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
         $datetime2 = new DateTime($end_date);
         $datetime2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $interval = $datetime1->diff($datetime2);
-        return $interval->format('%m '.$mod_strings['LBL_MONTHS'].', %d '.$mod_strings['LBL_DAYS']);
+
+        return $interval->format('%m ' . $mod_strings['LBL_MONTHS'] . ', %d ' . $mod_strings['LBL_DAYS']);
     }
 }

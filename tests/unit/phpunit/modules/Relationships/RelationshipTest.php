@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testRelationship()
@@ -19,7 +22,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $relationship);
     }
 
-    public function testis_self_referencing()
+    public function testisSelfReferencing()
     {
         //test without setting any attributes
         $relationship = new Relationship();
@@ -82,7 +85,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_other_module()
+    public function testgetOtherModule()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -101,7 +104,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Users', $result);
     }
 
-    public function testretrieve_by_sides()
+    public function testretrieveBySides()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -127,7 +130,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('many-to-many', $result['relationship_type']);
     }
 
-    public function testretrieve_by_modules()
+    public function testretrieveByModules()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -150,7 +153,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('roles_users', $result);
     }
 
-    public function testretrieve_by_name()
+    public function testretrieveByName()
     {
         $relationship = new Relationship();
 
@@ -172,7 +175,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('many-to-many', $relationship->relationship_type);
     }
 
-    public function testload_relationship_meta()
+    public function testloadRelationshipMeta()
     {
         $relationship = new Relationship();
 
@@ -180,7 +183,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(isset($GLOBALS['relationships']));
     }
 
-    public function testbuild_relationship_cache()
+    public function testbuildRelationshipCache()
     {
         $relationship = new Relationship();
 
@@ -193,19 +196,19 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcache_file_dir()
+    public function testcacheFileDir()
     {
         $result = Relationship::cache_file_dir();
         $this->assertEquals('cache/modules/Relationships', $result);
     }
 
-    public function testcache_file_name_only()
+    public function testcacheFileNameOnly()
     {
         $result = Relationship::cache_file_name_only();
         $this->assertEquals('relationships.cache.php', $result);
     }
 
-    public function testdelete_cache()
+    public function testdeleteCache()
     {
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -216,7 +219,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testtrace_relationship_module()
+    public function testtraceRelationshipModule()
     {
         $relationship = new Relationship();
         $result = $relationship->trace_relationship_module('Roles', 'Users');

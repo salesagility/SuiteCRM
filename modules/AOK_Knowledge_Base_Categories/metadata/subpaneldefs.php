@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,7 +38,7 @@
  */
 
 // created: 2015-03-04 12:01:39
-$layout_defs["AOK_Knowledge_Base_Categories"]["subpanel_setup"]['aok_knowledgebase_categories'] = array(
+$layout_defs['AOK_Knowledge_Base_Categories']['subpanel_setup']['aok_knowledgebase_categories'] = [
     'order' => 100,
     'module' => 'AOK_KnowledgeBase',
     'subpanel_name' => 'default',
@@ -47,16 +46,13 @@ $layout_defs["AOK_Knowledge_Base_Categories"]["subpanel_setup"]['aok_knowledgeba
     'sort_by' => 'id',
     'title_key' => 'LBL_AOK_KB_TITLE',
     'get_subpanel_data' => 'aok_knowledgebase_categories',
-    'top_buttons' =>
-        array(
-            0 =>
-                array(
-                    'widget_class' => 'SubPanelTopButtonQuickCreate',
-                ),
-            1 =>
-                array(
-                    'widget_class' => 'SubPanelTopSelectButton',
-                    'mode' => 'MultiSelect',
-                ),
-        ),
-);
+    'top_buttons' => [
+        0 => [
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ],
+        1 => [
+            'widget_class' => 'SubPanelTopSelectButton',
+            'mode' => 'MultiSelect',
+        ],
+    ],
+];

@@ -5,12 +5,12 @@ use Faker\Generator;
 class CompanyModuleCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -37,6 +37,7 @@ class CompanyModuleCest
     }
 
     // Tests
+
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -46,8 +47,8 @@ class CompanyModuleCest
      * the module before testing.
      */
     public function testScenarioCreateCompanyModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a company module for testing');
         $I->loginAsAdmin();
@@ -65,12 +66,12 @@ class CompanyModuleCest
      * @param \Step\Acceptance\ListView $listView
      *
      * As administrative user I want to view my company test module so that I can see if it has been
-     * deployed correctly.
+     * deployed correctly
      */
     public function testScenarioViewCompanyTestModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Company Test Module');
 
@@ -90,14 +91,14 @@ class CompanyModuleCest
      * @param \Step\Acceptance\DetailView $detailView
      *
      * As administrative user I want to create a record with my company test module so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateRecord(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create Company Test Module Record');
 
@@ -121,14 +122,14 @@ class CompanyModuleCest
         $editView->fillField('#rating', $this->fakeData->randomAscii);
         $editView->fillField('#ownership', $this->fakeData->randomAscii);
         $editView->selectOption('#industry', 'Other');
-        $editView->selectOption('test_'.strtolower(\Page\CompanyModule::$NAME).'_type', 'Other');
+        $editView->selectOption('test_' . strtolower(\Page\CompanyModule::$NAME) . '_type', 'Other');
         $editView->fillField('#billing_address_street', $this->fakeData->streetAddress);
         $editView->fillField('#billing_address_city', $this->fakeData->city);
         $editView->fillField('#billing_address_state', $this->fakeData->randomAscii);
         $editView->fillField('#billing_address_postalcode', $this->fakeData->postcode);
         $editView->fillField('#billing_address_country', $this->fakeData->country);
         $editView->checkOption('#shipping_checkbox');
-        $editView->fillField('#Test_'.\Page\CompanyModule::$NAME.'0emailAddress0', $this->fakeData->companyEmail);
+        $editView->fillField('#Test_' . \Page\CompanyModule::$NAME . '0emailAddress0', $this->fakeData->companyEmail);
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -143,10 +144,10 @@ class CompanyModuleCest
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
 
@@ -180,11 +181,11 @@ class CompanyModuleCest
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
-        \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit Company Test Module Record from detail view');
 
@@ -225,11 +226,11 @@ class CompanyModuleCest
      * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate Company Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -274,10 +275,10 @@ class CompanyModuleCest
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete Company Test Module Record from detail view');
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param;
 
 use Api\V8\Param\Options as ParamOption;
@@ -23,7 +24,7 @@ class GetModuleParams extends BaseParam
     }
 
     /**
-     * @return array|null
+     * @return null|array
      */
     public function getFields()
     {
@@ -31,7 +32,7 @@ class GetModuleParams extends BaseParam
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configureParameters(OptionsResolver $resolver)
     {

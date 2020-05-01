@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Trait IndexingSchedulerJobTrait
+ * Trait IndexingSchedulerJobTrait.
  *
  * This is intended to be use with an instance of AbstractIndexer.
  */
@@ -79,6 +79,7 @@ trait IndexingSchedulerTrait
         } catch (\Exception $exception) {
             $indexer->getLogger()->error('An error has occurred while running a scheduled indexing');
             $indexer->getLogger()->error($exception);
+
             return false;
         }
 

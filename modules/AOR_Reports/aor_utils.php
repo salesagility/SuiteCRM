@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,21 +36,23 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
  * Returns the display labels for a module path and field.
+ *
  * @param $modulePath
  * @param $field
+ * @param mixed $reportModule
+ *
  * @return array
  */
 function getDisplayForField($modulePath, $field, $reportModule)
 {
     global $app_list_strings;
-    $modulePathDisplay = array();
+    $modulePathDisplay = [];
     $currentBean = BeanFactory::getBean($reportModule);
     $modulePathDisplay[] = $currentBean->module_name;
     if (is_array($modulePath)) {
@@ -90,13 +91,14 @@ function getDisplayForField($modulePath, $field, $reportModule)
             isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
         );
     }
-    return array('field' => $fieldDisplay, 'type'=>$fieldType, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
+
+    return ['field' => $fieldDisplay, 'type' => $fieldType, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay))];
 }
 
 function requestToUserParameters($reportBean = null)
 {
     global $app_list_strings;
-    $params = array();
+    $params = [];
     if (!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
@@ -113,27 +115,27 @@ function requestToUserParameters($reportBean = null)
                 $value = fixUpFormatting($reportBean->report_module, $condition->field, $value);
             }
 
-            $params[$parameterId] = array(
+            $params[$parameterId] = [
                 'id' => $parameterId,
                 'operator' => $_REQUEST['parameter_operator'][$key],
                 'type' => $_REQUEST['parameter_type'][$key],
                 'value' => $value,
-            );
+            ];
 
             // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
             if ($_REQUEST['parameter_type'][$key] === 'Date') {
-                $values = array();
+                $values = [];
                 $values[] = $_REQUEST['parameter_date_value'][$key];
                 $values[] = $_REQUEST['parameter_date_sign'][$key];
                 $values[] = $_REQUEST['parameter_date_number'][$key];
                 $values[] = $_REQUEST['parameter_date_time'][$key];
 
-                $params[$parameterId] = array(
+                $params[$parameterId] = [
                     'id' => $parameterId,
                     'operator' => $_REQUEST['parameter_operator'][$key],
                     'type' => $_REQUEST['parameter_type'][$key],
                     'value' => $values,
-                );
+                ];
                 $dateCount++;
             }
 
@@ -143,26 +145,26 @@ function requestToUserParameters($reportBean = null)
                 $paramValue = $_REQUEST['parameter_value'][$key];
                 if ($paramLength === 10) {
                     if (strpos($paramValue, '/') === 2 || strpos($paramValue, '/') === 4) {
-                        $params[$parameterId] = array(
+                        $params[$parameterId] = [
                             'id' => $parameterId,
                             'operator' => $_REQUEST['parameter_operator'][$key],
                             'type' => $_REQUEST['parameter_type'][$key],
                             'value' => $value,
-                        );
+                        ];
                     } elseif (strpos($paramValue, '-') === 2 || strpos($paramValue, '-') === 4) {
-                        $params[$parameterId] = array(
+                        $params[$parameterId] = [
                             'id' => $parameterId,
                             'operator' => $_REQUEST['parameter_operator'][$key],
                             'type' => $_REQUEST['parameter_type'][$key],
                             'value' => $value,
-                        );
+                        ];
                     } elseif (strpos($paramValue, '.') === 2 || strpos($paramValue, '.') === 4) {
-                        $params[$parameterId] = array(
+                        $params[$parameterId] = [
                             'id' => $parameterId,
                             'operator' => $_REQUEST['parameter_operator'][$key],
                             'type' => $_REQUEST['parameter_type'][$key],
                             'value' => $value,
-                        );
+                        ];
                     }
                 }
             }
@@ -172,14 +174,14 @@ function requestToUserParameters($reportBean = null)
     return $params;
 }
 
-function getConditionsAsParameters($report, $override = array())
+function getConditionsAsParameters($report, $override = [])
 {
     if (empty($report)) {
-        return array();
+        return [];
     }
 
     global $app_list_strings;
-    $conditions = array();
+    $conditions = [];
     foreach ($report->get_linked_beans('aor_conditions', 'AOR_Conditions') as $key => $condition) {
         if (!$condition->parameter) {
             continue;
@@ -198,13 +200,11 @@ function getConditionsAsParameters($report, $override = array())
 
         $additionalConditions = unserialize(base64_decode($condition->value));
 
-
         $value = isset($override[$condition->id]['value']) ? $override[$condition->id]['value'] : $value = $condition->value;
 
-
-        $field = getModuleField($field_module, $condition->field, "parameter_value[$key]", 'EditView', $value);
+        $field = getModuleField($field_module, $condition->field, "parameter_value[{$key}]", 'EditView', $value);
         $disp = getDisplayForField($path, $condition->field, $report->report_module);
-        $conditions[] = array(
+        $conditions[] = [
             'id' => $condition->id,
             'key' => $key,
             'operator' => $condition->operator,
@@ -215,15 +215,17 @@ function getConditionsAsParameters($report, $override = array())
             'module_display' => $disp['module'],
             'field' => $field,
             'additionalConditions' => $additionalConditions
-        );
+        ];
     }
 
     return $conditions;
 }
 
 /**
- * getPeriodDate
+ * getPeriodDate.
+ *
  * @param $date_time_period_list_selected
+ *
  * @return DateTime
  */
 function getPeriodDate($date_time_period_list_selected)
@@ -241,7 +243,7 @@ function getPeriodDate($date_time_period_list_selected)
     if ($date_time_period_list_selected == 'today') {
         $datetime_period = new DateTime();
     } elseif ($date_time_period_list_selected == 'yesterday') {
-        $datetime_period = $datetime_period->sub(new DateInterval("P1D"));
+        $datetime_period = $datetime_period->sub(new DateInterval('P1D'));
     } elseif ($date_time_period_list_selected == 'this_week') {
         $datetime_period = $datetime_period->setTimestamp(strtotime('this week'));
     } elseif ($date_time_period_list_selected == 'last_week') {
@@ -328,8 +330,11 @@ function getPeriodDate($date_time_period_list_selected)
 }
 
 /**
- * getPeriodDate
+ * getPeriodDate.
+ *
  * @param $date_time_period_list_selected
+ * @param mixed $dateTimePeriodListSelected
+ *
  * @return DateTime
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
@@ -338,22 +343,27 @@ function getPeriodEndDate($dateTimePeriodListSelected)
         case 'today':
         case 'yesterday':
             $datetimePeriod = new DateTime();
+
             break;
         case 'this_week':
-            $datetimePeriod = new DateTime("next week monday");
+            $datetimePeriod = new DateTime('next week monday');
             $datetimePeriod->setTime(0, 0, 0);
+
             break;
         case 'last_week':
-            $datetimePeriod = new DateTime("this week monday");
+            $datetimePeriod = new DateTime('this week monday');
             $datetimePeriod->setTime(0, 0, 0);
+
             break;
         case 'this_month':
             $datetimePeriod = new DateTime('first day of next month');
             $datetimePeriod->setTime(0, 0, 0);
+
             break;
         case 'last_month':
-            $datetimePeriod = new DateTime("first day of this month");
+            $datetimePeriod = new DateTime('first day of this month');
             $datetimePeriod->setTime(0, 0, 0);
+
             break;
         case 'this_quarter':
             $thisMonth = new DateTime('first day of this month');
@@ -375,6 +385,7 @@ function getPeriodEndDate($dateTimePeriodListSelected)
                 $datetimePeriod = new DateTime('next year first day of january');
                 $datetimePeriod->setTime(0, 0, 0);
             }
+
             break;
         case 'last_quarter':
             $thisMonth = new DateTime('first day of this month');
@@ -396,14 +407,17 @@ function getPeriodEndDate($dateTimePeriodListSelected)
                 $datetimePeriod = new DateTime('first day of october');
                 $datetimePeriod->setTime(0, 0, 0);
             }
+
             break;
         case 'this_year':
             $datetimePeriod = new DateTime('next year first day of january');
             $datetimePeriod->setTime(0, 0, 0);
+
             break;
         case 'last_year':
-            $datetimePeriod = new DateTime("this year first day of january");
+            $datetimePeriod = new DateTime('this year first day of january');
             $datetimePeriod->setTime(0, 0, 0);
+
             break;
     }
 
@@ -411,17 +425,18 @@ function getPeriodEndDate($dateTimePeriodListSelected)
 }
 
 /**
- * @param int $offsetMonths - defines start of the year.
+ * @param int $offsetMonths - defines start of the year
+ *
  * @return array - The each quarters boundary
  */
 function calculateQuarters($offsetMonths = 0)
 {
     // define quarters
-    $q = array();
-    $q['1'] = array();
-    $q['2'] = array();
-    $q['3'] = array();
-    $q['4'] = array();
+    $q = [];
+    $q['1'] = [];
+    $q['2'] = [];
+    $q['3'] = [];
+    $q['4'] = [];
 
     // Get the start of this year
     $q1start = new DateTime();
@@ -431,7 +446,7 @@ function calculateQuarters($offsetMonths = 0)
      * $offsetMonths gets added to the current month. Therefor we need this variable to equal one less than the start
      * month. So Jan becomes 0. Feb => 1 and so on.
      */
-    $offsetMonths -= 1;
+    $offsetMonths--;
     // Offset months
     if ($offsetMonths > 0) {
         $q1start->add(new DateInterval('P' . $offsetMonths . 'M'));
@@ -468,8 +483,10 @@ function calculateQuarters($offsetMonths = 0)
 }
 
 /**
- * convertDateValue
+ * convertDateValue.
+ *
  * @param string $value - date in any user format
+ *
  * @return DateTime $dateTime - converted string
  */
 function convertToDateTime($value)
@@ -486,6 +503,7 @@ function convertToDateTime($value)
     switch ($user_dateformat) {
         case 'Y-m-d':
             $formattedValue = date('Y-m-d', strtotime($value));
+
             break;
         case 'm-d-Y':
             $formattedValue = $value;
@@ -496,6 +514,7 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $month, 3, 2);
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
+
             break;
         case 'd-m-Y':
             $formattedValue = $value;
@@ -506,9 +525,11 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $month, 3, 2);
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
+
             break;
         case 'Y/m/d':
             $formattedValue = str_replace('/', '-', $value);
+
             break;
         case 'm/d/Y':
             $formattedValue = str_replace('/', '-', $value);
@@ -519,6 +540,7 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $month, 3, 2);
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
+
             break;
         case 'd/m/Y':
             $formattedValue = str_replace('/', '-', $value);
@@ -529,9 +551,11 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $month, 3, 2);
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
+
             break;
         case 'Y.m.d':
             $formattedValue = str_replace('.', '-', $value);
+
             break;
         case 'd.m.Y':
             $formattedValue = str_replace('.', '-', $value);
@@ -542,6 +566,7 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $month, 3, 2);
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
+
             break;
         case 'm.d.Y':
             $formattedValue = str_replace('.', '-', $value);
@@ -552,6 +577,7 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $month, 3, 2);
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
+
             break;
     }
 

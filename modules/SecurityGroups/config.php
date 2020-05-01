@@ -1,26 +1,26 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('XTemplate/xtpl.php');
+require_once 'XTemplate/xtpl.php';
 
-require_once('modules/Administration/Administration.php');
-require_once('modules/SecurityGroups/Forms.php');
-require_once('modules/SecurityGroups/SecurityGroup.php');
+require_once 'modules/Administration/Administration.php';
+require_once 'modules/SecurityGroups/Forms.php';
+require_once 'modules/SecurityGroups/SecurityGroup.php';
 
 global $mod_strings;
 global $app_list_strings;
 global $app_strings;
 global $current_user;
 
-
 if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 }
 //Fix Notice error
-$mod_id = "";
-$mod_name = "";
+$mod_id = '';
+$mod_name = '';
 if (isset($mod_strings['LBL_MODULE_ID'])) {
     $mod_id = $mod_strings['LBL_MODULE_ID'];
 }
@@ -28,30 +28,28 @@ if (isset($mod_strings['LBL_MODULE_NAME'])) {
     $mod_name = $mod_strings['LBL_MODULE_NAME'];
 }
 echo "\n<p>\n";
-echo get_module_title($mod_id, $mod_name.": ".$mod_strings['LBL_CONFIGURE_SETTINGS'], false);
+echo get_module_title($mod_id, $mod_name . ': ' . $mod_strings['LBL_CONFIGURE_SETTINGS'], false);
 echo "\n</p>\n";
 global $theme;
 global $currentModule;
-$theme_path = "themes/".$theme."/";
-$image_path = $theme_path."images/";
-
+$theme_path = 'themes/' . $theme . '/';
+$image_path = $theme_path . 'images/';
 
 $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
-$GLOBALS['log']->info("SecuritySuite Configure Settings view");
+$GLOBALS['log']->info('SecuritySuite Configure Settings view');
 
-$xtpl=new XTemplate('modules/SecurityGroups/config.html');
-$xtpl->assign("MOD", $mod_strings);
-$xtpl->assign("APP", $app_strings);
+$xtpl = new XTemplate('modules/SecurityGroups/config.html');
+$xtpl->assign('MOD', $mod_strings);
+$xtpl->assign('APP', $app_strings);
 
-$xtpl->assign("RETURN_MODULE", "Administration");
-$xtpl->assign("RETURN_ACTION", "index");
+$xtpl->assign('RETURN_MODULE', 'Administration');
+$xtpl->assign('RETURN_ACTION', 'index');
 
-$xtpl->assign("MODULE", $currentModule);
-$xtpl->assign("THEME", $theme);
-$xtpl->assign("IMAGE_PATH", $image_path);$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
-$xtpl->assign("HEADER", get_module_title("SecurityGroups", "{MOD.LBL_CONFIGURE_SETTINGS}", true));
-
+$xtpl->assign('MODULE', $currentModule);
+$xtpl->assign('THEME', $theme);
+$xtpl->assign('IMAGE_PATH', $image_path); $xtpl->assign('PRINT_URL', 'index.php?' . $GLOBALS['request_string']);
+$xtpl->assign('HEADER', get_module_title('SecurityGroups', '{MOD.LBL_CONFIGURE_SETTINGS}', true));
 
 // securitysuite_additive
 $securitysuite_additive = '';
@@ -111,7 +109,6 @@ if (isset($sugar_config['securitysuite_inherit_assigned']) && $sugar_config['sec
 }
 $xtpl->assign('securitysuite_inherit_assigned', $securitysuite_inherit_assigned);
 
-
 // securitysuite_inbound_email
 $securitysuite_inbound_email = '';
 if (isset($sugar_config['securitysuite_inbound_email']) && $sugar_config['securitysuite_inbound_email'] == true) {
@@ -119,33 +116,32 @@ if (isset($sugar_config['securitysuite_inbound_email']) && $sugar_config['securi
 }
 $xtpl->assign('securitysuite_inbound_email', $securitysuite_inbound_email);
 
-
 //default security groups
 $groupFocus = new SecurityGroup();
 $defaultGroups = SecurityGroup::retrieveDefaultGroups();
-$defaultGroup_string = "";
+$defaultGroup_string = '';
 foreach ($defaultGroups as $default_id => $defaultGroup) {
     $defaultGroup_string .= "
 	<tr>
 	<td class='dataLabel' width='30%'>
-		".$mod_strings['LBL_GROUP']." ".$defaultGroup['group']."
+		" . $mod_strings['LBL_GROUP'] . ' ' . $defaultGroup['group'] . "
 	</td>
 	<td class='dataField' width='30%'>
-		".$mod_strings['LBL_MODULE']." ".$app_list_strings['moduleList'][$defaultGroup['module']]."
+		" . $mod_strings['LBL_MODULE'] . ' ' . $app_list_strings['moduleList'][$defaultGroup['module']] . "
 	</td>
 	<td class='dataLabel' width='40%'>
-		<input type='submit' tabindex='1' class='button' onclick=\"this.form.remove_default_id.value='".$default_id."'; this.form.action.value='SaveConfig'; this.form.return_module.value='SecurityGroups'; this.form.return_action.value='config';\" value='".$mod_strings['LBL_REMOVE_BUTTON_LABEL']."'/>
+		<input type='submit' tabindex='1' class='button' onclick=\"this.form.remove_default_id.value='" . $default_id . "'; this.form.action.value='SaveConfig'; this.form.return_module.value='SecurityGroups'; this.form.return_action.value='config';\" value='" . $mod_strings['LBL_REMOVE_BUTTON_LABEL'] . "'/>
 	</td>
 	</tr>";
 }
-$xtpl->assign("DEFAULT_GROUPS", $defaultGroup_string);
+$xtpl->assign('DEFAULT_GROUPS', $defaultGroup_string);
 
-$groups = $groupFocus->get_list('name','',0,999999,999999);
-$options = array(""=>"");
+$groups = $groupFocus->get_list('name', '', 0, 999999, 999999);
+$options = ['' => ''];
 foreach ($groups['list'] as $group) {
     $options[$group->id] = $group->name;
 }
-$xtpl->assign("SECURITY_GROUP_OPTIONS", get_select_options_with_id($options, ""));
+$xtpl->assign('SECURITY_GROUP_OPTIONS', get_select_options_with_id($options, ''));
 
 //$moduleList = $app_list_strings['moduleList'];
 
@@ -155,11 +151,10 @@ $xtpl->assign("SECURITY_GROUP_OPTIONS", get_select_options_with_id($options, "")
 //$moduleList = array_keys($dh->modules);
 $security_modules = SecurityGroup::getSecurityModules();
 
-$security_modules["All"] = $mod_strings["LBL_ALL_MODULES"];//rost fix
+$security_modules['All'] = $mod_strings['LBL_ALL_MODULES']; //rost fix
 ksort($security_modules);
-$xtpl->assign("MODULE_OPTIONS", get_select_options_with_id($security_modules, "All"));
+$xtpl->assign('MODULE_OPTIONS', get_select_options_with_id($security_modules, 'All'));
 
+$xtpl->parse('main');
 
-$xtpl->parse("main");
-
-$xtpl->out("main");
+$xtpl->out('main');

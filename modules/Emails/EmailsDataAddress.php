@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,15 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * EmailsDataAddress
+ * EmailsDataAddress.
  *
  * @author gyula
  */
 class EmailsDataAddress
 {
-    
     /**
-     *
      * @param string $type
      * @param string $id
      * @param string $attributesReplyTo
@@ -63,6 +60,7 @@ class EmailsDataAddress
      * @param string $outboundEmailId
      * @param string $outboundEmailName
      * @param array $emailSignaturesArray
+     *
      * @return array
      */
     public function getDataArray(
@@ -81,8 +79,8 @@ class EmailsDataAddress
     ) {
         $signatureResolver = new EmailsSignatureResolver();
         $signatureResolver->setSignatureArray($emailSignaturesArray);
-        
-        $dataArray = [
+
+        return [
             'type' => $type,
             'id' => $id,
             'attributes' => $this->getDataArrayAttributes(
@@ -104,16 +102,14 @@ class EmailsDataAddress
                 'no_default_available' => $signatureResolver->isNoDefaultAvailable(),
             ],
         ];
-        
-        return $dataArray;
     }
-    
+
     /**
-     *
      * @param string $attributesReplyTo
      * @param string $attributesFrom
      * @param string $attributesName
      * @param string $attributesOe
+     *
      * @return array
      */
     protected function getDataArrayAttributes($attributesReplyTo, $attributesFrom, $attributesName, $attributesOe)

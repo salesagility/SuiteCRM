@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class HomeViewModulelistmenu extends ViewModulelistmenu
 {
     public function display()
@@ -51,7 +48,7 @@ class HomeViewModulelistmenu extends ViewModulelistmenu
             $history[$key]['image'] = SugarThemeRegistry::current()->getImage($row['module_name'], 'border="0" align="absmiddle"', null, null, '.gif', $row['item_summary']);
         }
         $this->ss->assign('LAST_VIEWED', $history);
-        
+
         $this->ss->display('include/MVC/View/tpls/modulelistmenu.tpl');
     }
 }

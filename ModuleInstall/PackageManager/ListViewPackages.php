@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,46 +36,55 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
- require_once('include/ListView/ListViewSmarty.php');
+ require_once 'include/ListView/ListViewSmarty.php';
 
 class ListViewPackages extends ListViewSmarty
 {
     public $secondaryDisplayColumns;
+
     /**
-     * Constructor  Call ListViewSmarty
+     * Constructor  Call ListViewSmarty.
      */
     public function __construct()
     {
         parent::__construct();
     }
 
-
-
-
     /**
-     * Override the setup method in ListViewSmarty since we are not passing in a bean
+     * Override the setup method in ListViewSmarty since we are not passing in a bean.
      *
      * @param data  the data to display on the page
      * @param file  the template file to parse
+     * @param mixed $data
+     * @param mixed $file
+     * @param mixed $where
+     * @param mixed $params
+     * @param mixed $offset
+     * @param mixed $limit
+     * @param mixed $filter_fields
+     * @param mixed $id_field
+     * @param null|mixed $id
      */
-    public function setup($data, $file, $where, $params = array(), $offset = 0, $limit = -1, $filter_fields = array(), $id_field = 'id', $id=null)
+    public function setup($data, $file, $where, $params = [], $offset = 0, $limit = -1, $filter_fields = [], $id_field = 'id', $id = null)
     {
         $this->data = $data;
         $this->tpl = $file;
     }
 
     /**
-     * Override the display method
+     * Override the display method.
+     *
+     * @param mixed $end
      */
     public function display($end = true)
     {
         global $odd_bg, $even_bg, $app_strings;
-        $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
-        $this->ss->assign('bgColor', array($odd_bg, $even_bg));
+        $this->ss->assign('rowColor', ['oddListRow', 'evenListRow']);
+        $this->ss->assign('bgColor', [$odd_bg, $even_bg]);
         $this->ss->assign('displayColumns', $this->displayColumns);
         $this->ss->assign('secondaryDisplayColumns', $this->secondaryDisplayColumns);
         $this->ss->assign('data', $this->data);
+
         return $this->ss->fetch($this->tpl);
     }
 }

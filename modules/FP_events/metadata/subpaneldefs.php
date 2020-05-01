@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,61 +42,56 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-$layout_defs['FP_events'] = array(
+$layout_defs['FP_events'] = [
     // list of what Subpanels to show in the DetailView
-    'subpanel_setup' => array(
-
-        'delegates' => array(
+    'subpanel_setup' => [
+        'delegates' => [
             'order' => 10,
             'sort_order' => 'desc',
             'title_key' => 'LBL_DEFAULT_SUBPANEL_TITLE',
             'type' => 'collection',
             'subpanel_name' => 'delegates',   //this values is not associated with a physical file.
-            'header_definition_from_subpanel'=> 'Contacts',
-            'module'=>'Delegates',
+            'header_definition_from_subpanel' => 'Contacts',
+            'module' => 'Delegates',
 
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelDelegatesSelectButton'),
-                array('widget_class' => 'SubPanelManageDelegatesButton'),
-                array('widget_class' => 'SubPanelManageAcceptancesButton'),
-                array('widget_class' => 'SubPanelSendInvitesButton'),
-                array('widget_class' => 'SubPanelCheck'),
-                array('widget_class' => 'SubPanelTopFilterButton'),
-            ),
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelDelegatesSelectButton'],
+                ['widget_class' => 'SubPanelManageDelegatesButton'],
+                ['widget_class' => 'SubPanelManageAcceptancesButton'],
+                ['widget_class' => 'SubPanelSendInvitesButton'],
+                ['widget_class' => 'SubPanelCheck'],
+                ['widget_class' => 'SubPanelTopFilterButton'],
+            ],
 
-            'collection_list' => array(
-                'contacts' => array(
+            'collection_list' => [
+                'contacts' => [
                     'module' => 'Contacts',
                     'subpanel_name' => 'FP_events_subpanel_fp_events_contacts',
                     'get_subpanel_data' => 'fp_events_contacts',
-                ),
-                'prospects' => array(
+                ],
+                'prospects' => [
                     'module' => 'Prospects',
                     'subpanel_name' => 'FP_events_subpanel_fp_events_prospects_1',
                     'get_subpanel_data' => 'fp_events_prospects_1',
-                ),
-                'leads' => array(
+                ],
+                'leads' => [
                     'module' => 'Leads',
                     'subpanel_name' => 'FP_events_subpanel_fp_events_leads_1',
                     'get_subpanel_data' => 'fp_events_leads_1',
-                ),
-            ),
-            'searchdefs' => array(
-                'first_name' =>
-                    array(
-                        'name' => 'first_name',
-                        'default' => true,
-                        'width' => '10%',
-                    ),
-                'last_name' =>
-                    array(
-                        'name' => 'last_name',
-                        'default' => true,
-                        'width' => '10%',
-                    ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+            'searchdefs' => [
+                'first_name' => [
+                    'name' => 'first_name',
+                    'default' => true,
+                    'width' => '10%',
+                ],
+                'last_name' => [
+                    'name' => 'last_name',
+                    'default' => true,
+                    'width' => '10%',
+                ],
+            ],
+        ],
+    ],
+];

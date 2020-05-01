@@ -14,9 +14,9 @@ class Attributes extends BaseOption
     const REGEX_ATTRIBUTE_PATTERN = '/\b\B/';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @throws InvalidArgumentException If attributes parameters have invalid property.
+     * @throws InvalidArgumentException if attributes parameters have invalid property
      */
     public function add(OptionsResolver $resolver)
     {

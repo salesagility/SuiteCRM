@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__.'/externalAPI/ExternalAPIFactory.php';
-require_once __DIR__.'/UploadStream.php';
+require_once __DIR__ . '/externalAPI/ExternalAPIFactory.php';
+require_once __DIR__ . '/UploadStream.php';
 
 /**
  * @api
@@ -60,13 +58,14 @@ class UploadFile
     public $file;
     public $file_ext;
     public $mime_type;
-    protected static $url = "upload/";
+    protected static $url = 'upload/';
 
     /**
-     * Upload errors
+     * Upload errors.
+     *
      * @var array
      */
-    protected static $filesError = array(
+    protected static $filesError = [
         UPLOAD_ERR_OK => 'UPLOAD_ERR_OK - There is no error, the file uploaded with success.',
         UPLOAD_ERR_INI_SIZE => 'UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize directive in php.ini.',
         UPLOAD_ERR_FORM_SIZE => 'UPLOAD_ERR_FORM_SIZE - The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
@@ -76,10 +75,11 @@ class UploadFile
         UPLOAD_ERR_NO_TMP_DIR => 'UPLOAD_ERR_NO_TMP_DIR - Missing a temporary folder.',
         UPLOAD_ERR_CANT_WRITE => 'UPLOAD_ERR_CANT_WRITE - Failed to write file to disk.',
         UPLOAD_ERR_EXTENSION => 'UPLOAD_ERR_EXTENSION - A PHP extension stopped the file upload.',
-    );
+    ];
 
     /**
-     * Create upload file handler
+     * Create upload file handler.
+     *
      * @param string $field_name Form field name
      */
     public function __construct($field_name = '')
@@ -90,7 +90,8 @@ class UploadFile
     }
 
     /**
-     * Setup for SOAP upload
+     * Setup for SOAP upload.
+     *
      * @param string $filename Name for the file
      * @param string $file
      */
@@ -102,10 +103,15 @@ class UploadFile
     }
 
     /**
-     * Get URL for a document
+     * Get URL for a document.
+     *
      * @deprecated
+     *
      * @param string stored_file_name File name in filesystem
      * @param string bean_id note bean ID
+     * @param mixed $stored_file_name
+     * @param mixed $bean_id
+     *
      * @return string path with file name
      */
     public static function get_url($stored_file_name, $bean_id)
@@ -118,7 +124,8 @@ class UploadFile
     }
 
     /**
-     * Get URL of the uploaded file related to the document
+     * Get URL of the uploaded file related to the document.
+     *
      * @param SugarBean $document
      * @param string $type Type of the document, if different from $document
      */
@@ -128,32 +135,18 @@ class UploadFile
             $type = $document->module_dir;
         }
 
-        return "index.php?entryPoint=download&type=$type&id={$document->id}";
+        return "index.php?entryPoint=download&type={$type}&id={$document->id}";
     }
 
     /**
-     * Try renaming a file to bean_id name
-     * @param string $filename
-     * @param string $bean_id
-     */
-    protected static function tryRename($filename, $bean_id)
-    {
-        $fullname = "upload://$bean_id.$filename";
-        if (file_exists($fullname)) {
-            if (!rename($fullname, "upload://$bean_id")) {
-                $GLOBALS['log']->fatal("unable to rename file: $fullname => $bean_id");
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * builds a URL path for an anchor tag
+     * builds a URL path for an anchor tag.
+     *
      * @param string stored_file_name File name in filesystem
      * @param string bean_id note bean ID
+     * @param mixed $stored_file_name
+     * @param mixed $bean_id
+     * @param mixed $skip_rename
+     *
      * @return string path with file name
      */
     public static function get_file_path($stored_file_name, $bean_id, $skip_rename = false)
@@ -162,7 +155,7 @@ class UploadFile
 
         // if the parameters are empty strings, just return back the upload_dir
         if (empty($bean_id) && empty($stored_file_name)) {
-            return "upload://";
+            return 'upload://';
         }
 
         if (!$skip_rename) {
@@ -175,22 +168,27 @@ class UploadFile
             );
         }
 
-        return "upload://$bean_id";
+        return "upload://{$bean_id}";
     }
 
     /**
      * duplicates an already uploaded file in the filesystem.
+     *
      * @param string old_id ID of original note
      * @param string new_id ID of new (copied) note
      * @param string filename Filename of file (deprecated)
-     * @return boolean TRUE = success, FALSE = failed
+     * @param mixed $old_id
+     * @param mixed $new_id
+     * @param mixed $file_name
+     *
+     * @return bool TRUE = success, FALSE = failed
      */
     public static function duplicate_file($old_id, $new_id, $file_name)
     {
         global $sugar_config;
 
         // current file system (GUID)
-        $source = "upload://$old_id";
+        $source = "upload://{$old_id}";
 
         if (!file_exists($source)) {
             // old-style file system (GUID.filename.extension)
@@ -208,8 +206,8 @@ class UploadFile
             }
         }
 
-        $destination = "upload://$new_id";
-        
+        $destination = "upload://{$new_id}";
+
         if (is_dir($source)) {
             LoggerManager::getLogger()->warn('Upload File error: Argument cannot be a directory. Argument was: "' . $source . '"');
         } else {
@@ -219,17 +217,18 @@ class UploadFile
                 return true;
             }
         }
-        
+
         return false;
     }
 
     /**
-     * Get upload error from system
+     * Get upload error from system.
+     *
      * @return string upload error
      */
     public function get_upload_error()
     {
-        if (isset($this->field_name) && isset($_FILES[$this->field_name]['error'])) {
+        if (isset($this->field_name, $_FILES[$this->field_name]['error'])) {
             return $_FILES[$this->field_name]['error'];
         }
 
@@ -237,7 +236,8 @@ class UploadFile
     }
 
     /**
-     * standard PHP file-upload security measures. all variables accessed in a global context
+     * standard PHP file-upload security measures. all variables accessed in a global context.
+     *
      * @return bool True on success
      */
     public function confirm_upload()
@@ -257,11 +257,11 @@ class UploadFile
                     // - UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize directive in php.ini. upload_maxsize is 16
                     $errMess = string_format(
                         $GLOBALS['app_strings']['UPLOAD_ERROR_TEXT_SIZEINFO'],
-                        array(
+                        [
                             $_FILES['filename_file']['error'],
                             self::$filesError[$_FILES['filename_file']['error']],
                             $sugar_config['upload_maxsize']
-                        )
+                        ]
                     );
                     $GLOBALS['log']->fatal($errMess);
                 } else {
@@ -270,10 +270,10 @@ class UploadFile
                     // - UPLOAD_ERR_PARTIAL - The uploaded file was only partially uploaded.
                     $errMess = string_format(
                         $GLOBALS['app_strings']['UPLOAD_ERROR_TEXT'],
-                        array(
+                        [
                             $_FILES['filename_file']['error'],
                             self::$filesError[$_FILES['filename_file']['error']]
-                        )
+                        ]
                     );
                     $GLOBALS['log']->fatal($errMess);
                 }
@@ -284,14 +284,15 @@ class UploadFile
 
         if (!is_uploaded_file($_FILES[$this->field_name]['tmp_name'])) {
             return false;
-        } elseif ($_FILES[$this->field_name]['size'] > $sugar_config['upload_maxsize']) {
+        }
+        if ($_FILES[$this->field_name]['size'] > $sugar_config['upload_maxsize']) {
             $GLOBALS['log']->fatal("ERROR: uploaded file was too big: max filesize: {$sugar_config['upload_maxsize']}");
 
             return false;
         }
 
         if (!UploadStream::writable()) {
-            $GLOBALS['log']->fatal("ERROR: cannot write to upload directory");
+            $GLOBALS['log']->fatal('ERROR: cannot write to upload directory');
 
             return false;
         }
@@ -305,8 +306,10 @@ class UploadFile
     }
 
     /**
-     * Guess MIME type for file
+     * Guess MIME type for file.
+     *
      * @param string $filename
+     *
      * @return string MIME type
      */
     public function getMimeSoap($filename)
@@ -321,8 +324,10 @@ class UploadFile
     }
 
     /**
-     * Get MIME type for uploaded file
+     * Get MIME type for uploaded file.
+     *
      * @param array $_FILES_element $_FILES element required
+     *
      * @return string MIME type
      */
     public function getMime($_FILES_element)
@@ -354,7 +359,8 @@ class UploadFile
     }
 
     /**
-     * gets note's filename
+     * gets note's filename.
+     *
      * @return string
      */
     public function get_stored_file_name()
@@ -378,11 +384,10 @@ class UploadFile
     }
 
     /**
-     * Returns the contents of the uploaded file
+     * Returns the contents of the uploaded file.
      */
     public function get_file_contents()
     {
-
         // Need to call
         if (!isset($this->temp_file_location)) {
             $this->confirm_upload();
@@ -395,9 +400,9 @@ class UploadFile
         return $data;
     }
 
-
     /**
-     * creates a file's name for preparation for saving
+     * creates a file's name for preparation for saving.
+     *
      * @return string
      */
     public function create_stored_filename()
@@ -408,7 +413,7 @@ class UploadFile
             $stored_file_name = $_FILES[$this->field_name]['name'];
             $this->original_file_name = $stored_file_name;
 
-            /**
+            /*
              * cn: bug 8056 - windows filesystems and IIS do not like utf8.  we are forced to urlencode() to ensure that
              * the file is linkable from the browser.  this will stay broken until we move to a db-storage system
              */
@@ -419,7 +424,7 @@ class UploadFile
                 $stored_file_name = substr($stored_file_name, 0, $end);
                 $this->original_file_name = $_FILES[$this->field_name]['name'];
             }
-            $stored_file_name = str_replace("\\", "", $stored_file_name);
+            $stored_file_name = str_replace('\\', '', $stored_file_name);
         } else {
             $stored_file_name = $this->stored_file_name;
             $this->original_file_name = $stored_file_name;
@@ -429,8 +434,9 @@ class UploadFile
         // cn: bug 6347 - fix file extension detection
         foreach ($sugar_config['upload_badext'] as $badExt) {
             if (strtolower($this->file_ext) == strtolower($badExt)) {
-                $stored_file_name .= ".txt";
-                $this->file_ext = "txt";
+                $stored_file_name .= '.txt';
+                $this->file_ext = 'txt';
+
                 break; // no need to look for more
             }
         }
@@ -439,8 +445,10 @@ class UploadFile
     }
 
     /**
-     * moves uploaded temp file to permanent save location
+     * moves uploaded temp file to permanent save location.
+     *
      * @param string $bean_id ID of parent bean
+     *
      * @return bool True on success
      */
     public function final_move($bean_id)
@@ -449,19 +457,20 @@ class UploadFile
 
         $destination = $bean_id;
         if (substr($destination, 0, 9) != 'upload://') {
-            $destination = 'upload://'.$bean_id;
+            $destination = 'upload://' . $bean_id;
         }
 
         if ($this->use_soap) {
             if (!file_put_contents($destination, $this->file)) {
-                $log->fatal('Unable to save file to '. $destination);
+                $log->fatal('Unable to save file to ' . $destination);
+
                 return false;
             }
         } elseif (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
             $log->fatal(
                 'Unable to move move_uploaded_file to ' . $destination .
                     ' You should try making the directory writable by the webserver'
-                );
+            );
 
             return false;
         }
@@ -470,7 +479,8 @@ class UploadFile
     }
 
     /**
-     * Upload document to external service
+     * Upload document to external service.
+     *
      * @param SugarBean $bean Related bean
      * @param string $bean_id
      * @param string $doc_type
@@ -498,20 +508,20 @@ class UploadFile
                 } else {
                     $result['success'] = false;
                     // FIXME: Translate
-                    $GLOBALS['log']->error("Could not load the requested API (" . $doc_type . ")");
+                    $GLOBALS['log']->error('Could not load the requested API (' . $doc_type . ')');
                     $result['errorMessage'] = 'Could not find a proper API';
                 }
             } catch (Exception $e) {
                 $result['success'] = false;
                 $result['errorMessage'] = $e->getMessage();
-                $GLOBALS['log']->error("Caught exception: (" . $e->getMessage() . ") ");
+                $GLOBALS['log']->error('Caught exception: (' . $e->getMessage() . ') ');
             }
             if (!$result['success']) {
                 sugar_rename($new_destination, str_replace($bean_id . '_' . $file_name, $bean_id, $new_destination));
                 $bean->doc_type = 'Sugar';
                 // FIXME: Translate
                 if (!is_array($_SESSION['user_error_message'])) {
-                    $_SESSION['user_error_message'] = array();
+                    $_SESSION['user_error_message'] = [];
                 }
 
                 $error_message = isset($result['errorMessage']) ? $result['errorMessage'] :
@@ -524,8 +534,11 @@ class UploadFile
     }
 
     /**
-     * returns the path with file name to save an uploaded file
+     * returns the path with file name to save an uploaded file.
+     *
      * @param string bean_id ID of the parent bean
+     * @param mixed $bean_id
+     *
      * @return string
      */
     public function get_upload_path($bean_id)
@@ -536,37 +549,42 @@ class UploadFile
         $end = (strlen($file_name) > 212) ? 212 : strlen($file_name);
         $ret_file_name = substr($file_name, 0, $end);
 
-        return "upload://$ret_file_name";
+        return "upload://{$ret_file_name}";
     }
 
     /**
-     * deletes a file
+     * deletes a file.
+     *
      * @param string bean_id ID of the parent bean
      * @param string file_name File's name
+     * @param mixed $bean_id
+     * @param mixed $file_name
      */
     public static function unlink_file($bean_id, $file_name = '')
     {
-        if (file_exists("upload://$bean_id$file_name")) {
-            return unlink("upload://$bean_id$file_name");
+        if (file_exists("upload://{$bean_id}{$file_name}")) {
+            return unlink("upload://{$bean_id}{$file_name}");
         }
     }
 
     /**
-     * Get upload file location prefix
+     * Get upload file location prefix.
+     *
      * @return string prefix
      */
     public function get_upload_dir()
     {
-        return "upload://";
+        return 'upload://';
     }
 
     /**
-     * Return real FS path of the file
+     * Return real FS path of the file.
+     *
      * @param string $path
      */
     public static function realpath($path)
     {
-        if (substr($path, 0, 9) == "upload://") {
+        if (substr($path, 0, 9) == 'upload://') {
             $path = UploadStream::path($path);
         }
         $ret = realpath($path);
@@ -575,15 +593,36 @@ class UploadFile
     }
 
     /**
-     * Return path of uploaded file relative to uploads dir
+     * Return path of uploaded file relative to uploads dir.
+     *
      * @param string $path
      */
     public static function relativeName($path)
     {
-        if (substr($path, 0, 9) == "upload://") {
+        if (substr($path, 0, 9) == 'upload://') {
             $path = substr($path, 9);
         }
 
         return $path;
+    }
+
+    /**
+     * Try renaming a file to bean_id name.
+     *
+     * @param string $filename
+     * @param string $bean_id
+     */
+    protected static function tryRename($filename, $bean_id)
+    {
+        $fullname = "upload://{$bean_id}.{$filename}";
+        if (file_exists($fullname)) {
+            if (!rename($fullname, "upload://{$bean_id}")) {
+                $GLOBALS['log']->fatal("unable to rename file: {$fullname} => {$bean_id}");
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

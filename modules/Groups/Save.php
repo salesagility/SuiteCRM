@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,7 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $focus = new Group();
 
 // New user
@@ -53,38 +52,37 @@ if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
 foreach ($focus->column_fields as $field) {
     if (isset($_POST[$field])) {
         $value = $_POST[$field];
-        $focus->$field = $value;
+        $focus->{$field} = $value;
     }
 }
 
 foreach ($focus->additional_column_fields as $field) {
     if (isset($_POST[$field])) {
         $value = $_POST[$field];
-        $focus->$field = $value;
+        $focus->{$field} = $value;
     }
 }
 if (isset($_REQUEST['user_name']) && !empty($_REQUEST['user_name'])) {
-    $focus->user_name	= $_REQUEST['user_name'];
-    $focus->last_name	= $_REQUEST['user_name'];
+    $focus->user_name = $_REQUEST['user_name'];
+    $focus->last_name = $_REQUEST['user_name'];
 }
-$focus->description	= $_REQUEST['description'];
+$focus->description = $_REQUEST['description'];
 $focus->save();
 
-
-if (isset($_POST['return_module']) && $_POST['return_module'] != "") {
+if (isset($_POST['return_module']) && $_POST['return_module'] != '') {
     $return_module = $_POST['return_module'];
 } else {
-    $return_module = "Groups";
+    $return_module = 'Groups';
 }
-if (isset($_POST['return_action']) && $_POST['return_action'] != "") {
+if (isset($_POST['return_action']) && $_POST['return_action'] != '') {
     $return_action = $_POST['return_action'];
 } else {
-    $return_action = "DetailView";
+    $return_action = 'DetailView';
 }
-if (isset($_POST['return_id']) && $_POST['return_id'] != "") {
+if (isset($_POST['return_id']) && $_POST['return_id'] != '') {
     $return_id = $_POST['return_id'];
 }
 
-$GLOBALS['log']->debug("Saved record with id of ".$return_id);
+$GLOBALS['log']->debug('Saved record with id of ' . $return_id);
 
-header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
+header("Location: index.php?action={$return_action}&module={$return_module}&record={$return_id}");

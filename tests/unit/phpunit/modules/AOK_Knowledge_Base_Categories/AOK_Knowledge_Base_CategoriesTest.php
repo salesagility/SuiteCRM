@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOK_Knowledge_Base_CategoriesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOK_Knowledge_Base_Categories()
+    public function testAOKKnowledgeBaseCategories()
     {
         // Execute the constructor and check for the Object type and type attribute
         $aok_KBCategories = new AOK_Knowledge_Base_Categories();

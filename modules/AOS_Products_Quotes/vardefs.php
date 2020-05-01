@@ -2,7 +2,6 @@
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
  *
- * @package Advanced OpenSales for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,15 +18,13 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-$dictionary['AOS_Products_Quotes'] = array(
+$dictionary['AOS_Products_Quotes'] = [
     'table' => 'aos_products_quotes',
     'audited' => true,
-    'fields' => array(
-        'name' => array(
+    'fields' => [
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'text',
@@ -35,8 +32,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'unified_search' => true,
             'required' => true,
             'importable' => 'required',
-        ),
-        'currency_id' => array(
+        ],
+        'currency_id' => [
             'required' => false,
             'name' => 'currency_id',
             'vname' => 'LBL_CURRENCY',
@@ -52,14 +49,13 @@ $dictionary['AOS_Products_Quotes'] = array(
             'len' => 36,
             'size' => '20',
             'studio' => 'visible',
-            'function' =>
-                array(
-                    'name' => 'getCurrencyDropDown',
-                    'returns' => 'html',
-                    'onListView' => true,
-                ),
-            ),
-        'part_number' => array(
+            'function' => [
+                'name' => 'getCurrencyDropDown',
+                'returns' => 'html',
+                'onListView' => true,
+            ],
+        ],
+        'part_number' => [
             'required' => false,
             'name' => 'part_number',
             'vname' => 'LBL_PART_NUMBER',
@@ -79,16 +75,16 @@ $dictionary['AOS_Products_Quotes'] = array(
             'len' => '255',
             'size' => '20',
             'id' => 'AOS_Products_Quotespart_number',
-         ),
-        'item_description' => array(
+        ],
+        'item_description' => [
             'name' => 'item_description',
             'vname' => 'LBL_PRODUCT_DESCRIPTION',
             'type' => 'text',
             'comment' => '',
             'rows' => 6,
             'cols' => 80,
-         ),
-        'number' => array(
+        ],
+        'number' => [
             'required' => false,
             'name' => 'number',
             'vname' => 'LBL_LIST_NUM',
@@ -103,8 +99,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'reportable' => true,
             'len' => '11',
             'disable_num_format' => '',
-         ),
-        'product_qty' => array(
+        ],
+        'product_qty' => [
             'required' => false,
             'name' => 'product_qty',
             'vname' => 'LBL_PRODUCT_QTY',
@@ -121,8 +117,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'size' => '20',
             'enable_range_search' => false,
             'precision' => '4',
-         ),
-        'product_cost_price' => array(
+        ],
+        'product_cost_price' => [
             'required' => false,
             'name' => 'product_cost_price',
             'vname' => 'LBL_PRODUCT_COST_PRICE',
@@ -136,8 +132,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 0,
             'reportable' => true,
             'len' => '26,6',
-         ),
-        'product_cost_price_usdollar' => array(
+        ],
+        'product_cost_price_usdollar' => [
             'name' => 'product_cost_price_usdollar',
             'vname' => 'LBL_PRODUCT_COST_PRICE_USDOLLAR',
             'type' => 'currency',
@@ -146,14 +142,14 @@ $dictionary['AOS_Products_Quotes'] = array(
             'duplicate_merge' => '0',
             'audited' => true,
             'comment' => '',
-            'studio' => array(
+            'studio' => [
                 'editview' => false,
                 'detailview' => false,
                 'quickcreate' => false,
-            ),
+            ],
             'len' => '26,6',
-         ),
-        'product_list_price' => array(
+        ],
+        'product_list_price' => [
             'required' => false,
             'name' => 'product_list_price',
             'vname' => 'LBL_PRODUCT_LIST_PRICE',
@@ -167,8 +163,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 1,
             'reportable' => true,
             'len' => '26,6',
-         ),
-        'product_list_price_usdollar' => array(
+        ],
+        'product_list_price_usdollar' => [
             'name' => 'product_list_price_usdollar',
             'vname' => 'LBL_PRODUCT_LIST_PRICE_USDOLLAR',
             'type' => 'currency',
@@ -177,14 +173,14 @@ $dictionary['AOS_Products_Quotes'] = array(
             'duplicate_merge' => '0',
             'audited' => true,
             'comment' => '',
-            'studio' => array(
+            'studio' => [
                 'editview' => false,
                 'detailview' => false,
                 'quickcreate' => false,
-            ),
+            ],
             'len' => '26,6',
-         ),
-        'product_discount' => array(
+        ],
+        'product_discount' => [
             'required' => false,
             'name' => 'product_discount',
             'vname' => 'LBL_PRODUCT_DISCOUNT',
@@ -198,8 +194,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 1,
             'reportable' => true,
             'len' => '26,6',
-         ),
-        'product_discount_usdollar' => array(
+        ],
+        'product_discount_usdollar' => [
             'name' => 'product_discount_usdollar',
             'vname' => 'LBL_PRODUCT_DISCOUNT_USDOLLAR',
             'type' => 'currency',
@@ -208,14 +204,14 @@ $dictionary['AOS_Products_Quotes'] = array(
             'duplicate_merge' => '0',
             'audited' => true,
             'comment' => '',
-            'studio' => array(
+            'studio' => [
                 'editview' => false,
                 'detailview' => false,
                 'quickcreate' => false,
-            ),
+            ],
             'len' => '26,6',
-         ),
-        'product_discount_amount' => array(
+        ],
+        'product_discount_amount' => [
             'required' => false,
             'name' => 'product_discount_amount',
             'vname' => 'LBL_PRODUCT_DISCOUNT_AMOUNT',
@@ -229,8 +225,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 1,
             'reportable' => true,
             'len' => '26,6',
-         ),
-        'product_discount_amount_usdollar' => array(
+        ],
+        'product_discount_amount_usdollar' => [
             'name' => 'product_discount_amount_usdollar',
             'vname' => 'LBL_PRODUCT_DISCOUNT_AMOUNT_USDOLLAR',
             'type' => 'currency',
@@ -239,14 +235,14 @@ $dictionary['AOS_Products_Quotes'] = array(
             'duplicate_merge' => '0',
             'audited' => true,
             'comment' => '',
-            'studio' => array(
+            'studio' => [
                 'editview' => false,
                 'detailview' => false,
                 'quickcreate' => false,
-            ),
+            ],
             'len' => '26,6',
-         ),
-        'discount' => array(
+        ],
+        'discount' => [
             'required' => false,
             'name' => 'discount',
             'vname' => 'LBL_DISCOUNT',
@@ -263,9 +259,9 @@ $dictionary['AOS_Products_Quotes'] = array(
             'len' => 255,
             'options' => 'discount_list',
             'studio' => 'visible',
-         ),
+        ],
 
-        'product_unit_price' => array(
+        'product_unit_price' => [
             'required' => '1',
             'name' => 'product_unit_price',
             'vname' => 'LBL_PRODUCT_UNIT_PRICE',
@@ -279,8 +275,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 1,
             'reportable' => true,
             'len' => '26,6',
-         ),
-        'product_unit_price_usdollar' => array(
+        ],
+        'product_unit_price_usdollar' => [
             'name' => 'product_unit_price_usdollar',
             'vname' => 'LBL_PRODUCT_UNIT_PRICE_USDOLLAR',
             'type' => 'currency',
@@ -289,14 +285,14 @@ $dictionary['AOS_Products_Quotes'] = array(
             'duplicate_merge' => '0',
             'audited' => true,
             'comment' => '',
-            'studio' => array(
+            'studio' => [
                 'editview' => false,
                 'detailview' => false,
                 'quickcreate' => false,
-            ),
+            ],
             'len' => '26,6',
-         ),
-        'vat_amt' => array(
+        ],
+        'vat_amt' => [
             'required' => '1',
             'name' => 'vat_amt',
             'vname' => 'LBL_VAT_AMT',
@@ -310,8 +306,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 1,
             'reportable' => true,
             'len' => '26,6',
-         ),
-        'vat_amt_usdollar' => array(
+        ],
+        'vat_amt_usdollar' => [
             'name' => 'vat_amt_usdollar',
             'vname' => 'LBL_VAT_AMT_USDOLLAR',
             'type' => 'currency',
@@ -320,14 +316,14 @@ $dictionary['AOS_Products_Quotes'] = array(
             'duplicate_merge' => '0',
             'audited' => true,
             'comment' => '',
-            'studio' => array(
+            'studio' => [
                 'editview' => false,
                 'detailview' => false,
                 'quickcreate' => false,
-            ),
+            ],
             'len' => '26,6',
-         ),
-        'product_total_price' => array(
+        ],
+        'product_total_price' => [
             'required' => '1',
             'name' => 'product_total_price',
             'vname' => 'LBL_PRODUCT_TOTAL_PRICE',
@@ -341,8 +337,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 1,
             'reportable' => true,
             'len' => '26,6',
-         ),
-        'product_total_price_usdollar' => array(
+        ],
+        'product_total_price_usdollar' => [
             'name' => 'product_total_price_usdollar',
             'vname' => 'LBL_PRODUCT_TOTAL_PRICE_USDOLLAR',
             'type' => 'currency',
@@ -351,14 +347,14 @@ $dictionary['AOS_Products_Quotes'] = array(
             'duplicate_merge' => '0',
             'audited' => true,
             'comment' => '',
-            'studio' => array(
+            'studio' => [
                 'editview' => false,
                 'detailview' => false,
                 'quickcreate' => false,
-            ),
+            ],
             'len' => '26,6',
-         ),
-        'vat' => array(
+        ],
+        'vat' => [
             'required' => false,
             'name' => 'vat',
             'vname' => 'LBL_VAT',
@@ -375,8 +371,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'len' => 100,
             'options' => 'vat_list',
             'studio' => 'visible',
-         ),
-        'parent_name' => array(
+        ],
+        'parent_name' => [
             'required' => false,
             'source' => 'non-db',
             'name' => 'parent_name',
@@ -396,8 +392,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'type_name' => 'parent_type',
             'id_name' => 'parent_id',
             'parent_type' => 'record_type_display',
-         ),
-        'parent_type' => array(
+        ],
+        'parent_type' => [
             'required' => false,
             'name' => 'parent_type',
             'vname' => 'LBL_PARENT_TYPE',
@@ -413,8 +409,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'len' => 100,
             'dbType' => 'varchar',
             'studio' => 'hidden',
-         ),
-        'parent_id' => array(
+        ],
+        'parent_id' => [
             'required' => false,
             'name' => 'parent_id',
             'vname' => 'LBL_PARENT_ID',
@@ -428,8 +424,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 0,
             'reportable' => 0,
             'len' => 36,
-         ),
-        'product_id' => array(
+        ],
+        'product_id' => [
             'required' => false,
             'name' => 'product_id',
             'vname' => 'LBL_PRODUCT_ID',
@@ -443,8 +439,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 0,
             'reportable' => 0,
             'len' => 36,
-         ),
-        'group_name' => array(
+        ],
+        'group_name' => [
             'name' => 'group_name',
             'rname' => 'name',
             'vname' => 'LBL_GROUP_NAME',
@@ -455,8 +451,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'id_name' => 'group_id',
             'module' => 'AOS_Line_Item_Groups',
             'duplicate_merge' => 'disabled',
-         ),
-        'group_id' => array(
+        ],
+        'group_id' => [
             'required' => false,
             'name' => 'group_id',
             'vname' => '',
@@ -470,8 +466,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'audited' => 0,
             'reportable' => 0,
             'len' => 36,
-         ),
-        'aos_products' => array(
+        ],
+        'aos_products' => [
             'name' => 'aos_products',
             'vname' => 'LBL_AOS_PRODUCTS',
             'type' => 'link',
@@ -479,8 +475,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Products',
             'bean_name' => 'AOS_Products',
             'source' => 'non-db',
-         ),
-        'aos_contracts' => array(
+        ],
+        'aos_contracts' => [
             'name' => 'aos_contracts',
             'vname' => 'LBL_AOS_CONTRACTS',
             'type' => 'link',
@@ -488,8 +484,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Contracts',
             'bean_name' => 'AOS_Contracts',
             'source' => 'non-db',
-         ),
-        'aos_quotes' => array(
+        ],
+        'aos_quotes' => [
             'name' => 'aos_quotes',
             'vname' => 'LBL_AOS_QUOTES',
             'type' => 'link',
@@ -497,8 +493,8 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Quotes',
             'bean_name' => 'AOS_Quotes',
             'source' => 'non-db',
-         ),
-        'aos_invoices' => array(
+        ],
+        'aos_invoices' => [
             'name' => 'aos_invoices',
             'vname' => 'LBL_AOS_INVOICES',
             'type' => 'link',
@@ -506,21 +502,21 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Invoices',
             'bean_name' => 'AOS_Invoices',
             'source' => 'non-db',
-        ),
-    ),
-    'indices' => array(
-        array(
+        ],
+    ],
+    'indices' => [
+        [
             'name' => 'idx_aospq_par_del',
             'type' => 'index',
-            'fields' => array(
+            'fields' => [
                 'parent_id',
                 'parent_type',
                 'deleted'
-            ),
-        ),
-    ),
-    'relationships' => array(
-        'aos_product_quotes_aos_products' => array(
+            ],
+        ],
+    ],
+    'relationships' => [
+        'aos_product_quotes_aos_products' => [
             'lhs_module' => 'AOS_Products',
             'lhs_table' => 'aos_products',
             'lhs_key' => 'id',
@@ -528,9 +524,9 @@ $dictionary['AOS_Products_Quotes'] = array(
             'rhs_table' => 'aos_products_quotes',
             'rhs_key' => 'product_id',
             'relationship_type' => 'one-to-many',
-        ),
-    ),
+        ],
+    ],
     'optimistic_lock' => true,
-);
-require_once('include/SugarObjects/VardefManager.php');
-VardefManager::createVardef('AOS_Products_Quotes', 'AOS_Products_Quotes', array('basic', 'assignable'));
+];
+require_once 'include/SugarObjects/VardefManager.php';
+VardefManager::createVardef('AOS_Products_Quotes', 'AOS_Products_Quotes', ['basic', 'assignable']);

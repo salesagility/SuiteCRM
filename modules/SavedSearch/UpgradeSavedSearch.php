@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class UpgradeSavedSearch
 {
     public function __construct()
     {
-        $result = DBManagerFactory::getInstance()->query("SELECT id FROM saved_search");
+        $result = DBManagerFactory::getInstance()->query('SELECT id FROM saved_search');
         while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
             $focus = new SavedSearch();
             $focus->retrieve($row['id']);
@@ -53,17 +52,17 @@ class UpgradeSavedSearch
             $has_team_name_saved = isset($contents['team_name_advanced']) || isset($contents['team_name_basic']) ? true : false;
             //If $contents['searchFormTab'] is set then this is coming from a 4.x saved search
             if (isset($contents['searchFormTab']) && $contents['searchFormTab'] == 'saved_views') {
-                $new_contents = array();
+                $new_contents = [];
                 $module = $contents['search_module'];
                 $advanced = !empty($contents['advanced']);
-                $field_map = array();
+                $field_map = [];
 
                 if (file_exists("custom/modules/{$module}/metadata/searchdefs.php")) {
-                    require("custom/modules/{$module}/metadata/searchdefs.php");
+                    require "custom/modules/{$module}/metadata/searchdefs.php";
                     $field_map = $advanced ? $searchdefs[$module]['layout']['advanced_search'] : $searchdefs[$module]['layout']['basic_search'];
                 } else {
                     if (file_exists("modules/{$module}/metadata/SearchFields.php")) {
-                        require("modules/{$module}/metadata/SearchFields.php");
+                        require "modules/{$module}/metadata/SearchFields.php";
                         $field_map = $searchFields[$module];
                     } else {
                         $bean = loadBean($module);
@@ -77,12 +76,12 @@ class UpgradeSavedSearch
                     unset($contents['team_id']);
                 }
 
-                foreach ($contents as $key=>$value) {
+                foreach ($contents as $key => $value) {
                     if (isset($field_map[$key])) {
                         $new_key = $key . ($advanced ? '_advanced' : '_basic');
                         if (preg_match('/^team_name_(advanced|basic)$/', $new_key)) {
                             if (!is_array($value)) {
-                                $temp_value = array();
+                                $temp_value = [];
                                 $teap_value[] = $value;
                                 $value = $temp_value;
                             }
@@ -97,7 +96,6 @@ class UpgradeSavedSearch
                                     $count++;
                                 } //while
                             } //if
-
 
                            //Unset the original key
                             unset($new_contents[$key]);
@@ -133,6 +131,4 @@ class UpgradeSavedSearch
             }
         } //while
     }
-
-
 }

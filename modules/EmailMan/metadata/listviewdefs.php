@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,44 +42,41 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$listViewDefs['EmailMan'] = array(
-    'CAMPAIGN_NAME' => array(
+$listViewDefs['EmailMan'] = [
+    'CAMPAIGN_NAME' => [
         'width' => '10',
         'label' => 'LBL_LIST_CAMPAIGN',
         'link' => true,
         'customCode' => '<a href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}">{$CAMPAIGN_NAME}</a>',
-        'default' => true),
-    'RECIPIENT_NAME' => array(
+        'default' => true],
+    'RECIPIENT_NAME' => [
         'sortable' => false,
         'width' => '10',
         'label' => 'LBL_LIST_RECIPIENT_NAME',
         'customCode' => '<a href="index.php?module={$RELATED_TYPE}&action=DetailView&record={$RELATED_ID}">{$RECIPIENT_NAME}</a>',
-        'default' => true),
-    'RECIPIENT_EMAIL' => array(
+        'default' => true],
+    'RECIPIENT_EMAIL' => [
         'sortable' => false,
         'width' => '10',
         'label' => 'LBL_LIST_RECIPIENT_EMAIL',
         'customCode' => '{$RECIPIENT_EMAIL}</a>',
-        'default' => true),
-    'MESSAGE_NAME' => array(
+        'default' => true],
+    'MESSAGE_NAME' => [
         'sortable' => false,
         'width' => '10',
         'label' => 'LBL_LIST_MESSAGE_NAME',
         'customCode' => '<a href="index.php?module=EmailMarketing&action=DetailView&record={$MARKETING_ID}">{$MESSAGE_NAME}</a>',
-        'default' => true),
-    'SEND_DATE_TIME' => array(
+        'default' => true],
+    'SEND_DATE_TIME' => [
         'width' => '10',
         'label' => 'LBL_LIST_SEND_DATE_TIME',
-        'default' => true),
-    'SEND_ATTEMPTS' => array(
+        'default' => true],
+    'SEND_ATTEMPTS' => [
         'width' => '10',
         'label' => 'LBL_LIST_SEND_ATTEMPTS',
-        'default' => true),
-    'IN_QUEUE' => array(
+        'default' => true],
+    'IN_QUEUE' => [
         'width' => '10',
         'label' => 'LBL_LIST_IN_QUEUE',
-        'default' => true),
-);
+        'default' => true],
+];

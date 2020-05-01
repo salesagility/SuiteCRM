@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Includes generic helper functions used throughout the application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 /**
  * This class used to perform json encode / decode functions but has now been replaced by
@@ -55,17 +55,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * Note: We no longer eval our json so there is no more need for security envelopes. The parameter
  * has been left for backwards compatibility.
+ *
  * @api
  */
 class JSON
 {
-
     /**
-     * JSON encode a string
+     * JSON encode a string.
      *
      * @param array $array
      * @param bool $addSecurityEnvelope defaults to false
      * @param bool $encodeSpecial
+     *
      * @return string
      */
     public static function encode($array, $addSecurityEnvelope = false, $encodeSpecial = false)
@@ -73,7 +74,7 @@ class JSON
         $encodedString = json_encode($array);
 
         if ($encodeSpecial) {
-            $charMap = array('<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026');
+            $charMap = ['<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026'];
             foreach ($charMap as $c => $enc) {
                 $encodedString = str_replace($c, $enc, $encodedString);
             }
@@ -83,14 +84,15 @@ class JSON
     }
 
     /**
-     * JSON decode a string
+     * JSON decode a string.
      *
      * @param string $string
      * @param bool $examineEnvelope Default false, true to extract and verify envelope
      * @param bool $assoc
+     *
      * @return string
      */
-    public static function decode($string, $examineEnvelope=false, $assoc = true)
+    public static function decode($string, $examineEnvelope = false, $assoc = true)
     {
         return json_decode($string, $assoc);
     }

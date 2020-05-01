@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,14 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-if (is_file("config.php")) {
+if (is_file('config.php')) {
     if (!empty($sugar_config['default_theme'])) {
         $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
     }
@@ -82,16 +80,16 @@ if (is_file("config.php")) {
     }
     if (!empty($sugar_config['languages'])) {
         // We need to encode the languages in a way that can be retrieved later.
-        $language_keys = array();
-        $language_values = array();
+        $language_keys = [];
+        $language_values = [];
 
-        foreach ($sugar_config['languages'] as $key=>$value) {
+        foreach ($sugar_config['languages'] as $key => $value) {
             $language_keys[] = $key;
             $language_values[] = $value;
         }
 
-        $_SESSION['language_keys'] = urlencode(implode(",", $language_keys));
-        $_SESSION['language_values'] = urlencode(implode(",", $language_values));
+        $_SESSION['language_keys'] = urlencode(implode(',', $language_keys));
+        $_SESSION['language_values'] = urlencode(implode(',', $language_values));
     }
 }
 
@@ -99,15 +97,14 @@ if (is_file("config.php")) {
 $errors = '';
 if (isset($validation_errors)) {
     if (count($validation_errors) > 0) {
-        $errors  = '<div id="errorMsgs">';
-        $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
+        $errors = '<div id="errorMsgs">';
+        $errors .= '<p>' . $mod_strings['LBL_SITECFG_FIX_ERRORS'] . '</p><ul>';
         foreach ($validation_errors as $error) {
             $errors .= '<li>' . $error . '</li>';
         }
         $errors .= '</ul></div>';
     }
 }
-
 
 ////	ternaries
 $sugarUpdates = (isset($_SESSION['setup_site_sugarbeet']) && !empty($_SESSION['setup_site_sugarbeet'])) ? 'checked="checked"' : '';
@@ -119,7 +116,7 @@ $customId = (isset($_SESSION['setup_site_specify_guid']) && !empty($_SESSION['se
 ///////////////////////////////////////////////////////////////////////////////
 ////	START OUTPUT
 $langHeader = get_language_header();
-$out =<<<EOQ
+$out = <<<EOQ
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html {$langHeader}>
 <head>
@@ -157,7 +154,7 @@ $checked = '';
 //if(!empty($_SESSION['setup_site_sugarbeet_anonymous_stats'])) $checked = 'checked=""';
 $out .= "
    <tr style='display:none'><td></td>
-       <td><input type='checkbox' class='checkbox' name='setup_site_sugarbeet_anonymous_stats' value='yes' $checked /></td>
+       <td><input type='checkbox' class='checkbox' name='setup_site_sugarbeet_anonymous_stats' value='yes' {$checked} /></td>
        <td><b>{$mod_strings['LBL_SITECFG_ANONSTATS']}</b><br><i>{$mod_strings['LBL_SITECFG_ANONSTATS_DIRECTIONS']}</i></td></tr>
 
 ";

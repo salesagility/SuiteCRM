@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,32 +40,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/connectors/sources/default/source.php');
+require_once 'include/connectors/sources/default/source.php';
 
 /**
- * Generic source connected using EAPM access details
+ * Generic source connected using EAPM access details.
+ *
  * @api
  */
 abstract class ext_eapm extends source
 {
-
     /**
      * The ExternalAPI Base that instantiated this connector.
+     *
      * @var _eapm
      */
     protected $_eapm;
 
     public function setEAPM(ExternalAPIBase $eapm)
     {
-        $GLOBALS['log']->debug("Connector is setting eapm");
+        $GLOBALS['log']->debug('Connector is setting eapm');
         $this->_eapm = $eapm;
     }
 
     public function getEAPM()
     {
-        $GLOBALS['log']->debug("Connector is getting eapm");
+        $GLOBALS['log']->debug('Connector is getting eapm');
+
         return $this->_eapm;
     }
 }

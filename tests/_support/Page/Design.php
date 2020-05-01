@@ -2,14 +2,12 @@
 
 namespace Page;
 
-use \AcceptanceTester as Tester;
-
+use AcceptanceTester as Tester;
 use Codeception\Module;
 use SuiteCRM\Enumerator\DesignBreakPoint;
 
 class Design extends Module
 {
-
     /**
      * @var Tester;
      */
@@ -17,6 +15,7 @@ class Design extends Module
 
     /**
      * BasicModule constructor.
+     *
      * @param Tester $I
      */
     public function __construct(Tester $I)
@@ -26,6 +25,7 @@ class Design extends Module
 
     /**
      * @return string
+     *
      * @see \SuiteCRM\Enumerator\DesignBreakPoint
      */
     public function getBreakpointString()

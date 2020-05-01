@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,14 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+// general UI Stuff
 
-
-/**************************** general UI Stuff *******************/
-
-
-
-require_once('modules/Campaigns/utils.php');
-
+require_once 'modules/Campaigns/utils.php';
 
 global $app_strings;
 global $timedate;
@@ -57,8 +52,7 @@ global $mod_strings;
 global $current_user;
 global $sugar_version, $sugar_config;
 
-
-/**************************** GENERAL SETUP WORK*******************/
+// GENERAL SETUP WORK
 $campaign_focus = new Campaign();
 if (isset($_REQUEST['campaign_id']) && !empty($_REQUEST['campaign_id'])) {
     $campaign_focus->retrieve($_REQUEST['campaign_id']);
@@ -68,38 +62,35 @@ if (isset($_REQUEST['campaign_id']) && !empty($_REQUEST['campaign_id'])) {
 
 global $theme;
 
-
-
 $json = getJSONobj();
 
-$GLOBALS['log']->info("Wizard Continue Create Wizard");
-if ($campaign_focus->campaign_type=='NewsLetter') {
-    echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_NEWSLETTER WIZARD_TITLE'].' '.$campaign_focus->name), true);
+$GLOBALS['log']->info('Wizard Continue Create Wizard');
+if ($campaign_focus->campaign_type == 'NewsLetter') {
+    echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_NEWSLETTER WIZARD_TITLE'] . ' ' . $campaign_focus->name], true);
 } else {
-    echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_CAMPAIGN'].' '.$campaign_focus->name), true);
+    echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_CAMPAIGN'] . ' ' . $campaign_focus->name], true);
 }
 
 $ss = new Sugar_Smarty();
-$ss->assign("MOD", $mod_strings);
-$ss->assign("APP", $app_strings);
+$ss->assign('MOD', $mod_strings);
+$ss->assign('APP', $app_strings);
 if (isset($_REQUEST['return_module'])) {
-    $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
+    $ss->assign('RETURN_MODULE', $_REQUEST['return_module']);
 }
 if (isset($_REQUEST['return_action'])) {
-    $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
+    $ss->assign('RETURN_ACTION', $_REQUEST['return_action']);
 }
 if (isset($_REQUEST['return_id'])) {
-    $ss->assign("RETURN_ID", $_REQUEST['return_id']);
+    $ss->assign('RETURN_ID', $_REQUEST['return_id']);
 }
 // handle Create $module then Cancel
 $ss->assign('CAMPAIGN_ID', $campaign_focus->id);
 
 $seps = get_number_separators();
-$ss->assign("NUM_GRP_SEP", $seps[0]);
-$ss->assign("DEC_SEP", $seps[1]);
+$ss->assign('NUM_GRP_SEP', $seps[0]);
+$ss->assign('DEC_SEP', $seps[1]);
 
-
-/**************************** MARKETING UI DIV Stuff *******************/
+// MARKETING UI DIV Stuff
 //$campaign_focus->load_relationship('emailmarketing');
 //$mrkt_ids = $campaign_focus->emailmarketing->get();
 
@@ -172,9 +163,6 @@ if (isset($_REQUEST['record']) and !empty($_REQUEST['record'])) {
                     unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
                 }
 
-
-
-
                 //        if(!empty($mrkt_lists)){
         //            //reverse array so we always use the most recent one:
         //            $mrkt_lists = array_reverse($mrkt_lists);
@@ -190,69 +178,66 @@ if (isset($_REQUEST['record']) and !empty($_REQUEST['record'])) {
     }
 }
 
-
-$ss->assign("CALENDAR_LANG", "en");
-$ss->assign("USER_DATEFORMAT", '('. $timedate->get_user_date_format().')');
-$ss->assign("CALENDAR_DATEFORMAT", $timedate->get_cal_date_format());
-$ss->assign("TIME_MERIDIEM", $timedate->AMPMMenu('', $mrkt_focus->time_start));
-$ss->assign("MRKT_ID", $mrkt_focus->id);
-$ss->assign("MRKT_NAME", $mrkt_focus->name);
-$ss->assign("MRKT_FROM_NAME", $mrkt_focus->from_name);
-$ss->assign("MRKT_FROM_ADDR", $mrkt_focus->from_addr);
+$ss->assign('CALENDAR_LANG', 'en');
+$ss->assign('USER_DATEFORMAT', '(' . $timedate->get_user_date_format() . ')');
+$ss->assign('CALENDAR_DATEFORMAT', $timedate->get_cal_date_format());
+$ss->assign('TIME_MERIDIEM', $timedate->AMPMMenu('', $mrkt_focus->time_start));
+$ss->assign('MRKT_ID', $mrkt_focus->id);
+$ss->assign('MRKT_NAME', $mrkt_focus->name);
+$ss->assign('MRKT_FROM_NAME', $mrkt_focus->from_name);
+$ss->assign('MRKT_FROM_ADDR', $mrkt_focus->from_addr);
 $def = $mrkt_focus->getFieldDefinition('from_name');
-$ss->assign("MRKT_FROM_NAME_LEN", $def['len']);
+$ss->assign('MRKT_FROM_NAME_LEN', $def['len']);
 
 //jc: bug 15498
 // assigning the length of the reply name from the var defs to the template to be used
 // as the max length for the input field
 $def = $mrkt_focus->getFieldDefinition('reply_to_name');
-$ss->assign("MRKT_REPLY_NAME_LEN", $def['len']);
-$ss->assign("MRKT_REPLY_NAME", $mrkt_focus->reply_to_name);
+$ss->assign('MRKT_REPLY_NAME_LEN', $def['len']);
+$ss->assign('MRKT_REPLY_NAME', $mrkt_focus->reply_to_name);
 $def = $mrkt_focus->getFieldDefinition('reply_to_addr');
-$ss->assign("MRKT_REPLY_ADDR_LEN", $def['len']);
+$ss->assign('MRKT_REPLY_ADDR_LEN', $def['len']);
 // end bug 15498
-$ss->assign("MRKT_REPLY_ADDR", $mrkt_focus->reply_to_addr);
-$ss->assign("MRKT_DATE_START", $mrkt_focus->date_start);
-$ss->assign("MRKT_TIME_START", $mrkt_focus->time_start);
+$ss->assign('MRKT_REPLY_ADDR', $mrkt_focus->reply_to_addr);
+$ss->assign('MRKT_DATE_START', $mrkt_focus->date_start);
+$ss->assign('MRKT_TIME_START', $mrkt_focus->time_start);
 //$_REQUEST['mass'] = $mrkt_focus->id;
-$ss->assign("MRKT_ID", $mrkt_focus->id);
-$emails=array();
-$mailboxes=get_campaign_mailboxes($emails);
+$ss->assign('MRKT_ID', $mrkt_focus->id);
+$emails = [];
+$mailboxes = get_campaign_mailboxes($emails);
 
-/*
- * get full array of stored options
- */
+// get full array of stored options
 $IEStoredOptions = get_campaign_mailboxes_with_stored_options();
 $IEStoredOptionsJSON = (!empty($IEStoredOptions)) ? $json->encode($IEStoredOptions, false) : 'new Object()';
-$ss->assign("IEStoredOptions", $IEStoredOptionsJSON);
+$ss->assign('IEStoredOptions', $IEStoredOptionsJSON);
 
 $OEStoredOptions = get_campaign_mailboxes_with_stored_options_outbound();
 $OEStoredOptionsJSON = (!empty($OEStoredOptions)) ? $json->encode($OEStoredOptions, false) : 'new Object()';
-$ss->assign("OEStoredOptions", $OEStoredOptionsJSON);
+$ss->assign('OEStoredOptions', $OEStoredOptionsJSON);
 
 //add empty options.
-$emails['']='nobody@example.com';
-$mailboxes['']='';
+$emails[''] = 'nobody@example.com';
+$mailboxes[''] = '';
 
 //inbound_email_id
-$default_email_address='nobody@example.com';
+$default_email_address = 'nobody@example.com';
 $from_emails = '';
-foreach ($mailboxes as $id=>$name) {
+foreach ($mailboxes as $id => $name) {
     if (!empty($from_emails)) {
-        $from_emails.=',';
+        $from_emails .= ',';
     }
-    if ($id=='') {
-        $from_emails.="'EMPTY','$name','$emails[$id]'";
+    if ($id == '') {
+        $from_emails .= "'EMPTY','{$name}','{$emails[$id]}'";
     } else {
-        $from_emails.="'$id','$name','$emails[$id]'";
+        $from_emails .= "'{$id}','{$name}','{$emails[$id]}'";
     }
 }
-$ss->assign("FROM_EMAILS", $from_emails);
-$ss->assign("DEFAULT_FROM_EMAIL", $default_email_address);
-$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'], $mrkt_focus->status ? $mrkt_focus->status : 'active'));
+$ss->assign('FROM_EMAILS', $from_emails);
+$ss->assign('DEFAULT_FROM_EMAIL', $default_email_address);
+$ss->assign('STATUS_OPTIONS', get_select_options_with_id($app_list_strings['email_marketing_status_dom'], $mrkt_focus->status ? $mrkt_focus->status : 'active'));
 if (empty($mrkt_focus->inbound_email_id)) {
     $defaultMailboxId = '';
-    $mailboxIds = array();
+    $mailboxIds = [];
     foreach ($mailboxes as $mailboxId => $mailboxName) {
         if ($mailboxId) {
             $mailboxIds[] = $mailboxId;
@@ -261,14 +246,14 @@ if (empty($mrkt_focus->inbound_email_id)) {
     if (count($mailboxIds) == 1) {
         $defaultMailboxId = $mailboxIds[0];
     }
-    $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, $defaultMailboxId));
-    $ss->assign("MAILBOXES_DEAULT", $defaultMailboxId);
+    $ss->assign('MAILBOXES', get_select_options_with_id($mailboxes, $defaultMailboxId));
+    $ss->assign('MAILBOXES_DEAULT', $defaultMailboxId);
 } else {
-    $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, $mrkt_focus->inbound_email_id));
+    $ss->assign('MAILBOXES', get_select_options_with_id($mailboxes, $mrkt_focus->inbound_email_id));
 }
 
-$outboundEmailAccountLabels = array();
-$outboundEmailLabels = array();
+$outboundEmailAccountLabels = [];
+$outboundEmailLabels = [];
 $outboundEmailAccounts = BeanFactory::getBean('OutboundEmailAccounts')->get_full_list();
 if ($outboundEmailAccounts) {
     foreach ($outboundEmailAccounts as $outboundEmailAccount) {
@@ -281,59 +266,56 @@ if ($outboundEmailAccounts) {
 
 $ss->assign('OUTBOUND_MAILBOXES', get_select_options_with_id($outboundEmailLabels, $mrkt_focus->outbound_email_id));
 
-$ss->assign("TIME_MERIDIEM", $timedate->AMPMMenu('', $mrkt_focus->time_start));
-$ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
+$ss->assign('TIME_MERIDIEM', $timedate->AMPMMenu('', $mrkt_focus->time_start));
+$ss->assign('TIME_FORMAT', '(' . $timedate->get_user_time_format() . ')');
 
 $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 if ($mrkt_focus->template_id) {
-    $ss->assign("TEMPLATE_ID", $mrkt_focus->template_id);
+    $ss->assign('TEMPLATE_ID', $mrkt_focus->template_id);
     $templateId = $mrkt_focus->template_id;
     if (!$templateId && !empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'])) {
         $templateId = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'];
     }
-    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $templateId));
-    $ss->assign("EDIT_TEMPLATE", "visibility:inline");
+    $ss->assign('EMAIL_TEMPLATE_OPTIONS', get_select_options_with_id($email_templates_arr, $templateId));
+    $ss->assign('EDIT_TEMPLATE', 'visibility:inline');
     $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
 } else {
-    $templateId = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : "";
+    $templateId = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : '';
     if (!$templateId && !empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'])) {
         $templateId = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'];
     }
-    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing' ? null : $templateId));
-    $ss->assign("EDIT_TEMPLATE", "visibility:hidden");
+    $ss->assign('EMAIL_TEMPLATE_OPTIONS', get_select_options_with_id($email_templates_arr, isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing' ? null : $templateId));
+    $ss->assign('EDIT_TEMPLATE', 'visibility:hidden');
 }
 
-
-$scope_options=get_message_scope_dom($campaign_focus->id, $campaign_focus->name, $mrkt_focus->db);
-$prospectlists=array();
-if (isset($mrkt_focus->all_prospect_lists) && $mrkt_focus->all_prospect_lists==1) {
-    $ss->assign("ALL_PROSPECT_LISTS_CHECKED", "checked");
-    $ss->assign("MESSAGE_FOR_DISABLED", "disabled");
+$scope_options = get_message_scope_dom($campaign_focus->id, $campaign_focus->name, $mrkt_focus->db);
+$prospectlists = [];
+if (isset($mrkt_focus->all_prospect_lists) && $mrkt_focus->all_prospect_lists == 1) {
+    $ss->assign('ALL_PROSPECT_LISTS_CHECKED', 'checked');
+    $ss->assign('MESSAGE_FOR_DISABLED', 'disabled');
 } else {
     //get select prospect list.
     if (!empty($mrkt_focus->id)) {
         $mrkt_focus->load_relationship('prospectlists');
-        $prospectlists=$mrkt_focus->prospectlists->get();
+        $prospectlists = $mrkt_focus->prospectlists->get();
     } else {
-        $ss->assign("ALL_PROSPECT_LISTS_CHECKED", "checked");
-        $ss->assign("MESSAGE_FOR_DISABLED", "disabled");
-    };
+        $ss->assign('ALL_PROSPECT_LISTS_CHECKED', 'checked');
+        $ss->assign('MESSAGE_FOR_DISABLED', 'disabled');
+    }
 }
 
 // force to check all prospect list by default..
-$ss->assign("ALL_PROSPECT_LISTS_CHECKED", "checked");
-$ss->assign("MESSAGE_FOR_DISABLED", "disabled");
+$ss->assign('ALL_PROSPECT_LISTS_CHECKED', 'checked');
+$ss->assign('MESSAGE_FOR_DISABLED', 'disabled');
 
 if (empty($prospectlists)) {
-    $prospectlists=array();
+    $prospectlists = [];
 }
 if (empty($scope_options)) {
-    $scope_options=array();
+    $scope_options = [];
 }
-$ss->assign("SCOPE_OPTIONS", get_select_options_with_id($scope_options, $prospectlists));
-$ss->assign("SAVE_CONFIRM_MESSAGE", $mod_strings['LBL_CONFIRM_SEND_SAVE']);
-
-
+$ss->assign('SCOPE_OPTIONS', get_select_options_with_id($scope_options, $prospectlists));
+$ss->assign('SAVE_CONFIRM_MESSAGE', $mod_strings['LBL_CONFIRM_SEND_SAVE']);
 
 $javascript = new javascript();
 $javascript->setFormName('wizform');
@@ -341,13 +323,12 @@ $javascript->setSugarBean($mrkt_focus);
 $javascript->addAllFields('');
 echo $javascript->getScript();
 
-/**************************** Final Step UI DIV *******************/
+// Final Step UI DIV
 
 //Grab the prospect list of type default
 $default_pl_focus = ' ';
 $campaign_focus->load_relationship('prospectlists');
-$prospectlists=$campaign_focus->prospectlists->get();
-
+$prospectlists = $campaign_focus->prospectlists->get();
 
 $pl_count = 0;
 $pl_lists = 0;
@@ -357,53 +338,50 @@ if (!empty($prospectlists)) {
         $pl_focus->retrieve($prospect_id);
 
         if (($pl_focus->list_type == 'default') || ($pl_focus->list_type == 'seed')) {
-            $default_pl_focus= $pl_focus;
+            $default_pl_focus = $pl_focus;
             // get count of all attached target types
             $pl_count = $default_pl_focus->get_entry_count();
         }
-        $pl_lists = $pl_lists+1;
+        $pl_lists = $pl_lists + 1;
     }
 }
 //if count is 0, then hide inputs and and print warning message
 $pl_diabled_test_too = true;
-if ($pl_count==0) {
-    if ($pl_lists==0) {
+if ($pl_count == 0) {
+    if ($pl_lists == 0) {
         //print no target list warning
-        if ($campaign_focus->campaign_type != "Email" || $campaign_focus->campaign_type != "NewsLetter") {
-            $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING_NON_EMAIL']);
+        if ($campaign_focus->campaign_type != 'Email' || $campaign_focus->campaign_type != 'NewsLetter') {
+            $ss->assign('WARNING_MESSAGE', $mod_strings['LBL_NO_TARGETS_WARNING_NON_EMAIL']);
             $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING_NON_EMAIL']);
         } else {
-            $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING']);
+            $ss->assign('WARNING_MESSAGE', $mod_strings['LBL_NO_TARGETS_WARNING']);
             $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING']);
         }
     } else {
         //print no entries warning
-        if ($campaign_focus->campaign_type=='NewsLetter' || $campaign_focus->campaign_type=='Survey') {
-            $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
+        if ($campaign_focus->campaign_type == 'NewsLetter' || $campaign_focus->campaign_type == 'Survey') {
+            $ss->assign('WARNING_MESSAGE', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
             $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
             $pl_diabled_test_too = false;
-        } elseif ($campaign_focus->campaign_type=='Email') {
-            $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
+        } elseif ($campaign_focus->campaign_type == 'Email') {
+            $ss->assign('WARNING_MESSAGE', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
             $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
         } else {
-            $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING_NON_EMAIL']);
+            $ss->assign('WARNING_MESSAGE', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING_NON_EMAIL']);
             $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING_NON_EMAIL']);
         }
     }
     //disable the send email options
-    $ss->assign("PL_DISABLED", 'disabled');
-    $ss->assign("PL_DISABLED_TEST", $pl_diabled_test_too ? 'disabled' : false);
-} else {
-    //show inputs and assign type to be radio
+    $ss->assign('PL_DISABLED', 'disabled');
+    $ss->assign('PL_DISABLED_TEST', $pl_diabled_test_too ? 'disabled' : false);
 }
+    //show inputs and assign type to be radio
 
-if (!$list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_focus->id}' AND template_id IS NOT NULL AND template_id != ''")) {
+if (!$list = BeanFactory::getBean('EmailMarketing')->get_full_list('', "campaign_id = '{$campaign_focus->id}' AND template_id IS NOT NULL AND template_id != ''")) {
     $ss->assign('error_on_templates', $mod_strings['LBL_NO_TEMPLATE_SELECTED']);
 }
 
-
-
-/**************************** WIZARD UI DIV Stuff *******************/
+// WIZARD UI DIV Stuff
 
 $additionalParams = '';
 if (isset($_REQUEST['template_id']) && $_REQUEST['template_id']) {
@@ -413,23 +391,23 @@ if (isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id']) {
     $additionalParams .= '&marketing_id=' . $_REQUEST['marketing_id'];
 }
 
-$camp_url = "index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome";
-$camp_url .= "&return_id=".$campaign_focus->id."&record=".$campaign_focus->id . $additionalParams ."&direct_step=";
-$ss->assign("CAMP_WIZ_URL", $camp_url);
+$camp_url = 'index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome';
+$camp_url .= '&return_id=' . $campaign_focus->id . '&record=' . $campaign_focus->id . $additionalParams . '&direct_step=';
+$ss->assign('CAMP_WIZ_URL', $camp_url);
 $summ_url = $mod_strings['LBL_NAVIGATION_MENU_SUMMARY'];
 if (!empty($focus->id)) {
     $summ_url = "<a href='index.php?action=WizardHome&module=Campaigns";
-    $summ_url .= "&return_id=".$focus->id."&record=".$focus->id;
-    $summ_url .= "'> ". $mod_strings['LBL_NAVIGATION_MENU_SUMMARY']."</a>";
+    $summ_url .= '&return_id=' . $focus->id . '&record=' . $focus->id;
+    $summ_url .= "'> " . $mod_strings['LBL_NAVIGATION_MENU_SUMMARY'] . '</a>';
 }
 $summ_url = $mod_strings['LBL_NAVIGATION_MENU_SUMMARY'];
 if (!empty($focus->id)) {
-    $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=".$focus->id."&record=".$focus->id;
+    $summ_url = 'index.php?action=WizardHome&module=Campaigns&return_id=' . $focus->id . '&record=' . $focus->id;
 }
-$ss->assign("SUMM_URL", $summ_url);
+$ss->assign('SUMM_URL', $summ_url);
 
 //  this is the wizard control script that resides in page
-$divScript = <<<EOQ
+$divScript = <<<'EOQ'
 
  <script type="text/javascript" language="javascript">
     /*
@@ -463,14 +441,9 @@ $divScript = <<<EOQ
 EOQ;
 
 //$ss->assign("WIZ_JAVASCRIPT", print_wizard_jscript());
-$ss->assign("DIV_JAVASCRIPT", $divScript);
+$ss->assign('DIV_JAVASCRIPT', $divScript);
 
-
-
-
-
-/**************************** FINAL END OF PAGE UI Stuff *******************/
-
+// FINAL END OF PAGE UI Stuff
 
 if ($campaign_focus->campaign_type != 'Telesales' && (!isset($_REQUEST['campaign_type']) || $_REQUEST['campaign_type'] != 'Telesales')) {
     //$templateURLForProgressBar = '#';
@@ -493,11 +466,11 @@ if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) 
     $summaryURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=3&show_wizard_marketing=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
 }
 
-$steps = array();
-$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']] = $camp_url.'1';
+$steps = [];
+$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']] = $camp_url . '1';
 if ($campaign_focus->campaign_type == 'Telesales' || (isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] == 'Telesales')) {
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']] = 'index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $campaign_focus->id . '&record=' . $campaign_focus->id . '&direct_step=2';
-    $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url.'2&show_target_list=1';
+    $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url . '2&show_target_list=1';
 } else {
     $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url . '2';
 }
@@ -519,7 +492,7 @@ if ($campaign_focus->campaign_type != 'Telesales' && (!isset($_REQUEST['campaign
     $steps[$mod_strings['LBL_NAVIGATION_MENU_SUMMARY']] = $summaryURLForProgressBar;
 }
 
-include_once('modules/Campaigns/DotListWizardMenu.php');
+include_once 'modules/Campaigns/DotListWizardMenu.php';
 $dotListWizardMenu = new DotListWizardMenu($mod_strings, $steps, true);
 //    array(
 //        $mod_strings['LBL_NAVIGATION_MENU_GEN1'] => $camp_url.'1',
@@ -533,10 +506,9 @@ $dotListWizardMenu = new DotListWizardMenu($mod_strings, $steps, true);
 //    )
 //    , true);
 
-
 if (isset($_REQUEST['redirectToTargetList']) && $_REQUEST['redirectToTargetList']) {
     $ss->assign('hideScreen', true);
-    $dotListWizardMenu .= <<<JS
+    $dotListWizardMenu .= <<<'JS'
 <script type="text/javascript">
 $(function(){
     document.location.href = $('#nav_step2 a').first().attr('href');
@@ -565,30 +537,27 @@ foreach ($errors as $error => $msg) {
     }
 }
 
-
 foreach ($links as $link => $url) {
     if ($url) {
         $ss->assign('link_to_' . $link, $url);
     }
 }
 
-$ss->assign('link_to_campaign_header', $camp_url.'1');
+$ss->assign('link_to_campaign_header', $camp_url . '1');
 
 if ($campaign_focus->campaign_type == 'Telesales') {
     $stepValues = array_values($steps);
     $ss->assign('link_to_target_list', $stepValues[2]);
 } else {
-    $ss->assign('link_to_target_list', $camp_url.'2');
+    $ss->assign('link_to_target_list', $camp_url . '2');
 }
 
 $ss->assign('link_to_choose_template', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id);
 $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id . '&jump=2');
 
-
 // ---------------------------------
 // ------------ EDITOR -------------
 // ---------------------------------
-
 
 require_once 'include/SuiteEditor/SuiteEditorConnector.php';
 $templateWidth = 600;
@@ -600,8 +569,6 @@ $ss->assign('hide_width_set', $current_user->getEditorType() != 'mozaik');
 // ---------------------------------
 // ---------------------------------
 
-
-
 if (!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'])) {
     $ss->assign('EmailMarketingId', $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 } else {
@@ -610,8 +577,6 @@ if (!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMark
         $ss->assign('EmailMarketingId', $mrkt_lists[0]);
     }
 }
-
-
 
 //if campaign_id is passed then we assume this is being invoked from the campaign module and in a popup.
 $has_campaign = true;
@@ -627,39 +592,40 @@ if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
 //$has_campaign = false;
 
 include_once 'modules/EmailTemplates/templateFields.php';
-$ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
+$ss->assign('FIELD_DEFS_JS', generateFieldDefsJS2());
 
 ///////////////////////////////////////
 ////	CAMPAIGNS
 if ($has_campaign || $inboundEmail) {
     //$ss->assign("INPOPUPWINDOW", 'true');
-    $ss->assign("INSERT_URL_ONCLICK", "insert_variable_html_link(document.wizform.tracker_url.value)");
+    $ss->assign('INSERT_URL_ONCLICK', 'insert_variable_html_link(document.wizform.tracker_url.value)');
 
     $get_campaign_urls = function ($campaign_id) {
-        $return_array=array();
+        $return_array = [];
 
         if (!empty($campaign_id)) {
             $db = DBManagerFactory::getInstance();
 
             $campaign_id = $db->quote($campaign_id);
 
-            $query1="select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
-            $current=$db->query($query1);
-            while (($row=$db->fetchByAssoc($current)) != null) {
-                $return_array['{'.$row['tracker_name'].'}'] = array(
+            $query1 = "select * from campaign_trkrs where campaign_id='{$campaign_id}' and deleted=0";
+            $current = $db->query($query1);
+            while (($row = $db->fetchByAssoc($current)) != null) {
+                $return_array['{' . $row['tracker_name'] . '}'] = [
                     'text' => $row['tracker_name'] . ' : ' . $row['tracker_url'],
                     'url' => $row['tracker_url'],
                     'id' => $row['id']
-                );
+                ];
             }
         }
+
         return $return_array;
     };
     if ($has_campaign) {
         $campaign_urls = $get_campaign_urls($_REQUEST['campaign_id']);
     }
     if (!empty($campaign_urls)) {
-        $ss->assign("DEFAULT_URL_TEXT", key($campaign_urls));
+        $ss->assign('DEFAULT_URL_TEXT', key($campaign_urls));
     }
     if ($has_campaign) {
         $get_tracker_options = function ($label_list, $key_list, $selected_key, $massupdate = false) {
@@ -668,24 +634,24 @@ if ($has_campaign || $inboundEmail) {
 
             //for setting null selection values to human readable --None--
             $pattern = "/'0?'></";
-            $replacement = "''>".$app_strings['LBL_NONE'].'<';
+            $replacement = "''>" . $app_strings['LBL_NONE'] . '<';
             if ($massupdate) {
                 $replacement .= "/OPTION>\n<OPTION value='__SugarMassUpdateClearField__'><"; // Giving the user the option to unset a drop down list. I.e. none means that it won't get updated
             }
 
             if (empty($key_list)) {
-                $key_list = array();
+                $key_list = [];
             }
             //create the type dropdown domain and set the selected value if $opp value already exists
             foreach ($key_list as $option_key => $option_value) {
-                $select_options .= '<OPTION value="'.$option_key.'" data-id="'.$label_list[$option_key]['id'].'" data-url="'.$label_list[$option_key]['url'].'">'.$label_list[$option_key]['text'].'</OPTION>';
+                $select_options .= '<OPTION value="' . $option_key . '" data-id="' . $label_list[$option_key]['id'] . '" data-url="' . $label_list[$option_key]['url'] . '">' . $label_list[$option_key]['text'] . '</OPTION>';
             }
             $select_options = preg_replace($pattern, $replacement, $select_options);
 
             return $select_options;
         };
 
-        $ss->assign("TRACKER_KEY_OPTIONS", $get_tracker_options($campaign_urls, $campaign_urls, null));
+        $ss->assign('TRACKER_KEY_OPTIONS', $get_tracker_options($campaign_urls, $campaign_urls, null));
         //$ss->parse("main.NoInbound.tracker_url");
 
         // create tracker URL fields
@@ -694,41 +660,40 @@ if ($has_campaign || $inboundEmail) {
             $campaignTracker->retrieve((int) $_REQUEST['campaign_tracker_id']);
         }
         // todo: hide tracker select if it has no trackers
-        $ss->assign("TRACKER_NAME", isset($focus) ? $focus->tracker_name : null);
-        $ss->assign("TRACKER_URL", isset($focus) ? $focus->tracker_url : null);
+        $ss->assign('TRACKER_NAME', isset($focus) ? $focus->tracker_name : null);
+        $ss->assign('TRACKER_URL', isset($focus) ? $focus->tracker_url : null);
         if (!empty($focus->is_optout) && $focus->is_optout == 1) {
-            $ss->assign("IS_OPTOUT_CHECKED", "checked");
-            $ss->assign("TRACKER_URL_DISABLED", "disabled");
+            $ss->assign('IS_OPTOUT_CHECKED', 'checked');
+            $ss->assign('TRACKER_URL_DISABLED', 'disabled');
         }
     }
 }
 // create option of "Contact/Lead/Task" from corresponding module
 // translations
-$lblContactAndOthers = implode('/', array(
+$lblContactAndOthers = implode('/', [
     isset($app_list_strings['moduleListSingular']['Contacts']) ? $app_list_strings['moduleListSingular']['Contacts'] : 'Contact',
     isset($app_list_strings['moduleListSingular']['Leads']) ? $app_list_strings['moduleListSingular']['Leads'] : 'Lead',
     isset($app_list_strings['moduleListSingular']['Prospects']) ? $app_list_strings['moduleListSingular']['Prospects'] : 'Target',
-));
+]);
 
 // The insert variable drodown should be conditionally displayed.
 // If it's campaign then hide the Account.
 if ($has_campaign) {
     $dropdown = "<option value='Contacts'>
-						" . $lblContactAndOthers . "
-			       </option>";
+						" . $lblContactAndOthers . '
+			       </option>';
     if ($campaign_focus->campaign_type == 'Survey') {
-        $dropdown .= "<option value='Surveys'>".translate('Surveys')."</option>";
+        $dropdown .= "<option value='Surveys'>" . translate('Surveys') . '</option>';
     }
-    $ss->assign("DROPDOWN", $dropdown);
-    $ss->assign("DEFAULT_MODULE", 'Contacts');
+    $ss->assign('DROPDOWN', $dropdown);
+    $ss->assign('DEFAULT_MODULE', 'Contacts');
 //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
 } else {
-    $ss->assign("DROPDOWN", genDropDownJS2());
-    $ss->assign("DEFAULT_MODULE", 'Accounts');
+    $ss->assign('DROPDOWN', genDropDownJS2());
+    $ss->assign('DEFAULT_MODULE', 'Accounts');
 }
 
-$ss->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.wizform.variable_text.value, \"email_template_editor\")");
-
+$ss->assign('INSERT_VARIABLE_ONCLICK', 'insert_variable(document.wizform.variable_text.value, "email_template_editor")');
 
 ///////////////////////////////////////
 ////    ATTACHMENTS
@@ -742,10 +707,10 @@ if (!empty($mrkt_focus->id)) {
 if (!empty($etid)) {
     $note = new Note();
     $where = "notes.parent_id='{$etid}' AND notes.filename IS NOT NULL";
-    $notes_list = $note->get_full_list("", $where, true);
+    $notes_list = $note->get_full_list('', $where, true);
 
     if (!isset($notes_list)) {
-        $notes_list = array();
+        $notes_list = [];
     }
     for ($i = 0; $i < count($notes_list); $i++) {
         $the_note = $notes_list[$i];
@@ -768,13 +733,12 @@ $ss->assign('ATTACHMENTS_JAVASCRIPT', $attJs);
 
 $ss->assign('campaign_type', isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] ? $_REQUEST['campaign_type'] : $campaign_focus->campaign_type);
 
-
-$ss->assign('fields', array(
-    'date_start' => array(
+$ss->assign('fields', [
+    'date_start' => [
         'name' => 'date_start',
         'value' => $mrkt_focus->date_start . ' ' . $mrkt_focus->time_start,
-    )
-));
+    ]
+]);
 
 if (isset($_SESSION['msg']) && $_SESSION['msg']) {
     $ss->assign('msg', $mod_strings[$_SESSION['msg']]);
@@ -782,6 +746,6 @@ if (isset($_SESSION['msg']) && $_SESSION['msg']) {
 }
 
 if (!empty($_REQUEST['func'])) {
-    echo '<input type="hidden" id="func" value="'.$_REQUEST['func'].'">';
+    echo '<input type="hidden" id="func" value="' . $_REQUEST['func'] . '">';
 }
       $ss->display('modules/Campaigns/WizardMarketing.html');

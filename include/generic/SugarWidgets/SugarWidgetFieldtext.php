@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/generic/SugarWidgets/SugarWidgetFieldvarchar.php');
+require_once 'include/generic/SugarWidgets/SugarWidgetFieldvarchar.php';
 
 class SugarWidgetFieldText extends SugarWidgetFieldVarchar
 {
@@ -53,27 +51,30 @@ class SugarWidgetFieldText extends SugarWidgetFieldVarchar
 
     public function queryFilterEquals($layout_def)
     {
-        return $this->reporter->db->convert($this->_get_column_select($layout_def), "text2char").
-            " = ".$this->reporter->db->quoted($layout_def['input_name0']);
+        return $this->reporter->db->convert($this->_get_column_select($layout_def), 'text2char') .
+            ' = ' . $this->reporter->db->quoted($layout_def['input_name0']);
     }
 
     public function queryFilterNot_Equals_Str($layout_def)
     {
         $column = $this->_get_column_select($layout_def);
-        return "($column IS NULL OR ". $this->reporter->db->convert($column, "text2char")." != ".
-            $this->reporter->db->quoted($layout_def['input_name0']).")";
+
+        return "({$column} IS NULL OR " . $this->reporter->db->convert($column, 'text2char') . ' != ' .
+            $this->reporter->db->quoted($layout_def['input_name0']) . ')';
     }
 
     public function queryFilterNot_Empty($layout_def)
     {
         $column = $this->_get_column_select($layout_def);
-        return "($column IS NOT NULL AND ".$this->reporter->db->convert($column, "length")." > 0)";
+
+        return "({$column} IS NOT NULL AND " . $this->reporter->db->convert($column, 'length') . ' > 0)';
     }
 
     public function queryFilterEmpty($layout_def)
     {
         $column = $this->_get_column_select($layout_def);
-        return "($column IS NULL OR ".$this->reporter->db->convert($column, "length")." = 0)";
+
+        return "({$column} IS NULL OR " . $this->reporter->db->convert($column, 'length') . ' = 0)';
     }
 
     public function displayList(&$layout_def)

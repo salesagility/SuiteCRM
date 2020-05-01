@@ -1,5 +1,6 @@
 <?php
-$sugar_config_si  = array(
+
+$sugar_config_si = [
     'dbUSRData' => 'create',
     'default_date_format' => 'd/m/Y',
     'default_decimal_seperator' => '.',
@@ -25,4 +26,4 @@ $sugar_config_si  = array(
     'setup_system_name' => 'SuiteCRM Travis Build',
     'show_log_trace' => true,
     'strict_id_validation' => true,
-);
+];

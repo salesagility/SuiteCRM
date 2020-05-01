@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class ContactsViewDetail extends ViewDetail
 {
     /**
@@ -58,15 +55,15 @@ class ContactsViewDetail extends ViewDetail
 
         $aop_portal_enabled = !empty($sugar_config['aop']['enable_portal']) && !empty($sugar_config['aop']['enable_aop']);
 
-        $this->ss->assign("AOP_PORTAL_ENABLED", $aop_portal_enabled);
+        $this->ss->assign('AOP_PORTAL_ENABLED', $aop_portal_enabled);
 
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
+        require_once 'modules/AOS_PDF_Templates/formLetter.php';
         formLetter::DVPopupHtml('Contacts');
 
         $admin = new Administration();
         $admin->retrieveSettings();
         if (isset($admin->settings['portal_on']) && $admin->settings['portal_on']) {
-            $this->ss->assign("PORTAL_ENABLED", true);
+            $this->ss->assign('PORTAL_ENABLED', true);
         }
         parent::display();
     }

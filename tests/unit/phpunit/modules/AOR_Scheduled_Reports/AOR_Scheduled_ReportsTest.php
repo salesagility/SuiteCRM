@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,35 +16,31 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testSaveAndGet_email_recipients()
+    public function testSaveAndGetEmailRecipients()
     {
         $aorScheduledReports = new AOR_Scheduled_Reports();
-        $aorScheduledReports->name = "test";
-        $aorScheduledReports->description = "test description";
-        $_POST['email_recipients']= array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
-
+        $aorScheduledReports->name = 'test';
+        $aorScheduledReports->description = 'test description';
+        $_POST['email_recipients'] = ['email_target_type' => ['Email Address', 'all', 'Specify User'], 'email' => ['test@test.com', '', '1']];
 
         //test save and test for record ID to verify that record is saved
         $aorScheduledReports->save();
         $this->assertTrue(isset($aorScheduledReports->id));
         $this->assertEquals(36, strlen($aorScheduledReports->id));
 
-
-
         //test get_email_recipients
-        $expected = array('test@test.com','','1');
+        $expected = ['test@test.com', '', '1'];
         $aorScheduledReports->retrieve($aorScheduledReports->id);
         $emails = $aorScheduledReports->get_email_recipients();
 
         $this->assertTrue(is_array($emails));
         $this->assertEquals('test@test.com', $emails[0]);
 
-
         $aorScheduledReports->mark_deleted($aorScheduledReports->id);
         unset($aorScheduledReports);
     }
-    
-    public function testAOR_Scheduled_Reports()
+
+    public function testAORScheduledReports()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aorScheduledReports = new AOR_Scheduled_Reports();
@@ -57,10 +56,11 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'importable', $aorScheduledReports);
     }
 
-    public function test_ReportRelation() {
+    public function testReportRelation()
+    {
         $_POST['aor_fields_field'] = [];
         $report = new AOR_Report();
-        $report->name = "Foobar";
+        $report->name = 'Foobar';
         $report->save();
 
         $aorScheduledReports = new AOR_Scheduled_Reports();
@@ -72,7 +72,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($report->id, $aorScheduledReports->aor_report_id);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
@@ -83,16 +83,15 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
     public function testshouldRun()
     {
         $aorScheduledReports = new AOR_Scheduled_Reports();
-        $aorScheduledReports->schedule = " 8 * * * *";
+        $aorScheduledReports->schedule = ' 8 * * * *';
 
         //test without a last_run date
         //@todo: NEEDS FIXING - are we sure?
         //$this->assertFalse($aorScheduledReports->shouldRun(new DateTime()) );
 
         //test without a older last_run date
-        $aorScheduledReports->last_run = date("d-m-y H:i:s", mktime(0, 0, 0, 10, 3, 2014));
+        $aorScheduledReports->last_run = date('d-m-y H:i:s', mktime(0, 0, 0, 10, 3, 2014));
         $this->assertTrue($aorScheduledReports->shouldRun(new DateTime()));
-
 
         //test without a current last_run date
         $aorScheduledReports->last_run = new DateTime();

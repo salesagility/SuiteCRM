@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Campaigns extends \AcceptanceTester
 {
     /**
-     * Create a non-emails campaign
+     * Create a non-emails campaign.
      *
      * @param $name
      */
@@ -54,7 +54,7 @@ class Campaigns extends \AcceptanceTester
     }
 
     /**
-     * Create a Newletter campaign
+     * Create a Newletter campaign.
      *
      * @param $name
      */

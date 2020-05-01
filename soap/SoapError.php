@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('soap/SoapErrorDefinitions.php');
+require_once 'soap/SoapErrorDefinitions.php';
 class SoapError
 {
     public $name;
@@ -53,16 +52,13 @@ class SoapError
         $this->set_error('no_error');
     }
 
-
-
-
     public function set_error($error_name)
     {
         global $error_defs;
         if (!isset($error_defs[$error_name])) {
             $this->name = 'An Undefined Error - ' . $error_name . ' occurred';
             $this->number = '-1';
-            $this->description = 'There is no error definition for ' . 	$error_name;
+            $this->description = 'There is no error definition for ' . $error_name;
         } else {
             $this->name = $error_defs[$error_name]['name'];
             $this->number = $error_defs[$error_name]['number'];
@@ -72,23 +68,29 @@ class SoapError
 
     public function get_soap_array()
     {
-        return array('number'=>$this->number,
-                     'name'=>$this->name,
-                     'description'=>$this->description);
+        return ['number' => $this->number,
+            'name' => $this->name,
+            'description' => $this->description];
     }
 
     public function getName()
     {
         return $this->name;
-    } // fn
+    }
+
+    // fn
 
     public function getFaultCode()
     {
         return $this->number;
-    } // fn
+    }
+
+    // fn
 
     public function getDescription()
     {
         return $this->description;
-    } // fn
+    }
+
+    // fn
 }

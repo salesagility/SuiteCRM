@@ -3,53 +3,61 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/db_utils.php';
+/**
+ * @internal
+ */
 class db_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function db_convertProvider()
     {
         //array containing all possible types supported by db_convert
-        return array(
-            array(gmdate('Y-m-d H:i:s'), 'today', array(), 'CURDATE()'),
-            array('text', 'left', array(2), 'LEFT(text,2)'),
-            array('2015-11-16 19:10:52', 'date_format', array(), 'DATE_FORMAT(2015-11-16 19:10:52,\'%Y-%m-%d\')'),
-            array('2015-11-16 19:10:52', 'time_format', array(), '2015-11-16 19:10:52'),
-            array('2015-11-16', 'date', array(), '2015-11-16'),
-            array('19:10:52', 'time', array(), '19:10:52'),
-            array('2015-11-16 19:10:52', 'datetime', array(), '2015-11-16 19:10:52'),
-            array(null, 'ifnull', array(0), 'IFNULL(0)'),
-            array('value1 ', 'concat', array('value2'), 'CONCAT(value1 ,value2)'),
-            array('2015-11-16 19:10:52', 'quarter', array(), 'QUARTER(2015-11-16 19:10:52)'),
-            array('value1', 'length', array(), 'LENGTH(value1)'),
-            array('2015-11-16 19:32:29', 'month', array(), 'MONTH(2015-11-16 19:32:29)'),
-            array('2015-11-16', 'add_date', array('1', 'DAY'), 'DATE_ADD(2015-11-16, INTERVAL 1 DAY)'),
-            array('19:10:52', 'add_time', array('1', 'HOUR'), 'DATE_ADD(19:10:52, INTERVAL + CONCAT(1, \':\', HOUR) HOUR_MINUTE)'),
-            array('col', 'avg', array(2), 'avg(col)'),
-            array('2015-11-16 19:32:29', 'add_tz_offset', array(), '2015-11-16 19:32:29 + INTERVAL 0 MINUTE'),
-        );
+        return [
+            [gmdate('Y-m-d H:i:s'), 'today', [], 'CURDATE()'],
+            ['text', 'left', [2], 'LEFT(text,2)'],
+            ['2015-11-16 19:10:52', 'date_format', [], 'DATE_FORMAT(2015-11-16 19:10:52,\'%Y-%m-%d\')'],
+            ['2015-11-16 19:10:52', 'time_format', [], '2015-11-16 19:10:52'],
+            ['2015-11-16', 'date', [], '2015-11-16'],
+            ['19:10:52', 'time', [], '19:10:52'],
+            ['2015-11-16 19:10:52', 'datetime', [], '2015-11-16 19:10:52'],
+            [null, 'ifnull', [0], 'IFNULL(0)'],
+            ['value1 ', 'concat', ['value2'], 'CONCAT(value1 ,value2)'],
+            ['2015-11-16 19:10:52', 'quarter', [], 'QUARTER(2015-11-16 19:10:52)'],
+            ['value1', 'length', [], 'LENGTH(value1)'],
+            ['2015-11-16 19:32:29', 'month', [], 'MONTH(2015-11-16 19:32:29)'],
+            ['2015-11-16', 'add_date', ['1', 'DAY'], 'DATE_ADD(2015-11-16, INTERVAL 1 DAY)'],
+            ['19:10:52', 'add_time', ['1', 'HOUR'], 'DATE_ADD(19:10:52, INTERVAL + CONCAT(1, \':\', HOUR) HOUR_MINUTE)'],
+            ['col', 'avg', [2], 'avg(col)'],
+            ['2015-11-16 19:32:29', 'add_tz_offset', [], '2015-11-16 19:32:29 + INTERVAL 0 MINUTE'],
+        ];
     }
 
     /**
      * @dataProvider db_convertProvider
+     *
+     * @param mixed $string
+     * @param mixed $type
+     * @param mixed $params
+     * @param mixed $expected
      */
-    public function testdb_convert($string, $type, $params, $expected)
+    public function testdbConvert($string, $type, $params, $expected)
     {
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
     }
 
-    public function testdb_concat()
+    public function testdbConcat()
     {
         //execute the method and test if it returns expected values
 
         $table = 'Table1';
-        $fields = array('Col1', 'Col2', 'Col3');
+        $fields = ['Col1', 'Col2', 'Col3'];
         $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),' ',IFNULL(Table1.Col2,''),' ',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
     }
 
-    public function testfrom_db_convert()
+    public function testfromDbConvert()
     {
         //execute the method and test if it returns expected values
 
@@ -60,7 +68,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'timestamp'));
     }
 
-    public function testto_html()
+    public function testtoHtml()
     {
 //        $this->markTestIncomplete('PHPUnit and codeception results are in conflict');
 //        //execute the method and test if it returns expected values
@@ -76,7 +84,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertSame($expected, $actual);
     }
 
-    public function testfrom_html()
+    public function testfromHtml()
     {
         $string = '';
         $expected = '';

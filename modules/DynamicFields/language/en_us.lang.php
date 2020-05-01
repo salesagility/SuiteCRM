@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LNK_NEW_CALL' => 'Log Call',
     'LNK_NEW_MEETING' => 'Schedule Meeting',
     'LNK_NEW_TASK' => 'Create Task',
@@ -87,7 +85,7 @@ $mod_strings = array(
     'LBL_LABEL' => 'Label',
     'LBL_DATA_TYPE' => 'Data Type',
     'LBL_DEFAULT_VALUE' => 'Default Value',
-    'ERR_RESERVED_FIELD_NAME' => "Reserved Keyword",
+    'ERR_RESERVED_FIELD_NAME' => 'Reserved Keyword',
     'ERR_SELECT_FIELD_TYPE' => 'Please Select a Field Type',
     'ERR_FIELD_NAME_ALREADY_EXISTS' => 'Field Name already exists',
     'LBL_BTN_ADD' => 'Add',
@@ -101,4 +99,4 @@ $mod_strings = array(
     'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
     'COLUMN_TITLE_INLINE_EDIT_TEXT' => 'Inline Edit',
     'COLUMN_TITLE_PARENT_ENUM' => 'Parent DropDown',
-);
+];

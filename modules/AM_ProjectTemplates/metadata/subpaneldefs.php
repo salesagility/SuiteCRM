@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,30 +42,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$layout_defs["AM_ProjectTemplates"] = array(
-    'subpanel_setup' => array(
-        'am_tasktemplates_am_projecttemplates' =>
-            array(
-                'order' => 100,
-                'module' => 'AM_TaskTemplates',
-                'subpanel_name' => 'default',
-                'sort_order' => 'asc',
-                'sort_by' => 'id',
-                'title_key' => 'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_TASKTEMPLATES_TITLE',
-                'get_subpanel_data' => 'am_tasktemplates_am_projecttemplates',
-                'top_buttons' =>
-                    array(
-                        0 =>
-                            array(
-                                'widget_class' => 'SubPanelTopButtonQuickCreate',
-                            ),
-                        1 =>
-                            array(
-                                'widget_class' => 'SubPanelTopSelectButton',
-                                'mode' => 'MultiSelect',
-                            ),
-                    ),
-            ),
+$layout_defs['AM_ProjectTemplates'] = [
+    'subpanel_setup' => [
+        'am_tasktemplates_am_projecttemplates' => [
+            'order' => 100,
+            'module' => 'AM_TaskTemplates',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_TASKTEMPLATES_TITLE',
+            'get_subpanel_data' => 'am_tasktemplates_am_projecttemplates',
+            'top_buttons' => [
+                0 => [
+                    'widget_class' => 'SubPanelTopButtonQuickCreate',
+                ],
+                1 => [
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
         /*
         'am_projecttemplates_contacts_1' =>
             array(
@@ -89,7 +86,7 @@ $layout_defs["AM_ProjectTemplates"] = array(
                     ),
             ),
         */
-        'am_projecttemplates_resources' => array(
+        'am_projecttemplates_resources' => [
             'order' => 101,
             'module' => 'AM_ProjectTemplates',
             'subpanel_name' => 'AM_ProjectTemplates',
@@ -97,36 +94,26 @@ $layout_defs["AM_ProjectTemplates"] = array(
             'sort_order' => 'asc',
             'sort_by' => 'id',
             'title_key' => 'LBL_AM_PROJECTTEMPLATES_RESOURCES_TITLE',
-            'top_buttons' =>
-                array(
-                    0 =>
-                        array(
-                            'widget_class' => 'SubPanelTopSelectUsersButton', 'mode' => 'MultiSelect',
-                        ),
-                    1 =>
-                        array(
-                            'widget_class' => 'SubPanelTopSelectContactsButton', 'mode' => 'MultiSelect',
-                        ),
-                ),
-            'collection_list' => array(
-                'users' => array(
+            'top_buttons' => [
+                0 => [
+                    'widget_class' => 'SubPanelTopSelectUsersButton', 'mode' => 'MultiSelect',
+                ],
+                1 => [
+                    'widget_class' => 'SubPanelTopSelectContactsButton', 'mode' => 'MultiSelect',
+                ],
+            ],
+            'collection_list' => [
+                'users' => [
                     'module' => 'Users',
                     'subpanel_name' => 'ForProject',
                     'get_subpanel_data' => 'am_projecttemplates_users_1',
-                ),
-                'contacts' => array(
+                ],
+                'contacts' => [
                     'module' => 'Contacts',
                     'subpanel_name' => 'ForProject',
                     'get_subpanel_data' => 'am_projecttemplates_contacts_1',
-                ),
-
-            )
-        ),
-        
-
-
-
-    ),
-
-
-);
+                ],
+            ]
+        ],
+    ],
+];

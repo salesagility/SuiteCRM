@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,24 +43,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: Class to handle processing an import file
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  */
-
-require_once('modules/Import/CsvAutoDetect.php');
-require_once('modules/Import/sources/ImportDataSource.php');
+require_once 'modules/Import/CsvAutoDetect.php';
+require_once 'modules/Import/sources/ImportDataSource.php';
 
 class ImportFile extends ImportDataSource
 {
     /**
-     * Stores whether or not we are deleting the import file in the destructor
+     * Stores whether or not we are deleting the import file in the destructor.
      */
     private $_deleteFile;
 
     /**
-     * File pointer returned from fopen() call
+     * File pointer returned from fopen() call.
      */
     private $_fp = false;
 
@@ -72,92 +70,77 @@ class ImportFile extends ImportDataSource
     /**
      * True if the csv file has a header row.
      */
-    private $_detector = null;
+    private $_detector;
 
     /**
-     * CSV date format
+     * CSV date format.
      */
     private $_date_format = false;
 
     /**
-     * CSV time format
+     * CSV time format.
      */
     private $_time_format = false;
 
     /**
      * The import file map that this import file inherits properties from.
      */
-    private $_importFile = null;
+    private $_importFile;
 
     /**
-     * Delimiter string we are using (i.e. , or ;)
+     * Delimiter string we are using (i.e. , or ;).
      */
     private $_delimiter;
 
     /**
-     * Enclosure string we are using (i.e. ' or ")
+     * Enclosure string we are using (i.e. ' or ").
      */
     private $_enclosure;
-    
+
     /**
-     * File encoding, used to translate the data into UTF-8 for display and import
+     * File encoding, used to translate the data into UTF-8 for display and import.
      */
     private $_encoding;
 
-
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $filename
      * @param string $delimiter
      * @param string $enclosure
      * @param bool   $deleteFile
+     * @param mixed $checkUploadPath
      */
-    public function __construct($filename, $delimiter  = ',', $enclosure  = '', $deleteFile = true, $checkUploadPath = true)
+    public function __construct($filename, $delimiter = ',', $enclosure = '', $deleteFile = true, $checkUploadPath = true)
     {
         if (!is_file($filename) || !is_readable($filename)) {
             return false;
         }
 
         if ($checkUploadPath && UploadStream::path($filename) == null) {
-            $GLOBALS['log']->fatal("ImportFile detected attempt to access to the following file not within the sugar upload dir: $filename");
+            $GLOBALS['log']->fatal("ImportFile detected attempt to access to the following file not within the sugar upload dir: {$filename}");
+
             return null;
         }
 
         // turn on auto-detection of line endings to fix bug #10770
         ini_set('auto_detect_line_endings', '1');
 
-        $this->_fp         = sugar_fopen($filename, 'r');
-        $this->_sourcename   = $filename;
+        $this->_fp = sugar_fopen($filename, 'r');
+        $this->_sourcename = $filename;
         $this->_deleteFile = $deleteFile;
-        $this->_delimiter  = (empty($delimiter) ? ',' : $delimiter);
+        $this->_delimiter = (empty($delimiter) ? ',' : $delimiter);
         if ($this->_delimiter == '\t') {
             $this->_delimiter = "\t";
         }
-        $this->_enclosure  = (empty($enclosure) ? '' : trim($enclosure));
+        $this->_enclosure = (empty($enclosure) ? '' : trim($enclosure));
 
         // Autodetect does setFpAfterBOM()
         $this->_encoding = $this->autoDetectCharacterSet();
     }
 
     /**
-     * Remove the BOM (Byte Order Mark) from the beginning of the import row if it exists
-     * @return void
-     */
-    private function setFpAfterBOM()
-    {
-        if ($this->_fp === false) {
-            return;
-        }
-
-        rewind($this->_fp);
-        $bomCheck = fread($this->_fp, 3);
-        if ($bomCheck != pack("CCC", 0xef, 0xbb, 0xbf)) {
-            rewind($this->_fp);
-        }
-    }
-    /**
-     * Destructor
+     * Destructor.
      *
      * Deletes $_importFile if $_deleteFile is true
      */
@@ -175,19 +158,20 @@ class ImportFile extends ImportDataSource
     }
 
     /**
-     * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability.
      */
     public function __wakeup()
     {
         // clean all properties
         foreach (get_object_vars($this) as $k => $v) {
-            $this->$k = null;
+            $this->{$k} = null;
         }
-        throw new Exception("Not a serializable object");
+
+        throw new Exception('Not a serializable object');
     }
 
     /**
-     * Returns true if the filename given exists and is readable
+     * Returns true if the filename given exists and is readable.
      *
      * @return bool
      */
@@ -197,7 +181,7 @@ class ImportFile extends ImportDataSource
     }
 
     /**
-     * Gets the next row from $_importFile
+     * Gets the next row from $_importFile.
      *
      * @return array current row of file
      */
@@ -219,13 +203,13 @@ class ImportFile extends ImportDataSource
             }
         } else {
             $row = fgetcsv($this->_fp, 8192, $this->_delimiter, $this->_enclosure);
-            if ($row !== false && $row != array(null)) {
+            if ($row !== false && $row != [null]) {
                 $this->_currentRow = $row;
             } else {
                 return false;
             }
         }
-        
+
         global $locale;
         foreach ($this->_currentRow as $key => $value) {
             // If encoding is set, convert all values from it
@@ -233,19 +217,19 @@ class ImportFile extends ImportDataSource
                 // Convert all values to UTF-8 for display and import purposes
                 $this->_currentRow[$key] = $locale->translateCharset($value, $this->_encoding);
             }
-            
+
             // Convert all line endings to the same style as PHP_EOL
             // Use preg_replace instead of str_replace as str_replace may cause extra lines on Windows
             $this->_currentRow[$key] = preg_replace("[\r\n|\n|\r]", PHP_EOL, $this->_currentRow[$key]);
         }
-        
+
         $this->_rowsCount++;
 
         return $this->_currentRow;
     }
 
     /**
-     * Returns the number of fields in the current row
+     * Returns the number of fields in the current row.
      *
      * @return int count of fiels in the current row
      */
@@ -281,8 +265,8 @@ class ImportFile extends ImportDataSource
     public function autoDetectCSVProperties()
     {
         // defaults
-        $this->_delimiter  = ",";
-        $this->_enclosure  = '"';
+        $this->_delimiter = ',';
+        $this->_enclosure = '"';
 
         $this->_detector = new CsvAutoDetect($this->_sourcename);
 
@@ -292,10 +276,11 @@ class ImportFile extends ImportDataSource
         if ($ret) {
             $this->_delimiter = $delimiter;
             $this->_enclosure = $enclosure;
+
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function getFieldDelimeter()
@@ -314,10 +299,10 @@ class ImportFile extends ImportDataSource
         if (!empty($this->_encoding)) {
             return $this->_encoding;
         }
-        
+
         // Move file pointer to start
         $this->setFpAfterBOM();
-        
+
         global $locale;
         $user_charset = $locale->getExportCharset();
         $system_charset = $locale->default_export_charset;
@@ -326,33 +311,33 @@ class ImportFile extends ImportDataSource
 
         // Bug 26824 - mb_detect_encoding() thinks CP1252 is IS0-8859-1, so use that instead in the encoding list passed to the function
         $detectable_charsets = str_replace('CP1252', 'ISO-8859-1', $detectable_charsets);
-        
+
         // If we are able to detect encoding
         if (function_exists('mb_detect_encoding')) {
             // Retrieve a sample of data set
             $text = '';
-            
+
             // Read 10 lines from the file and put them all together in a variable
             $i = 0;
             while ($i < 10 && $temp = fgets($this->_fp, 8192)) {
                 $text .= $temp;
                 $i++;
             }
-            
+
             // If we picked any text, try to detect charset
             if (strlen($text) > 0) {
                 $charset_for_import = mb_detect_encoding($text, $detectable_charsets);
             }
         }
-        
+
         // If we couldn't detect the charset, set it to default export/import charset
         if (empty($charset_for_import)) {
             $charset_for_import = $locale->getExportCharset();
         }
-        
+
         // Reset the fp to after the bom if applicable.
         $this->setFpAfterBOM();
-        
+
         return $charset_for_import;
     }
 
@@ -399,16 +384,17 @@ class ImportFile extends ImportDataSource
                 $this->_hasHeader = $heading;
             }
         }
+
         return $this->_hasHeader;
     }
 
     public function setImportFileMap($map)
     {
         $this->_importFile = $map;
-        $importMapProperties = array('_delimiter' => 'delimiter','_enclosure' => 'enclosure', '_hasHeader' => 'has_header');
+        $importMapProperties = ['_delimiter' => 'delimiter', '_enclosure' => 'enclosure', '_hasHeader' => 'has_header'];
         //Inject properties from the import map
         foreach ($importMapProperties as $k => $v) {
-            $this->$k = $map->$v;
+            $this->{$k} = $map->{$v};
         }
     }
 
@@ -446,20 +432,21 @@ class ImportFile extends ImportDataSource
         if ($this->hasHeaderRow(false) && $totalCount > 0) {
             $totalCount--;
         }
+
         return $totalCount;
     }
 
     public function loadDataSet($totalItems = 0)
     {
         $currentLine = 0;
-        $this->_dataSet = array();
+        $this->_dataSet = [];
         $this->rewind();
         //If there's a header don't include it.
         if ($this->hasHeaderRow(false)) {
             $this->next();
         }
 
-        while ($this->valid() &&  $totalItems > count($this->_dataSet)) {
+        while ($this->valid() && $totalItems > count($this->_dataSet)) {
             if ($currentLine >= $this->_offset) {
                 $this->_dataSet[] = $this->_currentRow;
             }
@@ -475,8 +462,24 @@ class ImportFile extends ImportDataSource
         $this->rewind();
         if ($this->hasHeaderRow(false)) {
             return $this->_currentRow;
-        } else {
-            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove the BOM (Byte Order Mark) from the beginning of the import row if it exists.
+     */
+    private function setFpAfterBOM()
+    {
+        if ($this->_fp === false) {
+            return;
+        }
+
+        rewind($this->_fp);
+        $bomCheck = fread($this->_fp, 3);
+        if ($bomCheck != pack('CCC', 0xef, 0xbb, 0xbf)) {
+            rewind($this->_fp);
         }
     }
 }

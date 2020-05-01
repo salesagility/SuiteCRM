@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class aCaseTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -30,7 +33,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $aCase);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $aCase = new aCase();
         $this->assertEquals(null, $aCase->get_summary_text());
@@ -43,14 +46,13 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency');
 
-
         $aCase = new aCase();
-        $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
+        $expected = ['MAIN' => 'span', 'ACCOUNT' => 'span'];
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
 
-    public function testsave_relationship_changes()
+    public function testsaveRelationshipChanges()
     {
         $aCase = new aCase();
 
@@ -65,7 +67,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testset_case_contact_relationship()
+    public function testsetCaseContactRelationship()
     {
         $aCase = new aCase();
 
@@ -78,7 +80,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $aCase = new aCase();
 
@@ -91,7 +93,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $aCase = new aCase();
         $aCase->assigned_user_id = 1;
@@ -105,7 +107,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $aCase->modified_by_name);
     }
 
-    public function testget_contacts()
+    public function testgetContacts()
     {
         $aCase = new aCase();
         $result = $aCase->get_contacts();
@@ -113,26 +115,26 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $result);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $aCase = new aCase();
         $current_theme = SugarThemeRegistry::current();
         //test without setting attributes
-        $expected = array(
-                'DELETED' => 0,
-                'STATE' => 'Open',
-                'UPDATE_TEXT' => '',
-                'NAME' => '<em>blank</em>',
-                'PRIORITY' => '',
-                'STATUS' => '',
-                'ENCODED_NAME' => null,
-                'CASE_NUMBER' => null,
-                'SET_COMPLETE' => '~'
-                                .preg_quote('<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=')
-                                .'[\w-]+'
-                                .preg_quote('"    title=Close border=\'0\' alt="Close" /></a>')
-                                .'~',
-        );
+        $expected = [
+            'DELETED' => 0,
+            'STATE' => 'Open',
+            'UPDATE_TEXT' => '',
+            'NAME' => '<em>blank</em>',
+            'PRIORITY' => '',
+            'STATUS' => '',
+            'ENCODED_NAME' => null,
+            'CASE_NUMBER' => null,
+            'SET_COMPLETE' => '~'
+                            . preg_quote('<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/' . $current_theme . '/images/close_inline.png?v=')
+                            . '[\w-]+'
+                            . preg_quote('"    title=Close border=\'0\' alt="Close" /></a>')
+                            . '~',
+        ];
 
         $actual = $aCase->get_list_view_data();
         //$this->assertSame($expected ,$actual);
@@ -148,17 +150,17 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $aCase->status = 'Open_New';
         $aCase->case_number = 1;
 
-        $expected = array(
-                'NAME' => 'test',
-                'DELETED' => 0,
-                'CASE_NUMBER' => 1,
-                'STATUS' => 'New',
-                'PRIORITY' => 'High',
-                'STATE' => 'Open',
-                'UPDATE_TEXT' => '',
-                'ENCODED_NAME' => 'test',
-                'SET_COMPLETE' => '<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"    title=Close border=\'0\' alt="Close" /></a>',
-        );
+        $expected = [
+            'NAME' => 'test',
+            'DELETED' => 0,
+            'CASE_NUMBER' => 1,
+            'STATUS' => 'New',
+            'PRIORITY' => 'High',
+            'STATE' => 'Open',
+            'UPDATE_TEXT' => '',
+            'ENCODED_NAME' => 'test',
+            'SET_COMPLETE' => '<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/' . $current_theme . '/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"    title=Close border=\'0\' alt="Close" /></a>',
+        ];
 
         $actual = $aCase->get_list_view_data();
         //$this->assertSame($expected ,$actual);
@@ -169,7 +171,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['STATE'], $actual['STATE']);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $aCase = new aCase();
 
@@ -184,7 +186,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $aCase = new aCase();
 
@@ -201,7 +203,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($aCase->description, $result->_tpl_vars['CASE_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $aCase = new aCase();
         $this->assertEquals(false, $aCase->bean_implements('')); //test with blank value
@@ -239,6 +241,6 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $aCase = new aCase();
         $result = $aCase->getAccount(1);
         $this->assertTrue(is_array($result));
-        $this->assertEquals(array('account_name' => '', 'account_id' => ''), $result);
+        $this->assertEquals(['account_name' => '', 'account_id' => ''], $result);
     }
 }

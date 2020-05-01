@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 require_once 'include/SugarOAuthServer.php';
 
 class OauthTokensViewAuthorize extends SugarView
@@ -83,15 +80,15 @@ class OauthTokensViewAuthorize extends SugarView
             if ($_REQUEST['sid'] != session_id() || $_SESSION['oauth_hash'] != $_REQUEST['hash']) {
                 sugar_die('Invalid request');
             }
-            $verify = $token->authorize(array("user" => $current_user->id));
+            $verify = $token->authorize(['user' => $current_user->id]);
             if (!empty($token->callback_url)) {
-                $redirect_url=$token->callback_url;
-                if (strstr($redirect_url, "?") !== false) {
+                $redirect_url = $token->callback_url;
+                if (strstr($redirect_url, '?') !== false) {
                     $redirect_url .= '&';
                 } else {
                     $redirect_url .= '?';
                 }
-                $redirect_url .= "oauth_verifier=".$verify.'&oauth_token='.$_REQUEST['token'];
+                $redirect_url .= 'oauth_verifier=' . $verify . '&oauth_token=' . $_REQUEST['token'];
                 SugarApplication::redirect($redirect_url);
             }
             $sugar_smarty->assign('VERIFY', $verify);

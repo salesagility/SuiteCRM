@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$layout_defs['ForContacts'] = array(
-    'top_buttons' => array(
-            array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
-        ),
-);
+$layout_defs['ForContacts'] = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'],
+    ],
+];

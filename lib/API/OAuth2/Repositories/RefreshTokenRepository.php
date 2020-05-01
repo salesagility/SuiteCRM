@@ -4,7 +4,7 @@
  * @copyright   Copyright (c) Alex Bilbie
  * @license     http://mit-license.org/
  *
- * @link        https://github.com/thephpleague/oauth2-server
+ * @see        https://github.com/thephpleague/oauth2-server
  */
 
 namespace SuiteCRM\API\OAuth2\Repositories;
@@ -23,9 +23,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntityInterface)
     {
         $token = new \OAuth2Tokens();
-        $tokens =$token->get_list(
+        $tokens = $token->get_list(
             '',
-            self::ACCESS_TOKEN_FIELD.' = "'.$refreshTokenEntityInterface->getAccessToken()->getIdentifier().'"'
+            self::ACCESS_TOKEN_FIELD . ' = "' . $refreshTokenEntityInterface->getAccessToken()->getIdentifier() . '"'
         );
         foreach ($tokens['list'] as $token) {
             $token->token_is_revoked = false;
@@ -41,9 +41,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     public function revokeRefreshToken($tokenId)
     {
         $token = new \OAuth2Tokens();
-        $tokens =$token->get_list(
+        $tokens = $token->get_list(
             '',
-            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+            self::ACCESS_TOKEN_FIELD . ' = "' . $tokenId . '"'
         );
         /**
          * @var \OAuth2Tokens $token
@@ -56,6 +56,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 
     /**
      * {@inheritdoc}
+     *
      * @return bool
      */
     public function isRefreshTokenRevoked($tokenId)
@@ -63,9 +64,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         global $timedate;
 
         $token = new \OAuth2Tokens();
-        $tokens =$token->get_list(
+        $tokens = $token->get_list(
             '',
-            self::ACCESS_TOKEN_FIELD.' = "'.$tokenId.'"'
+            self::ACCESS_TOKEN_FIELD . ' = "' . $tokenId . '"'
         );
 
         /**
@@ -75,18 +76,21 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
             $expires = $timedate->fromUser($token->refresh_token_expires);
             if (!empty($expires)) {
                 $now = new \DateTime('now', $expires->getTimezone());
-                if ($now > $expires || (bool)$token->token_is_revoked === true) {
+                if ($now > $expires || (bool) $token->token_is_revoked === true) {
                     $token->token_is_revoked = true;
                     $token->save();
+
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     /**
      * {@inheritdoc}
+     *
      * @return RefreshTokenEntity
      */
     public function getNewRefreshToken()

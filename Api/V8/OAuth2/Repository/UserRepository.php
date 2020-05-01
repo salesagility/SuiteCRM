@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\OAuth2\Repository;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -22,9 +23,9 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @throws \InvalidArgumentException If user does not exist or the password is invalid.
+     * @throws \InvalidArgumentException if user does not exist or the password is invalid
      */
     public function getUserEntityByUserCredentials(
         $username,

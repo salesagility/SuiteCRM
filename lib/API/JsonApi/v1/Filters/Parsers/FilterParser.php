@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +39,8 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Filters\Parsers;
 
-use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use Psr\Container\ContainerInterface;
+use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
@@ -51,8 +50,7 @@ use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
- * Class FilterParser
- * @package SuiteCRM\API\JsonApi\v1\Filters\Parsers
+ * Class FilterParser.
  */
 class FilterParser
 {
@@ -62,28 +60,28 @@ class FilterParser
     private $containers;
 
     /**
-     * @var FieldOperator $fieldOperator
+     * @var FieldOperator
      */
     private static $fieldOperator;
 
     /**
-     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] $filterOperators
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]
      */
     private static $filterOperators;
 
     /**
-     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] 
      */
     private static $filterFieldOperators;
 
     /**
-     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] 
      */
     private static $filterSpecialOperators;
 
-
     /**
      * FilterParser constructor.
+     *
      * @param ContainerInterface $containers
      */
     public function __construct(ContainerInterface $containers)
@@ -107,17 +105,17 @@ class FilterParser
         }
     }
 
-
     /**
      * @param string $filterKey
      * @param string $filterValue
+     *
      * @return array
      */
     public function parseFilter($filterKey, $filterValue)
     {
         if (empty($filterKey)) {
             // predefined filter eg roi
-            $response = array($filterValue);
+            $response = [$filterValue];
         } else {
             $filterKeyArray = $this->parseFieldKey($filterKey);
             $filterValueArray = $this->parseFieldFilter($filterValue);
@@ -129,8 +127,10 @@ class FilterParser
 
     /**
      * @param $fieldKey
-     * @return array
+     *
      * @throws Exception
+     *
+     * @return array
      */
     protected function parseFieldKey($fieldKey)
     {
@@ -143,9 +143,9 @@ class FilterParser
         if (strpos($fieldKey, '.') !== false) {
             $parsedKey = $this->splitFieldKeys($fieldKey);
         } else {
-            $parsedKey = array(
-                self::$fieldOperator->toFilterTag($fieldKey) => array()
-            );
+            $parsedKey = [
+                self::$fieldOperator->toFilterTag($fieldKey) => []
+            ];
         }
 
         return $parsedKey;
@@ -153,18 +153,21 @@ class FilterParser
 
     /**
      * Convert file into tree structure
-     * eg 'Accounts.contacts.name' -> [ 'Accounts' => [ 'contacts' => 'name' => [] ] ]
+     * eg 'Accounts.contacts.name' -> [ 'Accounts' => [ 'contacts' => 'name' => [] ] ].
+     *
      * @param string $fieldKey
      * @param string $delimiter
-     * @return array
+     *
      * @throws BadRequestException
      * @throws Exception
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     protected function splitFieldKeys($fieldKey, $delimiter = '.')
     {
-        $response = array();
-        //
+        $response = [];
+
         if (is_string($fieldKey) === false) {
             throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
@@ -183,7 +186,7 @@ class FilterParser
         if (is_array($flatDataStructure)) {
             //
             // convert the flat data structure
-            $treeDataStructure = array();
+            $treeDataStructure = [];
             $fieldValidator = new FieldValidator($this->containers);
             $nodeReference = &$flatDataStructure;
 
@@ -196,13 +199,14 @@ class FilterParser
 
                 // set the root node
                 if ($index === 0) {
-                    $treeDataStructure[$fieldAttribute] = array();
+                    $treeDataStructure[$fieldAttribute] = [];
                     $nodeReference = &$treeDataStructure[$fieldAttribute];
+
                     continue;
                 }
 
                 // set the child nodes
-                $nodeReference[$fieldAttribute] = array();
+                $nodeReference[$fieldAttribute] = [];
                 $nodeReference = &$nodeReference[$fieldAttribute];
             }
 
@@ -211,14 +215,15 @@ class FilterParser
             throw new BadRequestException('[JsonApi][v1][Filters][FilterParser][splitFieldKeys][unable to split value] "' . $fieldKey . '"');
         }
 
-
         return $response;
     }
 
     /**
      * @param string $filters
-     * @return array
+     *
      * @throws Exception
+     *
+     * @return array
      */
     protected function parseFieldFilter($filters)
     {
@@ -226,17 +231,17 @@ class FilterParser
         $fieldOperator = new FieldOperator($this->containers);
         $specialOperator = new Operator($this->containers);
         $filterValidator = new FilterValidator($this->containers);
-        $parsedValues =  array();
+        $parsedValues = [];
         // Parse values handle single filter vs an array of filters
         if (strpos($filters, ',')) {
             $values = $this->splitValues($filters);
         } else {
-            $values =  array(
+            $values = [
                 $filters
-            );
+            ];
         }
 
-        /**
+        /*
          *
          * Valid cases:
          *      operand
@@ -251,8 +256,8 @@ class FilterParser
             if ($standardOperator->hasOperator($value)) {
                 $operand = '';
                 $operators = '';
-                $operatorsMatches= array();
-                $operatorsArray= array();
+                $operatorsMatches = [];
+                $operatorsArray = [];
                 if (preg_match_all('/\[+[A-Za-z0-9\_\-\.]+\]+/', $value, $operatorsMatches) !== false) {
                     // split operators in from their operands
                     foreach ($operatorsMatches[0] as $operator) {
@@ -269,9 +274,9 @@ class FilterParser
                         } else {
                             throw new Exception(
                                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
-                               '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
+                               '[parserFieldFilters][operator not found] please ensure that an operator has been added to ' .
                                'containers '
-                           );
+                            );
                         }
                     }
                 }
@@ -293,9 +298,11 @@ class FilterParser
     /**
      * @param string $fieldKey
      * @param string $delimiter
-     * @return array
+     *
      * @throws Exception
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     protected function splitValues($fieldKey, $delimiter = ',')
     {
@@ -319,6 +326,7 @@ class FilterParser
     /**
      * @param string $operatorNeedle
      * @param OperatorInterface[] $operatorsHaystack
+     *
      * @return bool
      */
     protected function isInOperatorsArray($operatorNeedle, array $operatorsHaystack)
@@ -329,12 +337,14 @@ class FilterParser
                 return true;
             }
         }
+
         return false;
     }
 
     /**
      * @param string $a
      * @param string $b
+     *
      * @return string
      */
     private function stringDifference($a, $b)
@@ -342,12 +352,14 @@ class FilterParser
         $aArray = str_split($a);
         $bArray = str_split($b);
         $arrayDiff = array_diff($aArray, $bArray);
+
         return implode('', $arrayDiff);
     }
 
     /**
      * @param array $filterKeyArray
      * @param array $filterValueArray
+     *
      * @return array
      */
     private function mergeValueToFilterKey(array $filterKeyArray, array $filterValueArray)
@@ -361,7 +373,7 @@ class FilterParser
         $isLeaf = false;
         do {
             if (is_array(current($nodeReference))) {
-                $nodeReference = & $nodeReference[key($nodeReference)];
+                $nodeReference = &$nodeReference[key($nodeReference)];
             } else {
                 $isLeaf = true;
                 $nodeReference = $filterValueArray;

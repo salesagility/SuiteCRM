@@ -39,6 +39,9 @@
 
 use SuiteCRM\Search\SearchTestAbstract;
 
+/**
+ * @internal
+ */
 class SearchInstallTest extends SearchTestAbstract
 {
     public function testConfiguredSuccessfully()

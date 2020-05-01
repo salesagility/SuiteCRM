@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,25 +40,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $db = DBManagerFactory::getInstance();
 
-$results = array(
+$results = [
     'error' => false,
-    'data' => array(),
-);
+    'data' => [],
+];
 $selectedId = null;
 if (!isset($_REQUEST['campaign_id']) || !$_REQUEST['campaign_id']) {
     $results['error'] = 'campaign_id is not set';
     unset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']);
 } else {
     $campaign_id = $db->quote($_REQUEST['campaign_id']);
-    if ($list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_id}'")) {
+    if ($list = BeanFactory::getBean('EmailMarketing')->get_full_list('', "campaign_id = '{$campaign_id}'")) {
         foreach ($list as $elem) {
-            $results['data'][] = array(
+            $results['data'][] = [
                 'id' => $elem->id,
                 'name' => $elem->name,
-            );
+            ];
             if (isset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']) && $elem->id == $_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']) {
                 $selectedId = $elem->id;
             }

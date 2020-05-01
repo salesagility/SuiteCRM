@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * ImapHandlerFakeData
+ * ImapHandlerFakeData.
  *
  * For tests only, it deals fake return values for fake calls on an IMAP wrapper.
  *
  * @author gyula
+ *
  * @todo using common Call faker as base class
  */
 class ImapHandlerFakeData
@@ -58,71 +57,19 @@ class ImapHandlerFakeData
     const ERR_CALL_NOT_EXISTS = 4;
     const ERR_CALL_REMOVE = 5;
     const ERR_WRONG_TESTSET = 6;
-    
+
     /**
-     *
      * @var array
      */
     protected $calls = [];
-    
+
     /**
-     *
-     * @param array|null $args
-     * @return string
-     */
-    protected function encodeArgs($args = null)
-    {
-        return $encoded = md5(serialize($args));
-    }
-    
-    /**
-     *
      * @param string $name
-     * @param string $argsEncoded
-     * @return mixed
-     */
-    protected function getNextCallReturn($name, $argsEncoded)
-    {
-        if (!is_array($this->calls[$name][$argsEncoded])) {
-            throw new Exception('Fake handler given an incorrect data. Returns should be an array at name: ' . $name, self::ERR_WRONG_TESTSET);
-        }
-        $ret = array_shift($this->calls[$name][$argsEncoded]);
-        $this->calls[$name][$argsEncoded] = array_values($this->calls[$name][$argsEncoded]);
-        if (empty($this->calls[$name][$argsEncoded])) {
-            // using the last element forever..
-            $this->calls[$name][$argsEncoded] = [$ret];
-        }
-        return $ret;
-    }
-    
-    /**
+     * @param null|array $args
      *
-     * @param string $name
-     * @param array|null $args
-     * @return mixed
      * @throws Exception
-     */
-    protected function getCall($name, $args = null)
-    {
-        if (array_key_exists($name, $this->calls)) {
-            $argsEncoded = $this->encodeArgs($args);
-            if (array_key_exists($argsEncoded, $this->calls[$name])) {
-                $ret = $this->getNextCallReturn($name, $argsEncoded);
-                return $ret;
-            } else {
-                throw new Exception('Fake caller has not matched arguments for this call: ' . $name . "\nArguments was: " . print_r($args, true), self::ERR_NO_MATCH_ARGS);
-            }
-        } else {
-            throw new Exception('Fake call does not exists for this function call: ' . $name . "\nwith specific arguments:\n" . print_r($args, true), self::ERR_CALL_NOT_FOUND);
-        }
-    }
-    
-    /**
      *
-     * @param string $name
-     * @param array|null $args
      * @return mixed
-     * @throws Exception
      */
     public function call($name, $args = null)
     {
@@ -132,14 +79,15 @@ class ImapHandlerFakeData
         } else {
             $out = $ret;
         }
+
         return $out;
     }
-    
+
     /**
-     *
      * @param string $name
-     * @param array|null $args
-     * @param mixed|null $ret
+     * @param null|array $args
+     * @param null|mixed $ret
+     *
      * @throws Exception
      */
     public function add($name, $args = null, $ret = null)
@@ -151,11 +99,11 @@ class ImapHandlerFakeData
         }
         $this->calls[$name][$argsEncoded] = $ret;
     }
-    
+
     /**
-     *
      * @param string $name
-     * @param array|null $args
+     * @param null|array $args
+     *
      * @throws Exception
      */
     public function remove($name, $args = null)
@@ -166,19 +114,16 @@ class ImapHandlerFakeData
         }
         unset($this->calls[$name][$argsEncoded]);
     }
-    
-    /**
-     *
-     */
+
     public function reset()
     {
         $this->calls = null;
     }
-    
+
     /**
-     *
      * @param string $name
-     * @param array|null $args
+     * @param null|array $args
+     *
      * @throws Exception
      */
     public function set($name, $args = null)
@@ -192,9 +137,9 @@ class ImapHandlerFakeData
         }
         $this->add($name, $args);
     }
-    
+
     /**
-     * Following example when ImapHandlerFake::open() called and imitate a success IMAP connection
+     * Following example when ImapHandlerFake::open() called and imitate a success IMAP connection.
      *
      * @param array $calls
      */
@@ -210,5 +155,58 @@ class ImapHandlerFakeData
                 $this->add($name, $args, $ret);
             }
         }
+    }
+
+    /**
+     * @param null|array $args
+     *
+     * @return string
+     */
+    protected function encodeArgs($args = null)
+    {
+        return $encoded = md5(serialize($args));
+    }
+
+    /**
+     * @param string $name
+     * @param string $argsEncoded
+     *
+     * @return mixed
+     */
+    protected function getNextCallReturn($name, $argsEncoded)
+    {
+        if (!is_array($this->calls[$name][$argsEncoded])) {
+            throw new Exception('Fake handler given an incorrect data. Returns should be an array at name: ' . $name, self::ERR_WRONG_TESTSET);
+        }
+        $ret = array_shift($this->calls[$name][$argsEncoded]);
+        $this->calls[$name][$argsEncoded] = array_values($this->calls[$name][$argsEncoded]);
+        if (empty($this->calls[$name][$argsEncoded])) {
+            // using the last element forever..
+            $this->calls[$name][$argsEncoded] = [$ret];
+        }
+
+        return $ret;
+    }
+
+    /**
+     * @param string $name
+     * @param null|array $args
+     *
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    protected function getCall($name, $args = null)
+    {
+        if (array_key_exists($name, $this->calls)) {
+            $argsEncoded = $this->encodeArgs($args);
+            if (array_key_exists($argsEncoded, $this->calls[$name])) {
+                return $this->getNextCallReturn($name, $argsEncoded);
+            }
+
+            throw new Exception('Fake caller has not matched arguments for this call: ' . $name . "\nArguments was: " . print_r($args, true), self::ERR_NO_MATCH_ARGS);
+        }
+
+        throw new Exception('Fake call does not exists for this function call: ' . $name . "\nwith specific arguments:\n" . print_r($args, true), self::ERR_CALL_NOT_FOUND);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $action_file_map['subpanelviewer'] = 'include/SubPanel/SubPanelViewer.php';
 $action_file_map['save2'] = 'include/generic/Save2.php';
 $action_file_map['targetlistupdate'] = 'modules/ProspectLists/TargetListUpdate.php';

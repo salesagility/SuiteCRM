@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -46,7 +45,7 @@ class FavoritesController extends SugarController
         global $current_user;
 
         $favorite = BeanFactory::newBean('Favorites');
-        $favorite->name = $_REQUEST['record_module'].' '.$_REQUEST['record_id'].' '.$current_user->id;
+        $favorite->name = $_REQUEST['record_module'] . ' ' . $_REQUEST['record_id'] . ' ' . $current_user->id;
         $favorite->parent_type = $_REQUEST['record_module'];
         $favorite->parent_id = $_REQUEST['record_id'];
         $favorite->assigned_user_id = $current_user->id;
@@ -69,7 +68,7 @@ class FavoritesController extends SugarController
 
     public function action_check_favorite()
     {
-        if (isset($_REQUEST['record_module']) &&  $_REQUEST['record_id']) {
+        if (isset($_REQUEST['record_module']) && $_REQUEST['record_id']) {
             $favourite_class = new Favorites();
             $return = $favourite_class->getFavoriteID($_REQUEST['record_module'], $_REQUEST['record_id']);
         } else {

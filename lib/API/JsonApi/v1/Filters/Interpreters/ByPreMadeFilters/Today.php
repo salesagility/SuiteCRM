@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,14 +42,13 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByPreMadeFilters;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByPreMadeFilterInterpreter;
 
 /**
- * Class Today
- * @package SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByPreMadeFilters
+ * Class Today.
  */
 class Today implements ByPreMadeFilterInterpreter
 {
-
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function hasByPreMadeFilter($name)
@@ -65,6 +63,7 @@ class Today implements ByPreMadeFilterInterpreter
     {
         $today = new \DateTime();
         $today = $today->setTime(0, 0, 0);
-        return 'date_entered >= "'. $today->format(DATE_ATOM) . '"';
+
+        return 'date_entered >= "' . $today->format(DATE_ATOM) . '"';
     }
 }

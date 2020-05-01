@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-
-
 $focus = new Role();
 
 $tabs_def = urldecode($_REQUEST['display_tabs_def']);
@@ -60,14 +52,12 @@ $focus->retrieve($_POST['record']);
 print_r($_POST);
 unset($_POST['id']);
 
-
 foreach ($focus->column_fields as $field) {
     if (isset($_POST[$field])) {
         $value = $_POST[$field];
-        $focus->$field = $value;
+        $focus->{$field} = $value;
     }
 }
-
 
 $check_notify = false;
 
@@ -78,21 +68,19 @@ $focus->clear_module_relationship($return_id);
 $focus->set_module_relationship($return_id, $allow_modules, 1);
 $focus->set_module_relationship($return_id, $disallow_modules, 0);
 
-
-
-if (isset($_POST['return_module']) && $_POST['return_module'] != "") {
+if (isset($_POST['return_module']) && $_POST['return_module'] != '') {
     $return_module = $_POST['return_module'];
 } else {
-    $return_module = "Roles";
+    $return_module = 'Roles';
 }
-if (isset($_POST['return_action']) && $_POST['return_action'] != "") {
+if (isset($_POST['return_action']) && $_POST['return_action'] != '') {
     $return_action = $_POST['return_action'];
 } else {
-    $return_action = "DetailView";
+    $return_action = 'DetailView';
 }
-if (isset($_POST['return_id']) && $_POST['return_id'] != "") {
+if (isset($_POST['return_id']) && $_POST['return_id'] != '') {
     $return_id = $_POST['return_id'];
 }
 
-    $GLOBALS['log']->debug("Saved record with id of ".$return_id);
-    header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
+    $GLOBALS['log']->debug('Saved record with id of ' . $return_id);
+    header("Location: index.php?action={$return_action}&module={$return_module}&record={$return_id}");

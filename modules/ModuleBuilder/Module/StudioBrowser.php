@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once 'modules/ModuleBuilder/Module/StudioModuleFactory.php' ;
+require_once 'modules/ModuleBuilder/Module/StudioModuleFactory.php';
 
 function cmp($a, $b)
 {
@@ -47,8 +45,8 @@ function cmp($a, $b)
 
 class StudioBrowser
 {
-    public $modules = array();
-    
+    public $modules = [];
+
     public function loadModules()
     {
         global $current_user;
@@ -58,12 +56,12 @@ class StudioBrowser
             if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
                 continue;
             }
-            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
-                $this->modules[$e] =  StudioModuleFactory::getStudioModule($e) ;
+            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS['beanList'][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e);
             }
         }
     }
-    
+
     public function loadRelatableModules()
     {
         $d = dir('modules');
@@ -71,16 +69,16 @@ class StudioBrowser
             if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
                 continue;
             }
-            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) { // installed modules must also exist in the beanList
-                $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
+            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS['beanList'][$e])) { // installed modules must also exist in the beanList
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e);
             }
         }
     }
-        
+
     public function getNodes()
     {
         $this->loadModules();
-        $nodes = array();
+        $nodes = [];
         foreach ($this->modules as $module) {
             $nodes[$module->name] = $module->getNodes();
         }

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,7 +48,7 @@ if (isset($focus->custom_fields)) {
     $test is set to focus to increment the reference count
     since it appears that the reference count was off by 1
     */
-    $test =& $focus;
-    $focus->custom_fields->bean =& $focus;
+    $test = &$focus;
+    $focus->custom_fields->bean = &$focus;
     $focus->custom_fields->populateXTPL($xtpl, 'edit');
 }

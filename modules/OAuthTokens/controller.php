@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class OAuthTokensController extends SugarController
 {
     protected function action_delete()
@@ -53,14 +50,14 @@ class OAuthTokensController extends SugarController
             }
             $this->bean->mark_deleted($_REQUEST['record']);
         } else {
-            sugar_die("A record number must be specified to delete");
+            sugar_die('A record number must be specified to delete');
         }
     }
 
     protected function post_delete()
     {
         if (!empty($_REQUEST['return_url'])) {
-            $_REQUEST['return_url'] =urldecode($_REQUEST['return_url']);
+            $_REQUEST['return_url'] = urldecode($_REQUEST['return_url']);
             $this->redirect_url = $_REQUEST['return_url'];
         } else {
             parent::post_delete();

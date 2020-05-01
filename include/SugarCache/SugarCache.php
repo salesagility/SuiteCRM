@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,16 +37,14 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Sugar Cache manager
+ * Sugar Cache manager.
+ *
  * @api
  */
 class SugarCache
 {
-    const EXTERNAL_CACHE_NULL_VALUE = "SUGAR_CACHE_NULL_ZZ";
-
-    protected static $_cacheInstance;
+    const EXTERNAL_CACHE_NULL_VALUE = 'SUGAR_CACHE_NULL_ZZ';
 
     /**
      * @var true if the cache has been reset during this request, so we no longer return values from
@@ -55,41 +52,10 @@ class SugarCache
      */
     public static $isCacheReset = false;
 
+    protected static $_cacheInstance;
+
     private function __construct()
     {
-    }
-
-    /**
-     * initializes the cache in question
-     */
-    protected static function _init()
-    {
-        $lastPriority = 1000;
-        $locations = array('include/SugarCache','custom/include/SugarCache');
-        foreach ($locations as $location) {
-            if (is_dir($location) && $dir = opendir($location)) {
-                while (($file = readdir($dir)) !== false) {
-                    if ($file == ".."
-                            || $file == "."
-                            || !is_file("$location/$file")
-                            ) {
-                        continue;
-                    }
-                    require_once("$location/$file");
-                    $cacheClass = basename($file, ".php");
-                    if (class_exists($cacheClass) && is_subclass_of($cacheClass, 'SugarCacheAbstract')) {
-                        $GLOBALS['log']->debug("Found cache backend $cacheClass");
-                        $cacheInstance = new $cacheClass();
-                        if ($cacheInstance->useBackend()
-                                && $cacheInstance->getPriority() < $lastPriority) {
-                            $GLOBALS['log']->debug("Using cache backend $cacheClass, since ".$cacheInstance->getPriority()." is less than ".$lastPriority);
-                            self::$_cacheInstance = $cacheInstance;
-                            $lastPriority = $cacheInstance->getPriority();
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -106,7 +72,7 @@ class SugarCache
     }
 
     /**
-     * Try to reset any opcode caches we know about
+     * Try to reset any opcode caches we know about.
      *
      * @todo make it so developers can extend this somehow
      */
@@ -144,7 +110,9 @@ class SugarCache
     }
 
     /**
-     * Try to reset file from caches
+     * Try to reset file from caches.
+     *
+     * @param mixed $file
      */
     public static function cleanFile($file)
     {
@@ -154,33 +122,69 @@ class SugarCache
         }
 
         // Zend OPcache
-        if (function_exists('opcache_invalidate'))
-        {
+        if (function_exists('opcache_invalidate')) {
             opcache_invalidate($file, true);
+        }
+    }
+
+    /**
+     * initializes the cache in question.
+     */
+    protected static function _init()
+    {
+        $lastPriority = 1000;
+        $locations = ['include/SugarCache', 'custom/include/SugarCache'];
+        foreach ($locations as $location) {
+            if (is_dir($location) && $dir = opendir($location)) {
+                while (($file = readdir($dir)) !== false) {
+                    if ($file == '..'
+                            || $file == '.'
+                            || !is_file("{$location}/{$file}")
+                            ) {
+                        continue;
+                    }
+                    require_once "{$location}/{$file}";
+                    $cacheClass = basename($file, '.php');
+                    if (class_exists($cacheClass) && is_subclass_of($cacheClass, 'SugarCacheAbstract')) {
+                        $GLOBALS['log']->debug("Found cache backend {$cacheClass}");
+                        $cacheInstance = new $cacheClass();
+                        if ($cacheInstance->useBackend()
+                                && $cacheInstance->getPriority() < $lastPriority) {
+                            $GLOBALS['log']->debug("Using cache backend {$cacheClass}, since " . $cacheInstance->getPriority() . ' is less than ' . $lastPriority);
+                            self::$_cacheInstance = $cacheInstance;
+                            $lastPriority = $cacheInstance->getPriority();
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 /**
- * Procedural API for external cache
+ * Procedural API for external cache.
+ *
+ * @param mixed $key
  */
 
 /**
  * Retrieve a key from cache.  For the Zend Platform, a maximum age of 5 minutes is assumed.
  *
- * @param String $key -- The item to retrieve.
+ * @param string $key -- The item to retrieve
+ *
  * @return The item unserialized
  */
 function sugar_cache_retrieve($key)
 {
-    return SugarCache::instance()->$key;
+    return SugarCache::instance()->{$key};
 }
 
 /**
- * Put a value in the cache under a key
+ * Put a value in the cache under a key.
  *
- * @param String $key -- Global namespace cache.  Key for the data.
- * @param Serializable $value -- The value to store in the cache.
+ * @param string $key -- Global namespace cache.  Key for the data.
+ * @param serializable $value -- The value to store in the cache
+ * @param null|mixed $ttl
  */
 function sugar_cache_put($key, $value, $ttl = null)
 {
@@ -190,11 +194,11 @@ function sugar_cache_put($key, $value, $ttl = null)
 /**
  * Clear a key from the cache.  This is used to invalidate a single key.
  *
- * @param String $key -- Key from global namespace
+ * @param string $key -- Key from global namespace
  */
 function sugar_cache_clear($key)
 {
-    unset(SugarCache::instance()->$key);
+    unset(SugarCache::instance()->{$key});
 }
 
 /**
@@ -242,7 +246,7 @@ function check_cache()
  *
  * @deprecated
  *
- * @return true for success, false for failure.
+ * @return true for success, false for failure
  */
 function sugar_cache_validate()
 {
@@ -256,11 +260,13 @@ function sugar_cache_validate()
  * It is a helper function that provides that actual cache API abstraction.
  *
  * @param unknown_type $key
+ *
  * @return unknown
+ *
  * @deprecated
  * @see sugar_cache_retrieve
  */
 function external_cache_retrieve_helper($key)
 {
-    return SugarCache::instance()->$key;
+    return SugarCache::instance()->{$key};
 }

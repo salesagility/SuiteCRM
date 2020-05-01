@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -47,7 +45,8 @@ if (!defined('SUGAR_SMARTY_DIR')) {
 }
 
 /**
- * Smarty wrapper for Sugar
+ * Smarty wrapper for Sugar.
+ *
  * @api
  */
 class Sugar_Smarty extends Smarty
@@ -83,17 +82,16 @@ class Sugar_Smarty extends Smarty
         $plugins_dir[] = 'include/Smarty/plugins';
         $this->plugins_dir = $plugins_dir;
 
-        $this->assign("VERSION_MARK", getVersionedPath(''));
+        $this->assign('VERSION_MARK', getVersionedPath(''));
     }
 
-
-
     /**
-     * Override default _unlink method call to fix Bug 53010
+     * Override default _unlink method call to fix Bug 53010.
      *
      * @param string $resource
-     * @param integer $exp_time
-     * @return boolean
+     * @param int $exp_time
+     *
+     * @return bool
      */
     public function _unlink($resource, $exp_time = null)
     {
@@ -106,16 +104,18 @@ class Sugar_Smarty extends Smarty
     }
 
     /**
-     * executes & returns or displays the template results
+     * executes & returns or displays the template results.
      *
      * @global array $app_list_strings
      * @global array $app_strings
      * @global array $mod_strings
      * @global array $sugar_config
+     *
      * @param string $resource_name
-     * @param string|null $cache_id
-     * @param string|null $compile_id
-     * @param boolean $display
+     * @param null|string $cache_id
+     * @param null|string $compile_id
+     * @param bool $display
+     *
      * @return string
      */
     public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
@@ -129,11 +129,11 @@ class Sugar_Smarty extends Smarty
         /// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
         /// otherwise fall back to the default tpl
         $current_theme = SugarThemeRegistry::current();
-        $theme_directory = (string)$current_theme;
-        if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
-            $test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+        $theme_directory = (string) $current_theme;
+        if (strpos($resource_name, 'themes' . DIRECTORY_SEPARATOR . $theme_directory) === false) {
+            $test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
             if (file_exists($test_path)) {
-                $resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+                $resource_name = 'themes' . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
             }
         }
 
@@ -158,40 +158,48 @@ class Sugar_Smarty extends Smarty
     }
 
     /**
-     * called for included templates
+     * called for included templates.
+     *
      * @param string $_smarty_include_tpl_file
      * @param string $_smarty_include_vars
+     * @param mixed $params
      */
-    function _smarty_include($params)
+    public function _smarty_include($params)
     {
         $params['smarty_include_tpl_file'] = get_custom_file_if_exists($params['smarty_include_tpl_file']);
         parent::_smarty_include($params);
     }
 
     /**
-     * Log smarty error out to default log location
+     * Log smarty error out to default log location.
+     *
      * @param string $error_msg
-     * @param integer $error_type
+     * @param int $error_type
      */
     public function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
         $error_msg = htmlentities($error_msg);
-        
+
         switch ($error_type) {
             case E_USER_ERROR:
                 $GLOBALS['log']->error('Smarty: ' . $error_msg);
+
                 break;
             case E_USER_WARNING:
                 $GLOBALS['log']->warn('Smarty: ' . $error_msg);
+
                 break;
             case E_USER_NOTICE:
                 $GLOBALS['log']->error('Smarty: ' . $error_msg);
+
                 break;
             case E_USER_DEPRECATED:
                 $GLOBALS['log']->debug('Smarty: ' . $error_msg);
+
                 break;
             default:
                 $GLOBALS['log']->fatal('Smarty: ' . $error_type . ' ' . $error_msg);
+
                 break;
         }
     }

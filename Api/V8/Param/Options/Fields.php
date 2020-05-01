@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Symfony\Component\OptionsResolver\Options;
@@ -10,9 +11,9 @@ class Fields extends BaseOption
     const REGEX_FIELD_PATTERN = '/[^\w\-,]/';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @throws \InvalidArgumentException In case fields are invalid.
+     * @throws \InvalidArgumentException in case fields are invalid
      */
     public function add(OptionsResolver $resolver)
     {

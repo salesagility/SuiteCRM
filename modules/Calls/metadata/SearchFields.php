@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,143 +41,119 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-$searchFields['Calls'] = array(
-  'name' =>
-  array(
-    'query_type' => 'default',
-  ),
-  'contact_name' =>
-  array(
-    'query_type' => 'default',
-    'db_field' =>
-    array(
-      0 => 'contacts.first_name',
-      1 => 'contacts.last_name',
-    ),
-  ),
-  'date_start' =>
-  array(
-    'query_type' => 'default',
-  ),
-  'location' =>
-  array(
-    'query_type' => 'default',
-  ),
-  'current_user_only' =>
-  array(
-    'query_type' => 'default',
-    'db_field' =>
-    array(
-      0 => 'assigned_user_id',
-    ),
-    'my_items' => true,
-    'vname' => 'LBL_CURRENT_USER_FILTER',
-    'type' => 'bool',
-  ),
-  'assigned_user_id' =>
-  array(
-    'query_type' => 'default',
-  ),
-  'status' =>
-  array(
-    'query_type' => 'default',
-    'options' => 'call_status_dom',
-    'template_var' => 'STATUS_FILTER',
-  ),
-  'open_only' =>
-  array(
-    'query_type' => 'default',
-    'db_field' =>
-    array(
-      0 => 'status',
-    ),
-    'operator' => 'not in',
-    'closed_values' =>
-    array(
-      0 => 'Held',
-      1 => 'Not Held',
-    ),
-    'type' => 'bool',
-  ),
-  'range_date_entered' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'start_range_date_entered' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'end_range_date_entered' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'range_date_modified' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'start_range_date_modified' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'end_range_date_modified' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'range_date_start' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'start_range_date_start' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'end_range_date_start' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'range_date_end' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'start_range_date_end' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'end_range_date_end' =>
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-    'favorites_only' => array(
-        'query_type'=>'format',
+$searchFields['Calls'] = [
+    'name' => [
+        'query_type' => 'default',
+    ],
+    'contact_name' => [
+        'query_type' => 'default',
+        'db_field' => [
+            0 => 'contacts.first_name',
+            1 => 'contacts.last_name',
+        ],
+    ],
+    'date_start' => [
+        'query_type' => 'default',
+    ],
+    'location' => [
+        'query_type' => 'default',
+    ],
+    'current_user_only' => [
+        'query_type' => 'default',
+        'db_field' => [
+            0 => 'assigned_user_id',
+        ],
+        'my_items' => true,
+        'vname' => 'LBL_CURRENT_USER_FILTER',
+        'type' => 'bool',
+    ],
+    'assigned_user_id' => [
+        'query_type' => 'default',
+    ],
+    'status' => [
+        'query_type' => 'default',
+        'options' => 'call_status_dom',
+        'template_var' => 'STATUS_FILTER',
+    ],
+    'open_only' => [
+        'query_type' => 'default',
+        'db_field' => [
+            0 => 'status',
+        ],
+        'operator' => 'not in',
+        'closed_values' => [
+            0 => 'Held',
+            1 => 'Not Held',
+        ],
+        'type' => 'bool',
+    ],
+    'range_date_entered' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'start_range_date_entered' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'end_range_date_entered' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'range_date_modified' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'start_range_date_modified' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'end_range_date_modified' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'range_date_start' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'start_range_date_start' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'end_range_date_start' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'range_date_end' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'start_range_date_end' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'end_range_date_end' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'favorites_only' => [
+        'query_type' => 'format',
         'operator' => 'subquery',
         'checked_only' => true,
         'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
 			                        and favorites.parent_type = 'Calls'
 			                        and favorites.assigned_user_id = '{1}'",
-        'db_field'=>array('id')),
-);
+        'db_field' => ['id']],
+];

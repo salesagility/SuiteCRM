@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -74,9 +73,6 @@ class AOW_Condition extends Basic
         parent::__construct();
     }
 
-
-
-
     public function bean_implements($interface)
     {
         return false;
@@ -84,7 +80,7 @@ class AOW_Condition extends Basic
 
     public function save_lines($post_data, $parent, $key = '')
     {
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
+        require_once 'modules/AOW_WorkFlow/aow_utils.php';
 
         $field = $key . 'field';
         $postedField = null;
@@ -94,9 +90,9 @@ class AOW_Condition extends Basic
             LoggerManager::getLogger()->warn('Posted field is undefined: ' . $field);
         }
 
-        $line_count = count((array)$postedField);
+        $line_count = count((array) $postedField);
         $j = 0;
-        for ($i = 0; $i < $line_count; ++$i) {
+        for ($i = 0; $i < $line_count; $i++) {
             if (!isset($post_data[$key . 'deleted'][$i])) {
                 LoggerManager::getLogger()->warn('AOR Condition trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
             }
@@ -115,6 +111,7 @@ class AOW_Condition extends Basic
                                 switch ($condition->value_type) {
                                     case 'Date':
                                         $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
+
                                         break;
                                     default:
                                         $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
@@ -125,7 +122,7 @@ class AOW_Condition extends Basic
                                 $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
                             }
                         }
-                        $condition->$field_name = $post_data[$key . $field_name][$i];
+                        $condition->{$field_name} = $post_data[$key . $field_name][$i];
                     }
                 }
                 if (trim($condition->field) != '') {

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,20 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGeneric.php');
-
+require_once 'include/Dashlets/DashletGeneric.php';
 
 class MyAccountsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/Accounts/Dashlets/MyAccountsDashlet/MyAccountsDashlet.data.php');
+        require 'modules/Accounts/Dashlets/MyAccountsDashlet/MyAccountsDashlet.data.php';
 
         parent::__construct($id, $def);
 
@@ -67,18 +61,15 @@ class MyAccountsDashlet extends DashletGeneric
         $this->seedBean = new Account();
     }
 
-
-
-
     /**
      * Overrides the generic process to include custom logic for email addresses,
      * since they are no longer stored in  a list view friendly manner.
      * (A record may have an undetermined number of email addresses).
      *
      * @param array $lvsParams
+     * @param null|mixed $id
      */
-
-    public function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = [], $id = null)
     {
         if (isset($this->displayColumns) && array_search('email1', $this->displayColumns) !== false) {
             $lvsParams['custom_select'] = ', email_address as email1';

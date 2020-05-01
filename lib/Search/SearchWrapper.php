@@ -53,7 +53,7 @@ use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
 class SearchWrapper
 {
     /**
-     * @var array stores an associative array matching the search engine class name with the file it is stored in.
+     * @var array stores an associative array matching the search engine class name with the file it is stored in
      */
     private static $engines = [
         'ElasticSearchEngine' => 'lib/Search/ElasticSearch/ElasticSearchEngine.php',
@@ -82,7 +82,7 @@ class SearchWrapper
      *
      * Results are grouped by module.
      *
-     * @param string|SearchEngine $engine
+     * @param SearchEngine|string $engine
      * @param SearchQuery         $query
      *
      * @return SearchResults
@@ -90,8 +90,8 @@ class SearchWrapper
     public static function search($engine, SearchQuery $query)
     {
         $engine = self::fetchEngine($engine);
-        $results = $engine->search($query);
-        return $results;
+
+        return $engine->search($query);
     }
 
     /**
@@ -118,6 +118,7 @@ class SearchWrapper
             $file = pathinfo($file);
             $custom[] = $file['filename'];
         }
+
         return array_merge($default, $custom);
     }
 
@@ -142,7 +143,7 @@ class SearchWrapper
      *
      * If the value is, for some reason, not set, `null` is returned.
      *
-     * @return string|null
+     * @return null|string
      */
     public static function getController()
     {
@@ -152,7 +153,7 @@ class SearchWrapper
     /**
      * Returns the configured modules to be used with search.
      *
-     * @return array|null
+     * @return null|array
      */
     public static function getModules()
     {
@@ -165,9 +166,10 @@ class SearchWrapper
      * It first searches in the default definitions array `self::$engines`,
      * then attempts to find a matching engine in the folder `self::CUSTOM_ENGINES_PATH`.
      *
-     * @param string|SearchEngine $engineName
+     * @param SearchEngine|string $engineName
      *
      * @throws SearchEngineNotFoundException
+     *
      * @return SearchEngine
      */
     private static function fetchEngine($engineName)
@@ -180,8 +182,8 @@ class SearchWrapper
             throw new SearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
         }
 
-        if (!preg_match("/^[a-zA-Z0-9_]*$/", $engineName)) {
-            throw new SearchEngineNotFoundException("'$engineName' is not a valid class name. Only letters, digits and underscores are allowed.");
+        if (!preg_match('/^[a-zA-Z0-9_]*$/', $engineName)) {
+            throw new SearchEngineNotFoundException("'{$engineName}' is not a valid class name. Only letters, digits and underscores are allowed.");
         }
 
         $filename = isset(self::$engines[$engineName])
@@ -189,14 +191,14 @@ class SearchWrapper
             : self::$customEnginePath . $engineName . '.php';
 
         if (!file_exists($filename)) {
-            throw new SearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
+            throw new SearchEngineNotFoundException("Unable to find search file '{$filename}'' for engine '{$engineName}''.");
         }
 
         /** @noinspection PhpIncludeInspection */
         require_once $filename;
 
         if (!is_subclass_of($engineName, SearchEngine::class)) {
-            throw new SearchEngineNotFoundException("The provided class '$engineName' is not a subclass of SearchEngine");
+            throw new SearchEngineNotFoundException("The provided class '{$engineName}' is not a subclass of SearchEngine");
         }
 
         /** @var SearchEngine $engineName */
@@ -212,11 +214,11 @@ class SearchWrapper
      *
      * @param $key
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     private static function getSearchConfig($key)
     {
-        /** @noinspection PhpVariableNamingConventionInspection */
+        // @noinspection PhpVariableNamingConventionInspection
         global $sugar_config;
 
         if (!isset($sugar_config['search'][$key])) {

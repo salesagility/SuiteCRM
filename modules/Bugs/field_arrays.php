@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,33 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$fields_array['Bug'] = array('column_fields' => array("id"
-        , "name"
-        , "bug_number"
-        , "date_entered"
-        , "date_modified"
-        , "modified_user_id"
-        , "assigned_user_id"
-        , "status"
-        , "found_in_release"
-        , "created_by"
-        , "resolution"
-        , "priority"
-        , "description"
-        ,'type'
-        , "fixed_in_release"
-        , "work_log"
-        , "source"
-        , "product_category"
-        ),
-        'list_fields' => array('id', 'priority', 'status', 'name', 'bug_number', 'assigned_user_name', 'assigned_user_id', 'release', 'found_in_release', 'resolution', 'type'
-        ),
-        'required_fields' => array('name'=>1),
-);
+ */
+$fields_array['Bug'] = ['column_fields' => ['id', 'name', 'bug_number', 'date_entered', 'date_modified', 'modified_user_id', 'assigned_user_id', 'status', 'found_in_release', 'created_by', 'resolution', 'priority', 'description', 'type', 'fixed_in_release', 'work_log', 'source', 'product_category'
+],
+    'list_fields' => ['id', 'priority', 'status', 'name', 'bug_number', 'assigned_user_name', 'assigned_user_id', 'release', 'found_in_release', 'resolution', 'type'
+    ],
+    'required_fields' => ['name' => 1],
+];

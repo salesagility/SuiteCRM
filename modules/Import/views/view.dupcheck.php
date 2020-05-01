@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,18 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: view handler for step 1 of the import process
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  */
-require_once('modules/Import/views/ImportView.php');
-require_once('modules/Import/sources/ImportFile.php');
-require_once('modules/Import/ImportFileSplitter.php');
-require_once('modules/Import/ImportCacheFiles.php');
-require_once('modules/Import/ImportDuplicateCheck.php');
+require_once 'modules/Import/views/ImportView.php';
+require_once 'modules/Import/sources/ImportFile.php';
+require_once 'modules/Import/ImportFileSplitter.php';
+require_once 'modules/Import/ImportCacheFiles.php';
+require_once 'modules/Import/ImportDuplicateCheck.php';
 
-require_once('include/upload_file.php');
+require_once 'include/upload_file.php';
 
 class ImportViewDupcheck extends ImportView
 {
@@ -72,16 +71,16 @@ class ImportViewDupcheck extends ImportView
         $this->instruction = 'LBL_SELECT_DUPLICATE_INSTRUCTION';
         $this->ss->assign('INSTRUCTION', $this->getInstruction());
 
-        $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" alt="'.$app_strings['LNK_DELETE'].'" border="0"'));
-        $this->ss->assign("PUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('publish_inline', 'align="absmiddle" alt="'.$mod_strings['LBL_PUBLISH'].'" border="0"'));
-        $this->ss->assign("UNPUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('unpublish_inline', 'align="absmiddle" alt="'.$mod_strings['LBL_UNPUBLISH'].'" border="0"'));
-        $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
-        $this->ss->assign("CURRENT_STEP", $this->currentStep);
-        $this->ss->assign("JAVASCRIPT", $this->_getJS());
+        $this->ss->assign('MODULE_TITLE', $this->getModuleTitle(false));
+        $this->ss->assign('DELETE_INLINE_PNG', SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" alt="' . $app_strings['LNK_DELETE'] . '" border="0"'));
+        $this->ss->assign('PUBLISH_INLINE_PNG', SugarThemeRegistry::current()->getImage('publish_inline', 'align="absmiddle" alt="' . $mod_strings['LBL_PUBLISH'] . '" border="0"'));
+        $this->ss->assign('UNPUBLISH_INLINE_PNG', SugarThemeRegistry::current()->getImage('unpublish_inline', 'align="absmiddle" alt="' . $mod_strings['LBL_UNPUBLISH'] . '" border="0"'));
+        $this->ss->assign('IMPORT_MODULE', $_REQUEST['import_module']);
+        $this->ss->assign('CURRENT_STEP', $this->currentStep);
+        $this->ss->assign('JAVASCRIPT', $this->_getJS());
 
         $content = $this->ss->fetch('modules/Import/tpls/dupcheck.tpl');
-        $this->ss->assign("CONTENT", $content);
+        $this->ss->assign('CONTENT', $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
 
@@ -92,23 +91,23 @@ class ImportViewDupcheck extends ImportView
             $import_map_seed->retrieve($_REQUEST['source_id'], false);
 
             return $import_map_seed->getMapping();
-        } else {
-            return array();
         }
+
+        return [];
     }
 
     /**
-     * Returns JS used in this view
+     * Returns JS used in this view.
      */
     private function _getJS()
     {
         global $mod_strings, $sugar_config;
 
         $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
-        $uploadFileName = "upload://".basename($_REQUEST['tmp_file']);
+        $uploadFileName = 'upload://' . basename($_REQUEST['tmp_file']);
         $splitter = new ImportFileSplitter($uploadFileName, $sugar_config['import_max_records_per_file']);
         $splitter->splitSourceFile($_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), $has_header);
-        $count = $splitter->getFileCount()-1;
+        $count = $splitter->getFileCount() - 1;
         $recCount = $splitter->getRecordCount();
 
         //BEGIN DRAG DROP WIDGET
@@ -120,36 +119,35 @@ class ImportViewDupcheck extends ImportView
         $import_fields = $idc->getDuplicateCheckIndexedFiles();
 
         //check for saved entries from mapping
-        $dupe_disabled =  array();
-        $dupe_enabled =  array();
-        $mapped_fields = array('full_name');
+        $dupe_disabled = [];
+        $dupe_enabled = [];
+        $mapped_fields = ['full_name'];
 
         //grab the list of user mapped fields
         foreach ($_REQUEST as $req_k => $req_v) {
-            if (strpos($req_k, 'olnum')>0) {
+            if (strpos($req_k, 'olnum') > 0) {
                 if (empty($req_v) || $req_v != '-1') {
                     $mapped_fields[] = $req_v;
                 }
             }
         }
 
-        foreach ($import_fields as $ik=>$iv) {
-
-             //grab the field value from the key
+        foreach ($import_fields as $ik => $iv) {
+            //grab the field value from the key
             $ik_field = explode('::', $ik);
 
             //field is not a custom field and was not included in the key, or was not in mapped fields, so skip
-            if (strpos($ik_field[0], 'ustomfield::')>0 || (empty($ik_field[1]) || !in_array($ik_field[1], $mapped_fields))) {
+            if (strpos($ik_field[0], 'ustomfield::') > 0 || (empty($ik_field[1]) || !in_array($ik_field[1], $mapped_fields))) {
                 //skip indexed fields that are not defined in user mapping or
                 continue;
             }
 
-            if (isset($field_map['dupe_'.$ik])) {
+            if (isset($field_map['dupe_' . $ik])) {
                 //index is defined in mapping, so set this index as enabled if not already defined
-                $dupe_enabled[] =  array("dupeVal" => $ik, "label" => $iv);
+                $dupe_enabled[] = ['dupeVal' => $ik, 'label' => $iv];
             } else {
                 //index is not defined in mapping, so display as disabled if not already defined
-                $dupe_disabled[] =  array("dupeVal" => $ik, "label" => $iv);
+                $dupe_disabled[] = ['dupeVal' => $ik, 'label' => $iv];
             }
         }
 
@@ -160,8 +158,9 @@ class ImportViewDupcheck extends ImportView
 
         $dateTimeFormat = $GLOBALS['timedate']->get_cal_date_time_format();
         $type = (isset($_REQUEST['type'])) ? $_REQUEST['type'] : '';
-        $lblUsed = str_replace(":", "", $mod_strings['LBL_INDEX_USED']);
-        $lblNotUsed = str_replace(":", "", $mod_strings['LBL_INDEX_NOT_USED']);
+        $lblUsed = str_replace(':', '', $mod_strings['LBL_INDEX_USED']);
+        $lblNotUsed = str_replace(':', '', $mod_strings['LBL_INDEX_NOT_USED']);
+
         return <<<EOJAVASCRIPT
 
 
@@ -203,7 +202,7 @@ ProcessImport = new function()
         YAHOO.util.Connect.asyncRequest('POST', 'index.php',
             {
                 success: function(o) {
-                    if (o.responseText.replace(/^\s+|\s+$/g, '') != '') {
+                    if (o.responseText.replace(/^\\s+|\\s+$/g, '') != '') {
                         this.failure(o);
                     }
                     else {

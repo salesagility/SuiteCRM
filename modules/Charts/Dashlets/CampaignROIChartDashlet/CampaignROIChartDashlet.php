@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGenericChart.php');
+require_once 'include/Dashlets/DashletGenericChart.php';
 
 class CampaignROIChartDashlet extends DashletGenericChart
 {
@@ -62,13 +57,13 @@ class CampaignROIChartDashlet extends DashletGenericChart
     {
         $this->getSeedBean()->disable_row_level_security = false;
 
-        $campaigns = $this->getSeedBean()->get_full_list("", "");
+        $campaigns = $this->getSeedBean()->get_full_list('', '');
         if ($campaigns != null) {
             foreach ($campaigns as $c) {
                 $this->_searchFields['campaign_id']['options'][$c->id] = $c->name;
             }
         } else {
-            $this->_searchFields['campaign_id']['options'] = array();
+            $this->_searchFields['campaign_id']['options'] = [];
         }
 
         return parent::displayOptions();
@@ -98,9 +93,9 @@ class CampaignROIChartDashlet extends DashletGenericChart
         }
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
-        $canvasId = 'rGraphCampaignROI'.uniqid();
-        $chartWidth     = 900;
-        $chartHeight    = 500;
+        $canvasId = 'rGraphCampaignROI' . uniqid();
+        $chartWidth = 900;
+        $chartHeight = 500;
         $autoRefresh = $this->processAutoRefresh();
 
         $chartReadyData = $this->prepareChartData($rawData, $currency_symbol, $thousands_symbol);
@@ -110,30 +105,29 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $jsonLabels = json_encode($chartReadyData['labels']);
         $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
-
         $jsonKey = json_encode($chartReadyData['key']);
         $jsonTooltips = json_encode($chartReadyData['tooltips']);
 
         //$colours = "['red','blue','green','orange','yellow','pink']";
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
-        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
-            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
+        if (!is_array($chartReadyData['data']) || count($chartReadyData['data']) < 1) {
+            return "<h3 class='noGraphDataPoints'>{$this->noDataMessage}</h3>";
         }
 
         //<canvas id='$canvasId'  width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
 
         $chart = <<<EOD
-        <canvas id='$canvasId' class='resizableCanvas' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
-             $autoRefresh
+        <canvas id='{$canvasId}' class='resizableCanvas' width='{$chartWidth}' height='{$chartHeight}'>[No canvas support]</canvas>
+             {$autoRefresh}
          <script>
            var bar = new RGraph.Bar({
-            id: '$canvasId',
-            data:$jsonData,
+            id: '{$canvasId}',
+            data:{$jsonData},
             options: {
                 //grouping: 'stacked',
                 colorsSequential:true,
-                labels: $jsonLabels,
+                labels: {$jsonLabels},
                 xlabels:true,
                 labelsAbove: true,
                 labelsAbovedecimals: 2,
@@ -147,7 +141,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
                 //shadowOffsety: 1,
                 //shadowBlur: 10,
                 //hmargin: 25,
-                colors:$colours,
+                colors:{$colours},
                 gutterLeft: 80,
                 //gutterTop:50,
                 //gutterRight:160,
@@ -155,18 +149,18 @@ class CampaignROIChartDashlet extends DashletGenericChart
                 //textAngle: 45,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
-                tooltips:$jsonLabels,
+                tooltips:{$jsonLabels},
                 tooltipsEvent:'mousemove',
-                //key: $jsonKey,
-                //keyColors: $colours,
+                //key: {$jsonKey},
+                //keyColors: {$colours},
                 //keyPosition: 'gutter',
-                //keyPositionX: $canvasId.width - 150,
+                //keyPositionX: {$canvasId}.width - 150,
                 //keyPositionY: 18,
                 //keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
-                unitsPre:'$currency_symbol',
-                labelsAboveUnitsPre:'$currency_symbol',
-                //unitsPost:'$thousands_symbol',
+                unitsPre:'{$currency_symbol}',
+                labelsAboveUnitsPre:'{$currency_symbol}',
+                //unitsPost:'{$thousands_symbol}',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 noyaxis: true
             }
@@ -202,10 +196,10 @@ class CampaignROIChartDashlet extends DashletGenericChart
         */
 /*
          var sizeIncrement = new RGraph.Drawing.Text({
-            id: '$canvasId',
+            id: '{$canvasId}',
             x: 10,
             y: 20,
-            text: 'Amount in ${currency_symbol}',
+            text: 'Amount in {$currency_symbol}',
             options: {
                 font: 'Arial',
                 bold: true,
@@ -218,53 +212,52 @@ class CampaignROIChartDashlet extends DashletGenericChart
 */
 </script>
 EOD;
+
         return $chart;
-
-
-
         //   return $this->getTitle('<div align="center"></div>') . '<div align="center">' . $returnStr . '</div>'. $this->processAutoRefresh();
     }
 
-    protected function constructQuery($datay= array(), $targets=array(), $campaign_id = null, $cache_file_name='a_file', $refresh=false, $marketing_id='', $is_dashlet=false, $dashlet_id='')
+    protected function constructQuery($datay = [], $targets = [], $campaign_id = null, $cache_file_name = 'a_file', $refresh = false, $marketing_id = '', $is_dashlet = false, $dashlet_id = '')
     {
         //global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
         global $mod_strings;
-        
+
         if (!$campaign_id) {
             $GLOBALS['log']->debug('roi chart need a campaign id');
+
             return false;
         }
 
         $not_empty = false;
 
-        $chartData = array();
+        $chartData = [];
 
         $focus = new Campaign();
         $focus->retrieve($campaign_id);
-        $opp_count=0;
-        $opp_query  = "select count(*) opp_count,sum(" . DBManager::convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
-        $opp_query .= " from opportunities";
-        $opp_query .= " where campaign_id='$campaign_id'";
+        $opp_count = 0;
+        $opp_query = 'select count(*) opp_count,sum(' . DBManager::convert('amount_usdollar', 'IFNULL', [0]) . ')  total_value';
+        $opp_query .= ' from opportunities';
+        $opp_query .= " where campaign_id='{$campaign_id}'";
         $opp_query .= " and sales_stage='Prospecting'";
-        $opp_query .= " and deleted=0";
+        $opp_query .= ' and deleted=0';
 
-        $opp_result=$focus->db->query($opp_query);
-        $opp_data=$focus->db->fetchByAssoc($opp_result);
+        $opp_result = $focus->db->query($opp_query);
+        $opp_data = $focus->db->fetchByAssoc($opp_result);
         if (empty($opp_data['total_value'])) {
-            $opp_data['total_value']=0;
+            $opp_data['total_value'] = 0;
         }
 
-        $chartData['Total Value']= $opp_data['total_value'];
+        $chartData['Total Value'] = $opp_data['total_value'];
 
         //report query
-        $opp_query1  = "select SUM(opp.amount) as revenue";
-        $opp_query1 .= " from opportunities opp";
-        $opp_query1 .= " right join campaigns camp on camp.id = opp.campaign_id";
-        $opp_query1 .= " where opp.sales_stage = 'Closed Won'and camp.id='$campaign_id' and opp.deleted=0";
-        $opp_query1 .= " group by camp.name";
+        $opp_query1 = 'select SUM(opp.amount) as revenue';
+        $opp_query1 .= ' from opportunities opp';
+        $opp_query1 .= ' right join campaigns camp on camp.id = opp.campaign_id';
+        $opp_query1 .= " where opp.sales_stage = 'Closed Won'and camp.id='{$campaign_id}' and opp.deleted=0";
+        $opp_query1 .= ' group by camp.name';
 
-        $opp_result1=$focus->db->query($opp_query1);
-        $opp_data1=$focus->db->fetchByAssoc($opp_result1);
+        $opp_result1 = $focus->db->query($opp_query1);
+        $opp_data1 = $focus->db->fetchByAssoc($opp_result1);
 
         //if (empty($opp_data1[]))
         if (empty($opp_data1['revenue'])) {
@@ -276,16 +269,15 @@ EOD;
             $not_empty = true;
         }
 
-        $chartData['Revenue']= $opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']];
+        $chartData['Revenue'] = $opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']];
 
-        $camp_query1  = "select camp.name, SUM(camp.actual_cost) as investment,SUM(camp.budget) as budget,SUM(camp.expected_revenue) as expected_revenue";
-        $camp_query1 .= " from campaigns camp";
-        $camp_query1 .= " where camp.id='$campaign_id'";
-        $camp_query1 .= " group by camp.name";
+        $camp_query1 = 'select camp.name, SUM(camp.actual_cost) as investment,SUM(camp.budget) as budget,SUM(camp.expected_revenue) as expected_revenue';
+        $camp_query1 .= ' from campaigns camp';
+        $camp_query1 .= " where camp.id='{$campaign_id}'";
+        $camp_query1 .= ' group by camp.name';
 
-        $camp_result1=$focus->db->query($camp_query1);
-        $camp_data1=$focus->db->fetchByAssoc($camp_result1);
-
+        $camp_result1 = $focus->db->query($camp_query1);
+        $camp_data1 = $focus->db->fetchByAssoc($camp_result1);
 
         if (empty($camp_data1['investment'])) {
             $camp_data1['investment'] = 0;
@@ -303,9 +295,9 @@ EOD;
             $not_empty = true;
         }
 
-        $chartData['Investment']= $camp_data1['investment'];
-        $chartData['Budget']= $camp_data1['budget'];
-        $chartData['Expected Revenue']= $camp_data1['expected_revenue'];
+        $chartData['Investment'] = $camp_data1['investment'];
+        $chartData['Budget'] = $camp_data1['budget'];
+        $chartData['Expected Revenue'] = $camp_data1['expected_revenue'];
 
         /*
             $opp_data1[$mod_strings['LBL_ROI_CHART_INVESTMENT']]=$camp_data1['investment'];
@@ -330,14 +322,14 @@ EOD;
     protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
-        $chart['labels'] = array();
-        $chart['data'] = array();
+        $chart['labels'] = [];
+        $chart['data'] = [];
         //Need to add all elements into the key, as they are stacked (even though the category is not present, the value could be)
-        $chart['key'] = array();
-        $chart['tooltips']= array();
+        $chart['key'] = [];
+        $chart['tooltips'] = [];
 
-        foreach ($data as $key=>$value) {
-            $formattedFloat = (float)number_format((float)$value, 2, '.', '');
+        foreach ($data as $key => $value) {
+            $formattedFloat = (float) number_format((float) $value, 2, '.', '');
             $chart['labels'][] = $key;
             $chart['data'][] = $formattedFloat;
             /*
@@ -356,6 +348,7 @@ EOD;
             $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage'><input type='hidden' class='date' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
             */
         }
+
         return $chart;
     }
 }

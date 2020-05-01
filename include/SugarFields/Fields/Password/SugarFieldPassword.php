@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,22 +36,23 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldPassword extends SugarFieldBase
 {
     /**
      * @see SugarFieldBase::importSanitize()
+     *
+     * @param mixed $value
+     * @param mixed $vardef
+     * @param mixed $focus
      */
     public function importSanitize(
         $value,
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
-        $value = md5($value);
-        
-        return $value;
+    ) {
+        return md5($value);
     }
 }

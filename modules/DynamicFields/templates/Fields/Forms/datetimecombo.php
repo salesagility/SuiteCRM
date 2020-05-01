@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,18 +40,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateDatetimecombo.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateDatetimecombo.php';
 
 function get_body(&$ss, $vardef)
 {
     $defaultTime = '';
-    $hours = "";
-    $minitues = "";
-    $meridiem = "";
+    $hours = '';
+    $minitues = '';
+    $meridiem = '';
     $td = new TemplateDatetimecombo();
     $ss->assign('default_values', array_flip($td->dateStrings));
-    
+
     global $timedate;
     $user_time_format = $timedate->get_user_time_format();
     $show_meridiem = preg_match('/pm$/i', $user_time_format) ? true : false;
@@ -65,7 +64,7 @@ function get_body(&$ss, $vardef)
     $ss->assign('default_minutes_values', array_flip($td->minutesStrings));
     $ss->assign('default_meridiem_values', array_flip($td->meridiemStrings));
     if (isset($vardef['display_default']) && strstr($vardef['display_default'], '&')) {
-        $dt = explode("&", $vardef['display_default']); //+1 day&06:00pm
+        $dt = explode('&', $vardef['display_default']); //+1 day&06:00pm
         $date = $dt[0];
         $defaultTime = $dt[1];
         $hours = substr($defaultTime, 0, 2);
@@ -87,5 +86,6 @@ function get_body(&$ss, $vardef)
     $ss->assign('default_minutes', $minitues);
     $ss->assign('default_meridiem', $meridiem);
     $ss->assign('defaultTime', $defaultTime);
+
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/datetimecombo.tpl');
 }

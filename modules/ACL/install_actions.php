@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,24 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $current_user,$beanList, $beanFiles, $mod_strings;
 
-$installed_classes = array();
-$ACLbeanList=$beanList;
-
-
+$installed_classes = [];
+$ACLbeanList = $beanList;
 
 if (is_admin($current_user)) {
-    foreach ($ACLbeanList as $module=>$class) {
+    foreach ($ACLbeanList as $module => $class) {
         if (empty($installed_classes[$class]) && isset($beanFiles[$class]) && file_exists($beanFiles[$class])) {
             if ($class == 'Tracker') {
             } else {
-                require_once($beanFiles[$class]);
+                require_once $beanFiles[$class];
                 $mod = new $class();
-                $GLOBALS['log']->debug("DOING: $class");
+                $GLOBALS['log']->debug("DOING: {$class}");
                 if ($mod->bean_implements('ACL') && empty($mod->acl_display_only)) {
                     // BUG 10339: do not display messages for upgrade wizard
                     if (!isset($_REQUEST['upgradeWizard'])) {

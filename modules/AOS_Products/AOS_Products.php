@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,14 +19,13 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/AOS_Products/AOS_Products_sugar.php');
+require_once 'modules/AOS_Products/AOS_Products_sugar.php';
 class AOS_Products extends AOS_Products_sugar
 {
     public function __construct()
@@ -35,22 +33,19 @@ class AOS_Products extends AOS_Products_sugar
         parent::__construct();
     }
 
-
-
     public function getGUID()
     {
         if (function_exists('com_create_guid')) {
             return com_create_guid();
         }
-        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+        mt_srand((float) microtime() * 10000); //optional for php 4.2.0 and up.
         $charid = strtoupper(md5(uniqid(mt_rand(), true)));
-        $hyphen = chr(45);// "-"
-        $uuid = substr($charid, 0, 8).$hyphen
-                .substr($charid, 8, 4).$hyphen
-                .substr($charid, 12, 4).$hyphen
-                .substr($charid, 16, 4).$hyphen
-                .substr($charid, 20, 12);
-        return $uuid;
+        $hyphen = chr(45); // "-"
+        return substr($charid, 0, 8) . $hyphen
+                . substr($charid, 8, 4) . $hyphen
+                . substr($charid, 12, 4) . $hyphen
+                . substr($charid, 16, 4) . $hyphen
+                . substr($charid, 20, 12);
     }
 
     public function save($check_notify = false)
@@ -61,7 +56,7 @@ class AOS_Products extends AOS_Products_sugar
             $this->product_image = '';
         }
 
-        require_once('include/upload_file.php');
+        require_once 'include/upload_file.php';
         $GLOBALS['log']->debug('UPLOADING PRODUCT IMAGE');
 
         if (!empty($_FILES['uploadimage']['tmp_name']) && verify_uploaded_image($_FILES['uploadimage']['tmp_name'])) {
@@ -73,7 +68,7 @@ class AOS_Products extends AOS_Products_sugar
             move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'] . $prefix_image . $_FILES['uploadimage']['name']);
         }
 
-        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        require_once 'modules/AOS_Products_Quotes/AOS_Utils.php';
 
         perform_aos_save($this);
 
@@ -82,7 +77,7 @@ class AOS_Products extends AOS_Products_sugar
 
     public function getCustomersPurchasedProductsQuery()
     {
-        $query = "
+        return "
  			SELECT * FROM (
  				SELECT
 					aos_quotes.*,
@@ -105,6 +100,5 @@ class AOS_Products extends AOS_Products_sugar
 			) AS aos_quotes
 
 		";
-        return $query;
     }
 }

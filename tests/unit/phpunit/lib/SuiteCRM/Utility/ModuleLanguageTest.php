@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ModuleLanguageTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -10,10 +13,9 @@ class ModuleLanguageTest extends SuitePHPUnitFrameworkTestCase
     protected $tester;
 
     /**
-     * @var \SuiteCRM\Utility\ModuleLanguage $paths
+     * @var \SuiteCRM\Utility\ModuleLanguage
      */
     private static $language;
-
 
     protected function setUp()
     {

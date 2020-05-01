@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -55,10 +53,10 @@ $checked = (isset($_SESSION['setup_old_php']) && !empty($_SESSION['setup_old_php
 $langHeader = get_language_header();
 
 // load javascripts
-include('jssource/JSGroupings.php');
+include 'jssource/JSGroupings.php';
 $jsSrc = '';
 foreach ($sugar_grp1_yui as $jsFile => $grp) {
-    $jsSrc .= "\t<script src=\"$jsFile\"></script>\n";
+    $jsSrc .= "\t<script src=\"{$jsFile}\"></script>\n";
 }
 
 ////	START OUTPUT
@@ -82,7 +80,7 @@ $out = <<<EOQ
    <link rel="stylesheet" href="install/install2.css" type="text/css">
    <link rel="stylesheet" href="themes/SuiteP/css/themes.css" type="text/css">
    <script src="include/javascript/jquery/jquery-min.js"></script>
-    $jsSrc
+    {$jsSrc}
    <script type="text/javascript">
     <!--
     if ( YAHOO.env.ua )

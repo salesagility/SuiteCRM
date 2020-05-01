@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,198 +42,196 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-$dictionary['SchedulersJob'] = array('table' => 'job_queue',
+$dictionary['SchedulersJob'] = ['table' => 'job_queue',
     'comment' => 'Job queue keeps the list of the jobs executed by this instance',
-    'fields' => array(
-        'id' => array(
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_NAME',
             'type' => 'id',
             'len' => '36',
             'required' => true,
-            'reportable'=>false,
-        ),
-       'name'=>
-        array(
-            'name'=>'name',
-            'vname'=> 'LBL_NAME',
-            'type'=>'name',
+            'reportable' => false,
+        ],
+        'name' => [
+            'name' => 'name',
+            'vname' => 'LBL_NAME',
+            'type' => 'name',
             'link' => true, // bug 39288
             'dbType' => 'varchar',
-            'len'=>255,
-            'required'=>true,
-        ),
-        'deleted' => array(
+            'len' => 255,
+            'required' => true,
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
             'required' => true,
             'default' => '0',
-            'reportable'=>false,
-        ),
-        'date_entered' => array(
+            'reportable' => false,
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'date_modified' => array(
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'scheduler_id' => array(
+        ],
+        'scheduler_id' => [
             'name' => 'scheduler_id',
             'vname' => 'LBL_SCHEDULER',
             'type' => 'id',
             'required' => false,
             'reportable' => false,
-        ),
-        'execute_time' => array(
+        ],
+        'execute_time' => [
             'name' => 'execute_time',
             'vname' => 'LBL_EXECUTE_TIME',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'status' => array(
+        ],
+        'status' => [
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'enum',
-            'options'	=> 'schedulers_times_dom',
+            'options' => 'schedulers_times_dom',
             'len' => 20,
             'required' => true,
             'reportable' => true,
             'readonly' => true,
-        ),
-        'resolution' => array(
+        ],
+        'resolution' => [
             'name' => 'resolution',
             'vname' => 'LBL_RESOLUTION',
             'type' => 'enum',
-            'options'	=> 'schedulers_resolution_dom',
+            'options' => 'schedulers_resolution_dom',
             'len' => 20,
             'required' => true,
             'reportable' => true,
             'readonly' => true,
-        ),
-        'message' => array(
+        ],
+        'message' => [
             'name' => 'message',
             'vname' => 'LBL_MESSAGE',
             'type' => 'text',
             'required' => false,
             'reportable' => false,
-        ),
-        'target' => array(
+        ],
+        'target' => [
             'name' => 'target',
             'vname' => 'LBL_TARGET',
             'type' => 'varchar',
             'len' => 255,
             'required' => true,
             'reportable' => true,
-        ),
-        'data' => array(
+        ],
+        'data' => [
             'name' => 'data',
             'vname' => 'LBL_DATA',
             'type' => 'text',
             'required' => false,
             'reportable' => true,
-        ),
-        'requeue' => array(
+        ],
+        'requeue' => [
             'name' => 'requeue',
             'vname' => 'LBL_REQUEUE',
             'type' => 'bool',
             'default' => 0,
             'required' => false,
             'reportable' => true,
-        ),
-        'retry_count' => array(
+        ],
+        'retry_count' => [
             'name' => 'retry_count',
             'vname' => 'LBL_RETRY_COUNT',
             'type' => 'tinyint',
             'required' => false,
             'reportable' => true,
-        ),
-        'failure_count' => array(
+        ],
+        'failure_count' => [
             'name' => 'failure_count',
             'vname' => 'LBL_FAIL_COUNT',
             'type' => 'tinyint',
             'required' => false,
             'reportable' => true,
             'readonly' => true,
-        ),
-        'job_delay' => array(
+        ],
+        'job_delay' => [
             'name' => 'job_delay',
             'vname' => 'LBL_INTERVAL',
             'type' => 'int',
             'required' => false,
             'reportable' => false,
-        ),
-        'client' => array(
+        ],
+        'client' => [
             'name' => 'client',
             'vname' => 'LBL_CLIENT',
             'type' => 'varchar',
             'len' => 255,
             'required' => true,
             'reportable' => true,
-        ),
-        'percent_complete' => array(
+        ],
+        'percent_complete' => [
             'name' => 'percent_complete',
             'vname' => 'LBL_PERCENT',
             'type' => 'int',
             'required' => false,
-            ),
-        'schedulers' => array(
-            'name'            => 'schedulers',
-            'vname'            => 'LBL_SCHEDULER_ID',
-            'type'            => 'link',
-            'relationship'    => 'schedulers_jobs_rel',
-            'source'        => 'non-db',
+        ],
+        'schedulers' => [
+            'name' => 'schedulers',
+            'vname' => 'LBL_SCHEDULER_ID',
+            'type' => 'link',
+            'relationship' => 'schedulers_jobs_rel',
+            'source' => 'non-db',
             'link_type' => 'one',
-       ),
-        ),
-    'indices' => array(
-        array(
-            'name' =>'job_queuepk',
-            'type' =>'primary',
-            'fields' => array(
+        ],
+    ],
+    'indices' => [
+        [
+            'name' => 'job_queuepk',
+            'type' => 'primary',
+            'fields' => [
                 'id'
-            )
-        ),
-        array(
-            'name' =>'idx_status_scheduler',
-            'type'=>'index',
-            'fields' => array(
+            ]
+        ],
+        [
+            'name' => 'idx_status_scheduler',
+            'type' => 'index',
+            'fields' => [
                 'status',
                 'scheduler_id',
-            )
-        ),
-        array(
-            'name' =>'idx_status_time',
-            'type'=>'index',
-            'fields' => array(
+            ]
+        ],
+        [
+            'name' => 'idx_status_time',
+            'type' => 'index',
+            'fields' => [
                 'status',
                 'execute_time',
                 'date_entered',
-            )
-        ),
-        array(
-            'name' =>'idx_status_entered',
-            'type'=>'index',
-            'fields' => array(
+            ]
+        ],
+        [
+            'name' => 'idx_status_entered',
+            'type' => 'index',
+            'fields' => [
                 'status',
                 'date_entered',
-            )
-        ),
-        array(
-            'name' =>'idx_status_modified',
-            'type'=>'index',
-            'fields' => array(
+            ]
+        ],
+        [
+            'name' => 'idx_status_modified',
+            'type' => 'index',
+            'fields' => [
                 'status',
                 'date_modified',
-            )
-        ),
-    ),
-);
+            ]
+        ],
+    ],
+];
 
-VardefManager::createVardef('SchedulersJobs', 'SchedulersJob', array('assignable'));
+VardefManager::createVardef('SchedulersJobs', 'SchedulersJob', ['assignable']);

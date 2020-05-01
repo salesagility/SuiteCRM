@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,26 +36,25 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldRelate extends SugarFieldBase
 {
-
     /**
      * @param string $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
-     * @param integer $tabindex
+     * @param int $tabindex
+     *
      * @return string
      */
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
-        $nolink = array('Users', 'Teams');
+        $nolink = ['Users', 'Teams'];
         if (in_array($vardef['module'], $nolink)) {
             $this->ss->assign('nolink', true);
         } else {
@@ -69,10 +67,12 @@ class SugarFieldRelate extends SugarFieldBase
 
     /**
      * @see SugarFieldBase::getEditViewSmarty()
+     *
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
-     * @param integer $tabindex
+     * @param int $tabindex
+     *
      * @return string
      */
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -99,7 +99,7 @@ class SugarFieldRelate extends SugarFieldBase
         //the Account's address with.  'copy' is the suffix we are copying the addresses
         //form fields into.
         if (isset($vardef['module']) && preg_match('/Accounts/si', $vardef['module'])
-            && isset($displayParams['key']) && isset($displayParams['copy'])
+            && isset($displayParams['key'], $displayParams['copy'])
         ) {
             if (isset($displayParams['key']) && is_array($displayParams['key'])) {
                 $database_key = $displayParams['key'];
@@ -120,16 +120,16 @@ class SugarFieldRelate extends SugarFieldBase
 
             $copy_phone = isset($displayParams['copyPhone']) ? $displayParams['copyPhone'] : true;
 
-            $field_to_name = array();
+            $field_to_name = [];
             $field_to_name['id'] = $vardef['id_name'];
             $field_to_name['name'] = $vardef['name'];
-            $address_fields = isset($displayParams['field_to_name_array']) ? $displayParams['field_to_name_array'] : array(
+            $address_fields = isset($displayParams['field_to_name_array']) ? $displayParams['field_to_name_array'] : [
                 '_address_street',
                 '_address_city',
                 '_address_state',
                 '_address_postalcode',
                 '_address_country'
-            );
+            ];
             $count = 0;
             foreach ($form as $f) {
                 foreach ($address_fields as $afield) {
@@ -138,32 +138,32 @@ class SugarFieldRelate extends SugarFieldBase
                 $count++;
             }
 
-            $popup_request_data = array(
+            $popup_request_data = [
                 'call_back_function' => $call_back_function,
                 'form_name' => $form_name,
                 'field_to_name_array' => $field_to_name,
-            );
+            ];
 
             if ($copy_phone) {
                 $popup_request_data['field_to_name_array']['phone_office'] = 'phone_work';
             }
         } elseif (isset($displayParams['field_to_name_array'])) {
-            $popup_request_data = array(
+            $popup_request_data = [
                 'call_back_function' => $call_back_function,
                 'form_name' => $form_name,
                 'field_to_name_array' => $displayParams['field_to_name_array'],
-            );
+            ];
         } else {
-            $popup_request_data = array(
+            $popup_request_data = [
                 'call_back_function' => $call_back_function,
                 'form_name' => $form_name,
-                'field_to_name_array' => array(
+                'field_to_name_array' => [
                     //'id' => (empty($displayParams['idName']) ? $vardef['id_name'] : ($displayParams['idName'] . '_' . $vardef['id_name'])) ,
                     //bug 43770: Assigned to value could not be saved during lead conversion
                     'id' => (empty($displayParams['idNameHidden']) ? $vardef['id_name'] : ($displayParams['idNameHidden'] . $vardef['id_name'])),
                     ((empty($vardef['rname'])) ? 'name' : $vardef['rname']) => (empty($displayParams['idName']) ? $vardef['name'] : $displayParams['idName']),
-                ),
-            );
+                ],
+            ];
         }
         $json = getJSONobj();
         $displayParams['popupData'] = '{literal}' . $json->encode($popup_request_data) . '{/literal}';
@@ -190,7 +190,8 @@ class SugarFieldRelate extends SugarFieldBase
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
-     * @param integer $tabindex
+     * @param int $tabindex
+     *
      * @return string
      */
     public function getPopupViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -204,7 +205,8 @@ class SugarFieldRelate extends SugarFieldBase
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
-     * @param integer $tabindex
+     * @param int $tabindex
+     *
      * @return string
      */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -226,7 +228,7 @@ class SugarFieldRelate extends SugarFieldBase
         //the Account's address with.  'copy' is the suffix we are copying the addresses
         //form fields into.
         if (isset($vardef['module']) && preg_match('/Accounts/si', $vardef['module'])
-            && isset($displayParams['key']) && isset($displayParams['copy'])
+            && isset($displayParams['key'], $displayParams['copy'])
         ) {
             if (isset($displayParams['key']) && is_array($displayParams['key'])) {
                 $database_key = $displayParams['key'];
@@ -247,16 +249,16 @@ class SugarFieldRelate extends SugarFieldBase
 
             $copy_phone = isset($displayParams['copyPhone']) ? $displayParams['copyPhone'] : true;
 
-            $field_to_name = array();
+            $field_to_name = [];
             $field_to_name['id'] = $vardef['id_name'];
             $field_to_name['name'] = $vardef['name'];
-            $address_fields = array(
+            $address_fields = [
                 '_address_street',
                 '_address_city',
                 '_address_state',
                 '_address_postalcode',
                 '_address_country'
-            );
+            ];
             $count = 0;
             foreach ($form as $f) {
                 foreach ($address_fields as $afield) {
@@ -265,30 +267,30 @@ class SugarFieldRelate extends SugarFieldBase
                 $count++;
             }
 
-            $popup_request_data = array(
+            $popup_request_data = [
                 'call_back_function' => $call_back_function,
                 'form_name' => $form_name,
                 'field_to_name_array' => $field_to_name,
-            );
+            ];
 
             if ($copy_phone) {
                 $popup_request_data['field_to_name_array']['phone_office'] = 'phone_work';
             }
         } elseif (isset($displayParams['field_to_name_array'])) {
-            $popup_request_data = array(
+            $popup_request_data = [
                 'call_back_function' => $call_back_function,
                 'form_name' => $form_name,
                 'field_to_name_array' => $displayParams['field_to_name_array'],
-            );
+            ];
         } else {
-            $popup_request_data = array(
+            $popup_request_data = [
                 'call_back_function' => $call_back_function,
                 'form_name' => $form_name,
-                'field_to_name_array' => array(
+                'field_to_name_array' => [
                     'id' => $vardef['id_name'],
                     ((empty($vardef['rname'])) ? 'name' : $vardef['rname']) => $vardef['name'],
-                ),
-            );
+                ],
+            ];
         }
         $json = getJSONobj();
         $displayParams['popupData'] = '{literal}' . $json->encode($popup_request_data) . '{/literal}';
@@ -305,6 +307,7 @@ class SugarFieldRelate extends SugarFieldBase
     /**
      * @param array $rawField
      * @param array $vardef
+     *
      * @return string
      */
     public function formatField($rawField, $vardef)
@@ -313,7 +316,7 @@ class SugarFieldRelate extends SugarFieldBase
             $default_locale_name_format = $GLOBALS['current_user']->getPreference('default_locale_name_format');
             $default_locale_name_format = trim(preg_replace('/s/i', '', $default_locale_name_format));
             $new_field = '';
-            $names = array();
+            $names = [];
             $temp = explode(' ', $rawField);
             if (!isset($temp[1])) {
                 $names['f'] = '';
@@ -337,10 +340,12 @@ class SugarFieldRelate extends SugarFieldBase
 
     /**
      * @see SugarFieldBase::importSanitize()
+     *
      * @param string $value
      * @param array $vardef
      * @param SugarBean $focus
      * @param ImportFieldSanitize $settings
+     *
      * @return array|bool|string
      */
     public function importSanitize(
@@ -358,10 +363,10 @@ class SugarFieldRelate extends SugarFieldBase
         // that the related field data is the full_name, rather than the user_name. So to be sure
         // let's try to lookup the field the relationship is expecting to use (user_name).
         if ($vardef['module'] == 'Users' && isset($vardef['rname']) && $vardef['rname'] == 'user_name') {
-            $userFocus = new User;
+            $userFocus = new User();
             $query = sprintf(
                 "SELECT user_name FROM {$userFocus->table_name} WHERE %s=%s AND deleted=0",
-                $userFocus->db->concat('users', array('first_name', 'last_name')),
+                $userFocus->db->concat('users', ['first_name', 'last_name']),
                 $userFocus->db->quoted($value)
             );
             $username = $userFocus->db->getOne($query);
@@ -381,22 +386,21 @@ class SugarFieldRelate extends SugarFieldBase
             && method_exists($this, $rvardef['type'])
         ) {
             $fieldtype = $rvardef['type'];
-            $returnValue = $settings->$fieldtype($value, $rvardef);
+            $returnValue = $settings->{$fieldtype}($value, $rvardef);
             if (!$returnValue) {
                 return false;
-            } else {
-                $value = $returnValue;
             }
+            $value = $returnValue;
         }
 
         if (isset($vardef['id_name'])) {
             $idField = $vardef['id_name'];
 
             // Bug 24075 - clear out id field value if it is invalid
-            if (isset($focus->$idField)) {
+            if (isset($focus->{$idField})) {
                 $checkfocus = loadBean($vardef['module']);
-                if ($checkfocus && is_null($checkfocus->retrieve($focus->$idField))) {
-                    $focus->$idField = '';
+                if ($checkfocus && is_null($checkfocus->retrieve($focus->{$idField}))) {
+                    $focus->{$idField} = '';
                 }
             }
 
@@ -406,7 +410,7 @@ class SugarFieldRelate extends SugarFieldBase
                 $vardef['table'] = $newbean->table_name;
             }
             // be sure that the id isn't already set for this row
-            if (empty($focus->$idField)
+            if (empty($focus->{$idField})
                 && $idField != $vardef['name']
                 && !empty($vardef['rname'])
                 && !empty($vardef['table'])
@@ -426,13 +430,13 @@ class SugarFieldRelate extends SugarFieldBase
                             WHERE {$fieldName} = '" . $focus->db->quote($value) . "'
                                 AND deleted != 1";
 
-                $result = $focus->db->limitQuery($query, 0, 1, true, "Want only a single row");
+                $result = $focus->db->limitQuery($query, 0, 1, true, 'Want only a single row');
                 if (!empty($result)) {
                     if ($relaterow = $focus->db->fetchByAssoc($result)) {
-                        $focus->$idField = $relaterow['id'];
+                        $focus->{$idField} = $relaterow['id'];
                     } elseif (!$settings->addRelatedBean
                         || ($newbean->bean_implements('ACL') && !$newbean->ACLAccess('save'))
-                        || (in_array($newbean->module_dir, array('Teams', 'Users')))
+                        || (in_array($newbean->module_dir, ['Teams', 'Users']))
                     ) {
                         return false;
                     } else {
@@ -442,7 +446,7 @@ class SugarFieldRelate extends SugarFieldBase
                         ) {
                             assignConcatenatedValue($newbean, $relatedFieldDef, $value);
                         } else {
-                            $newbean->$fieldName = $value;
+                            $newbean->{$fieldName} = $value;
                         }
                         if (!isset($focus->assigned_user_id) || $focus->assigned_user_id == '') {
                             $newbean->assigned_user_id = $GLOBALS['current_user']->id;
@@ -459,7 +463,7 @@ class SugarFieldRelate extends SugarFieldBase
                         $focus->populateRelatedBean($newbean);
 
                         $newbean->save(false);
-                        $focus->$idField = $newbean->id;
+                        $focus->{$idField} = $newbean->id;
                         ImportFieldSanitize::$createdBeans[] = ImportFile::writeRowToLastImport(
                             $focus->module_dir,
                             $newbean->object_name,

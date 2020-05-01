@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,27 +36,21 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $module_name = 'AOD_IndexEvent';
-$viewdefs[$module_name]['QuickCreate'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-                                            ),
-                                            
-                                            
- 'panels' =>array(
-  'default' =>
-  array(
-    
-    array(
-      'name',
-      'assigned_user_name',
-    ),
-  ),
-                                                    
-),
-                        
-);
+$viewdefs[$module_name]['QuickCreate'] = [
+    'templateMeta' => ['maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
+
+    'panels' => [
+        'default' => [
+            [
+                'name',
+                'assigned_user_name',
+            ],
+        ],
+    ],
+];

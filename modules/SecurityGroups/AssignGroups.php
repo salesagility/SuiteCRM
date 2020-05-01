@@ -1,8 +1,8 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 class AssignGroups
 {
@@ -13,7 +13,7 @@ class AssignGroups
         //only process if action is Save (meaning a user has triggered this event and not the portal or automated process)
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save'
         && isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
-        && empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
+        && empty($bean->fetched_row['id']) && $bean->module_dir != 'Users' && $bean->module_dir != 'SugarFeed') {
             //Upload an attachment to an Email Template and save. If user with multi groups - popup select option
             //it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
             if (!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) {
@@ -21,16 +21,16 @@ class AssignGroups
             }
 
             if (!empty($_REQUEST['securitygroup_list'])) {
-                require_once('modules/SecurityGroups/SecurityGroup.php');
+                require_once 'modules/SecurityGroups/SecurityGroup.php';
                 $security_modules = SecurityGroup::getSecurityModules();
                 //sanity check
                 if (in_array($bean->module_dir, array_keys($security_modules))) {
                     //add each group in securitygroup_list to new record
-                    $rel_name = SecurityGroup::getLinkName($bean->module_dir,"SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($bean->module_dir, 'SecurityGroups');
 
                     $bean->load_relationship($rel_name);
                     foreach ($_REQUEST['securitygroup_list'] as $group_id) {
-                        $bean->$rel_name->add($group_id);
+                        $bean->{$rel_name}->add($group_id);
                     }
                 }
             } elseif (!empty($_REQUEST['dup_checked'])) {
@@ -42,9 +42,8 @@ class AssignGroups
                 $_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
             }
         } elseif (isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
-        && empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
+        && empty($bean->fetched_row['id']) && $bean->module_dir == 'Users'
         && isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature') { //Bug: 589
-
             //$_REQUEST['return_module'] = $bean->module_dir;
             //$_REQUEST['return_action'] = "DetailView";
             //$_REQUEST['return_id'] = $bean->id;
@@ -52,15 +51,14 @@ class AssignGroups
             //$_SESSION['securitygroups_popup_'.$bean->module_dir] = $bean->id;
 
             if (!isset($_SESSION['securitygroups_popup'])) {
-                $_SESSION['securitygroups_popup'] = array();
+                $_SESSION['securitygroups_popup'] = [];
             }
-            $_SESSION['securitygroups_popup'][] = array(
-            'module' => $bean->module_dir,
-            'id' => $bean->id
-        );
+            $_SESSION['securitygroups_popup'][] = [
+                'module' => $bean->module_dir,
+                'id' => $bean->id
+            ];
         }
     }
-
 
     public function popup_onload($event, $arguments)
     {
@@ -68,7 +66,7 @@ class AssignGroups
             return;
         }
 
-        /** //test user popup
+        /* //test user popup
         	//always have this loaded
         	echo '<script type="text/javascript" src="modules/SecurityGroups/javascript/popup_relate.js"></script>';
         */
@@ -88,15 +86,14 @@ class AssignGroups
             LoggerManager::getLogger()->warn('Not defined module in request');
         }
 
-
-        if (isset($action) && ($action == "Save" || $action == "SetTimezone")) {
+        if (isset($action) && ($action == 'Save' || $action == 'SetTimezone')) {
             return;
         }
 
         if ((
             //(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
             //||
-            ($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
+            ($module == 'Users' && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
         )
 
         //&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
@@ -107,18 +104,18 @@ class AssignGroups
                 $module = $popup['module'];
                 unset($_SESSION['securitygroups_popup'][$popup_index]);
 
-                require_once('modules/SecurityGroups/SecurityGroup.php');
+                require_once 'modules/SecurityGroups/SecurityGroup.php';
                 if ($module == 'Users') {
-                    $rel_name = "SecurityGroups";
+                    $rel_name = 'SecurityGroups';
                 } else {
-                    $rel_name = SecurityGroup::getLinkName($module,"SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($module, 'SecurityGroups');
                 }
 
                 //this only works if on the detail view of the record actually saved...
                 //so ajaxui breaks this as it stays on the parent
                 $auto_popup = <<<EOQ
 <script type="text/javascript" language="javascript">
-	open_popup("SecurityGroups",600,400,"",true,true,{"call_back_function":"securitysuite_set_return_and_save_background","form_name":"DetailView","field_to_name_array":{"id":"subpanel_id"},"passthru_data":{"module":"$module","record":"$record_id","child_field":"$rel_name","return_url":"","link_field_name":"$rel_name","module_name":"$rel_name","refresh_page":"1"}},"MultiSelect",true);
+	open_popup("SecurityGroups",600,400,"",true,true,{"call_back_function":"securitysuite_set_return_and_save_background","form_name":"DetailView","field_to_name_array":{"id":"subpanel_id"},"passthru_data":{"module":"{$module}","record":"{$record_id}","child_field":"{$rel_name}","return_url":"","link_field_name":"{$rel_name}","module_name":"{$rel_name}","refresh_page":"1"}},"MultiSelect",true);
 </script>
 EOQ;
 
@@ -144,17 +141,16 @@ EOQ;
             LoggerManager::getLogger()->warn('Not defined module in request');
         }
 
-  
-        $no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
+        $no_mass_assign_list = ['Emails' => 'Emails', 'ACLRoles' => 'ACLRoles']; //,"Users"=>"Users");
         //check if security suite enabled
         $action = strtolower($action);
-        if (isset($module) && ($action == "list" || $action == "index" || $action == "listview")
+        if (isset($module) && ($action == 'list' || $action == 'index' || $action == 'listview')
         && (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
         && !array_key_exists($module, $no_mass_assign_list)
         ) {
             global $current_user;
-            if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, "SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
-                require_once('modules/SecurityGroups/SecurityGroup.php');
+            if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, 'SecurityGroups', 'access') == ACL_ALLOW_ENABLED) {
+                require_once 'modules/SecurityGroups/SecurityGroup.php';
                 $groupFocus = new SecurityGroup();
                 $security_modules = SecurityGroup::getSecurityModules();
                 //if(in_array($module,$security_modules)) {
@@ -166,15 +162,15 @@ EOQ;
 
                     $form_header = get_form_header($current_module_strings['LBL_MASS_ASSIGN'], '', false);
 
-                    $groups = $groupFocus->get_list("name", "", 0, -99, -99);
-                    $options = array(""=>"");
+                    $groups = $groupFocus->get_list('name', '', 0, -99, -99);
+                    $options = ['' => ''];
                     foreach ($groups['list'] as $group) {
                         $options[$group->id] = $group->name;
                     }
-                    $group_options =  get_select_options_with_id($options, "");
+                    $group_options = get_select_options_with_id($options, '');
 
-				    $export_where = !empty($_SESSION['export_where']) ? $_SESSION['export_where'] : '';
-				    $export_where_md5 = md5($export_where);
+                    $export_where = !empty($_SESSION['export_where']) ? $_SESSION['export_where'] : '';
+                    $export_where_md5 = md5($export_where);
 
                     $mass_assign = <<<EOQ
 
@@ -264,13 +260,13 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 		<form action='index.php' method='post' name='MassAssign_SecurityGroups'  id='MassAssign_SecurityGroups'>
 			<input type='hidden' name='action' value='MassAssign' />
 			<input type='hidden' name='module' value='SecurityGroups' />
-			<input type='hidden' name='return_action' value='${action}' />
-			<input type='hidden' name='return_module' value='${module}' />
+			<input type='hidden' name='return_action' value='{$action}' />
+			<input type='hidden' name='return_module' value='{$module}' />
 			<input type="hidden" name="export_where_md5" value="{$export_where_md5}">
 			<textarea style='display: none' name='uid'></textarea>
 
 
-		<div id='massassign_form'>$form_header
+		<div id='massassign_form'>{$form_header}
 		<table cellpadding='0' cellspacing='0' border='0' width='100%'>
 		<tr>
 		<td style='padding-bottom: 2px;' class='listViewButtons'>
@@ -283,12 +279,11 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 		<tr><td><table width='100%' border='0' cellspacing='0' cellpadding='0'>
 		<tr>
 		<td>${current_module_strings['LBL_GROUP']}</td>
-		<td><select name='massassign_group' id="massassign_group" tabindex='1'>${group_options}</select></td>
+		<td><select name='massassign_group' id="massassign_group" tabindex='1'>{$group_options}</select></td>
 		</tr>
 		</table></td></tr></table></div>			
 		</form>		
 EOQ;
-
 
                     echo $mass_assign;
                 }
@@ -306,7 +301,7 @@ EOQ;
 var oNewP = document.createElement("div");
 oNewP.className = 'error';
 
-var oText = document.createTextNode("${lbl_securitysuite_error}");
+var oText = document.createTextNode("{$lbl_securitysuite_error}");
 oNewP.appendChild(oText);
 
 var beforeMe = document.getElementsByTagName("div")[0];

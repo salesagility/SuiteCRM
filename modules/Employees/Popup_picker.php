@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,44 +42,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $theme;
-
-
-
-
-
-
-
-
 
 class Popup_Picker
 {
-
-
-    /*
-     *
-     */
+    //
     public function __construct()
     {
     }
 
-
-
-
-    /*
-     *
-     */
+    //
     public function _get_where_clause()
     {
         $where = '';
         if (isset($_REQUEST['query'])) {
-            $where_clauses = array();
-            append_where_clause($where_clauses, "first_name", "users.first_name");
-            append_where_clause($where_clauses, "last_name", "users.last_name");
-            append_where_clause($where_clauses, "user_name", "users.user_name");
+            $where_clauses = [];
+            append_where_clause($where_clauses, 'first_name', 'users.first_name');
+            append_where_clause($where_clauses, 'last_name', 'users.last_name');
+            append_where_clause($where_clauses, 'user_name', 'users.user_name');
 
             $where = generate_where_statement($where_clauses);
         }
@@ -86,9 +67,6 @@ class Popup_Picker
         return $where;
     }
 
-    /**
-     *
-     */
     public function process_page()
     {
         global $theme;
@@ -102,23 +80,21 @@ class Popup_Picker
 
         $where = $this->_get_where_clause();
 
-
-
         $first_name = empty($_REQUEST['first_name']) ? '' : $_REQUEST['first_name'];
         $last_name = empty($_REQUEST['last_name']) ? '' : $_REQUEST['last_name'];
         $user_name = empty($_REQUEST['user_name']) ? '' : $_REQUEST['user_name'];
         $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 
-        $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
+        $button = "<form action='index.php' method='post' name='form' id='form'>\n";
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."'  />\n";
+                . $app_strings['LBL_CLEAR_BUTTON_TITLE'] . "'  />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-            .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' accesskey='"
+            . $app_strings['LBL_CANCEL_BUTTON_KEY'] . "' value='  "
+            . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  ' />\n";
         $button .= "</form>\n";
 
         $form = new XTemplate('modules/Employees/Popup_picker.html');
@@ -161,6 +137,7 @@ class Popup_Picker
         ob_end_clean();
 
         $output_html .= insert_popup_footer();
+
         return $output_html;
     }
 } // end of class Popup_Picker

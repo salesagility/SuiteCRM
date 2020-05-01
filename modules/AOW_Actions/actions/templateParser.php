@@ -1,11 +1,10 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,10 +19,8 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
-
 require_once 'modules/AOS_PDF_Templates/templateParser.php';
 
 class aowTemplateParser extends templateParser
@@ -38,7 +35,6 @@ class aowTemplateParser extends templateParser
             $focus = BeanFactory::getBean($bean_name, $bean_id);
 
             if (!$focus->fetched_row) {
-
                 // We do not want the cached version for a newly created bean, as some data such as date fields and
                 // auto increment fields will only be correct after a retrieve operation
                 BeanFactory::unregisterBean($bean_name, $bean_id);
@@ -47,7 +43,7 @@ class aowTemplateParser extends templateParser
 
             $string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
 
-            if($focus instanceof Person){
+            if ($focus instanceof Person) {
                 $person[] = $focus;
             }
         }

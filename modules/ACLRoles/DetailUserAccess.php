@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -69,7 +67,7 @@ if (!is_admin($focus)) {
         }
     }
 
-    $names = array();
+    $names = [];
     $names = ACLAction::setupCategoriesMatrix($categories);
     if (!empty($names)) {
         $tdwidth = 100 / count($names);
@@ -81,7 +79,7 @@ if (!is_admin($focus)) {
 
     $title = getClassicModuleTitle(
         '',
-        array($mod_strings['LBL_MODULE_NAME'], $mod_strings['LBL_ROLES_SUBPANEL_TITLE']),
+        [$mod_strings['LBL_MODULE_NAME'], $mod_strings['LBL_ROLES_SUBPANEL_TITLE']],
         ''
     );
 

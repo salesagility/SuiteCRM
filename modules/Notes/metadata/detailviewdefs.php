@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,100 +36,76 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$viewdefs ['Notes'] =
-array(
-  'DetailView' =>
-  array(
-    'templateMeta' =>
-    array(
-      'maxColumns' => '2',
-      'widths' =>
-      array(
-        0 =>
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-        1 =>
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-      ),
-      'useTabs' => true,
-      'tabDefs' =>
-      array(
-        'LBL_NOTE_INFORMATION' =>
-        array(
-          'newTab' => true,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ASSIGNMENT' =>
-        array(
-          'newTab' => true,
-          'panelDefault' => 'expanded',
-        ),
-      ),
-    ),
-    'panels' =>
-    array(
-      'lbl_note_information' =>
-      array(
-        0 =>
-        array(
-          0 => 'contact_name',
-          1 =>
-          array(
-            'name' => 'parent_name',
-            'customLabel' => '{sugar_translate label=\'LBL_MODULE_NAME\' module=$fields.parent_type.value}',
-          ),
-        ),
-        1 =>
-        array(
-          0 =>
-          array(
-            'name' => 'name',
-            'label' => 'LBL_SUBJECT',
-          ),
-        ),
-        2 =>
-        array(
-          0 =>
-          array(
-            'name' => 'filename',
-          ),
-        ),
-        3 =>
-        array(
-          0 =>
-          array(
-            'name' => 'description',
-            'label' => 'LBL_NOTE_STATUS',
-          ),
-        ),
-        4 =>
-        array(
-          0 => 'assigned_user_name',
-        ),
-      ),
-      'LBL_PANEL_ASSIGNMENT' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'date_modified',
-            'label' => 'LBL_DATE_MODIFIED',
-            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-          ),
-          1 =>
-          array(
-            'name' => 'date_entered',
-            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-          ),
-        ),
-      ),
-    ),
-  ),
-);
+$viewdefs['Notes'] =
+[
+    'DetailView' => [
+        'templateMeta' => [
+            'maxColumns' => '2',
+            'widths' => [
+                0 => [
+                    'label' => '10',
+                    'field' => '30',
+                ],
+                1 => [
+                    'label' => '10',
+                    'field' => '30',
+                ],
+            ],
+            'useTabs' => true,
+            'tabDefs' => [
+                'LBL_NOTE_INFORMATION' => [
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ],
+                'LBL_PANEL_ASSIGNMENT' => [
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ],
+            ],
+        ],
+        'panels' => [
+            'lbl_note_information' => [
+                0 => [
+                    0 => 'contact_name',
+                    1 => [
+                        'name' => 'parent_name',
+                        'customLabel' => '{sugar_translate label=\'LBL_MODULE_NAME\' module=$fields.parent_type.value}',
+                    ],
+                ],
+                1 => [
+                    0 => [
+                        'name' => 'name',
+                        'label' => 'LBL_SUBJECT',
+                    ],
+                ],
+                2 => [
+                    0 => [
+                        'name' => 'filename',
+                    ],
+                ],
+                3 => [
+                    0 => [
+                        'name' => 'description',
+                        'label' => 'LBL_NOTE_STATUS',
+                    ],
+                ],
+                4 => [
+                    0 => 'assigned_user_name',
+                ],
+            ],
+            'LBL_PANEL_ASSIGNMENT' => [
+                0 => [
+                    0 => [
+                        'name' => 'date_modified',
+                        'label' => 'LBL_DATE_MODIFIED',
+                        'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                    ],
+                    1 => [
+                        'name' => 'date_entered',
+                        'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                    ],
+                ],
+            ],
+        ],
+    ],
+];

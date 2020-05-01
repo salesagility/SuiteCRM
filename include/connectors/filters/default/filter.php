@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,7 +38,8 @@
  */
 
 /**
- * Generic filter
+ * Generic filter.
+ *
  * @api
  */
 class default_filter
@@ -50,9 +50,6 @@ class default_filter
     {
     }
 
-
-
-
     public function setComponent($component)
     {
         $this->_component = $component;
@@ -60,15 +57,17 @@ class default_filter
 
     /**
      * getList
-     * Returns a nested array containing a key/value pair(s) of a source record
+     * Returns a nested array containing a key/value pair(s) of a source record.
      *
      * @param array $args Array of arguments to search/filter by
      * @param string $module String optional value of the module that the connector framework is attempting to map to
+     *
      * @return array of key/value pair(s) of source record; empty Array if no results are found
      */
     public function getList($args, $module)
     {
         $args = $this->_component->mapInput($args, $module);
+
         return $this->_component->getSource()->getList($args, $module);
     }
 }

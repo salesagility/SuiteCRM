@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarCache/SugarCacheAbstract.php');
+require_once 'include/SugarCache/SugarCacheAbstract.php';
 
 class SugarCacheZend extends SugarCacheAbstract
 {
@@ -57,7 +54,7 @@ class SugarCacheZend extends SugarCacheAbstract
             return false;
         }
 
-        if (function_exists("zend_shm_cache_fetch")
+        if (function_exists('zend_shm_cache_fetch')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_zend'])) {
             return true;
         }
@@ -67,24 +64,30 @@ class SugarCacheZend extends SugarCacheAbstract
 
     /**
      * @see SugarCacheAbstract::_setExternal()
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function _setExternal(
         $key,
         $value
-        ) {
+    ) {
         zend_shm_cache_store($key, serialize($value), $this->_expireTimeout);
     }
 
     /**
      * @see SugarCacheAbstract::_getExternal()
+     *
+     * @param mixed $key
      */
     protected function _getExternal(
         $key
-        ) {
+    ) {
         $raw_cache_value = zend_shm_cache_fetch($key);
         if ($raw_cache_value === false) {
             return null;
         }
+
         return is_string($raw_cache_value) ?
             unserialize($raw_cache_value) :
             $raw_cache_value;
@@ -92,10 +95,12 @@ class SugarCacheZend extends SugarCacheAbstract
 
     /**
      * @see SugarCacheAbstract::_clearExternal()
+     *
+     * @param mixed $key
      */
     protected function _clearExternal(
         $key
-        ) {
+    ) {
         zend_shm_cache_delete($key);
     }
 

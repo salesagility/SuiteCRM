@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,60 +36,54 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$dictionary['Alert'] = array(
-    'table'=>'alerts',
-    'audited'=> false,
-        'duplicate_merge'=>true,
-        'fields'=>array(
-            'is_read' =>
-                array(
-                    'name'		=> 'is_read',
-                    'vname'     => 'LBL_IS_READ',
-                    'type'		=> 'bool',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                ),
-            'target_module' =>
-                array(
-                    'name'		=> 'target_module',
-                    'vname'     => 'LBL_TYPE',
-                    'type'		=> 'varchar',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                ),
-            'type' =>
-                array(
-                    'name'		=> 'type',
-                    'vname'     => 'LBL_TYPE',
-                    'type'		=> 'varchar',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                ),
-            'url_redirect' =>
-                array(
-                    'name'		=> 'url_redirect',
-                    'vname'     => 'LBL_TYPE',
-                    'type'		=> 'varchar',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                ),
-            'reminder_id' =>
-                array(
-                    'name'		=> 'reminder_id',
-                    'type' => 'id',
-                    'required' => false,
-                    'reportable' => false,
-                    'studio'=> 'false',
-                    'comment' => 'The id of the reminder that created this alert',
-                )
-),
-    'relationships'=>array(
-),
-    'optimistic_locking'=>true,
-        'unified_search'=>false,
-    );
+$dictionary['Alert'] = [
+    'table' => 'alerts',
+    'audited' => false,
+    'duplicate_merge' => true,
+    'fields' => [
+        'is_read' => [
+            'name' => 'is_read',
+            'vname' => 'LBL_IS_READ',
+            'type' => 'bool',
+            'massupdate' => false,
+            'studio' => 'false',
+        ],
+        'target_module' => [
+            'name' => 'target_module',
+            'vname' => 'LBL_TYPE',
+            'type' => 'varchar',
+            'massupdate' => false,
+            'studio' => 'false',
+        ],
+        'type' => [
+            'name' => 'type',
+            'vname' => 'LBL_TYPE',
+            'type' => 'varchar',
+            'massupdate' => false,
+            'studio' => 'false',
+        ],
+        'url_redirect' => [
+            'name' => 'url_redirect',
+            'vname' => 'LBL_TYPE',
+            'type' => 'varchar',
+            'massupdate' => false,
+            'studio' => 'false',
+        ],
+        'reminder_id' => [
+            'name' => 'reminder_id',
+            'type' => 'id',
+            'required' => false,
+            'reportable' => false,
+            'studio' => 'false',
+            'comment' => 'The id of the reminder that created this alert',
+        ]
+    ],
+    'relationships' => [
+    ],
+    'optimistic_locking' => true,
+    'unified_search' => false,
+];
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Alerts', 'Alert', array('basic','assignable'));
+VardefManager::createVardef('Alerts', 'Alert', ['basic', 'assignable']);

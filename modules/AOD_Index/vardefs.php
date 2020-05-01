@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,60 +36,57 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$dictionary['AOD_Index'] = array(
-    'table'=>'aod_index',
-    'audited'=>true,
-        'duplicate_merge'=>true,
-        'fields'=>array(
-  'last_optimised' =>
-  array(
-    'required' => false,
-    'name' => 'last_optimised',
-    'vname' => 'LBL_LAST_OPTIMISED',
-    'type' => 'datetimecombo',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
-    'audited' => false,
-    'reportable' => true,
+$dictionary['AOD_Index'] = [
+    'table' => 'aod_index',
+    'audited' => true,
+    'duplicate_merge' => true,
+    'fields' => [
+        'last_optimised' => [
+            'required' => false,
+            'name' => 'last_optimised',
+            'vname' => 'LBL_LAST_OPTIMISED',
+            'type' => 'datetimecombo',
+            'massupdate' => 0,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'size' => '20',
+            'enable_range_search' => false,
+            'dbType' => 'datetime',
+        ],
+        'location' => [
+            'required' => false,
+            'name' => 'location',
+            'vname' => 'LBL_LOCATION',
+            'type' => 'varchar',
+            'massupdate' => 0,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'len' => '255',
+            'size' => '20',
+        ],
+    ],
+    'relationships' => [
+    ],
+    'optimistic_locking' => true,
     'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'size' => '20',
-    'enable_range_search' => false,
-    'dbType' => 'datetime',
-  ),
-  'location' =>
-  array(
-    'required' => false,
-    'name' => 'location',
-    'vname' => 'LBL_LOCATION',
-    'type' => 'varchar',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
-    'audited' => false,
-    'reportable' => true,
-    'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'len' => '255',
-    'size' => '20',
-  ),
-),
-    'relationships'=>array(
-),
-    'optimistic_locking'=>true,
-        'unified_search'=>false,
-    );
+];
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('AOD_Index', 'AOD_Index', array('basic','assignable'));
+VardefManager::createVardef('AOD_Index', 'AOD_Index', ['basic', 'assignable']);

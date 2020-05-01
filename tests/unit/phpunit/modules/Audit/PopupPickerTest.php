@@ -4,6 +4,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Audit/Popup_picker.php';
 
+/**
+ * @internal
+ */
 class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testProcessPage()
@@ -12,7 +15,7 @@ class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
         $focus = BeanFactory::getBean('Contacts');
         $focus->name = 'test';
         $focus->save();
-        
+
         ob_start();
         $popupPicker = new Popup_Picker();
         $result = $popupPicker->process_page();

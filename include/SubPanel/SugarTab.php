@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,18 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
- * Tab representation
+ * Tab representation.
+ *
  * @api
  */
 class SugarTab
 {
-    public function __construct($type='singletabmenu')
+    public function __construct($type = 'singletabmenu')
     {
         $this->type = $type;
         $this->ss = new Sugar_Smarty();
     }
 
-    public function setup($mainTabs, $otherTabs=array(), $subTabs=array(), $selected_group='All')
+    public function setup($mainTabs, $otherTabs = [], $subTabs = [], $selected_group = 'All')
     {
         global $sugar_version, $sugar_config, $current_user;
 
@@ -68,16 +69,16 @@ class SugarTab
         }
 
         $moreTabs = array_slice($mainTabs, $max_tabs);
-        /* If the current tab is in the 'More' menu, move it into the visible menu. */
+        // If the current tab is in the 'More' menu, move it into the visible menu.
         if (!empty($moreTabs[$selected_group])) {
-            $temp = array($selected_group => $mainTabs[$selected_group]);
+            $temp = [$selected_group => $mainTabs[$selected_group]];
             unset($mainTabs[$selected_group]);
-            array_splice($mainTabs, $max_tabs-1, 0, $temp);
+            array_splice($mainTabs, $max_tabs - 1, 0, $temp);
         }
 
-        $subpanelTitles = array();
+        $subpanelTitles = [];
 
-        if (isset($otherTabs[$key_all]) && isset($otherTabs[$key_all]['tabs'])) {
+        if (isset($otherTabs[$key_all], $otherTabs[$key_all]['tabs'])) {
             foreach ($otherTabs[$key_all]['tabs'] as $subtab) {
                 $subpanelTitles[$subtab['key']] = $subtab['label'];
             }
@@ -89,10 +90,10 @@ class SugarTab
         $this->ss->assign('othertabs', $otherTabs);
         $this->ss->assign('subpanelTitlesJSON', json_encode($subpanelTitles));
         $this->ss->assign('startSubPanel', $selected_group);
-        $this->ss->assign('sugarVersionJsStr', "?s=$sugar_version&c={$sugar_config['js_custom_version']}");
+        $this->ss->assign('sugarVersionJsStr', "?s={$sugar_version}&c={$sugar_config['js_custom_version']}");
         if (!empty($mainTabs)) {
             $mtak = array_keys($mainTabs);
-            $this->ss->assign('moreTab', $mainTabs[$mtak[min(count($mtak)-1, $max_tabs-1)]]['label']);
+            $this->ss->assign('moreTab', $mainTabs[$mtak[min(count($mtak) - 1, $max_tabs - 1)]]['label']);
         }
     }
 

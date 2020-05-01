@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Trackers/monitor/Monitor.php');
+require_once 'modules/Trackers/monitor/Monitor.php';
 
 class tracker_monitor extends Monitor
 {
-
     /**
-     * Monitor constructor
+     * Monitor constructor.
+     *
+     * @param mixed $name
+     * @param mixed $monitorId
+     * @param mixed $metadata
+     * @param mixed $store
      */
-    public function __construct($name='', $monitorId='', $metadata='', $store='')
+    public function __construct($name = '', $monitorId = '', $metadata = '', $store = '')
     {
         parent::__construct($name, $monitorId, $metadata, $store);
     }
@@ -59,9 +61,10 @@ class tracker_monitor extends Monitor
      * save
      * This method retrieves the Store instances associated with monitor and calls
      * the flush method passing with the montior ($this) instance.
+     *
      * @param $flush boolean parameter indicating whether or not to flush the instance data to store or possibly cache
      */
-    public function save($flush=true)
+    public function save($flush = true)
     {
         //if the monitor does not have values set no need to do the work saving.
         if (!$this->dirty) {

@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Field()
+    public function testAORField()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aor_Field = new AOR_Field();
@@ -21,12 +24,12 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'tracker_visibility', $aor_Field);
     }
 
-    public function testsave_lines()
+    public function testsaveLines()
     {
         $aor_Field = new AOR_Field();
 
         //preset the required data
-        $post_data = array();
+        $post_data = [];
         $post_data['field'][] = 'test field';
         $post_data['name'][] = 'test';
         $post_data['module_path'][] = 'test path';

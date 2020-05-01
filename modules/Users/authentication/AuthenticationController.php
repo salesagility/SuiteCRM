@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,26 +40,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class AuthenticationController
 {
     public $loggedIn = false; //if a user has attempted to login
     public $authenticated = false;
-    public $loginSuccess = false;// if a user has successfully logged in
-
-    protected static $authcontrollerinstance = null;
+    public $loginSuccess = false; // if a user has successfully logged in
 
     /**
      * @var SugarAuthenticate
      */
     public $authController;
 
+    protected static $authcontrollerinstance = null;
+
     /**
-     * Creates an instance of the authentication controller and loads it
+     * Creates an instance of the authentication controller and loads it.
      *
-     * @param STRING $type - the authentication Controller
+     * @param string $type - the authentication Controller
+     *
      * @return AuthenticationController -
      */
     public function __construct($type = null)
@@ -68,46 +66,10 @@ class AuthenticationController
     }
 
     /**
-     * Get auth controller object
-     * @param string $type
-     * @return SugarAuthenticate
-     */
-    protected function getAuthController($type)
-    {
-        if (!$type) {
-            $type = !empty($GLOBALS['sugar_config']['authenticationClass'])
-                ? $GLOBALS['sugar_config']['authenticationClass'] : 'SugarAuthenticate';
-        }
-
-        if ($type == 'SugarAuthenticate' && !empty($GLOBALS['system_config']->settings['system_ldap_enabled']) && empty($_SESSION['sugar_user'])) {
-            $type = 'LDAPAuthenticate';
-        }
-
-        // check in custom dir first, in case someone want's to override an auth controller
-        if (file_exists('custom/modules/Users/authentication/'.$type.'/' . $type . '.php')) {
-            require_once('custom/modules/Users/authentication/'.$type.'/' . $type . '.php');
-        } elseif (file_exists('modules/Users/authentication/'.$type.'/' . $type . '.php')) {
-            require_once('modules/Users/authentication/'.$type.'/' . $type . '.php');
-        } else {
-            require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
-            $type = 'SugarAuthenticate';
-        }
-
-        if (!empty($_REQUEST['no_saml'])
-            && (
-                (is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
-                (is_subclass_of($type, 'SAML2Authenticate') || 'SAML2Authenticate' == $type)
-            )) {
-            $type = 'SugarAuthenticate';
-        }
-
-        return new $type();
-    }
-
-    /**
-     * Returns an instance of the authentication controller
+     * Returns an instance of the authentication controller.
      *
      * @param string $type this is the type of authetnication you want to use default is SugarAuthenticate
+     *
      * @return an instance of the authetnciation controller
      */
     public static function getInstance($type = null)
@@ -125,12 +87,13 @@ class AuthenticationController
      * @param string $username
      * @param string $password
      * @param array $PARAMS
-     * @return boolean true if the user successfully logs in or false otherwise.
+     *
+     * @return bool true if the user successfully logs in or false otherwise
      */
-    public function login($username, $password, $PARAMS = array())
+    public function login($username, $password, $PARAMS = [])
     {
         //kbrill bug #13225
-        $_SESSION['loginAttempts'] = (isset($_SESSION['loginAttempts']))? $_SESSION['loginAttempts'] + 1: 1;
+        $_SESSION['loginAttempts'] = (isset($_SESSION['loginAttempts'])) ? $_SESSION['loginAttempts'] + 1 : 1;
         unset($GLOBALS['login_error']);
 
         if ($this->loggedIn) {
@@ -148,8 +111,9 @@ class AuthenticationController
             //loginLicense();
             if (!empty($GLOBALS['login_error'])) {
                 unset($_SESSION['authenticated_user_id']);
-                $GLOBALS['log']->fatal('FAILED LOGIN: potential hack attempt:'.$GLOBALS['login_error']);
+                $GLOBALS['log']->fatal('FAILED LOGIN: potential hack attempt:' . $GLOBALS['login_error']);
                 $this->loginSuccess = false;
+
                 return false;
             }
 
@@ -162,11 +126,11 @@ class AuthenticationController
             $config = new Administration();
             $config->retrieveSettings();
             $postSilentInstallAdminWizardCompleted = $GLOBALS['current_user']->getPreference('postSilentInstallAdminWizardCompleted');
-            if ((is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard') ||($postSilentInstallAdminWizardCompleted !== null && !$postSilentInstallAdminWizardCompleted)) {
+            if ((is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard') || ($postSilentInstallAdminWizardCompleted !== null && !$postSilentInstallAdminWizardCompleted)) {
                 $GLOBALS['module'] = 'Configurator';
                 $GLOBALS['action'] = 'AdminWizard';
                 ob_clean();
-                header("Location: index.php?module=Configurator&action=AdminWizard");
+                header('Location: index.php?module=Configurator&action=AdminWizard');
                 sugar_cleanup(true);
             }
 
@@ -179,7 +143,7 @@ class AuthenticationController
                 $GLOBALS['module'] = 'Users';
                 $GLOBALS['action'] = 'Wizard';
                 ob_clean();
-                header("Location: index.php?module=Users&action=Wizard");
+                header('Location: index.php?module=Users&action=Wizard');
                 sugar_cleanup(true);
             }
         } else {
@@ -198,7 +162,7 @@ class AuthenticationController
 
     /**
      * This is called on every page hit.
-     * It returns true if the current session is authenticated or false otherwise
+     * It returns true if the current session is authenticated or false otherwise.
      *
      * @return booelan
      */
@@ -215,6 +179,7 @@ class AuthenticationController
             $_SESSION['userStats']['lastTime'] = time();
             $_SESSION['userStats']['pages']++;
         }
+
         return $this->authenticated;
     }
 
@@ -228,5 +193,44 @@ class AuthenticationController
         $this->authController->logout();
         LogicHook::initialize();
         $GLOBALS['logic_hook']->call_custom_logic('Users', 'after_logout');
+    }
+
+    /**
+     * Get auth controller object.
+     *
+     * @param string $type
+     *
+     * @return SugarAuthenticate
+     */
+    protected function getAuthController($type)
+    {
+        if (!$type) {
+            $type = !empty($GLOBALS['sugar_config']['authenticationClass'])
+                ? $GLOBALS['sugar_config']['authenticationClass'] : 'SugarAuthenticate';
+        }
+
+        if ($type == 'SugarAuthenticate' && !empty($GLOBALS['system_config']->settings['system_ldap_enabled']) && empty($_SESSION['sugar_user'])) {
+            $type = 'LDAPAuthenticate';
+        }
+
+        // check in custom dir first, in case someone want's to override an auth controller
+        if (file_exists('custom/modules/Users/authentication/' . $type . '/' . $type . '.php')) {
+            require_once 'custom/modules/Users/authentication/' . $type . '/' . $type . '.php';
+        } elseif (file_exists('modules/Users/authentication/' . $type . '/' . $type . '.php')) {
+            require_once 'modules/Users/authentication/' . $type . '/' . $type . '.php';
+        } else {
+            require_once 'modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php';
+            $type = 'SugarAuthenticate';
+        }
+
+        if (!empty($_REQUEST['no_saml'])
+            && (
+                (is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
+                (is_subclass_of($type, 'SAML2Authenticate') || 'SAML2Authenticate' == $type)
+            )) {
+            $type = 'SugarAuthenticate';
+        }
+
+        return new $type();
     }
 }

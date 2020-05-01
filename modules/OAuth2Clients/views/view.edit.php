@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,12 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class OAuth2ClientsViewEdit extends ViewEdit
 {
     /**
-     * @var OAuth2Clients $bean
+     * @var OAuth2Clients
      */
     public $bean;
 
     /**
-     * @var string $formName
+     * @var string
      */
     public $formName;
 
@@ -60,22 +58,31 @@ class OAuth2ClientsViewEdit extends ViewEdit
     public function getMetaDataFile()
     {
         $this->setViewType();
+
         return parent::getMetaDataFile();
     }
 
     /**
-     *
+     * {@inheritdoc}
      */
+    public function display()
+    {
+        $this->ev->formName = $this->formName;
+        parent::display();
+    }
+
     private function setViewType()
     {
         switch ($this->bean->allowed_grant_type) {
             case 'password':
                 $this->type = 'editpassword';
                 $this->formName = 'EditPassword';
+
                 break;
             case 'client_credentials':
                 $this->type = 'editcredentials';
                 $this->formName = 'EditCredentials';
+
                 break;
         }
         if (!empty($_REQUEST['action'])) {
@@ -83,21 +90,14 @@ class OAuth2ClientsViewEdit extends ViewEdit
                 case 'EditViewPassword':
                     $this->type = 'editpassword';
                     $this->formName = 'EditPassword';
+
                     break;
                 case 'EditViewCredentials':
                     $this->type = 'editcredentials';
                     $this->formName = 'EditCredentials';
+
                     break;
             }
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function display()
-    {
-        $this->ev->formName = $this->formName;
-        parent::display();
     }
 }

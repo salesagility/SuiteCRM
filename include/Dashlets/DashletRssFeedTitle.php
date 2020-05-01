@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,20 +37,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
  * Class for parsing title from RSS feed, and keep default encoding (UTF-8)
- * Created: Sep 12, 2011
+ * Created: Sep 12, 2011.
  */
 class DashletRssFeedTitle
 {
-    public $defaultEncoding = "UTF-8";
+    public $defaultEncoding = 'UTF-8';
     public $readBytes = 8192;
     public $url;
     public $cut = 70;
-    public $contents = "";
-    public $title = "";
-    public $endWith = "...";
+    public $contents = '';
+    public $title = '';
+    public $endWith = '...';
     public $xmlEncoding = false;
     public $fileOpen = false;
 
@@ -69,6 +67,7 @@ class DashletRssFeedTitle
                 $this->cutLength();
             }
         }
+
         return $this->title;
     }
 
@@ -78,7 +77,7 @@ class DashletRssFeedTitle
     public function readFeed()
     {
         if ($this->url) {
-            if (!in_array(strtolower(parse_url($this->url, PHP_URL_SCHEME)), array("http", "https"), true)) {
+            if (!in_array(strtolower(parse_url($this->url, PHP_URL_SCHEME)), ['http', 'https'], true)) {
                 return false;
             }
             $fileOpen = @fopen($this->url, 'rb');
@@ -86,21 +85,20 @@ class DashletRssFeedTitle
                 $this->fileOpen = true;
                 $this->contents = fread($fileOpen, $this->readBytes);
                 fclose($fileOpen);
+
                 return true;
             }
         }
+
         return false;
     }
 
-    /**
-     *
-     */
     public function getTitle()
     {
-        $matches = array();
-        preg_match("/<title>.*?<\/title>/i", $this->contents, $matches);
+        $matches = [];
+        preg_match('/<title>.*?<\\/title>/i', $this->contents, $matches);
         if (isset($matches[0])) {
-            $this->title = str_replace(array('<![CDATA[', '<title>', '</title>', ']]>'), '', $matches[0]);
+            $this->title = str_replace(['<![CDATA[', '<title>', '</title>', ']]>'], '', $matches[0]);
         }
     }
 
@@ -111,20 +109,20 @@ class DashletRssFeedTitle
         }
     }
 
-    private function _identifyXmlEncoding()
-    {
-        $matches = array();
-        preg_match('/encoding\=*\".*?\"/', $this->contents, $matches);
-        if (isset($matches[0])) {
-            $this->xmlEncoding = trim(str_replace('encoding="', '"', $matches[0]), '"');
-        }
-    }
-
     public function convertEncoding()
     {
         $this->_identifyXmlEncoding();
         if ($this->xmlEncoding && $this->xmlEncoding != $this->defaultEncoding) {
             $this->title = iconv($this->xmlEncoding, $this->defaultEncoding, $this->title);
+        }
+    }
+
+    private function _identifyXmlEncoding()
+    {
+        $matches = [];
+        preg_match('/encoding\=*\".*?\"/', $this->contents, $matches);
+        if (isset($matches[0])) {
+            $this->xmlEncoding = trim(str_replace('encoding="', '"', $matches[0]), '"');
         }
     }
 }

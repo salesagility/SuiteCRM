@@ -1,44 +1,45 @@
 <?php
+
 $module_name = 'SurveyResponses';
-$viewdefs [$module_name] = array(
-    'EditView' => array(
-        'templateMeta' => array(
+$viewdefs[$module_name] = [
+    'EditView' => [
+        'templateMeta' => [
             'maxColumns' => '2',
-            'widths'     => array(
-                0 => array(
+            'widths' => [
+                0 => [
                     'label' => '10',
                     'field' => '30',
-                ),
-                1 => array(
+                ],
+                1 => [
                     'label' => '10',
                     'field' => '30',
-                ),
-            ),
-        ),
-        'panels'       => array(
-            'default' => array(
-                0 => array(
+                ],
+            ],
+        ],
+        'panels' => [
+            'default' => [
+                0 => [
                     0 => 'name',
                     1 => 'assigned_user_name',
-                ),
-                1 => array(
+                ],
+                1 => [
                     0 => 'description',
-                    1 => array(
+                    1 => [
                         'name' => 'contact_name',
-                    ),
-                ),
-                2 => array(
-                    0 => array(
+                    ],
+                ],
+                2 => [
+                    0 => [
                         'name' => 'account_name',
-                    ),
-                    1 => array(
+                    ],
+                    1 => [
                         'name' => 'survey_name',
-                    ),
-                ),
-                3 => array(
+                    ],
+                ],
+                3 => [
                     0 => 'campaign_name',
-                ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];

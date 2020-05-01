@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testdisplayCheckBoxes()
@@ -10,7 +13,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
         //check with empty values array. it should return html sting
         ob_start();
-        $values = array();
+        $values = [];
         $view->displayCheckBoxes('test', $values);
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
@@ -18,7 +21,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
         //check with prefilled values array. it should return html sting longer than earlier
         ob_start();
-        $values = array('option1', 'option2');
+        $values = ['option1', 'option2'];
         $view->displayCheckBoxes('test', $values);
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
@@ -31,7 +34,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
         //check with empty values array. it should return html sting
         ob_start();
-        $values = array();
+        $values = [];
         $view->displaySelect('test', $values);
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
@@ -39,7 +42,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
         //check with prefilled values array. it should return html sting longer than earlier
         ob_start();
-        $values = array('option1', 'option2');
+        $values = ['option1', 'option2'];
         $view->displaySelect('test', $values);
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
@@ -52,7 +55,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
         //check with empty values array. it should return html sting
         ob_start();
-        $values = array();
+        $values = [];
         $view->displayTextBoxes($values);
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
@@ -60,7 +63,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
         //check with prefilled values array. it should return html sting longer than earlier
         ob_start();
-        $values = array('option1', 'option2');
+        $values = ['option1', 'option2'];
         $view->displayTextBoxes($values);
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
@@ -72,7 +75,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewMetadata();
 
         ob_start();
-        $values = array('option1', 'option2');
+        $values = ['option1', 'option2'];
         $view->printValue($values);
         $renderedContent = ob_get_contents();
         ob_end_clean();
@@ -84,12 +87,6 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $request = $_REQUEST;
         }
-        
-
-        
-        
-        
-        
 
         $view = new ViewMetadata();
 
@@ -101,7 +98,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0, strlen($renderedContent));
 
         //test with REQUEST parameters set
-        $_REQUEST['modules'] = array('Calls', 'Meetings');
+        $_REQUEST['modules'] = ['Calls', 'Meetings'];
         ob_start();
         $view->display();
         $renderedContent = ob_get_contents();
@@ -125,17 +122,17 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
     public function testfindFieldsWithAttributes()
     {
         //check with emptty attributes array
-        $attributes = array();
+        $attributes = [];
         $fields1 = VardefBrowser::findFieldsWithAttributes($attributes);
         $this->assertTrue(is_array($fields1));
 
         //check with a very common attribute
-        $attributes = array('id');
+        $attributes = ['id'];
         $fields2 = VardefBrowser::findFieldsWithAttributes($attributes);
         $this->assertTrue(is_array($fields2));
 
         //check with a very specific attribute
-        $attributes = array('category');
+        $attributes = ['category'];
         $fields3 = VardefBrowser::findFieldsWithAttributes($attributes);
         $this->assertTrue(is_array($fields3));
 
@@ -148,12 +145,12 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
     public function testfindVardefs()
     {
         //check with empty modules array
-        $modules = array();
+        $modules = [];
         $defs1 = VardefBrowser::findVardefs($modules);
         $this->assertTrue(is_array($defs1));
 
         //check with modules array set.
-        $modules = array('Calls');
+        $modules = ['Calls'];
         $defs2 = VardefBrowser::findVardefs($modules);
         $this->assertTrue(is_array($defs2));
 
@@ -164,18 +161,18 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
     public function testfindFieldAttributes()
     {
         //check with emptty attributes array
-        $attributes = array();
+        $attributes = [];
         $fields1 = VardefBrowser::findFieldAttributes();
         $this->assertTrue(is_array($fields1));
 
         //check with emptty attributes array and prefilled modules array.
-        $attributes = array();
-        $modules = array('Users');
+        $attributes = [];
+        $modules = ['Users'];
         $fields2 = VardefBrowser::findFieldAttributes($attributes, $modules, true, true);
         $this->assertTrue(is_array($fields2));
 
         //check with a very specific attribute and empty modules array.
-        $attributes = array('category');
+        $attributes = ['category'];
         $fields3 = VardefBrowser::findFieldAttributes($attributes);
         $this->assertTrue(is_array($fields3));
 

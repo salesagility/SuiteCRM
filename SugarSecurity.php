@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
 class SugarSecure
 {
-    public $results = array();
+    public $results = [];
+
     public function display()
     {
         echo '<table>';
@@ -53,8 +48,8 @@ class SugarSecure
         }
         echo '</table>';
     }
-    
-    public function save($file='')
+
+    public function save($file = '')
     {
         $fp = fopen($file, 'ab');
         foreach ($this->results as $result) {
@@ -62,24 +57,23 @@ class SugarSecure
         }
         fclose($fp);
     }
-    
-    public function scan($path= '.', $ext = '.php')
+
+    public function scan($path = '.', $ext = '.php')
     {
         $dir = dir($path);
         while ($entry = $dir->read()) {
             if (is_dir($path . '/' . $entry) && $entry != '.' && $entry != '..') {
-                $this->scan($path .'/' . $entry);
+                $this->scan($path . '/' . $entry);
             }
-            if (is_file($path . '/'. $entry) && substr($entry, strlen($entry) - strlen($ext), strlen($ext)) == $ext) {
-                $contents = file_get_contents($path .'/'. $entry);
-                $this->scanContents($contents, $path .'/'. $entry);
+            if (is_file($path . '/' . $entry) && substr($entry, strlen($entry) - strlen($ext), strlen($ext)) == $ext) {
+                $contents = file_get_contents($path . '/' . $entry);
+                $this->scanContents($contents, $path . '/' . $entry);
             }
         }
     }
-    
+
     public function scanContents($contents)
     {
-        return;
     }
 }
 
@@ -87,7 +81,7 @@ class ScanFileIncludes extends SugarSecure
 {
     public function scanContents($contents, $file)
     {
-        $results = array();
+        $results = [];
         $found = '';
         /*preg_match_all("'(require_once\([^\)]*\\$[^\)]*\))'si", $contents, $results, PREG_SET_ORDER);
         foreach($results as $result){
@@ -100,47 +94,46 @@ class ScanFileIncludes extends SugarSecure
         	$found .= "\n" . $result[0];
         }
         */
-        $results = array();
-        preg_match_all("'require\([^\)]*\\$[^\)]*\)'si", $contents, $results, PREG_SET_ORDER);
+        $results = [];
+        preg_match_all("'require\\([^\\)]*\\$[^\\)]*\\)'si", $contents, $results, PREG_SET_ORDER);
         foreach ($results as $result) {
             $found .= "\n" . $result[0];
         }
-        $results = array();
-        preg_match_all("'include\([^\)]*\\$[^\)]*\)'si", $contents, $results, PREG_SET_ORDER);
+        $results = [];
+        preg_match_all("'include\\([^\\)]*\\$[^\\)]*\\)'si", $contents, $results, PREG_SET_ORDER);
         foreach ($results as $result) {
             $found .= "\n" . $result[0];
         }
-        $results = array();
-        preg_match_all("'require_once\([^\)]*\\$[^\)]*\)'si", $contents, $results, PREG_SET_ORDER);
+        $results = [];
+        preg_match_all("'require_once\\([^\\)]*\\$[^\\)]*\\)'si", $contents, $results, PREG_SET_ORDER);
         foreach ($results as $result) {
             $found .= "\n" . $result[0];
         }
-        $results = array();
-        preg_match_all("'fopen\([^\)]*\\$[^\)]*\)'si", $contents, $results, PREG_SET_ORDER);
+        $results = [];
+        preg_match_all("'fopen\\([^\\)]*\\$[^\\)]*\\)'si", $contents, $results, PREG_SET_ORDER);
         foreach ($results as $result) {
             $found .= "\n" . $result[0];
         }
-        $results = array();
-        preg_match_all("'file_get_contents\([^\)]*\\$[^\)]*\)'si", $contents, $results, PREG_SET_ORDER);
+        $results = [];
+        preg_match_all("'file_get_contents\\([^\\)]*\\$[^\\)]*\\)'si", $contents, $results, PREG_SET_ORDER);
         foreach ($results as $result) {
             $found .= "\n" . $result[0];
         }
         if (!empty($found)) {
-            $this->results[] = $file . $found."\n\n";
+            $this->results[] = $file . $found . "\n\n";
         }
     }
 }
-    
-
 
 class SugarSecureManager
 {
-    public $scanners = array();
+    public $scanners = [];
+
     public function registerScan($class)
     {
         $this->scanners[] = new $class();
     }
-    
+
     public function scan()
     {
         while ($scanner = current($this->scanners)) {
@@ -149,7 +142,7 @@ class SugarSecureManager
         }
         reset($this->scanners);
     }
-    
+
     public function display()
     {
         while ($scanner = current($this->scanners)) {
@@ -159,12 +152,12 @@ class SugarSecureManager
         }
         reset($this->scanners);
     }
-    
+
     public function save()
     {
         //reset($this->scanners);
-        $name = 'SugarSecure'. time() . '.txt';
-        while ($this->scanners  = next($this->scanners)) {
+        $name = 'SugarSecure' . time() . '.txt';
+        while ($this->scanners = next($this->scanners)) {
             $scanner->save($name);
         }
     }

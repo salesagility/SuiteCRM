@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,30 +36,24 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 function get_hook_array($module_name)
 {
     $hook_array = null;
     // This will load an array of the hooks to process
-    $file = "custom/modules/$module_name/logic_hooks.php";
+    $file = "custom/modules/{$module_name}/logic_hooks.php";
     if (file_exists($file)) {
-        include($file);
+        include $file;
     } else {
         LoggerManager::getLogger()->warn('File not found: ' . $file);
     }
-    return $hook_array;
 
+    return $hook_array;
     //end function return_hook_array
 }
-
-
 
 function check_existing_element($hook_array, $event, $action_array)
 {
@@ -71,8 +64,8 @@ function check_existing_element($hook_array, $event, $action_array)
             }
         }
     }
-    return false;
 
+    return false;
     //end function check_existing_element
 }
 
@@ -80,16 +73,12 @@ function replace_or_add_logic_type($hook_array)
 {
     $new_entry = build_logic_file($hook_array);
 
-    $new_contents = "<?php\n$new_entry\n?>";
-
-    return $new_contents;
+    return "<?php\n{$new_entry}\n?>";
 }
-
-
 
 function write_logic_file($module_name, $contents)
 {
-    $file = "modules/".$module_name . '/logic_hooks.php';
+    $file = 'modules/' . $module_name . '/logic_hooks.php';
     $file = create_custom_directory($file);
     $fp = sugar_fopen($file, 'wb');
     fwrite($fp, $contents);
@@ -100,7 +89,7 @@ function write_logic_file($module_name, $contents)
 
 function build_logic_file($hook_array)
 {
-    $hook_contents = "";
+    $hook_contents = '';
 
     $hook_contents .= "// Do not store anything in this file that is not part of the array or the hook version.  This file will	\n";
     $hook_contents .= "// be automatically rebuilt in the future. \n ";
@@ -109,11 +98,11 @@ function build_logic_file($hook_array)
     $hook_contents .= "// position, file, function \n";
 
     foreach ($hook_array as $event_array => $event) {
-        $hook_contents .= "\$hook_array['".$event_array."'] = Array(); \n";
+        $hook_contents .= "\$hook_array['" . $event_array . "'] = Array(); \n";
 
         foreach ($event as $second_key => $elements) {
-            $hook_contents .= "\$hook_array['".$event_array."'][] = ";
-            $hook_contents .= "Array(".$elements[0].", '".$elements[1]."', '".$elements[2]."','".$elements[3]."', '".$elements[4]."'); \n";
+            $hook_contents .= "\$hook_array['" . $event_array . "'][] = ";
+            $hook_contents .= 'Array(' . $elements[0] . ", '" . $elements[1] . "', '" . $elements[2] . "','" . $elements[3] . "', '" . $elements[4] . "'); \n";
         }
 
         //end foreach hook_array as event => action_array
@@ -122,6 +111,5 @@ function build_logic_file($hook_array)
     $hook_contents .= "\n\n";
 
     return $hook_contents;
-
     //end function build_logic_file
 }

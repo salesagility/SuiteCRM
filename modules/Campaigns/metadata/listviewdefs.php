@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,40 +42,38 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $theme, $mod_strings;
 
-$listViewDefs['Campaigns'] = array(
-    'NAME' => array(
+$listViewDefs['Campaigns'] = [
+    'NAME' => [
         'width' => '20',
         'label' => 'LBL_LIST_CAMPAIGN_NAME',
         'link' => true,
-        'default' => true),
-    'STATUS' => array(
+        'default' => true],
+    'STATUS' => [
         'width' => '10',
         'label' => 'LBL_LIST_STATUS',
-        'default' => true),
-    'CAMPAIGN_TYPE' => array(
+        'default' => true],
+    'CAMPAIGN_TYPE' => [
         'width' => '10',
         'label' => 'LBL_LIST_TYPE',
-        'default' => true),
-    'END_DATE' => array(
+        'default' => true],
+    'END_DATE' => [
         'width' => '10',
         'label' => 'LBL_LIST_END_DATE',
-        'default' => true),
-    'DATE_ENTERED' => array(
+        'default' => true],
+    'DATE_ENTERED' => [
         'width' => '10',
         'label' => 'LBL_DATE_ENTERED',
-        'default' => true),
+        'default' => true],
 
-    'ASSIGNED_USER_NAME' => array(
+    'ASSIGNED_USER_NAME' => [
         'width' => '8',
         'label' => 'LBL_LIST_ASSIGNED_USER',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-    'TRACK_CAMPAIGN' => array(
+        'default' => true],
+    'TRACK_CAMPAIGN' => [
         'width' => '0.01',
         'label' => '&nbsp;',
         'link' => true,
@@ -82,6 +81,5 @@ $listViewDefs['Campaigns'] = array(
         'default' => true,
         'studio' => false,
         'nowrap' => true,
-        'sortable' => false),
-
-);
+        'sortable' => false],
+];

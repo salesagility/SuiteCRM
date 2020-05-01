@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,14 +37,13 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/Emails/Email.php');
-require_once('modules/Contacts/Contact.php');
+require_once 'modules/Emails/Email.php';
+require_once 'modules/Contacts/Contact.php';
 
 /**
  * Class sendEmail
  * TODO: Move to emails module. This class violates single responsibility principle. In that the emails
- * module should handle the email
+ * module should handle the email.
  */
 class sendEmail
 {
@@ -55,6 +53,7 @@ class sendEmail
      * @param string $printable
      * @param string $file_name
      * @param bool $attach
+     *
      * @see generatePDF (Entrypoint)
      * @deprecated use EmailController::composeViewFrom
      */
@@ -72,8 +71,8 @@ class sendEmail
         // body
         $email->description_html = $printable;
         // type is draft
-        $email->type = "draft";
-        $email->status = "draft";
+        $email->type = 'draft';
+        $email->status = 'draft';
 
         if (!empty($module->billing_contact_id)) {
             $contact_id = $module->billing_contact_id;
@@ -87,19 +86,18 @@ class sendEmail
         $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
         $email->mailbox_id = $inboundEmailID;
 
-        $contact = new Contact;
+        $contact = new Contact();
         if ($contact->retrieve($contact_id)) {
             $email->parent_type = 'Contacts';
             $email->parent_id = $contact->id;
 
             if (!empty($contact->email1)) {
-                $email->to_addrs_emails = $contact->email1 . ";";
-                $email->to_addrs = $contact->name . " <" . $contact->email1 . ">";
-                $email->to_addrs_names = $contact->name . " <" . $contact->email1 . ">";
+                $email->to_addrs_emails = $contact->email1 . ';';
+                $email->to_addrs = $contact->name . ' <' . $contact->email1 . '>';
+                $email->to_addrs_names = $contact->name . ' <' . $contact->email1 . '>';
                 $email->parent_name = $contact->name;
             }
         }
-
 
         // team id
         $email->team_id = $current_user->default_team;
@@ -132,10 +130,9 @@ class sendEmail
 
         // redirect
         if (empty($email_id)) {
-            echo "Unable to initiate Email Client";
+            echo 'Unable to initiate Email Client';
             exit;
-        } else {
-            header('Location: index.php?action=ComposeViewWithPdfTemplate&module=Emails&return_module=' . $module_type . '&return_action=DetailView&return_id=' . $module->id . '&record=' . $email_id);
         }
+        header('Location: index.php?action=ComposeViewWithPdfTemplate&module=Emails&return_module=' . $module_type . '&return_action=DetailView&return_id=' . $module->id . '&record=' . $email_id);
     }
 }

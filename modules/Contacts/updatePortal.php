@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -60,8 +58,8 @@ class updatePortal
 
             $template = BeanFactory::getBean('EmailTemplates', $aop_config['joomla_account_creation_email_template_id']);
 
-            $search = array("\$joomla_pass", "\$portal_address");
-            $replace = array($bean->joomla_account_access, $aop_config['joomla_url']);
+            $search = ['$joomla_pass', '$portal_address'];
+            $replace = [$bean->joomla_account_access, $aop_config['joomla_url']];
 
             $object_arr['Contacts'] = $bean->id;
             $body_html = aop_parse_template($template->body_html, $object_arr);
@@ -79,7 +77,7 @@ class updatePortal
      * @param $emailSubject
      * @param $emailBody
      * @param $altEmailBody
-     * @param SugarBean|null $relatedBean
+     * @param null|SugarBean $relatedBean
      */
     public function sendEmail($emailTo, $emailSubject, $emailBody, $altEmailBody, SugarBean $relatedBean = null)
     {

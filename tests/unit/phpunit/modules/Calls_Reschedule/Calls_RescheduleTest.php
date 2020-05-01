@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class Calls_RescheduleTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class Calls_RescheduleTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testCalls_Reschedule()
+    public function testCallsReschedule()
     {
         // Execute the constructor and check for the Object type and  attributes
         $callsReschedule = new Calls_Reschedule();

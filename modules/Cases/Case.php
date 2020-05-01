@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // Case is used to store customer information.
 class aCase extends Basic
 {
-    public $field_name_map = array();
+    public $field_name_map = [];
     // Stored fields
     public $id;
     public $date_entered;
@@ -98,7 +96,7 @@ class aCase extends Basic
     public $emailSubjectMacro = '[CASE:%1]';
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array(
+    public $additional_column_fields = [
         'bug_id',
         'assigned_user_name',
         'assigned_user_id',
@@ -108,17 +106,17 @@ class aCase extends Basic
         'meeting_id',
         'call_id',
         'email_id',
-    );
+    ];
 
-    public $relationship_fields = array(
+    public $relationship_fields = [
         'account_id' => 'accounts',
-        'bug_id'     => 'bugs',
-        'task_id'    => 'tasks',
-        'note_id'    => 'notes',
+        'bug_id' => 'bugs',
+        'task_id' => 'tasks',
+        'note_id' => 'notes',
         'meeting_id' => 'meetings',
-        'call_id'    => 'calls',
-        'email_id'   => 'emails',
-    );
+        'call_id' => 'calls',
+        'email_id' => 'emails',
+    ];
 
     /**
      * aCase constructor.
@@ -142,7 +140,7 @@ class aCase extends Basic
      */
     public function get_summary_text()
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     /**
@@ -182,7 +180,7 @@ class aCase extends Basic
      * @param bool $is_update
      * @param array $exclude
      */
-    public function save_relationship_changes($is_update, $exclude = array())
+    public function save_relationship_changes($is_update, $exclude = [])
     {
         parent::save_relationship_changes($is_update, $exclude);
 
@@ -199,7 +197,7 @@ class aCase extends Basic
         global $app_list_strings;
         $default = $app_list_strings['case_relationship_type_default_key'];
         $this->load_relationship('contacts');
-        $this->contacts->add($contact_id, array('contact_role' => $default));
+        $this->contacts->add($contact_id, ['contact_role' => $default]);
     }
 
     public function fill_in_additional_detail_fields()
@@ -228,12 +226,13 @@ class aCase extends Basic
     public function get_contacts()
     {
         $this->load_relationship('contacts');
-        $query_array=$this->contacts->getQuery();
+        $query_array = $this->contacts->getQuery();
 
         //update the select clause in the returned query.
 
         if (!is_array($query_array)) {
             LoggerManager::getLogger()->fatal('Building database selection for contacts but the query information format is not an array.');
+
             return false;
         }
 
@@ -244,7 +243,7 @@ class aCase extends Basic
         foreach ($query_array as $qString) {
             $query .= ' ' . $qString;
         }
-        $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'case_role', 'case_rel_id');
+        $temp = ['id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'case_role', 'case_rel_id'];
 
         return $this->build_related_list2($query, new Contact(), $temp);
     }
@@ -270,7 +269,7 @@ class aCase extends Basic
         $temp_array['ENCODED_NAME'] = $this->name;
         $temp_array['CASE_NUMBER'] = $this->case_number;
         $temp_array['SET_COMPLETE'] =
-            "<a href='index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=$this->id&status=Closed'>" .
+            "<a href='index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record={$this->id}&status=Closed'>" .
             SugarThemeRegistry::current()->getImage(
                 'close_inline',
                 'title=' . translate('LBL_LIST_CLOSE', 'Cases') . " border='0'",
@@ -295,13 +294,13 @@ class aCase extends Basic
      */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = array();
+        $where_clauses = [];
         $the_query_string = $this->db->quote($the_query_string);
-        $where_clauses[] = "cases.name like '$the_query_string%'";
-        $where_clauses[] = "accounts.name like '$the_query_string%'";
+        $where_clauses[] = "cases.name like '{$the_query_string}%'";
+        $where_clauses[] = "accounts.name like '{$the_query_string}%'";
 
         if (is_numeric($the_query_string)) {
-            $where_clauses[] = "cases.case_number like '$the_query_string%'";
+            $where_clauses[] = "cases.case_number like '{$the_query_string}%'";
         }
 
         $the_where = '';
@@ -329,7 +328,7 @@ class aCase extends Basic
     public function set_notification_body($xtpl, $case)
     {
         global $app_list_strings;
-        
+
         $xtpl->assign('CASE_NUMBER', $case->case_number);
         $xtpl->assign('CASE_SUBJECT', $case->name);
         $xtpl->assign(
@@ -379,9 +378,9 @@ class aCase extends Basic
     public function getAccount($case_id)
     {
         if (empty($case_id)) {
-            return array();
+            return [];
         }
-        $ret_array = array();
+        $ret_array = [];
         $query =
             "SELECT acc.id, acc.name FROM accounts  acc, cases  WHERE acc.id = cases.account_id AND cases.id = '" .
             $case_id .

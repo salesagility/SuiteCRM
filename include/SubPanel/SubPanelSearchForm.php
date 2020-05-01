@@ -1,17 +1,17 @@
 <?php
 /**
- * SubPanelSearchForm.php
+ * SubPanelSearchForm.php.
+ *
  * @author SalesAgility <info@salesagility.com>
  * Date: 28/01/14
  */
-
-require_once('include/SearchForm/SearchForm2.php');
+require_once 'include/SearchForm/SearchForm2.php';
 
 class SubPanelSearchForm extends SearchForm
 {
     public $subPanel; // the instantiated bean of the subPanel
 
-    public function __construct($seed, $module, $subPanel, $options = array())
+    public function __construct($seed, $module, $subPanel, $options = [])
     {
         $this->subPanel = $subPanel;
         parent::__construct($seed, $module, 'DetailView', $options);
@@ -27,26 +27,28 @@ class SubPanelSearchForm extends SearchForm
 
         // Adding the offset to subpanel search field - this has no affect on pagination
         if ($this->subPanel->parent_bean->module_dir != '') {
-            $this->th->ss->assign('subpanelPageOffset', '<input type="hidden" name="'.$this->subPanel->parent_bean->module_dir.'_'.$this->subPanel->subpanel_id.'_CELL_offset" value="0" />');
+            $this->th->ss->assign('subpanelPageOffset', '<input type="hidden" name="' . $this->subPanel->parent_bean->module_dir . '_' . $this->subPanel->subpanel_id . '_CELL_offset" value="0" />');
         }
         $this->parsedView = 'sps';
+
         return parent::display($header);
     }
 
-    public function getCollectionList($collection = array())
+    public function getCollectionList($collection = [])
     {
         global $app_list_strings;
 
-        $select = array();
+        $select = [];
 
         if (!empty($collection)) {
-            $select = array();
+            $select = [];
             foreach ($collection as $name => $value_array) {
                 if (isset($app_list_strings['moduleList'][$value_array['module']])) {
                     $select[$name] = $app_list_strings['moduleList'][$value_array['module']];
                 }
             }
         }
+
         return $select;
     }
 

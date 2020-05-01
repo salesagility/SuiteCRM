@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,13 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Vardef Handler Object
+ * Vardef Handler Object.
+ *
  * @api
  */
 class VarDefHandler
@@ -52,26 +50,25 @@ class VarDefHandler
     public $meta_array_name;
     public $target_meta_array = false;
     public $start_none = false;
-    public $extra_array = array();					//used to add custom items
-    public $options_array = array();
+    public $extra_array = [];					//used to add custom items
+    public $options_array = [];
     public $module_object;
-    public $start_none_lbl = null;
+    public $start_none_lbl;
 
-
-    public function __construct($module, $meta_array_name=null)
+    public function __construct($module, $meta_array_name = null)
     {
         $this->meta_array_name = $meta_array_name;
         $this->module_object = $module;
-        if ($meta_array_name!=null) {
+        if ($meta_array_name != null) {
             global $vardef_meta_array;
-            include("include/VarDefHandler/vardef_meta_arrays.php");
+            include 'include/VarDefHandler/vardef_meta_arrays.php';
             $this->target_meta_array = $vardef_meta_array[$meta_array_name];
         }
 
         //end function setup
     }
 
-    public function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false)
+    public function get_vardef_array($use_singular = false, $remove_dups = false, $use_field_name = false, $use_field_label = false)
     {
         global $dictionary;
         global $current_language;
@@ -84,7 +81,7 @@ class VarDefHandler
         //$base_array = $dictionary[$this->module_object->object_name]['fields'];
 
         ///Inclue empty none set or not
-        if ($this->start_none==true) {
+        if ($this->start_none == true) {
             if (!empty($this->start_none_lbl)) {
                 $this->options_array[''] = $this->start_none_lbl;
             } else {
@@ -100,7 +97,6 @@ class VarDefHandler
         }
         /////////end special one off//////////////////////////////////
 
-
         foreach ($base_array as $key => $value_array) {
             $compare_results = $this->compare_type($value_array);
 
@@ -108,10 +104,10 @@ class VarDefHandler
                 if ($value_array['type'] == 'link' && !$use_field_label) {
                     $relName = $value_array['name'];
                     $this->module_object->load_relationship($relName);
-                    if (!empty($app_list_strings['moduleList'][$this->module_object->$relName->getRelatedModuleName()])) {
-                        $label_name = $app_list_strings['moduleList'][$this->module_object->$relName->getRelatedModuleName()];
+                    if (!empty($app_list_strings['moduleList'][$this->module_object->{$relName}->getRelatedModuleName()])) {
+                        $label_name = $app_list_strings['moduleList'][$this->module_object->{$relName}->getRelatedModuleName()];
                     } else {
-                        $label_name = $this->module_object->$relName->getRelatedModuleName();
+                        $label_name = $this->module_object->{$relName}->getRelatedModuleName();
                     }
                 } else {
                     if (!empty($value_array['vname'])) {
@@ -120,7 +116,6 @@ class VarDefHandler
                         $label_name = $value_array['name'];
                     }
                 }
-
 
                 $label_name = get_label($label_name, $temp_module_strings);
 
@@ -136,7 +131,7 @@ class VarDefHandler
                     if ($use_field_name) {
                         $index = $value_array['name'];
                     } else {
-                        $index = $this->module_object->$key->getRelatedModuleName();
+                        $index = $this->module_object->{$key}->getRelatedModuleName();
                     }
                 } else {
                     $index = $key;
@@ -158,17 +153,14 @@ class VarDefHandler
         }
         if ($use_singular == true) {
             return convert_module_to_singular($this->options_array);
-        } else {
-            return $this->options_array;
         }
 
+        return $this->options_array;
         //end get_vardef_array
     }
 
-
     public function compare_type($value_array)
     {
-
         //Filter nothing?
         if (!is_array($this->target_meta_array)) {
             return true;
@@ -205,7 +197,7 @@ class VarDefHandler
 
         if (isset($this->target_meta_array['inclusion'])) {
             foreach ($this->target_meta_array['inclusion'] as $attribute => $value) {
-                if ($attribute=="type") {
+                if ($attribute == 'type') {
                     foreach ($value as $actual_value) {
                         if (isset($value_array[$attribute]) && $value_array[$attribute] != $actual_value) {
                             return false;
@@ -232,9 +224,7 @@ class VarDefHandler
             }
         }
 
-
         return true;
-
         //end function compare_type
     }
 

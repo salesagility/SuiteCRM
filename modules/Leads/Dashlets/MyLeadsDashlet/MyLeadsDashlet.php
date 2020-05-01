@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,20 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGeneric.php');
-
+require_once 'include/Dashlets/DashletGeneric.php';
 
 class MyLeadsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/Leads/Dashlets/MyLeadsDashlet/MyLeadsDashlet.data.php');
+        require 'modules/Leads/Dashlets/MyLeadsDashlet/MyLeadsDashlet.data.php';
 
         parent::__construct($id, $def);
 
@@ -65,6 +59,4 @@ class MyLeadsDashlet extends DashletGeneric
         $this->columns = $dashletData['MyLeadsDashlet']['columns'];
         $this->seedBean = new Lead();
     }
-
-
 }

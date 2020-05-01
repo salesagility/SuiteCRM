@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,63 +40,58 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Notes'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Notes'],
+    ],
 
     'where' => '',
 
-
-
-    'list_fields' => array(
-        'object_image'=>array(
+    'list_fields' => [
+        'object_image' => [
             'vname' => 'LBL_OBJECT_IMAGE',
             'widget_class' => 'SubPanelIcon',
             'width' => '2%',
-            'image2'=>'attachment',
-            'image2_url_field'=> array(
+            'image2' => 'attachment',
+            'image2_url_field' => [
                 'id_field' => 'id',
                 'filename_field' => 'filename',
-            ),
-        ),
-        'name'=>array(
+            ],
+        ],
+        'name' => [
             'vname' => 'LBL_LIST_SUBJECT',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '50%',
-        ),
-        'contact_name'=>array(
+        ],
+        'contact_name' => [
             'module' => 'Contacts',
             'vname' => 'LBL_LIST_CONTACT_NAME',
             'width' => '20%',
             'target_record_key' => 'contact_id',
             'target_module' => 'Contacts',
             'widget_class' => 'SubPanelDetailViewLink',
-        ),
-        'date_modified'=>array(
+        ],
+        'date_modified' => [
             'vname' => 'LBL_LIST_DATE_MODIFIED',
             'width' => '10%',
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'Notes',
             'width' => '5%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
-             'widget_class' => 'SubPanelRemoveButton',
-             'width' => '2%',
-        ),
-        'file_url'=>array(
-            'usage'=>'query_only'
-            ),
-        'filename'=>array(
-            'usage'=>'query_only'
-            ),
-    ),
-);
+            'widget_class' => 'SubPanelRemoveButton',
+            'width' => '2%',
+        ],
+        'file_url' => [
+            'usage' => 'query_only'
+        ],
+        'filename' => [
+            'usage' => 'query_only'
+        ],
+    ],
+];

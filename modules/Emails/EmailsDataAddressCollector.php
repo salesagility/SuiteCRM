@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * EmailsDataAddressCollector
+ * EmailsDataAddressCollector.
  *
  * @author gyula
  */
@@ -59,25 +58,21 @@ class EmailsDataAddressCollector
     const ERR_REPLY_TO_FORMAT_INVALID_AS_FROM = 209;
 
     /**
-     *
      * @var User
      */
     protected $currentUser;
 
     /**
-     *
      * @var array
      */
     protected $sugarConfig;
 
     /**
-     *
      * @var int
      */
     protected $err;
 
     /**
-     *
      * @var OutboundEmail
      */
     protected $oe;
@@ -85,31 +80,26 @@ class EmailsDataAddressCollector
     // ------------------ FROM DATA STRUCT -------------------
 
     /**
-     *
      * @var string
      */
     protected $replyTo;
 
     /**
-     *
      * @var string
      */
     protected $fromAddr;
 
     /**
-     *
      * @var string
      */
     protected $fromName;
 
     /**
-     *
      * @var string
      */
     protected $oeId;
 
     /**
-     *
      * @var string
      */
     protected $oeName;
@@ -117,7 +107,6 @@ class EmailsDataAddressCollector
     // -------------------------------------------------------
 
     /**
-     *
      * @param User $currentUser
      * @param array $sugarConfig
      */
@@ -133,8 +122,10 @@ class EmailsDataAddressCollector
      * @param $prependSignature
      * @param $emailSignatures
      * @param $defaultEmailSignature
-     * @return array
+     *
      * @throws EmailValidatorException
+     *
+     * @return array
      */
     public function collectDataAddressesFromIEAccounts(
         $ieAccounts,
@@ -143,7 +134,7 @@ class EmailsDataAddressCollector
         $emailSignatures,
         $defaultEmailSignature
     ) {
-        $dataAddresses = array();
+        $dataAddresses = [];
         foreach ($ieAccounts as $inboundEmail) {
             $this->validateInboundEmail($inboundEmail);
 
@@ -158,7 +149,6 @@ class EmailsDataAddressCollector
                 $emailFromValidator = new EmailFromValidator();
 
                 $this->logReplyToError($emailFromValidator);
-
 
                 $dataAddress = $this->getDataAddressFromIEAccounts(
                     $inboundEmail,
@@ -177,10 +167,9 @@ class EmailsDataAddressCollector
         return $this->fillDataAddress($dataAddresses, $defaultEmailSignature, $prependSignature);
     }
 
-
     /**
-     *
      * @param InboundEmail $inboundEmail
+     *
      * @throws InvalidArgumentException
      */
     protected function validateInboundEmail($inboundEmail = null)
@@ -194,7 +183,6 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $storedOptions
      * @param InboundEmail $inboundEmail
      */
@@ -219,8 +207,7 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
-     * @param OutboundEmail|null $oe
+     * @param null|OutboundEmail $oe
      */
     protected function setOe($oe)
     {
@@ -228,7 +215,6 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $storedOptions
      */
     protected function retrieveFromDataStruct($storedOptions)
@@ -252,6 +238,7 @@ class EmailsDataAddressCollector
 
     /**
      * @param EmailFromValidator $emailFromValidator
+     *
      * @throws EmailValidatorException
      */
     protected function logReplyToError(EmailFromValidator $emailFromValidator)
@@ -281,9 +268,9 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $splits
      * @param int $replyToErr
+     *
      * @return string
      */
     protected function getTmpNameForLogReplyToError($splits, &$replyToErr)
@@ -297,9 +284,9 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $splits
      * @param int $replyToErr
+     *
      * @return string
      */
     protected function getTmpAddrForLogReplyToError($splits, &$replyToErr)
@@ -317,6 +304,7 @@ class EmailsDataAddressCollector
      * @param $tmpAddr
      * @param EmailFromValidator $emailFromValidator
      * @param $replyToErr
+     *
      * @throws EmailValidatorException
      */
     protected function validateForLogReplyToError(
@@ -338,7 +326,6 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @return string
      */
     protected function getReplyTo()
@@ -347,7 +334,6 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param InboundEmail $inboundEmail
      * @param array $storedOptions
      * @param string $prependSignature
@@ -355,6 +341,7 @@ class EmailsDataAddressCollector
      * @param bool $isGroupEmailAccount
      * @param array $emailSignatures
      * @param array $defaultEmailSignature
+     *
      * @return array
      */
     protected function getDataAddressFromIEAccounts(
@@ -381,29 +368,28 @@ class EmailsDataAddressCollector
             if ($defaultEmailSignature['no_default_available'] === true) {
                 $dataAddress['emailSignatures'] = $defaultEmailSignature;
             } else {
-                $dataAddress['emailSignatures'] = array(
+                $dataAddress['emailSignatures'] = [
                     'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
                     'plain' => $defaultEmailSignature['signature'],
-                );
+                ];
             }
         } else {
-            $dataAddress['emailSignatures'] = array(
+            $dataAddress['emailSignatures'] = [
                 'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
                 'plain' => $signature['signature'],
-            );
+            ];
         }
 
         return $dataAddress;
     }
 
-
     /**
-     *
      * @param InboundEmail $inboundEmail
      * @param array $storedOptions
      * @param string $prependSignature
      * @param bool $isPersonalEmailAccount
      * @param bool $isGroupEmailAccount
+     *
      * @return array
      */
     protected function getDataAddressArrayFromIEAccounts(
@@ -432,7 +418,6 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @return string
      */
     protected function getOeId()
@@ -441,7 +426,6 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @return string
      */
     protected function getOeName()
@@ -450,14 +434,13 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $emailSignatures
      * @param InboundEmail $inboundEmail
+     *
      * @return string
      */
     protected function getEmailSignatureId($emailSignatures, InboundEmail $inboundEmail)
     {
-
         // Include signature
         if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
             $emailSignatureId = $emailSignatures[$inboundEmail->id];
@@ -469,10 +452,10 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $dataAddresses
      * @param array $defaultEmailSignature
      * @param string $prependSignature
+     *
      * @return array
      */
     protected function fillDataAddress($dataAddresses, $defaultEmailSignature, $prependSignature)
@@ -494,10 +477,10 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $dataAddresses
      * @param array $defaultEmailSignature
      * @param string $prependSignature
+     *
      * @return array
      */
     protected function fillDataAddressFromUserAddresses($dataAddresses, $defaultEmailSignature, $prependSignature)
@@ -516,13 +499,12 @@ class EmailsDataAddressCollector
         return $dataAddresses;
     }
 
-
     /**
-     *
      * @param array $dataAddresses
      * @param array $userAddressesArr
      * @param array $defaultEmailSignature
      * @param string $prependSignature
+     *
      * @return array
      */
     protected function collectDataAddressesFromUserAddresses(
@@ -552,8 +534,8 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $userAddress
+     *
      * @return string
      */
     protected function getFromString($userAddress)
@@ -569,6 +551,7 @@ class EmailsDataAddressCollector
 
     /**
      * @param $email
+     *
      * @return string
      */
     protected function addCurrentUserToEmailString($email)
@@ -577,8 +560,8 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $defaultEmailSignature
+     *
      * @return string
      */
     protected function getSignatureHtml($defaultEmailSignature)
@@ -594,8 +577,8 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $defaultEmailSignature
+     *
      * @return string
      */
     protected function getSignatureTxt($defaultEmailSignature)
@@ -611,12 +594,12 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $userAddress
      * @param string $fromString
      * @param string $prependSignature
      * @param string $signatureHtml
      * @param string $signatureTxt
+     *
      * @return array
      */
     protected function getCollectDataAddressArrayFromUserAddresses(
@@ -648,9 +631,9 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $dataAddresses
      * @param array $defaultEmailSignature
+     *
      * @return array
      */
     protected function fillDataAddressWithSystemMailerSettings($dataAddresses, $defaultEmailSignature)
@@ -673,6 +656,7 @@ class EmailsDataAddressCollector
 
     /**
      * @param $dataAddresses
+     *
      * @return mixed
      */
     protected function fillDataAddressFromPersonal($dataAddresses)
@@ -696,7 +680,6 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @return OutboundEmail
      */
     protected function getOe()
@@ -704,15 +687,14 @@ class EmailsDataAddressCollector
         return $this->oe;
     }
 
-
     /**
-     *
      * @param string $id
      * @param string $name
      * @param string $fromName
      * @param string $fromAddr
      * @param string $mailUser
      * @param array $defaultEmailSignature
+     *
      * @return array
      */
     protected function getFillDataAddressArray(
@@ -728,8 +710,8 @@ class EmailsDataAddressCollector
         return $dataAddress->getDataArray(
             'system',
             $id,
-            "$fromName &lt;$fromAddr&gt;",
-            "$fromName &lt;$fromAddr&gt;",
+            "{$fromName} &lt;{$fromAddr}&gt;",
+            "{$fromName} &lt;{$fromAddr}&gt;",
             $fromName,
             false,
             false,
@@ -742,8 +724,8 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $storedOptions
+     *
      * @return OutboundEmail
      */
     protected function getOutboundEmailOrErrorByStoredOptions($storedOptions)
@@ -759,8 +741,8 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $storedOptions
+     *
      * @return string
      */
     protected function getReplyToOnError($storedOptions)
@@ -776,8 +758,8 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $storedOptions
+     *
      * @return string
      */
     protected function getFromNameOnError($storedOptions)
@@ -793,8 +775,8 @@ class EmailsDataAddressCollector
     }
 
     /**
-     *
      * @param array $storedOptions
+     *
      * @return string
      */
     protected function getFromAddrOnError($storedOptions)

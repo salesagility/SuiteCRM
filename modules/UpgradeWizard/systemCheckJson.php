@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,26 +42,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 if (ob_get_level() < 1) {
     ob_start();
 }
 ob_implicit_flush(1);
 
 // load the generated persistence file if found
-$persistence = array();
+$persistence = [];
 if (file_exists($persist = sugar_cached('/modules/UpgradeWizard/_persistence.php'))) {
     require_once $persist;
 }
-require_once('modules/UpgradeWizard/uw_utils.php');
+require_once 'modules/UpgradeWizard/uw_utils.php';
 
 switch ($_REQUEST['systemCheckStep']) {
     case 'find_all_files':
         ob_end_flush();
         $persistence['files_to_check'] = getFilesForPermsCheck();
-        break;
 
+        break;
     case 'check_found_files':
         if (empty($persistence['files_to_check'])) {
             logThis('*** ERROR: could not find persistent array of files to check');
@@ -69,11 +68,12 @@ switch ($_REQUEST['systemCheckStep']) {
             ob_end_flush();
             $persistence = checkFiles($persistence['files_to_check'], true);
         }
-    break;
 
+    break;
     case 'check_files_status':
         $ret = ($persistence['filesNotWritable']) ? 'true' : 'false';
         echo $ret;
+
     break;
 }
 

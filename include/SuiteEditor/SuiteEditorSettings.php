@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class SuiteEditorSettings
+ * Class SuiteEditorSettings.
  *
  * store and extends an associative settings for editors
  */
@@ -55,7 +53,7 @@ abstract class SuiteEditorSettings
     public $contents;
 
     /**
-     * Target textarea element ID
+     * Target textarea element ID.
      *
      * @var string
      */
@@ -77,7 +75,7 @@ abstract class SuiteEditorSettings
     public $group;
 
     /**
-     * Javascript for body click handling
+     * Javascript for body click handling.
      *
      * @var string
      */
@@ -96,14 +94,14 @@ abstract class SuiteEditorSettings
     }
 
     /**
-     * extends the settings
+     * extends the settings.
      *
      * @param $settings array or object
      */
     public function extend($settings)
     {
         foreach ($settings as $key => $value) {
-            $this->$key = $value;
+            $this->{$key} = $value;
         }
     }
 }

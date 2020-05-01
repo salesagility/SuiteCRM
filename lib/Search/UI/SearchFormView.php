@@ -59,7 +59,7 @@ class SearchFormView extends View
         parent::__construct(__DIR__ . '/templates/search.form.tpl');
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function display()
     {
         $sizes = $this->makeSizesFromConfig();
@@ -83,19 +83,19 @@ class SearchFormView extends View
     protected function makeSizesFromConfig()
     {
         global $sugar_config;
-        
+
         if (!isset($sugar_config['search']['pagination']['min'])) {
             LoggerManager::getLogger()->warn('Configuration does not contains value for search pagination min');
         }
-        
+
         if (!isset($sugar_config['search']['pagination']['step'])) {
             LoggerManager::getLogger()->warn('Configuration does not contains value for search pagination step');
         }
-        
+
         if (!isset($sugar_config['search']['pagination']['max'])) {
             LoggerManager::getLogger()->warn('Configuration does not contains value for search pagination max');
         }
-        
+
         $min = isset($sugar_config['search']['pagination']['min']) ? $sugar_config['search']['pagination']['min'] : null;
         $step = isset($sugar_config['search']['pagination']['step']) ? $sugar_config['search']['pagination']['step'] : null;
         $max = isset($sugar_config['search']['pagination']['max']) ? $sugar_config['search']['pagination']['max'] : null;

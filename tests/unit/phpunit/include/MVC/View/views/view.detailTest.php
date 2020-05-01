@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -11,7 +14,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
+
     protected function tearDown()
     {
         parent::tearDown();

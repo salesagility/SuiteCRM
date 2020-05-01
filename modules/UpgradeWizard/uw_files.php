@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,10 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 global $sugar_version;
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -48,11 +43,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	DYNAMICALLY GENERATE UPGRADEWIZARD MODULE FILE LIST
-$uwFilesCurrent = findAllFiles('modules/UpgradeWizard/', array());
+$uwFilesCurrent = findAllFiles('modules/UpgradeWizard/', []);
 
 // handle 4.x to 4.5.x+ (no UpgradeWizard module)
 if (count($uwFilesCurrent) < 5) {
-    $uwFiles = array(
+    $uwFiles = [
         'modules/UpgradeWizard/language/en_us.lang.php',
         'modules/UpgradeWizard/cancel.php',
         'modules/UpgradeWizard/commit.php',
@@ -74,21 +69,21 @@ if (count($uwFilesCurrent) < 5) {
         'modules/UpgradeWizard/uw_files.php',
         'modules/UpgradeWizard/uw_main.tpl',
         'modules/UpgradeWizard/uw_utils.php',
-    );
+    ];
 } else {
     $uwFilesCurrent = findAllFiles('ModuleInstall', $uwFilesCurrent);
     $uwFilesCurrent = findAllFiles('include/javascript/yui', $uwFilesCurrent);
     $uwFilesCurrent[] = 'HandleAjaxCall.php';
 
-    $uwFiles = array();
+    $uwFiles = [];
     foreach ($uwFilesCurrent as $file) {
-        $uwFiles[] = str_replace("./", "", clean_path($file));
+        $uwFiles[] = str_replace('./', '', clean_path($file));
     }
 }
 ////	END DYNAMICALLY GENERATE UPGRADEWIZARD MODULE FILE LIST
 ///////////////////////////////////////////////////////////////////////////////
 
-$uw_files = array(
+$uw_files = [
     // standard files we steamroll with no warning
     'log4php.properties',
     'include/utils/encryption_utils.php',
@@ -105,6 +100,6 @@ $uw_files = array(
     'include/database/MssqlManager.php',
     'include/database/MysqlManager.php',
     'include/database/DBManagerFactory.php',
-);
+];
 
 $uw_files = array_merge($uw_files, $uwFiles);

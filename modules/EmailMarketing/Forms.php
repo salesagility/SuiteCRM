@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,15 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 function get_validate_record_js()
 {
     global $mod_strings;
     global $app_strings;
 
     $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
-    $err_lbl_send_message= $mod_strings['LBL_MESSAGE_FOR'];
-    $the_script  = <<<EOQ
+    $err_lbl_send_message = $mod_strings['LBL_MESSAGE_FOR'];
+    $the_script = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 function verify_data(form,formname) {
@@ -63,11 +62,11 @@ function verify_data(form,formname) {
 
 	if (!thecheckbox.checked && theselectbox.selectedIndex < 0)  {
 		isError=true;
-		errorMessage="$err_lbl_send_message";
+		errorMessage="{$err_lbl_send_message}";
 	}
 			
 	if (isError == true) {
-		alert("$err_missing_required_fields" + errorMessage);
+		alert("{$err_missing_required_fields}" + errorMessage);
 		return false;
 	}
 	return true;
@@ -79,7 +78,7 @@ EOQ;
     return $the_script;
 }
 
-/**
+/*
  * Create HTML form to enter a new record with the minimum necessary fields.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.

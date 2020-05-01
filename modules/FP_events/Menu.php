@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,15 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $mod_strings, $app_strings, $sugar_config;
- 
+
 if (ACLController::checkAccess('FP_events', 'edit', true)) {
-    $module_menu[]=array("index.php?module=FP_events&action=EditView&return_module=FP_events&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'FP_events');
+    $module_menu[] = ['index.php?module=FP_events&action=EditView&return_module=FP_events&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Create', 'FP_events'];
 }
 if (ACLController::checkAccess('FP_events', 'list', true)) {
-    $module_menu[]=array("index.php?module=FP_events&action=index&return_module=FP_events&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'FP_events');
+    $module_menu[] = ['index.php?module=FP_events&action=index&return_module=FP_events&return_action=DetailView', $mod_strings['LNK_LIST'], 'List', 'FP_events'];
 }
 if (ACLController::checkAccess('FP_events', 'import', true)) {
-    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=FP_events&return_module=FP_events&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'FP_events');
+    $module_menu[] = ['index.php?module=Import&action=Step1&import_module=FP_events&return_module=FP_events&return_action=index', $app_strings['LBL_IMPORT'], 'Import', 'FP_events'];
 }

@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testjjwg_Maps()
+    public function testjjwgMaps()
     {
         // Execute the constructor and check for the Object type and  attributes
         $jjwgMaps = new jjwg_Maps();
@@ -38,7 +41,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
     public function testsaveConfiguration()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $jjwgMaps = new jjwg_Maps();
 
         //test with empty array/default
@@ -46,7 +49,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $result);
 
         //test with data array
-        $result = $jjwgMaps->saveConfiguration(array('test' => 1));
+        $result = $jjwgMaps->saveConfiguration(['test' => 1]);
         $this->assertEquals(true, $result);
     }
 
@@ -69,23 +72,21 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
         $this->assertEquals(100, $bean->jjwg_maps_lat_c);
         $this->assertEquals(40, $bean->jjwg_maps_lng_c);
-        
-        
+
         if (!isset($bean->jjwg_maps_geocode_status_c)) {
             $beanJjwgMapsGeocodeStatusC = null;
         } else {
             $beanJjwgMapsGeocodeStatusC = $bean->jjwg_maps_geocode_status_c;
         }
-        
+
         $this->assertEquals('', $beanJjwgMapsGeocodeStatusC);
-        
-        
+
         if (!isset($bean->jjwg_maps_address_c)) {
             $beanJjwgMapsAddressC = null;
         } else {
             $beanJjwgMapsAddressC = $bean->jjwg_maps_address_c;
         }
-        
+
         $this->assertEquals('', $beanJjwgMapsAddressC);
     }
 
@@ -127,15 +128,15 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
         $jjwgMaps = new jjwg_Maps();
 
         //test with empty parameters
-        $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('', array(), array());
+        $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('', [], []);
         $this->assertSame(false, $result);
 
         //test with non empty but invalid parameters
-        $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('test', array(), array());
+        $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('test', [], []);
         $this->assertSame(false, $result);
 
         //test with non empty valid parameters
-        $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('accounts', array('id' => 1), array());
+        $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('accounts', ['id' => 1], []);
         $this->assertSame(null, $result);
     }
 
@@ -187,38 +188,38 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
         $jjwgMaps = new jjwg_Maps();
 
         //test for Account Object type
-        $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
+        $address = ['id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsAddress('Account', $address);
         //var_dump($result);
-        $this->assertEquals(array('address' => 'addr 1, addr 2, addr 3, addr 4, addr 5'), $result);
+        $this->assertEquals(['address' => 'addr 1, addr 2, addr 3, addr 4, addr 5'], $result);
 
         //test for Contact Object type
-        $address = array('id' => 1, 'primary_address_street' => 'addr 1', 'primary_address_city' => 'addr 2', 'primary_address_state' => 'addr 3', 'primary_address_postalcode' => 'addr 4', 'primary_address_country' => 'addr 5');
+        $address = ['id' => 1, 'primary_address_street' => 'addr 1', 'primary_address_city' => 'addr 2', 'primary_address_state' => 'addr 3', 'primary_address_postalcode' => 'addr 4', 'primary_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsAddress('Contact', $address);
-        $this->assertEquals(array('address' => 'addr 1, addr 2, addr 3, addr 4, addr 5'), $result);
+        $this->assertEquals(['address' => 'addr 1, addr 2, addr 3, addr 4, addr 5'], $result);
 
         //test for Leads Object type
-        $address = array('id' => 1, 'primary_address_street' => 'addr 1', 'primary_address_city' => 'addr 2', 'primary_address_state' => 'addr 3', 'primary_address_postalcode' => 'addr 4', 'primary_address_country' => 'addr 5');
+        $address = ['id' => 1, 'primary_address_street' => 'addr 1', 'primary_address_city' => 'addr 2', 'primary_address_state' => 'addr 3', 'primary_address_postalcode' => 'addr 4', 'primary_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsAddress('Lead', $address);
-        $this->assertEquals(array('address' => 'addr 1, addr 2, addr 3, addr 4, addr 5'), $result);
+        $this->assertEquals(['address' => 'addr 1, addr 2, addr 3, addr 4, addr 5'], $result);
 
         //test for Opportunities Object type
-        $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
+        $address = ['id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsAddress('Opportunity', $address);
         $this->assertEquals(false, $result);
 
         //test for Case Object type
-        $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
+        $address = ['id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsAddress('Case', $address);
         $this->assertEquals(false, $result);
 
         //test for Project Object type
-        $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
+        $address = ['id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsAddress('Project', $address);
         $this->assertEquals(false, $result);
 
         //test for Project Meetings type
-        $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
+        $address = ['id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsAddress('Meeting', $address);
         $this->assertEquals(false, $result);
     }
@@ -227,36 +228,36 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
     {
         $jjwgMaps = new jjwg_Maps();
 
-        $result = $jjwgMaps->defineMapsFormattedAddress(array());
+        $result = $jjwgMaps->defineMapsFormattedAddress([]);
         $this->assertEquals(false, $result);
 
         //test for type billing
-        $address = array('billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
+        $address = ['billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsFormattedAddress($address, 'billing');
         $this->assertEquals('addr 1, addr 2, addr 3, addr 4, addr 5', $result);
 
         //test for type shipping
-        $address = array('shipping_address_street' => 'addr 1', 'shipping_address_city' => 'addr 2', 'shipping_address_state' => 'addr 3', 'shipping_address_postalcode' => 'addr 4', 'shipping_address_country' => 'addr 5');
+        $address = ['shipping_address_street' => 'addr 1', 'shipping_address_city' => 'addr 2', 'shipping_address_state' => 'addr 3', 'shipping_address_postalcode' => 'addr 4', 'shipping_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsFormattedAddress($address, 'shipping');
         $this->assertEquals('addr 1, addr 2, addr 3, addr 4, addr 5', $result);
 
         //test for type primary
-        $address = array('primary_address_street' => 'addr 1', 'primary_address_city' => 'addr 2', 'primary_address_state' => 'addr 3', 'primary_address_postalcode' => 'addr 4', 'primary_address_country' => 'addr 5');
+        $address = ['primary_address_street' => 'addr 1', 'primary_address_city' => 'addr 2', 'primary_address_state' => 'addr 3', 'primary_address_postalcode' => 'addr 4', 'primary_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsFormattedAddress($address, 'primary');
         $this->assertEquals('addr 1, addr 2, addr 3, addr 4, addr 5', $result);
 
         //test for type alt
-        $address = array('alt_address_street' => 'addr 1', 'alt_address_city' => 'addr 2', 'alt_address_state' => 'addr 3', 'alt_address_postalcode' => 'addr 4', 'alt_address_country' => 'addr 5');
+        $address = ['alt_address_street' => 'addr 1', 'alt_address_city' => 'addr 2', 'alt_address_state' => 'addr 3', 'alt_address_postalcode' => 'addr 4', 'alt_address_country' => 'addr 5'];
         $result = $jjwgMaps->defineMapsFormattedAddress($address, 'alt');
         $this->assertEquals('addr 1, addr 2, addr 3, addr 4, addr 5', $result);
 
         //test for type address
-        $address = array('address_street' => 'addr 1', 'address_city' => 'addr 2', 'address_state' => 'addr 3', 'address_postalcode' => 'addr 4');
+        $address = ['address_street' => 'addr 1', 'address_city' => 'addr 2', 'address_state' => 'addr 3', 'address_postalcode' => 'addr 4'];
         $result = $jjwgMaps->defineMapsFormattedAddress($address, 'address');
         $this->assertEquals('addr 1, addr 2, addr 3, addr 4', $result);
     }
 
-    public function testis_valid_lng()
+    public function testisValidLng()
     {
         $jjwgMaps = new jjwg_Maps();
 
@@ -270,7 +271,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgMaps->is_valid_lng(-180));
     }
 
-    public function testis_valid_lat()
+    public function testisValidLat()
     {
         $jjwgMaps = new jjwg_Maps();
 

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Advanced OpenReports, SugarCRM Reporting.
  * @package Advanced OpenReports for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -22,6 +22,4 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-/**
- * This file adds support for studio
- */
+// This file adds support for studio

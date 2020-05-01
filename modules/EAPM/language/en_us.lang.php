@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'SuiteCRM User',
     'LBL_ID' => 'ID',
@@ -75,7 +73,7 @@ $mod_strings = array(
     'LBL_API_CONSKEY' => 'Consumer Key',
     'LBL_API_CONSSECRET' => 'Consumer Secret',
     'LBL_API_OAUTHTOKEN' => 'OAuth Token',
-    'LBL_AUTH_UNSUPPORTED' => "This authorization method is not supported by the application",
+    'LBL_AUTH_UNSUPPORTED' => 'This authorization method is not supported by the application',
     'LBL_AUTH_ERROR' => 'The attempt to connect to this account failed.',
     'LBL_VALIDATED' => 'Connected',
     'LBL_ACTIVE' => 'Active',
@@ -100,4 +98,4 @@ $mod_strings = array(
     'LBL_ERR_POPUPS_DISABLED' => 'Please enable browser popup windows or add an exception for website "{0}" to the exceptions list in order to connect.',
 
     'LBL_API_OAUTHSECRET' => 'API OAuth Secret',
-);
+];

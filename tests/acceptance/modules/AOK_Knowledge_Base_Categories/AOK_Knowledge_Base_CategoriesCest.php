@@ -5,12 +5,12 @@ use Faker\Generator;
 class AOK_Knowledge_Base_CategoriesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -32,12 +32,12 @@ class AOK_Knowledge_Base_CategoriesCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategory
      *
-     * As an administrator I want to view the knowledgeBaseCategory module.
+     * As an administrator I want to view the knowledgeBaseCategory module
      */
     public function testScenarioViewKnowledgeBaseCategoriesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategory
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategory
     ) {
         $I->wantTo('View the knowledgeBaseCategory module for testing');
 
@@ -56,13 +56,13 @@ class AOK_Knowledge_Base_CategoriesCest
      * @param \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategories
      *
      * As administrative user I want to create a knowledge base category so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateKnowledgeBaseCategory(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategories
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\KnowledgeBaseCategories $knowledgeBaseCategories
     ) {
         $I->wantTo('Create KnowledgeBaseCategory');
 
@@ -73,7 +73,7 @@ class AOK_Knowledge_Base_CategoriesCest
 
         // Create knowledge base category
         $this->fakeData->seed($this->fakeDataSeed);
-        $knowledgeBaseCategories->createKnowledgeBaseCategory('Test_'. $this->fakeData->company());
+        $knowledgeBaseCategories->createKnowledgeBaseCategory('Test_' . $this->fakeData->company());
 
         // Delete knowledge base category
         $detailView->clickActionMenuItem('Delete');

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
 class AOR_Scheduled_Reports extends basic
 {
@@ -70,14 +68,12 @@ class AOR_Scheduled_Reports extends basic
         parent::__construct();
     }
 
-
-
-
     public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL': return true;
         }
+
         return false;
     }
 
@@ -94,30 +90,32 @@ class AOR_Scheduled_Reports extends basic
     {
         $params = unserialize(base64_decode($this->email_recipients));
 
-        $emails = array();
+        $emails = [];
         if (isset($params['email_target_type'])) {
             foreach ($params['email_target_type'] as $key => $field) {
                 switch ($field) {
                     case 'Email Address':
                         $emails[] = $params['email'][$key];
+
                         break;
                     case 'Specify User':
                         $user = new User();
                         $user->retrieve($params['email'][$key]);
                         $emails[] = $user->emailAddress->getPrimaryAddress($user);
+
                         break;
                     case 'Users':
-                        $users = array();
+                        $users = [];
                         switch ($params['email'][$key][0]) {
                             case 'security_group':
                                 if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
-                                    require_once('modules/SecurityGroups/SecurityGroup.php');
+                                    require_once 'modules/SecurityGroups/SecurityGroup.php';
                                     $security_group = new SecurityGroup();
                                     $security_group->retrieve($params['email'][$key][1]);
                                     $users = $security_group->get_linked_beans('users', 'User');
-                                    $r_users = array();
+                                    $r_users = [];
                                     if ($params['email'][$key][2] != '') {
-                                        require_once('modules/ACLRoles/ACLRole.php');
+                                        require_once 'modules/ACLRoles/ACLRole.php';
                                         $role = new ACLRole();
                                         $role->retrieve($params['email'][$key][2]);
                                         $role_users = $role->get_linked_beans('users', 'User');
@@ -130,15 +128,17 @@ class AOR_Scheduled_Reports extends basic
                                             unset($users[$user_id]);
                                         }
                                     }
+
                                     break;
                                 }
                             //No Security Group module found - fall through.
                             // no break
                             case 'role':
-                                require_once('modules/ACLRoles/ACLRole.php');
+                                require_once 'modules/ACLRoles/ACLRole.php';
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
                                 $users = $role->get_linked_beans('users', 'User');
+
                                 break;
                             case 'all':
                             default:
@@ -150,22 +150,27 @@ class AOR_Scheduled_Reports extends basic
                                     $user->retrieve($row['id']);
                                     $users[$user->id] = $user;
                                 }
+
                                 break;
                         }
                         foreach ($users as $user) {
                             $emails[] = $user->emailAddress->getPrimaryAddress($user);
                         }
+
                         break;
                 }
             }
         }
+
         return $emails;
     }
 
     /**
      * @param DateTime $date
-     * @return bool
+     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function shouldRun(DateTime $date)
     {
@@ -198,5 +203,4 @@ class AOR_Scheduled_Reports extends basic
         $offset = $timezone->getOffset($date);
         $date->modify($offset . 'second');
     }
-
 }

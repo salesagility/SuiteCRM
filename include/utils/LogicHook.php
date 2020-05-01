@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,7 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
  * Predefined logic hooks
  * after_ui_frame
@@ -62,23 +61,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * after_login
  * login_failed
  * after_session_start
- * after_entry_point
+ * after_entry_point.
  *
  * @api
  */
 class LogicHook
 {
-    public $bean = null;
+    public $bean;
+
+    protected $hook_map = [];
+    protected $hookscan = [];
+
+    protected static $hooks = [];
 
     public function __construct()
     {
     }
 
-
-
-
     /**
-     * Static Function which returns and instance of LogicHook
+     * Static Function which returns and instance of LogicHook.
      *
      * @return unknown
      */
@@ -87,17 +88,16 @@ class LogicHook
         if (empty($GLOBALS['logic_hook'])) {
             $GLOBALS['logic_hook'] = new LogicHook();
         }
+
         return $GLOBALS['logic_hook'];
     }
 
     public function setBean($bean)
     {
         $this->bean = $bean;
+
         return $this;
     }
-
-    protected $hook_map = array();
-    protected $hookscan = array();
 
     public function getHooksMap()
     {
@@ -114,15 +114,15 @@ class LogicHook
         if (is_dir($extpath)) {
             $dir = dir($extpath);
             while ($entry = $dir->read()) {
-                if ($entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php" && is_file($extpath.'/'.$entry)) {
+                if ($entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == '.php' && is_file($extpath . '/' . $entry)) {
                     unset($hook_array);
-                    include($extpath.'/'.$entry);
+                    include $extpath . '/' . $entry;
                     if (!empty($hook_array)) {
                         foreach ($hook_array as $type => $hookg) {
                             foreach ($hookg as $index => $hook) {
                                 $this->hookscan[$type][] = $hook;
-                                $idx = count($this->hookscan[$type])-1;
-                                $this->hook_map[$type][$idx] = array("file" => $extpath.'/'.$entry, "index" => $index);
+                                $idx = count($this->hookscan[$type]) - 1;
+                                $this->hook_map[$type][$idx] = ['file' => $extpath . '/' . $entry, 'index' => $index];
                             }
                         }
                     }
@@ -131,36 +131,35 @@ class LogicHook
         }
     }
 
-    protected static $hooks = array();
-
     public static function refreshHooks()
     {
-        self::$hooks = array();
+        self::$hooks = [];
     }
 
     public function loadHooks($module_dir)
     {
-        $hook_array = array();
+        $hook_array = [];
         if (!empty($module_dir)) {
-            $custom = "custom/modules/$module_dir";
+            $custom = "custom/modules/{$module_dir}";
         } else {
-            $custom = "custom/modules";
+            $custom = 'custom/modules';
         }
-        if (file_exists("$custom/logic_hooks.php")) {
+        if (file_exists("{$custom}/logic_hooks.php")) {
             if (isset($GLOBALS['log'])) {
-                $GLOBALS['log']->debug('Including module specific hook file for '.$custom);
+                $GLOBALS['log']->debug('Including module specific hook file for ' . $custom);
             }
-            include("$custom/logic_hooks.php");
+            include "{$custom}/logic_hooks.php";
         }
         if (empty($module_dir)) {
-            $custom = "custom/application";
+            $custom = 'custom/application';
         }
-        if (file_exists("$custom/Ext/LogicHooks/logichooks.ext.php")) {
+        if (file_exists("{$custom}/Ext/LogicHooks/logichooks.ext.php")) {
             if (isset($GLOBALS['log'])) {
-                $GLOBALS['log']->debug('Including Ext hook file for '.$custom);
+                $GLOBALS['log']->debug('Including Ext hook file for ' . $custom);
             }
-            include("$custom/Ext/LogicHooks/logichooks.ext.php");
+            include "{$custom}/Ext/LogicHooks/logichooks.ext.php";
         }
+
         return $hook_array;
     }
 
@@ -169,6 +168,7 @@ class LogicHook
         if ($refresh || !isset(self::$hooks[$module_dir])) {
             self::$hooks[$module_dir] = $this->loadHooks($module_dir);
         }
+
         return self::$hooks[$module_dir];
     }
 
@@ -187,7 +187,7 @@ class LogicHook
         // declare the hook array variable, it will be defined in the included file.
         $hook_array = null;
         if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->debug("Hook called: $module_dir::$event");
+            $GLOBALS['log']->debug("Hook called: {$module_dir}::{$event}");
         }
         if (!empty($module_dir)) {
             // This will load an array of the hooks to process
@@ -216,10 +216,9 @@ class LogicHook
     {
         // Now iterate through the array for the appropriate hook
         if (!empty($hook_array[$event])) {
-
             // Apply sorting to the hooks using the sort index.
             // Hooks with matching sort indexes will be processed in no particular order.
-            $sorted_indexes = array();
+            $sorted_indexes = [];
             foreach ($hook_array[$event] as $idx => $hook_details) {
                 $order_idx = $hook_details[0];
                 $sorted_indexes[$idx] = $order_idx;
@@ -232,11 +231,12 @@ class LogicHook
                 $hook_details = $hook_array[$event][$hook_index];
                 if (!file_exists($hook_details[2])) {
                     if (isset($GLOBALS['log'])) {
-                        $GLOBALS['log']->error('Unable to load custom logic file: '.$hook_details[2]);
+                        $GLOBALS['log']->error('Unable to load custom logic file: ' . $hook_details[2]);
                     }
+
                     continue;
                 }
-                include_once($hook_details[2]);
+                include_once $hook_details[2];
                 $hook_class = $hook_details[3];
                 $hook_function = $hook_details[4];
 
@@ -244,7 +244,7 @@ class LogicHook
                 //TODO Make a factory for these classes.  Cache instances accross uses
                 if ($hook_class == $hook_function) {
                     if (isset($GLOBALS['log'])) {
-                        $GLOBALS['log']->debug('Creating new instance of hook class '.$hook_class.' with parameters');
+                        $GLOBALS['log']->debug('Creating new instance of hook class ' . $hook_class . ' with parameters');
                     }
                     if (!is_null($this->bean)) {
                         $class = new $hook_class($this->bean, $event, $arguments);
@@ -253,13 +253,13 @@ class LogicHook
                     }
                 } else {
                     if (isset($GLOBALS['log'])) {
-                        $GLOBALS['log']->debug('Creating new instance of hook class '.$hook_class.' without parameters');
+                        $GLOBALS['log']->debug('Creating new instance of hook class ' . $hook_class . ' without parameters');
                     }
                     $class = new $hook_class();
                     if (!is_null($this->bean)) {
-                        $class->$hook_function($this->bean, $event, $arguments);
+                        $class->{$hook_function}($this->bean, $event, $arguments);
                     } else {
-                        $class->$hook_function($event, $arguments);
+                        $class->{$hook_function}($event, $arguments);
                     }
                 }
             }

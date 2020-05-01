@@ -5,9 +5,10 @@ namespace Step\Acceptance;
 class Cases extends \AcceptanceTester
 {
     /**
-     * Create a case
+     * Create a case.
      *
      * @param $name
+     * @param mixed $account
      */
     public function createCase($name, $account)
     {

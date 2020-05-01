@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,27 +42,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once 'modules/Trackers/TrackerUtility.php';
 
-
-require_once('modules/Trackers/TrackerUtility.php');
-
-require_once('install/UserDemoData.php');
+require_once 'install/UserDemoData.php';
 
 class populateSeedData
 {
     public $monitorIds = 500;
     public $user = 1;
     public $userDemoData;
-    public $modules = array('Accounts', 'Calls', 'Contacts', 'Leads', 'Meetings', 'Notes', 'Opportunities', 'Users');
-    public $actions = array('authenticate', 'detailview', 'editview', 'index', 'save', 'settimezone');
+    public $modules = ['Accounts', 'Calls', 'Contacts', 'Leads', 'Meetings', 'Notes', 'Opportunities', 'Users'];
+    public $actions = ['authenticate', 'detailview', 'editview', 'index', 'save', 'settimezone'];
     public $db;
-    public $beanIdMap = array();
-    public $userSessions = array();
+    public $beanIdMap = [];
+    public $userSessions = [];
     public $trackerManager;
 
     public function start()
@@ -71,9 +69,9 @@ class populateSeedData
         $this->trackerManager = TrackerManager::getInstance();
 
         foreach ($this->modules as $mod) {
-            $query = "select id from $mod";
+            $query = "select id from {$mod}";
             $result = $this->db->limitQuery($query, 0, 50);
-            $ids = array();
+            $ids = [];
             while (($row = $this->db->fetchByAssoc($result))) {
                 $ids[] = $row['id'];
             } //while
@@ -108,7 +106,6 @@ class populateSeedData
         }
     }
 
-
     public function randomTimestamp()
     {
         global $timedate;
@@ -122,6 +119,7 @@ class populateSeedData
             return $this->userSessions[$this->user];
         }
         $this->userSessions[$this->user] = $this->monitorId;
+
         return $this->monitorId;
     }
 }

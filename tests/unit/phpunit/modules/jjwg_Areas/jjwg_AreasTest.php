@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testjjwg_Areas()
+    public function testjjwgAreas()
     {
         // Execute the constructor and check for the Object type and  attributes
         $jjwgAreas = new jjwg_Areas();
@@ -51,12 +54,12 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         //test with required attributes preset
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
 
-        $expected_polygon = array(
-                array('lng' => '100', 'lat' => '80', 'elv' => '10'),
-                array('lng' => '101', 'lat' => '81', 'elv' => '11'),
-                array('lng' => '102', 'lat' => '82', 'elv' => '12'),
-        );
-        $expected_centroid = array('lng' => 67.3333333333333285963817615993320941925048828125, 'lat' => 54.0, 'elv' => 0);
+        $expected_polygon = [
+            ['lng' => '100', 'lat' => '80', 'elv' => '10'],
+            ['lng' => '101', 'lat' => '81', 'elv' => '11'],
+            ['lng' => '102', 'lat' => '82', 'elv' => '12'],
+        ];
+        $expected_centroid = ['lng' => 67.3333333333333285963817615993320941925048828125, 'lat' => 54.0, 'elv' => 0];
 
         $jjwgAreas->retrieve();
 
@@ -65,7 +68,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected_centroid, $jjwgAreas->centroid);
     }
 
-    public function testdefine_polygon()
+    public function testdefinePolygon()
     {
         $jjwgAreas = new jjwg_Areas();
 
@@ -75,16 +78,16 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
 
         //test with required attributes preset
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
-        $expected = array(
-                      array('lng' => '100', 'lat' => '80', 'elv' => '10'),
-                      array('lng' => '101', 'lat' => '81', 'elv' => '11'),
-                      array('lng' => '102', 'lat' => '82', 'elv' => '12'),
-                );
+        $expected = [
+            ['lng' => '100', 'lat' => '80', 'elv' => '10'],
+            ['lng' => '101', 'lat' => '81', 'elv' => '11'],
+            ['lng' => '102', 'lat' => '82', 'elv' => '12'],
+        ];
         $actual = $jjwgAreas->define_polygon();
         $this->assertSame($actual, $expected);
     }
 
-    public function testdefine_area_loc()
+    public function testdefineAreaLoc()
     {
         $jjwgAreas = new jjwg_Areas();
 
@@ -96,14 +99,14 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
 
         //test with required attributes preset
         $jjwgAreas->name = 'test';
-        $jjwgAreas->centroid = array('lng' => 100, 'lat' => 50);
+        $jjwgAreas->centroid = ['lng' => 100, 'lat' => 50];
 
-        $expected = array('name' => 'test', 'lat' => 50, 'lng' => 100);
+        $expected = ['name' => 'test', 'lat' => 50, 'lng' => 100];
         $result = $jjwgAreas->define_area_loc();
         $this->assertSame($expected, $result);
     }
 
-    public function testdefine_centroid()
+    public function testdefineCentroid()
     {
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = new jjwg_Areas();
@@ -114,13 +117,13 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
 
         //test with coordinates setup
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
-        $expected = array('lng' => 67.3333333333333285963817615993320941925048828125, 'lat' => 54.0, 'elv' => 0);
+        $expected = ['lng' => 67.3333333333333285963817615993320941925048828125, 'lat' => 54.0, 'elv' => 0];
 
         $result = $jjwgAreas->define_centroid();
         $this->assertSame($expected, $result);
     }
 
-    public function testdefine_area()
+    public function testdefineArea()
     {
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = new jjwg_Areas();
@@ -136,23 +139,23 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(20, $result);
     }
 
-    public function testdefine_loc()
+    public function testdefineLoc()
     {
         $jjwgAreas = new jjwg_Areas();
 
         //test without pre settting attributes
-        $result = $jjwgAreas->define_loc(array());
+        $result = $jjwgAreas->define_loc([]);
         $this->assertEquals('N/A', $result['name']);
         $this->assertTrue(is_numeric($result['lat']));
         $this->assertTrue(is_numeric($result['lng']));
 
         //test with required attributes preset
-        $marker = array('name' => 'test', 'lat' => 50, 'lng' => 100);
+        $marker = ['name' => 'test', 'lat' => 50, 'lng' => 100];
         $result = $jjwgAreas->define_loc($marker);
         $this->assertSame($marker, $result);
     }
 
-    public function testis_valid_lng()
+    public function testisValidLng()
     {
         $jjwgAreas = new jjwg_Areas();
 
@@ -166,7 +169,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgAreas->is_valid_lng(-180));
     }
 
-    public function testis_valid_lat()
+    public function testisValidLat()
     {
         $jjwgAreas = new jjwg_Areas();
 
@@ -180,11 +183,11 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgAreas->is_valid_lat(-90));
     }
 
-    public function testis_marker_in_area()
+    public function testisMarkerInArea()
     {
         $jjwgAreas = new jjwg_Areas();
 
-        $marker = array('name' => 'test', 'lat' => 100, 'lng' => 40);
+        $marker = ['name' => 'test', 'lat' => 100, 'lng' => 40];
 
         //test without setting up coordinates
         $this->assertEquals(false, $jjwgAreas->is_marker_in_area($marker));
@@ -194,7 +197,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $jjwgAreas->is_marker_in_area($marker));
     }
 
-    public function testis_point_in_area()
+    public function testisPointInArea()
     {
         $jjwgAreas = new jjwg_Areas();
 
@@ -207,7 +210,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgAreas->is_point_in_area(100, 40));
     }
 
-    public function testpoint_in_polygon()
+    public function testpointInPolygon()
     {
         $jjwgAreas = new jjwg_Areas();
 
@@ -219,20 +222,20 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgAreas->point_in_polygon('100,40,0.0'));
     }
 
-    public function testpoint_on_vertex()
+    public function testpointOnVertex()
     {
         $jjwgAreas = new jjwg_Areas();
 
-        $vertices = array('100,40,10', '101,81,11', '102,82,12');
+        $vertices = ['100,40,10', '101,81,11', '102,82,12'];
         $this->assertEquals(false, $jjwgAreas->point_on_vertex('100,40,0.0', $vertices));
         $this->assertEquals(true, $jjwgAreas->point_on_vertex('100,40,10', $vertices));
     }
 
-    public function testpoint_string_to_coordinates()
+    public function testpointStringToCoordinates()
     {
         $jjwgAreas = new jjwg_Areas();
 
-        $expected = array('x' => 100, 'y' => 40);
+        $expected = ['x' => 100, 'y' => 40];
         $actual = $jjwgAreas->point_string_to_coordinates('100,40,10');
         $this->assertEquals($expected, $actual);
     }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     //DON'T CONVERT THESE THEY ARE MAPPINGS
     'db_last_name' => 'LBL_LIST_LAST_NAME',
     'db_first_name' => 'LBL_LIST_FIRST_NAME',
@@ -211,7 +209,7 @@ $mod_strings = array(
     'LBL_SELECT' => ' <b>OR</b> Select',
     'LBL_WEBSITE' => 'Website',
     'LNK_IMPORT_LEADS' => 'Import Leads',
-//Convert lead tooltips
+    //Convert lead tooltips
     'LBL_MODULE_TIP' => 'The module to create a new record in.',
     'LBL_REQUIRED_TIP' => 'Required modules must be created or selected before the lead can be converted.',
     'LBL_COPY_TIP' => 'If checked, fields from the lead will be copied to fields with the same name in the newly created records.',
@@ -230,4 +228,4 @@ $mod_strings = array(
     'LBL_LOADING' => 'Loading' /*for 508 compliance fix*/,
     'LBL_EDIT_INLINE' => 'Edit' /*for 508 compliance fix*/,
     'LBL_FP_EVENTS_LEADS_1_FROM_FP_EVENTS_TITLE' => 'Events',
-);
+];

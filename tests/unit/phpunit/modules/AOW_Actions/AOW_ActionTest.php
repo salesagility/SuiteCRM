@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOW_Action()
+    public function testAOWAction()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowAction = new AOW_Action();
@@ -30,15 +33,15 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'tracker_visibility', $aowAction);
     }
 
-    public function testsave_lines()
+    public function testsaveLines()
     {
         $aowAction = new AOW_Action();
 
         //populate required values
-        $post_data = array();
-        $post_data['name'] = array('test1', 'test2');
-        $post_data['action'] = array('action1', 'action2');
-        $post_data['param'] = array(array('param1' => 'value'), array('value' => array('param2' => 'value')));
+        $post_data = [];
+        $post_data['name'] = ['test1', 'test2'];
+        $post_data['action'] = ['action1', 'action2'];
+        $post_data['param'] = [['param1' => 'value'], ['value' => ['param2' => 'value']]];
 
         //create parent bean
         $aowWorkFlow = new AOW_WorkFlow();
@@ -56,7 +59,7 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $aowAction = new AOW_Action();
         $this->assertEquals(false, $aowAction->bean_implements('')); //test with blank value

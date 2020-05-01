@@ -4,19 +4,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/jjwg_Markers/jjwg_Markers_sugar.php');
-require_once('modules/jjwg_Maps/jjwg_Maps.php');
-
+require_once 'modules/jjwg_Markers/jjwg_Markers_sugar.php';
+require_once 'modules/jjwg_Maps/jjwg_Maps.php';
 
 class jjwg_Markers extends jjwg_Markers_sugar
 {
-
     /**
      * @var settings array
      */
-    public $settings = array();
+    public $settings = [];
 
-    public function __construct($init=true)
+    public function __construct($init = true)
     {
         parent::__construct();
         // Admin Config Setting
@@ -25,12 +23,11 @@ class jjwg_Markers extends jjwg_Markers_sugar
         }
     }
 
-
     /**
      * Load Configuration Settings using Administration Module
      * See jjwg_Maps module for setting config
      * $GLOBALS['jjwg_config_defaults']
-     * $GLOBALS['jjwg_config']
+     * $GLOBALS['jjwg_config'].
      */
     public function configuration()
     {
@@ -39,16 +36,16 @@ class jjwg_Markers extends jjwg_Markers_sugar
     }
 
     /**
+     * Define Marker Location.
      *
-     * Define Marker Location
      * @param $marker mixed (array or object)
      */
-    public function define_loc($marker = array())
+    public function define_loc($marker = [])
     {
         if (empty($marker)) {
             $marker = $this;
         }
-        $loc = array();
+        $loc = [];
         if (is_object($marker)) {
             $loc['name'] = $marker->name;
             $loc['lat'] = $marker->jjwg_maps_lat;
@@ -78,26 +75,27 @@ class jjwg_Markers extends jjwg_Markers_sugar
         }
 
         $loc['image'] = $markerMarkerImage;
+
         return $loc;
     }
 
     /**
+     * Check for valid longitude.
      *
-     * Check for valid longitude
      * @param $lng float
      */
     public function is_valid_lng($lng)
     {
-        return (is_numeric($lng) && $lng >= -180 && $lng <= 180);
+        return is_numeric($lng) && $lng >= -180 && $lng <= 180;
     }
 
     /**
+     * Check for valid latitude.
      *
-     * Check for valid latitude
      * @param $lat float
      */
     public function is_valid_lat($lat)
     {
-        return (is_numeric($lat) && $lat >= -90 && $lat <= 90);
+        return is_numeric($lat) && $lat >= -90 && $lat <= 90;
     }
 }

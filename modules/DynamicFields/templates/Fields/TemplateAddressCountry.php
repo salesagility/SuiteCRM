@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,18 +40,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
-require_once('include/utils/array_utils.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateEnum.php';
+require_once 'include/utils/array_utils.php';
 class TemplateAddressCountry extends TemplateEnum
 {
     public $group = '';
-    
+
     public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['group'] = $this->group;
         $def['options'] = 'countries_dom';
+
         return $def;
     }
 }

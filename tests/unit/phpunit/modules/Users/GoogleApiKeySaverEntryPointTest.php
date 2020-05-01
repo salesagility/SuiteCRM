@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,19 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 include_once __DIR__ . '/GoogleApiKeySaverEntryPointMock.php';
 
-/**
+/*
  * GoogleApiKeySaverEntryPointTest
  *
  * @author gyula
  */
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testHandleRequestError()
@@ -83,7 +83,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $client = new Google_Client();
         $request['getnew'] = 'ERR_NOT_ADMIN';
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
-        $expected = "https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=UNIT_TEST_client_id&redirect_uri=http%3A%2F%2Fwww.example.com%2Findex.php%3FentryPoint%3DsaveGoogleApiKey&state&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&approval_prompt=force";
+        $expected = 'https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=UNIT_TEST_client_id&redirect_uri=http%3A%2F%2Fwww.example.com%2Findex.php%3FentryPoint%3DsaveGoogleApiKey&state&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&approval_prompt=force';
         $redirectString = $epMock->getRedirectUrl();
         $this->assertEquals($expected, $redirectString);
     }
@@ -99,9 +99,10 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $cfg['google_auth_json'] = base64_encode('{"web":{"client_id":"UNIT_TEST_client_id","project_id":"UNIT_TEST_project_id","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://www.googleapis.com/oauth2/v3/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"UNIT_TEST_client_secret","redirect_uris":["http://www.example.com/index.php?entryPoint=saveGoogleApiKey"]}}');
         $client = new Google_Client();
         $request['code'] = '1234567890';
+
         try {
             $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
-            $this->assertTrue(false, "This should have thrown an exception");
+            $this->assertTrue(false, 'This should have thrown an exception');
         } catch (Exception $e) {
         }
         $this->assertEquals(10, $e->getCode());
@@ -119,11 +120,10 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $client = new Google_Client();
         $request['setinvalid'] = '';
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
-        $expected = "http://foo/bar.org/index.php?module=Users&action=EditView&record=" . $user->id;
+        $expected = 'http://foo/bar.org/index.php?module=Users&action=EditView&record=' . $user->id;
         $redirectString = $epMock->getRedirectUrl();
         $this->assertEquals($expected, $redirectString);
     }
-
 
     public function testHandleRequestUnknown()
     {
@@ -136,7 +136,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $client = new Google_Client();
         $request['INVALID'] = 'INVALID';
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
-        $expected = "http://foo/bar.org/index.php?module=Users&action=EditView&record=" . $user->id;
+        $expected = 'http://foo/bar.org/index.php?module=Users&action=EditView&record=' . $user->id;
         $redirectString = $epMock->getRedirectUrl();
         $this->assertEquals($expected, $redirectString);
     }

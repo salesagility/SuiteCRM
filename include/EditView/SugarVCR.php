@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
  define('VCREND', '50');
  define('VCRSTART', '10');
  /**
@@ -45,50 +43,58 @@
   */
  class SugarVCR
  {
-
-    /**
-     * records the query in the session for later retrieval
-     */
+     /**
+      * records the query in the session for later retrieval.
+      *
+      * @param mixed $module
+      * @param mixed $query
+      */
      public static function store($module, $query)
      {
-         $_SESSION[$module .'2_QUERY'] = $query;
+         $_SESSION[$module . '2_QUERY'] = $query;
      }
 
      /**
-      * This function retrieves a query from the session
+      * This function retrieves a query from the session.
+      *
+      * @param mixed $module
       */
      public static function retrieve($module)
      {
-         return (!empty($_SESSION[$module .'2_QUERY']) ? $_SESSION[$module .'2_QUERY'] : '');
+         return !empty($_SESSION[$module . '2_QUERY']) ? $_SESSION[$module . '2_QUERY'] : '';
      }
 
      /**
-      * return the start, prev, next, end
+      * return the start, prev, next, end.
+      *
+      * @param mixed $module
+      * @param mixed $offset
       */
      public static function play($module, $offset)
      {
          //given some global offset try to determine if we have this
          //in our array.
-         $ids = array();
-         if (!empty($_SESSION[$module.'QUERY_ARRAY'])) {
-             $ids = $_SESSION[$module.'QUERY_ARRAY'];
+         $ids = [];
+         if (!empty($_SESSION[$module . 'QUERY_ARRAY'])) {
+             $ids = $_SESSION[$module . 'QUERY_ARRAY'];
          }
-         if (empty($ids[$offset]) || empty($ids[$offset+1]) || empty($ids[$offset-1])) {
+         if (empty($ids[$offset]) || empty($ids[$offset + 1]) || empty($ids[$offset - 1])) {
              $ids = SugarVCR::record($module, $offset);
          }
-         $menu = array();
+         $menu = [];
          if (!empty($ids[$offset])) {
              //return the control given this id
-             $menu['PREV'] = ($offset > 1) ? $ids[$offset-1] : '';
+             $menu['PREV'] = ($offset > 1) ? $ids[$offset - 1] : '';
              $menu['CURRENT'] = $ids[$offset];
-             $menu['NEXT'] = !empty($ids[$offset+1]) ? $ids[$offset+1] : '';
+             $menu['NEXT'] = !empty($ids[$offset + 1]) ? $ids[$offset + 1] : '';
          }
+
          return $menu;
      }
 
      public static function menu($module, $offset, $isAuditEnabled, $saveAndContinue = false)
      {
-         $html_text = "";
+         $html_text = '';
          if ($offset < 0) {
              $offset = 0;
          }
@@ -100,7 +106,7 @@
          // bug 15893 - only show VCR if called as an element in a set of records
          if (!empty($_REQUEST['record']) and !empty($stored_vcr_query) and isset($_REQUEST['offset']) and (empty($_REQUEST['isDuplicate']) or $_REQUEST['isDuplicate'] == 'false')) {
              //syncing with display offset;
-             $offset ++;
+             $offset++;
              $action = (!empty($_REQUEST['action']) ? $_REQUEST['action'] : 'EditView');
 
              $menu = SugarVCR::play($module, $offset);
@@ -110,12 +116,12 @@
                  $list_link = ajaxLink('index.php?action=' . $action . '&module=' . $module . '&record=' . $menu['NEXT'] . '&offset=' . ($offset + 1));
              }
 
-             $previous_link = "";
+             $previous_link = '';
              if (!empty($menu['PREV'])) {
                  $previous_link = ajaxLink('index.php?module=' . $module . '&action=' . $action . '&offset=' . ($offset - 1) . '&record=' . $menu['PREV']);
              }
 
-             $next_link = "";
+             $next_link = '';
              if (!empty($menu['NEXT'])) {
                  $next_link = ajaxLink('index.php?module=' . $module . '&action=' . $action . '&offset=' . ($offset + 1) . '&record=' . $menu['NEXT']);
              }
@@ -137,7 +143,7 @@
                  $ss->assign('total', $_SESSION[$module . 'total']);
                  if (
                     !empty($GLOBALS['sugar_config']['disable_count_query'])
-                    && (($_SESSION[$module. 'total']-1) % $GLOBALS['sugar_config']['list_max_entries_per_page'] == 0)
+                    && (($_SESSION[$module . 'total'] - 1) % $GLOBALS['sugar_config']['list_max_entries_per_page'] == 0)
                 ) {
                      $ss->assign('plus', '+');
                  }
@@ -149,6 +155,7 @@
                  $html_text .= $ss->fetch('include/EditView/SugarVCR.tpl');
              }
          }
+
          return $html_text;
      }
 
@@ -159,16 +166,17 @@
          $index = $start;
          $db = DBManagerFactory::getInstance();
 
-         $result = $db->limitQuery(SugarVCR::retrieve($module), $start, ($offset+VCREND), false);
+         $result = $db->limitQuery(SugarVCR::retrieve($module), $start, ($offset + VCREND), false);
          $index++;
 
-         $ids = array();
+         $ids = [];
          while (($row = $db->fetchByAssoc($result)) != null) {
              $ids[$index] = $row['id'];
              $index++;
          }
          //now that we have the array of ids, store this in the session
-         $_SESSION[$module.'QUERY_ARRAY'] = $ids;
+         $_SESSION[$module . 'QUERY_ARRAY'] = $ids;
+
          return $ids;
      }
 
@@ -176,20 +184,20 @@
      {
          $index = $offset;
          $index++;
-         $ids = array();
+         $ids = [];
          foreach ($rids as $id) {
              $ids[$index] = $id;
              $index++;
          }
          //now that we have the array of ids, store this in the session
-         $_SESSION[$module.'QUERY_ARRAY'] = $ids;
-         $_SESSION[$module.'total'] = $totalCount;
+         $_SESSION[$module . 'QUERY_ARRAY'] = $ids;
+         $_SESSION[$module . 'total'] = $totalCount;
      }
 
      public static function erase($module)
      {
-         if (isset($_SESSION) && isset($_SESSION[$module. 'QUERY_ARRAY'])) {
-             unset($_SESSION[$module. 'QUERY_ARRAY']);
+         if (isset($_SESSION, $_SESSION[$module . 'QUERY_ARRAY'])) {
+             unset($_SESSION[$module . 'QUERY_ARRAY']);
          }
      }
  }

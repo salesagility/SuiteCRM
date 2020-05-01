@@ -37,9 +37,9 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-# This is an example configuration file that should be copied to a file named config.test.php.
-# The config.test.php file allows you to define configuration values for the test environment.
-# It can be customized without committing it to git. (config.test.php is ignored by the gitignore).
+// This is an example configuration file that should be copied to a file named config.test.php.
+// The config.test.php file allows you to define configuration values for the test environment.
+// It can be customized without committing it to git. (config.test.php is ignored by the gitignore).
 $testConfig = [
     'imap_test' => true,
 ];

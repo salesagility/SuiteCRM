@@ -4,6 +4,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/activity_utils.php';
 
+/**
+ * @internal
+ */
 class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -15,7 +18,7 @@ class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
     }
 
-    public function testbuild_related_list_by_user_id()
+    public function testbuildRelatedListByUserId()
     {
         //execute the method and test if it returns true
 

@@ -20,6 +20,11 @@ class DotListWizardMenu
         $this->html = $nav_html;
     }
 
+    public function __toString()
+    {
+        return $this->html;
+    }
+
     private function getWizardMenuItemHTML($i, $label, $link = false)
     {
         if ($i >= 4) {
@@ -30,27 +35,24 @@ class DotListWizardMenu
         }
 
         if ($link != false) {
-            $html = '<li id="nav_step'.$i.'" class="nav-steps" data-nav-step="'.$i.'" data-nav-url="'.$link.'"><div>'.$label.'</div></li>';
+            $html = '<li id="nav_step' . $i . '" class="nav-steps" data-nav-step="' . $i . '" data-nav-url="' . $link . '"><div>' . $label . '</div></li>';
         } else {
-            $html = '<li id="nav_step'.$i.'" class="nav-steps" data-nav-step="'.$i.'"  data-nav-url=""><div>'.$label.'</div></li>';
+            $html = '<li id="nav_step' . $i . '" class="nav-steps" data-nav-step="' . $i . '"  data-nav-url=""><div>' . $label . '</div></li>';
         }
+
         return $html;
     }
 
     private function getWizardMenuHTML($innerHTML)
     {
-        $html = file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'tpls'.DIRECTORY_SEPARATOR.'progressStepsStyle.html');
+        $html = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'tpls' . DIRECTORY_SEPARATOR . 'progressStepsStyle.html');
         $html .=
 '<div class="progression-container">
     <ul class="progression">
-    '.$innerHTML.'
+    ' . $innerHTML . '
     </ul>
 </div>';
-        return $html;
-    }
 
-    public function __toString()
-    {
-        return $this->html;
+        return $html;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,15 +18,13 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
- 
- $metafiles['AOR_Reports'] = array(
-    'detailviewdefs'  => 	'modules/AOR_Reports/metadata/detailviewdefs.php',
-    'editviewdefs'    => 	'modules/AOR_Reports/metadata/editviewdefs.php',
-    'listviewdefs'    => 	'modules/AOR_Reports/metadata/listviewdefs.php',
-    'searchdefs'      =>    'modules/AOR_Reports/metadata/searchdefs.php',
-    'popupdefs'	      =>    'modules/AOR_Reports/metadata/popupdefs.php',
-    'searchfields'	  =>    'modules/AOR_Reports/metadata/SearchFields.php',
- );
+ $metafiles['AOR_Reports'] = [
+     'detailviewdefs' => 'modules/AOR_Reports/metadata/detailviewdefs.php',
+     'editviewdefs' => 'modules/AOR_Reports/metadata/editviewdefs.php',
+     'listviewdefs' => 'modules/AOR_Reports/metadata/listviewdefs.php',
+     'searchdefs' => 'modules/AOR_Reports/metadata/searchdefs.php',
+     'popupdefs' => 'modules/AOR_Reports/metadata/popupdefs.php',
+     'searchfields' => 'modules/AOR_Reports/metadata/SearchFields.php',
+ ];

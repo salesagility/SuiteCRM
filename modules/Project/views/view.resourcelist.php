@@ -14,21 +14,21 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
+ *
  * @Package Gantt chart
+ *
  * @copyright Andrew Mclaughlan 2014
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 class ProjectViewResourceList extends SugarView
 {
     public function display()
     {
-        include('modules/Project/chart.php');
+        include 'modules/Project/chart.php';
 
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/css/style.css" />';
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/css/style_chart.css" />';

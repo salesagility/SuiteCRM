@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,20 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $beanList, $beanFiles, $locale;
 
-if (isset($_REQUEST['module']) && isset($_REQUEST['action']) && isset($_REQUEST['record'])) {
+if (isset($_REQUEST['module'], $_REQUEST['action'], $_REQUEST['record'])) {
     $currentModule = clean_string($_REQUEST['module']);
     $action = clean_string($_REQUEST['action']);
     $record = clean_string($_REQUEST['record']);
 } else {
-    die("module, action, and record id all are required");
+    die('module, action, and record id all are required');
 }
 
 $entity = $GLOBALS['beanList'][$currentModule];
-require_once($GLOBALS['beanFiles'][$entity]);
+require_once $GLOBALS['beanFiles'][$entity];
 $GLOBALS['focus'] = new $entity();
 $GLOBALS['focus']->retrieve(clean_string($_REQUEST['record']));
 
-include("modules/$currentModule/$action.php");
+include "modules/{$currentModule}/{$action}.php";

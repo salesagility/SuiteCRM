@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,25 +41,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 /**
  * Created on Jul 17, 2006
  * Ajax Procedure for loading all subpanels for a certain subpanel tab.
  */
-
-require_once('include/DetailView/DetailView.php');
+require_once 'include/DetailView/DetailView.php';
 $detailView = new DetailView();
-
 
 $class = $beanList[$_REQUEST['loadModule']];
 
-require_once($beanFiles[$class]);
+require_once $beanFiles[$class];
 $focus = new $class();
 $focus->id = $_REQUEST['record'];
 
-require_once('include/SubPanel/SubPanelTiles.php');
+require_once 'include/SubPanel/SubPanelTiles.php';
 $subpanel = new SubPanelTiles($focus, $_REQUEST['loadModule']);
 
 if (!function_exists('get_form_header')) {

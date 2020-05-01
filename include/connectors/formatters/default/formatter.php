@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
- * Generic formatter
+ * Generic formatter.
+ *
  * @api
  */
 class default_formatter
@@ -72,25 +73,21 @@ class default_formatter
 
         if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
             return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } else {
-            if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-                return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-            } else {
-                if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-                    return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-                } else {
-                    if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-                        return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-                    } else {
-                        if (preg_match('/_soap_/', $class)) {
-                            return $this->_ss->fetch("include/connectors/formatters/ext/soap/tpls/default.tpl");
-                        } else {
-                            return $this->_ss->fetch("include/connectors/formatters/ext/rest/tpls/default.tpl");
-                        }
-                    }
-                }
-            }
         }
+        if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+        }
+        if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+        }
+        if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+        }
+        if (preg_match('/_soap_/', $class)) {
+            return $this->_ss->fetch('include/connectors/formatters/ext/soap/tpls/default.tpl');
+        }
+
+        return $this->_ss->fetch('include/connectors/formatters/ext/rest/tpls/default.tpl');
     }
 
     public function getEditViewFormat()
@@ -108,35 +105,11 @@ class default_formatter
         return '';
     }
 
-    protected function fetchSmarty()
-    {
-        $source = $this->_component->getSource();
-        $class = get_class($source);
-        $dir = str_replace('_', '/', $class);
-        $config = $source->getConfig();
-        $this->_ss->assign('config', $config);
-        $this->_ss->assign('source', $class);
-        $this->_ss->assign('module', $this->_module);
-        if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } else {
-            if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-                return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-            } else {
-                if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-                    return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-                } else {
-                    return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-                }
-            }
-        }
-    }
-
     public function getSourceMapping()
     {
         $source = $this->_component->getSource();
-        $mapping = $source->getMapping();
-        return $mapping;
+
+        return $source->getMapping();
     }
 
     public function setSmarty($smarty)
@@ -182,5 +155,27 @@ class default_formatter
     public function getIconFilePath()
     {
         return '';
+    }
+
+    protected function fetchSmarty()
+    {
+        $source = $this->_component->getSource();
+        $class = get_class($source);
+        $dir = str_replace('_', '/', $class);
+        $config = $source->getConfig();
+        $this->_ss->assign('config', $config);
+        $this->_ss->assign('source', $class);
+        $this->_ss->assign('module', $this->_module);
+        if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+        }
+        if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+        }
+        if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+        }
+
+        return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
     }
 }

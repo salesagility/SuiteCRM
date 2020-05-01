@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,30 +40,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateId.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateId.php';
 class TemplateCurrencyId extends TemplateId
 {
     public $max_size = 25;
-    public $type='currency_id';
-    
+    public $type = 'currency_id';
+
     public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['type'] = $this->type;
         $def['dbType'] = 'id';
         $def['studio'] = 'visible';
-        $def['function'] = array('name'=>'getCurrencyDropDown', 'returns'=>'html');
+        $def['function'] = ['name' => 'getCurrencyDropDown', 'returns' => 'html'];
+
         return $def;
     }
-    
+
     public function save($df)
     {
         if (!$df->fieldExists($this->name)) {
             parent::save($df);
         }
     }
-    
+
     public function delete($df)
     {
         if (!$df->fieldExists(null, 'currency')) {

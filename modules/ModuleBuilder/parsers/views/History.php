@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,58 +36,56 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 require_once 'modules/ModuleBuilder/parsers/constants.php';
 require_once 'modules/ModuleBuilder/parsers/views/HistoryInterface.php';
 
 /**
- * Class History
+ * Class History.
  */
 class History implements HistoryInterface
 {
-
     /**
-     * @var string $_dirname
+     * @var string
      *  base directory for the history files
      */
     private $_dirname;
 
     /**
-     * @var string $_basename
+     * @var string
      * base name for a history file, for example, listviewdef.php
      */
     private $_basename;
 
     /**
-     * @var array $_list
+     * @var array
      * the history - a list of history files
      */
     private $_list;
 
     /**
-     * @var string $_previewFilename
+     * @var string
      * the location of a file for preview
      */
     private $_previewFilename;
 
     /**
      * History constructor.
+     *
      * @param string $previewFilename The filename which the caller expects for a preview file
      */
     public function __construct($previewFilename)
     {
-        $GLOBALS ['log']->debug(get_class($this) . "->__construct( {$previewFilename} )");
+        $GLOBALS['log']->debug(get_class($this) . "->__construct( {$previewFilename} )");
         $this->_previewFilename = $previewFilename;
-        $this->_list = array();
+        $this->_list = [];
 
         $this->_basename = basename($this->_previewFilename);
         $this->_dirname = dirname($this->_previewFilename);
-        $this->_historyLimit = isset($GLOBALS ['sugar_config'] ['studio_max_history']) ? $GLOBALS ['sugar_config'] ['studio_max_history'] : 50;
+        $this->_historyLimit = isset($GLOBALS['sugar_config']['studio_max_history']) ? $GLOBALS['sugar_config']['studio_max_history'] : 50;
 
         // create the history directory if it does not already exist
         if (!is_dir($this->_dirname)) {
@@ -99,7 +96,7 @@ class History implements HistoryInterface
             if (!empty($filenameList)) {
                 foreach ($filenameList as $filename) {
                     if (preg_match('/(\d+)$/', $filename, $match)) {
-                        $this->_list [] = $match[1];
+                        $this->_list[] = $match[1];
                     }
                 }
             }
@@ -110,10 +107,10 @@ class History implements HistoryInterface
         }
     }
 
-
     /**
-     * Get the most recent item in the history
-     * @return integer timestamp of the first item
+     * Get the most recent item in the history.
+     *
+     * @return int timestamp of the first item
      */
     public function getCount()
     {
@@ -121,8 +118,9 @@ class History implements HistoryInterface
     }
 
     /**
-     * Get the most recent item in the history
-     * @return integer timestamp of the first item
+     * Get the most recent item in the history.
+     *
+     * @return int timestamp of the first item
      */
     public function getFirst()
     {
@@ -130,8 +128,9 @@ class History implements HistoryInterface
     }
 
     /**
-     * Get the oldest item in the history (the default layout)
-     * @return integer timestamp of the last item
+     * Get the oldest item in the history (the default layout).
+     *
+     * @return int timestamp of the last item
      */
     public function getLast()
     {
@@ -139,8 +138,9 @@ class History implements HistoryInterface
     }
 
     /**
-     * Get the next oldest item in the history
-     * @return integer timestamp of the next item
+     * Get the next oldest item in the history.
+     *
+     * @return int timestamp of the next item
      */
     public function getNext()
     {
@@ -148,9 +148,11 @@ class History implements HistoryInterface
     }
 
     /**
-     * Get the nth item in the history (where the zeroeth record is the most recent)
-     * @param integer $index
-     * @return integer timestamp of the nth item
+     * Get the nth item in the history (where the zeroeth record is the most recent).
+     *
+     * @param int $index
+     *
+     * @return int timestamp of the nth item
      */
     public function getNth($index)
     {
@@ -165,8 +167,10 @@ class History implements HistoryInterface
     }
 
     /**
-     * Add an item to the history
+     * Add an item to the history.
+     *
      * @param string $path
+     *
      * @return string   A GMT Unix timestamp for this newly added item
      */
     public function append($path)
@@ -178,7 +182,7 @@ class History implements HistoryInterface
         $now = TimeDate::getInstance()->getNow();
         $new_file = null;
         for ($retries = 0; !file_exists($new_file) && $retries < 5; $retries++) {
-            $now->modify("+1 second");
+            $now->modify('+1 second');
             $time = $now->__get('ts');
             $new_file = $this->getFileByTimestamp($time);
         }
@@ -186,7 +190,7 @@ class History implements HistoryInterface
         if (file_exists($path)) {
             copy($path, $new_file);
         }
-        $this->_list [] = $time;
+        $this->_list[] = $time;
 
         // finally, trim the number of files we're holding in the history to that specified in the configuration
         // truncate the oldest files, keeping only the most recent $GLOBALS['sugar_config']['studio_max_history'] files (zero=keep them all)
@@ -197,14 +201,14 @@ class History implements HistoryInterface
             for ($i = 0; $i < $to_delete; $i++) {
                 $timestamp = array_shift($this->_list);
                 if (!unlink($this->getFileByTimestamp($timestamp))) {
-                    $GLOBALS ['log']->warn("History.php: unable to remove history file {$timestamp} from directory {$this->_dirname} - permissions problem?");
+                    $GLOBALS['log']->warn("History.php: unable to remove history file {$timestamp} from directory {$this->_dirname} - permissions problem?");
                 }
             }
         }
 
         // finally, remove any history preview file that might be lurking around - as soon as we append a new record it supercedes any old preview, so that must be removed (bug 20130)
         if (file_exists($this->_previewFilename)) {
-            $GLOBALS ['log']->debug(get_class($this) . "->append(): removing old history file at {$this->_previewFilename}");
+            $GLOBALS['log']->debug(get_class($this) . "->append(): removing old history file at {$this->_previewFilename}");
             unlink($this->_previewFilename);
         }
 
@@ -212,14 +216,16 @@ class History implements HistoryInterface
     }
 
     /**
-     * Restore the historical layout identified by timestamp
-     * @param integer $timestamp Unix timestamp GMT Timestamp of the layout to recover
-     * @return integer GMT Timestamp if successful, null if failure (if the file could not be copied for some reason)
+     * Restore the historical layout identified by timestamp.
+     *
+     * @param int $timestamp Unix timestamp GMT Timestamp of the layout to recover
+     *
+     * @return int GMT Timestamp if successful, null if failure (if the file could not be copied for some reason)
      */
     public function restoreByTimestamp($timestamp)
     {
         $filename = $this->getFileByTimestamp($timestamp);
-        $GLOBALS ['log']->debug(get_class($this) . ": restoring from $filename to {$this->_previewFilename}");
+        $GLOBALS['log']->debug(get_class($this) . ": restoring from {$filename} to {$this->_previewFilename}");
 
         if (file_exists($filename)) {
             copy($filename, $this->_previewFilename);
@@ -231,7 +237,7 @@ class History implements HistoryInterface
     }
 
     /**
-     * Undo the restore - revert back to the layout before the restore
+     * Undo the restore - revert back to the layout before the restore.
      */
     public function undoRestore()
     {
@@ -241,8 +247,10 @@ class History implements HistoryInterface
     }
 
     /**
-     * Returns full path to history file by timestamp. This function returns file path even if file doesn't exist
-     * @param  integer $timestamp Unix timestamp
+     * Returns full path to history file by timestamp. This function returns file path even if file doesn't exist.
+     *
+     * @param  int $timestamp Unix timestamp
+     *
      * @return string
      */
     public function getFileByTimestamp($timestamp)

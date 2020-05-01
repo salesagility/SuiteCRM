@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
 class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSelectButton
 {
     public function display($widget_data, $additionalFormFields = null, $nonbutton = false)
@@ -56,13 +50,11 @@ class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSe
         * See bug 25633
         * Bug25633 code change start
         */
-        if (!ACLController::checkAccess($widget_data["module"], "edit", true)) {
-            return ;
+        if (!ACLController::checkAccess($widget_data['module'], 'edit', true)) {
+            return;
         }
-        /*
-        * Bug25633 code change end
-        */
-        
+        // Bug25633 code change end
+
         return parent::display($widget_data);
     }
 }

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testloadView()
@@ -19,7 +22,7 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('UsersViewList', $view);
     }
 
-    public function test_loadConfig()
+    public function testLoadConfig()
     {
         //check with a invalid module, method must not change the view options.
         $view = ViewFactory::loadView('default', '');
@@ -41,31 +44,31 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($options, $view->options);
     }
 
-    public function test_buildFromFile()
+    public function testBuildFromFile()
     {
         //check with valid values and test if it returns correct view instance
         $type = 'list';
         $target_module = 'Users';
         $bean = null;
-        $view = ViewFactory::_buildFromFile('modules/'.$target_module.'/views/view.'.$type.'.php', $bean, array(), $type, $target_module);
+        $view = ViewFactory::_buildFromFile('modules/' . $target_module . '/views/view.' . $type . '.php', $bean, [], $type, $target_module);
         $this->assertInstanceOf('UsersViewList', $view);
 
         //check with valid values and test if it returns correct view instance
         $type = 'detail';
         $target_module = 'Users';
         $bean = null;
-        $view = ViewFactory::_buildFromFile('modules/'.$target_module.'/views/view.'.$type.'.php', $bean, array(), $type, $target_module);
+        $view = ViewFactory::_buildFromFile('modules/' . $target_module . '/views/view.' . $type . '.php', $bean, [], $type, $target_module);
         $this->assertInstanceOf('UsersViewDetail', $view);
     }
 
-    public function test_buildClass()
+    public function testBuildClass()
     {
         //check with valid values and test if it returns correct view instance
-        $view = ViewFactory::_buildClass('UsersViewList', null, array());
+        $view = ViewFactory::_buildClass('UsersViewList', null, []);
         $this->assertInstanceOf('UsersViewList', $view);
 
         //check with valid values and test if it returns correct view instance
-        $view = ViewFactory::_buildClass('UsersViewDetail', null, array());
+        $view = ViewFactory::_buildClass('UsersViewDetail', null, []);
         $this->assertInstanceOf('UsersViewDetail', $view);
     }
 }

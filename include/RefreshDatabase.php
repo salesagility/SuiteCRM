@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,14 +47,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Trait RefreshDatabase
- * @package SuiteCRM
+ * Trait RefreshDatabase.
  */
 trait RefreshDatabase
 {
     /**
-     * Truncates the database/table before each unit test
-     * @param string $table database table to truncate or 'ALL' to truncate all tables.
+     * Truncates the database/table before each unit test.
+     *
+     * @param string $table database table to truncate or 'ALL' to truncate all tables
+     *
      * @throws Exception
      */
     public function refreshDatabase($table = 'ALL')

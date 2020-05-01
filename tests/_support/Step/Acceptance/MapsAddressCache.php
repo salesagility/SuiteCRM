@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class MapsAddressCache extends \AcceptanceTester
 {
     /**
-     * Create maps address cache
+     * Create maps address cache.
      *
      * @param $name
      */

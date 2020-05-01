@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 $role = new ACLRole();
 if (isset($_REQUEST['record'])) {
     $role->id = $_POST['record'];
@@ -55,7 +51,7 @@ if (!empty($_REQUEST['name'])) {
     //if duplicate
     if (isset($_REQUEST['isduplicate']) && !empty($_REQUEST['isduplicate'])) {
         //duplicate actions
-        $role_actions=$role->getRoleActions($_REQUEST['isduplicate']);
+        $role_actions = $role->getRoleActions($_REQUEST['isduplicate']);
         foreach ($role_actions as $module) {
             foreach ($module as $type) {
                 foreach ($type as $act) {
@@ -67,15 +63,15 @@ if (!empty($_REQUEST['name'])) {
 } else {
     ob_clean();
     $flc_module = 'All';
-    foreach ($_POST as $name=>$value) {
+    foreach ($_POST as $name => $value) {
         if (substr_count($name, 'act_guid') > 0) {
             $name = str_replace('act_guid', '', $name);
-    
+
             $role->setAction($role->id, $name, $value);
         }
     }
-    echo "result = {role_id:'$role->id', module:'$flc_module'}";
+    echo "result = {role_id:'{$role->id}', module:'{$flc_module}'}";
     sugar_cleanup(true);
 }
 
-header("Location: index.php?module=ACLRoles&action=DetailView&record=". $role->id);
+header('Location: index.php?module=ACLRoles&action=DetailView&record=' . $role->id);

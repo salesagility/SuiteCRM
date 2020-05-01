@@ -7,13 +7,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class LeadsJjwg_MapsLogicHook
 {
     public $jjwg_Maps;
+
     public function __construct()
     {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }
-
-
-
 
     public function updateGeocodeInfo(&$bean, $event, $arguments)
     {

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,36 +43,21 @@
  */
 class ResourceManager
 {
-
     /**
-     * @var ResourceManager $instance
+     * @var ResourceManager
      */
     private static $instance;
 
     /**
-     * @var array $_observers
+     * @var array
      */
-    private $_observers = array();
+    private $_observers = [];
 
     /**
-     * The constructor; declared as private
+     * The constructor; declared as private.
      */
     private function __construct()
     {
-    }
-
-    /**
-     * getInstance
-     * Singleton method to return static instance of ResourceManager
-     * @return ResourceManager The static singleton
-     */
-    public static function getInstance()
-    {
-        if (!isset(self::$instance)) {
-            self::$instance = new ResourceManager();
-        } // if
-
-        return self::$instance;
     }
 
     /**
@@ -81,8 +65,10 @@ class ResourceManager
      * Handles determining the appropriate setup based on client type.
      * It will create a SoapResourceObserver instance if the $module parameter is set to
      * 'Soap'; otherwise, it will try to create a WebResourceObserver instance.
+     *
      * @param string $module The module value used to create the corresponding observer
-     * @return boolean value indicating whether or not an observer was successfully setup
+     *
+     * @return bool value indicating whether or not an observer was successfully setup
      */
     public function setup($module)
     {
@@ -92,12 +78,12 @@ class ResourceManager
         }
 
         if ($module == 'Soap') {
-            require_once('include/resource/Observers/SoapResourceObserver.php');
+            require_once 'include/resource/Observers/SoapResourceObserver.php';
             $observer = new SoapResourceObserver('Soap');
         } elseif (defined('SUITE_PHPUNIT_RUNNER')) {
             return;
         } else {
-            require_once('include/resource/Observers/WebResourceObserver.php');
+            require_once 'include/resource/Observers/WebResourceObserver.php';
             $observer = new WebResourceObserver($module);
         }
 
@@ -135,8 +121,24 @@ class ResourceManager
     }
 
     /**
+     * getInstance
+     * Singleton method to return static instance of ResourceManager.
+     *
+     * @return ResourceManager The static singleton
+     */
+    public static function getInstance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new ResourceManager();
+        } // if
+
+        return self::$instance;
+    }
+
+    /**
      * notifyObservers
      * This method notifies the registered observers with the provided message.
+     *
      * @param string $msg Message from language file to notify observers with
      */
     public function notifyObservers($msg)
@@ -160,10 +162,10 @@ class ResourceManager
         }
     }
 
-
     /**
      * getObservers
-     * Returns the observer instances that have been setup for the ResourceManager instance
+     * Returns the observer instances that have been setup for the ResourceManager instance.
+     *
      * @return array ResourceObserver(s)
      */
     public function getObservers()

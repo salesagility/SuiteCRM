@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,19 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $sugar_version, $js_custom_version;
 
-
 if (empty($_SESSION['setup_db_host_name'])) {
-    $_SESSION['setup_db_host_name'] = (isset($sugar_config['db_host_name']))  ? $sugar_config['db_host_name'] :  $_SERVER['SERVER_NAME'];
+    $_SESSION['setup_db_host_name'] = (isset($sugar_config['db_host_name'])) ? $sugar_config['db_host_name'] : $_SERVER['SERVER_NAME'];
 }
 
 if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
-
 
 // DB split
 $createDbCheckbox = '';
@@ -64,7 +61,7 @@ if (isset($_SESSION['setup_db_host_instance']) && !empty($_SESSION['setup_db_hos
     $instanceName = $_SESSION['setup_db_host_instance'];
 }
 
-$setupDbPortNum ='';
+$setupDbPortNum = '';
 if (isset($_SESSION['setup_db_port_num']) && !empty($_SESSION['setup_db_port_num'])) {
     $setupDbPortNum = $_SESSION['setup_db_port_num'];
 }
@@ -76,7 +73,7 @@ $db = getInstallDbInstance();
 
 $langHeader = get_language_header();
 
-$out =<<<EOQ
+$out = <<<EOQ
 <!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
@@ -98,7 +95,7 @@ $out =<<<EOQ
 EOQ;
 $out .= '<body onload="document.getElementById(\'button_next2\').focus();">';
 
-$out2 =<<<EOQ2
+$out2 = <<<EOQ2
 <!--SuiteCRM installer-->
 <div id="install_container">
     <div id="install_box">
@@ -121,89 +118,85 @@ EOQ2;
 $config_params = $db->installConfig();
 $form = '';
 foreach ($config_params as $group => $gdata) {
-    $form.= "<div class='install_block'>";
+    $form .= "<div class='install_block'>";
     $form .= "<label>{$mod_strings[$group]}</label><br>\n";
     foreach ($gdata as $name => $value) {
         if (!empty($value)) {
             if (!empty($value['required'])) {
-                $form .= "<span class=\"required\">*</span>";
-            } else {
+                $form .= '<span class="required">*</span>';
             }
+
             if (!empty($_SESSION[$name])) {
                 $sessval = $_SESSION[$name];
             } else {
                 $sessval = '';
             }
-            if (!empty($value["type"])) {
-                $type = $value["type"];
+            if (!empty($value['type'])) {
+                $type = $value['type'];
             } else {
                 $type = '';
             }
 
-            $form .= <<<FORM
+            $form .= <<<'FORM'
 
 FORM;
             //if the type is password, set a hidden field to capture the value.  This is so that we can properly encode special characters, which is a limitation with password fields
-            if ($type=='password') {
-                $form .= "<input type='$type' name='{$name}_entry' id='{$name}_entry' value='".urldecode($sessval)."'><input type='hidden' name='$name' id='$name' value='".urldecode($sessval)."'>";
+            if ($type == 'password') {
+                $form .= "<input type='{$type}' name='{$name}_entry' id='{$name}_entry' value='" . urldecode($sessval) . "'><input type='hidden' name='{$name}' id='{$name}' value='" . urldecode($sessval) . "'>";
             } else {
-                $form .= "<input type='$type' name='$name' id='$name' value='$sessval'>";
+                $form .= "<input type='{$type}' name='{$name}' id='{$name}' value='{$sessval}'>";
             }
 
-
-
-            $form .= <<<FORM
+            $form .= <<<'FORM'
 FORM;
         } else {
-            $form .= "<input name=\"$name\" id=\"$name\" value=\"\" type=\"hidden\">\n";
+            $form .= "<input name=\"{$name}\" id=\"{$name}\" value=\"\" type=\"hidden\">\n";
         }
     }
-    $form .= "</div>";
+    $form .= '</div>';
 }
 
 $out2 .= $form;
 
 //if we are installing in custom mode, include the following html
-if ($db->supports("create_user")) {
+if ($db->supports('create_user')) {
     // create / set db user dropdown
     $auto_select = '';
-    $provide_select ='';
+    $provide_select = '';
     $create_select = '';
     $same_select = '';
     if (isset($_SESSION['dbUSRData'])) {
 //    if($_SESSION['dbUSRData']=='auto')    {$auto_select ='selected';}
-        if ($_SESSION['dbUSRData']=='provide') {
-            $provide_select ='selected';
+        if ($_SESSION['dbUSRData'] == 'provide') {
+            $provide_select = 'selected';
         }
-        if (isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && strtolower($_SESSION['install_type'])=='custom') {
-            if ($_SESSION['dbUSRData']=='create') {
-                $create_select ='selected';
+        if (isset($_SESSION['install_type']) && !empty($_SESSION['install_type']) && strtolower($_SESSION['install_type']) == 'custom') {
+            if ($_SESSION['dbUSRData'] == 'create') {
+                $create_select = 'selected';
             }
         }
-        if ($_SESSION['dbUSRData']=='same') {
-            $same_select ='selected';
+        if ($_SESSION['dbUSRData'] == 'same') {
+            $same_select = 'selected';
         }
     } else {
-        $same_select ='selected';
+        $same_select = 'selected';
     }
-    $dbUSRDD   = "<select name='dbUSRData' id='dbUSRData' onchange='toggleDBUser();'>";
-    $dbUSRDD  .= "<option value='provide' $provide_select>".$mod_strings['LBL_DBCONFIG_PROVIDE_DD']."</option>";
-    $dbUSRDD  .= "<option value='create' $create_select>".$mod_strings['LBL_DBCONFIG_CREATE_DD']."</option>";
-    $dbUSRDD  .= "<option value='same' $same_select>".$mod_strings['LBL_DBCONFIG_SAME_DD']."</option>";
-    $dbUSRDD  .= "</select><br>&nbsp;";
-
-
+    $dbUSRDD = "<select name='dbUSRData' id='dbUSRData' onchange='toggleDBUser();'>";
+    $dbUSRDD .= "<option value='provide' {$provide_select}>" . $mod_strings['LBL_DBCONFIG_PROVIDE_DD'] . '</option>';
+    $dbUSRDD .= "<option value='create' {$create_select}>" . $mod_strings['LBL_DBCONFIG_CREATE_DD'] . '</option>';
+    $dbUSRDD .= "<option value='same' {$same_select}>" . $mod_strings['LBL_DBCONFIG_SAME_DD'] . '</option>';
+    $dbUSRDD .= '</select><br>&nbsp;';
 
     $setup_db_sugarsales_password = urldecode($_SESSION['setup_db_sugarsales_password']);
     $setup_db_sugarsales_user = urldecode($_SESSION['setup_db_sugarsales_user']);
     $setup_db_sugarsales_password_retype = urldecode($_SESSION['setup_db_sugarsales_password_retype']);
 
-    $out2 .=<<<EOQ2
+    $out2 .= <<<EOQ2
 <br>
     <hr>
 <br>
 {$mod_strings['LBL_DBCONFIG_SECURITY']}
-<div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>$dbUSRDD
+<div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>{$dbUSRDD}
     <span id='connection_user_div' style="display:none">
         <span class="required">*</span>
             <label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>
@@ -219,11 +212,10 @@ if ($db->supports("create_user")) {
 EOQ2;
 }
 
-$demoDD = "<select name='demoData' id='demoData' class='select'><option value='no' >".$mod_strings['LBL_NO']."</option><option value='yes'>".$mod_strings['LBL_YES']."</option>";
-$demoDD .= "</select>";
+$demoDD = "<select name='demoData' id='demoData' class='select'><option value='no' >" . $mod_strings['LBL_NO'] . "</option><option value='yes'>" . $mod_strings['LBL_YES'] . '</option>';
+$demoDD .= '</select>';
 
-
-$out3 =<<<EOQ3
+$out3 = <<<EOQ3
 <hr>
 <div class="install_block">
     <h2>{$mod_strings['LBL_DBCONF_DEMO_DATA_TITLE']}</h2>
@@ -234,9 +226,7 @@ $out3 =<<<EOQ3
 <br>
 EOQ3;
 
-
-
-$out4 =<<<EOQ4
+$out4 = <<<EOQ4
 </div>
 <hr>
     <div id="installcontrols">
@@ -379,9 +369,8 @@ function callDBCheck(){
 
 EOQ4;
 
-
 $out_dd = 'postData += "&demoData="+document.setConfig.demoData.value;';
-$out5 =<<<EOQ5
+$out5 = <<<EOQ5
                 postData += "&to_pdf=1&sugar_body_only=1";
 
                 //if this is a call already in progress, then just return

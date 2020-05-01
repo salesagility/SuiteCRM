@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,20 +22,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
-require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
+require_once 'include/Dashlets/DashletGeneric.php';
+require_once 'modules/AOW_WorkFlow/AOW_WorkFlow.php';
 
 class AOW_WorkFlowDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/AOW_WorkFlow/metadata/dashletviewdefs.php');
+        require 'modules/AOW_WorkFlow/metadata/dashletviewdefs.php';
 
         parent::__construct($id, $def);
 
@@ -47,6 +45,4 @@ class AOW_WorkFlowDashlet extends DashletGeneric
 
         $this->seedBean = new AOW_WorkFlow();
     }
-
-
 }

@@ -1,16 +1,18 @@
 <?php
+
 use Faker\Generator;
 
 class EmailManCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
+
     /**
      * @param AcceptanceTester $I
      */
@@ -28,11 +30,11 @@ class EmailManCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EmailManTester $emailMan
      *
-     * As an administrator I want to test outgoing mail configuration.
+     * As an administrator I want to test outgoing mail configuration
      */
     public function testScenarioAdminEmailSettings(
-        \AcceptanceTester $I,
-        \Step\Acceptance\EmailManTester $emailMan
+        AcceptanceTester $I,
+        Step\Acceptance\EmailManTester $emailMan
     ) {
         $I->wantTo('Save an outgoing email configuration');
 

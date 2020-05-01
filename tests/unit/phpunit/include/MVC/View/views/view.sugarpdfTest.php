@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -22,7 +25,7 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
         //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
         try {
             $view = new ViewSugarpdf();
-            $this->assertEmpty("", $view);
+            $this->assertEmpty('', $view);
         } catch (Exception $e) {
             $msg = $e->getMessage();
             $this->assertStringStartsWith('Cannot modify header information', $msg, 'Cannot modify header information? : ' . $msg . "\nTrace\n" . $e->getTraceAsString());

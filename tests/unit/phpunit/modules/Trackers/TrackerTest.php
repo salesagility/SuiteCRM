@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class TrackerTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -32,7 +35,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'disable_custom_fields', $tracker);
     }
 
-    public function testget_recently_viewed()
+    public function testgetRecentlyViewed()
     {
         $tracker = new Tracker();
 
@@ -55,7 +58,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $tracker = new Tracker();
 
@@ -76,7 +79,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['app']->headerDisplayed = 1;
         Tracker::logPage();
         $this->assertEquals(time(), $_SESSION['lpage']);
-        
+
         //$this->assertEquals(time(), null);
     }
 }

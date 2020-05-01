@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/externalAPI/Base/ExternalAPIBase.php');
+require_once 'include/externalAPI/Base/ExternalAPIBase.php';
 
 /**
- * External API based on OAuth
+ * External API based on OAuth.
+ *
  * @api
  */
 class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 {
     public $authMethod = 'oauth';
-    protected $oauthParams = array();
+    protected $oauthParams = [];
     protected $oauth_keys_initialized = false;
 
     public function __construct()
@@ -56,7 +54,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
     }
 
     /**
-     * Setup oauth parameters from connector
+     * Setup oauth parameters from connector.
      */
     public function setupOauthKeys()
     {
@@ -79,8 +77,11 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
     }
 
     /**
-     * Load data from EAPM bean
+     * Load data from EAPM bean.
+     *
      * @see ExternalAPIBase::loadEAPM()
+     *
+     * @param mixed $eapmBean
      */
     public function loadEAPM($eapmBean)
     {
@@ -95,8 +96,10 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
     }
 
     /**
-     * Check login
+     * Check login.
+     *
      * @param EAPM $eapmBean
+     *
      * @see ExternalAPIBase::checkLogin()
      */
     public function checkLogin($eapmBean = null)
@@ -107,7 +110,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
         }
 
         if ($this->checkOauthLogin()) {
-            return array('success' => true);
+            return ['success' => true];
         }
     }
 
@@ -120,43 +123,35 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
         }
 
         if (!empty($this->oauth_token) && !empty($this->oauth_secret)) {
-            return array('success'=>true);
-        } else {
-            return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN', 'EAPM'));
+            return ['success' => true];
         }
-    }
 
-    protected function checkOauthLogin()
-    {
-        if (empty($this->oauth_token) || empty($this->oauth_secret)) {
-            return $this->oauthLogin();
-        } else {
-            return false;
-        }
+        return ['success' => false, 'errorMessage' => translate('LBL_ERR_NO_TOKEN', 'EAPM')];
     }
 
     public function getOauthParams()
     {
-        return $this->getValue("oauthParams");
+        return $this->getValue('oauthParams');
     }
 
     public function getOauthRequestURL()
     {
-        return $this->getValue("oauthReq");
+        return $this->getValue('oauthReq');
     }
 
     public function getOauthAuthURL()
     {
-        return $this->getValue("oauthAuth");
+        return $this->getValue('oauthAuth');
     }
 
     public function getOauthAccessURL()
     {
-        return $this->getValue("oauthAccess");
+        return $this->getValue('oauthAccess');
     }
 
     /**
-     * Get OAuth client
+     * Get OAuth client.
+     *
      * @return SugarOauth
      */
     public function getOauth()
@@ -175,37 +170,36 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
     {
         global $sugar_config;
         $oauth = $this->getOauth();
-        if (isset($_SESSION['eapm_oauth_secret']) && isset($_SESSION['eapm_oauth_token']) && isset($_REQUEST['oauth_token']) && isset($_REQUEST['oauth_verifier'])) {
+        if (isset($_SESSION['eapm_oauth_secret'], $_SESSION['eapm_oauth_token'], $_REQUEST['oauth_token'], $_REQUEST['oauth_verifier'])) {
             $stage = 1;
         } else {
             $stage = 0;
         }
         if ($stage == 0) {
             $oauthReq = $this->getOauthRequestURL();
-            $callback_url = $sugar_config['site_url'].'/index.php?module=EAPM&action=oauth&record='.$this->eapmBean->id;
+            $callback_url = $sugar_config['site_url'] . '/index.php?module=EAPM&action=oauth&record=' . $this->eapmBean->id;
             $callback_url = $this->formatCallbackURL($callback_url);
 
-            $GLOBALS['log']->debug("OAuth request token: {$oauthReq} callback: $callback_url");
+            $GLOBALS['log']->debug("OAuth request token: {$oauthReq} callback: {$callback_url}");
 
             $request_token_info = $oauth->getRequestTokenByUrl($oauthReq, $callback_url);
 
-            $GLOBALS['log']->debug("OAuth token: ".var_export($request_token_info, true));
+            $GLOBALS['log']->debug('OAuth token: ' . var_export($request_token_info, true));
 
             if (empty($request_token_info['oauth_token_secret']) || empty($request_token_info['oauth_token'])) {
                 return false;
-            } else {
-                // FIXME: error checking here
-                $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
-                $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
-                $authReq = $this->getOauthAuthURL();
-                SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
             }
+            // FIXME: error checking here
+            $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
+            $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
+            $authReq = $this->getOauthAuthURL();
+            SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
         } else {
             $accReq = $this->getOauthAccessURL();
             $oauth->setToken($_SESSION['eapm_oauth_token'], $_SESSION['eapm_oauth_secret']);
             $GLOBALS['log']->debug("OAuth access token: {$accReq}");
             $access_token_info = $oauth->getAccessToken($accReq);
-            $GLOBALS['log']->debug("OAuth token: ".var_export($access_token_info, true));
+            $GLOBALS['log']->debug('OAuth token: ' . var_export($access_token_info, true));
             // FIXME: error checking here
             $this->oauth_token = $access_token_info['oauth_token'];
             $this->oauth_secret = $access_token_info['oauth_token_secret'];
@@ -214,10 +208,20 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
             $oauth->setToken($this->oauth_token, $this->oauth_secret);
             $this->eapmBean->validated = 1;
             $this->eapmBean->save();
-            unset($_SESSION['eapm_oauth_token']);
-            unset($_SESSION['eapm_oauth_secret']);
+            unset($_SESSION['eapm_oauth_token'], $_SESSION['eapm_oauth_secret']);
+
             return true;
         }
+
+        return false;
+    }
+
+    protected function checkOauthLogin()
+    {
+        if (empty($this->oauth_token) || empty($this->oauth_secret)) {
+            return $this->oauthLogin();
+        }
+
         return false;
     }
 }

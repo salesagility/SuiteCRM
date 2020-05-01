@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,24 +43,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
 /**
- * IMAP Wrapper class
+ * IMAP Wrapper class.
  *
  * @author gyula
  */
 class Imap implements ImapInterface
 {
-    
     /**
-     *
      * @var resource
      */
     protected $resource;
-    
+
     /**
-     * see more at imap_open()
+     * see more at imap_open().
      *
      * @param string $mailbox
      * @param string $username
@@ -70,7 +65,7 @@ class Imap implements ImapInterface
      * @param int $n_retries
      * @param array $params
      *
-     * @return resource or <b>FALSE</b> on error.
+     * @return resource or <b>FALSE</b> on error
      */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, array $params = null)
     {

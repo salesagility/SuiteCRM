@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
  * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,16 +22,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-$popupMeta = array('moduleMain' => 'AOR_Reports',
-                        'varName' => 'AOR_Report',
-                        'orderBy' => 'aor_reports.name',
-                        'whereClauses' =>
-                            array('name' => 'aor_reports.name',
-                                ),
-                            'searchInputs'=> array('aor_reports_number', 'name', 'priority','status'),
-                            
-                        );
+$popupMeta = ['moduleMain' => 'AOR_Reports',
+    'varName' => 'AOR_Report',
+    'orderBy' => 'aor_reports.name',
+    'whereClauses' => ['name' => 'aor_reports.name',
+    ],
+    'searchInputs' => ['aor_reports_number', 'name', 'priority', 'status'],
+];

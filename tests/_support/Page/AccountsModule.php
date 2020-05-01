@@ -2,22 +2,22 @@
 
 namespace Page;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class AccountsModule
 {
     /**
-     * @var string $URL include url of current page
+     * @var string include url of current page
      */
     public static $URL = 'index.php?module=Accounts';
 
     /**
-     * @var string $NAME
+     * @var string
      */
     public static $PACKAGE_NAME = '';
 
     /**
-     * @var string $NAME
+     * @var string
      */
     public static $NAME = 'Accounts';
 
@@ -33,6 +33,7 @@ class AccountsModule
 
     /**
      * BasicModule constructor.
+     *
      * @param Tester $I
      */
     public function __construct(Tester $I)

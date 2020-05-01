@@ -5,12 +5,12 @@ use Faker\Generator;
 class AOS_PDF_TemplatesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class AOS_PDF_TemplatesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the pdfTemplates module.
+     * As an administrator I want to view the pdfTemplates module
      */
     public function testScenarioViewPDFTemplatesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the pdfTemplates module for testing');
 
@@ -54,13 +54,13 @@ class AOS_PDF_TemplatesCest
      * @param \Step\Acceptance\PDFTemplates $pdfTemplate
      *
      * As administrative user I want to create a PDF template so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreatePDFTemplate(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\PDFTemplates $pdfTemplate
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\PDFTemplates $pdfTemplate
     ) {
         $I->wantTo('Create a PDF Template');
 
@@ -71,7 +71,7 @@ class AOS_PDF_TemplatesCest
 
         // Create PDF Template
         $this->fakeData->seed($this->fakeDataSeed);
-        $pdfTemplate->createPDFTemplate('Test_'. $this->fakeData->company());
+        $pdfTemplate->createPDFTemplate('Test_' . $this->fakeData->company());
 
         // Delete PDF Template
         $detailView->clickActionMenuItem('Delete');

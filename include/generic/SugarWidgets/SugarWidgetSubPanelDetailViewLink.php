@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
 class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
 {
     public function displayList(&$layout_def)
@@ -62,11 +56,9 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
             $key = strtoupper($key);
         }
         if (empty($layout_def['fields'][$key])) {
-            return "";
-        } else {
-            $value = $layout_def['fields'][$key];
+            return '';
         }
-
+        $value = $layout_def['fields'][$key];
 
         if (empty($layout_def['target_record_key'])) {
             $record = $layout_def['fields']['ID'];
@@ -77,7 +69,7 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
 
         if (!empty($layout_def['target_module_key'])) {
             if (!empty($layout_def['fields'][strtoupper($layout_def['target_module_key'])])) {
-                $module=$layout_def['fields'][strtoupper($layout_def['target_module_key'])];
+                $module = $layout_def['fields'][strtoupper($layout_def['target_module_key'])];
             }
         }
 
@@ -92,21 +84,21 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
         //links to email module now need additional information.
         //this is to resolve the information about the target of the emails. necessitated by feature that allow
         //only on email record for the whole campaign.
-        $parent='';
+        $parent = '';
         if (!empty($layout_def['parent_info'])) {
             if (!empty($focus)) {
-                $parent="&parent_id=".$focus->id;
-                $parent.="&parent_module=".$focus->module_dir;
+                $parent = '&parent_id=' . $focus->id;
+                $parent .= '&parent_module=' . $focus->module_dir;
             }
         } else {
             if (!empty($layout_def['parent_id'])) {
                 if (isset($layout_def['fields'][strtoupper($layout_def['parent_id'])])) {
-                    $parent.="&parent_id=".$layout_def['fields'][strtoupper($layout_def['parent_id'])];
+                    $parent .= '&parent_id=' . $layout_def['fields'][strtoupper($layout_def['parent_id'])];
                 }
             }
             if (!empty($layout_def['parent_module'])) {
                 if (isset($layout_def['fields'][strtoupper($layout_def['parent_module'])])) {
-                    $parent.="&parent_module=".$layout_def['fields'][strtoupper($layout_def['parent_module'])];
+                    $parent .= '&parent_module=' . $layout_def['fields'][strtoupper($layout_def['parent_module'])];
                 }
             }
         }
@@ -116,15 +108,16 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
         global $current_user;
         if (!empty($record) &&
             ($layout_def['DetailView'] && !$layout_def['owner_module']
-            ||  $layout_def['DetailView'] && !ACLController::moduleSupportsACL($layout_def['owner_module'])
+            || $layout_def['DetailView'] && !ACLController::moduleSupportsACL($layout_def['owner_module'])
             || ACLController::checkAccess($layout_def['owner_module'], 'view', $layout_def['owner_id'] == $current_user->id))) {
-            $link = ajaxLink("index.php?module=$module&action=$action&record={$record}{$parent}");
+            $link = ajaxLink("index.php?module={$module}&action={$action}&record={$record}{$parent}");
             if ($module == 'EAPM') {
-                $link = "index.php?module=$module&action=$action&record={$record}{$parent}";
+                $link = "index.php?module={$module}&action={$action}&record={$record}{$parent}";
             }
-            return '<a href="' . $link . '" >'."$value</a>";
-        } else {
-            return $value;
+
+            return '<a href="' . $link . '" >' . "{$value}</a>";
         }
+
+        return $value;
     }
 }

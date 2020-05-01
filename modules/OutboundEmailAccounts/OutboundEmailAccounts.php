@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,12 +38,11 @@
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php');
+require_once 'modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php';
 class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
 {
-
     /**
      * @var string
      */
@@ -61,8 +59,8 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
             $bean = new OutboundEmailAccounts();
             $bean->retrieve($this->id);
             if (!$bean->mail_smtppass) {
-                $GLOBALS['log']->warn("Unable to send email via SMTP using an empty password.");
-                $GLOBALS['log']->info("Please ensure that the email settings are configured correctly");
+                $GLOBALS['log']->warn('Unable to send email via SMTP using an empty password.');
+                $GLOBALS['log']->info('Please ensure that the email settings are configured correctly');
                 $this->mail_smtppass = null;
             } else {
                 $this->mail_smtppass = $bean->mail_smtppass;
@@ -70,6 +68,7 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
         }
         $this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
         $results = parent::save($check_notify);
+
         return $results;
     }
 
@@ -77,6 +76,7 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
     {
         $results = parent::retrieve($id, $encode, $deleted);
         $this->mail_smtppass = $this->mail_smtppass ? blowfishDecode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
+
         return $results;
     }
 
@@ -96,6 +96,7 @@ var passwordToggle = function(elem, sel) {
 <a href="javascript:;" onclick="passwordToggle(this, '#password_toggle');">{$mod_strings['LBL_CHANGE_PASSWORD']}</a>
 
 HTML;
+
         return $html;
     }
 
@@ -107,6 +108,7 @@ HTML;
         $ss->assign('MOD', $mod_strings);
         $ss->assign('mail_smtptype', $focus->mail_smtptype);
         $html = $ss->fetch('modules/OutboundEmailAccounts/smtpPreselection.tpl');
+
         return $html;
     }
 
@@ -223,8 +225,8 @@ HTML;
 					var smtpssl  = document.getElementById('mail_smtpssl').value;
 					var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
 					var mail_sendtype = 'SMTP'; 
-                                                                var adminNotifyFromAddress = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'$adminNotifyFromName';
-                                                                var adminNotifyFromName = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '$adminNotifyFromAddress';
+                                                                var adminNotifyFromAddress = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'{$adminNotifyFromName}';
+                                                                var adminNotifyFromName = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '{$adminNotifyFromAddress}';
 					var postDataString =
 						'mail_type=system&' +
 						'mail_sendtype=' + mail_sendtype + '&' +
@@ -267,6 +269,7 @@ HTML;
 				</div>
 			</div>
 HTML;
+
         return $html;
     }
 }

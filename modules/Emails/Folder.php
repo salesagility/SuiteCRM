@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 use SuiteCRM\Utility\SuiteValidator;
 
 /**
- * Class Folder
+ * Class Folder.
  *
  * private model class for ListViewDataEmails::getListViewData()
  * represent a fake SugarBean:
@@ -53,21 +51,23 @@ use SuiteCRM\Utility\SuiteValidator;
  */
 class Folder
 {
-
     /**
-     * private
-     * @var DBManager $db
+     * private.
+     *
+     * @var DBManager
      */
     public $db;
 
     /**
-     * private, use Folder::getId() instead
+     * private, use Folder::getId() instead.
+     *
      * @var string UUID in folders table
      */
     public $id;
 
     /**
-     * private, use Folder::getType() instead
+     * private, use Folder::getType() instead.
+     *
      * @var string folder type
      */
     protected $type;
@@ -79,15 +79,17 @@ class Folder
     {
         $this->db = DBManagerFactory::getInstance();
         $this->id = null;
-        $this->type = "inbound";
+        $this->type = 'inbound';
     }
 
     /**
      * @param int|string $folderId - (should be string, int type is legacy)
      * @param bool $encode (legacy, unused)
      * @param bool $deleted (legacy, unused)
-     * @return null|string (folder ID)
+     *
      * @throws SuiteException
+     *
+     * @return null|string (folder ID)
      */
     public function retrieve($folderId = -1)
     {
@@ -100,12 +102,10 @@ class Folder
             // is the id of the root node is the same as the inbound email id
 
             if (empty($row['parent_folder'])) {
-
                 // root node (inbound)
 
                 $this->id = $row['id'];
             } else {
-
                 // child node
 
                 $this->id = $row['parent_folder'];
@@ -113,7 +113,7 @@ class Folder
                 $this->mailbox = $row['name'];
             }
         } else {
-            throw new SuiteException("Invalid or empty Email Folder ID");
+            throw new SuiteException('Invalid or empty Email Folder ID');
         }
 
         return $this->id;
@@ -121,8 +121,10 @@ class Folder
 
     /**
      * @param array $request
-     * @return Folder
+     *
      * @throws SuiteException
+     *
+     * @return Folder
      */
     public function retrieveFromRequest($request)
     {
@@ -130,7 +132,7 @@ class Folder
             $foldersId = $request['folders_id'];
             $this->retrieve($foldersId);
         } else {
-            $GLOBALS['log']->warn("Empty or undefined Email Folder ID");
+            $GLOBALS['log']->warn('Empty or undefined Email Folder ID');
         }
 
         return $this;

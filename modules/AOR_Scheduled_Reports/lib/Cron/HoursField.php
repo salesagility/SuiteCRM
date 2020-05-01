@@ -3,7 +3,7 @@
 namespace Cron;
 
 /**
- * Hours field.  Allows: * , / -
+ * Hours field.  Allows: * , / -.
  */
 class HoursField extends AbstractField
 {

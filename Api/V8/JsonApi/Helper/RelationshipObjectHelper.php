@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Helper;
 
 use Api\V8\Helper\VarDefHelper;

@@ -97,6 +97,7 @@ class SearchThrowableHandler
 
         if ($sugar_config['developerMode'] === true) {
             $this->printStackTrace();
+
             return;
         }
 
@@ -129,12 +130,12 @@ class SearchThrowableHandler
     }
 
     /**
-     * Cancels the current output and prints a full screen detailed exception page
+     * Cancels the current output and prints a full screen detailed exception page.
      */
     private function printStackTrace()
     {
-        $whoops = new Run;
-        $handler = new PrettyPageHandler;
+        $whoops = new Run();
+        $handler = new PrettyPageHandler();
 
         $handler->addDataTable('SearchQuery', $this->query->jsonSerialize());
         $handler->addDataTable('SearchWrapper Status', $this->getSearchWrapperStatus());
@@ -175,6 +176,6 @@ class SearchThrowableHandler
         $endMessage = $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_END_MESSAGE'];
 
         echo '<h1>Error</h1>';
-        echo "<p class='text-danger'>$message $endMessage</p>";
+        echo "<p class='text-danger'>{$message} {$endMessage}</p>";
     }
 }

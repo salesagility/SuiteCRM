@@ -1,7 +1,8 @@
 <?php
+
 function install_aos()
 {
-    require_once('modules/Administration/Administration.php');
+    require_once 'modules/Administration/Administration.php';
 
     global $sugar_config;
 
@@ -21,7 +22,7 @@ function install_aos()
     if (!isset($sugar_config['aos']['quotes']['initialNumber'])) {
         $sugar_config['aos']['quotes']['initialNumber'] = '1';
     }
-    
+
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
 }
@@ -33,9 +34,9 @@ function upgrade_aos()
         $db->query("UPDATE  aos_pdf_templates SET type = 'AOS_Quotes' WHERE type = 'Quotes'");
         $db->query("UPDATE  aos_pdf_templates SET type = 'AOS_Invoices' WHERE type = 'Invoices'");
 
-        require_once('include/utils/file_utils.php');
+        require_once 'include/utils/file_utils.php';
 
-        $old_files = array(
+        $old_files = [
             'custom/Extension/modules/Accounts/Ext/Layoutdefs/Account.php',
             'custom/Extension/modules/Accounts/Ext/Vardefs/Account.php',
             'custom/Extension/modules/Contacts/Ext/Layoutdefs/Contact.php',
@@ -45,12 +46,12 @@ function upgrade_aos()
             'custom/Extension/modules/Project/Ext/Layoutdefs/Project.php',
             'custom/Extension/modules/Project/Ext/Vardefs/Project.php',
             'modules/AOS_Quotes/js/Quote.js',
-        );
+        ];
 
         foreach ($old_files as $old_file) {
             if (file_exists($old_file)) {
-                create_custom_directory('bak_aos/'.$old_file);
-                sugar_rename($old_file, 'custom/bak_aos/'.$old_file);
+                create_custom_directory('bak_aos/' . $old_file);
+                sugar_rename($old_file, 'custom/bak_aos/' . $old_file);
             }
         }
     }

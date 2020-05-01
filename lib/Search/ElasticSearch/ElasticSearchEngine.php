@@ -36,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -62,7 +61,7 @@ class ElasticSearchEngine extends SearchEngine
     /**
      * ElasticSearchEngine constructor.
      *
-     * @param Client|null $client
+     * @param null|Client $client
      */
     public function __construct(Client $client = null)
     {
@@ -70,7 +69,7 @@ class ElasticSearchEngine extends SearchEngine
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function search(SearchQuery $query)
     {
@@ -81,6 +80,7 @@ class ElasticSearchEngine extends SearchEngine
         $results = $this->parseHits($hits);
         $end = microtime(true);
         $searchTime = ($end - $start);
+
         return new SearchResults($results, true, $searchTime, $hits['hits']['total']);
     }
 
@@ -118,7 +118,7 @@ class ElasticSearchEngine extends SearchEngine
      */
     private function createSearchParams($query)
     {
-        $params = [
+        return [
             'index' => $this->index,
             'body' => [
                 'stored_fields' => [],
@@ -135,8 +135,6 @@ class ElasticSearchEngine extends SearchEngine
                 ],
             ],
         ];
-
-        return $params;
     }
 
     /**
@@ -150,7 +148,7 @@ class ElasticSearchEngine extends SearchEngine
     {
         try {
             $results = $this->client->search($params);
-        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (BadRequest400Exception $exception) {
+        } /* @noinspection PhpRedundantCatchClauseInspection */ catch (BadRequest400Exception $exception) {
             throw new SearchInvalidRequestException('The query was not valid.');
         }
 

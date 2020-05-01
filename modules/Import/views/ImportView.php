@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/MVC/View/SugarView.php');
-
+require_once 'include/MVC/View/SugarView.php';
 
 class ImportView extends SugarView
 {
@@ -50,7 +48,7 @@ class ImportView extends SugarView
     protected $pageTitleKey;
     protected $instruction;
 
-    public function __construct($bean = null, $view_object_map = array())
+    public function __construct($bean = null, $view_object_map = [])
     {
         global $mod_strings;
 
@@ -68,15 +66,17 @@ class ImportView extends SugarView
     public function preDisplay()
     {
         if (!is_file('cache/jsLanguage/Import/' . $GLOBALS['current_language'] . '.js')) {
-            require_once('include/language/jsLanguage.php');
+            require_once 'include/language/jsLanguage.php';
             jsLanguage::createModuleStringsCache('Import', $GLOBALS['current_language']);
         }
-        echo '<script src="cache/jsLanguage/Import/'. $GLOBALS['current_language'] . '.js"></script>';
+        echo '<script src="cache/jsLanguage/Import/' . $GLOBALS['current_language'] . '.js"></script>';
         parent::preDisplay();
     }
 
     /**
      * @see SugarView::getMenu()
+     *
+     * @param null|mixed $module
      */
     public function getMenu($module = null)
     {
@@ -104,15 +104,16 @@ class ImportView extends SugarView
         // Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
         if (!empty($_REQUEST['module_tab'])) {
             return $_REQUEST['module_tab'];
-        } elseif (isset($moduleTabMap[$this->importModule])) {
+        }
+        if (isset($moduleTabMap[$this->importModule])) {
             return $moduleTabMap[$this->importModule];
         }
         // Default anonymous pages to be under Home
-        elseif (!isset($app_list_strings['moduleList'][$this->importModule])) {
+        if (!isset($app_list_strings['moduleList'][$this->importModule])) {
             return 'Home';
-        } else {
-            return $this->importModule;
         }
+
+        return $this->importModule;
     }
 
     /**
@@ -122,16 +123,15 @@ class ImportView extends SugarView
      * @param string $submitContent
      * @param string $script
      * @param bool $encode
-     * @return void
      */
-    protected function sendJsonOutput($html = "", $submitContent = "", $script = "", $encode = false)
+    protected function sendJsonOutput($html = '', $submitContent = '', $script = '', $encode = false)
     {
         $title = $this->getModuleTitle(false);
-        $out = array(
-            'html'          => $html,
+        $out = [
+            'html' => $html,
             'submitContent' => $submitContent,
-            'title'         => $title,
-            'script'        => $script);
+            'title' => $title,
+            'script' => $script];
 
         if ($encode) {
             $function = function (&$val) {
@@ -145,11 +145,13 @@ class ImportView extends SugarView
 
     /**
      * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
      */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings, $app_list_strings;
-        $returnArray = array(string_format($mod_strings[$this->pageTitleKey], array($this->currentStep)));
+        $returnArray = [string_format($mod_strings[$this->pageTitleKey], [$this->currentStep])];
 
         return $returnArray;
     }
@@ -159,7 +161,7 @@ class ImportView extends SugarView
         global $mod_strings;
 
         $ins = '';
-        
+
         if ($this->instruction) {
             $ins_string = $mod_strings[$this->instruction];
             $ins = '<div class="import_instruction">' . $ins_string . '</div>';
@@ -169,23 +171,23 @@ class ImportView extends SugarView
     }
 
     /**
-    * Displays the Smarty template for an error
-    *
-    * @param string $message error message to show
-    * @param string $module what module we were importing into
-    * @param string $action what page we should go back to
-    */
+     * Displays the Smarty template for an error.
+     *
+     * @param string $message error message to show
+     * @param string $module what module we were importing into
+     * @param string $action what page we should go back to
+     */
     protected function _showImportError($message, $module, $action = 'Step1')
     {
         $ss = new Sugar_Smarty();
 
-        $ss->assign("MESSAGE", $message);
-        $ss->assign("ACTION", $action);
-        $ss->assign("IMPORT_MODULE", $module);
-        $ss->assign("MOD", $GLOBALS['mod_strings']);
-        $ss->assign("SOURCE", "");
+        $ss->assign('MESSAGE', $message);
+        $ss->assign('ACTION', $action);
+        $ss->assign('IMPORT_MODULE', $module);
+        $ss->assign('MOD', $GLOBALS['mod_strings']);
+        $ss->assign('SOURCE', '');
         if (isset($_REQUEST['source'])) {
-            $ss->assign("SOURCE", $_REQUEST['source']);
+            $ss->assign('SOURCE', $_REQUEST['source']);
         }
 
         echo $ss->fetch('modules/Import/tpls/error.tpl');

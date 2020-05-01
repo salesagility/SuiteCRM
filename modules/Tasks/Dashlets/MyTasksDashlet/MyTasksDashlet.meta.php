@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,12 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $app_strings;
 
-$dashletMeta['MyTasksDashlet'] = array('module'		=> 'Tasks',
-                                       'title'       => translate('LBL_LIST_MY_TASKS', 'Tasks'),
-                                       'description' => 'A customizable view into Tasks',
-                                       'category'    => 'Module Views');
+$dashletMeta['MyTasksDashlet'] = ['module' => 'Tasks',
+    'title' => translate('LBL_LIST_MY_TASKS', 'Tasks'),
+    'description' => 'A customizable view into Tasks',
+    'category' => 'Module Views'];

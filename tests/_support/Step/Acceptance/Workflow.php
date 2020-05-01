@@ -2,7 +2,7 @@
 
 namespace Step\Acceptance;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class Workflow extends Tester
 {
@@ -62,9 +62,9 @@ class Workflow extends Tester
      */
     public function setConditionOperatorDateTimeValue($row)
     {
-        $calendarButton = '#aow_conditions_value'.$row.'_trigger';
-        $calendarField = '#aow_conditions_value'.$row.'_date';
-        $calendarDialog = '#aow_conditions_value'.$row.'_trigger_div';
+        $calendarButton = '#aow_conditions_value' . $row . '_trigger';
+        $calendarField = '#aow_conditions_value' . $row . '_date';
+        $calendarDialog = '#aow_conditions_value' . $row . '_trigger_div';
         $this->click($calendarButton);
         $this->waitForElementVisible($calendarDialog);
         $this->click('.today > .selector', $calendarDialog);

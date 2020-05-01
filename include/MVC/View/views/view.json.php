@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class ViewJson extends SugarView
 {
-    public $type ='detail';
+    public $type = 'detail';
 
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function display()
     {
@@ -58,18 +53,18 @@ class ViewJson extends SugarView
         $bean = $this->bean;
         $all_fields = array_merge($bean->column_fields, $bean->additional_column_fields);
 
-        $js_fields_arr = array();
+        $js_fields_arr = [];
         foreach ($all_fields as $field) {
-            if (isset($bean->$field)) {
-                $bean->$field = from_html($bean->$field);
-                $bean->$field = preg_replace('/\r\n/', '<BR>', $bean->$field);
-                $bean->$field = preg_replace('/\n/', '<BR>', $bean->$field);
-                $js_fields_arr[$field] = addslashes($bean->$field);
+            if (isset($bean->{$field})) {
+                $bean->{$field} = from_html($bean->{$field});
+                $bean->{$field} = preg_replace('/\r\n/', '<BR>', $bean->{$field});
+                $bean->{$field} = preg_replace('/\n/', '<BR>', $bean->{$field});
+                $js_fields_arr[$field] = addslashes($bean->{$field});
             }
         }
         $out = $json->encode($js_fields_arr, true);
         ob_clean();
-        print($out);
+        echo $out;
         sugar_cleanup(true);
     }
 }

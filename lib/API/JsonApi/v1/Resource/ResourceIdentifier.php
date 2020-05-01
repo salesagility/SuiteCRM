@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,23 +36,24 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
 use Psr\Container\ContainerInterface;
-use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResourceIdentifier;
-use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
+use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResourceIdentifier;
+use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
 
 /**
- * Class ResourceIdentifier
- * @package SuiteCRM\API\JsonApi\v1\Resource
+ * Class ResourceIdentifier.
+ *
  * @see http://jsonapi.org/format/1.0/#document-resource-identifier-objects
  */
 class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterface, JsonApiResourceIdentifier
 {
     /**
-     * @var ContainerInterface $containers
+     * @var ContainerInterface
      */
     protected $containers;
 
@@ -63,29 +63,29 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
     protected $logger;
 
     /**
-     * @var string $id
+     * @var string
      */
     protected $id;
 
     /**
-     * @var string $type
+     * @var string
      */
     protected $type;
 
     /**
-    * @var array $meta
-    */
+     * @var array
+     */
     protected $meta;
 
     /**
      * Resource constructor.
+     *
      * @param ContainerInterface $containers
      */
     public function __construct(ContainerInterface $containers)
     {
         $this->containers = $containers;
     }
-
 
     /**
      * @return string
@@ -97,7 +97,8 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
 
     /**
      * @param string $id
-     * @return Resource|$this
+     *
+     * @return $this|resource
      */
     public function withId($id)
     {
@@ -116,7 +117,8 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
 
     /**
      * @param string $type
-     * @return Resource|$this
+     *
+     * @return $this|resource
      */
     public function withType($type)
     {
@@ -126,12 +128,14 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
     }
 
     /**
-     * @param array|null $meta
+     * @param null|array $meta
+     *
      * @return ResourceIdentifier
      */
     public function withMeta($meta)
     {
         $this->meta = $meta;
+
         return clone $this;
     }
 
@@ -139,8 +143,6 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
      * Sets a logger instance on the object.
      *
      * @param LoggerInterface $logger
-     *
-     * @return void
      */
     public function setLogger(LoggerInterface $logger)
     {
@@ -152,7 +154,7 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
      */
     public function toJsonApiResponse()
     {
-        $response = array();
+        $response = [];
 
         // id can be empty in order to create a new record
         if (empty($this->getType()) === false) {

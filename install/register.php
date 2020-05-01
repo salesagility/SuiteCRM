@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -54,9 +52,8 @@ if ($suicide) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-
 if (!isset($_POST['confirm']) || !$_POST['confirm']) {
-    include("sugar_version.php"); // provide $sugar_flavor
+    include 'sugar_version.php'; // provide $sugar_flavor
     global $sugar_config;
     $ik = '';
     if (isset($sugar_config['unique_key']) && !empty($sugar_config['unique_key'])) {
@@ -66,11 +63,10 @@ if (!isset($_POST['confirm']) || !$_POST['confirm']) {
     $notConfirmed = $mod_strings['LBL_REG_CONF_3'];
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	START OUTPUT
 $langHeader = get_language_header();
-$out =<<<EOQ
+$out = <<<EOQ
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html {$langHeader}>
 <head>
@@ -78,9 +74,9 @@ $out =<<<EOQ
    <meta http-equiv="Content-Script-Type" content="text/javascript">
    <meta http-equiv="Content-Style-Type" content="text/css">
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_REG_TITLE']}</title>
-   <link REL="SHORTCUT ICON" HREF="$icon">
-   <link rel="stylesheet" href="$css" type="text/css" />
-   <script type="text/javascript" src="$common"></script>
+   <link REL="SHORTCUT ICON" HREF="{$icon}">
+   <link rel="stylesheet" href="{$css}" type="text/css" />
+   <script type="text/javascript" src="{$common}"></script>
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
 <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
@@ -91,7 +87,7 @@ $out =<<<EOQ
 		<img src="{$sugar_md}" alt="SugarCRM" border="0">
 		</p>
 		{$mod_strings['LBL_REG_TITLE']} <span style="font-size: 9px;"> (Optional)</span></th>
-	<th width="200" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank"><IMG src="$loginImage" alt="SugarCRM" border="0"></a></th>
+	<th width="200" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank"><IMG src="{$loginImage}" alt="SugarCRM" border="0"></a></th>
 </tr>
 <tr>
     <td colspan="2">{$notConfirmed}</td>

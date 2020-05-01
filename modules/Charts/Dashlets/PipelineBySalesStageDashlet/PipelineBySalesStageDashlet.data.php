@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,23 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$dashletData['PipelineBySalesStageDashlet']['searchFields'] = array(
-        'pbss_date_start' => array(
-                'name'  => 'pbss_date_start',
-                'vname' => 'LBL_CLOSE_DATE_START',
-                'type'  => 'datepicker',
-            ),
-        'pbss_date_end' => array(
-                'name'  => 'pbss_date_end',
-                'vname' => 'LBL_CLOSE_DATE_END',
-                'type'  => 'datepicker',
-            ),
-        'pbss_sales_stages' => array(
-                'name'  => 'pbss_sales_stages',
-                'vname' => 'LBL_SALES_STAGES',
-                'type'  => 'enum',
-            ),
-        );
+$dashletData['PipelineBySalesStageDashlet']['searchFields'] = [
+    'pbss_date_start' => [
+        'name' => 'pbss_date_start',
+        'vname' => 'LBL_CLOSE_DATE_START',
+        'type' => 'datepicker',
+    ],
+    'pbss_date_end' => [
+        'name' => 'pbss_date_end',
+        'vname' => 'LBL_CLOSE_DATE_END',
+        'type' => 'datepicker',
+    ],
+    'pbss_sales_stages' => [
+        'name' => 'pbss_sales_stages',
+        'vname' => 'LBL_SALES_STAGES',
+        'type' => 'enum',
+    ],
+];

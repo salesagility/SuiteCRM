@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,25 +42,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['aow_processed_aow_actions'] = array( 'table' => 'aow_processed_aow_actions'
-, 'fields' => array(
-        array('name' =>'id', 'type' =>'varchar', 'len'=>'36')
-    , array('name' =>'aow_processed_id', 'type' =>'varchar', 'len'=>'36')
-    , array('name' =>'aow_action_id', 'type' =>'varchar', 'len'=>'36')
-    ,  array('name' => 'status', 'type' => 'varchar', 'len'=>'36', 'default'=>'Pending')
-    , array('name' => 'date_modified','type' => 'datetime')
-    , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'required'=>false, 'default'=>'0')
-    )                                  , 'indices' => array(
-        array('name' =>'aow_processed_aow_actionsspk', 'type' =>'primary', 'fields'=>array('id'))
-    , array('name' => 'idx_aow_processed_aow_actions', 'type'=>'alternate_key', 'fields'=>array('aow_processed_id','aow_action_id'))
-    , array('name' => 'idx_actid_del_freid', 'type' => 'index', 'fields'=> array('aow_action_id', 'deleted', 'aow_processed_id'))
-
-    )
-
-, 'relationships' => array('aow_processed_aow_actions' => array('lhs_module'=> 'AOW_Processed', 'lhs_table'=> 'aow_processed', 'lhs_key' => 'id',
-        'rhs_module'=> 'AOW_Actions', 'rhs_table'=> 'aow_actions', 'rhs_key' => 'id',
-        'relationship_type'=>'many-to-many',
-        'join_table'=> 'aow_processed_aow_actions', 'join_key_lhs'=>'aow_processed_id', 'join_key_rhs'=>'aow_action_id'))
-
-
-);
+$dictionary['aow_processed_aow_actions'] = ['table' => 'aow_processed_aow_actions', 'fields' => [
+    ['name' => 'id', 'type' => 'varchar', 'len' => '36'], ['name' => 'aow_processed_id', 'type' => 'varchar', 'len' => '36'], ['name' => 'aow_action_id', 'type' => 'varchar', 'len' => '36'],  ['name' => 'status', 'type' => 'varchar', 'len' => '36', 'default' => 'Pending'], ['name' => 'date_modified', 'type' => 'datetime'], ['name' => 'deleted', 'type' => 'bool', 'len' => '1', 'required' => false, 'default' => '0']
+], 'indices' => [
+    ['name' => 'aow_processed_aow_actionsspk', 'type' => 'primary', 'fields' => ['id']], ['name' => 'idx_aow_processed_aow_actions', 'type' => 'alternate_key', 'fields' => ['aow_processed_id', 'aow_action_id']], ['name' => 'idx_actid_del_freid', 'type' => 'index', 'fields' => ['aow_action_id', 'deleted', 'aow_processed_id']]
+], 'relationships' => ['aow_processed_aow_actions' => ['lhs_module' => 'AOW_Processed', 'lhs_table' => 'aow_processed', 'lhs_key' => 'id',
+    'rhs_module' => 'AOW_Actions', 'rhs_table' => 'aow_actions', 'rhs_key' => 'id',
+    'relationship_type' => 'many-to-many',
+    'join_table' => 'aow_processed_aow_actions', 'join_key_lhs' => 'aow_processed_id', 'join_key_rhs' => 'aow_action_id']]
+];

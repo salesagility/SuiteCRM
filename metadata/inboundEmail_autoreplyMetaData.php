@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,44 +42,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['InboundEmail_autoreply'] = array('table' => 'inbound_email_autoreply',
-    'fields' => array(
-        'id' => array(
+$dictionary['InboundEmail_autoreply'] = ['table' => 'inbound_email_autoreply',
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
-        ),
-        'deleted' => array(
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
             'required' => false,
             'default' => '0',
-            'reportable'=>false,
-        ),
-        'date_entered' => array(
+            'reportable' => false,
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'date_modified' => array(
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'autoreplied_to' => array(
+        ],
+        'autoreplied_to' => [
             'name' => 'autoreplied_to',
             'vname' => 'LBL_AUTOREPLIED_TO',
             'type' => 'varchar',
-            'len'		=> 100,
+            'len' => 100,
             'required' => true,
-            'reportable'=>false,
-        ),
-        'ie_id' => array(
+            'reportable' => false,
+        ],
+        'ie_id' => [
             'name' => 'ie_id',
             'vname' => 'LBL_INBOUNDEMAIL_ID',
             'type' => 'id',
@@ -86,24 +87,24 @@ $dictionary['InboundEmail_autoreply'] = array('table' => 'inbound_email_autorepl
             'default' => '',
             'required' => true,
             'reportable' => false,
-        ),
-    ),
-    'indices' => array(
-        array(
+        ],
+    ],
+    'indices' => [
+        [
             'name' => 'ie_autopk',
-            'type' =>'primary',
-            'fields' => array(
+            'type' => 'primary',
+            'fields' => [
                 'id'
-            )
-        ),
-        array(
-        'name' =>'idx_ie_autoreplied_to',
-        'type'=>'index',
-        'fields' => array(
-            'autoreplied_to'
-            )
-        ),
-    ), /* end indices */
-    'relationships' => array(
-    ), /* end relationships */
-);
+            ]
+        ],
+        [
+            'name' => 'idx_ie_autoreplied_to',
+            'type' => 'index',
+            'fields' => [
+                'autoreplied_to'
+            ]
+        ],
+    ], // end indices
+    'relationships' => [
+    ], // end relationships
+];

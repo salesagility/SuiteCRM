@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,37 +36,35 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$dictionary['Reminder'] = array(
+$dictionary['Reminder'] = [
     'table' => 'reminders',
     'audited' => false,
-    'fields' => array(
-        'popup' => array(
+    'fields' => [
+        'popup' => [
             'name' => 'popup',
             'vname' => 'LBL_POPUP',
             'type' => 'bool',
             'required' => false,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'email' => array(
+        ],
+        'email' => [
             'name' => 'email',
             'vname' => 'LBL_EMAIL',
             'type' => 'bool',
             'required' => false,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'email_sent' => array(
+        ],
+        'email_sent' => [
             'name' => 'email_sent',
             'vname' => 'LBL_EMAIL_SENT',
             'type' => 'bool',
             'required' => false,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'timer_popup' => array(
+        ],
+        'timer_popup' => [
             'name' => 'timer_popup',
             'vname' => 'LBL_TIMER_POPUP',
             'type' => 'varchar',
@@ -75,8 +72,8 @@ $dictionary['Reminder'] = array(
             'required' => true,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'timer_email' => array(
+        ],
+        'timer_email' => [
             'name' => 'timer_email',
             'vname' => 'LBL_TIMER_EMAIL',
             'type' => 'varchar',
@@ -84,8 +81,8 @@ $dictionary['Reminder'] = array(
             'required' => true,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'related_event_module' => array(
+        ],
+        'related_event_module' => [
             'name' => 'related_event_module',
             'vname' => 'LBL_RELATED_EVENT_MODULE',
             'type' => 'varchar',
@@ -93,16 +90,16 @@ $dictionary['Reminder'] = array(
             'required' => true,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'related_event_module_id' => array(
+        ],
+        'related_event_module_id' => [
             'name' => 'related_event_module_id',
             'vname' => 'LBL_RELATED_EVENT_MODULE_ID',
             'type' => 'id',
             'required' => true,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'date_willexecute' => array(
+        ],
+        'date_willexecute' => [
             'name' => 'date_willexecute',
             'vname' => 'LBL_DATE_WILLEXECUTE',
             'type' => 'int',
@@ -111,32 +108,32 @@ $dictionary['Reminder'] = array(
             'required' => false,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'popup_viewed' => array(
+        ],
+        'popup_viewed' => [
             'name' => 'popup_viewed',
             'type' => 'bool',
             'default' => '0',
             'importable' => true,
             'duplicate_merge' => 'disabled',
-        ),
-    ),
-    'indices' => array(
-        array('name' => 'idx_reminder_name', 'type' => 'index', 'fields' => array('name')),
-        array('name' => 'idx_reminder_deleted', 'type' => 'index', 'fields' => array('deleted')),
-        array(
+        ],
+    ],
+    'indices' => [
+        ['name' => 'idx_reminder_name', 'type' => 'index', 'fields' => ['name']],
+        ['name' => 'idx_reminder_deleted', 'type' => 'index', 'fields' => ['deleted']],
+        [
             'name' => 'idx_reminder_related_event_module',
             'type' => 'index',
-            'fields' => array('related_event_module')
-        ),
-        array(
+            'fields' => ['related_event_module']
+        ],
+        [
             'name' => 'idx_reminder_related_event_module_id',
             'type' => 'index',
-            'fields' => array('related_event_module_id')
-        ),
-    )
-);
+            'fields' => ['related_event_module_id']
+        ],
+    ]
+];
 
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Reminders', 'Reminder', array('basic','assignable'));
+VardefManager::createVardef('Reminders', 'Reminder', ['basic', 'assignable']);

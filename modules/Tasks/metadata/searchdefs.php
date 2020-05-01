@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,96 +36,78 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$searchdefs ['Tasks'] =
-array(
-  'layout' =>
-  array(
-    'basic_search' =>
-    array(
-      'name' =>
-      array(
-        'name' => 'name',
-        'default' => true,
-        'width' => '10%',
-      ),
-     'current_user_only' =>
-      array(
-        'name' => 'current_user_only',
-        'label' => 'LBL_CURRENT_USER_FILTER',
-        'type' => 'bool',
-        'default' => true,
-        'width' => '10%',
-      ),
-      array('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
-      array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
-
-    ),
-    'advanced_search' =>
-    array(
-      'name' =>
-      array(
-        'name' => 'name',
-        'default' => true,
-        'width' => '10%',
-      ),
-      'contact_name' =>
-      array(
-        'name' => 'contact_name',
-        'label' => 'LBL_CONTACT_NAME',
-        'type' => 'name',
-        'default' => true,
-        'width' => '10%',
-      ),
-      'current_user_only' =>
-      array(
-        'name' => 'current_user_only',
-        'label' => 'LBL_CURRENT_USER_FILTER',
-        'type' => 'bool',
-        'default' => true,
-        'width' => '10%',
-      ),
-      'status' =>
-      array(
-        'name' => 'status',
-        'default' => true,
-        'width' => '10%',
-      ),
-      'parent_name' =>
-      array(
-        'type' => 'parent',
-        'label' => 'LBL_LIST_RELATED_TO',
-        'width' => '10%',
-        'default' => true,
-        'name' => 'parent_name',
-      ),
-      'assigned_user_id' =>
-      array(
-        'name' => 'assigned_user_id',
-        'type' => 'enum',
-        'label' => 'LBL_ASSIGNED_TO',
-        'function' =>
-        array(
-          'name' => 'get_user_array',
-          'params' =>
-          array(
-            0 => false,
-          ),
-        ),
-        'default' => true,
-        'width' => '10%',
-      ),
-      
-    ),
-  ),
-  'templateMeta' =>
-  array(
-    'maxColumns' => '3',
-    'maxColumnsBasic' => '4',
-    'widths' =>
-    array(
-      'label' => '10',
-      'field' => '30',
-    ),
-  ),
-);
+$searchdefs['Tasks'] =
+[
+    'layout' => [
+        'basic_search' => [
+            'name' => [
+                'name' => 'name',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'current_user_only' => [
+                'name' => 'current_user_only',
+                'label' => 'LBL_CURRENT_USER_FILTER',
+                'type' => 'bool',
+                'default' => true,
+                'width' => '10%',
+            ],
+            ['name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'],
+            ['name' => 'favorites_only', 'label' => 'LBL_FAVORITES_FILTER', 'type' => 'bool'],
+        ],
+        'advanced_search' => [
+            'name' => [
+                'name' => 'name',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'contact_name' => [
+                'name' => 'contact_name',
+                'label' => 'LBL_CONTACT_NAME',
+                'type' => 'name',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'current_user_only' => [
+                'name' => 'current_user_only',
+                'label' => 'LBL_CURRENT_USER_FILTER',
+                'type' => 'bool',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'status' => [
+                'name' => 'status',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'parent_name' => [
+                'type' => 'parent',
+                'label' => 'LBL_LIST_RELATED_TO',
+                'width' => '10%',
+                'default' => true,
+                'name' => 'parent_name',
+            ],
+            'assigned_user_id' => [
+                'name' => 'assigned_user_id',
+                'type' => 'enum',
+                'label' => 'LBL_ASSIGNED_TO',
+                'function' => [
+                    'name' => 'get_user_array',
+                    'params' => [
+                        0 => false,
+                    ],
+                ],
+                'default' => true,
+                'width' => '10%',
+            ],
+        ],
+    ],
+    'templateMeta' => [
+        'maxColumns' => '3',
+        'maxColumnsBasic' => '4',
+        'widths' => [
+            'label' => '10',
+            'field' => '30',
+        ],
+    ],
+];

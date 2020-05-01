@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,32 +41,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-require_once('modules/Trackers/store/Store.php');
+require_once 'modules/Trackers/store/Store.php';
 
 class TrackerQueriesDatabaseStore implements Store
 {
     public function flush($monitor)
     {
         if ($monitor->run_count > 1) {
-            $query = "UPDATE $monitor->table_name set run_count={$monitor->run_count}, sec_avg={$monitor->sec_avg}, sec_total={$monitor->sec_total}, date_modified='{$monitor->date_modified}' where query_hash = '{$monitor->query_hash}'";
+            $query = "UPDATE {$monitor->table_name} set run_count={$monitor->run_count}, sec_avg={$monitor->sec_avg}, sec_total={$monitor->sec_total}, date_modified='{$monitor->date_modified}' where query_hash = '{$monitor->query_hash}'";
             DBManagerFactory::getInstance()->query($query);
+
             return;
         }
 
         $metrics = $monitor->getMetrics();
-        $values = array();
-        foreach ($metrics as $name=>$metric) {
-            if (!empty($monitor->$name)) {
+        $values = [];
+        foreach ($metrics as $name => $metric) {
+            if (!empty($monitor->{$name})) {
                 $columns[] = $name;
-                $fields[$name] = array('name' => $name, 'type' => $metrics[$name]->_type);
-                $values[$name] = $monitor->$name;
+                $fields[$name] = ['name' => $name, 'type' => $metrics[$name]->_type];
+                $values[$name] = $monitor->{$name};
             }
         } //foreach
 
@@ -74,7 +75,7 @@ class TrackerQueriesDatabaseStore implements Store
             return;
         }
 
-        $fields['id'] = array('auto_increment' => true, "name" => "id", "type" => "int");
+        $fields['id'] = ['auto_increment' => true, 'name' => 'id', 'type' => 'int'];
         DBManagerFactory::getInstance()->insertParams($monitor->table_name, $fields, $values);
     }
 }

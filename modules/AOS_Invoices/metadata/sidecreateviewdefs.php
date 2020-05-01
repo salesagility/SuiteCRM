@@ -1,9 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/**
+/*
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
@@ -30,31 +31,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings;
 $module_name = 'AOS_Invoices';
-$viewdefs[$module_name]['SideQuickCreate'] = array(
-    'templateMeta' => array('form'=>array('buttons'=>array('SAVE'),
-                                          'button_location'=>'bottom',
-                                          'headerTpl'=>'include/EditView/header.tpl',
-                                          'footerTpl'=>'include/EditView/footer.tpl',
-                                          ),
-                            'maxColumns' => '1',
-                            'panelClass'=>'none',
-                            'labelsOnTop'=>true,
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                         ),
-                        ),
- 'panels' =>array(
-  'DEFAULT' =>
-  array(
-    array(
-      array('name'=>'name', 'displayParams'=>array('required'=>true,'size'=>20)),
-    ),
-    array(
-      array('name'=>'assigned_user_name', 'displayParams'=>array('required'=>true, 'size'=>11, 'selectOnly'=>true)),
-    ),
-  ),
-
- )
-
-
-);
+$viewdefs[$module_name]['SideQuickCreate'] = [
+    'templateMeta' => ['form' => ['buttons' => ['SAVE'],
+        'button_location' => 'bottom',
+        'headerTpl' => 'include/EditView/header.tpl',
+        'footerTpl' => 'include/EditView/footer.tpl',
+    ],
+        'maxColumns' => '1',
+        'panelClass' => 'none',
+        'labelsOnTop' => true,
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'DEFAULT' => [
+            [
+                ['name' => 'name', 'displayParams' => ['required' => true, 'size' => 20]],
+            ],
+            [
+                ['name' => 'assigned_user_name', 'displayParams' => ['required' => true, 'size' => 11, 'selectOnly' => true]],
+            ],
+        ],
+    ]
+];

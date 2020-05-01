@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,14 +37,12 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * ContactsViewContactAddressPopup
+ * ContactsViewContactAddressPopup.
  *
  * */
- 
-require_once('include/MVC/View/SugarView.php');
-require_once('modules/Contacts/Popup_picker.php');
+require_once 'include/MVC/View/SugarView.php';
+require_once 'modules/Contacts/Popup_picker.php';
 
 class ContactsViewMailMergePopup extends SugarView
 {
@@ -53,7 +50,7 @@ class ContactsViewMailMergePopup extends SugarView
     {
         parent::__construct();
     }
-    
+
     public function process()
     {
         $this->display();

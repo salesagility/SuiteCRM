@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *//**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -76,9 +74,9 @@
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php');
+require_once 'modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
 class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
 {
     public function __construct()
@@ -86,45 +84,40 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
         parent::__construct();
     }
 
-
     public function save($check_notify = false)
     {
         $focus = $this;
 
         if ((isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
             (isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
-            (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
+            (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id)) ||
              !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
         ) {
-            parent::save(true) ;
+            parent::save(true);
             $return_id = $focus->id;
         } else {
             if (!empty($_POST['user_invitees'])) {
                 $userInvitees = explode(',', trim($_POST['user_invitees'], ','));
             } else {
-                $userInvitees = array();
+                $userInvitees = [];
             }
-
 
             if (!empty($_POST['contact_invitees'])) {
                 $contactInvitees = explode(',', trim($_POST['contact_invitees'], ','));
             } else {
-                $contactInvitees = array();
+                $contactInvitees = [];
             }
 
+            $deleteUsers = [];
+            $existingUsers = [];
 
-            $deleteUsers = array();
-            $existingUsers = array();
-
-            $deleteContacts = array();
-            $existingContacts = array();
+            $deleteContacts = [];
+            $existingContacts = [];
 
             if (!empty($this->id)) {
-
-
                 ////	REMOVE RESOURCE RELATIONSHIPS
                 // Calculate which users to flag as deleted and which to add
-                
+
                 // Get all users for the project template
                 $focus->load_relationship('users');
                 $users = $focus->get_linked_beans('am_projecttemplates_users_1', 'User');
@@ -143,7 +136,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
                     }
                     $sql = substr($sql, 1);
                     // We could run a delete SQL statement here, but will just mark as deleted instead
-                    $sql = "UPDATE am_projecttemplates_users_1_c set deleted = 1 where users_idb in ($sql) AND am_projecttemplates_ida = '". $focus->id . "'";
+                    $sql = "UPDATE am_projecttemplates_users_1_c set deleted = 1 where users_idb in ({$sql}) AND am_projecttemplates_ida = '" . $focus->id . "'";
                     $focus->db->query($sql);
                     echo $sql;
                 }
@@ -166,19 +159,19 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
                     }
                     $sql = substr($sql, 1);
                     // We could run a delete SQL statement here, but will just mark as deleted instead
-                    $sql = "UPDATE am_projecttemplates_contacts_1_c set deleted = 1 where contacts_idb in ($sql) AND am_projecttemplates_ida = '". $focus->id . "'";
+                    $sql = "UPDATE am_projecttemplates_contacts_1_c set deleted = 1 where contacts_idb in ({$sql}) AND am_projecttemplates_ida = '" . $focus->id . "'";
                     $focus->db->query($sql);
                     echo $sql;
                 }
-        
+
                 ////	END REMOVE
             }
-            
+
             $return_id = parent::save($check_notify);
             $focus->retrieve($return_id);
 
             ////	REBUILD INVITEE RELATIONSHIPS
-            
+
             // Process users
             $focus->load_relationship('users');
             $focus->get_linked_beans('am_projecttemplates_users_1', 'User');

@@ -5,12 +5,12 @@ use Faker\Generator;
 class jjwg_AreasCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,14 +31,14 @@ class jjwg_AreasCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the mapsAreas module.
+     * As an administrator I want to view the mapsAreas module
      */
     public function testScenarioViewMapsAreasModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the mapsAreas module for testing');
-        
+
         $I->loginAsAdmin();
         // Navigate to mapsAreas list-view
         $I->visitPage('jjwg_Areas', 'index');

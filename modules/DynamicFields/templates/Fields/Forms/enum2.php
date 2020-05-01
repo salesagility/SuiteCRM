@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,6 +35,9 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $ss
+ * @param mixed $vardef
  */
 
 /*
@@ -51,8 +53,8 @@
      if (isset($vardef['type']) && $vardef['type'] == 'multienum') {
          $multi = true;
      }
-        
-     $selected_options = "";
+
+     $selected_options = '';
      if ($multi && !empty($vardef['default'])) {
          $selected_options = unencodeMultienum($vardef['default']);
      } else {
@@ -67,31 +69,31 @@
          $edit_mod_strings['LBL_DROP_DOWN_LIST'] = $edit_mod_strings['LBL_RADIO_FIELDS'];
          $radio = true;
      }
-     $package_strings = array();
+     $package_strings = [];
      if (!empty($_REQUEST['view_package'])) {
          $view_package = $_REQUEST['view_package'];
          if ($view_package != 'studio') {
-             require_once('modules/ModuleBuilder/MB/ModuleBuilder.php');
+             require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php';
              $mb = new ModuleBuilder();
-             $module =& $mb->getPackageModule($view_package, $_REQUEST['view_module']);
+             $module = &$mb->getPackageModule($view_package, $_REQUEST['view_module']);
              $lang = $GLOBALS['current_language'];
              //require_once($package->getPackageDir()."/include/language/$lang.lang.php");
              $module->mblanguage->generateAppStrings(false);
-             $package_strings = $module->mblanguage->appListStrings[$lang.'.lang.php'];
+             $package_strings = $module->mblanguage->appListStrings[$lang . '.lang.php'];
          }
      }
-    
+
      global $app_list_strings;
      $my_list_strings = $app_list_strings;
      $my_list_strings = array_merge($my_list_strings, $package_strings);
-     foreach ($my_list_strings as $key=>$value) {
+     foreach ($my_list_strings as $key => $value) {
          if (!is_array($value)) {
              unset($my_list_strings[$key]);
          }
      }
      $dropdowns = array_keys($my_list_strings);
      sort($dropdowns);
-     $default_dropdowns = array();
+     $default_dropdowns = [];
      if (!empty($vardef['options']) && !empty($my_list_strings[$vardef['options']])) {
          $default_dropdowns = $my_list_strings[$vardef['options']];
      } else {
@@ -99,7 +101,7 @@
          $key = $dropdowns[0];
          $default_dropdowns = $my_list_strings[$key];
      }
-    
+
      $selected_dropdown = '';
      if (!empty($vardef['options'])) {
          $selected_dropdown = $vardef['options'];
@@ -114,12 +116,13 @@
      $ss->assign('selected_dropdown', $selected_dropdown);
      $ss->assign('show', $show);
      $ss->assign('selected_options', $selected_options);
-     $ss->assign('multi', isset($multi) ? $multi: false);
-     $ss->assign('radio', isset($radio) ? $radio: false);
+     $ss->assign('multi', isset($multi) ? $multi : false);
+     $ss->assign('radio', isset($radio) ? $radio : false);
      $ss->assign('dropdown_name', (!empty($vardef['options']) ? $vardef['options'] : ''));
 
-     require_once('include/JSON.php');
+     require_once 'include/JSON.php';
      $json = new JSON();
      $ss->assign('app_list_strings', "''");
+
      return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/enum.tpl');
  }

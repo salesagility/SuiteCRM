@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,36 +41,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class EmployeesViewEdit extends ViewEdit
 {
     public $useForSubpanel = true;
+
     public function __construct()
     {
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
         if (is_admin($GLOBALS['current_user'])) {
             $json = getJSONobj();
-            require_once('include/QuickSearchDefaults.php');
+            require_once 'include/QuickSearchDefaults.php';
             $qsd = QuickSearchDefaults::getQuickSearchDefaults();
-            $sqs_objects = array('EditView_reports_to_name' => $qsd->getQSUser());
-            $sqs_objects['EditView_reports_to_name']['populate_list'] = array('reports_to_name', 'reports_to_id');
+            $sqs_objects = ['EditView_reports_to_name' => $qsd->getQSUser()];
+            $sqs_objects['EditView_reports_to_name']['populate_list'] = ['reports_to_name', 'reports_to_id'];
             $quicksearch_js = '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '; enableQS();</script>';
 
             $this->ss->assign('REPORTS_TO_JS', $quicksearch_js);
             $this->ss->assign('EDIT_REPORTS_TO', true);
         }
 
-
         //retrieve employee bean if it is not already in focus
-        if (empty($this->bean->id)  && !empty($_REQUEST['record'])) {
+        if (empty($this->bean->id) && !empty($_REQUEST['record'])) {
             $this->bean->retrieve($_REQUEST['record']);
         }
         //populate values for non admin users

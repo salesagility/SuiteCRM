@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,67 +42,64 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
+$GLOBALS['tabStructure'] = [
+    'LBL_TABGROUP_SALES' => [
         'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
+        'modules' => [
+            'Home',
+            'Accounts',
+            'Contacts',
+            'Opportunities',
+            'Leads',
+            'Contracts',
+            'Quotes',
+            'Forecasts',
+        ]
+    ],
+    'LBL_TABGROUP_MARKETING' => [
         'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
+        'modules' => [
+            'Home',
+            'Accounts',
+            'Contacts',
+            'Leads',
+            'Campaigns',
+            'Prospects',
+            'ProspectLists',
+        ]
+    ],
+    'LBL_TABGROUP_SUPPORT' => [
         'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
+        'modules' => [
+            'Home',
+            'Accounts',
+            'Contacts',
+            'Cases',
+            'Bugs',
+        ]
+    ],
+    'LBL_TABGROUP_ACTIVITIES' => [
         'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
+        'modules' => [
+            'Home',
+            'Calendar',
+            'Calls',
+            'Meetings',
+            'Emails',
+            'Tasks',
+            'Notes',
+        ]
+    ],
+    'LBL_TABGROUP_COLLABORATION' => [
         'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-);
+        'modules' => [
+            'Home',
+            'Emails',
+            'Documents',
+            'Project',
+        ]
+    ],
+];
 
 if (file_exists('custom/include/tabConfig.php')) {
     require 'custom/include/tabConfig.php';

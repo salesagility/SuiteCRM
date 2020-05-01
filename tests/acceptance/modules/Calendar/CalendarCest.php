@@ -5,12 +5,12 @@ use Faker\Generator;
 class CalendarCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -30,10 +30,10 @@ class CalendarCest
     /**
      * @param \AcceptanceTester $I
      *
-     * As an administrator I want to view the calendar module.
+     * As an administrator I want to view the calendar module
      */
     public function testScenarioViewCalendarModule(
-        \AcceptanceTester $I
+        AcceptanceTester $I
     ) {
         $I->wantTo('View the calendar module for testing');
 

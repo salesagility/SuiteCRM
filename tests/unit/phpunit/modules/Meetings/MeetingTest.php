@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class MeetingTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -82,7 +85,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(isset($meeting->id));
         $this->assertEquals(36, strlen($meeting->id));
 
-        /* Test set_accept_status method */
+        // Test set_accept_status method
 
         //test set_accept_status with User object
         $user = new User();
@@ -105,7 +108,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $meeting = new Meeting();
 
@@ -117,12 +120,12 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $meeting->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
 //        $this->markTestIncomplete('export query produces queries which fields chagne order in different enironments');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $meeting = new Meeting();
 
@@ -151,7 +154,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Accounts', $meeting->parent_type);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $meeting = new Meeting();
         $current_theme = SugarThemeRegistry::current();
@@ -163,25 +166,25 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $meeting->contact_name = 'test';
         $meeting->parent_name = 'Account';
 
-        $expected = array(
-                      'DELETED' => 0,
-                      'PARENT_TYPE' => 'Accounts',
-                      'STATUS' => 'Planned',
-                      'TYPE' => 'Sugar',
-                      'REMINDER_TIME' => '-1',
-                      'EMAIL_REMINDER_TIME' => '-1',
-                      'EMAIL_REMINDER_SENT' => '0',
-                      'SEQUENCE' => '0',
-                      'CONTACT_NAME' => 'test',
-                      'PARENT_NAME' => '',
-                      'CONTACT_ID' => 1,
-                      'REPEAT_INTERVAL' => '1',
-                      'PARENT_MODULE' => 'Accounts',
-                      'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
-                      'DATE_START' => '<font class=\'overdueTask\'></font>',
-                      'REMINDER_CHECKED' => false,
-                      'EMAIL_REMINDER_CHECKED' => false,
-                    );
+        $expected = [
+            'DELETED' => 0,
+            'PARENT_TYPE' => 'Accounts',
+            'STATUS' => 'Planned',
+            'TYPE' => 'Sugar',
+            'REMINDER_TIME' => '-1',
+            'EMAIL_REMINDER_TIME' => '-1',
+            'EMAIL_REMINDER_SENT' => '0',
+            'SEQUENCE' => '0',
+            'CONTACT_NAME' => 'test',
+            'PARENT_NAME' => '',
+            'CONTACT_ID' => 1,
+            'REPEAT_INTERVAL' => '1',
+            'PARENT_MODULE' => 'Accounts',
+            'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/' . $current_theme . '/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
+            'DATE_START' => '<font class=\'overdueTask\'></font>',
+            'REMINDER_CHECKED' => false,
+            'EMAIL_REMINDER_CHECKED' => false,
+        ];
 
         $actual = $meeting->get_list_view_data();
 
@@ -198,7 +201,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['PARENT_MODULE'], $actual['PARENT_MODULE']);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         global $current_user;
         $current_user = new User(1);
@@ -225,7 +228,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($meeting->description, $result->_tpl_vars['MEETING_DESCRIPTION']);
     }
 
-    public function testcreate_notification_email()
+    public function testcreateNotificationEmail()
     {
         $meeting = new Meeting();
 
@@ -241,7 +244,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('SugarPHPMailer', $result);
     }
 
-    public function testsend_assignment_notifications()
+    public function testsendAssignmentNotifications()
     {
         $meeting = new Meeting();
 
@@ -263,7 +266,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_meeting_users()
+    public function testgetMeetingUsers()
     {
         $meeting = new Meeting();
 
@@ -271,7 +274,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testget_invite_meetings()
+    public function testgetInviteMeetings()
     {
         $meeting = new Meeting();
 
@@ -280,7 +283,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testget_notification_recipients()
+    public function testgetNotificationRecipients()
     {
         $meeting = new Meeting();
 
@@ -294,7 +297,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $meeting = new Meeting();
 
@@ -307,12 +310,12 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     {
         $meeting = new Meeting();
 
-        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
+        $expected = ['MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a'];
         $actual = $meeting->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
 
-    public function testsave_relationship_changes()
+    public function testsaveRelationshipChanges()
     {
         $meeting = new Meeting();
 
@@ -326,7 +329,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     }
 
     /**
-     * This will throw FATAL error on php7
+     * This will throw FATAL error on php7.
      */
     public function testafterImportSave()
     {
@@ -362,7 +365,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     public function testgetMeetingsExternalApiDropDown()
     {
         $actual = getMeetingsExternalApiDropDown();
-        $expected = array('Sugar' => 'SuiteCRM');
+        $expected = ['Sugar' => 'SuiteCRM'];
         $this->assertSame($expected, $actual);
     }
 

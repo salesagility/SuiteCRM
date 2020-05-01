@@ -1,6 +1,6 @@
 <?php
 
-require_once('modules/Contacts/ContactsListViewSmarty.php');
+require_once 'modules/Contacts/ContactsListViewSmarty.php';
 
 class ContactsViewList extends ViewList
 {
@@ -9,7 +9,7 @@ class ContactsViewList extends ViewList
      */
     public function preDisplay()
     {
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
+        require_once 'modules/AOS_PDF_Templates/formLetter.php';
         formLetter::LVPopupHtml('Contacts');
         parent::preDisplay();
 

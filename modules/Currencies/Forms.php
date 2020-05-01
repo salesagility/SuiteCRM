@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,12 +41,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains a variety of utility functions used to display UI
  * components such as form headers and footers.  Intended to be modified on a per
  * theme basis.
- ********************************************************************************/
+ */
 
 /**
  * Create javascript to validate the data entered into a record.
@@ -57,7 +57,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 function get_validate_record_js()
 {
 }
-
 
 /**
  * Create HTML form to enter a new record with the minimum necessary fields.

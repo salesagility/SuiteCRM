@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,62 +42,62 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $current_user;
 
-
 if (!isset($_POST['dashName'])) {
-    $html  ='<form method="post" name="addpageform" id="addpageform" action="index.php?module=Home&action=AddDashboardPages"/>';
-    $html .='<table>';
-    $html .='<tr>';
-    $html .='<td><label for="dashName">'.$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME'].'</label></td>';
-    $html .='<td><input type="text" name="dashName" id="dashName"/></td>';
-    $html .='</tr>';
-    $html .='<tr>';
-    $html .='<td><label for="numColumns">'.$GLOBALS['app_strings']['LBL_NUMBER_OF_COLUMNS'].' </label></td>';
-    $html .='<td><select name="numColumns">';
-    $html .='<option value="1">1</option>';
-    $html .='<option value="2">2</option>';
-    $html .='<option value="3">3</option>';
-    $html .='</select></td>';
-    $html .='</tr>';
-    $html .='</table>';
-    $html .='</form>';
+    $html = '<form method="post" name="addpageform" id="addpageform" action="index.php?module=Home&action=AddDashboardPages"/>';
+    $html .= '<table>';
+    $html .= '<tr>';
+    $html .= '<td><label for="dashName">' . $GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME'] . '</label></td>';
+    $html .= '<td><input type="text" name="dashName" id="dashName"/></td>';
+    $html .= '</tr>';
+    $html .= '<tr>';
+    $html .= '<td><label for="numColumns">' . $GLOBALS['app_strings']['LBL_NUMBER_OF_COLUMNS'] . ' </label></td>';
+    $html .= '<td><select name="numColumns">';
+    $html .= '<option value="1">1</option>';
+    $html .= '<option value="2">2</option>';
+    $html .= '<option value="3">3</option>';
+    $html .= '</select></td>';
+    $html .= '</tr>';
+    $html .= '</table>';
+    $html .= '</form>';
 
     echo $html;
 } else {
     $type = 'Home';
 
     $existingPages = $current_user->getPreference('pages', $type);
-    $dashboardPage = array();
+    $dashboardPage = [];
     $numberColumns = $_POST['numColumns'];
     $pageName = $_POST['dashName'];
 
     switch ($numberColumns) {
         case 1:
-            $pagecolumns[0] = array();
-            $pagecolumns[0]['dashlets'] = array();
+            $pagecolumns[0] = [];
+            $pagecolumns[0]['dashlets'] = [];
             $pagecolumns[0]['width'] = '100%';
+
             break;
         case 2:
-            $pagecolumns[0] = array();
-            $pagecolumns[0]['dashlets'] = array();
+            $pagecolumns[0] = [];
+            $pagecolumns[0]['dashlets'] = [];
             $pagecolumns[0]['width'] = '60%';
-            $pagecolumns[1] = array();
-            $pagecolumns[1]['dashlets'] = array();
+            $pagecolumns[1] = [];
+            $pagecolumns[1]['dashlets'] = [];
             $pagecolumns[1]['width'] = '40%';
+
             break;
         case 3:
-            $pagecolumns[0] = array();
-            $pagecolumns[0]['dashlets'] = array();
+            $pagecolumns[0] = [];
+            $pagecolumns[0]['dashlets'] = [];
             $pagecolumns[0]['width'] = '30%';
-            $pagecolumns[1] = array();
-            $pagecolumns[1]['dashlets'] = array();
+            $pagecolumns[1] = [];
+            $pagecolumns[1]['dashlets'] = [];
             $pagecolumns[1]['width'] = '30%';
-            $pagecolumns[2] = array();
-            $pagecolumns[2]['dashlets'] = array();
+            $pagecolumns[2] = [];
+            $pagecolumns[2]['dashlets'] = [];
             $pagecolumns[2]['width'] = '30%';
+
             break;
     }
 
@@ -108,7 +109,7 @@ if (!isset($_POST['dashName'])) {
 
     $current_user->setPreference('pages', $existingPages, 0, $type);
 
-    $display = array();
+    $display = [];
 
     foreach ($dashboardPage['columns'] as $colNum => $column) {
         $display[$colNum]['width'] = $column['width'];

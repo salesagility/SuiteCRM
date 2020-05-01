@@ -2,11 +2,21 @@
 
 /**
  * Class ModulesCest
- * Tests /api/v8/modules API
+ * Tests /api/v8/modules API.
+ *
  * @see https://tools.ietf.org/html/rfc7519
  */
 class ModulesCest
 {
+    /**
+     * @var Faker\Generator
+     */
+    protected $fakeData;
+
+    /**
+     * @var int
+     */
+    protected $fakeDataSeed;
     private static $ACCOUNT_RESOURCE = '/api/v8/modules/Accounts';
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
     private static $RECORD_TYPE = 'Accounts';
@@ -16,23 +26,13 @@ class ModulesCest
     private static $PRODUCT_CATEGORY_RESOURCE = '/api/v8/modules/AOS_Product_Categories';
     private static $PRODUCT_CATEGORY_RECORD_TYPE = 'AOS_Product_Categories';
     private static $PRODUCT_CATEGORY_RECORD_ID = '11111111-1111-1111-1111-111111111111';
-    private static $PRODUCT_CATEGORY_RELATED_RECORD_IDS = array();
+    private static $PRODUCT_CATEGORY_RELATED_RECORD_IDS = [];
     private static $MEETINGS_RESOURCE = '/api/v8/modules/Meetings';
     private static $MEETINGS_RECORD_ID = '11111111-1111-1111-1111-111111111111';
     private static $NOTES_RESOURCE = '/api/v8/modules/Notes';
     private static $NOTES_RESOURCE_ID = '11111111-1111-1111-1111-111111111111';
     private static $DOCUMENTS_RESOURCE = '/api/v8/modules/Documents';
     private static $DOCUMENTS_RESOURCE_ID = '11111111-1111-1111-1111-111111111111';
-    /**
-     * @var Faker\Generator $fakeData
-     */
-    protected $fakeData;
-
-    /**
-     * @var integer $fakeDataSeed
-     */
-    protected $fakeDataSeed;
-
 
     /**
      * @param AcceptanceTester $I
@@ -47,13 +47,14 @@ class ModulesCest
     }
 
     /**
-     * Get list of modules
+     * Get list of modules.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules
-     *
      */
     public function TestScenarioListModules(ApiTester $I)
     {
@@ -76,14 +77,15 @@ class ModulesCest
     }
 
     /**
-     * Create a new entry with missing type
+     * Create a new entry with missing type.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name} (with id in $_POST)
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioCreateWithMissingType(ApiTester $I)
     {
@@ -94,10 +96,10 @@ class ModulesCest
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
-                array(
-                    'data' => array(
-                    )
-                )
+                [
+                    'data' => [
+                    ]
+                ]
             )
         );
         $I->seeResponseCodeIs(409);
@@ -106,14 +108,15 @@ class ModulesCest
     }
 
     /**
-     * Create a new entry with missing attributes
+     * Create a new entry with missing attributes.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name} (with id in $_POST)
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioCreateWithMissingAttributes(ApiTester $I)
     {
@@ -124,11 +127,11 @@ class ModulesCest
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
-                array(
-                    'data' => array(
+                [
+                    'data' => [
                         'type' => 'Accounts',
-                    )
-                )
+                    ]
+                ]
             )
         );
         $I->seeResponseCodeIs(400);
@@ -136,16 +139,16 @@ class ModulesCest
         $I->seeJsonApiFailure();
     }
 
-
     /**
-     * Create a new entry with required fields
+     * Create a new entry with required fields.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name} (with id in $_POST)
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioCreateWithMissingRequiredFields(ApiTester $I)
     {
@@ -156,12 +159,12 @@ class ModulesCest
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
-                array(
-                    'data' => array(
+                [
+                    'data' => [
                         'type' => 'Accounts',
-                        'attributes' => array()
-                    )
-                )
+                        'attributes' => []
+                    ]
+                ]
             )
         );
         $I->seeResponseCodeIs(400);
@@ -170,14 +173,15 @@ class ModulesCest
     }
 
     /**
-     * Create a new entry
+     * Create a new entry.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name} (with id in $_POST)
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioCreateNew(ApiTester $I)
     {
@@ -190,15 +194,15 @@ class ModulesCest
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
-                array(
-                    'data' => array(
+                [
+                    'data' => [
                         'id' => '',
                         'type' => 'Accounts',
-                        'attributes' => array(
+                        'attributes' => [
                             'name' => $faker->name()
-                        )
-                    )
-                )
+                        ]
+                    ]
+                ]
             )
         );
         $I->seeResponseCodeIs(201);
@@ -215,13 +219,16 @@ class ModulesCest
     }
 
     /**
-     * Create a new entry
+     * Create a new entry.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name} (with id in $_POST)
      * URL: /api/v8/modules/{module_name}/{id}
+     *
      * @throws \Codeception\Exception\ModuleException
      */
     public function TestScenarioCreateNewWithClientCredentialsGrant(ApiTester $I)
@@ -235,15 +242,15 @@ class ModulesCest
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
-                array(
-                    'data' => array(
+                [
+                    'data' => [
                         'id' => '',
                         'type' => 'Accounts',
-                        'attributes' => array(
+                        'attributes' => [
                             'name' => $faker->name()
-                        )
-                    )
-                )
+                        ]
+                    ]
+                ]
             )
         );
         $I->seeResponseCodeIs(201);
@@ -262,14 +269,15 @@ class ModulesCest
     }
 
     /**
-     * Create a existing entry
+     * Create a existing entry.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name} (with id in $_POST)
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioCreateExisting(ApiTester $I)
     {
@@ -283,15 +291,15 @@ class ModulesCest
         $I->sendPOST(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
             json_encode(
-                array(
-                    'data' => array(
+                [
+                    'data' => [
                         'id' => self::$RECORD,
                         'type' => 'Accounts',
-                        'attributes' => array(
+                        'attributes' => [
                             'name' => $faker->name()
-                        )
-                    )
-                )
+                        ]
+                    ]
+                ]
             )
         );
         $I->seeResponseCodeIs(403);
@@ -299,10 +307,11 @@ class ModulesCest
         $I->seeJsonApiFailure();
     }
 
-
     /**
-     * Create a notes resource and attaches file
+     * Create a notes resource and attaches file.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -329,13 +338,12 @@ class ModulesCest
         $I->sendJsonApiContentNegotiation();
         $this->fakeData->seed(mt_rand(0, 2148));
 
-
         $payload = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
                     'type' => 'Notes',
-                    'attributes' => array(
+                    'attributes' => [
                         'name' => $faker->name(),
                         'portal_flag' => true,
                         // The api looks for fields with the type set to file
@@ -343,9 +351,9 @@ class ModulesCest
                         'filename' => $filenameBinaryFile,
                         // $prefix . $filed_name . "_file" represents the actual data
                         'filename_file' => $binaryFileEncoded
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -386,8 +394,10 @@ class ModulesCest
     }
 
     /**
-     * Create a document resource and attaches a file
+     * Create a document resource and attaches a file.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -405,7 +415,7 @@ class ModulesCest
         // Test create a note with a binary document
         $I->comment('Create a notes resource and attach binary a document');
         $filenameBinaryFile = 'testFile.png';
-        $pathToBinaryFile = codecept_data_dir().'/'.$filenameBinaryFile;
+        $pathToBinaryFile = codecept_data_dir() . '/' . $filenameBinaryFile;
         $binaryFile = file_get_contents($pathToBinaryFile);
         $binaryFileEncoded = '<OMITTED>';
 
@@ -420,11 +430,11 @@ class ModulesCest
         $active_date = $active_datetime->format(DATE_ATOM);
 
         $payload = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
                     'type' => 'Documents',
-                    'attributes' => array(
+                    'attributes' => [
                         'name' => $document_name,
                         'document_name' => $document_name,
                         'portal_flag' => true,
@@ -435,9 +445,9 @@ class ModulesCest
                         // $prefix . $filed_name . "_file" represents the actual data
                         'filename_file' => $binaryFileEncoded,
                         'revision' => 1
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -478,20 +488,21 @@ class ModulesCest
     }
 
     /**
-     * Retrieves an entry
+     * Retrieves an entry.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#fetching
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioRetrieveEntry(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        $I->sendGET($I->getInstanceURL() . self::$ACCOUNT_RESOURCE .  '/' . self::$RECORD);
+        $I->sendGET($I->getInstanceURL() . self::$ACCOUNT_RESOURCE . '/' . self::$RECORD);
         $I->seeResponseCodeIs(200);
         $I->seeJsonAPISuccess();
         $response = json_decode($I->grabResponse(), true);
@@ -504,13 +515,14 @@ class ModulesCest
     }
 
     /**
-     * Update entry
+     * Update entry.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-updating
      *
      * HTTP Verb: POST (update and replace) / PATCH (update and modify)
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioUpdateEntry(ApiTester $I)
     {
@@ -526,15 +538,15 @@ class ModulesCest
         $I->sendPATCH(
             $I->getInstanceURL() . self::$ACCOUNT_RESOURCE . '/' . self::$RECORD,
             json_encode(
-                array(
-                    'data' => array(
+                [
+                    'data' => [
                         'id' => self::$RECORD,
                         'type' => 'Accounts',
-                        'attributes' => array(
+                        'attributes' => [
                             'name' => $newName
-                        )
-                    )
-                )
+                        ]
+                    ]
+                ]
             )
         );
 
@@ -549,13 +561,14 @@ class ModulesCest
     }
 
     /**
-     * Update entry
+     * Update entry.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-deleting
      *
      * HTTP Verb: DELETE
      * URL: /api/v8/modules/{module_name}/{id}
-     *
      */
     public function TestScenarioDeleteEntry(ApiTester $I)
     {
@@ -567,10 +580,11 @@ class ModulesCest
         $I->seeJsonAPISuccess();
     }
 
-
     /**
-     * Retrieves a list of entries
+     * Retrieves a list of entries.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#fetching
      *
      * HTTP Verb: GET
@@ -605,10 +619,11 @@ class ModulesCest
         $I->assertArrayHasKey('self', $response['links']);
     }
 
-
     /**
-     * Retrieves a list of entries
+     * Retrieves a list of entries.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#fetching
      *
      * HTTP Verb: GET
@@ -646,10 +661,11 @@ class ModulesCest
         $I->assertArrayHasKey('self', $response['links']);
     }
 
-
     /**
-     * Create product and create a relationship with product categories (One To Many)
+     * Create product and create a relationship with product categories (One To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#fetching-resources-responses
      *
      * HTTP Verb: POST
@@ -664,15 +680,15 @@ class ModulesCest
         $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -687,24 +703,24 @@ class ModulesCest
         $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
                     'type' => self::$PRODUCT_RECORD_TYPE,
-                    'attributes' => array(
+                    'attributes' => [
                         'name' => $this->fakeData->name(),
                         'price' => $this->fakeData->randomDigit()
-                    ),
-                    'relationships' => array(
-                        'aos_product_category' => array(
-                            'data' => array(
+                    ],
+                    'relationships' => [
+                        'aos_product_category' => [
+                            'data' => [
                                 'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                                 'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE
-                            )
-                        )
-                    )
-                )
-            )
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         );
 
         // Send Request
@@ -719,8 +735,10 @@ class ModulesCest
     }
 
     /**
-     * Use product to retrieve a relationship (One To Many)
+     * Use product to retrieve a relationship (One To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: GET
@@ -752,10 +770,11 @@ class ModulesCest
         $I->assertArrayHasKey('href', $responseProduct['data']['links']);
     }
 
-
     /**
-     * Use product to create a new relationship with product categories (One To Many)
+     * Use product to create a new relationship with product categories (One To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#fetching-resources-responses
      *
      * HTTP Verb: POST
@@ -769,15 +788,15 @@ class ModulesCest
         // Create AOS_Product_Categories
         $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProductCategory = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -791,15 +810,15 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                )
-            )
+                ]
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
             self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
         // Send Request
         $I->sendPOST(
@@ -812,7 +831,7 @@ class ModulesCest
         $responseProduct = json_decode($I->grabResponse(), true);
 
         // Verify that the product category has changed
-        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
             self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
 
         // Verify that the link has been deleted
@@ -830,8 +849,10 @@ class ModulesCest
     }
 
     /**
-     * Update a relationship (One To Many)
+     * Update a relationship (One To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
@@ -845,15 +866,15 @@ class ModulesCest
         $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -867,15 +888,15 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                )
-            )
+                ]
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
             self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
         // Send Request
         $I->sendPATCH(
@@ -888,7 +909,7 @@ class ModulesCest
         $responseProduct = json_decode($I->grabResponse(), true);
 
         // Verify that the product category has changed
-        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
             self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
 
         // Verify that the link has been deleted
@@ -906,8 +927,10 @@ class ModulesCest
     }
 
     /**
-     * Update a relationship (One To Many)
+     * Update a relationship (One To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
@@ -920,12 +943,12 @@ class ModulesCest
         $I->sendJsonApiContentNegotiation();
         // Clear AOS_Product_Categories relationship
         $payload = json_encode(
-            array(
-                'data' => array()
-            )
+            [
+                'data' => []
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
             self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
 
         // Send Request
@@ -950,8 +973,10 @@ class ModulesCest
     }
 
     /**
-     * Delete a relationship (One To Many)
+     * Delete a relationship (One To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-deleting
      *
      * HTTP Verb: DELETE
@@ -965,15 +990,15 @@ class ModulesCest
         $this->fakeData->seed(mt_rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -987,15 +1012,15 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                )
-            )
+                ]
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
             self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
         // Send Request
         $I->sendPOST(
@@ -1007,7 +1032,7 @@ class ModulesCest
         $I->seeResponseCodeIs(200);
 
         // Delete Relationship
-        $url =  $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_RESOURCE . '/' .
             self::$PRODUCT_RECORD_ID . '/relationships/aos_product_category';
 
         $I->sendDELETE($url, $payload);
@@ -1023,10 +1048,11 @@ class ModulesCest
         $I->assertEmpty($responseProductCategories['data']);
     }
 
-
     /**
-     * Retrieve a relationship (Many To Many)
+     * Retrieve a relationship (Many To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/#fetching-relationships
      *
      * HTTP Verb: GET
@@ -1042,16 +1068,16 @@ class ModulesCest
         // Create AOS_Product #1
         $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct1 = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName(),
                         'price' => $this->fakeData->randomDigit()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -1067,16 +1093,16 @@ class ModulesCest
         // Create AOS_Product #2
         $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct2 = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName(),
                         'price' => $this->fakeData->randomDigit()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -1089,19 +1115,18 @@ class ModulesCest
         $responseProduct2 = json_decode($I->grabResponse(), true);
         self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct2['data']['id'];
 
-
         // Create AOS_Product_Categories Parent
         $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -1113,24 +1138,23 @@ class ModulesCest
         $responseProductCategory = json_decode($I->grabResponse(), true);
         self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
 
-
         // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
         $payload = json_encode(
-            array(
-                'data' => array(
-                    array(
+            [
+                'data' => [
+                    [
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
                         'type' => self::$PRODUCT_RECORD_TYPE
-                        ),
-                    array(
+                    ],
+                    [
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
                         'type' => self::$PRODUCT_RECORD_TYPE
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
             self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
 
         // Send Request
@@ -1147,8 +1171,10 @@ class ModulesCest
     }
 
     /**
-     * Retrieve a relationship (Many To Many)
+     * Retrieve a relationship (Many To Many).
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/#fetching-relationships
      *
      * HTTP Verb: GET
@@ -1159,8 +1185,8 @@ class ModulesCest
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
-        //
-        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+
+        $url = $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
             self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
         // Get Subcategories of Product Categories
         $I->sendGET(
@@ -1184,8 +1210,10 @@ class ModulesCest
     }
 
     /**
-     * Replaces a relationship
+     * Replaces a relationship.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
@@ -1199,17 +1227,17 @@ class ModulesCest
         // Replace the relationships with just one of the related items
         // We should only see the item we have posted in the responses
         $payload = json_encode(
-            array(
-                'data' => array(
-                    array(
+            [
+                'data' => [
+                    [
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
                         'type' => self::$PRODUCT_RECORD_TYPE
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
             self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
 
         // Send Request
@@ -1242,10 +1270,11 @@ class ModulesCest
         $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
     }
 
-
     /**
-     * Clears all related items
+     * Clears all related items.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
@@ -1262,12 +1291,12 @@ class ModulesCest
         // Replace the relationships with just one of the related items
         // We should only see the item we have posted in the responses
         $payload = json_encode(
-            array(
-                'data' => array()
-            )
+            [
+                'data' => []
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
             self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
 
         // Send Request
@@ -1294,8 +1323,10 @@ class ModulesCest
     }
 
     /**
-     * Removes a relationship
+     * Removes a relationship.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: DELETE
@@ -1312,16 +1343,16 @@ class ModulesCest
         // Create AOS_Product #1
         $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct1 = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName(),
                         'price' => $this->fakeData->randomDigit()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -1337,16 +1368,16 @@ class ModulesCest
         // Create AOS_Product #2
         $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct2 = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName(),
                         'price' => $this->fakeData->randomDigit()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -1359,19 +1390,18 @@ class ModulesCest
         $responseProduct2 = json_decode($I->grabResponse(), true);
         self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[] = $responseProduct2['data']['id'];
 
-
         // Create AOS_Product_Categories Parent
         $this->fakeData->seed(mt_rand(0, 2148));
         $payloadProduct = json_encode(
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
-                    'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
-                    'attributes' => array(
+                    'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
+                    'attributes' => [
                         'name' => $this->fakeData->colorName()
-                    ),
-                )
-            )
+                    ],
+                ]
+            ]
         );
 
         $I->sendPOST(
@@ -1383,24 +1413,23 @@ class ModulesCest
         $responseProductCategory = json_decode($I->grabResponse(), true);
         self::$PRODUCT_CATEGORY_RECORD_ID = $responseProductCategory['data']['id'];
 
-
         // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
         $payload = json_encode(
-            array(
-                'data' => array(
-                    array(
+            [
+                'data' => [
+                    [
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
                         'type' => self::$PRODUCT_RECORD_TYPE
-                    ),
-                    array(
+                    ],
+                    [
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
                         'type' => self::$PRODUCT_RECORD_TYPE
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
-        $url =  $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
+        $url = $I->getInstanceURL() . self::$PRODUCT_CATEGORY_RESOURCE . '/' .
             self::$PRODUCT_CATEGORY_RECORD_ID . '/relationships/aos_products';
 
         // Send Request
@@ -1417,14 +1446,14 @@ class ModulesCest
 
         // Delete first product
         $payloadDelete = json_encode(
-            array(
-                'data' => array(
-                    array(
+            [
+                'data' => [
+                    [
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
                         'type' => self::$PRODUCT_RECORD_TYPE
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
         // Send Request
@@ -1453,7 +1482,6 @@ class ModulesCest
         $I->assertArrayHasKey('type', $responseProducts['data'][0]);
         $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
     }
-
 
     public function TestScenarioCreateMeetingsWithUsersAndMiddleTableFields(ApiTester $I)
     {

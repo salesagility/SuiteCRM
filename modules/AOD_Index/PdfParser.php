@@ -15,9 +15,10 @@
 class PdfParser
 {
     /**
-     * Parse PDF file
+     * Parse PDF file.
      *
      * @param string $filename
+     *
      * @return string
      */
     public static function parseFile($filename)
@@ -28,9 +29,10 @@ class PdfParser
     }
 
     /**
-     * Parse PDF content
+     * Parse PDF content.
      *
      * @param string $content
+     *
      * @return string
      */
     public static function parseContent($content)
@@ -41,7 +43,9 @@ class PdfParser
     /**
      * Convert a PDF into text.
      *
-     * @param string $filename The filename to extract the data from.
+     * @param string $filename the filename to extract the data from
+     * @param mixed $data
+     *
      * @return string The extracted text from the PDF
      */
     protected static function extractText($data)
@@ -50,11 +54,11 @@ class PdfParser
          * Split apart the PDF document into sections. We will address each
          * section separately.
          */
-        $a_obj    = self::getDataArray($data, 'obj', 'endobj');
-        $j        = 0;
-        $a_chunks = array();
+        $a_obj = self::getDataArray($data, 'obj', 'endobj');
+        $j = 0;
+        $a_chunks = [];
 
-        /**
+        /*
          * Attempt to extract each part of the PDF document into a 'filter'
          * element and a 'data' element. This can then be used to decode the
          * data.
@@ -80,11 +84,10 @@ class PdfParser
         foreach ($a_chunks as $chunk) {
             // Look at each chunk decide if we can decode it by looking at the contents of the filter
             if (isset($chunk['data'])) {
-
-        // look at the filter to find out which encoding has been used
+                // look at the filter to find out which encoding has been used
                 if (strpos($chunk['filter'], 'FlateDecode') !== false) {
                     // Use gzuncompress but suppress error messages.
-                    $data =@ gzuncompress($chunk['data']);
+                    $data = @gzuncompress($chunk['data']);
                 } else {
                     $data = $chunk['data'];
                 }
@@ -96,20 +99,18 @@ class PdfParser
             }
         }
 
-        /**
+        /*
          * Make sure we don't have large blocks of white space before and after
          * our string. Also extract alphanumerical information to reduce
          * redundant data.
          */
         if (trim($result_data) == '') {
             return null;
-        } else {
-            // Optimize hyphened words
-            $result_data = preg_replace('/\s*-[\r\n]+\s*/', '', $result_data);
-            $result_data = preg_replace('/\s+/', ' ', $result_data);
-
-            return $result_data;
         }
+        // Optimize hyphened words
+        $result_data = preg_replace('/\s*-[\r\n]+\s*/', '', $result_data);
+
+        return preg_replace('/\s+/', ' ', $result_data);
     }
 
     protected static function extractTextElements($content)
@@ -118,25 +119,25 @@ class PdfParser
             return '';
         }
 
-        $text  = '';
+        $text = '';
         $lines = explode("\n", $content);
 
         foreach ($lines as $line) {
             $line = trim($line);
-            $matches = array();
+            $matches = [];
 
             // Parse each lines to extract command and operator values
             if (preg_match('/^(?<command>.*[\)\] ])(?<operator>[a-z]+[\*]?)$/i', $line, $matches)) {
                 $command = trim($matches['command']);
 
                 // Convert octal encoding
-                $found_octal_values = array();
+                $found_octal_values = [];
                 preg_match_all('/\\\\([0-9]{3})/', $command, $found_octal_values);
 
                 foreach ($found_octal_values[0] as $value) {
                     $octal = substr($value, 1);
 
-                    if ((int)$octal < 40) {
+                    if ((int) $octal < 40) {
                         // Skips non printable chars
                         $command = str_replace($value, '', $command);
                     } else {
@@ -147,7 +148,7 @@ class PdfParser
                 $command = preg_replace('/\\\\[\r\n]/', '', $command);
                 $command = preg_replace('/\\\\[rnftb ]/', ' ', $command);
                 // Force UTF-8 charset
-                $encoding = mb_detect_encoding($command, array('ASCII', 'UTF-8', 'Windows-1252', 'ISO-8859-1'));
+                $encoding = mb_detect_encoding($command, ['ASCII', 'UTF-8', 'Windows-1252', 'ISO-8859-1']);
                 if (strtoupper($encoding) != 'UTF-8') {
                     if ($decoded = @iconv('CP1252', 'UTF-8//TRANSLIT//IGNORE', $command)) {
                         $command = $decoded;
@@ -165,7 +166,6 @@ class PdfParser
         // Set character spacing.
         case 'Tc':
           break;
-
         // Move text current point.
         case 'Td':
           $values = explode(' ', $command);
@@ -177,8 +177,8 @@ class PdfParser
           if ($y < 0) {
               $text .= ' ';
           }
-          break;
 
+          break;
         // Move text current point and set leading.
         case 'TD':
           $values = explode(' ', $command);
@@ -186,27 +186,26 @@ class PdfParser
           if ($y < 0) {
               $text .= "\n";
           }
-          break;
 
+          break;
         // Set font name and size.
         case 'Tf':
-          $text.= ' ';
-          break;
+          $text .= ' ';
 
+          break;
         // Display text, allowing individual character positioning
         case 'TJ':
           $start = mb_strpos($command, '[', null, 'UTF-8') + 1;
-          $end   = mb_strrpos($command, ']', null, 'UTF-8');
-          $text.= self::parseTextCommand(mb_substr($command, $start, $end - $start, 'UTF-8'));
-          break;
+          $end = mb_strrpos($command, ']', null, 'UTF-8');
+          $text .= self::parseTextCommand(mb_substr($command, $start, $end - $start, 'UTF-8'));
 
+          break;
         // Display text.
         case 'Tj':
           $start = mb_strpos($command, '(', null, 'UTF-8') + 1;
-          $end   = mb_strrpos($command, ')', null, 'UTF-8');
-          $text.= mb_substr($command, $start, $end - $start, 'UTF-8'); // Removes round brackets
+          $end = mb_strrpos($command, ')', null, 'UTF-8');
+          $text .= mb_substr($command, $start, $end - $start, 'UTF-8'); // Removes round brackets
           break;
-
         // Set leading.
         case 'TL':
 
@@ -214,28 +213,23 @@ class PdfParser
         case 'Tm':
 //          $text.= ' ';
           break;
-
         // Set text rendering mode.
         case 'Tr':
           break;
-
         // Set super/subscripting text rise.
         case 'Ts':
           break;
-
         // Set text spacing.
         case 'Tw':
           break;
-
         // Set horizontal scaling.
         case 'Tz':
           break;
-
         // Move to start of next line.
         case 'T*':
-          $text.= "\n";
-          break;
+          $text .= "\n";
 
+          break;
         // Internal use
         case 'g':
         case 'gs':
@@ -246,17 +240,13 @@ class PdfParser
         // End text
         case 'ET':
           break;
-
         case '':
           break;
-
         default:
       }
         }
 
-        $text = str_replace(array('\\(', '\\)'), array('(', ')'), $text);
-
-        return $text;
+        return str_replace(['\\(', '\\)'], ['(', ')'], $text);
     }
 
     /**
@@ -311,20 +301,21 @@ class PdfParser
     /**
      * Convert a section of data into an array, separated by the start and end words.
      *
-     * @param  string $data       The data.
-     * @param  string $start_word The start of each section of data.
-     * @param  string $end_word   The end of each section of data.
-     * @return array              The array of data.
+     * @param  string $data       the data
+     * @param  string $start_word the start of each section of data
+     * @param  string $end_word   the end of each section of data
+     *
+     * @return array              the array of data
      */
     protected static function getDataArray($data, $start_word, $end_word)
     {
-        $start     = 0;
-        $end       = 0;
-        $a_results = array();
+        $start = 0;
+        $end = 0;
+        $a_results = [];
 
         while ($start !== false && $end !== false) {
             $start = strpos($data, $start_word, $end);
-            $end   = strpos($data, $end_word, $start);
+            $end = strpos($data, $end_word, $start);
 
             if ($end !== false && $start !== false) {
                 // data is between start and end

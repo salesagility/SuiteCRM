@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/SugarObjects/templates/file/File.php');
-
+require_once 'include/SugarObjects/templates/file/File.php';
 
 // User is used to store Forecast information.
 class Document extends File
@@ -83,23 +80,23 @@ class Document extends File
     public $file_url;
     public $file_url_noimage;
 
-    public $table_name = "documents";
-    public $object_name = "Document";
+    public $table_name = 'documents';
+    public $object_name = 'Document';
     public $user_preferences;
 
-    public $encodeFields = array();
+    public $encodeFields = [];
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array('revision');
+    public $additional_column_fields = ['revision'];
 
     public $new_schema = true;
     public $module_dir = 'Documents';
 
-    public $relationship_fields = array(
+    public $relationship_fields = [
         'contract_id' => 'contracts',
-    );
+    ];
 
-    public $authenticated = null;
+    public $authenticated;
 
     public function __construct()
     {
@@ -107,9 +104,6 @@ class Document extends File
         $this->setupCustomFields('Documents'); //parameter is module name
         $this->disable_row_level_security = false;
     }
-
-
-
 
     public function save($check_notify = false)
     {
@@ -122,7 +116,7 @@ class Document extends File
                 $this->new_with_id = true;
             }
 
-            if (isset($_REQUEST) && isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] == true && isset($_REQUEST['filename_old_doctype'])) {
+            if (isset($_REQUEST, $_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] == true && isset($_REQUEST['filename_old_doctype'])) {
                 $this->doc_type = $_REQUEST['filename_old_doctype'];
                 $isDuplicate = true;
             } else {
@@ -171,7 +165,7 @@ class Document extends File
                     $oldDocument->retrieve($_REQUEST['duplicateId']);
                     $old_name = "upload://{$oldDocument->document_revision_id}";
                     $new_name = "upload://{$Revision->id}";
-                    $GLOBALS['log']->debug("Attempting to copy from $old_name to $new_name");
+                    $GLOBALS['log']->debug("Attempting to copy from {$old_name} to {$new_name}");
                     copy($old_name, $new_name);
                     $createRevision = true;
                 }
@@ -189,7 +183,6 @@ class Document extends File
                 $this->document_revision_id = $Revision->id;
             }
 
-
             //set relationship field values if contract_id is passed (via subpanel create)
             if (!empty($_POST['contract_id'])) {
                 $save_revision['document_revision_id'] = $this->document_revision_id;
@@ -199,7 +192,7 @@ class Document extends File
 
             if ((isset($_POST['load_signed_id']) and !empty($_POST['load_signed_id']))) {
                 $loadSignedIdQuoted = $this->db->quote($_POST['load_signed_id']);
-                $query="update linked_documents set deleted=1 where id='".$loadSignedIdQuoted."'";
+                $query = "update linked_documents set deleted=1 where id='" . $loadSignedIdQuoted . "'";
                 $this->db->query($query);
             }
         }
@@ -209,15 +202,17 @@ class Document extends File
 
     public function get_summary_text()
     {
-        return (string)$this->document_name;
+        return (string) $this->document_name;
     }
 
     public function is_authenticated()
     {
         if (!isset($this->authenticated)) {
             LoggerManager::getLogger()->warn('Document::$authenticated is not set');
+
             return null;
         }
+
         return $this->authenticated;
     }
 
@@ -242,7 +237,7 @@ class Document extends File
             	 document_revisions.filename AS filename, document_revisions.revision AS revision,
             	 document_revisions.file_ext AS file_ext, document_revisions.file_mime_type AS file_mime_type
             	 FROM users, document_revisions
-            	 WHERE users.id = document_revisions.created_by AND document_revisions.id = '$this->document_revision_id'";
+            	 WHERE users.id = document_revisions.created_by AND document_revisions.id = '{$this->document_revision_id}'";
 
             $result = $this->db->query($query);
             $row = $this->db->fetchByAssoc($result);
@@ -265,8 +260,8 @@ class Document extends File
             global $img_name;
             global $img_name_bare;
             if (!empty($row['file_ext'])) {
-                $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . "_image_inline.gif");
-                $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
+                $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . '_image_inline.gif');
+                $img_name_bare = strtolower($row['file_ext']) . '_image_inline';
             }
         }
 
@@ -274,7 +269,7 @@ class Document extends File
         if (!empty($img_name) && file_exists($img_name)) {
             $img_name = $img_name_bare;
         } else {
-            $img_name = "def_image_inline"; //todo change the default image.
+            $img_name = 'def_image_inline'; //todo change the default image.
         }
         if ($this->ACLAccess('DetailView')) {
             if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
@@ -285,7 +280,7 @@ class Document extends File
                     null,
                     '.png',
                     $mod_strings['LBL_LIST_VIEW_DOCUMENT']
-                ) . "</a>";
+                ) . '</a>';
             } else {
                 $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage(
                     $img_name,
@@ -294,14 +289,14 @@ class Document extends File
                     null,
                     '.gif',
                     $mod_strings['LBL_LIST_VIEW_DOCUMENT']
-                ) . "</a>";
+                ) . '</a>';
             }
 
             $this->file_url = $file_url;
             $this->file_url_noimage = "index.php?entryPoint=download&type=Documents&id={$this->document_revision_id}";
         } else {
-            $this->file_url = "";
-            $this->file_url_noimage = "";
+            $this->file_url = '';
+            $this->file_url_noimage = '';
         }
 
         //get last_rev_by user name.
@@ -334,24 +329,24 @@ class Document extends File
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
-        $query = "SELECT
-						documents.*";
+        $query = 'SELECT
+						documents.*';
         $query .= $custom_join['select'];
-        $query .= " FROM documents ";
+        $query .= ' FROM documents ';
         $query .= $custom_join['join'];
 
-        $where_auto = " documents.deleted = 0";
+        $where_auto = ' documents.deleted = 0';
 
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
+        if ($where != '') {
+            $query .= " WHERE {$where} AND " . $where_auto;
         } else {
-            $query .= " WHERE " . $where_auto;
+            $query .= ' WHERE ' . $where_auto;
         }
 
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
+        if ($order_by != '') {
+            $query .= " ORDER BY {$order_by}";
         } else {
-            $query .= " ORDER BY documents.document_name";
+            $query .= ' ORDER BY documents.document_name';
         }
 
         return $query;
@@ -365,7 +360,6 @@ class Document extends File
         $document_fields = $this->get_list_view_array();
 
         $this->fill_in_additional_list_fields();
-
 
         $document_fields['FILENAME'] = $this->filename;
         $document_fields['FILE_URL'] = $this->file_url;
@@ -393,17 +387,16 @@ class Document extends File
             $appListStringDocumentCategoryDomForThisSubCategoryId = $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
         }
 
-        $document_fields['CATEGORY_ID'] = empty($this->category_id) ? "" : $appListStringDocumentCategoryDomForThisCategoryId;
-        $document_fields['SUBCATEGORY_ID'] = empty($this->subcategory_id) ? "" : $appListStringDocumentCategoryDomForThisSubCategoryId;
+        $document_fields['CATEGORY_ID'] = empty($this->category_id) ? '' : $appListStringDocumentCategoryDomForThisCategoryId;
+        $document_fields['SUBCATEGORY_ID'] = empty($this->subcategory_id) ? '' : $appListStringDocumentCategoryDomForThisSubCategoryId;
         $document_fields['NAME'] = $this->document_name;
         $document_fields['DOCUMENT_NAME_JAVASCRIPT'] = DBManagerFactory::getInstance()->quote($document_fields['DOCUMENT_NAME']);
 
         return $document_fields;
     }
 
-
     /**
-     * mark_relationships_deleted
+     * mark_relationships_deleted.
      *
      * Override method from SugarBean to handle deleting relationships associated with a Document.  This method will
      * remove DocumentRevision relationships and then optionally delete Contracts depending on the version.
@@ -425,7 +418,6 @@ class Document extends File
         parent::mark_relationships_deleted($id);
     }
 
-
     public function bean_implements($interface)
     {
         switch ($interface) {
@@ -446,7 +438,7 @@ class Document extends File
         }
 
         $db = DBManagerFactory::getInstance();
-        $query = "select document_name from documents where id='$doc_id'  and deleted=0";
+        $query = "select document_name from documents where id='{$doc_id}'  and deleted=0";
         $result = $db->query($query);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -459,4 +451,4 @@ class Document extends File
     }
 }
 
-require_once('modules/Documents/DocumentExternalApiDropDown.php');
+require_once 'modules/Documents/DocumentExternalApiDropDown.php';

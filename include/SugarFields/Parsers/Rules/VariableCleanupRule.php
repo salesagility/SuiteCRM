@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,17 +41,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * VariableCleanupRule.php
+ * VariableCleanupRule.php.
  *
  * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.
  *
  * @author Collin Lee
  */
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class VariableCleanupRule extends BaseRule
 {
@@ -62,13 +60,13 @@ class VariableCleanupRule extends BaseRule
     public function parsePanels($panels, $view)
     {
         if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+            foreach ($panels as $name => $panel) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         //This converts variable ended with "_c_checked" to just "_c" (for checkboxes in DetailView)
                         if (!is_array($column) && isset($column) && preg_match('/(.*?)_c_checked$/s', $column, $matches)) {
                             if (count($matches) == 2) {
-                                $panels[$name][$rowCount][$key] = $matches[1] . "_c";
+                                $panels[$name][$rowCount][$key] = $matches[1] . '_c';
                             }
                         } else {
                             if ($this->matches($column, '/^parent_id$/si')) {
@@ -84,9 +82,9 @@ class VariableCleanupRule extends BaseRule
             } //foreach
         } else {
             if ($view == 'EditView') {
-                foreach ($panels as $name=>$panel) {
-                    foreach ($panel as $rowCount=>$row) {
-                        foreach ($row as $key=>$column) {
+                foreach ($panels as $name => $panel) {
+                    foreach ($panel as $rowCount => $row) {
+                        foreach ($row as $key => $column) {
                             if ($this->matches($column, '/^(.*?)_c\[\]$/s')) {
                                 //This converts multienum variables named with [] suffix back to normal and removes custom code
                                 $val = $this->getMatch($column, '/^(.*?)_c\[\]$/s');

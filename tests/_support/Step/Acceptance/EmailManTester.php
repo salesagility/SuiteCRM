@@ -6,9 +6,9 @@ class EmailManTester extends \AcceptanceTester
 {
     private static $testerEmailAddress = 'sa.tester2@gmail.com';
     private static $testerEmailPassword = 'chilisauce';
-    
+
     /**
-     * Go to email settings
+     * Go to email settings.
      */
     public function gotoEmailSettings()
     {
@@ -18,7 +18,7 @@ class EmailManTester extends \AcceptanceTester
     }
 
     /**
-     * Populate email settings
+     * Populate email settings.
      *
      * @param $name
      */
@@ -34,7 +34,7 @@ class EmailManTester extends \AcceptanceTester
 //        $I->click('button');
 //        $I->seeCurrentURLEquals('/SuiteCRM/index.php');
 //        return ; // using different email settings in the future..
-        
+
         $I = new NavigationBarTester($this->getScenario());
         $EditView = new EditView($this->getScenario());
         $faker = $this->getFaker();

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,53 +36,48 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+$viewdefs['Opportunities']['EditView'] = [
+    'templateMeta' => ['maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+        'javascript' => '{$PROBABILITY_SCRIPT}',
+    ],
+    'panels' => [
+        'default' => [
+            [
+                ['name' => 'name'],
+                'account_name',
+            ],
+            [
+                ['name' => 'currency_id', 'label' => 'LBL_CURRENCY'],
+                ['name' => 'date_closed'],
+            ],
+            [
+                ['name' => 'amount'],
+                'opportunity_type',
+            ],
+            [
+                'sales_stage',
+                'lead_source',
+            ],
+            [
+                'probability',
+                'campaign_name',
+            ],
+            [
+                'next_step',
+            ],
+            [
+                'description',
+            ],
+        ],
 
-$viewdefs['Opportunities']['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-    'javascript' => '{$PROBABILITY_SCRIPT}',
-),
- 'panels' =>array(
-  'default' =>
-  array(
-    
-    array(
-      array('name'=>'name'),
-      'account_name',
-    ),
-    array(
-        array('name'=>'currency_id','label'=>'LBL_CURRENCY'),
-        array('name'=>'date_closed'),
-    ),
-    array(
-      array( 'name'=>'amount'),
-      'opportunity_type',
-    ),
-    array(
-      'sales_stage',
-      'lead_source',
-    ),
-    array(
-        'probability',
-          'campaign_name',
-    ),
-    array(
-          'next_step',
-    ),
-    array(
-      'description',
-    ),
-  ),
-  
-  'LBL_PANEL_ASSIGNMENT' => array(
-    array(
-        'assigned_user_name',
-    ),
-  ),
-)
-
-
-);
+        'LBL_PANEL_ASSIGNMENT' => [
+            [
+                'assigned_user_name',
+            ],
+        ],
+    ]
+];

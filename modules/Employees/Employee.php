@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-require_once('include/SugarObjects/templates/person/Person.php');
+require_once 'include/SugarObjects/templates/person/Person.php';
 
 // Employee is used to store customer information.
 class Employee extends Person
@@ -86,20 +83,17 @@ class Employee extends Person
     public $error_string;
     public $person_id;
 
-    public $module_dir = "Employees";
+    public $module_dir = 'Employees';
 
+    public $table_name = 'users';
 
-    public $table_name = "users";
-
-    public $object_name = "Employee";
+    public $object_name = 'Employee';
     public $user_preferences;
 
-    public $encodeFields = array("first_name", "last_name", "description");
+    public $encodeFields = ['first_name', 'last_name', 'description'];
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array('reports_to_name');
-
-
+    public $additional_column_fields = ['reports_to_name'];
 
     public $new_schema = true;
 
@@ -110,16 +104,12 @@ class Employee extends Person
         $this->emailAddress = new SugarEmailAddress();
     }
 
-
-
-
-
     public function get_summary_text()
     {
         $this->_create_proper_name_field();
+
         return $this->name;
     }
-
 
     public function fill_in_additional_list_fields()
     {
@@ -129,8 +119,8 @@ class Employee extends Person
     public function fill_in_additional_detail_fields()
     {
         global $locale;
-        $query = "SELECT u1.first_name, u1.last_name from users u1, users u2 where u1.id = u2.reports_to_id AND u2.id = '$this->id' and u1.deleted=0";
-        $result =$this->db->query($query, true, "Error filling in additional detail fields") ;
+        $query = "SELECT u1.first_name, u1.last_name from users u1, users u2 where u1.id = u2.reports_to_id AND u2.id = '{$this->id}' and u1.deleted=0";
+        $result = $this->db->query($query, true, 'Error filling in additional detail fields');
 
         $row = $this->db->fetchByAssoc($result);
 
@@ -143,9 +133,10 @@ class Employee extends Person
 
     public function retrieve_employee_id($employee_name)
     {
-        $query = "SELECT id from users where user_name='$user_name' AND deleted=0";
-        $result  = $this->db->query($query, false, "Error retrieving employee ID: ");
+        $query = "SELECT id from users where user_name='{$user_name}' AND deleted=0";
+        $result = $this->db->query($query, false, 'Error retrieving employee ID: ');
         $row = $this->db->fetchByAssoc($result);
+
         return $row['id'];
     }
 
@@ -183,10 +174,9 @@ class Employee extends Person
         return $list_form;
     }
 
-
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
-        include('modules/Employees/field_arrays.php');
+        include 'modules/Employees/field_arrays.php';
 
         $cols = '';
         foreach ($fields_array['Employee']['export_fields'] as $field) {
@@ -196,18 +186,18 @@ class Employee extends Person
 
         $query = "SELECT {$cols} FROM users ";
 
-        $where_auto = " users.deleted = 0";
+        $where_auto = ' users.deleted = 0';
 
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
+        if ($where != '') {
+            $query .= " WHERE {$where} AND " . $where_auto;
         } else {
-            $query .= " WHERE " . $where_auto;
+            $query .= ' WHERE ' . $where_auto;
         }
 
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
+        if ($order_by != '') {
+            $query .= " ORDER BY {$order_by}";
         } else {
-            $query .= " ORDER BY users.user_name";
+            $query .= ' ORDER BY users.user_name';
         }
 
         return $query;
@@ -231,9 +221,8 @@ class Employee extends Person
         parent::preprocess_fields_on_save();
     }
 
-
     /**
-     * create_new_list_query
+     * create_new_list_query.
      *
      * Return the list query used by the list views and export button. Next generation of create_new_list_query function.
      *
@@ -243,14 +232,16 @@ class Employee extends Person
      * @param string $where custom where clause
      * @param array $filter Optioanal
      * @param array $params Optional     *
-     * @param int $show_deleted Optional, default 0, show deleted records is set to 1.
+     * @param int $show_deleted optional, default 0, show deleted records is set to 1
      * @param string $join_type
-     * @param boolean $return_array Optional, default false, response as array
-     * @param object $parentbean creating a subquery for this bean.
-     * @param boolean $singleSelect Optional, default false.
-     * @return String select query string, optionally an array value will be returned if $return_array= true.
+     * @param bool $return_array Optional, default false, response as array
+     * @param object $parentbean creating a subquery for this bean
+     * @param bool $singleSelect optional, default false
+     * @param mixed $ifListForExport
+     *
+     * @return string select query string, optionally an array value will be returned if $return_array= true
      */
-    public function create_new_list_query($order_by, $where, $filter=array(), $params=array(), $show_deleted = 0, $join_type='', $return_array = false, $parentbean=null, $singleSelect = false, $ifListForExport = false)
+    public function create_new_list_query($order_by, $where, $filter = [], $params = [], $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false)
     {
         //create the filter for portal only users, as they should not be showing up in query results
         if (empty($where)) {
@@ -263,20 +254,18 @@ class Employee extends Person
         return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, $return_array, $parentbean, $singleSelect, $ifListForExport);
     }
 
-    /*
-     * Overwrite Sugar bean which returns the current objects custom fields.  Lets return User custom fields instead
-     */
+    // Overwrite Sugar bean which returns the current objects custom fields.  Lets return User custom fields instead
     public function hasCustomFields()
     {
-
         //Check to see if there are custom user fields that we should report on, first check the custom_fields array
         $userCustomfields = !empty($GLOBALS['dictionary']['Employee']['custom_fields']);
         if (!$userCustomfields) {
             //custom Fields not set, so traverse employee fields to see if any custom fields exist
-            foreach ($GLOBALS['dictionary']['Employee']['fields'] as $k=>$v) {
+            foreach ($GLOBALS['dictionary']['Employee']['fields'] as $k => $v) {
                 if (!empty($v['source']) && $v['source'] == 'custom_fields') {
                     //custom field has been found, set flag to true and break
                     $userCustomfields = true;
+
                     break;
                 }
             }
@@ -290,9 +279,10 @@ class Employee extends Person
      * Override the original save function,
      * for checking first is it same user as employee
      * and disable to save any employee data for others.
-     * (admin user is an exception)
+     * (admin user is an exception).
      *
      * @param bool $check_notify
+     *
      * @return bool|string
      */
     public function save($check_notify = false)
@@ -302,7 +292,7 @@ class Employee extends Person
             if (!is_admin($current_user)) {
                 if ($this->id && $current_user->id != $this->id) {
                     $GLOBALS['log']->security("{$current_user->name} tried to update {$this->name} record with out permission.");
-                    $GLOBALS['log']->fatal("You can change only your own employee data.");
+                    $GLOBALS['log']->fatal('You can change only your own employee data.');
 
                     return false;
                 }

@@ -1,8 +1,8 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 class AOS_PDF_TemplatesViewDetail extends ViewDetail
 {
@@ -10,9 +10,6 @@ class AOS_PDF_TemplatesViewDetail extends ViewDetail
     {
         parent::__construct();
     }
-
-
-
 
     public function display()
     {

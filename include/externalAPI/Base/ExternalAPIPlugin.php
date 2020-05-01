@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,33 +37,41 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * External API interface
+ * External API interface.
+ *
  * @api
  */
 interface ExternalAPIPlugin
 {
     /**
      * Check if this API supports certain authentication method
-     * If $method is empty, return the list of supported methods
+     * If $method is empty, return the list of supported methods.
+     *
      * @param string $method
+     *
      * @return array|bool
      */
     public function supports($method = '');
+
     /**
-     * Load data from EAPM bean
+     * Load data from EAPM bean.
+     *
      * @param EAPM $eapmBean
      */
     public function loadEAPM($eapmBean);
+
     /**
-     * Check if the data from the bean are good for login
+     * Check if the data from the bean are good for login.
+     *
      * @param EAPM $eapmBean
+     *
      * @return bool
      */
     public function checkLogin($eapmBean = null);
+
     /**
-     * Log out from the service
+     * Log out from the service.
      */
     public function logOff();
 }

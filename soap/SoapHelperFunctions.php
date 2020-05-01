@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 /**
  * Retrieve field data for a provided SugarBean.
  *
- * @param SugarBean $value -- The bean to retrieve the field information for.
- * @return Array -- 'field'=>   'name' -- the name of the field
+ * @param sugarBean $value -- The bean to retrieve the field information for
+ * @param mixed $translate
+ *
+ * @return array -- 'field'=>   'name' -- the name of the field
  *                              'type' -- the data type of the field
  *                              'label' -- the translation key for the label of the field
  *                              'required' -- Is the field required?
@@ -55,7 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function get_field_list($value, $translate = true)
 {
-    $list = array();
+    $list = [];
 
     if (!empty($value->field_defs)) {
         foreach ($value->field_defs as $var) {
@@ -63,8 +62,8 @@ function get_field_list($value, $translate = true)
                 continue;
             }
             $required = 0;
-            $options_dom = array();
-            $options_ret = array();
+            $options_dom = [];
+            $options_ret = [];
             // Apparently the only purpose of this check is to make sure we only return fields
             //   when we've read a record.  Otherwise this function is identical to get_module_field_list
             if (!empty($var['required'])) {
@@ -73,7 +72,7 @@ function get_field_list($value, $translate = true)
             if (isset($var['options'])) {
                 $options_dom = translate($var['options'], $value->module_dir);
                 if (!is_array($options_dom)) {
-                    $options_dom = array();
+                    $options_dom = [];
                 }
                 foreach ($options_dom as $key => $oneOption) {
                     $options_ret[] = get_name_value($key, $oneOption);
@@ -84,7 +83,7 @@ function get_field_list($value, $translate = true)
                 $options_ret[] = get_name_value('type', $var['dbType']);
             }
 
-            $entry = array();
+            $entry = [];
             $entry['name'] = $var['name'];
             $entry['type'] = $var['type'];
             if ($translate) {
@@ -104,10 +103,10 @@ function get_field_list($value, $translate = true)
 
     if (isset($value->module_dir) && $value->module_dir == 'Bugs') {
         $seedRelease = new Release();
-        $options = $seedRelease->get_releases(true, "Active");
-        $options_ret = array();
+        $options = $seedRelease->get_releases(true, 'Active');
+        $options_ret = [];
         foreach ($options as $name => $value) {
-            $options_ret[] = array('name' => $name, 'value' => $value);
+            $options_ret[] = ['name' => $name, 'value' => $value];
         }
         if (isset($list['fixed_in_release'])) {
             $list['fixed_in_release']['type'] = 'enum';
@@ -123,12 +122,12 @@ function get_field_list($value, $translate = true)
         }
     }
     if (isset($value->module_dir) && $value->module_dir == 'Emails') {
-        $fields = array('from_addr_name', 'reply_to_addr', 'to_addrs_names', 'cc_addrs_names', 'bcc_addrs_names');
+        $fields = ['from_addr_name', 'reply_to_addr', 'to_addrs_names', 'cc_addrs_names', 'bcc_addrs_names'];
         foreach ($fields as $field) {
             $var = $value->field_defs[$field];
 
             $required = 0;
-            $entry = array();
+            $entry = [];
             $entry['name'] = $var['name'];
             $entry['type'] = $var['type'];
             if ($translate) {
@@ -137,7 +136,7 @@ function get_field_list($value, $translate = true)
                 $entry['label'] = isset($var['vname']) ? $var['vname'] : $var['name'];
             }
             $entry['required'] = $required;
-            $entry['options'] = array();
+            $entry['options'] = [];
             if (isset($var['default'])) {
                 $entry['default_value'] = $var['default'];
             }
@@ -146,7 +145,7 @@ function get_field_list($value, $translate = true)
         }
     }
 
-    if (isset($value->assigned_user_name) && isset($list['assigned_user_id'])) {
+    if (isset($value->assigned_user_name, $list['assigned_user_id'])) {
         $list['assigned_user_name'] = $list['assigned_user_id'];
         $list['assigned_user_name']['name'] = 'assigned_user_name';
     }
@@ -164,8 +163,8 @@ function get_field_list($value, $translate = true)
 
 function new_get_field_list($value, $translate = true)
 {
-    $module_fields = array();
-    $link_fields = array();
+    $module_fields = [];
+    $link_fields = [];
 
     if (!empty($value->field_defs)) {
         foreach ($value->field_defs as $var) {
@@ -176,8 +175,8 @@ function new_get_field_list($value, $translate = true)
                 continue;
             }
             $required = 0;
-            $options_dom = array();
-            $options_ret = array();
+            $options_dom = [];
+            $options_ret = [];
             // Apparently the only purpose of this check is to make sure we only return fields
             //   when we've read a record.  Otherwise this function is identical to get_module_field_list
             if (!empty($var['required'])) {
@@ -186,7 +185,7 @@ function new_get_field_list($value, $translate = true)
             if (isset($var['options'])) {
                 $options_dom = translate($var['options'], $value->module_dir);
                 if (!is_array($options_dom)) {
-                    $options_dom = array();
+                    $options_dom = [];
                 }
                 foreach ($options_dom as $key => $oneOption) {
                     $options_ret[] = get_name_value($key, $oneOption);
@@ -197,7 +196,7 @@ function new_get_field_list($value, $translate = true)
                 $options_ret[] = get_name_value('type', $var['dbType']);
             }
 
-            $entry = array();
+            $entry = [];
             $entry['name'] = $var['name'];
             $entry['type'] = $var['type'];
             if ($var['type'] == 'link') {
@@ -226,10 +225,10 @@ function new_get_field_list($value, $translate = true)
 
     if ($value->module_dir == 'Bugs') {
         $seedRelease = new Release();
-        $options = $seedRelease->get_releases(true, "Active");
-        $options_ret = array();
+        $options = $seedRelease->get_releases(true, 'Active');
+        $options_ret = [];
         foreach ($options as $name => $value) {
-            $options_ret[] = array('name' => $name, 'value' => $value);
+            $options_ret[] = ['name' => $name, 'value' => $value];
         }
         if (isset($module_fields['fixed_in_release'])) {
             $module_fields['fixed_in_release']['type'] = 'enum';
@@ -245,7 +244,7 @@ function new_get_field_list($value, $translate = true)
         }
     }
 
-    if (isset($value->assigned_user_name) && isset($module_fields['assigned_user_id'])) {
+    if (isset($value->assigned_user_name, $module_fields['assigned_user_id'])) {
         $module_fields['assigned_user_name'] = $module_fields['assigned_user_id'];
         $module_fields['assigned_user_name']['name'] = 'assigned_user_name';
     }
@@ -258,7 +257,7 @@ function new_get_field_list($value, $translate = true)
         $module_fields['created_by_name']['name'] = 'created_by_name';
     }
 
-    return array('module_fields' => $module_fields, 'link_fields' => $link_fields);
+    return ['module_fields' => $module_fields, 'link_fields' => $link_fields];
 } // fn
 
 function setFaultObject($errorObject)
@@ -321,7 +320,7 @@ function checkACLAccess($bean, $viewType, $errorObject, $error_key)
 
 function get_name_value($field, $value)
 {
-    return array('name' => $field, 'value' => $value);
+    return ['name' => $field, 'value' => $value];
 }
 
 function get_user_module_list($user)
@@ -377,7 +376,8 @@ function check_modules_access($user, $module_name, $action = 'write')
             }
 
             return false;
-        } elseif ($action == 'write' && strcmp(
+        }
+        if ($action == 'write' && strcmp(
             strtolower($module_name),
             'users'
         ) == 0 && !$user->isAdminForModule($module_name)
@@ -395,7 +395,7 @@ function check_modules_access($user, $module_name, $action = 'write')
 function get_name_value_list($value, $returnDomValue = false)
 {
     global $app_list_strings;
-    $list = array();
+    $list = [];
     if (!empty($value->field_defs)) {
         if (isset($value->assigned_user_name)) {
             $list['assigned_user_name'] = get_name_value('assigned_user_name', $value->assigned_user_name);
@@ -423,7 +423,7 @@ function get_name_value_list($value, $returnDomValue = false)
                 } elseif (strcmp($type, 'enum') == 0 && !empty($var['options']) && $returnDomValue) {
                     $val = $app_list_strings[$var['options']][$val];
                 } elseif (strcmp($type, 'currency') == 0) {
-                    $params = array('currency_symbol' => false);
+                    $params = ['currency_symbol' => false];
                     $val = currency_format_number($val, $params);
                 }
 
@@ -438,7 +438,7 @@ function get_name_value_list($value, $returnDomValue = false)
 function filter_fields($value, $fields)
 {
     global $invalid_contact_fields;
-    $filterFields = array();
+    $filterFields = [];
     foreach ($fields as $field) {
         if (is_array($invalid_contact_fields)) {
             if (in_array($field, $invalid_contact_fields)) {
@@ -463,7 +463,7 @@ function get_name_value_list_for_fields($value, $fields)
     global $app_list_strings;
     global $invalid_contact_fields;
 
-    $list = array();
+    $list = [];
     if (!empty($value->field_defs)) {
         if (isset($value->assigned_user_name) && in_array('assigned_user_name', $fields)) {
             $list['assigned_user_name'] = get_name_value('assigned_user_name', $value->assigned_user_name);
@@ -496,10 +496,9 @@ function get_name_value_list_for_fields($value, $fields)
     return $list;
 } // fn
 
-
 function array_get_name_value_list($array)
 {
-    $list = array();
+    $list = [];
     foreach ($array as $name => $value) {
         $list[$name] = get_name_value($name, $value);
     }
@@ -509,11 +508,11 @@ function array_get_name_value_list($array)
 
 function array_get_name_value_lists($array)
 {
-    $list = array();
+    $list = [];
     foreach ($array as $name => $value) {
         $tmp_value = $value;
         if (is_array($value)) {
-            $tmp_value = array();
+            $tmp_value = [];
             foreach ($value as $k => $v) {
                 $tmp_value[] = get_name_value($k, $v);
             }
@@ -526,11 +525,11 @@ function array_get_name_value_lists($array)
 
 function name_value_lists_get_array($list)
 {
-    $array = array();
+    $array = [];
     foreach ($list as $key => $value) {
-        if (isset($value['value']) && isset($value['name'])) {
+        if (isset($value['value'], $value['name'])) {
             if (is_array($value['value'])) {
-                $array[$value['name']] = array();
+                $array[$value['name']] = [];
                 foreach ($value['value'] as $v) {
                     $array[$value['name']][$v['name']] = $v['value'];
                 }
@@ -545,11 +544,11 @@ function name_value_lists_get_array($list)
 
 function array_get_return_value($array, $module)
 {
-    return array(
+    return [
         'id' => $array['id'],
         'module_name' => $module,
         'name_value_list' => array_get_name_value_list($array)
-    );
+    ];
 }
 
 function get_return_value_for_fields($value, $module, $fields)
@@ -561,31 +560,31 @@ function get_return_value_for_fields($value, $module, $fields)
     }
     $value = clean_sensitive_data($value->field_defs, $value);
 
-    return array(
+    return [
         'id' => $value->id,
         'module_name' => $module,
         'name_value_list' => get_name_value_list_for_fields($value, $fields)
-    );
+    ];
 }
 
 function getRelationshipResults($bean, $link_field_name, $link_module_fields)
 {
     global $beanList, $beanFiles;
     $bean->load_relationship($link_field_name);
-    if (isset($bean->$link_field_name)) {
+    if (isset($bean->{$link_field_name})) {
         // get the query object for this link field
-        $query_array = $bean->$link_field_name->getQuery(true, array(), 0, '', true);
-        $params = array();
+        $query_array = $bean->{$link_field_name}->getQuery(true, [], 0, '', true);
+        $params = [];
         $params['joined_tables'] = $query_array['join_tables'];
 
         // get the related module name and instantiate a bean for that.
-        $submodulename = $bean->$link_field_name->getRelatedModuleName();
+        $submodulename = $bean->{$link_field_name}->getRelatedModuleName();
         $submoduleclass = $beanList[$submodulename];
-        require_once($beanFiles[$submoduleclass]);
+        require_once $beanFiles[$submoduleclass];
 
         $submodule = new $submoduleclass();
         $filterFields = filter_fields($submodule, $link_module_fields);
-        $relFields = $bean->$link_field_name->getRelatedFields();
+        $relFields = $bean->{$link_field_name}->getRelatedFields();
         $roleSelect = '';
 
         if (!empty($relFields)) {
@@ -600,13 +599,14 @@ function getRelationshipResults($bean, $link_field_name, $link_module_fields)
         $query = $subquery['select'] . $roleSelect . $subquery['from'] . $query_array['join'] . $subquery['where'];
 
         $result = $submodule->db->query($query, true);
-        $list = array();
+        $list = [];
         while ($row = $submodule->db->fetchByAssoc($result)) {
             $list[] = $row;
         }
 
-        return array('rows' => $list, 'fields_set_on_rows' => $filterFields);
+        return ['rows' => $list, 'fields_set_on_rows' => $filterFields];
     }
+
     return false;
     // else
 } // fn
@@ -621,10 +621,10 @@ function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fi
     $bean = clean_sensitive_data($value->field_defs, $bean);
 
     if (empty($link_name_to_value_fields_array) || !is_array($link_name_to_value_fields_array)) {
-        return array();
+        return [];
     }
 
-    $link_output = array();
+    $link_output = [];
     foreach ($link_name_to_value_fields_array as $link_name_value_fields) {
         if (!is_array($link_name_value_fields) || !isset($link_name_value_fields['name']) || !isset($link_name_value_fields['value'])) {
             continue;
@@ -634,17 +634,18 @@ function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fi
         if (is_array($link_module_fields) && !empty($link_module_fields)) {
             $result = getRelationshipResults($bean, $link_field_name, $link_module_fields);
             if (!$result) {
-                $link_output[] = array('name' => $link_field_name, 'records' => array());
+                $link_output[] = ['name' => $link_field_name, 'records' => []];
+
                 continue;
             }
             $list = $result['rows'];
             $filterFields = $result['fields_set_on_rows'];
             if ($list) {
-                $rowArray = array();
+                $rowArray = [];
                 foreach ($list as $row) {
-                    $nameValueArray = array();
+                    $nameValueArray = [];
                     foreach ($filterFields as $field) {
-                        $nameValue = array();
+                        $nameValue = [];
                         if (isset($row[$field])) {
                             $nameValue['name'] = $field;
                             $nameValue['value'] = $row[$field];
@@ -653,7 +654,7 @@ function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fi
                     } // foreach
                     $rowArray[] = $nameValueArray;
                 } // foreach
-                $link_output[] = array('name' => $link_field_name, 'records' => $rowArray);
+                $link_output[] = ['name' => $link_field_name, 'records' => $rowArray];
             } // if
         } // if
     } // foreach
@@ -662,11 +663,11 @@ function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fi
 } // fn
 
 /**
+ * @param string $module_name -- The name of the module that the primary record is from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method).
+ * @param string $module_id -- The ID of the bean in the specified module
+ * @param string $link_field_name - The relationship name for which to create relationships
+ * @param array $related_ids -- The array of ids for which we want to create relationships
  *
- * @param String $module_name -- The name of the module that the primary record is from.  This name should be the name the module was developed under (changing a tab name is studio does not affect the name that should be passed into this method).
- * @param String $module_id -- The ID of the bean in the specified module
- * @param String $link_field_name - The relationship name for which to create relationships.
- * @param Array $related_ids -- The array of ids for which we want to create relationships
  * @return true on success, false on failure
  */
 function new_handle_set_relationship($module_name, $module_id, $link_field_name, $related_ids)
@@ -677,7 +678,7 @@ function new_handle_set_relationship($module_name, $module_id, $link_field_name,
         return false;
     } // if
     $class_name = $beanList[$module_name];
-    require_once($beanFiles[$class_name]);
+    require_once $beanFiles[$class_name];
     $mod = new $class_name();
     $mod->retrieve($module_id);
     if (!$mod->ACLAccess('DetailView')) {
@@ -685,14 +686,15 @@ function new_handle_set_relationship($module_name, $module_id, $link_field_name,
     }
 
     foreach ($related_ids as $ids) {
-        $GLOBALS['log']->debug("ids = " . $ids);
+        $GLOBALS['log']->debug('ids = ' . $ids);
     }
 
     if ($mod->load_relationship($link_field_name)) {
-        $mod->$link_field_name->add($related_ids);
+        $mod->{$link_field_name}->add($related_ids);
 
         return true;
     }
+
     return false;
 }
 
@@ -701,11 +703,11 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
     global $beanList, $beanFiles, $app_list_strings;
     global $current_user;
 
-    $ret_values = array();
+    $ret_values = [];
 
     $class_name = $beanList[$module_name];
-    require_once($beanFiles[$class_name]);
-    $ids = array();
+    require_once $beanFiles[$class_name];
+    $ids = [];
     $count = 1;
     $total = count($name_value_lists);
     foreach ($name_value_lists as $name_value_list) {
@@ -715,6 +717,7 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
         foreach ($name_value_list as $value) {
             if ($value['name'] == 'id') {
                 $seed->retrieve($value['value']);
+
                 break;
             }
         }
@@ -757,7 +760,7 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
                     $seed->id = $duplicate_id;
                     $seed->contacts_users_id = $current_user->id;
                     $seed->save();
-                    $ids[] = $duplicate_id;//we have a conflict
+                    $ids[] = $duplicate_id; //we have a conflict
                 }
             }
         } else {
@@ -773,13 +776,14 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
                             //so we need to query the db to find if we already
                             //have an object with this outlook_id, if we do
                             //then we can set the id, otherwise this is a new object
-                            $order_by = "";
+                            $order_by = '';
                             $query = $seed->table_name . ".outlook_id = '" . DBManagerFactory::getInstance()->quote($seed->outlook_id) . "'";
                             $response = $seed->get_list($order_by, $query, 0, -1, -1, 0);
                             $list = $response['list'];
                             if (count($list) > 0) {
                                 foreach ($list as $value) {
                                     $seed->id = $value->id;
+
                                     break;
                                 }
                             }//fi
@@ -801,11 +805,11 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
 
         // if somebody is calling set_entries_detail() and wants fields returned...
         if ($select_fields !== false) {
-            $ret_values[$count] = array();
+            $ret_values[$count] = [];
 
             foreach ($select_fields as $select_field) {
-                if (isset($seed->$select_field)) {
-                    $ret_values[$count][] = get_name_value($select_field, $seed->$select_field);
+                if (isset($seed->{$select_field})) {
+                    $ret_values[$count][] = get_name_value($select_field, $seed->{$select_field});
                 }
             }
         }
@@ -813,13 +817,14 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
 
     // handle returns for set_entries_detail() and set_entries()
     if ($select_fields !== false) {
-        return array(
+        return [
             'name_value_lists' => $ret_values,
-        );
+        ];
     }
-    return array(
-            'ids' => $ids,
-        );
+
+    return [
+        'ids' => $ids,
+    ];
 }
 
 function get_return_value($value, $module, $returnDomValue = false)
@@ -831,22 +836,20 @@ function get_return_value($value, $module, $returnDomValue = false)
     }
     $value = clean_sensitive_data($value->field_defs, $value);
 
-    return array(
+    return [
         'id' => $value->id,
         'module_name' => $module,
         'name_value_list' => get_name_value_list($value, $returnDomValue)
-    );
+    ];
 }
-
 
 function get_encoded_Value($value)
 {
-
     // XML 1.0 doesn't allow those...
-    $value = preg_replace("/([\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F])/", '', $value);
-    $value = htmlspecialchars($value, ENT_NOQUOTES, "utf-8");
+    $value = preg_replace('/([\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F])/', '', $value);
+    $value = htmlspecialchars($value, ENT_NOQUOTES, 'utf-8');
 
-    return "<value>$value</value>";
+    return "<value>{$value}</value>";
 }
 
 function get_name_value_xml($val, $module_name)
@@ -873,11 +876,11 @@ function new_get_return_module_fields($value, $module, $translate = true)
     $module_name = $module;
     $result = new_get_field_list($value, $translate);
 
-    return array(
+    return [
         'module_name' => $module,
         'module_fields' => $result['module_fields'],
         'link_fields' => $result['link_fields'],
-    );
+    ];
 }
 
 function get_return_module_fields($value, $module, $error, $translate = true)
@@ -885,20 +888,20 @@ function get_return_module_fields($value, $module, $error, $translate = true)
     global $module_name;
     $module_name = $module;
 
-    return array(
+    return [
         'module_name' => $module,
         'module_fields' => get_field_list($value, $translate),
         'error' => get_name_value_list($value)
-    );
+    ];
 }
 
 function get_return_error_value($error_num, $error_name, $error_description)
 {
-    return array(
+    return [
         'number' => $error_num,
         'name' => $error_name,
         'description' => $error_description
-    );
+    ];
 }
 
 function filter_field_list(&$field_list, $select_fields, $module_name)
@@ -906,14 +909,14 @@ function filter_field_list(&$field_list, $select_fields, $module_name)
     return filter_return_list($field_list, $select_fields, $module_name);
 }
 
-
 /**
  * Filter the results of a list query.  Limit the fields returned.
  *
- * @param Array $output_list -- The array of list data
- * @param Array $select_fields -- The list of fields that should be returned.  If this array is specified, only the fields in the array will be returned.
- * @param String $module_name -- The name of the module this being worked on
- * @return The filtered array of list data.
+ * @param array $output_list -- The array of list data
+ * @param array $select_fields -- The list of fields that should be returned.  If this array is specified, only the fields in the array will be returned.
+ * @param string $module_name -- The name of the module this being worked on
+ *
+ * @return The filtered array of list data
  */
 function filter_return_list(&$output_list, $select_fields, $module_name)
 {
@@ -922,8 +925,7 @@ function filter_return_list(&$output_list, $select_fields, $module_name)
             global $invalid_contact_fields;
             if (is_array($invalid_contact_fields)) {
                 foreach ($invalid_contact_fields as $name => $val) {
-                    unset($output_list[$sug]['field_list'][$name]);
-                    unset($output_list[$sug]['name_value_list'][$name]);
+                    unset($output_list[$sug]['field_list'][$name], $output_list[$sug]['name_value_list'][$name]);
                 }
             }
         }
@@ -931,8 +933,7 @@ function filter_return_list(&$output_list, $select_fields, $module_name)
         if (!empty($output_list[$sug]['name_value_list']) && is_array($output_list[$sug]['name_value_list']) && !empty($select_fields) && is_array($select_fields)) {
             foreach ($output_list[$sug]['name_value_list'] as $name => $value) {
                 if (!in_array($value['name'], $select_fields)) {
-                    unset($output_list[$sug]['name_value_list'][$name]);
-                    unset($output_list[$sug]['field_list'][$name]);
+                    unset($output_list[$sug]['name_value_list'][$name], $output_list[$sug]['field_list'][$name]);
                 }
             }
         }
@@ -949,10 +950,7 @@ function login_success()
     $app_list_strings = return_app_list_strings_language($current_language);
 }
 
-
-/*
- *	Given an account_name, either create the account or assign to a contact.
- */
+// Given an account_name, either create the account or assign to a contact.
 function add_create_account($seed)
 {
     global $current_user;
@@ -986,7 +984,7 @@ function add_create_account($seed)
         if (empty($ret)) {
             $query = "select {$focus->table_name}.id, {$focus->table_name}.deleted from {$focus->table_name} ";
             $query .= " WHERE name='" . $seed->db->quote($account_name) . "'";
-            $query .= " ORDER BY deleted ASC";
+            $query .= ' ORDER BY deleted ASC';
             $result = $seed->db->query($query, true);
 
             $row = $seed->db->fetchByAssoc($result, false);
@@ -1034,7 +1032,6 @@ function check_for_duplicate_contacts($seed)
     $trimmed_last = trim($seed->last_name);
     $trimmed_first = trim($seed->first_name);
     if (!empty($trimmed_email) || !empty($trimmed_email2)) {
-
         //obtain a list of contacts which contain the same email address
         $contacts = $seed->emailAddress->getBeansByEmailAddress($trimmed_email);
         $contacts2 = $seed->emailAddress->getBeansByEmailAddress($trimmed_email2);
@@ -1047,10 +1044,10 @@ function check_for_duplicate_contacts($seed)
                 if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
                     $trimmed_email,
                     $contact->email1
-                    ) == 0 || strcmp(
+                ) == 0 || strcmp(
                         $trimmed_email,
                         $contact->email2
-                                ) == 0 || strcmp(
+                    ) == 0 || strcmp(
                                     $trimmed_email2,
                                     $contact->email
                                 ) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
@@ -1080,7 +1077,7 @@ function check_for_duplicate_contacts($seed)
 
     $query = "SELECT c.id as id FROM contacts c
 LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
-WHERE c.first_name = $trimmed_first AND c.last_name = $trimmed_last AND c.deleted = 0 AND eabr.id IS NULL";
+WHERE c.first_name = {$trimmed_first} AND c.last_name = {$trimmed_last} AND c.deleted = 0 AND eabr.id IS NULL";
 
     //Apply the limit query filter to this since we only need the first record
     $result = DBManagerFactory::getInstance()->getOne($query);
@@ -1101,38 +1098,42 @@ function is_server_version_greater($left, $right)
 {
     if (count($left) == 0 && count($right) == 0) {
         return false;
-    } elseif (count($left) == 0 || count($right) == 0) {
+    }
+    if (count($left) == 0 || count($right) == 0) {
         return true;
-    } elseif ($left[0] == $right[0]) {
+    }
+    if ($left[0] == $right[0]) {
         array_shift($left);
         array_shift($right);
 
         return is_server_version_greater($left, $right);
-    } elseif ($left[0] < $right[0]) {
+    }
+    if ($left[0] < $right[0]) {
         return true;
     }
+
     return false;
 }
 
 function getFile($zip_file, $file_in_zip)
 {
-    $base_upgrade_dir = sugar_cached("/upgrades");
-    $base_tmp_upgrade_dir = "$base_upgrade_dir/temp";
+    $base_upgrade_dir = sugar_cached('/upgrades');
+    $base_tmp_upgrade_dir = "{$base_upgrade_dir}/temp";
     $my_zip_dir = mk_temp_dir($base_tmp_upgrade_dir);
     unzip_file($zip_file, $file_in_zip, $my_zip_dir);
 
-    return ("$my_zip_dir/$file_in_zip");
+    return "{$my_zip_dir}/{$file_in_zip}";
 }
 
 function getManifest($zip_file)
 {
-    ini_set("max_execution_time", "3600");
+    ini_set('max_execution_time', '3600');
 
-    return (getFile($zip_file, "manifest.php"));
+    return getFile($zip_file, 'manifest.php');
 }
 
-if (!function_exists("get_encoded")) {
-    /*HELPER FUNCTIONS*/
+if (!function_exists('get_encoded')) {
+    // HELPER FUNCTIONS
     function get_encoded($object)
     {
         return base64_encode(serialize($object));
@@ -1145,7 +1146,7 @@ if (!function_exists("get_encoded")) {
 
     /**
      * decrypt a string use the TripleDES algorithm. This meant to be
-     * modified if the end user chooses a different algorithm
+     * modified if the end user chooses a different algorithm.
      *
      * @param $string - the string to decrypt
      *
@@ -1165,8 +1166,9 @@ if (!function_exists("get_encoded")) {
             }
             $buffer = $string;
             $key = substr(md5($key), 0, 24);
-            $iv = "password";
-            return openssl_decrypt(pack("H*", $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
+            $iv = 'password';
+
+            return openssl_decrypt(pack('H*', $buffer), 'des-ede3-cbc', $key, OPENSSL_NO_PADDING, $iv);
         }
     }
 }
@@ -1179,16 +1181,15 @@ function canViewPath($path, $base)
     return 0 !== strncmp($path, $base, strlen($base));
 }
 
-
 /**
- * apply_values
+ * apply_values.
  *
  * This function applies the given values to the bean object.  If it is a first time sync
  * then empty values will not be copied over.
  *
- * @param Mixed $seed Object representing SugarBean instance
- * @param Array $dataValues Array of fields/values to set on the SugarBean instance
- * @param boolean $firstSync Boolean indicating whether or not this is a first time sync
+ * @param mixed $seed Object representing SugarBean instance
+ * @param array $dataValues Array of fields/values to set on the SugarBean instance
+ * @param bool $firstSync Boolean indicating whether or not this is a first time sync
  */
 function apply_values($seed, $dataValues, $firstSync)
 {
@@ -1200,12 +1201,12 @@ function apply_values($seed, $dataValues, $firstSync)
         if ($firstSync) {
             //If this is a first sync AND the value is not empty then we set it
             if (!empty($value)) {
-                $seed->$field = $value;
+                $seed->{$field} = $value;
             }
         } else {
-            $seed->$field = $value;
+            $seed->{$field} = $value;
         }
     }
 }
 
-/*END HELPER*/
+// END HELPER

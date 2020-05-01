@@ -22,6 +22,7 @@ class GetFieldsMetaCest
      * @param Example $example
      *
      * @dataProvider shouldWorkDataProvider
+     *
      * @throws \Exception
      */
     public function shouldWork(ApiTester $I, Example $example)
@@ -37,7 +38,7 @@ class GetFieldsMetaCest
             [
                 'name' => [
                     'type' => 'name',
-                    "dbType" => "varchar",
+                    'dbType' => 'varchar',
                 ],
             ]
         );
@@ -48,6 +49,7 @@ class GetFieldsMetaCest
      * @param Example $example
      *
      * @dataProvider shouldNotWorkDataProvider
+     *
      * @throws \Exception
      */
     public function shouldNotWork(ApiTester $I, Example $example)
@@ -83,7 +85,6 @@ class GetFieldsMetaCest
             ],
         ];
     }
-
 
     /**
      * @return array

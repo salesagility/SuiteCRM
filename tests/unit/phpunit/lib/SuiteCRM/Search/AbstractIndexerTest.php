@@ -2,7 +2,7 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-/**
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -46,9 +46,11 @@ use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 
 /**
- * Class AbstractIndexerTest
+ * Class AbstractIndexerTest.
  *
  * @see AbstractIndexer
+ *
+ * @internal
  */
 class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 {
@@ -111,8 +113,8 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertContains('Bar', $indexer->getModulesToIndex());
 
         try {
-            $indexer->addModulesToIndex((object)["test"]);
-            self::fail("Exception should have been thrown");
+            $indexer->addModulesToIndex((object) ['test']);
+            self::fail('Exception should have been thrown');
         } catch (InvalidArgumentException $ignore) {
             // All good!
         } catch (Exception $exception) {
@@ -142,7 +144,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         $expected = $indexer->mockery_getName();
         $actual = $indexer->getIndexerName();
 
-        self::assertEquals($expected, $actual, "Indexer name does not match");
+        self::assertEquals($expected, $actual, 'Indexer name does not match');
     }
 
     public function testLogger()
@@ -155,11 +157,10 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
     }
 
     /**
-     * @return m\Mock|AbstractIndexer
+     * @return AbstractIndexer|m\Mock
      */
     private function getIndexerMock()
     {
-        $indexer = m::mock(AbstractIndexer::class)->makePartial();
-        return $indexer;
+        return m::mock(AbstractIndexer::class)->makePartial();
     }
 }

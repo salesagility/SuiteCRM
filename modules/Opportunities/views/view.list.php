@@ -1,6 +1,6 @@
 <?php
 
-require_once('modules/Opportunities/OpportunitiesListViewSmarty.php');
+require_once 'modules/Opportunities/OpportunitiesListViewSmarty.php';
 
 class OpportunitiesViewList extends ViewList
 {
@@ -8,9 +8,6 @@ class OpportunitiesViewList extends ViewList
     {
         parent::__construct();
     }
-
-
-
 
     public function preDisplay()
     {

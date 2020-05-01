@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -46,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class EmailsViewSendEmail extends ViewAjax
 {
     /**
-     * @var Email $bean
+     * @var Email
      */
     public $bean;
 
@@ -64,7 +62,7 @@ class EmailsViewSendEmail extends ViewAjax
     public function display()
     {
         global $app_strings;
-        $response = array();
+        $response = [];
 
         if (empty($this->bean->status)) {
             $this->bean->status = $_REQUEST['status'];
@@ -72,27 +70,30 @@ class EmailsViewSendEmail extends ViewAjax
 
         switch ($this->bean->status) {
             case 'sent':
-                $response['data'] = array(
+                $response['data'] = [
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,
                     'title' => $app_strings['LBL_EMAIL_SENT_SUCCESS'],
-                    'attributes' => array(),
-                    'relationships' => array(),
-                );
+                    'attributes' => [],
+                    'relationships' => [],
+                ];
+
                 break;
             case 'send_error':
-                $response['errors'] = array(
+                $response['errors'] = [
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,
                     'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
-                );
+                ];
+
                 break;
             default:
-                $response['errors'] = array(
+                $response['errors'] = [
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,
                     'title' => $app_strings['ERR_BAD_RESPONSE_FROM_SERVER']
-                );
+                ];
+
                 break;
         }
 

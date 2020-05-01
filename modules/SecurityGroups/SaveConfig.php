@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Administration/Administration.php');
-require_once('modules/SecurityGroups/SecurityGroup.php');
+require_once 'modules/Administration/Administration.php';
+require_once 'modules/SecurityGroups/SecurityGroup.php';
 
 if (!empty($_REQUEST['remove_default_id'])) {
     SecurityGroup::removeDefaultGroup($_REQUEST['remove_default_id']);
@@ -52,11 +50,9 @@ if (!empty($_REQUEST['remove_default_id'])) {
         SecurityGroup::saveDefaultGroup($_REQUEST['default_group'], $_REQUEST['default_module']);
     }
 
-
-
-    require_once('modules/Configurator/Configurator.php');
+    require_once 'modules/Configurator/Configurator.php';
     $cfg = new Configurator();
-    
+
     // save securitysuite_additive setting
     $cfg->config['securitysuite_additive'] = ($_REQUEST['securitysuite_additive'] == 1) ? true : false;
     // save securitysuite_strict_rights setting
@@ -79,7 +75,7 @@ if (!empty($_REQUEST['remove_default_id'])) {
     $cfg->config['securitysuite_inbound_email'] = ($_REQUEST['securitysuite_inbound_email'] == 1) ? true : false;
 
     if (!isset($cfg->config['addAjaxBannedModules'])) {
-        $cfg->config['addAjaxBannedModules'] = array();
+        $cfg->config['addAjaxBannedModules'] = [];
     }
     if (!in_array('SecurityGroups', $cfg->config['addAjaxBannedModules'])) {
         $cfg->config['addAjaxBannedModules'][] = 'SecurityGroups';

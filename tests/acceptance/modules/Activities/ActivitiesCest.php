@@ -5,12 +5,12 @@ use Faker\Generator;
 class ActivitiesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -37,12 +37,12 @@ class ActivitiesCest
      * As a user I want to see the due date on the activities module
      */
     public function testSeeDueDateSubpanelView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\AccountsTester $accounts,
-        \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\NavigationBarTester $NavigationBar
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\AccountsTester $accounts,
+        Step\Acceptance\Calls $calls,
+        Step\Acceptance\NavigationBarTester $NavigationBar
     ) {
         $I->wantTo('See the due date field on Account Activities subpanel');
 
@@ -53,7 +53,7 @@ class ActivitiesCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $account_name = 'Test_'. $this->fakeData->company();
+        $account_name = 'Test_' . $this->fakeData->company();
         $accounts->createAccount($account_name);
 
         // Create a Call and relate to an Account
@@ -61,8 +61,8 @@ class ActivitiesCest
 
         // Create call
         $this->fakeData->seed($this->fakeDataSeed);
-        $callName = 'Test_'. $this->fakeData->company();
-        $calls->createCallRelateModule($callName, $account_name, "Account");
+        $callName = 'Test_' . $this->fakeData->company();
+        $calls->createCallRelateModule($callName, $account_name, 'Account');
 
         // Navigate to the Account's Detail View and confirm the due date contains data
         $I->visitPage('Accounts', 'index');
@@ -77,8 +77,8 @@ class ActivitiesCest
         $listView->clickNameLink($account_name);
 
         //Click on Activites subpanel
-        $I->waitForElementVisible(['id'=>'subpanel_title_activities']);
-        $I->click(['id'=>'subpanel_title_activities']);
+        $I->waitForElementVisible(['id' => 'subpanel_title_activities']);
+        $I->click(['id' => 'subpanel_title_activities']);
         $I->waitForElementVisible('#Activities_createtask_button');
         $I->expect('the due date is visible');
         $I->seeInSource('01/19/2038');

@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\Core\Resolver;
 
 class ConfigResolver
@@ -8,8 +9,9 @@ class ConfigResolver
      *
      * @param array $files
      *
+     * @throws \InvalidArgumentException when config file does not contain an array
+     *
      * @return array
-     * @throws \InvalidArgumentException When config file does not contain an array.
      */
     public static function loadFiles(array $files)
     {
@@ -37,8 +39,9 @@ class ConfigResolver
     /**
      * @param string $file
      *
-     * @return boolean
-     * @throws \RuntimeException When config file is not readable.
+     * @throws \RuntimeException when config file is not readable
+     *
+     * @return bool
      */
     public static function isFileExist($file)
     {

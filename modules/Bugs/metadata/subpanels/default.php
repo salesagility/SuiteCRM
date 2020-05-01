@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,60 +40,55 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Bugs'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Bugs'],
+    ],
 
     'where' => '',
-    
-    
 
-    'list_fields' => array(
-        'bug_number'=>array(
+    'list_fields' => [
+        'bug_number' => [
             'vname' => 'LBL_LIST_NUMBER',
             'width' => '5%',
-        ),
-        
-        'name'=>array(
+        ],
+
+        'name' => [
             'vname' => 'LBL_LIST_SUBJECT',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '50%',
-        ),
-        'status'=>array(
+        ],
+        'status' => [
             'vname' => 'LBL_LIST_STATUS',
             'width' => '15%',
-        ),
-        'type'=>array(
+        ],
+        'type' => [
             'vname' => 'LBL_LIST_TYPE',
             'width' => '15%',
-        ),
-        'priority'=>array(
+        ],
+        'priority' => [
             'vname' => 'LBL_LIST_PRIORITY',
             'width' => '11%',
-        ),
-        'assigned_user_name' => array(
+        ],
+        'assigned_user_name' => [
             'name' => 'assigned_user_name',
             'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'assigned_user_id',
             'target_module' => 'Employees',
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'Bugs',
             'width' => '4%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Bugs',
             'width' => '5%',
-        ),
-    ),
-);
+        ],
+    ],
+];

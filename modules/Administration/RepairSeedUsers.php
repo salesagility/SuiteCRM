@@ -2,7 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,7 +53,7 @@ if (is_admin($current_user)) {
                 $status = 'Active';
             }
         }
-        $query = "UPDATE users SET status = '$status' WHERE id LIKE 'seed%'";
+        $query = "UPDATE users SET status = '{$status}' WHERE id LIKE 'seed%'";
         DBManagerFactory::getInstance()->query($query);
     }
     $query = "SELECT status FROM users WHERE id LIKE 'seed%'";

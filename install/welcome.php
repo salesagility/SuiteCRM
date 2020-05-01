@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,11 +49,8 @@ if (!isset($install_script) || !$install_script) {
 
 $langDropDown = get_select_options_with_id($supportedLanguages, $current_language);
 
-
-
-
-$_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
-$_SESSION['license_submitted']      = true;
+$_SESSION['setup_license_accept'] = get_boolean_from_request('setup_license_accept');
+$_SESSION['license_submitted'] = true;
 
 // setup session variables (and their defaults) if this page has not yet been submitted
 if (!isset($_SESSION['license_submitted']) || !$_SESSION['license_submitted']) {
@@ -61,16 +59,15 @@ if (!isset($_SESSION['license_submitted']) || !$_SESSION['license_submitted']) {
 
 $checked = (isset($_SESSION['setup_license_accept']) && !empty($_SESSION['setup_license_accept'])) ? 'checked="on"' : '';
 
-require_once("install/install_utils.php");
-$license_file = getLicenseContents("LICENSE.txt");
+require_once 'install/install_utils.php';
+$license_file = getLicenseContents('LICENSE.txt');
 $langHeader = get_language_header();
 
-
 // load javascripts
-include('jssource/JSGroupings.php');
+include 'jssource/JSGroupings.php';
 $jsSrc = '';
 foreach ($sugar_grp1_yui as $jsFile => $grp) {
-    $jsSrc .= "\t<script src=\"$jsFile\"></script>\n";
+    $jsSrc .= "\t<script src=\"{$jsFile}\"></script>\n";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -91,7 +88,7 @@ $out = <<<EOQ
    <link rel="stylesheet" href="themes/SuiteP/css/themes.css" type="text/css">
    <script src="include/javascript/jquery/jquery-min.js"></script>
    <script src="themes/SuiteP/js/responsiveslides.min.js"></script>
-    $jsSrc
+    {$jsSrc}
    <script type="text/javascript">
     <!--
     if ( YAHOO.env.ua )
@@ -257,11 +254,11 @@ function callSysCheck(){
                             YAHOO.util.Selector.query('button', 'p_msg', true).style.display = 'none';
                         //scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
 						scsbody = '<h1>{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}</h1>';
-                        scsbody += "<p><img src='install/processing.gif' alt=\"{$mod_strings['LBL_CREATE_CACHE']}\"></p>";
+                        scsbody += "<p><img src='install/processing.gif' alt=\\"{$mod_strings['LBL_CREATE_CACHE']}\\"></p>";
                         scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}<br>{$mod_strings['LBL_CREATE_CACHE']}</p>";
                         //scsbody += "<div id='cntDown'>{$mod_strings['LBL_THREE']}</div>";
                         //scsbody += "</td></tr></table>";
-                        //scsbody += "<script>countdown(3);<\/script>";
+                        //scsbody += "<script>countdown(3);<\\/script>";
                         //msgPanel.setBody(scsbody);
                         //msgPanel.render();
 						$('#content').html(scsbody);
@@ -333,10 +330,10 @@ function onLangSelect(e) {
 EOQ;
 if (check_php_version() === -1) {
     if (empty($mod_strings['LBL_MINIMUM_PHP_VERSION'])) {
-        $mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is '.constant('SUITECRM_PHP_MIN_VERSION');
+        $mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is ' . constant('SUITECRM_PHP_MIN_VERSION');
     }
 
-    $php_verison_warning =<<<eoq
+    $php_verison_warning = <<<eoq
 	    <table width="100%" cellpadding="0" cellpadding="0" border="0" class="Welcome">
 			<tr>
 		      <td colspan="2"  align="center" id="ready_image"><IMG src="include/images/install_themes.jpg" width="698" height="190" alt="Sugar Themes" border="0"></td>

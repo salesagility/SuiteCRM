@@ -5,9 +5,10 @@ namespace Step\Acceptance;
 class Opportunities extends \AcceptanceTester
 {
     /**
-     * Create an opportunity
+     * Create an opportunity.
      *
      * @param $name
+     * @param mixed $account
      */
     public function createOpportunity($name, $account)
     {

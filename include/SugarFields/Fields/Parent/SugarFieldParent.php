@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,7 +39,7 @@
     die('Not A Valid Entry Point');
 }
 
-require_once('include/SugarFields/Fields/Relate/SugarFieldRelate.php');
+require_once 'include/SugarFields/Fields/Relate/SugarFieldRelate.php';
 
 class SugarFieldParent extends SugarFieldRelate
 {
@@ -48,12 +47,13 @@ class SugarFieldParent extends SugarFieldRelate
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
-     * @param integer $tabindex
+     * @param int $tabindex
+     *
      * @return string
      */
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
-        $nolink = array('Users', 'Teams');
+        $nolink = ['Users', 'Teams'];
         if (in_array($vardef['module'], $nolink)) {
             $this->ss->assign('nolink', true);
         } else {
@@ -68,7 +68,8 @@ class SugarFieldParent extends SugarFieldRelate
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
-     * @param integer $tabindex
+     * @param int $tabindex
+     *
      * @return string
      */
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -81,7 +82,7 @@ class SugarFieldParent extends SugarFieldRelate
             $form_name = $displayParams['formName'];
         }
 
-        $popup_request_data = array();
+        $popup_request_data = [];
 
         if (isset($displayParams['call_back_function']) && !empty($displayParams['call_back_function'])) {
             $popup_request_data['call_back_function'] = $displayParams['call_back_function'];
@@ -90,10 +91,10 @@ class SugarFieldParent extends SugarFieldRelate
         }
 
         $popup_request_data['form_name'] = $form_name;
-        $popup_request_data['field_to_name_array'] = array(
+        $popup_request_data['field_to_name_array'] = [
             'id' => $vardef['id_name'],
             'name' => $vardef['name'],
-        );
+        ];
 
         if (isset($displayParams['field_to_name_array']) && !empty($displayParams['field_to_name_array'])) {
             $popup_request_data['field_to_name_array'] = array_merge(
@@ -133,7 +134,8 @@ class SugarFieldParent extends SugarFieldRelate
      * @param array $parentFieldArray
      * @param array $vardef
      * @param array $displayParams
-     * @param integer $tabindex
+     * @param int $tabindex
+     *
      * @return string
      */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -153,14 +155,14 @@ class SugarFieldParent extends SugarFieldRelate
 
         $this->ss->assign('form_name', $form_name);
 
-        $popup_request_data = array(
+        $popup_request_data = [
             'call_back_function' => 'set_return',
             'form_name' => $form_name,
-            'field_to_name_array' => array(
+            'field_to_name_array' => [
                 'id' => $vardef['id_name'],
                 'name' => $vardef['name'],
-            ),
-        );
+            ],
+        ];
 
         $parent_types = $app_list_strings['record_type_display'];
         $disabled_parent_types = ACLController::disabledModuleList($parent_types, false, 'list');
@@ -180,10 +182,12 @@ class SugarFieldParent extends SugarFieldRelate
 
     /**
      * @see SugarFieldBase::importSanitize()
+     *
      * @param string $value
      * @param array $vardef
      * @param SugarBean $focus
      * @param ImportFieldSanitize $settings
+     *
      * @return array|bool|string
      */
     public function importSanitize(
@@ -196,10 +200,10 @@ class SugarFieldParent extends SugarFieldRelate
 
         if (isset($vardef['type_name'])) {
             $moduleName = $vardef['type_name'];
-            if (isset($focus->$moduleName) && isset($beanList[$focus->$moduleName])) {
-                $vardef['module'] = $focus->$moduleName;
+            if (isset($focus->{$moduleName}, $beanList[$focus->{$moduleName}])) {
+                $vardef['module'] = $focus->{$moduleName};
                 $vardef['rname'] = 'name';
-                $relatedBean = loadBean($focus->$moduleName);
+                $relatedBean = loadBean($focus->{$moduleName});
                 $vardef['table'] = $relatedBean->table_name;
 
                 return parent::importSanitize($value, $vardef, $focus, $settings);
@@ -212,31 +216,33 @@ class SugarFieldParent extends SugarFieldRelate
     /**
      * @param string $formName
      * @param array $vardef
+     *
      * @return string
      */
-    public function createQuickSearchCode($formName = 'EditView', $vardef = array())
+    public function createQuickSearchCode($formName = 'EditView', $vardef = [])
     {
-        require_once('include/QuickSearchDefaults.php');
+        require_once 'include/QuickSearchDefaults.php';
         $json = getJSONobj();
 
-        $dynamicParentTypePlaceHolder = "**@**"; //Placeholder for dynamic parent so smarty tags are not escaped in json encoding.
+        $dynamicParentTypePlaceHolder = '**@**'; //Placeholder for dynamic parent so smarty tags are not escaped in json encoding.
         $dynamicParentType = '{/literal}{if !empty($fields.parent_type.value)}{$fields.parent_type.value}{else}Accounts{/if}{literal}';
 
         //Get the parent sqs definition
         $qsd = QuickSearchDefaults::getQuickSearchDefaults();
         $qsd->setFormName($formName);
         $sqsFieldArray = $qsd->getQSParent($dynamicParentTypePlaceHolder);
-        $qsFieldName = $formName . "_" . $vardef['name'];
+        $qsFieldName = $formName . '_' . $vardef['name'];
 
         //Build the javascript
         $quicksearch_js = '<script language="javascript">';
         $quicksearch_js .= "if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}";
-        $quicksearch_js .= "sqs_objects['$qsFieldName']=" . str_replace(
+        $quicksearch_js .= "sqs_objects['{$qsFieldName}']=" . str_replace(
             $dynamicParentTypePlaceHolder,
             $dynamicParentType,
             $json::encode($sqsFieldArray)
         ) . ';';
         $quicksearch_js .= '</script>';
+
         return $quicksearch_js;
     }
 
@@ -246,9 +252,10 @@ class SugarFieldParent extends SugarFieldRelate
      *
      * @param string $key value of key to search for
      * @param array $args value containing haystack to search for value in
+     *
      * @return mixed|string value that the SugarField should return
      */
-    public function getSearchInput($key = '', $args = array())
+    public function getSearchInput($key = '', $args = [])
     {
         //Nothing specified return empty string
         if (empty($key) || empty($args)) {

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,37 +40,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $module_name = 'Surveys';
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name],
+    ],
 
     'where' => '',
 
-    'list_fields' => array(
-        'name'          => array(
-            'vname'        => 'LBL_NAME',
+    'list_fields' => [
+        'name' => [
+            'vname' => 'LBL_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
-            'width'        => '45%',
-        ),
-        'date_modified' => array(
+            'width' => '45%',
+        ],
+        'date_modified' => [
             'vname' => 'LBL_DATE_MODIFIED',
             'width' => '45%',
-        ),
-        'edit_button'   => array(
-            'vname'        => 'LBL_EDIT_BUTTON',
+        ],
+        'edit_button' => [
+            'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
-            'module'       => $module_name,
-            'width'        => '4%',
-        ),
-        'remove_button' => array(
-            'vname'        => 'LBL_REMOVE',
+            'module' => $module_name,
+            'width' => '4%',
+        ],
+        'remove_button' => [
+            'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
-            'module'       => $module_name,
-            'width'        => '5%',
-        ),
-    ),
-);
+            'module' => $module_name,
+            'width' => '5%',
+        ],
+    ],
+];

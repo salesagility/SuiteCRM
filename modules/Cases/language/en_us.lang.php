@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'ERR_DELETE_RECORD' => 'You must specify a record number to delete the account.',
     'LBL_TOOL_TIP_BOX_TITLE' => 'KnowledgeBase Suggestions',
     'LBL_TOOL_TIP_TITLE' => 'Title:',
@@ -127,4 +125,4 @@ $mod_strings = array(
     'LBL_CONTACT_CREATED_BY_NAME' => 'Created by contact',
     'LBL_CONTACT_CREATED_BY' => 'Created by',
     'LBL_CASE_UPDATE_FORM' => 'Updates - Attachment form', //Form for attachments on case updates
-);
+];

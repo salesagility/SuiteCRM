@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,8 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $mod_strings;
 global $current_language;
 
@@ -54,6 +53,6 @@ $current_module_strings = return_module_language($current_language, 'Users');
 $ListView = new ListView();
 $ListView->initNewXTemplate('modules/Groups/ListView.html', $current_module_strings);
 $ListView->setHeaderTitle($mod_strings['LBL_LIST_TITLE']);
-$ListView->setQuery($where, "", "last_name, first_name", "USER");
-$ListView->show_mass_update=false;
-$ListView->processListView($focus, "main", "USER");
+$ListView->setQuery($where, '', 'last_name, first_name', 'USER');
+$ListView->show_mass_update = false;
+$ListView->processListView($focus, 'main', 'USER');

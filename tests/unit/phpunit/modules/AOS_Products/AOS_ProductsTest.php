@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOS_Products()
+    public function testAOSProducts()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosProducts = new AOS_Products();

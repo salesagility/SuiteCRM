@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarCache/SugarCacheAbstract.php');
+require_once 'include/SugarCache/SugarCacheAbstract.php';
 
 /**
- * Redis SugarCache backend, using the PHP Redis C library at http://github.com/nicolasff/phpredis
+ * Redis SugarCache backend, using the PHP Redis C library at http://github.com/nicolasff/phpredis.
  */
 class SugarCacheRedis extends SugarCacheAbstract
 {
@@ -50,22 +47,30 @@ class SugarCacheRedis extends SugarCacheAbstract
      * @var Redis server name string
      */
     protected $_host = 'localhost';
-    
+
     /**
      * @var Redis server port int
      */
     protected $_port = 6379;
-    
+
     /**
      * @var Redis object
      */
-    protected $_redis = null;
-    
+    protected $_redis;
+
     /**
      * @see SugarCacheAbstract::$_priority
      */
     protected $_priority = 920;
-    
+
+    /**
+     * @see SugarCacheAbstract::__construct()
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * @see SugarCacheAbstract::useBackend()
      */
@@ -74,26 +79,18 @@ class SugarCacheRedis extends SugarCacheAbstract
         if (!parent::useBackend()) {
             return false;
         }
-        
-        if (extension_loaded("redis")
+
+        if (extension_loaded('redis')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_redis'])
                 && $this->_getRedisObject()) {
             return true;
         }
-            
+
         return false;
     }
-    
+
     /**
-     * @see SugarCacheAbstract::__construct()
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    
-    /**
-     * Get the memcache object; initialize if needed
+     * Get the memcache object; initialize if needed.
      */
     protected function _getRedisObject()
     {
@@ -109,52 +106,59 @@ class SugarCacheRedis extends SugarCacheAbstract
         } catch (RedisException $e) {
             return false;
         }
-        
+
         return $this->_redis;
     }
-    
+
     /**
      * @see SugarCacheAbstract::_setExternal()
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function _setExternal(
         $key,
         $value
-        ) {
+    ) {
         $value = serialize($value);
         $key = $this->_fixKeyName($key);
-        
+
         $this->_getRedisObject()->set($key, $value);
         $this->_getRedisObject()->expire($key, $this->_expireTimeout);
     }
-    
+
     /**
      * @see SugarCacheAbstract::_getExternal()
+     *
+     * @param mixed $key
      */
     protected function _getExternal(
         $key
-        ) {
+    ) {
         $key = $this->_fixKeyName($key);
         $returnValue = $this->_getRedisObject()->get($key);
         // return null if we don't get a cache hit
         if ($returnValue === false) {
             return null;
         }
-        
+
         return is_string($returnValue) ?
             unserialize($returnValue) :
             $returnValue;
     }
-    
+
     /**
      * @see SugarCacheAbstract::_clearExternal()
+     *
+     * @param mixed $key
      */
     protected function _clearExternal(
         $key
-        ) {
+    ) {
         $key = $this->_fixKeyName($key);
         $this->_getRedisObject()->delete($key);
     }
-    
+
     /**
      * @see SugarCacheAbstract::_resetExternal()
      */
@@ -162,11 +166,12 @@ class SugarCacheRedis extends SugarCacheAbstract
     {
         $this->_getRedisObject()->flushAll();
     }
-    
+
     /**
-     * Fixed the key naming used so we don't have any spaces
+     * Fixed the key naming used so we don't have any spaces.
      *
      * @param  string $key
+     *
      * @return string fixed key name
      */
     protected function _fixKeyName($key)

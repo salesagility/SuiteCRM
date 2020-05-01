@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,18 +40,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class ActivitiesParseRule extends BaseRule
 {
     public function preParse($panels, $view)
     {
         if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+            foreach ($panels as $name => $panel) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         if ($this->matches($column, '/^duration_minutes$/')) {
                             $panels[$name][$rowCount][$key] = 'duration_hours';
                         } else {
@@ -63,14 +61,15 @@ class ActivitiesParseRule extends BaseRule
                 } //foreach
             } //foreach
         }
+
         return $panels;
     }
 
     public function parsePanels($panels, $view)
     {
-        foreach ($panels as $name=>$panel) {
-            foreach ($panel as $rowCount=>$row) {
-                foreach ($row as $key=>$column) {
+        foreach ($panels as $name => $panel) {
+            foreach ($panel as $rowCount => $row) {
+                foreach ($row as $key => $column) {
                     if ($this->matches($column, '/^duration_minutes$/si')) {
                         $panels[$name][$rowCount][$key] = '';
                     }

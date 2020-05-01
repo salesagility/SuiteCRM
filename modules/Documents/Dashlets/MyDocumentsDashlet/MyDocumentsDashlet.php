@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,16 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/Dashlets/DashletGeneric.php');
+require_once 'include/Dashlets/DashletGeneric.php';
 
 class MyDocumentsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/Documents/Dashlets/MyDocumentsDashlet/MyDocumentsDashlet.data.php');
+        require 'modules/Documents/Dashlets/MyDocumentsDashlet/MyDocumentsDashlet.data.php';
 
         parent::__construct($id, $def);
 
@@ -63,19 +61,17 @@ class MyDocumentsDashlet extends DashletGeneric
         $this->seedBean = new Document();
     }
 
-
-
-
     public function displayOptions()
     {
         $this->processDisplayOptions();
-        require_once('modules/Documents/Document.php');
+        require_once 'modules/Documents/Document.php';
 
         $types = getDocumentsExternalApiDropDown();
         $this->currentSearchFields['doc_type']['input'] = '<select size="3" multiple="true" name="doc_type[]">'
                                                   . get_select_options_with_id($types, (empty($this->filters['doc_type']) ? '' : $this->filters['doc_type']))
                                                   . '</select>';
         $this->configureSS->assign('searchFields', $this->currentSearchFields);
+
         return $this->configureSS->fetch($this->configureTpl);
     }
 }

@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Class LoginCest
+ * Class LoginCest.
  *
  * Test login page
  */
 class AOW_WorkflowCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -42,13 +42,13 @@ class AOW_WorkflowCest
     // tests
     public function testScenarioCreateWorkflow(
         AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\SideBar $sideBar,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\Dashboard $dashboard,
-        \Step\Acceptance\Workflow $workflow
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\SideBar $sideBar,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\Dashboard $dashboard,
+        Step\Acceptance\Workflow $workflow
     ) {
         $I->wantTo('Create a workflow for accounts');
 

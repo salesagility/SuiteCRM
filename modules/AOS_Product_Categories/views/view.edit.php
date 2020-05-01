@@ -3,16 +3,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 class AOS_Product_CategoriesViewEdit extends ViewEdit
 {
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function display()
     {

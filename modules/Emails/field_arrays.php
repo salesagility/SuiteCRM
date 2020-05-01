@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,48 +42,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$fields_array['Email'] = array(
-    'column_fields' => array(
-        "id"
-        , "date_entered"
-        , "date_modified"
-        , "assigned_user_id"
-        , "modified_user_id"
-        , "created_by"
-        , "description"
-        , "description_html"
-        , "name"
-        , "date_start"
-        , "time_start"
-        , "parent_type"
-        , "parent_id"
-        , "from_addr"
-        , "from_name"
-        , "to_addrs"
-        , "cc_addrs"
-        , "bcc_addrs"
-        , "to_addrs_ids"
-        , "to_addrs_names"
-        , "to_addrs_emails"
-        , "cc_addrs_ids"
-        , "cc_addrs_names"
-        , "cc_addrs_emails"
-        , "bcc_addrs_ids"
-        , "bcc_addrs_names"
-        , "bcc_addrs_emails"
-        , "type"
-        , "status"
-        , "intent"
-        ,"category_id"
-        ),
-    'list_fields' => array(
+ */
+$fields_array['Email'] = [
+    'column_fields' => [
+        'id', 'date_entered', 'date_modified', 'assigned_user_id', 'modified_user_id', 'created_by', 'description', 'description_html', 'name', 'date_start', 'time_start', 'parent_type', 'parent_id', 'from_addr', 'from_name', 'to_addrs', 'cc_addrs', 'bcc_addrs', 'to_addrs_ids', 'to_addrs_names', 'to_addrs_emails', 'cc_addrs_ids', 'cc_addrs_names', 'cc_addrs_emails', 'bcc_addrs_ids', 'bcc_addrs_names', 'bcc_addrs_emails', 'type', 'status', 'intent', 'category_id'
+    ],
+    'list_fields' => [
         'id',
         'name',
         'parent_type',
@@ -107,5 +78,5 @@ $fields_array['Email'] = array(
         'attachment_image',
         'intent',
         'category_id'
-        ),
-);
+    ],
+];

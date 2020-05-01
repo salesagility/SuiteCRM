@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 require_once 'modules/AOP_Case_Updates/util.php';
 
 class SurveyResponses extends Basic
@@ -111,7 +109,7 @@ class SurveyResponses extends Basic
             //Create case
             $case = BeanFactory::newBean('Cases');
             $case->name = 'SurveyFollowup';
-            $case->description = "Received the following dissatisfied response from " . $contact->name . "<br>";
+            $case->description = 'Received the following dissatisfied response from ' . $contact->name . '<br>';
             $case->description .= $this->happiness_text;
             $case->from_negative_survey = true;
             $case->status = 'Open_New';
@@ -139,7 +137,7 @@ class SurveyResponses extends Basic
 
     private function sendEmail($contact, $email, $emailTemplateId, $case)
     {
-        require_once("include/SugarPHPMailer.php");
+        require_once 'include/SugarPHPMailer.php';
         $mailer = new SugarPHPMailer();
         $admin = new Administration();
         $admin->retrieveSettings();
@@ -151,7 +149,7 @@ class SurveyResponses extends Basic
         $email_template = $email_template->retrieve($emailTemplateId);
 
         if (!$email_template) {
-            $GLOBALS['log']->warn("SurveyResponse: Email template is empty");
+            $GLOBALS['log']->warn('SurveyResponse: Email template is empty');
 
             return false;
         }
@@ -167,35 +165,34 @@ class SurveyResponses extends Basic
 
         $mailer->AddAddress($email);
         if (!$mailer->Send()) {
-            $GLOBALS['log']->info("SurveyResponse: Could not send email:  " . $mailer->ErrorInfo);
+            $GLOBALS['log']->info('SurveyResponse: Could not send email:  ' . $mailer->ErrorInfo);
 
             return false;
-        } else {
-            $this->logEmail($email, $mailer, $contact->id);
-
-            return true;
         }
+        $this->logEmail($email, $mailer, $contact->id);
+
+        return true;
     }
 
     private function populateTemplate(EmailTemplate $template, $contact, $case)
     {
         global $sugar_config;
-        $beans = array(
-            "Contacts" => $contact->id,
-        );
+        $beans = [
+            'Contacts' => $contact->id,
+        ];
         if ($case) {
             $beans['Cases'] = $case->id;
         }
-        $ret = array();
+        $ret = [];
         $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
         $ret['body'] =
             from_html(
-                aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body_html), $beans)
+                aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html), $beans)
             );
         $ret['body_alt'] =
             strip_tags(
                 from_html(
-                    aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body), $beans)
+                    aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body), $beans)
                 )
             );
 
@@ -204,7 +201,7 @@ class SurveyResponses extends Basic
 
     private function logEmail($email, $mailer, $contactId = null)
     {
-        require_once('modules/Emails/Email.php');
+        require_once 'modules/Emails/Email.php';
         $emailObj = new Email();
         $emailObj->to_addrs = $email;
         $emailObj->type = 'out';
@@ -215,7 +212,7 @@ class SurveyResponses extends Basic
         $emailObj->from_addr = $mailer->From;
         isValidEmailAddress($emailObj->from_addr);
         if ($contactId) {
-            $emailObj->parent_type = "Contacts";
+            $emailObj->parent_type = 'Contacts';
             $emailObj->parent_id = $contactId;
         }
         $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();

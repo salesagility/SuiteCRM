@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $current_user;
 
 if (isset($_REQUEST['type']) && $_REQUEST['type'] == 'personal') {
@@ -55,7 +55,7 @@ if (isset($_REQUEST['type']) && $_REQUEST['type'] == 'personal') {
             }
         }
     }
-    header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id='.$current_user->id);
+    header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id=' . $current_user->id);
 } elseif (isset($_REQUEST['type']) && $_REQUEST['type'] == 'group') {
     $ie = new InboundEmail();
     // this query only polls Group Inboxes
@@ -66,7 +66,7 @@ if (isset($_REQUEST['type']) && $_REQUEST['type'] == 'personal') {
         $ieX->retrieve($a['id']);
         $ieX->importMessages();
     }
-    
+
     header('Location: index.php?module=Emails&action=ListViewGroup');
 } else { // fail gracefully
     header('Location: index.php?module=Emails&action=index');

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,13 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Class for separate storage of Email texts
- */
+// Class for separate storage of Email texts
 global $dictionary;
 if (file_exists('custom/metadata/emails_beansMetaData.php')) {
-    require_once('custom/metadata/emails_beansMetaData.php');
+    require_once 'custom/metadata/emails_beansMetaData.php';
 } else {
-    require_once('metadata/emails_beansMetaData.php');
+    require_once 'metadata/emails_beansMetaData.php';
 }
 $dictionary['EmailText'] = $dictionary['emails_text'];

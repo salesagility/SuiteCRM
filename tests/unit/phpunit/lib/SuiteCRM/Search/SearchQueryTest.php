@@ -40,6 +40,9 @@
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchTestAbstract;
 
+/**
+ * @internal
+ */
 class SearchQueryTest extends SearchTestAbstract
 {
     public function testFromString()
@@ -78,7 +81,6 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals('hello test world', $query->getSearchString());
     }
 
-
     public function testToLowerCase()
     {
         $string = ' HelLo tEsT WorLD    ';
@@ -103,7 +105,7 @@ class SearchQueryTest extends SearchTestAbstract
 
     public function testStripSlashes()
     {
-        $string = "Is your name O\'reilly? :\\\\";
+        $string = "Is your name O\\'reilly? :\\\\";
         $expected = "Is your name O'reilly? :\\";
 
         $query = SearchQuery::fromString($string);
@@ -178,14 +180,13 @@ class SearchQueryTest extends SearchTestAbstract
      */
     private function getRequest()
     {
-        $request = [
+        return [
             'search-query-string' => 'FOO',
             'search-query-size' => '123',
             'search-query-from' => 3,
             'search-engine' => 'TestEngine',
             'foo' => 'bar',
         ];
-        return $request;
     }
 
     /**

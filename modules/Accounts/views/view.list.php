@@ -1,6 +1,6 @@
 <?php
 
-require_once('modules/Accounts/AccountsListViewSmarty.php');
+require_once 'modules/Accounts/AccountsListViewSmarty.php';
 
 class AccountsViewList extends ViewList
 {
@@ -9,7 +9,7 @@ class AccountsViewList extends ViewList
      */
     public function preDisplay()
     {
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
+        require_once 'modules/AOS_PDF_Templates/formLetter.php';
         formLetter::LVPopupHtml('Accounts');
         parent::preDisplay();
 

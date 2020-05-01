@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,26 +36,26 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM;
 
 /**
- * Class HTMLPurifierFilterXmp
- * @package SuiteCRM
+ * Class HTMLPurifierFilterXmp.
  */
 class HTMLPurifierFilterXmp extends \HTMLPurifier_Filter
 {
-
-    /** @var string $name */
+    /** @var string */
     public $name = 'Xmp';
 
     /**
      * @param string $html
      * @param \HTMLPurifier_Config $config
      * @param \HTMLPurifier_Context $context
+     *
      * @return null|string|string[]
      */
     public function preFilter($html, $config, $context)
     {
-        return preg_replace("#<(/)?xmp>#i", "<\\1pre>", $html);
+        return preg_replace('#<(/)?xmp>#i', '<\\1pre>', $html);
     }
 }

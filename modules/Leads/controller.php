@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class LeadsController extends SugarController
 {
     public function __construct()
@@ -45,29 +43,30 @@ class LeadsController extends SugarController
         parent::__construct();
     }
 
-
-
     public function pre_editview()
     {
         //IF we have a prospect id leads convert it to a lead
-        if (empty($this->bean->id) && !empty($_REQUEST['return_module']) &&$_REQUEST['return_module'] == 'Prospects') {
-            $prospect=new Prospect();
+        if (empty($this->bean->id) && !empty($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Prospects') {
+            $prospect = new Prospect();
             $prospect->retrieve($_REQUEST['return_id']);
-            foreach ($prospect->field_defs as $key=>$value) {
-                if ($key == 'id' or $key=='deleted') {
+            foreach ($prospect->field_defs as $key => $value) {
+                if ($key == 'id' or $key == 'deleted') {
                     continue;
                 }
                 if (isset($this->bean->field_defs[$key])) {
-                    $this->bean->$key = $prospect->$key;
+                    $this->bean->{$key} = $prospect->{$key};
                 }
             }
-            $_POST['is_converted']=true;
+            $_POST['is_converted'] = true;
         }
+
         return true;
     }
+
     public function action_editview()
     {
         $this->view = 'edit';
+
         return true;
     }
 
@@ -76,9 +75,10 @@ class LeadsController extends SugarController
         if (strtolower($this->do_action) == 'convertlead') {
             if (file_exists('modules/Leads/ConvertLead.php') && !file_exists('custom/modules/Leads/metadata/convertdefs.php')) {
                 if (!empty($_REQUEST['emailAddressWidget'])) {
-                    foreach ($_REQUEST as $key=>$value) {
+                    foreach ($_REQUEST as $key => $value) {
                         if (preg_match('/^Leads.*?emailAddress[\d]+$/', $key)) {
                             $_REQUEST['Leads_email_widget_id'] = 0;
+
                             break;
                         }
                     }

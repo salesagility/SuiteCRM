@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,23 +42,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
     global $json,$current_user;
-    
-    
-    if ($_REQUEST['object_type'] == "Meeting") {
+
+    if ($_REQUEST['object_type'] == 'Meeting') {
         $focus = new Meeting();
         $focus->id = $_REQUEST['object_id'];
         $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
     } else {
-        if ($_REQUEST['object_type'] == "Call") {
+        if ($_REQUEST['object_type'] == 'Call') {
             $focus = new Call();
             $focus->id = $_REQUEST['object_id'];
             $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
         }
     }
-    print 1;
+    echo 1;
     exit;

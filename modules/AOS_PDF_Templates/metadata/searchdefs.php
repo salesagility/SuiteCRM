@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +19,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
@@ -30,24 +28,23 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
-  $searchdefs['AOS_PDF_Templates'] = array(
-                    'templateMeta' => array(
-                            'maxColumns' => '3',
-                            'widths' => array('label' => '10', 'field' => '30'),
-                           ),
-                    'layout' => array(
-                        'basic_search' => array(
-                            'name',
-                            array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
-                            array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
-                            ),
-                        'advanced_search' => array(
-                            'name',
-                            'date_entered',
-                            'date_modified',
-                            'type',
-                            array('name' => 'created_by', 'label' => 'LBL_CREATED', 'type' => 'enum', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
-                                                    
-                            ),
-                    ),
-               );
+  $searchdefs['AOS_PDF_Templates'] = [
+      'templateMeta' => [
+          'maxColumns' => '3',
+          'widths' => ['label' => '10', 'field' => '30'],
+      ],
+      'layout' => [
+          'basic_search' => [
+              'name',
+              ['name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'],
+              ['name' => 'favorites_only', 'label' => 'LBL_FAVORITES_FILTER', 'type' => 'bool'],
+          ],
+          'advanced_search' => [
+              'name',
+              'date_entered',
+              'date_modified',
+              'type',
+              ['name' => 'created_by', 'label' => 'LBL_CREATED', 'type' => 'enum', 'function' => ['name' => 'get_user_array', 'params' => [false]]],
+          ],
+      ],
+  ];

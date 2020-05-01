@@ -1,6 +1,6 @@
 <?php
 
-require_once('modules/Cases/CasesListViewSmarty.php');
+require_once 'modules/Cases/CasesListViewSmarty.php';
 
 class CasesViewList extends ViewList
 {
@@ -8,9 +8,6 @@ class CasesViewList extends ViewList
     {
         parent::__construct();
     }
-
-
-
 
     public function preDisplay()
     {

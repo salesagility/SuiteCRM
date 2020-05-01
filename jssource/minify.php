@@ -1,13 +1,14 @@
 <?php
+
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
 
 //assumes SugarMin.php is in same directory
     if (isset($_REQUEST['root_directory'])) {
-        require_once('jssource/minify_utils.php');
+        require_once 'jssource/minify_utils.php';
     } else {
-        require_once('minify_utils.php');
+        require_once 'minify_utils.php';
     }
 
 //if we are coming from browser
@@ -17,7 +18,7 @@ if (isset($_REQUEST['root_directory'])) {
         die('Not A Valid Entry Point');
     }
 
-    require_once('include/utils/sugar_file_utils.php');
+    require_once 'include/utils/sugar_file_utils.php';
 
     //get the root directory to process
     $from = $_REQUEST['root_directory'];
@@ -26,24 +27,24 @@ if (isset($_REQUEST['root_directory'])) {
     if (isset($_REQUEST['js_rebuild_concat'])) {
         if ($_REQUEST['js_rebuild_concat'] == 'rebuild') {
             //rebuild if files have changed
-            $js_groupings = array();
+            $js_groupings = [];
             if (isset($_REQUEST['root_directory'])) {
-                require('jssource/JSGroupings.php');
-                require_once('jssource/minify_utils.php');
+                require 'jssource/JSGroupings.php';
+                require_once 'jssource/minify_utils.php';
             } else {
-                require('JSGroupings.php');
-                require_once('minify_utils.php');
+                require 'JSGroupings.php';
+                require_once 'minify_utils.php';
             }
 
             //iterate through array of grouped files
-            $grp_array = $js_groupings;//from JSGroupings.php;
+            $grp_array = $js_groupings; //from JSGroupings.php;
 
             //for each item in array, concatenate the source files
             foreach ($grp_array as $grp) {
-                foreach ($grp as $original =>$concat) {
+                foreach ($grp as $original => $concat) {
                     $concat = sugar_cached($concat);
                     //make sure both files are still valid
-                    if (is_file($original)  &&  is_file($concat)) {
+                    if (is_file($original) && is_file($concat)) {
                         //if individual file has been modifed date later than modified date of
                         //concatenated file, then force a rebuild
                         if (filemtime($original) > filemtime($concat)) {
@@ -62,41 +63,42 @@ if (isset($_REQUEST['root_directory'])) {
         }
         //if boolean has been set, concatenate files
         if ($forceReb) {
-            ConcatenateFiles((string)$from);
+            ConcatenateFiles((string) $from);
         }
-    } else {
-        //We are only allowing rebuilding of concat files from browser.
     }
+    //We are only allowing rebuilding of concat files from browser.
+
     return;
-} else {
+}
     //run via command line
     //print_r($argv);
-    $from="";
+    $from = '';
 
     if (isset($argv[1]) && !empty($argv[1])) {
         $from = $argv[1];
     } else {
         //Root Directory was not specified
         echo 'Root Directory Input was not provided';
+
         return;
     }
 
     if ($argv[1] != '-?') {
         chdir($from);
-        require_once('include/utils.php');
-        require_once('include/utils/file_utils.php');
-        require_once('include/utils/sugar_file_utils.php');
+        require_once 'include/utils.php';
+        require_once 'include/utils/file_utils.php';
+        require_once 'include/utils/sugar_file_utils.php';
     }
     if (!function_exists('sugar_cached')) {
         if ($argv[1] != '-?') {
-            require_once($from.'/./include/utils.php');
-            require_once($from.'/./include/utils/file_utils.php');
-            require_once($from.'/./include/utils/sugar_file_utils.php');
+            require_once $from . '/./include/utils.php';
+            require_once $from . '/./include/utils/file_utils.php';
+            require_once $from . '/./include/utils/sugar_file_utils.php';
         }
         if (!function_exists('sugar_cached')) {
             function sugar_cached($dir)
             {
-                return "cache/$dir";
+                return "cache/{$dir}";
             }
         }
     }
@@ -109,19 +111,19 @@ if (isset($_REQUEST['root_directory'])) {
     if (!empty($argv[2])) {
         if ($argv[2] == '-r') {
             //replace the compressed scripts with the backed up version
-            reverseScripts("$from/jssource/src_files", $from);
+            reverseScripts("{$from}/jssource/src_files", $from);
         } elseif ($argv[2] == '-m') {
             //replace the scripts, and then minify the scripts again
-            reverseScripts("$from/jssource/src_files", $from);
-            BackUpAndCompressScriptFiles($from, "", false, true);
+            reverseScripts("{$from}/jssource/src_files", $from);
+            BackUpAndCompressScriptFiles($from, '', false, true);
         } elseif ($argv[2] == '-c') {
             //replace the scripts, concatenate the files, and then minify the scripts again
-            reverseScripts("$from/jssource/src_files", $from);
-            BackUpAndCompressScriptFiles($from, "", false, true);
+            reverseScripts("{$from}/jssource/src_files", $from);
+            BackUpAndCompressScriptFiles($from, '', false, true);
             ConcatenateFiles($from, true);
         } elseif ($argv[2] == '-mo') {
             //do not replace the scriptsjust minify the existing scripts again
-            BackUpAndCompressScriptFiles($from, "", false, true);
+            BackUpAndCompressScriptFiles($from, '', false, true);
         } elseif ($argv[2] == '-co') {
             //concatenate the files only
             ConcatenateFiles($from, true);
@@ -155,10 +157,9 @@ if (isset($_REQUEST['root_directory'])) {
     } else {
         //default is to concatenate the files, then back up and compress them
         if (empty($from)) {
-            echo("directory root to process was not specified");
+            echo 'directory root to process was not specified';
         }
 
         BackUpAndCompressScriptFiles($from, '', true, true);
         ConcatenateFiles($from, true);
     }
-}

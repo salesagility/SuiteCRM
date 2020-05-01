@@ -3,9 +3,12 @@
 //require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Chart()
+    public function testAORChart()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
         // Execute the constructor and check for the Object type and  attributes
@@ -22,19 +25,19 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $aorChart);
     }
 
-    public function testsave_lines()
+    public function testsaveLines()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        
+
         $aorChart = new AOR_Chart();
 
         //preset the required data
-        $post = array();
-        $post['chartid'] = array('test' => '');
-        $post['charttitle'] = array('test' => 'test');
-        $post['charttype'] = array('test' => 'bar');
-        $post['chartx_field'] = array('test' => '1');
-        $post['charty_field'] = array('test' => '2');
+        $post = [];
+        $post['chartid'] = ['test' => ''];
+        $post['charttitle'] = ['test' => 'test'];
+        $post['charttype'] = ['test' => 'bar'];
+        $post['chartx_field'] = ['test' => '1'];
+        $post['charty_field'] = ['test' => '2'];
 
         $postKey = 'chart';
 
@@ -52,7 +55,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
     public function testbuildChartImageBar()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        
+
         $aorChart = new AOR_Chart();
 
         $chartData = new pData();
@@ -69,14 +72,13 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         $aorChart->buildChartImageBar($chartPicture, false);
         $this->assertNotEquals($chartPicture, new pImage(700, 700, $chartData));
 
-        unset($chartData);
-        unset($chartPicture);
+        unset($chartData, $chartPicture);
     }
 
     public function testbuildChartImagePie()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        
+
         $aorChart = new AOR_Chart();
 
         $chartData = new pData();
@@ -85,22 +87,21 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
 
         //execute with recordImageMap false  and verify that the chartPicture is changed
         $chartPicture = new pImage(700, 700, $chartData);
-        $aorChart->buildChartImagePie($chartPicture, $chartData, array(array('x' => 10), array('x' => 20)), 700, 700, 'x', false);
+        $aorChart->buildChartImagePie($chartPicture, $chartData, [['x' => 10], ['x' => 20]], 700, 700, 'x', false);
         $this->assertNotEquals($chartPicture, new pImage(700, 700, $chartData));
 
         //execute with recordImageMap true and verify that the chartPicture is changed
         $chartPicture = new pImage(700, 700, $chartData);
-        $aorChart->buildChartImagePie($chartPicture, $chartData, array(array('x' => 10), array('x' => 20)), 700, 700, 'x', true);
+        $aorChart->buildChartImagePie($chartPicture, $chartData, [['x' => 10], ['x' => 20]], 700, 700, 'x', true);
         $this->assertNotEquals($chartPicture, new pImage(700, 700, $chartData));
 
-        unset($chartData);
-        unset($chartPicture);
+        unset($chartData, $chartPicture);
     }
 
     public function testbuildChartImageLine()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        
+
         $aorChart = new AOR_Chart();
 
         $chartData = new pData();
@@ -117,14 +118,13 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         $aorChart->buildChartImageLine($chartPicture, false);
         $this->assertNotEquals($chartPicture, new pImage(700, 700, $chartData));
 
-        unset($chartData);
-        unset($chartPicture);
+        unset($chartData, $chartPicture);
     }
 
     public function testbuildChartImageRadar()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        
+
         $aorChart = new AOR_Chart();
 
         //preset the required objects and properties
@@ -153,8 +153,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         $aorChart->buildChartImageRadar($chartPicture, $chartData, false);
         $this->assertNotEquals($chartPicture, new pImage(700, 700, $chartData));
 
-        unset($chartData);
-        unset($chartPicture);
+        unset($chartData, $chartPicture);
     }
 
     public function testbuildChartImage()
@@ -172,11 +171,11 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         $aorChart->x_field = 'x';
         $aorChart->y_field = 'y';
 
-        $fields = array();
+        $fields = [];
         $fields['x'] = json_decode('{"label": "x"}');
         $fields['y'] = json_decode('{"label": "y"}');
 
-        $reportData = array(array('xx' => 10, 'yy' => 10), array('xx' => 20, 'yy' => 20));
+        $reportData = [['xx' => 10, 'yy' => 10], ['xx' => 20, 'yy' => 20]];
 
         //execute the method and verify it returns expected results
         $aorChart->type = 'bar';
@@ -208,11 +207,11 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         $aorChart->x_field = 'x';
         $aorChart->y_field = 'y';
 
-        $fields = array();
+        $fields = [];
         $fields['x'] = json_decode('{"label": "x"}');
         $fields['y'] = json_decode('{"label": "y"}');
 
-        $reportData = array(array('xx' => 10, 'yy' => 10), array('xx' => 20, 'yy' => 20));
+        $reportData = [['xx' => 10, 'yy' => 10], ['xx' => 20, 'yy' => 20]];
 
         $aorChart->type = 'bar';
 

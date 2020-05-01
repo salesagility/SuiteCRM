@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -12,24 +15,24 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
-    
-    public function testcreate_export_query()
+
+    public function testcreateExportQuery()
     {
         $projectTask = new ProjectTask();
 
         //test with empty string params
-        $expected = "SELECT
+        $expected = 'SELECT
 				project_task.*,
                 users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
-                   	ON project_task.assigned_user_id=users.id where  project_task.deleted=0 ";
+                   	ON project_task.assigned_user_id=users.id where  project_task.deleted=0 ';
         $actual = $projectTask->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT
+        $expected = 'SELECT
 				project_task.*,
                 users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
-                   	ON project_task.assigned_user_id=users.id where (users.user_name= \"\") AND  project_task.deleted=0  ORDER BY project_task.id";
+                   	ON project_task.assigned_user_id=users.id where (users.user_name= "") AND  project_task.deleted=0  ORDER BY project_task.id';
         $actual = $projectTask->create_export_query('project_task.id', 'users.user_name= ""');
         $this->assertSame($expected, $actual);
     }
@@ -144,7 +147,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $projectTask = new ProjectTask();
 
@@ -158,7 +161,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $projectTask->assigned_user_name);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $projectTask = new ProjectTask();
 
@@ -172,7 +175,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $projectTask->assigned_user_name);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $projectTask = new ProjectTask();
 
@@ -184,7 +187,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $projectTask->get_summary_text());
     }
 
-    public function test_get_project_name()
+    public function testGetProjectName()
     {
         $projectTask = new ProjectTask();
 
@@ -197,7 +200,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $result);
     }
 
-    public function test_get_parent_name()
+    public function testGetParentName()
     {
         $projectTask = new ProjectTask();
 
@@ -210,7 +213,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $result);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $projectTask = new ProjectTask();
 
@@ -225,7 +228,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $projectTask = new ProjectTask();
 
@@ -233,25 +236,25 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $projectTask->description = 'test assigned user';
         $projectTask->parent_type = 'Project';
 
-        $expected = array(
-                'NAME' => 'tes user',
-                'DESCRIPTION' => 'test assigned user',
-                'ORDER_NUMBER' => '1',
-                'DELETED' => 0,
-                'UTILIZATION' => 100,
-                'PARENT_MODULE' => 'Project',
-                'FIRST_NAME' => '',
-                'LAST_NAME' => '',
-                'CONTACT_NAME' => ' ',
-                'TITLE' => ':  ',
-        );
+        $expected = [
+            'NAME' => 'tes user',
+            'DESCRIPTION' => 'test assigned user',
+            'ORDER_NUMBER' => '1',
+            'DELETED' => 0,
+            'UTILIZATION' => 100,
+            'PARENT_MODULE' => 'Project',
+            'FIRST_NAME' => '',
+            'LAST_NAME' => '',
+            'CONTACT_NAME' => ' ',
+            'TITLE' => ':  ',
+        ];
 
         $actual = $projectTask->get_list_view_data();
 
         $this->assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $projectTask = new ProjectTask();
 
@@ -264,7 +267,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
     {
         $projectTask = new ProjectTask();
 
-        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
+        $expected = ['MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a'];
         $actual = $projectTask->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }

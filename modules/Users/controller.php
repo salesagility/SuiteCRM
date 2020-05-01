@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,19 +36,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once("include/OutboundEmail/OutboundEmail.php");
+require_once 'include/OutboundEmail/OutboundEmail.php';
 
 class UsersController extends SugarController
 {
     /**
      * bug 48170
      * Action resetPreferences gets fired when user clicks on  'Reset User Preferences' button
-     * This action is set in UserViewHelper.php
+     * This action is set in UserViewHelper.php.
      */
     protected function action_resetPreferences()
     {
@@ -60,7 +58,7 @@ class UsersController extends SugarController
             if ($u->id == $GLOBALS['current_user']->id) {
                 SugarApplication::redirect('index.php');
             } else {
-                SugarApplication::redirect("index.php?module=Users&record=" . $_REQUEST['record'] . "&action=DetailView"); //bug 48170]
+                SugarApplication::redirect('index.php?module=Users&record=' . $_REQUEST['record'] . '&action=DetailView'); //bug 48170]
             }
         }
     }
@@ -69,7 +67,7 @@ class UsersController extends SugarController
     {
         if ($_REQUEST['record'] != $GLOBALS['current_user']->id && (
             $GLOBALS['current_user']->isAdminForModule('Users')
-            )
+        )
         ) {
             $u = new User();
             $u->retrieve($_REQUEST['record']);
@@ -83,9 +81,9 @@ class UsersController extends SugarController
             $eapm->delete_user_accounts($_REQUEST['record']);
             $GLOBALS['log']->info("Removing user's External Accounts");
 
-            SugarApplication::redirect("index.php?module=Users&action=index");
+            SugarApplication::redirect('index.php?module=Users&action=index');
         } else {
-            sugar_die("Unauthorized access to administration.");
+            sugar_die('Unauthorized access to administration.');
         }
     }
 
@@ -108,7 +106,7 @@ class UsersController extends SugarController
         $_POST['email_reminder_time'] = 3600;
         $_POST['mailmerge_on'] = 'on';
         $_POST['receive_notifications'] = $current_user->receive_notifications;
-        $_POST['user_theme'] = (string)SugarThemeRegistry::getDefault();
+        $_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
 
         // save and redirect to new view
         $_REQUEST['return_module'] = 'Home';
@@ -121,12 +119,11 @@ class UsersController extends SugarController
         $GLOBALS['current_user']->setPreference('fts_disabled_modules', $_REQUEST['disabled_modules']);
     }
 
-
     protected function action_editview()
     {
         $this->view = 'edit';
         if (!(is_admin($GLOBALS['current_user']) || $_REQUEST['record'] == $GLOBALS['current_user']->id)) {
-            SugarApplication::redirect("index.php?module=Home&action=index");
+            SugarApplication::redirect('index.php?module=Home&action=index');
         }
     }
 
@@ -134,7 +131,7 @@ class UsersController extends SugarController
     {
         $this->view = 'detail';
         if (!(is_admin($GLOBALS['current_user']) || $_REQUEST['record'] == $GLOBALS['current_user']->id)) {
-            SugarApplication::redirect("index.php?module=Home&action=index");
+            SugarApplication::redirect('index.php?module=Home&action=index');
         }
     }
 }

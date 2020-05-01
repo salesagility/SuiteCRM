@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class ViewMain extends SugarView
 {
     public function __construct()
@@ -47,28 +44,12 @@ class ViewMain extends SugarView
         parent::__construct();
     }
 
-
-
-
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
     public function display()
     {
         global $app_strings, $current_user, $mod_strings, $theme;
 
         $smarty = new Sugar_Smarty();
-        $type = (!empty($_REQUEST['type']))?$_REQUEST['type']:'main';
+        $type = (!empty($_REQUEST['type'])) ? $_REQUEST['type'] : 'main';
         $mbt = false;
         $admin = false;
         $mb = strtolower($type);
@@ -79,22 +60,25 @@ class ViewMain extends SugarView
         switch ($type) {
             case 'studio':
                 //$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
-                require_once('modules/ModuleBuilder/Module/StudioTree.php');
+                require_once 'modules/ModuleBuilder/Module/StudioTree.php';
                 $mbt = new StudioTree();
+
                 break;
             case 'mb':
                 //$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=package&package=")');
-                require_once('modules/ModuleBuilder/MB/MBPackageTree.php');
+                require_once 'modules/ModuleBuilder/MB/MBPackageTree.php';
                 $mbt = new MBPackageTree();
+
                 break;
             case 'dropdowns':
                // $admin = is_admin($current_user);
-                require_once('modules/ModuleBuilder/Module/DropDownTree.php');
+                require_once 'modules/ModuleBuilder/Module/DropDownTree.php';
                 $mbt = new DropDownTree();
+
                 break;
             default:
                 //$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=home")');
-                require_once('modules/ModuleBuilder/Module/MainTree.php');
+                require_once 'modules/ModuleBuilder/Module/MainTree.php';
                 $mbt = new MainTree();
         }
         $smarty->assign('TEST_STUDIO', displayStudioForCurrentUser());
@@ -106,23 +90,38 @@ class ViewMain extends SugarView
         }
         $userPref = $current_user->getPreference('mb_assist', 'Assistant');
         if (!$userPref) {
-            $userPref="na";
+            $userPref = 'na';
         }
         $smarty->assign('userPref', $userPref);
 
         ///////////////////////////////////
-        require_once('include/SugarTinyMCE.php');
+        require_once 'include/SugarTinyMCE.php';
         $tiny = new SugarTinyMCE();
-        $tiny->defaultConfig['width']=300;
-        $tiny->defaultConfig['height']=300;
-        $tiny->buttonConfig = "code,separator,bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,
+        $tiny->defaultConfig['width'] = 300;
+        $tiny->defaultConfig['height'] = 300;
+        $tiny->buttonConfig = 'code,separator,bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,
 	                         justifyfull,separator,forecolor,backcolor,
-	                         ";
-        $tiny->buttonConfig2 = "pastetext,pasteword,fontselect,fontsizeselect,";
-        $tiny->buttonConfig3 = "";
+	                         ';
+        $tiny->buttonConfig2 = 'pastetext,pasteword,fontselect,fontsizeselect,';
+        $tiny->buttonConfig3 = '';
         $ed = $tiny->getInstance();
-        $smarty->assign("tiny", $ed);
+        $smarty->assign('tiny', $ed);
 
         $smarty->display('modules/ModuleBuilder/tpls/index.tpl');
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

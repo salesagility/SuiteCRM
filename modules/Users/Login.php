@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/** @var AuthenticationController $authController */
+// @var AuthenticationController $authController
 $authController->authController->pre_login();
 
 global $current_language;
@@ -73,7 +71,6 @@ $login_image = is_file('custom/include/images/sugar_md.png') ?
 $login_image_url = SugarThemeRegistry::current()->getImageURL('company_logo.png');
 $login_image = '<IMG src="' . $login_image_url . '" alt="SuiteCRM" style="margin: 5px 0;">';
 
-
 $sugar_smarty->assign('LOGIN_IMAGE', $login_image);
 
 // See if any messages were passed along to display to the user.
@@ -95,7 +92,7 @@ if (isset($_REQUEST['loginErrorMessage'])) {
 
 $lvars = $GLOBALS['app']->getLoginVars();
 $sugar_smarty->assign('LOGIN_VARS', $lvars);
-foreach ((array)$lvars as $k => $v) {
+foreach ((array) $lvars as $k => $v) {
     $sugar_smarty->assign(strtoupper($k), $v);
 }
 
@@ -159,7 +156,7 @@ if (!empty($logindisplay)) {
 }
 
 // RECAPTCHA
-require_once __DIR__.'/../../include/utils/recaptcha_utils.php';
+require_once __DIR__ . '/../../include/utils/recaptcha_utils.php';
 $sugar_smarty->assign('CAPTCHA', displayRecaptcha());
 
 if (file_exists('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl')) {
@@ -173,5 +170,6 @@ if (file_exists('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl')
 } else {
     echo "<span class='error'>" . $mod_strings['LBL_MISSING_TEMPLATE'] . '</span>';
     $GLOBALS['log']->fatal('login.tpl not found');
+
     throw new RuntimeException('login.tpl not found');
 }

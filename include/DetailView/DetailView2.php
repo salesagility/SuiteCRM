@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,51 +36,51 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/TemplateHandler/TemplateHandler.php');
-require_once('include/EditView/EditView2.php');
+require_once 'include/TemplateHandler/TemplateHandler.php';
+require_once 'include/EditView/EditView2.php';
 
 /**
  * DetailView - display single record
- * New implementation
+ * New implementation.
+ *
  * @api
  */
 class DetailView2 extends EditView
 {
     /**
-     * @var string $view
+     * @var string
      */
     public $view = 'DetailView';
     /**
-     * @var array $defs
+     * @var array
      */
     public $defs;
 
     /**
      * DetailView constructor
      * This is the DetailView constructor responsible for processing the new
-     * Meta-Data framework
+     * Meta-Data framework.
      *
      * @param string $module String value of module this detail view is for
-     * @param SugarBean|null $focus An empty sugarbean object of module
-     * @param string|null $metadataFile String value of file location to use in overriding default metadata file
+     * @param null|SugarBean $focus An empty sugarbean object of module
+     * @param null|string $metadataFile String value of file location to use in overriding default metadata file
      * @param string $tpl tpl String value of file location to use in overriding default Smarty template
      * @param bool $createFocus
      * @param string $metadataFileName specifies the name of the metadata file eg 'detailviewdefs'
      */
     public function setup(
         $module,
-        $focus  = null,
+        $focus = null,
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
         $metadataFileName = 'detailviewdefs'
-        ) {
+    ) {
         global $sugar_config;
 
         $this->th = new TemplateHandler();
         $this->th->ss = $this->ss;
-        $viewdefs = array();
+        $viewdefs = [];
 
         //Check if inline editing is enabled for detail view.
         if (!isset($sugar_config['enable_line_editing_detail']) || $sugar_config['enable_line_editing_detail']) {
@@ -95,31 +94,31 @@ class DetailView2 extends EditView
             $this->showVCRControl = !$GLOBALS['sugar_config']['disable_vcr'];
         }
         if (!empty($this->metadataFile) && file_exists($this->metadataFile)) {
-            require($this->metadataFile);
+            require $this->metadataFile;
         } else {
             //If file doesn't exist we create a best guess
-            if (!file_exists("modules/$this->module/metadata/$metadataFileName.php") &&
-                file_exists("modules/$this->module/DetailView.html")) {
+            if (!file_exists("modules/{$this->module}/metadata/{$metadataFileName}.php") &&
+                file_exists("modules/{$this->module}/DetailView.html")) {
                 global $dictionary;
-                $htmlFile = "modules/" . $this->module . "/DetailView.html";
+                $htmlFile = 'modules/' . $this->module . '/DetailView.html';
                 $parser = new DetailViewMetaParser();
-                if (!file_exists('modules/'.$this->module.'/metadata')) {
-                    sugar_mkdir('modules/'.$this->module.'/metadata');
+                if (!file_exists('modules/' . $this->module . '/metadata')) {
+                    sugar_mkdir('modules/' . $this->module . '/metadata');
                 }
-                $fp = sugar_fopen('modules/'.$this->module.'/metadata/$metadataFileName.php', 'w');
+                $fp = sugar_fopen('modules/' . $this->module . '/metadata/$metadataFileName.php', 'w');
                 fwrite($fp, $parser->parse($htmlFile, $dictionary[$focus->object_name]['fields'], $this->module));
                 fclose($fp);
             }
 
             //Flag an error... we couldn't create the best guess meta-data file
-            if (!file_exists("modules/$this->module/metadata/$metadataFileName.php")) {
+            if (!file_exists("modules/{$this->module}/metadata/{$metadataFileName}.php")) {
                 global $app_strings;
-                $error = str_replace("[file]", "modules/$this->module/metadata/$metadataFileName.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
+                $error = str_replace('[file]', "modules/{$this->module}/metadata/{$metadataFileName}.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
                 $GLOBALS['log']->fatal($error);
                 echo $error;
                 die();
             }
-            require("modules/$this->module/metadata/$metadataFileName.php");
+            require "modules/{$this->module}/metadata/{$metadataFileName}.php";
         }
 
         $this->defs = $viewdefs[$this->module][$this->view];
@@ -127,10 +126,10 @@ class DetailView2 extends EditView
 
     /**
      * @param array $request
-     * @return void
+     *
      * @see EditView::populateBean()
      */
-    public function populateBean($request = array())
+    public function populateBean($request = [])
     {
         parent::populateBean($request);
     }

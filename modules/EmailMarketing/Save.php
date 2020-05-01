@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,13 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-
-
-
 global $timedate;
 global $current_user;
 if (!empty($_POST['meridiem'])) {
@@ -57,8 +51,8 @@ if (!empty($_POST['meridiem'])) {
 
 if (empty($_REQUEST['time_start'])) {
     if (!empty($_REQUEST['date_start'])) {
-        $_REQUEST['date_start'] = $_REQUEST['date_start'];// . ' 00:00';
-        $_POST['date_start'] = $_POST['date_start'];// . ' 00:00';
+        $_REQUEST['date_start'] = $_REQUEST['date_start']; // . ' 00:00';
+        $_POST['date_start'] = $_POST['date_start']; // . ' 00:00';
     }
 } else {
     if (!empty($_REQUEST['date_start'])) {
@@ -83,15 +77,15 @@ if (!empty($_POST['assigned_user_id']) && ($marketing->assigned_user_id != $_POS
 }
 foreach ($marketing->column_fields as $field) {
     if ($field == 'all_prospect_lists') {
-        if (isset($_POST[$field]) && $_POST[$field]=='on') {
-            $marketing->$field = 1;
+        if (isset($_POST[$field]) && $_POST[$field] == 'on') {
+            $marketing->{$field} = 1;
         } else {
-            $marketing->$field = 0;
+            $marketing->{$field} = 0;
         }
     } else {
         if (isset($_POST[$field])) {
             $value = $_POST[$field];
-            $marketing->$field = $value;
+            $marketing->{$field} = $value;
         }
     }
 }
@@ -99,7 +93,7 @@ foreach ($marketing->column_fields as $field) {
 foreach ($marketing->additional_column_fields as $field) {
     if (isset($_POST[$field])) {
         $value = $_POST[$field];
-        $marketing->$field = $value;
+        $marketing->{$field} = $value;
     }
 }
 
@@ -109,8 +103,8 @@ if (isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
     foreach ($_POST as $key => $value) {
         if (preg_match('/^wiz_step3_(.*)$/', $key, $match)) {
             $field = $match[1];
-            $marketing->$field = $value;
-            if ($field=='time_start') {
+            $marketing->{$field} = $value;
+            if ($field == 'time_start') {
                 $marketing->date_start .= ' ' . $value . (isset($_REQUEST['meridiem']) ? $_REQUEST['meridiem'] : '');
             }
         }
@@ -121,8 +115,8 @@ $marketing->save($check_notify);
 
 //add prospect lists to campaign.
 $marketing->load_relationship('prospectlists');
-$prospectlists=$marketing->prospectlists->get();
-if ($marketing->all_prospect_lists==1) {
+$prospectlists = $marketing->prospectlists->get();
+if ($marketing->all_prospect_lists == 1) {
     //remove all related prospect lists.
     if (!empty($prospectlists)) {
         $marketing->prospectlists->delete($marketing->id);
@@ -130,7 +124,7 @@ if ($marketing->all_prospect_lists==1) {
 } else {
     if (is_array($_REQUEST['message_for'])) {
         foreach ($_REQUEST['message_for'] as $prospect_list_id) {
-            $key=array_search($prospect_list_id, $prospectlists);
+            $key = array_search($prospect_list_id, $prospectlists);
             if ($key === null or $key === false) {
                 $marketing->prospectlists->add($prospect_list_id);
             } else {
@@ -138,7 +132,7 @@ if ($marketing->all_prospect_lists==1) {
             }
         }
         if (count($prospectlists) != 0) {
-            foreach ($prospectlists as $key=>$list_id) {
+            foreach ($prospectlists as $key => $list_id) {
                 $marketing->prospectlists->delete($marketing->id, $list_id);
             }
         }
@@ -146,14 +140,14 @@ if ($marketing->all_prospect_lists==1) {
 }
 if ($_REQUEST['action'] != 'WizardMarketingSave' && (!isset($_REQUEST['func']) || $_REQUEST['func'] != 'wizardUpdate')) {
     $header_URL = "Location: index.php?action=DetailView&module=Campaigns&record={$_REQUEST['campaign_id']}";
-    $GLOBALS['log']->debug("about to post header URL of: $header_URL");
+    $GLOBALS['log']->debug("about to post header URL of: {$header_URL}");
     header($header_URL);
 }
 
 if (isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
-    $resp = array();
+    $resp = [];
     $resp['error'] = false;
-    $resp['data'] = json_encode(array('id' => $marketing->id));
+    $resp['data'] = json_encode(['id' => $marketing->id]);
     $resp = json_encode($resp);
     echo $resp;
 }

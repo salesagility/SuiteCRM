@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Factory;
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -20,7 +21,7 @@ class ValidatorFactory
 
     /**
      * @param \Symfony\Component\Validator\Constraint[] $constraints
-     * @param boolean $allowNull
+     * @param bool $allowNull
      *
      * @return \Closure
      */
@@ -39,7 +40,7 @@ class ValidatorFactory
 
     /**
      * @param \Symfony\Component\Validator\Constraint[] $constraints
-     * @param boolean $allowNull
+     * @param bool $allowNull
      *
      * @return \Closure
      */

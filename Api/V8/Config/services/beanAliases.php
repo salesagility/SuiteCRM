@@ -2,9 +2,7 @@
 
 use Api\Core\Loader\CustomLoader;
 
-/**
- * Aliases for core modules
- */
+// Aliases for core modules
 return [
     'beanAliases' => function () {
         return CustomLoader::mergeCustomArray([

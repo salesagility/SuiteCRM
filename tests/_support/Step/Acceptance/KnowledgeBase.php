@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class KnowledgeBase extends \AcceptanceTester
 {
     /**
-     * Create a knowledge base
+     * Create a knowledge base.
      *
      * @param $name
      */

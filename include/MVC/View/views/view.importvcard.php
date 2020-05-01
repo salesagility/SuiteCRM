@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-require_once('include/vCard.php');
+require_once 'include/vCard.php';
 require_once __DIR__ . '/../../../../include/utils/layout_utils.php';
 
 class ViewImportvcard extends SugarView
@@ -62,24 +59,27 @@ class ViewImportvcard extends SugarView
     {
         global $mod_strings, $app_strings, $app_list_strings;
 
-        $this->ss->assign("ERROR_TEXT", $app_strings['LBL_EMPTY_VCARD']);
+        $this->ss->assign('ERROR_TEXT', $app_strings['LBL_EMPTY_VCARD']);
         if (isset($_REQUEST['error'])) {
             switch ($_REQUEST['error']) {
                 case 'vcardErrorFilesize':
                     $error = 'LBL_VCARD_ERROR_FILESIZE';
+
                     break;
                 case 'vcardErrorRequired':
                     $error = 'LBL_EMPTY_REQUIRED_VCARD';
+
                     break;
                 default:
                     $error = 'LBL_VCARD_ERROR_DEFAULT';
+
                     break;
             }
-            $this->ss->assign("ERROR", $app_strings[$error]);
+            $this->ss->assign('ERROR', $app_strings[$error]);
         }
-        $this->ss->assign("HEADER", $app_strings['LBL_IMPORT_VCARD']);
-        $this->ss->assign("MODULE", $_REQUEST['module']);
-        $params = array();
+        $this->ss->assign('HEADER', $app_strings['LBL_IMPORT_VCARD']);
+        $this->ss->assign('MODULE', $_REQUEST['module']);
+        $params = [];
         $params[] = "<a href='index.php?module={$_REQUEST['module']}&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
         $params[] = $app_strings['LBL_IMPORT_VCARD_BUTTON_LABEL'];
         echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], $params, true);

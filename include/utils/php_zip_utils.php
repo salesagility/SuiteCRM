@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,16 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Unzip file to specified directory
+ * Unzip file to specified directory.
  *
  * @param string $zip_archive
  * @param string $zip_dir
+ *
  * @return bool
  */
 function unzip($zip_archive, $zip_dir)
@@ -55,11 +54,12 @@ function unzip($zip_archive, $zip_dir)
 }
 
 /**
- * Unzip files to specified directory
+ * Unzip files to specified directory.
  *
  * @param string $zip_archive
- * @param string|null $archive_file
+ * @param null|string $archive_file
  * @param string $zip_dir
+ *
  * @return bool
  */
 function unzip_file($zip_archive, $archive_file, $zip_dir)
@@ -70,7 +70,7 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
             return false;
         }
     }
-    $zip = new ZipArchive;
+    $zip = new ZipArchive();
     // We need realpath here for PHP streams support
     $res = $zip->open(UploadFile::realpath($zip_archive));
 
@@ -98,10 +98,11 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
 }
 
 /**
- * Zip specified directory
+ * Zip specified directory.
  *
  * @param $zip_dir
  * @param $zip_archive
+ *
  * @return bool
  */
 function zip_dir($zip_dir, $zip_archive)
@@ -113,8 +114,10 @@ function zip_dir($zip_dir, $zip_archive)
     }
     $zip = new ZipArchive();
     // We need realpath here for PHP streams support
-    $zip->open(UploadFile::realpath($zip_archive),
-        ZipArchive::CREATE | ZipArchive::OVERWRITE);
+    $zip->open(
+        UploadFile::realpath($zip_archive),
+        ZipArchive::CREATE | ZipArchive::OVERWRITE
+    );
     $path = UploadFile::realpath($zip_dir);
     $chop = strlen($path) + 1;
     $dir = new RecursiveDirectoryIterator($path);
@@ -126,7 +129,7 @@ function zip_dir($zip_dir, $zip_archive)
         if ($fileName === '.' || $fileName === '..') {
             continue;
         }
-        $localname = str_replace("\\", '/', substr($fileinfo->getPathname(), $chop));
+        $localname = str_replace('\\', '/', substr($fileinfo->getPathname(), $chop));
         if ($fileinfo->isDir()) {
             $zip->addEmptyDir($localname . '/');
         } else {
@@ -138,21 +141,24 @@ function zip_dir($zip_dir, $zip_archive)
 }
 
 /**
- * Zip list of files, optionally stripping prefix
+ * Zip list of files, optionally stripping prefix.
  *
  * @param string $zip_file
  * @param array $file_list
  * @param string $prefix
+ *
  * @return bool
  */
 function zip_files_list($zip_file, $file_list, $prefix = '')
 {
     $archive = new ZipArchive();
     // We need realpath here for PHP streams support
-    $res = $archive->open(UploadFile::realpath($zip_file),
-        ZipArchive::CREATE | ZipArchive::OVERWRITE);
+    $res = $archive->open(
+        UploadFile::realpath($zip_file),
+        ZipArchive::CREATE | ZipArchive::OVERWRITE
+    );
     if ($res !== true) {
-        LoggerManager::getLogger()->fatal("Unable to open zip file, check directory permissions: $zip_file");
+        LoggerManager::getLogger()->fatal("Unable to open zip file, check directory permissions: {$zip_file}");
 
         return false;
     }

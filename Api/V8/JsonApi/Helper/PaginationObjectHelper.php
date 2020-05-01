@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Helper;
 
 use Api\V8\JsonApi\Response\MetaResponse;
@@ -8,8 +9,8 @@ use Slim\Http\Request;
 class PaginationObjectHelper
 {
     /**
-     * @param integer $totalPages
-     * @param integer $numOfRecords
+     * @param int $totalPages
+     * @param int $numOfRecords
      *
      * @return MetaResponse
      */
@@ -22,8 +23,8 @@ class PaginationObjectHelper
 
     /**
      * @param Request $request
-     * @param integer $totalPages
-     * @param integer $number
+     * @param int $totalPages
+     * @param int $number
      *
      * @return PaginationResponse
      */
@@ -46,7 +47,7 @@ class PaginationObjectHelper
 
     /**
      * @param Request $request
-     * @param integer $number
+     * @param int $number
      *
      * @return string
      */

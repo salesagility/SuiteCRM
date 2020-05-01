@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,16 +36,15 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/ListView/ListViewSmarty.php');
+require_once 'include/ListView/ListViewSmarty.php';
 
-require_once('include/TemplateHandler/TemplateHandler.php');
-require_once('include/SearchForm/SearchForm2.php');
-define("NUM_COLS", 2);
+require_once 'include/TemplateHandler/TemplateHandler.php';
+require_once 'include/SearchForm/SearchForm2.php';
+define('NUM_COLS', 2);
 class PopupSmarty extends ListViewSmarty
 {
     public $contextMenus = false;
@@ -64,11 +62,11 @@ class PopupSmarty extends ListViewSmarty
     public $formData;
     public $_popupMeta;
     public $_create = false;
-    public $searchdefs = array();
-    public $listviewdefs = array();
-    public $searchFields = array();
+    public $searchdefs = [];
+    public $listviewdefs = [];
+    public $searchFields = [];
     public $customFieldDefs;
-    public $filter_fields = array();
+    public $filter_fields = [];
     //rrs
     public $searchForm;
     public $module;
@@ -89,15 +87,44 @@ class PopupSmarty extends ListViewSmarty
     }
 
     /**
-     * Assign several arrow image attributes to TemplateHandler smarty. Such as width, height, etc.
+     * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
      *
-     * @return void
+     * @see ListViewDisplay::setup
+     *
+     * @param mixed $seed
+     * @param null|mixed $file
+     * @param null|mixed $where
+     * @param mixed $params
+     * @param mixed $offset
+     * @param mixed $limit
+     * @param mixed $filter_fields
+     * @param mixed $id_field
+     * @param null|mixed $id
+     */
+    public function setup(
+        $seed,
+        $file = null,
+        $where = null,
+        $params = [],
+        $offset = 0,
+        $limit = -1,
+        $filter_fields = [],
+        $id_field = 'id',
+        $id = null
+    ) {
+        $args = func_get_args();
+
+        return call_user_func_array([$this, '_setup'], $args);
+    }
+
+    /**
+     * Assign several arrow image attributes to TemplateHandler smarty. Such as width, height, etc.
      */
     public function processArrowVars()
     {
         $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif', false));
 
-        list($width, $height) = getimagesize($pathParts['dirname'].'/'.$pathParts['basename']);
+        list($width, $height) = getimagesize($pathParts['dirname'] . '/' . $pathParts['basename']);
 
         $this->th->ss->assign('arrowExt', $pathParts['extension']);
         $this->th->ss->assign('arrowWidth', $width);
@@ -107,12 +134,14 @@ class PopupSmarty extends ListViewSmarty
 
     /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
-     * This is called from ListViewDisplay
+     * This is called from ListViewDisplay.
      *
      * @param file file Template file to use
      * @param data array from ListViewData
      * @param html_var string the corresponding html var in xtpl per row
-     *
+     * @param mixed $file
+     * @param mixed $data
+     * @param mixed $htmlVar
      */
     public function process($file, $data, $htmlVar)
     {
@@ -128,7 +157,7 @@ class PopupSmarty extends ListViewSmarty
         }
         $adjustment = $totalWidth / 100;
 
-        $contextMenuObjectsTypes = array();
+        $contextMenuObjectsTypes = [];
         foreach ($this->displayColumns as $name => $params) {
             $this->displayColumns[$name]['width'] = round($this->displayColumns[$name]['width'] / $adjustment, 2);
             // figure out which contextMenu objectsTypes are required
@@ -137,7 +166,6 @@ class PopupSmarty extends ListViewSmarty
             }
         }
         $this->th->ss->assign('displayColumns', $this->displayColumns);
-
 
         $this->th->ss->assign('bgHilite', $hilite_bg);
         $this->th->ss->assign('colCount', count($this->displayColumns) + 1);
@@ -163,7 +191,6 @@ class PopupSmarty extends ListViewSmarty
             $this->th->ss->assign('mergedupLink', $this->buildMergeDuplicatesLink());
         }
 
-
         if (!empty($_REQUEST['mode']) && strtoupper($_REQUEST['mode']) == 'MULTISELECT') {
             $this->multiSelect = true;
         }
@@ -181,10 +208,9 @@ class PopupSmarty extends ListViewSmarty
 
         $this->processArrows($data['pageData']['ordering']);
         $this->th->ss->assign('prerow', $this->multiSelect);
-        $this->th->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
-        $this->th->ss->assign('bgColor', array($odd_bg, $even_bg));
+        $this->th->ss->assign('rowColor', ['oddListRow', 'evenListRow']);
+        $this->th->ss->assign('bgColor', [$odd_bg, $even_bg]);
         $this->th->ss->assign('contextMenus', $this->contextMenus);
-
 
         if ($this->contextMenus && !empty($contextMenuObjectsTypes)) {
             $script = '';
@@ -192,7 +218,7 @@ class PopupSmarty extends ListViewSmarty
             foreach ($contextMenuObjectsTypes as $type => $value) {
                 $cm->loadFromFile($type);
                 $script .= $cm->getScript();
-                $cm->menuItems = array(); // clear menuItems out
+                $cm->menuItems = []; // clear menuItems out
             }
             $this->th->ss->assign('contextMenuScript', $script);
         }
@@ -204,15 +230,13 @@ class PopupSmarty extends ListViewSmarty
         $this->processArrowVars();
     }
 
-    /*
-     * Display the Smarty template.  Here we are using the TemplateHandler for caching per the module.
-     */
+    // Display the Smarty template.  Here we are using the TemplateHandler for caching per the module.
     public function display($end = true)
     {
         global $app_strings;
 
         if (!is_file(sugar_cached("jsLanguage/{$GLOBALS['current_language']}.js"))) {
-            require_once('include/language/jsLanguage.php');
+            require_once 'include/language/jsLanguage.php';
             jsLanguage::createAppStringsCache($GLOBALS['current_language']);
         }
         $jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js", $GLOBALS['sugar_config']['js_lang_version']);
@@ -221,18 +245,17 @@ class PopupSmarty extends ListViewSmarty
         $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
         $this->th->ss->assign('pageData', $this->data['pageData']);
 
-        $navStrings = array('next' => $GLOBALS['app_strings']['LNK_LIST_NEXT'],
-                            'previous' => $GLOBALS['app_strings']['LNK_LIST_PREVIOUS'],
-                            'end' => $GLOBALS['app_strings']['LNK_LIST_END'],
-                            'start' => $GLOBALS['app_strings']['LNK_LIST_START'],
-                            'of' => $GLOBALS['app_strings']['LBL_LIST_OF']);
+        $navStrings = ['next' => $GLOBALS['app_strings']['LNK_LIST_NEXT'],
+            'previous' => $GLOBALS['app_strings']['LNK_LIST_PREVIOUS'],
+            'end' => $GLOBALS['app_strings']['LNK_LIST_END'],
+            'start' => $GLOBALS['app_strings']['LNK_LIST_START'],
+            'of' => $GLOBALS['app_strings']['LBL_LIST_OF']];
         $this->th->ss->assign('navStrings', $navStrings);
 
-
-        $associated_row_data = array();
+        $associated_row_data = [];
 
         //C.L. - Bug 44324 - Override the NAME entry to not display salutation so that the data returned from the popup can be searched on correctly
-        $searchNameOverride = !empty($this->seed) && $this->seed instanceof Person && (isset($this->data['data'][0]['FIRST_NAME']) && isset($this->data['data'][0]['LAST_NAME'])) ? true : false;
+        $searchNameOverride = !empty($this->seed) && $this->seed instanceof Person && (isset($this->data['data'][0]['FIRST_NAME'], $this->data['data'][0]['LAST_NAME'])) ? true : false;
 
         global $locale;
         foreach ($this->data['data'] as $val) {
@@ -247,7 +270,7 @@ class PopupSmarty extends ListViewSmarty
         $this->th->ss->assign('lang', substr($GLOBALS['current_language'], 0, 2));
         $this->th->ss->assign('headerTpl', $this->headerTpl);
         $this->th->ss->assign('footerTpl', $this->footerTpl);
-        $this->th->ss->assign('ASSOCIATED_JAVASCRIPT_DATA', 'var associated_javascript_data = '.$json->encode($associated_row_data). '; var is_show_fullname = '.$is_show_fullname.';');
+        $this->th->ss->assign('ASSOCIATED_JAVASCRIPT_DATA', 'var associated_javascript_data = ' . $json->encode($associated_row_data) . '; var is_show_fullname = ' . $is_show_fullname . ';');
         $this->th->ss->assign('module', $this->seed->module_dir);
         $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
 
@@ -268,7 +291,7 @@ class PopupSmarty extends ListViewSmarty
         $this->th->ss->assign('should_process', $this->should_process);
 
         if ($this->_create) {
-            $this->th->ss->assign('ADDFORM', $this->getQuickCreate());//$this->_getAddForm());
+            $this->th->ss->assign('ADDFORM', $this->getQuickCreate()); //$this->_getAddForm());
             $this->th->ss->assign('ADDFORMHEADER', $this->_getAddFormHeader());
             $this->th->ss->assign('object_name', $this->seed->object_name);
         }
@@ -282,37 +305,18 @@ class PopupSmarty extends ListViewSmarty
         );
 
         $themeObject = SugarThemeRegistry::current();
-        $this->th->ss->assign("STYLE_JS", ob_get_contents() . $themeObject->getJS());
+        $this->th->ss->assign('STYLE_JS', ob_get_contents() . $themeObject->getJS());
 
         $str = $this->th->displayTemplate($this->seed->module_dir, $this->view, $this->tpl);
-        return $str;
-    }
 
-    /**
-     * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
-     *
-     * @see ListViewDisplay::setup
-     */
-    public function setup(
-        $seed,
-        $file = null,
-        $where = null,
-        $params = array(),
-        $offset = 0,
-        $limit = -1,
-        $filter_fields = array(),
-        $id_field = 'id',
-        $id = null
-    ) {
-        $args = func_get_args();
-        return call_user_func_array(array($this, '_setup'), $args);
+        return $str;
     }
 
     public function _setup($file)
     {
         if (isset($this->_popupMeta)) {
             if (isset($this->_popupMeta['create']['formBase'])) {
-                require_once('modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase']);
+                require_once 'modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase'];
                 $this->_create = true;
             }
         }
@@ -325,21 +329,21 @@ class PopupSmarty extends ListViewSmarty
             }
         }
 
-        $params = array();
+        $params = [];
         if (!empty($this->_popupMeta['orderBy'])) {
             $params['orderBy'] = $this->_popupMeta['orderBy'];
         }
 
-        if (file_exists('custom/modules/'.$this->module.'/metadata/metafiles.php')) {
-            require('custom/modules/'.$this->module.'/metadata/metafiles.php');
-        } elseif (file_exists('modules/'.$this->module.'/metadata/metafiles.php')) {
-            require('modules/'.$this->module.'/metadata/metafiles.php');
+        if (file_exists('custom/modules/' . $this->module . '/metadata/metafiles.php')) {
+            require 'custom/modules/' . $this->module . '/metadata/metafiles.php';
+        } elseif (file_exists('modules/' . $this->module . '/metadata/metafiles.php')) {
+            require 'modules/' . $this->module . '/metadata/metafiles.php';
         }
 
         if (!empty($metafiles[$this->module]['searchfields'])) {
-            require($metafiles[$this->module]['searchfields']);
-        } elseif (file_exists('modules/'.$this->module.'/metadata/SearchFields.php')) {
-            require('modules/'.$this->module.'/metadata/SearchFields.php');
+            require $metafiles[$this->module]['searchfields'];
+        } elseif (file_exists('modules/' . $this->module . '/metadata/SearchFields.php')) {
+            require 'modules/' . $this->module . '/metadata/SearchFields.php';
         }
         $this->searchdefs[$this->module]['templateMeta']['maxColumns'] = 2;
         $this->searchdefs[$this->module]['templateMeta']['widths']['label'] = 10;
@@ -349,7 +353,7 @@ class PopupSmarty extends ListViewSmarty
         $this->searchForm->setup($this->searchdefs, $searchFields, 'SearchFormGenericAdvanced.tpl', 'advanced_search', $this->listviewdefs);
 
         $lv = new ListViewSmarty();
-        $displayColumns = array();
+        $displayColumns = [];
         if (!empty($_REQUEST['displayColumns'])) {
             foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
                 if (!empty($listViewDefs[$this->module][$col])) {
@@ -375,7 +379,6 @@ class PopupSmarty extends ListViewSmarty
         $lv->displayColumns = $displayColumns;
         $this->searchForm->lv = $lv;
         $this->searchForm->displaySavedSearch = false;
-
 
         $this->searchForm->populateFromRequest('advanced_search');
         $searchWhere = $this->_get_where_clause();
@@ -413,7 +416,7 @@ class PopupSmarty extends ListViewSmarty
                     }
                 }
                 if (!empty($this->seed->field_defs[strtolower($columnName)]['db_concat_fields'])) {
-                    foreach ($this->seed->field_defs[strtolower($columnName)]['db_concat_fields'] as $index=>$field) {
+                    foreach ($this->seed->field_defs[strtolower($columnName)]['db_concat_fields'] as $index => $field) {
                         if (!isset($this->filter_fields[strtolower($field)]) || !$this->filter_fields[strtolower($field)]) {
                             $this->filter_fields[strtolower($field)] = true;
                         }
@@ -430,13 +433,13 @@ class PopupSmarty extends ListViewSmarty
             $_POST['field_to_name'] = $_REQUEST['field_to_name'] = array_keys($request_data['field_to_name_array']);
         }
 
-        /**
+        /*
          * Bug #46842 : The relate field field_to_name_array fails to copy over custom fields
          * By default bean's create_new_list_query function loads fields displayed on the page or used in the search
          * add fields used to populate forms from _viewdefs :: field_to_name_array to retrive from db
          */
         if (isset($_REQUEST['field_to_name']) && $_REQUEST['field_to_name']) {
-            $_REQUEST['field_to_name'] = is_array($_REQUEST['field_to_name']) ? $_REQUEST['field_to_name'] : array($_REQUEST['field_to_name']);
+            $_REQUEST['field_to_name'] = is_array($_REQUEST['field_to_name']) ? $_REQUEST['field_to_name'] : [$_REQUEST['field_to_name']];
             foreach ($_REQUEST['field_to_name'] as $add_field) {
                 $add_field = strtolower($add_field);
                 if ($add_field != 'id' && !isset($this->filter_fields[$add_field]) && isset($this->seed->field_defs[$add_field])) {
@@ -445,19 +448,18 @@ class PopupSmarty extends ListViewSmarty
             }
         }
 
-
         if (!empty($_REQUEST['query']) || (!empty($GLOBALS['sugar_config']['save_query']) && $GLOBALS['sugar_config']['save_query'] != 'populate_only')) {
             $data = $this->lvd->getListViewData($this->seed, $searchWhere, 0, -1, $this->filter_fields, $params, 'id');
         } else {
             $this->should_process = false;
-            $data = array(
-                'data'=>array(),
-                'pageData'=>array(
-                    'bean'=>array('moduleDir'=>$this->seed->module_dir),
-                    'ordering'=>'',
-                    'offsets'=>array('total'=>0,'next'=>0,'current'=>0),
-                ),
-            );
+            $data = [
+                'data' => [],
+                'pageData' => [
+                    'bean' => ['moduleDir' => $this->seed->module_dir],
+                    'ordering' => '',
+                    'offsets' => ['total' => 0, 'next' => 0, 'current' => 0],
+                ],
+            ];
         }
 
         $this->fillDisplayColumnsWithVardefs();
@@ -465,9 +467,7 @@ class PopupSmarty extends ListViewSmarty
         $this->process($file, $data, $this->seed->object_name);
     }
 
-    /*
-     * Return the where clause as per the REQUEST.
-     */
+    // Return the where clause as per the REQUEST.
     public function _get_where_clause()
     {
         $where = '';
@@ -490,27 +490,25 @@ class PopupSmarty extends ListViewSmarty
         return $where;
     }
 
-    /*
-     * Generate the data for the search form on the header of the Popup.
-     */
+    // Generate the data for the search form on the header of the Popup.
     public function _build_field_defs()
     {
-        $this->formData = array();
-        $this->customFieldDefs = array();
+        $this->formData = [];
+        $this->customFieldDefs = [];
         foreach ($this->searchdefs[$this->module]['layout']['advanced_search'] as $data) {
             if (is_array($data)) {
-                $this->formData[] = array('field' => $data);
+                $this->formData[] = ['field' => $data];
                 $value = '';
-                $this->customFieldDefs[$data['name']]= $data;
+                $this->customFieldDefs[$data['name']] = $data;
                 if (!empty($_REQUEST[$data['name']])) {
                     $value = $_REQUEST[$data['name']];
                 }
                 $this->customFieldDefs[$data['name']]['value'] = $value;
             } else {
-                $this->formData[] = array('field' => array('name'=>$data));
+                $this->formData[] = ['field' => ['name' => $data]];
             }
         }
-        $this->fieldDefs = array();
+        $this->fieldDefs = [];
         if ($this->seed) {
             $this->seed->fill_in_additional_detail_fields();
 
@@ -522,7 +520,7 @@ class PopupSmarty extends ListViewSmarty
                 if ($this->fieldDefs[$name]['type'] == 'relate') {
                     $this->fieldDefs[$name]['type'] = 'name';
                 }
-                if (isset($this->fieldDefs[$name]['options']) && isset($GLOBALS['app_list_strings'][$this->fieldDefs[$name]['options']])) {
+                if (isset($this->fieldDefs[$name]['options'], $GLOBALS['app_list_strings'][$this->fieldDefs[$name]['options']])) {
                     $this->fieldDefs[$name]['options'] = $GLOBALS['app_list_strings'][$this->fieldDefs[$name]['options']]; // fill in enums
                 }
                 if (!empty($_REQUEST[$name])) {
@@ -542,22 +540,18 @@ class PopupSmarty extends ListViewSmarty
         if (!empty($this->_popupMeta['create'])) {
             $formBase = new $this->_popupMeta['create']['formBaseClass']();
 
-
-
             // TODO: cleanup the construction of $addform
             $prefix = empty($this->_popupMeta['create']['getFormBodyParams'][0]) ? '' : $this->_popupMeta['create']['getFormBodyParams'][0];
             $mod = empty($this->_popupMeta['create']['getFormBodyParams'][1]) ? '' : $this->_popupMeta['create']['getFormBodyParams'][1];
             $formBody = empty($this->_popupMeta['create']['getFormBodyParams'][2]) ? '' : $this->_popupMeta['create']['getFormBodyParams'][2];
 
             $getFormMethod = (empty($this->_popupMeta['create']['getFormMethod']) ? 'getFormBody' : $this->_popupMeta['create']['getFormMethod']);
-            $formbody = $formBase->$getFormMethod($prefix, $mod, $formBody);
+            $formbody = $formBase->{$getFormMethod}($prefix, $mod, $formBody);
 
-            $addform = '<table><tr><td nowrap="nowrap" valign="top">'
+            return '<table><tr><td nowrap="nowrap" valign="top">'
                     . str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
                     . '</td></tr></table>'
                     . '<input type="hidden" name="action" value="Popup" />';
-
-            return $addform;
         }
     }
 
@@ -571,25 +565,26 @@ class PopupSmarty extends ListViewSmarty
 			<input type="hidden" name="create" value="true">
 			<input type="hidden" name="popup" value="true">
 			<input type="hidden" name="to_pdf" value="true">
-			<input type="hidden" name="return_module" value="$module_dir">
+			<input type="hidden" name="return_module" value="{$module_dir}">
 			<input type="hidden" name="return_action" value="Popup">
 EOQ;
         // if metadata contains custom inputs for the quickcreate
         if (!empty($this->_popupMeta['customInput']) && is_array($this->_popupMeta['customInput'])) {
             foreach ($this->_popupMeta['customInput'] as $key => $value) {
-                $formSave .= '<input type="hidden" name="' . $key . '" value="'. $value .'">\n';
+                $formSave .= '<input type="hidden" name="' . $key . '" value="' . $value . '">\n';
             }
         }
 
-
         $addformheader = get_form_header(translate($this->_popupMeta['create']['createButton']), $formSave, false);
+
         return $addformheader;
     }
 
     public function getQuickCreate()
     {
-        require_once("include/EditView/PopupQuickCreate.php");
+        require_once 'include/EditView/PopupQuickCreate.php';
         $qc = new PopupQuickCreate($this->module);
+
         return $qc->process($this->module);
     }
 }

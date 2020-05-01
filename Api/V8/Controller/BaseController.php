@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Controller;
 
 use Api\V8\JsonApi\Response\ErrorResponse;
@@ -11,7 +12,7 @@ abstract class BaseController
     /**
      * @param HttpResponse $httpResponse
      * @param mixed $response
-     * @param integer $status
+     * @param int $status
      *
      * @return HttpResponse
      */
@@ -35,7 +36,7 @@ abstract class BaseController
     /**
      * @param HttpResponse $httpResponse
      * @param \Exception $exception
-     * @param integer $status
+     * @param int $status
      *
      * @return HttpResponse
      */

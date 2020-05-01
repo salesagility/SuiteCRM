@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()

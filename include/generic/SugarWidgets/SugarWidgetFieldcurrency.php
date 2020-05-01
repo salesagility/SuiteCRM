@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,10 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-                                                                                       
-
-
 global $current_user;
 
 $global_currency_obj = null;
@@ -62,9 +59,9 @@ function get_currency()
             $global_currency_obj->retrieve('-99');
         }
     }
+
     return $global_currency_obj;
 }
-
 
 class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 {
@@ -74,7 +71,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         $this->reporter = $this->layout_manager->getAttribute('reporter');
     }
 
-    public function & displayList(&$layout_def)
+    public function &displayList(&$layout_def)
     {
         global $locale;
         $symbol = $locale->getPrecedentPreference('default_currency_symbol');
@@ -103,8 +100,8 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         if ($layout_def['table_key'] == 'self' && isset($layout_def['fields']['PRIMARYID'])) {
             $record = $layout_def['fields']['PRIMARYID'];
         } else {
-            if (isset($layout_def['fields'][strtoupper($layout_def['table_alias']."_id")])) {
-                $record = $layout_def['fields'][strtoupper($layout_def['table_alias']."_id")];
+            if (isset($layout_def['fields'][strtoupper($layout_def['table_alias'] . '_id')])) {
+                $record = $layout_def['fields'][strtoupper($layout_def['table_alias'] . '_id')];
             }
         }
         if (!empty($record)) {
@@ -112,64 +109,65 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
             $field_type = $field_def['type'];
             $module = $field_def['module'];
 
-            $div_id = $module ."&$record&$field_name";
-            $str = "<div id='$div_id'>".$display;
+            $div_id = $module . "&{$record}&{$field_name}";
+            $str = "<div id='{$div_id}'>" . $display;
             global $sugar_config;
             if (isset($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit']) {
-                $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline", "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\",\"$currency_id\",\"$symbol\");'");
+                $str .= '&nbsp;' . SugarThemeRegistry::current()->getImage('edit_inline', "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"{$div_id}\",\"{$value}\",\"{$module}\",\"{$record}\",\"{$field_name}\",\"{$field_type}\",\"{$currency_id}\",\"{$symbol}\");'");
             }
-            $str .= "</div>";
+            $str .= '</div>';
+
             return $str;
-        } else {
-            return $display;
         }
+
+        return $display;
     }
 
     public function displayListPlain($layout_def)
     {
-        $value = currency_format_number(
+        return currency_format_number(
             parent::displayListPlain($layout_def),
             array_merge(
-                array(
+                [
                     'convert' => false,
-                ),
+                ],
                 $this->getCurrency($layout_def)
             )
         );
-        return $value;
     }
+
     public function queryFilterEquals(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)."=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+        return $this->_get_column_select($layout_def) . '=' . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])) . "\n";
     }
 
     public function queryFilterNot_Equals(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)."!=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+        return $this->_get_column_select($layout_def) . '!=' . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])) . "\n";
     }
 
     public function queryFilterGreater(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+        return $this->_get_column_select($layout_def) . ' > ' . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])) . "\n";
     }
 
     public function queryFilterLess(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+        return $this->_get_column_select($layout_def) . ' < ' . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])) . "\n";
     }
 
     public function queryFilterBetween(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])). " AND ". $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name1']))."\n";
+        return $this->_get_column_select($layout_def) . ' > ' . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])) . ' AND ' . $this->_get_column_select($layout_def) . ' < ' . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name1'])) . "\n";
     }
 
     public function isSystemCurrency(&$layout_def)
     {
         if (strpos($layout_def['name'], '_usdoll') === false) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     public function querySelect(&$layout_def)
@@ -177,9 +175,10 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         // add currency column to select
         $table = $this->getCurrencyIdTable($layout_def);
         if ($table) {
-            return $this->_get_column_select($layout_def)." ".$this->_get_column_alias($layout_def)." , ".$table.".currency_id ". $this->getTruncatedColumnAlias($this->_get_column_alias($layout_def)."_currency") . "\n";
+            return $this->_get_column_select($layout_def) . ' ' . $this->_get_column_alias($layout_def) . ' , ' . $table . '.currency_id ' . $this->getTruncatedColumnAlias($this->_get_column_alias($layout_def) . '_currency') . "\n";
         }
-        return $this->_get_column_select($layout_def)." ".$this->_get_column_alias($layout_def)."\n";
+
+        return $this->_get_column_select($layout_def) . ' ' . $this->_get_column_alias($layout_def) . "\n";
     }
 
     public function queryGroupBy($layout_def)
@@ -187,9 +186,10 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         // add currency column to group by
         $table = $this->getCurrencyIdTable($layout_def);
         if ($table) {
-            return $this->_get_column_select($layout_def)." , ".$table.".currency_id \n";
+            return $this->_get_column_select($layout_def) . ' , ' . $table . ".currency_id \n";
         }
-        return $this->_get_column_select($layout_def)." \n";
+
+        return $this->_get_column_select($layout_def) . " \n";
     }
 
     public function getCurrencyIdTable($layout_def)
@@ -222,37 +222,41 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
                 }
             }
         }
+
         return false;
     }
 
     /**
-     * Return currency for layout_def
+     * Return currency for layout_def.
+     *
      * @param $layout_def mixed
+     *
      * @return array Array with currency symbol and currency ID
      */
     protected function getCurrency($layout_def)
     {
         $currency_id = false;
         $currency_symbol = false;
-        if (isset($layout_def['currency_symbol']) && isset($layout_def['currency_id'])) {
+        if (isset($layout_def['currency_symbol'], $layout_def['currency_id'])) {
             $currency_symbol = $layout_def['currency_symbol'];
             $currency_id = $layout_def['currency_id'];
         } else {
             $key = strtoupper(isset($layout_def['varname']) ? $layout_def['varname'] : $this->_get_column_alias($layout_def));
             if ($this->isSystemCurrency($layout_def)) {
                 $currency_id = '-99';
-            } elseif (isset($layout_def['fields'][$key.'_CURRENCY'])) {
-                $currency_id = $layout_def['fields'][$key.'_CURRENCY'];
-            } elseif (isset($layout_def['fields'][$this->getTruncatedColumnAlias($this->_get_column_alias($layout_def)."_currency")])) {
-                $currency_id = $layout_def['fields'][$this->getTruncatedColumnAlias($this->_get_column_alias($layout_def)."_currency")];
+            } elseif (isset($layout_def['fields'][$key . '_CURRENCY'])) {
+                $currency_id = $layout_def['fields'][$key . '_CURRENCY'];
+            } elseif (isset($layout_def['fields'][$this->getTruncatedColumnAlias($this->_get_column_alias($layout_def) . '_currency')])) {
+                $currency_id = $layout_def['fields'][$this->getTruncatedColumnAlias($this->_get_column_alias($layout_def) . '_currency')];
             }
             if ($currency_id) {
                 $currency = BeanFactory::getBean('Currencies', $currency_id);
-                if (!empty($currency ->symbol)) {
-                    $currency_symbol = $currency ->symbol;
+                if (!empty($currency->symbol)) {
+                    $currency_symbol = $currency->symbol;
                 }
             }
         }
-        return array('currency_symbol' => $currency_symbol, 'currency_id' => $currency_id);
+
+        return ['currency_symbol' => $currency_symbol, 'currency_id' => $currency_id];
     }
 }

@@ -6,12 +6,12 @@ use JeroenDesloovere\VCard\VCard;
 class PersonModuleCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -35,6 +35,7 @@ class PersonModuleCest
     }
 
     // Tests
+
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -44,8 +45,8 @@ class PersonModuleCest
      * the module before testing.
      */
     public function testScenarioCreatePersonModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a person module for testing');
 
@@ -64,12 +65,12 @@ class PersonModuleCest
      * @param \Step\Acceptance\ListView $listView
      *
      * As administrative user I want to view my person test module so that I can see if it has been
-     * deployed correctly.
+     * deployed correctly
      */
     public function testScenarioViewPersonTestModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Person Test Module');
 
@@ -89,14 +90,14 @@ class PersonModuleCest
      * @param \Step\Acceptance\EditView $editView
      *
      * As administrative user I want to create a record with my person test module so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateRecord(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Create Person Test Module Record');
         $I->loginAsAdmin();
@@ -128,7 +129,7 @@ class PersonModuleCest
 
         $editView->fillField('#description', $this->fakeData->paragraph);
 
-        $editView->fillField('#Test_'.\Page\PersonModule::$NAME.'0emailAddress0', $this->fakeData->companyEmail);
+        $editView->fillField('#Test_' . \Page\PersonModule::$NAME . '0emailAddress0', $this->fakeData->companyEmail);
 
         $editView->fillField('#primary_address_street', $this->fakeData->streetAddress);
         $editView->fillField('#primary_address_city', $this->fakeData->city);
@@ -151,10 +152,10 @@ class PersonModuleCest
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
 
@@ -192,11 +193,11 @@ class PersonModuleCest
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
-        \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit Person Test Module Record from detail view');
 
@@ -242,11 +243,11 @@ class PersonModuleCest
      * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate Person Test Module Record from detail view');
 
@@ -275,8 +276,8 @@ class PersonModuleCest
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 
-        $editView->fillField('#first_name', $this->fakeData->firstName. ' '. $this->fakeData->lastName);
-        $editView->fillField('#last_name', $this->fakeData->firstName. ' '. $this->fakeData->lastName);
+        $editView->fillField('#first_name', $this->fakeData->firstName . ' ' . $this->fakeData->lastName);
+        $editView->fillField('#last_name', $this->fakeData->firstName . ' ' . $this->fakeData->lastName);
 
         // Save record
         $editView->click('Save');
@@ -297,10 +298,10 @@ class PersonModuleCest
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete Person Test Module Record from detail view');
 
@@ -335,7 +336,7 @@ class PersonModuleCest
     }
 
     /**
-    /**
+     * /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
@@ -344,11 +345,11 @@ class PersonModuleCest
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioImportVCardFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\SideBar $sideBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\SideBar $sideBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create a Person Record using a vcard');
 
@@ -378,8 +379,8 @@ class PersonModuleCest
         // Write to file
         $fileContent = $vcard->getOutput();
         $fileDir = 'tests/_data/';
-        $fileName = $lastname.'.test.vcf';
-        $I->writeToFile($fileDir.$fileName, $fileContent);
+        $fileName = $lastname . '.test.vcf';
+        $I->writeToFile($fileDir . $fileName, $fileContent);
 
         // Go to Person Test Module
         $I->loginAsAdmin();
@@ -394,7 +395,7 @@ class PersonModuleCest
         $I->click('#import_vcard_button', '.import-vcard');
 
         $detailView->waitForDetailViewVisible();
-        $detailView->see($firstname.' '.$lastname, '.module-title-text');
+        $detailView->see($firstname . ' ' . $lastname, '.module-title-text');
 
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
@@ -402,6 +403,6 @@ class PersonModuleCest
 
         $listView->waitForListViewVisible();
 
-        $I->deleteFile($fileDir.$fileName);
+        $I->deleteFile($fileDir . $fileName);
     }
 }

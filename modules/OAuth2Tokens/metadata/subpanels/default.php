@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,22 +36,21 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 $module_name = 'OAuth2Tokens';
 
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name],
+    ],
 
     'where' => 'token_is_revoked = 0 AND (refresh_token_expires > ' . OAuth2Tokens::getNowDateString() . ' OR refresh_token_expires IS NULL)',
 
-    'list_fields' => array(
+    'list_fields' => [
         'id' => [
             'vname' => 'LBL_TOKEN_ID',
             'default' => true,
@@ -74,5 +72,5 @@ $subpanel_layout = array(
             'default' => true,
             'sortable' => true,
         ],
-    ),
-);
+    ],
+];

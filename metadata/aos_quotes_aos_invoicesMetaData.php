@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,66 +36,66 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-$dictionary['aos_quotes_aos_invoices'] = array(
+$dictionary['aos_quotes_aos_invoices'] = [
     'true_relationship_type' => 'many-to-many',
-    'relationships' => array(
-            'aos_quotes_aos_invoices' => array(
-                    'lhs_module' => 'AOS_Quotes',
-                    'lhs_table' => 'aos_quotes',
-                    'lhs_key' => 'id',
-                    'rhs_module' => 'AOS_Invoices',
-                    'rhs_table' => 'aos_invoices',
-                    'rhs_key' => 'id',
-                    'relationship_type' => 'many-to-many',
-                    'join_table' => 'aos_quotes_aos_invoices_c',
-                    'join_key_lhs' => 'aos_quotes77d9_quotes_ida',
-                    'join_key_rhs' => 'aos_quotes6b83nvoices_idb',
-                ),
-        ),
+    'relationships' => [
+        'aos_quotes_aos_invoices' => [
+            'lhs_module' => 'AOS_Quotes',
+            'lhs_table' => 'aos_quotes',
+            'lhs_key' => 'id',
+            'rhs_module' => 'AOS_Invoices',
+            'rhs_table' => 'aos_invoices',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'aos_quotes_aos_invoices_c',
+            'join_key_lhs' => 'aos_quotes77d9_quotes_ida',
+            'join_key_rhs' => 'aos_quotes6b83nvoices_idb',
+        ],
+    ],
     'table' => 'aos_quotes_aos_invoices_c',
-    'fields' => array(
-            0 => array(
-                    'name' => 'id',
-                    'type' => 'varchar',
-                    'len' => 36,
-                ),
-            1 => array(
-                    'name' => 'date_modified',
-                    'type' => 'datetime',
-                ),
-            2 => array(
-                    'name' => 'deleted',
-                    'type' => 'bool',
-                    'len' => '1',
-                    'default' => '0',
-                    'required' => true,
-                ),
-            3 => array(
-                    'name' => 'aos_quotes77d9_quotes_ida',
-                    'type' => 'varchar',
-                    'len' => 36,
-                ),
-            4 => array(
-                    'name' => 'aos_quotes6b83nvoices_idb',
-                    'type' => 'varchar',
-                    'len' => 36,
-                ),
-        ),
-    'indices' => array(
-            0 => array(
-                    'name' => 'aos_quotes_aos_invoicesspk',
-                    'type' => 'primary',
-                    'fields' => array(
-                            0 => 'id',
-                        ),
-                ),
-            1 => array(
-                    'name' => 'aos_quotes_aos_invoices_alt',
-                    'type' => 'alternate_key',
-                    'fields' => array(
-                            0 => 'aos_quotes77d9_quotes_ida',
-                            1 => 'aos_quotes6b83nvoices_idb',
-                        ),
-                ),
-        ),
-);
+    'fields' => [
+        0 => [
+            'name' => 'id',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+        1 => [
+            'name' => 'date_modified',
+            'type' => 'datetime',
+        ],
+        2 => [
+            'name' => 'deleted',
+            'type' => 'bool',
+            'len' => '1',
+            'default' => '0',
+            'required' => true,
+        ],
+        3 => [
+            'name' => 'aos_quotes77d9_quotes_ida',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+        4 => [
+            'name' => 'aos_quotes6b83nvoices_idb',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+    ],
+    'indices' => [
+        0 => [
+            'name' => 'aos_quotes_aos_invoicesspk',
+            'type' => 'primary',
+            'fields' => [
+                0 => 'id',
+            ],
+        ],
+        1 => [
+            'name' => 'aos_quotes_aos_invoices_alt',
+            'type' => 'alternate_key',
+            'fields' => [
+                0 => 'aos_quotes77d9_quotes_ida',
+                1 => 'aos_quotes6b83nvoices_idb',
+            ],
+        ],
+    ],
+];

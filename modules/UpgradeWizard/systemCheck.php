@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 logThis('[At systemCheck.php]');
 
 $stop = false; // flag to prevent going to next step
@@ -49,18 +49,18 @@ $stop = false; // flag to prevent going to next step
 ///////////////////////////////////////////////////////////////////////////////
 ////	FILE CHECKS
 logThis('Starting file permission check...');
-$filesNotWritable = array();
-$filesNWPerms = array();
+$filesNotWritable = [];
+$filesNWPerms = [];
 
 // add directories here that should be skipped when doing file permissions checks (cache/upload is the nasty one)
-$skipDirs = array(
+$skipDirs = [
     $sugar_config['upload_dir'],
     '.svn',
     '.git',
-);
-$files = uwFindAllFiles(getcwd(), array(), true, $skipDirs);
+];
+$files = uwFindAllFiles(getcwd(), [], true, $skipDirs);
 
-$i=0;
+$i = 0;
 $filesOut = "
 	<a href='javascript:void(0); toggleNwFiles(\"filesNw\");'>{$mod_strings['LBL_UW_SHOW_NW_FILES']}</a>
 	<div id='filesNw' style='display:none;'>
@@ -76,31 +76,31 @@ $isWindows = is_windows();
 foreach ($files as $file) {
     if ($isWindows) {
         if (!is_writable_windows($file) && file_exists($file)) {
-            logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
+            logThis('WINDOWS: File [' . $file . '] not readable - saving for display');
             // don't warn yet - we're going to use this to check against replacement files
             $filesNotWritable[$i] = $file;
             $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-            $filesOut .= "<tr>".
-                            "<td><span class='error'>{$file}</span></td>".
-                            "<td>{$filesNWPerms[$i]}</td>".
-                            "<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
-                            "<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
-                          "</tr>";
+            $filesOut .= '<tr>' .
+                            "<td><span class='error'>{$file}</span></td>" .
+                            "<td>{$filesNWPerms[$i]}</td>" .
+                            '<td>' . $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'] . '</td>' .
+                            '<td>' . $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'] . '</td>' .
+                          '</tr>';
         }
     } else {
         if (!is_writable($file) && file_exists($file)) {
-            logThis('File ['.$file.'] not writable - saving for display');
+            logThis('File [' . $file . '] not writable - saving for display');
             // don't warn yet - we're going to use this to check against replacement files
             $filesNotWritable[$i] = $file;
             $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
             $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
             $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
-            $filesOut .= "<tr>".
-                            "<td><span class='error'>{$file}</span></td>".
-                            "<td>{$filesNWPerms[$i]}</td>".
-                            "<td>".$owner['name']."</td>".
-                            "<td>".$group['name']."</td>".
-                        "</tr>";
+            $filesOut .= '<tr>' .
+                            "<td><span class='error'>{$file}</span></td>" .
+                            "<td>{$filesNWPerms[$i]}</td>" .
+                            '<td>' . $owner['name'] . '</td>' .
+                            '<td>' . $group['name'] . '</td>' .
+                        '</tr>';
         }
     }
     $i++;
@@ -129,9 +129,9 @@ $dbOut = "
 	</tr>";
 
 $db = DBManagerFactory::getInstance();
-$outs = array();
+$outs = [];
 $outs['skip'] = false;
-$outs['db'] = array();
+$outs['db'] = [];
 $outs['dbOut'] = $dbOut;
 $outs = testPermsCreate($db, $outs);
 $outs = testPermsInsert($db, $outs, $outs['skip']);
@@ -144,43 +144,41 @@ $outs = testPermsAlterTableDrop($db, $outs, $outs['skip']);
 $outs = testPermsDropTable($db, $outs, $outs['skip']);
 $outs['dbOut'] .= '</table>';
 
-
 if (count($outs['db']) < 1) {
     logThis('No permissions errors found!');
-    $outs['dbOut'] = "<b>".$mod_strings['LBL_UW_DB_NO_ERRORS']."</b>";
+    $outs['dbOut'] = '<b>' . $mod_strings['LBL_UW_DB_NO_ERRORS'] . '</b>';
 }
 logThis('Finished database permissions check.');
 $dbOut = $outs['dbOut'];
 ////	END DATABASE CHECKS
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	INSTALLER TYPE CHECKS
 $result = checkSystemCompliance();
-$checks = array(
-    'phpVersion'				=> $mod_strings['LBL_UW_COMPLIANCE_PHP_VERSION'],
-    'dbVersion'                 => $mod_strings['LBL_UW_COMPLIANCE_DB'],
-    'xmlStatus'					=> $mod_strings['LBL_UW_COMPLIANCE_XML'],
-    'curlStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_CURL'],
-    'imapStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_IMAP'],
-    'mbstringStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING'],
-    'safeModeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_SAFEMODE'],
-    'callTimeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_CALLTIME'],
-    'memory_msg'				=> $mod_strings['LBL_UW_COMPLIANCE_MEMORY'],
-    'stream_msg'                => $mod_strings['LBL_UW_COMPLIANCE_STREAM'],
-    'ZipStatus'			        => $mod_strings['LBL_UW_COMPLIANCE_ZIPARCHIVE'],
-    'pcreVersion'			    => $mod_strings['LBL_UW_COMPLIANCE_PCRE_VERSION'],
+$checks = [
+    'phpVersion' => $mod_strings['LBL_UW_COMPLIANCE_PHP_VERSION'],
+    'dbVersion' => $mod_strings['LBL_UW_COMPLIANCE_DB'],
+    'xmlStatus' => $mod_strings['LBL_UW_COMPLIANCE_XML'],
+    'curlStatus' => $mod_strings['LBL_UW_COMPLIANCE_CURL'],
+    'imapStatus' => $mod_strings['LBL_UW_COMPLIANCE_IMAP'],
+    'mbstringStatus' => $mod_strings['LBL_UW_COMPLIANCE_MBSTRING'],
+    'safeModeStatus' => $mod_strings['LBL_UW_COMPLIANCE_SAFEMODE'],
+    'callTimeStatus' => $mod_strings['LBL_UW_COMPLIANCE_CALLTIME'],
+    'memory_msg' => $mod_strings['LBL_UW_COMPLIANCE_MEMORY'],
+    'stream_msg' => $mod_strings['LBL_UW_COMPLIANCE_STREAM'],
+    'ZipStatus' => $mod_strings['LBL_UW_COMPLIANCE_ZIPARCHIVE'],
+    'pcreVersion' => $mod_strings['LBL_UW_COMPLIANCE_PCRE_VERSION'],
     //commenting mbstring overload.
     //'mbstring.func_overload'	=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING_FUNC_OVERLOAD'],
-);
+];
 if ($result['error_found'] == true || !empty($result['warn_found'])) {
     if ($result['error_found']) {
         $stop = true;
     }
-    $phpIniLocation = get_cfg_var("cfg_file_path");
+    $phpIniLocation = get_cfg_var('cfg_file_path');
 
-    $sysCompliance  = "<a href='javascript:void(0); toggleNwFiles(\"sysComp\");'>{$mod_strings['LBL_UW_SHOW_COMPLIANCE']}</a>";
+    $sysCompliance = "<a href='javascript:void(0); toggleNwFiles(\"sysComp\");'>{$mod_strings['LBL_UW_SHOW_COMPLIANCE']}</a>";
     $sysCompliance .= "<div id='sysComp' >";
     $sysCompliance .= "<table cellpadding='0' cellspacing='0' border='0'>";
     foreach ($result as $k => $v) {
@@ -192,7 +190,7 @@ if ($result['error_found'] == true || !empty($result['warn_found'])) {
     }
     $sysCompliance .= "<tr><td valign='top'>{$mod_strings['LBL_UW_COMPLIANCE_PHP_INI']}</td>";
     $sysCompliance .= "<td valign='top'><b>{$phpIniLocation}</b></td></tr>";
-    $sysCompliance .= "</table></div>";
+    $sysCompliance .= '</table></div>';
 } else {
     $sysCompliance = "<b>{$mod_strings['LBL_UW_COMPLIANCE_ALL_OK']}</b>";
 }
@@ -216,24 +214,23 @@ foreach ($errors as $k => $type) {
     }
 }
 
-$GLOBALS['top_message'] = (string)($mod_strings['LBL_UW_NEXT_TO_UPLOAD']);
-$showBack		= true;
-$showCancel		= true;
-$showRecheck	= true;
-$showNext		= ($stop) ? false : true;
+$GLOBALS['top_message'] = (string) ($mod_strings['LBL_UW_NEXT_TO_UPLOAD']);
+$showBack = true;
+$showCancel = true;
+$showRecheck = true;
+$showNext = ($stop) ? false : true;
 
-$stepBack		= $_REQUEST['step'] - 1;
-$stepNext		= $_REQUEST['step'] + 1;
-$stepCancel		= -1;
-$stepRecheck	= $_REQUEST['step'];
+$stepBack = $_REQUEST['step'] - 1;
+$stepNext = $_REQUEST['step'] + 1;
+$stepCancel = -1;
+$stepRecheck = $_REQUEST['step'];
 
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	OUTPUT
 
-$uwMain =<<<eoq
+$uwMain = <<<eoq
 <style>
 .stop {
 	color: #cc0000;

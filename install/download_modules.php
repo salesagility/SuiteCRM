@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $sugar_version, $js_custom_version;
 $lang_curr = $_SESSION['language'];
-require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
+require_once 'ModuleInstall/PackageManager/PackageManagerDisplay.php';
 
 if (!isset($install_script) || !$install_script || empty($_SESSION['setup_db_admin_user_name'])) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
@@ -57,27 +58,25 @@ if (empty($sugar_config['upload_maxsize'])) {
     $sugar_config['upload_maxsize'] = 8192000;
 }
 if (empty($sugar_config['upload_badext'])) {
-    $sugar_config['upload_badext'] = array('php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py', 'asp', 'cfm', 'js', 'vbs', 'html', 'htm');
+    $sugar_config['upload_badext'] = ['php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py', 'asp', 'cfm', 'js', 'vbs', 'html', 'htm'];
 }
 ////    END PREFILL $sugar_config VARS
 ///////////////////////////////////////////////////////////////////////////////
-require_once('include/utils/php_zip_utils.php');
+require_once 'include/utils/php_zip_utils.php';
 
-require_once('include/upload_file.php');
-
-
+require_once 'include/upload_file.php';
 
 $GLOBALS['log'] = LoggerManager::getLogger();
 
 ///////////////////////////////////////////////////////////////////////////////
 ////    PREP VARS FOR LANG PACK
-    $base_upgrade_dir       = sugar_cached("upgrades");
-    $base_tmp_upgrade_dir   = $base_upgrade_dir."/temp";
+    $base_upgrade_dir = sugar_cached('upgrades');
+    $base_tmp_upgrade_dir = $base_upgrade_dir . '/temp';
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
 ////    HANDLE FILE UPLOAD AND PROCESSING
-$errors = array();
+$errors = [];
 $uploadResult = '';
 //commitModules();
 if (isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackAction'])) {
@@ -85,8 +84,8 @@ if (isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackActi
         case 'upload':
         $perform = false;
         $tempFile = '';
-        if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
-            require_once('ModuleInstall/PackageManager/PackageManager.php');
+        if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != '') {
+            require_once 'ModuleInstall/PackageManager/PackageManager.php';
             $pm = new PackageManager();
             $tempFile = $pm->download($_REQUEST['release_id']);
             $perform = true;
@@ -108,7 +107,6 @@ if (isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackActi
             }
         }
 
-
             if ($perform) { // check for a real file
                 $uploadResult = $mod_strings['LBL_LANG_SUCCESS'];
                 $result = langPackUnpack('langpack', $tempFile);
@@ -118,18 +116,22 @@ if (isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackActi
 
             if (count($errors) > 0) {
                 foreach ($errors as $error) {
-                    $uploadResult .= $error."<br />";
+                    $uploadResult .= $error . '<br />';
                 }
             }
+
             break; // end 'validate'
         case 'commit':
             $sugar_config = commitModules(false, 'langpack');
+
             break;
         case 'uninstall': // leaves zip file in "uploaded" state
             $sugar_config = uninstallLanguagePack();
+
             break;
         case 'remove':
             removeLanguagePack();
+
             break;
         default:
             break;
@@ -138,26 +140,25 @@ if (isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackActi
 ////    END HANDLE FILE UPLOAD AND PROCESSING
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////    PRELOAD DISPLAY DATA
 $upload_max_filesize = ini_get('upload_max_filesize');
 $upload_max_filesize_bytes = return_bytes($upload_max_filesize);
-$fileMaxSize ='';
+$fileMaxSize = '';
 if (!defined('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     define('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES', 6 * 1024 * 1024);
 }
 
 if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
-    $GLOBALS['log']->debug("detected upload_max_filesize: $upload_max_filesize");
-    $fileMaxSize = '<p class="error">'.$mod_strings['ERR_UPLOAD_MAX_FILESIZE']."</p>\n";
+    $GLOBALS['log']->debug("detected upload_max_filesize: {$upload_max_filesize}");
+    $fileMaxSize = '<p class="error">' . $mod_strings['ERR_UPLOAD_MAX_FILESIZE'] . "</p>\n";
 }
 $availablePatches = getLangPacks(true);
 $installedLanguagePacks = getInstalledLangPacks();
 $errs = '';
 if (isset($validation_errors)) {
     if (count($validation_errors) > 0) {
-        $errs  = '<div id="errorMsgs">';
+        $errs = '<div id="errorMsgs">';
         $errs .= "<p>{$mod_strings['LBL_SYSOPTS_ERRS_TITLE']}</p>";
         $errs .= '<ul>';
 
@@ -170,18 +171,15 @@ if (isset($validation_errors)) {
     }
 }
 
-
-
 ////    PRELOAD DISPLAY DATA
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////    BEING PAGE OUTPUT
-$disabled = "";
-$result = "";
+$disabled = '';
+$result = '';
 $langHeader = get_language_header();
-$out =<<<EOQ
+$out = <<<EOQ
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html {$langHeader}>
 <head>
@@ -227,7 +225,7 @@ $out =<<<EOQ
                 <tr>
                     <td colspan="2">
 EOQ;
-$form =<<<EOQ1
+$form = <<<EOQ1
                     <form name="the_form" enctype="multipart/form-data"
                         action="install.php" method="post">
                         <input type="hidden" name="current_step" value="{$next_step}">
@@ -294,7 +292,7 @@ $form =<<<EOQ1
 }
 </script>
 EOQ1;
-$out1 =<<<EOQ2
+$out1 = <<<EOQ2
                   </td>
                 </tr>
                 <tr>
@@ -348,13 +346,13 @@ $out1 =<<<EOQ2
 </body>
 </html>
 EOQ2;
-$hidden_fields =  "<input type=\"hidden\" name=\"current_step\" value=\"{$next_step}\">";
-$hidden_fields .=  "<input type=\"hidden\" name=\"goto\" value=\"{$mod_strings['LBL_CHECKSYS_RECHECK']}\">";
-$hidden_fields .=  "<input type=\"hidden\" name=\"languagePackAction\" value=\"commit\">";
+$hidden_fields = "<input type=\"hidden\" name=\"current_step\" value=\"{$next_step}\">";
+$hidden_fields .= "<input type=\"hidden\" name=\"goto\" value=\"{$mod_strings['LBL_CHECKSYS_RECHECK']}\">";
+$hidden_fields .= '<input type="hidden" name="languagePackAction" value="commit">';
 //$form2 = PackageManagerDisplay::buildPackageDisplay($form, $hidden_fields, 'install.php', array('langpack'), 'form1', true);
-$form2 = PackageManagerDisplay::buildPatchDisplay($form, $hidden_fields, 'install.php', array('langpack'));
+$form2 = PackageManagerDisplay::buildPatchDisplay($form, $hidden_fields, 'install.php', ['langpack']);
 
-echo $out.$form2.$out1;
+echo $out . $form2 . $out1;
 
 //unlinkTempFiles('','');
 ////    END PAGEOUTPUT

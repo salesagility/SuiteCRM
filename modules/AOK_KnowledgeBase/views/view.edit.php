@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class AOK_KnowledgeBaseViewEdit extends ViewEdit
 {
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function preDisplay()
     {
@@ -66,18 +61,17 @@ class AOK_KnowledgeBaseViewEdit extends ViewEdit
         $this->displayTMCE();
     }
 
-
     public function displayTMCE()
     {
-        require_once("include/SugarTinyMCE.php");
+        require_once 'include/SugarTinyMCE.php';
         global $locale;
 
         $tiny = new SugarTinyMCE();
         $tinyMCE = $tiny->getConfig();
 
-        $js =<<<JS
+        $js = <<<JS
 		<script language="javascript" type="text/javascript">
-		$tinyMCE
+		{$tinyMCE}
 		var df = '{$locale->getPrecedentPreference('default_date_format')}';
 
  		tinyMCE.init({

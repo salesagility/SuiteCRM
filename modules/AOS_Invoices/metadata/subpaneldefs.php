@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
@@ -27,11 +28,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-
-$layout_defs['AOS_Invoices'] = array(
-    'subpanel_setup' => array(
-        'aos_quotes_aos_invoices' =>
-        array(
+$layout_defs['AOS_Invoices'] = [
+    'subpanel_setup' => [
+        'aos_quotes_aos_invoices' => [
             'order' => 100,
             'module' => 'AOS_Quotes',
             'subpanel_name' => 'default',
@@ -39,19 +38,16 @@ $layout_defs['AOS_Invoices'] = array(
             'sort_by' => 'id',
             'title_key' => 'AOS_Quotes',
             'get_subpanel_data' => 'aos_quotes_aos_invoices',
-            'top_buttons' =>
-            array(
-                    0 =>
-                    array(
-                          'widget_class' => 'SubPanelTopCreateButton',
-                    ),
-                    1 =>
-                    array(
-                          'widget_class' => 'SubPanelTopSelectButton',
-                          'popup_module' => 'AOS_Quotes',
-                          'mode' => 'MultiSelect',
-                    ),
-            ),
-        ),
-    ),
-);
+            'top_buttons' => [
+                0 => [
+                    'widget_class' => 'SubPanelTopCreateButton',
+                ],
+                1 => [
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'popup_module' => 'AOS_Quotes',
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+    ],
+];

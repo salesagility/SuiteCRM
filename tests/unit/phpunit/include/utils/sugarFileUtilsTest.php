@@ -4,13 +4,16 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/sugar_file_utils.php';
 
+/**
+ * @internal
+ */
 class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     //@todo: check this - vfs does not seem to be working...
 
-    public function testsugar_dosomething()
+    public function testsugarDosomething()
     {
-        $this->assertTrue(true, "Needs checking!");
+        $this->assertTrue(true, 'Needs checking!');
     }
 
     /*

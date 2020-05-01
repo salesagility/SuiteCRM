@@ -37,10 +37,13 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\BeanJsonSerializer;
 use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class BeanJsonSerializerTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testToArrayContact()

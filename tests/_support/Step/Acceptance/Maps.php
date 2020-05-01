@@ -5,9 +5,10 @@ namespace Step\Acceptance;
 class Maps extends \AcceptanceTester
 {
     /**
-     * Create map
+     * Create map.
      *
      * @param $name
+     * @param mixed $account
      */
     public function createMap($name, $account)
     {

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,11 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
     function additional_details($fields, SugarBean $bean, $params)
     {
@@ -61,7 +58,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             if ($bean->field_name_map[strtolower($i)]['type'] == 'datetime' or $bean->field_name_map[strtolower($i)]['type'] == 'datetimecombo') {
                 $db_date = $timedate->fromUser($f);
                 $db_date_format = $db_date->format('Y-m-d H:i:s');
-                $fields['DB_'.$i] = $db_date_format;
+                $fields['DB_' . $i] = $db_date_format;
             }
         }
 
@@ -75,7 +72,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         $templateCaption->assign('PARAM', $params);
         $templateCaption->assign('MODULE_NAME', $bean->module_name);
         $templateCaption->assign('OBJECT_NAME', $bean->object_name);
-        $caption = $templateCaption->fetch('modules/'. $bean->module_name .'/tpls/additionalDetails.caption.tpl');
+        $caption = $templateCaption->fetch('modules/' . $bean->module_name . '/tpls/additionalDetails.caption.tpl');
 
         $templateBody = new Sugar_Smarty();
         $templateBody->assign('APP', $app_list_strings);
@@ -86,18 +83,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
         $templateBody->assign('PARAM', $params);
         $templateBody->assign('MODULE_NAME', $bean->module_name);
         $templateBody->assign('OBJECT_NAME', $bean->object_name);
-        $body = $templateBody->fetch('modules/'. $bean->module_name .'/tpls/additionalDetails.body.tpl');
+        $body = $templateBody->fetch('modules/' . $bean->module_name . '/tpls/additionalDetails.body.tpl');
 
-        $editLink = "index.php?action=EditView&module='. $bean->module_name .'&record={$fields['ID']}";
-        $viewLink = "index.php?action=DetailView&module='. $bean->module_name .'&record={$fields['ID']}";
+        $editLink = "index.php?action=EditView&module='. {$bean->module_name} .'&record={$fields['ID']}";
+        $viewLink = "index.php?action=DetailView&module='. {$bean->module_name} .'&record={$fields['ID']}";
 
-        return array(
+        return [
             'fieldToAddTo' => 'NAME',
             'string' => $body,
             'editLink' => $editLink,
             'viewLink' => $viewLink,
-            'caption'=> $caption,
+            'caption' => $caption,
             'body' => $body,
             'version' => '7.7.6'
-        );
+        ];
     }

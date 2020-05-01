@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,25 +35,24 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $type
  */
-
-
 function loadParentView($type)
 {
-    if (file_exists('custom/include/MVC/View/views/view.'.$type.'.php')) {
-        require_once('custom/include/MVC/View/views/view.'.$type.'.php');
+    if (file_exists('custom/include/MVC/View/views/view.' . $type . '.php')) {
+        require_once 'custom/include/MVC/View/views/view.' . $type . '.php';
     } else {
-        if (file_exists('include/MVC/View/views/view.'.$type.'.php')) {
-            require_once('include/MVC/View/views/view.'.$type.'.php');
+        if (file_exists('include/MVC/View/views/view.' . $type . '.php')) {
+            require_once 'include/MVC/View/views/view.' . $type . '.php';
         }
     }
 }
 
-
 function getPrintLink()
 {
-    if (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
-        return "javascript:SUGAR.ajaxUI.print();";
+    if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'ajaxui') {
+        return 'javascript:SUGAR.ajaxUI.print();';
     }
     $requestString = null;
     if (isset($GLOBALS['request_string'])) {
@@ -62,14 +60,14 @@ function getPrintLink()
     } else {
         LoggerManager::getLogger()->warn('Undefined index: request_string');
     }
+
     return "javascript:void window.open('index.php?{$requestString}',"
          . "'printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
 }
 
-
 function ajaxBannedModules()
 {
-    $bannedModules = array(
+    $bannedModules = [
         'Calendar',
         'Emails',
         'Campaigns',
@@ -83,8 +81,8 @@ function ajaxBannedModules()
         'Releases',
         'Groups',
         'EmailMan',
-        "Administration",
-        "ModuleBuilder",
+        'Administration',
+        'ModuleBuilder',
         'Schedulers',
         'SchedulersJobs',
         'DynamicFields',
@@ -111,7 +109,7 @@ function ajaxBannedModules()
         'Import',
         'OAuthKeys',
         'Surveys',
-    );
+    ];
 
     if (!empty($GLOBALS['sugar_config']['addAjaxBannedModules'])) {
         $bannedModules = array_merge($bannedModules, $GLOBALS['sugar_config']['addAjaxBannedModules']);
@@ -126,25 +124,23 @@ function ajaxBannedModules()
 function ajaxLink($url)
 {
     global $sugar_config;
-    $match = array();
-    $javascriptMatch = array();
+    $match = [];
+    $javascriptMatch = [];
 
     preg_match('/module=([^&]*)/i', $url, $match);
     preg_match('/^javascript/i', $url, $javascriptMatch);
 
     if (!empty($sugar_config['disableAjaxUI'])) {
         return $url;
-    } else {
-        if (isset($match[1]) && in_array($match[1], ajaxBannedModules())) {
-            return $url;
-        }
-        //Don't modify javascript calls.
-        else {
-            if (isset($javascriptMatch[0])) {
-                return $url;
-            } else {
-                return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
-            }
-        }
     }
+    if (isset($match[1]) && in_array($match[1], ajaxBannedModules())) {
+        return $url;
+    }
+    //Don't modify javascript calls.
+
+    if (isset($javascriptMatch[0])) {
+        return $url;
+    }
+
+    return '?action=ajaxui#ajaxUILoc=' . urlencode($url);
 }

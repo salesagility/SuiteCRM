@@ -5,12 +5,12 @@ use Faker\Generator;
 class AOS_Product_CategoriesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class AOS_Product_CategoriesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the productCategories module.
+     * As an administrator I want to view the productCategories module
      */
     public function testScenarioViewProductCategoriesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the productCategories module for testing');
 
@@ -54,13 +54,13 @@ class AOS_Product_CategoriesCest
      * @param \Step\Acceptance\ProductCategories $productCategory
      *
      * As administrative user I want to create a product category so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateAccount(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProductCategories $productCategory
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\ProductCategories $productCategory
     ) {
         $I->wantTo('Create a product category');
 
@@ -71,7 +71,7 @@ class AOS_Product_CategoriesCest
 
         // Create product category
         $this->fakeData->seed($this->fakeDataSeed);
-        $productCategory->createProductCategory('Test_'. $this->fakeData->company());
+        $productCategory->createProductCategory('Test_' . $this->fakeData->company());
 
         // Delete product category
         $detailView->clickActionMenuItem('Delete');

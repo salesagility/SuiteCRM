@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
@@ -24,6 +24,4 @@
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-/**
- * This file adds support for studio
- */
+// This file adds support for studio

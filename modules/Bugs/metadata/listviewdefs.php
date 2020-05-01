@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,55 +42,51 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-$listViewDefs['Bugs'] = array(
-    'BUG_NUMBER' => array(
+$listViewDefs['Bugs'] = [
+    'BUG_NUMBER' => [
         'width' => '5',
         'label' => 'LBL_LIST_NUMBER',
         'link' => true,
-        'default' => true),
-    'NAME' => array(
+        'default' => true],
+    'NAME' => [
         'width' => '32',
         'label' => 'LBL_LIST_SUBJECT',
         'default' => true,
-        'link' => true),
-    'STATUS' => array(
+        'link' => true],
+    'STATUS' => [
         'width' => '10',
         'label' => 'LBL_LIST_STATUS',
-        'default' => true),
-    'TYPE' => array(
+        'default' => true],
+    'TYPE' => [
         'width' => '10',
         'label' => 'LBL_LIST_TYPE',
-        'default' => true),
-    'PRIORITY' => array(
+        'default' => true],
+    'PRIORITY' => [
         'width' => '10',
         'label' => 'LBL_LIST_PRIORITY',
-        'default' => true),
-    'RELEASE_NAME' => array(
+        'default' => true],
+    'RELEASE_NAME' => [
         'width' => '10',
         'label' => 'LBL_FOUND_IN_RELEASE',
         'default' => false,
-        'related_fields' => array('found_in_release'),
+        'related_fields' => ['found_in_release'],
         'module' => 'Releases',
-        'id' => 'FOUND_IN_RELEASE',),
-    'FIXED_IN_RELEASE_NAME' => array(
+        'id' => 'FOUND_IN_RELEASE', ],
+    'FIXED_IN_RELEASE_NAME' => [
         'width' => '10',
         'label' => 'LBL_LIST_FIXED_IN_RELEASE',
         'default' => true,
-        'related_fields' => array('fixed_in_release'),
+        'related_fields' => ['fixed_in_release'],
         'module' => 'Releases',
-        'id' => 'FIXED_IN_RELEASE',),
-    'RESOLUTION' => array(
+        'id' => 'FIXED_IN_RELEASE', ],
+    'RESOLUTION' => [
         'width' => '10',
         'label' => 'LBL_LIST_RESOLUTION',
-        'default' => false),
-    'ASSIGNED_USER_NAME' => array(
+        'default' => false],
+    'ASSIGNED_USER_NAME' => [
         'width' => '9',
         'label' => 'LBL_LIST_ASSIGNED_USER',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true)
-);
+        'default' => true]
+];

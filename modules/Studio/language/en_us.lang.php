@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_EDIT_LAYOUT' => 'Edit Layout',
     'LBL_EDIT_FIELDS' => 'Edit Custom Fields',
     'LBL_SELECT_FILE' => 'Select File',
@@ -57,7 +55,7 @@ $mod_strings = array(
     'LBL_FAILED_PUBLISHED' => 'Failed to Publish',
     'LBL_DROP_HERE' => '[Drop Here]',
 
-//CUSTOM FIELDS
+    //CUSTOM FIELDS
     'LBL_NAME' => 'Name',
     'LBL_LABEL' => 'Label',
     'LBL_MASS_UPDATE' => 'Mass Update',
@@ -65,12 +63,11 @@ $mod_strings = array(
     'LBL_REQUIRED' => 'Required',
     'LBL_DATA_TYPE' => 'Type',
 
-
     'LBL_HISTORY' => 'History',
 
-//WIZARDS
+    //WIZARDS
 
-//STUDIO WIZARD
+    //STUDIO WIZARD
     'LBL_SW_WELCOME' => '<h2>Welcome to Studio!</h2><br> What would you like to do today?<br><b> Please select from the options below.</b>',
     'LBL_SW_EDIT_MODULE' => 'Edit a Module',
     'LBL_SW_EDIT_DROPDOWNS' => 'Edit Drop Downs',
@@ -81,23 +78,23 @@ $mod_strings = array(
     'LBL_SW_REPAIR_CUSTOMFIELDS' => 'Repair Custom Fields',
     'LBL_SW_MIGRATE_CUSTOMFIELDS' => 'Migrate Custom Fields',
 
-//Manager Backups History
+    //Manager Backups History
     'LBL_MB_DELETE' => 'Delete',
 
-//EDIT DROP DOWNS
+    //EDIT DROP DOWNS
     'LBL_ED_CREATE_DROPDOWN' => 'Create a Drop Down',
     'LBL_DROPDOWN_NAME' => 'Dropdown Name:',
     'LBL_DROPDOWN_LANGUAGE' => 'Dropdown Language:',
     'LBL_TABGROUP_LANGUAGE' => 'Language:',
 
-//END WIZARDS
+    //END WIZARDS
 
-//DROP DOWN EDITOR
+    //DROP DOWN EDITOR
     'LBL_DD_DISPALYVALUE' => 'Display Value',
     'LBL_DD_DATABASEVALUE' => 'Database Value',
     'LBL_DD_ALL' => 'All',
 
-//BUTTONS
+    //BUTTONS
     'LBL_BTN_SAVE' => 'Save',
     'LBL_BTN_CANCEL' => 'Cancel',
     'LBL_BTN_SAVEPUBLISH' => 'Save & Deploy',
@@ -108,7 +105,7 @@ $mod_strings = array(
     'LBL_BTN_ADDCUSTOMFIELD' => 'Add Custom Field',
     'LBL_BTN_TABINDEX' => 'Edit Tabbing Order',
 
-//TABS
+    //TABS
     'LBL_MODULES' => 'Modules',
     'LBL_MODULE_NAME' => 'Administration',
     'LBL_CONFIGURE_GROUP_TABS' => 'Configure Module Menu Filters',
@@ -120,10 +117,10 @@ $mod_strings = array(
     'LBL_NEW_GROUP' => 'New Group',
     'LBL_RENAME_TABS' => 'Rename Modules',
 
-//ERRORS
+    //ERRORS
     'ERROR_INVALID_KEY_VALUE' => "Error: Invalid Key Value: [']",
 
-//SUGAR PORTAL
+    //SUGAR PORTAL
     'LBL_SAVE' => 'Save' /*for 508 compliance fix*/,
     'LBL_UNDO' => 'Undo' /*for 508 compliance fix*/,
     'LBL_REDO' => 'Redo' /*for 508 compliance fix*/,
@@ -141,5 +138,4 @@ $mod_strings = array(
     'LBL_SINGULAR' => 'Singular Label',
     'LBL_PLURAL' => 'Plural Label',
     'LBL_RENAME_MOD_SAVE_HELP' => 'Click <b>Save</b> to apply the changes.'
-
-);
+];

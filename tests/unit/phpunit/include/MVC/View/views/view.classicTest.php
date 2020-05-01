@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         // Execute the constructor and check for the Object type and type attribute
 
@@ -49,7 +52,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $view->module = 'Home';
         $view->action = 'About';
 
-        $this->markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
+        $this->markTestIncomplete('Warning was: Test code or tested code did not (only) close its own output buffers');
 
         //test with a valid module and customized action. it should return true
         $view = new ViewClassic();
@@ -62,7 +65,6 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
-
 
         if (isset($session)) {
             $_SESSION = $session;

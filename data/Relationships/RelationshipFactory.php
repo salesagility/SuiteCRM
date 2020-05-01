@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -94,12 +92,12 @@ class SugarRelationshipFactory
     /**
      * @param  $relationshipName String name of relationship to load
      *
-     * @return SugarRelationship|bool
+     * @return bool|SugarRelationship
      */
     public function getRelationship($relationshipName)
     {
         if (empty($this->relationships[$relationshipName])) {
-            $GLOBALS['log']->error("Unable to find relationship $relationshipName");
+            $GLOBALS['log']->error("Unable to find relationship {$relationshipName}");
 
             return false;
         }
@@ -117,42 +115,45 @@ class SugarRelationshipFactory
                 require_once 'data/Relationships/M2MRelationship.php';
 
                 return new M2MRelationship($def);
+
                 break;
             case 'one-to-many':
                 require_once 'data/Relationships/One2MBeanRelationship.php';
                 //If a relationship has no table or join keys, it must be bean based
                 if (empty($def['true_relationship_type']) || (empty($def['table']) && empty($def['join_table'])) || empty($def['join_key_rhs'])) {
                     return new One2MBeanRelationship($def);
-                } else {
-                    return new One2MRelationship($def);
                 }
+
+                    return new One2MRelationship($def);
+
                 break;
             case 'one-to-one':
                 if (empty($def['true_relationship_type'])) {
                     require_once 'data/Relationships/One2OneBeanRelationship.php';
 
                     return new One2OneBeanRelationship($def);
-                } else {
+                }
                     require_once 'data/Relationships/One2OneRelationship.php';
 
                     return new One2OneRelationship($def);
-                }
+
                 break;
         }
 
-        $GLOBALS['log']->fatal("$relationshipName had an unknown type $type ");
+        $GLOBALS['log']->fatal("{$relationshipName} had an unknown type {$type} ");
 
         return false;
     }
 
     /**
      * @param $relationshipName
+     *
      * @return bool
      */
     public function getRelationshipDef($relationshipName)
     {
         if (empty($this->relationships[$relationshipName])) {
-            $GLOBALS['log']->error("Unable to find relationship $relationshipName");
+            $GLOBALS['log']->error("Unable to find relationship {$relationshipName}");
 
             return false;
         }
@@ -184,22 +185,22 @@ class SugarRelationshipFactory
         }
         //Reload ALL the module vardefs....
         foreach ($beanList as $moduleName => $beanName) {
-            VardefManager::loadVardef($moduleName, BeanFactory::getObjectName($moduleName), false, array(
+            VardefManager::loadVardef($moduleName, BeanFactory::getObjectName($moduleName), false, [
                 //If relationships are not yet loaded, we can't figure out the rel_calc_fields.
                 'ignore_rel_calc_fields' => true,
-            ));
+            ]);
         }
 
-        $relationships = array();
+        $relationships = [];
 
         //Grab all the relationships from the dictionary.
         foreach ($dictionary as $key => $def) {
             if (!empty($def['relationships'])) {
                 foreach ($def['relationships'] as $relKey => $relDef) {
                     if ($key === $relKey) { //Relationship only entry, we need to capture everything
-                        $relationships[$key] = array_merge(array('name' => $key), (array) $def, (array) $relDef);
+                        $relationships[$key] = array_merge(['name' => $key], (array) $def, (array) $relDef);
                     } else {
-                        $relationships[$relKey] = array_merge(array('name' => $relKey), (array) $relDef);
+                        $relationships[$relKey] = array_merge(['name' => $relKey], (array) $relDef);
                         if (!empty($relationships[$relKey]['join_table']) && empty($relationships[$relKey]['fields'])
                             && isset($dictionary[$relationships[$relKey]['join_table']]['fields'])
                         ) {
@@ -211,7 +212,7 @@ class SugarRelationshipFactory
         }
         //Save it out
         sugar_mkdir(dirname($this->getCacheFile()), null, true);
-        $out = "<?php \n \$relationships = ".var_export($relationships, true).';';
+        $out = "<?php \n \$relationships = " . var_export($relationships, true) . ';';
         sugar_file_put_contents_atomic($this->getCacheFile(), $out);
 
         $this->relationships = $relationships;

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $db = DBManagerFactory::getInstance();
 
 function getTemplateValidationMessages($templateId)
 {
-    $msgs = array();
+    $msgs = [];
     if (!$templateId) {
         $msgs[] = 'LBL_NO_SELECTED_TEMPLATE';
     } else {
@@ -61,6 +60,7 @@ function getTemplateValidationMessages($templateId)
             $msgs[] = 'LBL_NO_BODY_CONTENTS';
         }
     }
+
     return $msgs;
 }
 

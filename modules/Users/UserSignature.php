@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,8 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 // User is used to store customer information.
 class UserSignature extends SugarBean
 {
@@ -55,7 +53,7 @@ class UserSignature extends SugarBean
     public $signature;
     public $table_name = 'users_signatures';
     public $module_dir = 'Users';
-    public $object_name ='UserSignature';
+    public $object_name = 'UserSignature';
     public $disable_custom_fields = true;
 
     public function __construct()
@@ -63,19 +61,16 @@ class UserSignature extends SugarBean
         //Ensure the vardefs get loaded.
         global $dictionary;
         if (file_exists('custom/metadata/users_signaturesMetaData.php')) {
-            require_once('custom/metadata/users_signaturesMetaData.php');
+            require_once 'custom/metadata/users_signaturesMetaData.php';
         } else {
-            require_once('metadata/users_signaturesMetaData.php');
+            require_once 'metadata/users_signaturesMetaData.php';
         }
-
 
         parent::__construct();
     }
 
-
-
     /**
-     * returns the bean name - overrides SugarBean's
+     * returns the bean name - overrides SugarBean's.
      */
     public function get_summary_text()
     {
@@ -83,27 +78,32 @@ class UserSignature extends SugarBean
     }
 
     /**
-     * Override's SugarBean's
+     * Override's SugarBean's.
+     *
+     * @param mixed $order_by
+     * @param mixed $where
+     * @param mixed $show_deleted
      */
     public function create_export_query($order_by, $where, $show_deleted = 0)
     {
-        return $this->create_new_list_query($order_by, $where, array(), array(), $show_deleted);
+        return $this->create_new_list_query($order_by, $where, [], [], $show_deleted);
     }
 
     /**
-     * Override's SugarBean's
+     * Override's SugarBean's.
      */
     public function get_list_view_data()
     {
         global $mod_strings;
         global $app_list_strings;
         $temp_array = $this->get_list_view_array();
-        $temp_array['MAILBOX_TYPE_NAME']= $app_list_strings['dom_mailbox_type'][$this->mailbox_type];
+        $temp_array['MAILBOX_TYPE_NAME'] = $app_list_strings['dom_mailbox_type'][$this->mailbox_type];
+
         return $temp_array;
     }
 
     /**
-     * Override's SugarBean's
+     * Override's SugarBean's.
      */
     public function fill_in_additional_list_fields()
     {
@@ -111,7 +111,7 @@ class UserSignature extends SugarBean
     }
 
     /**
-     * Override's SugarBean's
+     * Override's SugarBean's.
      */
     public function fill_in_additional_detail_fields()
     {

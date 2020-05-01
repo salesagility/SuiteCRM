@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldDatetimecombo extends SugarFieldBase
 {
@@ -66,15 +64,17 @@ class SugarFieldDatetimecombo extends SugarFieldBase
 
         $displayParams['timeFormat'] = $timedate->get_user_time_format();
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
         return $this->fetch($this->findTemplate('EditView'));
     }
 
     public function getImportViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $displayParams['showFormats'] = true;
+
         return $this->getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
-    
+
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if ($this->isRangeSearchView($vardef)) {
@@ -88,7 +88,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
 
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             $id = isset($displayParams['idName']) ? $displayParams['idName'] : $vardef['name'];
-            $this->ss->assign('original_id', (string)($id));
+            $this->ss->assign('original_id', (string) ($id));
             $this->ss->assign('id_range', "range_{$id}");
             $this->ss->assign('id_range_start', "start_range_{$id}");
             $this->ss->assign('id_range_end', "end_range_{$id}");
@@ -96,6 +96,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
             if (file_exists('custom/include/SugarFields/Fields/Datetimecombo/RangeSearchForm.tpl')) {
                 return $this->fetch('custom/include/SugarFields/Fields/Datetimecombo/RangeSearchForm.tpl');
             }
+
             return $this->fetch('include/SugarFields/Fields/Datetimecombo/RangeSearchForm.tpl');
         }
 
@@ -121,9 +122,9 @@ class SugarFieldDatetimecombo extends SugarFieldBase
 
         $displayParams['timeFormat'] = $timedate->get_user_time_format();
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
         return $this->fetch($this->findTemplate('SearchView'));
     }
-
 
     public function getEmailTemplateValue($inputField, $vardef, $context = null, $tabindex = 0)
     {
@@ -133,43 +134,48 @@ class SugarFieldDatetimecombo extends SugarFieldBase
         } else {
             $user = $GLOBALS['current_user'];
         }
+
         return TimeDate::getInstance()->to_display_date_time($inputField, true, true, $user);
     }
-    
+
     public function save(&$bean, $params, $field, $properties, $prefix = '')
     {
         global $timedate;
-        if (!isset($params[$prefix.$field])) {
+        if (!isset($params[$prefix . $field])) {
             //$bean->$field = '';
             return;
         }
 
-        if (strpos($params[$prefix.$field], ' ') > 0) {
-            if ($timedate->check_matching_format($params[$prefix.$field], TimeDate::DB_DATETIME_FORMAT)) {
-                $bean->$field = $params[$prefix.$field];
+        if (strpos($params[$prefix . $field], ' ') > 0) {
+            if ($timedate->check_matching_format($params[$prefix . $field], TimeDate::DB_DATETIME_FORMAT)) {
+                $bean->{$field} = $params[$prefix . $field];
             } else {
-                $bean->$field = $timedate->to_db($params[$prefix.$field]);
+                $bean->{$field} = $timedate->to_db($params[$prefix . $field]);
             }
         } else {
-            $GLOBALS['log']->error('Field ' . $prefix.$field . ' expecting datetime format, but got value: ' . $params[$prefix.$field]);
+            $GLOBALS['log']->error('Field ' . $prefix . $field . ' expecting datetime format, but got value: ' . $params[$prefix . $field]);
             //Default to assume date format value
-            if ($timedate->check_matching_format($params[$prefix.$field], TimeDate::DB_DATE_FORMAT)) {
-                $bean->$field = $params[$prefix.$field];
+            if ($timedate->check_matching_format($params[$prefix . $field], TimeDate::DB_DATE_FORMAT)) {
+                $bean->{$field} = $params[$prefix . $field];
             } else {
-                $bean->$field = $timedate->to_db_date($params[$prefix.$field]);
+                $bean->{$field} = $timedate->to_db_date($params[$prefix . $field]);
             }
         }
     }
 
     /**
      * @see SugarFieldBase::importSanitize()
+     *
+     * @param mixed $value
+     * @param mixed $vardef
+     * @param mixed $focus
      */
     public function importSanitize(
         $value,
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
+    ) {
         global $timedate;
 
         $format = $timedate->merge_date_time($settings->dateformat, $settings->timeformat);
@@ -192,7 +198,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
                     // is kind of reasonable - no sane time format puts seconds first
                     $timeparts = explode($sep, $timepart);
                     if (!empty($timeparts[2])) {
-                        $timepart = implode($sep, array($timeparts[0], $timeparts[1]));
+                        $timepart = implode($sep, [$timeparts[0], $timeparts[1]]);
                     }
                 }
             }
@@ -208,6 +214,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
         } catch (Exception $e) {
             return false;
         }
+
         return $date->asDb();
     }
 }

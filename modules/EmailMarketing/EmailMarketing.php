@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class EmailMarketing extends SugarBean
 {
     public $field_name_map;
@@ -77,9 +75,6 @@ class EmailMarketing extends SugarBean
         parent::__construct();
     }
 
-
-
-
     public function save($check_notify = false)
     {
         global $current_user;
@@ -87,7 +82,7 @@ class EmailMarketing extends SugarBean
         $date_start = trim($this->date_start);
         $time_start = trim($this->time_start);
         if ($time_start && strpos($date_start, $time_start) === false) {
-            $this->date_start = "$date_start $time_start";
+            $this->date_start = "{$date_start} {$time_start}";
             $this->time_start = '';
         }
 
@@ -104,13 +99,13 @@ class EmailMarketing extends SugarBean
         return parent::save($check_notify);
     }
 
-    public function retrieve($id = -1, $encode=true, $deleted=true)
+    public function retrieve($id = -1, $encode = true, $deleted = true)
     {
         parent::retrieve($id, $encode, $deleted);
 
         global $timedate;
-        $date_start_array=explode(" ", trim($this->date_start));
-        if (count($date_start_array)==2) {
+        $date_start_array = explode(' ', trim($this->date_start));
+        if (count($date_start_array) == 2) {
             $this->time_start = $date_start_array[1];
             $this->date_start = $date_start_array[0];
         }
@@ -139,7 +134,6 @@ class EmailMarketing extends SugarBean
             $id = $temp_array['ID'];
         }
 
-
         if (!isset($temp_array['ID'])) {
             LoggerManager::getLogger()->warn('EmailMarketing get list view data error: list view array has not Template ID.');
             $template_id = null;
@@ -147,67 +141,46 @@ class EmailMarketing extends SugarBean
             $template_id = $temp_array['TEMPLATE_ID'];
         }
 
-
         //mode is set by schedule.php from campaigns module.
-        if (!isset($this->mode) or empty($this->mode) or $this->mode!='test') {
-            $this->mode='rest';
+        if (!isset($this->mode) or empty($this->mode) or $this->mode != 'test') {
+            $this->mode = 'rest';
         }
 
-        if ($temp_array['ALL_PROSPECT_LISTS']==1) {
-            $query="SELECT name from prospect_lists ";
-            $query.=" INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = prospect_lists.id";
-            $query.=" WHERE plc.campaign_id='{$temp_array['CAMPAIGN_ID']}'";
-            $query.=" AND prospect_lists.deleted=0";
-            $query.=" AND plc.deleted=0";
-            if ($this->mode=='test') {
-                $query.=" AND prospect_lists.list_type='test'";
+        if ($temp_array['ALL_PROSPECT_LISTS'] == 1) {
+            $query = 'SELECT name from prospect_lists ';
+            $query .= ' INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = prospect_lists.id';
+            $query .= " WHERE plc.campaign_id='{$temp_array['CAMPAIGN_ID']}'";
+            $query .= ' AND prospect_lists.deleted=0';
+            $query .= ' AND plc.deleted=0';
+            if ($this->mode == 'test') {
+                $query .= " AND prospect_lists.list_type='test'";
             } else {
-                $query.=" AND prospect_lists.list_type!='test'";
+                $query .= " AND prospect_lists.list_type!='test'";
             }
         } else {
-            $query="SELECT name from prospect_lists ";
-            $query.=" INNER JOIN email_marketing_prospect_lists empl ON empl.prospect_list_id = prospect_lists.id";
-            $query.=" WHERE empl.email_marketing_id='{$id}'";
-            $query.=" AND prospect_lists.deleted=0";
-            $query.=" AND empl.deleted=0";
-            if ($this->mode=='test') {
-                $query.=" AND prospect_lists.list_type='test'";
+            $query = 'SELECT name from prospect_lists ';
+            $query .= ' INNER JOIN email_marketing_prospect_lists empl ON empl.prospect_list_id = prospect_lists.id';
+            $query .= " WHERE empl.email_marketing_id='{$id}'";
+            $query .= ' AND prospect_lists.deleted=0';
+            $query .= ' AND empl.deleted=0';
+            if ($this->mode == 'test') {
+                $query .= " AND prospect_lists.list_type='test'";
             } else {
-                $query.=" AND prospect_lists.list_type!='test'";
+                $query .= " AND prospect_lists.list_type!='test'";
             }
         }
         $res = $this->db->query($query);
         while (($row = $this->db->fetchByAssoc($res)) != null) {
             if (!empty($temp_array['PROSPECT_LIST_NAME'])) {
-                $temp_array['PROSPECT_LIST_NAME'].="<BR>";
+                $temp_array['PROSPECT_LIST_NAME'] .= '<BR>';
             }
-            $temp_array['PROSPECT_LIST_NAME'].=$row['name'];
+            $temp_array['PROSPECT_LIST_NAME'] .= $row['name'];
         }
         if ($this->isCampaignDetailView()) {
             $temp_array = $this->makeCampaignWizardEditLink($temp_array);
         }
+
         return $temp_array;
-    }
-
-    private function isCampaignDetailView()
-    {
-        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
-        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-        $isCampaignDetailView = $module = 'Campaigns' && $action == 'DetailView';
-        return $isCampaignDetailView;
-    }
-
-    private function makeCampaignWizardEditLink($tempArray)
-    {
-        $campaignId = $_REQUEST['record'];
-        $link = 'index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id='.$campaignId.'&campaign_id='.$campaignId.'&marketing_id='.$this->id.'&func=editEmailMarketing';
-        if (!empty($tempArray['NAME'])) {
-            $tempArray['NAME'] = '<a href="' . $link . '">' . $tempArray['NAME'] . '</a>';
-        }
-        if (!empty($tempArray['TEMPLATE_NAME'])) {
-            $tempArray['TEMPLATE_NAME'] = '<a href="' . $link . '">' . $tempArray['TEMPLATE_NAME'] . '</a>';
-        }
-        return $tempArray;
     }
 
     public function bean_implements($interface)
@@ -215,17 +188,18 @@ class EmailMarketing extends SugarBean
         switch ($interface) {
             case 'ACL':return true;
         }
+
         return false;
     }
 
     public function get_all_prospect_lists()
     {
-        $query="select prospect_lists.* from prospect_lists ";
-        $query.=" left join prospect_list_campaigns on prospect_list_campaigns.prospect_list_id=prospect_lists.id";
-        $query.=" where prospect_list_campaigns.deleted=0";
-        $query.=" and prospect_list_campaigns.campaign_id='$this->campaign_id'";
-        $query.=" and prospect_lists.deleted=0";
-        $query.=" and prospect_lists.list_type not like 'exempt%'";
+        $query = 'select prospect_lists.* from prospect_lists ';
+        $query .= ' left join prospect_list_campaigns on prospect_list_campaigns.prospect_list_id=prospect_lists.id';
+        $query .= ' where prospect_list_campaigns.deleted=0';
+        $query .= " and prospect_list_campaigns.campaign_id='{$this->campaign_id}'";
+        $query .= ' and prospect_lists.deleted=0';
+        $query .= " and prospect_lists.list_type not like 'exempt%'";
 
         return $query;
     }
@@ -233,7 +207,7 @@ class EmailMarketing extends SugarBean
     public function validate()
     {
         global $mod_strings;
-        $errors = array();
+        $errors = [];
         if (!$this->name) {
             $errors['name'] = isset($mod_strings['LBL_NO_MARKETING_NAME']) ? $mod_strings['LBL_NO_MARKETING_NAME'] : 'LBL_NO_MARKETING_NAME';
         }
@@ -249,6 +223,30 @@ class EmailMarketing extends SugarBean
         if (!$this->from_addr) { // TODO test for valid email address
             $errors['from_addr'] = isset($mod_strings['LBL_NO_FROM_ADDR_OR_INVALID']) ? $mod_strings['LBL_NO_FROM_ADDR_OR_INVALID'] : 'LBL_NO_FROM_ADDR_OR_INVALID';
         }
+
         return $errors;
+    }
+
+    private function isCampaignDetailView()
+    {
+        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+        $isCampaignDetailView = $module = 'Campaigns' && $action == 'DetailView';
+
+        return $isCampaignDetailView;
+    }
+
+    private function makeCampaignWizardEditLink($tempArray)
+    {
+        $campaignId = $_REQUEST['record'];
+        $link = 'index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $campaignId . '&campaign_id=' . $campaignId . '&marketing_id=' . $this->id . '&func=editEmailMarketing';
+        if (!empty($tempArray['NAME'])) {
+            $tempArray['NAME'] = '<a href="' . $link . '">' . $tempArray['NAME'] . '</a>';
+        }
+        if (!empty($tempArray['TEMPLATE_NAME'])) {
+            $tempArray['TEMPLATE_NAME'] = '<a href="' . $link . '">' . $tempArray['TEMPLATE_NAME'] . '</a>';
+        }
+
+        return $tempArray;
     }
 }

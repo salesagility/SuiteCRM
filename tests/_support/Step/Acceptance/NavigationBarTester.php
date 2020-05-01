@@ -2,14 +2,14 @@
 
 namespace Step\Acceptance;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 use Page\Design;
 use SuiteCRM\Enumerator\DesignBreakPoint;
 
 class NavigationBarTester extends Tester
 {
     /**
-     * Click on the home buton / navbar brand
+     * Click on the home buton / navbar brand.
      */
     public function clickHome()
     {
@@ -21,21 +21,26 @@ class NavigationBarTester extends Tester
             // We need to select the home module from the all menu for tablet and mobile.
             case DesignBreakPoint::lg:
                 $I->click('#navbar-brand');
+
                 break;
             case DesignBreakPoint::md:
                 $this->clickAllMenuItem('Home');
+
                 break;
             case DesignBreakPoint::sm:
                 $this->clickAllMenuItem('Home');
+
                 break;
             case DesignBreakPoint::xs:
                 $this->clickAllMenuItem('Home');
+
                 break;
         }
     }
 
     /**
-     * Selects a menu item from the users menu (global links)
+     * Selects a menu item from the users menu (global links).
+     *
      * @param $link
      *
      * <?php
@@ -51,24 +56,29 @@ class NavigationBarTester extends Tester
             case DesignBreakPoint::lg:
                 $I->moveMouseOver('.desktop-bar #toolbar .globalLinks-desktop');
                 $I->click($link, '.desktop-bar #toolbar .globalLinks-desktop');
+
                 break;
             case DesignBreakPoint::md:
                 $I->click('.tablet-bar #toolbar .globalLinks-mobile');
                 $I->click($link, '.tablet-bar #toolbar .globalLinks-mobile');
+
                 break;
             case DesignBreakPoint::sm:
                 $I->click('.tablet-bar #toolbar .globalLinks-mobile');
                 $I->click($link, '.tablet-bar #toolbar .globalLinks-mobile');
+
                 break;
             case DesignBreakPoint::xs:
                 $I->click('.mobile-bar #toolbar .globalLinks-mobile');
                 $I->click($link, '.mobile-bar #toolbar .globalLinks-mobile');
+
                 break;
         }
     }
 
     /**
-     * Navigates to module. Selects a menu item from the all menu (top nav)
+     * Navigates to module. Selects a menu item from the all menu (top nav).
+     *
      * @param $link
      *
      * <?php
@@ -93,6 +103,7 @@ class NavigationBarTester extends Tester
                 $allMenu = $allMenuButton . ' > span.notCurrentTab > ul.dropdown-menu';
                 $I->waitForElementVisible($allMenu);
                 $I->click($link, $allMenu);
+
                 break;
             case DesignBreakPoint::md:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
@@ -101,6 +112,7 @@ class NavigationBarTester extends Tester
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $I->waitForElementVisible($allMenu);
                 $I->click($link, $allMenu);
+
                 break;
             case DesignBreakPoint::sm:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
@@ -109,6 +121,7 @@ class NavigationBarTester extends Tester
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $I->waitForElementVisible($allMenu);
                 $I->click($link, $allMenu);
+
                 break;
             case DesignBreakPoint::xs:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
@@ -117,12 +130,14 @@ class NavigationBarTester extends Tester
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $I->waitForElementVisible($allMenu);
                 $I->click($link, $allMenu);
+
                 break;
         }
     }
 
     /**
-     * Selects a menu item from the current module menu (top nav)
+     * Selects a menu item from the current module menu (top nav).
+     *
      * @param $link
      *
      * <?php
@@ -145,24 +160,28 @@ class NavigationBarTester extends Tester
                 $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
                 $I->waitForText($link, 30, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav > ul.dropdown-menu > li.current-module-action-links');
                 $I->click($link, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav > ul.dropdown-menu > li.current-module-action-links');
+
                 break;
             case DesignBreakPoint::md:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
                 $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+
                 break;
             case DesignBreakPoint::sm:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
                 $I->waitForElementVisible('#modulelinks > ul.dropdown-menu');
                 $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+
                 break;
             case DesignBreakPoint::xs:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
                 $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+
                 break;
         }
     }

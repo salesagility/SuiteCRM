@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,22 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $current_user, $sugar_version, $sugar_config, $beanFiles;
 
-
-require_once('include/MySugar/MySugar.php');
+require_once 'include/MySugar/MySugar.php';
 
 // build dashlet cache file if not found
 if (!is_file($cachefile = sugar_cached('dashlets/dashlets.php'))) {
-    require_once('include/Dashlets/DashletCacheBuilder.php');
+    require_once 'include/Dashlets/DashletCacheBuilder.php';
 
     $dc = new DashletCacheBuilder();
     $dc->buildCache();
 }
 require_once $cachefile;
 
-require('modules/Home/dashlets.php');
+require 'modules/Home/dashlets.php';
 
 $pages = $current_user->getPreference('pages', 'Home');
 $dashlets = $current_user->getPreference('dashlets', 'Home');
@@ -67,10 +66,10 @@ $defaultHomepage = false;
 $hasUserPreferences = (!isset($pages) || empty($pages) || !isset($dashlets) || empty($dashlets)) ? false : true;
 
 if (!$hasUserPreferences) {
-    $dashlets = array();
+    $dashlets = [];
 
     //list of preferences to move over and to where
-    $prefstomove = array(
+    $prefstomove = [
         'mypbss_date_start' => 'MyPipelineBySalesStageDashlet',
         'mypbss_date_end' => 'MyPipelineBySalesStageDashlet',
         'mypbss_sales_stages' => 'MyPipelineBySalesStageDashlet',
@@ -85,7 +84,7 @@ if (!$hasUserPreferences) {
         'pbss_chart_type' => 'PipelineBySalesStageDashlet',
         'obm_date_start' => 'OutcomeByMonthDashlet',
         'obm_date_end' => 'OutcomeByMonthDashlet',
-        'obm_ids' => 'OutcomeByMonthDashlet');
+        'obm_ids' => 'OutcomeByMonthDashlet'];
 
     //upgrading from pre-5.0 homepage
     $old_columns = $current_user->getPreference('columns', 'home');
@@ -96,47 +95,47 @@ if (!$hasUserPreferences) {
         $dashlets = $old_dashlets;
 
         // resetting old columns and dashlets to have no preference and data
-        $old_columns = array();
-        $old_dashlets = array();
+        $old_columns = [];
+        $old_dashlets = [];
         $current_user->setPreference('columns', $old_columns, 0, 'home');
         $current_user->setPreference('dashlets', $old_dashlets, 0, 'home');
     } else {
         // This is here to get Sugar dashlets added above the rest
-        $dashlets[create_guid()] = array('className' => 'SugarFeedDashlet',
+        $dashlets[create_guid()] = ['className' => 'SugarFeedDashlet',
             'module' => 'SugarFeed',
             'forceColumn' => 1,
             'fileLocation' => $dashletsFiles['SugarFeedDashlet']['file'],
-        );
+        ];
 
-        foreach ($defaultDashlets as $dashletName=>$module) {
+        foreach ($defaultDashlets as $dashletName => $module) {
             // clint - fixes bug #20398
             // only display dashlets that are from visibile modules and that the user has permission to list
             $myDashlet = new MySugar($module);
             $displayDashlet = $myDashlet->checkDashletDisplay();
             if (isset($dashletsFiles[$dashletName]) && $displayDashlet) {
-                $options = array();
+                $options = [];
                 $prefsforthisdashlet = array_keys($prefstomove, $dashletName);
                 foreach ($prefsforthisdashlet as $pref) {
                     $options[$pref] = $current_user->getPreference($pref);
                 }
-                $dashlets[create_guid()] = array('className' => $dashletName,
+                $dashlets[create_guid()] = ['className' => $dashletName,
                     'module' => $module,
                     'forceColumn' => 0,
                     'fileLocation' => $dashletsFiles[$dashletName]['file'],
-                    'options' => $options);
+                    'options' => $options];
             }
         }
 
         $count = 0;
-        $columns = array();
-        $columns[0] = array();
+        $columns = [];
+        $columns[0] = [];
         $columns[0]['width'] = '60%';
-        $columns[0]['dashlets'] = array();
-        $columns[1] = array();
+        $columns[0]['dashlets'] = [];
+        $columns[1] = [];
         $columns[1]['width'] = '40%';
-        $columns[1]['dashlets'] = array();
+        $columns[1]['dashlets'] = [];
 
-        foreach ($dashlets as $guid=>$dashlet) {
+        foreach ($dashlets as $guid => $dashlet) {
             if ($dashlet['forceColumn'] == 0) {
                 array_push($columns[0]['dashlets'], $guid);
             } else {
@@ -145,9 +144,6 @@ if (!$hasUserPreferences) {
             $count++;
         }
     }
-
-
-
 
     $current_user->setPreference('dashlets', $dashlets, 0, 'Home');
 }
@@ -174,7 +170,7 @@ if (!empty($pagesDashboard) || !empty($dashletsDashboard)) {
 }
 
 if (empty($pages)) {
-    $pages = array();
+    $pages = [];
     $pageIndex = 0;
     $pages[0]['columns'] = $columns;
     $pages[0]['numColumns'] = '3';
@@ -192,17 +188,16 @@ $divPages[] = $activePage;
 
 $numCols = $pages[$activePage]['numColumns'];
 
-
 $count = 0;
-$dashletIds = array(); // collect ids to pass to javascript
-$display = array();
+$dashletIds = []; // collect ids to pass to javascript
+$display = [];
 
 foreach ($pages[$activePage]['columns'] as $colNum => $column) {
     if ($colNum == $numCols) {
         break;
     }
     $display[$colNum]['width'] = $column['width'];
-    $display[$colNum]['dashlets'] = array();
+    $display[$colNum]['dashlets'] = [];
     foreach ($column['dashlets'] as $num => $id) {
         // clint - fixes bug #20398
         // only display dashlets that are from visibile modules and that the user has permission to list
@@ -220,10 +215,9 @@ foreach ($pages[$activePage]['columns'] as $colNum => $column) {
             $myDashlet = new MySugar($module);
 
             if ($myDashlet->checkDashletDisplay()) {
-                require_once($dashlets[$id]['fileLocation']);
+                require_once $dashlets[$id]['fileLocation'];
 
-
-                $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
+                $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : []));
                 // Need to add support to dynamically display/hide dashlets
                 // If it has a method 'shouldDisplay' we will call it to see if we should display it or not
                 if (method_exists($dashlet, 'shouldDisplay')) {
@@ -236,12 +230,13 @@ foreach ($pages[$activePage]['columns'] as $colNum => $column) {
                 array_push($dashletIds, $id);
 
                 $dashlets = $current_user->getPreference('dashlets', 'Home'); // Using hardcoded 'Home' because DynamicAction.php $_REQUEST['module'] value is always Home
-                $lvsParams = array();
+                $lvsParams = [];
                 if (!empty($dashlets[$id]['sort_options'])) {
                     $lvsParams = $dashlets[$id]['sort_options'];
                 }
 
                 $dashlet->process($lvsParams);
+
                 try {
                     $display[$colNum]['dashlets'][$id]['display'] = $dashlet->display();
                     $display[$colNum]['dashlets'][$id]['displayHeader'] = $dashlet->getHeader();
@@ -258,7 +253,6 @@ foreach ($pages[$activePage]['columns'] as $colNum => $column) {
         }
     }
 }
-
 
 $i = 0;
     while ($i < count($pages)) {
@@ -309,9 +303,9 @@ $sugar_smarty->assign('module', 'Home');
 
 //custom chart code
 //Get the RGraph libraries (add this more elegantly later to check exactly what is needed, not just all).
-require_once('include/SuiteGraphs/RGraphIncludes.php');
+require_once 'include/SuiteGraphs/RGraphIncludes.php';
 
-require_once('include/SugarCharts/SugarChartFactory.php');
+require_once 'include/SugarCharts/SugarChartFactory.php';
 $sugarChart = SugarChartFactory::getInstance();
 if ($sugarChart) {
     $resources = $sugarChart->getChartResources();
@@ -333,7 +327,6 @@ if (file_exists('custom/themes/' . $theme . '/tpls/MySugar.tpl')) {
 } else {
     $GLOBALS['log']->fatal('MySugar.tpl not found');
 }
-
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";

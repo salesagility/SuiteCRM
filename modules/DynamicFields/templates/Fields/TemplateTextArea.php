@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateText.php';
 class TemplateTextArea extends TemplateText
 {
     public $type = 'text';
@@ -67,11 +66,11 @@ class TemplateTextArea extends TemplateText
         }
     }
 
-
     public function get_xtpl_detail()
     {
         $name = $this->name;
-        return nl2br($this->bean->$name);
+
+        return nl2br($this->bean->{$name});
     }
 
     public function get_field_def()
@@ -79,14 +78,15 @@ class TemplateTextArea extends TemplateText
         $def = parent::get_field_def();
         $def['studio'] = 'visible';
 
-        if (isset($this->ext2) && isset($this->ext3)) {
-            $def[ 'rows' ] = $this->ext2 ;
-            $def[ 'cols' ] = $this->ext3 ;
+        if (isset($this->ext2, $this->ext3)) {
+            $def['rows'] = $this->ext2;
+            $def['cols'] = $this->ext3;
         }
-        if (isset($this->rows) && isset($this->cols)) {
-            $def[ 'rows' ] = $this->rows ;
-            $def[ 'cols' ] = $this->cols ;
+        if (isset($this->rows, $this->cols)) {
+            $def['rows'] = $this->rows;
+            $def['cols'] = $this->cols;
         }
+
         return $def;
     }
 

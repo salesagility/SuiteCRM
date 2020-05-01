@@ -1,11 +1,9 @@
 <?php
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,38 +40,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('soap/SoapError.php');
+require_once 'soap/SoapError.php';
 
 function check_for_relationship($relationships, $module)
 {
-    foreach ($relationships as $table=>$rel) {
+    foreach ($relationships as $table => $rel) {
         if ($rel['rhs_key'] == $module) {
             return $table;
         }
     }
+
     return false;
 }
 
-/*
- * takes in two modules and returns the relationship information about them
- *
- */
+// takes in two modules and returns the relationship information about them
 
-function retrieve_relationships_properties($module_1, $module_2, $relationship_name = "")
+function retrieve_relationships_properties($module_1, $module_2, $relationship_name = '')
 {
     $rs = new Relationship();
-    $query =  "SELECT * FROM $rs->table_name WHERE ((lhs_module = '".$rs->db->quote($module_1)."' AND rhs_module='".$rs->db->quote($module_2)."') OR (lhs_module = '".$rs->db->quote($module_2)."' AND rhs_module='".$rs->db->quote($module_1)."'))";
+    $query = "SELECT * FROM {$rs->table_name} WHERE ((lhs_module = '" . $rs->db->quote($module_1) . "' AND rhs_module='" . $rs->db->quote($module_2) . "') OR (lhs_module = '" . $rs->db->quote($module_2) . "' AND rhs_module='" . $rs->db->quote($module_1) . "'))";
     if (!empty($relationship_name) && isset($relationship_name)) {
-        $query .= " AND relationship_name = '".$rs->db->quote($relationship_name)."'";
+        $query .= " AND relationship_name = '" . $rs->db->quote($relationship_name) . "'";
     }
     $result = $rs->db->query($query);
 
     return $rs->db->fetchByAssoc($result);
 }
-
-
-
 
 /*
  * Retrieves relationships between two modules
@@ -89,24 +81,26 @@ function retrieve_relationships($module_name, $related_module, $relationship_que
     global  $beanList, $beanFiles, $dictionary, $current_user;
 
     $error = new SoapError();
-    $result_list = array();
+    $result_list = [];
     if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
         $error->set_error('no_module');
-        return array('result'=>$result_list, 'error'=>$error->get_soap_array());
+
+        return ['result' => $result_list, 'error' => $error->get_soap_array()];
     }
 
     $result = retrieve_relationship_query($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results);
 
     if (empty($result['module_1'])) {
         $error->set_error('no_relationship_support');
-        return array('result'=>$result_list, 'error'=>$error->get_soap_array());
+
+        return ['result' => $result_list, 'error' => $error->get_soap_array()];
     }
     $query = $result['query'];
     $module_1 = $result['module_1'];
     $table = $result['join_table'];
 
     $class_name = $beanList[$module_1];
-    require_once($beanFiles[$class_name]);
+    require_once $beanFiles[$class_name];
     $mod = new $class_name();
 
     $count_query = str_replace('rt.*', 'count(*)', $query);
@@ -123,7 +117,7 @@ function retrieve_relationships($module_name, $related_module, $relationship_que
         $result_list[] = $row;
     }
 
-    return array('table_name'=>$table, 'result'=>$result_list, 'total_count'=>$total_count, 'error'=>$error->get_soap_array());
+    return ['table_name' => $table, 'result' => $result_list, 'total_count' => $total_count, 'error' => $error->get_soap_array()];
 }
 
 /*
@@ -147,21 +141,23 @@ function retrieve_relationships($module_name, $related_module, $relationship_que
  *         error Mixed Array containing the SOAP errors if found, empty otherwise
  *
  */
-function retrieve_modified_relationships($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results, $select_fields = array(), $relationship_name = '')
+function retrieve_modified_relationships($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results, $select_fields = [], $relationship_name = '')
 {
     global  $beanList, $beanFiles, $dictionary, $current_user;
     $error = new SoapError();
-    $result_list = array();
+    $result_list = [];
     if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
         $error->set_error('no_module');
-        return array('result'=>$result_list, 'error'=>$error->get_soap_array());
+
+        return ['result' => $result_list, 'error' => $error->get_soap_array()];
     }
 
     $row = retrieve_relationships_properties($module_name, $related_module, $relationship_name);
 
     if (empty($row)) {
         $error->set_error('no_relationship_support');
-        return array('result'=>$result_list, 'error'=>$error->get_soap_array());
+
+        return ['result' => $result_list, 'error' => $error->get_soap_array()];
     }
 
     $table = $row['join_table'];
@@ -181,14 +177,12 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
         $mod2_key = $row['join_key_rhs'];
     }
 
-
-
     $class_name = $beanList[$module_1];
-    require_once($beanFiles[$class_name]);
+    require_once $beanFiles[$class_name];
     $mod = new $class_name();
 
     $mod2_name = $beanList[$module_2];
-    require_once($beanFiles[$mod2_name]);
+    require_once $beanFiles[$mod2_name];
     $mod2 = new $mod2_name();
     $table_alias = 'rt';
     if ($has_join == false) {
@@ -197,11 +191,11 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
 
     if (isset($select_fields) && !empty($select_fields)) {
         $index = 0;
-        $field_select ='';
+        $field_select = '';
 
         foreach ($select_fields as $field) {
-            if ($field == "id") {
-                $field_select .= "DISTINCT m1.id";
+            if ($field == 'id') {
+                $field_select .= 'DISTINCT m1.id';
             } else {
                 $parts = explode(' ', $field);
                 $alias = '';
@@ -210,14 +204,14 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
                     $alias = array_pop($parts);
                     $field = array_pop($parts); // will check for . further down
                 }
-                if ($alias == "email1") {
+                if ($alias == 'email1') {
                     // special case for primary emails
                     $field_select .= "(SELECT email_addresses.email_address FROM {$mod->table_name}
                     	LEFT JOIN  email_addr_bean_rel ON {$mod->table_name}.id = email_addr_bean_rel.bean_id
                     		AND email_addr_bean_rel.bean_module='{$mod->module_dir}'
                     		AND email_addr_bean_rel.deleted=0 AND email_addr_bean_rel.primary_address=1
                     	LEFT JOIN email_addresses ON email_addresses.id = email_addr_bean_rel.email_address_id Where {$mod->table_name}.id = m1.ID) email1";
-                } elseif ($alias == "email2") {
+                } elseif ($alias == 'email2') {
                     // special case for non-primary emails
                     // FIXME: This is not a DB-safe code. Does not work on SQL Server & Oracle.
                     // Using dirty hack here.
@@ -227,39 +221,39 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
                     		AND email_addr_bean_rel.primary_address!=1
                     	LEFT JOIN email_addresses ON email_addresses.id = email_addr_bean_rel.email_address_id Where {$mod->table_name}.id = m1.ID limit 1) email2";
                 } else {
-                    if (strpos($field, ".") == false) {
+                    if (strpos($field, '.') == false) {
                         // no dot - field for m1
-                        $fieldname = "m1.".$mod->db->getValidDBName($field);
+                        $fieldname = 'm1.' . $mod->db->getValidDBName($field);
                     } else {
                         // There is a dot in here somewhere.
                         list($table_part, $field_part) = explode('.', $field);
-                        $fieldname = $mod->db->getValidDBName($table_part).".".$mod->db->getValidDBName($field_part);
+                        $fieldname = $mod->db->getValidDBName($table_part) . '.' . $mod->db->getValidDBName($field_part);
                     }
                     $field_select .= $fieldname;
                     if (!empty($alias)) {
-                        $field_select .= " ".$mod->db->getValidDBName($alias);
+                        $field_select .= ' ' . $mod->db->getValidDBName($alias);
                     }
                 }
             }
             if ($index < (count($select_fields) - 1)) {
-                $field_select .= ",";
+                $field_select .= ',';
                 $index++;
             }
         }//end foreach
-        $query = "SELECT $field_select FROM $table $table_alias ";
+        $query = "SELECT {$field_select} FROM {$table} {$table_alias} ";
     } else {
-        $query = "SELECT rt.* FROM  $table $table_alias ";
+        $query = "SELECT rt.* FROM  {$table} {$table_alias} ";
     }
 
     if ($has_join == false) {
-        $query .= " inner join $mod->table_name m2 on $table_alias.$mod2_key = m2.id AND m2.id = '$current_user->id'";
+        $query .= " inner join {$mod->table_name} m2 on {$table_alias}.{$mod2_key} = m2.id AND m2.id = '{$current_user->id}'";
     } else {
-        $query .= " inner join $mod->table_name m1 on rt.$mod_key = m1.id ";
-        $query .= " inner join $mod2->table_name m2 on rt.$mod2_key = m2.id AND m2.id = '$current_user->id'";
+        $query .= " inner join {$mod->table_name} m1 on rt.{$mod_key} = m1.id ";
+        $query .= " inner join {$mod2->table_name} m2 on rt.{$mod2_key} = m2.id AND m2.id = '{$current_user->id}'";
     }
 
     if (!empty($relationship_query)) {
-        $query .= ' WHERE ' . string_format($relationship_query, array($table_alias));
+        $query .= ' WHERE ' . string_format($relationship_query, [$table_alias]);
     }
 
     if ($max_results != '-99') {
@@ -272,19 +266,20 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
     }
 
     $total_count = !empty($result_list) ? count($result_list) : 0;
-    return array('table_name'=>$table, 'result'=>$result_list, 'total_count'=>$total_count, 'error'=>$error->get_soap_array());
+
+    return ['table_name' => $table, 'result' => $result_list, 'total_count' => $total_count, 'error' => $error->get_soap_array()];
 }
 
 function server_save_relationships($list, $from_date, $to_date)
 {
-    require_once('include/utils/db_utils.php');
+    require_once 'include/utils/db_utils.php';
     global  $beanList, $beanFiles;
-    $from_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
-    $to_date = DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime');
+    $from_date = DBManager::convert("'" . DBManagerFactory::getInstance()->quote($from_date) . "'", 'datetime');
+    $to_date = DBManager::convert("'" . DBManagerFactory::getInstance()->quote($to_date) . "'", 'datetime');
     global $sugar_config;
     $db = DBManagerFactory::getInstance();
 
-    $ids = array();
+    $ids = [];
     $add = 0;
     $modify = 0;
     $deleted = 0;
@@ -293,8 +288,8 @@ function server_save_relationships($list, $from_date, $to_date)
         $insert = '';
         $insert_values = '';
         $update = '';
-        $select_values	= '';
-        $args = array();
+        $select_values = '';
+        $args = [];
 
         $id = $record['id'];
 
@@ -307,32 +302,32 @@ function server_save_relationships($list, $from_date, $to_date)
             if ($name == 'date_modified') {
                 $value = $to_date;
             } else {
-                $value = DBManager::convert("'".DBManagerFactory::getInstance()->quote($name_value['value'])."'", 'varchar');
+                $value = DBManager::convert("'" . DBManagerFactory::getInstance()->quote($name_value['value']) . "'", 'varchar');
             }
             if ($name != 'resolve') {
                 if (empty($insert)) {
-                    $insert = '('	.$name;
-                    $insert_values = '('	.$value;
+                    $insert = '(' . $name;
+                    $insert_values = '(' . $value;
                     if ($name != 'date_modified' && $name != 'id') {
-                        $select_values = $name ."=$value";
+                        $select_values = $name . "={$value}";
                     }
                     if ($name != 'id') {
-                        $update = $name ."=$value";
+                        $update = $name . "={$value}";
                     }
                 } else {
-                    $insert .= ', '	.$name;
-                    $insert_values .= ', '	.$value;
+                    $insert .= ', ' . $name;
+                    $insert_values .= ', ' . $value;
                     if (empty($update)) {
-                        $update .= $name."=$value";
+                        $update .= $name . "={$value}";
                     } else {
-                        $update .= ','.$name."=$value";
+                        $update .= ',' . $name . "={$value}";
                     }
 
                     if ($name != 'date_modified' && $name != 'id') {
                         if (empty($select_values)) {
-                            $select_values = $name ."=$value";
+                            $select_values = $name . "={$value}";
                         } else {
-                            $select_values .= ' AND '.$name ."=$value";
+                            $select_values .= ' AND ' . $name . "={$value}";
                         }
                     }
                 }
@@ -342,14 +337,13 @@ function server_save_relationships($list, $from_date, $to_date)
         }
         //ignore resolve for now server always wins
         $resolve = 1;
-        $insert = "INSERT INTO $table_name $insert) VALUES $insert_values)";
-        $update = "UPDATE $table_name SET $update WHERE id=";
-        $delete = "DELETE FROM $table_name WHERE id=";
-        $select_by_id_date = "SELECT id FROM $table_name WHERE id ='".DBManagerFactory::getInstance()->quote($id)."' AND date_modified > $from_date AND date_modified<= $to_date";
-        $select_by_id = "SELECT id FROM $table_name WHERE id ='".DBManagerFactory::getInstance()->quote($id)."'";
-        $select_by_values = "SELECT id FROM $table_name WHERE $select_values";
+        $insert = "INSERT INTO {$table_name} {$insert}) VALUES {$insert_values})";
+        $update = "UPDATE {$table_name} SET {$update} WHERE id=";
+        $delete = "DELETE FROM {$table_name} WHERE id=";
+        $select_by_id_date = "SELECT id FROM {$table_name} WHERE id ='" . DBManagerFactory::getInstance()->quote($id) . "' AND date_modified > {$from_date} AND date_modified<= {$to_date}";
+        $select_by_id = "SELECT id FROM {$table_name} WHERE id ='" . DBManagerFactory::getInstance()->quote($id) . "'";
+        $select_by_values = "SELECT id FROM {$table_name} WHERE {$select_values}";
         $updated = false;
-
 
         $result = $db->query($select_by_id_date);
         //see if we have a matching id in the date_range
@@ -360,7 +354,7 @@ function server_save_relationships($list, $from_date, $to_date)
             if (!($row = $db->fetchByAssoc($result))) {
                 $result = $db->query($select_by_id);
                 if ($row = $db->fetchByAssoc($result)) {
-                    $db->query($update ."'".DBManagerFactory::getInstance()->quote($row['id'])."'");
+                    $db->query($update . "'" . DBManagerFactory::getInstance()->quote($row['id']) . "'");
                     $ids[] = $row['id'];
                     $modify++;
                 } else {
@@ -371,14 +365,11 @@ function server_save_relationships($list, $from_date, $to_date)
             }
         }
     }
-    return array('add'=>$add, 'modify'=>$modify, 'ids'=>$ids);
+
+    return ['add' => $add, 'modify' => $modify, 'ids' => $ids];
 }
 
-/*
- *
- * gets the from statement from a query without the order by and without the select
- *
- */
+// gets the from statement from a query without the order by and without the select
 function get_from_statement($query)
 {
     $query = explode('FROM', $query);
@@ -394,16 +385,18 @@ function retrieve_relationship_query($module_name, $related_module, $relationshi
 {
     global  $beanList, $beanFiles, $dictionary, $current_user;
     $error = new SoapError();
-    $result_list = array();
+    $result_list = [];
     if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
         $error->set_error('no_module');
-        return array('query' =>"", 'module_1'=>"", 'join_table' =>"", 'error'=>$error->get_soap_array());
+
+        return ['query' => '', 'module_1' => '', 'join_table' => '', 'error' => $error->get_soap_array()];
     }
 
     $row = retrieve_relationships_properties($module_name, $related_module);
     if (empty($row)) {
         $error->set_error('no_relationship_support');
-        return array('query' =>"", 'module_1'=>"", 'join_table' =>"", 'error'=>$error->get_soap_array());
+
+        return ['query' => '', 'module_1' => '', 'join_table' => '', 'error' => $error->get_soap_array()];
     }
 
     $module_1 = $row['lhs_module'];
@@ -413,25 +406,24 @@ function retrieve_relationship_query($module_name, $related_module, $relationshi
 
     $table = $row['join_table'];
     if (empty($table)) {
-        return array('query' =>"", 'module_1'=>"", 'join_table' =>"", 'error'=>$error->get_soap_array());
+        return ['query' => '', 'module_1' => '', 'join_table' => '', 'error' => $error->get_soap_array()];
     }
     $class_name = $beanList[$module_1];
-    require_once($beanFiles[$class_name]);
+    require_once $beanFiles[$class_name];
     $mod = new $class_name();
 
     $mod2_name = $beanList[$module_2];
-    require_once($beanFiles[$mod2_name]);
+    require_once $beanFiles[$mod2_name];
     $mod2 = new $mod2_name();
-    $query = "SELECT rt.* FROM  $table rt ";
-    $query .= " inner join $mod->table_name m1 on rt.$mod_key = m1.id ";
-    $query .= " inner join $mod2->table_name m2 on rt.$mod2_key = m2.id  ";
-
+    $query = "SELECT rt.* FROM  {$table} rt ";
+    $query .= " inner join {$mod->table_name} m1 on rt.{$mod_key} = m1.id ";
+    $query .= " inner join {$mod2->table_name} m2 on rt.{$mod2_key} = m2.id  ";
 
     if (!empty($relationship_query)) {
         $query .= ' WHERE ' . $relationship_query;
     }
 
-    return array('query' =>$query, 'module_1'=>$module_1, 'join_table' => $table, 'error'=>$error->get_soap_array());
+    return ['query' => $query, 'module_1' => $module_1, 'join_table' => $table, 'error' => $error->get_soap_array()];
 }
 
 // Returns name of 'link' field between two given modules
@@ -445,7 +437,7 @@ function get_module_link_field($module_1, $module_2)
     }
 
     $class_1 = $beanList[$module_1];
-    require_once($beanFiles[$class_1]);
+    require_once $beanFiles[$class_1];
 
     $obj_1 = new $class_1();
 
@@ -454,11 +446,11 @@ function get_module_link_field($module_1, $module_2)
         $obj_1->load_relationship($linked_field['name']);
         $field = $linked_field['name'];
 
-        if (empty($obj_1->$field)) {
+        if (empty($obj_1->{$field})) {
             continue;
         }
 
-        if ($obj_1->$field->getRelatedModuleName() == $module_2) {
+        if ($obj_1->{$field}->getRelatedModuleName() == $module_2) {
             return $field;
         }
     }
@@ -474,7 +466,7 @@ function get_linked_records($get_module, $from_module, $get_id)
 
     // instantiate and retrieve $from_module
     $from_class = $beanList[$from_module];
-    require_once($beanFiles[$from_class]);
+    require_once $beanFiles[$from_class];
     $from_mod = new $from_class();
     $from_mod->retrieve($get_id);
 
@@ -484,15 +476,16 @@ function get_linked_records($get_module, $from_module, $get_id)
     }
 
     $from_mod->load_relationship($field);
-    $id_arr = $from_mod->$field->get();
+    $id_arr = $from_mod->{$field}->get();
 
     //bug: 38065
     if ($get_module == 'EmailAddresses') {
         $emails = $from_mod->emailAddress->addresses;
-        $email_arr = array();
+        $email_arr = [];
         foreach ($emails as $email) {
             $email_arr[] = $email['email_address_id'];
         }
+
         return $email_arr;
     }
 

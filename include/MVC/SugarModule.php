@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class SugarModule
 {
-    protected static $_instances = array();
+    protected static $_instances = [];
 
     protected $_moduleName;
 
+    public function __construct(
+        $moduleName
+    ) {
+        $this->_moduleName = $moduleName;
+    }
+
     public static function get(
         $moduleName
-        ) {
+    ) {
         if (!isset(self::$_instances[$moduleName])) {
             self::$_instances[$moduleName] = new SugarModule($moduleName);
         }
@@ -58,21 +62,16 @@ class SugarModule
         return self::$_instances[$moduleName];
     }
 
-    public function __construct(
-        $moduleName
-        ) {
-        $this->_moduleName = $moduleName;
-    }
-
     /**
-     * Returns true if the given module implements the indicated template
+     * Returns true if the given module implements the indicated template.
      *
      * @param  string $template
+     *
      * @return bool
      */
     public function moduleImplements(
         $template
-        ) {
+    ) {
         $focus = self::loadBean();
 
         if (!$focus) {
@@ -83,7 +82,11 @@ class SugarModule
     }
 
     /**
-     * Returns the bean object of the given module
+     * Returns the bean object of the given module.
+     *
+     * @param null|mixed $beanList
+     * @param null|mixed $beanFiles
+     * @param mixed $returnObject
      *
      * @return object
      */
@@ -97,7 +100,7 @@ class SugarModule
             global $beanFiles;
         }
         if (!isset($beanList) || !isset($beanFiles)) {
-            require('include/modules.php');
+            require 'include/modules.php';
         }
 
         if (isset($beanList[$this->_moduleName])) {
@@ -109,8 +112,8 @@ class SugarModule
                 if (!is_file($beanFiles[$bean])) {
                     return false;
                 }
-                require_once($beanFiles[$bean]);
-                $focus = new $bean;
+                require_once $beanFiles[$bean];
+                $focus = new $bean();
             } else {
                 return false;
             }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['Case'] = array(
+$dictionary['Case'] = [
     'table' => 'cases',
     'audited' => true,
     'unified_search' => true,
@@ -50,14 +48,14 @@ $dictionary['Case'] = array(
     'unified_search_default_enabled' => true,
     'duplicate_merge' => true,
     'comment' => 'Cases are issues or problems that a customer asks a support representative to resolve',
-    'fields' => array(
-        'suggestion_box' => array(
+    'fields' => [
+        'suggestion_box' => [
             'name' => 'suggestion_box',
             'vname' => 'LBL_SUGGESTION_BOX',
             'type' => 'readonly',
             'source' => 'non-db',
-        ),
-        'description' => array(
+        ],
+        'description' => [
             'name' => 'description',
             'vname' => 'LBL_DESCRIPTION',
             'type' => 'text',
@@ -65,9 +63,9 @@ $dictionary['Case'] = array(
             'comment' => 'Full text of the description',
             'rows' => 6,
             'cols' => 80,
-        ),
+        ],
 
-        'account_name' => array(
+        'account_name' => [
             'name' => 'account_name',
             'rname' => 'name',
             'id_name' => 'account_id',
@@ -85,16 +83,16 @@ $dictionary['Case'] = array(
             'comment' => 'The name of the account represented by the account_id field',
             'required' => true,
             'importable' => 'required',
-        ),
-        'account_name1' => array(
+        ],
+        'account_name1' => [
             'name' => 'account_name1',
             'source' => 'non-db',
             'type' => 'text',
             'len' => 100,
             'importable' => 'false',
-            'studio' => array("formula" => false),
-        ),
-        'account_id' => array(
+            'studio' => ['formula' => false],
+        ],
+        'account_id' => [
             'name' => 'account_id',
             'type' => 'relate',
             'dbType' => 'id',
@@ -106,9 +104,9 @@ $dictionary['Case'] = array(
             'audited' => true,
             'massupdate' => false,
             'comment' => 'The account to which the case is associated'
-        ),
+        ],
 
-        'state' => array(
+        'state' => [
             'name' => 'state',
             'vname' => 'LBL_STATE',
             'type' => 'enum',
@@ -119,8 +117,8 @@ $dictionary['Case'] = array(
             'default' => 'Open',
             'parentenum' => 'status',
             'merge_filter' => 'disabled',
-        ),
-        'status' => array(
+        ],
+        'status' => [
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'dynamicenum',
@@ -130,8 +128,8 @@ $dictionary['Case'] = array(
             'comment' => 'The status of the case',
             'dbtype' => 'enum',
             'parentenum' => 'state',
-        ),
-        'priority' => array(
+        ],
+        'priority' => [
             'name' => 'priority',
             'vname' => 'LBL_PRIORITY',
             'type' => 'enum',
@@ -139,17 +137,16 @@ $dictionary['Case'] = array(
             'len' => 100,
             'audited' => true,
             'comment' => 'The priority of the case',
-
-        ),
-        'resolution' => array(
+        ],
+        'resolution' => [
             'name' => 'resolution',
             'vname' => 'LBL_RESOLUTION',
             'type' => 'text',
             'comment' => 'The resolution of the case',
             'rows' => 6,
             'cols' => 80,
-        ),
-        'case_attachments_display' => array(
+        ],
+        'case_attachments_display' => [
             'required' => false,
             'name' => 'case_attachments_display',
             'vname' => 'LBL_CASE_ATTACHMENTS_DISPLAY',
@@ -162,13 +159,13 @@ $dictionary['Case'] = array(
             'duplicate_merge_dom_value' => 0,
             'audited' => false,
             'reportable' => false,
-            'function' => array(
+            'function' => [
                 'name' => 'display_case_attachments',
                 'returns' => 'html',
                 'include' => 'modules/AOP_Case_Updates/Case_Updates.php',
-            ),
-        ),
-        'case_update_form' => array(
+            ],
+        ],
+        'case_update_form' => [
             'required' => false,
             'name' => 'case_update_form',
             'vname' => 'LBL_CASE_UPDATE_FORM',
@@ -181,13 +178,13 @@ $dictionary['Case'] = array(
             'duplicate_merge_dom_value' => 0,
             'audited' => false,
             'reportable' => false,
-            'function' => array(
+            'function' => [
                 'name' => 'display_update_form',
                 'returns' => 'html',
                 'include' => 'modules/AOP_Case_Updates/Case_Updates.php',
-            ),
-        ),
-        'contact_created_by' => array(
+            ],
+        ],
+        'contact_created_by' => [
             'name' => 'contact_created_by',
             'type' => 'link',
             'relationship' => 'cases_created_contact',
@@ -198,8 +195,8 @@ $dictionary['Case'] = array(
             'vname' => 'LBL_CONTACT_CREATED_BY',
             'side' => 'left',
             'id_name' => 'contact_created_by_id',
-        ),
-        'contact_created_by_name' => array(
+        ],
+        'contact_created_by_name' => [
             'name' => 'contact_created_by_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -210,72 +207,72 @@ $dictionary['Case'] = array(
             'table' => 'Contacts',
             'module' => 'Contacts',
             'rname' => 'name',
-        ),
-        'contact_created_by_id' => array(
+        ],
+        'contact_created_by_id' => [
             'name' => 'contact_created_by_id',
             'type' => 'id',
             'reportable' => false,
             'vname' => 'LBL_CONTACT_CREATED_BY_ID',
-        ),
+        ],
 
-        'tasks' => array(
+        'tasks' => [
             'name' => 'tasks',
             'type' => 'link',
             'relationship' => 'case_tasks',
             'source' => 'non-db',
             'vname' => 'LBL_TASKS',
-        ),
-        'notes' => array(
+        ],
+        'notes' => [
             'name' => 'notes',
             'type' => 'link',
             'relationship' => 'case_notes',
             'source' => 'non-db',
             'vname' => 'LBL_NOTES',
-        ),
-        'meetings' => array(
+        ],
+        'meetings' => [
             'name' => 'meetings',
             'type' => 'link',
             'relationship' => 'case_meetings',
             'bean_name' => 'Meeting',
             'source' => 'non-db',
             'vname' => 'LBL_MEETINGS',
-        ),
-        'emails' => array(
+        ],
+        'emails' => [
             'name' => 'emails',
             'type' => 'link',
             'relationship' => 'emails_cases_rel',
             'source' => 'non-db',
             'vname' => 'LBL_EMAILS',
-        ),
-        'documents' => array(
+        ],
+        'documents' => [
             'name' => 'documents',
             'type' => 'link',
             'relationship' => 'documents_cases',
             'source' => 'non-db',
             'vname' => 'LBL_DOCUMENTS_SUBPANEL_TITLE',
-        ),
-        'calls' => array(
+        ],
+        'calls' => [
             'name' => 'calls',
             'type' => 'link',
             'relationship' => 'case_calls',
             'source' => 'non-db',
             'vname' => 'LBL_CALLS',
-        ),
-        'bugs' => array(
+        ],
+        'bugs' => [
             'name' => 'bugs',
             'type' => 'link',
             'relationship' => 'cases_bugs',
             'source' => 'non-db',
             'vname' => 'LBL_BUGS',
-        ),
-        'contacts' => array(
+        ],
+        'contacts' => [
             'name' => 'contacts',
             'type' => 'link',
             'relationship' => 'contacts_cases',
             'source' => 'non-db',
             'vname' => 'LBL_CONTACTS',
-        ),
-        'accounts' => array(
+        ],
+        'accounts' => [
             'name' => 'accounts',
             'type' => 'link',
             'relationship' => 'account_cases',
@@ -283,15 +280,15 @@ $dictionary['Case'] = array(
             'side' => 'right',
             'source' => 'non-db',
             'vname' => 'LBL_ACCOUNT',
-        ),
-        'project' => array(
+        ],
+        'project' => [
             'name' => 'project',
             'type' => 'link',
             'relationship' => 'projects_cases',
             'source' => 'non-db',
             'vname' => 'LBL_PROJECTS',
-        ),
-        'update_text' => array(
+        ],
+        'update_text' => [
             'required' => false,
             'name' => 'update_text',
             'vname' => 'LBL_UPDATE_TEXT',
@@ -315,15 +312,15 @@ $dictionary['Case'] = array(
             'rows' => 6,
             'cols' => 80,
             'id' => 'Casesupdate_text',
-        ),
-        'internal' => array(
+        ],
+        'internal' => [
             'name' => 'internal',
             'source' => 'non-db',
             'vname' => 'LBL_INTERNAL',
             'type' => 'bool',
             'studio' => 'visible',
-        ),
-        'aop_case_updates_threaded' => array(
+        ],
+        'aop_case_updates_threaded' => [
             'required' => false,
             'name' => 'aop_case_updates_threaded',
             'vname' => 'LBL_AOP_CASE_UPDATES_THREADED',
@@ -337,41 +334,41 @@ $dictionary['Case'] = array(
             'audited' => false,
             'reportable' => false,
             'inline_edit' => 0,
-            'function' => array(
+            'function' => [
                 'name' => 'display_updates',
                 'returns' => 'html',
                 'include' => 'modules/AOP_Case_Updates/Case_Updates.php',
-            ),
-        ),
-        'aop_case_updates' => array(
+            ],
+        ],
+        'aop_case_updates' => [
             'name' => 'aop_case_updates',
             'type' => 'link',
             'relationship' => 'cases_aop_case_updates',
             'source' => 'non-db',
             'id_name' => 'case_id',
             'vname' => 'LBL_AOP_CASE_UPDATES',
-        ),
-        'aop_case_events' => array(
+        ],
+        'aop_case_events' => [
             'name' => 'aop_case_events',
             'type' => 'link',
             'relationship' => 'cases_aop_case_events',
             'source' => 'non-db',
             'id_name' => 'case_id',
             'vname' => 'LBL_AOP_CASE_EVENTS',
-        ),
-    ),
-    'indices' => array(
-        array('name' => 'case_number', 'type' => 'index', 'fields' => array('case_number')),
-        array('name' => 'idx_case_name', 'type' => 'index', 'fields' => array('name')),
-        array('name' => 'idx_account_id', 'type' => 'index', 'fields' => array('account_id')),
-        array(
+        ],
+    ],
+    'indices' => [
+        ['name' => 'case_number', 'type' => 'index', 'fields' => ['case_number']],
+        ['name' => 'idx_case_name', 'type' => 'index', 'fields' => ['name']],
+        ['name' => 'idx_account_id', 'type' => 'index', 'fields' => ['account_id']],
+        [
             'name' => 'idx_cases_stat_del',
             'type' => 'index',
-            'fields' => array('assigned_user_id', 'status', 'deleted')
-        ),
-    ),
-    'relationships' => array(
-        'case_calls' => array(
+            'fields' => ['assigned_user_id', 'status', 'deleted']
+        ],
+    ],
+    'relationships' => [
+        'case_calls' => [
             'lhs_module' => 'Cases',
             'lhs_table' => 'cases',
             'lhs_key' => 'id',
@@ -381,8 +378,8 @@ $dictionary['Case'] = array(
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'Cases'
-        ),
-        'case_tasks' => array(
+        ],
+        'case_tasks' => [
             'lhs_module' => 'Cases',
             'lhs_table' => 'cases',
             'lhs_key' => 'id',
@@ -392,8 +389,8 @@ $dictionary['Case'] = array(
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'Cases'
-        ),
-        'case_notes' => array(
+        ],
+        'case_notes' => [
             'lhs_module' => 'Cases',
             'lhs_table' => 'cases',
             'lhs_key' => 'id',
@@ -403,8 +400,8 @@ $dictionary['Case'] = array(
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'Cases'
-        ),
-        'case_meetings' => array(
+        ],
+        'case_meetings' => [
             'lhs_module' => 'Cases',
             'lhs_table' => 'cases',
             'lhs_key' => 'id',
@@ -414,8 +411,8 @@ $dictionary['Case'] = array(
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'Cases'
-        ),
-        'case_emails' => array(
+        ],
+        'case_emails' => [
             'lhs_module' => 'Cases',
             'lhs_table' => 'cases',
             'lhs_key' => 'id',
@@ -425,8 +422,8 @@ $dictionary['Case'] = array(
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'Cases'
-        ),
-        'cases_assigned_user' => array(
+        ],
+        'cases_assigned_user' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -434,8 +431,8 @@ $dictionary['Case'] = array(
             'rhs_table' => 'cases',
             'rhs_key' => 'assigned_user_id',
             'relationship_type' => 'one-to-many'
-        ),
-        'cases_modified_user' => array(
+        ],
+        'cases_modified_user' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -443,8 +440,8 @@ $dictionary['Case'] = array(
             'rhs_table' => 'cases',
             'rhs_key' => 'modified_user_id',
             'relationship_type' => 'one-to-many'
-        ),
-        'cases_created_by' => array(
+        ],
+        'cases_created_by' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -452,9 +449,9 @@ $dictionary['Case'] = array(
             'rhs_table' => 'cases',
             'rhs_key' => 'created_by',
             'relationship_type' => 'one-to-many'
-        ),
+        ],
 
-        'cases_created_contact' => array(
+        'cases_created_contact' => [
             'lhs_module' => 'Contacts',
             'lhs_table' => 'contacts',
             'lhs_key' => 'id',
@@ -462,18 +459,18 @@ $dictionary['Case'] = array(
             'rhs_table' => 'cases',
             'rhs_key' => 'contact_created_by_id',
             'relationship_type' => 'one-to-many',
-        ),
-    ),
+        ],
+    ],
     'optimistic_locking' => true,
-);
+];
 VardefManager::createVardef(
     'Cases',
     'Case',
-    array(
+    [
         'default',
         'assignable',
         'security_groups',
         'issue',
-    ),
+    ],
     'case'
 );

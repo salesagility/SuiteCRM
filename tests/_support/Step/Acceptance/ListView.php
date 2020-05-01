@@ -2,13 +2,14 @@
 
 namespace Step\Acceptance;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class ListView extends Tester
 {
-
     /**
-     * Click on the name of a record
+     * Click on the name of a record.
+     *
+     * @param mixed $name
      */
     public function clickNameLink($name)
     {
@@ -18,7 +19,7 @@ class ListView extends Tester
     }
 
     /**
-     * Click on the filter button
+     * Click on the filter button.
      */
     public function clickFilterButton()
     {
@@ -29,7 +30,7 @@ class ListView extends Tester
     }
 
     /**
-     * Clears the list-view filter
+     * Clears the list-view filter.
      */
     public function clearFilterButton()
     {
@@ -42,9 +43,8 @@ class ListView extends Tester
     }
 
     /**
-     * Wait for for the list view to become visible
+     * Wait for for the list view to become visible.
      */
-
     public function waitForListViewVisible()
     {
         $I = $this;

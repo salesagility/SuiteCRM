@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/DynamicFields/templates/Fields/TemplateCurrencyId.php');
-require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateCurrencyId.php';
+require_once 'modules/DynamicFields/templates/Fields/TemplateRange.php';
 
 class TemplateCurrency extends TemplateRange
 {
     public $max_size = 25;
-    public $len = 26 ;
+    public $len = 26;
     public $precision = 6;
-    public $type='currency';
+    public $type = 'currency';
 
     public function delete($df)
     {
@@ -81,13 +79,15 @@ class TemplateCurrency extends TemplateRange
     {
         $def = parent::get_field_def();
         $def['precision'] = (!empty($this->precision)) ? $this->precision : 6;
+
         return $def;
     }
 
     public function get_db_type()
     {
         $precision = (!empty($this->precision)) ? $this->precision : 6;
-        $len = (!empty($this->len)) ? $this->len:26;
-        return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $len, $precision);
+        $len = (!empty($this->len)) ? $this->len : 26;
+
+        return ' ' . sprintf(DBManagerFactory::getInstance()->getColumnType('decimal_tpl'), $len, $precision);
     }
 }

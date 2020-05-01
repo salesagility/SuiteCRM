@@ -1,6 +1,7 @@
 <?php
+
 //if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,8 +40,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $sugar_version, $js_custom_version;
 if (!isset($install_script) || !$install_script) {
     die('Unable to process script directly.');
@@ -53,10 +52,10 @@ if (!isset($_SESSION['license_submitted']) || !$_SESSION['license_submitted']) {
 
 $checked = (isset($_SESSION['setup_license_accept']) && !empty($_SESSION['setup_license_accept'])) ? 'checked="on"' : '';
 
-require_once("install/install_utils.php");
-$license_file = getLicenseContents("LICENSE.txt");
+require_once 'install/install_utils.php';
+$license_file = getLicenseContents('LICENSE.txt');
 $langHeader = get_language_header();
-$out =<<<EOQ
+$out = <<<EOQ
 <!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
@@ -151,7 +150,7 @@ function callSysCheck(){
                         scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}</p>";
                         scsbody += "<div id='cntDown'>{$mod_strings['LBL_THREE']}</div>";
                         scsbody += "</td></tr></table>";
-                        scsbody += "<script>countdown(3);<\/script>";
+                        scsbody += "<script>countdown(3);<\\/script>";
                         msgPanel.setBody(scsbody);
                         msgPanel.render();
                         countdown(3);

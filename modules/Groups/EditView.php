@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,20 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
 global $app_strings;
 global $app_list_strings;
 global $mod_strings;
 global $theme;
 
-
 $focus = new Group();
 
 if (!is_admin($current_user) && $_REQUEST['record'] != $current_user->id) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 }
 if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
@@ -62,33 +58,33 @@ if (isset($_REQUEST['record'])) {
     $focus->default_team = $focus->fetched_row['default_team'];
 }
 if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
-    $focus->id = "";
-    $focus->user_name = "";
+    $focus->id = '';
+    $focus->user_name = '';
 }
 
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->last_name." (".$focus->user_name.")"), true);
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_MODULE_NAME'], $focus->last_name . ' (' . $focus->user_name . ')'], true);
 
-$GLOBALS['log']->info("Groups edit view");
-$xtpl= new XTemplate('modules/Groups/EditView.html');
-$xtpl->assign("MOD", $mod_strings);
-$xtpl->assign("APP", $app_strings);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
-$xtpl->assign("ID", $focus->id);
-$xtpl->assign("USER_NAME", $focus->user_name);
-$xtpl->assign("DESCRIPTION", $focus->description);
+$GLOBALS['log']->info('Groups edit view');
+$xtpl = new XTemplate('modules/Groups/EditView.html');
+$xtpl->assign('MOD', $mod_strings);
+$xtpl->assign('APP', $app_strings);
+$xtpl->assign('PRINT_URL', 'index.php?' . $GLOBALS['request_string']);
+$xtpl->assign('ID', $focus->id);
+$xtpl->assign('USER_NAME', $focus->user_name);
+$xtpl->assign('DESCRIPTION', $focus->description);
 
 if (isset($_REQUEST['return_module'])) {
-    $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
+    $xtpl->assign('RETURN_MODULE', $_REQUEST['return_module']);
 }
 if (isset($_REQUEST['return_action'])) {
-    $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
+    $xtpl->assign('RETURN_ACTION', $_REQUEST['return_action']);
 }
 if (isset($_REQUEST['return_id'])) {
-    $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+    $xtpl->assign('RETURN_ID', $_REQUEST['return_id']);
 }
 // handle Create $module then Cancel
 if (empty($_REQUEST['return_id'])) {
-    $xtpl->assign("RETURN_ACTION", 'index');
+    $xtpl->assign('RETURN_ACTION', 'index');
 }
-$xtpl->parse("main");
-$xtpl->out("main");
+$xtpl->parse('main');
+$xtpl->out('main');

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,49 +40,48 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateText.php';
 class TemplateImage extends TemplateText
 {
     public $type = 'image';
-        
-    public function get_field_def()
-    {
-        $def = parent::get_field_def();
-        $def['studio'] = 'visible';
-        $def['type'] = 'image';
-        $def['dbType'] = 'varchar';
-        $def['len']= 255;
-        
-        if (isset($this->ext1)) {
-            $def[ 'border' ] 	= $this->ext1 ;
-        }
-        if (isset($this->ext2)) {
-            $def[ 'width' ] 	= $this->ext2 ;
-        }
-        if (isset($this->ext3)) {
-            $def[ 'height' ] 	= $this->ext3 ;
-        }
-        if (isset($this->border)) {
-            $def[ 'border' ] 	= $this->border ;
-        }
-        if (isset($this->width)) {
-            $def[ 'width' ] 	= $this->width ;
-        }
-        if (isset($this->height)) {
-            $def[ 'height' ] 	= $this->height ;
-        }
-        
-        return $def;
-    }
-    
+
     public function __construct()
     {
         $this->vardef_map['border'] = 'ext1';
         $this->vardef_map['width'] = 'ext2';
         $this->vardef_map['height'] = 'ext3';
     }
-    
+
+    public function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['studio'] = 'visible';
+        $def['type'] = 'image';
+        $def['dbType'] = 'varchar';
+        $def['len'] = 255;
+
+        if (isset($this->ext1)) {
+            $def['border'] = $this->ext1;
+        }
+        if (isset($this->ext2)) {
+            $def['width'] = $this->ext2;
+        }
+        if (isset($this->ext3)) {
+            $def['height'] = $this->ext3;
+        }
+        if (isset($this->border)) {
+            $def['border'] = $this->border;
+        }
+        if (isset($this->width)) {
+            $def['width'] = $this->width;
+        }
+        if (isset($this->height)) {
+            $def['height'] = $this->height;
+        }
+
+        return $def;
+    }
+
     public function set($values)
     {
         parent::set($values);

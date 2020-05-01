@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,22 +36,19 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class SyncInboundEmailAccountsPage
+ * Class SyncInboundEmailAccountsPage.
  *
  * Handle the page of 'Sync Inbound Email Accounts' menu item in Admin page / Repair section
  * - handle the current sub/ajax actions
  * - sync email-UID and orphaned field in email module
- *
  */
 class SyncInboundEmailAccountsPage
 {
-
     /**
      * @var array
      */
@@ -75,7 +71,6 @@ class SyncInboundEmailAccountsPage
      */
     public function __construct($includeData, ImapHandlerInterface $imap)
     {
-
         // create object state
 
         $this->includeData = $includeData;
@@ -88,7 +83,7 @@ class SyncInboundEmailAccountsPage
     }
 
     /**
-     * Show basic UI for Sync Inbound Email Accounts
+     * Show basic UI for Sync Inbound Email Accounts.
      *
      * @param $ieList
      */

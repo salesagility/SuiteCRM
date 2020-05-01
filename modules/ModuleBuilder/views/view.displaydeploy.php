@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
 
 class ViewDisplaydeploy extends SugarView
 {
@@ -49,25 +47,24 @@ class ViewDisplaydeploy extends SugarView
         $smarty->assign('message', $GLOBALS['mod_strings']['LBL_DEPLOY_IN_PROGRESS']);
         $ajax = new AjaxCompose();
         $ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'], 'ModuleBuilder.main("mb")');
-        $ajax->addCrumb($_REQUEST['name'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$_REQUEST['name'].'")');
+        $ajax->addCrumb($_REQUEST['name'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package=' . $_REQUEST['name'] . '")');
         $ajax->addCrumb(translate('LBL_SECTION_DEPLOY', 'ModuleBuilder'), '');
         $ajax->addSection('center', translate('LBL_SECTION_DEPLOY', 'ModuleBuilder'), $smarty->fetch('modules/ModuleBuilder/tpls/MBPackage/deploy.tpl'));
         echo $ajax->getJavascript();
     }
 
-
-
-
     /**
      * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
      */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
 
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

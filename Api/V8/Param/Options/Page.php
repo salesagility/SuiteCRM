@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Api\V8\Param\PageParams;
@@ -11,7 +12,7 @@ class Page extends BaseOption
     const REGEX_PAGE_PATTERN = '/[^\d]/';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add(OptionsResolver $resolver)
     {

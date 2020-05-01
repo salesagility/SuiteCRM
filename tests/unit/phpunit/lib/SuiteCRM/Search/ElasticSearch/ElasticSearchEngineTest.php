@@ -1,6 +1,7 @@
 <?php
+
 /** @noinspection PhpUnhandledExceptionInspection */
-/**
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,13 +44,16 @@ use SuiteCRM\Search\SearchQuery;
 /** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
+/**
+ * @internal
+ */
 class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 {
     public function testValidateQuery()
     {
         $engine = new ElasticSearchEngine();
-        $str = " test AND test2 OR t-test3 ";
-        $exp = "test AND test2 OR t-test3";
+        $str = ' test AND test2 OR t-test3 ';
+        $exp = 'test AND test2 OR t-test3';
         $query = SearchQuery::fromString($str);
 
         $this->invokeMethod($engine, 'validateQuery', [&$query]);
@@ -60,7 +64,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     public function testCreateSearchParams1()
     {
         $engine = new ElasticSearchEngine();
-        $searchString = "hello search";
+        $searchString = 'hello search';
         $size = 30;
         $from = 5;
 
@@ -92,7 +96,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     public function testCreateSearchParams2()
     {
         $engine = new ElasticSearchEngine();
-        $searchString = "test";
+        $searchString = 'test';
         $size = 30;
 
         $query = SearchQuery::fromString($searchString, $size);
@@ -122,7 +126,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testRunElasticSearch()
     {
-        $query = SearchQuery::fromString("a");
+        $query = SearchQuery::fromString('a');
 
         $mockedResults = $this->getMockedHits();
 
@@ -133,71 +137,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         $results = $params = $this->invokeMethod($engine, 'runElasticSearch', [$query]);
 
         self::assertEquals($mockedResults, $results);
-    }
-
-    /**
-     * @return array
-     */
-    private function getMockedHits()
-    {
-        $mockedResults = [
-            'took' => 5,
-            'timed_out' => false,
-            '_shards' =>
-                [
-                    'total' => 3,
-                    'successful' => 2,
-                    'skipped' => 0,
-                    'failed' => 0,
-                ],
-            'hits' =>
-                [
-                    'total' => 258,
-                    'max_score' => 1.0,
-                    'hits' =>
-                        [
-                            0 =>
-                                [
-                                    '_index' => 'main',
-                                    '_type' => 'Accounts',
-                                    '_id' => 'id1',
-                                    '_score' => 1.0,
-                                ],
-                            1 =>
-                                [
-                                    '_index' => 'main',
-                                    '_type' => 'Accounts',
-                                    '_id' => 'id2',
-                                    '_score' => 1.0,
-                                ],
-                            2 =>
-                                [
-                                    '_index' => 'main',
-                                    '_type' => 'Contacts',
-                                    '_id' => 'id3',
-                                    '_score' => 0.5,
-                                ],
-                        ]
-                ],
-        ];
-        return $mockedResults;
-    }
-
-    /**
-     * @param $mockedResults
-     * @return \Mockery\MockInterface
-     */
-    private function getMockedClient($mockedResults)
-    {
-        $client = Mockery::mock('Elasticsearch\Client');
-
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
-        $client
-            ->shouldReceive('search')
-            ->once()
-            ->andReturn($mockedResults);
-
-        return $client;
     }
 
     public function testParseHits()
@@ -213,24 +152,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($expectedResults, $results);
     }
 
-    /**
-     * @return array
-     */
-    private function getExpectedResultsForMockedHits()
-    {
-        $expectedResults = [
-            'Accounts' => [
-                'id1',
-                'id2'
-            ],
-            'Contacts' => [
-                'id3',
-            ]
-        ];
-
-        return $expectedResults;
-    }
-
     public function testParseEmptyHits()
     {
         $engine = new ElasticSearchEngine();
@@ -244,32 +165,12 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($expectedResults, $results);
     }
 
-    private function getMockedHitsEmpty()
-    {
-        return [
-            'took' => 1,
-            'timed_out' => false,
-            '_shards' =>
-                [
-                    'total' => 5,
-                    'successful' => 5,
-                    'skipped' => 0,
-                    'failed' => 0,
-                ],
-            'hits' => [
-                "total" => 0,
-                "max_score" => null,
-                "hits" => [],
-            ]
-        ];
-    }
-
     public function testSearch()
     {
         $mockedClient = $this->getMockedClient($this->getMockedHits());
         $engine = new ElasticSearchEngine($mockedClient);
         $expectedResults = $this->getExpectedResultsForMockedHits();
-        $query = SearchQuery::fromString("test");
+        $query = SearchQuery::fromString('test');
 
         $results = $engine->search($query);
 
@@ -290,5 +191,99 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         $actual = $engine->getIndex();
 
         self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    private function getMockedHits()
+    {
+        return [
+            'took' => 5,
+            'timed_out' => false,
+            '_shards' => [
+                'total' => 3,
+                'successful' => 2,
+                'skipped' => 0,
+                'failed' => 0,
+            ],
+            'hits' => [
+                'total' => 258,
+                'max_score' => 1.0,
+                'hits' => [
+                    0 => [
+                        '_index' => 'main',
+                        '_type' => 'Accounts',
+                        '_id' => 'id1',
+                        '_score' => 1.0,
+                    ],
+                    1 => [
+                        '_index' => 'main',
+                        '_type' => 'Accounts',
+                        '_id' => 'id2',
+                        '_score' => 1.0,
+                    ],
+                    2 => [
+                        '_index' => 'main',
+                        '_type' => 'Contacts',
+                        '_id' => 'id3',
+                        '_score' => 0.5,
+                    ],
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @param $mockedResults
+     *
+     * @return \Mockery\MockInterface
+     */
+    private function getMockedClient($mockedResults)
+    {
+        $client = Mockery::mock('Elasticsearch\Client');
+
+        // @noinspection PhpMethodParametersCountMismatchInspection
+        $client
+            ->shouldReceive('search')
+            ->once()
+            ->andReturn($mockedResults);
+
+        return $client;
+    }
+
+    /**
+     * @return array
+     */
+    private function getExpectedResultsForMockedHits()
+    {
+        return [
+            'Accounts' => [
+                'id1',
+                'id2'
+            ],
+            'Contacts' => [
+                'id3',
+            ]
+        ];
+    }
+
+    private function getMockedHitsEmpty()
+    {
+        return [
+            'took' => 1,
+            'timed_out' => false,
+            '_shards' => [
+                'total' => 5,
+                'successful' => 5,
+                'skipped' => 0,
+                'failed' => 0,
+            ],
+            'hits' => [
+                'total' => 0,
+                'max_score' => null,
+                'hits' => [],
+            ]
+        ];
     }
 }

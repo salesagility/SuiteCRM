@@ -2,7 +2,7 @@
 
 // modules/jjwg_Markers/controller.php
 
-include_once('include/utils.php');
+include_once 'include/utils.php';
 
 class jjwg_MarkersController extends SugarController
 {

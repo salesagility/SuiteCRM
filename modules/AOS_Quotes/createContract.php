@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
- * @package Advanced OpenSales for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,17 +18,15 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
     if (!(ACLController::checkAccess('AOS_Contracts', 'edit', true))) {
         ACLController::displayNoAccess();
         die;
     }
 
-    require_once('modules/AOS_Quotes/AOS_Quotes.php');
-    require_once('modules/AOS_Contracts/AOS_Contracts.php');
+    require_once 'modules/AOS_Quotes/AOS_Quotes.php';
+    require_once 'modules/AOS_Contracts/AOS_Contracts.php';
 
     //Setting values in Quotes
     $quote = new AOS_Quotes();
@@ -55,10 +53,10 @@
 
     $contract->save();
 
-    $group_id_map = array();
+    $group_id_map = [];
 
     //Setting Group Line Items
-    $sql = "SELECT * FROM aos_line_item_groups WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
+    $sql = "SELECT * FROM aos_line_item_groups WHERE parent_type = 'AOS_Quotes' AND parent_id = '" . $quote->id . "' AND deleted = 0";
 
     $result = $this->bean->db->query($sql);
     while ($row = $this->bean->db->fetchByAssoc($result)) {
@@ -90,9 +88,8 @@
         $group_id_map[$old_id] = $group_contract->id;
     }
 
-
     //Setting Line Items
-    $sql = "SELECT * FROM aos_products_quotes WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
+    $sql = "SELECT * FROM aos_products_quotes WHERE parent_type = 'AOS_Quotes' AND parent_id = '" . $quote->id . "' AND deleted = 0";
     $result = $this->bean->db->query($sql);
     while ($row = $this->bean->db->fetchByAssoc($result)) {
         $row['id'] = '';
@@ -118,11 +115,11 @@
     }
 
     //Setting contract quote relationship
-    require_once('modules/Relationships/Relationship.php');
+    require_once 'modules/Relationships/Relationship.php';
     $key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Contracts', $GLOBALS['db']);
     if (!empty($key)) {
         $quote->load_relationship($key);
-        $quote->$key->add($contract->id);
+        $quote->{$key}->add($contract->id);
     }
     ob_clean();
-    header('Location: index.php?module=AOS_Contracts&action=EditView&record='.$contract->id);
+    header('Location: index.php?module=AOS_Contracts&action=EditView&record=' . $contract->id);

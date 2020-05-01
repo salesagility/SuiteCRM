@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class BugTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -29,7 +32,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $bug);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $bug = new Bug();
 
@@ -41,7 +44,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $bug->get_summary_text());
     }
 
-    public function testcreate_list_query()
+    public function testcreateListQuery()
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
         $bug = new Bug();
@@ -57,7 +60,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
         $bug = new Bug();
@@ -73,7 +76,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $bug = new Bug();
 
@@ -86,7 +89,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $bug = new Bug();
         $bug->assigned_user_id = 1;
@@ -101,7 +104,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $bug->modified_by_name);
     }
 
-    public function testset_release()
+    public function testsetRelease()
     {
         $bug = new Bug();
         $bug->found_in_release = '1';
@@ -111,7 +114,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $bug->release_name);
     }
 
-    public function testset_fixed_in_release()
+    public function testsetFixedInRelease()
     {
         $bug = new Bug();
         $bug->found_in_release = '1';
@@ -121,12 +124,12 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $bug->fixed_in_release_name);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $bug = new Bug();
 
         //execute the method and verify that it retunrs expected results
-        $expected = array(
+        $expected = [
             'DELETED' => 0,
             'NAME' => '<em>blank</em>',
             'PRIORITY' => '',
@@ -135,13 +138,13 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
             'RELEASE' => null,
             'BUG_NUMBER' => null,
             'ENCODED_NAME' => null,
-        );
+        ];
 
         $actual = $bug->get_list_view_data();
         $this->assertSame($expected, $actual);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $bug = new Bug();
 
@@ -156,7 +159,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $bug = new Bug();
 
@@ -178,7 +181,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($bug->bug_number, $result->_tpl_vars['BUG_BUG_NUMBER']);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $bug = new Bug();
         $this->assertEquals(false, $bug->bean_implements('')); //test with blank value

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,93 +36,77 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary["emails_email_templates"] = array(
-  'true_relationship_type' => 'one-to-one',
-  'from_studio' => true,
-  'relationships' =>
-  array(
-    'emails_email_templates' =>
-    array(
-      'lhs_module' => 'Emails',
-      'lhs_table' => 'emails',
-      'lhs_key' => 'id',
-      'rhs_module' => 'EmailTemplates',
-      'rhs_table' => 'email_templates',
-      'rhs_key' => 'id',
-      'relationship_type' => 'many-to-many',
-      'join_table' => 'emails_email_templates',
-      'join_key_lhs' => 'emails_email_templates_ida',
-      'join_key_rhs' => 'emails_email_templates_idb',
-    ),
-  ),
-  'table' => 'emails_email_templates',
-  'fields' =>
-  array(
-    0 =>
-    array(
-      'name' => 'id',
-      'type' => 'varchar',
-      'len' => 36,
-    ),
-    1 =>
-    array(
-      'name' => 'date_modified',
-      'type' => 'datetime',
-    ),
-    2 =>
-    array(
-      'name' => 'deleted',
-      'type' => 'bool',
-      'len' => '1',
-      'default' => '0',
-      'required' => true,
-    ),
-    3 =>
-    array(
-      'name' => 'emails_email_templates_ida',
-      'type' => 'varchar',
-      'len' => 36,
-    ),
-    4 =>
-    array(
-      'name' => 'emails_email_templates_idb',
-      'type' => 'varchar',
-      'len' => 36,
-    ),
-  ),
-  'indices' =>
-  array(
-    0 =>
-    array(
-      'name' => 'emails_email_templatesspk',
-      'type' => 'primary',
-      'fields' =>
-      array(
-        0 => 'id',
-      ),
-    ),
-    1 =>
-    array(
-      'name' => 'emails_email_templates_ida1',
-      'type' => 'index',
-      'fields' =>
-      array(
-        0 => 'emails_email_templates_ida',
-      ),
-    ),
-    2 =>
-    array(
-      'name' => 'emails_email_templates_idb2',
-      'type' => 'index',
-      'fields' =>
-      array(
-        0 => 'emails_email_templates_idb',
-      ),
-    ),
-  ),
-);
+$dictionary['emails_email_templates'] = [
+    'true_relationship_type' => 'one-to-one',
+    'from_studio' => true,
+    'relationships' => [
+        'emails_email_templates' => [
+            'lhs_module' => 'Emails',
+            'lhs_table' => 'emails',
+            'lhs_key' => 'id',
+            'rhs_module' => 'EmailTemplates',
+            'rhs_table' => 'email_templates',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_email_templates',
+            'join_key_lhs' => 'emails_email_templates_ida',
+            'join_key_rhs' => 'emails_email_templates_idb',
+        ],
+    ],
+    'table' => 'emails_email_templates',
+    'fields' => [
+        0 => [
+            'name' => 'id',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+        1 => [
+            'name' => 'date_modified',
+            'type' => 'datetime',
+        ],
+        2 => [
+            'name' => 'deleted',
+            'type' => 'bool',
+            'len' => '1',
+            'default' => '0',
+            'required' => true,
+        ],
+        3 => [
+            'name' => 'emails_email_templates_ida',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+        4 => [
+            'name' => 'emails_email_templates_idb',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+    ],
+    'indices' => [
+        0 => [
+            'name' => 'emails_email_templatesspk',
+            'type' => 'primary',
+            'fields' => [
+                0 => 'id',
+            ],
+        ],
+        1 => [
+            'name' => 'emails_email_templates_ida1',
+            'type' => 'index',
+            'fields' => [
+                0 => 'emails_email_templates_ida',
+            ],
+        ],
+        2 => [
+            'name' => 'emails_email_templates_idb2',
+            'type' => 'index',
+            'fields' => [
+                0 => 'emails_email_templates_idb',
+            ],
+        ],
+    ],
+];

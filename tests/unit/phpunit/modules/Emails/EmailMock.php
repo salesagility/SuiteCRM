@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,20 +36,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * EmailMock
+ * EmailMock.
  *
  * @author gyula
  */
 class EmailMock extends Email
 {
     /**
-     *
      * @param int $err
      */
     public function setLastSaveAndStoreInSentErrorPublic($err)
@@ -59,11 +56,14 @@ class EmailMock extends Email
     }
 
     /**
-     * preps SMTP info for email transmission
+     * preps SMTP info for email transmission.
+     *
      * @param object $mail SugarPHPMailer object
      * @param string $mailer_id
      * @param string $ieId
+     *
      * @global $current_user
+     *
      * @return object mail SugarPHPMailer object
      */
     public function setMailer($mail, $mailer_id = '', $ieId = '')

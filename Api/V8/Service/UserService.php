@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -53,14 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * UserService
+ * UserService.
  *
  * @author gyula
  */
 class UserService
 {
-
-    
     /**
      * @var BeanManager
      */
@@ -90,8 +87,8 @@ class UserService
     }
 
     /**
-     *
      * @param Request $request
+     *
      * @return DocumentResponse
      */
     public function getCurrentUser(Request $request)
@@ -114,6 +111,7 @@ class UserService
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
+
         return $response;
     }
 }

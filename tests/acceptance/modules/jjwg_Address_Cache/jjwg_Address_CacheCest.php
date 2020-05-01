@@ -5,12 +5,12 @@ use Faker\Generator;
 class jjwg_Address_CacheCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class jjwg_Address_CacheCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the mapsAddressCache module.
+     * As an administrator I want to view the mapsAddressCache module
      */
     public function testScenarioViewMapsAddressCacheModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the mapsAddressCache module for testing');
 
@@ -54,13 +54,13 @@ class jjwg_Address_CacheCest
      * @param \Step\Acceptance\MapsAddressCache $mapsAddressCache
      *
      * As administrative user I want to create a maps address cache so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateMapsAddressCache(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsAddressCache $mapsAddressCache
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\MapsAddressCache $mapsAddressCache
     ) {
         $I->wantTo('Create maps address cache');
 
@@ -71,7 +71,7 @@ class jjwg_Address_CacheCest
 
         // Create maps address cache
         $this->fakeData->seed($this->fakeDataSeed);
-        $mapsAddressCache->createMapsAddressCache('Test_'. $this->fakeData->company());
+        $mapsAddressCache->createMapsAddressCache('Test_' . $this->fakeData->company());
 
         // Delete maps address cache
         $detailView->clickActionMenuItem('Delete');

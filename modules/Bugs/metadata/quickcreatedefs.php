@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,108 +41,82 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
-$viewdefs = array(
-  'Bugs' =>
-  array(
-    'QuickCreate' =>
-    array(
-      'templateMeta' =>
-      array(
-        'form' =>
-        array(
-          'hidden' =>
-          array(
-            0 => '<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
-            1 => '<input type="hidden" name="contact_id" value="{$smarty.request.contact_id}">',
-          ),
-        ),
-        'maxColumns' => '2',
-        'widths' =>
-        array(
-          0 =>
-          array(
-            'label' => '10',
-            'field' => '30',
-          ),
-          1 =>
-          array(
-            'label' => '10',
-            'field' => '30',
-          ),
-        ),
-      ),
-      'panels' =>
-      array(
-        'DEFAULT' =>
-        array(
-          0 =>
-          array(
-            0 =>
-            array(
-              'name' => 'priority',
-            ),
-            1 =>
-            array(
-              'name' => 'assigned_user_name',
-            ),
-          ),
-          1 =>
-          array(
-            0 =>
-            array(
-              'name' => 'source',
-            ),
-            1 =>
-            array(
-              'name' => 'team_name',
-            ),
-          ),
-          2 =>
-          array(
-            0 =>
-            array(
-              'name' => 'type',
-            ),
-            1 =>
-            array(
-              'name' => 'status',
-            ),
-          ),
-          3 =>
-          array(
-            0 =>
-            array(
-              'name' => 'product_category',
-            ),
-            1 =>
-            array(
-              'name' => 'found_in_release',
-            ),
-          ),
-          4 =>
-          array(
-            0 =>
-            array(
-              'name' => 'name',
-              'displayParams'=>array('required'=>true),
-            ),
-          ),
-          5 =>
-          array(
-            0 =>
-            array(
-              'name' => 'description',
-            ),
-          ),
-        ),
-      ),
-    ),
-  ),
-);
+ */
+
+$viewdefs = [
+    'Bugs' => [
+        'QuickCreate' => [
+            'templateMeta' => [
+                'form' => [
+                    'hidden' => [
+                        0 => '<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
+                        1 => '<input type="hidden" name="contact_id" value="{$smarty.request.contact_id}">',
+                    ],
+                ],
+                'maxColumns' => '2',
+                'widths' => [
+                    0 => [
+                        'label' => '10',
+                        'field' => '30',
+                    ],
+                    1 => [
+                        'label' => '10',
+                        'field' => '30',
+                    ],
+                ],
+            ],
+            'panels' => [
+                'DEFAULT' => [
+                    0 => [
+                        0 => [
+                            'name' => 'priority',
+                        ],
+                        1 => [
+                            'name' => 'assigned_user_name',
+                        ],
+                    ],
+                    1 => [
+                        0 => [
+                            'name' => 'source',
+                        ],
+                        1 => [
+                            'name' => 'team_name',
+                        ],
+                    ],
+                    2 => [
+                        0 => [
+                            'name' => 'type',
+                        ],
+                        1 => [
+                            'name' => 'status',
+                        ],
+                    ],
+                    3 => [
+                        0 => [
+                            'name' => 'product_category',
+                        ],
+                        1 => [
+                            'name' => 'found_in_release',
+                        ],
+                    ],
+                    4 => [
+                        0 => [
+                            'name' => 'name',
+                            'displayParams' => ['required' => true],
+                        ],
+                    ],
+                    5 => [
+                        0 => [
+                            'name' => 'description',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];

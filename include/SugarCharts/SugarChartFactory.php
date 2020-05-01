@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,17 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
- * Chart factory
+ * Chart factory.
+ *
  * @api
  */
 class SugarChartFactory
 {
     /**
      * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
-     * instance if one is not specified
+     * instance if one is not specified.
      *
      * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']
      * @param string $module optional, name of module extension for chart engine (see JitReports or SugarFlashReports)
+     *
      * @return object ChartEngine instance
      */
     public static function getInstance(
@@ -84,9 +86,9 @@ class SugarChartFactory
 
         if (class_exists($className)) {
             return new $className();
-        } else {
-            LoggerManager::getLogger()->fatal('Chart class not found.');
-            return null;
         }
+        LoggerManager::getLogger()->fatal('Chart class not found.');
+
+        return null;
     }
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,66 +40,62 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelAddToProspectListButton','create'=>'true'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelAddToProspectListButton', 'create' => 'true'],
+    ],
 
     'where' => '',
 
-
-    'list_fields' => array(
-        'recipient_name'=>array(
+    'list_fields' => [
+        'recipient_name' => [
             'vname' => 'LBL_LIST_RECIPIENT_NAME',
             'width' => '14%',
-            'sortable'=>false,
-        ),
-        'recipient_email'=>array(
+            'sortable' => false,
+        ],
+        'recipient_email' => [
             'vname' => 'LBL_LIST_RECIPIENT_EMAIL',
             'width' => '14%',
-            'sortable'=>false,
-        ),
-        'marketing_name'=>array(
+            'sortable' => false,
+        ],
+        'marketing_name' => [
             'vname' => 'LBL_LIST_MARKETING_NAME',
             'width' => '14%',
-            'sortable'=>false,
-        ),
-        'activity_type' => array(
+            'sortable' => false,
+        ],
+        'activity_type' => [
             'vname' => 'LBL_ACTIVITY_TYPE',
             'width' => '14%',
-        ),
-        'activity_date' => array(
+        ],
+        'activity_date' => [
             'vname' => 'LBL_ACTIVITY_DATE',
             'width' => '14%',
-        ),
-        'related_name' => array(
+        ],
+        'related_name' => [
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'related_id',
             'target_module_key' => 'related_type',
-            'parent_id' =>'target_id',
-            'parent_module'=>'target_type',
+            'parent_id' => 'target_id',
+            'parent_module' => 'target_type',
             'vname' => 'LBL_RELATED',
             'width' => '20%',
-            'sortable'=>false,
-        ),
-        'hits' => array(
+            'sortable' => false,
+        ],
+        'hits' => [
             'vname' => 'LBL_HITS',
             'width' => '5%',
-        ),
-        'target_id'=>array(
-            'usage' =>'query_only',
-        ),
-        'target_type'=>array(
-            'usage' =>'query_only',
-        ),
-        'related_id'=>array(
-            'usage' =>'query_only',
-        ),
-        'related_type'=>array(
-            'usage' =>'query_only',
-        ),
-    ),
-);
+        ],
+        'target_id' => [
+            'usage' => 'query_only',
+        ],
+        'target_type' => [
+            'usage' => 'query_only',
+        ],
+        'related_id' => [
+            'usage' => 'query_only',
+        ],
+        'related_type' => [
+            'usage' => 'query_only',
+        ],
+    ],
+];

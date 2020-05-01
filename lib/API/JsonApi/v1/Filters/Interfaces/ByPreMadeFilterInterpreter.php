@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,13 +40,13 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
 /**
- * Interface ByPreMadeFilterInterpreter
- * @package SuiteCRM\API\JsonApi\v1\Filters\Interfaces
+ * Interface ByPreMadeFilterInterpreter.
  */
 interface ByPreMadeFilterInterpreter
 {
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function hasByPreMadeFilter($name);

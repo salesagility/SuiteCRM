@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,39 +36,36 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$viewdefs['DocumentRevisions']['EditView'] = array(
-    'templateMeta' => array('form' => array('enctype'=>'multipart/form-data',
-                                            'hidden'=>array('<input type="hidden" name="return_id" value="{$smarty.request.return_id}">'),
-                                ),
-                            'maxColumns' => '2',
-                            'widths' => array(
-                                array('label' => '10', 'field' => '30'),
-                                array('label' => '10', 'field' => '30')
-                                ),
-                            'javascript' => '{sugar_getscript file="include/javascript/popup_parent_helper.js"}
+$viewdefs['DocumentRevisions']['EditView'] = [
+    'templateMeta' => ['form' => ['enctype' => 'multipart/form-data',
+        'hidden' => ['<input type="hidden" name="return_id" value="{$smarty.request.return_id}">'],
+    ],
+        'maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+        'javascript' => '{sugar_getscript file="include/javascript/popup_parent_helper.js"}
 {sugar_getscript file="cache/include/javascript/sugar_grp_jsolait.js"}
 {sugar_getscript file="modules/Documents/documents.js"}',
-        ),
-    'panels' =>array(
-        '' =>
-        array(
-            array(
-                array( 'name' => 'document_name', 'type' => 'readonly' ),
-                array( 'name' => 'latest_revision', 'type' => 'readonly' ),
-            ),
-            array(
+    ],
+    'panels' => [
+        '' => [
+            [
+                ['name' => 'document_name', 'type' => 'readonly'],
+                ['name' => 'latest_revision', 'type' => 'readonly'],
+            ],
+            [
                 'revision',
-            ),
-            
-            array(
-                'filename',
-            ),
-            
-            array(
-                array( 'name' => 'change_log', 'size' => '126', 'maxlength' => '255' ),
-            ),
+            ],
 
-        ),
-    ),
-);
+            [
+                'filename',
+            ],
+
+            [
+                ['name' => 'change_log', 'size' => '126', 'maxlength' => '255'],
+            ],
+        ],
+    ],
+];

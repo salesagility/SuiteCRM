@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,19 +36,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/SugarObjects/templates/person/Person.php');
+require_once 'include/SugarObjects/templates/person/Person.php';
 require_once __DIR__ . '/../../include/EmailInterface.php';
 require_once __DIR__ . '/../Emails/EmailUI.php';
 
 // User is used to store customer information.
 class User extends Person implements EmailInterface
 {
-
     // Stored fields
     public $name = '';
     public $full_name;
@@ -97,17 +94,17 @@ class User extends Person implements EmailInterface
     public $reports_to_name;
     public $reports_to_id;
     public $team_exists = false;
-    public $table_name = "users";
+    public $table_name = 'users';
     public $module_dir = 'Users';
-    public $object_name = "User";
+    public $object_name = 'User';
     public $user_preferences;
     public $importable = true;
     public $_userPreferenceFocus;
-    public $encodeFields = array("first_name", "last_name", "description");
+    public $encodeFields = ['first_name', 'last_name', 'description'];
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array(
+    public $additional_column_fields = [
         'reports_to_name'
-    );
+    ];
     public $emailAddress;
     public $new_schema = true;
 
@@ -133,9 +130,9 @@ class User extends Person implements EmailInterface
      * addresses and return false it also set this variable to
      * true.
      *
-     * @var bool|null
+     * @var null|bool
      */
-    public $lastSaveErrorIsEmailAddressSaveError = null;
+    public $lastSaveErrorIsEmailAddressSaveError;
 
     public function __construct()
     {
@@ -146,29 +143,22 @@ class User extends Person implements EmailInterface
 
     public function __set($key, $value)
     {
-        $this->$key = $value;
+        $this->{$key} = $value;
         if ($key == 'id' && $value == '1') {
             $GLOBALS['log']->fatal('DEBUG: User::' . $key . ' set to ' . $value);
         }
     }
 
-
-
-    protected function _loadUserPreferencesFocus()
-    {
-        $this->_userPreferenceFocus = new UserPreference($this);
-    }
-
     /**
-     * returns an admin user
+     * returns an admin user.
      */
     public function getSystemUser()
     {
         if (null === $this->retrieve('1')) { // handle cases where someone deleted user with id "1"
-            $this->retrieve_by_string_fields(array(
+            $this->retrieve_by_string_fields([
                 'status' => 'Active',
                 'is_admin' => '1',
-            ));
+            ]);
         }
 
         return $this;
@@ -176,19 +166,23 @@ class User extends Person implements EmailInterface
 
     /**
      * convenience function to get user's default signature
-     * return array
+     * return array.
      */
     public function getDefaultSignature()
     {
         if ($defaultId = $this->getPreference('signature_default')) {
             return $this->getSignature($defaultId);
         }
-        return array();
+
+        return [];
     }
 
     /**
-     * retrieves the signatures for a user
+     * retrieves the signatures for a user.
+     *
      * @param string id ID of user_signature
+     * @param mixed $id
+     *
      * @return array ID, signature, and signature_html
      */
     public function getSignature($id)
@@ -200,8 +194,10 @@ class User extends Person implements EmailInterface
 
     /**
      * @param bool $useRequestedRecord
-     * @return array
+     *
      * @throws \RuntimeException
+     *
+     * @return array
      */
     public function getSignaturesArray($useRequestedRecord = false)
     {
@@ -216,7 +212,7 @@ class User extends Person implements EmailInterface
         $r = $this->db->query($q);
 
         // provide "none"
-        $sig = array("" => "");
+        $sig = ['' => ''];
 
         while ($a = $this->db->fetchByAssoc($r)) {
             $sig[$a['id']] = $a;
@@ -226,14 +222,17 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * retrieves any signatures that the User may have created as <select>
+     * retrieves any signatures that the User may have created as <select>.
+     *
      * @param bool $live
      * @param string $defaultSig
      * @param bool $forSettings
      * @param string $elementId
      * @param bool $useRequestedRecord
-     * @return string
+     *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function getSignatures(
         $live = false,
@@ -243,7 +242,7 @@ class User extends Person implements EmailInterface
         $useRequestedRecord = false
     ) {
         $sig = $this->getSignaturesArray($useRequestedRecord);
-        $sigs = array();
+        $sigs = [];
         foreach ($sig as $key => $arr) {
             $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
         }
@@ -262,14 +261,17 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * retrieves any signatures that the User may have created as <select>
+     * retrieves any signatures that the User may have created as <select>.
+     *
      * @param bool $live
      * @param string $defaultSig
      * @param bool $forSettings
      * @param string $elementId
      * @param bool $useRequestedRecord
-     * @return string
+     *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function getEmailAccountSignatures(
         $live = false,
@@ -279,7 +281,7 @@ class User extends Person implements EmailInterface
         $useRequestedRecord = false
     ) {
         $sig = $this->getSignaturesArray($useRequestedRecord);
-        $sigs = array();
+        $sigs = [];
         foreach ($sig as $key => $arr) {
             $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
         }
@@ -304,7 +306,10 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * returns buttons and JS for signatures
+     * returns buttons and JS for signatures.
+     *
+     * @param mixed $jscall
+     * @param mixed $defaultDisplay
      */
     public function getSignatureButtons($jscall = '', $defaultDisplay = false)
     {
@@ -326,14 +331,14 @@ class User extends Person implements EmailInterface
 
     /**
      * performs a rudimentary check to verify if a given user has setup personal
-     * InboundEmail
+     * InboundEmail.
      *
      * @return bool
      */
     public function hasPersonalEmail()
     {
-        $focus = new InboundEmail;
-        $focus->retrieve_by_string_fields(array('group_id' => $this->id));
+        $focus = new InboundEmail();
+        $focus->retrieve_by_string_fields(['group_id' => $this->id]);
 
         return !empty($focus->id);
     }
@@ -356,7 +361,7 @@ class User extends Person implements EmailInterface
 
             return $userPrivGuid;
         }
-        sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
+        sugar_die('Breaking Infinite Loop Condition: Could not setUserPrivGuid.');
     }
 
     public function setUserPrivGuid()
@@ -367,7 +372,7 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
+     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php.
      *
      * @see UserPreference::setPreference()
      *
@@ -394,7 +399,7 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Interface for the User object to calling the UserPreference::resetPreferences() method in modules/UserPreferences/UserPreference.php
+     * Interface for the User object to calling the UserPreference::resetPreferences() method in modules/UserPreferences/UserPreference.php.
      *
      * @see UserPreference::resetPreferences()
      *
@@ -415,7 +420,7 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Interface for the User object to calling the UserPreference::savePreferencesToDB() method in modules/UserPreferences/UserPreference.php
+     * Interface for the User object to calling the UserPreference::savePreferencesToDB() method in modules/UserPreferences/UserPreference.php.
      *
      * @see UserPreference::savePreferencesToDB()
      */
@@ -433,8 +438,10 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Unconditionally reloads user preferences from the DB and updates the session
+     * Unconditionally reloads user preferences from the DB and updates the session.
+     *
      * @param string $category name of the category to retreive, defaults to global scope
+     *
      * @return bool successful?
      */
     public function reloadPreferences($category = 'global')
@@ -443,7 +450,7 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Interface for the User object to calling the UserPreference::getUserDateTimePreferences() method in modules/UserPreferences/UserPreference.php
+     * Interface for the User object to calling the UserPreference::getUserDateTimePreferences() method in modules/UserPreferences/UserPreference.php.
      *
      * @see UserPreference::getUserDateTimePreferences()
      *
@@ -463,11 +470,12 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Interface for the User object to calling the UserPreference::loadPreferences() method in modules/UserPreferences/UserPreference.php
+     * Interface for the User object to calling the UserPreference::loadPreferences() method in modules/UserPreferences/UserPreference.php.
      *
      * @see UserPreference::loadPreferences()
      *
      * @param string $category name of the category to retreive, defaults to global scope
+     *
      * @return bool successful?
      */
     public function loadPreferences(
@@ -485,8 +493,9 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * @return bool|SugarBean
      * @throws \RuntimeException
+     *
+     * @return bool|SugarBean
      */
     public function getRequestedUserRecord()
     {
@@ -506,13 +515,15 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
+     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php.
      *
      * @see UserPreference::getPreference()
      *
      * @param string $name name of the preference to retreive
      * @param string $category name of the category to retreive, defaults to global scope
+     *
      * @return mixed the value of the preference (string, array, int etc)
+     *
      * @internal param bool $useRequestedRecord
      */
     public function getPreference(
@@ -531,7 +542,7 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * incrementETag
+     * incrementETag.
      *
      * This function increments any ETag seed needed for a particular user's
      * UI. For example, if the user changes their theme, the ETag seed for the
@@ -540,7 +551,8 @@ class User extends Person implements EmailInterface
      *
      * UserPreference::incrementETag("mainMenuETag");
      *
-     * @param string $tag ETag seed name.
+     * @param string $tag ETag seed name
+     *
      * @return nothing
      */
     public function incrementETag($tag)
@@ -550,21 +562,22 @@ class User extends Person implements EmailInterface
             $val = 0;
         }
         $val++;
-        $this->setPreference($tag, $val, 0, "ETag");
+        $this->setPreference($tag, $val, 0, 'ETag');
     }
 
     /**
-     * getETagSeed
+     * getETagSeed.
      *
      * This function is a wrapper to encapsulate getting the ETag seed and
      * making sure it's sanitized for use in the app.
      *
-     * @param string $tag ETag seed name.
-     * @return integer numeric value of the seed
+     * @param string $tag ETag seed name
+     *
+     * @return int numeric value of the seed
      */
     public function getETagSeed($tag)
     {
-        $val = $this->getPreference($tag, "ETag");
+        $val = $this->getPreference($tag, 'ETag');
         if ($val == null) {
             $val = 0;
         }
@@ -573,14 +586,15 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Get WHERE clause that fetches all users counted for licensing purposes
+     * Get WHERE clause that fetches all users counted for licensing purposes.
+     *
      * @return string
      */
     public static function getLicensedUsersWhere()
     {
-        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . DBManagerFactory::getInstance()->convert('user_name', 'length') . ">0";
+        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . DBManagerFactory::getInstance()->convert('user_name', 'length') . '>0';
 
-        return "1<>1";
+        return '1<>1';
     }
 
     /**
@@ -598,9 +612,12 @@ class User extends Person implements EmailInterface
      * @global User $current_user
      * @global array $sugar_config
      * @global array $mod_strings
+     *
      * @param bool $check_notify
-     * @return bool|string
+     *
      * @throws SuiteException
+     *
+     * @return bool|string
      */
     public function save($check_notify = false)
     {
@@ -666,15 +683,14 @@ class User extends Person implements EmailInterface
             $this->portal_only = 0;
         }
 
-
         // set some default preferences when creating a new user
         $setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
         if (!$this->verify_data()) {
             SugarApplication::appendErrorMessage($this->error_string);
+
             return SugarApplication::redirect('Location: index.php?action=Error&module=Users');
         }
-
 
         $retId = parent::save($check_notify);
         if (!$retId) {
@@ -700,11 +716,11 @@ class User extends Person implements EmailInterface
             if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
                 if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    SugarApplication::redirect("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
+                    SugarApplication::redirect('Location: index.php?action=EditView&module=Users&record=' . $_POST['record']);
                 }
                 if (isset($_POST['page']) && $_POST['page'] === 'Change') {
                     SugarApplication::appendErrorMessage($this->error_string);
-                    SugarApplication::redirect("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+                    SugarApplication::redirect('Location: index.php?action=ChangePassword&module=Users&record=' . $_POST['record']);
                 }
             }
         }
@@ -714,6 +730,7 @@ class User extends Person implements EmailInterface
         if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
             LoggerManager::getLogger()->fatal('Email address save error');
             $this->lastSaveErrorIsEmailAddressSaveError = true;
+
             return false;
         }
 
@@ -723,7 +740,7 @@ class User extends Person implements EmailInterface
     public function saveFormPreferences()
     {
         if (!$this->is_group && !$this->portal_only) {
-            require_once('modules/MySettings/TabController.php');
+            require_once 'modules/MySettings/TabController.php';
 
             global $current_user, $sugar_config;
 
@@ -731,9 +748,9 @@ class User extends Person implements EmailInterface
             $hide_tabs_def = isset($_REQUEST['hide_tabs_def']) ? urldecode($_REQUEST['hide_tabs_def']) : '';
             $remove_tabs_def = isset($_REQUEST['remove_tabs_def']) ? urldecode($_REQUEST['remove_tabs_def']) : '';
 
-            $DISPLAY_ARR = array();
-            $HIDE_ARR = array();
-            $REMOVE_ARR = array();
+            $DISPLAY_ARR = [];
+            $HIDE_ARR = [];
+            $REMOVE_ARR = [];
 
             parse_str($display_tabs_def, $DISPLAY_ARR);
             parse_str($hide_tabs_def, $HIDE_ARR);
@@ -808,13 +825,13 @@ class User extends Person implements EmailInterface
             if (isset($HIDE_ARR['hide_tabs'])) {
                 $tabs->set_user_tabs($HIDE_ARR['hide_tabs'], $this, 'hide');
             } else {
-                $tabs->set_user_tabs(array(), $this, 'hide');
+                $tabs->set_user_tabs([], $this, 'hide');
             }
             if (is_admin($current_user)) {
                 if (isset($REMOVE_ARR['remove_tabs'])) {
                     $tabs->set_user_tabs($REMOVE_ARR['remove_tabs'], $this, 'remove');
                 } else {
-                    $tabs->set_user_tabs(array(), $this, 'remove');
+                    $tabs->set_user_tabs([], $this, 'remove');
                 }
             }
 
@@ -921,7 +938,7 @@ class User extends Person implements EmailInterface
             ///////////////////////////////////////////////////////////////////////////
             ////    PDF SETTINGS
             foreach ($_POST as $k => $v) {
-                if (strpos($k, "sugarpdf_pdf") !== false) {
+                if (strpos($k, 'sugarpdf_pdf') !== false) {
                     $this->setPreference($k, $v, 0, 'global');
                 }
             }
@@ -938,7 +955,6 @@ class User extends Person implements EmailInterface
             }
             ////	END SIGNATURES
             ///////////////////////////////////////////////////////////////////////////
-
 
             if (isset($_POST['email_link_type'])) {
                 $this->setPreference('email_link_type', $_REQUEST['email_link_type']);
@@ -981,11 +997,11 @@ class User extends Person implements EmailInterface
         }
     }
 
-
     /**
-     * @return boolean true if the user is a member of the role_name, false otherwise
      * @param string $role_name - Must be the exact name of the acl_role
      * @param string $user_id - The user id to check for the role membership, empty string if current user
+     *
+     * @return bool true if the user is a member of the role_name, false otherwise
      * @desc Determine whether or not a user is a member of an ACL Role. This function caches the
      *       results in the session or to prevent running queries after the first time executed.
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
@@ -1001,7 +1017,7 @@ class User extends Person implements EmailInterface
         }
 
         // Check the Sugar External Cache to see if this users memberships were cached
-        $role_array = sugar_cache_retrieve("RoleMemberships_" . $user_id);
+        $role_array = sugar_cache_retrieve('RoleMemberships_' . $user_id);
 
         // If we are pulling the roles for the current user
         if ($user_id == $current_user->id) {
@@ -1022,7 +1038,7 @@ class User extends Person implements EmailInterface
             // If the external cache didn't contain the values, we get them and put them in cache
             if (!$role_array) {
                 $role_array = ACLRole::getUserRoleNames($user_id);
-                sugar_cache_put("RoleMemberships_" . $user_id, $role_array);
+                sugar_cache_put('RoleMemberships_' . $user_id, $role_array);
             }
         }
 
@@ -1030,6 +1046,7 @@ class User extends Person implements EmailInterface
         if (!empty($role_array) && in_array($role_name, $role_array)) {
             return true;
         }
+
         return false;
     }
 
@@ -1040,9 +1057,10 @@ class User extends Person implements EmailInterface
     }
 
     /**
-     * Authenicates the user; returns true if successful
+     * Authenicates the user; returns true if successful.
      *
      * @param string $password MD5-encoded password
+     *
      * @return bool
      */
     public function authenticate_user($password)
@@ -1059,12 +1077,13 @@ class User extends Person implements EmailInterface
     /**
      * retrieves an User bean
      * pre-format name & full_name attribute with first/last
-     * loads User's preferences
+     * loads User's preferences.
      *
-     * @param string|integer $id ID of the User
+     * @param int|string $id ID of the User
      * @param bool $encode encode the result
      * @param bool $deleted
-     * @return User|SugarBean|null null if no User found
+     *
+     * @return null|SugarBean|User null if no User found
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
@@ -1072,6 +1091,7 @@ class User extends Person implements EmailInterface
         if ($ret && isset($_SESSION) && $_SESSION !== null) {
             $this->loadPreferences();
         }
+
         return $ret;
     }
 
@@ -1085,9 +1105,8 @@ class User extends Person implements EmailInterface
 		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
 EOQ;
 
-
         $res = $this->db->query($q);
-        $rows = array();
+        $rows = [];
         while ($row = $this->db->fetchByAssoc($res)) {
             $rows[] = $row;
         }
@@ -1098,6 +1117,7 @@ EOQ;
         if (!empty($rows[0]['id'])) {
             return $this->retrieve($rows[0]['id']);
         }
+
         return '';
     }
 
@@ -1112,17 +1132,19 @@ EOQ;
     }
 
     /**
-     * Load a user based on the user_name in $this
+     * Load a user based on the user_name in $this.
+     *
      * @param string $username_password Password
      * @param bool $password_encoded Is password md5-encoded or plain text?
-     * @return -- this if load was successul and null if load failed.
+     *
+     * @return -- this if load was successul and null if load failed
      */
     public function load_user($username_password, $password_encoded = false)
     {
         global $login_error;
         unset($GLOBALS['login_error']);
         if (isset($_SESSION['loginattempts'])) {
-            $_SESSION['loginattempts'] += 1;
+            $_SESSION['loginattempts']++;
         } else {
             $_SESSION['loginattempts'] = 1;
         }
@@ -1132,9 +1154,9 @@ EOQ;
             return null;
         }
 
-        $GLOBALS['log']->debug("Starting user load for $this->user_name");
+        $GLOBALS['log']->debug("Starting user load for {$this->user_name}");
 
-        if (!isset($this->user_name) || $this->user_name == "" || !isset($username_password) || $username_password == "") {
+        if (!isset($this->user_name) || $this->user_name == '' || !isset($username_password) || $username_password == '') {
             return null;
         }
 
@@ -1152,7 +1174,7 @@ EOQ;
         $this->loadFromRow($row);
         $this->loadPreferences();
 
-        if ($this->status != "Inactive") {
+        if ($this->status != 'Inactive') {
             $this->authenticated = true;
         }
 
@@ -1162,8 +1184,10 @@ EOQ;
     }
 
     /**
-     * Generate a new hash from plaintext password
+     * Generate a new hash from plaintext password.
+     *
      * @param string $password
+     *
      * @return bool|string
      */
     public static function getPasswordHash($password)
@@ -1172,8 +1196,10 @@ EOQ;
     }
 
     /**
-     * Generate a new hash from MD5 password
+     * Generate a new hash from MD5 password.
+     *
      * @param string $passwordMd5
+     *
      * @return bool|string
      */
     public static function getPasswordHashMD5($passwordMd5)
@@ -1182,9 +1208,11 @@ EOQ;
     }
 
     /**
-     * Check that password matches existing hash
+     * Check that password matches existing hash.
+     *
      * @param string $password Plaintext password
      * @param string $userHash DB hash
+     *
      * @return bool
      */
     public static function checkPassword($password, $userHash)
@@ -1193,9 +1221,11 @@ EOQ;
     }
 
     /**
-     * Check that md5-encoded password matches existing hash
+     * Check that md5-encoded password matches existing hash.
+     *
      * @param string $passwordMd5 MD5-encoded password
      * @param string $userHash DB hash
+     *
      * @return bool Match or not?
      */
     public static function checkPasswordMD5($passwordMd5, $userHash)
@@ -1215,17 +1245,20 @@ EOQ;
     }
 
     /**
-     * Find user with matching password
+     * Find user with matching password.
+     *
      * @param string $name Username
      * @param string $password MD5-encoded password
      * @param string $where Limiting query
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-     * @return bool|array the matching User of false if not found
+     *
+     * @return array|bool the matching User of false if not found
      */
     public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
     {
         if (!$name) {
             $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
+
             return false;
         }
         $db = DBManagerFactory::getInstance();
@@ -1233,13 +1266,14 @@ EOQ;
         $name = $db->quote($name);
         if ($before && !$name) {
             $GLOBALS['log']->fatal('DB Quote error: return value is removed, check the Database connection.');
+
             return false;
         }
-        $query = "SELECT * from users where user_name='$name'";
+        $query = "SELECT * from users where user_name='{$name}'";
         if (!empty($where)) {
-            $query .= " AND $where";
+            $query .= " AND {$where}";
         }
-        $query .= " AND deleted=0";
+        $query .= ' AND deleted=0';
         $result = $db->limitQuery($query, 0, 1, false);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -1247,12 +1281,15 @@ EOQ;
                 return $row;
             }
         }
+
         return false;
     }
 
     /**
-     * Sets new password and resets password expiration timers
+     * Sets new password and resets password expiration timers.
+     *
      * @param string $new_password
+     * @param mixed $system_generated
      */
     public function setNewPassword($new_password, $system_generated = '0')
     {
@@ -1263,40 +1300,41 @@ EOQ;
         $this->savePreferencesToDB();
         //set new password
         $now = TimeDate::getInstance()->nowDb();
-        $query = "UPDATE $this->table_name SET user_hash='$user_hash', system_generated_password='$system_generated', pwd_last_changed='$now' where id='$this->id'";
-        $this->db->query($query, true, "Error setting new password for $this->user_name: ");
+        $query = "UPDATE {$this->table_name} SET user_hash='{$user_hash}', system_generated_password='{$system_generated}', pwd_last_changed='{$now}' where id='{$this->id}'";
+        $this->db->query($query, true, "Error setting new password for {$this->user_name}: ");
         $_SESSION['hasExpiredPassword'] = '0';
     }
 
     /**
      * Verify that the current password is correct and write the new password to the DB.
      *
-     * @param string $username_password - Must be non null and at least 1 character.
-     * @param string $new_password - Must be non null and at least 1 character.
+     * @param string $username_password - Must be non null and at least 1 character
+     * @param string $new_password - Must be non null and at least 1 character
      * @param string $system_generated
-     * @return boolean - If passwords pass verification and query succeeds, return true, else return false.
+     *
+     * @return bool - If passwords pass verification and query succeeds, return true, else return false
      */
     public function change_password($username_password, $new_password, $system_generated = '0')
     {
         global $mod_strings;
         global $current_user;
-        $GLOBALS['log']->debug("Starting password change for $this->user_name");
+        $GLOBALS['log']->debug("Starting password change for {$this->user_name}");
 
-        if (!isset($new_password) || $new_password == "") {
+        if (!isset($new_password) || $new_password == '') {
             $this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'] . $current_user->user_name . $mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
+
             return false;
         }
         if ($this->error_string = $this->passwordValidationCheck($new_password)) {
             return false;
         }
 
-
         //check old password current user is not an admin or current user is an admin editing themselves
         if (!$current_user->isAdminForModule('Users') || ($current_user->isAdminForModule('Users') && ($current_user->id == $this->id))) {
             //check old password first
             $row = self::findUserPassword($this->user_name, md5($username_password));
             if (empty($row)) {
-                $GLOBALS['log']->warn("Incorrect old password for " . $this->user_name . "");
+                $GLOBALS['log']->warn('Incorrect old password for ' . $this->user_name . '');
                 $this->error_string = $mod_strings['ERR_PASSWORD_INCORRECT_OLD_1'] . $this->user_name . $mod_strings['ERR_PASSWORD_INCORRECT_OLD_2'];
 
                 return false;
@@ -1304,6 +1342,7 @@ EOQ;
         }
 
         $this->setNewPassword($new_password, $system_generated);
+
         return true;
     }
 
@@ -1311,7 +1350,7 @@ EOQ;
     {
         global $sugar_config, $mod_strings;
 
-        $messages = array();
+        $messages = [];
 
         if (!isset($sugar_config['passwordsetting']['minpwdlength'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: minpwdlength ($sugar_config[passwordsetting][minpwdlength])');
@@ -1320,14 +1359,12 @@ EOQ;
 
         $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
 
-
         if (!isset($sugar_config['passwordsetting']['oneupper'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: oneupper ($sugar_config[passwordsetting][oneupper])');
             $sugar_config['passwordsetting']['oneupper'] = null;
         }
 
         $oneupper = $sugar_config['passwordsetting']['oneupper'];
-
 
         if (!isset($sugar_config['passwordsetting']['onelower'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onelower ($sugar_config[passwordsetting][onelower])');
@@ -1336,7 +1373,6 @@ EOQ;
 
         $onelower = $sugar_config['passwordsetting']['onelower'];
 
-
         if (!isset($sugar_config['passwordsetting']['onenumber'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onenumber ($sugar_config[passwordsetting][onenumber])');
             $sugar_config['passwordsetting']['onenumber'] = null;
@@ -1344,14 +1380,12 @@ EOQ;
 
         $onenumber = $sugar_config['passwordsetting']['onenumber'];
 
-
         if (!isset($sugar_config['passwordsetting']['onespecial'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onespecial ($sugar_config[passwordsetting][onespecial])');
             $sugar_config['passwordsetting']['onespecial'] = null;
         }
 
         $onespecial = $sugar_config['passwordsetting']['onespecial'];
-
 
         if ($minpwdlength && strlen($newPassword) < $minpwdlength) {
             $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
@@ -1395,8 +1429,8 @@ EOQ;
         // ~jmorais@dri
         global $locale;
 
-        $query = "SELECT u1.first_name, u1.last_name from users  u1, users  u2 where u1.id = u2.reports_to_id AND u2.id = '$this->id' and u1.deleted=0";
-        $result = $this->db->query($query, true, "Error filling in additional detail fields");
+        $query = "SELECT u1.first_name, u1.last_name from users  u1, users  u2 where u1.id = u2.reports_to_id AND u2.id = '{$this->id}' and u1.deleted=0";
+        $result = $this->db->query($query, true, 'Error filling in additional detail fields');
 
         $row = $this->db->fetchByAssoc($result);
 
@@ -1406,15 +1440,14 @@ EOQ;
             $this->reports_to_name = '';
         }
 
-
         $this->_create_proper_name_field();
     }
 
     public function retrieve_user_id(
         $user_name
     ) {
-        $userFocus = new User;
-        $userFocus->retrieve_by_string_fields(array('user_name' => $user_name));
+        $userFocus = new User();
+        $userFocus->retrieve_by_string_fields(['user_name' => $user_name]);
         if (empty($userFocus->id)) {
             return false;
         }
@@ -1423,6 +1456,8 @@ EOQ;
     }
 
     /**
+     * @param mixed $ieVerified
+     *
      * @return -- returns a list of all users in the system.
      * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
      * All Rights Reserved..
@@ -1437,23 +1472,25 @@ EOQ;
             // Make sure the user doesn't report to themselves.
             $reports_to_self = 0;
             $check_user = $this->reports_to_id;
-            $already_seen_list = array();
+            $already_seen_list = [];
             while (!empty($check_user)) {
                 if (isset($already_seen_list[$check_user])) {
                     // This user doesn't actually report to themselves
                     // But someone above them does.
                     $reports_to_self = 1;
+
                     break;
                 }
                 if ($check_user == $this->id) {
                     $reports_to_self = 1;
+
                     break;
                 }
                 $already_seen_list[$check_user] = 1;
                 $query = "SELECT reports_to_id FROM users WHERE id='" . $this->db->quote($check_user) . "'";
-                $result = $this->db->query($query, true, "Error checking for reporting-loop");
+                $result = $this->db->query($query, true, 'Error checking for reporting-loop');
                 $row = $this->db->fetchByAssoc($result);
-                echo("fetched: " . $row['reports_to_id'] . " from " . $check_user . "<br>");
+                echo 'fetched: ' . $row['reports_to_id'] . ' from ' . $check_user . '<br>';
                 $check_user = $row['reports_to_id'];
             }
 
@@ -1463,11 +1500,11 @@ EOQ;
             }
         }
 
-        $query = "SELECT user_name from users where user_name='$this->user_name' AND deleted=0";
+        $query = "SELECT user_name from users where user_name='{$this->user_name}' AND deleted=0";
         if (!empty($this->id)) {
-            $query .= " AND id<>'$this->id'";
+            $query .= " AND id<>'{$this->id}'";
         }
-        $result = $this->db->query($query, true, "Error selecting possible duplicate users: ");
+        $result = $this->db->query($query, true, 'Error selecting possible duplicate users: ');
         $dup_users = $this->db->fetchByAssoc($result);
 
         if (!empty($dup_users)) {
@@ -1476,7 +1513,7 @@ EOQ;
         }
 
         if (is_admin($current_user)) {
-            $remaining_admins = $this->db->getOne("SELECT COUNT(*) as c from users where is_admin = 1 AND deleted=0");
+            $remaining_admins = $this->db->getOne('SELECT COUNT(*) as c from users where is_admin = 1 AND deleted=0');
 
             if (($remaining_admins <= 1) && ($this->is_admin != '1') && ($this->id == $current_user->id)) {
                 $GLOBALS['log']->debug("Number of remaining administrator accounts: {$remaining_admins}");
@@ -1515,7 +1552,6 @@ EOQ;
             $user_fields['IS_GROUP_IMAGE'] = '';
         }
 
-
         if ($this->is_admin) {
             $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', translate('LBL_CHECKMARK', 'Users'));
         } elseif (!$this->is_admin) {
@@ -1530,7 +1566,6 @@ EOQ;
 
         $user_fields['REPORTS_TO_NAME'] = $this->reports_to_name;
 
-
         return $user_fields;
     }
 
@@ -1540,15 +1575,16 @@ EOQ;
     }
 
     /**
-     * getAllUsers
+     * getAllUsers.
      *
      * Returns all active and inactive users
-     * @return Array of all users in the system
+     *
+     * @return array of all users in the system
      */
     public static function getAllUsers()
     {
         $active_users = get_user_array(false);
-        $inactive_users = get_user_array(false, "Inactive");
+        $inactive_users = get_user_array(false, 'Inactive');
         $result = $active_users + $inactive_users;
         asort($result);
 
@@ -1556,10 +1592,11 @@ EOQ;
     }
 
     /**
-     * getActiveUsers
+     * getActiveUsers.
      *
      * Returns all active users
-     * @return Array of active users in the system
+     *
+     * @return array of active users in the system
      */
     public static function getActiveUsers()
     {
@@ -1571,7 +1608,7 @@ EOQ;
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
-        include('modules/Users/field_arrays.php');
+        include 'modules/Users/field_arrays.php';
 
         $cols = '';
         foreach ($fields_array['User']['export_fields'] as $field) {
@@ -1581,24 +1618,24 @@ EOQ;
 
         $query = "SELECT {$cols} FROM users ";
 
-        $where_auto = " users.deleted = 0";
+        $where_auto = ' users.deleted = 0';
 
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
+        if ($where != '') {
+            $query .= " WHERE {$where} AND " . $where_auto;
         } else {
-            $query .= " WHERE " . $where_auto;
+            $query .= ' WHERE ' . $where_auto;
         }
 
         // admin for module user is not be able to export a super-admin
         global $current_user;
         if (!$current_user->is_admin) {
-            $query .= " AND users.is_admin=0";
+            $query .= ' AND users.is_admin=0';
         }
 
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
+        if ($order_by != '') {
+            $query .= " ORDER BY {$order_by}";
         } else {
-            $query .= " ORDER BY users.user_name";
+            $query .= ' ORDER BY users.user_name';
         }
 
         return $query;
@@ -1612,22 +1649,23 @@ EOQ;
     public function get_meetings()
     {
         // First, get the list of IDs.
-        $query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
+        $query = "SELECT meeting_id as id from meetings_users where user_id='{$this->id}' AND deleted=0";
 
         $meeting = new Meeting();
+
         return $this->build_related_list($query, $meeting);
     }
 
     public function get_calls()
     {
         // First, get the list of IDs.
-        $query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
+        $query = "SELECT call_id as id from calls_users where user_id='{$this->id}' AND deleted=0";
 
         return $this->build_related_list($query, new Call());
     }
 
     /**
-     * generates Javascript to display I-E mail counts, both personal and group
+     * generates Javascript to display I-E mail counts, both personal and group.
      */
     public function displayEmailCounts()
     {
@@ -1635,7 +1673,7 @@ EOQ;
         $new = translate('LBL_NEW', 'Emails');
         $default = 'index.php?module=Emails&action=ListView&assigned_user_id=' . $this->id;
         $count = '';
-        $verts = array('Love', 'Links', 'Pipeline', 'RipCurl', 'SugarLite');
+        $verts = ['Love', 'Links', 'Pipeline', 'RipCurl', 'SugarLite'];
 
         if ($this->hasPersonalEmail()) {
             $r = $this->db->query('SELECT count(*) AS c FROM emails WHERE deleted=0 AND assigned_user_id = \'' . $this->id . '\' AND type = \'inbound\' AND status = \'unread\'');
@@ -1693,7 +1731,7 @@ EOQ;
 
     public function getPreferredEmail()
     {
-        $ret = array();
+        $ret = [];
         $nameEmail = $this->getUsersNameAndEmail();
         $prefAddr = $nameEmail['email'];
         $fullName = $nameEmail['name'];
@@ -1720,7 +1758,7 @@ EOQ;
             $prefAddr = $this->emailAddress->getReplyToAddress($this);
         }
 
-        return array('email' => $prefAddr, 'name' => $this->name);
+        return ['email' => $prefAddr, 'name' => $this->name];
     }
 
     // fn
@@ -1732,14 +1770,14 @@ EOQ;
         $prefAddr = $return['email'];
         $fullName = $return['name'];
 
-        return array('email' => $prefAddr, 'name' => $fullName);
+        return ['email' => $prefAddr, 'name' => $fullName];
     }
 
     // fn
 
     /**
      * sets User email default in config.php if not already set by install - i.
-     * e., upgrades
+     * e., upgrades.
      */
     public function setDefaultsInConfig()
     {
@@ -1753,9 +1791,11 @@ EOQ;
     }
 
     /**
-     * returns User's email address based on descending order of preferences
+     * returns User's email address based on descending order of preferences.
      *
      * @param string id GUID of target user if needed
+     * @param mixed $id
+     *
      * @return array Assoc array for an email and name
      */
     public function getEmailInfo($id = '')
@@ -1795,8 +1835,8 @@ EOQ;
 
     /**
      * returns opening <a href=xxxx for a contact, account, etc
-     * cascades from User set preference to System-wide default
-     * @return string    link
+     * cascades from User set preference to System-wide default.
+     *
      * @param attribute the email addy
      * @param focus the parent bean
      * @param contact_id
@@ -1804,6 +1844,15 @@ EOQ;
      * @param return_action
      * @param return_id
      * @param class
+     * @param mixed $emailAddress
+     * @param mixed $focus
+     * @param mixed $contact_id
+     * @param mixed $ret_module
+     * @param mixed $ret_action
+     * @param mixed $ret_id
+     * @param mixed $class
+     *
+     * @return string    link
      */
     public function getEmailLink2(
         $emailAddress,
@@ -1819,10 +1868,11 @@ EOQ;
         $emailUI = new EmailUI();
         for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
             $emailField = 'email' . (string) ($i + 1);
-            $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
+            $optOut = (bool) $focus->emailAddress->addresses[$i]['opt_out'];
             if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
-                $focus->$emailField = $emailAddress;
+                $focus->{$emailField} = $emailAddress;
                 $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
+
                 break;
             }
         }
@@ -1858,8 +1908,8 @@ EOQ;
 
     /**
      * returns opening <a href=xxxx for a contact, account, etc
-     * cascades from User set preference to System-wide default
-     * @return string    link
+     * cascades from User set preference to System-wide default.
+     *
      * @param attribute the email addy
      * @param focus the parent bean
      * @param contact_id
@@ -1867,6 +1917,15 @@ EOQ;
      * @param return_action
      * @param return_id
      * @param class
+     * @param mixed $attribute
+     * @param mixed $focus
+     * @param mixed $contact_id
+     * @param mixed $ret_module
+     * @param mixed $ret_action
+     * @param mixed $ret_id
+     * @param mixed $class
+     *
+     * @return string    link
      */
     public function getEmailLink(
         $attribute,
@@ -1884,7 +1943,8 @@ EOQ;
     }
 
     /**
-     * gets a human-readable explanation of the format macro
+     * gets a human-readable explanation of the format macro.
+     *
      * @return string Human readable name format
      */
     public function getLocaleFormatDesc()
@@ -1909,94 +1969,19 @@ EOQ;
         $ret2 = '';
         for ($i = 0; $i < strlen($macro); $i++) {
             if (array_key_exists($macro[$i], $format)) {
-                $ret1 .= "<i>" . $format[$macro[$i]] . "</i>";
-                $ret2 .= "<i>" . $name[$macro[$i]] . "</i>";
+                $ret1 .= '<i>' . $format[$macro[$i]] . '</i>';
+                $ret2 .= '<i>' . $name[$macro[$i]] . '</i>';
             } else {
                 $ret1 .= $macro[$i];
                 $ret2 .= $macro[$i];
             }
         }
 
-        return $ret1 . "<br />" . $ret2;
-    }
-
-    /*
-     *
-     * Here are the multi level admin access check functions.
-     *
-     */
-
-    /**
-     * Helper function to remap some modules around ACL wise
-     *
-     * @return string
-     */
-    protected function _fixupModuleForACL($module)
-    {
-        if ($module == 'ContractTypes') {
-            $module = 'Contracts';
-        }
-        if (preg_match('/Product[a-zA-Z]*/', $module)) {
-            $module = 'Products';
-        }
-
-        return $module;
+        return $ret1 . '<br />' . $ret2;
     }
 
     /**
-     * Helper function that enumerates the list of modules and checks if they are an admin/dev.
-     * The code was just too similar to copy and paste.
-     *
-     * @return array
-     */
-    protected function _getModulesForACL($type = 'dev')
-    {
-        $isDev = $type == 'dev';
-        $isAdmin = $type == 'admin';
-
-        global $beanList;
-        $myModules = array();
-
-        if (!is_array($beanList)) {
-            return $myModules;
-        }
-
-        // These modules don't take kindly to the studio trying to play about with them.
-        static $ignoredModuleList = array('iFrames', 'Feeds', 'Home', 'Dashboard', 'Calendar', 'Activities', 'Reports');
-
-
-        $actions = ACLAction::getUserActions($this->id);
-
-        foreach ($beanList as $module => $val) {
-            // Remap the module name
-            $module = $this->_fixupModuleForACL($module);
-            if (in_array($module, $myModules)) {
-                // Already have the module in the list
-                continue;
-            }
-            if (in_array($module, $ignoredModuleList)) {
-                // You can't develop on these modules.
-                continue;
-            }
-
-            $focus = SugarModule::get($module)->loadBean();
-            if ($focus instanceof SugarBean) {
-                $key = $focus->acltype;
-            } else {
-                $key = 'module';
-            }
-
-            if (($this->isAdmin() && isset($actions[$module][$key]))
-            ) {
-                $myModules[] = $module;
-            }
-        }
-
-        return $myModules;
-    }
-
-    /**
-     * Is this user a system wide admin
+     * Is this user a system wide admin.
      *
      * @return bool
      */
@@ -2011,7 +1996,7 @@ EOQ;
     }
 
     /**
-     * Is this user a developer for any module
+     * Is this user a developer for any module.
      *
      * @return bool
      */
@@ -2029,7 +2014,7 @@ EOQ;
     }
 
     /**
-     * List the modules a user has developer access to
+     * List the modules a user has developer access to.
      *
      * @return array
      */
@@ -2044,7 +2029,9 @@ EOQ;
     }
 
     /**
-     * Is this user a developer for the specified module
+     * Is this user a developer for the specified module.
+     *
+     * @param mixed $module
      *
      * @return bool
      */
@@ -2070,7 +2057,7 @@ EOQ;
     }
 
     /**
-     * List the modules a user has admin access to
+     * List the modules a user has admin access to.
      *
      * @return array
      */
@@ -2084,7 +2071,9 @@ EOQ;
     }
 
     /**
-     * Is this user an admin for the specified module
+     * Is this user an admin for the specified module.
+     *
+     * @param mixed $module
      *
      * @return bool
      */
@@ -2121,14 +2110,15 @@ EOQ;
         if (strpos($localeFormat, 'l') > strpos($localeFormat, 'f')) {
             return false;
         }
+
         return true;
     }
 
     public function create_new_list_query(
         $order_by,
         $where,
-        $filter = array(),
-        $params = array(),
+        $filter = [],
+        $params = [],
         $show_deleted = 0,
         $join_type = '',
         $return_array = false,
@@ -2140,7 +2130,6 @@ EOQ;
 
         //if this is being called from webservices, then run additional code
         if (!empty($GLOBALS['soap_server_object'])) {
-
             //if this is a single select, then secondary queries are being run that may result in duplicate rows being returned through the
             //left joins with meetings/tasks/call.  We need to change the left joins to include a null check (bug 40250)
             if ($singleSelect) {
@@ -2155,6 +2144,7 @@ EOQ;
                     $onPos = strpos($ljVal, ' on');
                     if ($onPos === false) {
                         $new_left_str .= ' ' . $ljVal . ' ';
+
                         continue;
                     }
                     $spacePos = strrpos(substr($ljVal, 0, $onPos), ' ');
@@ -2188,6 +2178,7 @@ EOQ;
      * Get user first day of week.
      *
      * @param [User] $user user object, current user if not specified
+     *
      * @return int : 0 = Sunday, 1 = Monday, etc...
      */
     public function get_first_day_of_week()
@@ -2201,9 +2192,10 @@ EOQ;
     }
 
     /**
-     * Method for password generation
+     * Method for password generation.
      *
      * @static
+     *
      * @return string password
      */
     public static function generatePassword()
@@ -2211,13 +2203,13 @@ EOQ;
         $res = $GLOBALS['sugar_config']['passwordsetting'];
         $charBKT = '';
         //chars to select from
-        $LOWERCASE = "abcdefghijklmnpqrstuvwxyz";
-        $NUMBER = "0123456789";
-        $UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $LOWERCASE = 'abcdefghijklmnpqrstuvwxyz';
+        $NUMBER = '0123456789';
+        $UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $SPECIAL = '~!@#$%^&*()_+=-{}|';
         $condition = 0;
         $charBKT .= $UPPERCASE . $LOWERCASE . $NUMBER;
-        $password = "";
+        $password = '';
         $length = '6';
 
         // Create random characters for the ones that doesnt have requirements
@@ -2229,20 +2221,21 @@ EOQ;
     }
 
     /**
-     * Send new password or link to user
+     * Send new password or link to user.
      *
      * @param string $templateId Id of email template
      * @param array $additionalData additional params: link, url, password
+     *
      * @return array status: true|false, message: error message, if status = false and message = '' it means that send method has returned false
      */
-    public function sendEmailForPassword($templateId, array $additionalData = array())
+    public function sendEmailForPassword($templateId, array $additionalData = [])
     {
         global $sugar_config, $current_user;
         $mod_strings = return_module_language('', 'Users');
-        $result = array(
+        $result = [
             'status' => false,
             'message' => ''
-        );
+        ];
 
         $emailTemp = new EmailTemplate();
         $emailTemp->disable_row_level_security = true;
@@ -2278,7 +2271,7 @@ EOQ;
         //retrieve email defaults
         $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();
-        require_once('include/SugarPHPMailer.php');
+        require_once 'include/SugarPHPMailer.php';
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
         //$mail->IsHTML(true);
@@ -2354,11 +2347,11 @@ EOQ;
                 $this->user_hash == false && !$this->is_group && !$this->portal_only && isset($GLOBALS['sugar_config']['passwordsetting']['SystemGeneratedPasswordON']) && $GLOBALS['sugar_config']['passwordsetting']['SystemGeneratedPasswordON']
         ) {
             $backUpPost = $_POST;
-            $_POST = array(
+            $_POST = [
                 'userId' => $this->id
-            );
+            ];
             ob_start();
-            require('modules/Users/GeneratePassword.php');
+            require 'modules/Users/GeneratePassword.php';
             $result = ob_get_clean();
             $_POST = $backUpPost;
 
@@ -2370,13 +2363,15 @@ EOQ;
      * Checks if the passed email is primary.
      *
      * @param string $email
-     * @return bool Returns TRUE if the passed email is primary.
+     *
+     * @return bool returns TRUE if the passed email is primary
      */
     public function isPrimaryEmail($email)
     {
         if (!empty($this->email1) && !empty($email) && strcasecmp($this->email1, $email) == 0) {
             return true;
         }
+
         return false;
     }
 
@@ -2393,18 +2388,98 @@ EOQ;
 
     public function getSubThemes()
     {
-        $sugarTheme = new SugarTheme(array());
-        $subThemes = $sugarTheme->getSubThemes();
-        return $subThemes;
+        $sugarTheme = new SugarTheme([]);
+
+        return $sugarTheme->getSubThemes();
     }
 
     public function getSubTheme()
     {
         $subTheme = $this->getPreference('subtheme');
         if (!$subTheme) {
-            $sugarTheme = new SugarTheme(array());
+            $sugarTheme = new SugarTheme([]);
             $subTheme = $sugarTheme->getSubThemeDefault();
         }
+
         return $subTheme;
+    }
+
+    protected function _loadUserPreferencesFocus()
+    {
+        $this->_userPreferenceFocus = new UserPreference($this);
+    }
+
+    // Here are the multi level admin access check functions.
+
+    /**
+     * Helper function to remap some modules around ACL wise.
+     *
+     * @param mixed $module
+     *
+     * @return string
+     */
+    protected function _fixupModuleForACL($module)
+    {
+        if ($module == 'ContractTypes') {
+            $module = 'Contracts';
+        }
+        if (preg_match('/Product[a-zA-Z]*/', $module)) {
+            $module = 'Products';
+        }
+
+        return $module;
+    }
+
+    /**
+     * Helper function that enumerates the list of modules and checks if they are an admin/dev.
+     * The code was just too similar to copy and paste.
+     *
+     * @param mixed $type
+     *
+     * @return array
+     */
+    protected function _getModulesForACL($type = 'dev')
+    {
+        $isDev = $type == 'dev';
+        $isAdmin = $type == 'admin';
+
+        global $beanList;
+        $myModules = [];
+
+        if (!is_array($beanList)) {
+            return $myModules;
+        }
+
+        // These modules don't take kindly to the studio trying to play about with them.
+        static $ignoredModuleList = ['iFrames', 'Feeds', 'Home', 'Dashboard', 'Calendar', 'Activities', 'Reports'];
+
+        $actions = ACLAction::getUserActions($this->id);
+
+        foreach ($beanList as $module => $val) {
+            // Remap the module name
+            $module = $this->_fixupModuleForACL($module);
+            if (in_array($module, $myModules)) {
+                // Already have the module in the list
+                continue;
+            }
+            if (in_array($module, $ignoredModuleList)) {
+                // You can't develop on these modules.
+                continue;
+            }
+
+            $focus = SugarModule::get($module)->loadBean();
+            if ($focus instanceof SugarBean) {
+                $key = $focus->acltype;
+            } else {
+                $key = 'module';
+            }
+
+            if (($this->isAdmin() && isset($actions[$module][$key]))
+            ) {
+                $myModules[] = $module;
+            }
+        }
+
+        return $myModules;
     }
 }

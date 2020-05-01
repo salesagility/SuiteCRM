@@ -1,4 +1,2 @@
 <?php
-/**
- * This file adds support for studio
- */
+// This file adds support for studio

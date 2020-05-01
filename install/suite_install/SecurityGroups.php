@@ -4,11 +4,11 @@ function install_ss()
 {
     //eggsurplus: set up default config options
 
-    require_once('sugar_version.php');
-    require_once('modules/Administration/Administration.php');
+    require_once 'sugar_version.php';
+    require_once 'modules/Administration/Administration.php';
     global $sugar_config;
 
-    /** If this is the first install set some default settings */
+    // If this is the first install set some default settings
     if (!array_key_exists('securitysuite_additive', $sugar_config)) {
         // save securitysuite_additive setting
         $sugar_config['securitysuite_additive'] = true;
@@ -48,7 +48,7 @@ function install_ss()
     }
 
     if (!isset($GLOBALS['sugar_config']['addAjaxBannedModules'])) {
-        $GLOBALS['sugar_config']['addAjaxBannedModules'] = array();
+        $GLOBALS['sugar_config']['addAjaxBannedModules'] = [];
     }
     $GLOBALS['sugar_config']['addAjaxBannedModules'][] = 'SecurityGroups';
 
@@ -61,10 +61,10 @@ function install_ss()
 
 function installSSHooks()
 {
-    require_once('ModuleInstall/ModuleInstaller.php');
+    require_once 'ModuleInstall/ModuleInstaller.php';
 
-    $hooks = array(
-        array(
+    $hooks = [
+        [
             'module' => '',
             'hook' => 'after_ui_footer',
             'order' => 10,
@@ -72,8 +72,8 @@ function installSSHooks()
             'file' => 'modules/SecurityGroups/AssignGroups.php',
             'class' => 'AssignGroups',
             'function' => 'popup_onload',
-        ),
-        array(
+        ],
+        [
             'module' => '',
             'hook' => 'after_ui_frame',
             'order' => 20,
@@ -81,8 +81,8 @@ function installSSHooks()
             'file' => 'modules/SecurityGroups/AssignGroups.php',
             'class' => 'AssignGroups',
             'function' => 'mass_assign',
-        ),
-        array(
+        ],
+        [
             'module' => '',
             'hook' => 'after_save',
             'order' => 30,
@@ -90,10 +90,10 @@ function installSSHooks()
             'file' => 'modules/SecurityGroups/AssignGroups.php',
             'class' => 'AssignGroups',
             'function' => 'popup_select',
-        ),
-    );
+        ],
+    ];
 
     foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
+        check_logic_hook_file($hook['module'], $hook['hook'], [$hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']]);
     }
 }

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -31,7 +34,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $opportunity);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $opportunity = new Opportunity();
 
@@ -43,7 +46,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $opportunity->get_summary_text());
     }
 
-    public function testcreate_list_query()
+    public function testcreateListQuery()
     {
         $this->markTestIncomplete('Breaks on php 7.1');
         $opportunity = new Opportunity();
@@ -59,7 +62,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $this->markTestIncomplete('Breaks on php 7.1');
         $opportunity = new Opportunity();
@@ -75,7 +78,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $opportunity = new Opportunity();
 
@@ -94,7 +97,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $opportunity = new Opportunity();
 
@@ -107,7 +110,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_contacts()
+    public function testgetContacts()
     {
         $opportunity = new Opportunity();
 
@@ -115,31 +118,31 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testupdate_currency_id()
+    public function testupdateCurrencyId()
     {
         $opportunity = new Opportunity();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
-            $opportunity->update_currency_id(array('GBP', 'EUR'), 'USD');
+            $opportunity->update_currency_id(['GBP', 'EUR'], 'USD');
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $opportunity = new Opportunity();
 
         $opportunity->name = 'test';
 
-        $expected = array(
-                'NAME' => 'test',
-                'DELETED' => 0,
-                'SALES_STAGE' => '',
-                'ENCODED_NAME' => 'test',
-                );
+        $expected = [
+            'NAME' => 'test',
+            'DELETED' => 0,
+            'SALES_STAGE' => '',
+            'ENCODED_NAME' => 'test',
+        ];
 
         $actual = $opportunity->get_list_view_data();
         //$this->assertSame($expected, $actual);
@@ -149,7 +152,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
     }
 
-    public function testget_currency_symbol()
+    public function testgetCurrencySymbol()
     {
         $opportunity = new Opportunity();
 
@@ -161,7 +164,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $opportunity->get_currency_symbol());
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $opportunity = new Opportunity();
 
@@ -193,7 +196,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testsave_relationship_changes()
+    public function testsaveRelationshipChanges()
     {
         $opportunity = new Opportunity();
         $opportunity->account_id = 1;
@@ -206,7 +209,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testset_opportunity_contact_relationship()
+    public function testsetOpportunityContactRelationship()
     {
         $opportunity = new Opportunity();
 
@@ -218,7 +221,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $opportunity = new Opportunity();
 
@@ -239,7 +242,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($opportunity->description, $result->_tpl_vars['OPPORTUNITY_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $opportunity = new Opportunity();
 
@@ -252,12 +255,12 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     {
         $opportunity = new Opportunity();
 
-        $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
+        $expected = ['MAIN' => 'a', 'ACCOUNT' => 'a'];
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_account_detail()
+    public function testgetAccountDetail()
     {
         $opportunity = new Opportunity();
 

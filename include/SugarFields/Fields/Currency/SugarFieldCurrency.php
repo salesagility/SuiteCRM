@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,9 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Fields/Float/SugarFieldFloat.php');
+require_once 'include/SugarFields/Fields/Float/SugarFieldFloat.php';
 
 class SugarFieldCurrency extends SugarFieldFloat
 {
@@ -53,8 +50,8 @@ class SugarFieldCurrency extends SugarFieldFloat
         $currencyUSD = '-99';
 
         $amount = $parentFieldArray[strtoupper($vardef['name'])];
-        $currencyId = isset($parentFieldArray['CURRENCY_ID']) ? $parentFieldArray['CURRENCY_ID'] : "";
-        $currencySymbol = isset($parentFieldArray['CURRENCY_SYMBOL']) ? $parentFieldArray['CURRENCY_SYMBOL'] : "";
+        $currencyId = isset($parentFieldArray['CURRENCY_ID']) ? $parentFieldArray['CURRENCY_ID'] : '';
+        $currencySymbol = isset($parentFieldArray['CURRENCY_SYMBOL']) ? $parentFieldArray['CURRENCY_SYMBOL'] : '';
 
         if (empty($currencyId)) {
             $currencyId = $locale->getPrecedentPreference('currency');
@@ -63,7 +60,7 @@ class SugarFieldCurrency extends SugarFieldFloat
         if (empty($currencySymbol)) {
             $currencySymbol = $locale->getPrecedentPreference('default_currency_symbol');
         }
-        
+
         if (stripos($vardef['name'], '_USD')) {
             $userCurrencyId = $current_user->getPreference('currency');
             if (!empty($userCurrencyId) && $currencyUSD !== $userCurrencyId) {
@@ -86,23 +83,31 @@ class SugarFieldCurrency extends SugarFieldFloat
 
     /**
      * @see SugarFieldBase::importSanitize()
+     *
+     * @param mixed $value
+     * @param mixed $vardef
+     * @param mixed $focus
      */
     public function importSanitize(
         $value,
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
-        $value = str_replace($settings->currency_symbol, "", $value);
-        
+    ) {
+        $value = str_replace($settings->currency_symbol, '', $value);
+
         return $settings->float($value, $vardef, $focus);
     }
 
     /**
      * format the currency field based on system locale values for currency
      * Note that this may be different from the precision specified in the vardefs.
+     *
      * @param string $rawfield value of the field
      * @param string $somewhere vardef for the field being processed
+     * @param mixed $rawField
+     * @param mixed $vardef
+     *
      * @return number formatted according to currency settings
      */
     public function formatField($rawField, $vardef)
@@ -113,6 +118,7 @@ class SugarFieldCurrency extends SugarFieldFloat
         if ($rawField === '' || $rawField === null) {
             return '';
         }
+
         return format_number($rawField, $precision, $precision);
     }
 }

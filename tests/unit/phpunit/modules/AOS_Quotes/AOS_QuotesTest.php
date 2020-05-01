@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOS_QuotesTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOS_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOS_Quotes()
+    public function testAOSQuotes()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosQuotes = new AOS_Quotes();
@@ -30,7 +33,7 @@ class AOS_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'lineItems', $aosQuotes);
     }
 
-    public function testSaveAndMark_deleted()
+    public function testSaveAndMarkDeleted()
     {
         $aosQuotes = new AOS_Quotes();
 

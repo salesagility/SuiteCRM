@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -46,12 +45,12 @@ class AOPAssignManager
     private $ieX = false;
     private $distributionMethod = '';
     private $aopFallback = true;
-    private $assignableUsers = array();
+    private $assignableUsers = [];
 
     /**
      * AOPAssignManager constructor.
      *
-     * @param  InboundEmail|bool $ieX
+     * @param  bool|InboundEmail $ieX
      */
     public function __construct($ieX = false)
     {
@@ -69,6 +68,37 @@ class AOPAssignManager
             $this->aopFallback = false;
         }
         $this->assignableUsers = $this->getAssignableUsers();
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getNextAssignedUser()
+    {
+        switch ($this->distributionMethod) {
+            case 'singleUser':
+                $userId = $this->getSingleUser();
+
+                break;
+            case 'roundRobin':
+                $userId = $this->getRoundRobinUser();
+                $this->setLastRoundRobinUser($userId);
+
+                break;
+            case 'leastBusy':
+                $userId = $this->getLeastBusyUser();
+                $this->updateLeastBusy($userId);
+
+                break;
+            case 'random':
+                $userId = $this->getRandomUser();
+
+                break;
+            default:
+                $userId = '';
+        }
+
+        return $userId;
     }
 
     /**
@@ -96,9 +126,9 @@ class AOPAssignManager
             }
 
             return $distributionOptions;
-        } else {
-            return $this->ieX->get_stored_options('distribution_options', '');
         }
+
+        return $this->ieX->get_stored_options('distribution_options', '');
     }
 
     /**
@@ -112,7 +142,7 @@ class AOPAssignManager
         $role = new ACLRole();
         $role->retrieve($roleId);
         $role_users = $role->get_linked_beans('users', 'User');
-        $r_users = array();
+        $r_users = [];
         foreach ($role_users as $role_user) {
             $r_users[$role_user->id] = $role_user->name;
         }
@@ -126,12 +156,12 @@ class AOPAssignManager
     private function getAssignableUsers()
     {
         if ($this->distributionMethod === 'singleUser') {
-            return array();
+            return [];
         }
         $distributionOptions = $this->getDistributionOptions();
 
         if (empty($distributionOptions)) {
-            return array();
+            return [];
         }
         switch ($distributionOptions[0]) {
             case 'security_group':
@@ -140,8 +170,8 @@ class AOPAssignManager
                     $security_group = new SecurityGroup();
                     $security_group->retrieve($distributionOptions[1]);
                     $group_users = $security_group->get_linked_beans('users', 'User');
-                    $users = array();
-                    $r_users = array();
+                    $users = [];
+                    $r_users = [];
                     if ($distributionOptions[2] !== '') {
                         $r_users = $this->getRoleUsers($distributionOptions[2]);
                     }
@@ -151,16 +181,19 @@ class AOPAssignManager
                         }
                         $users[$group_user->id] = $group_user->name;
                     }
+
                     break;
                 }
             //No Security Group module found - fall through.
             // no break
             case 'role':
                 $users = $this->getRoleUsers($distributionOptions[2]);
+
                 break;
             case 'all':
             default:
                 $users = get_user_array(false);
+
                 break;
         }
 
@@ -196,10 +229,10 @@ class AOPAssignManager
         $db = DBManagerFactory::getInstance();
         $idIn = implode("','", $db->arrayQuote(array_keys($this->assignableUsers)));
         if ($idIn) {
-            $idIn = "'".$idIn."'";
+            $idIn = "'" . $idIn . "'";
         }
         $res = $db->query("SELECT assigned_user_id, COUNT(*) AS c FROM cases WHERE assigned_user_id IN ({$idIn}) AND deleted = 0 GROUP BY assigned_user_id ORDER BY COUNT(*)");
-        $this->leastBusyUsers = array();
+        $this->leastBusyUsers = [];
         while ($row = $db->fetchByAssoc($res)) {
             $this->leastBusyUsers[$row['assigned_user_id']] = $row['c'];
         }
@@ -227,7 +260,7 @@ class AOPAssignManager
         if (!$this->leastBusyUsers) {
             $this->getLeastBusyCounts();
         }
-        $this->leastBusyUsers[$id] += 1;
+        $this->leastBusyUsers[$id]++;
     }
 
     /**
@@ -241,39 +274,12 @@ class AOPAssignManager
     }
 
     /**
-     * @return mixed|string
-     */
-    public function getNextAssignedUser()
-    {
-        switch ($this->distributionMethod) {
-            case 'singleUser':
-                $userId = $this->getSingleUser();
-                break;
-            case 'roundRobin':
-                $userId = $this->getRoundRobinUser();
-                $this->setLastRoundRobinUser($userId);
-                break;
-            case 'leastBusy':
-                $userId = $this->getLeastBusyUser();
-                $this->updateLeastBusy($userId);
-                break;
-            case 'random':
-                $userId = $this->getRandomUser();
-                break;
-            default:
-                $userId = '';
-        }
-
-        return $userId;
-    }
-
-    /**
      * @return mixed
      */
     private function getRoundRobinUser()
     {
         $id = empty($this->ieX) ? '' : $this->ieX->id;
-        $file = create_cache_directory('modules/AOP_Case_Updates/Users/').$id.'lastUser.cache.php';
+        $file = create_cache_directory('modules/AOP_Case_Updates/Users/') . $id . 'lastUser.cache.php';
         $lastUserId = '';
         if (isset($_SESSION['AOPLastUser'][$id]) && $_SESSION['AOPLastUser'][$id] !== '') {
             $lastUserId = $_SESSION['AOPLastUser'][$id];
@@ -302,8 +308,8 @@ class AOPAssignManager
     {
         $id = empty($this->ieX) ? '' : $this->ieX->id;
         $_SESSION['AOPLastUser'][$id] = $user_id;
-        $file = create_cache_directory('modules/AOP_Case_Updates/Users/').$id.'lastUser.cache.php';
-        $arrayString = var_export_helper(array('User' => $user_id));
+        $file = create_cache_directory('modules/AOP_Case_Updates/Users/') . $id . 'lastUser.cache.php';
+        $arrayString = var_export_helper(['User' => $user_id]);
         $content = <<<eoq
 <?php
     \$lastUser = {$arrayString};

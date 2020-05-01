@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,19 +40,20 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
 /**
- * Interface HasParserInterface
- * @package SuiteCRM\API\JsonApi\v1\Filters\Interfaces
+ * Interface HasParserInterface.
  */
 interface HasParserInterface
 {
     /**
-     * Return filter format of the operator
-     * @return boolean
+     * Return filter format of the operator.
+     *
+     * @return bool
      */
     public function hasParser();
 
     /**
-     * Return Sql format of the operator
+     * Return Sql format of the operator.
+     *
      * @return string
      */
     public function getParser();

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,16 +45,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 session_start();
 $GLOBALS['installing'] = true;
 
+require_once 'include/JSON.php';
 
-require_once('include/JSON.php');
+require_once 'include/utils/db_utils.php';
 
-require_once('include/utils/db_utils.php');
+require_once 'include/utils/php_zip_utils.php';
 
-require_once('include/utils/php_zip_utils.php');
-
-require_once('modules/UpgradeWizard/uw_utils.php');
-
-
+require_once 'modules/UpgradeWizard/uw_utils.php';
 
 $json = getJSONobj();
 /*
@@ -67,17 +65,16 @@ if(isset($tagdata['jsonObject']) && $tagdata['jsonObject'] != null){
  }
 */
 
- $_SESSION['totalUpgradeTime'] = $_SESSION['totalUpgradeTime']+$_REQUEST['upgradeStepTime'];
+ $_SESSION['totalUpgradeTime'] = $_SESSION['totalUpgradeTime'] + $_REQUEST['upgradeStepTime'];
  $response = $_SESSION['totalUpgradeTime'];
 
-$GLOBALS['log']->fatal('TOTAL TIME .....'.$_SESSION['totalUpgradeTime']);
+$GLOBALS['log']->fatal('TOTAL TIME .....' . $_SESSION['totalUpgradeTime']);
  //$uptime = $uptime+$_REQUEST['upgradeStepTime'];
  $GLOBALS['log']->fatal($response);
 
-
  if (!empty($response)) {
      $json = getJSONobj();
-     print $json->encode($response);
+     echo $json->encode($response);
  }
 
 sugar_cleanup();

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-$layout_defs['Schedulers'] = array(
+$layout_defs['Schedulers'] = [
     // list of what Subpanels to show in the DetailView
-    'subpanel_setup' => array(
-        'times' => array(
+    'subpanel_setup' => [
+        'times' => [
             'order' => 20,
             'module' => 'SchedulersJobs',
             'sort_by' => 'execute_time',
@@ -54,8 +54,8 @@ $layout_defs['Schedulers'] = array(
             'get_subpanel_data' => 'schedulers_times',
             'add_subpanel_data' => 'scheduler_id',
             'title_key' => 'LBL_JOBS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-            ),
-        ),
-    ),
-);
+            'top_buttons' => [
+            ],
+        ],
+    ],
+];

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,16 +40,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-require_once('include/Dashlets/DashletGenericChart.php');
+require_once 'include/Dashlets/DashletGenericChart.php';
 
 class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 {
-    public $lsbo_lead_sources = array();
-    public $lsbo_ids          = array();
+    public $lsbo_lead_sources = [];
+    public $lsbo_ids = [];
 
     /**
      * @see DashletGenericChart::$_seedName
@@ -63,7 +59,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
     {
         global $app_list_strings;
 
-        $selected_datax = array();
+        $selected_datax = [];
         if (!empty($this->lsbo_lead_sources) && count($this->lsbo_lead_sources) > 0) {
             foreach ($this->lsbo_lead_sources as $key) {
                 $selected_datax[] = $key;
@@ -125,21 +121,19 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
-        $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
+        $subtitle = translate('LBL_OPP_SIZE', 'Charts') . ' ' . $currency_symbol . '1' . translate('LBL_OPP_THOUSANDS', 'Charts');
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
         $module = 'Opportunities';
-        $action =  'index';
-        $query =  'true';
+        $action = 'index';
+        $query = 'true';
         $searchFormTab = 'advanced_search';
-        $groupBy = array( 'lead_source', 'sales_stage' );
+        $groupBy = ['lead_source', 'sales_stage'];
 
-
-        $url_params = array();
+        $url_params = [];
         if (count($this->lsbo_ids) > 0) {
             $url_params['assigned_user_id'] = array_values($this->lsbo_ids);
         }
-
 
         $data = $this->getChartData($this->constructQuery());
 
@@ -147,9 +141,9 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
 
-        $canvasId = 'rGraphOppByLeadSourceByOutcome'.uniqid();
-        $chartWidth     = 900;
-        $chartHeight    = 500;
+        $canvasId = 'rGraphOppByLeadSourceByOutcome' . uniqid();
+        $chartWidth = 900;
+        $chartHeight = 500;
         $autoRefresh = $this->processAutoRefresh();
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
@@ -157,26 +151,25 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
         $jsonLabels = json_encode($chartReadyData['labels']);
         $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
-
         $jsonKey = json_encode($chartReadyData['key']);
         $jsonTooltips = json_encode($chartReadyData['tooltips']);
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
-        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
-            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
+        if (!is_array($chartReadyData['data']) || count($chartReadyData['data']) < 1) {
+            return "<h3 class='noGraphDataPoints'>{$this->noDataMessage}</h3>";
         }
 
         $chart = <<<EOD
-        <canvas id='$canvasId'   class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
-             $autoRefresh
+        <canvas id='{$canvasId}'   class='resizableCanvas'  width='{$chartWidth}' height='{$chartHeight}'>[No canvas support]</canvas>
+             {$autoRefresh}
          <script>
            var hbar = new RGraph.HBar({
-            id: '$canvasId',
-            data:$jsonData,
+            id: '{$canvasId}',
+            data:{$jsonData},
             options: {
                 grouping: 'stacked',
-                labels: $jsonLabels,
+                labels: {$jsonLabels},
                 xlabels:true,
                 labelsAbove: true,
                 labelsAbovedecimals: 2,
@@ -188,16 +181,16 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
                 //gutterRight:200,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
-                tooltips:$jsonTooltips,
+                tooltips:{$jsonTooltips},
                 tooltipsEvent:'mousemove',
-                colors:$colours,
+                colors:{$colours},
                 textSize:10,
-                key: $jsonKey,
-                keyColors: $colours,
+                key: {$jsonKey},
+                keyColors: {$colours},
                 keyBackground:'rgba(255,255,255,0.7)',
-                unitsPre:'$currency_symbol',
-                unitsPost:'$thousands_symbol',
-                //keyPositionX: $canvasId.width - 190,
+                unitsPre:'{$currency_symbol}',
+                unitsPost:'{$thousands_symbol}',
+                //keyPositionX: {$canvasId}.width - 190,
                 keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
@@ -252,18 +245,18 @@ EOD;
      */
     protected function constructQuery()
     {
-        $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total, ".
-            "count(*) as opp_count FROM opportunities ";
-        $query .= " WHERE opportunities.deleted=0 ";
+        $query = 'SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total, ' .
+            'count(*) as opp_count FROM opportunities ';
+        $query .= ' WHERE opportunities.deleted=0 ';
         if (count($this->lsbo_ids) > 0) {
-            $query .= "AND opportunities.assigned_user_id IN ('".implode("','", $this->lsbo_ids)."') ";
+            $query .= "AND opportunities.assigned_user_id IN ('" . implode("','", $this->lsbo_ids) . "') ";
         }
         if (count($this->lsbo_lead_sources) > 0) {
-            $query .= "AND opportunities.lead_source IN ('".implode("','", $this->lsbo_lead_sources)."') ";
+            $query .= "AND opportunities.lead_source IN ('" . implode("','", $this->lsbo_lead_sources) . "') ";
         } else {
-            $query .= "AND opportunities.lead_source IN ('".implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+            $query .= "AND opportunities.lead_source IN ('" . implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom'])) . "') ";
         }
-        $query .= " GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage";
+        $query .= ' GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage';
 
         return $query;
     }
@@ -271,29 +264,30 @@ EOD;
     protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
-        $chart['labels'] = array();
-        $chart['data'] = array();
+        $chart['labels'] = [];
+        $chart['data'] = [];
         //Need to add all elements into the key, as they are stacked (even though the category is not present, the value could be
-        $chart['key'] = array();
-        $chart['tooltips']= array();
+        $chart['key'] = [];
+        $chart['tooltips'] = [];
 
         foreach ($data as $i) {
-            $key = $i["lead_source"];
-            $keyDom = $i["lead_source_dom_option"];
-            $stage = $i["sales_stage"];
-            $stageDom = $i["sales_stage_dom_option"];
+            $key = $i['lead_source'];
+            $keyDom = $i['lead_source_dom_option'];
+            $stage = $i['sales_stage'];
+            $stageDom = $i['sales_stage_dom_option'];
             if (!in_array($key, $chart['labels'])) {
                 $chart['labels'][] = $key;
-                $chart['data'][] = array();
+                $chart['data'][] = [];
             }
             if (!in_array($stage, $chart['key'])) {
                 $chart['key'][] = $stage;
             }
 
-            $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
-            $chart['data'][count($chart['data'])-1][] = $formattedFloat;
-            $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stageDom'><input type='hidden' class='category' value='$keyDom'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
+            $formattedFloat = (float) number_format((float) $i['total'], 2, '.', '');
+            $chart['data'][count($chart['data']) - 1][] = $formattedFloat;
+            $chart['tooltips'][] = "<div><input type='hidden' class='stage' value='{$stageDom}'><input type='hidden' class='category' value='{$keyDom}'></div>" . $stage . '(' . $currency_symbol . $formattedFloat . $thousands_symbol . ') ' . $key;
         }
+
         return $chart;
     }
 }

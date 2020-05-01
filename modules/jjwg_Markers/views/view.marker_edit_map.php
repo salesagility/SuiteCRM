@@ -11,13 +11,9 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
-
-    // Users local settings for decimal separator and number grouping separator
+        // Users local settings for decimal separator and number grouping separator
         $dec_sep = $GLOBALS['sugar_config']['default_decimal_seperator'];
         $user_dec_sep = $GLOBALS['current_user']->getPreference('dec_sep');
         $dec_sep = (empty($user_dec_sep) ? $GLOBALS['sugar_config']['default_decimal_seperator'] : $user_dec_sep);
@@ -61,7 +57,7 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView
     }
   </style>
 
-  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false"></script>
 
   <script type="text/javascript">
 

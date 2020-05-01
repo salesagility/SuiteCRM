@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -67,7 +65,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     if (!$isValidator->isValidId($campaign_id)) {
         throw new RuntimeException('Invalid ID requested in Person Capture');
     }
-    $camp_query = "select name,id from campaigns where id='$campaign_id'";
+    $camp_query = "select name,id from campaigns where id='{$campaign_id}'";
     $camp_query .= ' and deleted=0';
     $camp_result = $campaign->db->query($camp_query);
     $camp_data = $campaign->db->fetchByAssoc($camp_result);
@@ -76,8 +74,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $marketing = new EmailMarketing();
     $marketing_query = $marketing->create_new_list_query(
         'date_start desc, date_modified desc',
-        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < ".$db->convert('', 'today'),
-        array('id')
+        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < " . $db->convert('', 'today'),
+        ['id']
     );
     $marketing_result = $db->limitQuery($marketing_query, 0, 1, true);
     $marketing_data = $db->fetchByAssoc($marketing_result);
@@ -107,9 +105,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         }
 
         //bug: 42398 - have to unset the id from the required_fields since it is not populated in the $_POST
-        unset($person->required_fields['id']);
-        unset($person->required_fields['team_name']);
-        unset($person->required_fields['team_count']);
+        unset($person->required_fields['id'], $person->required_fields['team_name'], $person->required_fields['team_count']);
 
         // Bug #52563 : Web to Lead form redirects to Sugar when duplicate detected
         // prevent duplicates check
@@ -120,13 +116,13 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
-        
-        $optInEmailFields = array();
+
+        $optInEmailFields = [];
         $optInPrefix = 'opt_in_';
 
         if (!empty($person)) {
-            $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
-            $possiblePersonCaptureFields = array('campaign_id', 'assigned_user_id');
+            $filteredFieldsFromPersonBean = filterFieldsFromBeans([$person]);
+            $possiblePersonCaptureFields = ['campaign_id', 'assigned_user_id'];
             foreach ($filteredFieldsFromPersonBean[0]->fields as $field) {
                 $possiblePersonCaptureFields[] = $field[1];
             }
@@ -135,7 +131,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 //Skip the admin items that are not part of the bean
                 if ($k === 'client_id_address' || $k === 'req_id' || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
-                } elseif (preg_match('/^' . $optInPrefix . '/', $k)) {
+                }
+                if (preg_match('/^' . $optInPrefix . '/', $k)) {
                     $optInEmailFields[] = substr($k, strlen($optInPrefix));
                 } else {
                     if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
@@ -143,7 +140,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                             if (is_array($v)) {
                                 $v = encodeMultienumValue($v);
                             }
-                            $person->$k = $v;
+                            $person->{$k} = $v;
                         } else {
                             LoggerManager::getLogger()->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
                         }
@@ -153,7 +150,6 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         }
 
         if (!empty($person)) {
-
             //create campaign log
             $camplog = new CampaignLog();
             $camplog->campaign_id = $campaign_id;
@@ -209,11 +205,10 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $sea->AddUpdateEmailAddress($person->email2, 0, 1);
             }
         }
-        
-        
+
         if (!empty($optInEmailFields)) {
             // Look for opted out
-            $optedOut = array();
+            $optedOut = [];
             foreach ($optInEmailFields as $i => $optInEmailField) {
                 if (stristr($optInEmailField, '_default') !== false) {
                     $emailField = str_replace('_default', '', $optInEmailField);
@@ -229,16 +224,16 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $optInEmailFields = array_unique($optInEmailFields);
 
             foreach ($optInEmailFields as $optInEmailField) {
-                if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
+                if (isset($person->{$optInEmailField}) && !empty($person->{$optInEmailField})) {
                     $sea = new EmailAddress();
-                    $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
+                    $emailId = $sea->AddUpdateEmailAddress($person->{$optInEmailField});
                     if ($sea->retrieve($emailId)) {
                         if (in_array($optInEmailField, $optedOut)) {
                             $sea->resetOptIn();
+
                             continue;
-                        } else {
-                            $sea->optIn();
                         }
+                        $sea->optIn();
 
                         $configurator = new Configurator();
                         if ($configurator->isConfirmOptInEnabled()) {
@@ -265,17 +260,18 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     } else {
                         $msg = 'Error retrieving an email address.';
                         LoggerManager::getLogger()->fatal($msg);
+
                         throw new RuntimeException($msg);
                     }
                 } else {
                     $personClass = get_class($person);
-                    $msg = "Incorrect email field for Opt In at person. Person type: $personClass, field: $optInEmailField.";
+                    $msg = "Incorrect email field for Opt In at person. Person type: {$personClass}, field: {$optInEmailField}.";
                     LoggerManager::getLogger()->fatal($msg);
+
                     throw new RuntimeException($msg);
                 }
             }
         }
-
 
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
@@ -298,7 +294,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 } else {
                     $query_string .= '&';
                 }
-                $query_string .= "{$param}=".urlencode($value);
+                $query_string .= "{$param}=" . urlencode($value);
             }
             if (empty($person)) {
                 if ($first_iteration) {
@@ -314,12 +310,12 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             // Check if the headers have been sent, or if the redirect url is greater than 2083 characters (IE max URL length)
             //   and use a javascript form submission if that is the case.
             if (headers_sent() || strlen($redirect_url) > 2083) {
-                echo '<html '.get_language_header().'><head><title>SugarCRM</title></head><body>';
-                echo '<form name="redirect" action="'.$_POST['redirect_url'].'" method="GET">';
+                echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
+                echo '<form name="redirect" action="' . $_POST['redirect_url'] . '" method="GET">';
 
                 foreach ($_POST as $param => $value) {
                     if ($param != 'redirect_url' || $param != 'submit') {
-                        echo '<input type="hidden" name="'.$param.'" value="'.$value.'">';
+                        echo '<input type="hidden" name="' . $param . '" value="' . $value . '">';
                     }
                 }
                 if (empty($person)) {
@@ -342,24 +338,23 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     $log = LoggerManager::getLogger();
                     $log->error('Success but some error occurred: ' . implode(', ', $errors));
                 }
-                
+
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
                 echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
             }
-            header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
+            header($_SERVER['SERVER_PROTOCOL'] . '201', true, 201);
         }
         sugar_cleanup();
         // die to keep code from running into redirect case below
         die();
-    } else {
-        echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
     }
+    echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
 }
 
 if (!empty($_POST['redirect'])) {
     if (headers_sent()) {
-        echo '<html '.get_language_header().'><head><title>SugarCRM</title></head><body>';
-        echo '<form name="redirect" action="'.$_POST['redirect'].'" method="GET">';
+        echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
+        echo '<form name="redirect" action="' . $_POST['redirect'] . '" method="GET">';
         echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
         echo '</body></html>';
     } else {

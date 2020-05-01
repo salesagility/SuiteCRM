@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,10 +40,7 @@
 namespace SuiteCRM\Enumerator;
 
 /**
- * Class ExceptionCode
- * @package SuiteCRM\Enumerator
- * Holds all the error codes for exceptions
- * Convention: [Sub_System]_[Error_Name] = unique integer
+ * Class ExceptionCode.
  */
 class ExceptionCode
 {

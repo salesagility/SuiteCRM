@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,30 +39,30 @@
 
 namespace SuiteCRM\API\JsonApi\v1\Repositories;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SuiteCRM\API\JsonApi\v1\Filters\Parsers\FilterParser;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use Psr\Container\ContainerInterface;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 
 /**
- * Class FilterRepository
- * @package SuiteCRM\API\JsonApi\v1\Repositories
+ * Class FilterRepository.
  */
 class FilterRepository
 {
     /**
-     * @var ContainerInterface $containers
+     * @var ContainerInterface
      */
     private $containers;
 
     /**
-     * @var FilterParser $filterParser
+     * @var FilterParser
      */
     private $filterParser;
 
     /**
      * FilterRepository constructor.
+     *
      * @param ContainerInterface $containers
      */
     public function __construct(ContainerInterface $containers)
@@ -75,19 +74,21 @@ class FilterRepository
     /**
      * @param Request $request
      * @param array route arguments
-     * @return array
+     *
      * @throws \SuiteCRM\API\v8\Exception\BadRequestException
+     *
+     * @return array
      */
-    public function fromRequest(Request $request, array $args = array())
+    public function fromRequest(Request $request, array $args = [])
     {
         /** @var OperatorInterface[] $filterOperators */
         // Parse Filters from request
         $queries = $request->getQueryParams();
         if (empty($queries)) {
-            return array();
+            return [];
         }
 
-        $response = array();
+        $response = [];
         if (isset($queries['filter'])) {
             /** @var array $filters */
             $filters = $queries['filter'];
@@ -98,7 +99,7 @@ class FilterRepository
                 }
             } else {
                 if (is_string($filters)) {
-                    $response = array($filters);
+                    $response = [$filters];
                 } else {
                     throw new BadRequestException('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
                 }

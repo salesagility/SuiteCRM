@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -46,10 +44,10 @@ include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
 
 require_once 'modules/AOP_Case_Updates/util.php';
 
-$_REQUEST['edit']='true';
+$_REQUEST['edit'] = 'true';
 
-require_once('include/SugarFolders/SugarFolders.php');
-require_once('include/templates/TemplateGroupChooser.php');
+require_once 'include/SugarFolders/SugarFolders.php';
+require_once 'include/templates/TemplateGroupChooser.php';
 
 // GLOBALS
 global $mod_strings;
@@ -61,12 +59,12 @@ $focus = new InboundEmail();
 $focus->checkImap();
 $javascript = new Javascript();
 $email = new Email();
-/* Start standard EditView setup logic */
+// Start standard EditView setup logic
 
 $domMailBoxType = $app_list_strings['dom_mailbox_type'];
 
 if (isset($_REQUEST['record'])) {
-    $GLOBALS['log']->debug("In InboundEmail edit view, about to retrieve record: ".$_REQUEST['record']);
+    $GLOBALS['log']->debug('In InboundEmail edit view, about to retrieve record: ' . $_REQUEST['record']);
     $result = $focus->retrieve($_REQUEST['record']);
     if ($result == null) {
         sugar_die($app_strings['ERROR_NO_RECORD']);
@@ -81,23 +79,22 @@ if (isset($_REQUEST['record'])) {
 }
 
 if ($focus->mailbox_type == 'bounce') {
-    unset($domMailBoxType['pick']);
-    unset($domMailBoxType['createcase']);
+    unset($domMailBoxType['pick'], $domMailBoxType['createcase']);
 } else {
     unset($domMailBoxType['bounce']);
 }
 
 $isDuplicate = isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true';
 if ($isDuplicate) {
-    $GLOBALS['log']->debug("isDuplicate found - duplicating record of id: ".$focus->id);
+    $GLOBALS['log']->debug('isDuplicate found - duplicating record of id: ' . $focus->id);
     $origin_id = $focus->id;
-    $focus->id = "";
+    $focus->id = '';
 }
 
-$GLOBALS['log']->info("InboundEmail Edit View");
-/* End standard EditView setup logic */
+$GLOBALS['log']->info('InboundEmail Edit View');
+// End standard EditView setup logic
 
-/* Start custom setup logic */
+// Start custom setup logic
 // status drop down
 $status = get_select_options_with_id_separate_key($app_list_strings['user_status_dom'], $app_list_strings['user_status_dom'], $focus->status);
 // default MAILBOX value
@@ -117,17 +114,17 @@ if (!empty($focus->service)) {
     // will always have 2 values: /tls || /notls and /validate-cert || /novalidate-cert
     $exServ = explode('::', $focus->service);
     if ($exServ[0] == 'tls') {
-        $tls = "CHECKED";
+        $tls = 'CHECKED';
     } elseif ($exServ[5] == 'notls') {
-        $notls = "CHECKED";
+        $notls = 'CHECKED';
     }
     if ($exServ[1] == 'validate-cert') {
-        $cert = "CHECKED";
+        $cert = 'CHECKED';
     } elseif ($exServ[4] == 'novalidate-cert') {
         $novalidate_cert = 'CHECKED';
     }
     if (isset($exServ[2]) && !empty($exServ[2]) && $exServ[2] == 'ssl') {
-        $ssl = "CHECKED";
+        $ssl = 'CHECKED';
     }
 }
 $mark_read = '';
@@ -151,18 +148,17 @@ if (!empty($focus->stored_options)) {
     $from_addr = $storedOptions['from_addr'];
     isValidEmailAddress($from_addr);
 
-    $reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : "";
-    $reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : "";
+    $reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : '';
+    $reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : '';
 
-    $trashFolder = (isset($storedOptions['trashFolder'])) ? $storedOptions['trashFolder'] : "";
-    $sentFolder = (isset($storedOptions['sentFolder'])) ? $storedOptions['sentFolder'] : "";
-    $distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : "";
-    $distribution_user_id = (isset($storedOptions['distribution_user_id'])) ? $storedOptions['distribution_user_id'] : "";
-    $distribution_user_name = (isset($storedOptions['distribution_user_name'])) ? $storedOptions['distribution_user_name'] : "";
-    $distributionAssignOptions = (isset($storedOptions['distribution_options'])) ? $storedOptions['distribution_options'] : "";
+    $trashFolder = (isset($storedOptions['trashFolder'])) ? $storedOptions['trashFolder'] : '';
+    $sentFolder = (isset($storedOptions['sentFolder'])) ? $storedOptions['sentFolder'] : '';
+    $distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : '';
+    $distribution_user_id = (isset($storedOptions['distribution_user_id'])) ? $storedOptions['distribution_user_id'] : '';
+    $distribution_user_name = (isset($storedOptions['distribution_user_name'])) ? $storedOptions['distribution_user_name'] : '';
+    $distributionAssignOptions = (isset($storedOptions['distribution_options'])) ? $storedOptions['distribution_options'] : '';
 
-
-    $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
+    $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : '';
     $email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;
 
     if ($storedOptions['only_since']) {
@@ -190,12 +186,12 @@ if (!empty($focus->stored_options)) {
     $filterDomain = '';
     $trashFolder = '';
     $sentFolder = '';
-    $distrib_method ='';
+    $distrib_method = '';
     $distribution_user_id = '';
     $distribution_user_name = '';
-    $create_case_email_template='';
+    $create_case_email_template = '';
     $leaveMessagesOnMailServer = 1;
-    $distributionAssignOptions = array();
+    $distributionAssignOptions = [];
     $email_num_autoreplies_24_hours = $focus->defaultEmailNumAutoreplies24Hours;
 } // else
 
@@ -223,7 +219,7 @@ if (($isDuplicate || !$validatePass) && isset($focus->required_fields['email_pas
 $javascript->addRequiredFields();
 $javascript->addFieldGeneric('email_user', 'alpha', $mod_strings['LBL_LOGIN'], true);
 $javascript->addFieldGeneric('email_password', 'alpha', $mod_strings['LBL_PASSWORD'], $validatePass);
-$javascript->addFieldRange('email_num_autoreplies_24_hours', 'int', $mod_strings['LBL_MAX_AUTO_REPLIES'], true, "", 1, $focus->maxEmailNumAutoreplies24Hours);
+$javascript->addFieldRange('email_num_autoreplies_24_hours', 'int', $mod_strings['LBL_MAX_AUTO_REPLIES'], true, '', 1, $focus->maxEmailNumAutoreplies24Hours);
 
 $r = $focus->db->query('SELECT value FROM config WHERE name = \'fromname\'');
 $a = $focus->db->fetchByAssoc($r);
@@ -232,8 +228,7 @@ $r = $focus->db->query('SELECT value FROM config WHERE name = \'fromaddress\'');
 $a = $focus->db->fetchByAssoc($r);
 $default_from_addr = $a['value'];
 
-/* End custom setup logic */
-
+// End custom setup logic
 
 // TEMPLATE ASSIGNMENTS
 if ($focus->mailbox_type == 'template') {
@@ -250,7 +245,7 @@ if (!$imap->isAvailable()) {
 // standard assigns
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
-$xtpl->assign('THEME', (string)SugarThemeRegistry::current());
+$xtpl->assign('THEME', (string) SugarThemeRegistry::current());
 $xtpl->assign('GRIDLINE', $gridline);
 $xtpl->assign('MODULE', 'InboundEmail');
 $xtpl->assign('RETURN_MODULE', 'InboundEmail');
@@ -258,16 +253,16 @@ $xtpl->assign('RETURN_ID', $focus->id);
 $xtpl->assign('RETURN_ACTION', $return_action);
 // module specific
 //$xtpl->assign('ROLLOVER', $email->rolloverStyle);
-$xtpl->assign("EMAIL_OPTIONS", $mod_strings['LBL_EMAIL_OPTIONS']);
-$xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_MODULE_NAME'],$focus->name), true));
+$xtpl->assign('EMAIL_OPTIONS', $mod_strings['LBL_EMAIL_OPTIONS']);
+$xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', [$mod_strings['LBL_MODULE_NAME'], $focus->name], true));
 $xtpl->assign('ID', $focus->id);
 $xtpl->assign('NAME', $focus->name);
 $xtpl->assign('STATUS', $status);
 $xtpl->assign('SERVER_URL', $focus->server_url);
 $xtpl->assign('USER', $focus->email_user);
-$xtpl->assign('ORIGIN_ID', isset($origin_id)?$origin_id:'');
+$xtpl->assign('ORIGIN_ID', isset($origin_id) ? $origin_id : '');
 // Don't send password back
-$xtpl->assign('HAS_PASSWORD', empty($focus->email_password)?0:1);
+$xtpl->assign('HAS_PASSWORD', empty($focus->email_password) ? 0 : 1);
 $xtpl->assign('TRASHFOLDER', $trashFolder);
 $xtpl->assign('SENTFOLDER', $sentFolder);
 $xtpl->assign('MAILBOX', $mailbox);
@@ -290,8 +285,8 @@ if (!empty($focus->port)) {
     $xtpl->assign('PORT', $focus->port);
 }
 // groups
-$groupId = "";
-$is_auto_import = "";
+$groupId = '';
+$is_auto_import = '';
 $allow_outbound = '';
 if (isset($focus->id)) {
     $groupId = $focus->group_id;
@@ -310,24 +305,24 @@ $xtpl->assign('DEFAULT_FROM_NAME', $default_from_name);
 $xtpl->assign('DEFAULT_FROM_ADDR', $default_from_addr);
 $xtpl->assign('REPLY_TO_NAME', $reply_to_name);
 $xtpl->assign('REPLY_TO_ADDR', $reply_to_addr);
-$createCaseRowStyle = "display:none";
+$createCaseRowStyle = 'display:none';
 if ($focus->template_id) {
-    $xtpl->assign("EDIT_TEMPLATE", "visibility:inline");
+    $xtpl->assign('EDIT_TEMPLATE', 'visibility:inline');
 } else {
-    $xtpl->assign("EDIT_TEMPLATE", "visibility:hidden");
+    $xtpl->assign('EDIT_TEMPLATE', 'visibility:hidden');
 }
 if ($focus->port == 110 || $focus->port == 995) {
     $xtpl->assign('DISPLAY', "display:''");
 } else {
-    $xtpl->assign('DISPLAY', "display:none");
+    $xtpl->assign('DISPLAY', 'display:none');
 }
-$leaveMessagesOnMailServerStyle = "display:none";
+$leaveMessagesOnMailServerStyle = 'display:none';
 if ($focus->is_personal) {
     $xtpl->assign('DISABLE_GROUP', 'DISABLED');
-    $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', "display:none");
-    $xtpl->assign('CREATE_GROUP_FOLDER_STYLE', "display:none");
-    $xtpl->assign('MAILBOX_TYPE_STYLE', "display:none");
-    $xtpl->assign('AUTO_IMPORT_STYLE', "display:none");
+    $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', 'display:none');
+    $xtpl->assign('CREATE_GROUP_FOLDER_STYLE', 'display:none');
+    $xtpl->assign('MAILBOX_TYPE_STYLE', 'display:none');
+    $xtpl->assign('AUTO_IMPORT_STYLE', 'display:none');
 } else {
     $folder = new SugarFolder();
     $xtpl->assign('CREATE_GROUP_FOLDER_STYLE', "display:''");
@@ -336,14 +331,14 @@ if ($focus->is_personal) {
     $ret = $folder->getFoldersForSettings($current_user);
 
     //For existing records, do not allow
-    $is_auto_import_disabled = "";
+    $is_auto_import_disabled = '';
     if (!empty($focus->groupfolder_id)) {
-        $is_auto_import = "checked";
-        $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', "visibility:inline");
+        $is_auto_import = 'checked';
+        $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', 'visibility:inline');
         $leaveMessagesOnMailServerStyle = "display:''";
-        $allow_outbound = (isset($storedOptions['allow_outbound_group_usage']) && $storedOptions['allow_outbound_group_usage'] == 1) ? 'CHECKED'  : '';
+        $allow_outbound = (isset($storedOptions['allow_outbound_group_usage']) && $storedOptions['allow_outbound_group_usage'] == 1) ? 'CHECKED' : '';
     } else {
-        $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', "visibility:hidden");
+        $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', 'visibility:hidden');
     }
 
     $xtpl->assign('ALLOW_OUTBOUND_USAGE', $allow_outbound);
@@ -353,7 +348,6 @@ if ($focus->is_personal) {
         $createCaseRowStyle = "display:''";
     }
 }
-
 
 $xtpl->assign('hasGrpFld', $focus->groupfolder_id == null ? '' : 'checked="1"');
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
@@ -365,23 +359,21 @@ $xtpl->assign('DISTRIBUTION_OPTIONS', getAOPAssignField('distribution_options', 
 $xtpl->assign('distribution_user_name', $distribution_user_name);
 $xtpl->assign('distribution_user_id', $distribution_user_id);
 
-
-
 $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE_OPTIONS', get_select_options_with_id($email_templates_arr, $create_case_email_template));
 if (!empty($create_case_email_template)) {
-    $xtpl->assign("CREATE_CASE_EDIT_TEMPLATE", "visibility:inline");
+    $xtpl->assign('CREATE_CASE_EDIT_TEMPLATE', 'visibility:inline');
 } else {
-    $xtpl->assign("CREATE_CASE_EDIT_TEMPLATE", "visibility:hidden");
+    $xtpl->assign('CREATE_CASE_EDIT_TEMPLATE', 'visibility:hidden');
 }
 
-$quicksearch_js = "";
+$quicksearch_js = '';
 
 //$javascript = get_set_focus_js(). $javascript->getScript() . $quicksearch_js;
-$xtpl->assign('JAVASCRIPT', get_set_focus_js(). $javascript->getScript() . $quicksearch_js);
+$xtpl->assign('JAVASCRIPT', get_set_focus_js() . $javascript->getScript() . $quicksearch_js);
 
-require_once('include/Smarty/plugins/function.sugar_help.php');
-$tipsStrings = array(
+require_once 'include/Smarty/plugins/function.sugar_help.php';
+$tipsStrings = [
     'LBL_SSL_DESC',
     'LBL_ASSIGN_TO_TEAM_DESC',
     'LBL_ASSIGN_TO_GROUP_FOLDER_DESC',
@@ -392,14 +384,14 @@ $tipsStrings = array(
     'LBL_AUTOREPLY_HELP',
     'LBL_FILTER_DOMAIN_DESC',
     'LBL_MAX_AUTO_REPLIES_DESC',
-);
+];
 $smarty = null;
-$tips = array();
+$tips = [];
 foreach ($tipsStrings as $string) {
     if (!empty($mod_strings[$string])) {
-        $tips[$string] = smarty_function_sugar_help(array(
+        $tips[$string] = smarty_function_sugar_help([
             'text' => $mod_strings[$string]
-        ), $smarty);
+        ], $smarty);
     }
 }
 $xtpl->assign('TIPS', $tips);
@@ -411,23 +403,22 @@ $xtpl->assign('TIPS', $tips);
 // PARSE AND PRINT
 //Overrides for bounce mailbox accounts
 if ($focus->mailbox_type == 'bounce') {
-    $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_BOUNCE_MODULE_NAME'],$focus->name), true));
-    $xtpl->assign("EMAIL_OPTIONS", $mod_strings['LBL_EMAIL_BOUNCE_OPTIONS']);
-    $xtpl->assign('MAILBOX_TYPE_STYLE', "display:none");
-    $xtpl->assign('AUTO_IMPORT_STYLE', "display:none");
+    $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', [$mod_strings['LBL_BOUNCE_MODULE_NAME'], $focus->name], true));
+    $xtpl->assign('EMAIL_OPTIONS', $mod_strings['LBL_EMAIL_BOUNCE_OPTIONS']);
+    $xtpl->assign('MAILBOX_TYPE_STYLE', 'display:none');
+    $xtpl->assign('AUTO_IMPORT_STYLE', 'display:none');
 } elseif ($focus->mailbox_type == 'createcase') {
-    $xtpl->assign("IS_CREATE_CASE", 'checked');
+    $xtpl->assign('IS_CREATE_CASE', 'checked');
 } else {
     if ($focus->is_personal == '1') {
-        $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
+        $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', [$mod_strings['LBL_PERSONAL_MODULE_NAME'], $focus->name], true));
     }
 }
 
 //else
 
-
-$xtpl->parse("main");
-$xtpl->out("main");
+$xtpl->parse('main');
+$xtpl->out('main');
 
 ?>
 <script>

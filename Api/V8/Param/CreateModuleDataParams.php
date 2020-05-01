@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param;
 
 use Api\V8\Param\Options as ParamOption;
@@ -16,7 +17,7 @@ class CreateModuleDataParams extends BaseParam
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getId()
     {
@@ -32,7 +33,7 @@ class CreateModuleDataParams extends BaseParam
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configureParameters(OptionsResolver $resolver)
     {

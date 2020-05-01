@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,14 +42,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 // Bug 57062 ///////////////////////////////
 if ((!empty($_REQUEST['spriteNamespace']) && substr_count($_REQUEST['spriteNamespace'], '..') > 0) ||
     (!empty($_REQUEST['imageName']) && substr_count($_REQUEST['imageName'], '..') > 0)) {
     die();
 }
 // End Bug 57062 ///////////////////////////////
-
 
 // try to use the user's theme if we can figure it out
 if (isset($_REQUEST['themeName']) && SugarThemeRegistry::current()->name != $_REQUEST['themeName']) {
@@ -63,14 +62,14 @@ while (substr_count($_REQUEST['imageName'], '..') > 0) {
 
 if (isset($_REQUEST['spriteNamespace'])) {
     $filename = "cache/sprites/{$_REQUEST['spriteNamespace']}/{$_REQUEST['imageName']}";
-    if (! file_exists($filename)) {
-        header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
+    if (!file_exists($filename)) {
+        header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
         die;
     }
 } else {
     $filename = SugarThemeRegistry::current()->getImageURL($_REQUEST['imageName']);
     if (empty($filename)) {
-        header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
+        header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
         die;
     }
 }
@@ -81,10 +80,9 @@ $file_ext = substr($filename, -3);
 
 $mime_type = SugarThemeRegistry::current()->getMimeType($file_ext);
 if (is_null($mime_type)) {
-    header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
+    header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
     die;
 }
-
 
 // try to use the content cached locally if it's the same as we have here.
 if (defined('TEMPLATE_URL')) {
@@ -93,11 +91,11 @@ if (defined('TEMPLATE_URL')) {
     $last_modified_time = filemtime($filename);
 }
 
-$etag = '"'.md5_file($filename).'"';
+$etag = '"' . md5_file($filename) . '"';
 
-header("Cache-Control: private");
-header("Pragma: dummy=bogus");
-header("Etag: $etag");
+header('Cache-Control: private');
+header('Pragma: dummy=bogus');
+header("Etag: {$etag}");
 header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
 
 $ifmod = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
@@ -105,11 +103,11 @@ $ifmod = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
 $iftag = isset($_SERVER['HTTP_IF_NONE_MATCH'])
     ? $_SERVER['HTTP_IF_NONE_MATCH'] == $etag : null;
 if (($ifmod || $iftag) && ($ifmod !== false && $iftag !== false)) {
-    header($_SERVER["SERVER_PROTOCOL"].' 304 Not Modified');
+    header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
     die;
 }
 
-header("Last-Modified: ".gmdate('D, d M Y H:i:s \G\M\T', $last_modified_time));
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s \G\M\T', $last_modified_time));
 header('Content-Type: ' . $mime_type);
 
 if (!defined('TEMPLATE_URL')) {

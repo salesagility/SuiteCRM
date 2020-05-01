@@ -3,6 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\StringValidator;
 
+/**
+ * @internal
+ */
 class StringValidatorTest extends SuitePHPUnitFrameworkTestCase
 {
     /**

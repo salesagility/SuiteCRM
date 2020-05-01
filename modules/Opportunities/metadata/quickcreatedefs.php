@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,76 +41,68 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-$viewdefs = array(
-  'Opportunities' =>
-  array(
-    'QuickCreate' =>
-    array(
-      'templateMeta' =>
-      array(
-        'maxColumns' => '2',
-        'widths' =>
-        array(
-          0 =>
-          array(
-            'label' => '10',
-            'field' => '30',
-          ),
-          1 =>
-          array(
-            'label' => '10',
-            'field' => '30',
-          ),
-        ),
-        'javascript' => '{$PROBABILITY_SCRIPT}',
-      ),
-      'panels' =>
-      array(
-        'DEFAULT' =>
-        array(
-          array(
-            array(
-              'name' => 'name',
-              'displayParams'=>array('required'=>true),
-            ),
-            array(
-              'name' => 'account_name',
-            ),
-          ),
-          array(
-            array(
-              'name' => 'currency_id',
-            ),
-            array(
-              'name' => 'opportunity_type',
-            ),
-          ),
-          array(
-            'amount',
-            'date_closed'
-          ),
-          array(
-             'next_step',
-             'sales_stage',
-          ),
-          array(
-             'lead_source',
-             'probability',
-          ),
-        array(
-            array(
-              'name' => 'assigned_user_name',
-            ),
-        ),
-        ),
-      ),
-    ),
-  ),
-);
+$viewdefs = [
+    'Opportunities' => [
+        'QuickCreate' => [
+            'templateMeta' => [
+                'maxColumns' => '2',
+                'widths' => [
+                    0 => [
+                        'label' => '10',
+                        'field' => '30',
+                    ],
+                    1 => [
+                        'label' => '10',
+                        'field' => '30',
+                    ],
+                ],
+                'javascript' => '{$PROBABILITY_SCRIPT}',
+            ],
+            'panels' => [
+                'DEFAULT' => [
+                    [
+                        [
+                            'name' => 'name',
+                            'displayParams' => ['required' => true],
+                        ],
+                        [
+                            'name' => 'account_name',
+                        ],
+                    ],
+                    [
+                        [
+                            'name' => 'currency_id',
+                        ],
+                        [
+                            'name' => 'opportunity_type',
+                        ],
+                    ],
+                    [
+                        'amount',
+                        'date_closed'
+                    ],
+                    [
+                        'next_step',
+                        'sales_stage',
+                    ],
+                    [
+                        'lead_source',
+                        'probability',
+                    ],
+                    [
+                        [
+                            'name' => 'assigned_user_name',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];

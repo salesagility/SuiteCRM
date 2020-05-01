@@ -1,7 +1,12 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -95,7 +100,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertFalse(ACLAction::hasAccess()); //check with defaults
         $this->assertTrue(ACLAction::hasAccess(false, false, 90));  //access All with is owner false
         $this->assertTrue(ACLAction::hasAccess(true, true, 90)); //access All with is owner true
-        $this->assertFalse(ACLAction::hasAccess(false, false, -98));// check access disabled
+        $this->assertFalse(ACLAction::hasAccess(false, false, -98)); // check access disabled
         $this->assertFalse(ACLAction::hasAccess(true, true, 89)); //check access enabled
         $this->assertTrue(ACLAction::hasAccess(true, true, 75)); //check owner access with is owner true
         $this->assertFalse(ACLAction::hasAccess(false, true, 75)); //check owner access with is owner false
@@ -103,9 +108,12 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testuserNeedsSecurityGroup()
     {
-        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action
-        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts',
-            'list')); //test with valid module and action
+        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', '')); //test with empty module and action
+        $this->assertFalse(ACLAction::userNeedsSecurityGroup(
+            '1',
+            'Accounts',
+            'list'
+        )); //test with valid module and action
     }
 
     public function testuserHasAccess()
@@ -115,13 +123,19 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
         // Test with empty module and action
         $this->assertFalse(ACLAction::userHasAccess('', '', ''));
         // Test with empty user and valid module and action
-        $this->assertTrue(ACLAction::userHasAccess('', 'Accounts',
-            'list'));
+        $this->assertTrue(ACLAction::userHasAccess(
+            '',
+            'Accounts',
+            'list'
+        ));
         // Test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list'));
         // Test with valid User, module and action
-        $this->assertTrue(ACLAction::userHasAccess('1', 'SecurityGroups',
-            'list'));
+        $this->assertTrue(ACLAction::userHasAccess(
+            '1',
+            'SecurityGroups',
+            'list'
+        ));
         // Test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Users', 'list'));
     }
@@ -156,44 +170,44 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
     public function testsetupCategoriesMatrix()
     {
         //preset required data
-        $categories = array();
+        $categories = [];
         $categories['Accounts']['module']['list'][] = 'list';
         $categories['Accounts']['module']['edit'][] = 'edit';
 
-        $names_expected = array('list' => 'List', 'edit' => 'Edit');
+        $names_expected = ['list' => 'List', 'edit' => 'Edit'];
 
-        $categories_expected = array(
-            'Accounts' => array(
-                'module' => array(
-                    'list' => array(
+        $categories_expected = [
+            'Accounts' => [
+                'module' => [
+                    'list' => [
                         'list',
                         'accessColor' => false,
                         'accessName' => false,
                         'accessLabel' => false,
-                        'accessOptions' => array(
+                        'accessOptions' => [
                             90 => 'All',
                             80 => 'Group',
                             75 => 'Owner',
                             0 => 'Not Set',
                             -99 => 'None'
-                        )
-                    ),
-                    'edit' => array(
+                        ]
+                    ],
+                    'edit' => [
                         'edit',
                         'accessColor' => false,
                         'accessName' => false,
                         'accessLabel' => false,
-                        'accessOptions' => array(
+                        'accessOptions' => [
                             90 => 'All',
                             80 => 'Group',
                             75 => 'Owner',
                             0 => 'Not Set',
                             -99 => 'None'
-                        )
-                    ),
-                ),
-            ),
-        );
+                        ]
+                    ],
+                ],
+            ],
+        ];
 
         //execute the method and verify that it retunrs expected results
         $result = ACLAction::setupCategoriesMatrix($categories);
@@ -206,13 +220,13 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
         $aclAction = new ACLAction();
 
         //wihout any fields set
-        $expected = array('id' => null, 'aclaccess' => null);
+        $expected = ['id' => null, 'aclaccess' => null];
         $actual = $aclAction->toArray();
         $this->assertSame($expected, $actual);
 
         //with fileds pre populated
-        $aclAction->populateFromRow(array('id' => '1234', 'aclaccess' => '9999'));
-        $expected = array('id' => '1234', 'aclaccess' => '9999');
+        $aclAction->populateFromRow(['id' => '1234', 'aclaccess' => '9999']);
+        $expected = ['id' => '1234', 'aclaccess' => '9999'];
         $actual = $aclAction->toArray();
         $this->assertSame($expected, $actual);
     }
@@ -220,7 +234,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
     public function testfromArray()
     {
         $aclAction = new ACLAction();
-        $arr = array('id' => '1234', 'name' => 'test');
+        $arr = ['id' => '1234', 'name' => 'test'];
 
         //execute the method and verify that it retunrs expected results
         $aclAction->fromArray($arr);

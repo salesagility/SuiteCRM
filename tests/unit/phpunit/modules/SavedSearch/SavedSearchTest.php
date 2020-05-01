@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -26,16 +29,16 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('SavedSearch', 'object_name', $savedSearch);
 
         //test with parameters
-        $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
+        $savedSearch = new SavedSearch(['id', 'name'], 'id', 'ASC');
 
-        $this->assertAttributeEquals(array('id', 'name'), 'columns', $savedSearch);
+        $this->assertAttributeEquals(['id', 'name'], 'columns', $savedSearch);
         $this->assertAttributeEquals('id', 'orderBy', $savedSearch);
         $this->assertAttributeEquals('ASC', 'sortOrder', $savedSearch);
     }
 
     public function testgetForm()
     {
-        $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
+        $savedSearch = new SavedSearch(['id', 'name'], 'id', 'ASC');
         $result = $savedSearch->getForm('Leads');
 
         $this->assertGreaterThan(0, strlen($result));
@@ -43,7 +46,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetSelect()
     {
-        $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
+        $savedSearch = new SavedSearch(['id', 'name'], 'id', 'ASC');
         $result = $savedSearch->getSelect('Leads');
 
         $this->assertGreaterThan(0, strlen($result));
@@ -89,7 +92,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $_REQUEST['description'] = 'test description';
         $_REQUEST['test_content'] = 'test text';
 
-        $expected = array('search_module' => 'Leads', 'description' => 'test description', 'test_content' => 'test text', 'advanced' => true);
+        $expected = ['search_module' => 'Leads', 'description' => 'test description', 'test_content' => 'test text', 'advanced' => true];
 
         //execute the method and then retrieve back to verify contents attribute
         $savedSearch->handleSave('', false, false, $id, $searchModuleBean);
@@ -143,12 +146,12 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method uses die');
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $savedSearch = new SavedSearch();
 
         $savedSearch->assigned_user_id = 1;
-        $savedSearch->contents = array('search_module' => 'Leads');
+        $savedSearch->contents = ['search_module' => 'Leads'];
 
         $savedSearch->fill_in_additional_list_fields();
 
@@ -160,10 +163,10 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
     {
         $savedSearch = new SavedSearch();
 
-        $savedSearch->contents = array('search_module' => 'Accounts',
-                                        'description' => 'test text',
-                                        'test_content' => 'some content',
-                                        'advanced' => true, );
+        $savedSearch->contents = ['search_module' => 'Accounts',
+            'description' => 'test text',
+            'test_content' => 'some content',
+            'advanced' => true, ];
 
         $savedSearch->populateRequest();
 

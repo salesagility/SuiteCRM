@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -60,11 +58,6 @@ class EmailsController extends SugarController
     const ERR_REPLY_TO_FROMAT_INVALID_NO_NAME = 112;
     const ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR = 113;
     const ERR_REPLY_TO_FROMAT_INVALID_AS_FROM = 114;
-
-    /**
-     * @var Email $bean ;
-     */
-    public $bean;
 
     /**
      * @see EmailsController::composeBean()
@@ -91,7 +84,12 @@ class EmailsController extends SugarController
      */
     const COMPOSE_BEAN_WITH_PDF_TEMPLATE = 4;
 
-    protected static $doNotImportFields = array(
+    /**
+     * @var Email ;
+     */
+    public $bean;
+
+    protected static $doNotImportFields = [
         'action',
         'type',
         'send',
@@ -123,7 +121,7 @@ class EmailsController extends SugarController
         'is_imported',
         'has_attachment',
         'id',
-    );
+    ];
 
     /**
      * @see EmailsViewList
@@ -150,12 +148,12 @@ class EmailsController extends SugarController
         // For viewing the Compose as modal from other modules we need to load the Emails language strings
         if (isset($_REQUEST['in_popup']) && $_REQUEST['in_popup']) {
             if (!is_file('cache/jsLanguage/Emails/' . $GLOBALS['current_language'] . '.js')) {
-                require_once('include/language/jsLanguage.php');
+                require_once 'include/language/jsLanguage.php';
                 jsLanguage::createModuleStringsCache('Emails', $GLOBALS['current_language']);
             }
-            echo '<script src="cache/jsLanguage/Emails/'. $GLOBALS['current_language'] . '.js"></script>';
+            echo '<script src="cache/jsLanguage/Emails/' . $GLOBALS['current_language'] . '.js"></script>';
         }
-        if (isset($_REQUEST['ids']) && isset($_REQUEST['targetModule'])) {
+        if (isset($_REQUEST['ids'], $_REQUEST['targetModule'])) {
             $toAddressIds = explode(',', rtrim($_REQUEST['ids'], ','));
             foreach ($toAddressIds as $id) {
                 $destinataryBean = BeanFactory::getBean($_REQUEST['targetModule'], $id);
@@ -169,7 +167,7 @@ class EmailsController extends SugarController
                 }
             }
         }
-        if (isset($_REQUEST['relatedModule']) && isset($_REQUEST['relatedId'])) {
+        if (isset($_REQUEST['relatedModule'], $_REQUEST['relatedId'])) {
             $relateBean = BeanFactory::getBean($_REQUEST['relatedModule'], $_REQUEST['relatedId']);
             $relateLine = '<input type="hidden" class="email-relate-target" ';
             $relateLine .= 'data-relate-module="' . $_REQUEST['relatedModule'] . '" ';
@@ -180,7 +178,7 @@ class EmailsController extends SugarController
     }
 
     /**
-     * Creates a record from the Quick Create Modal
+     * Creates a record from the Quick Create Modal.
      */
     public function action_QuickCreate()
     {
@@ -201,6 +199,7 @@ class EmailsController extends SugarController
         if (!$bean) {
             $result = ['id' => false];
             echo json_encode($result);
+
             return;
         }
 
@@ -220,7 +219,7 @@ class EmailsController extends SugarController
 
         $relationship = strtolower($controller->module);
         $emailBean->load_relationship($relationship);
-        $emailBean->$relationship->add($bean->id);
+        $emailBean->{$relationship}->add($bean->id);
 
         if (!$bean->load_relationship('emails')) {
             return;
@@ -283,115 +282,6 @@ class EmailsController extends SugarController
     }
 
     /**
-     * Parse and replace bean variables
-     * but first validate request,
-     * see log to check validation problems
-     *
-     * return Email bean
-     *
-     * @param Email $email
-     * @param array $request
-     * @return Email
-     */
-    protected function replaceEmailVariables(Email $email, $request)
-    {
-        // request validation before replace bean variables
-
-        if ($this->isValidRequestForReplaceEmailVariables($request)) {
-            $macro_nv = array();
-
-            $focusName = $request['parent_type'];
-            $focus = BeanFactory::getBean($focusName, $request['parent_id']);
-            if ($email->module_dir == 'Accounts') {
-                $focusName = 'Accounts';
-            }
-
-            /**
-             * @var EmailTemplate $emailTemplate
-             */
-            $emailTemplate = BeanFactory::getBean(
-                'EmailTemplates',
-                isset($request['emails_email_templates_idb']) ?
-                    $request['emails_email_templates_idb'] :
-                    null
-            );
-            $templateData = $emailTemplate->parse_email_template(
-                array(
-                    'subject' => $email->name,
-                    'body_html' => $email->description_html,
-                    'body' => $email->description,
-                ),
-                $focusName,
-                $focus,
-                $macro_nv
-            );
-
-            $email->name = $templateData['subject'];
-            $email->description_html = $templateData['body_html'];
-            $email->description = $templateData['body'];
-        } else {
-            $this->log('Email variables is not replaced because an invalid request.');
-        }
-
-
-        return $email;
-    }
-
-    /**
-     * Request validation before replace bean variables,
-     * see log to check validation problems
-     *
-     * @param array $request
-     * @return bool
-     */
-    protected function isValidRequestForReplaceEmailVariables($request)
-    {
-        $isValidRequestForReplaceEmailVariables = true;
-
-        if (!is_array($request)) {
-
-            // request should be an array like standard $_REQUEST
-
-            $isValidRequestForReplaceEmailVariables = false;
-            $this->log('Incorrect request format');
-        }
-
-
-        if (!isset($request['parent_type']) || !$request['parent_type']) {
-
-            // there is no any selected option in 'Related To' field
-            // so impossible to replace variables to selected bean data
-
-            $isValidRequestForReplaceEmailVariables = false;
-            $this->log('There isn\'t any selected BEAN-TYPE option in \'Related To\' dropdown');
-        }
-
-
-        if (!isset($request['parent_id']) || !$request['parent_id']) {
-
-            // there is no any selected bean in 'Related To' field
-            // so impossible to replace variables to selected bean data
-
-            $isValidRequestForReplaceEmailVariables = false;
-            $this->log('There isn\'t any selected BEAN-ELEMENT in \'Related To\' field');
-        }
-
-
-        return $isValidRequestForReplaceEmailVariables;
-    }
-
-    /**
-     * Add a message to log
-     *
-     * @param string $msg
-     * @param string $level
-     */
-    private function log($msg, $level = 'info')
-    {
-        $GLOBALS['log']->$level($msg);
-    }
-
-    /**
      * @see EmailsViewCompose
      */
     public function action_SaveDraft()
@@ -414,7 +304,6 @@ class EmailsController extends SugarController
         $this->view = 'deletedraftemail';
     }
 
-
     /**
      * @see EmailsViewPopup
      */
@@ -425,7 +314,7 @@ class EmailsController extends SugarController
 
     /**
      * Gets the values of the "from" field
-     * includes the signatures for each account
+     * includes the signatures for each account.
      */
     public function action_getFromFields()
     {
@@ -441,11 +330,11 @@ class EmailsController extends SugarController
     }
 
     /**
-     * Returns attachment data to ajax call
+     * Returns attachment data to ajax call.
      */
     public function action_GetDraftAttachmentData()
     {
-        $data['attachments'] = array();
+        $data['attachments'] = [];
 
         if (!empty($_REQUEST['id'])) {
             $bean = BeanFactory::getBean('Emails', $_REQUEST['id']);
@@ -455,7 +344,7 @@ class EmailsController extends SugarController
                 LoggerManager::getLogger()->warn('No attachment Note for selected Email.');
             } else {
                 foreach ($attachmentBeans as $attachmentBean) {
-                    $data['attachments'][] = array(
+                    $data['attachments'][] = [
                         'id' => $attachmentBean->id,
                         'name' => $attachmentBean->name,
                         'file_mime_type' => $attachmentBean->file_mime_type,
@@ -463,12 +352,12 @@ class EmailsController extends SugarController
                         'parent_type' => $attachmentBean->parent_type,
                         'parent_id' => $attachmentBean->parent_id,
                         'description' => $attachmentBean->description,
-                    );
+                    ];
                 }
             }
         }
 
-        $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
+        $dataEncoded = json_encode(['data' => $data], JSON_UNESCAPED_UNICODE);
         echo utf8_decode($dataEncoded);
         $this->view = 'ajax';
     }
@@ -478,12 +367,12 @@ class EmailsController extends SugarController
         $inboundEmail = new InboundEmail();
         $inboundEmail->syncEmail();
 
-        echo json_encode(array('response' => array()));
+        echo json_encode(['response' => []]);
         $this->view = 'ajax';
     }
 
     /**
-     * Used to list folders in the list view
+     * Used to list folders in the list view.
      */
     public function action_GetFolders()
     {
@@ -505,16 +394,15 @@ class EmailsController extends SugarController
                 $current_user,
                 true
             );
-            $out = json_encode(array('response' => $ret));
+            $out = json_encode(['response' => $ret]);
         } catch (SugarFolderEmptyException $e) {
             $GLOBALS['log']->warn($e->getMessage());
-            $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
+            $out = json_encode(['errors' => [$mod_strings['LBL_ERROR_NO_FOLDERS']]]);
         }
 
         echo $out;
         $this->view = 'ajax';
     }
-
 
     /**
      * @see EmailsViewDetailnonimported
@@ -524,7 +412,7 @@ class EmailsController extends SugarController
         $result = null;
 
         $db = DBManagerFactory::getInstance();
-        $emails = BeanFactory::getBean("Emails");
+        $emails = BeanFactory::getBean('Emails');
 
         $uid = $_REQUEST['uid'];
         $inboundEmailRecordId = $_REQUEST['inbound_email_record'];
@@ -532,7 +420,7 @@ class EmailsController extends SugarController
         $validator = new SuiteValidator();
 
         if ($validator->isValidId($uid)) {
-            $subQuery = "`mailbox_id` = " . $db->quoted($inboundEmailRecordId) . " AND `uid` = " . $db->quoted($uid);
+            $subQuery = '`mailbox_id` = ' . $db->quoted($inboundEmailRecordId) . ' AND `uid` = ' . $db->quoted($uid);
             $result = $emails->get_full_list('', $subQuery);
         }
 
@@ -578,7 +466,7 @@ class EmailsController extends SugarController
     public function action_GetCurrentUserID()
     {
         global $current_user;
-        echo json_encode(array("response" => $current_user->id));
+        echo json_encode(['response' => $current_user->id]);
         $this->view = 'ajax';
     }
 
@@ -631,7 +519,8 @@ class EmailsController extends SugarController
     }
 
     /**
-     * Fills compose view body with the output from PDF Template
+     * Fills compose view body with the output from PDF Template.
+     *
      * @see sendEmail::send_email()
      */
     public function action_ComposeViewWithPdfTemplate()
@@ -643,9 +532,8 @@ class EmailsController extends SugarController
     public function action_SendDraft()
     {
         $this->view = 'ajax';
-        echo json_encode(array());
+        echo json_encode([]);
     }
-
 
     /**
      * @throws SugarControllerException
@@ -653,7 +541,7 @@ class EmailsController extends SugarController
     public function action_MarkEmails()
     {
         $this->markEmails($_REQUEST);
-        echo json_encode(array('response' => true));
+        echo json_encode(['response' => true]);
         $this->view = 'ajax';
     }
 
@@ -695,6 +583,7 @@ class EmailsController extends SugarController
 
     /**
      * @param array $request
+     *
      * @throws SugarControllerException
      */
     public function markEmails($request)
@@ -728,7 +617,9 @@ class EmailsController extends SugarController
     /**
      * @param array $request
      * @param int $mode
+     *
      * @throws InvalidArgumentException
+     *
      * @see EmailsController::COMPOSE_BEAN_MODE_UNDEFINED
      * @see EmailsController::COMPOSE_BEAN_MODE_REPLY_TO
      * @see EmailsController::COMPOSE_BEAN_MODE_REPLY_TO_ALL
@@ -743,7 +634,6 @@ class EmailsController extends SugarController
         $db = DBManagerFactory::getInstance();
         global $mod_strings;
 
-
         global $current_user;
         $email = new Email();
         $email->email2init();
@@ -751,12 +641,11 @@ class EmailsController extends SugarController
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
         if (!$accounts) {
-            $url = 'index.php?module=Users&action=EditView&record=' . $current_user->id . "&showEmailSettingsPopup=1";
+            $url = 'index.php?module=Users&action=EditView&record=' . $current_user->id . '&showEmailSettingsPopup=1';
             SugarApplication::appendErrorMessage(
-                "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>"
+                "You don't have any valid email account settings yet. <a href=\"{$url}\">Click here to set your email accounts.</a>"
             );
         }
-
 
         if (isset($request['record']) && !empty($request['record'])) {
             $parent_name = $this->bean->parent_name;
@@ -789,7 +678,7 @@ class EmailsController extends SugarController
         }
 
         if ($mode !== self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
-            $this->bean->cc_addrs_arr = array();
+            $this->bean->cc_addrs_arr = [];
             $this->bean->cc_addrs_names = '';
             $this->bean->cc_addrs = '';
             $this->bean->cc_addrs_ids = '';
@@ -824,76 +713,112 @@ class EmailsController extends SugarController
         $this->bean->description_html = '';
     }
 
-
     /**
-     * @param $request
-     * @return null|string
-     */
-    private function getRequestedUIDs($request)
-    {
-        $ret = $this->getRequestedArgument($request, 'uid');
-        if (is_array($ret)) {
-            $ret = implode(',', $ret);
-        }
-
-        return $ret;
-    }
-
-    /**
-     * @param array $request
-     * @return null|mixed
-     */
-    private function getRequestedFlagType($request)
-    {
-        $ret = $this->getRequestedArgument($request, 'type');
-
-        return $ret;
-    }
-
-    /**
-     * @param array $request
-     * @param string $key
-     * @return null|mixed
-     */
-    private function getRequestedArgument($request, $key)
-    {
-        if (!isset($request[$key])) {
-            $GLOBALS['log']->error("Requested key is not set: ");
-
-            return null;
-        }
-
-        return $request[$key];
-    }
-
-    /**
-     * return an Inbound Email by requested record
+     * Parse and replace bean variables
+     * but first validate request,
+     * see log to check validation problems.
      *
-     * @param string $record
-     * @return InboundEmail
-     * @throws SugarControllerException
+     * return Email bean
+     *
+     * @param Email $email
+     * @param array $request
+     *
+     * @return Email
      */
-    private function getInboundEmail($record)
+    protected function replaceEmailVariables(Email $email, $request)
     {
-        $db = DBManagerFactory::getInstance();
-        $ie = BeanFactory::getBean('InboundEmail', $db->quote($record));
-        if (!$ie) {
-            throw new SugarControllerException("BeanFactory can't resolve an InboundEmail record: $record");
+        // request validation before replace bean variables
+
+        if ($this->isValidRequestForReplaceEmailVariables($request)) {
+            $macro_nv = [];
+
+            $focusName = $request['parent_type'];
+            $focus = BeanFactory::getBean($focusName, $request['parent_id']);
+            if ($email->module_dir == 'Accounts') {
+                $focusName = 'Accounts';
+            }
+
+            /**
+             * @var EmailTemplate $emailTemplate
+             */
+            $emailTemplate = BeanFactory::getBean(
+                'EmailTemplates',
+                isset($request['emails_email_templates_idb']) ?
+                    $request['emails_email_templates_idb'] :
+                    null
+            );
+            $templateData = $emailTemplate->parse_email_template(
+                [
+                    'subject' => $email->name,
+                    'body_html' => $email->description_html,
+                    'body' => $email->description,
+                ],
+                $focusName,
+                $focus,
+                $macro_nv
+            );
+
+            $email->name = $templateData['subject'];
+            $email->description_html = $templateData['body_html'];
+            $email->description = $templateData['body'];
+        } else {
+            $this->log('Email variables is not replaced because an invalid request.');
         }
 
-        return $ie;
+        return $email;
+    }
+
+    /**
+     * Request validation before replace bean variables,
+     * see log to check validation problems.
+     *
+     * @param array $request
+     *
+     * @return bool
+     */
+    protected function isValidRequestForReplaceEmailVariables($request)
+    {
+        $isValidRequestForReplaceEmailVariables = true;
+
+        if (!is_array($request)) {
+            // request should be an array like standard $_REQUEST
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('Incorrect request format');
+        }
+
+        if (!isset($request['parent_type']) || !$request['parent_type']) {
+            // there is no any selected option in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-TYPE option in \'Related To\' dropdown');
+        }
+
+        if (!isset($request['parent_id']) || !$request['parent_id']) {
+            // there is no any selected bean in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-ELEMENT in \'Related To\' field');
+        }
+
+        return $isValidRequestForReplaceEmailVariables;
     }
 
     /**
      * @param array $request
+     * @param mixed $importedEmailId
+     *
      * @return bool|Email
+     *
      * @see Email::id
      * @see EmailsController::action_ImportAndShowDetailView()
      * @see EmailsController::action_ImportView()
      */
     protected function setAfterImport($importedEmailId, $request)
     {
-        $emails = BeanFactory::getBean("Emails", $importedEmailId);
+        $emails = BeanFactory::getBean('Emails', $importedEmailId);
 
         foreach ($request as $requestKey => $requestValue) {
             if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
@@ -915,6 +840,7 @@ class EmailsController extends SugarController
      * @param User $requestedUser
      * @param InboundEmail $requestedInboundEmail
      * @param Email $requestedEmail
+     *
      * @return bool false if user doesn't have access
      */
     protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
@@ -927,6 +853,7 @@ class EmailsController extends SugarController
         foreach ($usersInboundEmailAccounts as $inboundEmailId => $userInboundEmail) {
             if ($userInboundEmail->id === $requestedInboundEmail->id) {
                 $hasAccessToInboundEmailAccount = true;
+
                 break;
             }
         }
@@ -1006,8 +933,83 @@ class EmailsController extends SugarController
         }
         if ($error !== false) {
             $GLOBALS['log']->security($error);
+
             return false;
         }
+
         return true;
+    }
+
+    /**
+     * Add a message to log.
+     *
+     * @param string $msg
+     * @param string $level
+     */
+    private function log($msg, $level = 'info')
+    {
+        $GLOBALS['log']->{$level}($msg);
+    }
+
+    /**
+     * @param $request
+     *
+     * @return null|string
+     */
+    private function getRequestedUIDs($request)
+    {
+        $ret = $this->getRequestedArgument($request, 'uid');
+        if (is_array($ret)) {
+            $ret = implode(',', $ret);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * @param array $request
+     *
+     * @return null|mixed
+     */
+    private function getRequestedFlagType($request)
+    {
+        return $this->getRequestedArgument($request, 'type');
+    }
+
+    /**
+     * @param array $request
+     * @param string $key
+     *
+     * @return null|mixed
+     */
+    private function getRequestedArgument($request, $key)
+    {
+        if (!isset($request[$key])) {
+            $GLOBALS['log']->error('Requested key is not set: ');
+
+            return null;
+        }
+
+        return $request[$key];
+    }
+
+    /**
+     * return an Inbound Email by requested record.
+     *
+     * @param string $record
+     *
+     * @throws SugarControllerException
+     *
+     * @return InboundEmail
+     */
+    private function getInboundEmail($record)
+    {
+        $db = DBManagerFactory::getInstance();
+        $ie = BeanFactory::getBean('InboundEmail', $db->quote($record));
+        if (!$ie) {
+            throw new SugarControllerException("BeanFactory can't resolve an InboundEmail record: {$record}");
+        }
+
+        return $ie;
     }
 }

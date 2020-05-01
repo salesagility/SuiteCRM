@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\OAuth2\Repository;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -28,7 +29,7 @@ class ClientRepository implements ClientRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
     {

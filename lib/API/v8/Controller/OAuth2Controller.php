@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM\API\v8\Controller;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
@@ -55,11 +53,13 @@ class OAuth2Controller extends ApiController
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @return ResponseInterface|static
+     *
      * @throws InvalidJsonApiResponseException
      * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
+     *
+     * @return ResponseInterface|static
      */
     public function authenticate(ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -75,7 +75,7 @@ class OAuth2Controller extends ApiController
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
-        
+
         return $this->generateJsonApiResponse($request, $response, $payload);
     }
 }

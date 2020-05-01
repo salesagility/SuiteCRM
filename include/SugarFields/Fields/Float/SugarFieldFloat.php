@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,9 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Fields/Int/SugarFieldInt.php');
+require_once 'include/SugarFields/Fields/Int/SugarFieldInt.php';
 
 class SugarFieldFloat extends SugarFieldInt
 {
@@ -51,40 +48,45 @@ class SugarFieldFloat extends SugarFieldInt
         if (isset($vardef['precision'])) {
             $precision = $vardef['precision'];
         }
-        
+
         if ($rawField === '' || $rawField === null) {
             return '';
         }
 
         return format_number($rawField, $precision, $precision);
     }
-    
+
     public function unformatField($formattedField, $vardef)
     {
         if ($formattedField === '' || $formattedField === null) {
             return '';
         }
-        return (float)unformat_number($formattedField);
+
+        return (float) unformat_number($formattedField);
     }
 
     /**
      * @see SugarFieldBase::importSanitize()
+     *
+     * @param mixed $value
+     * @param mixed $vardef
+     * @param mixed $focus
      */
     public function importSanitize(
         $value,
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
-        $value = str_replace($settings->num_grp_sep, "", $value);
+    ) {
+        $value = str_replace($settings->num_grp_sep, '', $value);
         $dec_sep = $settings->dec_sep;
         if ($dec_sep != '.') {
-            $value = str_replace($dec_sep, ".", $value);
+            $value = str_replace($dec_sep, '.', $value);
         }
         if (!is_numeric($value)) {
             return false;
         }
-        
+
         return $value;
     }
 }

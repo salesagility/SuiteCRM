@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,8 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 global $mod_strings;
-$module_menu = array(
-    array("index.php?module=ACLRoles&action=index", $mod_strings['LIST_ROLES'],"List"),
-    array("index.php?module=ACLRoles&action=ListUsers", $mod_strings['LIST_ROLES_BY_USER'],"List"),
-    
-    );
+$module_menu = [
+    ['index.php?module=ACLRoles&action=index', $mod_strings['LIST_ROLES'], 'List'],
+    ['index.php?module=ACLRoles&action=ListUsers', $mod_strings['LIST_ROLES_BY_USER'], 'List'],
+];

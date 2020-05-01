@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,42 +42,42 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'Inbound email parameters',
-    'fields' => array(
-        'id' => array(
+$dictionary['InboundEmail'] = ['table' => 'inbound_email', 'comment' => 'Inbound email parameters',
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
             'dbType' => 'varchar',
             'len' => 36,
             'required' => true,
-            'reportable'=>false,
+            'reportable' => false,
             'comment' => 'Unique identifier'
-        ),
-        'deleted' => array(
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
             'required' => false,
             'default' => '0',
-            'reportable'=>false,
+            'reportable' => false,
             'comment' => 'Record deltion indicator'
-        ),
-        'date_entered' => array(
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record created'
-        ),
-        'date_modified' => array(
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record last modified'
-        ),
-        'modified_user_id' => array(
+        ],
+        'modified_user_id' => [
             'name' => 'modified_user_id',
             'rname' => 'user_name',
             'id_name' => 'modified_user_id',
@@ -85,10 +86,10 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'table' => 'users',
             'isnull' => false,
             'dbType' => 'id',
-            'reportable'=>true,
+            'reportable' => true,
             'comment' => 'User who last modified record'
-        ),
-        'modified_user_id_link' => array(
+        ],
+        'modified_user_id_link' => [
             'name' => 'modified_user_id_link',
             'type' => 'link',
             'relationship' => 'inbound_email_modified_user_id',
@@ -97,8 +98,8 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'module' => 'Users',
             'bean_name' => 'User',
             'source' => 'non-db',
-        ),
-        'created_by' => array(
+        ],
+        'created_by' => [
             'name' => 'created_by',
             'rname' => 'user_name',
             'id_name' => 'modified_user_id',
@@ -108,8 +109,8 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'isnull' => false,
             'dbType' => 'id',
             'comment' => 'User who created record'
-        ),
-        'created_by_link' => array(
+        ],
+        'created_by_link' => [
             'name' => 'created_by_link',
             'type' => 'link',
             'relationship' => 'inbound_email_created_by',
@@ -118,8 +119,8 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'module' => 'Users',
             'bean_name' => 'User',
             'source' => 'non-db',
-        ),
-        'name' => array(
+        ],
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'varchar',
@@ -127,8 +128,8 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'required' => false,
             'reportable' => false,
             'comment' => 'Name given to the inbound email mailbox'
-        ),
-        'status' => array(
+        ],
+        'status' => [
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'varchar',
@@ -137,8 +138,8 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'required' => true,
             'reportable' => false,
             'comment' => 'Status of the inbound email mailbox (ex: Active or Inactive)'
-        ),
-        'server_url' => array(
+        ],
+        'server_url' => [
             'name' => 'server_url',
             'vname' => 'LBL_SERVER_URL',
             'type' => 'varchar',
@@ -147,8 +148,8 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => 'Mail server URL',
             'importable' => 'required',
-        ),
-        'email_user' => array(
+        ],
+        'email_user' => [
             'name' => 'email_user',
             'vname' => 'LBL_LOGIN',
             'type' => 'varchar',
@@ -156,8 +157,8 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'required' => true,
             'reportable' => false,
             'comment' => 'User name allowed access to mail server'
-        ),
-        'email_password' => array(
+        ],
+        'email_password' => [
             'name' => 'email_password',
             'vname' => 'LBL_PASSWORD',
             'type' => 'varchar',
@@ -165,18 +166,18 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'required' => true,
             'reportable' => false,
             'comment' => 'Password of user identified by email_user'
-        ),
-        'port' => array(
+        ],
+        'port' => [
             'name' => 'port',
             'vname' => 'LBL_SERVER_TYPE',
             'type' => 'int',
             'len' => '5',
             'required' => true,
             'reportable' => false,
-            'validation' => array('type' => 'range', 'min' => '110', 'max' => '65535'),
+            'validation' => ['type' => 'range', 'min' => '110', 'max' => '65535'],
             'comment' => 'Port used to access mail server'
-        ),
-        'service' => array(
+        ],
+        'service' => [
             'name' => 'service',
             'vname' => 'LBL_SERVICE',
             'type' => 'varchar',
@@ -185,16 +186,16 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'comment' => '',
             'importable' => 'required',
-        ),
-        'mailbox' => array(
+        ],
+        'mailbox' => [
             'name' => 'mailbox',
             'vname' => 'LBL_MAILBOX',
             'type' => 'text',
             'required' => true,
             'reportable' => false,
             'comment' => ''
-        ),
-        'delete_seen' => array(
+        ],
+        'delete_seen' => [
             'name' => 'delete_seen',
             'vname' => 'LBL_DELETE_SEEN',
             'type' => 'bool',
@@ -202,87 +203,86 @@ $dictionary['InboundEmail'] = array('table' => 'inbound_email', 'comment' => 'In
             'reportable' => false,
             'massupdate' => '',
             'comment' => 'Delete email from server once read (seen)'
-        ),
-        'mailbox_type' => array(
+        ],
+        'mailbox_type' => [
             'name' => 'mailbox_type',
             'vname' => 'LBL_MAILBOX_TYPE',
             'type' => 'varchar',
             'len' => '10',
             'reportable' => false,
             'comment' => ''
-        ),
-        'template_id' => array(
+        ],
+        'template_id' => [
             'name' => 'template_id',
             'vname' => 'LBL_AUTOREPLY',
             'type' => 'id',
             'len' => '36',
             'reportable' => false,
             'comment' => 'Template used for auto-reply'
-        ),
-        'stored_options' => array(
+        ],
+        'stored_options' => [
             'name' => 'stored_options',
             'vname' => 'LBL_STORED_OPTIONS',
             'type' => 'text',
             'reportable' => false,
             'comment' => ''
-        ),
-        'group_id' => array(
+        ],
+        'group_id' => [
             'name' => 'group_id',
             'vname' => 'LBL_GROUP_ID',
             'type' => 'id',
             'reportable' => false,
             'comment' => 'Group ID (unused)'
-        ),
-        'is_personal' => array(
+        ],
+        'is_personal' => [
             'name' => 'is_personal',
             'vname' => 'LBL_IS_PERSONAL',
             'type' => 'bool',
             'required' => true,
             'default' => '0',
-            'reportable'=>false,
+            'reportable' => false,
             'massupdate' => '',
             'comment' => 'Personal account flag'
-        ),
-        'groupfolder_id' => array(
+        ],
+        'groupfolder_id' => [
             'name' => 'groupfolder_id',
             'vname' => 'LBL_GROUPFOLDER_ID',
             'type' => 'id',
             'required' => false,
-            'reportable'=>false,
+            'reportable' => false,
             'comment' => 'Unique identifier'
-        ),
-    ), /* end fields() */
-    'indices' => array(
-        array(
-            'name' =>'inbound_emailpk',
-            'type' =>'primary',
-            'fields' => array(
+        ],
+    ], // end fields()
+    'indices' => [
+        [
+            'name' => 'inbound_emailpk',
+            'type' => 'primary',
+            'fields' => [
                 'id'
-            )
-        ),
-    ), /* end indices */
-    'relationships' => array(
-        'inbound_email_created_by' => array(
-            'lhs_module'=> 'Users',
-            'lhs_table' => 'users',
-            'lhs_key' => 'id',
-            'rhs_module'=> 'InboundEmail',
-            'rhs_table'=> 'inbound_email',
-            'rhs_key' => 'created_by',
-            'relationship_type' => 'one-to-one'
-        ),
-        'inbound_email_modified_user_id' => array(
+            ]
+        ],
+    ], // end indices
+    'relationships' => [
+        'inbound_email_created_by' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
-            'rhs_module'=> 'InboundEmail',
-            'rhs_table'=> 'inbound_email',
+            'rhs_module' => 'InboundEmail',
+            'rhs_table' => 'inbound_email',
+            'rhs_key' => 'created_by',
+            'relationship_type' => 'one-to-one'
+        ],
+        'inbound_email_modified_user_id' => [
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'InboundEmail',
+            'rhs_table' => 'inbound_email',
             'rhs_key' => 'modified_user_id',
             'relationship_type' => 'one-to-one'
-        ),
-    ), /* end relationships */
-);
+        ],
+    ], // end relationships
+];
 
-
-VardefManager::createVardef('InboundEmail', 'InboundEmail', array(
-));
+VardefManager::createVardef('InboundEmail', 'InboundEmail', [
+]);

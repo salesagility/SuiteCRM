@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/** @noinspection PhpUnhandledExceptionInspection */
+// @noinspection PhpUnhandledExceptionInspection
 
 use Monolog\Logger;
 use SuiteCRM\Log\CliLoggerHandler;
@@ -47,30 +47,33 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
  * Class CliLoggerHandlerTest test for CliLoggerHandler.
  *
  * @see CliLoggerHandler
+ *
+ * @internal
  */
 class CliLoggerHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
     /** @var Logger */
     private $logger;
 
+    protected function setUp()
+    {
+        $this->logger = new Logger('Test');
+        $this->logger->pushHandler(new CliLoggerHandler());
+
+        return parent::setUp();
+    }
+
     public function testLogging()
     {
         $this->logger->debug("\n");
         $this->logger->debug('DEBUG');
-        $this->logger->info("INFO");
+        $this->logger->info('INFO');
         $this->logger->notice('NOTICE');
         $this->logger->warning('WARNING');
         $this->logger->error('ERROR');
         $this->logger->critical('CRITICAL');
         $this->logger->emergency('EMERGENCY');
 
-        $this->logger->emergency(new RuntimeException("Exception!"));
-    }
-
-    protected function setUp()
-    {
-        $this->logger = new Logger("Test");
-        $this->logger->pushHandler(new CliLoggerHandler());
-        return parent::setUp();
+        $this->logger->emergency(new RuntimeException('Exception!'));
     }
 }

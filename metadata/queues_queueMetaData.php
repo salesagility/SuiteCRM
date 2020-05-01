@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,105 +42,105 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['queues_queue'] = array('table' => 'queues_queue',
-    'fields' => array(
-        'id' => array(
+$dictionary['queues_queue'] = ['table' => 'queues_queue',
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_QUEUES_QUEUE_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
-        ),
-        'deleted' => array(
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
             'required' => true,
             'default' => '0',
-            'reportable'=>false,
-        ),
-        'date_entered' => array(
+            'reportable' => false,
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'date_modified' => array(
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'queue_id' => array(
+        ],
+        'queue_id' => [
             'name' => 'queue_id',
             'vname' => 'LBL_QUEUE_ID',
             'type' => 'id',
             'required' => true,
-            'reportable'=>false,
-        ),
-        'parent_id' => array(
+            'reportable' => false,
+        ],
+        'parent_id' => [
             'name' => 'parent_id',
             'vname' => 'LBL_PARENT_ID',
             'type' => 'id',
             'required' => true,
-            'reportable'=>false,
-        ),
-    ),
-    'indices' => array(
-        array(
+            'reportable' => false,
+        ],
+    ],
+    'indices' => [
+        [
             'name' => 'queues_queuepk',
-            'type' =>'primary',
-            'fields' => array(
+            'type' => 'primary',
+            'fields' => [
                 'id'
-            )
-        ),
-        array(
-        'name' =>'idx_queue_id',
-        'type'=>'index',
-        'fields' => array(
-            'queue_id'
-            )
-        ),
-        array(
-        'name' =>'idx_parent_id',
-        'type'=>'index',
-        'fields' => array(
-            'parent_id'
-            )
-        ),
-        array(
-        'name' => 'compidx_queue_id_parent_id',
-        'type' => 'alternate_key',
-        'fields' => array(
-            'queue_id',
-            'parent_id'
-            ),
-        ),
-    ), /* end indices */
-    'relationships' => array(
-        'child_queues_rel'	=> array(
-            'lhs_module'		=> 'Queues',
-            'lhs_table'			=> 'queues',
-            'lhs_key'			=> 'id',
-            'rhs_module'		=> 'Queues',
-            'rhs_table'			=> 'queues',
-            'rhs_key'			=> 'id',
+            ]
+        ],
+        [
+            'name' => 'idx_queue_id',
+            'type' => 'index',
+            'fields' => [
+                'queue_id'
+            ]
+        ],
+        [
+            'name' => 'idx_parent_id',
+            'type' => 'index',
+            'fields' => [
+                'parent_id'
+            ]
+        ],
+        [
+            'name' => 'compidx_queue_id_parent_id',
+            'type' => 'alternate_key',
+            'fields' => [
+                'queue_id',
+                'parent_id'
+            ],
+        ],
+    ], // end indices
+    'relationships' => [
+        'child_queues_rel' => [
+            'lhs_module' => 'Queues',
+            'lhs_table' => 'queues',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Queues',
+            'rhs_table' => 'queues',
+            'rhs_key' => 'id',
             'relationship_type' => 'many-to-many',
-            'join_table'		=> 'queues_queue',
-            'join_key_lhs'		=> 'queue_id',
-            'join_key_rhs'		=> 'parent_id'
-        ),
-        'parent_queues_rel' => array(
-            'lhs_module'		=> 'Queues',
-            'lhs_table'			=> 'queues',
-            'lhs_key' 			=> 'id',
-            'rhs_module'		=> 'Queues',
-            'rhs_table'			=> 'queues',
-            'rhs_key' 			=> 'id',
+            'join_table' => 'queues_queue',
+            'join_key_lhs' => 'queue_id',
+            'join_key_rhs' => 'parent_id'
+        ],
+        'parent_queues_rel' => [
+            'lhs_module' => 'Queues',
+            'lhs_table' => 'queues',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Queues',
+            'rhs_table' => 'queues',
+            'rhs_key' => 'id',
             'relationship_type' => 'many-to-many',
-            'join_table'		=> 'queues_queue',
-            'join_key_rhs'		=> 'queue_id',
-            'join_key_lhs'		=> 'parent_id'
-        ),
-    ), /* end relationships */
-);
+            'join_table' => 'queues_queue',
+            'join_key_rhs' => 'queue_id',
+            'join_key_lhs' => 'parent_id'
+        ],
+    ], // end relationships
+];

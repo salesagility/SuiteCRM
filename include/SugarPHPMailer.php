@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -48,14 +45,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 require_once 'include/OutboundEmail/OutboundEmail.php';
 
 /**
- * Sugar mailer
+ * Sugar mailer.
+ *
  * @api
  */
 class SugarPHPMailer extends PHPMailer
 {
-    /*
-     * var OutboundEmail
-     */
+    // var OutboundEmail
     public $oe;
     public $protocol = 'tcp://';
     public $preppedForOutbound = false;
@@ -63,18 +59,19 @@ class SugarPHPMailer extends PHPMailer
     public $disclosureText;
     public $isHostEmpty = false;
     public $opensslOpened = true;
-    public $fullSmtpLog='';
+    public $fullSmtpLog = '';
 
     /**
      * @var string
      */
     public $Body_html;
-    
+
     private static $FromNameOrigin = null;
 
     /**
      * Constructor.
-     * @param boolean $exceptions Should we throw external exceptions?
+     *
+     * @param bool $exceptions Should we throw external exceptions?
      */
     public function __construct($exceptions = null)
     {
@@ -110,10 +107,8 @@ class SugarPHPMailer extends PHPMailer
         $this->SMTPAutoTLS = false;
     }
 
-
-
     /**
-     * Prefills outbound details
+     * Prefills outbound details.
      */
     public function setMailer()
     {
@@ -149,7 +144,7 @@ class SugarPHPMailer extends PHPMailer
     }
 
     /**
-     * Prefills mailer for system
+     * Prefills mailer for system.
      */
     public function setMailerForSystem()
     {
@@ -221,9 +216,9 @@ class SugarPHPMailer extends PHPMailer
 eoq;
                 $this->Body = $head . $this->Body . '</body></html>';
             }
-            
+
             $fromName = $this->FromName;
-            
+
             // checking if username already set for phpmailer and
             // using that as username instead fromname
             if ($this->FromName == self::$FromNameOrigin && !empty($this->Username)) {
@@ -236,7 +231,7 @@ eoq;
 
     /**
      * Replace images with locations specified by regex with cid: images
-     * and attach needed files
+     * and attach needed files.
      *
      * @param string $regex Regular expression
      * @param string $local_prefix Prefix where local files are stored
@@ -244,7 +239,7 @@ eoq;
      */
     public function replaceImageByRegex($regex, $local_prefix, $object = false)
     {
-        preg_match_all("#<img[^>]*[\s]+src[^=]*=[\s]*[\"']($regex)(.+?)[\"']#si", $this->Body, $matches);
+        preg_match_all("#<img[^>]*[\\s]+src[^=]*=[\\s]*[\"']({$regex})(.+?)[\"']#si", $this->Body, $matches);
         $i = 0;
         foreach ($matches[2] as $match) {
             $filename = urldecode($match);
@@ -258,9 +253,11 @@ eoq;
                     switch (strtolower($typematch[1])) {
                         case 'documents':
                             $beanname = 'DocumentRevisions';
+
                             break;
                         case 'notes':
                             $beanname = 'Notes';
+
                             break;
                     }
                 }
@@ -281,7 +278,7 @@ eoq;
             $i++;
         }
         //replace references to cache with cid tag
-        $this->Body = preg_replace("|\"$regex|i", '"cid:', $this->Body);
+        $this->Body = preg_replace("|\"{$regex}|i", '"cid:', $this->Body);
         // remove bad img line from outbound email
         $this->Body = preg_replace('#<img[^>]+src[^=]*=\"\/([^>]*?[^>]*)>#sim', '', $this->Body);
     }
@@ -331,7 +328,7 @@ eoq;
                 }
             } elseif ($note->object_name === 'DocumentRevision') { // from Documents
                 $filename = $note->id . $note->filename;
-                $file_location = "upload/$filename";
+                $file_location = "upload/{$filename}";
                 $mime_type = $note->file_mime_type;
             }
 
@@ -344,23 +341,13 @@ eoq;
     }
 
     /**
-     * overloads class.phpmailer's setError() method so that we can log errors in sugarcrm.log
-     *
-     * @param string $msg
-     */
-    protected function setError($msg)
-    {
-        $GLOBALS['log']->fatal("SugarPHPMailer encountered an error: {$msg}");
-        parent::setError($msg);
-    }
-
-    /**
      * @param array $options
      *
-     * @return bool
      * @throws \phpmailerException
+     *
+     * @return bool
      */
-    public function smtpConnect($options = array())
+    public function smtpConnect($options = [])
     {
         $connection = parent::smtpConnect();
         if (!$connection) {
@@ -373,13 +360,16 @@ eoq;
         }
 
         return $connection;
-    } // fn
+    }
+
+    // fn
 
     /**
      * overloads PHPMailer::PreSend() to allow for empty messages to go out.
      *
-     * @return bool
      * @throws \phpmailerException
+     *
+     * @return bool
      */
     public function PreSend()
     {
@@ -390,24 +380,6 @@ eoq;
         }
 
         return parent::preSend();
-    }
-
-    /**
-     * Checks if the embedded file is already attached.
-     *
-     * @param string $filename Name of the file to check.
-     *
-     * @return boolean
-     */
-    protected function embeddedAttachmentExists($filename)
-    {
-        foreach ($this->attachment as $attachment) {
-            if ($attachment[1] === $filename) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -428,7 +400,7 @@ eoq;
     }
 
     /**
-     * overloads PHPMailer::Send() to allow for better logging and debugging SMTP issues
+     * overloads PHPMailer::Send() to allow for better logging and debugging SMTP issues.
      *
      * @return bool
      */
@@ -441,12 +413,11 @@ eoq;
         //$this->Sender   = 'me@here.com';
         //$this->Password = 'wrong';
         //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
-       
-        
+
         $ret = null;
-        
-        $this->fullSmtpLog='';
-        $phpMailerExceptionMsg='';
+
+        $this->fullSmtpLog = '';
+        $phpMailerExceptionMsg = '';
 
         try {
             $saveExceptionsState = $this->exceptions;
@@ -457,25 +428,25 @@ eoq;
                 // obfuscate part of response if previous line was a server 334 request, for authentication data:
                 static $previousIs334 = false;
                 if ($previousIs334) {
-                    $this->fullSmtpLog .= "$level: CLIENT -> SERVER: ---obfuscated---\n";
+                    $this->fullSmtpLog .= "{$level}: CLIENT -> SERVER: ---obfuscated---\n";
                 } else {
-                    $this->fullSmtpLog .= "$level: $str\n";
+                    $this->fullSmtpLog .= "{$level}: {$str}\n";
                 }
                 $previousIs334 = (strpos($str, 'SERVER -> CLIENT: 334') !== false);
             };
 
             $this->SMTPDebug = 3;
             $ret = parent::send();
-            $this->exceptions =  $saveExceptionsState;
+            $this->exceptions = $saveExceptionsState;
         } catch (Exception $e) {
-            $phpMailerExceptionMsg=$e->errorMessage(); //Pretty error messages from PHPMailer
+            $phpMailerExceptionMsg = $e->errorMessage(); //Pretty error messages from PHPMailer
             if ($phpMailerExceptionMsg) {
-                $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
+                $GLOBALS['log']->error("send: PHPMailer Exception: { {$phpMailerExceptionMsg} }");
             }
         } catch (\Exception $e) { //The leading slash means the Global PHP Exception class will be caught
-            $phpMailerExceptionMsg=$e->getMessage(); //generic error messages from anything else
+            $phpMailerExceptionMsg = $e->getMessage(); //generic error messages from anything else
             if ($phpMailerExceptionMsg) {
-                $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
+                $GLOBALS['log']->error("send: PHPMailer Exception: { {$phpMailerExceptionMsg} }");
             }
         }
 
@@ -488,5 +459,34 @@ eoq;
         $GLOBALS['log']->debug("------------ Exiting SugarMailer send");
         */
         return $ret;
+    }
+
+    /**
+     * overloads class.phpmailer's setError() method so that we can log errors in sugarcrm.log.
+     *
+     * @param string $msg
+     */
+    protected function setError($msg)
+    {
+        $GLOBALS['log']->fatal("SugarPHPMailer encountered an error: {$msg}");
+        parent::setError($msg);
+    }
+
+    /**
+     * Checks if the embedded file is already attached.
+     *
+     * @param string $filename name of the file to check
+     *
+     * @return bool
+     */
+    protected function embeddedAttachmentExists($filename)
+    {
+        foreach ($this->attachment as $attachment) {
+            if ($attachment[1] === $filename) {
+                return true;
+            }
+        }
+
+        return false;
     }
 } // end class definition

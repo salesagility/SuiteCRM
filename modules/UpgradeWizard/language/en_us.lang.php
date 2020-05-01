@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'ERR_UW_CANNOT_DETERMINE_GROUP' => 'Cannot determine Group',
     'ERR_UW_CANNOT_DETERMINE_USER' => 'Cannot determine Owner',
     'ERR_UW_CONFIG_WRITE' => 'Error updating config.php with new version information.',
@@ -258,7 +256,7 @@ $mod_strings = array(
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
     'ERROR_NO_VERSION_SET' => 'Compatible version is not set in manifest file',
     'LBL_UPGRD_CSTM_CHK' => 'Upgrade process will update some files but these files also exist in custom/ folder. Please review the changes before continuing:',
-    'ERR_UW_PHP_FILE_ERRORS' => array(
+    'ERR_UW_PHP_FILE_ERRORS' => [
         1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
         2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
         3 => 'The uploaded file was only partially uploaded.',
@@ -267,7 +265,7 @@ $mod_strings = array(
         6 => 'Missing a temporary folder.',
         7 => 'Failed to write file to disk.',
         8 => 'File upload stopped by extension.',
-    ),
+    ],
     'LBL_PASSWORD_EXPIRATON_CHANGED' => 'Warning: password expiration is set to none!',
     'LBL_PASSWORD_EXPIRATON_REDIRECT' => 'Please update your settings here',
-);
+];

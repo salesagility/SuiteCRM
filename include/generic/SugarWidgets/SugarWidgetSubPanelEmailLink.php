@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class SugarWidgetSubPanelEmailLink
+ * Class SugarWidgetSubPanelEmailLink.
  */
 class SugarWidgetSubPanelEmailLink extends SugarWidgetField
 {
     /**
      * @param array $layout_def
+     *
      * @return string
      */
     public function displayList(&$layout_def)
@@ -56,7 +55,7 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField
         global $current_user;
         global $focus;
 
-        require_once('modules/Emails/EmailUI.php');
+        require_once 'modules/Emails/EmailUI.php';
         $emailUi = new EmailUI();
         if ($focus !== null) {
             return $emailUi->populateComposeViewFields($focus);

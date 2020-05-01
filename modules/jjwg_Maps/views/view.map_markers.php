@@ -11,9 +11,6 @@ class Jjwg_MapsViewMap_Markers extends SugarView
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
         ?>
@@ -24,7 +21,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView
   <title><?php echo $GLOBALS['mod_strings']['LBL_MAP_DISPLAY']; ?></title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
-<?php if (!empty($GLOBALS['jjwg_config']['google_maps_api_key'])): ?>
+<?php if (!empty($GLOBALS['jjwg_config']['google_maps_api_key'])) { ?>
   <style type="text/css">
     html,body{
       margin:0;
@@ -83,7 +80,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView
   </style>
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" />
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/css/TableTools.min.css" />
-  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false&libraries=drawing,geometry"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false&libraries=drawing,geometry"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/jquery.iframe-auto-height.plugin.1.9.3.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
@@ -126,7 +123,7 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
         if ($num_groups > 216) {
             $num_groups = 216;
         }
-        $group_name_to_num = array();
+        $group_name_to_num = [];
         $i = 1;
         // Define Group Name to Icon Number Mapping 1-216(max)
         if (!empty($this->bean->map_markers_groups)) {
@@ -138,20 +135,20 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
         // Define Dir of Group Icons
         $icons_dir_base = 'themes/default/images/jjwg_Maps/';
         if ($num_groups <= 10) {
-            $icons_dir = $icons_dir_base.'0-10/';
+            $icons_dir = $icons_dir_base . '0-10/';
         } elseif ($num_groups <= 25) {
-            $icons_dir = $icons_dir_base.'0-25/';
+            $icons_dir = $icons_dir_base . '0-25/';
         } elseif ($num_groups <= 100) {
-            $icons_dir = $icons_dir_base.'0-100/';
+            $icons_dir = $icons_dir_base . '0-100/';
         } elseif ($num_groups <= 216) {
-            $icons_dir = $icons_dir_base.'0-216/';
+            $icons_dir = $icons_dir_base . '0-216/';
         } else {
-            $icons_dir = $icons_dir_base.'0-10/'; // Demo Version
+            $icons_dir = $icons_dir_base . '0-10/'; // Demo Version
         }
 
         // Define Custom Markers Dir and Common Icons
         $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
-        $custom_markers_icons = array();
+        $custom_markers_icons = [];
         foreach ($this->bean->custom_markers as $marker) {
             $custom_markers_icons[] = $marker['image'];
         }
@@ -930,15 +927,15 @@ $(document).ready(function(){
 
 
 </script>
-<?php endif ?>
+<?php } ?>
 
 </head>
 
 <body>
-<?php if (empty($GLOBALS['jjwg_config']['google_maps_api_key'])): ?>
+<?php if (empty($GLOBALS['jjwg_config']['google_maps_api_key'])) { ?>
 <!-- show error-->
-<div class="error"><?= $GLOBALS['mod_strings']['LBL_ERROR_NO_GOOGLE_API_KEY'] ?></div>
-<?php else: ?>
+<div class="error"><?php echo $GLOBALS['mod_strings']['LBL_ERROR_NO_GOOGLE_API_KEY']; ?></div>
+<?php } else { ?>
 <!-- show map-->
 <div id="map_canvas"></div>
 
@@ -952,7 +949,7 @@ $(document).ready(function(){
 <?php
   if (!empty($this->bean->map_center)) {
       ?>
-    <img src="<?php echo './'.$icons_dir.'/marker_0.png'; ?>" align="middle" />
+    <img src="<?php echo './' . $icons_dir . '/marker_0.png'; ?>" align="middle" />
     <?php echo $this->bean->map_center['name']; ?><br/>
 <?php
   } ?>
@@ -960,13 +957,13 @@ $(document).ready(function(){
 <?php
   foreach ($group_name_to_num as $group_name => $group_number) {
       ?>
-    <img src="<?php echo './'.$icons_dir.'/marker_'.$group_number.'.png'; ?>"
+    <img src="<?php echo './' . $icons_dir . '/marker_' . $group_number . '.png'; ?>"
          rel="<?php echo $group_number; ?>" align="middle" />
 <?php
     if (empty($group_name)) {
-        echo '{'.$GLOBALS['mod_strings']['LBL_MAP_NULL_GROUP_NAME'].'}';
+        echo '{' . $GLOBALS['mod_strings']['LBL_MAP_NULL_GROUP_NAME'] . '}';
     } else {
-        echo htmlentities($group_name, ENT_COMPAT, "UTF-8", false);
+        echo htmlentities($group_name, ENT_COMPAT, 'UTF-8', false);
     } ?><br/>
 <?php
   } ?>
@@ -1001,7 +998,7 @@ $(document).ready(function(){
   } ?>
 
 <?php
-  if (in_array($this->bean->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects', 'Users')) &&
+  if (in_array($this->bean->display_object->module_name, ['Accounts', 'Contacts', 'Leads', 'Prospects', 'Users']) &&
           ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) &&
           empty($_REQUEST['list_id']) && !empty($this->bean->list_array)) {
       ?>
@@ -1014,11 +1011,11 @@ $(document).ready(function(){
         <input type="hidden" name="to_pdf" value="1" />
         <?php if (array_key_exists('uid', $_GET)) {
           ?>
-            <input type="hidden" name="selected_ids" value="<?php echo $_GET['uid'] ?>" />
+            <input type="hidden" name="selected_ids" value="<?php echo $_GET['uid']; ?>" />
         <?php
       } ?>
         <select id="list_id" tabindex="3" name="list_id" title="">
-            <?php foreach ($this->bean->list_array as $key=>$value) {
+            <?php foreach ($this->bean->list_array as $key => $value) {
           ?>
                 <option value="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($value); ?></option>
             <?php
@@ -1030,7 +1027,7 @@ $(document).ready(function(){
 </div>
 <?php
   } ?>
-<?php endif ?>
+<?php } ?>
 
 
 </body>

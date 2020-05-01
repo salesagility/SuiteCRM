@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,18 +41,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- ********************************************************************************/
-
-
-
+//
 
 /**
  * Currency.php
  * This class encapsulates the handling of currency conversions and
  * formatting in the SugarCRM application.
- *
  */
 class Currency extends SugarBean
 {
@@ -70,29 +64,29 @@ class Currency extends SugarBean
     public $unhide = '';
     public $field_name_map;
 
-    public $table_name = "currencies";
-    public $object_name = "Currency";
-    public $module_dir = "Currencies";
+    public $table_name = 'currencies';
+    public $object_name = 'Currency';
+    public $module_dir = 'Currencies';
     public $new_schema = true;
 
     public $disable_num_format = true;
-
 
     public function __construct()
     {
         parent::__construct();
         global $app_strings, $current_user, $sugar_config, $locale;
-        $this->field_defs['hide'] = array('name'=>'hide', 'source'=>'non-db', 'type'=>'varchar','len'=>25);
-        $this->field_defs['unhide'] = array('name'=>'unhide', 'source'=>'non-db', 'type'=>'varchar','len'=>25);
-        $this->disable_row_level_security =true;
+        $this->field_defs['hide'] = ['name' => 'hide', 'source' => 'non-db', 'type' => 'varchar', 'len' => 25];
+        $this->field_defs['unhide'] = ['name' => 'unhide', 'source' => 'non-db', 'type' => 'varchar', 'len' => 25];
+        $this->disable_row_level_security = true;
     }
 
     /**
      * convertToDollar
-     * This method accepts a currency amount and converts it to the US Dollar amount
+     * This method accepts a currency amount and converts it to the US Dollar amount.
      *
      * @param $amount The currency amount to convert to US Dollars
      * @param $precision The rounding precision scale
+     *
      * @return currency value in US Dollars from conversion
      */
     public function convertToDollar($amount, $precision = 6)
@@ -107,6 +101,7 @@ class Currency extends SugarBean
      *
      * @param $amount The currency amount in US Dollars
      * @param $precision The rounding precision scale
+     *
      * @return currency value from US Dollar conversion
      */
     public function convertFromDollar($amount, $precision = 6)
@@ -115,54 +110,61 @@ class Currency extends SugarBean
     }
 
     /**
-     * getDefaultCurrencyName
+     * getDefaultCurrencyName.
      *
      * Returns the default currency name as defined in application
-     * @return String value of default currency name
+     *
+     * @return string value of default currency name
      */
     public function getDefaultCurrencyName()
     {
         global $sugar_config;
+
         return $sugar_config['default_currency_name'];
     }
 
     /**
-     * getDefaultCurrencySymbol
+     * getDefaultCurrencySymbol.
      *
      * Returns the default currency symobol in application
-     * @return String value of default currency symbol(e.g. $)
+     *
+     * @return string value of default currency symbol(e.g. $)
      */
     public function getDefaultCurrencySymbol()
     {
         global $sugar_config;
+
         return $sugar_config['default_currency_symbol'];
     }
 
     /**
-     * getDefaultISO4217
+     * getDefaultISO4217.
      *
      * Returns the default ISO 4217 standard currency code value
-     * @return String value for the ISO 4217 standard code(e.g. EUR)
+     *
+     * @return string value for the ISO 4217 standard code(e.g. EUR)
      */
     public function getDefaultISO4217()
     {
         global $sugar_config;
+
         return $sugar_config['default_currency_iso4217'];
     }
 
     /**
-     * retrieveIDBySmbol
+     * retrieveIDBySmbol.
      *
      * Returns the id value for given currency symbol in Currencies table
      * and currency entry for symbol is not set to deleted.
      *
      * @param $symbol Symbol value
-     * @return String id value for symbol defined in Currencies table, blank String value
+     *
+     * @return string id value for symbol defined in Currencies table, blank String value
      *         if none found
      */
     public function retrieveIDBySymbol($symbol)
     {
-        $query = "SELECT id FROM currencies WHERE symbol='$symbol' AND deleted=0;";
+        $query = "SELECT id FROM currencies WHERE symbol='{$symbol}' AND deleted=0;";
         $result = $this->db->query($query);
         if ($result) {
             $row = $this->db->fetchByAssoc($result);
@@ -179,15 +181,16 @@ class Currency extends SugarBean
         global $isMerge;
 
         if (isset($isMerge) && $isMerge && $this->id != '-99') {
-            $list_form->assign('PREROW', '<input name="mergecur[]" type="checkbox" value="'.$this->id.'">');
+            $list_form->assign('PREROW', '<input name="mergecur[]" type="checkbox" value="' . $this->id . '">');
         }
+
         return $list_form;
     }
 
     public function retrieve_id_by_name($name)
     {
         $nameQuoted = $this->db->quote($name);
-        $query = "select id from currencies where name='$nameQuoted' and deleted=0;";
+        $query = "select id from currencies where name='{$nameQuoted}' and deleted=0;";
         $result = $this->db->query($query);
         if ($result) {
             $row = $this->db->fetchByAssoc($result);
@@ -195,13 +198,14 @@ class Currency extends SugarBean
                 return $row['id'];
             }
         }
+
         return '';
     }
 
     public function retrieve($id = -99, $encode = true, $deleted = true)
     {
         if ($id == '-99') {
-            $this->name = 	$this->getDefaultCurrencyName();
+            $this->name = $this->getDefaultCurrencyName();
             $this->symbol = $this->getDefaultCurrencySymbol();
             $this->id = '-99';
             $this->conversion_rate = 1;
@@ -214,7 +218,7 @@ class Currency extends SugarBean
             parent::retrieve($id, $encode, $deleted);
         }
         if (!isset($this->name) || $this->deleted == 1) {
-            $this->name = 	$this->getDefaultCurrencyName();
+            $this->name = $this->getDefaultCurrencyName();
             $this->symbol = $this->getDefaultCurrencySymbol();
             $this->conversion_rate = 1;
             $this->iso4217 = $this->getDefaultISO4217();
@@ -224,6 +228,7 @@ class Currency extends SugarBean
             $this->hide = '<!--';
             $this->unhide = '-->';
         }
+
         return $this;
     }
 
@@ -233,30 +238,34 @@ class Currency extends SugarBean
      * Parameters:
      * 	none
      * Returns:
-     * 	$symbol otherwise chr(2) for euro symbol
+     * 	$symbol otherwise chr(2) for euro symbol.
      */
     public function getPdfCurrencySymbol()
     {
         if ($this->symbol == '&#8364;' || $this->symbol == '€') {
             return chr(2);
         }
+
         return $this->symbol;
     }
+
     public function get_list_view_data()
     {
         $this->conversion_rate = format_number($this->conversion_rate, 10, 10);
-        $data = parent::get_list_view_data();
-        return $data;
+
+        return parent::get_list_view_data();
     }
+
     public function save($check_notify = false)
     {
         sugar_cache_clear('currency_list');
+
         return parent::save($check_notify);
     }
 } // end currency class
 
 /**
- * currency_format_number
+ * currency_format_number.
  *
  * This method is a wrapper designed exclusively for formatting currency values
  * with the assumption that the method caller wants a currency formatted value
@@ -265,9 +274,10 @@ class Currency extends SugarBean
  *
  * @param $amount The amount to be formatted
  * @param $params Optional parameters(see @format_number)
- * @return String representation of amount with formatting applied
+ *
+ * @return string representation of amount with formatting applied
  */
-function currency_format_number($amount, $params = array())
+function currency_format_number($amount, $params = [])
 {
     global $locale;
     if (isset($params['round']) && is_int($params['round'])) {
@@ -285,13 +295,14 @@ function currency_format_number($amount, $params = array())
 
     $showCurrencySymbol = $locale->getPrecedentPreference('default_currency_symbol') != '' ? true : false;
     if ($showCurrencySymbol && !isset($params['currency_symbol'])) {
-        $params["currency_symbol"] = true;
+        $params['currency_symbol'] = true;
     }
+
     return format_number($amount, $real_round, $real_decimals, $params);
 }
 
 /**
- * format_number(deprecated)
+ * format_number(deprecated).
  *
  * This method accepts an amount and formats it given the user's preferences.
  * Should the values set in the user preferences be invalid then it will
@@ -316,7 +327,6 @@ function currency_format_number($amount, $params = array())
  * @param $decimals Integer value for number of decimals to round to
  * @param $params Array of additional parameter values
  *
- *
  * The following are passed in as an array of params:
  *        boolean $params['currency_symbol'] - true to display currency symbol
  *        boolean $params['convert'] - true to convert from USD dollar
@@ -326,10 +336,12 @@ function currency_format_number($amount, $params = array())
  *        String  $params['type'] - pass in 'pdf' for pdf currency symbol conversion
  *        String  $params['currency_id'] - currency_id to retreive, defaults to current user
  *        String  $params['human'] - formatting that truncates the first thousands and appends "k"
- * @return String formatted currency value
+ *
+ * @return string formatted currency value
+ *
  * @see include/Localization/Localization.php
  */
-function format_number($amount, $round = null, $decimals = null, $params = array())
+function format_number($amount, $round = null, $decimals = null, $params = [])
 {
     global $app_strings, $current_user, $sugar_config, $locale;
     static $current_users_currency = null;
@@ -421,10 +433,9 @@ function format_number($amount, $round = null, $decimals = null, $params = array
     if (!empty($params['percentage']) && $params['percentage']) {
         $amount .= $app_strings['LBL_PERCENTAGE_SYMBOL'];
     }
+
     return $amount;
 } //end function format_number
-
-
 
 function format_place_symbol($amount, $symbol, $symbol_space)
 {
@@ -435,6 +446,7 @@ function format_place_symbol($amount, $symbol, $symbol_space)
             $amount = $symbol . $amount;
         }
     }
+
     return $amount;
 }
 
@@ -462,9 +474,9 @@ function unformat_number($string)
 
     $seps = get_number_separators();
     // remove num_grp_sep and replace decimal separator with decimal
-    $string = trim(str_replace(array($seps[0], $seps[1], $currency->symbol), array('', '.', ''), $string));
+    $string = trim(str_replace([$seps[0], $seps[1], $currency->symbol], ['', '.', ''], $string));
     if (preg_match('/^[+-]?\d(\.\d+)?[Ee]([+-]?\d+)?$/', $string)) {
-        $string = sprintf("%.0f", $string);
+        $string = sprintf('%.0f', $string);
     }//for scientific number format. After round(), we may get this number type.
     preg_match('/[\-\+]?[0-9\.]*/', $string, $string);
 
@@ -472,7 +484,8 @@ function unformat_number($string)
     if ($out_number == '') {
         return '';
     }
-    return (float)$out_number;
+
+    return (float) $out_number;
 }
 
 // deprecated use format_number() above
@@ -483,17 +496,17 @@ function format_money($amount, $for_display = true)
     // Currently, it stays closer to the existing format, and just rounds to two decimal points
     if (isset($amount)) {
         if ($for_display) {
-            return sprintf("%0.02f", $amount);
+            return sprintf('%0.02f', $amount);
         }
         // If it's an editable field, don't use a thousand separator.
         // Or perhaps we will want to, but it doesn't matter right now.
-        return sprintf("%0.02f", $amount);
+        return sprintf('%0.02f', $amount);
     }
-    return;
 }
 
 /**
  * @deprecated
+ *
  * @param bool $reset_sep
  */
 function get_number_seperators($reset_sep = false)
@@ -504,6 +517,9 @@ function get_number_seperators($reset_sep = false)
 /**
  * Returns user/system preference for number grouping separator character(default ",") and the decimal separator
  *(default ".").  Special case: when num_grp_sep is ".", it will return NULL as the num_grp_sep.
+ *
+ * @param mixed $reset_sep
+ *
  * @return array Two element array, first item is num_grp_sep, 2nd item is dec_sep
  */
 function get_number_separators($reset_sep = false)
@@ -536,33 +552,36 @@ function get_number_separators($reset_sep = false)
         }
     }
 
-    return array($num_grp_sep, $dec_sep);
+    return [$num_grp_sep, $dec_sep];
 }
 
 /**
- * toString
+ * toString.
  *
  * Utility function to print out some information about Currency instance.
+ *
  * @deprecated since version 7.10.2
+ *
+ * @param mixed $echo
  */
 function toString($echo = true)
 {
     LoggerManager::getLogger()->fatal('Wrong or incomplete implementation for currency to string convertation.');
 
-
-    $s = "\$m_currency_round=" . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
-     "\$m_currency_decimal=" . (isset($m_currency_decimal) ? $m_currency_decimal : null) . " \n" .
-     "\$m_currency_symbol=" . (isset($m_currency_symbol) ? $m_currency_symbol : null) . " \n" .
-     "\$m_currency_iso=" . (isset($m_currency_iso) ? $m_currency_iso : null) . " \n" .
-     "\$m_currency_name=" . (isset($m_currency_name) ? $m_currency_name : null) . " \n";
+    $s = '$m_currency_round=' . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
+     '$m_currency_decimal=' . (isset($m_currency_decimal) ? $m_currency_decimal : null) . " \n" .
+     '$m_currency_symbol=' . (isset($m_currency_symbol) ? $m_currency_symbol : null) . " \n" .
+     '$m_currency_iso=' . (isset($m_currency_iso) ? $m_currency_iso : null) . " \n" .
+     '$m_currency_name=' . (isset($m_currency_name) ? $m_currency_name : null) . " \n";
 
     if ($echo) {
         echo $s;
     }
+
     return $s;
 }
 
-function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='DetailView')
+function getCurrencyDropDown($focus, $field = 'currency_id', $value = '', $view = 'DetailView')
 {
     $view = ucfirst($view);
     if ($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate' || $view == 'ConvertLead') {
@@ -575,8 +594,8 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
                 $value = -99;
             }
         }
-        require_once('modules/Currencies/ListCurrency.php');
-        $currency_fields = array();
+        require_once 'modules/Currencies/ListCurrency.php';
+        $currency_fields = [];
         //Bug 18276 - Fix for php 5.1.6
 
         if (!isset($focus)) {
@@ -592,10 +611,9 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
             $defs = isset($focus->field_defs) ? $focus->field_defs : null;
         }
 
-        //
-        foreach ((array)$defs as $name=>$key) {
+        foreach ((array) $defs as $name => $key) {
             if ($key['type'] == 'currency') {
-                $currency_fields[]= $name;
+                $currency_fields[] = $name;
             }
         }
         $currency = new ListCurrency();
@@ -604,29 +622,31 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
         $currency->setCurrencyFields($currency_fields);
         $html = '<select name="';
         // If it's a lead conversion (ConvertLead view), add the module_name before the $field
-        if ($view == "ConvertLead") {
+        if ($view == 'ConvertLead') {
             $html .= $focus->module_name;
         }
-        $html .= $field. '" id="' . $field  . '_select" ';
+        $html .= $field . '" id="' . $field . '_select" ';
         if ($view != 'MassUpdate') {
             $html .= 'onchange="CurrencyConvertAll(this.form);"';
         }
-        $html .= '>'. $selectCurrency . '</select>';
+        $html .= '>' . $selectCurrency . '</select>';
         if ($view != 'MassUpdate') {
             $html .= $currency->getJavascript();
         }
+
         return $html;
     }
     $currency = new Currency();
     $currency->retrieve($value);
+
     return $currency->name;
 }
 
-function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $view='DetailView')
+function getCurrencyNameDropDown($focus, $field = 'currency_name', $value = '', $view = 'DetailView')
 {
     if ($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate') {
-        require_once('modules/Currencies/ListCurrency.php');
-        $currency_fields = array();
+        require_once 'modules/Currencies/ListCurrency.php';
+        $currency_fields = [];
         //Bug 18276 - Fix for php 5.1.6
 
         if (!isset($focus)) {
@@ -642,20 +662,20 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
             $defs = isset($focus->field_defs) ? $focus->field_defs : null;
         }
 
-        //
-        foreach ((array)$defs as $name=>$key) {
+        foreach ((array) $defs as $name => $key) {
             if ($key['type'] == 'currency') {
-                $currency_fields[]= $name;
+                $currency_fields[] = $name;
             }
         }
         $currency = new ListCurrency();
         $currency->lookupCurrencies();
-        $listitems = array();
+        $listitems = [];
         foreach ($currency->list as $item) {
             $listitems[$item->name] = $item->name;
         }
-        return '<select name="'.$field.'" id="'.$field.'" />'.
-            get_select_options_with_id($listitems, $value).'</select>';
+
+        return '<select name="' . $field . '" id="' . $field . '" />' .
+            get_select_options_with_id($listitems, $value) . '</select>';
     }
     $currency = new Currency();
     if (isset($focus->currency_id)) {
@@ -664,14 +684,15 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         $currency_id = -99;
     }
     $currency->retrieve($currency_id);
+
     return $currency->name;
 }
 
-function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $view='DetailView')
+function getCurrencySymbolDropDown($focus, $field = 'currency_name', $value = '', $view = 'DetailView')
 {
     if ($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate') {
-        require_once('modules/Currencies/ListCurrency.php');
-        $currency_fields = array();
+        require_once 'modules/Currencies/ListCurrency.php';
+        $currency_fields = [];
         //Bug 18276 - Fix for php 5.1.6
 
         if (!isset($focus)) {
@@ -687,20 +708,20 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
             $defs = isset($focus->field_defs) ? $focus->field_defs : null;
         }
 
-        //
-        foreach ((array)$defs as $name=>$key) {
+        foreach ((array) $defs as $name => $key) {
             if ($key['type'] == 'currency') {
-                $currency_fields[]= $name;
+                $currency_fields[] = $name;
             }
         }
         $currency = new ListCurrency();
         $currency->lookupCurrencies();
-        $listitems = array();
+        $listitems = [];
         foreach ($currency->list as $item) {
             $listitems[$item->symbol] = $item->symbol;
         }
-        return '<select name="'.$field.'" id="'.$field.'" />'.
-            get_select_options_with_id($listitems, $value).'</select>';
+
+        return '<select name="' . $field . '" id="' . $field . '" />' .
+            get_select_options_with_id($listitems, $value) . '</select>';
     }
     $currency = new Currency();
     if (isset($focus->currency_id)) {
@@ -709,5 +730,6 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         $currency_id = -99;
     }
     $currency->retrieve($currency_id);
+
     return $currency->name;
 }

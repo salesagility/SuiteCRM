@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,9 +47,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * LangTextTest
+ * LangTextTest.
  *
  * @author gyula
+ *
+ * @internal
  */
 class LangTextTest extends SuitePHPUnitFrameworkTestCase
 {
@@ -120,7 +121,6 @@ class LangTextTest extends SuitePHPUnitFrameworkTestCase
         $text = new LangText('LBL_TEST_MOD_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_ALL_STRINGS);
         $output = $text->getText();
         $this->assertEquals('test mod string bar baz', $output, 'Incorrect translation (6)');
-
 
         $text = new LangText();
         $output = $text->getText('LBL_TEST_APP_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_APP_STRINGS);

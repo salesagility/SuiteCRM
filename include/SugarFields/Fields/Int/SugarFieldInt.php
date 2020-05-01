@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,10 +37,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
-require_once('modules/Currencies/Currency.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
+require_once 'modules/Currencies/Currency.php';
 
 class SugarFieldInt extends SugarFieldBase
 {
@@ -53,7 +50,7 @@ class SugarFieldInt extends SugarFieldBase
         if ($rawField === '' || $rawField === null) {
             return '';
         }
-            
+
         return format_number($rawField, 0, 0);
     }
 
@@ -62,17 +59,19 @@ class SugarFieldInt extends SugarFieldBase
         if ($formattedField === '' || $formattedField === null) {
             return '';
         }
-        return (int)unformat_number($formattedField);
+
+        return (int) unformat_number($formattedField);
     }
 
     /**
-     * getSearchWhereValue
+     * getSearchWhereValue.
      *
      * Checks and returns a sane value based on the field type that can be used when building the where clause in a
      * search form.
      *
      * @param $value Mixed value being searched on
-     * @return Int the value for the where clause used in search
+     *
+     * @return int the value for the where clause used in search
      */
     public function getSearchWhereValue($value)
     {
@@ -91,11 +90,13 @@ class SugarFieldInt extends SugarFieldBase
                         $newVal .= $val;
                     }
                 }
+
                 return $newVal;
-            } else {
-                return -1;
             }
+
+            return -1;
         }
+
         return $newVal;
     }
 
@@ -110,7 +111,7 @@ class SugarFieldInt extends SugarFieldBase
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         if ($this->isRangeSearchView($vardef)) {
             $id = isset($displayParams['idName']) ? $displayParams['idName'] : $vardef['name'];
-            $this->ss->assign('original_id', (string)($id));
+            $this->ss->assign('original_id', (string) ($id));
             $this->ss->assign('id_range', "range_{$id}");
             $this->ss->assign('id_range_start', "start_range_{$id}");
             $this->ss->assign('id_range_end', "end_range_{$id}");
@@ -118,26 +119,31 @@ class SugarFieldInt extends SugarFieldBase
             if (file_exists('custom/include/SugarFields/Fields/Int/RangeSearchForm.tpl')) {
                 return $this->fetch('custom/include/SugarFields/Fields/Int/RangeSearchForm.tpl');
             }
+
             return $this->fetch('include/SugarFields/Fields/Int/RangeSearchForm.tpl');
         }
-    
+
         return $this->fetch($this->findTemplate('SearchForm'));
     }
-    
+
     /**
      * @see SugarFieldBase::importSanitize()
+     *
+     * @param mixed $value
+     * @param mixed $vardef
+     * @param mixed $focus
      */
     public function importSanitize(
         $value,
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
-        $value = str_replace($settings->num_grp_sep, "", $value);
-        if (!is_numeric($value) || strstr($value, ".")) {
+    ) {
+        $value = str_replace($settings->num_grp_sep, '', $value);
+        if (!is_numeric($value) || strstr($value, '.')) {
             return false;
         }
-        
+
         return $value;
     }
 }

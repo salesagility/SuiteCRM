@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['Scheduler'] = array('table' => 'schedulers',
-    'fields' => array(
-        'id' => array(
+$dictionary['Scheduler'] = ['table' => 'schedulers',
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_NAME',
             'type' => 'id',
@@ -51,8 +52,8 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'len' => 36,
             'required' => true,
             'reportable' => false,
-        ),
-        'deleted' => array(
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -60,20 +61,20 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'required' => false,
             'default' => '0',
             'reportable' => false,
-        ),
-        'date_entered' => array(
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'date_modified' => array(
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'created_by' => array(
+        ],
+        'created_by' => [
             'name' => 'created_by',
             'rname' => 'user_name',
             'id_name' => 'created_by',
@@ -83,8 +84,8 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'isnull' => false,
             'dbType' => 'id',
             'len' => 36,
-        ),
-        'created_by_link' => array(
+        ],
+        'created_by_link' => [
             'name' => 'created_by_link',
             'type' => 'link',
             'relationship' => 'schedulers_created_by_rel',
@@ -93,24 +94,23 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'module' => 'Users',
             'bean_name' => 'User',
             'source' => 'non-db',
-        ),
-        'created_by_name' =>
-          array(
+        ],
+        'created_by_name' => [
             'name' => 'created_by_name',
             'vname' => 'LBL_CREATED',
             'type' => 'relate',
-            'reportable'=>false,
+            'reportable' => false,
             'link' => 'created_by_link',
             'rname' => 'user_name',
-            'source'=>'non-db',
+            'source' => 'non-db',
             'table' => 'users',
             'id_name' => 'created_by',
-            'module'=>'Users',
-            'duplicate_merge'=>'disabled',
+            'module' => 'Users',
+            'duplicate_merge' => 'disabled',
             'importable' => 'false',
             'massupdate' => false,
-        ),
-        'modified_user_id' => array(
+        ],
+        'modified_user_id' => [
             'name' => 'modified_user_id',
             'rname' => 'user_name',
             'id_name' => 'modified_user_id',
@@ -121,8 +121,8 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'dbType' => 'id',
             'len' => '36',
             'reportable' => true,
-        ),
-        'modified_user_link' => array(
+        ],
+        'modified_user_link' => [
             'name' => 'modified_user_link',
             'type' => 'link',
             'relationship' => 'schedulers_modified_user_id_rel',
@@ -131,23 +131,22 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'module' => 'Users',
             'bean_name' => 'User',
             'source' => 'non-db',
-        ),
-        'modified_by_name' =>
-          array(
+        ],
+        'modified_by_name' => [
             'name' => 'modified_by_name',
             'vname' => 'LBL_MODIFIED_NAME',
             'type' => 'relate',
-            'reportable'=>false,
-            'source'=>'non-db',
-            'rname'=>'user_name',
+            'reportable' => false,
+            'source' => 'non-db',
+            'rname' => 'user_name',
             'table' => 'users',
             'id_name' => 'modified_user_id',
-            'module'=>'Users',
-            'link'=>'modified_user_link',
-            'duplicate_merge'=>'disabled',
+            'module' => 'Users',
+            'link' => 'modified_user_link',
+            'duplicate_merge' => 'disabled',
             'massupdate' => false,
-        ),
-        'name' => array(
+        ],
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'varchar',
@@ -155,16 +154,16 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'required' => true,
             'reportable' => false,
             'importable' => 'required',
-        ),
-        'job' => array(
+        ],
+        'job' => [
             'name' => 'job',
             'vname' => 'LBL_JOB',
             'type' => 'varchar',
             'len' => '255',
             'required' => true,
             'reportable' => false,
-        ),
-        'job_url' => array(
+        ],
+        'job_url' => [
             'name' => 'job_url',
             'vname' => 'LBL_JOB_URL',
             'type' => 'varchar',
@@ -173,18 +172,18 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'reportable' => false,
             'source' => 'non-db',
             'dependency' => 'equal($job_function, "url::")'
-        ),
-        'job_function' => array(
+        ],
+        'job_function' => [
             'name' => 'job_function',
             'vname' => 'LBL_JOB',
             'type' => 'enum',
-            'function' => array('name' => array('Scheduler', 'getJobsList'), 'params' => array()),
+            'function' => ['name' => ['Scheduler', 'getJobsList'], 'params' => []],
             'len' => '255',
             'required' => false,
             'reportable' => false,
             'source' => 'non-db',
-        ),
-        'date_time_start' => array(
+        ],
+        'date_time_start' => [
             'name' => 'date_time_start',
             'vname' => 'LBL_DATE_TIME_START',
             'type' => 'datetimecombo',
@@ -193,52 +192,52 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             //Previously Editview on scheduler assigned default value as $timedate->fromString('2005-01-01')
             //the bottom value follows previous default value.
             'display_default' => '2005/01/01'
-        ),
-        'date_time_end' => array(
+        ],
+        'date_time_end' => [
             'name' => 'date_time_end',
             'vname' => 'LBL_DATE_TIME_END',
             'type' => 'datetimecombo',
             'reportable' => false,
-        ),
-        'job_interval' => array(
+        ],
+        'job_interval' => [
             'name' => 'job_interval',
             'vname' => 'LBL_INTERVAL',
             'type' => 'varchar',
             'len' => '100',
             'required' => true,
             'reportable' => false,
-        ),
-        'adv_interval' => array(
+        ],
+        'adv_interval' => [
             'name' => 'adv_interval',
             'vname' => 'LBL_ADV_OPTIONS',
             'type' => 'bool',
             'required' => false,
             'reportable' => false,
             'source' => 'non-db',
-        ),
+        ],
 
-        'time_from' => array(
+        'time_from' => [
             'name' => 'time_from',
             'vname' => 'LBL_TIME_FROM',
             'type' => 'time',
             'required' => false,
             'reportable' => false,
-        ),
-        'time_to' => array(
+        ],
+        'time_to' => [
             'name' => 'time_to',
             'vname' => 'LBL_TIME_TO',
             'type' => 'time',
             'required' => false,
             'reportable' => false,
-        ),
-        'last_run' => array(
+        ],
+        'last_run' => [
             'name' => 'last_run',
             'vname' => 'LBL_LAST_RUN',
             'type' => 'datetime',
             'required' => false,
             'reportable' => false,
-        ),
-        'status' => array(
+        ],
+        'status' => [
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'enum',
@@ -247,8 +246,8 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'required' => false,
             'reportable' => false,
             'importable' => 'required',
-        ),
-        'catch_up' => array(
+        ],
+        'catch_up' => [
             'name' => 'catch_up',
             'vname' => 'LBL_CATCH_UP',
             'type' => 'bool',
@@ -256,63 +255,63 @@ $dictionary['Scheduler'] = array('table' => 'schedulers',
             'required' => false,
             'default' => '1',
             'reportable' => false,
-        ),
-        'schedulers_times' => array(
-            'name'			=> 'schedulers_times',
-            'vname'			=> 'LBL_SCHEDULER_TIMES',
-            'type'			=> 'link',
-            'relationship'	=> 'schedulers_jobs_rel',
-            'module'		=> 'SchedulersJobs',
-            'bean_name'		=> 'Scheduler',
-            'source'		=> 'non-db',
-        ),
-    ),
-    'indices' => array(
-        array(
-            'name' =>'schedulerspk',
-            'type' =>'primary',
-            'fields' => array(
+        ],
+        'schedulers_times' => [
+            'name' => 'schedulers_times',
+            'vname' => 'LBL_SCHEDULER_TIMES',
+            'type' => 'link',
+            'relationship' => 'schedulers_jobs_rel',
+            'module' => 'SchedulersJobs',
+            'bean_name' => 'Scheduler',
+            'source' => 'non-db',
+        ],
+    ],
+    'indices' => [
+        [
+            'name' => 'schedulerspk',
+            'type' => 'primary',
+            'fields' => [
                 'id'
-            )
-        ),
-        array(
-        'name' =>'idx_schedule',
-        'type'=>'index',
-        'fields' => array(
-            'date_time_start',
-            'deleted'
-            )
-        ),
-    ),
-    'relationships' => array(
-        'schedulers_created_by_rel' => array(
-            'lhs_module'		=> 'Users',
-            'lhs_table'			=> 'users',
-            'lhs_key'			=> 'id',
-            'rhs_module'		=> 'Schedulers',
-            'rhs_table'			=> 'schedulers',
-            'rhs_key'			=> 'created_by',
-            'relationship_type'	=> 'one-to-one'
-        ),
-        'schedulers_modified_user_id_rel' => array(
-            'lhs_module'		=> 'Users',
-            'lhs_table'			=> 'users',
-            'lhs_key'			=> 'id',
-            'rhs_module'		=> 'Schedulers',
-            'rhs_table'			=> 'schedulers',
-            'rhs_key'			=> 'modified_user_id',
-            'relationship_type'	=> 'one-to-many'
-        ),
-        'schedulers_jobs_rel' => array(
-            'lhs_module'					=> 'Schedulers',
-            'lhs_table'						=> 'schedulers',
-            'lhs_key' 						=> 'id',
-            'rhs_module'					=> 'SchedulersJobs',
-            'rhs_table'						=> 'job_queue',
-            'rhs_key' 						=> 'scheduler_id',
-            'relationship_type' 			=> 'one-to-many',
-        ),
-    )
-);
+            ]
+        ],
+        [
+            'name' => 'idx_schedule',
+            'type' => 'index',
+            'fields' => [
+                'date_time_start',
+                'deleted'
+            ]
+        ],
+    ],
+    'relationships' => [
+        'schedulers_created_by_rel' => [
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Schedulers',
+            'rhs_table' => 'schedulers',
+            'rhs_key' => 'created_by',
+            'relationship_type' => 'one-to-one'
+        ],
+        'schedulers_modified_user_id_rel' => [
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Schedulers',
+            'rhs_table' => 'schedulers',
+            'rhs_key' => 'modified_user_id',
+            'relationship_type' => 'one-to-many'
+        ],
+        'schedulers_jobs_rel' => [
+            'lhs_module' => 'Schedulers',
+            'lhs_table' => 'schedulers',
+            'lhs_key' => 'id',
+            'rhs_module' => 'SchedulersJobs',
+            'rhs_table' => 'job_queue',
+            'rhs_key' => 'scheduler_id',
+            'relationship_type' => 'one-to-many',
+        ],
+    ]
+];
 
 //VardefManager::createVardef('Schedulers','Scheduler', array('default'));

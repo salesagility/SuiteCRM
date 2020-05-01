@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,14 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-if (is_file("config.php")) {
+if (is_file('config.php')) {
     if (!empty($sugar_config['default_theme'])) {
         $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
     }
@@ -82,16 +80,16 @@ if (is_file("config.php")) {
     }
     if (!empty($sugar_config['languages'])) {
         // We need to encode the languages in a way that can be retrieved later.
-        $language_keys = array();
-        $language_values = array();
+        $language_keys = [];
+        $language_values = [];
 
-        foreach ($sugar_config['languages'] as $key=>$value) {
+        foreach ($sugar_config['languages'] as $key => $value) {
             $language_keys[] = $key;
             $language_values[] = $value;
         }
 
-        $_SESSION['language_keys'] = urlencode(implode(",", $language_keys));
-        $_SESSION['language_values'] = urlencode(implode(",", $language_values));
+        $_SESSION['language_keys'] = urlencode(implode(',', $language_keys));
+        $_SESSION['language_values'] = urlencode(implode(',', $language_values));
     }
 }
 
@@ -99,15 +97,14 @@ if (is_file("config.php")) {
 $errors = '';
 if (isset($validation_errors) && is_array($validation_errors)) {
     if (count($validation_errors) > 0) {
-        $errors  = '<div id="errorMsgs">';
-        $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
+        $errors = '<div id="errorMsgs">';
+        $errors .= '<p>' . $mod_strings['LBL_SITECFG_FIX_ERRORS'] . '</p><ul>';
         foreach ($validation_errors as $error) {
             $errors .= '<li>' . $error . '</li>';
         }
         $errors .= '</ul></div>';
     }
 }
-
 
 ////	ternaries
 $sugarUpdates = (isset($_SESSION['setup_site_sugarbeet']) && !empty($_SESSION['setup_site_sugarbeet'])) ? 'checked="checked"' : '';
@@ -119,7 +116,7 @@ $customId = (isset($_SESSION['setup_site_specify_guid']) && !empty($_SESSION['se
 ///////////////////////////////////////////////////////////////////////////////
 ////	START OUTPUT
 $langHeader = get_language_header();
-$out =<<<EOQ
+$out = <<<EOQ
 <!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
@@ -154,8 +151,8 @@ $out =<<<EOQ
 EOQ;
 
 //hide this in typical mode
-if (!empty($_SESSION['install_type'])  && strtolower($_SESSION['install_type'])=='custom') {
-    $out .=<<<EOQ
+if (!empty($_SESSION['install_type']) && strtolower($_SESSION['install_type']) == 'custom') {
+    $out .= <<<EOQ
 <div class='install_block'>
     {$mod_strings['LBL_SITECFG_URL_MSG']}
     <span class="required">*</span>
@@ -168,7 +165,7 @@ if (!empty($_SESSION['install_type'])  && strtolower($_SESSION['install_type'])=
 </div>
 EOQ;
     $db = getDbConnection();
-    if ($db->supports("collation")) {
+    if ($db->supports('collation')) {
         $collationOptions = $db->getCollationList();
     }
     if (!empty($collationOptions)) {
@@ -178,18 +175,18 @@ EOQ;
             $default = $db->getDefaultCollation();
         }
         $options = get_select_options_with_id(array_combine($collationOptions, $collationOptions), $default);
-        $out .=<<<EOQ
+        $out .= <<<EOQ
      <div class='install_block'>
         <br>{$mod_strings['LBL_SITECFG_COLLATION_MSG']}
         <span class="required">*</span>
         <label><b>{$mod_strings['LBL_COLLATION']}</b></label>
-        <select name="setup_db_collation" id="setup_db_collation">$options</select><br>
+        <select name="setup_db_collation" id="setup_db_collation">{$options}</select><br>
      </div>
 EOQ;
     }
 }
 
-$out .=<<<EOQ
+$out .= <<<EOQ
 <div class='install_block'>
     <p>{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
     <label><b>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></b></label>

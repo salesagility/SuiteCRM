@@ -1,6 +1,6 @@
 <?php
 /**
- * Stub for certain interactions;
+ * Stub for certain interactions;.
  */
 class temp
 {

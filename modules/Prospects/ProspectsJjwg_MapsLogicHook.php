@@ -13,9 +13,6 @@ class ProspectsJjwg_MapsLogicHook
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }
 
-
-
-
     public function updateGeocodeInfo(&$bean, $event, $arguments)
     {
         // before_save

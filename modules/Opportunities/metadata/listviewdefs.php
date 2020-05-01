@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,77 +42,74 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$listViewDefs['Opportunities'] = array(
-    'NAME' => array(
-        'width'   => '30',
-        'label'   => 'LBL_LIST_OPPORTUNITY_NAME',
-        'link'    => true,
-        'default' => true),
-    'ACCOUNT_NAME' => array(
-        'width'   => '20',
-        'label'   => 'LBL_LIST_ACCOUNT_NAME',
-        'id'      => 'ACCOUNT_ID',
-        'module'  => 'Accounts',
-        'link'    => true,
+$listViewDefs['Opportunities'] = [
+    'NAME' => [
+        'width' => '30',
+        'label' => 'LBL_LIST_OPPORTUNITY_NAME',
+        'link' => true,
+        'default' => true],
+    'ACCOUNT_NAME' => [
+        'width' => '20',
+        'label' => 'LBL_LIST_ACCOUNT_NAME',
+        'id' => 'ACCOUNT_ID',
+        'module' => 'Accounts',
+        'link' => true,
         'default' => true,
-        'sortable'=> true,
+        'sortable' => true,
         'ACLTag' => 'ACCOUNT',
-        'contextMenu' => array('objectType' => 'sugarAccount',
-                               'metaData' => array('return_module' => 'Contacts',
-                                                   'return_action' => 'ListView',
-                                                   'module' => 'Accounts',
-                                                   'return_action' => 'ListView',
-                                                   'parent_id' => '{$ACCOUNT_ID}',
-                                                   'parent_name' => '{$ACCOUNT_NAME}',
-                                                   'account_id' => '{$ACCOUNT_ID}',
-                                                   'account_name' => '{$ACCOUNT_NAME}',
-                                                   ),
-                              ),
-        'related_fields' => array('account_id')),
-    'SALES_STAGE' => array(
-        'width'   => '10',
-        'label'   => 'LBL_LIST_SALES_STAGE',
-        'default' => true),
-    'AMOUNT_USDOLLAR' => array(
-        'width'   => '10',
-        'label'   => 'LBL_LIST_AMOUNT_USDOLLAR',
-        'align'   => 'right',
+        'contextMenu' => ['objectType' => 'sugarAccount',
+            'metaData' => ['return_module' => 'Contacts',
+                'return_action' => 'ListView',
+                'module' => 'Accounts',
+                'return_action' => 'ListView',
+                'parent_id' => '{$ACCOUNT_ID}',
+                'parent_name' => '{$ACCOUNT_NAME}',
+                'account_id' => '{$ACCOUNT_ID}',
+                'account_name' => '{$ACCOUNT_NAME}',
+            ],
+        ],
+        'related_fields' => ['account_id']],
+    'SALES_STAGE' => [
+        'width' => '10',
+        'label' => 'LBL_LIST_SALES_STAGE',
+        'default' => true],
+    'AMOUNT_USDOLLAR' => [
+        'width' => '10',
+        'label' => 'LBL_LIST_AMOUNT_USDOLLAR',
+        'align' => 'right',
         'default' => true,
         'currency_format' => true,
-    ),
-    'OPPORTUNITY_TYPE' => array(
+    ],
+    'OPPORTUNITY_TYPE' => [
         'width' => '15',
-        'label' => 'LBL_TYPE'),
-    'LEAD_SOURCE' => array(
+        'label' => 'LBL_TYPE'],
+    'LEAD_SOURCE' => [
         'width' => '15',
-        'label' => 'LBL_LEAD_SOURCE'),
-    'NEXT_STEP' => array(
+        'label' => 'LBL_LEAD_SOURCE'],
+    'NEXT_STEP' => [
         'width' => '10',
-        'label' => 'LBL_NEXT_STEP'),
-    'PROBABILITY' => array(
+        'label' => 'LBL_NEXT_STEP'],
+    'PROBABILITY' => [
         'width' => '10',
-        'label' => 'LBL_PROBABILITY'),
-    'DATE_CLOSED' => array(
+        'label' => 'LBL_PROBABILITY'],
+    'DATE_CLOSED' => [
         'width' => '10',
         'label' => 'LBL_LIST_DATE_CLOSED',
-        'default' => true),
-    'CREATED_BY_NAME' => array(
+        'default' => true],
+    'CREATED_BY_NAME' => [
         'width' => '10',
-        'label' => 'LBL_CREATED'),
-    'ASSIGNED_USER_NAME' => array(
+        'label' => 'LBL_CREATED'],
+    'ASSIGNED_USER_NAME' => [
         'width' => '5',
         'label' => 'LBL_LIST_ASSIGNED_USER',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-    'MODIFIED_BY_NAME' => array(
+        'default' => true],
+    'MODIFIED_BY_NAME' => [
         'width' => '5',
-        'label' => 'LBL_MODIFIED'),
-    'DATE_ENTERED' => array(
+        'label' => 'LBL_MODIFIED'],
+    'DATE_ENTERED' => [
         'width' => '10',
         'label' => 'LBL_DATE_ENTERED',
-        'default' => true)
-);
+        'default' => true]
+];

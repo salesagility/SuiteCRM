@@ -2,22 +2,22 @@
 
 namespace Page;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class FileModule
 {
     /**
-     * @var string $URL include url of current page
+     * @var string include url of current page
      */
     public static $URL = 'index.php?module=Test_FileModule&action=index';
 
     /**
-     * @var string $NAME
+     * @var string
      */
     public static $PACKAGE_NAME = 'FileTestModule';
 
     /**
-     * @var string $NAME
+     * @var string
      */
     public static $NAME = 'FileTestModule';
 
@@ -28,6 +28,7 @@ class FileModule
 
     /**
      * FileModule constructor.
+     *
      * @param Tester $I
      */
     public function __construct(Tester $I)

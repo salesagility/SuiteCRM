@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -49,8 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Class ApiException
- * @package SuiteCRM\API\v8\Exception
+ * Class ApiException.
  */
 class ApiException extends LangException
 {
@@ -58,39 +56,36 @@ class ApiException extends LangException
     const DEFAULT_CODE = 8000;
     const HTTP_STATUS = 500;
     const DETAIL_TEXT_LABEL = 'LBL_API_EXCEPTION_DETAIL';
-    
+
     /**
-     *
      * @var array
      */
     protected $source = ['pointer' => null, 'parameter' => null];
-    
+
     /**
-     *
      * @var LangText
      */
     protected $detail;
 
     /**
-     *
      * @param string $message
-     * @param integer $code
+     * @param int $code
      * @param \Exception $previous
      * @param LangText $langMessage
      */
-    public function __construct($message = "", $code = 0, \Exception $previous = null, LangText $langMessage = null)
+    public function __construct($message = '', $code = 0, \Exception $previous = null, LangText $langMessage = null)
     {
         parent::__construct((self::MSG_PREFIX === $this::MSG_PREFIX ? $this::MSG_PREFIX : self::MSG_PREFIX . ' ' . $this::MSG_PREFIX) . ' ' . $message, $code ? $code : self::DEFAULT_CODE, $previous, $langMessage);
     }
 
     /**
-     * Gives addition details to what caused the exception
+     * Gives addition details to what caused the exception.
+     *
      * @return LangText
      */
     public function getDetail()
     {
-        $text = $this->detail ? $this->detail : new LangText($this::DETAIL_TEXT_LABEL);
-        return $text;
+        return $this->detail ? $this->detail : new LangText($this::DETAIL_TEXT_LABEL);
     }
 
     /**
@@ -100,7 +95,7 @@ class ApiException extends LangException
     {
         $this->detail = $detail;
     }
-    
+
     /**
      * @param array|string $source
      */
@@ -111,9 +106,8 @@ class ApiException extends LangException
         }
         $this->source = $source;
     }
-    
+
     /**
-     *
      * @return array
      */
     public function getSource()

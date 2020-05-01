@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,13 +37,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-require_once('modules/Documents/DocumentPopupPicker.php');
+require_once 'modules/Documents/DocumentPopupPicker.php';
 $popup = new DocumentPopupPicker();
 
 global $theme;
@@ -61,7 +58,7 @@ $where = '';
 $where = $popup->_get_where_clause();
 
 // We can't attach remote documents to emails because we can't necessarialy fetch a copy of them to include.
-if (! empty($where)) {
+if (!empty($where)) {
     $where .= ' AND ';
 }
 $where .= "documents.doc_type IN ( '', 'Sugar')";
@@ -77,16 +74,16 @@ $document_revision_id = empty($_REQUEST['document_revision_id']) ? '' : $_REQUES
 //$request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
 
 $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
-$button  = "<form action='index.php' method='post' name='form' id='form'>\n";
+$button = "<form action='index.php' method='post' name='form' id='form'>\n";
 if (!$hide_clear_button) {
     $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-        .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-        .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+        . $app_strings['LBL_CLEAR_BUTTON_TITLE'] . "' value='  "
+        . $app_strings['LBL_CLEAR_BUTTON_LABEL'] . "  ' />\n";
 }
 $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-    .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-    .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-    .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+    . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' accesskey='"
+    . $app_strings['LBL_CANCEL_BUTTON_KEY'] . "' value='  "
+    . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  ' />\n";
 $button .= "</form>\n";
 
 $form = new XTemplate('modules/Emails/PopupDocuments.html');
@@ -104,10 +101,10 @@ if (isset($_REQUEST['target'])) {
 $form->assign('DOCUMENT_REVISION_ID', $document_revision_id);
 
 //$form->assign('request_data', $request_data);
-$form->assign("CATEGORY_OPTIONS", get_select_options_with_id($app_list_strings['document_category_dom'], $category_id));
-$form->assign("SUB_CATEGORY_OPTIONS", get_select_options_with_id($app_list_strings['document_subcategory_dom'], $subcategory_id));
-$form->assign("IS_TEMPLATE_OPTIONS", get_select_options_with_id($app_list_strings['checkbox_dom'], $is_template));
-$form->assign("TEMPLATE_TYPE_OPTIONS", get_select_options_with_id($app_list_strings['document_template_type_dom'], $template_type));
+$form->assign('CATEGORY_OPTIONS', get_select_options_with_id($app_list_strings['document_category_dom'], $category_id));
+$form->assign('SUB_CATEGORY_OPTIONS', get_select_options_with_id($app_list_strings['document_subcategory_dom'], $subcategory_id));
+$form->assign('IS_TEMPLATE_OPTIONS', get_select_options_with_id($app_list_strings['checkbox_dom'], $is_template));
+$form->assign('TEMPLATE_TYPE_OPTIONS', get_select_options_with_id($app_list_strings['document_template_type_dom'], $template_type));
 
 ob_start();
 insert_popup_header($theme);

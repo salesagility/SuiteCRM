@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,16 +44,16 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByIdFilterInterpreter;
 use SuiteCRM\Exception\Exception;
 
 /**
- * Class ByIdFilter
- * @package SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters
+ * Class ByIdFilter.
  */
 class ByIdFilter implements ByIdFilterInterpreter
 {
-    /** @var ContainerInterface $containers */
+    /** @var ContainerInterface */
     private $containers;
 
     /**
      * ByIdFilter constructor.
+     *
      * @param ContainerInterface $containers
      */
     public function __construct(ContainerInterface $containers)
@@ -64,8 +63,10 @@ class ByIdFilter implements ByIdFilterInterpreter
 
     /**
      * @param array $filterStructure
-     * @return string
+     *
      * @throws \SuiteCRM\Exception\Exception
+     *
+     * @return string
      */
     public function getByIdFilter(array $filterStructure)
     {
@@ -77,7 +78,7 @@ class ByIdFilter implements ByIdFilterInterpreter
 
         /** @var \DBManager $databaseManager */
         $databaseManager = $this->containers->get('DatabaseManager');
-        $idFilter = array();
+        $idFilter = [];
         /** @var array $identifiers */
         $identifiers = $filterStructure['[id]'];
         foreach ($identifiers as $id) {
@@ -85,11 +86,9 @@ class ByIdFilter implements ByIdFilterInterpreter
                 continue;
             }
 
-            $idFilter[] = '"'. $databaseManager->quote($id) .'"';
+            $idFilter[] = '"' . $databaseManager->quote($id) . '"';
         }
 
-        $filter = 'id IN ('. implode(',', $idFilter) .')';
-
-        return $filter;
+        return 'id IN (' . implode(',', $idFilter) . ')';
     }
 }

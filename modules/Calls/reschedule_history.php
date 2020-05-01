@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/Calls_Reschedule/Calls_Reschedule.php');
+require_once 'modules/Calls_Reschedule/Calls_Reschedule.php';
 
 function reschedule_history($focus, $field, $value, $view)
 {
@@ -48,16 +46,16 @@ function reschedule_history($focus, $field, $value, $view)
         $html = '';
         $html .= '<ul id="history_list">';
 
-        $query = "SELECT calls_reschedule.id FROM calls_reschedule JOIN users ON calls_reschedule.modified_user_id = users.id WHERE call_id='".$focus->id."' ORDER BY calls_reschedule.date_entered DESC";
-        
+        $query = "SELECT calls_reschedule.id FROM calls_reschedule JOIN users ON calls_reschedule.modified_user_id = users.id WHERE call_id='" . $focus->id . "' ORDER BY calls_reschedule.date_entered DESC";
+
         $result = $focus->db->query($query);
-        
+
         $reschedule = new Calls_Reschedule();
 
         while ($row = $focus->db->fetchByAssoc($result)) {
             $reschedule->retrieve($row['id']);
-                       
-            $html .= '<li>'.$app_list_strings["call_reschedule_dom"][$reschedule->reason].' - '.$reschedule->date_entered.' by '.$reschedule->created_by_name.'</li>';
+
+            $html .= '<li>' . $app_list_strings['call_reschedule_dom'][$reschedule->reason] . ' - ' . $reschedule->date_entered . ' by ' . $reschedule->created_by_name . '</li>';
         }
 
         $html .= '</ul>';
@@ -68,7 +66,7 @@ function reschedule_history($focus, $field, $value, $view)
 
 function reschedule_count($focus, $field, $value, $view)
 {
-    $query = "SELECT COUNT(*) FROM calls_reschedule WHERE call_id='".$focus->id."'";
+    $query = "SELECT COUNT(*) FROM calls_reschedule WHERE call_id='" . $focus->id . "'";
     $result = $focus->db->getOne($query);
 
     $focus->reschedule_count = $result;

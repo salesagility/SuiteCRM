@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Interface SuiteEditorInterface
+ * Interface SuiteEditorInterface.
  *
  * each editor based on same interface to use all of it in same way
  */
@@ -51,14 +49,14 @@ interface SuiteEditorInterface
 {
     /**
      * use this method after the constructor to tell
-     * the settings that apply on editor connector
+     * the settings that apply on editor connector.
      *
      * @param SuiteEditorSettings $settings (optional) preferred an associative array or object
      */
     public function setup(SuiteEditorSettings $settings = null);
 
     /**
-     * generate an output which contains the editor
+     * generate an output which contains the editor.
      *
      * @return string (html output)
      */

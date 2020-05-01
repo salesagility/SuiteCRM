@@ -7,7 +7,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Class SearchQuery
+ * Class SearchQuery.
  *
  * The current format is the following:
  *
@@ -24,6 +24,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @see    fromString()
  * @see    fromArray()
+ *
  * @author Vittorio Iocolano
  */
 class SearchQuery implements \JsonSerializable
@@ -45,11 +46,11 @@ class SearchQuery implements \JsonSerializable
      * SearchQuery constructor.
      *
      * @param string      $searchString Search query
-     * @param string|null $engine       Name of the search engine to use. `null` will use the default as specified by
+     * @param null|string $engine       Name of the search engine to use. `null` will use the default as specified by
      *                                  the config
      * @param int         $size         Number of results
      * @param int         $from         Offset of the search. Used for pagination
-     * @param array       $options      [optional] used for additional options by SearchEngines.
+     * @param array       $options      [optional] used for additional options by SearchEngines
      */
     private function __construct($searchString, $engine = null, $size = null, $from = 0, array $options = [])
     {
@@ -65,11 +66,11 @@ class SearchQuery implements \JsonSerializable
      *
      * `$size` and `$from` are for pagination.
      *
-     * @param string      $searchString A string containing the search query.
+     * @param string      $searchString a string containing the search query
      * @param int         $size         The number of results
      * @param int         $from         The results offset (for pagination)
-     * @param string|null $engine       Name of the search engine to use. Use default if `null`
-     * @param array|null  $options      Array with options (optional)
+     * @param null|string $engine       Name of the search engine to use. Use default if `null`
+     * @param null|array  $options      Array with options (optional)
      *
      * @return SearchQuery a fully built query
      */
@@ -84,7 +85,7 @@ class SearchQuery implements \JsonSerializable
      * - search-query-string
      * - search-engine
      * - search-query-size
-     * - search-query-from
+     * - search-query-from.
      *
      * @param array $request
      *
@@ -117,36 +118,12 @@ class SearchQuery implements \JsonSerializable
      * Makes a Query from a GET request.
      *
      * @see fromRequestArray
+     *
      * @return SearchQuery
      */
     public static function fromGetRequest()
     {
         return self::fromRequestArray($_GET);
-    }
-
-    /**
-     * Validates and filters values from an array.
-     *
-     * @param array       $array   The array to filter
-     * @param string      $key     The key of the array to load
-     * @param mixed       $default The default value in case the array value is empty
-     * @param null|string $filter  Optional filter to be used. e.g. FILTER_SANITIZE_STRING
-     *
-     * @return mixed
-     */
-    private static function filterArray(array $array, $key, $default, $filter = null)
-    {
-        if (!isset($array[$key])) {
-            return $default;
-        }
-
-        $value = filter_var($array[$key], $filter);
-
-        if ($value === false) {
-            return $default;
-        }
-
-        return $value;
     }
 
     /**
@@ -156,7 +133,7 @@ class SearchQuery implements \JsonSerializable
      */
     public function getFrom()
     {
-        return (int)$this->from;
+        return (int) $this->from;
     }
 
     /**
@@ -166,14 +143,15 @@ class SearchQuery implements \JsonSerializable
      */
     public function getSize()
     {
-        if ((int)$this->size < 0) {
+        if ((int) $this->size < 0) {
             $this->size = 1;
         }
-        return (int)$this->size;
+
+        return (int) $this->size;
     }
 
     /**
-     * Get the default Search size by checking the config or falling back to Constant value
+     * Get the default Search size by checking the config or falling back to Constant value.
      *
      * @return int
      */
@@ -181,11 +159,11 @@ class SearchQuery implements \JsonSerializable
     {
         global $sugar_config;
 
-        if(isset($sugar_config['search']['query_size'])){
+        if (isset($sugar_config['search']['query_size'])) {
             return (int) $sugar_config['search']['query_size'];
         }
 
-        if(isset($sugar_config['search']['pagination']['min'])){
+        if (isset($sugar_config['search']['pagination']['min'])) {
             return (int) $sugar_config['search']['pagination']['min'];
         }
 
@@ -291,7 +269,7 @@ class SearchQuery implements \JsonSerializable
         $this->query = mb_convert_encoding($this->query, 'UTF-8', 'HTML-ENTITIES');
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function jsonSerialize()
     {
         return [
@@ -301,5 +279,30 @@ class SearchQuery implements \JsonSerializable
             'engine' => $this->engine,
             'options' => $this->options,
         ];
+    }
+
+    /**
+     * Validates and filters values from an array.
+     *
+     * @param array       $array   The array to filter
+     * @param string      $key     The key of the array to load
+     * @param mixed       $default The default value in case the array value is empty
+     * @param null|string $filter  Optional filter to be used. e.g. FILTER_SANITIZE_STRING
+     *
+     * @return mixed
+     */
+    private static function filterArray(array $array, $key, $default, $filter = null)
+    {
+        if (!isset($array[$key])) {
+            return $default;
+        }
+
+        $value = filter_var($array[$key], $filter);
+
+        if ($value === false) {
+            return $default;
+        }
+
+        return $value;
     }
 }

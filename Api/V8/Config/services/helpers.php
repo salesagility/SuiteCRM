@@ -1,11 +1,10 @@
 <?php
 
+use Api\Core\Loader\CustomLoader;
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Helper;
 use Api\V8\JsonApi\Helper as ApiHelper;
 use Psr\Container\ContainerInterface as Container;
-
-use Api\Core\Loader\CustomLoader;
 
 return CustomLoader::mergeCustomArray([
     Helper\VarDefHelper::class => function () {

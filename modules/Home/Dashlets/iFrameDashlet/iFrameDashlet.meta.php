@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,12 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- 
 global $app_strings;
 
-$dashletMeta['iFrameDashlet'] = array('module'		=> 'Home',
-                                      'titleLabel'	=> 'LBL_DASHLET_TITLE',
-                                      'title'		=> 'LBL_DASHLET_TITLE',
-                                      'description' => 'A customizeable portal page',
-                                      'icon'        => '',
-                                      'category'    => 'Web');
+$dashletMeta['iFrameDashlet'] = ['module' => 'Home',
+    'titleLabel' => 'LBL_DASHLET_TITLE',
+    'title' => 'LBL_DASHLET_TITLE',
+    'description' => 'A customizeable portal page',
+    'icon' => '',
+    'category' => 'Web'];

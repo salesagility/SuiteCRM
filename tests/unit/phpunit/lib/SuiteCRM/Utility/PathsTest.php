@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class PathsTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -10,11 +13,11 @@ class PathsTest extends SuitePHPUnitFrameworkTestCase
     protected $tester;
 
     /**
-     * @var \SuiteCRM\Utility\Paths $paths
+     * @var \SuiteCRM\Utility\Paths
      */
     private static $paths;
 
-    /**#
+    /*#
      * @var string $projectPath
      */
     private static $projectPath;
@@ -33,21 +36,21 @@ class PathsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetProjectPath()
     {
-        $expected =  self::$projectPath;
+        $expected = self::$projectPath;
         $actual = self::$paths->getProjectPath();
         $this->assertEquals($expected, $actual);
     }
 
     public function testGetLibraryPath()
     {
-        $expected =  self::$projectPath.'/lib';
+        $expected = self::$projectPath . '/lib';
         $actual = self::$paths->getLibraryPath();
         $this->assertEquals($expected, $actual);
     }
 
     public function testGetContainersPath()
     {
-        $expected =  self::$projectPath.'/lib/API/core/containers.php';
+        $expected = self::$projectPath . '/lib/API/core/containers.php';
         $actual = self::$paths->getContainersFilePath();
         $this->assertEquals($expected, $actual);
     }

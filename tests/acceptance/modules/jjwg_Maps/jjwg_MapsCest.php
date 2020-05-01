@@ -5,12 +5,12 @@ use Faker\Generator;
 class jjwg_MapsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class jjwg_MapsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the maps module.
+     * As an administrator I want to view the maps module
      */
     public function testScenarioViewMapsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the maps module for testing');
 
@@ -55,14 +55,14 @@ class jjwg_MapsCest
      * @param \Step\Acceptance\AccountsTester $accounts
      *
      * As administrative user I want to create a map so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateMap(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Maps $map,
-        \Step\Acceptance\AccountsTester $accounts
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Maps $map,
+        Step\Acceptance\AccountsTester $accounts
     ) {
         $I->wantTo('Create a Map');
 
@@ -73,7 +73,7 @@ class jjwg_MapsCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $account_name = 'Test_'. $this->fakeData->company();
+        $account_name = 'Test_' . $this->fakeData->company();
         $accounts->createAccount($account_name);
 
         // Navigate to maps list-view
@@ -82,7 +82,7 @@ class jjwg_MapsCest
 
         // Create map
         $this->fakeData->seed($this->fakeDataSeed);
-        $name = 'Test_'. $this->fakeData->company();
+        $name = 'Test_' . $this->fakeData->company();
         $map->createMap($name, $account_name);
 
         // Delete map

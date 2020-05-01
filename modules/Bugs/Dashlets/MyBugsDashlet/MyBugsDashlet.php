@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,19 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-require_once('include/Dashlets/DashletGeneric.php');
-
+require_once 'include/Dashlets/DashletGeneric.php';
 
 class MyBugsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/Bugs/Dashlets/MyBugsDashlet/MyBugsDashlet.data.php');
+        require 'modules/Bugs/Dashlets/MyBugsDashlet/MyBugsDashlet.data.php';
 
         parent::__construct($id, $def);
 
@@ -65,9 +60,6 @@ class MyBugsDashlet extends DashletGeneric
         $this->seedBean = new Bug();
     }
 
-
-
-
     public function displayOptions()
     {
         $this->processDisplayOptions();
@@ -76,16 +68,17 @@ class MyBugsDashlet extends DashletGeneric
 
         if (!empty($this->searchFields['fixed_in_release'])) {
             $this->currentSearchFields['fixed_in_release']['input'] = '<select multiple="true" size="3" name="fixed_in_release[]">'
-                                                                      . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['fixed_in_release']) ? '' : $this->filters['fixed_in_release']))
+                                                                      . get_select_options_with_id($seedRelease->get_releases(false, 'Active'), (empty($this->filters['fixed_in_release']) ? '' : $this->filters['fixed_in_release']))
                                                                       . '</select>';
         }
 
         if (!empty($this->searchFields['found_in_release'])) {
             $this->currentSearchFields['found_in_release']['input'] = '<select multiple="true" size="3" name="found_in_release[]">'
-                                                                      . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['found_in_release']) ? '' : $this->filters['found_in_release']))
+                                                                      . get_select_options_with_id($seedRelease->get_releases(false, 'Active'), (empty($this->filters['found_in_release']) ? '' : $this->filters['found_in_release']))
                                                                       . '</select>';
         }
         $this->configureSS->assign('searchFields', $this->currentSearchFields);
+
         return $this->configureSS->fetch($this->configureTpl);
     }
 }

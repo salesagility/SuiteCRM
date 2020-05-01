@@ -1,21 +1,20 @@
 <?php
 
-$layout_defs['Delegates'] = array(
+$layout_defs['Delegates'] = [
     // default subpanel provided by this SugarBean
-    'default_subpanel_define' => array(
+    'default_subpanel_define' => [
         'subpanel_title' => 'LBL_DEFAULT_SUBPANEL_TITLE',
-        'top_buttons' => array(
+        'top_buttons' => [
             //array('widget_class' => 'SubPanelTopCreateNoteButton'),
-            array('widget_class' => 'SubPanelTopArchiveEmailButton'),
-            array('widget_class' => 'SubPanelTopSummaryButton'),
-        ),
-        
-//TODO try and merge with the activities
-        'list_fields' => array(
-            'Contacts' => array(
-                'columns' => array(
-                    'checkbox' =>
-                      array(
+            ['widget_class' => 'SubPanelTopArchiveEmailButton'],
+            ['widget_class' => 'SubPanelTopSummaryButton'],
+        ],
+
+        //TODO try and merge with the activities
+        'list_fields' => [
+            'Contacts' => [
+                'columns' => [
+                    'checkbox' => [
                         'vname' => '<ul id="selectLinkTop" class="clickMenu selectmenu SugarActionMenu" name="">
 					                    <li class="sugar_action_button">
 					                      <input class="checkallContacts" class="checkbox massall" type="checkbox" name="checkallContacts" style="float: left;margin: 2px 0 0 2px;" onclick="">
@@ -33,9 +32,8 @@ $layout_defs['Delegates'] = array(
                         'width' => '5%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                    'name' =>
-                      array(
+                    ],
+                    'name' => [
                         'name' => 'name',
                         'vname' => 'LBL_LIST_NAME',
                         'sort_by' => 'last_name',
@@ -44,9 +42,8 @@ $layout_defs['Delegates'] = array(
                         'module' => 'Contacts',
                         'width' => '23%',
                         'default' => true,
-                      ),
-                      'account_name' =>
-                      array(
+                    ],
+                    'account_name' => [
                         'name' => 'account_name',
                         'module' => 'Accounts',
                         'target_record_key' => 'account_id',
@@ -56,51 +53,46 @@ $layout_defs['Delegates'] = array(
                         'width' => '22%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                    'phone_work' =>
-                      array(
+                    ],
+                    'phone_work' => [
                         'name' => 'phone_work',
                         'vname' => 'LBL_LIST_PHONE',
                         'width' => '15%',
                         'default' => true,
-                      ),
-                      'email1' =>
-                      array(
+                    ],
+                    'email1' => [
                         'name' => 'email1',
                         'vname' => 'LBL_LIST_EMAIL',
                         'widget_class' => 'SubPanelEmailLink',
                         'width' => '20%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                      'event_status_name' =>
-                      array(
+                    ],
+                    'event_status_name' => [
                         'vname' => 'LBL_STATUS_EVENT',
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                      'event_accept_status' =>
-                      array(
+                    ],
+                    'event_accept_status' => [
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
                         'vname' => 'LBL_ACCEPT_STATUS',
-                      ),
-                ),
-                /*'where' => "(meetings.status='Held' OR meetings.status='Not Held')", */
+                    ],
+                ],
+                // 'where' => "(meetings.status='Held' OR meetings.status='Not Held')",
                 'order_by' => 'date_entered.date_modified',
-            ),
-            'Leads' => array(
-                'columns' => array(
-                    array(
+            ],
+            'Leads' => [
+                'columns' => [
+                    [
                         'name' => 'nothing',
                         'widget_class' => 'SubPanelIcon',
                         'module' => 'Emails',
                         'width' => '2%',
-                    ),
-                    'name' =>
-                      array(
+                    ],
+                    'name' => [
                         'name' => 'name',
                         'vname' => 'LBL_LIST_NAME',
                         'sort_by' => 'last_name',
@@ -109,9 +101,8 @@ $layout_defs['Delegates'] = array(
                         'module' => 'Contacts',
                         'width' => '23%',
                         'default' => true,
-                      ),
-                      'account_name' =>
-                      array(
+                    ],
+                    'account_name' => [
                         'name' => 'account_name',
                         'module' => 'Accounts',
                         'target_record_key' => 'account_id',
@@ -121,45 +112,40 @@ $layout_defs['Delegates'] = array(
                         'width' => '22%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                    'phone_work' =>
-                      array(
+                    ],
+                    'phone_work' => [
                         'name' => 'phone_work',
                         'vname' => 'LBL_LIST_PHONE',
                         'width' => '15%',
                         'default' => true,
-                      ),
-                      'email1' =>
-                      array(
+                    ],
+                    'email1' => [
                         'name' => 'email1',
                         'vname' => 'LBL_LIST_EMAIL',
                         'widget_class' => 'SubPanelEmailLink',
                         'width' => '20%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                      'event_status_name' =>
-                      array(
+                    ],
+                    'event_status_name' => [
                         'vname' => 'LBL_STATUS',
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                      'event_accept_status' =>
-                      array(
+                    ],
+                    'event_accept_status' => [
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
                         'vname' => 'LBL_ACCEPT_STATUS',
-                      ),
-                ),
-                /*'where' => "(emails.status='sent')", */
+                    ],
+                ],
+                // 'where' => "(emails.status='sent')",
                 'order_by' => 'leads.date_modified',
-            ),
-            'Prospects' => array(
-                'columns' => array(
-                    'name' =>
-                      array(
+            ],
+            'Prospects' => [
+                'columns' => [
+                    'name' => [
                         'name' => 'name',
                         'vname' => 'LBL_LIST_NAME',
                         'sort_by' => 'last_name',
@@ -168,9 +154,8 @@ $layout_defs['Delegates'] = array(
                         'module' => 'Contacts',
                         'width' => '23%',
                         'default' => true,
-                      ),
-                      'account_name' =>
-                      array(
+                    ],
+                    'account_name' => [
                         'name' => 'account_name',
                         'module' => 'Accounts',
                         'target_record_key' => 'account_id',
@@ -180,41 +165,37 @@ $layout_defs['Delegates'] = array(
                         'width' => '22%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                    'phone_work' =>
-                      array(
+                    ],
+                    'phone_work' => [
                         'name' => 'phone_work',
                         'vname' => 'LBL_LIST_PHONE',
                         'width' => '15%',
                         'default' => true,
-                      ),
-                      'email1' =>
-                      array(
+                    ],
+                    'email1' => [
                         'name' => 'email1',
                         'vname' => 'LBL_LIST_EMAIL',
                         'widget_class' => 'SubPanelEmailLink',
                         'width' => '20%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                      'event_status_name' =>
-                      array(
+                    ],
+                    'event_status_name' => [
                         'vname' => 'LBL_STATUS',
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
-                      ),
-                      'event_accept_status' =>
-                      array(
+                    ],
+                    'event_accept_status' => [
                         'width' => '10%',
                         'sortable' => false,
                         'default' => true,
                         'vname' => 'LBL_ACCEPT_STATUS',
-                      ),
-                ),
-                /*'where' => "(emails.status='sent')", */
+                    ],
+                ],
+                // 'where' => "(emails.status='sent')",
                 'order_by' => 'Prospects.date_modified',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];

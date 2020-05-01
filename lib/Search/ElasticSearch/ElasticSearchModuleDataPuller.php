@@ -49,116 +49,132 @@ use RuntimeException;
 use SugarBean;
 
 /**
- * This class facilitates pulling Sugarbeans from a module
+ * This class facilitates pulling Sugarbeans from a module.
  */
 class ElasticSearchModuleDataPuller
 {
-    /** 
-     * The source module
-     * 
-     * @var string 
+    /**
+     * The source module.
+     *
+     * @var string
      */
     protected $module;
 
-    /** 
-     * The Sugarbean seed
-     * 
-     * @var SugarBean 
+    /**
+     * The Sugarbean seed.
+     *
+     * @var SugarBean
      */
     protected $seed;
 
-    /** 
-     * Whether this is a differential run or not
-     * 
-     * @var bool 
+    /**
+     * Whether this is a differential run or not.
+     *
+     * @var bool
      */
     protected $isDifferential;
 
-    /** 
-     * Whether to pull Deleted records
-     *  
+    /**
+     * Whether to pull Deleted records.
+     *
      * @var int *
      */
     protected $showDeleted = 0;
 
-    /** 
-     * The pagination offset
-     *  
+    /**
+     * The pagination offset.
+     *
      * @var int *
      */
     protected $offset = 0;
 
-    /** 
+    /**
      * The size of batches pulled from the database.
-     *  
+     *
      * @var int *
      */
     protected $batchSize = 1000;
 
     /**
-     * The last index time
+     * The last index time.
      *
      * @var string
      */
     protected $lastIndexTime;
 
     /**
-     * The number of records pulled from the DB
+     * The number of records pulled from the DB.
      *
-     * @var integer
+     * @var int
      */
     protected $recordsPulled = 0;
 
-
-    function __construct($module, $isDifferential, $logger)
+    public function __construct($module, $isDifferential, $logger)
     {
         $this->module = $module;
         $this->seed = BeanFactory::getBean($module);
-        $this->isDifferential = $isDifferential;  
-        $this->logger = $logger;   
-
+        $this->isDifferential = $isDifferential;
+        $this->logger = $logger;
     }
 
     /**
-     * Set the LastIndexTime
+     * Magic getter.
+     *
+     * @param string $field
+     *
+     * @return mixed
+     */
+    public function __get($field)
+    {
+        return $this->{$field};
+    }
+
+    /**
+     * Set the LastIndexTime.
      *
      * @param string $lastIndexTime
-     * @return this
+     *
+     * @return $this
      */
     public function setLastIndexTime($lastIndexTime)
     {
         $this->lastIndexTime = $lastIndexTime;
+
         return $this;
     }
 
     /**
-     * Set the ShowDeleted flag. 
-     * Set to 1 to return deleted records in the results
+     * Set the ShowDeleted flag.
+     * Set to 1 to return deleted records in the results.
      *
      * @param int $showDeleted
-     * @return this
+     *
+     * @return $this
      */
     public function setShowDeleted($showDeleted)
     {
         $this->showDeleted = (int) $showDeleted;
+
         return $this;
     }
 
     /**
-     * Set whether this run should be differential 
-     * This influences whether the where clause is used
+     * Set whether this run should be differential
+     * This influences whether the where clause is used.
      *
      * @param bool $isDifferential
-     * @return this
+     *
+     * @return $this
      */
     public function setDifferential($isDifferential)
     {
         $this->isDifferential = $isDifferential;
+
         return $this;
     }
 
     /**
-     * Pull the next batch of records from the database
+     * Pull the next batch of records from the database.
      *
      * @return array | null
      */
@@ -173,33 +189,23 @@ class ElasticSearchModuleDataPuller
     }
 
     /**
-     * Generates the where clause used in the get_list query
+     * Generates the where clause used in the get_list query.
      *
      * @return string
      */
     protected function generateWhere()
     {
-        if($this->isDifferential AND empty($this->lastIndexTime)){
-            throw new RuntimeException("A differential search must have a lastIndexTime to filter off of");
+        if ($this->isDifferential and empty($this->lastIndexTime)) {
+            throw new RuntimeException('A differential search must have a lastIndexTime to filter off of');
         }
 
-        if($this->isDifferential){
+        if ($this->isDifferential) {
             $tableName = $this->seed->table_name;
             $lastIndexTime = $this->lastIndexTime;
-            return "$tableName.date_modified > '$lastIndexTime' OR $tableName.date_entered > '$lastIndexTime'";    
+
+            return "{$tableName}.date_modified > '{$lastIndexTime}' OR {$tableName}.date_entered > '{$lastIndexTime}'";
         }
 
         return '';
-    }
-
-    /**
-     * Magic getter
-     *
-     * @param string $field
-     * @return mixed
-     */
-    public function __get($field)
-    {
-        return $this->$field;
     }
 }

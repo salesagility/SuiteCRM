@@ -52,9 +52,7 @@ use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Utility\BeanJsonSerializer;
 
 /**
- * Class ElasticSearchCommands
- *
- * @package SuiteCRM\Robo\Plugin\Commands
+ * Class ElasticSearchCommands.
  */
 class ElasticSearchCommands extends \Robo\Tasks
 {
@@ -71,7 +69,7 @@ class ElasticSearchCommands extends \Robo\Tasks
      *
      * @param string $query    The search query. See elasticsearch syntax.
      * @param int    $size     How many results to show
-     * @param bool   $showJson if set to `1` shows a JSON for each results.
+     * @param bool   $showJson if set to `1` shows a JSON for each results
      */
     public function elasticSearch($query, $size = 20, $showJson = false)
     {
@@ -85,10 +83,11 @@ class ElasticSearchCommands extends \Robo\Tasks
         if (empty($hits)) {
             $this->io()->note('No results matching your query. Try broadening your criteria.');
             $this->showSearchTime($result);
+
             return;
         }
 
-        $this->io()->title("Results");
+        $this->io()->title('Results');
         foreach ($hits as $key => $module) {
             $this->printModuleResults($showJson, $key, $module);
         }
@@ -166,6 +165,6 @@ class ElasticSearchCommands extends \Robo\Tasks
     private function showSearchTime(SearchResults $result)
     {
         $time = round($result->getSearchTime() * 1000);
-        $this->io()->success("Search performed in $time ms");
+        $this->io()->success("Search performed in {$time} ms");
     }
 }

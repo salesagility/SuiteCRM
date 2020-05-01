@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,48 +40,46 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'AOR_Scheduled_Reports'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'AOR_Scheduled_Reports'],
+    ],
 
     'where' => '',
 
-    'list_fields' => array(
-        'name'=>array(
+    'list_fields' => [
+        'name' => [
             'vname' => 'LBL_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '25%',
-        ),
-        'status'=>array(
+        ],
+        'status' => [
             'vname' => 'LBL_STATUS',
             'width' => '25%',
-        ),
-        'last_run'=>array(
+        ],
+        'last_run' => [
             'vname' => 'LBL_LAST_RUN',
             'width' => '25%',
-        ),
-        'assigned_user_name' => array(
+        ],
+        'assigned_user_name' => [
             'name' => 'assigned_user_name',
             'vname' => 'LBL_ASSIGNED_USER',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'assigned_user_id',
             'target_module' => 'Employees',
-        ),
-        'edit_button'=>array(
-             'vname' => 'LBL_EDIT_BUTTON',
+        ],
+        'edit_button' => [
+            'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'AOR_Scheduled_Reports',
             'width' => '4%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'AOR_Scheduled_Reports',
             'width' => '5%',
-        ),
-    ),
-);
+        ],
+    ],
+];

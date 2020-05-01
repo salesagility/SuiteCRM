@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 require_once 'data/SugarBean.php';
 require_once 'include/SugarObjects/templates/basic/Basic.php';
 require_once 'include/externalAPI/ExternalAPIFactory.php';
@@ -99,7 +97,7 @@ class EAPM extends Basic
                 return;
             }
         } else {
-            $queryArray = array('assigned_user_id' => $current_user->id, 'application' => $application, 'deleted' => 0);
+            $queryArray = ['assigned_user_id' => $current_user->id, 'application' => $application, 'deleted' => 0];
             if (!$includeInactive) {
                 $queryArray['validated'] = 1;
             }
@@ -125,7 +123,7 @@ class EAPM extends Basic
         return $eapmBean;
     }
 
-    public function create_new_list_query($order_by, $where, $filter = array(), $params = array(), $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false)
+    public function create_new_list_query($order_by, $where, $filter = [], $params = [], $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false)
     {
         global $current_user;
 
@@ -136,7 +134,7 @@ class EAPM extends Basic
             if (empty($where)) {
                 $where = $owner_where;
             } else {
-                $where .= ' AND '.$owner_where;
+                $where .= ' AND ' . $owner_where;
             }
         }
 
@@ -181,7 +179,7 @@ class EAPM extends Basic
         }
         // Don't use save, it will attempt to revalidate
         $adata = DBManagerFactory::getInstance()->quote(isset($this->api_data) ? $this->api_data : null);
-        DBManagerFactory::getInstance()->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
+        DBManagerFactory::getInstance()->query("UPDATE eapm SET validated=1,api_data='{$adata}'  WHERE id = '{$this->id}' AND deleted = 0");
         if (!$this->deleted && !empty($this->application)) {
             // deactivate other EAPMs with same app
             $sql = "UPDATE eapm SET deleted=1 WHERE application = '{$this->application}' AND id != '{$this->id}' AND deleted = 0 AND assigned_user_id = '{$this->assigned_user_id}'";
@@ -191,16 +189,6 @@ class EAPM extends Basic
         // Nuke the EAPM cache for this record
         if (isset($_SESSION['EAPM'][$this->application])) {
             unset($_SESSION['EAPM'][$this->application]);
-        }
-    }
-
-    protected function fillInName()
-    {
-        if (!empty($this->application)) {
-            $apiList = ExternalAPIFactory::loadFullAPIList(false, true);
-        }
-        if (!empty($apiList) && isset($apiList[$this->application]) && $apiList[$this->application]['authMethod'] == 'oauth') {
-            $this->name = sprintf(translate('LBL_OAUTH_NAME', $this->module_dir), $this->application);
         }
     }
 
@@ -233,12 +221,20 @@ class EAPM extends Basic
         $sql = "DELETE FROM {$this->table_name} WHERE assigned_user_id = '{$user_id}'";
         DBManagerFactory::getInstance()->query($sql, true);
     }
+
+    protected function fillInName()
+    {
+        if (!empty($this->application)) {
+            $apiList = ExternalAPIFactory::loadFullAPIList(false, true);
+        }
+        if (!empty($apiList) && isset($apiList[$this->application]) && $apiList[$this->application]['authMethod'] == 'oauth') {
+            $this->name = sprintf(translate('LBL_OAUTH_NAME', $this->module_dir), $this->application);
+        }
+    }
 }
 
 // External API integration, for the dropdown list of what external API's are available
 function getEAPMExternalApiDropDown()
 {
-    $apiList = ExternalAPIFactory::getModuleDropDown('', true, true);
-
-    return $apiList;
+    return ExternalAPIFactory::getModuleDropDown('', true, true);
 }

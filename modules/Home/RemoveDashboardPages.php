@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,19 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $current_user;
 $type = 'Home';
 $pages = $current_user->getPreference('pages', $type);
 
-
 if (count($pages) > 1) {
     if (!isset($_POST['status'])) {
         $html = "<form method='post' name='removepageform' action='index.php?module=Home&action=RemoveDashboardPages'/>";
-        $html .= "<p>".$GLOBALS['app_strings']['LBL_DELETE_DASHBOARD1']." ".$pages[$_POST['page_id']]['pageTitle'] . " ".$GLOBALS['app_strings']['LBL_DELETE_DASHBOARD2']."</p>";
-        $html .= "<input type='hidden' name='page_id' value='" . $_POST['page_id']. "' />";
+        $html .= '<p>' . $GLOBALS['app_strings']['LBL_DELETE_DASHBOARD1'] . ' ' . $pages[$_POST['page_id']]['pageTitle'] . ' ' . $GLOBALS['app_strings']['LBL_DELETE_DASHBOARD2'] . '</p>';
+        $html .= "<input type='hidden' name='page_id' value='" . $_POST['page_id'] . "' />";
         $html .= "<input type='hidden' name='status' value='yes' />";
-        $html .= "</form>";
+        $html .= '</form>';
 
         echo $html;
     } else {
@@ -63,10 +62,10 @@ if (count($pages) > 1) {
 
         $current_user->setPreference('pages', $pages, 0, $type);
 
-        $queryParams = array(
+        $queryParams = [
             'module' => 'Home',
             'action' => 'index',
-        );
+        ];
 
         $sa = new SugarApplication();
         $sa->redirect('index.php?' . http_build_query($queryParams));

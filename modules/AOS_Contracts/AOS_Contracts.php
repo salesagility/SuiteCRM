@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,14 +19,13 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
+require_once 'modules/AOS_Contracts/AOS_Contracts_sugar.php';
 
 class AOS_Contracts extends AOS_Contracts_sugar
 {
@@ -39,15 +37,15 @@ class AOS_Contracts extends AOS_Contracts_sugar
         if ($this->id == null && $this->renewal_reminder_date == null) {
             global $sugar_config, $timedate;
 
-            $default_time = "12:00:00";
+            $default_time = '12:00:00';
 
-            $period = empty($sugar_config['aos'])?false:(int)$sugar_config['aos']['contracts']['renewalReminderPeriod'];
+            $period = empty($sugar_config['aos']) ? false : (int) $sugar_config['aos']['contracts']['renewalReminderPeriod'];
 
             //Calculate renewal date from end_date minus $period days and format this.
             if ($period && !empty($this->end_date)) {
                 $renewal_date = $timedate->fromUserDate($this->end_date);
 
-                $renewal_date->modify("-$period days");
+                $renewal_date->modify("-{$period} days");
                 $time_value = $timedate->fromString($default_time);
                 $renewal_date->setTime($time_value->hour, $time_value->min, $time_value->sec);
 
@@ -57,34 +55,30 @@ class AOS_Contracts extends AOS_Contracts_sugar
         }
     }
 
-
-
-
     public function save($check_notify = false)
     {
         if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
-            unset($_POST['group_id']);
-            unset($_POST['product_id']);
-            unset($_POST['service_id']);
+            unset($_POST['group_id'], $_POST['product_id'], $_POST['service_id']);
         }
 
         if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
             $this->createReminder();
         }
 
-        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        require_once 'modules/AOS_Products_Quotes/AOS_Utils.php';
 
         perform_aos_save($this);
 
         $return_id = parent::save($check_notify);
 
-        require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
+        require_once 'modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php';
         $productQuoteGroup = new AOS_Line_Item_Groups();
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
         if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
             $this->createLink();
         }
+
         return $return_id;
     }
 
@@ -98,7 +92,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
 
     public function createReminder()
     {
-        require_once('modules/Calls/Call.php');
+        require_once 'modules/Calls/Call.php';
         $call = new call();
 
         if ($this->renewal_reminder_date != 0) {
@@ -126,7 +120,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
 
     public function createLink()
     {
-        require_once('modules/Calls/Call.php');
+        require_once 'modules/Calls/Call.php';
         $call = new call();
 
         if ($this->renewal_reminder_date != 0) {
@@ -147,7 +141,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
 
     public function deleteCall()
     {
-        require_once('modules/Calls/Call.php');
+        require_once 'modules/Calls/Call.php';
         $call = new call();
 
         if (!isset($this->call_id)) {

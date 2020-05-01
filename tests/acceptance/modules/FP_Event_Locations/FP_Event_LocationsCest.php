@@ -5,12 +5,12 @@ use Faker\Generator;
 class LocationsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class LocationsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the locations module.
+     * As an administrator I want to view the locations module
      */
     public function testScenarioViewLocationsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the locations module for testing');
 
@@ -54,13 +54,13 @@ class LocationsCest
      * @param \Step\Acceptance\Locations $location
      *
      * As administrative user I want to create a locations with the so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateEventLocation(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Locations $location
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Locations $location
     ) {
         $I->wantTo('Create a Location');
 
@@ -71,7 +71,7 @@ class LocationsCest
 
         // Create location
         $this->fakeData->seed($this->fakeDataSeed);
-        $location->createEventLocation('Test_'. $this->fakeData->company());
+        $location->createEventLocation('Test_' . $this->fakeData->company());
 
         // Delete location
         $detailView->clickActionMenuItem('Delete');

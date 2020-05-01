@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class OAuth2TokensController extends SugarController
 {
-
     /**
-     * Mass update is only used for revoking tokens at the moment
+     * Mass update is only used for revoking tokens at the moment.
      */
     public function action_massupdate()
     {

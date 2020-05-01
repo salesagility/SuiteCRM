@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class OAuth2Clients
+ * Class OAuth2Clients.
  */
 class OAuth2Clients extends SugarBean
 {
@@ -82,13 +80,14 @@ class OAuth2Clients extends SugarBean
      */
     public function get_summary_text()
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     /**
      * @see SugarBean::save()
      *
      * @param bool $check_notify
+     *
      * @return string ID
      */
     public function save($check_notify = false)
@@ -97,6 +96,7 @@ class OAuth2Clients extends SugarBean
             $this->secret = hash('sha256', $_REQUEST['new_secret']);
         }
         $this->setDurationValue();
+
         return parent::save();
     }
 
@@ -106,16 +106,27 @@ class OAuth2Clients extends SugarBean
             $this->duration_value = 60;
             $this->duration_amount = 1;
             $this->duration_unit = 'minute';
+
             return;
         }
         $amount = $_REQUEST['duration_amount'];
         $value = 1;
         switch ($_REQUEST['duration_unit']) {
-            case 'month': $value = $amount * 30 * 24 * 60 * 60; break;
-            case 'week': $value = $amount * 7 * 24 * 60 * 60; break;
-            case 'day': $value = $amount * 24 * 60 * 60; break;
-            case 'hour': $value = $amount * 60 * 60; break;
-            case 'minute': $value = $amount * 60; break;
+            case 'month': $value = $amount * 30 * 24 * 60 * 60;
+
+break;
+            case 'week': $value = $amount * 7 * 24 * 60 * 60;
+
+break;
+            case 'day': $value = $amount * 24 * 60 * 60;
+
+break;
+            case 'hour': $value = $amount * 60 * 60;
+
+break;
+            case 'minute': $value = $amount * 60;
+
+break;
         }
         $this->duration_value = $value;
     }

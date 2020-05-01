@@ -3,9 +3,12 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/layout_utils.php';
+/**
+ * @internal
+ */
 class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testget_form_header()
+    public function testgetFormHeader()
     {
         //execute the method and test if it returns html and contains the values provided in parameters
 
@@ -23,7 +26,7 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(strlen($html2), strlen($html1));
     }
 
-    public function testget_module_title()
+    public function testgetModuleTitle()
     {
         //execute the method and test if it returns html and contains the values provided in parameters
 
@@ -54,18 +57,18 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it returns html and contains the values provided in parameters
 
         //with show_create false, generates less html
-        $html1 = getClassicModuleTitle('users', array('Users Home'));
+        $html1 = getClassicModuleTitle('users', ['Users Home']);
         $this->assertGreaterThan(0, strlen($html1));
         $this->assertContains('Users Home', $html1);
 
         //with show_create true, generates more html
-        $html2 = getClassicModuleTitle('users', array('Users Home'), true);
+        $html2 = getClassicModuleTitle('users', ['Users Home'], true);
         $this->assertGreaterThan(0, strlen($html2));
         $this->assertContains('Users Home', $html2);
         $this->assertGreaterThan(strlen($html1), strlen($html2));
     }
 
-    public function testinsert_popup_header()
+    public function testinsertPopupHeader()
     {
         //execute the method and test if it returns html/JS
 
@@ -86,7 +89,7 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(strlen($renderedContent2), strlen($renderedContent1));
     }
 
-    public function testinsert_popup_footer()
+    public function testinsertPopupFooter()
     {
         //execute the method and test if it returns html
 

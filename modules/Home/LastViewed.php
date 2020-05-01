@@ -2,7 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,20 +41,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
 global $theme;
 global $current_user;
-
 
 // Create the head of the table.
 ?>
 		<table cellpadding="2" cellspacing="0" border="0">
 		
 <?php
-$current_row=1;
+$current_row = 1;
 $tracker = new Tracker();
 $history = $tracker->get_recently_viewed($current_user->id);
 
@@ -63,7 +58,7 @@ foreach ($history as $row) {
     echo <<<EOQ
         <tr>
           <td vAlign="top"><IMG width="20" alt="{$row['module_name']}" src="{$moduleImage}" border="0"></td>
-          <td noWrap><A  href="index.php?module=$row[module_name]&action=DetailView&record=$row[item_id]">$row[item_summary]</A></td>
+          <td noWrap><A  href="index.php?module={$row['module_name']}&action=DetailView&record={$row['item_id']}">{$row['item_summary']}</A></td>
         </tr>
 EOQ;
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Repository;
 
 class Filter
@@ -31,8 +32,9 @@ class Filter
      * @param \SugarBean $bean
      * @param array $params
      *
+     * @throws \InvalidArgumentException when field is not found or is not an array
+     *
      * @return string
-     * @throws \InvalidArgumentException When field is not found or is not an array.
      */
     public function parseWhere(\SugarBean $bean, array $params)
     {
@@ -75,9 +77,10 @@ class Filter
     }
 
     /**
-     * Only return deleted records if they were explicitly requested
+     * Only return deleted records if they were explicitly requested.
      *
      * @param array $params
+     *
      * @return array
      */
     protected function addDeletedParameter(array $params)
@@ -94,7 +97,7 @@ class Filter
     /**
      * @param string $op
      *
-     * @throws \InvalidArgumentException When the given operator is invalid.
+     * @throws \InvalidArgumentException when the given operator is invalid
      */
     private function checkOperator($op)
     {

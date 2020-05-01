@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,17 +41,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
  * This resolves SugarCRM Bug # 52929
- * http://www.sugarcrm.com/support/bugs.html#issue_52929
+ * http://www.sugarcrm.com/support/bugs.html#issue_52929.
  *
  * Jeff Bickart
  * Twitter: @bickart
  * Email: jeff @ neposystems.com
  * Blog: http://sugarcrm-dev.blogspot.com
  */
-
 class SugarWidgetFieldLong extends SugarWidgetFieldDecimal
 {
     public function __construct(&$layout_manager)

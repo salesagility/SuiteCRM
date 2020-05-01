@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AlertTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -29,7 +32,7 @@ class AlertTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'importable', $alert);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $alert = new Alert();
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param;
 
 use Api\V8\Param\Options as ParamOption;
@@ -17,7 +18,7 @@ class CreateRelationshipByLinkParams extends CreateRelationshipParams
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configureParameters(OptionsResolver $resolver)
     {

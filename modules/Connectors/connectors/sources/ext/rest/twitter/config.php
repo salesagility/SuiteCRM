@@ -1,5 +1,6 @@
 <?php
-/***CONNECTOR SOURCE***/
+
+// CONNECTOR SOURCE
 $config = [];
 $config['name'] = 'Twitter';
 $config['properties']['consumer_key'] = '';

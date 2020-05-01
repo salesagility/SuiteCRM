@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOR_ConditionTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Condition()
+    public function testAORCondition()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aor_Condition = new AOR_Condition();
@@ -21,12 +24,12 @@ class AOR_ConditionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'tracker_visibility', $aor_Condition);
     }
 
-    public function testsave_lines()
+    public function testsaveLines()
     {
         $aor_Condition = new AOR_Condition();
 
         //preset the required data
-        $post_data = array();
+        $post_data = [];
         $post_data['field'][] = 'test field';
         $post_data['name'][] = 'test';
         $post_data['parameter'][] = '1';

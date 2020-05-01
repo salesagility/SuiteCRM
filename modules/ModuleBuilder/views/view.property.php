@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,10 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
-require_once('include/MVC/View/SugarView.php');
-require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
+require_once 'include/MVC/View/SugarView.php';
+require_once 'modules/ModuleBuilder/parsers/ParserFactory.php';
 
 class ViewProperty extends SugarView
 {
@@ -49,31 +47,14 @@ class ViewProperty extends SugarView
         $this->init();
     }
 
-
-
-
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
+    public function init($bean = null, $view_object_map = []) // pseudo-constuctor - given a well-known name to allow subclasses to call this classes constructor
     {
-        global $mod_strings;
-
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
-
-    public function init($bean = null, $view_object_map = array()) // pseudo-constuctor - given a well-known name to allow subclasses to call this classes constructor
-    {
-        $this->editModule = (! empty($_REQUEST['view_module'])) ? $_REQUEST['view_module'] : null;
-        $this->editPackage = (! empty($_REQUEST['view_package'])) ? $_REQUEST['view_package'] : null;
-        $this->id = (! empty($_REQUEST['id'])) ? $_REQUEST['id'] : null;
-        $this->subpanel = (! empty($_REQUEST['subpanel'])) ? $_REQUEST['subpanel'] : "";
-        $this->properties = array();
-        foreach ($_REQUEST as $key=>$value) {
+        $this->editModule = (!empty($_REQUEST['view_module'])) ? $_REQUEST['view_module'] : null;
+        $this->editPackage = (!empty($_REQUEST['view_package'])) ? $_REQUEST['view_package'] : null;
+        $this->id = (!empty($_REQUEST['id'])) ? $_REQUEST['id'] : null;
+        $this->subpanel = (!empty($_REQUEST['subpanel'])) ? $_REQUEST['subpanel'] : '';
+        $this->properties = [];
+        foreach ($_REQUEST as $key => $value) {
             if (substr($key, 0, 4) == 'name') {
                 $this->properties[substr($key, 5)]['name'] = $value;
             }
@@ -101,12 +82,12 @@ class ViewProperty extends SugarView
         global $mod_strings;
         $ajax = new AjaxCompose();
         $smarty = new Sugar_Smarty();
-        if (isset($_REQUEST['MB']) && $_REQUEST['MB'] == "1") {
-            $smarty->assign("MB", $_REQUEST['MB']);
-            $smarty->assign("view_package", $_REQUEST['view_package']);
+        if (isset($_REQUEST['MB']) && $_REQUEST['MB'] == '1') {
+            $smarty->assign('MB', $_REQUEST['MB']);
+            $smarty->assign('view_package', $_REQUEST['view_package']);
         }
 
-        $selected_lang = (!empty($_REQUEST['selected_lang'])?$_REQUEST['selected_lang']:$_SESSION['authenticated_user_language']);
+        $selected_lang = (!empty($_REQUEST['selected_lang']) ? $_REQUEST['selected_lang'] : $_SESSION['authenticated_user_language']);
         if (empty($selected_lang)) {
             $selected_lang = $GLOBALS['sugar_config']['default_language'];
         }
@@ -115,18 +96,33 @@ class ViewProperty extends SugarView
 
         ksort($this->properties);
 
-        $smarty->assign("properties", $this->properties);
+        $smarty->assign('properties', $this->properties);
 //        $smarty->assign("id",$this->id);
 
-        $smarty->assign("mod_strings", $mod_strings);
+        $smarty->assign('mod_strings', $mod_strings);
         $smarty->assign('APP', $GLOBALS['app_strings']);
-        $smarty->assign("view_module", $this->editModule);
-        $smarty->assign("subpanel", $this->subpanel);
+        $smarty->assign('view_module', $this->editModule);
+        $smarty->assign('subpanel', $this->subpanel);
         if (isset($this->editPackage)) {
-            $smarty->assign("view_package", $this->editPackage);
+            $smarty->assign('view_package', $this->editPackage);
         }
 
         $ajax->addSection('east', translate('LBL_SECTION_PROPERTIES', 'ModuleBuilder'), $smarty->fetch('modules/ModuleBuilder/tpls/editProperty.tpl'));
         echo $ajax->getJavascript();
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,81 +47,69 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
 /**
- * implementation of http://jsonapi.org/format/#error-objects
+ * implementation of http://jsonapi.org/format/#error-objects.
  *
  * @todo incomplete...
  */
 class JsonApiErrorObject
 {
-
     /**
-     * integer
+     * integer.
      */
     const DEFAULT_ID = 1;
 
     /**
-     * integer
+     * integer.
      */
     const DEFAULT_CODE = 1;
 
     /**
-     * integer
+     * integer.
      */
     const DEFAULT_STATUS = 200;
 
     /**
-     *
      * @var string
      */
     protected $id;
 
     /**
-     *
      * @var array
      */
     protected $links;
 
     /**
-     *
      * @var string
      */
     protected $status;
 
     /**
-     *
      * @var string
      */
     protected $code;
 
     /**
-     *
      * @var LangText
      */
     protected $title;
 
     /**
-     *
      * @var LangText
      */
     protected $detail;
 
     /**
-     *
      * @var array
      */
     protected $source;
 
     /**
-     *
      * @var array
      */
     protected $meta;
 
     /**
-     *
      * @param LangText $title
      * @param LangText $detail
      * @param string $id
@@ -145,7 +132,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param LangText $title
      */
     public function setTitle(LangText $title)
@@ -159,7 +145,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param LangText $detail
      */
     public function setDetail(LangText $detail)
@@ -173,7 +158,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param string $id
      */
     public function setId($id)
@@ -187,7 +171,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param string $code
      */
     public function setCode($code)
@@ -201,7 +184,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param string $status
      */
     public function setStatus($status)
@@ -215,7 +197,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param array $links
      */
     public function setLinks($links)
@@ -229,7 +210,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param array $source
      */
     public function setSource($source)
@@ -243,7 +223,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @param array $meta
      */
     public function setMeta($meta)
@@ -257,233 +236,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
-     * @param LangText $title
-     * @return boolean
-     */
-    protected function isValidTitle(LangText $title)
-    {
-        return true;
-    }
-
-    /**
-     *
-     * @param LangText $detail
-     * @return boolean
-     */
-    protected function isValidDetail(LangText $detail)
-    {
-        return true;
-    }
-
-    /**
-     *
-     * @param string $id
-     * @return boolean
-     */
-    protected function isValidId($id)
-    {
-        return is_string($id) || is_numeric($id);
-    }
-
-    /**
-     *
-     * @param string $code
-     * @return boolean
-     */
-    protected function isValidCode($code)
-    {
-        return is_string($code) || is_numeric($code);
-    }
-
-    /**
-     *
-     * @param string $status
-     * @return boolean
-     */
-    protected function isValidStatus($status)
-    {
-        return is_string($status) || is_numeric($status);
-    }
-
-    /**
-     *
-     * @param array $links
-     * @return boolean
-     */
-    protected function isValidLinks($links)
-    {
-        return is_array($links) && isset($links['about']);
-    }
-
-    /**
-     *
-     * @param array $source
-     * @return boolean
-     */
-    protected function isValidSource($source)
-    {
-        return is_array($source) && isset($source['pointer']) && isset($source['parameter']);
-    }
-
-    /**
-     *
-     * @param array $meta
-     * @return boolean
-     */
-    protected function getValidMeta($meta)
-    {
-        return is_array($meta);
-    }
-
-    /**
-     *
-     * @return LangText
-     */
-    protected function getDefaultTitle()
-    {
-        $text = new LangText('LBL_DEFAULT_API_ERROR_TITLE');
-        return $text;
-    }
-
-    /**
-     *
-     * @return LangText
-     */
-    protected function getDefaultDetail()
-    {
-        $text = new LangText('LBL_DEFAULT_API_ERROR_DETAIL');
-        return $text;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getDefaultId()
-    {
-        return (string) self::DEFAULT_ID;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getDefaultCode()
-    {
-        return (string) self::DEFAULT_CODE;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getDefaultStatus()
-    {
-        return (string) self::DEFAULT_STATUS;
-    }
-
-    /**
-     *
-     * @return array
-     */
-    protected function getDefaultLinks()
-    {
-        return ['about' => null];
-    }
-
-    /**
-     *
-     * @return array
-     */
-    protected function getDefaultSource()
-    {
-        return ['pointer' => null, 'parameter' => null];
-    }
-
-    /**
-     *
-     * @return array
-     */
-    protected function getDefaultMeta()
-    {
-        return [];
-    }
-    
-    /**
-     *
-     * @return string|null
-     */
-    protected function getId()
-    {
-        return $this->id;
-    }
-    
-    /**
-     *
-     * @return array|null
-     */
-    protected function getLinks()
-    {
-        return $this->links;
-    }
-    
-    /**
-     *
-     * @return string|null
-     */
-    protected function getStatus()
-    {
-        return $this->status;
-    }
-    
-    /**
-     *
-     * @return string|null
-     */
-    protected function getCode()
-    {
-        return $this->code;
-    }
-    
-    /**
-     *
-     * @return string|null
-     */
-    protected function getTitle()
-    {
-        return $this->title;
-    }
-    
-    /**
-     *
-     * @return string|null
-     */
-    protected function getDetail()
-    {
-        return $this->detail;
-    }
-    
-    /**
-     *
-     * @return array|null
-     */
-    protected function getSource()
-    {
-        return $this->source;
-    }
-    
-    /**
-     *
-     * @return array|null
-     */
-    protected function getMeta()
-    {
-        return $this->meta;
-    }
-
-    /**
-     *
      * @return array
      */
     public function export()
@@ -501,7 +253,6 @@ class JsonApiErrorObject
     }
 
     /**
-     *
      * @return string
      */
     public function exportJson()
@@ -511,13 +262,261 @@ class JsonApiErrorObject
         if ($error !== JSON_ERROR_NONE) {
             ErrorMessage::log('API Error Object JSON export error: ' . json_last_error_msg());
         }
+
         return $json;
     }
-    
+
     /**
-     *
-     * @global array $sugar_config
      * @param Exception $e
+     *
+     * @return $this
+     */
+    public function retrieveFromException(Exception $e)
+    {
+        $this->setCode($e->getCode());
+
+        $meta = $this->retrieveMetaFromException($e);
+
+        $this->setMeta($meta);
+
+        if ($e instanceof ApiException) {
+            $this->setCode($e->getCode());
+            $this->setStatus($e->getHttpStatus());
+            $this->setDetail($e->getDetail());
+            $this->setStatus($e->getHttpStatus());
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     *
+     * @return $this
+     */
+    public function retrieveFromRequest(ServerRequestInterface $request)
+    {
+        $this->setSource([
+            'pointer' => $request->getUri(),
+            'parametes' => $request->getQueryParams(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param LangText $title
+     *
+     * @return bool
+     */
+    protected function isValidTitle(LangText $title)
+    {
+        return true;
+    }
+
+    /**
+     * @param LangText $detail
+     *
+     * @return bool
+     */
+    protected function isValidDetail(LangText $detail)
+    {
+        return true;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return bool
+     */
+    protected function isValidId($id)
+    {
+        return is_string($id) || is_numeric($id);
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return bool
+     */
+    protected function isValidCode($code)
+    {
+        return is_string($code) || is_numeric($code);
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return bool
+     */
+    protected function isValidStatus($status)
+    {
+        return is_string($status) || is_numeric($status);
+    }
+
+    /**
+     * @param array $links
+     *
+     * @return bool
+     */
+    protected function isValidLinks($links)
+    {
+        return is_array($links) && isset($links['about']);
+    }
+
+    /**
+     * @param array $source
+     *
+     * @return bool
+     */
+    protected function isValidSource($source)
+    {
+        return is_array($source) && isset($source['pointer'], $source['parameter']);
+    }
+
+    /**
+     * @param array $meta
+     *
+     * @return bool
+     */
+    protected function getValidMeta($meta)
+    {
+        return is_array($meta);
+    }
+
+    /**
+     * @return LangText
+     */
+    protected function getDefaultTitle()
+    {
+        return new LangText('LBL_DEFAULT_API_ERROR_TITLE');
+    }
+
+    /**
+     * @return LangText
+     */
+    protected function getDefaultDetail()
+    {
+        return new LangText('LBL_DEFAULT_API_ERROR_DETAIL');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultId()
+    {
+        return (string) self::DEFAULT_ID;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultCode()
+    {
+        return (string) self::DEFAULT_CODE;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultStatus()
+    {
+        return (string) self::DEFAULT_STATUS;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultLinks()
+    {
+        return ['about' => null];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultSource()
+    {
+        return ['pointer' => null, 'parameter' => null];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultMeta()
+    {
+        return [];
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return null|array
+     */
+    protected function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getDetail()
+    {
+        return $this->detail;
+    }
+
+    /**
+     * @return null|array
+     */
+    protected function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @return null|array
+     */
+    protected function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @global array $sugar_config
+     *
+     * @param Exception $e
+     *
      * @return array
      */
     protected function retrieveMetaFromException(Exception $e)
@@ -527,7 +526,7 @@ class JsonApiErrorObject
             'class' => get_class($e),
             'code' => $e->getCode(),
         ];
-        
+
         if ($e instanceof LangExceptionInterface) {
             $meta['langMessage'] = $e->getLangMessage();
         }
@@ -542,46 +541,7 @@ class JsonApiErrorObject
                 $meta['debug']['previous'] = $this->retrieveMetaFromException($previous);
             }
         }
-        
+
         return $meta;
-    }
-    
-    /**
-     *
-     * @param Exception $e
-     * @return $this
-     */
-    public function retrieveFromException(Exception $e)
-    {
-        $this->setCode($e->getCode());
-        
-        $meta = $this->retrieveMetaFromException($e);
-        
-        $this->setMeta($meta);
-        
-        
-        if ($e instanceof ApiException) {
-            $this->setCode($e->getCode());
-            $this->setStatus($e->getHttpStatus());
-            $this->setDetail($e->getDetail());
-            $this->setStatus($e->getHttpStatus());
-        }
-        
-        return $this;
-    }
-    
-    /**
-     *
-     * @param ServerRequestInterface $request
-     * @return $this
-     */
-    public function retrieveFromRequest(ServerRequestInterface $request)
-    {
-        $this->setSource([
-            'pointer' => $request->getUri(),
-            'parametes' => $request->getQueryParams(),
-        ]);
-        
-        return $this;
     }
 }

@@ -78,8 +78,8 @@ class BeanJsonSerializer
      * Converts a SugarBean to a nested, standardised, cleaned JSON string.
      *
      * @param \SugarBean $bean            the bean to serialise
-     * @param bool       $hideEmptyValues removes fields with empty (`''` or `null`) values.
-     * @param bool       $pretty          to make *very* pretty formatted.
+     * @param bool       $hideEmptyValues removes fields with empty (`''` or `null`) values
+     * @param bool       $pretty          to make *very* pretty formatted
      *
      * @return string
      */
@@ -102,10 +102,11 @@ class BeanJsonSerializer
      * Keep it disabled.
      *
      * @param \SugarBean $bean              the bean to serialise
-     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values.
+     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values
      * @param bool       $loadRelationships whether to load the bean relationship
      *
      * @deprecated
+     *
      * @return array
      */
     public function toArrayOld($bean, $hideEmptyValues = true, $loadRelationships = false)
@@ -127,8 +128,8 @@ class BeanJsonSerializer
             if (is_array($fields)) {
                 $value = $fields[$key];
             } elseif (is_object($fields)) {
-                if (isset($fields->$key)) {
-                    $value = $fields->$key;
+                if (isset($fields->{$key})) {
+                    $value = $fields->{$key};
                 } else {
                     $value = null;
                 }
@@ -153,46 +154,55 @@ class BeanJsonSerializer
             //region metas
             if ($key === 'date_entered') {
                 $prettyBean['meta']['created']['date'] = $value;
+
                 continue;
             }
 
             if ($key === 'created_by') {
                 $prettyBean['meta']['created']['user_id'] = $value;
+
                 continue;
             }
 
             if ($key === 'date_modified') {
                 $prettyBean['meta']['modified']['date'] = $value;
+
                 continue;
             }
 
             if ($key === 'modified_user_id') {
                 $prettyBean['meta']['modified']['user_id'] = $value;
+
                 continue;
             }
 
             if ($key === 'assigned_user_id') {
                 $prettyBean['meta']['assigned']['user_id'] = $value;
+
                 continue;
             }
 
             if ($key === 'modified_by_name') {
                 $prettyBean['meta']['modified']['user_name'] = $value;
+
                 continue;
             }
 
             if ($key === 'created_by_name') {
                 $prettyBean['meta']['created']['user_name'] = $value;
+
                 continue;
             }
 
             if ($key === 'assigned_user_name') {
                 $prettyBean['meta']['assigned']['user_name'] = $value;
+
                 continue;
             }
 
             if ($key === 'assigned_user_name_owner') {
                 $prettyBean['meta']['assigned']['owner_name'] = $value;
+
                 continue;
             }
             //endregion
@@ -200,11 +210,13 @@ class BeanJsonSerializer
             //region assistant
             if ($key === 'assistant') {
                 $prettyBean['assistant']['name'] = $value;
+
                 continue;
             }
 
             if ($key === 'assistant_phone') {
                 $prettyBean['assistant']['phone'] = $value;
+
                 continue;
             }
             // endregion
@@ -212,16 +224,19 @@ class BeanJsonSerializer
             //region reportTo
             if ($key === 'reports_to_id') {
                 $prettyBean['reports_to']['id'] = $value;
+
                 continue;
             }
 
             if ($key === 'report_to_name') {
                 $prettyBean['reports_to']['name'] = $value;
+
                 continue;
             }
 
             if ($key === 'reports_to_name') {
                 $prettyBean['reports_to']['name'] = $value;
+
                 continue;
             }
             //endregion
@@ -229,11 +244,13 @@ class BeanJsonSerializer
             //region campaign
             if ($key === 'campaign_id') {
                 $prettyBean['campaign']['id'] = $value;
+
                 continue;
             }
 
             if ($key === 'campaign_name') {
                 $prettyBean['campaign']['name'] = $value;
+
                 continue;
             }
             //endregion
@@ -241,16 +258,19 @@ class BeanJsonSerializer
             //region name
             if ($key === 'first_name') {
                 $prettyBean['name']['first'] = $value;
+
                 continue;
             }
 
             if ($key === 'last_name') {
                 $prettyBean['name']['last'] = $value;
+
                 continue;
             }
 
             if ($key === 'salutation') {
                 $prettyBean['name']['salutation'] = $value;
+
                 continue;
             }
             //endregion
@@ -258,21 +278,25 @@ class BeanJsonSerializer
             //region account
             if ($key === 'account_id') {
                 $prettyBean['account']['id'] = $value;
+
                 continue;
             }
 
             if ($key === 'account_name') {
                 $prettyBean['account']['name'] = $value;
+
                 continue;
             }
 
             if ($key === 'title') {
                 $prettyBean['account']['title'] = $value;
+
                 continue;
             }
 
             if ($key === 'department') {
                 $prettyBean['account']['department'] = $value;
+
                 continue;
             }
             //endregion
@@ -280,11 +304,13 @@ class BeanJsonSerializer
             //region parent
             if ($key === 'parent_id') {
                 $prettyBean['parent']['id'] = $value;
+
                 continue;
             }
 
             if ($key === 'parent_name') {
                 $prettyBean['parent']['name'] = $value;
+
                 continue;
             }
             //endregion
@@ -292,11 +318,13 @@ class BeanJsonSerializer
             //region messenger
             if ($key === 'messenger_id') {
                 $prettyBean['messenger']['id'] = $value;
+
                 continue;
             }
 
             if ($key === 'messenger_type') {
                 $prettyBean['messenger']['type'] = $value;
+
                 continue;
             }
             //endregion
@@ -304,11 +332,13 @@ class BeanJsonSerializer
             //region emails
             if ($key === 'email') {
                 $prettyBean['email'][] = $value;
+
                 continue;
             }
 
             if (preg_match('/^email([0-9]+)$/', $key)) {
                 $prettyBean['email'][] = $value;
+
                 continue;
             }
             //endregion
@@ -316,6 +346,7 @@ class BeanJsonSerializer
             //region phone
             if (preg_match('/^phone\_([a-z_]+)$/', $key, $matches)) {
                 $prettyBean['phone'][$matches[1]] = $value;
+
                 continue;
             }
             //endregion
@@ -323,11 +354,13 @@ class BeanJsonSerializer
             //region address
             if (preg_match('/^address\_([a-z_]+)$/', $key, $matches)) {
                 $prettyBean['address']['primary'][$matches[1]] = $value;
+
                 continue;
             }
 
             if (preg_match('/^([a-z]+)\_address\_([a-z_]+)$/', $key, $matches)) {
                 $prettyBean['address'][$matches[1]][$matches[2]] = $value;
+
                 continue;
             }
             //endregion
@@ -348,7 +381,7 @@ class BeanJsonSerializer
      * Keep it disabled.
      *
      * @param \SugarBean $bean              the bean to serialise
-     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values.
+     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values
      * @param bool       $loadRelationships whether to load the bean relationship
      *
      * @return array
@@ -364,9 +397,7 @@ class BeanJsonSerializer
         $this->mapper->setMappable($fields);
         $this->mapper->setHideEmptyValues($hideEmptyValues);
 
-        $prettyBean = $this->mapper->map($keys);
-
-        return $prettyBean;
+        return $this->mapper->map($keys);
     }
 
     /**
@@ -391,7 +422,7 @@ class BeanJsonSerializer
     }
 
     /**
-     * Creates an associative array with all the raw values that might need serialisation
+     * Creates an associative array with all the raw values that might need serialisation.
      *
      * @param SugarBean $bean
      *

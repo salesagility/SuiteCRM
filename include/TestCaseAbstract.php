@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,8 +47,7 @@ use PHPUnit_Framework_TestCase;
 use SuiteCRM\Exception\Exception;
 
 /**
- * Class TestCaseAbstract
- * @package SuiteCRM
+ * Class TestCaseAbstract.
  */
 abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
 {

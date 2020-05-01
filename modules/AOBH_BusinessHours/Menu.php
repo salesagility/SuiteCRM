@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -46,8 +45,8 @@ global $mod_strings, $app_strings;
 $module = 'AOBH_BusinessHours';
 
 if (ACLController::checkAccess($module, 'edit', true)) {
-    $module_menu[] = array('index.php?module=AOBH_BusinessHours&action=EditView&return_module=AOBH_BusinessHours&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Create', $module);
+    $module_menu[] = ['index.php?module=AOBH_BusinessHours&action=EditView&return_module=AOBH_BusinessHours&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Create', $module];
 }
 if (ACLController::checkAccess($module, 'list', true)) {
-    $module_menu[] = array('index.php?module=AOBH_BusinessHours&action=index', $mod_strings['LNK_LIST'], 'List', 'AOBH_BusinessHours');
+    $module_menu[] = ['index.php?module=AOBH_BusinessHours&action=index', $mod_strings['LNK_LIST'], 'List', 'AOBH_BusinessHours'];
 }

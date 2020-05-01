@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,56 +36,55 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $module_name = 'Emails';
-$searchdefs[$module_name] = array(
-    'templateMeta' => array(
+$searchdefs[$module_name] = [
+    'templateMeta' => [
         'maxColumns' => '3',
         'maxColumnsBasic' => '4',
-        'widths' => array('label' => '10', 'field' => '30'),
-    ),
-    'layout' => array(
-        'basic_search' => array(
+        'widths' => ['label' => '10', 'field' => '30'],
+    ],
+    'layout' => [
+        'basic_search' => [
             'name',
-            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-        ),
-        'advanced_search' => array(
-           'imap_keywords' => array(
+            ['name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'],
+        ],
+        'advanced_search' => [
+            'imap_keywords' => [
                 'name' => 'imap_keywords',
                 'label' => 'LBL_IMAP_KEYWORDS',
-            ),
-            'from_addr_name' => array(
+            ],
+            'from_addr_name' => [
                 'name' => 'from_addr_name',
                 'label' => 'LBL_FROM',
-            ),
-            'to_addrs_names' => array(
+            ],
+            'to_addrs_names' => [
                 'name' => 'to_addrs_names',
                 'label' => 'LBL_TO',
-            ),
-            'name' => array(
+            ],
+            'name' => [
                 'name' => 'name',
                 'label' => 'LBL_SUBJECT',
-            ),
-            'description' => array(
+            ],
+            'description' => [
                 'name' => 'description',
                 'label' => 'LBL_BODY'
-            ),
-            'assigned_user_id' => array(
+            ],
+            'assigned_user_id' => [
                 'name' => 'assigned_user_id',
                 'label' => 'LBL_ASSIGNED_TO',
                 'type' => 'enum',
-                'function' => array('name' => 'get_user_array', 'params' => array(false))
-            ),
-            'category_id' => array(
+                'function' => ['name' => 'get_user_array', 'params' => [false]]
+            ],
+            'category_id' => [
                 'name' => 'category_id',
                 'default' => true,
                 'width' => '10%',
-            ),
-            'parent_name' => array(
+            ],
+            'parent_name' => [
                 'name' => 'parent_name',
                 'default' => true,
                 'width' => '10%',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,19 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
 class FieldsMetaData extends SugarBean
 {
     // database table columns
@@ -72,12 +59,12 @@ class FieldsMetaData extends SugarBean
     public $inline_edit;
     public $duplicate_merge;
     public $reportable;
-    public $required_fields =  array("name"=>1, "date_start"=>2, "time_start"=>3,);
+    public $required_fields = ['name' => 1, 'date_start' => 2, 'time_start' => 3];
 
     public $table_name = 'fields_meta_data';
     public $object_name = 'FieldsMetaData';
     public $module_dir = 'DynamicFields';
-    public $column_fields = array(
+    public $column_fields = [
         'id',
         'name',
         'vname',
@@ -95,9 +82,9 @@ class FieldsMetaData extends SugarBean
         'massupdate',
         'duplicate_merge',
         'reportable',
-    );
+    ];
 
-    public $list_fields = array(
+    public $list_fields = [
         'id',
         'name',
         'vname',
@@ -110,7 +97,7 @@ class FieldsMetaData extends SugarBean
         'massupdate',
         'duplicate_merge',
         'reportable',
-    );
+    ];
 
     public $field_name_map;
     public $new_schema = true;
@@ -125,13 +112,10 @@ class FieldsMetaData extends SugarBean
         $this->disable_row_level_security = true;
     }
 
-
-
-
     public function mark_deleted($id)
     {
-        $query = "DELETE FROM $this->table_name WHERE  id='$id'";
-        $this->db->query($query, true, "Error deleting record: ");
+        $query = "DELETE FROM {$this->table_name} WHERE  id='{$id}'";
+        $this->db->query($query, true, 'Error deleting record: ');
         $this->mark_relationships_deleted($id);
     }
 
@@ -140,9 +124,9 @@ class FieldsMetaData extends SugarBean
         $data = parent::get_list_view_data();
         $data['VNAME'] = translate($this->vname, $this->custom_module);
         $data['NAMELINK'] = '<input class="checkbox" type="checkbox" name="remove[]" value="' . $this->id . '">&nbsp;&nbsp;<a href="index.php?module=Studio&action=wizard&wizard=EditCustomFieldsWizard&option=EditCustomField&record=' . $this->id . '" >';
+
         return $data;
     }
-
 
     public function get_summary_text()
     {

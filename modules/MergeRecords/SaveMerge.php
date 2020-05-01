@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -84,9 +83,9 @@ foreach ($focus->merge_bean->column_fields as $field) {
             }
             $value = encodeMultienumValue($value);
         }
-        $focus->merge_bean->$field = $value;
+        $focus->merge_bean->{$field} = $value;
     } elseif (isset($focus->merge_bean->field_name_map[$field]['type']) && $focus->merge_bean->field_name_map[$field]['type'] == 'bool') {
-        $focus->merge_bean->$field = 0;
+        $focus->merge_bean->{$field} = 0;
     }
 }
 
@@ -99,7 +98,7 @@ foreach ($focus->merge_bean->additional_column_fields as $field) {
             }
             $value = encodeMultienumValue($value);
         }
-        $focus->merge_bean->$field = $value;
+        $focus->merge_bean->{$field} = $value;
     }
 }
 
@@ -147,16 +146,16 @@ if (is_array($_POST['merged_ids'])) {
 
             if ($mergeSource->load_relationship($name)) {
                 //check to see if loaded relationship is with email address
-                $relName = $mergeSource->$name->getRelatedModuleName();
+                $relName = $mergeSource->{$name}->getRelatedModuleName();
                 if (!empty($relName) && strtolower($relName) == 'emailaddresses') {
                     //handle email address merge
-                    handleEmailMerge($focus, $name, $mergeSource->$name->get());
+                    handleEmailMerge($focus, $name, $mergeSource->{$name}->get());
                 } else {
-                    $data = $mergeSource->$name->get();
+                    $data = $mergeSource->{$name}->get();
                     if (is_array($data) && $focus->merge_bean->load_relationship($name)) {
                         foreach ($data as $related_id) {
                             //add to primary bean
-                            $focus->merge_bean->$name->add($related_id);
+                            $focus->merge_bean->{$name}->add($related_id);
                         }
                     }
                 }
@@ -167,11 +166,11 @@ if (is_array($_POST['merged_ids'])) {
         $mergeSource->mark_deleted($mergeSource->id);
     }
 }
-$GLOBALS['log']->debug('Merged record with id of '.$return_id);
+$GLOBALS['log']->debug('Merged record with id of ' . $return_id);
 
 //do not redirect if noRedirect flag is set.  This is mostly used by Unit tests
 if (empty($_REQUEST['noRedirect'])) {
-    header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
+    header("Location: index.php?action={$return_action}&module={$return_module}&record={$return_id}");
 }
 
 /**
@@ -180,11 +179,11 @@ if (empty($_REQUEST['noRedirect'])) {
  *
  * @param MergeRecord $focus - Merge Bean
  * @param string      $name  name of relationship (email_addresses)
- * @param array       $data  array of email id's that will be merged into existing bean.
+ * @param array       $data  array of email id's that will be merged into existing bean
  */
 function handleEmailMerge($focus, $name, $data)
 {
-    $mrgArray = array();
+    $mrgArray = [];
     //get the email id's to merge
     $existingData = $data;
 
@@ -192,7 +191,7 @@ function handleEmailMerge($focus, $name, $data)
 
     //get the existing email id's
     $focus->merge_bean->load_relationship($name);
-    $exData = $focus->merge_bean->$name->get();
+    $exData = $focus->merge_bean->{$name}->get();
 
     if (!is_array($existingData) || empty($existingData)) {
         return;
@@ -202,17 +201,17 @@ function handleEmailMerge($focus, $name, $data)
     $first = true;
     foreach ($exData as $id) {
         if ($first) {
-            $exEmailQuery .= " '$id' ";
+            $exEmailQuery .= " '{$id}' ";
             $first = false;
         } else {
-            $exEmailQuery .= ", '$id' ";
+            $exEmailQuery .= ", '{$id}' ";
             $first = false;
         }
     }
     $exEmailQuery .= ')';
 
     $exResult = $focus->merge_bean->db->query($exEmailQuery);
-    $existingEmails = array();
+    $existingEmails = [];
     while (($row = $focus->merge_bean->db->fetchByAssoc($exResult)) != null) {
         $existingEmails[$row['id']] = $row['email_address'];
     }
@@ -222,17 +221,17 @@ function handleEmailMerge($focus, $name, $data)
     $first = true;
     foreach ($existingData as $id) {
         if ($first) {
-            $newEmailQuery .= " '$id' ";
+            $newEmailQuery .= " '{$id}' ";
             $first = false;
         } else {
-            $newEmailQuery .= ", '$id' ";
+            $newEmailQuery .= ", '{$id}' ";
             $first = false;
         }
     }
     $newEmailQuery .= ')';
 
     $newResult = $focus->merge_bean->db->query($newEmailQuery);
-    $newEmails = array();
+    $newEmails = [];
     while (($row = $focus->merge_bean->db->fetchByAssoc($newResult)) != null) {
         $newEmails[$row['id']] = $row['email_address'];
     }
@@ -247,6 +246,6 @@ function handleEmailMerge($focus, $name, $data)
     //add email id's.
     foreach ($mrgArray as $related_id => $related_val) {
         //add to primary bean
-        $focus->merge_bean->$name->add($related_id);
+        $focus->merge_bean->{$name}->add($related_id);
     }
 }

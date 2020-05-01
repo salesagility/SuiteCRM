@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/resource/Observers/ResourceObserver.php');
+require_once 'include/resource/Observers/ResourceObserver.php';
 
 class SoapResourceObserver extends ResourceObserver
 {
@@ -54,18 +51,20 @@ class SoapResourceObserver extends ResourceObserver
      * set_soap_server
      * This method accepts an instance of the nusoap soap server so that a proper
      * response can be returned when the notify method is triggered.
+     *
      * @param $server The instance of the nusoap soap server
      */
-    public function set_soap_server(& $server)
+    public function set_soap_server(&$server)
     {
         $this->soapServer = $server;
     }
 
-
     /**
      * notify
-     * Soap implementation to notify the soap clients of a resource management error
+     * Soap implementation to notify the soap clients of a resource management error.
+     *
      * @param msg String message to possibly display
+     * @param mixed $msg
      */
     public function notify($msg = '')
     {
@@ -75,7 +74,7 @@ class SoapResourceObserver extends ResourceObserver
         $error->set_error('resource_management_error');
         //Override the description
         $error->description = $msg;
-        $this->soapServer->methodreturn = array('result'=>$msg, 'error'=>$error->get_soap_array());
+        $this->soapServer->methodreturn = ['result' => $msg, 'error' => $error->get_soap_array()];
         $this->soapServer->serialize_return();
         $this->soapServer->send_response();
         sugar_cleanup(true);

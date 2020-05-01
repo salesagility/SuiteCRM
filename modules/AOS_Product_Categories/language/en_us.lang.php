@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ID' => 'ID',
@@ -70,10 +68,10 @@ $mod_strings = array(
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_NEW_FORM_TITLE' => 'New Product Categories',
     'LBL_PARENT_CATEGORY' => 'Parent Category',
-    'LBL_IS_PARENT' => "Is parent category",
-    'LBL_SUB_CATEGORIES' => "Sub categories",
-    'LBL_PRODUCT_CATEGORYS_NAME' => "Parent category",
-    'LBL_PARENT_CATEGORY_ID' => "Parent Category ID",
+    'LBL_IS_PARENT' => 'Is parent category',
+    'LBL_SUB_CATEGORIES' => 'Sub categories',
+    'LBL_PRODUCT_CATEGORYS_NAME' => 'Parent category',
+    'LBL_PARENT_CATEGORY_ID' => 'Parent Category ID',
 
     'LBL_AOS_PRODUCT_CATEGORIES_AOS_PRODUCTS_FROM_AOS_PRODUCTS_TITLE' => 'Product Categories: Product from Product Title',
-);
+];

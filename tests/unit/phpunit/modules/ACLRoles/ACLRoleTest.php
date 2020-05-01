@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -26,10 +29,10 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $aclRole);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aclRole);
         $this->assertAttributeEquals(true, 'disable_custom_fields', $aclRole);
-        $this->assertAttributeEquals(array('user_id' => 'users'), 'relationship_fields', $aclRole);
+        $this->assertAttributeEquals(['user_id' => 'users'], 'relationship_fields', $aclRole);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $aclRole = new ACLRole();
 
@@ -45,23 +48,23 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole = new ACLRole();
 
         //take count of relationship initially and then after method execution and test if relationship count increases
-        $initial_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $initial_count = count($aclRole->retrieve_relationships('acl_roles_actions', ['role_id' => '1', 'action_id' => '1', 'access_override' => '90'], 'role_id'));
         $aclRole->setAction('1', '1', '90');
-        $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', ['role_id' => '1', 'action_id' => '1', 'access_override' => '90'], 'role_id'));
 
-        $this->assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
+        $this->assertGreaterThanOrEqual($initial_count, $final_count, "values were: [{$initial_count}], [{$final_count}]");
     }
 
-    public function testmark_relationships_deleted()
+    public function testmarkRelationshipsDeleted()
     {
         $aclRole = new ACLRole();
 
         //take count of relationship initially and then after method execution and test if relationship count decreases
-        $initial_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $initial_count = count($aclRole->retrieve_relationships('acl_roles_actions', ['role_id' => '1', 'action_id' => '1', 'access_override' => '90'], 'role_id'));
         $aclRole->mark_relationships_deleted('1');
-        $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', ['role_id' => '1', 'action_id' => '1', 'access_override' => '90'], 'role_id'));
 
-        $this->assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
+        $this->assertLessThanOrEqual($initial_count, $final_count, "values were: [{$initial_count}], [{$final_count}]");
     }
 
     public function testgetUserRoles()
@@ -111,62 +114,62 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $result = $aclRole->getRoleActions('');
         $this->assertInternalType('array', $result);
         $exp = [
-          'Accounts',
-          'Alerts',
-          'Bugs',
-          'Calls',
-          'Calls_Reschedule',
-          'Campaigns',
-          'AOP_Case_Events',
-          'AOP_Case_Updates',
-          'Cases',
-          'Contacts',
-          'AOS_Contracts',
-          'Documents',
-          'EAPM',
-          'EmailTemplates',
-          'EmailMarketing',
-          'Emails',
-          'FP_events',
-          'AOD_Index',
-          'AOD_IndexEvent',
-          'AOS_Invoices',
-          'AOK_Knowledge_Base_Categories',
-          'AOK_KnowledgeBase',
-          'Leads',
-          'FP_Event_Locations',
-          'jjwg_Maps',
-          'jjwg_Address_Cache',
-          'jjwg_Areas',
-          'jjwg_Markers',
-          'Meetings',
-          'Notes',
-          'Opportunities',
-          'OutboundEmailAccounts',
-          'AOS_PDF_Templates',
-          'AOW_Processed',
-          'AOS_Products',
-          'AOS_Product_Categories',
-          'AM_TaskTemplates',
-          'ProjectTask',
-          'Project',
-          'AM_ProjectTemplates',
-          'AOS_Quotes',
-          'AOR_Reports',
-          'AOR_Scheduled_Reports',
-          'SecurityGroups',
-          'Spots',
-          'SurveyQuestionOptions',
-          'SurveyQuestionResponses',
-          'SurveyQuestions',
-          'SurveyResponses',
-          'Surveys',
-          'Prospects',
-          'ProspectLists',
-          'Tasks',
-          'TemplateSectionLine',
-          'Users',
-          'AOW_WorkFlow',
+            'Accounts',
+            'Alerts',
+            'Bugs',
+            'Calls',
+            'Calls_Reschedule',
+            'Campaigns',
+            'AOP_Case_Events',
+            'AOP_Case_Updates',
+            'Cases',
+            'Contacts',
+            'AOS_Contracts',
+            'Documents',
+            'EAPM',
+            'EmailTemplates',
+            'EmailMarketing',
+            'Emails',
+            'FP_events',
+            'AOD_Index',
+            'AOD_IndexEvent',
+            'AOS_Invoices',
+            'AOK_Knowledge_Base_Categories',
+            'AOK_KnowledgeBase',
+            'Leads',
+            'FP_Event_Locations',
+            'jjwg_Maps',
+            'jjwg_Address_Cache',
+            'jjwg_Areas',
+            'jjwg_Markers',
+            'Meetings',
+            'Notes',
+            'Opportunities',
+            'OutboundEmailAccounts',
+            'AOS_PDF_Templates',
+            'AOW_Processed',
+            'AOS_Products',
+            'AOS_Product_Categories',
+            'AM_TaskTemplates',
+            'ProjectTask',
+            'Project',
+            'AM_ProjectTemplates',
+            'AOS_Quotes',
+            'AOR_Reports',
+            'AOR_Scheduled_Reports',
+            'SecurityGroups',
+            'Spots',
+            'SurveyQuestionOptions',
+            'SurveyQuestionResponses',
+            'SurveyQuestions',
+            'SurveyResponses',
+            'Surveys',
+            'Prospects',
+            'ProspectLists',
+            'Tasks',
+            'TemplateSectionLine',
+            'Users',
+            'AOW_WorkFlow',
         ];
         $this->assertEquals($exp, array_keys($result));
 
@@ -181,7 +184,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole = new ACLRole();
 
         //wihout any fields set
-        $expected = array('id' => '', 'name' => '',  'description' => '');
+        $expected = ['id' => '', 'name' => '',  'description' => ''];
         $actual = $aclRole->toArray();
         $this->assertSame($expected, $actual);
 
@@ -190,7 +193,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole->name = 'test';
         $aclRole->description = 'some description text';
 
-        $expected = array('id' => '1', 'name' => 'test',  'description' => 'some description text');
+        $expected = ['id' => '1', 'name' => 'test',  'description' => 'some description text'];
         $actual = $aclRole->toArray();
         $this->assertSame($expected, $actual);
     }
@@ -199,7 +202,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
     {
         $aclRole = new ACLRole();
 
-        $arr = array('id' => '1', 'name' => 'test',  'description' => 'some description text');
+        $arr = ['id' => '1', 'name' => 'test',  'description' => 'some description text'];
         $aclRole->fromArray($arr);
 
         //verify that it sets the object attributes correctly

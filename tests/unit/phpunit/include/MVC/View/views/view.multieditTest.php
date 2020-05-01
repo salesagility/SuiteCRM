@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewMultieditTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewMultiedit()

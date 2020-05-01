@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,17 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $mod_strings, $app_strings, $sugar_config;
 
-        
 if (ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)) {
-    $module_menu[]=array("index.php?module=AM_ProjectTemplates&action=EditView&return_module=AM_ProjectTemplates&return_action=index", $mod_strings['LNK_NEW_RECORD'],"Create", 'AM_ProjectTemplates');
+    $module_menu[] = ['index.php?module=AM_ProjectTemplates&action=EditView&return_module=AM_ProjectTemplates&return_action=index', $mod_strings['LNK_NEW_RECORD'], 'Create', 'AM_ProjectTemplates'];
 }
 if (ACLController::checkAccess('AM_ProjectTemplates', 'list', true)) {
-    $module_menu[]=array("index.php?module=AM_ProjectTemplates&action=index&return_module=AM_ProjectTemplates&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'AM_ProjectTemplates');
+    $module_menu[] = ['index.php?module=AM_ProjectTemplates&action=index&return_module=AM_ProjectTemplates&return_action=DetailView', $mod_strings['LNK_LIST'], 'List', 'AM_ProjectTemplates'];
 }
 if (ACLController::checkAccess('AM_ProjectTemplates', 'import', true)) {
-    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=AM_ProjectTemplates&return_module=AM_ProjectTemplates&return_action=index", $mod_strings['LNK_IMPORT_AM_PROJECTTEMPLATES'],"Import", 'AM_ProjectTemplates');
+    $module_menu[] = ['index.php?module=Import&action=Step1&import_module=AM_ProjectTemplates&return_module=AM_ProjectTemplates&return_action=index', $mod_strings['LNK_IMPORT_AM_PROJECTTEMPLATES'], 'Import', 'AM_ProjectTemplates'];
 }

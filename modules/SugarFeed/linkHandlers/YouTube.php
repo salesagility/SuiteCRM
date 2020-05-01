@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/SugarFeed/linkHandlers/Link.php');
+require_once 'modules/SugarFeed/linkHandlers/Link.php';
 
 class FeedLinkHandlerYoutube extends FeedLinkHandlerLink
 {
@@ -49,12 +48,12 @@ class FeedLinkHandlerYoutube extends FeedLinkHandlerLink
     {
         return '<div style="padding-left:10px"><object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/' . $data['LINK_URL'] . '&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="wmode" value="opaque" /><embed src="http://www.youtube.com/v/' . $data['LINK_URL'] . '&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="false" wmode="opaque" width="425" height="344"></embed></object></div>';
     }
-    
+
     public function handleInput($feed, $link_type, $link_url)
     {
-        $match = array();
+        $match = [];
         preg_match('/v=([^\&]+)/', $link_url, $match);
-        
+
         if (!empty($match[1])) {
             $feed->link_type = $link_type;
             $feed->link_url = $match[1];

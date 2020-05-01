@@ -2,7 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,14 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $mod_strings;
 $mod_strings_users = $mod_strings;
 
 global $current_user;
 if (!$GLOBALS['current_user']->isAdminForModule('Users')
   ) {
-    sugar_die("You cannot access this page.");
+    sugar_die('You cannot access this page.');
 }
 
 global $locale;
@@ -57,17 +56,17 @@ $return_module = isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] 
 $return_action = isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '';
 $return_id = isset($_REQUEST['return_id']) ? $_REQUEST['return_id'] : '';
 if (!empty($return_module)) {
-    $cancel_location = "index.php?module=".$return_module."&action=".$return_action."&record=".$return_id;
+    $cancel_location = 'index.php?module=' . $return_module . '&action=' . $return_action . '&record=' . $return_id;
 } else {
-    $cancel_location = "index.php?module=Users&action=index";
+    $cancel_location = 'index.php?module=Users&action=index';
 }
 
 echo "<h2 class='moduleTitle' style=\"margin-bottom:0px;\">{$mod_strings_users['LBL_REASS_SCRIPT_TITLE']}</h2>";
 
 // Include Metadata for processing
-require_once("modules/Users/metadata/reassignScriptMetadata.php");
-if (file_exists("custom/modules/Users/reassignScriptMetadata_override.php")) {
-    include("custom/modules/Users/reassignScriptMetadata_override.php");
+require_once 'modules/Users/metadata/reassignScriptMetadata.php';
+if (file_exists('custom/modules/Users/reassignScriptMetadata_override.php')) {
+    include 'custom/modules/Users/reassignScriptMetadata_override.php';
 }
 
 if (!empty($_GET['record'])) {
@@ -77,16 +76,16 @@ if (!empty($_GET['record'])) {
 
 if (!isset($_POST['fromuser']) && !isset($_GET['execute'])) {
     ///////////////////// BEGIN STEP 1 - Select users/modules /////////////////////////
-    $exclude_modules = array(
-        "ImportMap",
-        "UsersLastImport",
-        "Dashboard",
-        "SavedSearch",
-        "UserPreference",
-        "SugarFavorites",
+    $exclude_modules = [
+        'ImportMap',
+        'UsersLastImport',
+        'Dashboard',
+        'SavedSearch',
+        'UserPreference',
+        'SugarFavorites',
         'OAuthKey',
         'OAuthToken',
-    );
+    ];
 
     if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
         unset($_SESSION['reassignRecords']);
@@ -94,13 +93,13 @@ if (!isset($_POST['fromuser']) && !isset($_GET['execute'])) {
 <form method=post action="index.php?module=Users&action=reassignUserRecords" name='EditView' id='EditView'>
 <table cellspacing='1' cellpadding='1' border='0'>
 <tr>
-    <td><?php echo $mod_strings_users['LBL_REASS_DESC_PART1']."<BR><br>"?></td>
+    <td><?php echo $mod_strings_users['LBL_REASS_DESC_PART1'] . '<BR><br>'; ?></td>
 </tr>
 <tr>
 <td>
 <input type=submit class="button" value="<?php echo $mod_strings_users['LBL_REASS_BUTTON_CONTINUE']; ?>" name=steponesubmit>
 &nbsp;<input type=button class="button" value="<?php echo $mod_strings_users['LBL_REASS_BUTTON_CLEAR']; ?>" onclick='clearCurrentRecords();'>
-<input type=button class="button" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']; ?>" onclick='document.location="<?php echo $cancel_location ?>"'>
+<input type=button class="button" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']; ?>" onclick='document.location="<?php echo $cancel_location; ?>"'>
 </td>
 </tr>
 </table>
@@ -123,7 +122,7 @@ $all_users = User::getAllUsers();
 <BR>
 <select name="touser" id="touser">
 <?php
-if (isset($_SESSION['reassignRecords']['fromuser']) && isset($all_users[$_SESSION['reassignRecords']['fromuser']])) {
+if (isset($_SESSION['reassignRecords']['fromuser'], $all_users[$_SESSION['reassignRecords']['fromuser']])) {
         unset($all_users[$_SESSION['reassignRecords']['fromuser']]);
     }
 
@@ -142,14 +141,14 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
             if (empty($beanFiles[$p])) {
                 unset($beanListDup[$m]);
             } else {
-                require_once($beanFiles[$p]);
+                require_once $beanFiles[$p];
                 $obj = new $p();
                 if (!isset($obj->field_defs['assigned_user_id']) ||
                      (
-                         isset($obj->field_defs['assigned_user_id']) &&
-                    isset($obj->field_defs['assigned_user_id']['source']) &&
-                    $obj->field_defs['assigned_user_id']['source'] == "non-db"
-                )
+                         isset($obj->field_defs['assigned_user_id'], $obj->field_defs['assigned_user_id']['source'])
+                     &&
+                    $obj->field_defs['assigned_user_id']['source'] == 'non-db'
+                     )
               ) {
                     unset($beanListDup[$m]);
                 }
@@ -158,10 +157,10 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
         $beanListDup = array_diff($beanListDup, $exclude_modules);
 
         //Leon bug 20739
-        $beanListDupDisp=array() ;
+        $beanListDupDisp = [];
         foreach ($beanListDup as $m => $p) {
             if (isset($app_list_strings['moduleList'][$m])) {
-                $beanListDupDisp[$app_list_strings['moduleList'][$m]]=$p;
+                $beanListDupDisp[$app_list_strings['moduleList'][$m]] = $p;
             }
         }
         $_SESSION['reassignRecords']['assignedModuleListCache'] = $beanListDup;
@@ -170,7 +169,7 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
     $beanListDup = array_flip($_SESSION['reassignRecords']['assignedModuleListCache']);
     $beanListFlip = array_flip($_SESSION['reassignRecords']['assignedModuleListCacheDisp']);
     asort($beanListFlip);
-    $selected = array();
+    $selected = [];
     if (!empty($_SESSION['reassignRecords']['modules'])) {
         foreach ($_SESSION['reassignRecords']['modules'] as $mod => $arr) {
             $selected[] = $mod;
@@ -185,39 +184,41 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
 <td>
 <?php
 foreach ($moduleFilters as $modFilter => $fieldArray) {
-        $display = (!empty($fieldArray['display_default']) && $fieldArray['display_default'] == true ? "block" : "none");
+        $display = (!empty($fieldArray['display_default']) && $fieldArray['display_default'] == true ? 'block' : 'none');
         //Leon bug 20739
-        $t_mod_strings=return_module_language($GLOBALS['current_language'], $modFilter);
-        echo "<div id=\"reassign_{$GLOBALS['beanList'][$modFilter]}\" style=\"display:$display\">\n";
+        $t_mod_strings = return_module_language($GLOBALS['current_language'], $modFilter);
+        echo "<div id=\"reassign_{$GLOBALS['beanList'][$modFilter]}\" style=\"display:{$display}\">\n";
         echo "<h5 style=\"padding-left:0px; margin-bottom:4px;\">{$app_list_strings['moduleList'][$modFilter]} ", " {$mod_strings_users['LBL_REASS_FILTERS']}</h5>\n";
         foreach ($fieldArray['fields'] as $meta) {
-            $multi = "";
-            $name = (!empty($meta['name']) ? $meta['name'] : "");
-            $size = (!empty($meta['size']) ? "size=\"{$meta['size']}\"" : "");
+            $multi = '';
+            $name = (!empty($meta['name']) ? $meta['name'] : '');
+            $size = (!empty($meta['size']) ? "size=\"{$meta['size']}\"" : '');
             //Leon bug 20739
-            echo $t_mod_strings[$meta['vname']] ."\n<BR>\n";
+            echo $t_mod_strings[$meta['vname']] . "\n<BR>\n";
             switch ($meta['type']) {
-            case "text":
-                $tag = "input";
+            case 'text':
+                $tag = 'input';
+
                 break;
-            case "multiselect":
-                $multi = "multiple=\"true\"";
-                $name .= "[]";
+            case 'multiselect':
+                $multi = 'multiple="true"';
+                $name .= '[]';
                 // no break - Continue into select
-            case "select":
-                $tag = "select";
+            case 'select':
+                $tag = 'select';
                 $sel = '';
                 if (!empty($_SESSION['reassignRecords']['filters'][$meta['name']])) {
                     $sel = $_SESSION['reassignRecords']['filters'][$meta['name']];
                 }
                 $extra = get_select_options_with_id($meta['dropdown'], $sel);
                 $extra .= "\n</select>";
+
                 break;
             default:
                 //echo "Skipping field {$meta['name']} since the type is not supported<BR>";
                 continue;
         }
-            echo "<$tag $size name=\"$name\" $multi>\n$extra";
+            echo "<{$tag} {$size} name=\"{$name}\" {$multi}>\n{$extra}";
             echo "<BR>\n";
         }
         echo "</div>\n";
@@ -230,7 +231,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
 <td>
 <input type=submit class="button" value="<?php echo $mod_strings_users['LBL_REASS_BUTTON_CONTINUE']; ?>" name=steponesubmit>
 &nbsp;<input type=button class="button" value="<?php echo $mod_strings_users['LBL_REASS_BUTTON_CLEAR']; ?>" onclick='clearCurrentRecords();'>
-<input type=button class="button" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']; ?>" onclick='document.location="<?php echo $cancel_location ?>"'>
+<input type=button class="button" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']; ?>" onclick='document.location="<?php echo $cancel_location; ?>"'>
 </td>
 </tr>
 </table>
@@ -252,7 +253,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
     $fromUserNameQuoted = $this->db->quote($_POST['fromuser']);
     $toUserNameQuoted = $this->db->quote($_POST['touser']);
 
-    $query = "select user_name, id from users where id in ('$fromUserNameQuoted', '$toUserNameQuoted')";
+    $query = "select user_name, id from users where id in ('{$fromUserNameQuoted}', '{$toUserNameQuoted}')";
     $res = DBManagerFactory::getInstance()->query($query, true);
     while ($row = DBManagerFactory::getInstance()->fetchByAssoc($res)) {
         if ($row['id'] == $_POST['fromuser']) {
@@ -270,11 +271,11 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
     echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_TWO']}\n";
     echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_THREE']}\n";
     echo "</ul>\n";
-    require_once('include/Smarty/plugins/function.sugar_help.php');
+    require_once 'include/Smarty/plugins/function.sugar_help.php';
     $sugar_smarty = new Sugar_Smarty();
-    $help_img = smarty_function_sugar_help(array("text"=>$mod_strings['LBL_REASS_VERBOSE_HELP']), $sugar_smarty);
-    echo "<BR><input type=checkbox name=verbose> {$mod_strings_users['LBL_REASS_VERBOSE_OUTPUT']}".$help_img."<BR>\n";
-    
+    $help_img = smarty_function_sugar_help(['text' => $mod_strings['LBL_REASS_VERBOSE_HELP']], $sugar_smarty);
+    echo "<BR><input type=checkbox name=verbose> {$mod_strings_users['LBL_REASS_VERBOSE_OUTPUT']}" . $help_img . "<BR>\n";
+
     unset($_SESSION['reassignRecords']['modules']);
     $beanListFlip = array_flip($_SESSION['reassignRecords']['assignedModuleListCache']);
     foreach ($_POST['modules'] as $module) {
@@ -284,7 +285,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
         }
         $p_module = $beanListFlip[$module];
 
-        require_once($beanFiles[$module]);
+        require_once $beanFiles[$module];
         $object = new $module();
         if (empty($object->table_name)) {
             //			echo "<h5>Could not find the database table for $p_module.</h5>";
@@ -300,13 +301,13 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
         $currentUserID = $this->db->quote($current_user->id);
         $tableName = $this->db->quote($object->table_name);
 
-        $q_select = "select id";
-        $q_update = "update ";
-        $q_set = " set assigned_user_id = '$toUserNameQuoted', " .
+        $q_select = 'select id';
+        $q_update = 'update ';
+        $q_set = " set assigned_user_id = '{$toUserNameQuoted}', " .
             "date_modified = '" . TimeDate::getInstance()->nowDb() . "', " .
-            "modified_user_id = '$currentUserID' ";
+            "modified_user_id = '{$currentUserID}' ";
         $q_tables = " {$tableName} ";
-        $q_where = "where {$tableName}.deleted=0 and {$tableName}.assigned_user_id = '$fromUserNameQuoted' ";
+        $q_where = "where {$tableName}.deleted=0 and {$tableName}.assigned_user_id = '{$fromUserNameQuoted}' ";
 
         // Process conditions based on metadata
         if (isset($moduleFilters[$p_module]['fields']) && is_array($moduleFilters[$p_module]['fields'])) {
@@ -320,38 +321,41 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                     $q_tables .= "inner join {$tableName}_cstm on {$tableName}.id = {$tableName}_cstm.id_c ";
                     $custom_added = true;
                 }
-                $addcstm = ($is_custom ? "_cstm" : "");
+                $addcstm = ($is_custom ? '_cstm' : '');
                 $nameQuoted = $_POST[$meta['name']];
                 switch ($meta['type']) {
-                    case "text":
-                    case "select":
+                    case 'text':
+                    case 'select':
                     $q_where .= " and {$tableName}{$addcstm}.{$meta['dbname']} = '{$nameQuoted}' ";
+
                         break;
-                    case "multiselect":
+                    case 'multiselect':
                         if (empty($nameQuoted)) {
                             continue;
                         }
-                        $in_string = "";
-                        $empty_check = "";
+                        $in_string = '';
+                        $empty_check = '';
                         foreach ($nameQuoted as $onevalue) {
                             if (empty($onevalue)) {
                                 $empty_check .= " OR {$tableName}{$addcstm}.{$meta['dbname']} is null ";
                             }
-                            $in_string .= "'$onevalue', ";
+                            $in_string .= "'{$onevalue}', ";
                         }
                         $in_string = substr($in_string, 0, count($in_string) - 3);
-                        $q_where .= " and ({$tableName}{$addcstm}.{$meta['dbname']} in ($in_string) $empty_check)";
+                        $q_where .= " and ({$tableName}{$addcstm}.{$meta['dbname']} in ({$in_string}) {$empty_check})";
+
                         break;
                     default:
                         //echo "Skipping field {$meta['name']} since the type is not supported<BR>";
                         continue;
+
                         break;
                 }
             }
         }
-        $query = "$q_select from $q_tables $q_where";
-        $countquery = "select count(*) AS count from $q_tables $q_where";
-        $updatequery = "$q_update $q_tables $q_set $q_where";
+        $query = "{$q_select} from {$q_tables} {$q_where}";
+        $countquery = "select count(*) AS count from {$q_tables} {$q_where}";
+        $updatequery = "{$q_update} {$q_tables} {$q_set} {$q_where}";
 
         $_SESSION['reassignRecords']['fromuser'] = $_POST['fromuser'];
         $_SESSION['reassignRecords']['touser'] = $_POST['touser'];
@@ -390,7 +394,7 @@ elseif (isset($_GET['execute']) && $_GET['execute'] == true) {
     foreach ($_SESSION['reassignRecords']['modules'] as $module => $queries) {
         $p_module = $beanListFlip[$module];
         $workflow = false;
-        if (isset($_POST[$module."_workflow"]) && $_POST[$module."_workflow"] = "on") {
+        if (isset($_POST[$module . '_workflow']) && $_POST[$module . '_workflow'] = 'on') {
             $workflow = true;
         }
 
@@ -404,14 +408,14 @@ elseif (isset($_GET['execute']) && $_GET['execute'] == true) {
         echo "<table border='0' cellspacing='0' cellpadding='0'  class='detail view'>\n";
         echo "<tr>\n";
         echo "<td>\n";
-        if (! $workflow) {
+        if (!$workflow) {
             $affected_rows = DBManagerFactory::getInstance()->getAffectedRowCount($res);
-            echo "{$mod_strings_users['LBL_UPDATE_FINISH']}: $affected_rows {$mod_strings_users['LBL_AFFECTED']}<BR>\n";
+            echo "{$mod_strings_users['LBL_UPDATE_FINISH']}: {$affected_rows} {$mod_strings_users['LBL_AFFECTED']}<BR>\n";
         } else {
-            $successarr = array();
-            $failarr = array();
+            $successarr = [];
+            $failarr = [];
 
-            require_once($beanFiles[$module]);
+            require_once $beanFiles[$module];
             while ($row = DBManagerFactory::getInstance()->fetchByAssoc($res)) {
                 $bean = new $module();
                 if (empty($row['id'])) {
@@ -434,17 +438,17 @@ elseif (isset($_GET['execute']) && $_GET['execute'] == true) {
                     } elseif (!empty($bean->document_name)) {
                         $linkname = $bean->document_name;
                     }
-                    $successstr = "{$mod_strings_users['LBL_REASS_SUCCESS_ASSIGN']} {$bean->object_name} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">$linkname</a></i>\" {$mod_strings_users['LBL_REASS_FROM']} $fromusername {$mod_strings_users['LBL_REASS_TO']} $tousername";
+                    $successstr = "{$mod_strings_users['LBL_REASS_SUCCESS_ASSIGN']} {$bean->object_name} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">{$linkname}</a></i>\" {$mod_strings_users['LBL_REASS_FROM']} {$fromusername} {$mod_strings_users['LBL_REASS_TO']} {$tousername}";
                     $successarr[] = $successstr;
                 } else {
-                    $failarr[] = "{$mod_strings_users['LBL_REASS_FAILED_SAVE']} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">$linkname</a></i>\".";
+                    $failarr[] = "{$mod_strings_users['LBL_REASS_FAILED_SAVE']} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">{$linkname}</a></i>\".";
                 }
             }
 
-            if (isset($_POST['verbose']) && $_POST['verbose'] == "on") {
+            if (isset($_POST['verbose']) && $_POST['verbose'] == 'on') {
                 echo "<h5>{$mod_strings_users['LBL_REASS_THE_FOLLOWING']} {$app_list_strings['moduleList'][$p_module]} {$mod_strings_users['LBL_REASS_HAVE_BEEN_UPDATED']}</h5>\n";
                 foreach ($successarr as $ord) {
-                    echo "$ord\n<BR>\n";
+                    echo "{$ord}\n<BR>\n";
                 }
                 if (empty($successarr)) {
                     echo "{$mod_strings_users['LBL_REASS_NONE']}\n<BR>\n";
@@ -452,15 +456,15 @@ elseif (isset($_GET['execute']) && $_GET['execute'] == true) {
 
                 echo "<h5>{$mod_strings_users['LBL_REASS_THE_FOLLOWING']} {$app_list_strings['moduleList'][$p_module]} {$mod_strings_users['LBL_REASS_CANNOT_PROCESS']}</h5>\n";
                 foreach ($failarr as $failure) {
-                    echo $failure."\n<BR>\n";
+                    echo $failure . "\n<BR>\n";
                 }
                 if (empty($failarr)) {
                     echo "{$mod_strings_users['LBL_REASS_NONE']}\n<BR>\n";
                 }
             } else {
                 echo "{$mod_strings_users['LBL_REASS_UPDATE_COMPLETE']}\n<BR>\n";
-                echo "&nbsp;&nbsp;".count($successarr)." {$mod_strings_users['LBL_REASS_SUCCESSFUL']}\n<BR>\n";
-                echo "&nbsp;&nbsp;".count($failarr)." {$mod_strings_users['LBL_REASS_FAILED']}\n";
+                echo '&nbsp;&nbsp;' . count($successarr) . " {$mod_strings_users['LBL_REASS_SUCCESSFUL']}\n<BR>\n";
+                echo '&nbsp;&nbsp;' . count($failarr) . " {$mod_strings_users['LBL_REASS_FAILED']}\n";
             }
             echo "<BR>\n";
         }

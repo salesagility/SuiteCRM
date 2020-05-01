@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Controller\InvocationStrategy;
 
 use Psr\Http\Message\ResponseInterface;
@@ -8,7 +9,7 @@ use Slim\Interfaces\InvocationStrategyInterface;
 class SuiteInvocationStrategy implements InvocationStrategyInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __invoke(
         callable $callable,

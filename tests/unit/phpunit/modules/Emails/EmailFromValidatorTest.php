@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -47,9 +46,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once __DIR__ . '/../../../../../modules/Emails/EmailFromValidator.php';
 
 /**
- * EmailFromValidatorTest
+ * EmailFromValidatorTest.
  *
  * @author gyula
+ *
+ * @internal
  */
 class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
 {
@@ -58,7 +59,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
         $validator = new EmailFromValidator();
-        
+
         // from_addr is not set
         $email->From = 'gusta@yammee.org';
         unset($email->from_addr);
@@ -71,8 +72,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals([
             EmailFromValidator::ERR_FIELD_FROM_ADDR_IS_NOT_SET,
         ], $errors);
-        
-        
+
         // from_addr is empty
         $email->from_addr = '';
         $valid = $validator->isValid($email);
@@ -83,8 +83,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
-        
-        
+
         // from_addr is invalid
         $email->from_addr = 'gustayammee';
         $valid = $validator->isValid($email);
@@ -95,7 +94,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
-        
+
         // from_addr is not match to From and/or from_addr_name - address part
         $email->from_addr = 'langusta@yammee.org';
         $valid = $validator->isValid($email);
@@ -106,12 +105,12 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
     }
-    
+
     public function testValidateWrongFrom()
     {
         $email = new Email();
         $validator = new EmailFromValidator();
-        
+
         // From is not set
         unset($email->From);
         $email->from_addr = 'gusta@yammee.org';
@@ -124,8 +123,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals([
             EmailFromValidator::ERR_FIELD_FROM_IS_NOT_SET,
         ], $errors);
-        
-        
+
         // From is empty
         $email->From = '';
         $valid = $validator->isValid($email);
@@ -136,8 +134,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
-        
-        
+
         // From is invalid
         $email->From = 'gustayammee';
         $valid = $validator->isValid($email);
@@ -148,7 +145,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
-        
+
         // From is not match to from_addr and/or from_addr_name - address part
         $email->From = 'langusta@yammee.org';
         $valid = $validator->isValid($email);
@@ -159,12 +156,12 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
     }
-    
+
     public function testValidateOk()
     {
         $email = new Email();
         $validator = new EmailFromValidator();
-        
+
         $email->From = 'gusta@yammee.org';
         $email->from_addr = 'gusta@yammee.org';
         $email->FromName = 'Mr. Wee Gusta';

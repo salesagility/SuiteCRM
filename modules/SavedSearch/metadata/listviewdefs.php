@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,19 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$listViewDefs['SavedSearch'] = array(
-    'NAME' => array(
+$listViewDefs['SavedSearch'] = [
+    'NAME' => [
         'width' => '40%',
         'label' => 'LBL_LIST_NAME',
         'link' => true,
-        'customCode' => '<a  href="index.php?action=index&module=SavedSearch&saved_search_select={$ID}">{$NAME}</a>'),
-    'SEARCH_MODULE' => array(
+        'customCode' => '<a  href="index.php?action=index&module=SavedSearch&saved_search_select={$ID}">{$NAME}</a>'],
+    'SEARCH_MODULE' => [
         'width' => '35%',
-        'label' => 'LBL_LIST_MODULE'),
-    'ASSIGNED_USER_NAME' => array(
+        'label' => 'LBL_LIST_MODULE'],
+    'ASSIGNED_USER_NAME' => [
         'width' => '10%',
-        'label' => 'LBL_LIST_ASSIGNED_USER')
-);
+        'label' => 'LBL_LIST_ASSIGNED_USER']
+];

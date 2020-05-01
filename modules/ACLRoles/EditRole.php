@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-global $app_list_strings;// $modInvisList
+global $app_list_strings; // $modInvisList
 
 $sugar_smarty = new Sugar_Smarty();
 
@@ -61,18 +58,18 @@ $sugar_smarty->assign('APP_LIST', $app_list_strings);
 }*/
 $role = new ACLRole();
 $role_name = '';
-$return= array('module'=>'ACLRoles', 'action'=>'index', 'record'=>'');
+$return = ['module' => 'ACLRoles', 'action' => 'index', 'record' => ''];
 if (!empty($_REQUEST['record'])) {
     $role->retrieve($_REQUEST['record']);
     $categories = ACLRole::getRoleActions($_REQUEST['record']);
-    
-    $role_name =  $role->name;
+
+    $role_name = $role->name;
     if (!empty($_REQUEST['isDuplicate'])) {
         //role id is stripped here in duplicate so anything using role id after this will not have it
         $role->id = '';
     } else {
-        $return['record']= $role->id;
-        $return['action']='DetailView';
+        $return['record'] = $role->id;
+        $return['action'] = 'DetailView';
     }
 } else {
     $categories = ACLRole::getRoleActions('');
@@ -81,12 +78,12 @@ $sugar_smarty->assign('ROLE', $role->toArray());
 $tdwidth = 10;
 
 if (isset($_REQUEST['return_module'])) {
-    $return['module']=$_REQUEST['return_module'];
+    $return['module'] = $_REQUEST['return_module'];
     if (isset($_REQUEST['return_action'])) {
-        $return['action']=$_REQUEST['return_action'];
+        $return['action'] = $_REQUEST['return_action'];
     }
     if (isset($_REQUEST['return_record'])) {
-        $return['record']=$_REQUEST['return_record'];
+        $return['record'] = $_REQUEST['return_record'];
     }
 }
 
@@ -107,7 +104,7 @@ if ($_REQUEST['category_name'] == 'All') {
     echo $sugar_smarty->fetch('modules/ACLRoles/EditAllBody.tpl');
 } else {
     //WDong Bug 23195: Strings not localized in Role Management.
-    echo getClassicModuleTitle($_REQUEST['category_name'], array($app_list_strings['moduleList'][$_REQUEST['category_name']]), false);
+    echo getClassicModuleTitle($_REQUEST['category_name'], [$app_list_strings['moduleList'][$_REQUEST['category_name']]], false);
     echo $sugar_smarty->fetch('modules/ACLRoles/EditRole.tpl');
     echo '</form>';
 }

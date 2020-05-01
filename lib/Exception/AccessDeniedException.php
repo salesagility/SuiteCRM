@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,13 +42,13 @@ namespace SuiteCRM\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class AccessDeniedException
- * @package SuiteCRM\Exception
+ * Class AccessDeniedException.
  */
 class AccessDeniedException extends Exception
 {
     /**
      * AccessDeniedException constructor.
+     *
      * @param string $message
      * @param int $code
      * @param null $previous

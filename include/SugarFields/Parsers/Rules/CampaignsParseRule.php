@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class CampaignsParseRule extends BaseRule
 {
@@ -49,16 +48,13 @@ class CampaignsParseRule extends BaseRule
     {
     }
 
-
-
-
     public function preParse($panels, $view)
     {
         if ($view == 'EditView') {
             $frequencyAdded = false;
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+            foreach ($panels as $name => $panel) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         if (empty($column) && !$frequencyAdded) {
                             //Add the frequency label
                             $panels[$name][$rowCount][$key] = 'frequency';
@@ -80,6 +76,7 @@ class CampaignsParseRule extends BaseRule
                 $panels['default'][][] = 'frequency';
             }
         }
+
         return $panels;
     }
 }

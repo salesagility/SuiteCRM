@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,10 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 logThis('[At cancel.php]');
 logThis('cleaning up files and session.  goodbye.');
-
 
 //Check the current step.
 
@@ -55,7 +54,7 @@ unlinkUWTempFiles();
 unlinkUploadFiles();
 resetUwSession();
 
-$uwMain =<<<eoq
+$uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 	<tr>
 		<td align="left">
@@ -77,14 +76,13 @@ $uwMain =<<<eoq
 </table>
 eoq;
 
+$showBack = false;
+$showCancel = false;
+$showRecheck = false;
+$showNext = false;
+$showExit = true;
 
-$showBack		= false;
-$showCancel		= false;
-$showRecheck	= false;
-$showNext		= false;
-$showExit       = true;
-
-$stepBack		= $_REQUEST['step'] - 1;
-$stepNext		= $_REQUEST['step'] + 1;
-$stepCancel		= -1;
-$stepRecheck	= $_REQUEST['step'];
+$stepBack = $_REQUEST['step'] - 1;
+$stepNext = $_REQUEST['step'] + 1;
+$stepCancel = -1;
+$stepRecheck = $_REQUEST['step'];

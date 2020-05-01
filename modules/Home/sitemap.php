@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once("include/utils.php");
+require_once 'include/utils.php';
 
 $sm = sm_build_array();
 $sm_smarty = new Sugar_Smarty();
@@ -56,11 +55,11 @@ $app_list_strings = return_app_list_strings_language($current_language);
 
 foreach ($sm as $mod_dir_name => $links) {
     $module_friendly_name = $app_list_strings['moduleList'][$mod_dir_name];
-    $temphtml = "";
-    $temphtml .= '<h4><a href="javascript:window.location=\'index.php?module='.$mod_dir_name.'&action=index\'">' . $module_friendly_name .'</a></h4><ul class=\'noBullet\'>';
+    $temphtml = '';
+    $temphtml .= '<h4><a href="javascript:window.location=\'index.php?module=' . $mod_dir_name . '&action=index\'">' . $module_friendly_name . '</a></h4><ul class=\'noBullet\'>';
 
     foreach ($links as $name => $href) {
-        $temphtml .= '<li class=\'noBullet\'><a href="javascript:window.location=\''. $href .'\'">' . $name . ' ' . '</a></li>';
+        $temphtml .= '<li class=\'noBullet\'><a href="javascript:window.location=\'' . $href . '\'">' . $name . ' ' . '</a></li>';
     }
 
     $temphtml .= '</ul>';
@@ -82,21 +81,19 @@ function sm_build_array()
         return $_SESSION['SM_ARRAY'];
     }
 
-
-    include("include/modules.php");
+    include 'include/modules.php';
     global $mod_strings;
 
-
     // Need to set up mod_strings when we iterate through module menus.
-    $orig_modstrings = array();
+    $orig_modstrings = [];
     if (!empty($mod_strings)) {
         $orig_modstrings = $mod_strings;
     }
 
     $current_language = get_current_language();
 
-    $exclude= array();		// in case you want to exclude any.
-    $mstr_array = array();
+    $exclude = [];		// in case you want to exclude any.
+    $mstr_array = [];
 
     global $modListHeader;
     if (!isset($modListHeader)) {
@@ -106,29 +103,29 @@ function sm_build_array()
         }
     }
 
-    foreach ($modListHeader as $key=>$val) {
+    foreach ($modListHeader as $key => $val) {
         if (!empty($exclusion_array) && in_array($val, $exclude)) {
             continue;
-        } else {
-            if (file_exists('modules/'.$val.'/Menu.php')) {
-                $mod_strings = return_module_language($current_language, $val);
-                $module_menu = array();
-                include('modules/'.$val.'/Menu.php');
+        }
+        if (file_exists('modules/' . $val . '/Menu.php')) {
+            $mod_strings = return_module_language($current_language, $val);
+            $module_menu = [];
+            include 'modules/' . $val . '/Menu.php';
 
-                $tmp_menu_items = array();
-                foreach ($module_menu as $menu) {
-                    if (isset($menu[0]) && !empty($menu[0]) && isset($menu[1]) && !empty($menu[1]) && trim($menu[0]) !='#') {
-                        $tmp_menu_items[$menu[1]] =$menu[0];
-                    }
+            $tmp_menu_items = [];
+            foreach ($module_menu as $menu) {
+                if (isset($menu[0]) && !empty($menu[0]) && isset($menu[1]) && !empty($menu[1]) && trim($menu[0]) != '#') {
+                    $tmp_menu_items[$menu[1]] = $menu[0];
                 }
-                $mstr_array[$val] = $tmp_menu_items;
             }
+            $mstr_array[$val] = $tmp_menu_items;
         }
     }
 
     //reset the modstrings to current module
-    $mod_strings = $orig_modstrings ;
+    $mod_strings = $orig_modstrings;
     //store master array into session variable
     $_SESSION['SM_ARRAY'] = $mstr_array;
+
     return $mstr_array;
 }

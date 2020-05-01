@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
 {
     public $reporter;
-    public $assigned_user=null;
+    public $assigned_user;
 
     public function __construct(&$layout_manager)
     {
@@ -57,7 +53,7 @@ class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
 
     //TODO:now for date time field , we just search from date start to date end. The time is from 00:00:00 to 23:59:59
     //If there is requirement, we can modify report.js::addFilterInputDatetimesBetween and this function
-    public function queryFilterBetween_Datetimes(& $layout_def)
+    public function queryFilterBetween_Datetimes(&$layout_def)
     {
         global $timedate;
         if ($this->getAssignedUser()) {
@@ -67,8 +63,9 @@ class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
             $begin = $layout_def['input_name0'];
             $end = $layout_def['input_name1'];
         }
-        return "(".$this->_get_column_select($layout_def).">=".$this->reporter->db->convert($this->reporter->db->quoted($begin), "datetime").
-            " AND\n ".$this->_get_column_select($layout_def)."<=".$this->reporter->db->convert($this->reporter->db->quoted($end), "datetime").
+
+        return '(' . $this->_get_column_select($layout_def) . '>=' . $this->reporter->db->convert($this->reporter->db->quoted($begin), 'datetime') .
+            " AND\n " . $this->_get_column_select($layout_def) . '<=' . $this->reporter->db->convert($this->reporter->db->quoted($end), 'datetime') .
             ")\n";
     }
 }

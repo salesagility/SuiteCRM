@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!isset($_REQUEST['uid']) || empty($_REQUEST['uid']) || !isset($_REQUEST['templateID']) || empty($_REQUEST['templateID'])) {
     die('Error retrieving record. This record may be deleted or you may not be authorized to view it.');
 }
 
 $errorLevelStored = error_reporting();
 error_reporting(0);
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
-require_once('modules/AOS_PDF_Templates/templateParser.php');
-require_once('modules/AOS_PDF_Templates/sendEmail.php');
-require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
+require_once 'modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
+require_once 'modules/AOS_PDF_Templates/templateParser.php';
+require_once 'modules/AOS_PDF_Templates/sendEmail.php';
+require_once 'modules/AOS_PDF_Templates/AOS_PDF_Templates.php';
 error_reporting($errorLevelStored);
 
 global $mod_strings, $sugar_config;
@@ -55,13 +53,13 @@ global $mod_strings, $sugar_config;
 $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST['uid']);
 
 if (!$bean) {
-    sugar_die("Invalid Record");
+    sugar_die('Invalid Record');
 }
 
 $task = $_REQUEST['task'];
 $variableName = strtolower($bean->module_dir);
-$lineItemsGroups = array();
-$lineItems = array();
+$lineItemsGroups = [];
+$lineItems = [];
 
 $sql = "SELECT pg.id, pg.product_id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '" . $bean->object_name . "' AND pg.parent_id = '" . $bean->id . "' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
 $res = $bean->db->query($sql);
@@ -70,11 +68,10 @@ while ($row = $bean->db->fetchByAssoc($res)) {
     $lineItems[$row['id']] = $row['product_id'];
 }
 
-
 $template = new AOS_PDF_Templates();
 $template->retrieve($_REQUEST['templateID']);
 
-$object_arr = array();
+$object_arr = [];
 $object_arr[$bean->module_dir] = $bean->id;
 
 //backward compatibility
@@ -83,7 +80,7 @@ $object_arr['Contacts'] = $bean->billing_contact_id;
 $object_arr['Users'] = $bean->assigned_user_id;
 $object_arr['Currencies'] = $bean->currency_id;
 
-$search = array('/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
+$search = ['/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
     '/<[\/\!]*?[^<>]*?>/si',        // Strip out HTML tags
     '/([\r\n])[\s]+/',          // Strip out white space
     '/&(quot|#34);/i',          // Replace HTML entities
@@ -95,9 +92,9 @@ $search = array('/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
     '/<address[^>]*?>/si',
     '/&(apos|#0*39);/',
     '/&#(\d+);/'
-);
+];
 
-$replace = array('',
+$replace = ['',
     '',
     '\1',
     '"',
@@ -109,12 +106,12 @@ $replace = array('',
     '<br>',
     "'",
     'chr(%1)'
-);
+];
 
 $header = preg_replace($search, $replace, $template->pdfheader);
 $footer = preg_replace($search, $replace, $template->pdffooter);
 $text = preg_replace($search, $replace, $template->description);
-$text = str_replace("<p><pagebreak /></p>", "<pagebreak />", $text);
+$text = str_replace('<p><pagebreak /></p>', '<pagebreak />', $text);
 $text = preg_replace_callback(
     '/\{DATE\s+(.*?)\}/',
     function ($matches) {
@@ -122,14 +119,14 @@ $text = preg_replace_callback(
     },
     $text
 );
-$text = str_replace("\$aos_quotes", "\$" . $variableName, $text);
-$text = str_replace("\$aos_invoices", "\$" . $variableName, $text);
-$text = str_replace("\$total_amt", "\$" . $variableName . "_total_amt", $text);
-$text = str_replace("\$discount_amount", "\$" . $variableName . "_discount_amount", $text);
-$text = str_replace("\$subtotal_amount", "\$" . $variableName . "_subtotal_amount", $text);
-$text = str_replace("\$tax_amount", "\$" . $variableName . "_tax_amount", $text);
-$text = str_replace("\$shipping_amount", "\$" . $variableName . "_shipping_amount", $text);
-$text = str_replace("\$total_amount", "\$" . $variableName . "_total_amount", $text);
+$text = str_replace('$aos_quotes', '$' . $variableName, $text);
+$text = str_replace('$aos_invoices', '$' . $variableName, $text);
+$text = str_replace('$total_amt', '$' . $variableName . '_total_amt', $text);
+$text = str_replace('$discount_amount', '$' . $variableName . '_discount_amount', $text);
+$text = str_replace('$subtotal_amount', '$' . $variableName . '_subtotal_amount', $text);
+$text = str_replace('$tax_amount', '$' . $variableName . '_tax_amount', $text);
+$text = str_replace('$shipping_amount', '$' . $variableName . '_shipping_amount', $text);
+$text = str_replace('$total_amount', '$' . $variableName . '_total_amount', $text);
 
 $text = populate_group_lines($text, $lineItemsGroups, $lineItems);
 
@@ -137,21 +134,22 @@ $converted = templateParser::parse_template($text, $object_arr);
 $header = templateParser::parse_template($header, $object_arr);
 $footer = templateParser::parse_template($footer, $object_arr);
 
-$printable = str_replace("\n", "<br />", $converted);
+$printable = str_replace("\n", '<br />', $converted);
 
 if ($task == 'pdf' || $task == 'emailpdf') {
-    $file_name = $mod_strings['LBL_PDF_NAME'] . "_" . str_replace(" ", "_", $bean->name) . ".pdf";
+    $file_name = $mod_strings['LBL_PDF_NAME'] . '_' . str_replace(' ', '_', $bean->name) . '.pdf';
 
     ob_clean();
+
     try {
-        $orientation = ($template->orientation == "Landscape") ? "-L" : "";
+        $orientation = ($template->orientation == 'Landscape') ? '-L' : '';
         $pdf = new mPDF('en', $template->page_size . $orientation, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
         $pdf->SetAutoFont();
         $pdf->SetHTMLHeader($header);
         $pdf->SetHTMLFooter($footer);
         $pdf->WriteHTML($printable);
         if ($task == 'pdf') {
-            $pdf->Output($file_name, "D");
+            $pdf->Output($file_name, 'D');
         } else {
             $fp = fopen($sugar_config['upload_dir'] . 'attachfile.pdf', 'wb');
             fclose($fp);
@@ -167,7 +165,6 @@ if ($task == 'pdf' || $task == 'emailpdf') {
     $sendEmail->send_email($bean, $bean->module_dir, $printable, '', false);
 }
 
-
 function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 'table')
 {
     $firstValue = '';
@@ -178,7 +175,6 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
 
     $startElement = '<' . $element;
     $endElement = '</' . $element . '>';
-
 
     $groups = new AOS_Line_Item_Groups();
     foreach ($groups->field_defs as $name => $arr) {
@@ -211,16 +207,15 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
             //Read line start <tr> value
             $tcount = strrpos($text, $startElement);
             $lsValue = substr($text, $tcount);
-            $tcount = strpos($lsValue, ">") + 1;
+            $tcount = strpos($lsValue, '>') + 1;
             $lsValue = substr($lsValue, 0, $tcount);
-
 
             //Read line end values
             $tcount = strpos($parts[1], $endElement) + strlen($endElement);
             $leValue = substr($parts[1], 0, $tcount);
 
             //Converting Line Items
-            $obb = array();
+            $obb = [];
 
             $tdTemp = explode($lsValue, $text);
 
@@ -251,7 +246,6 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
         $text = populate_product_lines($text, $lineItems);
         $text = populate_service_lines($text, $lineItems);
     }
-
 
     return $text;
 }
@@ -294,7 +288,6 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
                 if ($curNum < $firstNum || $firstNum == 0) {
                     $firstValue = '$aos_products_' . $name;
 
-
                     $firstNum = $curNum;
                 }
                 if ($curNum > $lastNum) {
@@ -306,7 +299,6 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
     }
 
     if ($firstValue !== '' && $lastValue !== '') {
-
         //Converting Text
         $tparts = explode($firstValue, $text);
         $temp = $tparts[0];
@@ -319,10 +311,9 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
             $linePart = $firstValue . $tparts[0] . $lastValue;
         }
 
-
         $tcount = strrpos($temp, $startElement);
         $lsValue = substr($temp, $tcount);
-        $tcount = strpos($lsValue, ">") + 1;
+        $tcount = strpos($lsValue, '>') + 1;
         $lsValue = substr($lsValue, 0, $tcount);
 
         //Read line end values
@@ -349,6 +340,7 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
             $text .= $parts[$i];
         }
     }
+
     return $text;
 }
 
@@ -363,7 +355,7 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
     $startElement = '<' . $element;
     $endElement = '</' . $element . '>';
 
-    $text = str_replace("\$aos_services_quotes_service", "\$aos_services_quotes_product", $text);
+    $text = str_replace('$aos_services_quotes_service', '$aos_services_quotes_product', $text);
 
     //Find first and last valid line values
     $product_quote = new AOS_Products_Quotes();
@@ -383,8 +375,8 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
         }
     }
     if ($firstValue !== '' && $lastValue !== '') {
-        $text = str_replace("\$aos_products", "\$aos_null", $text);
-        $text = str_replace("\$aos_services", "\$aos_products", $text);
+        $text = str_replace('$aos_products', '$aos_null', $text);
+        $text = str_replace('$aos_services', '$aos_products', $text);
 
         //Converting Text
         $tparts = explode($firstValue, $text);
@@ -400,7 +392,7 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
 
         $tcount = strrpos($temp, $startElement);
         $lsValue = substr($temp, $tcount);
-        $tcount = strpos($lsValue, ">") + 1;
+        $tcount = strpos($lsValue, '>') + 1;
         $lsValue = substr($lsValue, 0, $tcount);
 
         //Read line end values
@@ -426,5 +418,6 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
             $text .= $parts[$i];
         }
     }
+
     return $text;
 }

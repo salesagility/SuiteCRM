@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,38 +42,37 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-$dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
-    'fields' => array(
-        'id' => array(
+$dictionary['SchedulersTimes'] = ['table' => 'schedulers_times',
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_NAME',
             'type' => 'id',
             'len' => '36',
             'required' => true,
-            'reportable'=>false,
-        ),
-        'deleted' => array(
+            'reportable' => false,
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
             'required' => false,
             'default' => '0',
-            'reportable'=>false,
-        ),
-        'date_entered' => array(
+            'reportable' => false,
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'date_modified' => array(
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-        ),
-        'scheduler_id' => array(
+        ],
+        'scheduler_id' => [
             'name' => 'scheduler_id',
             'vname' => 'LBL_SCHEDULER_ID',
             'type' => 'id',
@@ -80,15 +80,15 @@ $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
             'len' => 36,
             'required' => true,
             'reportable' => false,
-        ),
-        'execute_time' => array(
+        ],
+        'execute_time' => [
             'name' => 'execute_time',
             'vname' => 'LBL_EXECUTE_TIME',
             'type' => 'datetime',
             'required' => true,
             'reportable' => true,
-        ),
-        'status' => array(
+        ],
+        'status' => [
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'varchar',
@@ -96,23 +96,23 @@ $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
             'required' => true,
             'reportable' => true,
             'default' => 'ready',
-        ),
-    ),
-    'indices' => array(
-        array(
-            'name' =>'schedulers_timespk',
-            'type' =>'primary',
-            'fields' => array(
+        ],
+    ],
+    'indices' => [
+        [
+            'name' => 'schedulers_timespk',
+            'type' => 'primary',
+            'fields' => [
                 'id'
-            )
-        ),
-        array(
-        'name' =>'idx_scheduler_id',
-        'type'=>'index',
-        'fields' => array(
-            'scheduler_id',
-            'execute_time',
-            )
-        ),
-    ),
-);
+            ]
+        ],
+        [
+            'name' => 'idx_scheduler_id',
+            'type' => 'index',
+            'fields' => [
+                'scheduler_id',
+                'execute_time',
+            ]
+        ],
+    ],
+];

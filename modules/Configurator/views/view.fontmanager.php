@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,79 +41,82 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/Sugarpdf/sugarpdf_config.php');
-require_once('include/MVC/View/SugarView.php');
-require_once('include/Sugarpdf/FontManager.php');
+require_once 'include/Sugarpdf/sugarpdf_config.php';
+require_once 'include/MVC/View/SugarView.php';
+require_once 'include/Sugarpdf/FontManager.php';
 class ConfiguratorViewFontManager extends SugarView
 {
-   
     /**
-     * Constructor
+     * Constructor.
      */
     public function FontManager()
     {
         parent::__construct();
     }
+
     /**
-     * display the form
+     * display the form.
      */
     public function display()
     {
         global $mod_strings, $app_list_strings, $app_strings, $current_user;
-        $error="";
+        $error = '';
         if (!is_admin($current_user)) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $fontManager = new FontManager();
         if (!$fontManager->listFontFiles()) {
-            $error = implode("<br>", $fontManager->errors);
+            $error = implode('<br>', $fontManager->errors);
         }
 
         $this->ss->assign(
-            "MODULE_TITLE",
+            'MODULE_TITLE',
             getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_ID'],
-                array($mod_strings['LBL_FONTMANAGER_TITLE']),
+                [$mod_strings['LBL_FONTMANAGER_TITLE']],
                 false
-                )
-            );
+            )
+        );
         if (!empty($_REQUEST['error'])) {
-            $error .= "<br>".$_REQUEST['error'];
+            $error .= '<br>' . $_REQUEST['error'];
         }
-        $this->ss->assign("error", $error);
-        $this->ss->assign("MOD", $mod_strings);
-        $this->ss->assign("APP", $app_strings);
-        $this->ss->assign("JAVASCRIPT", $this->_getJS());
+        $this->ss->assign('error', $error);
+        $this->ss->assign('MOD', $mod_strings);
+        $this->ss->assign('APP', $app_strings);
+        $this->ss->assign('JAVASCRIPT', $this->_getJS());
         if (isset($_REQUEST['return_action'])) {
-            $this->ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
+            $this->ss->assign('RETURN_ACTION', $_REQUEST['return_action']);
         } else {
-            $this->ss->assign("RETURN_ACTION", 'SugarpdfSettings');
+            $this->ss->assign('RETURN_ACTION', 'SugarpdfSettings');
         }
-        $this->ss->assign("K_PATH_FONTS", K_PATH_FONTS);
+        $this->ss->assign('K_PATH_FONTS', K_PATH_FONTS);
         // YUI List
-        $this->ss->assign("COLUMNDEFS", $this->getYuiColumnDefs($fontManager->fontList));
-        $this->ss->assign("DATASOURCE", $this->getYuiDataSource($fontManager->fontList));
-        $this->ss->assign("RESPONSESCHEMA", $this->getYuiResponseSchema());
-        
+        $this->ss->assign('COLUMNDEFS', $this->getYuiColumnDefs($fontManager->fontList));
+        $this->ss->assign('DATASOURCE', $this->getYuiDataSource($fontManager->fontList));
+        $this->ss->assign('RESPONSESCHEMA', $this->getYuiResponseSchema());
+
         //display
         $this->ss->display('modules/Configurator/tpls/fontmanager.tpl');
     }
-    
+
     /**
-     * Returns JS used in this view
+     * Returns JS used in this view.
      */
     private function _getJS()
     {
         global $mod_strings;
-        return <<<EOJAVASCRIPT
+
+        return <<<'EOJAVASCRIPT'
 
 EOJAVASCRIPT;
     }
-    
+
     /**
-     * Return the columnDefs for the YUI datatable
-     * @return String
+     * Return the columnDefs for the YUI datatable.
+     *
+     * @param mixed $fontList
+     *
+     * @return string
      */
     private function getYuiColumnDefs($fontList)
     {
@@ -123,7 +126,7 @@ EOJAVASCRIPT;
         if ($this->isAllOOBFont($fontList)) {
             $removeColumn = '';
         }
-            
+
         $return = <<<BSOFR
 [ 
     {key:"name", minWidth:140, label:"{$mod_strings['LBL_FONT_LIST_NAME']}", sortable:true},
@@ -133,42 +136,45 @@ EOJAVASCRIPT;
     {key:"filesize", minWidth:70, label:"{$mod_strings['LBL_FONT_LIST_FILESIZE']}", formatter:YAHOO.widget.DataTable.formatNumber, sortable:true},
     {key:"enc", minWidth:80, label:"{$mod_strings['LBL_FONT_LIST_ENC']}", sortable:true},
     {key:"embedded", minWidth:70, label:"{$mod_strings['LBL_FONT_LIST_EMBEDDED']}", sortable:true},
-    $removeColumn
+    {$removeColumn}
 ]
 BSOFR;
+
         return $return;
     }
-    
+
     /**
-    * Return the dataSource for the YUI Data Table
-    * @param $fontList
-    * @return String
-    */
+     * Return the dataSource for the YUI Data Table.
+     *
+     * @param $fontList
+     *
+     * @return string
+     */
     private function getYuiDataSource($fontList)
     {
-        $return = "[";
-        $first=true;
-        foreach ($fontList as $k=>$v) {
+        $return = '[';
+        $first = true;
+        foreach ($fontList as $k => $v) {
             if ($first) {
-                $first=false;
+                $first = false;
             } else {
                 $return .= ',';
             }
             $return .= '{';
             if (!empty($v['displayname'])) {
-                $return .= 'name:"'.$v['displayname'].'"';
+                $return .= 'name:"' . $v['displayname'] . '"';
             } else {
                 if (!empty($v['name'])) {
-                    $return .= 'name:"'.$v['name'].'"';
+                    $return .= 'name:"' . $v['name'] . '"';
                 }
             }
-            $return .= ', filename:"'.$v['filename'].'"';
-            $return .= ', fontpath:"'.$v['fontpath'].'"';
-            $return .= ', style:"'.$this->formatStyle($v['style']).'"';
-            $return .= ', type:"'.$this->formatType($v['type']).'"';
-            $return .= ', filesize:'.$v['filesize'];
+            $return .= ', filename:"' . $v['filename'] . '"';
+            $return .= ', fontpath:"' . $v['fontpath'] . '"';
+            $return .= ', style:"' . $this->formatStyle($v['style']) . '"';
+            $return .= ', type:"' . $this->formatType($v['type']) . '"';
+            $return .= ', filesize:' . $v['filesize'];
             if (!empty($v['enc'])) {
-                $return .= ', enc:"'.$v['enc'].'"';
+                $return .= ', enc:"' . $v['enc'] . '"';
             }
             if ($v['embedded'] == true) {
                 $return .= ', embedded:"<input type=\'checkbox\' checked disabled/>"}';
@@ -176,17 +182,19 @@ BSOFR;
                 $return .= ', embedded:"<input type=\'checkbox\' disabled/>"}';
             }
         }
-        $return .= "]";
+        $return .= ']';
+
         return $return;
     }
-    
+
     /**
-    * Return the Response Schema for the YUI data table
-    * @return String
-    */
+     * Return the Response Schema for the YUI data table.
+     *
+     * @return string
+     */
     private function getYuiResponseSchema()
     {
-        return <<<BSOFR
+        return <<<'BSOFR'
         { 
             fields: [{key:"name", parser:"string"},
                      {key:"filename", parser:"string"},
@@ -199,65 +207,84 @@ BSOFR;
         }
 BSOFR;
     }
-    
+
     /**
-    * Return the label of the passed style
-    * @param $style
-    * @return String
-    */
+     * Return the label of the passed style.
+     *
+     * @param $style
+     *
+     * @return string
+     */
     private function formatStyle($style)
     {
         global $mod_strings;
-        $return = "";
+        $return = '';
         if (count($style) == 2) {
-            $return .= "<b><i>".$mod_strings['LBL_FONT_BOLDITALIC']."</b></i>";
+            $return .= '<b><i>' . $mod_strings['LBL_FONT_BOLDITALIC'] . '</b></i>';
         } else {
             switch ($style[0]) {
-                case "bold":
-                    $return .= "<b>".$mod_strings['LBL_FONT_BOLD']."</b>";
+                case 'bold':
+                    $return .= '<b>' . $mod_strings['LBL_FONT_BOLD'] . '</b>';
+
                     break;
-                case "italic":
-                    $return .= "<i>".$mod_strings['LBL_FONT_ITALIC']."</i>";
+                case 'italic':
+                    $return .= '<i>' . $mod_strings['LBL_FONT_ITALIC'] . '</i>';
+
                     break;
                 default:
                     $return .= $mod_strings['LBL_FONT_REGULAR'];
             }
         }
+
         return $return;
     }
-    
+
     private function formatType($type)
     {
         global $mod_strings;
         switch ($type) {
-            case "cidfont0":
-                $return = $mod_strings['LBL_FONT_TYPE_CID0'];break;
-            case "core":
-                $return = $mod_strings['LBL_FONT_TYPE_CORE'];break;
-            case "TrueType":
-                $return = $mod_strings['LBL_FONT_TYPE_TRUETYPE'];break;
-            case "Type1":
-                $return = $mod_strings['LBL_FONT_TYPE_TYPE1'];break;
-            case "TrueTypeUnicode":
-                $return = $mod_strings['LBL_FONT_TYPE_TRUETYPEU'];break;
+            case 'cidfont0':
+                $return = $mod_strings['LBL_FONT_TYPE_CID0'];
+
+break;
+            case 'core':
+                $return = $mod_strings['LBL_FONT_TYPE_CORE'];
+
+break;
+            case 'TrueType':
+                $return = $mod_strings['LBL_FONT_TYPE_TRUETYPE'];
+
+break;
+            case 'Type1':
+                $return = $mod_strings['LBL_FONT_TYPE_TYPE1'];
+
+break;
+            case 'TrueTypeUnicode':
+                $return = $mod_strings['LBL_FONT_TYPE_TRUETYPEU'];
+
+break;
             default:
-                $return = "";
+                $return = '';
         }
+
         return $return;
     }
-    
+
     /**
-     * Determine if all the fonts are core fonts
+     * Determine if all the fonts are core fonts.
+     *
      * @param $fontList
-     * @return boolean return true if all the fonts are core type
+     *
+     * @return bool return true if all the fonts are core type
      */
     private function isAllOOBFont($fontList)
     {
         foreach ($fontList as $v) {
-            if ($v['type'] != "core" && $v['fontpath'] != K_PATH_FONTS) {
+            if ($v['type'] != 'core' && $v['fontpath'] != K_PATH_FONTS) {
                 return false;
             }
         }
+
         return true;
     }
 }

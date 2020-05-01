@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,74 +43,64 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $module_name = 'OAuth2Tokens';
 
 $searchFields[$module_name] = [
-    'id' =>
-        [
-            'query_type' => 'default',
-        ],
-    'token_is_revoked' =>
-        [
-            'query_type' => 'default',
-        ],
+    'id' => [
+        'query_type' => 'default',
+    ],
+    'token_is_revoked' => [
+        'query_type' => 'default',
+    ],
     'active_only' => [
         'query_type' => 'format',
         'operator' => 'subquery',
         'checked_only' => true,
-        'subquery' => "SELECT tokenTableAlias.id " .
-            "FROM oauth2tokens as tokenTableAlias " .
-            "WHERE tokenTableAlias.id = oauth2tokens.id " .
-            "AND tokenTableAlias.access_token_expires > " . OAuth2Tokens::getNowDateString(),
-        'db_field' => array('id')
+        'subquery' => 'SELECT tokenTableAlias.id ' .
+            'FROM oauth2tokens as tokenTableAlias ' .
+            'WHERE tokenTableAlias.id = oauth2tokens.id ' .
+            'AND tokenTableAlias.access_token_expires > ' . OAuth2Tokens::getNowDateString(),
+        'db_field' => ['id']
     ],
-    'grant_type' =>
-        [
-            'query_type' => 'default',
-            'operator' => 'subquery',
-            'subquery' => 'SELECT id FROM oauth2clients where allowed_grant_type LIKE ',
-            'db_field' => [
-                'client',
-            ],
+    'grant_type' => [
+        'query_type' => 'default',
+        'operator' => 'subquery',
+        'subquery' => 'SELECT id FROM oauth2clients where allowed_grant_type LIKE ',
+        'db_field' => [
+            'client',
         ],
-    'oauth2client_name' =>
-        [
-            'query_type' => 'default',
-            'db_field' => ['oauth2clients.name']
-        ],
+    ],
+    'oauth2client_name' => [
+        'query_type' => 'default',
+        'db_field' => ['oauth2clients.name']
+    ],
 
     // Range search
-    'range_access_token_expires' =>
-        [
-            'query_type' => 'default',
-            'enable_range_search' => true,
-            'is_date_field' => true,
-        ],
-    'start_range_access_token_expires' =>
-        [
-            'query_type' => 'default',
-            'enable_range_search' => true,
-            'is_date_field' => true,
-        ],
-    'end_range_access_token_expires' =>
-        [
-            'query_type' => 'default',
-            'enable_range_search' => true,
-            'is_date_field' => true,
-        ],
-    'range_refresh_token_expires' =>
-        [
-            'query_type' => 'default',
-            'enable_range_search' => true,
-            'is_date_field' => true,
-        ],
-    'start_range_refresh_token_expires' =>
-        [
-            'query_type' => 'default',
-            'enable_range_search' => true,
-            'is_date_field' => true,
-        ],
-    'end_range_refresh_token_expires' =>
-        [
-            'query_type' => 'default',
-            'enable_range_search' => true,
-            'is_date_field' => true,
-        ],
+    'range_access_token_expires' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'start_range_access_token_expires' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'end_range_access_token_expires' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'range_refresh_token_expires' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'start_range_refresh_token_expires' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
+    'end_range_refresh_token_expires' => [
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ],
 ];

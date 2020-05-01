@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,11 +18,13 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
+ *
+ * @param mixed $focus
+ * @param mixed $field
+ * @param mixed $value
+ * @param mixed $view
  */
-
-
 function display_field_lines($focus, $field, $value, $view)
 {
     global $mod_strings, $app_list_strings;
@@ -30,47 +32,48 @@ function display_field_lines($focus, $field, $value, $view)
     $html = '';
 
     if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
-        require_once('include/language/jsLanguage.php');
+        require_once 'include/language/jsLanguage.php';
         jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
     }
 
     $html .= '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
-    $html .= '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
+    $html .= '<script src="cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js"></script>';
 
     if ($view == 'EditView') {
         $html .= '<script src="modules/AOR_Fields/fieldLines.js"></script>';
-        $html .='<script></script>';
+        $html .= '<script></script>';
         $html .= "<table border='0' cellspacing='4' width='100%' id='fieldLines'></table>";
 
         $html .= "<div style='padding-top: 10px; padding-bottom:10px;'>";
-        $html .= "<input type=\"button\" tabindex=\"116\" class=\"button\" value=\"".$mod_strings['LBL_ADD_FIELD']."\" id=\"btn_FieldLine\" onclick=\"insertFieldLine()\" disabled/>";
-        $html .= "</div>";
-        $html .= "<script>";
-        $html .= "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
-        $html .= "</script>";
+        $html .= '<input type="button" tabindex="116" class="button" value="' . $mod_strings['LBL_ADD_FIELD'] . '" id="btn_FieldLine" onclick="insertFieldLine()" disabled/>';
+        $html .= '</div>';
+        $html .= '<script>';
+        $html .= 'sort_by_values = "' . trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], ''))) . '";';
+        $html .= '</script>';
 
         if (isset($focus->report_module) && $focus->report_module != '') {
-            require_once("modules/AOW_WorkFlow/aow_utils.php");
-            $html .= "<script>";
-            $html .= "report_rel_modules = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($focus->report_module)))."\";";
-            $html .= "report_module = \"".$focus->report_module."\";";
+            require_once 'modules/AOW_WorkFlow/aow_utils.php';
+            $html .= '<script>';
+            $html .= 'report_rel_modules = "' . trim(preg_replace('/\s+/', ' ', getModuleRelationships($focus->report_module))) . '";';
+            $html .= 'report_module = "' . $focus->report_module . '";';
             $html .= "document.getElementById('btn_FieldLine').disabled = '';";
             if ($focus->id != '') {
-                $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$focus->id."' AND deleted = 0 ORDER BY field_order ASC";
+                $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $focus->id . "' AND deleted = 0 ORDER BY field_order ASC";
                 $result = $focus->db->query($sql);
 
                 while ($row = $focus->db->fetchByAssoc($result)) {
                     $field_name = new AOR_Field();
                     $field_name->retrieve($row['id']);
                     $field_name->module_path = unserialize(base64_decode($field_name->module_path));
-                    $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module, $field_name->module_path[0]))))."\";";
+                    $html .= 'report_fields = "' . trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module, $field_name->module_path[0])))) . '";';
                     $field_item = json_encode($field_name->toArray());
-                    $html .= "loadFieldLine(".$field_item.");";
+                    $html .= 'loadFieldLine(' . $field_item . ');';
                 }
             }
-            $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($focus->report_module)))."\";";
-            $html .= "</script>";
+            $html .= 'report_fields = "' . trim(preg_replace('/\s+/', ' ', getModuleFields($focus->report_module))) . '";';
+            $html .= '</script>';
         }
     }
+
     return $html;
 }

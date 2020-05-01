@@ -1,22 +1,22 @@
 <?php
 
+use Api\Core\Loader\CustomLoader;
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Controller\InvocationStrategy\SuiteInvocationStrategy;
 use Psr\Container\ContainerInterface as Container;
-use Api\Core\Loader\CustomLoader;
 
 return CustomLoader::mergeCustomArray([
-        /** overwrite slim's foundHandler */
-        'foundHandler' => function () {
-            return new SuiteInvocationStrategy();
-        },
-        BeanManager::class => function (Container $container) {
-            return new BeanManager(
-                $container->get(DBManager::class),
-                $container->get('beanAliases')
-            );
-        },
-    ] +
+    // overwrite slim's foundHandler
+    'foundHandler' => function () {
+        return new SuiteInvocationStrategy();
+    },
+    BeanManager::class => function (Container $container) {
+        return new BeanManager(
+            $container->get(DBManager::class),
+            $container->get('beanAliases')
+        );
+    },
+] +
     (require __DIR__ . '/services/beanAliases.php') +
     (require __DIR__ . '/services/controllers.php') +
     (require __DIR__ . '/services/factories.php') +

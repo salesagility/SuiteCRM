@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
-    /*'ADMIN_EXPORT_ONLY'=>'Admin export only',*/
+$mod_strings = [
+    // 'ADMIN_EXPORT_ONLY'=>'Admin export only',
     'ADVANCED' => 'Advanced',
     'DEFAULT_CURRENCY_ISO4217' => 'ISO 4217 currency code',
     'DEFAULT_CURRENCY_NAME' => 'Currency name',
@@ -267,8 +265,7 @@ $mod_strings = array(
     'PDF_UNIT_INFO' => 'document unit of measure',
     'PDF_GD_WARNING' => 'You do not have the GD library installed for PHP. Without the GD library installed, only JPEG logos can be displayed in PDF documents.',
     'ERR_EZPDF_DISABLE' => 'Warning : The EZPDF class is disabled from the config table and it set as the PDF class. Please "Save" this form to set TCPDF as the PDF Class and return in a stable state.',
-    'LBL_IMG_RESIZED' => "(resized for display)",
-
+    'LBL_IMG_RESIZED' => '(resized for display)',
 
     'LBL_FONTMANAGER_BUTTON' => 'PDF Font Manager',
     'LBL_FONTMANAGER_TITLE' => 'PDF Font Manager',
@@ -336,10 +333,10 @@ More help : www.tcpdf.org',
     'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SuiteCRM.',
     'LBL_STATUS_FONT_ERROR' => 'ERROR : The font has not been added. Look at the log below.',
 
-// Font manager
+    // Font manager
     'ERR_PDF_NO_UPLOAD' => 'Error during the upload of the font or metric file.',
 
-// Wizard
+    // Wizard
     //Wizard Scenarios
     'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
     'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
@@ -363,4 +360,4 @@ More help : www.tcpdf.org',
     'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
     'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
-);
+];

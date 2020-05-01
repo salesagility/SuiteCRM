@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,20 +36,23 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\Robo\Traits;
 
 require_once dirname(__DIR__) . '/config.php';
 
 /**
- * Reusable methods for Robo commands which extends \Robo\Tasks
+ * Reusable methods for Robo commands which extends \Robo\Tasks.
  */
 trait RoboTrait
 {
     /**
-     * Asks user to set option when option is empty
+     * Asks user to set option when option is empty.
+     *
      * @param string $question
      * @param string $default
      * @param &string key to options param
+     * @param mixed $option
      */
     private function askDefaultOptionWhenEmpty($question, $default, &$option)
     {
@@ -62,6 +64,9 @@ trait RoboTrait
     /**
      * @param string $sugar config key eg db_config.db_name
      * @param string $defailt failback value
+     * @param mixed $configKey
+     * @param mixed $default
+     *
      * @return config value or fallback when config is not available
      */
     private function chooseConfigOrDefault($configKey, $default)
@@ -71,6 +76,7 @@ trait RoboTrait
         }
 
         $config = \SugarConfig::getInstance();
+
         return $config->get($configKey, $default);
     }
 }

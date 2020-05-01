@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/EditView/EditView2.php');
+require_once 'include/EditView/EditView2.php';
 /**
- * Quick create form in the subpanel
+ * Quick create form in the subpanel.
+ *
  * @api
  */
 class SubpanelQuickCreate
@@ -51,13 +51,13 @@ class SubpanelQuickCreate
     public $defaultProcess = true;
 
     /**
-     * The view type to use
+     * The view type to use.
      *
      * @var string
      */
     public $viewType = 'QuickCreate';
 
-    public function __construct($module, $view='QuickCreate', $proccessOverride = false)
+    public function __construct($module, $view = 'QuickCreate', $proccessOverride = false)
     {
         $this->viewType = $view;
 
@@ -98,7 +98,6 @@ class SubpanelQuickCreate
         $this->ev->setup($module, $bean, $source);
         unset($bean);
 
-
         // Bug 49219 - Check empty before set defaults, or the settings from viewdefs above will be overridden.
         if (!isset($this->ev->defs['templateMeta']['form']['headerTpl'])) {
             $this->ev->defs['templateMeta']['form']['headerTpl'] = 'include/EditView/header.tpl';
@@ -108,19 +107,19 @@ class SubpanelQuickCreate
             $this->ev->defs['templateMeta']['form']['footerTpl'] = 'include/EditView/footer.tpl';
         }
         // Comment below, breaks many out of the box viewdefs
-        /*if (empty($this->ev->defs['templateMeta']['form']['buttons'])) $this->ev->defs['templateMeta']['form']['buttons'] = array('SUBPANELSAVE', 'SUBPANELCANCEL', 'SUBPANELFULLFORM');*/
-        $this->ev->defs['templateMeta']['form']['buttons'] = array('SUBPANELSAVE', 'SUBPANELCANCEL', 'SUBPANELFULLFORM');
+        // if (empty($this->ev->defs['templateMeta']['form']['buttons'])) $this->ev->defs['templateMeta']['form']['buttons'] = array('SUBPANELSAVE', 'SUBPANELCANCEL', 'SUBPANELFULLFORM');
+        $this->ev->defs['templateMeta']['form']['buttons'] = ['SUBPANELSAVE', 'SUBPANELCANCEL', 'SUBPANELFULLFORM'];
 
         //Load the parent view class if it exists.  Check for custom file first
         loadParentView('edit');
 
-        $viewEditSource = 'modules/'.$module.'/views/view.edit.php';
-        if (file_exists('custom/'. $viewEditSource)) {
-            $viewEditSource = 'custom/'. $viewEditSource;
+        $viewEditSource = 'modules/' . $module . '/views/view.edit.php';
+        if (file_exists('custom/' . $viewEditSource)) {
+            $viewEditSource = 'custom/' . $viewEditSource;
         }
 
         if (file_exists($viewEditSource) && !$proccessOverride) {
-            include($viewEditSource);
+            include $viewEditSource;
             $c = $module . 'ViewEdit';
 
             $customClass = 'Custom' . $c;
@@ -129,24 +128,24 @@ class SubpanelQuickCreate
             }
 
             if (class_exists($c)) {
-                $view = new $c;
+                $view = new $c();
                 if ($view->useForSubpanel) {
                     $this->defaultProcess = false;
 
                     // Check if we should use the module's QuickCreate.tpl file.
-                    if ($view->useModuleQuickCreateTemplate && file_exists('modules/'.$module.'/tpls/QuickCreate.tpl')) {
-                        $this->ev->defs['templateMeta']['form']['headerTpl'] = 'modules/'.$module.'/tpls/QuickCreate.tpl';
+                    if ($view->useModuleQuickCreateTemplate && file_exists('modules/' . $module . '/tpls/QuickCreate.tpl')) {
+                        $this->ev->defs['templateMeta']['form']['headerTpl'] = 'modules/' . $module . '/tpls/QuickCreate.tpl';
                     }
 
-                    $view->ev = & $this->ev;
-                    $view->ss = & $this->ev->ss;
+                    $view->ev = &$this->ev;
+                    $view->ss = &$this->ev->ss;
                     $class = $GLOBALS['beanList'][$module];
                     if (!empty($GLOBALS['beanFiles'][$class])) {
-                        require_once($GLOBALS['beanFiles'][$class]);
+                        require_once $GLOBALS['beanFiles'][$class];
                         $bean = new $class();
                         $view->bean = $bean;
                     }
-                    $this->ev->formName = 'form_Subpanel'.$this->ev->view .'_'.$module;
+                    $this->ev->formName = 'form_Subpanel' . $this->ev->view . '_' . $module;
                     $view->showTitle = false; // Do not show title since this is for subpanel
                     $view->display();
                 }
@@ -163,31 +162,22 @@ class SubpanelQuickCreate
         if ($_REQUEST['target_action'] == 'QuickCreate') {
             $this->ev->view = 'QuickCreate';
         }
-        $form_name = 'form_Subpanel'.$this->ev->view .'_'.$module;
+        $form_name = 'form_Subpanel' . $this->ev->view . '_' . $module;
         $this->ev->formName = $form_name;
         $this->ev->process(true, $form_name);
         echo $this->ev->display(false, true);
     }
 
     /**
-     * Get EditView object
-     * @return EditView
-     */
-    protected function getEditView()
-    {
-        return new EditView();
-    }
-
-
-    /**
      * Finds and returns the best viewdefs to use:
      *  1. custom/module/quickcreatedefs.php
      *  2. module/quickcreatedefs.php
      *  3. custom/module/editviewdefs.php
-     *  4. module/editviewdefs.php
+     *  4. module/editviewdefs.php.
      *
      * @param $module
      * @param $view
+     *
      * @return string The path to the viewdefs file to use
      */
     public function getModuleViewDefsSourceFile($module, $view)
@@ -207,5 +197,15 @@ class SubpanelQuickCreate
         }
 
         return $source;
+    }
+
+    /**
+     * Get EditView object.
+     *
+     * @return EditView
+     */
+    protected function getEditView()
+    {
+        return new EditView();
     }
 }

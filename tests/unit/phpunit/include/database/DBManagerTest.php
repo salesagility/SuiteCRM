@@ -8,6 +8,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/database/DBManager.php';
 
+/**
+ * @internal
+ */
 class DBManagerTest extends SuitePHPUnitFrameworkTestCase
 {
     // Make sure createPreparedQuery returns the correct SQL query when given
@@ -21,7 +24,7 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $stmt = $db->prepareQuery($sql);
 
         $this->assertEquals(
-            $db->createPreparedQuery($stmt, ["foo"]),
+            $db->createPreparedQuery($stmt, ['foo']),
             "SELECT foo FROM bar WHERE baz = 'foo';"
         );
     }
@@ -37,7 +40,7 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $stmt = $db->prepareQuery($sql);
 
         $this->assertEquals(
-            $db->createPreparedQuery($stmt, ["foo", "bar"]),
+            $db->createPreparedQuery($stmt, ['foo', 'bar']),
             "SELECT foo FROM bar WHERE baz = 'foo' AND qux = 'bar';"
         );
     }
@@ -53,7 +56,7 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $stmt = $db->prepareQuery($sql);
 
         $this->assertEquals(
-            $db->createPreparedQuery($stmt, ["foo"]),
+            $db->createPreparedQuery($stmt, ['foo']),
             "SELECT foo FROM bar WHERE baz != 'foo';"
         );
     }
@@ -65,12 +68,12 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $db = DBManagerFactory::getInstance();
 
         // Match baz to the input variable with a question mark appended... for some reason.
-        $sql = "SELECT foo FROM bar WHERE baz = '?\?';";
+        $sql = "SELECT foo FROM bar WHERE baz = '?\\?';";
 
         $stmt = $db->prepareQuery($sql);
 
         $this->assertEquals(
-            $db->createPreparedQuery($stmt, ["foo"]),
+            $db->createPreparedQuery($stmt, ['foo']),
             "SELECT foo FROM bar WHERE baz = 'foo?';"
         );
     }

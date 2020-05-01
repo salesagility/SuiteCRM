@@ -1,5 +1,5 @@
 <?php
-$viewdefs ['Alerts'] =
-array(
 
-);
+$viewdefs['Alerts'] =
+[
+];

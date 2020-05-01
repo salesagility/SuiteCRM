@@ -1,8 +1,9 @@
 <?php
+
  if (!defined('sugarEntry')) {
      define('sugarEntry', true);
  }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,6 +42,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-    print("<html><body>");
-    print("Down for maintenance.");
-    print("</body></html>");
+    echo '<html><body>';
+    echo 'Down for maintenance.';
+    echo '</body></html>';

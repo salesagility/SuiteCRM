@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,14 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Base Form For Notes
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-
+ */
 
 class EmailTemplateFormBase
 {
@@ -56,7 +55,7 @@ class EmailTemplateFormBase
     {
     }
 
-    public function getFormBody($prefix, $mod='', $formname='', $size='30')
+    public function getFormBody($prefix, $mod = '', $formname = '', $size = '30')
     {
         global $mod_strings;
 
@@ -72,24 +71,24 @@ class EmailTemplateFormBase
         $lbl_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
         $lbl_subject = $mod_strings['LBL_NOTE_SUBJECT'];
         $lbl_description = $mod_strings['LBL_NOTE'];
-        $default_parent_type= $app_list_strings['record_type_default_key'];
+        $default_parent_type = $app_list_strings['record_type_default_key'];
 
         $form = <<<EOF
-				<input type="hidden" name="${prefix}record" value="">
-				<input type="hidden" name="${prefix}parent_type" value="${default_parent_type}">
+				<input type="hidden" name="{$prefix}record" value="">
+				<input type="hidden" name="{$prefix}parent_type" value="{$default_parent_type}">
 				<p>
 				<table cellspacing="0" cellpadding="0" border="0">
 				<tr>
-				    <td scope="row">$lbl_subject <span class="required">$lbl_required_symbol</span></td>
+				    <td scope="row">{$lbl_subject} <span class="required">{$lbl_required_symbol}</span></td>
 				</tr>
 				<tr>
-				    <td ><input name='${prefix}name' size='${size}' maxlength='255' type="text" value=""></td>
+				    <td ><input name='{$prefix}name' size='{$size}' maxlength='255' type="text" value=""></td>
 				</tr>
 				<tr>
-				    <td scope="row">$lbl_description</td>
+				    <td scope="row">{$lbl_description}</td>
 				</tr>
 				<tr>
-				    <td ><textarea name='${prefix}description' cols='${size}' rows='4' ></textarea></td>
+				    <td ><textarea name='{$prefix}description' cols='{$size}' rows='4' ></textarea></td>
 				</tr>
 				</table></p>
 EOF;
@@ -98,12 +97,13 @@ EOF;
         $javascript->setFormName($formname);
         $javascript->setSugarBean(new EmailTemplate());
         $javascript->addRequiredFields($prefix);
-        $form .=$javascript->getScript();
+        $form .= $javascript->getScript();
         $mod_strings = $temp_strings;
+
         return $form;
     }
 
-    public function getForm($prefix, $mod='')
+    public function getForm($prefix, $mod = '')
     {
         if (!empty($mod)) {
             global $current_language;
@@ -118,17 +118,16 @@ EOF;
         $lbl_save_button_key = $app_strings['LBL_SAVE_BUTTON_KEY'];
         $lbl_save_button_label = $app_strings['LBL_SAVE_BUTTON_LABEL'];
 
-
         $the_form = get_left_form_header($mod_strings['LBL_NEW_FORM_TITLE']);
         $the_form .= <<<EOQ
 
-				<form name="${prefix}EmailTemplateSave" onSubmit="return check_form('${prefix}EmailTemplateSave')" method="POST" action="index.php">
-					<input type="hidden" name="${prefix}module" value="EmailTemplates">
-					<input type="hidden" name="${prefix}action" value="Save">
+				<form name="{$prefix}EmailTemplateSave" onSubmit="return check_form('{$prefix}EmailTemplateSave')" method="POST" action="index.php">
+					<input type="hidden" name="{$prefix}module" value="EmailTemplates">
+					<input type="hidden" name="{$prefix}action" value="Save">
 EOQ;
-        $the_form .= $this->getFormBody($prefix, $mod, "${prefix}EmailTemplateSave", "20");
+        $the_form .= $this->getFormBody($prefix, $mod, "{$prefix}EmailTemplateSave", '20');
         $the_form .= <<<EOQ
-				<p><input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="button" value="  $lbl_save_button_label  " ></p>
+				<p><input title="{$lbl_save_button_title}" accessKey="{$lbl_save_button_key}" class="button" type="submit" name="button" value="  {$lbl_save_button_label}  " ></p>
 				</form>
 
 EOQ;
@@ -136,15 +135,13 @@ EOQ;
         $the_form .= get_left_form_footer();
         $the_form .= get_validate_record_js();
 
-
         return $the_form;
     }
 
-
-    public function handleSave($prefix, $redirect=true, $useRequired=false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
+    public function handleSave($prefix, $redirect = true, $useRequired = false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
     {
-        require_once('include/formbase.php');
-        require_once('include/upload_file.php');
+        require_once 'include/formbase.php';
+        require_once 'include/upload_file.php';
         global $upload_maxsize;
         global $mod_strings;
         global $sugar_config;
@@ -169,28 +166,31 @@ EOQ;
         }
 
         $this->handleAttachmentsProcessImages($focus, $redirect, $useSiteURL, $entryPoint, $useUploadFolder);
+
         return $focus;
     }
 
     public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
     {
         $return_id = $this->processImages($focus, $useSiteURL, $entryPoint, $useUploadFolder);
+
         return $this->handleAttachments($focus, $redirect, $return_id);
     }
 
     public function processImages(&$focus, $useSiteURL, $entryPoint, $useUploadFolder)
     {
         global $sugar_config;
-        $preProcessedImages = array();
+        $preProcessedImages = [];
         $emailTemplateBodyHtml = from_html($focus->body_html);
         if (strpos($emailTemplateBodyHtml, '"cache/images/')) {
-            $matches = array();
+            $matches = [];
             preg_match_all('#<img[^>]*[\s]+src[^=]*=[\s]*["\']cache/images/(.+?)["\']#si', $emailTemplateBodyHtml, $matches);
             foreach ($matches[1] as $match) {
                 $filename = urldecode($match);
                 if ($filename != pathinfo($filename, PATHINFO_BASENAME)) {
                     // don't allow paths there
-                    $emailTemplateBodyHtml = str_replace("cache/images/$match", "", $emailTemplateBodyHtml);
+                    $emailTemplateBodyHtml = str_replace("cache/images/{$match}", '', $emailTemplateBodyHtml);
+
                     continue;
                 }
                 $file_location = sugar_cached("images/{$filename}");
@@ -203,9 +203,9 @@ EOQ;
                     $note->save();
                     $id = $note->id;
 
-                    $newFileLocation = "upload://$id";
+                    $newFileLocation = "upload://{$id}";
                     if (!copy($file_location, $newFileLocation)) {
-                        $GLOBALS['log']->debug("EMAIL Template could not copy attachment to $newFileLocation");
+                        $GLOBALS['log']->debug("EMAIL Template could not copy attachment to {$newFileLocation}");
                     } else {
                         if ($useUploadFolder) {
                             $secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "public/{$id}";
@@ -217,10 +217,10 @@ EOQ;
                                 $secureLink .= ".{$mime_type}";
                             }
                         } else {
-                            $secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=" . $entryPoint . "&type=Notes&id={$id}&filename=" . $match;
+                            $secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . 'index.php?entryPoint=' . $entryPoint . "&type=Notes&id={$id}&filename=" . $match;
                         }
 
-                        $emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, $emailTemplateBodyHtml);
+                        $emailTemplateBodyHtml = str_replace("cache/images/{$match}", $secureLink, $emailTemplateBodyHtml);
                         //unlink($file_location);
                         $preProcessedImages[$filename] = $id;
                     }
@@ -236,6 +236,7 @@ EOQ;
             $focus->body_html = $emailTemplateBodyHtml;
         }
         $return_id = $focus->save($check_notify);
+
         return $return_id;
     }
 
@@ -255,21 +256,19 @@ EOQ;
             $note = new Note();
             $where = "notes.parent_id='{$focus->id}'";
             if (!empty($_REQUEST['old_id'])) { // to support duplication of email templates
-                $where .= " OR notes.parent_id='".htmlspecialchars($_REQUEST['old_id'], ENT_QUOTES)."'";
+                $where .= " OR notes.parent_id='" . htmlspecialchars($_REQUEST['old_id'], ENT_QUOTES) . "'";
             }
-            $notes_list = $note->get_full_list("", $where, true);
+            $notes_list = $note->get_full_list('', $where, true);
         }
 
         if (!isset($notes_list)) {
-            $notes_list = array();
+            $notes_list = [];
         }
 
         if (!is_array($focus->attachments)) { // PHP5 does not auto-create arrays(). Need to initialize it here.
-            $focus->attachments = array();
+            $focus->attachments = [];
         }
         $focus->attachments = array_merge($focus->attachments, $notes_list);
-
-
 
         //for($i = 0; $i < $max_files_upload; $i++) {
 
@@ -284,25 +283,25 @@ EOQ;
                 $GLOBALS['log']->debug("Image {$file['name']} has already been processed.");
             }
 
-            $i=preg_replace("/email_attachment(.+)/", '$1', $key);
+            $i = preg_replace('/email_attachment(.+)/', '$1', $key);
             $upload_file = new UploadFile($key);
 
-            if (isset($_FILES[$key]) && $upload_file->confirm_upload() && preg_match("/^email_attachment/", $key)) {
+            if (isset($_FILES[$key]) && $upload_file->confirm_upload() && preg_match('/^email_attachment/', $key)) {
                 $note->filename = $upload_file->get_stored_file_name();
                 $note->file = $upload_file;
-                $note->name = $mod_strings['LBL_EMAIL_ATTACHMENT'].': '.$note->file->original_file_name;
-                if (isset($_REQUEST['embedded'.$i]) && !empty($_REQUEST['embedded'.$i])) {
-                    if ($_REQUEST['embedded'.$i]=='true') {
-                        $note->embed_flag =true;
+                $note->name = $mod_strings['LBL_EMAIL_ATTACHMENT'] . ': ' . $note->file->original_file_name;
+                if (isset($_REQUEST['embedded' . $i]) && !empty($_REQUEST['embedded' . $i])) {
+                    if ($_REQUEST['embedded' . $i] == 'true') {
+                        $note->embed_flag = true;
                     } else {
-                        $note->embed_flag =false;
+                        $note->embed_flag = false;
                     }
                 }
                 array_push($focus->attachments, $note);
             }
         }
 
-        $focus->saved_attachments = array();
+        $focus->saved_attachments = [];
         foreach ($focus->attachments as $note) {
             if (!empty($note->id) && $note->new_with_id === false) {
                 if (empty($_REQUEST['old_id'])) {
@@ -318,25 +317,26 @@ EOQ;
                     $newNote->new_with_id = true;
                     $newNote->date_modified = '';
                     $newNote->date_entered = '';
-                    /* BEGIN - SECURITY GROUPS */
+                    // BEGIN - SECURITY GROUPS
                     //Need to do this so that attachments show under an EmailTemplate correctly for a normal user
                     global $current_user;
                     $newNote->assigned_user_id = $current_user->id;
-                    /* END - SECURITY GROUPS */
+                    // END - SECURITY GROUPS
                     $newNoteId = $newNote->save();
 
                     UploadFile::duplicate_file($note->id, $newNoteId, $note->filename);
                 }
+
                 continue;
             }
             $note->parent_id = $focus->id;
             $note->parent_type = 'Emails';
             $note->file_mime_type = $note->file->mime_type;
-            /* BEGIN - SECURITY GROUPS */
+            // BEGIN - SECURITY GROUPS
             //Need to do this so that attachments show under an EmailTemplate correctly for a normal user
             global $current_user;
             $note->assigned_user_id = $current_user->id;
-            /* END - SECURITY GROUPS */
+            // END - SECURITY GROUPS
             $note_id = $note->save();
             array_push($focus->saved_attachments, $note);
             $note->id = $note_id;
@@ -360,13 +360,13 @@ EOQ;
             $count = 10;
         }
 
-        for ($i=0; $i<$count; $i++) {
-            if (isset($_REQUEST['documentId'.$i]) && !empty($_REQUEST['documentId'.$i])) {
+        for ($i = 0; $i < $count; $i++) {
+            if (isset($_REQUEST['documentId' . $i]) && !empty($_REQUEST['documentId' . $i])) {
                 $doc = new Document();
                 $docRev = new DocumentRevision();
                 $docNote = new Note();
 
-                $doc->retrieve($_REQUEST['documentId'.$i]);
+                $doc->retrieve($_REQUEST['documentId' . $i]);
                 $docRev->retrieve($doc->document_revision_id);
 
                 array_push($focus->saved_attachments, $docRev);
@@ -391,7 +391,7 @@ EOQ;
 
         if (isset($_REQUEST['remove_attachment']) && !empty($_REQUEST['remove_attachment'])) {
             foreach ($_REQUEST['remove_attachment'] as $noteId) {
-                $q = 'UPDATE notes SET deleted = 1 WHERE id = \''.$noteId.'\'';
+                $q = 'UPDATE notes SET deleted = 1 WHERE id = \'' . $noteId . '\'';
                 $focus->db->query($q);
             }
         }
@@ -404,8 +404,8 @@ EOQ;
         clear_register_value('select_array', $focus->object_name);
 
         if ($redirect) {
-            $GLOBALS['log']->debug("Saved record with id of ".$return_id);
-            handleRedirect($return_id, "EmailTemplates");
+            $GLOBALS['log']->debug('Saved record with id of ' . $return_id);
+            handleRedirect($return_id, 'EmailTemplates');
         } else {
             return $focus;
         }

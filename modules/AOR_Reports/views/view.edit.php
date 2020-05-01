@@ -1,8 +1,5 @@
 <?php
 /**
- *
- *
- * @package
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,10 +16,8 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
-
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
 class AOR_ReportsViewEdit extends ViewEdit
@@ -38,34 +33,34 @@ class AOR_ReportsViewEdit extends ViewEdit
         echo "<style type='text/css'>";
         //readfile('modules/AOR_Reports/css/edit.css');
         readfile('modules/AOR_Reports/js/jqtree/jqtree.css');
-        echo "</style>";
+        echo '</style>';
         if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
-            require_once('include/language/jsLanguage.php');
+            require_once 'include/language/jsLanguage.php';
             jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
         }
-        echo '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
+        echo '<script src="cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js"></script>';
 
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
-            require_once('include/language/jsLanguage.php');
+            require_once 'include/language/jsLanguage.php';
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
-        echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
+        echo '<script src="cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js"></script>';
         echo '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
 
-        echo "<script>";
-        echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
-        echo "total_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_total_options'], '')))."\";";
-        echo "format_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_format_options'], '')))."\";";
-        echo "</script>";
+        echo '<script>';
+        echo 'sort_by_values = "' . trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], ''))) . '";';
+        echo 'total_values = "' . trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_total_options'], ''))) . '";';
+        echo 'format_values = "' . trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_format_options'], ''))) . '";';
+        echo '</script>';
 
         $fields = $this->getFieldLines();
-        echo "<script>var fieldLines = ".json_encode($fields)."</script>";
+        echo '<script>var fieldLines = ' . json_encode($fields) . '</script>';
 
         $conditions = $this->getConditionLines();
-        echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
+        echo '<script>var conditionLines = ' . json_encode($conditions) . '</script>';
 
         $charts = $this->getChartLines();
-        echo "<script>var chartLines = ".json_encode($charts).";</script>";
+        echo '<script>var chartLines = ' . json_encode($charts) . ';</script>';
 
         parent::preDisplay();
     }
@@ -73,16 +68,16 @@ class AOR_ReportsViewEdit extends ViewEdit
     private function getConditionLines()
     {
         if (!$this->bean->id) {
-            return array();
+            return [];
         }
-        $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY condition_order ASC";
+        $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '" . $this->bean->id . "' AND deleted = 0 ORDER BY condition_order ASC";
         $result = $this->bean->db->query($sql);
-        $conditions = array();
+        $conditions = [];
         while ($row = $this->bean->db->fetchByAssoc($result)) {
             $condition_name = new AOR_Condition();
             $condition_name->retrieve($row['id']);
             if (!$condition_name->parenthesis) {
-                $condition_name->module_path = implode(":", unserialize(base64_decode($condition_name->module_path)));
+                $condition_name->module_path = implode(':', unserialize(base64_decode($condition_name->module_path)));
             }
             if ($condition_name->value_type == 'Date') {
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
@@ -100,24 +95,24 @@ class AOR_ReportsViewEdit extends ViewEdit
                 $conditions[$condition_item['condition_order']] = $condition_item;
             }
         }
+
         return $conditions;
     }
 
     private function getFieldLines()
     {
         if (!$this->bean->id) {
-            return array();
+            return [];
         }
-        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY field_order ASC";
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->bean->id . "' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->bean->db->query($sql);
 
-        $fields = array();
+        $fields = [];
         while ($row = $this->bean->db->fetchByAssoc($result)) {
             $field_name = new AOR_Field();
             $field_name->retrieve($row['id']);
-            $field_name->module_path = implode(":", unserialize(base64_decode($field_name->module_path)));
+            $field_name->module_path = implode(':', unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
-
 
             $display = getDisplayForField($field_name->module_path, $field_name->field, $this->bean->report_module);
             $arr['field_type'] = $display['type'];
@@ -126,18 +121,20 @@ class AOR_ReportsViewEdit extends ViewEdit
             $arr['field_label'] = $display['field'];
             $fields[] = $arr;
         }
+
         return $fields;
     }
 
     private function getChartLines()
     {
-        $charts = array();
+        $charts = [];
         if (!$this->bean->id) {
-            return array();
+            return [];
         }
         foreach ($this->bean->get_linked_beans('aor_charts', 'AOR_Charts') as $chart) {
             $charts[] = $chart->toArray();
         }
+
         return $charts;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,31 +36,29 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php');
+require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php';
 require_once 'modules/ModuleBuilder/parsers/constants.php';
 
 class SubpanelMetaDataParser extends ListLayoutMetaDataParser
 {
     /**
-     * @var array $columns
+     * @var array
      * Columns is used by the view to construct the listview - each column is built by calling the named function
      */
-    public $columns = array('LBL_DEFAULT' => 'getDefaultFields', 'LBL_HIDDEN' => 'getAvailableFields');
+    public $columns = ['LBL_DEFAULT' => 'getDefaultFields', 'LBL_HIDDEN' => 'getAvailableFields'];
     /**
-     * @var string $labelIdentifier labels in the subpanel defs are tagged 'vname' =>
+     * @var string labels in the subpanel defs are tagged 'vname' =>
      */
     protected $labelIdentifier = 'vname';
 
     /**
      * SubpanelMetaDataParser constructor.
      * Must set:
-     * $this->columns   Array of 'Column LBL'=>function_to_retrieve_fields_for_this_column() - expected by the view
+     * $this->columns   Array of 'Column LBL'=>function_to_retrieve_fields_for_this_column() - expected by the view.
      *
      * @param string $subpanelName
      * @param string $moduleName
@@ -69,7 +66,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      */
     public function __construct($subpanelName, $moduleName, $packageName = '')
     {
-        $GLOBALS ['log']->debug(get_class($this) . ": __construct()");
+        $GLOBALS['log']->debug(get_class($this) . ': __construct()');
 
         // TODO: check the implementations
         if (empty($packageName)) {
@@ -84,25 +81,26 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
         $this->_viewdefs = array_change_key_case($this->implementation->getViewdefs()); // force to lower case so don't have problems with case mismatches later
         $this->_fielddefs = $this->implementation->getFielddefs();
         $this->_standardizeFieldLabels($this->_fielddefs);
-        $GLOBALS['log']->debug(get_class($this) . "->__construct(): viewdefs = " . print_r($this->_viewdefs, true));
-        $GLOBALS['log']->debug(get_class($this) . "->__construct(): viewdefs = " . print_r($this->_viewdefs, true));
+        $GLOBALS['log']->debug(get_class($this) . '->__construct(): viewdefs = ' . print_r($this->_viewdefs, true));
+        $GLOBALS['log']->debug(get_class($this) . '->__construct(): viewdefs = ' . print_r($this->_viewdefs, true));
         $this->_invisibleFields = $this->findInvisibleFields($this->_viewdefs);
 
-        $GLOBALS['log']->debug(get_class($this) . "->__construct(): invisibleFields = " . print_r(
+        $GLOBALS['log']->debug(get_class($this) . '->__construct(): invisibleFields = ' . print_r(
             $this->_invisibleFields,
             true
         ));
     }
 
     /**
-     * Save the layout
+     * Save the layout.
+     *
      * @param bool $populate
      */
     public function handleSave($populate = true)
     {
         if ($populate) {
             $this->_populateFromRequest();
-            if (isset($_REQUEST['subpanel_title']) && isset($_REQUEST['subpanel_title_key'])) {
+            if (isset($_REQUEST['subpanel_title'], $_REQUEST['subpanel_title_key'])) {
                 $selected_lang = (!empty($_REQUEST['selected_lang']) ? $_REQUEST['selected_lang'] : $_SESSION['authenticated_user_language']);
                 if (empty($selected_lang)) {
                     $selected_lang = $GLOBALS['sugar_config']['default_language'];
@@ -110,19 +108,19 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
                 require_once 'modules/ModuleBuilder/parsers/parser.label.php';
                 $labelParser = new ParserLabel(
                     $_REQUEST['view_module'],
-                    isset($_REQUEST ['view_package']) ? $_REQUEST ['view_package'] : null
+                    isset($_REQUEST['view_package']) ? $_REQUEST['view_package'] : null
                 );
                 $labelParser::addLabels(
                     $selected_lang,
-                    array($_REQUEST['subpanel_title_key'] => remove_xss(from_html($_REQUEST['subpanel_title']))),
+                    [$_REQUEST['subpanel_title_key'] => remove_xss(from_html($_REQUEST['subpanel_title']))],
                     $_REQUEST['view_module']
                 );
             }
         }
         // Bug 46291 - Missing widget_class for edit_button and remove_button
         foreach ($this->_viewdefs as $key => $def) {
-            if (isset($this->_fielddefs [$key] ['widget_class'])) {
-                $this->_viewdefs [$key] ['widget_class'] = $this->_fielddefs [$key] ['widget_class'];
+            if (isset($this->_fielddefs[$key]['widget_class'])) {
+                $this->_viewdefs[$key]['widget_class'] = $this->_fielddefs[$key]['widget_class'];
             }
         }
         $defs = $this->restoreInvisibleFields(
@@ -135,15 +133,16 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
 
     /**
      * Return a list of the default fields for a subpanel
-     * TODO: have this return just a list of fields, without definitions
+     * TODO: have this return just a list of fields, without definitions.
+     *
      * @return array    List of default fields as an array, where key = value = <field name>
      */
     public function getDefaultFields()
     {
-        $defaultFields = array();
+        $defaultFields = [];
         foreach ($this->_viewdefs as $key => $def) {
-            if (empty($def ['usage']) || strcmp($def ['usage'], 'query_only') == 1) {
-                $defaultFields [strtolower($key)] = $this->_viewdefs [$key];
+            if (empty($def['usage']) || strcmp($def['usage'], 'query_only') == 1) {
+                $defaultFields[strtolower($key)] = $this->_viewdefs[$key];
             }
         }
 
@@ -152,16 +151,18 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
 
     /**
      * Find the query_only fields in the viewdefs
-     * Query_only fields are used by the MVC to generate the subpanel but are not editable - they must be maintained in the layout
+     * Query_only fields are used by the MVC to generate the subpanel but are not editable - they must be maintained in the layout.
+     *
      * @param array $viewdefs The viewdefs to be searched for invisible fields
+     *
      * @return array of invisible fields, ready to be provided to $this->restoreInvisibleFields
      */
     public function findInvisibleFields($viewdefs)
     {
-        $invisibleFields = array();
+        $invisibleFields = [];
         foreach ($viewdefs as $name => $def) {
-            if (isset($def ['usage']) && ($def ['usage'] == 'query_only')) {
-                $invisibleFields [$name] = $def;
+            if (isset($def['usage']) && ($def['usage'] == 'query_only')) {
+                $invisibleFields[$name] = $def;
             }
         }
 
@@ -171,12 +172,13 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     /**
      * @param $invisibleFields
      * @param $viewdefs
+     *
      * @return mixed
      */
     public function restoreInvisibleFields($invisibleFields, $viewdefs)
     {
         foreach ($invisibleFields as $name => $def) {
-            $viewdefs [$name] = $def;
+            $viewdefs[$name] = $def;
         }
 
         return $viewdefs;
@@ -184,14 +186,15 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
 
     /**
      * @param array $fieldDefinitions
+     *
      * @return array
      */
     public static function _trimFieldDefs($fieldDefinitions)
     {
         $listDef = parent::_trimFieldDefs($fieldDefinitions);
-        if (isset($listDef ['label'])) {
-            $listDef ['vname'] = $listDef ['label'];
-            unset($listDef ['label']);
+        if (isset($listDef['label'])) {
+            $listDef['vname'] = $listDef['label'];
+            unset($listDef['label']);
         }
 
         return $listDef;
@@ -203,7 +206,9 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      * relate field so that a link to the related record may be shown in the subpanel code.  This is done by adding the
      * widget_class, target_module and target_record_key deltas to the related subpanel definition entry.
      *
-     * @param Array of subpanel definitions to possibly alter
+     * @param array of subpanel definitions to possibly alter
+     * @param mixed $defs
+     *
      * @return $defs Array of formatted subpanel definition entries to include any relate field attributes for Subpanels
      */
     protected function makeRelateFieldsAsLink($defs)

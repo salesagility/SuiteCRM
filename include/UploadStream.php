@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/externalAPI/ExternalAPIFactory.php');
+require_once 'include/externalAPI/ExternalAPIFactory.php';
 
 /**
  * @internal
@@ -50,13 +48,14 @@ require_once('include/externalAPI/ExternalAPIFactory.php');
  */
 class UploadStream
 {
-    const STREAM_NAME = "upload";
+    const STREAM_NAME = 'upload';
     protected static $upload_dir;
 
     /**
-     * Method checks Suhosin restrictions to use streams in php
+     * Method checks Suhosin restrictions to use streams in php.
      *
      * @static
+     *
      * @return bool is allowed stream or not
      */
     public static function getSuhosinStatus()
@@ -115,7 +114,8 @@ class UploadStream
     }
 
     /**
-     * Get upload directory
+     * Get upload directory.
+     *
      * @return string
      */
     public static function getDir()
@@ -123,7 +123,7 @@ class UploadStream
         if (empty(self::$upload_dir)) {
             self::$upload_dir = rtrim($GLOBALS['sugar_config']['upload_dir'], '/\\');
             if (empty(self::$upload_dir)) {
-                self::$upload_dir = "upload";
+                self::$upload_dir = 'upload';
             }
             if (!file_exists(self::$upload_dir)) {
                 sugar_mkdir(self::$upload_dir, 0755, true);
@@ -134,7 +134,8 @@ class UploadStream
     }
 
     /**
-     * Check if upload dir is writable
+     * Check if upload dir is writable.
+     *
      * @return bool
      */
     public static function writable()
@@ -143,7 +144,7 @@ class UploadStream
     }
 
     /**
-     * Register the stream
+     * Register the stream.
      */
     public static function register()
     {
@@ -151,26 +152,30 @@ class UploadStream
     }
 
     /**
-     * Get real FS path of the upload stream file
+     * Get real FS path of the upload stream file.
+     *
      * @param string $path Upload stream path (with upload://)
+     *
      * @return string FS path
      */
     public static function path($path)
     {
         $path = substr($path, strlen(self::STREAM_NAME) + 3); // cut off upload://
-        $path = str_replace("\\", "/", $path); // canonicalize path
-        if ($path == ".." || substr($path, 0, 3) == "../" || substr($path, -3, 3) == "/.." || strstr($path, "/../")) {
+        $path = str_replace('\\', '/', $path); // canonicalize path
+        if ($path == '..' || substr($path, 0, 3) == '../' || substr($path, -3, 3) == '/..' || strstr($path, '/../')) {
             return null;
         }
 
-        return self::getDir() . "/" . $path;
+        return self::getDir() . '/' . $path;
     }
 
     /**
-     * Ensure upload subdir exists
+     * Ensure upload subdir exists.
+     *
      * @param string $path Upload stream path (with upload://)
      * @param bool $writable
-     * @return boolean
+     *
+     * @return bool
      */
     public static function ensureDir($path, $writable = true)
     {

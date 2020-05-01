@@ -51,7 +51,7 @@ use Monolog\Logger;
  */
 class CliLoggerFormatter implements FormatterInterface
 {
-    /**  @var array a list of the available colours for quicker usage */
+    /** @var array a list of the available colours for quicker usage */
     private $colors = [];
     /** @var string the format of the log line */
     private $format;
@@ -93,6 +93,7 @@ class CliLoggerFormatter implements FormatterInterface
         foreach ($records as $record) {
             $formatted = $this->format($record);
         }
+
         return $formatted;
     }
 
@@ -114,7 +115,7 @@ class CliLoggerFormatter implements FormatterInterface
             $message = $color . $message . $this->colors['reset'];
         }
 
-        $message = preg_replace("/\n\s*/", $this->padding . $color, $message);
+        $message = preg_replace("/\n\\s*/", $this->padding . $color, $message);
 
         $time = (new \DateTime())->format('H:i:s');
 
@@ -176,33 +177,41 @@ class CliLoggerFormatter implements FormatterInterface
             case Logger::INFO:
                 $color = $this->colors['cyan'];
                 $code = '=';
+
                 break;
             case Logger::NOTICE:
                 $color = $this->colors['green'];
                 $code = '?';
+
                 break;
             case Logger::WARNING:
                 $color = $this->colors['yellow'];
                 $code = '*';
+
                 break;
             case Logger::ERROR:
                 $color = $this->colors['red'];
                 $code = '!';
+
                 break;
             case Logger::CRITICAL:
                 $color = $this->colors['bg-red-light'];
                 $code = '!';
+
                 break;
             case Logger::EMERGENCY:
                 $color = $this->colors['bg-red'];
                 $code = '!';
+
                 break;
             case Logger::DEBUG:
             default:
                 $color = $this->colors['blue'];
                 $code = '@';
+
                 break;
         }
+
         return [$color, $code];
     }
 }

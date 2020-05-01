@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
@@ -51,20 +49,17 @@ if (!isset($install_script) || !$install_script) {
 
 $langDropDown = get_select_options_with_id($supportedLanguages, $current_language);
 
-
-
 if (!isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitted']) {
-    $_SESSION['setup_license_key_users']        = 0;
-    $_SESSION['setup_license_key_expire_date']  = "";
-    $_SESSION['setup_license_key']              = "";
-    $_SESSION['setup_num_lic_oc']              = 0;
-} else {
+    $_SESSION['setup_license_key_users'] = 0;
+    $_SESSION['setup_license_key_expire_date'] = '';
+    $_SESSION['setup_license_key'] = '';
+    $_SESSION['setup_num_lic_oc'] = 0;
 }
 
 //php version suggestion
 $php_suggested_ver = '';
 if (check_php_version() === -1) {
-    $php_suggested_ver=$mod_strings['LBL_YOUR_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION'];
+    $php_suggested_ver = $mod_strings['LBL_YOUR_PHP_VERSION'] . phpversion() . $mod_strings['LBL_RECOMMENDED_PHP_VERSION'];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,14 +92,13 @@ $out = <<<EOQ
             <div id="install_content">
 EOQ;
 
-$typical_checked ='checked';
-$custom_checked ='';
-if (isset($_SESSION['install_type']) && $_SESSION['install_type']=='custom') {
-    $typical_checked ='';
-    $custom_checked ='checked';
-} else {
-    //do nothing because defaults handle this condition
+$typical_checked = 'checked';
+$custom_checked = '';
+if (isset($_SESSION['install_type']) && $_SESSION['install_type'] == 'custom') {
+    $typical_checked = '';
+    $custom_checked = 'checked';
 }
+    //do nothing because defaults handle this condition
 
 $out .= <<<EOQ2
                 <div id="installoptions">

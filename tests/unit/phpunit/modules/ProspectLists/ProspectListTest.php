@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,43 +16,40 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $prospectList = new ProspectList();
 
         //test with empty string params
-        $expected = "SELECT
+        $expected = 'SELECT
                                 prospect_lists.*,
                                 users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
-                                ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
+                                ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name';
         $actual = $prospectList->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
-
         //test with valid string params
-        $expected = "SELECT
+        $expected = 'SELECT
                                 prospect_lists.*,
                                 users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
-                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
+                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = "" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id';
         $actual = $prospectList->create_export_query('prospect_lists.id', 'users.user_name = ""');
         $this->assertSame($expected, $actual);
     }
 
-    
-    public function testcreate_list_query()
+    public function testcreateListQuery()
     {
         $prospectList = new ProspectList();
 
         //test with empty string params
-        $expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
-					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
+        $expected = 'SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
+					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name';
         $actual = $prospectList->create_list_query('', '');
         $this->assertSame($expected, $actual);
 
-
         //test with valid string params
-        $expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
-					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
+        $expected = 'SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
+					ON prospect_lists.assigned_user_id=users.id where users.user_name = "" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id';
         $actual = $prospectList->create_list_query('prospect_lists.id', 'users.user_name = ""');
         $this->assertSame($expected, $actual);
     }
@@ -66,10 +66,10 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('ProspectLists', 'module_dir', $prospectList);
         $this->assertAttributeEquals('ProspectList', 'object_name', $prospectList);
 
-        $this->assertAttributeEquals("prospect_lists_prospects", 'rel_prospects_table', $prospectList);
+        $this->assertAttributeEquals('prospect_lists_prospects', 'rel_prospects_table', $prospectList);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $prospectList = new ProspectList();
 
@@ -77,14 +77,14 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $prospectList->get_summary_text());
 
         //test with name set
-        $prospectList->name = "test";
+        $prospectList->name = 'test';
         $this->assertEquals('test', $prospectList->get_summary_text());
     }
 
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_export_members_query()
+    public function testcreateExportMembersQuery()
     {
         /*
     	$prospectList = new ProspectList();
@@ -94,15 +94,15 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
     	$actual = $prospectList->create_export_members_query('1');
     	$this->assertSame($expected,$actual);
         */
-        $this->assertTrue(true, "NEEDS FIXING!");
+        $this->assertTrue(true, 'NEEDS FIXING!');
     }
 
     public function testsave()
     {
         $prospectList = new ProspectList();
 
-        $prospectList->name = "test";
-        $prospectList->description ="test description";
+        $prospectList->name = 'test';
+        $prospectList->description = 'test description';
 
         $result = $prospectList->save();
 
@@ -110,14 +110,11 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(isset($prospectList->id));
         $this->assertEquals(36, strlen($prospectList->id));
 
-
         //test set_prospect_relationship method
         $this->set_prospect_relationship($prospectList->id);
 
-
         //test set_prospect_relationship_single method
         $this->set_prospect_relationship_single($prospectList->id);
-
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $prospectList->mark_deleted($prospectList->id);
@@ -125,7 +122,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testsave_relationship_changes()
+    public function testsaveRelationshipChanges()
     {
         $this->markTestIncomplete('Error in query: columns mismatch | Error in methodd call params: 2nd param should be array but string given');
     }
@@ -135,7 +132,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $prospectList = new ProspectList();
 
         //preset the required attributes, retrive the bean by id and verify the count of records
-        $link_ids = array('1','2');
+        $link_ids = ['1', '2'];
 
         $prospectList->retrieve($id);
         $prospectList->set_prospect_relationship($id, $link_ids, 'related');
@@ -143,7 +140,6 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $expected_count = $prospectList->get_entry_count();
 
         $this->assertEquals(2, $expected_count);
-
 
         //test clear_prospect_relationship method with expected counts
         $this->clear_prospect_relationship($id, '1');
@@ -172,15 +168,15 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
         $prospectList->retrieve($id);
 
-        $initial_count = (int)$prospectList->get_entry_count();
+        $initial_count = (int) $prospectList->get_entry_count();
 
         $prospectList->clear_prospect_relationship($id, $related_id, 'related');
 
-        $expected_count = (int)$prospectList->get_entry_count();
+        $expected_count = (int) $prospectList->get_entry_count();
         $this->assertEquals($initial_count - 1, $expected_count);
     }
 
-    public function testmark_relationships_deleted()
+    public function testmarkRelationshipsDeleted()
     {
         $prospectList = new ProspectList();
 
@@ -195,7 +191,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('Method has no implementation');
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $prospectList = new ProspectList();
 
@@ -210,7 +206,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('Method has no implementation');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $prospectList = new ProspectList();
 
@@ -218,7 +214,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(0, $prospectList->entry_count);
     }
 
-    public function testupdate_currency_id()
+    public function testupdateCurrencyId()
     {
         $prospectList = new ProspectList();
 
@@ -233,7 +229,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('Method has no implementation');
     }
 
-    public function testget_entry_count()
+    public function testgetEntryCount()
     {
         $prospectList = new ProspectList();
 
@@ -241,16 +237,16 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(0, $result);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $prospectList = new ProspectList();
 
-        $expected = array( "DELETED"=> 0, "ENTRY_COUNT"=> '0' );
+        $expected = ['DELETED' => 0, 'ENTRY_COUNT' => '0'];
         $actual = $prospectList->get_list_view_data();
         $this->assertSame($expected, $actual);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $prospectList = new ProspectList();
 
@@ -259,14 +255,13 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $actual = $prospectList->build_generic_where_clause('');
         $this->assertSame($expected, $actual);
 
-
         //test with valid string params
         $expected = "prospect_lists.name like '1%'";
         $actual = $prospectList->build_generic_where_clause('1');
         $this->assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $prospectList = new ProspectList();
 

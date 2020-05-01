@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * UpgradeRemoval.php
+ * UpgradeRemoval.php.
  *
  * This is the base class to support removing files during an upgrade process.
  * To support custom removal of files during an upgrade process take the following steps:
@@ -56,7 +55,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class UpgradeRemoval
 {
-
     /**
      * @var string minimal version for removal
      */
@@ -67,11 +65,12 @@ class UpgradeRemoval
      * Return array of files/directories to remove.  Default implementation returns empty array.
      *
      * @param int $version integer value of original version to be upgraded
+     *
      * @return mixed $files Array of files/directories to remove
      */
     public function getFilesToRemove($version)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -80,18 +79,18 @@ class UpgradeRemoval
      *
      * @param mixed $files
      */
-    public function processFilesToRemove($files=array())
+    public function processFilesToRemove($files = [])
     {
         if (empty($files) || !is_array($files)) {
             return;
         }
-    
-        require_once('include/dir_inc.php');
-    
+
+        require_once 'include/dir_inc.php';
+
         if (!file_exists('custom/backup')) {
             mkdir_recursive('custom/backup');
         }
-    
+
         foreach ($files as $file) {
             if (file_exists($file)) {
                 $this->backup($file);
@@ -104,10 +103,9 @@ class UpgradeRemoval
         }
     }
 
-
     /**
      * backup
-     * Private method to handle backing up the file to custom/backup directory
+     * Private method to handle backing up the file to custom/backup directory.
      *
      * @param $file File or directory to backup to custom/backup directory
      */
@@ -119,7 +117,7 @@ class UpgradeRemoval
         if (!empty($basepath) && !file_exists('custom/backup/' . $basepath)) {
             mkdir_recursive('custom/backup/' . $basepath);
         }
-    
+
         if (is_dir($file)) {
             copy_recursive($file, 'custom/backup/' . $file);
         } else {

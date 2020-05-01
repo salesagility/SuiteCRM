@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains a variety of utility functions used to display UI
  * components such as form headers and footers.  Intended to be modified on a per
@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 /**
  * Create javascript to validate the data entered into a record.
@@ -69,7 +69,7 @@ function get_validate_record_js()
     $err_self_reporting = $app_strings['ERR_SELF_REPORTING'];
     $sqs_no_match = $app_strings['ERR_SQS_NO_MATCH'] . ' : ' . $mod_strings['LBL_LIST_REPORTS_TO_NAME'];
 
-    $the_script  = <<<EOQ
+    $the_script = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 function verify_data(form) {
@@ -77,29 +77,29 @@ function verify_data(form) {
 	var errorMessage = "";
 	if (trim(form.last_name.value) == "") {
 		isError = true;
-		errorMessage += "\\n$lbl_last_name";
+		errorMessage += "\\n{$lbl_last_name}";
 	}
 
 	if (isError == true) {
-		alert("$err_missing_required_fields" + errorMessage);
+		alert("{$err_missing_required_fields}" + errorMessage);
 		return false;
 	}
-	if (trim(form.email1.value) != "" && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(form.email1.value)) {
-		alert('"' + form.email1.value + '" $err_invalid_email_address');
+	if (trim(form.email1.value) != "" && !/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,})+$/.test(form.email1.value)) {
+		alert('"' + form.email1.value + '" {$err_invalid_email_address}');
 		return false;
 	}
-	if (trim(form.email2.value) != "" && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(form.email2.value)) {
-		alert('"' + form.email2.value + '" $err_invalid_email_address');
+	if (trim(form.email2.value) != "" && !/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,})+$/.test(form.email2.value)) {
+		alert('"' + form.email2.value + '" {$err_invalid_email_address}');
 		return false;
 	}
 		if ((trim(form.reports_to_name.value) == "" && trim(form.reports_to_id.value) != "") || 
 		 (trim(form.reports_to_name.value) != "" && trim(form.reports_to_id.value) == "")) {
-		alert('$sqs_no_match');
+		alert('{$sqs_no_match}');
 		return false;	
 	}
 	
 	if (document.EditView.return_id.value != ''  && document.EditView.return_id.value == form.reports_to_id.value) {
-		alert('$err_self_reporting');
+		alert('{$err_self_reporting}');
 		return false;
 	}
 	return true;
@@ -113,7 +113,7 @@ EOQ;
 
 function get_chooser_js()
 {
-    $the_script  = <<<EOQ
+    return <<<'EOQ'
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers
@@ -138,6 +138,4 @@ document.EditView.display_tabs_def.value = display_tabs_def;
 // end hiding contents from old browsers  -->
 </script>
 EOQ;
-
-    return $the_script;
 }

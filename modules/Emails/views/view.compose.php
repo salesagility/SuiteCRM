@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,17 +37,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 class EmailsViewCompose extends ViewEdit
 {
-
     /**
-     * @var Email $bean
+     * @var Email
      */
     public $bean;
 
@@ -78,7 +74,7 @@ class EmailsViewCompose extends ViewEdit
         global $current_user, $mod_strings, $log;
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
-        $this->ev->ss =& $this->ss;
+        $this->ev->ss = &$this->ss;
 
         if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
@@ -99,9 +95,9 @@ class EmailsViewCompose extends ViewEdit
         $this->ev->ss->assign('RETURN_ACTION', isset($_GET['return_action']) ? $_GET['return_action'] : '');
         $this->ev->ss->assign('RETURN_ID', isset($_GET['return_id']) ? $_GET['return_id'] : '');
         $this->ev->ss->assign('IS_MODAL', isset($_GET['in_popup']) ? $_GET['in_popup'] : false);
-        
+
         $attachmentName = $mod_strings['LBL_ATTACHMENT'];
-        if (isset($_GET['return_module']) && isset($_GET['return_id'])) {
+        if (isset($_GET['return_module'], $_GET['return_id'])) {
             $attachmentName = $attachmentName . ' (' . $_GET['return_module'] . ')';
             $attachment = BeanFactory::getBean($_GET['return_module'], $_GET['return_id']);
             if (!$attachment) {
@@ -118,7 +114,7 @@ class EmailsViewCompose extends ViewEdit
             }
         }
         $this->ev->ss->assign('ATTACHMENT_NAME', $attachmentName);
-        
+
         $this->ev->setup(
             $this->module,
             $this->bean,
@@ -128,28 +124,33 @@ class EmailsViewCompose extends ViewEdit
     }
 
     /**
-     * Get EditView object
+     * Get EditView object.
+     *
      * @return EditView
      */
     public function getEditView()
     {
         $a = dirname(dirname(__FILE__)) . '/include/ComposeView/ComposeView.php';
         require_once 'modules/Emails/include/ComposeView/ComposeView.php';
+
         return new ComposeView();
     }
 
     /**
-     * Prepends body with $user's default signature
+     * Prepends body with $user's default signature.
+     *
      * @param Email $email
      * @param User $user
-     * @return bool|Email
+     *
      * @throws SugarControllerException
+     *
+     * @return bool|Email
      */
     public function getSignatures(User $user)
     {
         if (empty($user->id) || $user->new_with_id === true) {
             throw new \SugarControllerException(
-                'EmailsController::composeSignature() requires an existing User and not a new User object. '.
+                'EmailsController::composeSignature() requires an existing User and not a new User object. ' .
                 'This is typically the $current_user global'
             );
         }
@@ -165,12 +166,14 @@ class EmailsViewCompose extends ViewEdit
             $emailSignatures = $user->getSignature($emailSignatureId);
             $email->description .= $emailSignatures['signature'];
             $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
+
             return $email;
         }
         $GLOBALS['log']->warn(
-            'EmailsController::composeSignature() was unable to get the signature id for user: '.
+            'EmailsController::composeSignature() was unable to get the signature id for user: ' .
                 $user->name
-            );
+        );
+
         return false;
     }
 }

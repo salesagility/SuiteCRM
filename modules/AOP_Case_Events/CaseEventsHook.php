@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,46 +42,16 @@
  */
 class CaseEventsHook
 {
-    private static $diffFields = array(
-        array('field' => 'priority', 'display_field' => 'priority', 'display_name' => 'Priority'),
-        array('field' => 'status', 'display_field' => 'status', 'display_name' => 'Status'),
-        array(
-            'field'         => 'assigned_user_id',
+    private static $diffFields = [
+        ['field' => 'priority', 'display_field' => 'priority', 'display_name' => 'Priority'],
+        ['field' => 'status', 'display_field' => 'status', 'display_name' => 'Status'],
+        [
+            'field' => 'assigned_user_id',
             'display_field' => 'assigned_user_name',
-            'display_name'  => 'Assigned User'
-        ),
-        array('field' => 'type', 'display_field' => 'type', 'display_name' => 'Type'),
-    );
-
-    /**
-     * @param SugarBean $old
-     * @param SugarBean $new
-     *
-     * @return array
-     */
-    private function compareBeans($old, $new)
-    {
-        $events = array();
-        foreach (self::$diffFields as $field) {
-            $fieldName = $field['field'];
-            $displayField = $field['display_field'];
-            $name = $field['display_name'];
-            if ((isset($old->$fieldName) ? $old->$fieldName : null) !==
-                (isset($new->$fieldName) ? $new->$fieldName : null)
-            ) {
-                $event = new AOP_Case_Events();
-                $oldDisplay = $old->$displayField;
-                $newDisplay = $new->$displayField;
-                $desc = $name . ' changed from ' . $oldDisplay . ' to ' . $newDisplay . '.';
-                $event->name = $desc;
-                $event->description = $desc;
-                $event->case_id = $new->id;
-                $events[] = $event;
-            }
-        }
-
-        return $events;
-    }
+            'display_name' => 'Assigned User'
+        ],
+        ['field' => 'type', 'display_field' => 'type', 'display_name' => 'Type'],
+    ];
 
     /**
      * @param SugarBean $bean
@@ -102,5 +71,35 @@ class CaseEventsHook
         foreach ($events as $event) {
             $event->save();
         }
+    }
+
+    /**
+     * @param SugarBean $old
+     * @param SugarBean $new
+     *
+     * @return array
+     */
+    private function compareBeans($old, $new)
+    {
+        $events = [];
+        foreach (self::$diffFields as $field) {
+            $fieldName = $field['field'];
+            $displayField = $field['display_field'];
+            $name = $field['display_name'];
+            if ((isset($old->{$fieldName}) ? $old->{$fieldName} : null) !==
+                (isset($new->{$fieldName}) ? $new->{$fieldName} : null)
+            ) {
+                $event = new AOP_Case_Events();
+                $oldDisplay = $old->{$displayField};
+                $newDisplay = $new->{$displayField};
+                $desc = $name . ' changed from ' . $oldDisplay . ' to ' . $newDisplay . '.';
+                $event->name = $desc;
+                $event->description = $desc;
+                $event->case_id = $new->id;
+                $events[] = $event;
+            }
+        }
+
+        return $events;
     }
 }

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class GroupTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -26,7 +29,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'importable', $group);
     }
 
-    public function testmark_deleted()
+    public function testmarkDeleted()
     {
         self::markTestIncomplete('environment dependency (php7: Incorrect state hash: Hash doesn\'t match at key "database::users".)');
 
@@ -41,7 +44,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $group = new Group();
 

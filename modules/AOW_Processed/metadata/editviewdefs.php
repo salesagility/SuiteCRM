@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,34 +18,26 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
+$viewdefs['AOW_Processed']['EditView'] = [
+    'templateMeta' => ['maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
 
+    'panels' => [
+        'default' => [
+            [
+                'name',
+                'assigned_user_name',
+            ],
 
-$viewdefs['AOW_Processed']['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-                                            ),
-                                            
-                                            
- 'panels' =>array(
-  'default' =>
-  array(
-    
-    array(
-      'name',
-      'assigned_user_name',
-    ),
-    
-    array(
-      'description',
-    ),
-  ),
-                                                    
-),
-                        
-);
+            [
+                'description',
+            ],
+        ],
+    ],
+];

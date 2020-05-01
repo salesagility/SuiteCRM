@@ -42,11 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
  * Description: Bug 40166. Need for return right join for campaign's target list relations.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 require_once 'data/Link2.php';
 
@@ -62,8 +62,10 @@ class ProspectLink extends Link2
      * 'link_file' => 'modules/Campaigns/ProspectLink.php'.
      *
      * @see Link::getJoin method
+     *
      * @param array $params
      * @param bool $return_array
+     *
      * @return array|string
      */
     public function getJoin($params, $return_array = false)
@@ -86,26 +88,26 @@ class ProspectLink extends Link2
             $other_key = $this->_relationship->lhs_key;
             $alias_prefix = $table;
             if (!empty($params['join_table_alias'])) {
-                $table_with_alias = $table.' '.$params['join_table_alias'];
+                $table_with_alias = $table . ' ' . $params['join_table_alias'];
                 $table = $params['join_table_alias'];
                 $alias_prefix = $params['join_table_alias'];
             }
 
-            $join .= ' '.$join_type.' prospect_list_campaigns '.$alias_prefix.'_plc ON';
-            $join .= ' '.$alias_prefix.'_plc.'.$key.' = '.$other_table.'.'.$other_key."\n";
+            $join .= ' ' . $join_type . ' prospect_list_campaigns ' . $alias_prefix . '_plc ON';
+            $join .= ' ' . $alias_prefix . '_plc.' . $key . ' = ' . $other_table . '.' . $other_key . "\n";
 
             // join list targets
-            $join .= ' '.$join_type.' prospect_lists_prospects '.$alias_prefix.'_plp ON';
-            $join .= ' '.$alias_prefix.'_plp.prospect_list_id = '.$alias_prefix.'_plc.prospect_list_id AND';
-            $join .= ' '.$alias_prefix.'_plp.related_type = '.DBManagerFactory::getInstance()->quoted($module)."\n";
+            $join .= ' ' . $join_type . ' prospect_lists_prospects ' . $alias_prefix . '_plp ON';
+            $join .= ' ' . $alias_prefix . '_plp.prospect_list_id = ' . $alias_prefix . '_plc.prospect_list_id AND';
+            $join .= ' ' . $alias_prefix . '_plp.related_type = ' . DBManagerFactory::getInstance()->quoted($module) . "\n";
 
             // join target
-            $join .= ' '.$join_type.' '.$table_with_alias.' ON';
-            $join .= ' '.$table.'.id = '.$alias_prefix.'_plp.related_id AND';
-            $join .= ' '.$table.'.deleted=0'."\n";
+            $join .= ' ' . $join_type . ' ' . $table_with_alias . ' ON';
+            $join .= ' ' . $table . '.id = ' . $alias_prefix . '_plp.related_id AND';
+            $join .= ' ' . $table . '.deleted=0' . "\n";
 
             if ($return_array) {
-                $ret_arr = array();
+                $ret_arr = [];
                 $ret_arr['join'] = $join;
                 $ret_arr['type'] = $this->_relationship->relationship_type;
                 if ($linkIsLHS) {
@@ -118,8 +120,8 @@ class ProspectLink extends Link2
             }
 
             return $join;
-        } else {
-            return parent::getJoin($params, $return_array);
         }
+
+        return parent::getJoin($params, $return_array);
     }
 }

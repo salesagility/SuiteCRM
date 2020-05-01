@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,6 +35,8 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $focus
  */
 
 /**
@@ -57,8 +58,8 @@ function display_updates($focus)
     //Javascript for Asynchronous update
     $html = <<<A
 <script>
-var hideUpdateImage = '$hideImage';
-var showUpdateImage = '$showImage';
+var hideUpdateImage = '{$hideImage}';
+var showUpdateImage = '{$showImage}';
 function collapseAllUpdates(){
     $('.caseUpdateImage').attr("src",showUpdateImage);
     $('.caseUpdate').slideUp('fast');
@@ -181,7 +182,8 @@ EOD;
             $bDate = $b->fetched_row['date_entered'];
             if ($aDate < $bDate) {
                 return -1;
-            } elseif ($aDate > $bDate) {
+            }
+            if ($aDate > $bDate) {
                 return 1;
             }
 
@@ -259,10 +261,9 @@ function getUpdateDisplayHead(SugarBean $update)
  */
 function display_single_update(AOP_Case_Updates $update)
 {
-
-    /*if assigned user*/
+    // if assigned user
     if ($update->assigned_user_id) {
-        /*if internal update*/
+        // if internal update
         if ($update->internal) {
             $html = "<div id='caseStyleInternal'>" . getUpdateDisplayHead($update);
             $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
@@ -270,17 +271,16 @@ function display_single_update(AOP_Case_Updates $update)
             $html .= '</div></div>';
 
             return $html;
-        } /*if standard update*/ else {
-            $html = "<div id='lessmargin'><div id='caseStyleUser'>" . getUpdateDisplayHead($update);
-            $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
-            $html .= nl2br(html_entity_decode($update->description));
-            $html .= '</div></div></div>';
+        } // if standard update
+        $html = "<div id='lessmargin'><div id='caseStyleUser'>" . getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= '</div></div></div>';
 
-            return $html;
-        }
+        return $html;
     }
 
-    /*if contact user*/
+    // if contact user
     if ($update->contact_id) {
         $html = "<div id='extramargin'><div id='caseStyleContact'>" . getUpdateDisplayHead($update);
         $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
@@ -326,7 +326,7 @@ function quick_edit_case_updates($case)
     global $currentModule;
     global $current_language;
     $mod_strings = return_module_language($current_language, 'Cases');
-    #
+
     //on DetailView only
     if ($action !== 'DetailView') {
         return;
@@ -360,9 +360,9 @@ function quick_edit_case_updates($case)
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
     <div><label>{$mod_strings['LBL_INTERNAL']}</label>
-    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked ></input>
+    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' {$internalChecked} ></input>
     </div>
-    <input type='button' value='$saveBtn' onclick="caseUpdates('$record')" title="$saveTitle" name="button"> </input>
+    <input type='button' value='{$saveBtn}' onclick="caseUpdates('{$record}')" title="{$saveTitle}" name="button"> </input>
 
 
     </br>

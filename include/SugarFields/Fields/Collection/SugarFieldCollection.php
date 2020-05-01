@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,29 +36,29 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 class SugarFieldCollection extends SugarFieldBase
 {
     public $tpl_path;
-    
+
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
-        $nolink = array('Users');
+        $nolink = ['Users'];
         if (in_array($vardef['module'], $nolink)) {
-            $displayParams['nolink']=true;
+            $displayParams['nolink'] = true;
         } else {
-            $displayParams['nolink']=false;
+            $displayParams['nolink'] = false;
         }
         $json = getJSONobj();
         $displayParamsJSON = $json->encode($displayParams);
         $vardefJSON = $json->encode($vardef);
-        $this->ss->assign('displayParamsJSON', '{literal}'.$displayParamsJSON.'{/literal}');
-        $this->ss->assign('vardefJSON', '{literal}'.$vardefJSON.'{/literal}');
+        $this->ss->assign('displayParamsJSON', '{literal}' . $displayParamsJSON . '{/literal}');
+        $this->ss->assign('vardefJSON', '{literal}' . $vardefJSON . '{/literal}');
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         if (empty($this->tpl_path)) {
             $this->tpl_path = $this->findTemplate('DetailView');
         }
+
         return $this->fetch($this->tpl_path);
     }
 
@@ -74,8 +73,8 @@ class SugarFieldCollection extends SugarFieldBase
         $displayParamsJSON = $json->encode($displayParams);
         $vardefJSON = $json->encode($vardef);
         $this->ss->assign('required', !empty($vardef['required']));
-        $this->ss->assign('displayParamsJSON', '{literal}'.$displayParamsJSON.'{/literal}');
-        $this->ss->assign('vardefJSON', '{literal}'.$vardefJSON.'{/literal}');
+        $this->ss->assign('displayParamsJSON', '{literal}' . $displayParamsJSON . '{/literal}');
+        $this->ss->assign('vardefJSON', '{literal}' . $vardefJSON . '{/literal}');
 
         $keys = $this->getAccessKey($vardef, 'COLLECTION', $vardef['module']);
         $displayParams['accessKeySelect'] = $keys['accessKeySelect'];
@@ -90,6 +89,7 @@ class SugarFieldCollection extends SugarFieldBase
             if (empty($this->tpl_path)) {
                 $this->tpl_path = $this->findTemplate('EditView');
             }
+
             return $this->fetch($this->tpl_path);
         }
     }
@@ -98,32 +98,39 @@ class SugarFieldCollection extends SugarFieldBase
     {
         $this->getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex, true);
     }
+
     /**
-    * This should be called when the bean is saved. The bean itself will be passed by reference
-    * @param SugarBean bean - the bean performing the save
-    * @param array params - an array of paramester relevant to the save, most likely will be $_REQUEST
-    */
+     * This should be called when the bean is saved. The bean itself will be passed by reference.
+     *
+     * @param SugarBean bean - the bean performing the save
+     * @param array params - an array of paramester relevant to the save, most likely will be $_REQUEST
+     * @param mixed $bean
+     * @param mixed $params
+     * @param mixed $field
+     * @param mixed $properties
+     * @param mixed $prefix
+     */
     public function save(&$bean, $params, $field, $properties, $prefix = '')
     {
-        if (isset($_POST["primary_" . $field . "_collection"])) {
+        if (isset($_POST['primary_' . $field . '_collection'])) {
             $save = false;
-            $value_name = $field . "_values";
-            $link_field = array();
+            $value_name = $field . '_values';
+            $link_field = [];
             // populate $link_field from POST
-            foreach ($_POST as $name=>$value) {
-                if (strpos($name, $field . "_collection_") !== false) {
+            foreach ($_POST as $name => $value) {
+                if (strpos($name, $field . '_collection_') !== false) {
                     $num = substr($name, -1);
                     if (is_numeric($num)) {
-                        $num = (int)$num;
-                        if (strpos($name, $field . "_collection_extra_") !== false) {
-                            $extra_field = substr($name, $field . "_collection_extra_" . $num);
-                            $link_field[$num]['extra_field'][$extra_field]=$value;
+                        $num = (int) $num;
+                        if (strpos($name, $field . '_collection_extra_') !== false) {
+                            $extra_field = substr($name, $field . '_collection_extra_' . $num);
+                            $link_field[$num]['extra_field'][$extra_field] = $value;
                         } else {
-                            if ($name == $field . "_collection_" . $num) {
-                                $link_field[$num]['name']=$value;
+                            if ($name == $field . '_collection_' . $num) {
+                                $link_field[$num]['name'] = $value;
                             } else {
-                                if ($name == "id_" . $field . "_collection_" . $num) {
-                                    $link_field[$num]['id']=$value;
+                                if ($name == 'id_' . $field . '_collection_' . $num) {
+                                    $link_field[$num]['id'] = $value;
                                 }
                             }
                         }
@@ -131,44 +138,46 @@ class SugarFieldCollection extends SugarFieldBase
                 }
             }
             // Set Primary
-            if (isset($_POST["primary_" . $field . "_collection"])) {
-                $primary = $_POST["primary_" . $field . "_collection"];
-                $primary = (int)$primary;
-                $link_field[$primary]['primary']=true;
+            if (isset($_POST['primary_' . $field . '_collection'])) {
+                $primary = $_POST['primary_' . $field . '_collection'];
+                $primary = (int) $primary;
+                $link_field[$primary]['primary'] = true;
             }
             // Create or update record and take care of the extra_field
-            require('include/modules.php');
-            require_once('data/Link.php');
+            require 'include/modules.php';
+            require_once 'data/Link.php';
             $class = load_link_class($bean->field_defs[$field]);
-            
+
             $link_obj = new $class($bean->field_defs[$field]['relationship'], $bean, $bean->field_defs[$field]);
             $module = $link_obj->getRelatedModuleName();
             $beanName = $beanList[$module];
-            require_once($beanFiles[$beanName]);
-            foreach ($link_field as $k=>$v) {
+            require_once $beanFiles[$beanName];
+            foreach ($link_field as $k => $v) {
                 $save = false;
-                $update_fields = array();
+                $update_fields = [];
                 $obj = new $beanName();
                 if (!isset($link_field[$k]['name']) || empty($link_field[$k]['name'])) {
                     // There is no name so it is an empty record -> ignore it!
                     unset($link_field[$k]);
+
                     break;
                 }
-                if (!isset($link_field[$k]['id']) || empty($link_field[$k]['id']) || (isset($_POST[$field . "_new_on_update"]) && $_POST[$field . "_new_on_update"] === 'true')) {
+                if (!isset($link_field[$k]['id']) || empty($link_field[$k]['id']) || (isset($_POST[$field . '_new_on_update']) && $_POST[$field . '_new_on_update'] === 'true')) {
                     // Create a new record
-                    if (isset($_POST[$field . "_allow_new"]) && ($_POST[$field . "_allow_new"] === 'false' || $_POST[$field . "_allow_new"] === false)) {
+                    if (isset($_POST[$field . '_allow_new']) && ($_POST[$field . '_allow_new'] === 'false' || $_POST[$field . '_allow_new'] === false)) {
                         // Not allow to create a new record so remove from $link_field
                         unset($link_field[$k]);
+
                         break;
                     }
                     if (!isset($link_field[$k]['id']) || empty($link_field[$k]['id'])) {
                         // There is no ID so it is a new record
                         $save = true;
-                        $obj->name=$link_field[$k]['name'];
+                        $obj->name = $link_field[$k]['name'];
                     } else {
                         // We duplicate an existing record because new_on_update is set
                         $obj->retrieve($link_field[$k]['id']);
-                        $obj->id='';
+                        $obj->id = '';
                         $obj->name = $obj->name . '_DUP';
                     }
                 } else {
@@ -183,14 +192,14 @@ class SugarFieldCollection extends SugarFieldBase
                         $update_fields = $JSON->decode(html_entity_decode($_POST["update_fields_{$field}_collection"]));
                     }
                     // Update the changed fields
-                    foreach ($update_fields as $kk=>$vv) {
-                        if (!isset($_POST[$field . "_allow_update"]) || ($_POST[$field . "_allow_update"] !== 'false' && $_POST[$field . "_allow_update"] !== false)) {
+                    foreach ($update_fields as $kk => $vv) {
+                        if (!isset($_POST[$field . '_allow_update']) || ($_POST[$field . '_allow_update'] !== 'false' && $_POST[$field . '_allow_update'] !== false)) {
                             //allow to update the extra_field in the record
                             if (isset($v['extra_field'][$kk]) && $vv == true) {
-                                $extra_field_name = str_replace("_".$field."_collection_extra_".$k, "", $kk);
-                                if ($obj->$extra_field_name != $v['extra_field'][$kk]) {
+                                $extra_field_name = str_replace('_' . $field . '_collection_extra_' . $k, '', $kk);
+                                if ($obj->{$extra_field_name} != $v['extra_field'][$kk]) {
                                     $save = true;
-                                    $obj->$extra_field_name=$v['extra_field'][$kk];
+                                    $obj->{$extra_field_name} = $v['extra_field'][$kk];
                                 }
                             }
                         }
@@ -203,24 +212,24 @@ class SugarFieldCollection extends SugarFieldBase
                         sugar_cleanup(true);
                     }
                     $obj->save();
-                    $link_field[$k]['id']=$obj->id;
+                    $link_field[$k]['id'] = $obj->id;
                 }
             }
             // Save new relationship or delete deleted relationship
             if (!empty($link_field)) {
                 if ($bean->load_relationship($field)) {
-                    $oldvalues = $bean->$field->get(true);
-                    $role_field = $bean->$field->_get_link_table_role_field($bean->$field->_relationship_name);
+                    $oldvalues = $bean->{$field}->get(true);
+                    $role_field = $bean->{$field}->_get_link_table_role_field($bean->{$field}->_relationship_name);
                     foreach ($link_field as $new_v) {
                         if (!empty($new_v['id'])) {
                             if (!empty($role_field)) {
                                 if (isset($new_v['primary']) && $new_v['primary']) {
-                                    $bean->$field->add($new_v['id'], array($role_field=>'primary'));
+                                    $bean->{$field}->add($new_v['id'], [$role_field => 'primary']);
                                 } else {
-                                    $bean->$field->add($new_v['id'], array($role_field=>'NULL'));
+                                    $bean->{$field}->add($new_v['id'], [$role_field => 'NULL']);
                                 }
                             } else {
-                                $bean->$field->add($new_v['id'], array());
+                                $bean->{$field}->add($new_v['id'], []);
                             }
                         }
                     }
@@ -232,7 +241,7 @@ class SugarFieldCollection extends SugarFieldBase
                             }
                         }
                         if (!$match) {
-                            $bean->$field->delete($bean->id, $old_v['id']);
+                            $bean->{$field}->delete($bean->id, $old_v['id']);
                         }
                     }
                 }

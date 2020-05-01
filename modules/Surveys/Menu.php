@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,19 +46,19 @@ global $mod_strings, $app_strings, $sugar_config;
 
 if (ACLController::checkAccess('Surveys', 'edit', true)) {
     $module_menu[] =
-        array(
-            "index.php?module=Surveys&action=EditView&return_module=Surveys&return_action=DetailView",
+        [
+            'index.php?module=Surveys&action=EditView&return_module=Surveys&return_action=DetailView',
             $mod_strings['LNK_NEW_RECORD'],
-            "Add",
+            'Add',
             'Surveys'
-        );
+        ];
 }
 if (ACLController::checkAccess('Surveys', 'list', true)) {
     $module_menu[] =
-        array(
-            "index.php?module=Surveys&action=index&return_module=Surveys&return_action=DetailView",
+        [
+            'index.php?module=Surveys&action=index&return_module=Surveys&return_action=DetailView',
             $mod_strings['LNK_LIST'],
-            "List",
+            'List',
             'Surveys'
-        );
+        ];
 }

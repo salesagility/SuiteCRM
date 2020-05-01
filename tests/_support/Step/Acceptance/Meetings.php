@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Meetings extends \AcceptanceTester
 {
     /**
-     * Create a meeting
+     * Create a meeting.
      *
      * @param $name
      */

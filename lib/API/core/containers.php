@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,11 +40,11 @@
 // file has been separated out for testing and mocking purposes
 $version = 8;
 
-$container = new \Slim\Container;
+$container = new \Slim\Container();
 // Load Containers
 $paths = new \SuiteCRM\Utility\Paths();
-$containerFiles = (array)glob($paths->getLibraryPath() . '/API/v8/container/*.php');
-$customContainerFiles = (array)glob($paths->getCustomLibraryPath() . '/API/v8/container/*.php');
+$containerFiles = (array) glob($paths->getLibraryPath() . '/API/v8/container/*.php');
+$customContainerFiles = (array) glob($paths->getCustomLibraryPath() . '/API/v8/container/*.php');
 
 // load core files
 foreach ($containerFiles as $containerFile) {
@@ -57,7 +56,7 @@ foreach ($customContainerFiles as $containerFile) {
     require $containerFile;
 }
 
-/**
+/*
  * @param \Psr\Container\ContainerInterface $container
  * @return Closure
  */
@@ -73,7 +72,7 @@ $container['notAllowedHandler'] = function ($container) {
     };
 };
 
-/**
+/*
  * @param \Psr\Container\ContainerInterface $container
  * @return Closure
  */
@@ -89,7 +88,7 @@ $container['notFoundHandler'] = function ($container) {
     };
 };
 
-/**
+/*
  * @param \Psr\Container\ContainerInterface $container
  * @return Closure
  */
@@ -104,8 +103,7 @@ $container['errorHandler'] = function ($container) {
     };
 };
 
-
-/**
+/*
  * @param \Psr\Container\ContainerInterface $container
  * @return Closure
  */

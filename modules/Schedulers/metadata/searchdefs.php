@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,22 +36,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-  $searchdefs['Schedulers'] = array(
-                      'templateMeta' => array(
-                            'maxColumns' => '3',
-                            'widths' => array('label' => '10', 'field' => '30'),
-                           ),
-                      'layout' =>
-                      array(
-                        'basic_search' =>
-                        array(
-                          'name' =>
-                          array(
-                            'name' => 'name',
-                            'default' => true,
-                            'width' => '10%',
-                          ),
-                        ),
-                      ),
-);
+  $searchdefs['Schedulers'] = [
+      'templateMeta' => [
+          'maxColumns' => '3',
+          'widths' => ['label' => '10', 'field' => '30'],
+      ],
+      'layout' => [
+          'basic_search' => [
+              'name' => [
+                  'name' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+          ],
+      ],
+  ];

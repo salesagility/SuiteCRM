@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,27 +42,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-if (empty($_REQUEST['id']) || !preg_match("/^[\w\d\-]+$/", $_REQUEST['id'])) {
-    die("Not a Valid Entry Point");
+if (empty($_REQUEST['id']) || !preg_match('/^[\\w\\d\\-]+$/', $_REQUEST['id'])) {
+    die('Not a Valid Entry Point');
 }
 
-require_once('modules/Notes/Note.php');
+require_once 'modules/Notes/Note.php';
 $note = new Note();
 //check if file is an email image
-if (!$note->retrieve_by_string_fields(array('id' => $_REQUEST['id'], 'parent_type' => "Emails"))) {
+if (!$note->retrieve_by_string_fields(['id' => $_REQUEST['id'], 'parent_type' => 'Emails'])) {
     //die("Not a Valid Entry Point");
 }
 
-$location = $GLOBALS['sugar_config']['upload_dir']."/" . $_REQUEST['id'];
+$location = $GLOBALS['sugar_config']['upload_dir'] . '/' . $_REQUEST['id'];
 
 $mime = getimagesize($location);
 
 if (!empty($mime)) {
     header("Content-Type: {$mime['mime']}");
 } else {
-    header("Content-Type: image/png");
+    header('Content-Type: image/png');
 }
-
 
 readfile($location);

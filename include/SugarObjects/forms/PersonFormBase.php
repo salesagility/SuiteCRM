@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * PersonFormBase.php
+ * PersonFormBase.php.
  *
  * @author Collin Lee
  *
@@ -54,19 +53,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @see LeadFormBase.php, ContactFormBase.php, ProspectFormBase.php
  */
-require_once('include/SugarObjects/forms/FormBase.php');
+require_once 'include/SugarObjects/forms/FormBase.php';
 
 abstract class PersonFormBase extends FormBase
 {
     public $moduleName;
     public $objectName;
-    
+
     /**
-     * buildTableForm
+     * buildTableForm.
      *
      * This function creates a table with form data.  It is used by the form base code when checking for duplicates
      *
      * @param $rows Array of duplicate row data
+     *
      * @return $form The HTML form data
      */
     public function buildTableForm($rows)
@@ -76,30 +76,30 @@ abstract class PersonFormBase extends FormBase
         global $app_strings;
 
         $newLinkLabel = 'LNK_NEW_' . strtoupper($this->objectName);
-    
+
         $cols = count($rows[0]) * 2 + 1;
-    
+
         if ($action != 'ShowDuplicates') {
-            $duplicateLabel = string_format($app_strings['MSG_DUPLICATE'], array(strtolower($this->objectName), $this->moduleName));
-            $form = '<table width="100%"><tr><td>'.$duplicateLabel.'</td></tr><tr><td height="20"></td></tr></table>';
+            $duplicateLabel = string_format($app_strings['MSG_DUPLICATE'], [strtolower($this->objectName), $this->moduleName]);
+            $form = '<table width="100%"><tr><td>' . $duplicateLabel . '</td></tr><tr><td height="20"></td></tr></table>';
             $form .= "<form action='index.php' method='post' name='dup{$this->moduleName}'><input type='hidden' name='selected{$this->objectName}' value=''>";
             $form .= getPostToForm('/emailAddress(PrimaryFlag|OptOutFlag|InvalidFlag)?[0-9]*?$/', true);
         } else {
-            $duplicateLabel = string_format($app_strings['MSG_SHOW_DUPLICATES'], array(strtolower($this->objectName), $this->moduleName));
-            $form = '<table width="100%"><tr><td>'.$duplicateLabel.'</td></tr><tr><td height="20"></td></tr></table>';
+            $duplicateLabel = string_format($app_strings['MSG_SHOW_DUPLICATES'], [strtolower($this->objectName), $this->moduleName]);
+            $form = '<table width="100%"><tr><td>' . $duplicateLabel . '</td></tr><tr><td height="20"></td></tr></table>';
         }
-    
-        $form .= "<table width='100%' cellpadding='0' cellspacing='0' class='list view' border='0'><tr class='pagination'><td colspan='$cols'><table width='100%' cellspacing='0' cellpadding='0' border='0'><tr><td>";
+
+        $form .= "<table width='100%' cellpadding='0' cellspacing='0' class='list view' border='0'><tr class='pagination'><td colspan='{$cols}'><table width='100%' cellspacing='0' cellpadding='0' border='0'><tr><td>";
         if ($action == 'ShowDuplicates') {
             $form .= "<input title='${app_strings['LBL_SAVE_BUTTON_TITLE']}' accessKey='${app_strings['LBL_SAVE_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='Save';\" type='submit' name='button' value='  ${app_strings['LBL_SAVE_BUTTON_LABEL']}  '>\n";
             if (!empty($_REQUEST['return_module']) && !empty($_REQUEST['return_action']) && !empty($_REQUEST['return_id'])) {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_REQUEST['return_module']."';this.form.action.value='".$_REQUEST['return_action']."';this.form.record.value='".$_REQUEST['return_id']."'\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='" . $_REQUEST['return_module'] . "';this.form.action.value='" . $_REQUEST['return_action'] . "';this.form.record.value='" . $_REQUEST['return_id'] . "'\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
             }
 
             //Bug 1074, if the action is detailview and the id is empty, then do not show detailview
             else {
-                if (!empty($_POST['return_module']) && !empty($_POST['return_action'])    &&(($_POST['return_action'] == "DetailView" && !empty($_REQUEST['return_id'])) || $_POST['return_action'] != "DetailView")) {
-                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                if (!empty($_POST['return_module']) && !empty($_POST['return_action']) && (($_POST['return_action'] == 'DetailView' && !empty($_REQUEST['return_id'])) || $_POST['return_action'] != 'DetailView')) {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='" . $_POST['return_module'] . "';this.form.action.value='" . $_POST['return_action'] . "';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
                 } else {
                     $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
                 }
@@ -107,13 +107,13 @@ abstract class PersonFormBase extends FormBase
         } else {
             $form .= "<input type='submit' class='button' name='Continue{$this->objectName}' value='{$mod_strings[$newLinkLabel]}'>";
         }
-        $form .= "</td></tr></table></td></tr><tr>";
+        $form .= '</td></tr></table></td></tr><tr>';
 
         if ($action != 'ShowDuplicates') {
             $form .= "<td scope='col'>&nbsp;</td>";
         }
 
-        require_once('include/formbase.php');
+        require_once 'include/formbase.php';
 
         if (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') {
             $_POST['return_action'] = 'DetailView';
@@ -126,33 +126,33 @@ abstract class PersonFormBase extends FormBase
         $form .= getPostToForm();
 
         if (isset($rows[0])) {
-            foreach ($rows[0] as $key=>$value) {
+            foreach ($rows[0] as $key => $value) {
                 if ($key != 'id') {
-                    $form .= "<td scope='col' >". $mod_strings[$mod_strings['db_'.$key]]. "</td>";
+                    $form .= "<td scope='col' >" . $mod_strings[$mod_strings['db_' . $key]] . '</td>';
                 }
             }
-            $form .= "</tr>";
+            $form .= '</tr>';
         }
 
         $rowColor = 'oddListRowS1';
 
         foreach ($rows as $row) {
-            $form .= "<tr class='$rowColor'>";
+            $form .= "<tr class='{$rowColor}'>";
             if ($action != 'ShowDuplicates') {
                 $form .= "<td width='1%' nowrap='nowrap'><a href='#' onClick=\"document.forms['dup{$this->moduleName}'].selected{$this->objectName}.value='${row['id']}';document.forms['dup{$this->moduleName}'].submit() \">[{$app_strings['LBL_SELECT_BUTTON_LABEL']}]</a>&nbsp;&nbsp;</td>\n";
             }
             $wasSet = false;
 
-            foreach ($row as $key=>$value) {
+            foreach ($row as $key => $value) {
                 if ($key != 'id') {
-                    if (isset($_POST['popup']) && $_POST['popup']==true) {
-                        $form .= "<td scope='row'><a  href='#' onclick=\"window.opener.location='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'\">$value</a></td>\n";
+                    if (isset($_POST['popup']) && $_POST['popup'] == true) {
+                        $form .= "<td scope='row'><a  href='#' onclick=\"window.opener.location='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'\">{$value}</a></td>\n";
                     } else {
                         if (!$wasSet) {
-                            $form .= "<td scope='row'><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                            $form .= "<td scope='row'><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>{$value}</a></td>\n";
                             $wasSet = true;
                         } else {
-                            $form .= "<td><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                            $form .= "<td><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>{$value}</a></td>\n";
                         }
                     }
                 }
@@ -163,16 +163,16 @@ abstract class PersonFormBase extends FormBase
             } else {
                 $rowColor = 'evenListRowS1';
             }
-            $form .= "</tr>";
+            $form .= '</tr>';
         }
-        $form .= "<tr class='pagination'><td colspan='$cols'><table width='100%' cellspacing='0' cellpadding='0' border='0'><tr><td>";
+        $form .= "<tr class='pagination'><td colspan='{$cols}'><table width='100%' cellspacing='0' cellpadding='0' border='0'><tr><td>";
         if ($action == 'ShowDuplicates') {
             $form .= "<input title='${app_strings['LBL_SAVE_BUTTON_TITLE']}' accessKey='${app_strings['LBL_SAVE_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='Save';\" type='submit' name='button' value='  ${app_strings['LBL_SAVE_BUTTON_LABEL']}  '>\n";
             if (!empty($_REQUEST['return_module']) && !empty($_REQUEST['return_action']) && !empty($_REQUEST['return_id'])) {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_REQUEST['return_module']."';this.form.action.value='".$_REQUEST['return_action']."';this.form.record.value='".$_REQUEST['return_id']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='" . $_REQUEST['return_module'] . "';this.form.action.value='" . $_REQUEST['return_action'] . "';this.form.record.value='" . $_REQUEST['return_id'] . "';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
             } else {
                 if (!empty($_POST['return_module']) && !empty($_POST['return_action'])) {
-                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='" . $_POST['return_module'] . "';this.form.action.value='" . $_POST['return_action'] . "';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
                 } else {
                     $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
                 }
@@ -180,24 +180,25 @@ abstract class PersonFormBase extends FormBase
         } else {
             $form .= "<input type='submit' class='button' name='Continue{$this->objectName}' value='{$mod_strings[$newLinkLabel]}'></form>";
         }
-        $form .= "</td></tr></table></td></tr></table>";
+        $form .= '</td></tr></table></td></tr></table>';
+
         return $form;
     }
 
-
     /**
-     * checkForDuplicates
+     * checkForDuplicates.
      *
      * This function is used to locate any duplicate Leads that may be created when a new Lead is saved.  It is called from the handleSave method
      * of this class.
      *
      * @param $prefix String value of any prefix to the form input names
+     *
      * @return $rows Array of matching Leads entries found; null if none found
      */
-    public function checkForDuplicates($prefix='')
+    public function checkForDuplicates($prefix = '')
     {
-        require_once('include/formbase.php');
-        require_once('include/MVC/SugarModule.php');
+        require_once 'include/formbase.php';
+        require_once 'include/MVC/SugarModule.php';
         $focus = SugarModule::get($this->moduleName)->loadBean();
 
         $query = $this->getDuplicateQuery($focus, $prefix);
@@ -206,7 +207,7 @@ abstract class PersonFormBase extends FormBase
             return null;
         }
 
-        $rows = array();
+        $rows = [];
 
         $db = DBManagerFactory::getInstance();
         $result = $db->query($query);
@@ -214,13 +215,13 @@ abstract class PersonFormBase extends FormBase
         //Loop through the results and store
         while (($row = $db->fetchByAssoc($result)) != null) {
             if (!isset($rows[$row['id']])) {
-                $rows[]=$row;
+                $rows[] = $row;
             }
         }
 
         //Now check for duplicates using email values supplied
         $count = 0;
-        $emails = array();
+        $emails = [];
         $emailStr = '';
         while (isset($_POST["{$this->moduleName}{$count}emailAddress{$count}"])) {
             $emailStr .= ",'" . strtoupper(trim($_POST["{$this->moduleName}{$count}emailAddress" . $count++])) . "'";
@@ -240,7 +241,7 @@ abstract class PersonFormBase extends FormBase
                     $result2 = $db->query($query2);
                     $r = $db->fetchByAssoc($result2);
                     if (isset($r['id'])) {
-                        $rows[]=$r;
+                        $rows[] = $r;
                     }
                 } //if
             }
@@ -249,19 +250,20 @@ abstract class PersonFormBase extends FormBase
         return !empty($rows) ? $rows : null;
     }
 
-
     /**
-     * getDuplicateQuery
+     * getDuplicateQuery.
      *
      * This is the function that subclasses should extend and return a SQL query used for the initial duplicate
      * check sequence.
      *
      * @see checkForDuplicates (method), ContactFormBase.php, LeadFormBase.php, ProspectFormBase.php
+     *
      * @param $focus sugarbean
      * @param $prefix String value of prefix that may be present in $_POST variables
+     *
      * @return SQL String of the query that should be used for the initial duplicate lookup check
      */
-    public function getDuplicateQuery($focus, $prefix='')
+    public function getDuplicateQuery($focus, $prefix = '')
     {
         return null;
     }

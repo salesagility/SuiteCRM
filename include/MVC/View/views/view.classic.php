@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,19 +36,21 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/MVC/View/SugarView.php');
-require_once('include/MVC/Controller/SugarController.php');
+require_once 'include/MVC/View/SugarView.php';
+require_once 'include/MVC/Controller/SugarController.php';
 
 class ViewClassic extends SugarView
 {
     /**
      * @see SugarView::SugarView()
+     *
+     * @param null|mixed $bean
+     * @param mixed $view_object_map
      */
     public function __construct(
         $bean = null,
-        $view_object_map = array()
-        ) {
+        $view_object_map = []
+    ) {
         parent::__construct();
         $this->type = $this->action;
     }
@@ -61,17 +62,22 @@ class ViewClassic extends SugarView
     {
         if (($this->bean instanceof SugarBean) && isset($this->view_object_map['remap_action']) && !$this->bean->ACLAccess($this->view_object_map['remap_action'])) {
             ACLController::displayNoAccess(true);
+
             return false;
         }
         // Call SugarController::getActionFilename to handle case sensitive file names
         $file = SugarController::getActionFilename($this->action);
-        if (file_exists('custom/modules/' . $this->module . '/'. $file . '.php')) {
-            $this->includeClassicFile('custom/modules/'. $this->module . '/'. $file . '.php');
-            return true;
-        } elseif (file_exists('modules/' . $this->module . '/'. $file . '.php')) {
-            $this->includeClassicFile('modules/'. $this->module . '/'. $file . '.php');
+        if (file_exists('custom/modules/' . $this->module . '/' . $file . '.php')) {
+            $this->includeClassicFile('custom/modules/' . $this->module . '/' . $file . '.php');
+
             return true;
         }
+        if (file_exists('modules/' . $this->module . '/' . $file . '.php')) {
+            $this->includeClassicFile('modules/' . $this->module . '/' . $file . '.php');
+
+            return true;
+        }
+
         return false;
     }
 }

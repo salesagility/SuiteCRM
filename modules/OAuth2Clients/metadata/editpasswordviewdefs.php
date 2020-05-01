@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -57,27 +55,22 @@ $viewdefs[$module_name]['EditView'] = [
         ],
     ],
     'panels' => [
-        'default' =>
-            [
-                0 =>
-                    [
-                        'name' => 'name',
-                    ],
-                1 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'new_secret',
-                                'label' => 'LBL_SECRET_HASHED',
-                                'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30" autocomplete="dont-fill-this-password">'
-                                    . '<input type="hidden" name="allowed_grant_type" id="allowed_grant_type" value="password">'
-                                    . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
-                            ],
-                    ],
-                2 =>
-                    [
-                        'name' => 'is_confidential',
-                    ],
+        'default' => [
+            0 => [
+                'name' => 'name',
             ],
+            1 => [
+                0 => [
+                    'name' => 'new_secret',
+                    'label' => 'LBL_SECRET_HASHED',
+                    'customCode' => '<input type="password" name="new_secret" id="new_secret" placeholder="{$MOD.LBL_LEAVE_BLANK}" size="30" autocomplete="dont-fill-this-password">'
+                        . '<input type="hidden" name="allowed_grant_type" id="allowed_grant_type" value="password">'
+                        . '<br /><span>{$MOD.LBL_REMEMBER_SECRET}</span>',
+                ],
+            ],
+            2 => [
+                'name' => 'is_confidential',
+            ],
+        ],
     ],
 ];

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,20 +40,18 @@
 namespace Api\V8\Param;
 
 use Api\V8\Param\Options as ParamOption;
-use Api\V8\Param\OptionsResolver;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * ListViewColumnsParams
+ * ListViewColumnsParams.
  *
  * @author gyula
  */
 class ListViewColumnsParams extends BaseParam
 {
-    
     /**
      * @return string
      */
@@ -64,7 +61,6 @@ class ListViewColumnsParams extends BaseParam
     }
 
     /**
-     *
      * @param \Api\V8\Param\OptionsResolver $resolver
      */
     protected function configureParameters(OptionsResolver $resolver)

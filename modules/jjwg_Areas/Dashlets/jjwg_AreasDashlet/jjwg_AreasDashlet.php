@@ -4,14 +4,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/jjwg_Areas/jjwg_Areas.php');
+require_once 'include/Dashlets/DashletGeneric.php';
+require_once 'modules/jjwg_Areas/jjwg_Areas.php';
 
 class jjwg_AreasDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        require('modules/jjwg_Areas/metadata/dashletviewdefs.php');
+        require 'modules/jjwg_Areas/metadata/dashletviewdefs.php';
 
         parent::__construct($id, $def);
 
@@ -24,6 +24,4 @@ class jjwg_AreasDashlet extends DashletGeneric
 
         $this->seedBean = new jjwg_Areas();
     }
-
-
 }

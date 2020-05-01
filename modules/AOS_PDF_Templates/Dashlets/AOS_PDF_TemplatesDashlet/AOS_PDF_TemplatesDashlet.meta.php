@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
@@ -27,18 +28,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-/*********************************************************************************
+/*
  * $Id$
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
+ */
+
 global $app_strings;
 
-$dashletMeta['AOS_PDF_TemplatesDashlet'] = array('module'		=> 'AOS_PDF_Templates',
-                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOS_PDF_Templates'),
-                                          'description' => 'A customizable view into AOS_PDF_Templates',
-                                          'icon'        => 'themes/default/images/icon_AOS_PDF_Templates_32.gif',
-                                          'category'    => 'Module Views');
+$dashletMeta['AOS_PDF_TemplatesDashlet'] = ['module' => 'AOS_PDF_Templates',
+    'title' => translate('LBL_HOMEPAGE_TITLE', 'AOS_PDF_Templates'),
+    'description' => 'A customizable view into AOS_PDF_Templates',
+    'icon' => 'themes/default/images/icon_AOS_PDF_Templates_32.gif',
+    'category' => 'Module Views'];

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -50,7 +53,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
-        
+
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
@@ -76,7 +79,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         } else {
             unset($_SESSION);
         }
-        
+
         if (isset($_request)) {
             $_REQUEST = $_request;
         } else {

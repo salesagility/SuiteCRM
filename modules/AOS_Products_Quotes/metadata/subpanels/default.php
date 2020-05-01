@@ -1,12 +1,12 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,39 +23,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
-
-
-$module_name='AOS_Products_Quotes';
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
-    ),
+$module_name = 'AOS_Products_Quotes';
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name],
+    ],
 
     'where' => '',
 
-    'list_fields' => array(
-        'name'=>array(
+    'list_fields' => [
+        'name' => [
             'vname' => 'LBL_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '45%',
-        ),
-        'date_modified'=>array(
+        ],
+        'date_modified' => [
             'vname' => 'LBL_DATE_MODIFIED',
             'width' => '45%',
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'widget_class' => 'SubPanelEditButton',
             'module' => $module_name,
             'width' => '4%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'widget_class' => 'SubPanelRemoveButton',
             'module' => $module_name,
             'width' => '5%',
-        ),
-    ),
-);
+        ],
+    ],
+];

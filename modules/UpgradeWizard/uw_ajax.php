@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,10 +39,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $persistence
+ * @param mixed $sql
+ * @param mixed $type
  */
-
-
-
 
 ////	COMMON
 
@@ -54,8 +55,8 @@ function ajaxSqlProgress($persistence, $sql, $type)
     $whatsLeft = count($persistence[$type]);
 
     ob_start();
-    $out  = "<b>{$mod_strings['LBL_UW_PREFLIGHT_QUERY']}</b><br />";
-    $out .= round((($persistence['sql_total'] - $whatsLeft) / $persistence['sql_total']) * 100, 1)."%
+    $out = "<b>{$mod_strings['LBL_UW_PREFLIGHT_QUERY']}</b><br />";
+    $out .= round((($persistence['sql_total'] - $whatsLeft) / $persistence['sql_total']) * 100, 1) . "%
 				{$mod_strings['LBL_UW_DONE']} - {$mod_strings['LBL_UW_PREFLIGHT_QUERIES_LEFT']}: {$whatsLeft}";
     $out .= "<br /><textarea cols='60' rows='3' DISABLED>{$sql}</textarea>";
     echo $out;
@@ -68,12 +69,14 @@ function ajaxSqlProgress($persistence, $sql, $type)
     return $persistence;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	COMMIT AJAX
 /**
- * does post-post-install stuff
+ * does post-post-install stuff.
+ *
  * @param array persistence
+ * @param mixed $persistence
+ *
  * @return array persistence
  */
 function commitAjaxFinalTouches($persistence)
@@ -84,7 +87,7 @@ function commitAjaxFinalTouches($persistence)
     global $sugar_version;
 
     if (empty($sugar_version)) {
-        require('sugar_version.php');
+        require 'sugar_version.php';
     }
 
     // convert to UTF8 if needed
@@ -107,19 +110,19 @@ function commitAjaxFinalTouches($persistence)
     ///////////////////////////////////////////////////////////////////////////////
     ////	HANDLE REMINDERS
     if (count($persistence['skipped_files']) > 0) {
-        $desc  = $mod_strings['LBL_UW_COMMIT_ADD_TASK_OVERVIEW']."\n\n";
+        $desc = $mod_strings['LBL_UW_COMMIT_ADD_TASK_OVERVIEW'] . "\n\n";
         $desc .= $mod_strings['LBL_UW_COMMIT_ADD_TASK_DESC_1'];
-        $desc .= $persistence['uw_restore_dir']."\n\n";
-        $desc .= $mod_strings['LBL_UW_COMMIT_ADD_TASK_DESC_2']."\n\n";
+        $desc .= $persistence['uw_restore_dir'] . "\n\n";
+        $desc .= $mod_strings['LBL_UW_COMMIT_ADD_TASK_DESC_2'] . "\n\n";
 
         foreach ($persistence['skipped_files'] as $file) {
-            $desc .= $file."\n";
+            $desc .= $file . "\n";
         }
 
         //MFH #13468
         $nowDate = $timedate->nowDbDate();
         $nowTime = $timedate->asDbTime($timedate->getNow());
-        $nowDateTime = $nowDate.' '.$nowTime;
+        $nowDateTime = $nowDate . ' ' . $nowTime;
 
         if ($_REQUEST['addTaskReminder'] == 'remind') {
             logThis('Adding Task for admin for manual merge.');
@@ -150,8 +153,8 @@ function commitAjaxFinalTouches($persistence)
             $email->from_addr = $current_user->email1;
             isValidEmailAddress($email->from_addr);
             $email->to_addrs_arr = $email->parse_addrs($current_user->email1, '', '', '');
-            $email->cc_addrs_arr = array();
-            $email->bcc_addrs_arr = array();
+            $email->cc_addrs_arr = [];
+            $email->bcc_addrs_arr = [];
             $email->date_entered = $nowDateTime;
             $email->date_modified = $nowDateTime;
             $email->send();
@@ -172,8 +175,10 @@ function commitAjaxFinalTouches($persistence)
 }
 
 /**
- * runs one line of sql
+ * runs one line of sql.
+ *
  * @param array $persistence
+ *
  * @return array $persistence
  */
 function commitAjaxRunSql($persistence)
@@ -181,7 +186,7 @@ function commitAjaxRunSql($persistence)
     $db = DBManagerFactory::getInstance();
 
     if (!isset($persistence['commit_sql_errors'])) {
-        $persistence['commit_sql_errors'] = array();
+        $persistence['commit_sql_errors'] = [];
     }
 
     // This flag is determined by the preflight check in the installer
@@ -200,7 +205,7 @@ function commitAjaxRunSql($persistence)
                 if (!empty($error)) {
                     logThis('************************************************************');
                     logThis('*** ERROR: SQL Commit Error!');
-                    logThis('*** Query: [ '.$sql.' ]');
+                    logThis('*** Query: [ ' . $sql . ' ]');
                     logThis('************************************************************');
                     $persistence['commit_sql_errors'][] = getFormattedError($error, $sql);
                 }
@@ -221,8 +226,11 @@ function commitAjaxRunSql($persistence)
 }
 
 /**
- * returns errors found during SQL operations
+ * returns errors found during SQL operations.
+ *
  * @param array persistence
+ * @param mixed $persistence
+ *
  * @return string Error message or empty string on success
  */
 function commitAjaxGetSqlErrors($persistence)
@@ -235,7 +243,7 @@ function commitAjaxGetSqlErrors($persistence)
         foreach ($persistence['commit_sql_errors'] as $error) {
             $out .= $error;
         }
-        $out .= "</div>";
+        $out .= '</div>';
     }
 
     if (empty($out)) {
@@ -248,8 +256,11 @@ function commitAjaxGetSqlErrors($persistence)
 }
 
 /**
- * parses the sql upgrade file for sequential querying
+ * parses the sql upgrade file for sequential querying.
+ *
  * @param array persistence
+ * @param mixed $persistence
+ *
  * @return array persistence
  */
 function commitAjaxPrepSql($persistence)
@@ -257,9 +268,10 @@ function commitAjaxPrepSql($persistence)
     return preflightCheckJsonPrepSchemaCheck($persistence, false);
 }
 
-
 /**
- * handles post-install tasks
+ * handles post-install tasks.
+ *
+ * @param mixed $persistence
  */
 function commitAjaxPostInstall($persistence)
 {
@@ -268,7 +280,7 @@ function commitAjaxPostInstall($persistence)
     global $sugar_version;
 
     if (empty($sugar_version)) {
-        require('sugar_version.php');
+        require 'sugar_version.php';
     }
 
     // update versions info
@@ -280,14 +292,14 @@ function commitAjaxPostInstall($persistence)
     $postInstallResults = "<b>{$mod_strings['LBL_UW_COMMIT_POSTINSTALL_RESULTS']}</b><br />
 							<a href='javascript:toggleNwFiles(\"postInstallResults\");'>{$mod_strings['LBL_UW_SHOW']}</a><br />
 							<div id='postInstallResults' style='display:none'>";
-    $file = $persistence['unzip_dir']. "/" . constant('SUGARCRM_POST_INSTALL_FILE');
+    $file = $persistence['unzip_dir'] . '/' . constant('SUGARCRM_POST_INSTALL_FILE');
     if (is_file($file)) {
-        include($file);
+        include $file;
         ob_start();
         post_install();
     }
 
-    require("sugar_version.php");
+    require 'sugar_version.php';
 
     if (!rebuildConfigFile($sugar_config, $sugar_version)) {
         logThis('*** ERROR: could not write config.php! - upgrade will fail!');
@@ -296,7 +308,7 @@ function commitAjaxPostInstall($persistence)
 
     $res = ob_get_contents();
     $postInstallResults .= (empty($res)) ? $mod_strings['LBL_UW_SUCCESS'] : $res;
-    $postInstallResults .= "</div>";
+    $postInstallResults .= '</div>';
 
     ob_start();
     echo $postInstallResults;
@@ -307,8 +319,6 @@ function commitAjaxPostInstall($persistence)
 ////	END COMMIT AJAX
 ///////////////////////////////////////////////////////////////////////////////
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	PREFLIGHT JSON STYLE
 
@@ -317,47 +327,47 @@ function preflightCheckJsonFindUpgradeFiles($persistence)
     global $sugar_config;
     global $mod_strings;
 
-    unset($persistence['rebuild_relationships']);
-    unset($persistence['rebuild_extensions']);
+    unset($persistence['rebuild_relationships'], $persistence['rebuild_extensions']);
 
     // don't bother if are rechecking
-    $manualDiff			= array();
+    $manualDiff = [];
     if (!isset($persistence['unzip_dir']) || empty($persistence['unzip_dir'])) {
         logThis('unzipping files in upgrade archive...');
 
-        $errors					= array();
-        $base_upgrade_dir      = "upload://upgrades";
-        $base_tmp_upgrade_dir  = sugar_cached("upgrades/temp");
-        $install_file			= urldecode($persistence['install_file']);
-        $show_files				= true;
-        $unzip_dir				= mk_temp_dir($base_tmp_upgrade_dir);
-        $zip_from_dir			= ".";
-        $zip_to_dir			= ".";
-        $zip_force_copy			= array();
+        $errors = [];
+        $base_upgrade_dir = 'upload://upgrades';
+        $base_tmp_upgrade_dir = sugar_cached('upgrades/temp');
+        $install_file = urldecode($persistence['install_file']);
+        $show_files = true;
+        $unzip_dir = mk_temp_dir($base_tmp_upgrade_dir);
+        $zip_from_dir = '.';
+        $zip_to_dir = '.';
+        $zip_force_copy = [];
 
         unzip($install_file, $unzip_dir);
 
         // assumption -- already validated manifest.php at time of upload
-        include("$unzip_dir/manifest.php");
+        include "{$unzip_dir}/manifest.php";
 
-        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
-            $zip_from_dir   = $manifest['copy_files']['from_dir'];
+        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != '') {
+            $zip_from_dir = $manifest['copy_files']['from_dir'];
         }
-        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != "") {
-            $zip_to_dir     = $manifest['copy_files']['to_dir'];
+        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != '') {
+            $zip_to_dir = $manifest['copy_files']['to_dir'];
         }
-        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != "") {
-            $zip_force_copy     = $manifest['copy_files']['force_copy'];
+        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != '') {
+            $zip_force_copy = $manifest['copy_files']['force_copy'];
         }
         if (isset($manifest['version'])) {
-            $version    = $manifest['version'];
+            $version = $manifest['version'];
         }
-        if (!is_writable("config.php")) {
+        if (!is_writable('config.php')) {
             logThis('BAD error');
+
             return $mod_strings['ERR_UW_CONFIG'];
         }
 
-        logThis('setting "unzip_dir" to '.$unzip_dir);
+        logThis('setting "unzip_dir" to ' . $unzip_dir);
         $persistence['unzip_dir'] = clean_path($unzip_dir);
         $persistence['zip_from_dir'] = clean_path($zip_from_dir);
 
@@ -367,7 +377,7 @@ function preflightCheckJsonFindUpgradeFiles($persistence)
         $zip_from_dir = $persistence['zip_from_dir'];
     }
 
-    $persistence['upgrade_files'] = uwFindAllFiles(clean_path("$unzip_dir/$zip_from_dir"), array(), true, array(), true);
+    $persistence['upgrade_files'] = uwFindAllFiles(clean_path("{$unzip_dir}/{$zip_from_dir}"), [], true, [], true);
 
     return $persistence;
 }
@@ -378,23 +388,23 @@ function preflightCheckJsonDiffFiles($persistence)
     global $mod_strings;
 
     if (empty($sugar_version)) {
-        require('sugar_version.php');
+        require 'sugar_version.php';
     }
 
     // get md5 sums
-    $md5_string = array();
-    $finalZipDir = $persistence['unzip_dir'].'/'.$persistence['zip_from_dir'];
+    $md5_string = [];
+    $finalZipDir = $persistence['unzip_dir'] . '/' . $persistence['zip_from_dir'];
 
-    if (is_file(getcwd().'/files.md5')) {
-        require(getcwd().'/files.md5');
+    if (is_file(getcwd() . '/files.md5')) {
+        require getcwd() . '/files.md5';
     }
 
     // initialize pass array
-    $manualDiff = array();
+    $manualDiff = [];
 
     // file preflight checks
     logThis('verifying md5 checksums for files...');
-    $cache_html_files = findAllFilesRelative(sugar_cached("layout"), array());
+    $cache_html_files = findAllFilesRelative(sugar_cached('layout'), []);
 
     foreach ($persistence['upgrade_files'] as $file) {
         if (strpos($file, '.md5')) {
@@ -406,21 +416,21 @@ function preflightCheckJsonDiffFiles($persistence)
 
         // check that we can move/delete the upgraded file
         if (!is_writable($file)) {
-            $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'].": ".$file;
+            $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'] . ': ' . $file;
         }
         // check that destination files are writable
-        $destFile = getcwd().str_replace($finalZipDir, '', $file);
+        $destFile = getcwd() . str_replace($finalZipDir, '', $file);
 
         if (is_file($destFile)) { // of course it needs to exist first...
             if (!is_writable($destFile)) {
-                $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'].": ".$destFile;
+                $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'] . ': ' . $destFile;
             }
         }
 
         ///////////////////////////////////////////////////////////////////////
         ////	DIFFS
         // compare md5s and build up a manual merge list
-        $targetFile = clean_path(".".str_replace(getcwd(), '', $destFile));
+        $targetFile = clean_path('.' . str_replace(getcwd(), '', $destFile));
         $targetMd5 = '0';
         if (is_file($destFile)) {
             if (strpos($targetFile, '.php')) {
@@ -436,12 +446,12 @@ function preflightCheckJsonDiffFiles($persistence)
         }
 
         if (isset($md5_string[$targetFile]) && $md5_string[$targetFile] != $targetMd5) {
-            logThis('found a file with a differing md5: ['.$targetFile.']');
+            logThis('found a file with a differing md5: [' . $targetFile . ']');
             $manualDiff[] = $destFile;
         }
         ////	END DIFFS
         ///////////////////////////////////////////////////////////////////////
-        echo ".";
+        echo '.';
     }
     logThis('md5 verification done.');
 
@@ -451,21 +461,20 @@ function preflightCheckJsonDiffFiles($persistence)
     return $persistence;
 }
 
-
 function preflightCheckJsonGetDiff($persistence)
 {
     global $mod_strings;
     global $current_user;
 
-    $out  = $mod_strings['LBL_UW_PREFLIGHT_TESTS_PASSED'];
+    $out = $mod_strings['LBL_UW_PREFLIGHT_TESTS_PASSED'];
     $stop = false;
 
     $disableEmail = (empty($current_user->email1)) ? 'DISABLED' : 'CHECKED';
 
     if (count($persistence['manual']) > 0) {
-        $preserveFiles = array();
+        $preserveFiles = [];
 
-        $diffs =<<<eoq
+        $diffs = <<<eoq
 			<script type="text/javascript" language="Javascript">
 				function preflightToggleAll(cb) {
 					var checkAll = false;
@@ -495,7 +504,7 @@ function preflightCheckJsonGetDiff($persistence)
 				</tr>
 				<tr>
 					<td valign='top'>
-						<input type='checkbox' name='addEmail' id='addEmail' $disableEmail>
+						<input type='checkbox' name='addEmail' id='addEmail' {$disableEmail}>
 					</td>
 					<td valign='top'>
 						{$mod_strings['LBL_UW_PREFLIGHT_EMAIL_REMINDER']}
@@ -531,14 +540,14 @@ eoq;
             }
 
             $diffs .= "<tr><td valign='top'>";
-            $diffs .= "<input type='checkbox' name='diff_files[]' value='{$diff}' $checked>";
+            $diffs .= "<input type='checkbox' name='diff_files[]' value='{$diff}' {$checked}>";
             $diffs .= "</td><td valign='top'>";
             $diffs .= str_replace(getcwd(), '.', $diff);
-            $diffs .= "</td></tr>";
+            $diffs .= '</td></tr>';
         }
-        $diffs .= "</table>";
-        $diffs .= "</div></p>";
-        $diffs .= "</form>";
+        $diffs .= '</table>';
+        $diffs .= '</div></p>';
+        $diffs .= '</form>';
 
         // list preserved files (templates, etc.)
         $preserve = '';
@@ -546,14 +555,14 @@ eoq;
             if (empty($preserve)) {
                 $preserve .= "<table cellpadding='0' cellspacing='0' border='0'><tr><td><b>";
                 $preserve .= $mod_strings['LBL_UW_PREFLIGHT_PRESERVE_FILES'];
-                $preserve .= "</b></td></tr>";
+                $preserve .= '</b></td></tr>';
             }
-            $preserve .= "<tr><td valign='top'><i>".str_replace(getcwd(), '.', $pf)."</i></td></tr>";
+            $preserve .= "<tr><td valign='top'><i>" . str_replace(getcwd(), '.', $pf) . '</i></td></tr>';
         }
         if (!empty($preserve)) {
             $preserve .= '</table><br>';
         }
-        $diffs = $preserve.$diffs;
+        $diffs = $preserve . $diffs;
     } else { // NO FILE DIFFS REQUIRED
         $diffs = $mod_strings['LBL_UW_PREFLIGHT_NO_DIFFS'];
     }
@@ -564,12 +573,16 @@ eoq;
 }
 
 /**
- * loads the sql file into an array
+ * loads the sql file into an array.
+ *
  * @param array persistence
  * @param bool preflight Flag to load for Preflight or Commit
+ * @param mixed $persistence
+ * @param mixed $preflight
+ *
  * @return array persistence
  */
-function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true)
+function preflightCheckJsonPrepSchemaCheck($persistence, $preflight = true)
 {
     global $mod_strings;
     $db = DBManagerFactory::getInstance();
@@ -578,13 +591,12 @@ function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true)
 
     unset($persistence['sql_to_run']);
 
-    $persistence['sql_to_check'] = array();
-    $persistence['sql_to_check_backup'] = array();
+    $persistence['sql_to_check'] = [];
+    $persistence['sql_to_check_backup'] = [];
 
     if (isset($persistence['sql_check_done'])) {
         // reset flag to not check (on Recheck)
-        unset($persistence['sql_check_done']);
-        unset($persistence['sql_errors']);
+        unset($persistence['sql_check_done'], $persistence['sql_errors']);
     }
 
     // get schema script if not loaded
@@ -595,31 +607,31 @@ function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true)
     }
 
     if (empty($sugar_db_version)) {
-        include('sugar_version.php');
+        include 'sugar_version.php';
     }
 
     if (!isset($manifest['version']) || empty($manifest['version'])) {
-        include($persistence['unzip_dir'].'/manifest.php');
+        include $persistence['unzip_dir'] . '/manifest.php';
     }
 
     $origVersion = implodeVersion($sugar_db_version);
     $destVersion = implodeVersion($manifest['version']);
 
     $script_name = $db->getScriptType();
-    $sqlScript = $persistence['unzip_dir']."/scripts/{$origVersion}_to_{$destVersion}_{$script_name}.sql";
+    $sqlScript = $persistence['unzip_dir'] . "/scripts/{$origVersion}_to_{$destVersion}_{$script_name}.sql";
 
-    $newTables = array();
+    $newTables = [];
 
-    logThis('looking for schema script at: '.$sqlScript);
+    logThis('looking for schema script at: ' . $sqlScript);
     if (is_file($sqlScript)) {
-        logThis('found schema upgrade script: '.$sqlScript);
+        logThis('found schema upgrade script: ' . $sqlScript);
         $fp = sugar_fopen($sqlScript, 'r');
 
         if (!empty($fp)) {
             $completeLine = '';
             while ($line = fgets($fp)) {
                 if (strpos($line, '--') === false) {
-                    $completeLine .= " ".trim($line);
+                    $completeLine .= ' ' . trim($line);
                     if (strpos($line, ';') !== false) {
                         $completeLine = str_replace(';', '', $completeLine);
                         $persistence['sql_to_check'][] = $completeLine;
@@ -630,8 +642,8 @@ function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true)
 
             $persistence['sql_total'] = count($persistence['sql_to_check']);
         } else {
-            logThis('*** ERROR: could not read schema script: '.$sqlScript);
-            $persistence['sql_errors'][] = $mod_strings['ERR_UW_FILE_NOT_READABLE'].'::'.$sqlScript;
+            logThis('*** ERROR: could not read schema script: ' . $sqlScript);
+            $persistence['sql_errors'][] = $mod_strings['ERR_UW_FILE_NOT_READABLE'] . '::' . $sqlScript;
         }
     }
 
@@ -639,7 +651,7 @@ function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true)
     if ($preflight) {
         $persistence['sql_to_check_backup'] = $persistence['sql_to_check'];
         $persistence['sql_to_run'] = $persistence['sql_to_check'];
-        echo "1% ".$mod_strings['LBL_UW_DONE'];
+        echo '1% ' . $mod_strings['LBL_UW_DONE'];
     } else {
         $persistence['sql_to_run'] = $persistence['sql_to_check'];
         unset($persistence['sql_to_check']);
@@ -659,17 +671,17 @@ function preflightCheckJsonSchemaCheck($persistence)
         $whatsLeft = count($persistence['sql_to_check']);
 
         // populate newTables array to prevent "getting sample data" from non-existent tables
-        $newTables = array();
+        $newTables = [];
         if (strtoupper(substr($completeLine, 1, 5)) == 'CREAT') {
             $newTables[] = getTableFromQuery($completeLine);
         }
 
-        logThis('Verifying statement: '.$completeLine);
+        logThis('Verifying statement: ' . $completeLine);
         $bad = $db->verifySQLStatement($completeLine, $newTables);
 
         if (!empty($bad)) {
-            logThis('*** ERROR: schema change script has errors: '.$completeLine);
-            logThis('*** '.$bad);
+            logThis('*** ERROR: schema change script has errors: ' . $completeLine);
+            logThis('*** ' . $bad);
             $persistence['sql_errors'][] = getFormattedError($bad, $completeLine);
         }
 
@@ -682,7 +694,6 @@ function preflightCheckJsonSchemaCheck($persistence)
     return $persistence;
 }
 
-
 function preflightCheckJsonGetSchemaErrors($persistence)
 {
     global $mod_strings;
@@ -693,7 +704,7 @@ function preflightCheckJsonGetSchemaErrors($persistence)
         foreach ($persistence['sql_errors'] as $sqlError) {
             $out .= "<br><span class='error'>{$sqlError}</span>";
         }
-        $out .= "</div><hr />";
+        $out .= '</div><hr />';
     } else {
         $out = '';
     }
@@ -708,7 +719,6 @@ function preflightCheckJsonGetSchemaErrors($persistence)
     return $persistence;
 }
 
-
 function preflightCheckJsonFillSchema()
 {
     global $mod_strings;
@@ -718,10 +728,10 @@ function preflightCheckJsonFillSchema()
     $db = DBManagerFactory::getInstance();
 
     if (empty($sugar_db_version)) {
-        include('sugar_version.php');
+        include 'sugar_version.php';
     }
     if (empty($manifest)) {
-        include($persistence['unzip_dir'].'/manifest.php');
+        include $persistence['unzip_dir'] . '/manifest.php';
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -733,16 +743,16 @@ function preflightCheckJsonFillSchema()
     $destVersion = implodeVersion($manifest['version']);
 
     $script_name = $db->getScriptType();
-    $sqlScript = $persistence['unzip_dir']."/scripts/{$origVersion}_to_{$destVersion}_{$script_name}.sql";
-    $newTables = array();
+    $sqlScript = $persistence['unzip_dir'] . "/scripts/{$origVersion}_to_{$destVersion}_{$script_name}.sql";
+    $newTables = [];
 
-    logThis('looking for SQL script for DISPLAY at '.$sqlScript);
+    logThis('looking for SQL script for DISPLAY at ' . $sqlScript);
     if (file_exists($sqlScript)) {
         $contents = sugar_file_get_contents($sqlScript);
-        $schema  = "<p><a href='javascript:void(0); toggleNwFiles(\"schemashow\");'>{$mod_strings['LBL_UW_SHOW_SCHEMA']}</a>";
+        $schema = "<p><a href='javascript:void(0); toggleNwFiles(\"schemashow\");'>{$mod_strings['LBL_UW_SHOW_SCHEMA']}</a>";
         $schema .= "<div id='schemashow' style='display:none;'>";
         $schema .= "<textarea readonly cols='80' rows='10'>{$contents}</textarea>";
-        $schema .= "</div></p>";
+        $schema .= '</div></p>';
     }
     ////	END SCHEMA SCRIPT HANDLING
     ///////////////////////////////////////////////////////////////////////////////
@@ -752,7 +762,6 @@ function preflightCheckJsonFillSchema()
     ob_flush();
 }
 
-
 function preflightCheckJsonAlterTableCharset()
 {
     global $mod_strings;
@@ -760,16 +769,15 @@ function preflightCheckJsonAlterTableCharset()
     global $persistence;
 
     if (empty($sugar_db_version)) {
-        include('sugar_version.php');
+        include 'sugar_version.php';
     }
 
-    $alterTableSchema = '<i>'.$mod_strings['LBL_UW_PREFLIGHT_NOT_NEEDED'].'</i>';
+    $alterTableSchema = '<i>' . $mod_strings['LBL_UW_PREFLIGHT_NOT_NEEDED'] . '</i>';
 
     ob_start();
     echo $alterTableSchema;
     ob_flush();
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	SYSTEMCHECK AJAX FUNCTIONS
@@ -780,39 +788,40 @@ function systemCheckJsonGetFiles($persistence)
     global $mod_strings;
 
     // add directories here that should be skipped when doing file permissions checks (cache/upload is the nasty one)
-    $skipDirs = array(
+    $skipDirs = [
         $sugar_config['upload_dir'],
         'themes',
-    );
+    ];
 
     if (!isset($persistence['dirs_checked'])) {
-        $the_array = array();
-        $files = array();
+        $the_array = [];
+        $files = [];
         $dir = getcwd();
         $d = dir($dir);
         while ($f = $d->read()) {
-            if ($f == "." || $f == "..") { // skip *nix self/parent
+            if ($f == '.' || $f == '..') { // skip *nix self/parent
                 continue;
             }
 
-            if (is_dir("$dir/$f")) {
-                $the_array[] = clean_path("$dir/$f");
+            if (is_dir("{$dir}/{$f}")) {
+                $the_array[] = clean_path("{$dir}/{$f}");
             } else {
-                $files[] = clean_path("$dir/$f");
+                $files[] = clean_path("{$dir}/{$f}");
             }
         }
         $persistence['files_to_check'] = $files;
         $persistence['dirs_to_check'] = $the_array;
-        $persistence['dirs_total']	= count($the_array);
+        $persistence['dirs_total'] = count($the_array);
         $persistence['dirs_checked'] = false;
 
         $out = "1% {$mod_strings['LBL_UW_DONE']}";
 
         return $persistence;
-    } elseif ($persistence['dirs_checked'] == false) {
+    }
+    if ($persistence['dirs_checked'] == false) {
         $dir = array_pop($persistence['dirs_to_check']);
 
-        $files = uwFindAllFiles($dir, array(), true, $skipDirs);
+        $files = uwFindAllFiles($dir, [], true, $skipDirs);
 
         $persistence['files_to_check'] = array_merge($persistence['files_to_check'], $files);
 
@@ -823,10 +832,10 @@ function systemCheckJsonGetFiles($persistence)
             $persistence['dirs_checked'] = true;
         }
 
-        $out  = round((($persistence['dirs_total'] - $whatsLeft) / 21) * 100, 1)."% {$mod_strings['LBL_UW_DONE']}";
+        $out = round((($persistence['dirs_total'] - $whatsLeft) / 21) * 100, 1) . "% {$mod_strings['LBL_UW_DONE']}";
         $out .= " [{$mod_strings['LBL_UW_SYSTEM_CHECK_CHECKING_JSON']} {$dir}]";
     } else {
-        $out = "Done";
+        $out = 'Done';
     }
 
     echo trim($out);
@@ -834,11 +843,12 @@ function systemCheckJsonGetFiles($persistence)
     return $persistence;
 }
 
-
-
 /**
- * checks files for permissions
+ * checks files for permissions.
+ *
  * @param array files Array of files with absolute paths
+ * @param mixed $persistence
+ *
  * @return string result of check
  */
 function systemCheckJsonCheckFiles($persistence)
@@ -846,8 +856,8 @@ function systemCheckJsonCheckFiles($persistence)
     global $mod_strings;
     global $persistence;
 
-    $filesNotWritable = array();
-    $i=0;
+    $filesNotWritable = [];
+    $i = 0;
     $filesOut = "
 		<a href='javascript:void(0); toggleNwFiles(\"filesNw\");'>{$mod_strings['LBL_UW_SHOW_NW_FILES']}</a>
 		<div id='filesNw' style='display:none;'>
@@ -870,31 +880,31 @@ function systemCheckJsonCheckFiles($persistence)
 
         if ($isWindows) {
             if (!is_writable_windows($file)) {
-                logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
+                logThis('WINDOWS: File [' . $file . '] not readable - saving for display');
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
                 $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-                $filesOut .= "<tr>".
-                                "<td valign='top'><span class='error'>{$file}</span></td>".
-                                "<td valign='top'>{$filesNWPerms[$i]}</td>".
-                                "<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
-                                "<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
-                              "</tr>";
+                $filesOut .= '<tr>' .
+                                "<td valign='top'><span class='error'>{$file}</span></td>" .
+                                "<td valign='top'>{$filesNWPerms[$i]}</td>" .
+                                "<td valign='top'>" . $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'] . '</td>' .
+                                "<td valign='top'>" . $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'] . '</td>' .
+                              '</tr>';
             }
         } else {
             if (!is_writable($file)) {
-                logThis('File ['.$file.'] not writable - saving for display');
+                logThis('File [' . $file . '] not writable - saving for display');
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
                 $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
                 $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
                 $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
-                $filesOut .= "<tr>".
-                                "<td valign='top'><span class='error'>{$file}</span></td>".
-                                "<td valign='top'>{$filesNWPerms[$i]}</td>".
-                                "<td valign='top'>".$owner['name']."</td>".
-                                "<td valign='top'>".$group['name']."</td>".
-                              "</tr>";
+                $filesOut .= '<tr>' .
+                                "<td valign='top'><span class='error'>{$file}</span></td>" .
+                                "<td valign='top'>{$filesNWPerms[$i]}</td>" .
+                                "<td valign='top'>" . $owner['name'] . '</td>' .
+                                "<td valign='top'>" . $group['name'] . '</td>' .
+                              '</tr>';
             }
         }
         $i++;
@@ -905,10 +915,11 @@ function systemCheckJsonCheckFiles($persistence)
     $persistence['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
 
     if (count($filesNotWritable) < 1) {
-        $filesOut = (string)($mod_strings['LBL_UW_FILE_NO_ERRORS']);
+        $filesOut = (string) ($mod_strings['LBL_UW_FILE_NO_ERRORS']);
         $persistence['step']['systemCheck'] = 'success';
     }
 
     echo $filesOut;
+
     return $persistence;
 }

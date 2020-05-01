@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,7 +38,7 @@
  */
 
 /**
- * Install System Email Templates
+ * Install System Email Templates.
  */
 function installSystemEmailTemplates()
 {
@@ -49,19 +48,19 @@ function installSystemEmailTemplates()
     $templates = getSystemEmailTemplates();
     foreach ($templates as $configKey => $templateData) {
         if (
-            isset($sugar_config['system_email_templates'])
-            && isset($sugar_config['system_email_templates'][$configKey . "_id"])
-            && !empty($sugar_config['system_email_templates'][$configKey . "_id"])
+            isset($sugar_config['system_email_templates'], $sugar_config['system_email_templates'][$configKey . '_id'])
+
+            && !empty($sugar_config['system_email_templates'][$configKey . '_id'])
         ) {
             continue;
         }
 
         $template = new EmailTemplate();
         foreach ($templateData as $field => $value) {
-            $template->$field = $value;
+            $template->{$field} = $value;
         }
         $template->save();
-        $sugar_config['system_email_templates'][$configKey . "_id"] = $template->id;
+        $sugar_config['system_email_templates'][$configKey . '_id'] = $template->id;
     }
 
     ksort($sugar_config);
@@ -69,7 +68,7 @@ function installSystemEmailTemplates()
 }
 
 /**
- * upgrade System Email Templates
+ * upgrade System Email Templates.
  */
 function upgradeSystemEmailTemplates()
 {
@@ -80,42 +79,37 @@ function setSystemEmailTemplatesDefaultConfig()
 {
     global $sugar_config;
 
-
     // set confirm_opt_in_template
     if (
-        isset($sugar_config['system_email_templates'])
-        && isset($sugar_config['system_email_templates']['confirm_opt_in_template' . "_id"])
-        && isset($sugar_config['email_enable_confirm_opt_in'])
+        isset($sugar_config['system_email_templates'], $sugar_config['system_email_templates']['confirm_opt_in_template' . '_id'], $sugar_config['email_enable_confirm_opt_in'])
     ) {
         $sugar_config['email_confirm_opt_in_email_template_id'] =
-            $sugar_config['system_email_templates']['confirm_opt_in_template' . "_id"];
+            $sugar_config['system_email_templates']['confirm_opt_in_template' . '_id'];
     }
 
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
 }
 
-
 /**
  * @return array
  */
 function getSystemEmailTemplates()
 {
-    $templates = array();
-    $templates['confirm_opt_in_template'] = array(
+    $templates = [];
+    $templates['confirm_opt_in_template'] = [
         'name' => 'Confirmed Opt In',
         'published' => 'off',
         'description' => 'Email template to send to a contact to confirm they have opted in.',
         'subject' => 'Confirm Opt In',
         'type' => 'system',
         'body' => 'Hi $contact_first_name $contact_last_name, \n Please confirm that you have opted in by selecting the following link: $sugarurl/index.php?entryPoint=ConfirmOptIn&from=$emailaddress_email_address',
-        'body_html' =>
-            '<p>Hi $contact_first_name $contact_last_name,</p>
+        'body_html' => '<p>Hi $contact_first_name $contact_last_name,</p>
              <p>
                 Please confirm that you have opted in by selecting the following link:
                 <a href="$sugarurl/index.php?entryPoint=ConfirmOptIn&from=$emailaddress_confirm_opt_in_token">Opt In</a>
              </p>'
-    );
+    ];
 
     return $templates;
 }

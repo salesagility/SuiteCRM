@@ -42,6 +42,9 @@ use SuiteCRM\Search\SearchTestAbstract;
 require_once 'include/utils/LogicHook.php';
 require_once 'modules/Schedulers/Scheduler.php';
 
+/**
+ * @internal
+ */
 class ElasticSearchInstallTest extends SearchTestAbstract
 {
     /**
@@ -59,23 +62,23 @@ class ElasticSearchInstallTest extends SearchTestAbstract
 
         foreach ($afterSave as $item) {
             if (
-                $item[2] == "lib/Search/ElasticSearch/ElasticSearchHooks.php" &&
-                $item[3] == "SuiteCRM\Search\ElasticSearch\ElasticSearchHooks" &&
-                $item[4] == "beanSaved"
+                $item[2] == 'lib/Search/ElasticSearch/ElasticSearchHooks.php' &&
+                $item[3] == 'SuiteCRM\\Search\\ElasticSearch\\ElasticSearchHooks' &&
+                $item[4] == 'beanSaved'
             ) {
                 $found++;
             }
         }
 
-        self::assertEquals(1, $found, "Found the wrong number of Elasticsearch after_save hooks.");
+        self::assertEquals(1, $found, 'Found the wrong number of Elasticsearch after_save hooks.');
 
         $found = 0;
 
         foreach ($afterDelete as $item) {
             if (
-                $item[2] == "lib/Search/ElasticSearch/ElasticSearchHooks.php" &&
-                $item[3] == "SuiteCRM\Search\ElasticSearch\ElasticSearchHooks" &&
-                $item[4] == "beanDeleted"
+                $item[2] == 'lib/Search/ElasticSearch/ElasticSearchHooks.php' &&
+                $item[3] == 'SuiteCRM\\Search\\ElasticSearch\\ElasticSearchHooks' &&
+                $item[4] == 'beanDeleted'
             ) {
                 $found++;
             }
@@ -85,7 +88,7 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     }
 
     /**
-     * Asserts if the ElasticSearchIndexer scheduler is correctly loaded
+     * Asserts if the ElasticSearchIndexer scheduler is correctly loaded.
      */
     public function testSchedulerPresent()
     {
@@ -105,7 +108,7 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     {
         global $sugar_config;
 
-        self::assertArrayHasKey('search', $sugar_config, "Search config not present");
+        self::assertArrayHasKey('search', $sugar_config, 'Search config not present');
 
         self::assertArrayHasKey('ElasticSearch', $sugar_config['search']);
 

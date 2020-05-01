@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,28 +40,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/SugarFeed/feedLogicBase.php');
-
+require_once 'modules/SugarFeed/feedLogicBase.php';
 
 class OppFeed extends FeedLogicBase
 {
-    public $module = "Opportunities";
+    public $module = 'Opportunities';
+
     public function pushFeed($bean, $event, $arguments)
     {
         $text = '';
         if (empty($bean->fetched_row)) {
             $currency = new Currency();
             $currency->retrieve($bean->currency_id);
-            $text = '{SugarFeed.CREATED_OPPORTUNITY} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name . '] {SugarFeed.WITH} [Accounts:' . $bean->account_id . ':' . $bean->account_name . '] {SugarFeed.FOR_AMOUNT} ' . $currency->symbol. format_number($bean->amount);
+            $text = '{SugarFeed.CREATED_OPPORTUNITY} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name . '] {SugarFeed.WITH} [Accounts:' . $bean->account_id . ':' . $bean->account_name . '] {SugarFeed.FOR_AMOUNT} ' . $currency->symbol . format_number($bean->amount);
         } else {
             if (!empty($bean->fetched_row['sales_stage']) && $bean->fetched_row['sales_stage'] != $bean->sales_stage && $bean->sales_stage == 'Closed Won') {
                 $currency = new Currency();
                 $currency->retrieve($bean->currency_id);
-                $text = '{SugarFeed.WON_OPPORTUNITY} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name . '] {SugarFeed.WITH} [Accounts:' . $bean->account_id . ':' . $bean->account_name . '] {SugarFeed.FOR_AMOUNT} '. $currency->symbol . format_number($bean->amount);
+                $text = '{SugarFeed.WON_OPPORTUNITY} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name . '] {SugarFeed.WITH} [Accounts:' . $bean->account_id . ':' . $bean->account_name . '] {SugarFeed.FOR_AMOUNT} ' . $currency->symbol . format_number($bean->amount);
             }
         }
-        
+
         if (!empty($text)) {
             SugarFeed::pushFeed2($text, $bean);
         }

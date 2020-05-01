@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
@@ -27,10 +28,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-
-$layout_defs['AOS_Product_Categories'] = array(
-    'subpanel_setup' => array(
-        'sub_categories' => array(
+$layout_defs['AOS_Product_Categories'] = [
+    'subpanel_setup' => [
+        'sub_categories' => [
             'order' => 100,
             'module' => 'AOS_Product_Categories',
             'subpanel_name' => 'default',
@@ -38,20 +38,17 @@ $layout_defs['AOS_Product_Categories'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_SUB_CATEGORIES',
             'get_subpanel_data' => 'sub_categories',
-            'top_buttons' =>
-            array(
-                0 =>
-                array(
+            'top_buttons' => [
+                0 => [
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
-                ),
-                1 =>
-                array(
+                ],
+                1 => [
                     'widget_class' => 'SubPanelTopSelectButton',
                     'mode' => 'MultiSelect',
-                ),
-            ),
-        ),
-        'aos_products' => array(
+                ],
+            ],
+        ],
+        'aos_products' => [
             'order' => 100,
             'module' => 'AOS_Products',
             'subpanel_name' => 'default',
@@ -59,18 +56,15 @@ $layout_defs['AOS_Product_Categories'] = array(
             'sort_by' => 'id',
             'title_key' => 'AOS_Products',
             'get_subpanel_data' => 'aos_products',
-            'top_buttons' =>
-            array(
-                0 =>
-                array(
+            'top_buttons' => [
+                0 => [
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
-                ),
-                1 =>
-                array(
+                ],
+                1 => [
                     'widget_class' => 'SubPanelTopSelectButton',
                     'mode' => 'MultiSelect',
-                ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];

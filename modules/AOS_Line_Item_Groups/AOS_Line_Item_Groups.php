@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups_sugar.php');
+require_once 'modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups_sugar.php';
 
 class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
 {
@@ -47,20 +45,17 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
         parent::__construct();
     }
 
-
-
-
     public function save_groups($post_data, $parent, $key = '')
     {
-        $groups = array();
+        $groups = [];
         $group_count = isset($post_data[$key . 'group_number']) ? count($post_data[$key . 'group_number']) : 0;
         $j = 0;
-        for ($i = 0; $i < $group_count; ++$i) {
+        for ($i = 0; $i < $group_count; $i++) {
             $postData = null;
             if (isset($post_data[$key . 'deleted'][$i])) {
                 $postData = $post_data[$key . 'deleted'][$i];
             } else {
-                LoggerManager::getLogger()->warn('AOS Line Item Group deleted field is not set in requested POST data at key: ' . $key . '['. $i .']');
+                LoggerManager::getLogger()->warn('AOS Line Item Group deleted field is not set in requested POST data at key: ' . $key . '[' . $i . ']');
             }
 
             if ($postData == 1) {
@@ -70,7 +65,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
-                        $product_quote_group->$field_name = $post_data[$key . $field_name][$i];
+                        $product_quote_group->{$field_name} = $post_data[$key . $field_name][$i];
                     }
                 }
                 $product_quote_group->number = ++$j;
@@ -95,7 +90,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
             }
         }
 
-        require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
+        require_once 'modules/AOS_Products_Quotes/AOS_Products_Quotes.php';
         $productQuote = new AOS_Products_Quotes();
         $productQuote->save_lines($post_data, $parent, $groups, 'product_');
         $productQuote->save_lines($post_data, $parent, $groups, 'service_');
@@ -103,8 +98,9 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
 
     public function save($check_notify = false)
     {
-        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        require_once 'modules/AOS_Products_Quotes/AOS_Utils.php';
         perform_aos_save($this);
+
         return parent::save($check_notify);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -47,9 +45,10 @@ $_SESSION['setup_license_accept'] = true;
 /**
  * @param bool $install_script
  * @param array $mod_strings
+ *
  * @return string
  */
-function runCheck($install_script, $mod_strings = array())
+function runCheck($install_script, $mod_strings = [])
 {
     installLog('Begin System Check Process *************');
 
@@ -62,59 +61,56 @@ function runCheck($install_script, $mod_strings = array())
         define('SUGARCRM_MIN_MEM', 40);
     }
 
-
-
     // for keeping track of whether to enable/disable the 'Next' button
     $error_found = false;
     $error_txt = '';
 
-
     // check IIS and FastCGI
-    $server_software = $_SERVER["SERVER_SOFTWARE"];
-    if ((strpos($_SERVER["SERVER_SOFTWARE"], 'Microsoft-IIS') !== false)
+    $server_software = $_SERVER['SERVER_SOFTWARE'];
+    if ((strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
         && php_sapi_name() == 'cgi-fcgi'
         && ini_get('fastcgi.logging') != '0') {
         installLog($mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']);
         $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']}</span></b>";
         $error_found = true;
         $error_txt .= '
-            <p><b>'.$mod_strings['LBL_CHECKSYS_FASTCGI'].'</b></p>
-            <p ><span class="error">'.$iisVersion.'</span></p>
+            <p><b>' . $mod_strings['LBL_CHECKSYS_FASTCGI'] . '</b></p>
+            <p ><span class="error">' . $iisVersion . '</span></p>
     ';
     }
 
     if (strpos($server_software, 'Microsoft-IIS') !== false) {
         $iis_version = '';
-        if (preg_match_all("/^.*\/(\d+\.?\d*)$/", $server_software, $out)) {
+        if (preg_match_all('/^.*\\/(\\d+\\.?\\d*)$/', $server_software, $out)) {
             $iis_version = $out[1][0];
         }
 
         $check_iis_version_result = check_iis_version($iis_version);
         if ($check_iis_version_result == -1) {
-            installLog($mod_strings['ERR_CHECKSYS_IIS_INVALID_VER'].' '.$iis_version);
+            installLog($mod_strings['ERR_CHECKSYS_IIS_INVALID_VER'] . ' ' . $iis_version);
             $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_IIS_INVALID_VER']} {$iis_version}</span></b>";
             $error_found = true;
             $error_txt .= '
-            <p><b>'.$mod_strings['LBL_CHECKSYS_IISVER'].'</b></p>
-            <p><span class="error">'.$iisVersion.'</span></p>
+            <p><b>' . $mod_strings['LBL_CHECKSYS_IISVER'] . '</b></p>
+            <p><span class="error">' . $iisVersion . '</span></p>
         ';
         } else {
             if (php_sapi_name() != 'cgi-fcgi') {
-                installLog($mod_strings['ERR_CHECKSYS_FASTCGI'].' '.$iis_version);
+                installLog($mod_strings['ERR_CHECKSYS_FASTCGI'] . ' ' . $iis_version);
                 $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI']}</span></b>";
                 $error_found = true;
                 $error_txt .= '
-            <p><b>'.$mod_strings['LBL_CHECKSYS_FASTCGI'].'</b></p>
-            <p><span class="error">'.$iisVersion.'</span></p>
+            <p><b>' . $mod_strings['LBL_CHECKSYS_FASTCGI'] . '</b></p>
+            <p><span class="error">' . $iisVersion . '</span></p>
         ';
             } else {
                 if (ini_get('fastcgi.logging') != '0') {
-                    installLog($mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING'].' '.$iis_version);
+                    installLog($mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING'] . ' ' . $iis_version);
                     $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']}</span></b>";
                     $error_found = true;
                     $error_txt .= '
-            <p><b>'.$mod_strings['LBL_CHECKSYS_FASTCGI'].'</b></p>
-            <p ><span class="error">'.$iisVersion.'</span></p>
+            <p><b>' . $mod_strings['LBL_CHECKSYS_FASTCGI'] . '</b></p>
+            <p ><span class="error">' . $iisVersion . '</span></p>
         ';
                 }
             }
@@ -123,26 +119,25 @@ function runCheck($install_script, $mod_strings = array())
 
     // PHP VERSION
 
-
     if (check_php_version() === -1) {
-        installLog($mod_strings['ERR_CHECKSYS_PHP_INVALID_VER'].'  '.constant('PHP_VERSION'));
-        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
+        installLog($mod_strings['ERR_CHECKSYS_PHP_INVALID_VER'] . '  ' . constant('PHP_VERSION'));
+        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} " . constant('PHP_VERSION') . ' )</span></b>';
         $error_found = true;
         $error_txt .= '
-            <p><b>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</b></p>
-            <p><span class="error">'.$phpVersion.'</span></p>
+            <p><b>' . $mod_strings['LBL_CHECKSYS_PHPVER'] . '</b></p>
+            <p><span class="error">' . $phpVersion . '</span></p>
         ';
     }
 
     //Php Backward compatibility checks
-    if (ini_get("zend.ze1_compatibility_mode")) {
-        installLog($mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'].'  '.'Php Backward Compatibility');
+    if (ini_get('zend.ze1_compatibility_mode')) {
+        installLog($mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'] . '  ' . 'Php Backward Compatibility');
         $phpCompatibility = "<b><span class=stop>{$mod_strings['LBL_BACKWARD_COMPATIBILITY_ON']}</span></b>";
         $error_found = true;
         $error_txt .= '
       <tr>
         <p><b>Php Backward Compatibility</b></p>
-        <p><span class="error">'.$phpCompatibility.'</span></p>
+        <p><span class="error">' . $phpCompatibility . '</span></p>
     ';
     }
 
@@ -160,8 +155,8 @@ function runCheck($install_script, $mod_strings = array())
         $dbStatus = "<b><span class=stop>{$mod_strings['LBL_CHECKSYS_DB_SUPPORT_NOT_AVAILABLE']}</span></b>";
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$db_name.'</strong></p>
-        <p class="error">'.$dbStatus.'</p>
+        <p><strong>' . $db_name . '</strong></p>
+        <p class="error">' . $dbStatus . '</p>
     ';
     }
 
@@ -171,13 +166,12 @@ function runCheck($install_script, $mod_strings = array())
         installLog("ERROR:: {$mod_strings['LBL_CHECKSYS_XML_NOT_AVAILABLE']}");
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_XML'].'</strong></p>
-        <p class="error">'.$xmlStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_XML'] . '</strong></p>
+        <p class="error">' . $xmlStatus . '</p>
     ';
     } else {
-        installLog("XML Parsing Support Found");
+        installLog('XML Parsing Support Found');
     }
-
 
     // mbstrings
     if (!function_exists('mb_strlen')) {
@@ -185,11 +179,11 @@ function runCheck($install_script, $mod_strings = array())
         installLog("ERROR:: {$mod_strings['ERR_CHECKSYS_MBSTRING']}");
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_MBSTRING'].'</strong></p>
-        <p class="error">'.$mbstringStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_MBSTRING'] . '</strong></p>
+        <p class="error">' . $mbstringStatus . '</p>
     ';
     } else {
-        installLog("MBString Support Found");
+        installLog('MBString Support Found');
     }
 
     // zip
@@ -197,28 +191,28 @@ function runCheck($install_script, $mod_strings = array())
         $zipStatus = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_ZIP']}</font></b>";
         installLog("ERROR:: {$mod_strings['ERR_CHECKSYS_ZIP']}");
     } else {
-        installLog("ZIP Support Found");
+        installLog('ZIP Support Found');
     }
 
     // config.php
-    if (file_exists('./config.php') && (!(make_writable('./config.php')) ||  !(is_writable('./config.php')))) {
+    if (file_exists('./config.php') && (!(make_writable('./config.php')) || !(is_writable('./config.php')))) {
         installLog("ERROR:: {$mod_strings['ERR_CHECKSYS_CONFIG_NOT_WRITABLE']}");
         $configStatus = "<b><span class='stop'>{$mod_strings['ERR_CHECKSYS_CONFIG_NOT_WRITABLE']}</span></b>";
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_CONFIG'].'</strong></p>
-        <p class="error">'.$configStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_CONFIG'] . '</strong></p>
+        <p class="error">' . $configStatus . '</p>
     ';
     }
 
     // config_override.php
-    if (file_exists('./config_override.php') && (!(make_writable('./config_override.php')) ||  !(is_writable('./config_override.php')))) {
+    if (file_exists('./config_override.php') && (!(make_writable('./config_override.php')) || !(is_writable('./config_override.php')))) {
         installLog("ERROR:: {$mod_strings['ERR_CHECKSYS_CONFIG_OVERRIDE_NOT_WRITABLE']}");
         $configStatus = "<b><span class='stop'>{$mod_strings['ERR_CHECKSYS_CONFIG_OVERRIDE_NOT_WRITABLE']}</span></b>";
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_OVERRIDE_CONFIG'].'</strong></p>
-        <p class="error">'.$configStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_OVERRIDE_CONFIG'] . '</strong></p>
+        <p class="error">' . $configStatus . '</p>
     ';
     }
 
@@ -228,13 +222,12 @@ function runCheck($install_script, $mod_strings = array())
         installLog("ERROR:: {$mod_strings['ERR_CHECKSYS_CUSTOM_NOT_WRITABLE']}");
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</strong></p>
-        <p class="error">'.$customStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_CUSTOM'] . '</strong></p>
+        <p class="error">' . $customStatus . '</p>
     ';
     } else {
-        installLog("/custom directory and subdirectory check passed");
+        installLog('/custom directory and subdirectory check passed');
     }
-
 
     // cache dir
     $cache_files[] = '';
@@ -252,26 +245,25 @@ function runCheck($install_script, $mod_strings = array())
             $ok = make_writable($dirname);
         }
         if (!$ok) {
-            $filelist .= '<br>'.getcwd()."/$dirname";
+            $filelist .= '<br>' . getcwd() . "/{$dirname}";
         }
     }
-    if (strlen($filelist)>0) {
+    if (strlen($filelist) > 0) {
         $error_found = true;
-        installLog("ERROR:: Some subdirectories in cache subfolder were not read/writeable:");
+        installLog('ERROR:: Some subdirectories in cache subfolder were not read/writeable:');
         installLog($filelist);
         $error_txt .= '
-        	<p><strong>'.$mod_strings['LBL_CHECKSYS_CACHE'].'</strong></p>
-        	<p align="right" class="error" class="error"><b><span class="stop">'.$mod_strings['ERR_CHECKSYS_FILES_NOT_WRITABLE'].'</span></b>
+        	<p><strong>' . $mod_strings['LBL_CHECKSYS_CACHE'] . '</strong></p>
+        	<p align="right" class="error" class="error"><b><span class="stop">' . $mod_strings['ERR_CHECKSYS_FILES_NOT_WRITABLE'] . '</span></b>
 
-        	<p><b>'.$mod_strings['LBL_CHECKSYS_FIX_FILES'].'</b>'.$filelist. '</p>
+        	<p><b>' . $mod_strings['LBL_CHECKSYS_FIX_FILES'] . '</b>' . $filelist . '</p>
 		';
     } else {
-        installLog("cache directory and subdirectory check passed");
+        installLog('cache directory and subdirectory check passed');
     }
 
-
     // check modules dir
-    $_SESSION['unwriteable_module_files'] = array();
+    $_SESSION['unwriteable_module_files'] = [];
     //if(!$writeableFiles['ret_val']) {
     $passed_write = recursive_make_writable('./modules');
     if (isset($_SESSION['unwriteable_module_files']['failed']) && $_SESSION['unwriteable_module_files']['failed']) {
@@ -280,78 +272,76 @@ function runCheck($install_script, $mod_strings = array())
 
     if (!$passed_write) {
         $moduleStatus = "<b><span class='stop'>{$mod_strings['ERR_CHECKSYS_NOT_WRITABLE']}</span></b>";
-        installLog("ERROR:: Module directories and the files under them are not writeable.");
+        installLog('ERROR:: Module directories and the files under them are not writeable.');
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</strong></p>
-        <p align="right" class="error">'.$moduleStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_MODULE'] . '</strong></p>
+        <p align="right" class="error">' . $moduleStatus . '</p>
     ';
 
         //list which module directories are not writeable, if there are less than 10
         $error_txt .= '
-            <b>'.$mod_strings['LBL_CHECKSYS_FIX_MODULE_FILES'].'</b>';
-        foreach ($_SESSION['unwriteable_module_files'] as $key=>$file) {
-            if ($key !='.' && $key != 'failed') {
-                $error_txt .='<br>'.$file;
+            <b>' . $mod_strings['LBL_CHECKSYS_FIX_MODULE_FILES'] . '</b>';
+        foreach ($_SESSION['unwriteable_module_files'] as $key => $file) {
+            if ($key != '.' && $key != 'failed') {
+                $error_txt .= '<br>' . $file;
             }
         }
         $error_txt .= '
         ';
     } else {
-        installLog("/module  directory and subdirectory check passed");
+        installLog('/module  directory and subdirectory check passed');
     }
 
     // check upload dir
     if (!make_writable('./upload')) {
         $uploadStatus = "<b><span class='stop'>{$mod_strings['ERR_CHECKSYS_NOT_WRITABLE']}</span></b>";
-        installLog("ERROR: Upload directory is not writable.");
+        installLog('ERROR: Upload directory is not writable.');
         $error_found = true;
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</strong></p>
-        <p align="right" class="error">'.$uploadStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_UPLOAD'] . '</strong></p>
+        <p align="right" class="error">' . $uploadStatus . '</p>
     ';
     } else {
-        installLog("/upload directory check passed");
+        installLog('/upload directory check passed');
     }
 
     // check zip file support
-    if (!class_exists("ZipArchive")) {
+    if (!class_exists('ZipArchive')) {
         $zipStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZIP']}</b></span>";
 
-        installLog("ERROR: Zip support not found.");
+        installLog('ERROR: Zip support not found.');
         $error_found = true;
         $error_txt .= '
-            <p><strong>'.$mod_strings['LBL_CHECKSYS_ZIP'].'</strong></p>
-            <p  align="right" class="error">'.$zipStatus.'</p>
+            <p><strong>' . $mod_strings['LBL_CHECKSYS_ZIP'] . '</strong></p>
+            <p  align="right" class="error">' . $zipStatus . '</p>
     ';
     } else {
-        installLog("/zip check passed");
+        installLog('/zip check passed');
     }
-
 
     // check PCRE version
     if (defined('PCRE_VERSION')) {
         if (version_compare(PCRE_VERSION, '7.0') < 0) {
-            installLog("ERROR: PCRE Version is less than 7.0.");
+            installLog('ERROR: PCRE Version is less than 7.0.');
             $error_found = true;
             $pcreStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_PCRE_VER']}</b></span>";
             $error_txt .= '
-            <p><strong>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</strong></p>
-            <p  align="right" class="error">'.$pcreStatus.'</p>
+            <p><strong>' . $mod_strings['LBL_CHECKSYS_PCRE'] . '</strong></p>
+            <p  align="right" class="error">' . $pcreStatus . '</p>
         ';
         } else {
-            installLog("PCRE version check passed");
+            installLog('PCRE version check passed');
         }
     } else {
-        installLog("ERROR: PCRE not found.");
+        installLog('ERROR: PCRE not found.');
         $error_found = true;
         $pcreStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_PCRE']}</b></span>";
         $error_txt .= '
-        <p><strong>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</strong></p>
-        <p  align="right" class="error">'.$pcreStatus.'</p>
+        <p><strong>' . $mod_strings['LBL_CHECKSYS_PCRE'] . '</strong></p>
+        <p  align="right" class="error">' . $pcreStatus . '</p>
     ';
     }
-
 
     $customSystemChecks = installerHook('additionalCustomSystemChecks');
     if ($customSystemChecks != 'undefined') {
@@ -364,19 +354,19 @@ function runCheck($install_script, $mod_strings = array())
     }
 
     // PHP.ini
-    $phpIniLocation = get_cfg_var("cfg_file_path");
+    $phpIniLocation = get_cfg_var('cfg_file_path');
     installLog("php.ini location found. {$phpIniLocation}");
     // disable form if error found
 
     if ($error_found) {
-        installLog("Outputting HTML for System check");
-        installLog("Errors were found *************");
+        installLog('Outputting HTML for System check');
+        installLog('Errors were found *************');
         $disabled = $error_found ? 'disabled="disabled"' : '';
 
         $help_url = get_help_button_url();
         ///////////////////////////////////////////////////////////////////////////////
         ////    BEGIN PAGE OUTPUT
-        $out =<<<EOQ
+        $out = <<<EOQ
     <h2>{$mod_strings['LBL_CHECKSYS_TITLE']}</h2>
       <div width="200" height="30" style="/*float: right;*/">
         <p>{$mod_strings['ERR_CHECKSYS']}</p>
@@ -387,7 +377,7 @@ function runCheck($install_script, $mod_strings = array())
             <h2 style="float: left;">{$mod_strings['LBL_CHECKSYS_COMPONENT']}</h2>
         </div>
         <div id="errormsg">
-            <p>$error_txt</p>
+            <p>{$error_txt}</p>
         </div>
         <div align="center" style="margin: 5px;">
           <i>{$mod_strings['LBL_CHECKSYS_PHP_INI']}<br>{$phpIniLocation}</i>
@@ -400,12 +390,13 @@ function runCheck($install_script, $mod_strings = array())
         </form>
     </div>
 EOQ;
+
         return $out;
-    } else {
-        installLog("Outputting HTML for System check");
-        installLog("No Errors were found *************");
-        return 'passed';
     }
+    installLog('Outputting HTML for System check');
+    installLog('No Errors were found *************');
+
+    return 'passed';
 }
 ////    END PAGEOUTPUT
 ///////////////////////////////////////////////////////////////////////////////

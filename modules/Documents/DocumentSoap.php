@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,30 +40,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+require_once 'include/upload_file.php';
 
-require_once('include/upload_file.php');
-
-
-require_once('include/upload_file.php');
+require_once 'include/upload_file.php';
 
 class DocumentSoap
 {
     public $upload_file;
+
     public function __construct()
     {
         $this->upload_file = new UploadFile('filename_file');
     }
-
-
-
 
     public function saveFile($document, $portal = false)
     {
         global $sugar_config;
 
         $focus = new Document();
-
-
 
         if (!empty($document['id'])) {
             $focus->retrieve($document['id']);
@@ -78,11 +72,11 @@ class DocumentSoap
             $decodedFile = base64_decode($document['file']);
             $this->upload_file->set_for_soap($document['filename'], $decodedFile);
 
-            $ext_pos = strrpos($this->upload_file->stored_file_name, ".");
+            $ext_pos = strrpos($this->upload_file->stored_file_name, '.');
             $this->upload_file->file_ext = substr($this->upload_file->stored_file_name, $ext_pos + 1);
             if (in_array($this->upload_file->file_ext, $sugar_config['upload_badext'])) {
-                $this->upload_file->stored_file_name .= ".txt";
-                $this->upload_file->file_ext = "txt";
+                $this->upload_file->stored_file_name .= '.txt';
+                $this->upload_file->file_ext = 'txt';
             }
 
             $revision = new DocumentRevision();
@@ -101,6 +95,7 @@ class DocumentSoap
         } else {
             return '-1';
         }
+
         return $return_id;
     }
 }

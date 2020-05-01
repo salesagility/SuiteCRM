@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
- $metafiles['Project'] = array(
-    'detailviewdefs'  => 	'modules/Project/metadata/detailviewdefs.php',
-    'editviewdefs'    => 	'modules/Project/metadata/editviewdefs.php',
-    'listviewdefs'    => 	'modules/Project/metadata/listviewdefs.php',
-    'searchdefs'      =>    'modules/Project/metadata/searchdefs.php',
-    'popupdefs'	      =>    'modules/Project/metadata/popupdefs.php',
-    'searchfields'	  =>    'modules/Project/metadata/SearchFields.php',
-
- );
+ $metafiles['Project'] = [
+     'detailviewdefs' => 'modules/Project/metadata/detailviewdefs.php',
+     'editviewdefs' => 'modules/Project/metadata/editviewdefs.php',
+     'listviewdefs' => 'modules/Project/metadata/listviewdefs.php',
+     'searchdefs' => 'modules/Project/metadata/searchdefs.php',
+     'popupdefs' => 'modules/Project/metadata/popupdefs.php',
+     'searchfields' => 'modules/Project/metadata/SearchFields.php',
+ ];

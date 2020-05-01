@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -58,15 +56,14 @@ ARGS:
   3) $_REQUEST['return_action']; :
 */
 
-
-require_once('include/formbase.php');
+require_once 'include/formbase.php';
 
  global $beanFiles,$beanList;
  $bean_name = $beanList[$_REQUEST['module']];
- require_once($beanFiles[$bean_name]);
+ require_once $beanFiles[$bean_name];
  $focus = new $bean_name();
- if (empty($_REQUEST['linked_id']) || empty($_REQUEST['linked_field'])  || empty($_REQUEST['record'])) {
-     die("need linked_field, linked_id and record fields");
+ if (empty($_REQUEST['linked_id']) || empty($_REQUEST['linked_field']) || empty($_REQUEST['record'])) {
+     die('need linked_field, linked_id and record fields');
  }
  $linked_field = $_REQUEST['linked_field'];
  $record = $_REQUEST['record'];
@@ -87,23 +84,22 @@ $focus->retrieve($record);
 if ($bean_name === 'Team') {
     $focus->remove_user_from_team($linked_id);
 } else {
-
     // cut it off:
     $focus->load_relationship($linked_field);
-    if ($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto') {
-        unset($focus->$linked_field->_relationship->relationship_role_column);
+    if ($focus->{$linked_field}->_relationship->relationship_name === 'quotes_contacts_shipto') {
+        unset($focus->{$linked_field}->_relationship->relationship_role_column);
     }
-    $focus->$linked_field->delete($record, $linked_id);
+    $focus->{$linked_field}->delete($record, $linked_id);
 }
- if ($bean_name === 'Campaign' and $linked_field==='prospectlists') {
-     $query = "SELECT email_marketing_prospect_lists.id from email_marketing_prospect_lists ";
-     $query .= " left join email_marketing on email_marketing.id=email_marketing_prospect_lists.email_marketing_id";
-     $query .= " where email_marketing.campaign_id='$record'";
-     $query .= " and email_marketing_prospect_lists.prospect_list_id='$linked_id'";
+ if ($bean_name === 'Campaign' and $linked_field === 'prospectlists') {
+     $query = 'SELECT email_marketing_prospect_lists.id from email_marketing_prospect_lists ';
+     $query .= ' left join email_marketing on email_marketing.id=email_marketing_prospect_lists.email_marketing_id';
+     $query .= " where email_marketing.campaign_id='{$record}'";
+     $query .= " and email_marketing_prospect_lists.prospect_list_id='{$linked_id}'";
 
      $result = $focus->db->query($query);
      while (($row = $focus->db->fetchByAssoc($result)) != null) {
-         $del_query = " update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=" . $focus->db->convert(
+         $del_query = ' update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=' . $focus->db->convert(
              "'" . TimeDate::getInstance()->nowDb() . "'",
              'datetime'
          );
@@ -112,7 +108,7 @@ if ($bean_name === 'Team') {
      }
      $focus->db->query($query);
  }
-if ($bean_name === "Account" && $linked_field === 'leads') {
+if ($bean_name === 'Account' && $linked_field === 'leads') {
     // for Accounts-Leads non-standard relationship, after clearing account_id form Lead's bean, clear also account_name
     $focus->retrieve($record);
     $lead = new Lead();
@@ -124,18 +120,17 @@ if ($bean_name === "Account" && $linked_field === 'leads') {
     unset($lead);
 }
 
-if ($bean_name === "Meeting") {
+if ($bean_name === 'Meeting') {
     $focus->retrieve($record);
     $user = new User();
     $user->retrieve($linked_id);
     if (!empty($user->id)) {  //make sure that record exists. we may have a contact on our hands.
-
         if ($focus->update_vcal) {
             vCal::cache_sugar_vcal($user);
         }
     }
 }
-if ($bean_name === "User" && $linked_field === 'eapm') {
+if ($bean_name === 'User' && $linked_field === 'eapm') {
     $eapm = new EAPM();
     $eapm->mark_deleted($linked_id);
 }
@@ -143,10 +138,9 @@ if ($bean_name === "User" && $linked_field === 'eapm') {
 if (!empty($_REQUEST['return_url'])) {
     $_REQUEST['return_url'] = urldecode($_REQUEST['return_url']);
 }
-$GLOBALS['log']->debug("deleted relationship: bean: $bean_name, linked_field: $linked_field, linked_id:$linked_id");
+$GLOBALS['log']->debug("deleted relationship: bean: {$bean_name}, linked_field: {$linked_field}, linked_id:{$linked_id}");
 if (empty($_REQUEST['refresh_page'])) {
     handleRedirect();
 }
-
 
 exit;

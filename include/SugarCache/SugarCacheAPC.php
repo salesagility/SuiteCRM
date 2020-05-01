@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarCache/SugarCacheAbstract.php');
+require_once 'include/SugarCache/SugarCacheAbstract.php';
 
 class SugarCacheAPC extends SugarCacheAbstract
 {
@@ -57,7 +54,7 @@ class SugarCacheAPC extends SugarCacheAbstract
             return false;
         }
 
-        if (function_exists("apc_store")
+        if (function_exists('apc_store')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_apc'])) {
             return true;
         }
@@ -67,6 +64,9 @@ class SugarCacheAPC extends SugarCacheAbstract
 
     /**
      * @see SugarCacheAbstract::_setExternal()
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function _setExternal($key, $value)
     {
@@ -75,6 +75,8 @@ class SugarCacheAPC extends SugarCacheAbstract
 
     /**
      * @see SugarCacheAbstract::_getExternal()
+     *
+     * @param mixed $key
      */
     protected function _getExternal($key)
     {
@@ -88,6 +90,8 @@ class SugarCacheAPC extends SugarCacheAbstract
 
     /**
      * @see SugarCacheAbstract::_clearExternal()
+     *
+     * @param mixed $key
      */
     protected function _clearExternal($key)
     {

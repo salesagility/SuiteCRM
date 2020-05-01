@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,19 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGenericChart.php');
+require_once 'include/Dashlets/DashletGenericChart.php';
 
 class PipelineBySalesStageDashlet extends DashletGenericChart
 {
     public $pbss_date_start;
     public $pbss_date_end;
-    public $pbss_sales_stages = array();
-    private $currency;
+    public $pbss_sales_stages = [];
 
     public $maxLabelSizeBeforeTotal = 18;
     public $labelReplacementString = '...';
@@ -60,9 +54,12 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
      * @see DashletGenericChart::$_seedName
      */
     protected $_seedName = 'Opportunities';
+    private $currency;
 
     /**
      * @see DashletGenericChart::__construct()
+     *
+     * @param mixed $id
      */
     public function __construct(
         $id,
@@ -75,7 +72,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         }
 
         if (empty($options['pbss_date_end'])) {
-            $options['pbss_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
+            $options['pbss_date_end'] = $timedate->asDbDate($timedate->getNow()->modify('+6 months'));
         }
 
         if (empty($options['title'])) {
@@ -125,7 +122,6 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
             $currency_symbol = $currency->symbol;
         }
 
-
         $data = $this->getChartData($this->constructQuery());
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
 
@@ -140,48 +136,48 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $endDate = $this->pbss_date_end;
 
         //TODO find a better way of doing this
-        $canvasId = 'rGraphFunnel'.uniqid();
+        $canvasId = 'rGraphFunnel' . uniqid();
 
         //These are taken in the same fashion as the hard-coded array above
         $module = 'Opportunities';
         $action = 'index';
-        $query  ='true';
-        $searchFormTab ='advanced_search';
+        $query = 'true';
+        $searchFormTab = 'advanced_search';
 
-        $chartWidth     = 900;
-        $chartHeight    = 500;
+        $chartWidth = 900;
+        $chartHeight = 500;
 
-        $autoRefresh = $this->processAutoRefresh();//$autoRefresh
+        $autoRefresh = $this->processAutoRefresh(); //$autoRefresh
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
         //<canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
         //<canvas id='test123'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
 
         //Check for an empty array
-        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
-            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
+        if (!is_array($chartReadyData['data']) || count($chartReadyData['data']) < 1) {
+            return "<h3 class='noGraphDataPoints'>{$this->noDataMessage}</h3>";
         }
 
         $chart = <<<EOD
-        <canvas id='$canvasId'  class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
-        <input type='hidden' class='startDate' value='$startDate' />
-        <input type='hidden' class='endDate' value='$endDate' />
-        <input type='hidden' class='module' value='$module' />
-        <input type='hidden' class='action' value='$action' />
-        <input type='hidden' class='query' value='$query' />
-        <input type='hidden' class='searchFormTab' value='$searchFormTab' />
+        <canvas id='{$canvasId}'  class='resizableCanvas'  width='{$chartWidth}' height='{$chartHeight}'>[No canvas support]</canvas>
+        <input type='hidden' class='startDate' value='{$startDate}' />
+        <input type='hidden' class='endDate' value='{$endDate}' />
+        <input type='hidden' class='module' value='{$module}' />
+        <input type='hidden' class='action' value='{$action}' />
+        <input type='hidden' class='query' value='{$query}' />
+        <input type='hidden' class='searchFormTab' value='{$searchFormTab}' />
         <script>
-        window["chartHBarKeys$canvasId"] = $jsonKeys;
+        window["chartHBarKeys{$canvasId}"] = {$jsonKeys};
 new RGraph.HBar({
-                id:'$canvasId',
-                data:$jsonData,
+                id:'{$canvasId}',
+                data:{$jsonData},
 
                 options: {
-                    labels:$jsonLabelsAndValues,
+                    labels:{$jsonLabelsAndValues},
                     //textHalign:'center',
                     //labelsSticks: true,
                     //labelsX: 100,
-                    key:$jsonLabels,
+                    key:{$jsonLabels},
                     keyBackground:'rgba(255,255,255,0.7)',
                     //keyPositionX:500,
                     //keyInteractive: true,
@@ -196,12 +192,12 @@ new RGraph.HBar({
                     shadowOffsetx: 0,
                     shadowOffsety: 0,
                     shadowBlur: 15,
-                    colors:$colours,
-                    //keyColors:$colours,
+                    colors:{$colours},
+                    //keyColors:{$colours},
                     textSize:10,
                     //textHalign:'center',
                     shadowColor: 'gray',
-                    tooltips:$jsonLabels,
+                    tooltips:{$jsonLabels},
                     tooltipsEvent:'mousemove',
                     tooltipsCssClass: 'rgraph_chart_tooltips_css',
                     keyHalign:'right',
@@ -211,10 +207,10 @@ new RGraph.HBar({
 
 /*
             var text = new RGraph.Drawing.Text({
-            id: '$canvasId',
+            id: '{$canvasId}',
             x: 10,
             y: 22,
-            text: 'Pipeline Total is $currency_symbol$total',
+            text: 'Pipeline Total is {$currency_symbol}{$total}',
             options: {
                 font: 'Arial',
                 bold: true,
@@ -226,10 +222,10 @@ new RGraph.HBar({
         }).draw();
 
         var sizeIncrement = new RGraph.Drawing.Text({
-            id: '$canvasId',
+            id: '{$canvasId}',
             x: 10,
             y: 550,
-            text: 'Opportunity size in ${currency_symbol}1$thousands_symbol',
+            text: 'Opportunity size in {$currency_symbol}1{$thousands_symbol}',
             options: {
                 font: 'Arial',
                 bold: true,
@@ -245,15 +241,15 @@ new RGraph.HBar({
         </script>
 EOD;
 
-
         return $chart;
     }
 
     /**
      * awu: Bug 16794 - this function is a hack to get the correct sales stage order until
-     * i can clean it up later
+     * i can clean it up later.
      *
      * @param  $query string
+     *
      * @return array
      */
     public function getChartData(
@@ -261,9 +257,9 @@ EOD;
     ) {
         global $app_list_strings, $db;
 
-        $data = array();
-        $temp_data = array();
-        $selected_datax = array();
+        $data = [];
+        $temp_data = [];
+        $selected_datax = [];
 
         $user_sales_stage = $this->pbss_sales_stages;
         $tempx = $user_sales_stage;
@@ -296,6 +292,7 @@ EOD;
                 }
             }
         }
+
         return $data;
     }
 
@@ -324,33 +321,35 @@ EOD;
     protected function constructQuery()
     {
         $conversion_rate = $this->currency->conversion_rate;
-        $query = "  SELECT opportunities.sales_stage,
+        $query = '  SELECT opportunities.sales_stage,
                         count(*) AS opp_count,
-                        sum((amount_usdollar*".$conversion_rate.")/1000) AS total
-                    FROM users,opportunities  ";
-        $query .= " WHERE opportunities.date_closed >= ". DBManager::convert("'".$this->pbss_date_start."'", 'date').
-            " AND opportunities.date_closed <= ".DBManager::convert("'".$this->pbss_date_end."'", 'date') .
-            " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
-        $query .= " GROUP BY opportunities.sales_stage";
+                        sum((amount_usdollar*' . $conversion_rate . ')/1000) AS total
+                    FROM users,opportunities  ';
+        $query .= ' WHERE opportunities.date_closed >= ' . DBManager::convert("'" . $this->pbss_date_start . "'", 'date') .
+            ' AND opportunities.date_closed <= ' . DBManager::convert("'" . $this->pbss_date_end . "'", 'date') .
+            ' AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ';
+        $query .= ' GROUP BY opportunities.sales_stage';
+
         return $query;
     }
 
     protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //return $data;
-        $chart['labels']=array();
-        $chart['data']=array();
-        $chart['keys']=array();
+        $chart['labels'] = [];
+        $chart['data'] = [];
+        $chart['keys'] = [];
         $total = 0;
         foreach ($data as $i) {
             //$chart['labelsAndValues'][]=$i['key'].' ('.$currency.(int)$i['total'].')';
-            $chart['labelsAndValues'][]=$this->resizeLabel($i['value']).' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
-            $chart['labels'][]=$i['value'];
-            $chart['keys'][]=$i['key'];
-            $chart['data'][]=(int)$i['total'];
-            $total+=(int)$i['total'];
+            $chart['labelsAndValues'][] = $this->resizeLabel($i['value']) . ' (' . $currency_symbol . (int) $i['total'] . $thousands_symbol . ')';
+            $chart['labels'][] = $i['value'];
+            $chart['keys'][] = $i['key'];
+            $chart['data'][] = (int) $i['total'];
+            $total += (int) $i['total'];
         }
-        $chart['total']=$total;
+        $chart['total'] = $total;
+
         return $chart;
     }
 
@@ -359,6 +358,7 @@ EOD;
         if (strlen($label) < $this->maxLabelSizeBeforeTotal) {
             return $label;
         }
-        return substr($label, 0, $this->maxLabelSizeBeforeTotal).$this->labelReplacementString;
+
+        return substr($label, 0, $this->maxLabelSizeBeforeTotal) . $this->labelReplacementString;
     }
 }

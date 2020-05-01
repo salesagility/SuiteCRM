@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,17 +18,14 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-$dictionary['AOR_Field'] = array(
-    'table'=>'aor_fields',
-    'audited'=>false,
-    'duplicate_merge'=>true,
-    'fields'=>array(
-        'aor_report_id' =>
-        array(
+$dictionary['AOR_Field'] = [
+    'table' => 'aor_fields',
+    'audited' => false,
+    'duplicate_merge' => true,
+    'fields' => [
+        'aor_report_id' => [
             'required' => false,
             'name' => 'aor_report_id',
             'vname' => 'LBL_AOR_REPORT_ID',
@@ -45,9 +42,8 @@ $dictionary['AOR_Field'] = array(
             'merge_filter' => 'disabled',
             'len' => 36,
             'size' => '20',
-        ),
-        'field_order' =>
-        array(
+        ],
+        'field_order' => [
             'required' => false,
             'name' => 'field_order',
             'vname' => 'LBL_ORDER',
@@ -66,16 +62,14 @@ $dictionary['AOR_Field'] = array(
             'size' => '20',
             'enable_range_search' => false,
             'disable_num_format' => '',
-        ),
-        'module_path' =>
-        array(
+        ],
+        'module_path' => [
             'name' => 'module_path',
             'type' => 'longtext',
             'vname' => 'LBL_MODULE_PATH',
             'isnull' => true,
-        ),
-        'field' =>
-        array(
+        ],
+        'field' => [
             'required' => false,
             'name' => 'field',
             'vname' => 'LBL_FIELD',
@@ -95,9 +89,8 @@ $dictionary['AOR_Field'] = array(
             'options' => 'user_type_dom',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-        'display' =>
-        array(
+        ],
+        'display' => [
             'required' => false,
             'name' => 'display',
             'vname' => 'LBL_DISPLAY',
@@ -113,9 +106,8 @@ $dictionary['AOR_Field'] = array(
             'unified_search' => false,
             'merge_filter' => 'disabled',
             'studio' => 'visible',
-        ),
-        'link' =>
-        array(
+        ],
+        'link' => [
             'required' => false,
             'name' => 'link',
             'vname' => 'LBL_LINK',
@@ -131,9 +123,8 @@ $dictionary['AOR_Field'] = array(
             'unified_search' => false,
             'merge_filter' => 'disabled',
             'studio' => 'visible',
-        ),
-        'label' =>
-        array(
+        ],
+        'label' => [
             'required' => false,
             'name' => 'label',
             'vname' => 'LBL_LABEL',
@@ -150,9 +141,8 @@ $dictionary['AOR_Field'] = array(
             'merge_filter' => 'disabled',
             'len' => '255',
             'size' => '20',
-        ),
-        'field_function' =>
-        array(
+        ],
+        'field_function' => [
             'required' => false,
             'name' => 'field_function',
             'vname' => 'LBL_FUNCTION',
@@ -172,9 +162,8 @@ $dictionary['AOR_Field'] = array(
             'options' => 'aor_function_dom',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-        'sort_by' =>
-        array(
+        ],
+        'sort_by' => [
             'required' => false,
             'name' => 'sort_by',
             'vname' => 'LBL_SORT',
@@ -194,53 +183,50 @@ $dictionary['AOR_Field'] = array(
             'options' => 'aor_sort_dom',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-        'format' =>
-            array(
-                'required' => false,
-                'name' => 'format',
-                'vname' => 'LBL_FORMAT',
-                'type' => 'varchar',
-                'massupdate' => 0,
-                'comments' => '',
-                'help' => '',
-                'importable' => 'true',
-                'duplicate_merge' => 'disabled',
-                'duplicate_merge_dom_value' => '0',
-                'audited' => false,
-                'reportable' => true,
-                'unified_search' => false,
-                'merge_filter' => 'disabled',
-                'len' => 100,
-                'size' => '20',
-                'options' => 'aor_format_options',
-                'studio' => 'visible',
-                'dependency' => false,
-            ),
-        'total' =>
-            array(
-                'required' => false,
-                'name' => 'total',
-                'vname' => 'LBL_TOTAL',
-                'type' => 'enum',
-                'massupdate' => 0,
-                'comments' => '',
-                'help' => '',
-                'importable' => 'true',
-                'duplicate_merge' => 'disabled',
-                'duplicate_merge_dom_value' => '0',
-                'audited' => false,
-                'reportable' => true,
-                'unified_search' => false,
-                'merge_filter' => 'disabled',
-                'len' => 100,
-                'size' => '20',
-                'options' => 'aor_total_options',
-                'studio' => 'visible',
-                'dependency' => false,
-            ),
-        'sort_order' =>
-        array(
+        ],
+        'format' => [
+            'required' => false,
+            'name' => 'format',
+            'vname' => 'LBL_FORMAT',
+            'type' => 'varchar',
+            'massupdate' => 0,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'len' => 100,
+            'size' => '20',
+            'options' => 'aor_format_options',
+            'studio' => 'visible',
+            'dependency' => false,
+        ],
+        'total' => [
+            'required' => false,
+            'name' => 'total',
+            'vname' => 'LBL_TOTAL',
+            'type' => 'enum',
+            'massupdate' => 0,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'len' => 100,
+            'size' => '20',
+            'options' => 'aor_total_options',
+            'studio' => 'visible',
+            'dependency' => false,
+        ],
+        'sort_order' => [
             'required' => false,
             'name' => 'sort_order',
             'vname' => 'LBL_SORT_ORDER',
@@ -260,9 +246,8 @@ $dictionary['AOR_Field'] = array(
             'options' => 'aor_type_order_dom',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-        'group_by' =>
-        array(
+        ],
+        'group_by' => [
             'required' => false,
             'name' => 'group_by',
             'vname' => 'LBL_GROUP',
@@ -278,9 +263,8 @@ $dictionary['AOR_Field'] = array(
             'unified_search' => false,
             'merge_filter' => 'disabled',
             'studio' => 'visible',
-        ),
-        'group_order' =>
-        array(
+        ],
+        'group_order' => [
             'required' => false,
             'name' => 'group_order',
             'vname' => 'LBL_GROUP_ORDER',
@@ -300,9 +284,8 @@ $dictionary['AOR_Field'] = array(
             'options' => 'aor_type_order_dom',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-        'group_display' =>
-        array(
+        ],
+        'group_display' => [
             'required' => false,
             'name' => 'group_display',
             'vname' => 'LBL_GROUP_DISPLAY',
@@ -318,30 +301,29 @@ $dictionary['AOR_Field'] = array(
             'unified_search' => false,
             'merge_filter' => 'disabled',
             'studio' => 'visible',
-        ),
-        'aor_reports' =>
-        array(
+        ],
+        'aor_reports' => [
             'name' => 'aor_reports',
             'type' => 'link',
             'relationship' => 'aor_reports_aor_fields',
-            'module'=>'AOR_Reports',
-            'bean_name'=>'AOR_Reports',
-            'source'=>'non-db',
-        ),
-    ),
-    'relationships'=>array(
-    ),
-    'indices' => array(
-        array(
+            'module' => 'AOR_Reports',
+            'bean_name' => 'AOR_Reports',
+            'source' => 'non-db',
+        ],
+    ],
+    'relationships' => [
+    ],
+    'indices' => [
+        [
             'name' => 'aor_fields_index_report_id',
             'type' => 'index',
-            'fields' => array('aor_report_id'),
-        ),
-    ),
-    'optimistic_locking'=>true,
-        'unified_search'=>true,
-);
+            'fields' => ['aor_report_id'],
+        ],
+    ],
+    'optimistic_locking' => true,
+    'unified_search' => true,
+];
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('AOR_Fields', 'AOR_Field', array('basic'));
+VardefManager::createVardef('AOR_Fields', 'AOR_Field', ['basic']);

@@ -66,13 +66,14 @@ class JsonSerializerDocumentifier extends AbstractDocumentifier
         $this->serializer = BeanJsonSerializer::make();
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function documentify(\SugarBean $bean)
     {
         $values = $this->serializer->toArray($bean);
         $this->fixPhone($values);
         $this->fixEmails($bean, $values);
         unset($values['id']);
+
         return $values;
     }
 }

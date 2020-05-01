@@ -1,8 +1,11 @@
 <?php
 
-use \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands;
+use SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -10,7 +13,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
      */
     protected $tester;
 
-    /** @var \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands **/
+    /** @var \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands */
     protected static $testClass;
 
     protected function setUp()

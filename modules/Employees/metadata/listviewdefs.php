@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,52 +42,49 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$listViewDefs['Employees'] = array(
-    'NAME' => array(
+$listViewDefs['Employees'] = [
+    'NAME' => [
         'width' => '20',
         'label' => 'LBL_LIST_NAME',
         'link' => true,
-        'related_fields' => array('last_name', 'first_name'),
+        'related_fields' => ['last_name', 'first_name'],
         'orderBy' => 'last_name',
-        'default' => true),
-    'DEPARTMENT' => array(
+        'default' => true],
+    'DEPARTMENT' => [
         'width' => '10',
         'label' => 'LBL_DEPARTMENT',
         'link' => true,
-        'default' => true),
-    'TITLE' => array(
+        'default' => true],
+    'TITLE' => [
         'width' => '15',
         'label' => 'LBL_TITLE',
         'link' => true,
-        'default' => true),
-    'REPORTS_TO_NAME' => array(
+        'default' => true],
+    'REPORTS_TO_NAME' => [
         'width' => '15',
         'label' => 'LBL_LIST_REPORTS_TO_NAME',
         'link' => true,
         'sortable' => false,
-        'default' => true),
-    'EMAIL1' => array(
+        'default' => true],
+    'EMAIL1' => [
         'width' => '15',
         'label' => 'LBL_LIST_EMAIL',
         'link' => true,
         'customCode' => '{$EMAIL1_LINK}',
         'default' => true,
-        'sortable' => false),
-    'PHONE_WORK' => array(
+        'sortable' => false],
+    'PHONE_WORK' => [
         'width' => '10',
         'label' => 'LBL_LIST_PHONE',
         'link' => true,
-        'default' => true),
-    'EMPLOYEE_STATUS' => array(
+        'default' => true],
+    'EMPLOYEE_STATUS' => [
         'width' => '10',
         'label' => 'LBL_LIST_EMPLOYEE_STATUS',
         'link' => false,
-        'default' => true),
-    'DATE_ENTERED' => array(
+        'default' => true],
+    'DATE_ENTERED' => [
         'width' => '10',
         'label' => 'LBL_DATE_ENTERED',
-        'default' => true),
-);
+        'default' => true],
+];

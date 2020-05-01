@@ -2,7 +2,7 @@
 
 namespace Step\Acceptance;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class SideBar extends Tester
 {
@@ -43,7 +43,7 @@ class SideBar extends Tester
     }
 
     /**
-     * Toggles the side bar
+     * Toggles the side bar.
      */
     public function clickToggleSideBar()
     {

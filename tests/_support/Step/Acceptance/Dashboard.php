@@ -2,12 +2,12 @@
 
 namespace Step\Acceptance;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class Dashboard extends Tester
 {
     /**
-     * Wait for for the edit view to become visible
+     * Wait for for the edit view to become visible.
      */
     public function waitForDashboardVisible()
     {

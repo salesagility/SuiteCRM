@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,10 +39,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $ss
+ * @param mixed $vardef
  */
-
-
-
 function get_body($ss, $vardef)
 {
     $edit_mod_strings = return_module_language($GLOBALS['current_language'], 'EditCustomFields');
@@ -51,7 +51,7 @@ function get_body($ss, $vardef)
     $edValue = '';
     if (!empty($vardef['default_value'])) {
         $edValue = $vardef['default_value'];
-        $edValue = str_replace(array("\r\n", "\n"), " ", $edValue);
+        $edValue = str_replace(["\r\n", "\n"], ' ', $edValue);
     }
     $ss->assign('HTML_EDITOR', $edValue);
     $ss->assign('disableInlineEdit', 1);

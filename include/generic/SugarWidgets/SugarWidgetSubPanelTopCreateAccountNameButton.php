@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
- 
-
-
-
-
 class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelTopButtonQuickCreate
 {
     public function getWidgetId($buttonSuffix = true)
@@ -62,12 +56,13 @@ class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelT
         //$accesskey = $app_strings['LBL_NEW_BUTTON_KEY'];
         $value = $app_strings['LBL_NEW_BUTTON_LABEL'];
         $this->module = 'Contacts';
-        if (ACLController::moduleSupportsACL($defines['module'])  && !ACLController::checkAccess($defines['module'], 'edit', true)) {
-            $button = "<input title='$title'class='button' type='button' name='button' value='  $value  ' disabled/>\n";
+        if (ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true)) {
+            $button = "<input title='{$title}'class='button' type='button' name='button' value='  {$value}  ' disabled/>\n";
+
             return $button;
         }
-        
-        $additionalFormFields = array();
+
+        $additionalFormFields = [];
         if (isset($defines['focus']->billing_address_street)) {
             $additionalFormFields['primary_address_street'] = $defines['focus']->billing_address_street;
         }
@@ -86,11 +81,11 @@ class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelT
         if (isset($defines['focus']->phone_office)) {
             $additionalFormFields['phone_work'] = $defines['focus']->phone_office;
         }
-        
-        
+
         $button = $this->_get_form($defines, $additionalFormFields);
-        $button .= "<input title='$title' class='button' type='submit' name='{$this->getWidgetId()}' id='{$this->getWidgetId()}' value='  $value  '/>\n";
-        $button .= "</form>";
+        $button .= "<input title='{$title}' class='button' type='submit' name='{$this->getWidgetId()}' id='{$this->getWidgetId()}' value='  {$value}  '/>\n";
+        $button .= '</form>';
+
         return $button;
     }
 }

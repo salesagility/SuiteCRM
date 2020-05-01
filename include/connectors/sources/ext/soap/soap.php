@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,15 +40,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/connectors/sources/default/source.php');
-require_once('include/nusoap/nusoap.php');
+require_once 'include/connectors/sources/default/source.php';
+require_once 'include/nusoap/nusoap.php';
 
 /**
  * ext_soap
  * This class is the soap implementation for the connector framework.
  * Connectors that use SOAP calls should subclass this class and provide
- * a getList and getItem method override to return results from the connector
+ * a getList and getItem method override to return results from the connector.
+ *
  * @api
  */
 abstract class ext_soap extends source
@@ -57,14 +57,15 @@ abstract class ext_soap extends source
 
     /**
      * obj2array
-     * Given an object, returns the object as an Array
+     * Given an object, returns the object as an Array.
      *
      * @param $obj Object to convert to an array
+     *
      * @return $out Array reflecting the object's properties
      */
     public function obj2array($obj)
     {
-        $out = array();
+        $out = [];
         if (empty($obj)) {
             return $out;
         }
@@ -73,14 +74,17 @@ abstract class ext_soap extends source
             switch (true) {
           case is_object($val):
              $out[$key] = $this->obj2array($val);
+
              break;
           case is_array($val):
              $out[$key] = $this->obj2array($val);
+
              break;
           default:
             $out[$key] = $val;
         }
         }
+
         return $out;
     }
 }

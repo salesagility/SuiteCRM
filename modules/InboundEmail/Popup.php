@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
-
- * Description:
+ * Description:.
  */
 // cn: bug 6078: zlib breaks test-settings
 $iniError = '';
@@ -71,18 +68,17 @@ if (ob_get_level() < 1) {
     ob_start();
 }
 
-
-require_once('modules/InboundEmail/language/'.$current_language.'.lang.php');
+require_once 'modules/InboundEmail/language/' . $current_language . '.lang.php';
 global $theme;
 
-$title                = '';
-$msg                = '';
-$tls                = '';
-$cert                = '';
-$ssl                = '';
-$notls                = '';
-$novalidate_cert    = '';
-$useSsl                = false;
+$title = '';
+$msg = '';
+$tls = '';
+$cert = '';
+$ssl = '';
+$notls = '';
+$novalidate_cert = '';
+$useSsl = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	TITLES
@@ -100,25 +96,25 @@ if ($popupBoolean) {
     $msg = $mod_strings['LBL_TEST_WAIT_MESSAGE'];
 }
 
-if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
+if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == 'true' || $_REQUEST['ssl'] == 1)) {
     $msg .= $mod_strings['LBL_FIND_SSL_WARN'];
     $useSsl = true;
 }
-        
-$ie                 = new InboundEmail();
+
+$ie = new InboundEmail();
 if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
 }
-$ie->email_user     = $_REQUEST['email_user'];
-$ie->server_url     = $_REQUEST['server_url'];
-$ie->port           = $_REQUEST['port'];
-$ie->protocol       = $_REQUEST['protocol'];
+$ie->email_user = $_REQUEST['email_user'];
+$ie->server_url = $_REQUEST['server_url'];
+$ie->port = $_REQUEST['port'];
+$ie->protocol = $_REQUEST['protocol'];
 //Bug 23083.Special characters in email password results in IMAP authentication failure
 if (!empty($_REQUEST['email_password'])) {
     $ie->email_password = html_entity_decode($_REQUEST['email_password'], ENT_QUOTES);
     $ie->email_password = str_rot13($ie->email_password);
 }
-$ie->mailbox        = 'INBOX';
+$ie->mailbox = 'INBOX';
 
 if ($popupBoolean) {
     $msg = $ie->connectMailserver(true);
@@ -148,20 +144,20 @@ echo /*'
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>
 				<td>
-					'.SugarThemeRegistry::current()->getImage('h3Arrow', 'border="0"', 11, 11, ".gif", $mod_strings['LBL_POPUP_TITLE']).'
+					' . SugarThemeRegistry::current()->getImage('h3Arrow', 'border="0"', 11, 11, '.gif', $mod_strings['LBL_POPUP_TITLE']) . '
 				</td>
 				<td>
-					<h3>&nbsp;'.$title.'</h3>
+					<h3>&nbsp;' . $title . '</h3>
 				</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td valign="top">
 					<div id="testSettingsMsg">
-					'.$msg.'
+					' . $msg . '
 					</div>
 					<div id="testSettingsTic"></div>
-					<div id="testSettingsErr">'.$iniError.'</div>
+					<div id="testSettingsErr">' . $iniError . '</div>
 				</td>
 			</tr>';
 
@@ -177,7 +173,6 @@ if ($popupBoolean) {
 }
 
 echo '	</table>';
-
 
 ////	END COMMON CODE
 ///////////////////////////////////////////////////////////////////////////////

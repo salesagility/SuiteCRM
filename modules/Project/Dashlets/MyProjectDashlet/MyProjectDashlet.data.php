@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,30 +42,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $current_user;
 
-$dashletData['MyProjectDashlet']['searchFields'] =  array(
-                                                            'estimated_end_date'         => array('default' => ''),
-                                                   'estimated_start_date'        => array('default' => ''),
-                                                            'status'         => array('default' => ''),
-                                                            'assigned_user_id' => array('type'    => 'assigned_user_name',
-                                                                                        'default' => $current_user->name)
+$dashletData['MyProjectDashlet']['searchFields'] = [
+    'estimated_end_date' => ['default' => ''],
+    'estimated_start_date' => ['default' => ''],
+    'status' => ['default' => ''],
+    'assigned_user_id' => ['type' => 'assigned_user_name',
+        'default' => $current_user->name]
+];
+$dashletData['MyProjectDashlet']['columns'] = ['name' => ['width' => '40',
+    'label' => 'LBL_NAME',
+    'link' => true,
+    'default' => true],
 
-                                                            );
-$dashletData['MyProjectDashlet']['columns'] = array('name' => array('width'   => '40',
-                                                                       'label'   => 'LBL_NAME',
-                                                                       'link'    => true,
-                                                                       'default' => true),
-
-                                                                 'assigned_user_name' => array('width'   => '8',
-                                                                                     'label'   => 'LBL_LIST_ASSIGNED_USER',
-                                                                                     'default' => true),
-                                                                 'estimated_start_date' => array('width' => '10',
-                                            'label' => 'LBL_DATE_START'),
-                                 'estimated_end_date' => array('width' => '10',
-                                                                                    'label' => 'LBL_DATE_END'),
-                                 'status' => array('width' => '5',
-                                                                                    'label' => 'LBL_STATUS'),
-);
+    'assigned_user_name' => ['width' => '8',
+        'label' => 'LBL_LIST_ASSIGNED_USER',
+        'default' => true],
+    'estimated_start_date' => ['width' => '10',
+        'label' => 'LBL_DATE_START'],
+    'estimated_end_date' => ['width' => '10',
+        'label' => 'LBL_DATE_END'],
+    'status' => ['width' => '5',
+        'label' => 'LBL_STATUS'],
+];

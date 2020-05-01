@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class RemindersController extends SugarController
 {
     public function action_getInviteesPersonName()
     {
-        $personModules = array('Users', 'Contacts', 'Leads');
-        $ret = array();
+        $personModules = ['Users', 'Contacts', 'Leads'];
+        $ret = [];
         $invitees = $_REQUEST['invitees'];
         foreach ($invitees as $invitee) {
             if ($this->isValidInvitee($invitee)) {
@@ -56,7 +54,7 @@ class RemindersController extends SugarController
                     if ($person) {
                         $invitee['personName'] = $person->name;
                     } else {
-                        LoggerManager::getLogger()->error('Error retriving person bean: ' . 
+                        LoggerManager::getLogger()->error('Error retriving person bean: ' .
                             $invitee['personModule'] . '::' . $invitee['personModuleId']);
                     }
                 }
@@ -70,23 +68,21 @@ class RemindersController extends SugarController
         echo $inviteeJson;
         die();
     }
-    
-    /**
-     *
-     * @param array $invitee
-     * @return boolean
-     */
-    protected function isValidInvitee($invitee)
-    {
-        $valid = 
-            isset($invitee['personModule']) && $invitee['personModule'] &&
-            isset($invitee['personModuleId']) && $invitee['personModuleId'];
-        return $valid;
-    }
 
     public function action_getUserPreferencesForReminders()
     {
         echo Reminder::loadRemindersDefaultValuesDataJson();
         die();
+    }
+
+    /**
+     * @param array $invitee
+     *
+     * @return bool
+     */
+    protected function isValidInvitee($invitee)
+    {
+        return isset($invitee['personModule']) && $invitee['personModule'] &&
+            isset($invitee['personModuleId']) && $invitee['personModuleId'];
     }
 }

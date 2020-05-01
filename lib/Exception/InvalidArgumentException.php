@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,19 +42,19 @@ namespace SuiteCRM\Exception;
 use SuiteCRM\Enumerator\ExceptionCode;
 
 /**
- * Class Exception
- * @package SuiteCRM\InvalidArgumentException
+ * Class Exception.
  */
 class InvalidArgumentException extends Exception
 {
     /**
      * ApiException constructor.
+     *
      * @param string $message API Exception "$message"
      * @param int $code
      * @param $previous
      */
     public function __construct($message = '', $code = ExceptionCode::APPLICATION_UNHANDLED_BEHAVIOUR, $previous = null)
     {
-        parent::__construct('[InvalidArgumentException] '.$message.'', $code, $previous);
+        parent::__construct('[InvalidArgumentException] ' . $message . '', $code, $previous);
     }
 }

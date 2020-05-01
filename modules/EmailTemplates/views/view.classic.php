@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-/*********************************************************************************
+/*
 
  * Description: This file is used to override the default Meta-data DetailView behavior
  * to provide customization specific to the Campaigns module.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 class EmailTemplatesViewClassic extends ViewClassic
 {
@@ -57,14 +57,12 @@ class EmailTemplatesViewClassic extends ViewClassic
 
     public function display()
     {
-        /* BEGIN - SECURITY GROUPS - The whole file is custom but the purpose is the following code */
+        // BEGIN - SECURITY GROUPS - The whole file is custom but the purpose is the following code
         //turn on normal display of subpanels
         if ($this->action == 'DetailView') {
             $this->options['show_subpanels'] = true;
         }
-        /* END - SECURITY GROUPS */
+        // END - SECURITY GROUPS
         return parent::display();
     }
-
-
 }

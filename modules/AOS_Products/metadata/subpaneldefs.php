@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,12 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-$layout_defs['AOS_Products'] = array(
+$layout_defs['AOS_Products'] = [
     // list of what Subpanels to show in the DetailView
-    'subpanel_setup' => array(
-
-        'aos_products_purchases' => array(
+    'subpanel_setup' => [
+        'aos_products_purchases' => [
             'order' => 100,
             'module' => 'AOS_Quotes',
             'subpanel_name' => 'ForProductPurchases',
@@ -55,10 +54,8 @@ $layout_defs['AOS_Products'] = array(
             'title_key' => 'LBL_CUSTOMERS_PURCHASED_PRODUCTS_SUBPANEL_TITLE',
             //'get_subpanel_data' => 'aos_products_aos_quotes_1',
             'get_subpanel_data' => 'function:getCustomersPurchasedProductsQuery',
-            'top_buttons' =>
-            array(
-            ),
-        ),
-
-    ),
-);
+            'top_buttons' => [
+            ],
+        ],
+    ],
+];

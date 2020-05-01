@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,15 +38,13 @@
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/AOD_IndexEvent/AOD_IndexEvent_sugar.php');
+require_once 'modules/AOD_IndexEvent/AOD_IndexEvent_sugar.php';
 class AOD_IndexEvent extends AOD_IndexEvent_sugar
 {
     public function __construct()
     {
         parent::__construct();
     }
-
-
 }

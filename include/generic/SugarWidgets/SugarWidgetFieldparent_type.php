@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class SugarWidgetFieldparent_type extends SugarWidgetFieldEnum
 {
     public function __construct(&$layout_manager)
@@ -51,15 +48,17 @@ class SugarWidgetFieldparent_type extends SugarWidgetFieldEnum
         $this->reporter = $this->layout_manager->getAttribute('reporter');
     }
 
-    public function & displayListPlain($layout_def)
+    public function &displayListPlain($layout_def)
     {
-        $value= $this->_get_list_value($layout_def);
-        if (isset($layout_def['widget_type']) && $layout_def['widget_type'] =='checkbox') {
-            if ($value != '' &&  ($value == 'on' || (int)$value == 1 || $value == 'yes')) {
+        $value = $this->_get_list_value($layout_def);
+        if (isset($layout_def['widget_type']) && $layout_def['widget_type'] == 'checkbox') {
+            if ($value != '' && ($value == 'on' || (int) $value == 1 || $value == 'yes')) {
                 return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true' checked>";
             }
+
             return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true'>";
         }
+
         return $value;
     }
 }

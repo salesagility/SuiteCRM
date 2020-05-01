@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$dictionary['AOBH_BusinessHours'] = array(
+$dictionary['AOBH_BusinessHours'] = [
     'table' => 'aobh_businesshours',
     'audited' => false,
     'duplicate_merge' => false,
-    'fields' => array(
-        'opening_hours' => array(
+    'fields' => [
+        'opening_hours' => [
             'required' => false,
             'name' => 'opening_hours',
             'vname' => 'LBL_OPENING_HOURS',
@@ -65,8 +63,8 @@ $dictionary['AOBH_BusinessHours'] = array(
             'options' => 'business_hours_list',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-        'closing_hours' => array(
+        ],
+        'closing_hours' => [
             'required' => false,
             'name' => 'closing_hours',
             'vname' => 'LBL_CLOSING_HOURS',
@@ -88,14 +86,14 @@ $dictionary['AOBH_BusinessHours'] = array(
             'options' => 'business_hours_list',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-        'open_status' => array(
+        ],
+        'open_status' => [
             'required' => false,
             'name' => 'open_status',
             'vname' => 'LBL_OPEN',
             'type' => 'bool',
-        ),
-        'day' => array(
+        ],
+        'day' => [
             'required' => false,
             'name' => 'day',
             'vname' => 'LBL_DAY',
@@ -117,13 +115,13 @@ $dictionary['AOBH_BusinessHours'] = array(
             'options' => 'day_list',
             'studio' => 'visible',
             'dependency' => false,
-        ),
-    ),
-    'relationships' => array(),
+        ],
+    ],
+    'relationships' => [],
     'optimistic_locking' => true,
     'unified_search' => false,
-);
+];
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('AOBH_BusinessHours', 'AOBH_BusinessHours', array('basic'));
+VardefManager::createVardef('AOBH_BusinessHours', 'AOBH_BusinessHours', ['basic']);

@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @package Advanced OpenPortal
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,90 +16,70 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 $module_name = 'AOP_Case_Updates';
-$viewdefs [$module_name] =
-    array(
-        'DetailView' =>
-        array(
-            'templateMeta' =>
-            array(
-                'form' =>
-                array(
-                    'buttons' =>
-                    array(
+$viewdefs[$module_name] =
+    [
+        'DetailView' => [
+            'templateMeta' => [
+                'form' => [
+                    'buttons' => [
                         0 => 'EDIT',
                         1 => 'DUPLICATE',
                         2 => 'DELETE',
                         3 => 'FIND_DUPLICATES',
-                    ),
-                ),
+                    ],
+                ],
                 'maxColumns' => '2',
-                'widths' =>
-                array(
-                    0 =>
-                    array(
+                'widths' => [
+                    0 => [
                         'label' => '10',
                         'field' => '30',
-                    ),
-                    1 =>
-                    array(
+                    ],
+                    1 => [
                         'label' => '10',
                         'field' => '30',
-                    ),
-                ),
+                    ],
+                ],
                 'useTabs' => false,
-                'tabDefs' =>
-                array(
-                    'DEFAULT' =>
-                    array(
+                'tabDefs' => [
+                    'DEFAULT' => [
                         'newTab' => false,
                         'panelDefault' => 'expanded',
-                    ),
-                ),
-            ),
-            'panels' =>
-            array(
-                'default' =>
-                array(
-                    0 =>
-                    array(
+                    ],
+                ],
+            ],
+            'panels' => [
+                'default' => [
+                    0 => [
                         0 => 'name',
                         1 => 'assigned_user_name',
-                    ),
-                    1 =>
-                    array(
+                    ],
+                    1 => [
                         0 => 'date_entered',
                         1 => 'date_modified',
-                    ),
-                    2 =>
-                    array(
+                    ],
+                    2 => [
                         0 => 'description',
-                        1 =>
-                        array(
+                        1 => [
                             'name' => 'aop_case_updates_contacts_1_name',
-                        ),
-                    ),
-                    3 =>
-                    array(
-                        0 =>
-                        array(
+                        ],
+                    ],
+                    3 => [
+                        0 => [
                             'name' => 'case_name',
                             'label' => 'LBL_CASE_NAME',
-                        ),
-                    ),
-                    4 =>
-                    array(
-                        0 =>
-                        array(
+                        ],
+                    ],
+                    4 => [
+                        0 => [
                             'name' => 'contact_name',
                             'label' => 'LBL_CONTACT_NAME',
-                        ),
+                        ],
                         1 => '',
-                    ),
-                ),
-            ),
-        ),
-    );
+                    ],
+                ],
+            ],
+        ],
+    ];

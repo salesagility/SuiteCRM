@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class EmailManTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -50,7 +53,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'test', $emailMan);
     }
 
-    public function testcreate_new_list_query()
+    public function testcreateNewListQuery()
     {
         $emailMan = new EmailMan();
 
@@ -65,7 +68,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_queue_items_query()
+    public function testcreateQueueItemsQuery()
     {
         $emailMan = new EmailMan();
 
@@ -79,13 +82,13 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $actual = $emailMan->create_queue_items_query(
             'emailman.id',
             'emailman.user_id=""',
-            array(),
-            array('group_by' => 'emailman.user_id')
+            [],
+            ['group_by' => 'emailman.user_id']
         );
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_list_query()
+    public function testcreateListQuery()
     {
         $emailMan = new EmailMan();
 
@@ -100,11 +103,11 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $emailMan = new EmailMan();
 
-        $expected = array(
+        $expected = [
             'IN_QUEUE' => '0',
             'SEND_ATTEMPTS' => '0',
             'DELETED' => '0',
@@ -114,13 +117,13 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
                     data-module="EmailMan" data-record-id=""
                     data-module-name="" data-email-address=""
                 ></a>'
-        );
+        ];
 
         $actual = $emailMan->get_list_view_data();
         $this->assertSame($expected, $actual);
     }
 
-    public function testset_as_sent()
+    public function testsetAsSent()
     {
         $emailMan = new EmailMan();
 
@@ -143,7 +146,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_indiv_email()
+    public function testcreateIndivEmail()
     {
         $emailMan = new EmailMan();
 
@@ -156,7 +159,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $email->mark_deleted($result);
     }
 
-    public function testverify_campaign()
+    public function testverifyCampaign()
     {
         // test
         $emailMan = new EmailMan();
@@ -179,7 +182,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $result);
     }
 
-    public function testvalid_email_address()
+    public function testvalidEmailAddress()
     {
         $emailMan = new EmailMan();
 
@@ -188,7 +191,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $emailMan->valid_email_address('test@test.com'));
     }
 
-    public function testis_primary_email_address()
+    public function testisPrimaryEmailAddress()
     {
         $emailMan = new EmailMan();
 
@@ -198,7 +201,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $emailMan->is_primary_email_address($bean));
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $emailMan = new EmailMan();
 
@@ -213,7 +216,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testmark_deleted()
+    public function testmarkDeleted()
     {
         $emailMan = new EmailMan();
 
@@ -226,7 +229,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_ref_email()
+    public function testcreateRefEmail()
     {
         $emailMan = new EmailMan();
         $emailMan->test = true;
@@ -240,7 +243,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
             'from@test.com',
             '1',
             '',
-            array(),
+            [],
             true,
             'test from address'
         );

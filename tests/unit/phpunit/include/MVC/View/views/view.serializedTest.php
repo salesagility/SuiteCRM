@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewSerialized()

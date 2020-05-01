@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,11 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
 class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
 {
     public function displayList(&$layout_def)
@@ -55,7 +50,7 @@ class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
         $return_id = $_REQUEST['record'];
         $module_name = $layout_def['module'];
         $record_id = $layout_def['fields']['ID'];
-        $unique_id = $layout_def['subpanel_id']."_delete_".$subpanel_item_count; //bug 51512
+        $unique_id = $layout_def['subpanel_id'] . '_delete_' . $subpanel_item_count; //bug 51512
 
         // calls and meetings are held.
         $new_status = 'Held';
@@ -63,11 +58,12 @@ class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
         switch ($module_name) {
             case 'Tasks':
                 $new_status = 'Completed';
+
                 break;
         }
         $subpanel = $layout_def['subpanel_id'];
         if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
-            $linked_field= $layout_def['linked_field_set'] ;
+            $linked_field = $layout_def['linked_field_set'];
         } else {
             $linked_field = $layout_def['linked_field'];
         }
@@ -76,7 +72,8 @@ class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
             $refresh_page = 1;
         }
 
-        $html = "<a id=\"$unique_id\" onclick='return sp_del_conf();' href=\"javascript:sub_p_del('$subpanel', '$module_name', '$record_id', $refresh_page);\">".$app_strings['LNK_DELETE']."</a>";
+        $html = "<a id=\"{$unique_id}\" onclick='return sp_del_conf();' href=\"javascript:sub_p_del('{$subpanel}', '{$module_name}', '{$record_id}', {$refresh_page});\">" . $app_strings['LNK_DELETE'] . '</a>';
+
         return $html;
     }
 }

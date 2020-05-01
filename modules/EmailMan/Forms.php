@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,10 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  Contains a variety of utility functions specific to this module.
- ********************************************************************************/
+// Description:  Contains a variety of utility functions specific to this module.
 
 /**
  * Create javascript to validate the data entered into a record.
@@ -59,7 +56,7 @@ function get_validate_record_js()
 
     $lbl_email_per_run = $mod_strings['LBL_EMAILS_PER_RUN'];
     $lbl_location = $mod_strings['LBL_LOCATION_ONLY'];
-    $err_int_only=$mod_strings['ERR_INT_ONLY_EMAIL_PER_RUN'];
+    $err_int_only = $mod_strings['ERR_INT_ONLY_EMAIL_PER_RUN'];
     $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
     $err_from_name = $mod_strings['LBL_LIST_FROM_NAME'];
     $err_from_addr = $app_strings['LBL_EMAIL_SETTINGS_FROM_ADDR'];
@@ -68,7 +65,7 @@ function get_validate_record_js()
     $err_smtpuser = $mod_strings['LBL_MAIL_SMTPUSER'];
     $err_smtppass = $mod_strings['LBL_MAIL_SMTPPASS'];
 
-    $the_script  = <<<EOQ
+    $the_script = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers
@@ -78,18 +75,18 @@ function verify_data(button) {
 	var errorMessage = "";
 	if (typeof button.form['campaign_emails_per_run'] != 'undefined' && trim(button.form['campaign_emails_per_run'].value) == "") {
 		isError = true;
-		errorMessage += "\\n$lbl_email_per_run";
+		errorMessage += "\\n{$lbl_email_per_run}";
 	} else {
 		 //make sure emails per run  is an integer.
 		if (typeof button.form['campaign_emails_per_run'] != 'undefined' && isInteger(trim(button.form['campaign_emails_per_run'].value)) == false) {
 			isError = true;
-			errorMessage += "\\n$err_int_only";
+			errorMessage += "\\n{$err_int_only}";
 		}
 	}
 	if (typeof button.form['tracking_entities_location_type'] != 'undefined' && button.form['tracking_entities_location_type'][1].checked == true) {
 		if (typeof button.form['tracking_entities_location'] != 'undefined' && trim(button.form['tracking_entities_location'].value) == "") {
 			isError = true;
-			errorMessage += "\\n$lbl_location";
+			errorMessage += "\\n{$lbl_location}";
 		}
 	}
 	if (typeof document.forms['ConfigureSettings'] != 'undefined') {
@@ -102,26 +99,26 @@ function verify_data(button) {
 
         if(trim(fromname) == "") {
 			isError = true;
-			errorMessage += "\\n$err_from_name";
+			errorMessage += "\\n{$err_from_name}";
         }
         if(trim(fromAddress) == "") {
 			isError = true;
-			errorMessage += "\\n$err_from_addr";
+			errorMessage += "\\n{$err_from_addr}";
         }
 
         if (sendType == 'SMTP') {
 	        if(trim(smtpserver) == "") {
 				isError = true;
-				errorMessage += "\\n$err_mailserver";
+				errorMessage += "\\n{$err_mailserver}";
 	        }
 	        if(trim(smtpPort) == "") {
 				isError = true;
-				errorMessage += "\\n$err_smtpport";
+				errorMessage += "\\n{$err_smtpport}";
 	        }
 	        if (mailsmtpauthreq.checked) {
 		        if(trim(document.getElementById('mail_smtpuser').value) == "") {
 					isError = true;
-					errorMessage += "\\n$err_smtpuser";
+					errorMessage += "\\n{$err_smtpuser}";
 		        }
 	        }
 
@@ -130,7 +127,7 @@ function verify_data(button) {
 
 	// Here we decide whether to submit the form.
 	if (isError == true) {
-		alert("$err_missing_required_fields" + errorMessage);
+		alert("{$err_missing_required_fields}" + errorMessage);
 		return false;
 	}
 	return true;
@@ -157,5 +154,6 @@ function add_checks(f) {
 // end hiding contents from old browsers  -->
 </script>
 EOQ;
+
     return $the_script;
 }

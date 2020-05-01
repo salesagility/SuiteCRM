@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,42 +40,38 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/DetailView/DetailView.php');
+require_once 'include/DetailView/DetailView.php';
 global $theme;
 global $mod_strings;
 
-
-/* start standard DetailView layout process */
-$GLOBALS['log']->info("Groups DetailView");
+// start standard DetailView layout process
+$GLOBALS['log']->info('Groups DetailView');
 $focus = new Group();
 $focus->retrieve($_REQUEST['record']);
 $detailView = new DetailView();
-$offset=0;
+$offset = 0;
 if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
-    $result = $detailView->processSugarBean("Group", $focus, $offset);
+    $result = $detailView->processSugarBean('Group', $focus, $offset);
     if ($result == null) {
         sugar_die($app_strings['ERROR_NO_RECORD']);
     }
-    $focus=$result;
+    $focus = $result;
 } else {
-    header("Location: index.php?module=Groups&action=index");
+    header('Location: index.php?module=Groups&action=index');
 }
 
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->user_name), true);
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_MODULE_NAME'], $focus->user_name], true);
 
-/* end standard DetailView layout process */
-
+// end standard DetailView layout process
 
 $xtpl = new XTemplate('modules/Groups/DetailView.html');
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
-$xtpl->assign("CREATED_BY", $focus->created_by_name);
-$xtpl->assign("MODIFIED_BY", $focus->modified_by_name);
-$xtpl->assign("GRIDLINE", $gridline);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
-$xtpl->assign("ID", $focus->id);
+$xtpl->assign('CREATED_BY', $focus->created_by_name);
+$xtpl->assign('MODIFIED_BY', $focus->modified_by_name);
+$xtpl->assign('GRIDLINE', $gridline);
+$xtpl->assign('PRINT_URL', 'index.php?' . $GLOBALS['request_string']);
+$xtpl->assign('ID', $focus->id);
 $xtpl->assign('USER_NAME', $focus->user_name);
 
 $xtpl->parse('main');

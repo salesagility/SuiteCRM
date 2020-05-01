@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,10 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
-
- * Description:
- */
+// Description:
  // hack to allow "&", "%" and "+" through a $_GET var
 // set by ie_test_open_popup() javascript call
 foreach ($_REQUEST as $k => $v) {
@@ -54,11 +52,8 @@ foreach ($_REQUEST as $k => $v) {
     $_REQUEST[$k] = $v;
 }
 
-require_once('modules/InboundEmail/language/en_us.lang.php');
+require_once 'modules/InboundEmail/language/en_us.lang.php';
 global $theme;
-
-
-
 
 // GLOBALS
 global $mod_strings;
@@ -67,15 +62,15 @@ global $app_list_strings;
 global $current_user;
 global $sugar_config;
 
-$title				= '';
-$msg				= '';
-$tls				= '';
-$cert				= '';
-$ssl				= '';
-$notls				= '';
-$novalidate_cert	= '';
-$useSsl				= false;
-$deletedFoldersList = "";
+$title = '';
+$msg = '';
+$tls = '';
+$cert = '';
+$ssl = '';
+$notls = '';
+$novalidate_cert = '';
+$useSsl = false;
+$deletedFoldersList = '';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	TITLES
@@ -95,15 +90,15 @@ if ($popupBoolean) {
 
 $subdcriptionFolderHelp = $app_strings['LBL_EMAIL_SUBSCRIPTION_FOLDER_HELP'];
 
-if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
+if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == 'true' || $_REQUEST['ssl'] == 1)) {
     $useSsl = true;
 }
 
-$searchField = !empty($_REQUEST['searchField']) ? $_REQUEST['searchField'] : "";
-$multipleString = "multiple=\"true\"";
+$searchField = !empty($_REQUEST['searchField']) ? $_REQUEST['searchField'] : '';
+$multipleString = 'multiple="true"';
 if (!empty($searchField)) {
-    $subdcriptionFolderHelp = "";
-    $multipleString = "";
+    $subdcriptionFolderHelp = '';
+    $multipleString = '';
     if ($searchField == 'trash') {
         $title = $mod_strings['LBL_SELECT_TRASH_FOLDERS'];
     } else {
@@ -111,15 +106,14 @@ if (!empty($searchField)) {
     } // else
 } // else
 
-
-$ie                 = new InboundEmail();
+$ie = new InboundEmail();
 if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
 }
-$ie->email_user     = $_REQUEST['email_user'];
-$ie->server_url     = $_REQUEST['server_url'];
-$ie->port           = $_REQUEST['port'];
-$ie->protocol       = $_REQUEST['protocol'];
+$ie->email_user = $_REQUEST['email_user'];
+$ie->server_url = $_REQUEST['server_url'];
+$ie->port = $_REQUEST['port'];
+$ie->protocol = $_REQUEST['protocol'];
 //Bug 23083.Special characters in email password results in IMAP authentication failure
 if (!empty($_REQUEST['email_password'])) {
     $ie->email_password = html_entity_decode($_REQUEST['email_password'], ENT_QUOTES);
@@ -127,22 +121,22 @@ if (!empty($_REQUEST['email_password'])) {
 }
 //$ie->mailbox      = $_REQUEST['mailbox'];
 
-$ie->mailbox        = 'INBOX';
+$ie->mailbox = 'INBOX';
 
 if ($popupBoolean) {
     $returnArray = $ie->getFoldersListForMailBox();
     $foldersList = $returnArray['foldersList'];
     if ($returnArray['status']) {
         $msg = $returnArray['statusMessage'];
-        $requestMailBox = explode(",", $_REQUEST['mailbox']);
-        $foldersListArray = explode(",", $foldersList);
-        $deletedFoldersString = "";
+        $requestMailBox = explode(',', $_REQUEST['mailbox']);
+        $foldersListArray = explode(',', $foldersList);
+        $deletedFoldersString = '';
         $count = 0;
         if (!empty($requestMailBox) && !empty($foldersListArray)) {
             foreach ($requestMailBox as $mailbox) {
                 if (!in_array($mailbox, $foldersListArray)) {
                     if ($count != 0) {
-                        $deletedFoldersString = $deletedFoldersString . " ,";
+                        $deletedFoldersString = $deletedFoldersString . ' ,';
                     }
                     $deletedFoldersString = $deletedFoldersString . $mailbox;
                     $count++;
@@ -169,7 +163,7 @@ echo '<table width="100%" cellpadding="0" cellspacing="0" border="0">
 				</td>
 				<td valign="top">
 					<div id="sf_msg">
-					'.$msg.'
+					' . $msg . '
 					</div>
 				</td>
 			</tr>';
@@ -183,7 +177,7 @@ if (!empty($subdcriptionFolderHelp)) {
 			<tr align="center">
 				<td>&nbsp;
 				</td>
-				<td>'.$subdcriptionFolderHelp.'
+				<td>' . $subdcriptionFolderHelp . '
 				</td>
 			</tr>';
 } // if
@@ -192,7 +186,7 @@ echo '<tr>
 				</td>
 				<td valign="top">
 					<div id="sf_deletedFoldersList" style="display:none;">
-					'.$deletedFoldersList.'
+					' . $deletedFoldersList . '
 					</div>
 				</td>
 			</tr>
@@ -200,7 +194,7 @@ echo '<tr>
 				<td>&nbsp;
 				</td>
 				<td  valign="top">
-					<select '.$multipleString.' size="12" name="inboundmailboxes" id="sf_inboundmailboxes">
+					<select ' . $multipleString . ' size="12" name="inboundmailboxes" id="sf_inboundmailboxes">
 					</select>
 				</td>
 			</tr>
@@ -214,8 +208,8 @@ echo '<tr>
 				<td>&nbsp;
 				</td>
 				<td>
-					<input type="button" style="" class="button" value="'.$app_strings['LBL_DONE_BUTTON_LABEL'].'" onclick="setMailbox();">
-					<input type="button" class="button" value="'.$app_strings['LBL_EMAIL_CANCEL'].'" onclick="SUGAR.inboundEmail.listDlg.hide()">
+					<input type="button" style="" class="button" value="' . $app_strings['LBL_DONE_BUTTON_LABEL'] . '" onclick="setMailbox();">
+					<input type="button" class="button" value="' . $app_strings['LBL_EMAIL_CANCEL'] . '" onclick="SUGAR.inboundEmail.listDlg.hide()">
 				</td>
 			</tr>
 			<tr>
@@ -231,14 +225,14 @@ echo '	</table>';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	COMPLETE RENDERING OF THE POPUP
-echo '<input type="hidden" id="sf_returnstatus" name="returnstatus" value="'. $returnArray['status'] .'">';
-echo '<input type="hidden" id="sf_foldersList" name="foldersList" value="'. htmlspecialchars($foldersList) .'">';
-echo '<input type="hidden" id="sf_selectedfoldersList" name="selectedfoldersList" value="'. implode(",", $requestMailBox) .'">';
-echo '<input type="hidden" id="sf_searchField" name="searchField" value="'. $searchField .'">';
+echo '<input type="hidden" id="sf_returnstatus" name="returnstatus" value="' . $returnArray['status'] . '">';
+echo '<input type="hidden" id="sf_foldersList" name="foldersList" value="' . htmlspecialchars($foldersList) . '">';
+echo '<input type="hidden" id="sf_selectedfoldersList" name="selectedfoldersList" value="' . implode(',', $requestMailBox) . '">';
+echo '<input type="hidden" id="sf_searchField" name="searchField" value="' . $searchField . '">';
 
 echo '
 <script type="text/javascript">
-    SUGAR.inboundEmail.listDlg.setHeader("'.$title.'");
+    SUGAR.inboundEmail.listDlg.setHeader("' . $title . '");
     function setMailbox(box) {
         var inboundmailboxes = document.getElementById("sf_inboundmailboxes");
         var selectedmbox = "";
@@ -269,9 +263,9 @@ echo '
      }
 	function switchMsg() {
 		if(typeof(document.getElementById("sf_msg")) != "undefined") {
-			document.getElementById("sf_msg").innerHTML = "'.$msg.'";
+			document.getElementById("sf_msg").innerHTML = "' . $msg . '";
 			var deletedFoldersList = document.getElementById("sf_deletedFoldersList");
-			deletedFoldersList.innerHTML = "'. $deletedFoldersList .'";
+			deletedFoldersList.innerHTML = "' . $deletedFoldersList . '";
 			if (deletedFoldersList.innerHTML.length > 0) {
 				deletedFoldersList.style.display = "";
 			} // if

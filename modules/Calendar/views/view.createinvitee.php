@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/EditView/EditView2.php');
-
+require_once 'include/EditView/EditView2.php';
 
 class CalendarViewCreateInvitee extends SugarView
 {
@@ -49,46 +46,47 @@ class CalendarViewCreateInvitee extends SugarView
 
         $module = empty($_REQUEST['inviteeModule']) ? '' : $_REQUEST['inviteeModule'];
 
-        if (!in_array($module, array('Leads', 'Contacts')) || empty($beanList[$module])) {
+        if (!in_array($module, ['Leads', 'Contacts']) || empty($beanList[$module])) {
             $this->returnNoAccess($module);
         }
 
-        require_once($beanFiles[$beanList[$module]]);
+        require_once $beanFiles[$beanList[$module]];
         $this->bean = new $beanList[$module]();
-       
+
         if ($this->bean->ACLAccess('save')) {
-            require_once('include/formbase.php');
-            $this->bean = populateFromPost("", $this->bean);
+            require_once 'include/formbase.php';
+            $this->bean = populateFromPost('', $this->bean);
             $this->bean->save();
         } else {
             $this->returnNoAccess($this->bean->object_name);
         }
     }
-    
+
     public function display()
     {
-        $sendbackArr = array(
+        $sendbackArr = [
             'module' => $this->bean->object_name,
-            'fields' => array(),
-        );
+            'fields' => [],
+        ];
         foreach ($_REQUEST['fieldList'] as $field) {
-            $sendbackArr['fields'][$field] = $this->bean->$field;
+            $sendbackArr['fields'][$field] = $this->bean->{$field};
         }
-            
+
         ob_clean();
         echo json_encode($sendbackArr);
     }
 
     /**
-     * return no access answer and die
+     * return no access answer and die.
+     *
      * @param string $module
      */
     protected function returnNoAccess($module)
     {
-        echo json_encode(array(
+        echo json_encode([
             'noAccess' => true,
             'module' => $module,
-        ));
+        ]);
         sugar_cleanup(true);
     }
 }

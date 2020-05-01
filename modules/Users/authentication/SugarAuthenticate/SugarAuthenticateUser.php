@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,30 +36,26 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
-
 
 include_once get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/FactorAuthFactory.php');
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
- *
  */
 class SugarAuthenticateUser
 {
-
     /**
      * Does the actual authentication of the user and returns an id that will be used
-     * to load the current user (loadUserOnSession)
+     * to load the current user (loadUserOnSession).
      *
-     * @param STRING $name
-     * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
-     * @return STRING id - used for loading the user
+     * @param string $name
+     * @param string $password
+     * @param string $fallback - is this authentication a fallback from a failed authentication
+     *
+     * @return string id - used for loading the user
      */
     public function authenticateUser($name, $password, $fallback = false)
     {
@@ -70,38 +65,42 @@ class SugarAuthenticateUser
         //if it's falling back on Sugar Authentication after the login failed on an external authentication return empty if the user has external_auth_disabled for them
         if (empty($row) || !empty($row['external_auth_only'])) {
             return '';
-        } else {
-            return $row['id'];
         }
+
+        return $row['id'];
     }
 
     /**
      * Checks if a user is a sugarLogin user
-     * which implies they should use the sugar authentication to login
+     * which implies they should use the sugar authentication to login.
      *
-     * @param STRING $name
+     * @param string $name
      * @param STRIUNG $password
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSugarLogin($name, $password)
     {
         $row = User::findUserPassword($name, $password, "(portal_only IS NULL OR portal_only !='1') AND (is_group IS NULL OR is_group !='1') AND status !='Inactive' AND sugar_login=1");
+
         return !empty($row);
     }
 
     /**
-     * this is called when a user logs in
+     * this is called when a user logs in.
      *
-     * @param STRING $name
-     * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
-     * @return boolean
+     * @param string $name
+     * @param string $password
+     * @param string $fallback - is this authentication a fallback from a failed authentication
+     * @param mixed $PARAMS
+     *
+     * @return bool
      */
-    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array())
+    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = [])
     {
         global $login_error;
 
-        $GLOBALS['log']->debug("Starting user load for " . $name);
+        $GLOBALS['log']->debug('Starting user load for ' . $name);
         if (empty($name) || empty($password)) {
             return false;
         }
@@ -116,17 +115,20 @@ class SugarAuthenticateUser
         $user_id = $this->authenticateUser($name, $input_hash, $fallback);
         if (empty($user_id)) {
             $GLOBALS['log']->fatal('SECURITY: User authentication for ' . $name . ' failed');
+
             return false;
         }
         $this->loadUserOnSession($user_id);
+
         return true;
     }
 
     /**
-     * Loads the current user bassed on the given user_id
+     * Loads the current user bassed on the given user_id.
      *
-     * @param STRING $user_id
-     * @return boolean
+     * @param string $user_id
+     *
+     * @return bool
      */
     public function loadUserOnSession($user_id = '')
     {
@@ -140,6 +142,7 @@ class SugarAuthenticateUser
                 return true;
             }
         }
+
         return false;
     }
 
@@ -153,6 +156,7 @@ class SugarAuthenticateUser
         if ($current_user->factor_auth) {
             $ret = true;
         }
+
         return $ret;
     }
 
@@ -165,6 +169,7 @@ class SugarAuthenticateUser
         if (!isset($_SESSION['user_factor_authenticated']) || !$_SESSION['user_factor_authenticated']) {
             $ret = false;
         }
+
         return $ret;
     }
 
@@ -177,6 +182,7 @@ class SugarAuthenticateUser
         if (isset($_REQUEST['factor_token'])) {
             $ret = true;
         }
+
         return $ret;
     }
 
@@ -187,6 +193,7 @@ class SugarAuthenticateUser
         } else {
             $_SESSION['user_factor_authenticated'] = false;
         }
+
         return $_SESSION['user_factor_authenticated'];
     }
 
@@ -198,7 +205,7 @@ class SugarAuthenticateUser
         global $current_user;
 
         $GLOBALS['log']->debug('Redirect to factor token input.....');
-        
+
         $factory = new FactorAuthFactory();
         $factorAuth = $factory->getFactorAuth();
         if (!$factorAuth->validateTokenMessage()) {
@@ -224,6 +231,7 @@ class SugarAuthenticateUser
         if (isset($_SESSION['factor_token']) && $_SESSION['factor_token']) {
             $ret = true;
         }
+
         return $ret;
     }
 
@@ -286,12 +294,10 @@ class SugarAuthenticateUser
             $_SESSION['user_factor_authenticated'] = false;
             $_SESSION['factor_token'] = $token;
         }
+
         return $ret;
     }
 
-    /**
-     *
-     */
     public function redirectToLogout()
     {
         $GLOBALS['log']->debug('Session destroy and redirect to logout.....');
@@ -313,11 +319,13 @@ class SugarAuthenticateUser
         ) {
             $logout = true;
         }
+
         return $logout;
     }
 
     /**
      * Has user has requested to resend the multi/2 factor token?
+     *
      * @return bool true === yes, false === no
      */
     public function isUserRequestedResendToken()

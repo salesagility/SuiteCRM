@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +39,11 @@
 
 namespace SuiteCRM\API\v8\Library;
 
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use League\Uri\Components\Query;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\FilterInterpreter;
-use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
@@ -53,12 +51,10 @@ use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
 
 /**
- * Class ModulesLib
- * @package SuiteCRM\API\v8\Library
+ * Class ModulesLib.
  */
 class ModulesLib
 {
-
     /**
      * @var ContainerInterface
      */
@@ -66,6 +62,7 @@ class ModulesLib
 
     /**
      * ModulesLib constructor.
+     *
      * @param ContainerInterface $containers
      */
     public function __construct($containers)
@@ -77,7 +74,7 @@ class ModulesLib
      * @param Request $req
      * @param Response $res
      * @param array $args
-     * @return array list => SugarBean[], current_offset => 0, row_count => 0
+     *
      * @throws BadRequestException
      * @throws ModuleNotFoundException
      * @throws NotAllowed
@@ -86,11 +83,13 @@ class ModulesLib
      * @throws \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\InvalidArgumentException
      * @throws \SuiteCRM\API\v8\Exception\ApiException
      * @throws \SuiteCRM\Exception\Exception
+     *
+     * @return array list => SugarBean[], current_offset => 0, row_count => 0
      */
-    public function generatePaginatedModuleRecords(Request $req, Response $res, array $args = array())
+    public function generatePaginatedModuleRecords(Request $req, Response $res, array $args = [])
     {
         /** @var array $response */
-        $response = array();
+        $response = [];
 
         /** @var \SugarBean $module */
         $module = \BeanFactory::newBean($args['module']);
@@ -105,7 +104,7 @@ class ModulesLib
 
         $moduleList = $this->getModuleList($req, $module, $args);
 
-        $fields = array('fields' => array());
+        $fields = ['fields' => []];
         $selectFields = $req->getParam('fields');
 
         /** @var array $config */
@@ -144,26 +143,29 @@ class ModulesLib
 
     /**
      * @see ModulesLib::generatePaginatedLinksFromModuleRecords
+     *
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @param array $paginatedModuleRecords return value from ModulesLib::generatePaginatedLinksFromModuleRecords
-     * @return Links
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     *
+     * @return Links
      */
     public function generatePaginatedLinksFromModuleRecords(Request $req, Response $res, $args, $paginatedModuleRecords)
     {
         $config = $this->containers->get('ConfigurationManager');
         $page = $req->getParam('page');
-        $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
+        $limit = isset($page['limit']) ? (int) $page['limit'] : -1;
         $sort = $req->getParam('sort');
         $filter = $req->getParam('filter');
         $fields = $req->getParam('fields');
-        $currentOffset = (integer)$paginatedModuleRecords['current_offset'] < 0 ? 0 : (integer)$paginatedModuleRecords['current_offset'];
+        $currentOffset = (int) $paginatedModuleRecords['current_offset'] < 0 ? 0 : (int) $paginatedModuleRecords['current_offset'];
         $firstOffset = 0;
         $limitOffset = ($limit <= 0) ? $config['list_max_entries_per_page'] : $limit;
-        $lastOffset = (integer)floor((integer)$paginatedModuleRecords['row_count'] / $limitOffset);
+        $lastOffset = (int) floor((int) $paginatedModuleRecords['row_count'] / $limitOffset);
         $prevOffset = $currentOffset - 1 < $firstOffset ? $firstOffset : $currentOffset - 1;
         $nextOffset = $currentOffset + 1 > $lastOffset ? $lastOffset : $currentOffset + 1;
 
@@ -228,12 +230,28 @@ class ModulesLib
     }
 
     /**
-     * Handle sorting in the request
+     * @param Request $request
+     *
+     * @return \User
+     */
+    public function getCurrentUser(Request $request)
+    {
+        $id = $request->getAttribute('oauth_user_id');
+        $user = new \User();
+        $user->retrieve($id);
+
+        return $user;
+    }
+
+    /**
+     * Handle sorting in the request.
      *
      * @param Request $req
-     * @return string
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     *
+     * @return string
      */
     protected function getSorting(Request $req)
     {
@@ -262,14 +280,16 @@ class ModulesLib
      * @param Request $req
      * @param \SugarBean $module
      * @param array $args route arguments
-     * @return array
+     *
      * @throws BadRequestException
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\InvalidArgumentException
      * @throws \SuiteCRM\Exception\Exception
+     *
+     * @return array
      */
-    protected function getModuleList(Request $req, \SugarBean $module, array $args = array())
+    protected function getModuleList(Request $req, \SugarBean $module, array $args = [])
     {
         /** @var array $page */
         $page = $req->getParam('page');
@@ -278,10 +298,10 @@ class ModulesLib
         $orderBy = $this->getSorting($req);
 
         // Pagination (offset)
-        $currentOffset = isset($page['offset']) ? (integer)$page['offset'] : -1;
+        $currentOffset = isset($page['offset']) ? (int) $page['offset'] : -1;
 
         // Pagination (page limit)
-        $limit = isset($page['limit']) ? (integer)$page['limit'] : -1;
+        $limit = isset($page['limit']) ? (int) $page['limit'] : -1;
 
         // Maximum results (-1 === Unlimited)
         $maximumResults = -1;
@@ -289,7 +309,7 @@ class ModulesLib
         // Show deleted results
         $show_deleted = 0;
         if (isset($filter['deleted'])) {
-            $show_deleted = (integer)$filter['deleted'];
+            $show_deleted = (int) $filter['deleted'];
         }
 
         // Filtering (where clause in SQL)
@@ -301,16 +321,20 @@ class ModulesLib
         if (empty($filterStructure)) {
             // Do not perform a filter
             $where = '';
+
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
-        } elseif ($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
+        }
+        if ($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
             $where = $filterInterpreter->getFilterByPreMadeName($filterStructure);
-            /** @var array $moduleList */
+            // @var array $moduleList
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
-        } elseif ($filterInterpreter->isFilterById($filterStructure)) {
+        }
+        if ($filterInterpreter->isFilterById($filterStructure)) {
             $where = $filterInterpreter->getFilterById($filterStructure);
-            /** @var array $moduleList */
+            // @var array $moduleList
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
-        } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
+        }
+        if ($filterInterpreter->isFilterByAttributes($filterStructure)) {
             $where = $filterInterpreter->getFilterByAttributes($filterStructure, $args);
 
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
@@ -321,14 +345,16 @@ class ModulesLib
 
     /**
      * @param Request $req
-     * @param null|integer $offset
-     * @param null|integer $limit
+     * @param null|int $offset
+     * @param null|int $limit
      * @param null|array $filter
      * @param null|array $sort
      * @param null|array $fields eg array ('fields' => 'Accounts' => array('name', 'description'))
-     * @return string
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     *
+     * @return string
      */
     private function generatePaginationUrl(
         Request $req,
@@ -350,7 +376,6 @@ class ModulesLib
             $pagination['page']['limit'] = $offset;
         }
 
-
         if ($filter !== null) {
             $query->withContent(['filter' => $filter]);
         }
@@ -358,7 +383,6 @@ class ModulesLib
         if ($sort !== null) {
             $query->withContent(['sort' => implode(',', $sort)]);
         }
-
 
         if ($fields !== null) {
             $queryFields = [];
@@ -369,23 +393,11 @@ class ModulesLib
         }
 
         $query->withContent($pagination);
-        $queryString = (string)$query;
+        $queryString = (string) $query;
         if ($queryString !== null) {
             return $config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
         }
 
         return $config['site_url'] . '/api/' . $req->getUri()->getPath();
-    }
-
-    /**
-     * @param Request $request
-     * @return \User
-     */
-    public function getCurrentUser(Request $request)
-    {
-        $id = $request->getAttribute('oauth_user_id');
-        $user = new \User();
-        $user->retrieve($id);
-        return $user;
     }
 }

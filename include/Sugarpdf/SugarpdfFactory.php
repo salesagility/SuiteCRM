@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,32 +36,37 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/Sugarpdf/Sugarpdf.php');
+require_once 'include/Sugarpdf/Sugarpdf.php';
 
 class SugarpdfFactory
 {
     /**
-     * load the correct Tcpdf
+     * load the correct Tcpdf.
+     *
      * @param string $type Tcpdf Type
+     * @param null|mixed $module
+     * @param null|mixed $bean
+     * @param mixed $sugarpdf_object_map
+     *
      * @return valid Tcpdf
      */
+
     /**
-     * Load the correct Tcpdf
+     * Load the correct Tcpdf.
      *
      * @param string $type
      * @param null|string $module
      * @param null|array $bean
      * @param array $sugarpdf_object_map
-     * @return a|null|Sugarpdf
+     *
+     * @return null|a|Sugarpdf
      */
-    public function loadSugarpdf($type, $module = null, $bean = null, $sugarpdf_object_map = array())
+    public function loadSugarpdf($type, $module = null, $bean = null, $sugarpdf_object_map = [])
     {
-
         // set $type = 'default' by default
         if (empty($type)) {
             $type = 'default';
@@ -71,18 +75,18 @@ class SugarpdfFactory
         //SugarpdfFactory::_loadConfig($sugarpdf, $type);
         //first let's check if the module handles this Tcpdf
         $sugarpdf = null;
-        $path = '/sugarpdf/sugarpdf.'.$type.'.php';
-        if (file_exists('custom/modules/'.$module.$path)) {
-            $sugarpdf = SugarpdfFactory::_buildFromFile('custom/modules/'.$module.$path, $bean, $sugarpdf_object_map, $type, $module);
+        $path = '/sugarpdf/sugarpdf.' . $type . '.php';
+        if (file_exists('custom/modules/' . $module . $path)) {
+            $sugarpdf = SugarpdfFactory::_buildFromFile('custom/modules/' . $module . $path, $bean, $sugarpdf_object_map, $type, $module);
         } else {
-            if (file_exists('modules/'.$module.$path)) {
-                $sugarpdf = SugarpdfFactory::_buildFromFile('modules/'.$module.$path, $bean, $sugarpdf_object_map, $type, $module);
+            if (file_exists('modules/' . $module . $path)) {
+                $sugarpdf = SugarpdfFactory::_buildFromFile('modules/' . $module . $path, $bean, $sugarpdf_object_map, $type, $module);
             } else {
-                if (file_exists('custom/include/Sugarpdf'.$path)) {
-                    $sugarpdf = SugarpdfFactory::_buildFromFile('custom/include/Sugarpdf'.$path, $bean, $sugarpdf_object_map, $type, $module);
+                if (file_exists('custom/include/Sugarpdf' . $path)) {
+                    $sugarpdf = SugarpdfFactory::_buildFromFile('custom/include/Sugarpdf' . $path, $bean, $sugarpdf_object_map, $type, $module);
                 } else {
                     //if the module does not handle this Sugarpdf, then check if Sugar handles it OOTB
-                    $file = 'include/Sugarpdf'.$path;
+                    $file = 'include/Sugarpdf' . $path;
                     if (file_exists($file)) {
                         //it appears Sugar does have the proper logic for this file.
                         $sugarpdf = SugarpdfFactory::_buildFromFile($file, $bean, $sugarpdf_object_map, $type, $module);
@@ -94,11 +98,18 @@ class SugarpdfFactory
         if (!isset($sugarpdf)) {
             $sugarpdf = new Sugarpdf($bean, $sugarpdf_object_map);
         }
+
         return $sugarpdf;
     }
-    
+
     /**
      * Load the Sugarpdf_<Sugarpdf>_config.php file which holds options used by the tcpdf.
+     *
+     * @param mixed $file
+     * @param mixed $bean
+     * @param mixed $sugarpdf_object_map
+     * @param mixed $type
+     * @param mixed $module
      */
 //    function _loadConfig(&$sugarpdf, $type){
     ////        $sugarpdf_config_custom = array();
@@ -128,35 +139,39 @@ class SugarpdfFactory
 //        }
 //
 //    }
-    
+
     /**
      * This is a private function which just helps the getSugarpdf function generate the
-     * proper Tcpdf object
+     * proper Tcpdf object.
      *
      * @return a valid Sugarpdf
      */
     public function _buildFromFile($file, &$bean, $sugarpdf_object_map, $type, $module)
     {
-        require_once($file);
+        require_once $file;
         //try ModuleSugarpdfType first then try SugarpdfType if that fails then use Sugarpdf
-        $class = ucfirst($module).'Sugarpdf'.ucfirst($type);
+        $class = ucfirst($module) . 'Sugarpdf' . ucfirst($type);
         if (!class_exists($class)) {
-            $class = 'Sugarpdf'.ucfirst($type);
+            $class = 'Sugarpdf' . ucfirst($type);
             if (!class_exists($class)) {
                 return new Sugarpdf($bean, $sugarpdf_object_map);
             }
         }
+
         return SugarpdfFactory::_buildClass($class, $bean, $sugarpdf_object_map);
     }
-    
+
     /**
      * instantiate the correct Tcpdf and call init to pass on any obejcts we need to
      * from the controller.
      *
      * @param string class - the name of the class to instantiate
      * @param object bean = the bean to pass to the Sugarpdf
-     * @param array Sugarpdf_object_map - the array which holds obejcts to pass between the
-     *                                controller and the tcpdf.
+     * @param array sugarpdf_object_map - the array which holds obejcts to pass between the
+     *                                controller and the tcpdf
+     * @param mixed $class
+     * @param mixed $bean
+     * @param mixed $sugarpdf_object_map
      *
      * @return Sugarpdf
      */
@@ -166,8 +181,8 @@ class SugarpdfFactory
         //$sugarpdf->init($bean, $sugarpdf_object_map);
         if ($sugarpdf instanceof Sugarpdf) {
             return $sugarpdf;
-        } else {
-            return new Sugarpdf($bean, $sugarpdf_object_map);
         }
+
+        return new Sugarpdf($bean, $sugarpdf_object_map);
     }
 }

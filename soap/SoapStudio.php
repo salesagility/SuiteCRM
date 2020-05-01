@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,11 +41,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 // this is a list of what values are expected for a given custom field type
 // will eventually be moved to the SugarFields classes
-$custom_field_meta = array(
-    'address' => array(
+$custom_field_meta = [
+    'address' => [
         'default',
         'duplicate_merge',
         'help',
@@ -54,24 +53,24 @@ $custom_field_meta = array(
         'len',
         'name',
         'reportable'
-    ),
-    'bool' => array(
+    ],
+    'bool' => [
         'duplicate_merge',
         'help',
         'label',
         'label_value',
         'name',
         'reportable'
-    ),
-    'currency' => array(
+    ],
+    'currency' => [
         'duplicate_merge',
         'help',
         'label',
         'label_value',
         'name',
         'reportable'
-    ),
-    'date' => array(
+    ],
+    'date' => [
         'audited',
         'default_value',
         'duplicate_merge',
@@ -82,8 +81,8 @@ $custom_field_meta = array(
         'name',
         'reportable',
         'required'
-    ),
-    'enum' => array(
+    ],
+    'enum' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -95,8 +94,8 @@ $custom_field_meta = array(
         'options',
         'reportable',
         'required'
-    ),
-    'float' => array(
+    ],
+    'float' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -108,8 +107,8 @@ $custom_field_meta = array(
         'precision',
         'reportable',
         'required'
-    ),
-    'html' => array(
+    ],
+    'html' => [
         'audited',
         'duplicate_merge',
         'ext4',
@@ -119,8 +118,8 @@ $custom_field_meta = array(
         'name',
         'reportable',
         'required'
-    ),
-    'int' => array(
+    ],
+    'int' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -133,8 +132,8 @@ $custom_field_meta = array(
         'name',
         'reportable',
         'required'
-    ),
-    'multienum' => array(
+    ],
+    'multienum' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -146,8 +145,8 @@ $custom_field_meta = array(
         'options',
         'reportable',
         'required'
-    ),
-    'phone' => array(
+    ],
+    'phone' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -158,8 +157,8 @@ $custom_field_meta = array(
         'name',
         'reportable',
         'required'
-    ),
-    'radioenum' => array(
+    ],
+    'radioenum' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -171,8 +170,8 @@ $custom_field_meta = array(
         'options',
         'reportable',
         'required'
-    ),
-    'relate' => array(
+    ],
+    'relate' => [
         'audited',
         'duplicate_merge',
         'ext2',
@@ -182,8 +181,8 @@ $custom_field_meta = array(
         'name',
         'reportable',
         'required'
-    ),
-    'text' => array(
+    ],
+    'text' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -193,8 +192,8 @@ $custom_field_meta = array(
         'name',
         'reportable',
         'required'
-    ),
-    'varchar' => array(
+    ],
+    'varchar' => [
         'audited',
         'default',
         'duplicate_merge',
@@ -205,22 +204,22 @@ $custom_field_meta = array(
         'name',
         'reportable',
         'required'
-    )
-);
+    ]
+];
 
 // create or update an existing custom field
 $server->register(
     'set_custom_field',
-    array(
+    [
         'session' => 'xsd:string',
         'module_name' => 'xsd:string',
         'type' => 'xsd:string',
         'properties' => 'tns:name_value_list',
         'add_to_layout' => 'xsd:int',
-    ),
-    array(
+    ],
+    [
         'return' => 'tns:error_value'
-    ),
+    ],
     $NAMESPACE
 );
 
@@ -232,36 +231,40 @@ function set_custom_field($session, $module_name, $type, $properties, $add_to_la
 
     $error = new SoapError();
 
-    $request_arr = array(
+    $request_arr = [
         'action' => 'SaveField',
         'is_update' => 'true',
         'module' => 'ModuleBuilder',
         'view_module' => $module_name,
         'view_package' => 'studio'
-    );
+    ];
 
     // ERROR CHECKING
     if (!validate_authenticated($session)) {
         $error->set_error('invalid_login');
+
         return $error->get_soap_array();
     }
 
     if (!is_admin($current_user)) {
         $error->set_error('no_admin');
+
         return $error->get_soap_array();
     }
 
     if (empty($beanList[$module_name])) {
         $error->set_error('no_module');
+
         return $error->get_soap_array();
     }
 
     if (empty($custom_field_meta[$type])) {
         $error->set_error('custom_field_type_not_supported');
+
         return $error->get_soap_array();
     }
 
-    $new_properties = array();
+    $new_properties = [];
     foreach ($properties as $value) {
         $new_properties[$value['name']] = $value['value'];
     }
@@ -269,6 +272,7 @@ function set_custom_field($session, $module_name, $type, $properties, $add_to_la
     foreach ($custom_field_meta[$type] as $property) {
         if (!isset($new_properties[$property])) {
             $error->set_error('custom_field_property_not_supplied');
+
             return $error->get_soap_array();
         }
 
@@ -280,9 +284,9 @@ function set_custom_field($session, $module_name, $type, $properties, $add_to_la
     $_REQUEST = array_merge($_REQUEST, $request_arr);
     $_POST = array_merge($_POST, $request_arr);
 
-    require_once('include/MVC/Controller/SugarController.php');
-    require_once('modules/ModuleBuilder/controller.php');
-    require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
+    require_once 'include/MVC/Controller/SugarController.php';
+    require_once 'modules/ModuleBuilder/controller.php';
+    require_once 'modules/ModuleBuilder/parsers/ParserFactory.php';
 
     $mbc = new ModuleBuilderController();
     $mbc->setup();
@@ -290,10 +294,10 @@ function set_custom_field($session, $module_name, $type, $properties, $add_to_la
 
     // add the field to the given module's EditView and DetailView layouts
     if ($add_to_layout == 1) {
-        $layout_properties = array(
+        $layout_properties = [
             'name' => $new_properties['name'],
             'label' => $new_properties['label']
-        );
+        ];
 
         if (isset($new_properties['customCode'])) {
             $layout_properties['customCode'] = $new_properties['customCode'];

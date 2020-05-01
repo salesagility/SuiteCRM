@@ -51,12 +51,12 @@ require_once 'data/SugarBean.php';
  */
 class BeanFactory
 {
-    protected static $loadedBeans = array();
+    public static $hits = 0;
+    protected static $loadedBeans = [];
     protected static $maxLoaded = 10;
     protected static $total = 0;
-    protected static $loadOrder = array();
-    protected static $touched = array();
-    public static $hits = 0;
+    protected static $loadOrder = [];
+    protected static $touched = [];
 
     /**
      * Returns a SugarBean object by id. The Last 10 loaded beans are cached in memory
@@ -69,18 +69,17 @@ class BeanFactory
      * @param string $id
      * @param array  $params  A name/value array of parameters. Names: encode, deleted,
      *                        If $params is boolean we revert to the old arguments (encode, deleted),
- *                            and use $params as $encode.
+     *                            and use $params as $encode.
      *                        This will be changed to using only $params in later versions.
      * @param bool   $deleted @see SugarBean::retrieve
      *
-     * @return SugarBean|bool
+     * @return bool|SugarBean
      */
-    public static function getBean($module, $id = null, $params = array(), $deleted = true)
+    public static function getBean($module, $id = null, $params = [], $deleted = true)
     {
-
         // Check if params is an array, if not use old arguments
         if (isset($params) && !is_array($params)) {
-            $params = array('encode' => $params);
+            $params = ['encode' => $params];
         }
 
         // Pull values from $params array
@@ -88,8 +87,8 @@ class BeanFactory
         $deleted = isset($params['deleted']) ? $params['deleted'] : $deleted;
 
         if (!isset(self::$loadedBeans[$module])) {
-            self::$loadedBeans[$module] = array();
-            self::$touched[$module] = array();
+            self::$loadedBeans[$module] = [];
+            self::$touched[$module] = [];
         }
 
         $beanClass = self::getBeanName($module);
@@ -104,12 +103,11 @@ class BeanFactory
                 $result = $bean->retrieve($id, $encode, $deleted);
                 if ($result == null) {
                     return false;
-                } else {
-                    self::registerBean($module, $bean, $id);
                 }
+                self::registerBean($module, $bean, $id);
             } else {
-                ++self::$hits;
-                ++self::$touched[$module][$id];
+                self::$hits++;
+                self::$touched[$module][$id]++;
                 $bean = self::$loadedBeans[$module][$id];
                 if ($deleted && $bean->deleted) {
                     return false;
@@ -124,6 +122,7 @@ class BeanFactory
 
     /**
      * @param $module
+     *
      * @return bool|SugarBean
      */
     public static function newBean($module)
@@ -133,7 +132,8 @@ class BeanFactory
 
     /**
      * @param $module
-     * @return string|bool
+     *
+     * @return bool|string
      */
     public static function getBeanName($module)
     {
@@ -174,7 +174,7 @@ class BeanFactory
      * @param SugarBean   $bean
      * @param bool|string $id
      *
-     * @return bool true if the bean registered successfully.
+     * @return bool true if the bean registered successfully
      */
     public static function registerBean($module, $bean, $id = false)
     {
@@ -184,7 +184,7 @@ class BeanFactory
         }
 
         if (!isset(self::$loadedBeans[$module])) {
-            self::$loadedBeans[$module] = array();
+            self::$loadedBeans[$module] = [];
         }
 
         //Do not double register a bean
@@ -192,33 +192,31 @@ class BeanFactory
             return true;
         }
 
-        $index = 'i'.(self::$total % self::$maxLoaded);
+        $index = 'i' . (self::$total % self::$maxLoaded);
         //We should only hold a limited number of beans in memory at a time.
         //Once we have the max, unload the oldest bean.
         if (count(self::$loadOrder) >= self::$maxLoaded - 1) {
-            for ($i = 0; $i < self::$maxLoaded; ++$i) {
+            for ($i = 0; $i < self::$maxLoaded; $i++) {
                 if (isset(self::$loadOrder[$index])) {
                     $info = self::$loadOrder[$index];
                     //If a bean isn't in the database yet, we need to hold onto it.
                     if (!empty(self::$loadedBeans[$info['module']][$info['id']]->in_save)) {
-                        ++self::$total;
+                        self::$total++;
                     } elseif (!empty(self::$touched[$info['module']][$info['id']])
                         && self::$touched[$info['module']][$info['id']] > 0) {
                         //Beans that have been used recently should be held in memory if possible
-                        --self::$touched[$info['module']][$info['id']];
-                        ++self::$total;
+                        self::$touched[$info['module']][$info['id']]--;
+                        self::$total++;
                     } else {
                         break;
                     }
                 } else {
                     break;
                 }
-                $index = 'i'.(self::$total % self::$maxLoaded);
+                $index = 'i' . (self::$total % self::$maxLoaded);
             }
             if (isset(self::$loadOrder[$index])) {
-                unset(self::$loadedBeans[$info['module']][$info['id']]);
-                unset(self::$touched[$info['module']][$info['id']]);
-                unset(self::$loadOrder[$index]);
+                unset(self::$loadedBeans[$info['module']][$info['id']], self::$touched[$info['module']][$info['id']], self::$loadOrder[$index]);
             }
         }
 
@@ -228,8 +226,8 @@ class BeanFactory
 
         if ($id) {
             self::$loadedBeans[$module][$id] = $bean;
-            ++self::$total;
-            self::$loadOrder[$index] = array('module' => $module, 'id' => $id);
+            self::$total++;
+            self::$loadOrder[$index] = ['module' => $module, 'id' => $id];
             self::$touched[$module][$id] = 0;
         } else {
             return false;
@@ -252,8 +250,7 @@ class BeanFactory
             return false;
         }
 
-        unset(self::$loadedBeans[$module][$id]);
-        unset(self::$touched[$module][$id]);
+        unset(self::$loadedBeans[$module][$id], self::$touched[$module][$id]);
 
         return true;
     }

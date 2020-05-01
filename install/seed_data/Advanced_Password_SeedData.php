@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -54,7 +52,6 @@ if (file_exists(__DIR__ . '/../language/' . $current_language . '.lang.php')) {
 
 global $sugar_config;
 global $timedate;
-
 
 //Sent when the admin generate a new password
 if (
@@ -75,7 +72,6 @@ if (
     $sugar_config['passwordsetting']['generatepasswordtmpl'] = $id;
 }
 
-
 //User generate a link to set a new password
 if (
     !isset($sugar_config['passwordsetting']['lostpasswordtmpl'])
@@ -94,7 +90,6 @@ if (
     $id = $EmailTemp->save();
     $sugar_config['passwordsetting']['lostpasswordtmpl'] = $id;
 }
-
 
 //Two Factor Authentication code template
 if (
@@ -135,4 +130,4 @@ if ($sugar_config['passwordsetting']['systexpirationtype'] === '0') {
     $sugar_config['passwordsetting']['systexpirationtype'] = 1;
 }
 
-write_array_to_file("sugar_config", $sugar_config, "config.php");
+write_array_to_file('sugar_config', $sugar_config, 'config.php');

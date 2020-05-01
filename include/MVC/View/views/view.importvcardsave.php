@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/vCard.php');
+require_once 'include/vCard.php';
 
 class ViewImportvcardsave extends SugarView
 {
@@ -68,15 +66,17 @@ class ViewImportvcardsave extends SugarView
                 SugarApplication::redirect($redirect . '&error=vcardErrorRequired');
             }
 
-            SugarApplication::redirect("index.php?action=DetailView&module={$_REQUEST['module']}&record=$record");
+            SugarApplication::redirect("index.php?action=DetailView&module={$_REQUEST['module']}&record={$record}");
         } else {
             switch ($_FILES['vcard']['error']) {
                 case UPLOAD_ERR_FORM_SIZE:
-                    $redirect .= "&error=vcardErrorFilesize";
+                    $redirect .= '&error=vcardErrorFilesize';
+
                 break;
                 default:
-                    $redirect .= "&error=vcardErrorDefault";
+                    $redirect .= '&error=vcardErrorDefault';
                     $GLOBALS['log']->error('Upload error code: ' . $_FILES['vcard']['error'] . '. Please refer to the error codes http://php.net/manual/en/features.file-upload.errors.php');
+
                 break;
             }
 

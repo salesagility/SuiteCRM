@@ -1,6 +1,5 @@
 <?php
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -8,13 +7,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class CasesJjwg_MapsLogicHook
 {
     public $jjwg_Maps;
+
     public function __construct()
     {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }
-
-
-
 
     public function updateGeocodeInfo(&$bean, $event, $arguments)
     {

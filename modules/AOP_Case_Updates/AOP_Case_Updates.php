@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 require_once 'util.php';
 require_once 'include/clean.php';
 
@@ -82,8 +80,6 @@ class AOP_Case_Updates extends Basic
         parent::__construct();
     }
 
-
-
     /**
      * @param $interface
      *
@@ -101,6 +97,7 @@ class AOP_Case_Updates extends Basic
 
     /**
      * @param bool $check_notify
+     *
      * @return string
      */
     public function save($check_notify = false)
@@ -121,35 +118,6 @@ class AOP_Case_Updates extends Basic
         $hook->sendCaseUpdate($this);
 
         return $this->id;
-    }
-
-    /**
-     * Fixes unclosed HTML tags
-     */
-    private function parseDescription()
-    {
-        $description = SugarCleaner::cleanHtml($this->description);
-
-        if (preg_match('/<[^<]+>/', $description, $matches) !== 0) {
-            // remove external warning, if HTML is not valid
-            libxml_use_internal_errors(true);
-            $dom = new DOMDocument();
-            $dom->loadHTML(mb_convert_encoding($description, 'HTML-ENTITIES', 'UTF-8'));
-            foreach ($dom->getElementsByTagName('head') as $headElement) {
-                $headElement->parentNode->removeChild($headElement);
-            }
-            $dom->removeChild($dom->doctype);
-            $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);
-            $description = $dom->saveHTML();
-
-            foreach (libxml_get_errors() as $xmlError) {
-                $GLOBALS['log']->warn(sprintf('%s in %s', trim($xmlError->message), get_class($this)));
-            }
-
-            libxml_clear_errors();
-        }
-
-        $this->description = trim(preg_replace('/\s\s+/', ' ', $description));
     }
 
     /**
@@ -208,40 +176,10 @@ class AOP_Case_Updates extends Basic
     {
         $user = $this->getUser();
         if ($user) {
-            return array($user->emailAddress->getPrimaryAddress($user));
+            return [$user->emailAddress->getPrimaryAddress($user)];
         }
 
-        return array();
-    }
-
-    /**
-     * @param EmailTemplate $template
-     * @param bool          $addDelimiter
-     * @param null          $contactId
-     *
-     * @return array
-     */
-    private function populateTemplate(EmailTemplate $template, $addDelimiter = true, $contactId = null)
-    {
-        global $app_strings, $sugar_config;
-
-        $user = $this->getUpdateUser();
-        if (!$user) {
-            $this->getUser();
-        }
-        $beans = array('Contacts' => $contactId, 'Cases' => $this->getCase()->id, 'Users' => $user->id, 'AOP_Case_Updates' => $this->id);
-        $ret = array();
-        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
-        $body = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html), $beans);
-        $bodyAlt = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body), $beans);
-        if ($addDelimiter) {
-            $body = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'].$body;
-            $bodyAlt = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'].$bodyAlt;
-        }
-        $ret['body'] = from_html($body);
-        $ret['body_alt'] = strip_tags(from_html($bodyAlt));
-
-        return $ret;
+        return [];
     }
 
     /**
@@ -257,7 +195,7 @@ class AOP_Case_Updates extends Basic
     public function sendEmail(
         $emails,
         $template,
-        $signature = array(),
+        $signature = [],
         $caseId = null,
         $addDelimiter = true,
         $contactId = null
@@ -291,6 +229,7 @@ class AOP_Case_Updates extends Basic
         foreach ($emails as $email) {
             $mailer->addAddress($email);
         }
+
         try {
             if ($mailer->send()) {
                 require_once 'modules/Emails/Email.php';
@@ -320,5 +259,64 @@ class AOP_Case_Updates extends Basic
         $GLOBALS['log']->info('AOPCaseUpdates: Could not send email:  ' . $mailer->ErrorInfo);
 
         return false;
+    }
+
+    /**
+     * Fixes unclosed HTML tags.
+     */
+    private function parseDescription()
+    {
+        $description = SugarCleaner::cleanHtml($this->description);
+
+        if (preg_match('/<[^<]+>/', $description, $matches) !== 0) {
+            // remove external warning, if HTML is not valid
+            libxml_use_internal_errors(true);
+            $dom = new DOMDocument();
+            $dom->loadHTML(mb_convert_encoding($description, 'HTML-ENTITIES', 'UTF-8'));
+            foreach ($dom->getElementsByTagName('head') as $headElement) {
+                $headElement->parentNode->removeChild($headElement);
+            }
+            $dom->removeChild($dom->doctype);
+            $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);
+            $description = $dom->saveHTML();
+
+            foreach (libxml_get_errors() as $xmlError) {
+                $GLOBALS['log']->warn(sprintf('%s in %s', trim($xmlError->message), get_class($this)));
+            }
+
+            libxml_clear_errors();
+        }
+
+        $this->description = trim(preg_replace('/\s\s+/', ' ', $description));
+    }
+
+    /**
+     * @param EmailTemplate $template
+     * @param bool          $addDelimiter
+     * @param null          $contactId
+     *
+     * @return array
+     */
+    private function populateTemplate(EmailTemplate $template, $addDelimiter = true, $contactId = null)
+    {
+        global $app_strings, $sugar_config;
+
+        $user = $this->getUpdateUser();
+        if (!$user) {
+            $this->getUser();
+        }
+        $beans = ['Contacts' => $contactId, 'Cases' => $this->getCase()->id, 'Users' => $user->id, 'AOP_Case_Updates' => $this->id];
+        $ret = [];
+        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
+        $body = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html), $beans);
+        $bodyAlt = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body), $beans);
+        if ($addDelimiter) {
+            $body = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] . $body;
+            $bodyAlt = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] . $bodyAlt;
+        }
+        $ret['body'] = from_html($body);
+        $ret['body_alt'] = strip_tags(from_html($bodyAlt));
+
+        return $ret;
     }
 }

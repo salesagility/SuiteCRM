@@ -4,6 +4,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\Paths;
 use SuiteCRM\Utility\SuiteLogger;
 
+/**
+ * @internal
+ */
 class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -113,7 +116,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testInvalidLevel()
     {

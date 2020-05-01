@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -61,12 +64,12 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
     public function testgetModuleFeedFiles()
     {
         //test with invalid module
-        $expected = array();
+        $expected = [];
         $result = SugarFeed::getModuleFeedFiles('Accounts');
         $this->assertEquals($expected, $result);
 
         //test with valid module
-        $expected = array('CaseFeed.php' => 'modules/Cases/SugarFeeds/CaseFeed.php');
+        $expected = ['CaseFeed.php' => 'modules/Cases/SugarFeeds/CaseFeed.php'];
         $result = SugarFeed::getModuleFeedFiles('Cases');
         $this->assertEquals($expected, $result);
     }
@@ -75,13 +78,13 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
     {
         $result = SugarFeed::getActiveFeedModules();
 
-        $expected = array(
-                'UserFeed' => 'UserFeed',
-                'Cases' => 'Cases',
-                'Contacts' => 'Contacts',
-                'Leads' => 'Leads',
-                'Opportunities' => 'Opportunities',
-        );
+        $expected = [
+            'UserFeed' => 'UserFeed',
+            'Cases' => 'Cases',
+            'Contacts' => 'Contacts',
+            'Leads' => 'Leads',
+            'Opportunities' => 'Opportunities',
+        ];
 
         $this->assertEquals($expected, $result);
     }
@@ -89,13 +92,13 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
     public function testgetAllFeedModules()
     {
         $result = SugarFeed::getAllFeedModules();
-        $expected = array(
-                      'UserFeed' => 'UserFeed',
-                      'Cases' => 'Cases',
-                      'Contacts' => 'Contacts',
-                      'Leads' => 'Leads',
-                      'Opportunities' => 'Opportunities',
-                    );
+        $expected = [
+            'UserFeed' => 'UserFeed',
+            'Cases' => 'Cases',
+            'Contacts' => 'Contacts',
+            'Leads' => 'Leads',
+            'Opportunities' => 'Opportunities',
+        ];
 
         $this->assertEquals($expected, $result);
     }
@@ -110,7 +113,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
         //retrieve newly created bean
         $sugarFeed = new SugarFeed();
-        $result = $sugarFeed->retrieve_by_string_fields(array('related_id' => '1', 'related_module' => 'Leads'));
+        $result = $sugarFeed->retrieve_by_string_fields(['related_id' => '1', 'related_module' => 'Leads']);
 
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($sugarFeed->id));
@@ -126,7 +129,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
         //retrieve newly created bean
         $sugarFeed = new SugarFeed();
-        $result = $sugarFeed->retrieve_by_string_fields(array('related_id' => '1', 'related_module' => 'SugarFeed'));
+        $result = $sugarFeed->retrieve_by_string_fields(['related_id' => '1', 'related_module' => 'SugarFeed']);
 
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($sugarFeed->id));
@@ -143,7 +146,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
     {
         $sugarFeed = new SugarFeed();
 
-        $actual = $sugarFeed->fetchReplies(array('ID' => '1'));
+        $actual = $sugarFeed->fetchReplies(['ID' => '1']);
         $this->assertGreaterThan(0, strlen($actual));
     }
 
@@ -151,11 +154,11 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
     {
         $result = SugarFeed::getLinkTypes();
 
-        $expected = array(
-                'Image' => 'Image',
-                'Link' => 'Link',
-                'YouTube' => 'YouTube',
-        );
+        $expected = [
+            'Image' => 'Image',
+            'Link' => 'Link',
+            'YouTube' => 'YouTube',
+        ];
         $this->assertEquals($expected, $result);
     }
 
@@ -178,7 +181,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('FeedLinkHandlerYoutube', $result);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $sugarFeed = new SugarFeed();
 

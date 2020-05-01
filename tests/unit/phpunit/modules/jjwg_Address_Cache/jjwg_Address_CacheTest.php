@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testjjwg_Address_Cache()
+    public function testjjwgAddressCache()
     {
         // execute the constructor and check for the Object type and attributes
         $jjwgAddressCache = new jjwg_Address_Cache();
@@ -36,23 +39,23 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $jjwgAddressCache = new jjwg_Address_Cache();
 
         //test saveAddressCacheInfo() with empty info array
-        $ainfo = array();
+        $ainfo = [];
         $result = $jjwgAddressCache->saveAddressCacheInfo($ainfo);
         $this->assertEquals(false, $result);
 
         //test saveAddressCacheInfo() with a valid info array
         $jjwgAddressCache->settings['address_cache_save_enabled'] = 1;
-        $ainfo = array('address' => 'test', 'lat' => '24.861462', 'lng' => '67.009939', 'description' => 'test description');
+        $ainfo = ['address' => 'test', 'lat' => '24.861462', 'lng' => '67.009939', 'description' => 'test description'];
         $result = $jjwgAddressCache->saveAddressCacheInfo($ainfo);
         $this->assertEquals(true, $result);
 
         //test getAddressCacheInfo() with empty info array
-        $result = $jjwgAddressCache->getAddressCacheInfo(array());
+        $result = $jjwgAddressCache->getAddressCacheInfo([]);
         $this->assertEquals(false, $result);
 
         //test getAddressCacheInfo() with a valid info array
         $jjwgAddressCache->settings['address_cache_get_enabled'] = 1;
-        $ainfo = array('address' => 'test', 'lat' => '24.861462', 'lng' => '67.009939', 'description' => 'test description');
+        $ainfo = ['address' => 'test', 'lat' => '24.861462', 'lng' => '67.009939', 'description' => 'test description'];
         $result = $jjwgAddressCache->getAddressCacheInfo($ainfo);
         $this->assertTrue(is_array($result));
 
@@ -64,7 +67,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $result);
     }
 
-    public function testis_valid_lng()
+    public function testisValidLng()
     {
         $jjwgAddressCache = new jjwg_Address_Cache();
 
@@ -78,7 +81,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lng(-180));
     }
 
-    public function testis_valid_lat()
+    public function testisValidLat()
     {
         self::markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "database::email_addresses".');
 

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,11 +36,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $container['ResourceServer'] = function () {
     $keys = new \SuiteCRM\API\OAuth2\Keys();
 
-    $server =  new \League\OAuth2\Server\ResourceServer(
+    $server = new \League\OAuth2\Server\ResourceServer(
         new SuiteCRM\API\OAuth2\Repositories\AccessTokenRepository(),
         $keys->getPublicKey()
     );

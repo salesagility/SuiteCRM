@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -25,11 +26,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility <info@salesagility.com>
  */
 
- 
 global $app_strings;
 
-$dashletMeta['AOW_WorkFlowDashlet'] = array('module'		=> 'AOW_WorkFlow',
-                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOW_WorkFlow'),
-                                          'description' => 'A customizable view into WorkFlow',
-                                          'icon'        => 'icon_AOW_WorkFlow_32.gif',
-                                          'category'    => 'Module Views');
+$dashletMeta['AOW_WorkFlowDashlet'] = ['module' => 'AOW_WorkFlow',
+    'title' => translate('LBL_HOMEPAGE_TITLE', 'AOW_WorkFlow'),
+    'description' => 'A customizable view into WorkFlow',
+    'icon' => 'icon_AOW_WorkFlow_32.gif',
+    'category' => 'Module Views'];

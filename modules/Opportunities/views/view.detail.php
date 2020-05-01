@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,16 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description: This file is used to override the default Meta-data DetailView behavior
  * to provide customization specific to the Campaigns module.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
+ */
 
 class OpportunitiesViewDetail extends ViewDetail
 {
@@ -60,21 +58,18 @@ class OpportunitiesViewDetail extends ViewDetail
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
         $currency = new Currency();
         if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
             $currency->retrieve($this->bean->currency_id);
             if ($currency->deleted != 1) {
-                $this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
+                $this->ss->assign('CURRENCY', $currency->iso4217 . ' ' . $currency->symbol);
             } else {
-                $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+                $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
             }
         } else {
-            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
         }
 
         parent::display();

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class ActivitiesViewList extends ViewList
 {
     public function display()
     {
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Calendar');
-        require_once('modules/Calendar/index.php');
+        require_once 'modules/Calendar/index.php';
     }
 }

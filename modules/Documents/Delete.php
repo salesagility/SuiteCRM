@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,21 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Deletes an Account record and then redirects the browser to the
  * defined return URL.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
+ */
 
 global $mod_strings;
-
-
 
 if (!isset($_REQUEST['record'])) {
     sugar_die($mod_strings['ERR_DELETE_RECORD']);
@@ -66,11 +62,11 @@ if (!$focus->ACLAccess('Delete')) {
     ACLController::displayNoAccess(true);
     sugar_cleanup(true);
 }
-if (isset($_REQUEST['object']) && $_REQUEST['object']="documentrevision") {
+if (isset($_REQUEST['object']) && $_REQUEST['object'] = 'documentrevision') {
     //delete document revision.
     $focus = new DocumentRevision();
     UploadFile::unlink_file($_REQUEST['revision_id'], $_REQUEST['filename']);
 }
 
 $focus->mark_deleted($_REQUEST['record']);
-header("Location: index.php?module=".$_REQUEST['return_module']."&action=".$_REQUEST['return_action']."&record=".$_REQUEST['return_id']);
+header('Location: index.php?module=' . $_REQUEST['return_module'] . '&action=' . $_REQUEST['return_action'] . '&record=' . $_REQUEST['return_id']);

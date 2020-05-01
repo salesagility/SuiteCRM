@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,26 +42,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$layout_defs['Surveys'] = array(
+$layout_defs['Surveys'] = [
     // sets up which panels to show, in which order, and with what linked_fields
-    'subpanel_setup' => array(
-        'surveys_surveyresponses' => array(
-            'order'             => 100,
-            'module'            => 'SurveyResponses',
-            'subpanel_name'     => 'default',
-            'sort_order'        => 'asc',
-            'sort_by'           => 'id',
-            'title_key'         => 'LBL_SURVEYS_SURVEYRESPONSES_FROM_SURVEYRESPONSES_TITLE',
+    'subpanel_setup' => [
+        'surveys_surveyresponses' => [
+            'order' => 100,
+            'module' => 'SurveyResponses',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_SURVEYS_SURVEYRESPONSES_FROM_SURVEYRESPONSES_TITLE',
             'get_subpanel_data' => 'surveys_surveyresponses',
-            'top_buttons'       => array(
-                0 => array(
+            'top_buttons' => [
+                0 => [
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
-                ),
-                1 => array(
+                ],
+                1 => [
                     'widget_class' => 'SubPanelTopSelectButton',
-                    'mode'         => 'MultiSelect',
-                ),
-            ),
-        ),
-    ),
-);
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+    ],
+];

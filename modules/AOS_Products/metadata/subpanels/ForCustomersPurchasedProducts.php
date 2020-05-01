@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,26 +40,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-//		array('widget_class' => 'SubPanelTopCreateButton'),
-//		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
-    ),
-    'list_fields' => array(
-        'aos_quote_name'=>array(
+$subpanel_layout = [
+    'top_buttons' => [
+        //		array('widget_class' => 'SubPanelTopCreateButton'),
+        //		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
+    ],
+    'list_fields' => [
+        'aos_quote_name' => [
             'vname' => 'LBL_AOS_QUOTE_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'aos_quote_id',
             'target_module' => 'AOS_Quotes',
-        ),
-        'account_name'=>array(
+        ],
+        'account_name' => [
             'vname' => 'LBL_ACCOUNT_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'account_id',
             'target_module' => 'Accounts',
-        ),
-    ),
-);
+        ],
+    ],
+];

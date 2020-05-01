@@ -1,6 +1,6 @@
 <?php
 
-require_once('modules/Leads/LeadsListViewSmarty.php');
+require_once 'modules/Leads/LeadsListViewSmarty.php';
 
 class LeadsViewList extends ViewList
 {
@@ -9,7 +9,7 @@ class LeadsViewList extends ViewList
      */
     public function preDisplay()
     {
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
+        require_once 'modules/AOS_PDF_Templates/formLetter.php';
         formLetter::LVPopupHtml('Leads');
         parent::preDisplay();
 

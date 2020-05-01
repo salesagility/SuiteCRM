@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\OAuth2\Entity;
 
 use League\OAuth2\Server\Entities\UserEntityInterface;
@@ -6,7 +7,7 @@ use League\OAuth2\Server\Entities\UserEntityInterface;
 class UserEntity implements UserEntityInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIdentifier()
     {

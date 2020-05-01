@@ -4,6 +4,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once __DIR__ . '/../../../../../include/Localization/Localization.php';
 
+/**
+ * @internal
+ */
 class LocalizationTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testaddBOM()

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,23 +36,26 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldPhone extends SugarFieldBase
 {
-    
     /**
-     * This should be called when the bean is saved. The bean itself will be passed by reference
+     * This should be called when the bean is saved. The bean itself will be passed by reference.
      *
      * @param SugarBean bean - the bean performing the save
      * @param array params - an array of paramester relevant to the save, most likely will be $_REQUEST
+     * @param mixed $bean
+     * @param mixed $params
+     * @param mixed $field
+     * @param mixed $properties
+     * @param mixed $prefix
      */
     public function save(&$bean, $params, $field, $properties, $prefix = '')
     {
         parent::save($bean, $params, $field, $properties, $prefix);
-        if (isset($params[$prefix.$field])) {
-            $bean->$field = $params[$prefix.$field];
+        if (isset($params[$prefix . $field])) {
+            $bean->{$field} = $params[$prefix . $field];
         }
     }
 }

@@ -4,17 +4,17 @@ use Faker\Generator;
 
 /**
  * Class ModuleFieldsCest
- * Tests module fields, layouts, relationships in module builder
+ * Tests module fields, layouts, relationships in module builder.
  */
 class ModuleBuilderFieldsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -38,6 +38,7 @@ class ModuleBuilderFieldsCest
     }
 
     // Tests
+
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -47,8 +48,8 @@ class ModuleBuilderFieldsCest
      * the module before testing.
      */
     public function testScenarioCreateFieldsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a module for testing fields');
 
@@ -68,8 +69,8 @@ class ModuleBuilderFieldsCest
      * accounts module
      */
     public function testScenarioAddRelateField(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Add relate field');
 
@@ -140,8 +141,6 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->closePopupSuccess();
     }
 
-
-
     /**
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -149,8 +148,8 @@ class ModuleBuilderFieldsCest
      * accounts module
      */
     public function testScenarioAddHtmlField(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Add html field');
 
@@ -228,8 +227,8 @@ class ModuleBuilderFieldsCest
      * accounts module
      */
     public function testScenarioAddIntField(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Add int field');
 
@@ -307,9 +306,9 @@ class ModuleBuilderFieldsCest
      * As an administrator I want to test deploying a module
      */
     public function testScenarioDeployModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Step\Acceptance\Repair $repair
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder,
+        Step\Acceptance\Repair $repair
     ) {
         $I->wantTo('Deploy Test Module');
 
@@ -332,11 +331,11 @@ class ModuleBuilderFieldsCest
      * As an administrator I want to test relating to the accounts module
      */
     public function testScenarioRelateToAccounts(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\DetailView $detailView
     ) {
         return; // test failing behaviour is not similar in different environments
         $I->wantTo('Relate a record to accounts');
@@ -365,8 +364,8 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#name');
         $editView->fillField('#name', $company);
         $relateFieldId = 'test_relate_field';
-        $editView->fillField('#'.$relateFieldId, $company);
-        $editView->waitForElementNotVisible('#EditView_'.$relateFieldId.' > .yui-ac-content');
+        $editView->fillField('#' . $relateFieldId, $company);
+        $editView->waitForElementNotVisible('#EditView_' . $relateFieldId . ' > .yui-ac-content');
         $editView->fillField('#test_int_field', $this->fakeData->numberBetween(0, 1000));
 
         $editView->clickSaveButton();

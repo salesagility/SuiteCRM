@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once("data/Relationships/One2MBeanRelationship.php");
+require_once 'data/Relationships/One2MBeanRelationship.php';
 
 /**
- * 1-1 Bean relationship
+ * 1-1 Bean relationship.
+ *
  * @api
  */
 class One2OneBeanRelationship extends One2MBeanRelationship
@@ -54,36 +53,26 @@ class One2OneBeanRelationship extends One2MBeanRelationship
     {
         parent::__construct($def);
     }
+
     /**
-     * @param  $lhs SugarBean left side bean to add to the relationship.
-     * @param  $rhs SugarBean right side bean to add to the relationship.
+     * @param  $lhs sugarBean left side bean to add to the relationship
+     * @param  $rhs sugarBean right side bean to add to the relationship
      * @param  $additionalFields key=>value pairs of fields to save on the relationship
-     * @return boolean true if successful
+     *
+     * @return bool true if successful
      */
-    public function add($lhs, $rhs, $additionalFields = array())
+    public function add($lhs, $rhs, $additionalFields = [])
     {
         $lhsLinkName = $this->lhsLink;
         //In a one to one, any existing links from both sides must be removed first.
         //one2Many will take care of the right side, so we'll do the left.
         $lhs->load_relationship($lhsLinkName);
-        $this->removeAll($lhs->$lhsLinkName);
+        $this->removeAll($lhs->{$lhsLinkName});
 
         return parent::add($lhs, $rhs, $additionalFields);
     }
 
-    protected function updateLinks($lhs, $lhsLinkName, $rhs, $rhsLinkName)
-    {
-        //RHS and LHS only ever have one bean
-        if (isset($lhs->$lhsLinkName)) {
-            $lhs->$lhsLinkName->beans = array($rhs->id => $rhs);
-        }
-
-        if (isset($rhs->$rhsLinkName)) {
-            $rhs->$rhsLinkName->beans = array($lhs->id => $lhs);
-        }
-    }
-
-    public function getJoin($link, $params = array(), $return_array = false)
+    public function getJoin($link, $params = [], $return_array = false)
     {
         $linkIsLHS = $link->getSide() == REL_LHS;
         $startingTable = $link->getFocus()->table_name;
@@ -91,34 +80,47 @@ class One2OneBeanRelationship extends One2MBeanRelationship
         $targetTable = $linkIsLHS ? $this->def['rhs_table'] : $this->def['lhs_table'];
         $targetTableWithAlias = $targetTable;
         $targetKey = $linkIsLHS ? $this->def['rhs_key'] : $this->def['lhs_key'];
-        $join_type= isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
+        $join_type = isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
 
         $join = '';
 
         //Set up any table aliases required
-        if (! empty($params['join_table_alias'])) {
-            $targetTableWithAlias = $targetTable . " ". $params['join_table_alias'];
+        if (!empty($params['join_table_alias'])) {
+            $targetTableWithAlias = $targetTable . ' ' . $params['join_table_alias'];
             $targetTable = $params['join_table_alias'];
         }
 
         $deleted = !empty($params['deleted']) ? 1 : 0;
 
         //join the related module's table
-        $join .= "$join_type $targetTableWithAlias ON $targetTable.$targetKey=$startingTable.$startingKey"
-               . " AND $targetTable.deleted=$deleted\n"
+        $join .= "{$join_type} {$targetTableWithAlias} ON {$targetTable}.{$targetKey}={$startingTable}.{$startingKey}"
+               . " AND {$targetTable}.deleted={$deleted}\n"
         //Next add any role filters
                . $this->getRoleWhere();
 
         if ($return_array) {
-            return array(
+            return [
                 'join' => $join,
                 'type' => $this->type,
                 'rel_key' => $targetKey,
-                'join_tables' => array($targetTable),
-                'where' => "",
-                'select' => "$targetTable.id",
-            );
+                'join_tables' => [$targetTable],
+                'where' => '',
+                'select' => "{$targetTable}.id",
+            ];
         }
+
         return $join;
+    }
+
+    protected function updateLinks($lhs, $lhsLinkName, $rhs, $rhsLinkName)
+    {
+        //RHS and LHS only ever have one bean
+        if (isset($lhs->{$lhsLinkName})) {
+            $lhs->{$lhsLinkName}->beans = [$rhs->id => $rhs];
+        }
+
+        if (isset($rhs->{$rhsLinkName})) {
+            $rhs->{$rhsLinkName}->beans = [$lhs->id => $lhs];
+        }
     }
 }

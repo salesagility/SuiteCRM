@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SubPanel/SubPanelDefinitions.php');
+require_once 'include/SubPanel/SubPanelDefinitions.php';
 
 class ConfiguratorViewHistoryContactsEmails extends SugarView
 {
@@ -56,7 +54,7 @@ class ConfiguratorViewHistoryContactsEmails extends SugarView
 
     public function display()
     {
-        $modules = array();
+        $modules = [];
         foreach ($GLOBALS['beanList'] as $moduleName => $objectName) {
             $bean = BeanFactory::getBean($moduleName);
 
@@ -86,6 +84,7 @@ class ConfiguratorViewHistoryContactsEmails extends SugarView
                 foreach ($subPanelDef['collection_list'] as $v) {
                     if (!empty($v['get_subpanel_data']) && $v['get_subpanel_data'] == 'function:get_emails_by_assign_or_link') {
                         $isValid = true;
+
                         break 2;
                     }
                 }
@@ -96,12 +95,13 @@ class ConfiguratorViewHistoryContactsEmails extends SugarView
 
             $bean->load_relationships();
             foreach ($bean->get_linked_fields() as $fieldName => $fieldDef) {
-                if ($bean->$fieldName->getRelatedModuleName() == 'Contacts') {
-                    $modules[$moduleName] = array(
+                if ($bean->{$fieldName}->getRelatedModuleName() == 'Contacts') {
+                    $modules[$moduleName] = [
                         'module' => $moduleName,
                         'label' => translate($moduleName),
                         'enabled' => empty($fieldDef['hide_history_contacts_emails'])
-                    );
+                    ];
+
                     break;
                 }
             }

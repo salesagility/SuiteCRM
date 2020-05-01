@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,29 +36,25 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/charts/Charts.php');
+require_once 'include/charts/Charts.php';
 
 class Chart_lead_source_by_outcome
 {
-    public $modules = array('Opportunities');
+    public $modules = ['Opportunities'];
     public $order = 0;
+
     public function __construct()
     {
     }
-
-
-
 
     public function draw($extra_tools)
     {
         global $app_list_strings, $current_language, $sugar_config, $currentModule, $action,$theme;
         $current_module_strings = return_module_language($current_language, 'Charts');
-
 
         if (isset($_REQUEST['lsbo_refresh'])) {
             $refresh = $_REQUEST['lsbo_refresh'];
@@ -67,9 +62,9 @@ class Chart_lead_source_by_outcome
             $refresh = false;
         }
 
-        $tempx = array();
-        $datax = array();
-        $selected_datax = array();
+        $tempx = [];
+        $datax = [];
+        $selected_datax = [];
         //get list of sales stage keys to display
 
         global $current_user;
@@ -96,7 +91,7 @@ class Chart_lead_source_by_outcome
             $selected_datax = array_keys($app_list_strings['lead_source_dom']);
         }
 
-        $ids =$current_user->getPreference('lsbo_ids');
+        $ids = $current_user->getPreference('lsbo_ids');
         //get list of user ids for which to display data
         if (!empty($ids) && count($ids) != 0 && !isset($_REQUEST['lsbo_ids'])) {
             $GLOBALS['log']->debug("_SESSION['lsbo_ids'] is:");
@@ -122,25 +117,23 @@ class Chart_lead_source_by_outcome
                 $id_hash = $id_hash * -1;
             }
         }
-        $GLOBALS['log']->debug("ids is:");
+        $GLOBALS['log']->debug('ids is:');
         $GLOBALS['log']->debug($ids);
         $id_md5 = substr(md5($current_user->id), 0, 9);
 
+        $seps = ['-', '/'];
+        $dates = [date($GLOBALS['timedate']->dbDayFormat), $GLOBALS['timedate']->dbDayFormat];
+        $dateFileNameSafe = str_replace($seps, '_', $dates);
+        $cache_file_name = sugar_cached('xml/') . $current_user->getUserPrivGuid() . '_lead_source_by_outcome_' . $dateFileNameSafe[0] . '_' . $dateFileNameSafe[1] . '.xml';
+        $GLOBALS['log']->debug("cache file name is: {$cache_file_name}");
 
-        $seps				= array("-", "/");
-        $dates				= array(date($GLOBALS['timedate']->dbDayFormat), $GLOBALS['timedate']->dbDayFormat);
-        $dateFileNameSafe	= str_replace($seps, "_", $dates);
-        $cache_file_name	= sugar_cached("xml/").$current_user->getUserPrivGuid()."_lead_source_by_outcome_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
-        $GLOBALS['log']->debug("cache file name is: $cache_file_name");
-
-
-        $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&lsbo_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'lsbo_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit', 'border="0"  align="absmiddle"', null, null, '.gif', $mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a>&nbsp;&nbsp;'.$extra_tools.'</div>'; ?>
+        $tools = '<div align="right"><a href="index.php?module=' . $currentModule . '&action=' . $action . '&lsbo_refresh=true" class="tabFormAdvLink">' . SugarThemeRegistry::current()->getImage('refresh', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_REFRESH']) . '&nbsp;' . $current_module_strings['LBL_REFRESH'] . '</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'lsbo_edit\');" class="tabFormAdvLink">' . SugarThemeRegistry::current()->getImage('edit', 'border="0"  align="absmiddle"', null, null, '.gif', $mod_strings['LBL_EDIT']) . '&nbsp;' . $current_module_strings['LBL_EDIT'] . '</a>&nbsp;&nbsp;' . $extra_tools . '</div>'; ?>
 
 <?php
 echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_LEAD_SOURCE_BY_OUTCOME'], $tools, false) . '</span>';
 
         if (empty($_SESSION['lsbo_ids'])) {
-            $_SESSION['lsbo_ids'] = "";
+            $_SESSION['lsbo_ids'] = '';
         } ?>
 
 <p>
@@ -163,7 +156,7 @@ echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this-
 <tr>
 <?php
 global $app_strings; ?>
-	<td align="right" colspan="2"> <input class="button" type="submit" title="<?php echo $app_strings['LBL_SELECT_BUTTON_TITLE']; ?>" value="<?php echo $app_strings['LBL_SELECT_BUTTON_LABEL']?>" /><input class="button" onClick="javascript: toggleDisplay('lsbo_edit');" type="button" title="<?php echo $app_strings['LBL_CANCEL_BUTTON_TITLE']; ?>" accessKey="<?php echo $app_strings['LBL_CANCEL_BUTTON_KEY']; ?>" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']?>"/></td>
+	<td align="right" colspan="2"> <input class="button" type="submit" title="<?php echo $app_strings['LBL_SELECT_BUTTON_TITLE']; ?>" value="<?php echo $app_strings['LBL_SELECT_BUTTON_LABEL']; ?>" /><input class="button" onClick="javascript: toggleDisplay('lsbo_edit');" type="button" title="<?php echo $app_strings['LBL_CANCEL_BUTTON_TITLE']; ?>" accessKey="<?php echo $app_strings['LBL_CANCEL_BUTTON_KEY']; ?>" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']; ?>"/></td>
 	</tr>
 </table>
 </form>
@@ -171,9 +164,8 @@ global $app_strings; ?>
 </p>
 <?php
 
-echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refresh, $current_module_strings)."</p>";
-        echo "<P align='center'><span class='chartFootnote'>".$current_module_strings['LBL_LEAD_SOURCE_BY_OUTCOME_DESC']."</span></P>";
-
+echo "<p align='center'>" . $this->gen_xml($datax, $ids, $cache_file_name, $refresh, $current_module_strings) . '</p>';
+        echo "<P align='center'><span class='chartFootnote'>" . $current_module_strings['LBL_LEAD_SOURCE_BY_OUTCOME_DESC'] . '</span></P>';
 
         if (file_exists($cache_file_name)) {
             global  $timedate;
@@ -182,27 +174,30 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             $file_date = '';
         } ?>
 <span class='chartFootnote'>
-<p align="right"><i><?php  echo $current_module_strings['LBL_CREATED_ON'].' '.$file_date; ?></i></p>
+<p align="right"><i><?php  echo $current_module_strings['LBL_CREATED_ON'] . ' ' . $file_date; ?></i></p>
 </span>
 <?php
     }
 
-
-
-
     /**
-    * Creates lead_source_by_outcome pipeline image as a HORIZONAL accumlated bar graph for multiple users.
-    * param $datay- the lead source data to display in the x-axis
-    * param $ids - list of assigned users of opps to find
-    * param $cache_file_name - file name to write image to
-    * param $refresh - boolean whether to rebuild image if exists
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-    * All Rights Reserved..
-    * Contributor(s): ______________________________________..
-    */
+     * Creates lead_source_by_outcome pipeline image as a HORIZONAL accumlated bar graph for multiple users.
+     * param $datay- the lead source data to display in the x-axis
+     * param $ids - list of assigned users of opps to find
+     * param $cache_file_name - file name to write image to
+     * param $refresh - boolean whether to rebuild image if exists
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+     *
+     * @param mixed $datay
+     * @param mixed $user_id
+     * @param mixed $cache_file_name
+     * @param mixed $refresh
+     * @param null|mixed $current_module_strings
+     */
     public function gen_xml(
-        $datay = array('foo', 'bar'),
-        $user_id = array('1'),
+        $datay = ['foo', 'bar'],
+        $user_id = ['1'],
         $cache_file_name = 'a_file',
         $refresh = false,
         $current_module_strings = null
@@ -217,37 +212,37 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
         $kDelim = $current_user->getPreference('num_grp_sep');
 
         if (!file_exists($cache_file_name) || $refresh == true) {
-            $GLOBALS['log']->debug("datay is:");
+            $GLOBALS['log']->debug('datay is:');
             $GLOBALS['log']->debug($datay);
-            $GLOBALS['log']->debug("user_id is: ");
+            $GLOBALS['log']->debug('user_id is: ');
             $GLOBALS['log']->debug($user_id);
-            $GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
+            $GLOBALS['log']->debug("cache_file_name is: {$cache_file_name}");
             $opp = new Opportunity();
-            $where="";
+            $where = '';
             //build the where clause for the query that matches $user
             $count = count($user_id);
-            $id = array();
-            if ($count>0) {
+            $id = [];
+            if ($count > 0) {
                 foreach ($user_id as $the_id) {
-                    $id[] = "'".$the_id."'";
+                    $id[] = "'" . $the_id . "'";
                 }
-                $ids = implode(",", $id);
-                $where .= "opportunities.assigned_user_id IN ($ids) ";
+                $ids = implode(',', $id);
+                $where .= "opportunities.assigned_user_id IN ({$ids}) ";
             }
 
             //build the where clause for the query that matches $datay
             $count = count($datay);
-            $datayArr = array();
-            if ($count>0) {
-                foreach ($datay as $key=>$value) {
-                    $datayArr[] = "'".$key."'";
+            $datayArr = [];
+            if ($count > 0) {
+                foreach ($datay as $key => $value) {
+                    $datayArr[] = "'" . $key . "'";
                 }
-                $datayArr = implode(",", $datayArr);
-                $where .= "AND opportunities.lead_source IN	($datayArr) ";
+                $datayArr = implode(',', $datayArr);
+                $where .= "AND opportunities.lead_source IN	({$datayArr}) ";
             }
-            $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";
-            $query .= "WHERE " .$where." AND opportunities.deleted=0 ";
-            $query .= " GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage";
+            $query = 'SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ';
+            $query .= 'WHERE ' . $where . ' AND opportunities.deleted=0 ';
+            $query .= ' GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage';
             //Now do the db queries
             //query for opportunity data that matches $datay and $user
 
@@ -258,23 +253,23 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             global $sugar_config;
             $symbol = $sugar_config['default_currency_symbol'];
             $other = $current_module_strings['LBL_LEAD_SOURCE_OTHER'];
-            $rowTotalArr = array();
+            $rowTotalArr = [];
             $rowTotalArr[] = 0;
             global $current_user;
-            $salesStages = array("Closed Lost"=>$app_list_strings['sales_stage_dom']["Closed Lost"],"Closed Won"=>$app_list_strings['sales_stage_dom']["Closed Won"],"Other"=>$other);
+            $salesStages = ['Closed Lost' => $app_list_strings['sales_stage_dom']['Closed Lost'], 'Closed Won' => $app_list_strings['sales_stage_dom']['Closed Won'], 'Other' => $other];
             if ($current_user->getPreference('currency')) {
                 $currency = new Currency();
                 $currency->retrieve($current_user->getPreference('currency'));
                 $div = $currency->conversion_rate;
                 $symbol = $currency->symbol;
             }
-            $fileContents = '     <yData defaultAltText="'.$current_module_strings['LBL_ROLLOVER_DETAILS'].'">'."\n";
-            $leadSourceArr = array();
+            $fileContents = '     <yData defaultAltText="' . $current_module_strings['LBL_ROLLOVER_DETAILS'] . '">' . "\n";
+            $leadSourceArr = [];
             while ($row = $opp->db->fetchByAssoc($result, false)) {
-                if ($row['total']*$div<=100) {
-                    $sum = round($row['total']*$div, 2);
+                if ($row['total'] * $div <= 100) {
+                    $sum = round($row['total'] * $div, 2);
                 } else {
-                    $sum = round($row['total']*$div);
+                    $sum = round($row['total'] * $div);
                 }
                 if ($row['lead_source'] == '') {
                     $row['lead_source'] = $current_module_strings['NTC_NO_LEGENDS'];
@@ -283,20 +278,20 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
                     $salesStage = $row['sales_stage'];
                     $salesStageT = $app_list_strings['sales_stage_dom'][$row['sales_stage']];
                 } else {
-                    $salesStage = "Other";
+                    $salesStage = 'Other';
                     $salesStageT = $other;
                 }
                 if (!isset($leadSourceArr[$row['lead_source']]['row_total'])) {
-                    $leadSourceArr[$row['lead_source']]['row_total']=0;
+                    $leadSourceArr[$row['lead_source']]['row_total'] = 0;
                 }
                 $leadSourceArr[$row['lead_source']][$salesStage]['opp_count'][] = $row['opp_count'];
                 $leadSourceArr[$row['lead_source']][$salesStage]['total'][] = $sum;
-                $leadSourceArr[$row['lead_source']]['outcome'][$salesStage]=$salesStageT;
+                $leadSourceArr[$row['lead_source']]['outcome'][$salesStage] = $salesStageT;
                 $leadSourceArr[$row['lead_source']]['row_total'] += $sum;
 
                 $total += $sum;
             }
-            foreach ($datay as $key=>$translation) {
+            foreach ($datay as $key => $translation) {
                 if ($key == '') {
                     $key = $current_module_strings['NTC_NO_LEGENDS'];
                     $translation = $current_module_strings['NTC_NO_LEGENDS'];
@@ -305,59 +300,59 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
                     $leadSourceArr[$key] = $key;
                 }
                 if (isset($leadSourceArr[$key]['row_total'])) {
-                    $rowTotalArr[]=$leadSourceArr[$key]['row_total'];
+                    $rowTotalArr[] = $leadSourceArr[$key]['row_total'];
                 }
-                if (isset($leadSourceArr[$key]['row_total']) && $leadSourceArr[$key]['row_total']>100) {
+                if (isset($leadSourceArr[$key]['row_total']) && $leadSourceArr[$key]['row_total'] > 100) {
                     $leadSourceArr[$key]['row_total'] = round($leadSourceArr[$key]['row_total']);
                 }
-                $fileContents .= '          <dataRow title="'.$translation.'" endLabel="'.currency_format_number($leadSourceArr[$key]['row_total'], array('currency_symbol' => true)) . '">'."\n";
+                $fileContents .= '          <dataRow title="' . $translation . '" endLabel="' . currency_format_number($leadSourceArr[$key]['row_total'], ['currency_symbol' => true]) . '">' . "\n";
                 if (is_array($leadSourceArr[$key]['outcome'])) {
-                    foreach ($leadSourceArr[$key]['outcome'] as $outcome=>$outcome_translation) {
-                        $fileContents .= '               <bar id="'.$outcome.'" totalSize="'.array_sum($leadSourceArr[$key][$outcome]['total']).'" altText="'.format_number(array_sum($leadSourceArr[$key][$outcome]['opp_count']), 0, 0).' '.$current_module_strings['LBL_OPPS_WORTH'].' '.currency_format_number(array_sum($leadSourceArr[$key][$outcome]['total']), array('currency_symbol' => true)).$current_module_strings['LBL_OPP_THOUSANDS'].' '.$current_module_strings['LBL_OPPS_OUTCOME'].' '.$outcome_translation.'" url="index.php?module=Opportunities&action=index&lead_source='.$key.'&sales_stage='.urlencode($outcome).'&query=true&searchFormTab=advanced_search"/>'."\n";
+                    foreach ($leadSourceArr[$key]['outcome'] as $outcome => $outcome_translation) {
+                        $fileContents .= '               <bar id="' . $outcome . '" totalSize="' . array_sum($leadSourceArr[$key][$outcome]['total']) . '" altText="' . format_number(array_sum($leadSourceArr[$key][$outcome]['opp_count']), 0, 0) . ' ' . $current_module_strings['LBL_OPPS_WORTH'] . ' ' . currency_format_number(array_sum($leadSourceArr[$key][$outcome]['total']), ['currency_symbol' => true]) . $current_module_strings['LBL_OPP_THOUSANDS'] . ' ' . $current_module_strings['LBL_OPPS_OUTCOME'] . ' ' . $outcome_translation . '" url="index.php?module=Opportunities&action=index&lead_source=' . $key . '&sales_stage=' . urlencode($outcome) . '&query=true&searchFormTab=advanced_search"/>' . "\n";
                     }
                 }
-                $fileContents .= '          </dataRow>'."\n";
+                $fileContents .= '          </dataRow>' . "\n";
             }
-            $fileContents .= '     </yData>'."\n";
+            $fileContents .= '     </yData>' . "\n";
             $max = get_max($rowTotalArr);
-            $fileContents .= '     <xData min="0" max="'.$max.'" length="10" kDelim="'.$kDelim.'" prefix="'.$symbol.'" suffix=""/>' . "\n";
-            $fileContents .= '     <colorLegend status="on">'."\n";
-            $i=0;
+            $fileContents .= '     <xData min="0" max="' . $max . '" length="10" kDelim="' . $kDelim . '" prefix="' . $symbol . '" suffix=""/>' . "\n";
+            $fileContents .= '     <colorLegend status="on">' . "\n";
+            $i = 0;
 
-            foreach ($salesStages as $outcome=>$outcome_translation) {
+            foreach ($salesStages as $outcome => $outcome_translation) {
                 $color = generate_graphcolor($outcome, $i);
-                $fileContents .= '          <mapping id="'.$outcome.'" name="'.$outcome_translation.'" color="'.$color.'"/>'."\n";
+                $fileContents .= '          <mapping id="' . $outcome . '" name="' . $outcome_translation . '" color="' . $color . '"/>' . "\n";
                 $i++;
             }
-            $fileContents .= '     </colorLegend>'."\n";
-            $fileContents .= '     <graphInfo>'."\n";
-            $fileContents .= '          <![CDATA['.$current_module_strings['LBL_OPP_SIZE'].' '.$symbol.'1'.$current_module_strings['LBL_OPP_THOUSANDS'].']]>'."\n";
-            $fileContents .= '     </graphInfo>'."\n";
+            $fileContents .= '     </colorLegend>' . "\n";
+            $fileContents .= '     <graphInfo>' . "\n";
+            $fileContents .= '          <![CDATA[' . $current_module_strings['LBL_OPP_SIZE'] . ' ' . $symbol . '1' . $current_module_strings['LBL_OPP_THOUSANDS'] . ']]>' . "\n";
+            $fileContents .= '     </graphInfo>' . "\n";
             $fileContents .= '     <chartColors ';
             foreach ($barChartColors as $key => $value) {
-                $fileContents .= ' '.$key.'='.'"'.$value.'" ';
+                $fileContents .= ' ' . $key . '=' . '"' . $value . '" ';
             }
-            $fileContents .= ' />'."\n";
-            $fileContents .= '</graphData>'."\n";
+            $fileContents .= ' />' . "\n";
+            $fileContents .= '</graphData>' . "\n";
             $total = round($total, 2);
-            $title = '<graphData title="'.$current_module_strings['LBL_ALL_OPPORTUNITIES'].currency_format_number($total, array('currency_symbol' => true)).$app_strings['LBL_THOUSANDS_SYMBOL'].'">'."\n";
-            $fileContents = $title.$fileContents;
+            $title = '<graphData title="' . $current_module_strings['LBL_ALL_OPPORTUNITIES'] . currency_format_number($total, ['currency_symbol' => true]) . $app_strings['LBL_THOUSANDS_SYMBOL'] . '">' . "\n";
+            $fileContents = $title . $fileContents;
 
             save_xml_file($cache_file_name, $fileContents);
         }
         $return = create_chart('hBarF', $cache_file_name);
+
         return $return;
     }
-
 
     public function constructQuery()
     {
         global $current_user;
         global $app_list_strings;
 
-        $tempx = array();
-        $datax = array();
-        $selected_datax = array();
+        $tempx = [];
+        $datax = [];
+        $selected_datax = [];
         //get list of sales stage keys to display
 
         $tempx = $current_user->getPreference('lsbo_lead_sources');
@@ -385,7 +380,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
 
         $datay = $datax;
 
-        $ids =$current_user->getPreference('lsbo_ids');
+        $ids = $current_user->getPreference('lsbo_ids');
         //get list of user ids for which to display data
         if (!empty($ids) && count($ids) != 0 && !isset($_REQUEST['lsbo_ids'])) {
             $GLOBALS['log']->debug("_SESSION['lsbo_ids'] is:");
@@ -405,37 +400,37 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
         $user_id = $ids;
 
         $opp = new Opportunity();
-        $where="";
+        $where = '';
         //build the where clause for the query that matches $user
         $count = count($user_id);
-        $id = array();
-        if ($count>0) {
+        $id = [];
+        if ($count > 0) {
             foreach ($user_id as $the_id) {
-                $id[] = "'".$the_id."'";
+                $id[] = "'" . $the_id . "'";
             }
-            $ids = implode(",", $id);
-            $where .= "opportunities.assigned_user_id IN ($ids) ";
+            $ids = implode(',', $id);
+            $where .= "opportunities.assigned_user_id IN ({$ids}) ";
         }
 
         //build the where clause for the query that matches $datay
         $count = count($datay);
-        $datayArr = array();
-        if ($count>0) {
-            foreach ($datay as $key=>$value) {
-                $datayArr[] = "'".$key."'";
+        $datayArr = [];
+        if ($count > 0) {
+            foreach ($datay as $key => $value) {
+                $datayArr[] = "'" . $key . "'";
             }
-            $datayArr = implode(",", $datayArr);
-            $where .= "AND opportunities.lead_source IN	($datayArr) ";
+            $datayArr = implode(',', $datayArr);
+            $where .= "AND opportunities.lead_source IN	({$datayArr}) ";
         }
-        $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";
-        $query .= "WHERE " .$where." AND opportunities.deleted=0 ";
-        $query .= " GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage";
+        $query = 'SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ';
+        $query .= 'WHERE ' . $where . ' AND opportunities.deleted=0 ';
+        $query .= ' GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage';
 
         return $query;
     }
 
     public function constructGroupBy()
     {
-        return array( 'lead_source', 'sales_stage' );
+        return ['lead_source', 'sales_stage'];
     }
 }

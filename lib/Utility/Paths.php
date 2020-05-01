@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,10 +40,7 @@
 namespace SuiteCRM\Utility;
 
 /**
- * Class Paths
- * @package SuiteCRM\Utility
- *
- * Keeps the standard location in one place
+ * Class Paths.
  */
 class Paths
 {
@@ -53,7 +49,7 @@ class Paths
      */
     public function getContainersFilePath()
     {
-        return $this->getLibraryPath() .'/API/core/containers.php';
+        return $this->getLibraryPath() . '/API/core/containers.php';
     }
 
     /**
@@ -72,6 +68,7 @@ class Paths
         $projectPath = $this->getProjectPath();
         $libPath = $this->getLibraryPath();
         $customLibraryPath = str_replace($projectPath, $projectPath . DIRECTORY_SEPARATOR . 'custom', $libPath);
+
         return realpath($customLibraryPath);
     }
 

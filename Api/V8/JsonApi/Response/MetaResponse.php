@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Response;
 
 class MetaResponse implements \JsonSerializable
@@ -13,7 +14,7 @@ class MetaResponse implements \JsonSerializable
      *
      * @param array|\stdClass $properties
      *
-     * @throws \InvalidArgumentException When bean is not found with the given id.
+     * @throws \InvalidArgumentException when bean is not found with the given id
      */
     public function __construct($properties = [])
     {
@@ -22,14 +23,14 @@ class MetaResponse implements \JsonSerializable
         }
 
         foreach ($properties as $property => $value) {
-            $this->$property = $value;
+            $this->{$property} = $value;
         }
     }
 
     /**
      * @param string $name
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     public function __get($name)
     {
@@ -46,7 +47,7 @@ class MetaResponse implements \JsonSerializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function jsonSerialize()
     {

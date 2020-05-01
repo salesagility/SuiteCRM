@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -52,8 +51,7 @@ use SuiteCRM\Exception\NotAllowedException;
 use SuiteCRM\Exception\NotFoundException;
 
 /**
- * Class MetaService
- * @package Api\V8\Service
+ * Class MetaService.
  */
 class MetaService
 {
@@ -81,6 +79,7 @@ class MetaService
 
     /**
      * UserService constructor.
+     *
      * @param BeanManager $beanManager
      */
     public function __construct(
@@ -95,6 +94,7 @@ class MetaService
      * Build the response with a list of modules to return.
      *
      * @param Request $request
+     *
      * @return DocumentResponse
      */
     public function getModuleList(Request $request)
@@ -116,8 +116,10 @@ class MetaService
      *
      * @param Request $request
      * @param GetFieldListParams $fieldListParams
-     * @return DocumentResponse
+     *
      * @throws NotAllowedException
+     *
+     * @return DocumentResponse
      */
     public function getFieldList(Request $request, GetFieldListParams $fieldListParams)
     {
@@ -134,70 +136,12 @@ class MetaService
     }
 
     /**
-     * @param string $module
-     * @throws NotAllowedException
-     */
-    private function checkIfUserHasModuleAccess($module)
-    {
-        global $current_user;
-
-        $modules = query_module_access_list($current_user);
-        \ACLController::filterModuleList($modules, false);
-
-        if (!in_array($module, $modules, true)) {
-            throw new NotAllowedException('The API user does not have access to this module.');
-        }
-    }
-
-    /**
-     * Build the list of fields for a given module.
-     *
-     * @param string $module
-     * @return array
-     * @throws NotAllowedException
-     */
-    private function buildFieldList($module)
-    {
-        $this->checkIfUserHasModuleAccess($module);
-        $bean = $this->beanManager->newBeanSafe($module);
-        $fieldList = [];
-        foreach ($bean->field_defs as $fieldName => $fieldDef) {
-            $fieldList[$fieldName] = $this->pruneVardef($fieldDef);
-        }
-
-        return $fieldList;
-    }
-
-    /**
-     * We only allow certain fields from the vardefs to be returned in the field list.
-     *
-     * @param array $def
-     * @return array
-     */
-    private function pruneVardef($def)
-    {
-        $pruned = [];
-        foreach ($def as $var => $val) {
-            if (in_array($var, static::$allowedVardefFields, true)) {
-                $pruned[$var] = $val;
-            }
-        }
-        if (!isset($def['required'])) {
-            $pruned['required'] = false;
-        }
-        if (!isset($def['dbType'])) {
-            $pruned['dbType'] = $def['type'];
-        }
-
-        return $pruned;
-    }
-
-    /**
      * Build the response with the swagger schema.
      *
-     * @return DocumentResponse
      * @throws NotFoundException
      * @throws Exception
+     *
+     * @return DocumentResponse
      */
     public function getSwaggerSchema()
     {
@@ -217,5 +161,68 @@ class MetaService
         }
 
         return json_decode($swaggerFile, true);
+    }
+
+    /**
+     * @param string $module
+     *
+     * @throws NotAllowedException
+     */
+    private function checkIfUserHasModuleAccess($module)
+    {
+        global $current_user;
+
+        $modules = query_module_access_list($current_user);
+        \ACLController::filterModuleList($modules, false);
+
+        if (!in_array($module, $modules, true)) {
+            throw new NotAllowedException('The API user does not have access to this module.');
+        }
+    }
+
+    /**
+     * Build the list of fields for a given module.
+     *
+     * @param string $module
+     *
+     * @throws NotAllowedException
+     *
+     * @return array
+     */
+    private function buildFieldList($module)
+    {
+        $this->checkIfUserHasModuleAccess($module);
+        $bean = $this->beanManager->newBeanSafe($module);
+        $fieldList = [];
+        foreach ($bean->field_defs as $fieldName => $fieldDef) {
+            $fieldList[$fieldName] = $this->pruneVardef($fieldDef);
+        }
+
+        return $fieldList;
+    }
+
+    /**
+     * We only allow certain fields from the vardefs to be returned in the field list.
+     *
+     * @param array $def
+     *
+     * @return array
+     */
+    private function pruneVardef($def)
+    {
+        $pruned = [];
+        foreach ($def as $var => $val) {
+            if (in_array($var, static::$allowedVardefFields, true)) {
+                $pruned[$var] = $val;
+            }
+        }
+        if (!isset($def['required'])) {
+            $pruned['required'] = false;
+        }
+        if (!isset($def['dbType'])) {
+            $pruned['dbType'] = $def['type'];
+        }
+
+        return $pruned;
     }
 }

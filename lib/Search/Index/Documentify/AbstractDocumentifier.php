@@ -54,7 +54,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 abstract class AbstractDocumentifier
 {
-
     /**
      * Converts a bean to a document-friendly associative array.
      *
@@ -62,7 +61,7 @@ abstract class AbstractDocumentifier
      *
      * @return array
      */
-    abstract public function documentify(\SugarBean $bean);
+    abstract public function documentify(SugarBean $bean);
 
     /**
      * Applies sanitizePhone() to all the phones in the serialisation array.
@@ -87,7 +86,7 @@ abstract class AbstractDocumentifier
     public function fixEmails(SugarBean $bean, array &$document)
     {
         if (!isset($document['email']) && $bean->hasEmails()) {
-            /** @var SugarEmailAddress $emailManager */
+            // @var SugarEmailAddress $emailManager
             if (isset($bean->emailAddress)) {
                 $emailManager = $bean->emailAddress;
                 $email = $emailManager->getPrimaryAddress($bean);

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,15 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
-    die("Not a Valid Entry Point");
-} else {
-    require_once("data/BeanFactory.php");
+    die('Not a Valid Entry Point');
+}
+    require_once 'data/BeanFactory.php';
     $file_type = ''; // bug 45896
-    require_once("data/BeanFactory.php");
+    require_once 'data/BeanFactory.php';
     ini_set(
         'zlib.output_compression',
         'Off'
-    );//bug 27089, if use gzip here, the Content-Length in header may be incorrect.
+    ); //bug 27089, if use gzip here, the Content-Length in header may be incorrect.
     // cn: bug 8753: current_user's preferred export charset not being honored
     $GLOBALS['current_user']->retrieve($_SESSION['authenticated_user_id']);
     $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
@@ -62,7 +60,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     $file_type = strtolower($_REQUEST['type']);
     if (!isset($_REQUEST['isTempFile'])) {
         //Custom modules may have capitalizations anywhere in their names. We should check the passed in format first.
-        require('include/modules.php');
+        require 'include/modules.php';
         $module = $db->quote($_REQUEST['type']);
         if (empty($beanList[$module])) {
             //start guessing at a module name
@@ -104,77 +102,76 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         // See if it is a remote file, if so, send them that direction
         if (isset($focus->doc_url) && !empty($focus->doc_url)) {
             header('Location: ' . $focus->doc_url);
-            sugar_die("Remote file detected, location header sent.");
+            sugar_die('Remote file detected, location header sent.');
         }
 
-        if (isset($focusRevision) && isset($focusRevision->doc_url) && !empty($focusRevision->doc_url)) {
+        if (isset($focusRevision, $focusRevision->doc_url) && !empty($focusRevision->doc_url)) {
             header('Location: ' . $focusRevision->doc_url);
-            sugar_die("Remote file detected, location header sent.");
+            sugar_die('Remote file detected, location header sent.');
         }
     } // if
-    $temp = explode("_", $_REQUEST['id'], 2);
+    $temp = explode('_', $_REQUEST['id'], 2);
     if (is_array($temp)) {
         $image_field = isset($temp[1]) ? $temp[1] : null;
         $image_id = $temp[0];
     }
-    if (isset($_REQUEST['ieId']) && isset($_REQUEST['isTempFile'])) {
+    if (isset($_REQUEST['ieId'], $_REQUEST['isTempFile'])) {
         $local_location = sugar_cached("modules/Emails/{$_REQUEST['ieId']}/attachments/{$_REQUEST['id']}");
-    } elseif (isset($_REQUEST['isTempFile']) && $file_type == "import") {
+    } elseif (isset($_REQUEST['isTempFile']) && $file_type == 'import') {
         $local_location = "upload://import/{$_REQUEST['tempName']}";
     } else {
         $local_location = "upload://{$_REQUEST['id']}";
     }
 
-    if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
+    if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == 'SugarFieldImage')) {
         $local_location = "upload://{$_REQUEST['id']}";
     }
 
-    if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage") && (isset($_REQUEST['isProfile'])) && empty($_REQUEST['id'])) {
-        $local_location = "include/images/default-profile.png";
+    if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == 'SugarFieldImage') && (isset($_REQUEST['isProfile'])) && empty($_REQUEST['id'])) {
+        $local_location = 'include/images/default-profile.png';
     }
 
-    if (!file_exists($local_location) || strpos($local_location, "..")) {
+    if (!file_exists($local_location) || strpos($local_location, '..')) {
         if (isset($image_field)) {
-            header("Content-Type: image/png");
-            header("Content-Disposition: attachment; filename=\"No-Image.png\"");
-            header("X-Content-Type-Options: nosniff");
-            header("Content-Length: " . filesize('include/SugarFields/Fields/Image/no_image.png'));
+            header('Content-Type: image/png');
+            header('Content-Disposition: attachment; filename="No-Image.png"');
+            header('X-Content-Type-Options: nosniff');
+            header('Content-Length: ' . filesize('include/SugarFields/Fields/Image/no_image.png'));
             header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
             set_time_limit(0);
             readfile('include/SugarFields/Fields/Image/no_image.png');
             die();
-        } else {
-            die($app_strings['ERR_INVALID_FILE_REFERENCE']);
         }
-    } else {
+        die($app_strings['ERR_INVALID_FILE_REFERENCE']);
+    }
         $doQuery = true;
 
         if ($file_type == 'documents' && !isset($image_field)) {
             // cn: bug 9674 document_revisions table has no 'name' column.
-            $query = "SELECT filename name FROM document_revisions INNER JOIN documents ON documents.id = document_revisions.document_id ";
+            $query = 'SELECT filename name FROM document_revisions INNER JOIN documents ON documents.id = document_revisions.document_id ';
             $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "' ";
         } elseif ($file_type == 'kbdocuments') {
-            $query = "SELECT document_revisions.filename name	FROM document_revisions INNER JOIN kbdocument_revisions ON document_revisions.id = kbdocument_revisions.document_revision_id INNER JOIN kbdocuments ON kbdocument_revisions.kbdocument_id = kbdocuments.id ";
+            $query = 'SELECT document_revisions.filename name	FROM document_revisions INNER JOIN kbdocument_revisions ON document_revisions.id = kbdocument_revisions.document_revision_id INNER JOIN kbdocuments ON kbdocument_revisions.kbdocument_id = kbdocuments.id ';
             $query .= "WHERE document_revisions.id = '" . $db->quote($_REQUEST['id']) . "'";
         } elseif ($file_type == 'notes') {
-            $query = "SELECT filename name, file_mime_type FROM notes ";
+            $query = 'SELECT filename name, file_mime_type FROM notes ';
             $query .= "WHERE notes.id = '" . $db->quote($_REQUEST['id']) . "'";
         } elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type']) && $file_type != 'temp' && isset($image_field)) { //make sure not email temp file.
-            $file_type = ($file_type == "employees") ? "users" : $file_type;
+            $file_type = ($file_type == 'employees') ? 'users' : $file_type;
             //$query = "SELECT " . $image_field ." FROM " . $file_type . " LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
 
             // Fix for issue #1195: because the module was created using Module Builder and it does not create any _cstm table,
             // there is a need to check whether the field has _c extension.
-            $query = "SELECT " . $image_field . " FROM " . $file_type . " ";
-            if (substr($image_field, -2) == "_c") {
-                $query .= "LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
+            $query = 'SELECT ' . $image_field . ' FROM ' . $file_type . ' ';
+            if (substr($image_field, -2) == '_c') {
+                $query .= 'LEFT JOIN ' . $file_type . '_cstm cstm ON cstm.id_c = ' . $file_type . '.id ';
             }
-            $query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
+            $query .= 'WHERE ' . $file_type . ".id= '" . $db->quote($image_id) . "'";
 
         //$query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
         } elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type']) && $file_type != 'temp') { //make sure not email temp file.
-            $query = "SELECT filename name FROM " . $file_type . " ";
-            $query .= "WHERE " . $file_type . ".id= '" . $db->quote($_REQUEST['id']) . "'";
+            $query = 'SELECT filename name FROM ' . $file_type . ' ';
+            $query .= 'WHERE ' . $file_type . ".id= '" . $db->quote($_REQUEST['id']) . "'";
         } elseif ($file_type == 'temp') {
             $doQuery = false;
         }
@@ -210,32 +207,32 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
                 $download_location = "upload://{$_REQUEST['id']}";
             }
         } else {
-            if (isset($_REQUEST['tempName']) && isset($_REQUEST['isTempFile'])) {
+            if (isset($_REQUEST['tempName'], $_REQUEST['isTempFile'])) {
                 // downloading a temp file (email 2.0)
                 $download_location = $local_location;
                 $name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
             } else {
-                if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
+                if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == 'SugarFieldImage')) {
                     $download_location = $local_location;
                     $name = isset($_REQUEST['tempName']) ? $_REQUEST['tempName'] : '';
                 }
             }
         }
 
-        if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT'])) {
+        if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/MSIE/', $_SERVER['HTTP_USER_AGENT'])) {
             $name = urlencode($name);
-            $name = str_replace("+", "_", $name);
+            $name = str_replace('+', '_', $name);
         }
 
         header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
-        if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == "SugarFieldImage")) {
+        if (isset($_REQUEST['isTempFile']) && ($_REQUEST['type'] == 'SugarFieldImage')) {
             $mime = getimagesize($download_location);
             if (!empty($mime)) {
                 header("Content-Type: {$mime['mime']}");
             } else {
-                header("Content-Type: image/png");
+                header('Content-Type: image/png');
             }
         } else {
             header('Content-type: ' . $mime_type);
@@ -246,17 +243,14 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         }
         // disable content type sniffing in MSIE
-        header("X-Content-Type-Options: nosniff");
-        header("Content-Length: " . filesize($local_location));
+        header('X-Content-Type-Options: nosniff');
+        header('Content-Length: ' . filesize($local_location));
         header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
         set_time_limit(0);
 
         // When output_buffering = On, ob_get_level() may return 1 even if ob_end_clean() returns false
         // This happens on some QA stacks. See Bug#64860
         while (ob_get_level() && @ob_end_clean()) {
-            ;
         }
 
         readfile($download_location);
-    }
-}

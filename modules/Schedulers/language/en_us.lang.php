@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
-// OOTB Scheduler Job Names:
+$mod_strings = [
+    // OOTB Scheduler Job Names:
     'LBL_OOTB_WORKFLOW' => 'Process Workflow Tasks',
     'LBL_OOTB_REPORTS' => 'Run Report Generation Scheduled Tasks',
     'LBL_OOTB_IE' => 'Check Inbound Mailboxes',
@@ -59,14 +57,14 @@ $mod_strings = array(
     'LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS' => 'Removal of documents from filesystem',
     'LBL_OOTB_GOOGLE_CAL_SYNC' => 'Google Calendar Sync',
 
-// List Labels
+    // List Labels
     'LBL_LIST_JOB_INTERVAL' => 'Interval:',
     'LBL_LIST_LIST_ORDER' => 'Schedulers:',
     'LBL_LIST_NAME' => 'Scheduler:',
     'LBL_LIST_RANGE' => 'Range:',
     'LBL_LIST_STATUS' => 'Status:',
     'LBL_LIST_TITLE' => 'Schedule List:',
-// human readable:
+    // human readable:
     'LBL_SUN' => 'Sunday',
     'LBL_MON' => 'Monday',
     'LBL_TUE' => 'Tuesday',
@@ -86,15 +84,14 @@ $mod_strings = array(
     'LBL_OFTEN' => 'As often as possible.',
     'LBL_MIN_MARK' => 'minute mark',
 
-
-// crontabs
+    // crontabs
     'LBL_MINS' => 'min',
     'LBL_HOURS' => 'hrs',
     'LBL_DAY_OF_MONTH' => 'date',
     'LBL_MONTHS' => 'mo',
     'LBL_DAY_OF_WEEK' => 'day',
     'LBL_CRONTAB_EXAMPLES' => 'The above uses standard crontab notation.',
-// Labels
+    // Labels
     'LBL_ALWAYS' => 'Always',
     'LBL_CATCH_UP' => 'Execute If Missed',
     'LBL_CATCH_UP_WARNING' => 'Uncheck if this job may take more than a moment to run.',
@@ -122,10 +119,10 @@ $mod_strings = array(
     'LBL_ADV_OPTIONS' => 'Advanced Options',
     'LBL_TOGGLE_ADV' => 'Show Advanced Options',
     'LBL_TOGGLE_BASIC' => 'Show Basic Options',
-// Links
+    // Links
     'LNK_LIST_SCHEDULER' => 'Schedulers',
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
-// Messages
+    // Messages
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
     'LBL_CRON_INSTRUCTIONS_WINDOWS' => 'To Setup Windows Scheduler',
@@ -134,11 +131,11 @@ $mod_strings = array(
     'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file:',
     'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
     'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands:',
-// Subpanels
+    // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
     'LBL_EXECUTE_TIME' => 'Execute Time',
 
-//jobstrings
+    //jobstrings
     'LBL_REFRESHJOBS' => 'Refresh Jobs',
     'LBL_POLLMONITOREDINBOXES' => 'Check Inbound Mail Accounts',
     'LBL_PERFORMFULLFTSINDEX' => 'Full-text Search Index System',
@@ -161,6 +158,6 @@ $mod_strings = array(
 
     'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
     'LBL_SYNCGOOGLECALENDAR' => 'Sync Google Calendars',
-);
+];
 
 global $sugar_config;

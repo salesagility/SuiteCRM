@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -56,15 +55,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 include_once __DIR__ . '/../../../include/ListView/ListViewFacade.php';
 
 /**
- * ListViewService
+ * ListViewService.
  *
  * @author gyula
  */
 class ListViewService
 {
-    
     /**
-     * an exact match to ListViewColumnInterface struct of Angular front-end
+     * an exact match to ListViewColumnInterface struct of Angular front-end.
      *
      * @var array
      */
@@ -79,7 +77,7 @@ class ListViewService
         'sortable' => false,
         'customCode' => '', // deprecated from legacy (using only on PHP front-end)
     ];
-    
+
     /**
      * @var BeanManager
      */
@@ -128,7 +126,7 @@ class ListViewService
         $moduleName = $params->getModuleName();
         /** @var SugarBean */
         $bean = \BeanFactory::getBean($moduleName);
-        
+
         $text = new LangText(null, null, LangText::USING_ALL_STRINGS, true, false, $moduleName);
         $displayColumns = ListViewFacade::getDisplayColumns($moduleName);
         $data = [];
@@ -140,11 +138,11 @@ class ListViewService
                 $translated = $text->getText($bean->field_name_map[strtolower($key)]['vname']);
             }
             $column['label'] = $translated ? $translated : $column['label'];
-            
+
             // TODO: validate the column name (for e.g label and name should be requered etc...) also check the ListViewColumnInterface keys are match..
             $data[] = $column;
         }
-        $response = new AttributeResponse($data);
-        return $response;
+
+        return new AttributeResponse($data);
     }
 }

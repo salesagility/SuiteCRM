@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$dictionary['AOR_Scheduled_Reports'] = array(
+$dictionary['AOR_Scheduled_Reports'] = [
     'table' => 'aor_scheduled_reports',
     'audited' => false,
     'duplicate_merge' => false,
-    'fields' => array(
-        'schedule' => array(
+    'fields' => [
+        'schedule' => [
             'required' => true,
             'name' => 'schedule',
             'vname' => 'LBL_SCHEDULE',
@@ -62,16 +60,16 @@ $dictionary['AOR_Scheduled_Reports'] = array(
             'merge_filter' => 'disabled',
             'len' => '100',
             'size' => '20',
-        ),
-        'last_run' => array(
+        ],
+        'last_run' => [
             'name' => 'last_run',
             'vname' => 'LBL_LAST_RUN',
             'dbtype' => 'datetime',
             'type' => 'readonly',
             'required' => false,
             'reportable' => false,
-        ),
-        'status' => array(
+        ],
+        'status' => [
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'enum',
@@ -81,27 +79,25 @@ $dictionary['AOR_Scheduled_Reports'] = array(
             'required' => false,
             'reportable' => false,
             'importable' => 'required',
-        ),
-        'email_recipients' =>
-            array(
-                'required' => false,
-                'name' => 'email_recipients',
-                'vname' => 'LBL_EMAIL_RECIPIENTS',
-                'type' => 'longtext',
-                'massupdate' => 0,
-                'importable' => 'false',
-                'duplicate_merge' => 'disabled',
-                'duplicate_merge_dom_value' => 0,
-                'audited' => false,
-                'reportable' => false,
-                'function' =>
-                    array(
-                        'name' => 'display_email_lines',
-                        'returns' => 'html',
-                        'include' => 'modules/AOR_Scheduled_Reports/emailRecipients.php'
-                    ),
-            ),
-        "aor_report" => array(
+        ],
+        'email_recipients' => [
+            'required' => false,
+            'name' => 'email_recipients',
+            'vname' => 'LBL_EMAIL_RECIPIENTS',
+            'type' => 'longtext',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => 0,
+            'audited' => false,
+            'reportable' => false,
+            'function' => [
+                'name' => 'display_email_lines',
+                'returns' => 'html',
+                'include' => 'modules/AOR_Scheduled_Reports/emailRecipients.php'
+            ],
+        ],
+        'aor_report' => [
             'name' => 'aor_report',
             'type' => 'link',
             'relationship' => 'aor_scheduled_reports_aor_reports',
@@ -112,8 +108,8 @@ $dictionary['AOR_Scheduled_Reports'] = array(
             'vname' => 'LBL_AOR_REPORT',
             'side' => 'left',
             'id_name' => 'aor_report_id',
-        ),
-        "aor_report_name" => array(
+        ],
+        'aor_report_name' => [
             'name' => 'aor_report_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -125,22 +121,20 @@ $dictionary['AOR_Scheduled_Reports'] = array(
             'table' => 'aor_reports',
             'module' => 'AOR_Reports',
             'rname' => 'name',
-        ),
-        "aor_report_id" => array(
+        ],
+        'aor_report_id' => [
             'name' => 'aor_report_id',
             'type' => 'id',
             'reportable' => false,
             'vname' => 'LBL_AOR_REPORT_ID',
-        ),
-
-
-    ),
-    'relationships' => array(
-    ),
+        ],
+    ],
+    'relationships' => [
+    ],
     'optimistic_locking' => true,
     'unified_search' => false,
-);
+];
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
 VardefManager::createVardef('AOR_Scheduled_Reports', 'AOR_Scheduled_Reports', ['basic', 'security_groups']);

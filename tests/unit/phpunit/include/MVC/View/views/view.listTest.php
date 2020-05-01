@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewListTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -15,23 +18,22 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistViewProcess()
     {
-        $query = "SELECT * FROM aod_index";
+        $query = 'SELECT * FROM aod_index';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         }
         $tableAodIndex = $rows;
-        
-        $query = "SELECT * FROM email_addresses";
+
+        $query = 'SELECT * FROM email_addresses';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         }
         $tableEmailAddresses = $rows;
-        
-        
+
         //execute the method and call methods to get the required child objects set. it should return some html.
         $view = new ViewList();
         $view->seed = new User();
@@ -44,24 +46,23 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
 
-
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addresses');
         foreach ($tableEmailAddresses as $row) {
-            $query = "INSERT email_addresses INTO (";
+            $query = 'INSERT email_addresses INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
-        
-        DBManagerFactory::getInstance()->query("DELETE FROM aod_index");
+
+        DBManagerFactory::getInstance()->query('DELETE FROM aod_index');
         foreach ($tableAodIndex as $row) {
-            $query = "INSERT aod_index INTO (";
+            $query = 'INSERT aod_index INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
@@ -94,7 +95,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->module = 'Users';
         $GLOBALS['module'] = 'Users';
         $_REQUEST['Users2_USER_offset'] = 1;
-        $_REQUEST['current_query_by_page'] = htmlentities(json_encode(array('key' => 'value')));
+        $_REQUEST['current_query_by_page'] = htmlentities(json_encode(['key' => 'value']));
         $view->bean = new User();
 
         ob_start();
@@ -157,14 +158,14 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdisplay()
     {
-        $query = "SELECT * FROM email_addresses";
+        $query = 'SELECT * FROM email_addresses';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         }
         $tableEmailAddresses = $rows;
-        
+
         $view = new ViewList();
 
         //test without setting bean attibute. it shuold return no access html.
@@ -187,14 +188,13 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent2));
-        
 
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addresses');
         foreach ($tableEmailAddresses as $row) {
-            $query = "INSERT email_addresses INTO (";
+            $query = 'INSERT email_addresses INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,29 +40,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 class Group extends User
 {
     // User attribute overrides
-    public $status			= 'Group';
-    public $password		= ''; // to disallow logins
+    public $status = 'Group';
+    public $password = ''; // to disallow logins
     public $default_team;
     public $importable = false;
-
 
     public function __construct()
     {
         parent::__construct();
     }
 
-
-
-
     /**
-     * overrides SugarBean method
+     * overrides SugarBean method.
+     *
+     * @param mixed $id
      */
     public function mark_deleted($id)
     {
@@ -71,19 +65,20 @@ class Group extends User
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
-        $query = "SELECT users.*";
-        $query .= " FROM users ";
-        $where_auto = " users.deleted = 0";
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
+        $query = 'SELECT users.*';
+        $query .= ' FROM users ';
+        $where_auto = ' users.deleted = 0';
+        if ($where != '') {
+            $query .= " WHERE {$where} AND " . $where_auto;
         } else {
-            $query .= " WHERE " . $where_auto;
+            $query .= ' WHERE ' . $where_auto;
         }
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
+        if ($order_by != '') {
+            $query .= " ORDER BY {$order_by}";
         } else {
-            $query .= " ORDER BY users.user_name";
+            $query .= ' ORDER BY users.user_name';
         }
+
         return $query;
     }
 } // end class def

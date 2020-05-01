@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * EmailsSignatureResolver
+ * EmailsSignatureResolver.
  *
  * @author gyula
  */
@@ -52,40 +51,35 @@ class EmailsSignatureResolver
     const ERR_HTML_NONE = 302;
     const ERR_PLAINTEXT_AMBIGUOUS = 303;
     const ERR_PLAINTEXT_NONE = 304;
-    
+
     /**
-     *
      * @var array
      */
     protected $signatureArray;
-    
+
     /**
-     *
      * @var string
      */
     protected $html;
-    
+
     /**
-     *
      * @var string
      */
     protected $plaintext;
-    
+
     /**
-     *
      * @var array
      */
     protected $errors;
-    
+
     /**
-     *
      * @var bool
      */
     protected $noDefaultAvailable;
-    
+
     /**
-     *
      * @param array $signatureArray
+     *
      * @return array errors
      */
     public function setSignatureArray($signatureArray)
@@ -98,12 +92,36 @@ class EmailsSignatureResolver
         if (in_array(self::ERR_HTML_NONE, $this->errors) && in_array(self::ERR_PLAINTEXT_NONE, $this->errors)) {
             $this->noDefaultAvailable = true;
         }
+
         return $this->errors;
     }
-    
+
     /**
-     *
-     * @return string|null this function returns null and/or set errors variable if error(s) occured
+     * @return string
+     */
+    public function getHtml()
+    {
+        return $this->html;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaintext()
+    {
+        return $this->plaintext;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNoDefaultAvailable()
+    {
+        return $this->noDefaultAvailable;
+    }
+
+    /**
+     * @return null|string this function returns null and/or set errors variable if error(s) occured
      */
     protected function resolveHtml()
     {
@@ -113,6 +131,7 @@ class EmailsSignatureResolver
                 $this->errors[] = self::ERR_HTML_AMBIGUOUS;
                 LoggerManager::getLogger()->error('Ambiguous signature html found!');
             }
+
             return $this->signatureArray['html'];
         }
         if (isset($this->signatureArray['signature_html']) && $this->signatureArray['signature_html']) {
@@ -120,12 +139,12 @@ class EmailsSignatureResolver
         }
         $this->errors[] = self::ERR_HTML_NONE;
         LoggerManager::getLogger()->error('Signature html not found!');
+
         return null;
     }
-    
+
     /**
-     *
-     * @return string|null this function returns null and/or set errors variable if error(s) occured
+     * @return null|string this function returns null and/or set errors variable if error(s) occured
      */
     protected function resolvePlaintext()
     {
@@ -135,6 +154,7 @@ class EmailsSignatureResolver
                 $this->errors[] = self::ERR_PLAINTEXT_AMBIGUOUS;
                 LoggerManager::getLogger()->error('Ambiguous signature plain text found!');
             }
+
             return $this->signatureArray['plain'];
         }
         if (isset($this->signatureArray['signature']) && $this->signatureArray['signature']) {
@@ -142,33 +162,7 @@ class EmailsSignatureResolver
         }
         $this->errors[] = self::ERR_PLAINTEXT_NONE;
         LoggerManager::getLogger()->error('Signature plain text not found!');
+
         return null;
-    }
-    
-    /**
-     *
-     * @return string
-     */
-    public function getHtml()
-    {
-        return $this->html;
-    }
-    
-    /**
-     *
-     * @return string
-     */
-    public function getPlaintext()
-    {
-        return $this->plaintext;
-    }
-    
-    /**
-     *
-     * @return bool
-     */
-    public function isNoDefaultAvailable()
-    {
-        return $this->noDefaultAvailable;
     }
 }

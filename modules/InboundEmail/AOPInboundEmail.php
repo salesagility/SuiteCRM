@@ -1,8 +1,5 @@
 <?php
- /**
- *
- *
- * @package
+/**
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +16,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 require_once 'modules/InboundEmail/InboundEmail.php';
@@ -30,8 +26,10 @@ class AOPInboundEmail extends InboundEmail
 
     /**
      * Replaces embedded image links with links to the appropriate note in the CRM.
+     *
      * @param $string
      * @param $noteIds A whitelist of note ids to replace
+     *
      * @return mixed
      */
     public function processImageLinks($string, $noteIds)
@@ -40,7 +38,7 @@ class AOPInboundEmail extends InboundEmail
         if (!$noteIds) {
             return $string;
         }
-        $matches = array();
+        $matches = [];
         preg_match('/cid:([[:alnum:]-]*)/', $string, $matches);
         if (!$matches) {
             return $string;
@@ -49,17 +47,17 @@ class AOPInboundEmail extends InboundEmail
         $matches = array_unique($matches);
         foreach ($matches as $match) {
             if (in_array($match, $noteIds)) {
-                $string = str_replace('cid:'.$match, $sugar_config['site_url']."/index.php?entryPoint=download&id={$match}&type=Notes&", $string);
+                $string = str_replace('cid:' . $match, $sugar_config['site_url'] . "/index.php?entryPoint=download&id={$match}&type=Notes&", $string);
             }
         }
+
         return $string;
     }
-
 
     public function handleCreateCase(Email $email, $userId)
     {
         global $current_user, $mod_strings, $current_language;
-        $mod_strings = return_module_language($current_language, "Emails");
+        $mod_strings = return_module_language($current_language, 'Emails');
         $GLOBALS['log']->debug('In handleCreateCase in AOPInboundEmail');
         $c = new aCase();
         $this->getCaseIdFromCaseNumber($email->name, $c);
@@ -71,7 +69,7 @@ class AOPInboundEmail extends InboundEmail
             $c = new aCase();
 
             $notes = $email->get_linked_beans('notes', 'Notes');
-            $noteIds = array();
+            $noteIds = [];
             foreach ($notes as $note) {
                 $noteIds[] = $note->id;
             }
@@ -139,25 +137,25 @@ class AOPInboundEmail extends InboundEmail
             }
 
             $c->email_id = $email->id;
-            $email->parent_type = "Cases";
+            $email->parent_type = 'Cases';
             $email->parent_id = $c->id;
             // assign the email to the case owner
             $email->assigned_user_id = $c->assigned_user_id;
-            $email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " ". $email->name;
+            $email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . ' ' . $email->name;
             $email->save();
-            $GLOBALS['log']->debug('InboundEmail created one case with number: '.$c->case_number);
-            $createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
+            $GLOBALS['log']->debug('InboundEmail created one case with number: ' . $c->case_number);
+            $createCaseTemplateId = $this->get_stored_options('create_case_email_template', '');
             if (!empty($this->stored_options)) {
                 $storedOptions = unserialize(base64_decode($this->stored_options));
             }
             if (!empty($createCaseTemplateId)) {
-                $fromName = "";
-                $fromAddress = "";
+                $fromName = '';
+                $fromAddress = '';
                 if (!empty($this->stored_options)) {
                     $fromAddress = $storedOptions['from_addr'];
                     isValidEmailAddress($fromAddress);
                     $fromName = from_html($storedOptions['from_name']);
-                    $replyToName = (!empty($storedOptions['reply_to_name']))? from_html($storedOptions['reply_to_name']) :$fromName ;
+                    $replyToName = (!empty($storedOptions['reply_to_name'])) ? from_html($storedOptions['reply_to_name']) : $fromName;
                     $replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
                 } // if
                 $defaults = $current_user->getPreferredEmail();
@@ -185,7 +183,7 @@ class AOPInboundEmail extends InboundEmail
                     $et->body_html = '';
                 }
 
-                $et->subject = "Re:" . " " . str_replace('%1', $c->case_number, $c->getEmailSubjectMacro() . " ". $c->name);
+                $et->subject = 'Re:' . ' ' . str_replace('%1', $c->case_number, $c->getEmailSubjectMacro() . ' ' . $c->name);
 
                 $html = trim($email->description_html);
                 $plain = trim($email->description);
@@ -198,24 +196,24 @@ class AOPInboundEmail extends InboundEmail
                 $email->bcc_addrs = $email->bcc_addrs_names;
                 $email->from_name = $email->from_addr;
 
-                $email = $email->et->handleReplyType($email, "reply");
+                $email = $email->et->handleReplyType($email, 'reply');
                 $ret = $email->et->displayComposeEmail($email);
-                $ret['description'] = empty($email->description_html) ?  str_replace("\n", "\n<BR/>", $email->description) : $email->description_html;
+                $ret['description'] = empty($email->description_html) ? str_replace("\n", "\n<BR/>", $email->description) : $email->description_html;
 
                 $reply = new Email();
-                $reply->type				= 'out';
-                $reply->to_addrs			= $to[0]['email'];
-                $reply->to_addrs_arr		= $to;
-                $reply->cc_addrs_arr		= array();
-                $reply->bcc_addrs_arr		= array();
-                $reply->from_name			= $fromName;
-                $reply->from_addr			= $fromAddress;
-                $reply->reply_to_name		= $replyToName;
-                $reply->reply_to_addr		= $replyToAddr;
-                $reply->name				= $et->subject;
-                $reply->description			= $et->body . "<div><hr /></div>" .  $email->description;
+                $reply->type = 'out';
+                $reply->to_addrs = $to[0]['email'];
+                $reply->to_addrs_arr = $to;
+                $reply->cc_addrs_arr = [];
+                $reply->bcc_addrs_arr = [];
+                $reply->from_name = $fromName;
+                $reply->from_addr = $fromAddress;
+                $reply->reply_to_name = $replyToName;
+                $reply->reply_to_addr = $replyToAddr;
+                $reply->name = $et->subject;
+                $reply->description = $et->body . '<div><hr /></div>' . $email->description;
                 if (!$et->text_only) {
-                    $reply->description_html	= $et->body_html .  "<div><hr /></div>" . $email->description;
+                    $reply->description_html = $et->body_html . '<div><hr /></div>' . $email->description;
                 }
                 $GLOBALS['log']->debug('saving and sending auto-reply email');
                 //$reply->save(); // don't save the actual email.
@@ -234,5 +232,7 @@ class AOPInboundEmail extends InboundEmail
             $this->handleAutoresponse($email, $contactAddr);
         }
         echo "End of handle create case\n";
-    } // fn
+    }
+
+    // fn
 }

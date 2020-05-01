@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,7 +41,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\v8\Controller\OAuth2Controller;
 
-/**
+/*
  * @param ContainerInterface $container
  * @return OAuth2Controller
  */

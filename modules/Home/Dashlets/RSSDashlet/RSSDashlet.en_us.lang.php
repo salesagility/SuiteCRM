@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dashletStrings['RSSDashlet'] = array(
+$dashletStrings['RSSDashlet'] = [
     'LBL_TITLE' => 'News Feed',
     'LBL_DESCRIPTION' => 'News Feed',
     'LBL_SAVING' => 'Parsing...',
@@ -51,4 +49,4 @@ $dashletStrings['RSSDashlet'] = array(
     'LBL_CONFIGURE_HEIGHT' => 'Height (1 - 300)',
     'LBL_CONFIGURE_RSSURL' => 'RSS Url',
     'ERR_LOADING_FEED' => 'Failed loading RSS Feed',
-);
+];

@@ -2,22 +2,22 @@
 
 namespace Page;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class SaleModule
 {
     /**
-     * @var string $URL include url of current page
+     * @var string include url of current page
      */
     public static $URL = 'index.php?module=Test_SaleModule&action=index';
 
     /**
-     * @var string $NAME
+     * @var string
      */
     public static $PACKAGE_NAME = 'SaleTestModule';
 
     /**
-     * @var string $NAME
+     * @var string
      */
     public static $NAME = 'SaleTestModule';
 
@@ -28,6 +28,7 @@ class SaleModule
 
     /**
      * SaleModule constructor.
+     *
      * @param Tester $I
      */
     public function __construct(Tester $I)

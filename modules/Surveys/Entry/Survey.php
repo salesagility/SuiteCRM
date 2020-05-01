@@ -65,7 +65,7 @@ SELECT id
 FROM campaign_trkrs 
 WHERE campaign_id IN (
             SELECT campaign_id 
-            FROM campaign_log WHERE target_tracker_key = "$trackerId"
+            FROM campaign_log WHERE target_tracker_key = "{$trackerId}"
             ) 
 AND tracker_name = "SurveyLinkTracker"
 EOF;
@@ -86,7 +86,7 @@ EOF;
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title><?= $survey->name ?></title>
+        <title><?php echo $survey->name; ?></title>
 
         <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
         <link href="modules/Surveys/javascript/rating/rating.min.css" rel="stylesheet">
@@ -97,13 +97,13 @@ EOF;
     <div class="container">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
-                <img src="<?php echo $companyLogoURL ?>"/>
+                <img src="<?php echo $companyLogoURL; ?>"/>
             </div>
         </div>
         <div class="row well">
             <div class="col-md-offset-2 col-md-8">
-                <h1><?= $survey->name ?></h1>
-                <?= displaySurvey($survey, $contactId, $trackerId); ?>
+                <h1><?php echo $survey->name; ?></h1>
+                <?php echo displaySurvey($survey, $contactId, $trackerId); ?>
             </div>
         </div>
     </div>
@@ -147,17 +147,17 @@ function displaySurvey($survey, $contactId, $trackerId)
     ?>
     <form method="post">
         <input type="hidden" name="entryPoint" value="surveySubmit">
-        <input type="hidden" name="id" value="<?= $survey->id ?>">
-        <input type="hidden" name="contact" value="<?= $contactId ?>">
-        <input type="hidden" name="tracker" value="<?= $trackerId ?>">
+        <input type="hidden" name="id" value="<?php echo $survey->id; ?>">
+        <input type="hidden" name="contact" value="<?php echo $contactId; ?>">
+        <input type="hidden" name="tracker" value="<?php echo $trackerId; ?>">
         <?php
         $questions = $survey->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions');
     usort(
-            $questions,
-            function ($a, $b) {
+        $questions,
+        function ($a, $b) {
                 return $a->sort_order - $b->sort_order;
             }
-        );
+    );
     foreach ($questions as $question) {
         displayQuestion($survey, $question);
     } ?>
@@ -171,44 +171,45 @@ function displayQuestion($survey, $question)
     ?>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><label for="question<?= $question->id ?>"><?= $question->name; ?></label></h3>
+            <h3 class="panel-title"><label for="question<?php echo $question->id; ?>"><?php echo $question->name; ?></label></h3>
         </div>
         <div class="panel-body">
             <div class="form-group">
                 <?php
-                $options = array();
+                $options = [];
     foreach ($question->get_linked_beans(
-                    'surveyquestions_surveyquestionoptions',
-                    'SurveyQuestionOptions',
-                    'sort_order'
-                ) as $option) {
-        $optionArr = array();
+        'surveyquestions_surveyquestionoptions',
+        'SurveyQuestionOptions',
+        'sort_order'
+    ) as $option) {
+        $optionArr = [];
         $optionArr['id'] = $option->id;
         $optionArr['name'] = $option->name;
         $options[] = $optionArr;
     }
     switch ($question->type) {
-
-                    case "Textbox":
+                    case 'Textbox':
                         echo "<textarea class=\"form-control\" id='question" .
                             $question->id .
                             "' name='question[" .
                             $question->id .
                             "]'></textarea>";
+
                         break;
-                    case "Checkbox":
+                    case 'Checkbox':
                         echo "<div class='checkbox'><label>";
                         echo "<input id='question" .
                             $question->id .
                             "' name='question[" .
                             $question->id .
                             "]' type='checkbox'/>";
-                        echo "</label></div>";
+                        echo '</label></div>';
+
                         break;
-                    case "Radio":
+                    case 'Radio':
                         foreach ($options as $option) {
                             echo "<div class='radio'>";
-                            echo "<label>";
+                            echo '<label>';
                             echo "<input  id='question" .
                                 $question->id .
                                 "' name='question[" .
@@ -217,40 +218,48 @@ function displayQuestion($survey, $question)
                                 $option['id'] .
                                 "' type='radio'/>";
                             echo $option['name'];
-                            echo "</label>";
-                            echo "</div>";
+                            echo '</label>';
+                            echo '</div>';
                         }
+
                         break;
-                    case "Dropdown":
-                    case "Multiselect":
+                    case 'Dropdown':
+                    case 'Multiselect':
                         $multi = $question->type == 'Multiselect' ? ' multiple="true" ' : '';
                         $name =
-                            $question->type == 'Multiselect' ? "question[" . $question->id . "][]" :
-                                "question[" . $question->id . "]";
-                        echo "<select class=\"form-control\" id='question" . $question->id . "' name='$name' $multi>";
+                            $question->type == 'Multiselect' ? 'question[' . $question->id . '][]' :
+                                'question[' . $question->id . ']';
+                        echo "<select class=\"form-control\" id='question" . $question->id . "' name='{$name}' {$multi}>";
                         foreach ($options as $option) {
-                            echo "<option value='" . $option['id'] . "'>" . $option['name'] . "</option>";
+                            echo "<option value='" . $option['id'] . "'>" . $option['name'] . '</option>';
                         }
-                        echo "</select>";
+                        echo '</select>';
+
                         break;
-                    case "Matrix":
+                    case 'Matrix':
                         displayMatrixField($survey, $question, $options);
+
                         break;
-                    case "Date":
+                    case 'Date':
                         displayDateField($question);
+
                         break;
-                    case "DateTime":
+                    case 'DateTime':
                         displayDateTimeField($question);
+
                         break;
-                    case "Rating":
+                    case 'Rating':
                         displayRatingField($question);
+
                         break;
-                    case "Scale":
+                    case 'Scale':
                         displayScaleField($question);
+
                         break;
-                    case "Text":
+                    case 'Text':
                     default:
                         displayTextField($question);
+
                         break;
                 } ?>
             </div>
@@ -273,9 +282,9 @@ function displayScaleField($question)
     echo "<table class='table'><tr>";
     $scaleMax = 10;
     for ($x = 1; $x <= $scaleMax; $x++) {
-        echo "<th>" . $x . "</th>";
+        echo '<th>' . $x . '</th>';
     }
-    echo "</tr><tr>";
+    echo '</tr><tr>';
     for ($x = 1; $x <= $scaleMax; $x++) {
         echo "<td><input id='question" .
             $question->id .
@@ -285,7 +294,7 @@ function displayScaleField($question)
             $x .
             "' type='radio'/></td>";
     }
-    echo "</tr></table>";
+    echo '</tr></table>';
 }
 
 function displayRatingField($question)
@@ -301,63 +310,63 @@ function displayRatingField($question)
             $x .
             "' type='radio'/>";
     }
-    echo "</div>";
+    echo '</div>';
 }
 
 function displayMatrixField($survey, $question, $options)
 {
     $matrixOptions = $survey->getMatrixOptions();
     echo "<table width='75%'>";
-    echo "<tr>";
+    echo '<tr>';
     echo "<th style='width:25%'></th>";
     foreach ($matrixOptions as $matrixOption) {
         echo "<th style='width:25%'>";
         echo $matrixOption;
-        echo "</th>";
+        echo '</th>';
     }
 
     foreach ($options as $option) {
-        echo "<tr>";
+        echo '<tr>';
         echo "<td style='width:25%'>";
         echo $option['name'];
-        echo "</td>";
+        echo '</td>';
         foreach ($matrixOptions as $x => $matrixOption) {
             echo "<td style='width:25%'><input  id='question" .
                 $question->id .
                 "' name='question[" .
                 $question->id .
-                "][" .
+                '][' .
                 $option['id'] .
                 "]' 
 value='" .
                 $x .
                 "' type='radio'/></td>";
         }
-        echo "</tr>";
+        echo '</tr>';
     }
-    echo "</table>";
+    echo '</table>';
 }
 
 function displayDateTimeField($question)
 {
-    echo "<div class=\"input-group\">";
+    echo '<div class="input-group">';
     echo "<input class=\"form-control datetimefield\" id='question" .
         $question->id .
         "' name='question[" .
         $question->id .
         "]' type='text'/>";
-    echo "<div class=\"input-group-addon ui-datetimepicker-trigger\"><span class=\"suitepicon suitepicon-module-calendar\"></span></div></div>";
+    echo '<div class="input-group-addon ui-datetimepicker-trigger"><span class="suitepicon suitepicon-module-calendar"></span></div></div>';
 }
 
 function displayDateField($question)
 {
-    echo "<div class=\"input-group\">";
+    echo '<div class="input-group">';
     echo "<input class=\"form-control datefield\" id='question" .
         $question->id .
         "' name='question[" .
         $question->id .
         "]' type='text'/>";
-    echo "<div class=\"input-group-addon ui-datepicker-trigger\"><span class=\"suitepicon suitepicon-module-calendar\"></span></div></div>";
+    echo '<div class="input-group-addon ui-datepicker-trigger"><span class="suitepicon suitepicon-module-calendar"></span></div></div>';
 }
 
 function displayClosedPage($survey)
@@ -370,7 +379,7 @@ function displayClosedPage($survey)
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title><?= $survey->name ?></title>
+        <title><?php echo $survey->name; ?></title>
 
         <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
     </head>
@@ -383,7 +392,7 @@ function displayClosedPage($survey)
         </div>
         <div class="row well">
             <div class="col-md-offset-2 col-md-8">
-                <h1><?= $survey->name ?></h1>
+                <h1><?php echo $survey->name; ?></h1>
                 <p>Thanks for your interest but this survey is now closed.</p>
             </div>
         </div>

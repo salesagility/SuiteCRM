@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,16 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 {
-
-
-
     /**
      * @param Email $seed
      * @param array $request
@@ -60,6 +55,9 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
      * @param int $limit
      * @param string $limitPerPage
      * @param array $params
+     * @param mixed $pageData
+     * @param mixed $filter_fields
+     *
      * @return array
      */
     public function search(
@@ -78,11 +76,9 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $pageData,
         $filter_fields
     ) {
-
-
         // Create the data structure which are required to view a list view.
         require_once 'include/SearchForm/SearchForm2.php';
-        $this->lvde->seed =& $seed;
+        $this->lvde->seed = &$seed;
         $this->lvde->setVariableName($seed->object_name, $where, $this->lvde->listviewName, $id);
         $this->lvde->seed->id = '[SELECT_ID_LIST]';
 
@@ -103,15 +99,14 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         // TODO: figure out why was it for?
         $orderby = $order['orderBy'];
-        if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
+        if (strpos($order['orderBy'], '.') && ($order['orderBy'] != 'report_cache.date_modified')) {
             $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
         }
-
 
         $page = 0;
         $offset = 0;
         if (isset($request['Emails2_EMAIL_offset'])) {
-            if ($request['Emails2_EMAIL_offset'] !== "end") {
+            if ($request['Emails2_EMAIL_offset'] !== 'end') {
                 $offset = $request['Emails2_EMAIL_offset'];
                 $page = $offset / $limitPerPage;
             }
@@ -122,14 +117,12 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
         $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
-        if ($page === "end") {
+        if ($page === 'end') {
             $offset = $total - $limitPerPage;
         }
 
-
         /// Populate the data and its fields from the email server
-        $request['uids'] = array();
-
+        $request['uids'] = [];
 
         if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
@@ -142,7 +135,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
         if ($inboundEmail) {
-            foreach ((array)$emailServerEmailsData as $h => $emailHeader) {
+            foreach ((array) $emailServerEmailsData as $h => $emailHeader) {
                 $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
                 if ($emailRecord === false) {
                     continue;
@@ -151,7 +144,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
                 $emailRecord['ASSIGNED_USER_NAME'] = $assigned_user['assigned_user_name'];
                 $emailRecord['ASSIGNED_USER_ID'] = $assigned_user['assigned_user_id'];
                 $data[] = $emailRecord;
-                $pageData['rowAccess'][$h] = array('edit' => true, 'view' => true);
+                $pageData['rowAccess'][$h] = ['edit' => true, 'view' => true];
                 $pageData['additionalDetails'][$h] = '';
                 $pageData['tag'][$h]['MAIN'] = 'a';
             }
@@ -166,7 +159,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             $inboundEmailIdQuoted = '';
             LoggerManager::getLogger()->warn('Unable to quote Inbound Email ID, Inbound Email is not set.');
         }
-        $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmailIdQuoted . "'";
+        $crmWhere = $where . ' AND mailbox_id LIKE ' . "'" . $inboundEmailIdQuoted . "'";
 
         $ret_array['inner_join'] = '';
         if (!empty($this->lvde->seed->listview_inner_join)) {
@@ -174,7 +167,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
         if (!isset($params) || !is_array($params)) {
-            $params = array();
+            $params = [];
         }
         if (!isset($params['custom_select'])) {
             $params['custom_select'] = '';
@@ -196,7 +189,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $nextOffset = -1;
         $prevOffset = -1;
         $endOffset = 0;
-
 
         if ($total > $limitPerPage) {
             $nextOffset = $offset + $limitPerPage;
@@ -228,9 +220,9 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $pageData['offsets']['prev'] = $prevOffset;
         $pageData['offsets']['end'] = ceil($endOffset);
 
-        $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
+        $queries = ['baseUrl', 'endPage', 'nextPage', 'orderBy'];
 
-        if ((int)$pageData['offsets']['current'] >= $limitPerPage) {
+        if ((int) $pageData['offsets']['current'] >= $limitPerPage) {
             $queries[] = 'prevPage';
             $queries[] = 'startPage';
         }
@@ -241,13 +233,13 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
                     unset($pageData['queries'][$query]);
                 }
             } else {
-                $pageData['queries'][$query]['module'] = "Emails";
-                $pageData['queries'][$query]['action'] = "index";
-                $pageData['queries'][$query]['parentTab'] = "Activities";
-                $pageData['queries'][$query]['ajax_load'] = "0";
-                $pageData['queries'][$query]['loadLanguageJS'] = "1";
-                $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
-                $pageData['queries'][$query]['lvso'] = "DESC";
+                $pageData['queries'][$query]['module'] = 'Emails';
+                $pageData['queries'][$query]['action'] = 'index';
+                $pageData['queries'][$query]['parentTab'] = 'Activities';
+                $pageData['queries'][$query]['ajax_load'] = '0';
+                $pageData['queries'][$query]['loadLanguageJS'] = '1';
+                $pageData['queries'][$query]['searchFormTab'] = 'advanced_search';
+                $pageData['queries'][$query]['lvso'] = 'DESC';
 
                 $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
             }
@@ -280,10 +272,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
         if (!isset($pageData['ordering'])) {
-            $pageData['ordering'] = array(
+            $pageData['ordering'] = [
                 'orderBy' => 'date_entered',
-                'sortOrder'=> 'ASC'
-            );
+                'sortOrder' => 'ASC'
+            ];
         }
 
         // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
@@ -302,51 +294,48 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             $endOffset,
             $total
         );
-        $pageData['offsets'] = array(
+        $pageData['offsets'] = [
             'current' => $offset,
             'next' => $nextOffset,
             'prev' => $prevOffset,
             'end' => $endOffset,
             'total' => $total,
             'totalCounted' => $total
-        );
+        ];
 
         $pageData['ordering'] = $order;
         $pageData['ordering']['sortOrder'] = $this->lvde->getReverseSortOrder($pageData['ordering']['sortOrder']);
         //get url parameters as an array
         //join url parameters from array to a string
         $pageData['urls'] = $this->lvde->callGenerateURLS($pageData['queries']);
-        $module_names = array(
+        $module_names = [
             'Prospects' => 'Targets'
-        );
-        $pageData['bean'] = array(
+        ];
+        $pageData['bean'] = [
             'objectName' => $seed->object_name,
             'moduleDir' => $seed->module_dir,
             'moduleName' => strtr($seed->module_dir, $module_names)
-        );
+        ];
         $pageData['stamp'] = $this->lvde->stamp;
-        $pageData['access'] = array(
+        $pageData['access'] = [
             'view' => $this->lvde->seed->ACLAccess('DetailView'),
             'edit' => $this->lvde->seed->ACLAccess('EditView')
-        );
+        ];
         if (!$this->lvde->seed->ACLAccess('ListView')) {
             $pageData['error'] = 'ACL restricted access';
         }
 
-
         if ($this->lvde->isRequestedSearchAdvanced($request)) {
-            $queryString = "-advanced_search";
+            $queryString = '-advanced_search';
         } else {
             if ($this->lvde->isRequestedSearchBasic($request)) {
-
                 // SearchForm is a (SearchForm2)
                 $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
 
-                $basicSearchFields = array();
+                $basicSearchFields = [];
 
                 if (
-                    isset($searchMetaData['searchdefs']) &&
-                    isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])
+                    isset($searchMetaData['searchdefs'], $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])
                 ) {
                     $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
                 }
@@ -354,7 +343,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
                 foreach ($basicSearchFields as $basicSearchField) {
                     $field_name = (is_array($basicSearchField) && isset($basicSearchField['name']))
                         ? $basicSearchField['name'] : $basicSearchField;
-                    $field_name .= "_basic";
+                    $field_name .= '_basic';
                     if (
                         isset($request[$field_name]) &&
                         (
@@ -366,11 +355,12 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
                     ) {
                         // Ensure the encoding is UTF-8
                         $queryString = htmlentities($request[$field_name], null, 'UTF-8');
+
                         break;
                     }
                 }
             } else {
-                $GLOBALS['log']->warn("Unknown requested search type");
+                $GLOBALS['log']->warn('Unknown requested search type');
             }
         }
 
@@ -391,36 +381,36 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             LoggerManager::getLogger()->warn('Invalid search results data.');
         }
 
-        $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
+        $ret = ['data' => $data, 'pageData' => $pageData, 'query' => $queryString];
 
         return $ret;
     }
 
-
     /**
-     * Returns an array with an email assigned_user_id and assigned_user_name
+     * Returns an array with an email assigned_user_id and assigned_user_name.
      *
      * @param string $uid
+     *
      * @return array
      */
-
     private function retrieveEmailAssignedUser($uid)
     {
-        $ret = array(
+        $ret = [
             'assigned_user_id' => '',
             'assigned_user_name' => '',
-        );
+        ];
 
         if (!empty($uid)) {
             $email = BeanFactory::getBean('Emails');
             $email->retrieve_by_string_fields(
-                array(
+                [
                     'uid' => $uid
-                )
+                ]
             );
             $ret['assigned_user_id'] = $email->assigned_user_id;
             $ret['assigned_user_name'] = $email->assigned_user_name;
         }
+
         return $ret;
     }
 }

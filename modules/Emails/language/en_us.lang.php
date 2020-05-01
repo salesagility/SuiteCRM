@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_EMAIL_INFORMATION' => 'EMAIL',
     'LBL_FW' => 'FW:',
     'LBL_RE' => 'RE:',
@@ -374,7 +372,6 @@ $mod_strings = array(
     'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.',
     'LBL_ORIGINAL_MESSAGE_SEPARATOR' => '---',
 
-
     'LBL_MARK_UNREAD' => 'Mark As Unread',
     'LBL_MARK_READ' => 'Mark As Read',
     'LBL_MARK_FLAGGED' => 'Mark As Flagged',
@@ -387,7 +384,7 @@ $mod_strings = array(
 
     'LBL_LIST_DATE_MODIFIED' => 'Last Modified',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
-    
+
     // Email Validation Error messages. Typicaly for Email Validation:
     'ERR_FIELD_FROM_IS_NOT_SET' => 'From field is not set.',
     'ERR_FIELD_FROM_IS_EMPTY' => 'From field is empty.',
@@ -411,4 +408,4 @@ $mod_strings = array(
     'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR' => 'From address and name pair does not match to from address.',
     'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME' => 'From address and name pair does not match to from-name.',
     'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME' => 'From address and name pair does not match to from name.',
-);
+];

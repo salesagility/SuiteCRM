@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,11 +19,9 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
- 
-require_once('include/MVC/Controller/SugarController.php');
+require_once 'include/MVC/Controller/SugarController.php';
 
 class AOS_ContractsController extends SugarController
 {
@@ -41,7 +38,7 @@ class AOS_ContractsController extends SugarController
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->name = $row['name'];
             $this->bean->total_contract_value = $row['total_amount'];
-            
+
             if (isset($row['billing_account_id'])) {
                 $_REQUEST['account_id'] = $row['billing_account_id'];
             }
@@ -49,12 +46,12 @@ class AOS_ContractsController extends SugarController
             if (isset($row['billing_contact_id'])) {
                 $_REQUEST['contact_id'] = $row['billing_contact_id'];
             }
-                
+
             if (isset($row['opportunity_id'])) {
                 $_REQUEST['opportunity_id'] = $row['opportunity_id'];
             }
         }
-            
+
         if (isset($_REQUEST['account_id'])) {
             $query = "SELECT id,name FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
             $result = $this->bean->db->query($query, true);
@@ -69,7 +66,7 @@ class AOS_ContractsController extends SugarController
             $this->bean->contact = $contact->name;
             $this->bean->contact_id = $contact->id;
         }
-        
+
         if (isset($_REQUEST['opportunity_id'])) {
             $query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
             $result = $this->bean->db->query($query, true);

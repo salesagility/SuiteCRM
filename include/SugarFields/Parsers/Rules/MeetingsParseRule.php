@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Parsers/Rules/ActivitiesParseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/ActivitiesParseRule.php';
 
 class MeetingsParseRule extends ActivitiesParseRule
 {
@@ -50,16 +48,13 @@ class MeetingsParseRule extends ActivitiesParseRule
     {
     }
 
-
-
-
     public function preParse($panels, $view)
     {
         $panels = parent::preParse($panels, $view);
         if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+            foreach ($panels as $name => $panel) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         //Fix issue of not having parent_name in Meetings vardefs.php in pre 5.x versions
                         if ($this->matches($column, '/^tag.parent$/') || $this->matches($column, '/^parent_id$/')) {
                             $panels[$name][$rowCount][$key] = 'parent_name';
@@ -68,6 +63,7 @@ class MeetingsParseRule extends ActivitiesParseRule
                 } //foreach
             } //foreach
         }
+
         return $panels;
     }
 }

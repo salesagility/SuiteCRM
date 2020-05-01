@@ -5,7 +5,7 @@ namespace Cron;
 use DateTime;
 
 /**
- * Month field.  Allows: * , / -
+ * Month field.  Allows: * , / -.
  */
 class MonthField extends AbstractField
 {
@@ -13,10 +13,10 @@ class MonthField extends AbstractField
     {
         // Convert text month values to integers
         $value = str_ireplace(
-            array(
+            [
                 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
                 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
-            ),
+            ],
             range(1, 12),
             $value
         );

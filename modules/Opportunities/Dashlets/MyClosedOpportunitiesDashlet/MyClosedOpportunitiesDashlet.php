@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,19 +40,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-require_once('include/Dashlets/Dashlet.php');
+require_once 'include/Dashlets/Dashlet.php';
 
 class MyClosedOpportunitiesDashlet extends Dashlet
 {
     protected $total_opportunities;
     protected $total_opportunities_won;
-    
+
     /**
      * @see Dashlet::Dashlet()
+     *
+     * @param mixed $id
+     * @param null|mixed $def
      */
     public function __construct($id, $def = null)
     {
@@ -66,11 +65,11 @@ class MyClosedOpportunitiesDashlet extends Dashlet
         } else {
             $this->title = $def['title'];
         }
-        
+
         if (isset($def['autoRefresh'])) {
             $this->autoRefresh = $def['autoRefresh'];
         }
-        
+
         $this->seedBean = new Opportunity();
 
         $qry = "SELECT * from opportunities WHERE assigned_user_id = '" . $current_user->id . "' AND deleted=0";
@@ -84,7 +83,7 @@ class MyClosedOpportunitiesDashlet extends Dashlet
 
         $this->total_opportunities_won = $row['c'];
     }
-    
+
     /**
      * @see Dashlet::display()
      */
@@ -93,13 +92,13 @@ class MyClosedOpportunitiesDashlet extends Dashlet
         $ss = new Sugar_Smarty();
         $ss->assign('lblTotalOpportunities', translate('LBL_TOTAL_OPPORTUNITIES', 'Opportunities'));
         $ss->assign('lblClosedWonOpportunities', translate('LBL_CLOSED_WON_OPPORTUNITIES', 'Opportunities'));
-        
+
         $ss->assign('total_opportunities', $this->total_opportunities);
         $ss->assign('total_opportunities_won', $this->total_opportunities_won);
-        
+
         return parent::display() . $ss->fetch('modules/Opportunities/Dashlets/MyClosedOpportunitiesDashlet/MyClosedOpportunitiesDashlet.tpl');
     }
-    
+
     /**
      * @see Dashlet::displayOptions()
      */
@@ -116,22 +115,24 @@ class MyClosedOpportunitiesDashlet extends Dashlet
             $ss->assign('autoRefreshOptions', $this->getAutoRefreshOptions());
             $ss->assign('autoRefreshSelect', $this->autoRefresh);
         }
-        
+
         return $ss->fetch('modules/Opportunities/Dashlets/MyClosedOpportunitiesDashlet/MyClosedOpportunitiesDashletConfigure.tpl');
     }
 
     /**
      * @see Dashlet::saveOptions()
+     *
+     * @param mixed $req
      */
     public function saveOptions($req)
     {
-        $options = array();
-        
+        $options = [];
+
         if (isset($req['title'])) {
             $options['title'] = $req['title'];
         }
         $options['autoRefresh'] = empty($req['autoRefresh']) ? '0' : $req['autoRefresh'];
-        
+
         return $options;
     }
 }

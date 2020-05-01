@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/MB/MBPackageTree.php');
-require_once('modules/ModuleBuilder/Module/StudioBrowser.php');
+require_once 'modules/ModuleBuilder/MB/MBPackageTree.php';
+require_once 'modules/ModuleBuilder/Module/StudioBrowser.php';
 class MainTree extends MBPackageTree
 {
     public function __construct()
@@ -47,8 +45,6 @@ class MainTree extends MBPackageTree
         $this->tree = new Tree('package_tree');
         $this->tree->id = 'package_tree';
         $this->mb = new StudioBrowser();
-        $this->populateTree(array(), $this->tree);
+        $this->populateTree([], $this->tree);
     }
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Test\Api\V8;
 
 use ApiTester;

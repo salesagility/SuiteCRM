@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class LeadTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -31,14 +34,13 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $lead);
     }
 
-    public function testget_account()
+    public function testgetAccount()
     {
         $lead = BeanFactory::getBean('Leads');
 
         //test without pre settting attributes
         $result = $lead->get_account();
         $this->assertEquals(null, $result);
-
 
         //test with required attributes preset
         $lead->account_id = 1;
@@ -46,14 +48,13 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_opportunity()
+    public function testgetOpportunity()
     {
         $lead = BeanFactory::getBean('Leads');
 
         //test without pre settting attributes
         $result = $lead->get_opportunity();
         $this->assertEquals(null, $result);
-
 
         //test with required attributes preset
         $lead->opportunity_id = 1;
@@ -61,7 +62,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_contact()
+    public function testgetContact()
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -69,14 +70,13 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $result = $lead->get_contact();
         $this->assertEquals(null, $result);
 
-
         //test with required attributes preset
         $lead->contact_id = 1;
         $result = $lead->get_contact();
         $this->assertEquals(null, $result);
     }
 
-    public function testcreate_list_query()
+    public function testcreateListQuery()
     {
         $this->markTestIncomplete('Breaks on php 7.1');
         $lead = BeanFactory::getBean('Leads');
@@ -85,7 +85,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $expected = "SELECT leads.*, users.user_name assigned_user_name,leads_cstm.* FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c where  leads.deleted=0 ";
         $actual = $lead->create_list_query('', '');
         $this->assertSame($expected, $actual);
-
 
         //test with valid string params
         $expected = "SELECT leads.*, users.user_name assigned_user_name,leads_cstm.* FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c where (users.user_name=\"\") AND  leads.deleted=0  ORDER BY leads.id";
@@ -96,7 +95,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_new_list_query()
+    public function testcreateNewListQuery()
     {
         /*
         $lead = BeanFactory::getBean('Leads');
@@ -112,26 +111,25 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $actual = $lead->create_new_list_query('leads.id','users.user_name=""');
         $this->assertSame($expected,$actual);
         */
-        $this->assertTrue(true, "NEEDS FIXING!");
+        $this->assertTrue(true, 'NEEDS FIXING!');
     }
 
-    public function testSaveAndConverted_lead()
+    public function testSaveAndConvertedLead()
     {
         $this->markTestSkipped("converted_lead: Error in query, id's not properly escaped ");
-        
+
         $lead = BeanFactory::getBean('Leads');
 
-        $lead->first_name = "firstn";
-        $lead->last_name = "lastnn";
-        $lead->lead_source = "test";
+        $lead->first_name = 'firstn';
+        $lead->last_name = 'lastnn';
+        $lead->lead_source = 'test';
 
         $result = $lead->save();
 
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($lead->id));
         $this->assertEquals(36, strlen($lead->id));
-        $this->assertEquals("New", $lead->status);
-
+        $this->assertEquals('New', $lead->status);
 
         //test converted_lead method after saving
         /*$lead->converted_lead("'" . $lead->id . "'" , "'1'", "'1'", "'1'");
@@ -151,35 +149,35 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $lead = new Lead();
 
-        $lead->first_name = "firstn";
-        $lead->last_name = "lastn";
+        $lead->first_name = 'firstn';
+        $lead->last_name = 'lastn';
 
         $lead->fill_in_additional_list_fields();
 
-        $this->assertEquals("firstn lastn", $lead->name);
+        $this->assertEquals('firstn lastn', $lead->name);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $lead->first_name = "firstn";
-        $lead->last_name = "lastn";
+        $lead->first_name = 'firstn';
+        $lead->last_name = 'lastn';
 
         $lead->fill_in_additional_detail_fields();
 
-        $this->assertEquals("firstn lastn", $lead->name);
+        $this->assertEquals('firstn lastn', $lead->name);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $expected = array(
+        $expected = [
             'NAME' => ' ',
             'DELETED' => 0,
             'FULL_NAME' => ' ',
@@ -193,7 +191,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
                     data-module-name=" " data-email-address=""
                 ></a>',
             'ACC_NAME_FROM_ACCOUNTS' => null,
-        );
+        ];
 
         $actual = $lead->get_list_view_data();
 
@@ -205,11 +203,11 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
     }
 
-    public function testget_linked_fields()
+    public function testgetLinkedFields()
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $expected = array(
+        $expected = [
             'created_by_link',
             'modified_user_link',
             'assigned_user_link',
@@ -231,7 +229,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
             'prospect_lists',
             'fp_events_leads_1',
             'SecurityGroups',
-        );
+        ];
         $actual = $lead->get_linked_fields();
         $this->assertTrue(is_array($actual));
         sort($expected);
@@ -240,46 +238,45 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actualKeys);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         self::markTestSkipped('State dependecy');
-        
+
         $lead = BeanFactory::getBean('Leads');
 
         //test with empty string params
         $expected = "leads.last_name like '%' or leads.account_name like '%' or leads.first_name like '%' or ea.email_address like '%'";
-        $actual = $lead->build_generic_where_clause("");
+        $actual = $lead->build_generic_where_clause('');
         $this->assertSame($expected, $actual);
-
 
         //test with valid string params
         $expected = "leads.last_name like '%' or leads.account_name like '%' or leads.first_name like '%' or ea.email_address like '%'";
-        $actual = $lead->build_generic_where_clause("123");
+        $actual = $lead->build_generic_where_clause('123');
         $this->assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $lead = BeanFactory::getBean('Leads');
 
         //test with attributes preset and verify template variables are set accordingly
 
-        $lead->first_name = "firstn";
-        $lead->last_name = "lastn";
-        $lead->salutation = "Mr";
-        $lead->lead_source = "Email";
-        $lead->status = "New";
-        $lead->description = "tes description";
+        $lead->first_name = 'firstn';
+        $lead->last_name = 'lastn';
+        $lead->salutation = 'Mr';
+        $lead->lead_source = 'Email';
+        $lead->status = 'New';
+        $lead->description = 'tes description';
 
         $result = $lead->set_notification_body(new Sugar_Smarty(), $lead);
 
-        $this->assertEquals("Mr firstn lastn", $result->_tpl_vars['LEAD_NAME']);
+        $this->assertEquals('Mr firstn lastn', $result->_tpl_vars['LEAD_NAME']);
         $this->assertEquals($lead->lead_source, $result->_tpl_vars['LEAD_SOURCE']);
         $this->assertEquals($lead->status, $result->_tpl_vars['LEAD_STATUS']);
         $this->assertEquals($lead->description, $result->_tpl_vars['LEAD_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -292,7 +289,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $expected = array("MAIN" => "a", "ACCOUNT" => "a", "OPPORTUNITY" => "a", "CONTACT" => "a");
+        $expected = ['MAIN' => 'a', 'ACCOUNT' => 'a', 'OPPORTUNITY' => 'a', 'CONTACT' => 'a'];
         $actual = $lead->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
@@ -301,17 +298,17 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $form = "";
-        $prefix = "";
+        $form = '';
+        $prefix = '';
         $tempBean = new Contact();
 
         $result = $lead->convertCustomFieldsForm($form, $tempBean, $prefix);
 
         $this->assertEquals(true, $result);
-        $this->assertgreaterThanOrEqual("", $form); //no filed with source = custom_fields
+        $this->assertgreaterThanOrEqual('', $form); //no filed with source = custom_fields
     }
 
-    public function testget_unlinked_email_query()
+    public function testgetUnlinkedEmailQuery()
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -326,16 +323,16 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_old_related_calls()
+    public function testgetOldRelatedCalls()
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $expected = array();
+        $expected = [];
         $expected['select'] = 'SELECT calls.id ';
         $expected['from'] = 'FROM calls ';
-        $expected['where'] = " WHERE calls.parent_id = '$lead->id'
+        $expected['where'] = " WHERE calls.parent_id = '{$lead->id}'
             AND calls.parent_type = 'Leads' AND calls.id NOT IN ( SELECT call_id FROM calls_leads ) ";
-        $expected['join'] = "";
+        $expected['join'] = '';
         $expected['join_tables'][0] = '';
 
         $actual = $lead->get_old_related_calls();
@@ -346,21 +343,21 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $expected = array("copy" => "Copy", "move" => "Move", "donothing" => "Do Nothing");
+        $expected = ['copy' => 'Copy', 'move' => 'Move', 'donothing' => 'Do Nothing'];
         $actual = $lead->getActivitiesOptions();
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_old_related_meetings()
+    public function testgetOldRelatedMeetings()
     {
         $lead = BeanFactory::getBean('Leads');
 
-        $expected = array();
+        $expected = [];
         $expected['select'] = 'SELECT meetings.id ';
         $expected['from'] = 'FROM meetings ';
         $expected['where'] = " WHERE meetings.parent_id = ''
             AND meetings.parent_type = 'Leads' AND meetings.id NOT IN ( SELECT meeting_id FROM meetings_leads ) ";
-        $expected['join'] = "";
+        $expected['join'] = '';
         $expected['join_tables'][0] = '';
 
         $actual = $lead->get_old_related_meetings();

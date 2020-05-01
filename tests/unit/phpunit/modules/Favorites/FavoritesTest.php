@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class FavoritesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testFavorites()

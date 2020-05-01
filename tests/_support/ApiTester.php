@@ -6,9 +6,9 @@ use Codeception\Exception\ModuleException;
 use Codeception\Lib\Friend;
 use Helper\PhpBrowserDriverHelper;
 
-
 /**
- * Inherited Methods
+ * Inherited Methods.
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -36,22 +36,22 @@ class ApiTester extends Actor
     const CONTENT_TYPE_JSON = 'application/json';
 
     /**
-     * @var $string $accessToken
+     * @var $accessToken
      */
     private static $accessToken;
 
     /**
-     * @var $string $refreshToken
+     * @var $refreshToken
      */
     private static $refreshToken;
 
     /**
-     * @var $string $tokenType - eg Bearer
+     * @var $tokenType - eg Bearer
      */
     private static $tokenType;
 
     /**
-     * @var int $tokenExpiresIn - eg 3600
+     * @var int - eg 3600
      */
     private static $tokenExpiresIn;
 
@@ -88,11 +88,13 @@ class ApiTester extends Actor
     }
 
     /**
-     * Logins into API with Password grant type
+     * Logins into API with Password grant type.
+     *
      * @param string $client
      * @param string $secret
      * @param string $username
      * @param string $password
+     *
      * @throws ModuleException
      */
     public function loginWithPasswordGrant($client, $secret, $username, $password)
@@ -103,9 +105,7 @@ class ApiTester extends Actor
             return;
         }
 
-        /**
-         * @var PhpBrowserDriverHelper $browserDriverHelper
-         */
+        // @var PhpBrowserDriverHelper $browserDriverHelper
         $I->sendPOST(
             $I->getInstanceURL() . '/api/oauth/access_token',
             [
@@ -122,15 +122,17 @@ class ApiTester extends Actor
 
         $response = json_decode($I->grabResponse(), true);
         self::$tokenType = $response['token_type'];
-        self::$tokenExpiresIn = (int)$response['expires_in'];
+        self::$tokenExpiresIn = (int) $response['expires_in'];
         self::$accessToken = $response['access_token'];
         self::$refreshToken = $response['refresh_token'];
     }
 
     /**
-     * Logins into API with Client Credentials grant type
+     * Logins into API with Client Credentials grant type.
+     *
      * @param string $client
      * @param string $secret
+     *
      * @throws ModuleException
      */
     public function loginWithClientCredentialsGrant($client, $secret)
@@ -150,20 +152,19 @@ class ApiTester extends Actor
 
         $response = json_decode($I->grabResponse(), true);
         self::$tokenType = $response['token_type'];
-        self::$tokenExpiresIn = (int)$response['expires_in'];
+        self::$tokenExpiresIn = (int) $response['expires_in'];
         self::$accessToken = $response['access_token'];
     }
 
     /**
-     * Clicks the logout link in the users menu
+     * Clicks the logout link in the users menu.
      */
     public function logout()
     {
     }
 
-
     /**
-     * Set the Jwt Token
+     * Set the Jwt Token.
      */
     public function sendJwtAuthorisation()
     {
@@ -172,7 +173,7 @@ class ApiTester extends Actor
     }
 
     /**
-     * Set the Required Headers for authentication
+     * Set the Required Headers for authentication.
      */
     public function sendJwtContentNegotiation()
     {
@@ -182,7 +183,7 @@ class ApiTester extends Actor
     }
 
     /**
-     * Test to ensure that the response is Jwt
+     * Test to ensure that the response is Jwt.
      */
     public function seeJwtContent()
     {
@@ -191,7 +192,7 @@ class ApiTester extends Actor
     }
 
     /**
-     * Set the Required Headers for the Json API content
+     * Set the Required Headers for the Json API content.
      */
     public function sendJsonApiContentNegotiation()
     {
@@ -201,7 +202,7 @@ class ApiTester extends Actor
     }
 
     /**
-     * Test to ensure that the response is JSON Api
+     * Test to ensure that the response is JSON Api.
      */
     public function seeJsonApiContentNegotiation()
     {
@@ -210,7 +211,7 @@ class ApiTester extends Actor
     }
 
     /**
-     * Test to ensure that the response is successful
+     * Test to ensure that the response is successful.
      */
     public function seeJsonAPISuccess()
     {
@@ -222,7 +223,7 @@ class ApiTester extends Actor
     }
 
     /**
-     * Test to ensure that the response isn't successful
+     * Test to ensure that the response isn't successful.
      */
     public function seeJsonApiFailure()
     {
@@ -271,7 +272,7 @@ class ApiTester extends Actor
         $db = DBManagerFactory::getInstance();
 
         $query = sprintf(
-            "INSERT INTO accounts (id, name, account_type, date_entered) VALUES (%s, %s, %s, %s)",
+            'INSERT INTO accounts (id, name, account_type, date_entered) VALUES (%s, %s, %s, %s)',
             $db->quoted($id),
             $db->quoted($name),
             $db->quoted($accountType),
@@ -293,7 +294,7 @@ class ApiTester extends Actor
         $db = DBManagerFactory::getInstance();
 
         $query = sprintf(
-            "INSERT INTO contacts (id, date_entered) VALUES (%s,%s)",
+            'INSERT INTO contacts (id, date_entered) VALUES (%s,%s)',
             $db->quoted($id),
             $db->quoted(date('Y-m-d H:i:s'))
         );
@@ -311,7 +312,7 @@ class ApiTester extends Actor
     public function deleteBean($tableName, $id)
     {
         $db = DBManagerFactory::getInstance();
-        $query = sprintf("DELETE FROM %s WHERE id = %s", $tableName, $db->quoted($id));
+        $query = sprintf('DELETE FROM %s WHERE id = %s', $tableName, $db->quoted($id));
         $db->query($query);
     }
 

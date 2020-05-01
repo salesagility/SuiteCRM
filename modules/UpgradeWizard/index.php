@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,16 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 if (!is_admin($current_user)) {
     sugar_die($app_strings['ERR_NOT_ADMIN']);
 }
 
-require_once('include/utils/db_utils.php');
-require_once('include/utils/php_zip_utils.php');
-require_once('modules/UpgradeWizard/uw_utils.php');
-require_once('modules/Administration/UpgradeHistory.php');
+require_once 'include/utils/db_utils.php';
+require_once 'include/utils/php_zip_utils.php';
+require_once 'modules/UpgradeWizard/uw_utils.php';
+require_once 'modules/Administration/UpgradeHistory.php';
 
 $GLOBALS['top_message'] = '';
 
@@ -60,7 +59,7 @@ if (!isset($locale) || empty($locale)) {
 global $sugar_config;
 global $sugar_flavor;
 
-require_once('modules/Trackers/TrackerManager.php');
+require_once 'modules/Trackers/TrackerManager.php';
 $trackerManager = TrackerManager::getInstance();
 $trackerManager->pause();
 $trackerManager->unsetMonitors();
@@ -68,14 +67,14 @@ $trackerManager->unsetMonitors();
 ///////////////////////////////////////////////////////////////////////////////
 ////	SYSTEM PREP
 list($base_upgrade_dir, $base_tmp_upgrade_dir) = getUWDirs();
-$subdirs = array('full', 'langpack', 'module', 'patch', 'theme');
+$subdirs = ['full', 'langpack', 'module', 'patch', 'theme'];
 
 global $sugar_flavor;
 
 prepSystemForUpgrade();
 
 $uwMain = '';
-$steps = array();
+$steps = [];
 $step = 0;
 $showNext = '';
 $showCancel = '';
@@ -87,10 +86,10 @@ $stepBack = '';
 $stepRecheck = '';
 $showDone = '';
 $showExit = '';
-$disableNextForLicense='';
+$disableNextForLicense = '';
 
 if (!isset($_SESSION['step']) || !is_array($_SESSION['step'])) {
-    $_SESSION['step'] = array();
+    $_SESSION['step'] = [];
 }
 
 ////	END SYSTEM PREP
@@ -105,7 +104,7 @@ set_upgrade_vars();
 //look for session vars there and restore them
 initialize_session_vars();
 
-$deletedPackage =false;
+$deletedPackage = false;
 $cancelUpgrade = false;
 $backOrRecheckUpgrade = false;
 
@@ -124,30 +123,30 @@ if (!isset($mod_strings['LBL_UW_CONVERT_THE_LICENSE']) || $mod_strings['LBL_UW_C
 }
 
 $license_title = $mod_strings['LBL_UW_ACCEPT_THE_LICENSE'];
-if ((isset($sugar_flavor) && $sugar_flavor != null) && ($sugar_flavor=='OS' || $sugar_flavor=='CE')) {
+if ((isset($sugar_flavor) && $sugar_flavor != null) && ($sugar_flavor == 'OS' || $sugar_flavor == 'CE')) {
     $license_title = $mod_strings['LBL_UW_CONVERT_THE_LICENSE'];
 }
 
 if (isset($_REQUEST['delete_package']) && $_REQUEST['delete_package'] == 'true') {
     logThis('running delete old package');
     $error = '';
-    if (!isset($_REQUEST['install_file']) || ($_REQUEST['install_file'] == "")) {
-        logThis('ERROR: trying to delete non-existent file: ['.$_REQUEST['install_file'].']');
-        $error .= $mod_strings['ERR_UW_NO_FILE_UPLOADED'].'<br>';
+    if (!isset($_REQUEST['install_file']) || ($_REQUEST['install_file'] == '')) {
+        logThis('ERROR: trying to delete non-existent file: [' . $_REQUEST['install_file'] . ']');
+        $error .= $mod_strings['ERR_UW_NO_FILE_UPLOADED'] . '<br>';
     }
 
     // delete file in upgrades/patch
-    $delete_me = 'upload://upgrades/patch/'.basename(urldecode($_REQUEST['install_file']));
+    $delete_me = 'upload://upgrades/patch/' . basename(urldecode($_REQUEST['install_file']));
     if (is_file($delete_me) && !@unlink($delete_me)) {
-        logThis('ERROR: could not delete: '.$delete_me);
-        $error .= $mod_strings['ERR_UW_FILE_NOT_DELETED'].$delete_me.'<br>';
+        logThis('ERROR: could not delete: ' . $delete_me);
+        $error .= $mod_strings['ERR_UW_FILE_NOT_DELETED'] . $delete_me . '<br>';
     }
 
     // delete back up instance
-    $delete_dir = 'upload://upgrades/patch/'.remove_file_extension(urldecode($_REQUEST['install_file'])) . "-restore";
+    $delete_dir = 'upload://upgrades/patch/' . remove_file_extension(urldecode($_REQUEST['install_file'])) . '-restore';
     if (is_dir($delete_dir) && !@rmdir_recursive($delete_dir)) {
-        logThis('ERROR: could not delete: '.$delete_dir);
-        $error .= $mod_strings['ERR_UW_FILE_NOT_DELETED'].$delete_dir.'<br>';
+        logThis('ERROR: could not delete: ' . $delete_dir);
+        $error .= $mod_strings['ERR_UW_FILE_NOT_DELETED'] . $delete_dir . '<br>';
     }
 
     if (!empty($error)) {
@@ -161,87 +160,87 @@ if (isset($_REQUEST['delete_package']) && $_REQUEST['delete_package'] == 'true')
 }
 
 //redirect to the new upgradewizard
-if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard']==true) {
+if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard'] == true) {
     if (!isset($_SESSION['Initial_451to500_Step'])) {
         //redirect to the new upgradewizard
-        $redirect_new_wizard = $sugar_config['site_url' ].'/index.php?module=UpgradeWizard&action=index';
+        $redirect_new_wizard = $sugar_config['site_url'] . '/index.php?module=UpgradeWizard&action=index';
         //'<form name="redirect" action="' .$redirect_new_wizard. '" >';
         //echo "<meta http-equiv='refresh' content='0; url={$redirect_new_wizard}'>";
         $_SESSION['Initial_451to500_Step'] = true;
         //unset($_SESSION['step']);
         $_REQUEST['step'] = 0;
     }
-    $steps = array(
-            'files' => array(
-                'license_fiveO',
+    $steps = [
+        'files' => [
+            'license_fiveO',
+            'preflight',
+            'commit',
+            'end',
+            'cancel',
+        ],
+        'desc' => [
+            $license_title,
+            $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
+            $mod_strings['LBL_UW_TITLE_COMMIT'],
+            $mod_strings['LBL_UW_TITLE_END'],
+            $mod_strings['LBL_UW_TITLE_CANCEL'],
+        ],
+    ];
+} else {
+    if (isset($_SESSION['UpgradedUpgradeWizard']) && $_SESSION['UpgradedUpgradeWizard'] == true) {
+        // Upgrading from 5.0 upwards and upload already performed.
+        $steps = [
+            'files' => [
+                'start',
+                'systemCheck',
                 'preflight',
                 'commit',
                 'end',
                 'cancel',
-            ),
-            'desc' => array(
-                $license_title,
+            ],
+            'desc' => [
+                $mod_strings['LBL_UW_TITLE_START'],
+                $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
                 $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
                 $mod_strings['LBL_UW_TITLE_COMMIT'],
                 $mod_strings['LBL_UW_TITLE_END'],
                 $mod_strings['LBL_UW_TITLE_CANCEL'],
-            ),
-        );
-} else {
-    if (isset($_SESSION['UpgradedUpgradeWizard']) && $_SESSION['UpgradedUpgradeWizard'] == true) {
-        // Upgrading from 5.0 upwards and upload already performed.
-        $steps = array(
-            'files' => array(
-                    'start',
-                    'systemCheck',
-                    'preflight',
-                    'commit',
-                    'end',
-                    'cancel',
-            ),
-            'desc' => array(
-                    $mod_strings['LBL_UW_TITLE_START'],
-                    $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
-                    $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
-                    $mod_strings['LBL_UW_TITLE_COMMIT'],
-                    $mod_strings['LBL_UW_TITLE_END'],
-                    $mod_strings['LBL_UW_TITLE_CANCEL'],
-            ),
-        );
+            ],
+        ];
     } else {
         if (empty($mod_strings['LBL_UW_TITLE_LAYOUTS'])) {
             $mod_strings['LBL_UW_TITLE_LAYOUTS'] = 'Layouts';
         }
-        /* END TEMP FIX */
+        // END TEMP FIX
 
         // Upgrading from 5.0 upwards and upload not performed yet.
-        $steps = array(
-            'files' => array(
-                    'start',
-                    'systemCheck',
-                    'upload',
-                    'preflight',
-                    'commit',
-                    'layouts',
-                    'end',
-                    'cancel',
-            ),
-            'desc' => array(
-                    $mod_strings['LBL_UW_TITLE_START'],
-                    $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
-                    $mod_strings['LBL_UPLOAD_UPGRADE'],
-                    $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
-                    $mod_strings['LBL_UW_TITLE_COMMIT'],
-                    $mod_strings['LBL_UW_TITLE_LAYOUTS'],
-                    $mod_strings['LBL_UW_TITLE_END'],
-                    $mod_strings['LBL_UW_TITLE_CANCEL'],
-            ),
-        );
+        $steps = [
+            'files' => [
+                'start',
+                'systemCheck',
+                'upload',
+                'preflight',
+                'commit',
+                'layouts',
+                'end',
+                'cancel',
+            ],
+            'desc' => [
+                $mod_strings['LBL_UW_TITLE_START'],
+                $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
+                $mod_strings['LBL_UPLOAD_UPGRADE'],
+                $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
+                $mod_strings['LBL_UW_TITLE_COMMIT'],
+                $mod_strings['LBL_UW_TITLE_LAYOUTS'],
+                $mod_strings['LBL_UW_TITLE_END'],
+                $mod_strings['LBL_UW_TITLE_CANCEL'],
+            ],
+        ];
     }
 }
 
 $upgradeStepFile = '';
-if (isset($_REQUEST['step']) && $_REQUEST['step'] !=null) {
+if (isset($_REQUEST['step']) && $_REQUEST['step'] != null) {
     if ($_REQUEST['step'] == -1) {
         $_REQUEST['step'] = count($steps['files']) - 1;
     } elseif ($_REQUEST['step'] >= count($steps['files'])) {
@@ -255,9 +254,10 @@ if (isset($_REQUEST['step']) && $_REQUEST['step'] !=null) {
         //echo 'Previous run '.$previouUpgradeRun.'</br>';
         $upgradeStepFile = $previouUpgradeRun;
         //reset REQUEST
-        for ($i=0; $i<count($steps['files']); $i++) {
-            if ($steps['files'][$i]== $previouUpgradeRun) {
-                $_REQUEST['step']=$i;
+        for ($i = 0; $i < count($steps['files']); $i++) {
+            if ($steps['files'][$i] == $previouUpgradeRun) {
+                $_REQUEST['step'] = $i;
+
                 break;
             }
         }
@@ -275,10 +275,10 @@ if ($upgradeStepFile == 'license_fiveO') {
 if ($upgradeStepFile == 'end') {
     //if(isset($_SESSION['current_db_version']) && substr($_SESSION['current_db_version'],0,1) == 4){
     ob_start();
-    include('modules/ACL/install_actions.php');
+    include 'modules/ACL/install_actions.php';
     $old_mod_strings = $mod_strings;
     $mod_strings = return_module_language($current_language, 'Administration');
-    include('modules/Administration/RebuildRelationship.php');
+    include 'modules/Administration/RebuildRelationship.php';
     $mod_strings = $old_mod_strings;
     //also add the cache cleaning here.
     if (function_exists('deleteCache')) {
@@ -288,8 +288,8 @@ if ($upgradeStepFile == 'end') {
     //}
 }
 
-if(!$_REQUEST['additional_step']) {
-    require('modules/UpgradeWizard/'.$upgradeStepFile.'.php');
+if (!$_REQUEST['additional_step']) {
+    require 'modules/UpgradeWizard/' . $upgradeStepFile . '.php';
 }
 
 $afterCurrentStep = $_REQUEST['step'] + 1;
@@ -308,7 +308,7 @@ LanguageManager::loadModuleLanguage('UpgradeWizard', $GLOBALS['current_language'
 $installeds = $uh->getAll();
 $upgrades_installed = 0;
 
-$uwHistory  = '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view"><tr><td>'.$mod_strings['LBL_UW_DESC_MODULES_INSTALLED']."<br>\n";
+$uwHistory = '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view"><tr><td>' . $mod_strings['LBL_UW_DESC_MODULES_INSTALLED'] . "<br>\n";
 $uwHistory .= "<ul>\n";
 $uwHistory .= "<table class=\"edit view\" cellspacing=5>\n";
 $uwHistory .= <<<eoq
@@ -344,44 +344,43 @@ foreach ($installeds as $installed) {
     if ($type == 'patch') {
         $version = $installed->version;
         $upgrades_installed++;
-        $link = is_file($filename)? '   <input type="hidden" name="module" value="UpgradeWizard">
+        $link = is_file($filename) ? '   <input type="hidden" name="module" value="UpgradeWizard">
 					<input type="hidden" name="action" value="index">
-					<input type="hidden" name="step" value="'.$_REQUEST['step'].'">
+					<input type="hidden" name="step" value="' . $_REQUEST['step'] . '">
 					<input type="hidden" name="delete_package" value="true">
-	        		<input type=hidden name="install_file" value="'.$filename.'" />
-	        		<input type=submit value="'.$mod_strings['LBL_BUTTON_DELETE'].'" />':'';
+	        		<input type=hidden name="install_file" value="' . $filename . '" />
+	        		<input type=submit value="' . $mod_strings['LBL_BUTTON_DELETE'] . '" />' : '';
 
         $view = 'default';
 
-        $target_manifest = remove_file_extension($filename) . "-manifest.php";
+        $target_manifest = remove_file_extension($filename) . '-manifest.php';
 
         // cn: bug 9174 - cleared out upgrade dirs, or corrupt entries in upgrade_history give us bad file paths
         if (is_file($target_manifest)) {
-            require_once(getUploadRelativeName($target_manifest));
+            require_once getUploadRelativeName($target_manifest);
             $name = empty($manifest['name']) ? $filename : $manifest['name'];
             $description = empty($manifest['description']) ? $mod_strings['LBL_UW_NONE'] : $manifest['description'];
 
-            if (isset($manifest['icon']) && $manifest['icon'] != "") {
-                $manifest_copy_files_to_dir = isset($manifest['copy_files']['to_dir']) ? clean_path($manifest['copy_files']['to_dir']) : "";
-                $manifest_copy_files_from_dir = isset($manifest['copy_files']['from_dir']) ? clean_path($manifest['copy_files']['from_dir']) : "";
+            if (isset($manifest['icon']) && $manifest['icon'] != '') {
+                $manifest_copy_files_to_dir = isset($manifest['copy_files']['to_dir']) ? clean_path($manifest['copy_files']['to_dir']) : '';
+                $manifest_copy_files_from_dir = isset($manifest['copy_files']['from_dir']) ? clean_path($manifest['copy_files']['from_dir']) : '';
                 $manifest_icon = clean_path($manifest['icon']);
-                $icon = "<!--not_in_theme!--><img src=\"" . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != "" ? substr($manifest_icon, strlen($manifest_copy_files_from_dir)+1) : $manifest_icon) . "\">";
+                $icon = '<!--not_in_theme!--><img src="' . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != '' ? substr($manifest_icon, strlen($manifest_copy_files_from_dir) + 1) : $manifest_icon) . '">';
             } else {
                 $icon = getImageForType($manifest['type']);
             }
 
-            $uwHistory .= "<form action=\"index.php\" method=\"post\">\n".
-                "<tr><td align=left>$icon</td><td align=left>$name</td><td align=left>$type</td><td align=left>$version</td><td align=left>$date_entered</td><td align=left>$description</td><td align=left>$link</td></tr>\n".
+            $uwHistory .= "<form action=\"index.php\" method=\"post\">\n" .
+                "<tr><td align=left>{$icon}</td><td align=left>{$name}</td><td align=left>{$type}</td><td align=left>{$version}</td><td align=left>{$date_entered}</td><td align=left>{$description}</td><td align=left>{$link}</td></tr>\n" .
                 "</form>\n";
         }
     }
 }
 
-
 if ($upgrades_installed == 0) {
     $uwHistory .= "<td colspan='6'>";
     $uwHistory .= $mod_strings['LBL_UW_NO_INSTALLED_UPGRADES'];
-    $uwHistory .= "</td></tr>";
+    $uwHistory .= '</td></tr>';
 }
 
 $uwHistory .= "</table></td></tr>
@@ -393,8 +392,8 @@ $uwHistory .= "</ul>\n";
 ///////////////////////////////////////////////////////////////////////////////
 ////	PAGE OUTPUT
 
-if ($upgradeStepFile=='preflight' || $upgradeStepFile=='commit' || $upgradeStepFile=='end') {
-    $UW_510RC_PACKAGE_MESSAGE=<<<eoq
+if ($upgradeStepFile == 'preflight' || $upgradeStepFile == 'commit' || $upgradeStepFile == 'end') {
+    $UW_510RC_PACKAGE_MESSAGE = <<<'eoq'
 <table cellpadding="3" cellspacing="0" border="0">
 	<tr>
 		<th colspan="2" align="center">
@@ -404,7 +403,7 @@ if ($upgradeStepFile=='preflight' || $upgradeStepFile=='commit' || $upgradeStepF
 </table>
 eoq;
 }
-$js=<<<eoq
+$js = <<<eoq
 <script type="text/javascript" language="Javascript">
 	function toggleNwFiles(target) {
 		var div = document.getElementById(target);
@@ -539,7 +538,7 @@ if ($_REQUEST['step'] === '4' && !$_REQUEST['additional_step']) {
     die();
 }
 
-if($_REQUEST['step'] === '4' && $_REQUEST['additional_step']) {
+if ($_REQUEST['step'] === '4' && $_REQUEST['additional_step']) {
     // Set Smarty variables
     $uwMain = $_SESSION['UW_MAIN'];
     $js = $_SESSION['UW_JS'];
@@ -569,7 +568,7 @@ if($_REQUEST['step'] === '4' && $_REQUEST['additional_step']) {
 $smarty->assign('UW_MAIN', $uwMain);
 $smarty->assign('UW_JS', $js);
 $smarty->assign('CHECKLIST', getChecklist($steps, $step));
-$smarty->assign('UW_TITLE', getClassicModuleTitle($mod_strings['LBL_UW_TITLE'], array($mod_strings['LBL_UW_TITLE'],$steps['desc'][$_REQUEST['step']]), false));
+$smarty->assign('UW_TITLE', getClassicModuleTitle($mod_strings['LBL_UW_TITLE'], [$mod_strings['LBL_UW_TITLE'], $steps['desc'][$_REQUEST['step']]], false));
 $smarty->assign('MOD', $mod_strings);
 $smarty->assign('APP', $app_strings);
 $smarty->assign('GRIDLINE', $current_user->getPreference('gridline'));
@@ -586,9 +585,9 @@ $smarty->assign('STEP_RECHECK', $stepRecheck);
 $smarty->assign('step', $steps['files'][$_REQUEST['step']]);
 $smarty->assign('UW_HISTORY', $uwHistory);
 $smarty->assign('disableNextForLicense', $disableNextForLicense);
-$u_allow='true';
+$u_allow = 'true';
 if (isset($stop) && $stop == true) {
-    $frozen = (isset($frozen)) ? "<br />".$frozen : '';
+    $frozen = (isset($frozen)) ? '<br />' . $frozen : '';
     $smarty->assign('frozen', $frozen);
     if ($step == 'upload') {
         $u_allow = 'false';

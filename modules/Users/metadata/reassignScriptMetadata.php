@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$moduleFilters = array(
-    'Accounts' => array(
+$moduleFilters = [
+    'Accounts' => [
         'display_default' => false,
-        'fields' => array(
-            'account_type' => array(
+        'fields' => [
+            'account_type' => [
                 'display_name' => 'Account Type',
                 'name' => 'account_type',
                 'vname' => 'LBL_TYPE',
@@ -54,13 +53,13 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '4',
                 'dropdown' => $app_list_strings['account_type_dom'],
-            ),
-        ),
-    ),
-    'Bugs' => array(
+            ],
+        ],
+    ],
+    'Bugs' => [
         'display_default' => false,
-        'fields' => array(
-            'status' => array(
+        'fields' => [
+            'status' => [
                 'display_name' => 'Status',
                 'name' => 'status',
                 'vname' => 'LBL_STATUS',
@@ -69,13 +68,13 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '5',
                 'dropdown' => $app_list_strings['bug_status_dom'],
-            ),
-        ),
-    ),
-    'Calls' => array(
+            ],
+        ],
+    ],
+    'Calls' => [
         'display_default' => false,
-        'fields' => array(
-            'status' => array(
+        'fields' => [
+            'status' => [
                 'display_name' => 'Status',
                 'name' => 'status',
                 'vname' => 'LBL_STATUS',
@@ -84,14 +83,14 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '3',
                 'dropdown' => $app_list_strings['call_status_dom'],
-            ),
-        ),
-    ),
-    
-    'Cases' => array(
+            ],
+        ],
+    ],
+
+    'Cases' => [
         'display_default' => false,
-        'fields' => array(
-            'priority' => array(
+        'fields' => [
+            'priority' => [
                 'display_name' => 'Priority',
                 'name' => 'priority',
                 'vname' => 'LBL_PRIORITY',
@@ -100,8 +99,8 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '3',
                 'dropdown' => $app_list_strings['case_priority_dom'],
-            ),
-            'status' => array(
+            ],
+            'status' => [
                 'display_name' => 'Status',
                 'name' => 'status',
                 'vname' => 'LBL_STATUS',
@@ -110,14 +109,14 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '3',
                 'dropdown' => $app_list_strings['case_status_dom'],
-            ),
-        ),
-    ),
-    
-    'Opportunities' => array(
+            ],
+        ],
+    ],
+
+    'Opportunities' => [
         'display_default' => false,
-        'fields' => array(
-            'sales_stage' => array(
+        'fields' => [
+            'sales_stage' => [
                 'display_name' => 'Sales Stage',
                 'name' => 'sales_stage',
                 'vname' => 'LBL_SALES_STAGE',
@@ -126,8 +125,8 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '4',
                 'dropdown' => $app_list_strings['sales_stage_dom'],
-            ),
-            'opportunity_type' => array(
+            ],
+            'opportunity_type' => [
                 'display_name' => 'Opportunity Type',
                 'name' => 'opportunity_type',
                 'vname' => 'LBL_TYPE',
@@ -136,13 +135,13 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '4',
                 'dropdown' => $app_list_strings['opportunity_type_dom'],
-            ),
-        ),
-    ),
-    'Tasks' => array(
+            ],
+        ],
+    ],
+    'Tasks' => [
         'display_default' => false,
-        'fields' => array(
-            'status' => array(
+        'fields' => [
+            'status' => [
                 'display_name' => 'Status',
                 'name' => 'status',
                 'vname' => 'LBL_STATUS',
@@ -151,7 +150,7 @@ $moduleFilters = array(
                 'type' => 'multiselect',
                 'size' => '5',
                 'dropdown' => $app_list_strings['task_status_dom'],
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once("include/InlineEditing/InlineEditing.php");
+include_once 'include/InlineEditing/InlineEditing.php';
 
 class HomeController extends SugarController
 {
@@ -66,10 +64,10 @@ class HomeController extends SugarController
         if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
             $bean = BeanFactory::getBean($_REQUEST['current_module'], $_REQUEST['id']);
 
-            if (is_object($bean) && $bean->id != "") {
-                echo getDisplayValue($bean, $_REQUEST['field'], "close");
+            if (is_object($bean) && $bean->id != '') {
+                echo getDisplayValue($bean, $_REQUEST['field'], 'close');
             } else {
-                echo "Could not find value.";
+                echo 'Could not find value.';
             }
         }
     }
@@ -81,16 +79,16 @@ class HomeController extends SugarController
         if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
             $bean = BeanFactory::getBean($_REQUEST['current_module'], $_REQUEST['id']);
 
-            if (is_object($bean) && $bean->id != "") {
+            if (is_object($bean) && $bean->id != '') {
                 $fielddef = $bean->field_defs[$_REQUEST['field']];
 
                 if (!isset($fielddef['required']) || !$fielddef['required']) {
                     $fielddef['required'] = false;
                 }
 
-                if ($fielddef['name'] == "email1" || (isset($fielddef['email2']) && $fielddef['email2'])) {
-                    $fielddef['type'] = "email";
-                    $fielddef['vname'] = "LBL_EMAIL_ADDRESSES";
+                if ($fielddef['name'] == 'email1' || (isset($fielddef['email2']) && $fielddef['email2'])) {
+                    $fielddef['type'] = 'email';
+                    $fielddef['vname'] = 'LBL_EMAIL_ADDRESSES';
                 }
 
                 if (isset($app_strings[$fielddef['vname']])) {
@@ -105,34 +103,34 @@ class HomeController extends SugarController
                         }
                     }
                 }
-                $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
+                $validate_array = ['type' => $fielddef['type'], 'required' => $fielddef['required'], 'label' => $fielddef['label']];
 
                 echo json_encode($validate_array);
             }
         }
     }
-    
+
     public function action_getRelateFieldJS()
     {
         global $beanFiles, $beanList;
-        
-        $fieldlist = array();
-        $view = "EditView";
+
+        $fieldlist = [];
+        $view = 'EditView';
 
         if (!isset($focus) || !($focus instanceof SugarBean)) {
-            require_once($beanFiles[$beanList[$_REQUEST['current_module']]]);
-            $focus = new $beanList[$_REQUEST['current_module']];
+            require_once $beanFiles[$beanList[$_REQUEST['current_module']]];
+            $focus = new $beanList[$_REQUEST['current_module']]();
         }
 
         // create the dropdowns for the parent type fields
         $vardefFields[$_REQUEST['field']] = $focus->field_defs[$_REQUEST['field']];
 
-        require_once("include/TemplateHandler/TemplateHandler.php");
+        require_once 'include/TemplateHandler/TemplateHandler.php';
         $template_handler = new TemplateHandler();
         $quicksearch_js = $template_handler->createQuickSearchCode($vardefFields, $vardefFields, $view);
         $quicksearch_js = str_replace($_REQUEST['field'], $_REQUEST['field'] . '_display', $quicksearch_js);
 
-        if ($_REQUEST['field'] != "parent_name") {
+        if ($_REQUEST['field'] != 'parent_name') {
             $quicksearch_js = str_replace($vardefFields[$_REQUEST['field']]['id_name'], $_REQUEST['field'], $quicksearch_js);
         }
 

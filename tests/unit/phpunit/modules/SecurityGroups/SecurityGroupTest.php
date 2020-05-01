@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -12,6 +15,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = new User();
     }
+
     public function testSecurityGroup()
     {
         // Execute the constructor and check for the Object type and  attributes
@@ -49,13 +53,13 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
                                AND secu.deleted = 0
-                               AND secu.user_id = '$user_id'
+                               AND secu.user_id = '{$user_id}'
                           INNER JOIN securitygroups_records secr
                             ON secg.id = secr.securitygroup_id
                                AND secr.deleted = 0
-                               AND secr.module = '$module'
-                       WHERE   secr.record_id = ".$table_name.".id
-                               AND secg.deleted = 0) ";
+                               AND secr.module = '{$module}'
+                       WHERE   secr.record_id = " . $table_name . '.id
+                               AND secg.deleted = 0) ';
         $actual = $securityGroup->getGroupWhere($table_name, $module, $user_id);
         $this->assertSame($expected, $actual);
     }
@@ -145,7 +149,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testassign_default_groups()
+    public function testassignDefaultGroups()
     {
         $account = new Account();
         $account->id = 1;
@@ -159,7 +163,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_creator()
+    public function testinheritCreator()
     {
         $account = new Account();
         $account->id = 1;
@@ -173,7 +177,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_assigned()
+    public function testinheritAssigned()
     {
         $account = new Account();
         $account->id = 1;
@@ -188,7 +192,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_parent()
+    public function testinheritParent()
     {
         $account = new Account();
         $account->id = 1;
@@ -202,7 +206,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_parentQuery()
+    public function testinheritParentQuery()
     {
         $account = new Account();
         $account->id = 1;
@@ -273,7 +277,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
     {
         $securityGroup = new SecurityGroup();
 
-        $expected = array(
+        $expected = [
             'Meetings',
             'Cases',
             'AOS_Products',
@@ -316,7 +320,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
             'SurveyQuestions' => 'SurveyQuestions',
             'SurveyResponses' => 'SurveyResponses',
             'Surveys' => 'Surveys',
-        );
+        ];
 
         $actual = $securityGroup->getSecurityModules();
         $actualKeys = array_keys($actual);

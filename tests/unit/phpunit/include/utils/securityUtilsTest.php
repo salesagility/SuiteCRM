@@ -3,6 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/security_utils.php';
+/**
+ * @internal
+ */
 class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -14,14 +17,14 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testquery_module_access_list()
+    public function testqueryModuleAccessList()
     {
         self::markTestIncomplete('Test fails only in travis and php 7, Test has environment specific issue.');
 
         //execute the method and test it it returns expected contents
 
         $user = new User('1');
-        $expected = array(
+        $expected = [
             'Home' => 'Home',
             'Accounts' => 'Accounts',
             'Contacts' => 'Contacts',
@@ -58,13 +61,13 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
             'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
             'EmailTemplates' => 'EmailTemplates',
             'Surveys' => 'Surveys',
-        );
+        ];
 
         $actual = query_module_access_list($user);
         $this->assertSame($expected, $actual);
     }
 
-    public function testquery_user_has_roles()
+    public function testqueryUserHasRoles()
     {
         // execute the method and test it returns 1 role
         // if the test suite run runs RolesTest first.
@@ -76,29 +79,29 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_user_allowed_modules()
+    public function testgetUserAllowedModules()
     {
         //execute the method and test it it returns expected contents
 
-        $expected = array();
+        $expected = [];
         $actual = get_user_allowed_modules('1');
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_user_disallowed_modules()
+    public function testgetUserDisallowedModules()
     {
         self::markTestIncomplete('Test fails only in travis and php7, Test has environment specific issue.');
-        
+
         //execute the method and test it it returns expected contents
 
-        $expected = array(
+        $expected = [
             'Calendar' => 'Calendar',
             'Bugs' => 'Bugs',
             'ResourceCalendar' => 'ResourceCalendar',
             'AOBH_BusinessHours' => 'AOBH_BusinessHours',
             'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
             'SecurityGroups' => 'SecurityGroups',
-        );
+        ];
 
         $allowed = query_module_access_list(new User('1'));
         $actual = get_user_disallowed_modules('1', $allowed);
@@ -106,7 +109,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testquery_client_ip()
+    public function testqueryClientIp()
     {
         //test without setting any server parameters
         $this->assertSame(null, query_client_ip());
@@ -122,11 +125,11 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame('1.1.1.1', query_client_ip());
     }
 
-    public function testget_val_array()
+    public function testgetValArray()
     {
         //execute the method and test it it returns expected contents
-        $tempArray = array('key1' => 'val1', 'key2' => 'val2', 'key3' => 'val3');
-        $expected = array('key1' => 'key1', 'key2' => 'key2', 'key3' => 'key3');
+        $tempArray = ['key1' => 'val1', 'key2' => 'val2', 'key3' => 'val3'];
+        $expected = ['key1' => 'key1', 'key2' => 'key2', 'key3' => 'key3'];
         $actual = get_val_array($tempArray);
         $this->assertSame($expected, $actual);
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -49,7 +50,7 @@ abstract class BaseParam implements \JsonSerializable
     }
 
     /**
-     * We can overwrite this method, if necessary
+     * We can overwrite this method, if necessary.
      *
      * @param OptionsResolver $resolver
      * @param array $arguments
@@ -59,11 +60,17 @@ abstract class BaseParam implements \JsonSerializable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize()
+    {
+        return $this->parameters;
+    }
+
+    /**
      * Configure parameters.
      *
      * @param OptionsResolver $resolver
-     *
-     * @return void
      */
     abstract protected function configureParameters(OptionsResolver $resolver);
 
@@ -73,7 +80,7 @@ abstract class BaseParam implements \JsonSerializable
      * @param OptionsResolver $optionResolver
      * @param array $options
      *
-     * @throws \InvalidArgumentException If option is not exist.
+     * @throws \InvalidArgumentException if option is not exist
      */
     protected function setOptions(OptionsResolver $optionResolver, array $options)
     {
@@ -86,13 +93,5 @@ abstract class BaseParam implements \JsonSerializable
             $class = new $option($this->validatorFactory, $this->beanManager);
             $class->add($optionResolver);
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function jsonSerialize()
-    {
-        return $this->parameters;
     }
 }

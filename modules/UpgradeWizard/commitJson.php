@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,15 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 if (ob_get_level() < 1) {
     ob_start();
 }
 ob_implicit_flush(1);
 
 if (!function_exists('getFilesForPermsCheck')) {
-    require_once('modules/UpgradeWizard/uw_utils.php');
+    require_once 'modules/UpgradeWizard/uw_utils.php';
 }
 if (!isset($sugar_config) || empty($sugar_config)) {
 }
@@ -61,21 +60,22 @@ switch ($_REQUEST['commitStep']) {
         ob_end_flush();
         logThis('commitJson->runSql() called.');
         $persistence = commitAjaxRunSql($persistence);
-    break;
 
+    break;
     case 'get_errors':
         logThis('commitJson->getErrors() called.');
         commitAjaxGetSqlErrors($persistence);
+
     break;
-    
     case 'post_install':
         logThis('commitJson->postInstall() called.');
         commitAjaxPostInstall($persistence);
+
     break;
-    
     case 'final_touches':
         logThis('commitJson->finalTouches() called.');
         $persistence = commitAjaxFinalTouches($persistence);
+
     break;
 }
 

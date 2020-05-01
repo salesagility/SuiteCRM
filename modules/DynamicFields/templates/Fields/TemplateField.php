@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$GLOBALS['studioReadOnlyFields'] = array('date_entered'=>1, 'date_modified'=>1, 'created_by'=>1, 'id'=>1, 'modified_user_id'=>1);
+$GLOBALS['studioReadOnlyFields'] = ['date_entered' => 1, 'date_modified' => 1, 'created_by' => 1, 'id' => 1, 'modified_user_id' => 1];
 class TemplateField
 {
     /*
@@ -59,8 +60,8 @@ class TemplateField
     public $size = '20';
     public $len = '255';
     public $required = false;
-    public $default = null;
-    public $default_value = null;
+    public $default;
+    public $default_value;
     public $type = 'varchar';
     public $comment = '';
     public $bean;
@@ -68,11 +69,11 @@ class TemplateField
     public $ext2 = '';
     public $ext3 = '';
     public $ext4 = '';
-    public $audited= 0;
+    public $audited = 0;
     public $inline_edit = 1;
     public $massupdate = 0;
-    public $importable = 'true' ;
-    public $duplicate_merge=0;
+    public $importable = 'true';
+    public $duplicate_merge = 0;
     public $new_field_definition;
     public $reportable = true;
     public $label_value = '';
@@ -80,47 +81,45 @@ class TemplateField
     public $formula = '';
     public $unified_search = 0;
     public $supports_unified_search = false;
-    public $vardef_map = array(
-        'name'=>'name',
-        'label'=>'vname',
-    // bug 15801 - need to ALWAYS keep default and default_value consistent as some methods/classes use one, some use another...
-        'default_value'=>'default',
-        'default'=>'default_value',
-        'display_default'=>'default_value',
-    //		'default_value'=>'default_value',
-    //		'default'=>'default_value',
-        'len'=>'len',
-        'required'=>'required',
-        'type'=>'type',
-        'audited'=>'audited',
-        'inline_edit'=>'inline_edit',
-        'massupdate'=>'massupdate',
-        'options'=>'ext1',
-        'help'=>'help',
-        'comments'=>'comment',
-        'importable'=>'importable',
-        'duplicate_merge'=>'duplicate_merge',
-        'duplicate_merge_dom_value'=>'duplicate_merge_dom_value', //bug #14897
-        'merge_filter'=>'merge_filter',
+    public $vardef_map = [
+        'name' => 'name',
+        'label' => 'vname',
+        // bug 15801 - need to ALWAYS keep default and default_value consistent as some methods/classes use one, some use another...
+        'default_value' => 'default',
+        'default' => 'default_value',
+        'display_default' => 'default_value',
+        //		'default_value'=>'default_value',
+        //		'default'=>'default_value',
+        'len' => 'len',
+        'required' => 'required',
+        'type' => 'type',
+        'audited' => 'audited',
+        'inline_edit' => 'inline_edit',
+        'massupdate' => 'massupdate',
+        'options' => 'ext1',
+        'help' => 'help',
+        'comments' => 'comment',
+        'importable' => 'importable',
+        'duplicate_merge' => 'duplicate_merge',
+        'duplicate_merge_dom_value' => 'duplicate_merge_dom_value', //bug #14897
+        'merge_filter' => 'merge_filter',
         'reportable' => 'reportable',
-        'ext2'=>'ext2',
-        'ext4'=>'ext4',
-        'ext3'=>'ext3',
+        'ext2' => 'ext2',
+        'ext4' => 'ext4',
+        'ext3' => 'ext3',
         'labelValue' => 'label_value',
-        'unified_search'=>'unified_search',
-        'full_text_search'=>'full_text_search',
-    );
+        'unified_search' => 'unified_search',
+        'full_text_search' => 'full_text_search',
+    ];
     // Bug #48826
     // fields to decode from post request
-    public $decode_from_request_fields_map = array('formula', 'dependency');
+    public $decode_from_request_fields_map = ['formula', 'dependency'];
 
     public function __construct()
     {
     }
 
-    /*
-    	HTML FUNCTIONS
-    	*/
+    // HTML FUNCTIONS
     public function get_html()
     {
         $view = $this->view;
@@ -132,13 +131,13 @@ class TemplateField
             case 'edit': return $this->get_html_edit();
             case 'list': return $this->get_html_list();
             case 'detail': return $this->get_html_detail();
-
         }
     }
+
     public function set($values)
     {
-        foreach ($values as $name=>$value) {
-            $this->$name = $value;
+        foreach ($values as $name => $value) {
+            $this->{$name} = $value;
         }
     }
 
@@ -161,11 +160,12 @@ class TemplateField
     {
         return $this->get_html_edit();
     }
+
     public function get_html_label()
     {
-        $label =  "{MOD." .$this->vname . "}";
+        $label = '{MOD.' . $this->vname . '}';
         if (!empty($GLOBALS['app_strings'][$this->vname])) {
-            $label = "{APP." .$this->label . "}";
+            $label = '{APP.' . $this->label . '}';
         }
         if ($this->view == 'edit' && $this->is_required()) {
             $label .= '<span class="required">*</span>';
@@ -173,24 +173,23 @@ class TemplateField
         if ($this->view == 'list') {
             if (isset($this->bean)) {
                 if (!empty($this->id)) {
-                    $name = $this->bean->table_name . '_cstm.'. $this->name;
-                    $arrow = $this->bean->table_name . '_cstm_'. $this->name;
+                    $name = $this->bean->table_name . '_cstm.' . $this->name;
+                    $arrow = $this->bean->table_name . '_cstm_' . $this->name;
                 } else {
-                    $name = $this->bean->table_name . '.'. $this->name;
-                    $arrow = $this->bean->table_name . '_'. $this->name;
+                    $name = $this->bean->table_name . '.' . $this->name;
+                    $arrow = $this->bean->table_name . '_' . $this->name;
                 }
             } else {
                 $name = $this->name;
                 $arrow = $name;
             }
-            $label = "<a href='{ORDER_BY}$name' class='listViewThLinkS1'>{MOD.$this->label}{arrow_start}{".$arrow."_arrow}{arrow_end}</a>";
+            $label = "<a href='{ORDER_BY}{$name}' class='listViewThLinkS1'>{MOD.{$this->label}}{arrow_start}{" . $arrow . '_arrow}{arrow_end}</a>';
         }
+
         return $label;
     }
 
-    /*
-    	XTPL FUNCTIONS
-    	*/
+    // XTPL FUNCTIONS
 
     public function get_xtpl($bean = false)
     {
@@ -206,7 +205,6 @@ class TemplateField
             case 'edit': return $this->get_xtpl_edit();
             case 'list': return $this->get_xtpl_list();
             case 'detail': return $this->get_xtpl_detail();
-
         }
     }
 
@@ -235,15 +233,11 @@ class TemplateField
         if ($this->required) {
             return true;
         }
+
         return false;
     }
 
-
-
-
-    /*
-    	DB FUNCTIONS
-    	*/
+    // DB FUNCTIONS
 
     public function get_db_type()
     {
@@ -251,25 +245,26 @@ class TemplateField
             $type = DBManagerFactory::getInstance()->getColumnType($this->type);
         }
         if (!empty($type)) {
-            return " $type";
+            return " {$type}";
         }
-        $type = DBManagerFactory::getInstance()->getColumnType("varchar");
-        return " $type({$this->len})";
+        $type = DBManagerFactory::getInstance()->getColumnType('varchar');
+
+        return " {$type}({$this->len})";
     }
 
-    public function get_db_default($modify=false)
+    public function get_db_default($modify = false)
     {
-        $GLOBALS['log']->debug('get_db_default(): default_value='.$this->default_value);
+        $GLOBALS['log']->debug('get_db_default(): default_value=' . $this->default_value);
         if (!$modify or empty($this->new_field_definition['default_value']) or $this->new_field_definition['default_value'] != $this->default_value) {
             if (!is_null($this->default_value)) { // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
                 if (null == trim($this->default_value)) {
-                    return " DEFAULT NULL";
-                } else {
-                    return " DEFAULT '$this->default_value'";
+                    return ' DEFAULT NULL';
                 }
-            } else {
-                return '';
+
+                return " DEFAULT '{$this->default_value}'";
             }
+
+            return '';
         }
     }
 
@@ -281,23 +276,23 @@ class TemplateField
      * So if not called by Studio we want to return NULL if required=true (because we are changing FROM this setting)
      */
 
-    public function get_db_required($modify=false)
+    public function get_db_required($modify = false)
     {
         //		$GLOBALS['log']->debug('get_db_required required='.$this->required." and ".(($modify)?"true":"false")." and ".print_r($this->new_field_definition,true));
-        $req = "";
+        $req = '';
 
         if ($modify) {
             if (!empty($this->new_field_definition['required'])) {
                 if ($this->required and $this->new_field_definition['required'] != $this->required) {
-                    $req = " NULL ";
+                    $req = ' NULL ';
                 }
             } else {
-                $req = ($this->required) ? " NOT NULL " : ''; // bug 17184 tyoung - set required correctly when modifying custom field in Studio
+                $req = ($this->required) ? ' NOT NULL ' : ''; // bug 17184 tyoung - set required correctly when modifying custom field in Studio
             }
         } else {
             if (empty($this->new_field_definition['required']) or $this->new_field_definition['required'] != $this->required) {
                 if (!empty($this->required) && $this->required) {
-                    $req = " NOT NULL";
+                    $req = ' NOT NULL';
                 }
             }
         }
@@ -323,9 +318,12 @@ class TemplateField
     	return '';
     	}
     	*/
+
     /**
      * Oracle Support: do not set required constraint if no default value is supplied.
      * In this case the default value will be handled by the application/sugarbean.
+     *
+     * @param mixed $table
      */
     public function get_db_add_alter_table($table)
     {
@@ -342,39 +340,37 @@ class TemplateField
 
     /**
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
+     *
+     * @param mixed $table
      */
     public function get_db_modify_alter_table($table)
     {
         return DBManagerFactory::getInstance()->alterColumnSQL($table, $this->get_field_def());
     }
 
-
-    /*
-     * BEAN FUNCTIONS
-     *
-     */
+    // BEAN FUNCTIONS
     public function get_field_def()
     {
-        $array =  array(
-            'required'=>$this->convertBooleanValue($this->required),
-            'source'=>'custom_fields',
-            'name'=>$this->name,
-            'vname'=>$this->vname,
-            'type'=>$this->type,
-            'massupdate'=>$this->massupdate,
-            'default'=>$this->default,
-            'no_default'=> !empty($this->no_default),
-            'comments'=> (isset($this->comments)) ? $this->comments : '',
-            'help'=> (isset($this->help)) ?  $this->help : '',
-            'importable'=>$this->importable,
-            'duplicate_merge'=>$this->duplicate_merge,
-            'duplicate_merge_dom_value'=> $this->getDupMergeDomValue(),
-            'audited'=>$this->convertBooleanValue($this->audited),
-            'inline_edit'=>$this->convertBooleanValue($this->inline_edit),
-            'reportable'=>$this->convertBooleanValue($this->reportable),
-            'unified_search'=>$this->convertBooleanValue($this->unified_search),
-            'merge_filter' => empty($this->merge_filter) ? "disabled" : $this->merge_filter
-        );
+        $array = [
+            'required' => $this->convertBooleanValue($this->required),
+            'source' => 'custom_fields',
+            'name' => $this->name,
+            'vname' => $this->vname,
+            'type' => $this->type,
+            'massupdate' => $this->massupdate,
+            'default' => $this->default,
+            'no_default' => !empty($this->no_default),
+            'comments' => (isset($this->comments)) ? $this->comments : '',
+            'help' => (isset($this->help)) ? $this->help : '',
+            'importable' => $this->importable,
+            'duplicate_merge' => $this->duplicate_merge,
+            'duplicate_merge_dom_value' => $this->getDupMergeDomValue(),
+            'audited' => $this->convertBooleanValue($this->audited),
+            'inline_edit' => $this->convertBooleanValue($this->inline_edit),
+            'reportable' => $this->convertBooleanValue($this->reportable),
+            'unified_search' => $this->convertBooleanValue($this->unified_search),
+            'merge_filter' => empty($this->merge_filter) ? 'disabled' : $this->merge_filter
+        ];
         if (isset($this->full_text_search)) {
             $array['full_text_search'] = $this->full_text_search;
         }
@@ -390,44 +386,34 @@ class TemplateField
         return $array;
     }
 
-    protected function convertBooleanValue($value)
-    {
-        if ($value === 'true' || $value === '1' || $value === 1) {
-            return  true;
-        } else {
-            if ($value === 'false' || $value === '0' || $value === 0) {
-                return  false;
-            } else {
-                return $value;
-            }
-        }
-    }
-
-
-    /* if the field is duplicate merge enabled this function will return the vardef entry for the same.
-     */
+    // if the field is duplicate merge enabled this function will return the vardef entry for the same.
     public function get_dup_merge_def(&$def)
     {
         switch ($def['duplicate_merge_dom_value']) {
             case 0:
-                $def['duplicate_merge']='disabled';
-                $def['merge_filter']='disabled';
+                $def['duplicate_merge'] = 'disabled';
+                $def['merge_filter'] = 'disabled';
+
                 break;
             case 1:
-                $def['duplicate_merge']='enabled';
-                $def['merge_filter']='disabled';
+                $def['duplicate_merge'] = 'enabled';
+                $def['merge_filter'] = 'disabled';
+
                 break;
             case 2:
-                $def['merge_filter']='enabled';
-                $def['duplicate_merge']='enabled';
+                $def['merge_filter'] = 'enabled';
+                $def['duplicate_merge'] = 'enabled';
+
                 break;
             case 3:
-                $def['merge_filter']='selected';
-                $def['duplicate_merge']='enabled';
+                $def['merge_filter'] = 'selected';
+                $def['duplicate_merge'] = 'enabled';
+
                 break;
             case 4:
-                $def['merge_filter']='enabled';
-                $def['duplicate_merge']='disabled';
+                $def['merge_filter'] = 'enabled';
+                $def['duplicate_merge'] = 'disabled';
+
                 break;
         }
     }
@@ -438,6 +424,7 @@ class TemplateField
      * of those two fields. Also, when studio sends this value down to be read in PopulateFromPost, it is set to
      * duplicate_merge rather than duplicate_merge_dom_value, so we must check if duplicate_merge is a number rather
      * than a string as well.
+     *
      * @return int
      */
     public function getDupMergeDomValue()
@@ -451,7 +438,6 @@ class TemplateField
             return $this->duplicate_merge;
         }
 
-
         //Figure out the duplicate_merge_dom_value based on the values of merge filter and duplicate merge
         if (empty($this->merge_filter) || $this->merge_filter === 'disabled') {
             if (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
@@ -460,7 +446,7 @@ class TemplateField
                 $this->duplicate_merge_dom_value = 1;
             }
         } else {
-            if ($this->merge_filter === "selected") {
+            if ($this->merge_filter === 'selected') {
                 $this->duplicate_merge_dom_value = 3;
             } else {
                 if (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
@@ -474,10 +460,7 @@ class TemplateField
         return $this->duplicate_merge_dom_value;
     }
 
-    /*
-    	HELPER FUNCTIONS
-    	*/
-
+    // HELPER FUNCTIONS
 
     public function prepare()
     {
@@ -489,68 +472,63 @@ class TemplateField
     /**
      * populateFromRow
      * This function supports setting the values of all TemplateField instances.
+     *
      * @param $row The Array key/value pairs from fields_meta_data table
      */
-    public function populateFromRow($row=array())
+    public function populateFromRow($row = [])
     {
-        $fmd_to_dyn_map = array('comments' => 'comment', 'require_option' => 'required', 'label' => 'vname',
-                                'mass_update' => 'massupdate', 'max_size' => 'len', 'default_value' => 'default', 'id_name' => 'ext3');
+        $fmd_to_dyn_map = ['comments' => 'comment', 'require_option' => 'required', 'label' => 'vname',
+            'mass_update' => 'massupdate', 'max_size' => 'len', 'default_value' => 'default', 'id_name' => 'ext3'];
         if (!is_array($row)) {
-            $GLOBALS['log']->error("Error: TemplateField->populateFromRow expecting Array");
+            $GLOBALS['log']->error('Error: TemplateField->populateFromRow expecting Array');
         }
         //Bug 24189: Copy fields from FMD format to Field objects and vice versa
         foreach ($fmd_to_dyn_map as $fmd_key => $dyn_key) {
             if (isset($row[$dyn_key])) {
-                $this->$fmd_key = $row[$dyn_key];
+                $this->{$fmd_key} = $row[$dyn_key];
             }
             if (isset($row[$fmd_key])) {
-                $this->$dyn_key = $row[$fmd_key];
+                $this->{$dyn_key} = $row[$fmd_key];
             }
         }
-        foreach ($row as	$key=>$value) {
-            $this->$key = $value;
+        foreach ($row as	$key => $value) {
+            $this->{$key} = $value;
         }
     }
 
     public function populateFromPost()
     {
-        foreach ($this->vardef_map as $vardef=>$field) {
+        foreach ($this->vardef_map as $vardef => $field) {
             if (isset($_REQUEST[$vardef])) {
-                $this->$vardef = $_REQUEST[$vardef];
+                $this->{$vardef} = $_REQUEST[$vardef];
 
                 //  Bug #48826. Some fields are allowed to have special characters and must be decoded from the request
                 // Bug 49774, 49775: Strip html tags from 'formula' and 'dependency'.
-                if (is_string($this->$vardef) && in_array($vardef, $this->decode_from_request_fields_map)) {
-                    $this->$vardef = html_entity_decode(strip_tags(from_html($this->$vardef)));
+                if (is_string($this->{$vardef}) && in_array($vardef, $this->decode_from_request_fields_map)) {
+                    $this->{$vardef} = html_entity_decode(strip_tags(from_html($this->{$vardef})));
                 }
 
-
                 //Remove potential xss code from help field
-                if ($field == 'help' && !empty($this->$vardef)) {
-                    $help = htmlspecialchars_decode($this->$vardef, ENT_QUOTES);
+                if ($field == 'help' && !empty($this->{$vardef})) {
+                    $help = htmlspecialchars_decode($this->{$vardef}, ENT_QUOTES);
 
                     // Fix for issue #1170 - text in studio can't accept the special language characters.
                     //$this->$vardef = htmlentities(remove_xss($help));
-                    $this->$vardef = htmlspecialchars(remove_xss($help));
+                    $this->{$vardef} = htmlspecialchars(remove_xss($help));
                 }
 
-
                 if ($vardef != $field) {
-                    $this->$field = $this->$vardef;
+                    $this->{$field} = $this->{$vardef};
                 }
             }
         }
         $this->applyVardefRules();
-        $GLOBALS['log']->debug('populate: '.print_r($this, true));
-    }
-
-    protected function applyVardefRules()
-    {
+        $GLOBALS['log']->debug('populate: ' . print_r($this, true));
     }
 
     public function get_additional_defs()
     {
-        return array();
+        return [];
     }
 
     public function delete($df)
@@ -559,28 +537,7 @@ class TemplateField
     }
 
     /**
-     * get_field_name
-     *
-     * This is a helper function to return a field's proper name.  It checks to see if an instance of the module can
-     * be created and then attempts to retrieve the field's name based on the name lookup skey supplied to the method.
-     *
-     * @param String $module The name of the module
-     * @param String $name The field name key
-     * @return The field name for the module
-     */
-    protected function get_field_name($module, $name)
-    {
-        $bean = loadBean($module);
-        if (empty($bean) || is_null($bean)) {
-            return $name;
-        }
-
-        $field_defs = $bean->field_defs;
-        return isset($field_defs[$name]['name']) ? $field_defs[$name]['name'] : $name;
-    }
-
-    /**
-     * save
+     * save.
      *
      * This function says the field template by calling the DynamicField addFieldObject function.  It then
      * checks to see if updates are needed for the SearchFields.php file.  In the event that the unified_search
@@ -593,13 +550,52 @@ class TemplateField
         //	    $GLOBALS['log']->debug('saving field: '.print_r($this,true));
         $df->addFieldObject($this);
 
-        require_once('modules/ModuleBuilder/parsers/parser.searchfields.php');
-        $searchFieldParser = new ParserSearchFields($df->getModuleName(), $df->getPackageName()) ;
+        require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
+        $searchFieldParser = new ParserSearchFields($df->getModuleName(), $df->getPackageName());
         //If unified_search is enabled for this field, then create the SearchFields entry
         $fieldName = $this->get_field_name($df->getModuleName(), $this->name);
         if ($this->unified_search && !isset($searchFieldParser->searchFields[$df->getModuleName()][$fieldName])) {
-            $searchFieldParser->addSearchField($fieldName, array('query_type'=>'default'));
+            $searchFieldParser->addSearchField($fieldName, ['query_type' => 'default']);
             $searchFieldParser->saveSearchFields($searchFieldParser->searchFields);
         }
+    }
+
+    protected function convertBooleanValue($value)
+    {
+        if ($value === 'true' || $value === '1' || $value === 1) {
+            return  true;
+        }
+        if ($value === 'false' || $value === '0' || $value === 0) {
+            return  false;
+        }
+
+        return $value;
+    }
+
+    protected function applyVardefRules()
+    {
+    }
+
+    /**
+     * get_field_name.
+     *
+     * This is a helper function to return a field's proper name.  It checks to see if an instance of the module can
+     * be created and then attempts to retrieve the field's name based on the name lookup skey supplied to the method.
+     *
+     * @param string $module The name of the module
+     * @param string $name The field name key
+     *
+     * @return The field name for the module
+     */
+    protected function get_field_name($module, $name)
+    {
+        $bean = loadBean($module);
+        if (empty($bean) || is_null($bean)) {
+            return $name;
+        }
+
+        $field_defs = $bean->field_defs;
+
+        return isset($field_defs[$name]['name']) ? $field_defs[$name]['name'] : $name;
     }
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,22 +40,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
 class SugarWidgetSubPanelTopArchiveEmailButton extends SugarWidgetSubPanelTopButton
 {
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
-        if ((ACLController::moduleSupportsACL($defines['module'])  && !ACLController::checkAccess($defines['module'], 'edit', true) ||
-            $defines['module'] == "History" & !ACLController::checkAccess("Emails", 'edit', true))) {
+        if ((ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true) ||
+            $defines['module'] == 'History' & !ACLController::checkAccess('Emails', 'edit', true))) {
             $temp = '';
+
             return $temp;
         }
-        
+
         global $app_strings;
         global $mod_strings;
         global $currentModule;
@@ -64,7 +59,7 @@ class SugarWidgetSubPanelTopArchiveEmailButton extends SugarWidgetSubPanelTopBut
         $value = $app_strings['LBL_TRACK_EMAIL_BUTTON_LABEL'];
         $this->module = 'Emails';
 
-        $additionalFormFields = array();
+        $additionalFormFields = [];
         $additionalFormFields['type'] = 'archived';
         // cn: bug 5727 - must override the parents' parent for contacts (which could be an Account)
         $additionalFormFields['parent_type'] = $defines['focus']->module_dir;
@@ -74,13 +69,15 @@ class SugarWidgetSubPanelTopArchiveEmailButton extends SugarWidgetSubPanelTopBut
         if (isset($defines['focus']->email1)) {
             $additionalFormFields['to_email_addrs'] = $defines['focus']->email1;
         }
-        if (ACLController::moduleSupportsACL($defines['module'])  && !ACLController::checkAccess($defines['module'], 'edit', true)) {
-            $button = "<input id='".preg_replace('[ ]', '', $value)."_button'  title='$title' class='button' type='button' name='".preg_replace('[ ]', '', mb_strtolower($value, 'UTF-8'))."_button' value='$value' disabled/>\n";
+        if (ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true)) {
+            $button = "<input id='" . preg_replace('[ ]', '', $value) . "_button'  title='{$title}' class='button' type='button' name='" . preg_replace('[ ]', '', mb_strtolower($value, 'UTF-8')) . "_button' value='{$value}' disabled/>\n";
+
             return $button;
         }
         $button = $this->_get_form($defines, $additionalFormFields);
-        $button .= "<input id='".preg_replace('[ ]', '', $value)."_button' title='$title' class='button' type='submit' name='".preg_replace('[ ]', '', mb_strtolower($value, 'UTF-8'))."_button' value='$value'/>\n";
-        $button .= "</form>";
+        $button .= "<input id='" . preg_replace('[ ]', '', $value) . "_button' title='{$title}' class='button' type='submit' name='" . preg_replace('[ ]', '', mb_strtolower($value, 'UTF-8')) . "_button' value='{$value}'/>\n";
+        $button .= '</form>';
+
         return $button;
     }
 }

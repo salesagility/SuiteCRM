@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,18 +42,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (isset($_SESSION['authenticated_user_id'])) {
     ob_clean();
     header('Location: ' . $GLOBALS['app']->getLoginRedirect());
     sugar_cleanup(true);
+
     return;
 }
 
 // display the logged out screen
 $smarty = new Sugar_Smarty();
-$smarty->assign(array(
-    'LOGIN_URL'  => 'index.php?action=Login&module=Users',
+$smarty->assign([
+    'LOGIN_URL' => 'index.php?action=Login&module=Users',
     'STYLESHEET' => getJSPath('modules/Users/login.css'),
-));
+]);
 $smarty->display('modules/Users/LoggedOut.tpl');

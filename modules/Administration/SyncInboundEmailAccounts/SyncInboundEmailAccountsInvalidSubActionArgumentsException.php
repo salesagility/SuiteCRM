@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,25 +36,22 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class SyncInboundEmailAccountsInvalidSubActionArgumentsException
+ * Class SyncInboundEmailAccountsInvalidSubActionArgumentsException.
  *
  * Handle the action calls with incorrect argument(s)
  *
  * It is a simple exception with an additional message which
  * contains the incorrectly called action-method name
- *
  */
 class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Exception
 {
-
     /**
-     * steps for get the caller method in the backtrace
+     * steps for get the caller method in the backtrace.
      *
      * @var int
      */
@@ -66,13 +62,13 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
      *
      * @param string $message
      * @param int $code
-     * @param Exception|null $previous
+     * @param null|Exception $previous
      */
-    public function __construct($message = "", $code = 0, \Exception $previous = null)
+    public function __construct($message = '', $code = 0, Exception $previous = null)
     {
         parent::__construct(
-            ($message ? $message . " - " : "") .
-            "An action called with wrong parameters, incorrectly called action was: " .
+            ($message ? $message . ' - ' : '') .
+            'An action called with wrong parameters, incorrectly called action was: ' .
             $this->getCallerMethod(),
             $code,
             $previous
@@ -84,16 +80,16 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
      * call this function without argument
      * if you override this method may you have to change
      * the $this->callerMethodBackStep default value or
-     * override it with step parameter
+     * override it with step parameter.
      *
      * @param int $step
+     *
      * @return mixed
      */
     protected function getCallerMethod($step = 2)
     {
         $trace = debug_backtrace();
-        $function = $trace[$step ? $step : $this->callerMethodDistance]['function'];
 
-        return $function;
+        return $trace[$step ? $step : $this->callerMethodDistance]['function'];
     }
 }

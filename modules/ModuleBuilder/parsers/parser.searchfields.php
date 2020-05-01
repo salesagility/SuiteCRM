@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,16 +40,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
-require_once('modules/ModuleBuilder/MB/MBPackage.php');
+require_once 'modules/ModuleBuilder/parsers/ModuleBuilderParser.php';
+require_once 'modules/ModuleBuilder/MB/MBPackage.php';
 
 class ParserSearchFields extends ModuleBuilderParser
 {
     public $searchFields;
     public $packageKey;
 
-    public function __construct($moduleName, $packageName='')
+    public function __construct($moduleName, $packageName = '')
     {
         $this->moduleName = $moduleName;
         if (!empty($packageName)) {
@@ -82,15 +81,15 @@ class ParserSearchFields extends ModuleBuilderParser
 
     public function getSearchFields()
     {
-        $searchFields = array();
+        $searchFields = [];
         if (!empty($this->packageName) && file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) { //we are in Module builder
-            include("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php");
+            include "custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php";
         } else {
             if (file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php")) {
-                include("custom/modules/{$this->moduleName}/metadata/SearchFields.php");
+                include "custom/modules/{$this->moduleName}/metadata/SearchFields.php";
             } else {
                 if (file_exists("modules/{$this->moduleName}/metadata/SearchFields.php")) {
-                    include("modules/{$this->moduleName}/metadata/SearchFields.php");
+                    include "modules/{$this->moduleName}/metadata/SearchFields.php";
                 }
             }
         }

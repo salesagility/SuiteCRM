@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,26 +42,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-$dictionary['OutboundEmail'] = array('table' => 'outbound_email',
-    'fields' => array(
-        'id' => array(
+$dictionary['OutboundEmail'] = ['table' => 'outbound_email',
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
-        ),
-        'name' => array(
+        ],
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'varchar',
             'len' => 50,
             'required' => true,
             'reportable' => false,
-        ),
-        'type' => array(
+        ],
+        'type' => [
             'name' => 'type',
             'vname' => 'LBL_TYPE',
             'type' => 'varchar',
@@ -68,29 +67,27 @@ $dictionary['OutboundEmail'] = array('table' => 'outbound_email',
             'required' => true,
             'default' => 'user',
             'reportable' => false,
-        ),
-        'user_id' => array(
+        ],
+        'user_id' => [
             'name' => 'user_id',
             'vname' => 'LBL_USER_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
-        ),
-            
-                            'smtp_from_name' =>
-        array(
+        ],
+
+        'smtp_from_name' => [
             'name' => 'smtp_from_name',
             'vname' => 'LBL_SMTP_FROM_NAME',
             'type' => 'varchar',
-        ),
-        'smtp_from_addr' =>
-        array(
+        ],
+        'smtp_from_addr' => [
             'name' => 'smtp_from_addr',
             'vname' => 'LBL_SMTP_FROM_ADDR',
             'type' => 'varchar',
-        ),
-            
-        'mail_sendtype' => array(
+        ],
+
+        'mail_sendtype' => [
             'name' => 'mail_sendtype',
             'vname' => 'LBL_MAIL_SENDTYPE',
             'type' => 'varchar',
@@ -98,8 +95,8 @@ $dictionary['OutboundEmail'] = array('table' => 'outbound_email',
             'required' => true,
             'default' => 'smtp',
             'reportable' => false,
-        ),
-        'mail_smtptype' => array(
+        ],
+        'mail_smtptype' => [
             'name' => 'mail_smtptype',
             'vname' => 'LBL_MAIL_SENDTYPE',
             'type' => 'varchar',
@@ -107,53 +104,53 @@ $dictionary['OutboundEmail'] = array('table' => 'outbound_email',
             'required' => true,
             'default' => 'other',
             'reportable' => false,
-        ),
-        'mail_smtpserver' => array(
+        ],
+        'mail_smtpserver' => [
             'name' => 'mail_smtpserver',
             'vname' => 'LBL_MAIL_SMTPSERVER',
             'type' => 'varchar',
             'len' => 100,
             'required' => false,
             'reportable' => false,
-        ),
-        'mail_smtpport' => array(
+        ],
+        'mail_smtpport' => [
             'name' => 'mail_smtpport',
             'vname' => 'LBL_MAIL_SMTPPORT',
             'type' => 'int',
             'len' => 5,
             'default' => 0,
             'reportable' => false,
-        ),
-        'mail_smtpuser' => array(
+        ],
+        'mail_smtpuser' => [
             'name' => 'mail_smtpuser',
             'vname' => 'LBL_MAIL_SMTPUSER',
             'type' => 'varchar',
             'len' => 100,
             'reportable' => false,
-        ),
-        'mail_smtppass' => array(
+        ],
+        'mail_smtppass' => [
             'name' => 'mail_smtppass',
             'vname' => 'LBL_MAIL_SMTPPASS',
             'type' => 'varchar',
             'len' => 100,
             'reportable' => false,
-        ),
-        'mail_smtpauth_req' => array(
+        ],
+        'mail_smtpauth_req' => [
             'name' => 'mail_smtpauth_req',
             'vname' => 'LBL_MAIL_SMTPAUTH_REQ',
             'type' => 'bool',
             'default' => 0,
             'reportable' => false,
-        ),
-        'mail_smtpssl' => array(
+        ],
+        'mail_smtpssl' => [
             'name' => 'mail_smtpssl',
             'vname' => 'LBL_MAIL_SMTPSSL',
             'type' => 'int',
             'len' => 1,
             'default' => 0,
             'reportable' => false,
-        ),
-    ),
+        ],
+    ],
     //'indices' => array (
     //array(
     //	'name' => 'outbound_email_pk',
@@ -171,4 +168,4 @@ $dictionary['OutboundEmail'] = array('table' => 'outbound_email',
     //	)
     //),
     //), /* end indices */
-);
+];

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-require_once('include/Dashlets/Dashlet.php');
-require_once('include/Sugar_Smarty.php');
+require_once 'include/Dashlets/Dashlet.php';
+require_once 'include/Sugar_Smarty.php';
 
 class RSSDashlet extends Dashlet
 {
@@ -53,9 +50,10 @@ class RSSDashlet extends Dashlet
     protected $images_dir = 'modules/Home/Dashlets/RSSDashlet/images';
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @global string current language
+     *
      * @param guid $id id for the current dashlet (assigned from Home module)
      * @param array $def options saved for this dashlet
      */
@@ -88,7 +86,7 @@ class RSSDashlet extends Dashlet
     }
 
     /**
-     * Displays the dashlet
+     * Displays the dashlet.
      *
      * @return string html to display dashlet
      */
@@ -107,7 +105,7 @@ class RSSDashlet extends Dashlet
     }
 
     /**
-     * Displays the configuration form for the dashlet
+     * Displays the configuration form for the dashlet.
      *
      * @return string html to display form
      */
@@ -136,15 +134,16 @@ class RSSDashlet extends Dashlet
     }
 
     /**
-     * called to filter out $_REQUEST object when the user submits the configure dropdown
+     * called to filter out $_REQUEST object when the user submits the configure dropdown.
      *
      * @param array $req $_REQUEST
+     *
      * @return array filtered options to save
      */
     public function saveOptions(
         array $req
-        ) {
-        $options = array();
+    ) {
+        $options = [];
         $options['title'] = $req['title'];
         $options['url'] = $req['url'];
         $options['height'] = $req['height'];
@@ -155,7 +154,7 @@ class RSSDashlet extends Dashlet
 
     protected function getRSSOutput(
         $url
-        ) {
+    ) {
         // suppress XML errors
         libxml_use_internal_errors(true);
         $data = file_get_contents($url);
@@ -214,7 +213,7 @@ EOHTML;
 EOHTML;
             }
         }
-        $output .= "</table>";
+        $output .= '</table>';
 
         return $output;
     }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,11 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 logThis('[At end.php]');
 global $unzip_dir;
@@ -70,7 +67,7 @@ if (method_exists($rac, 'clearExternalAPICache')) {
     $rac->clearExternalAPICache();
 }
 
-$repairedTables = array();
+$repairedTables = [];
 
 foreach ($beanFiles as $bean => $file) {
     if (file_exists($file)) {
@@ -81,14 +78,14 @@ foreach ($beanFiles as $bean => $file) {
             if (!isset($repairedTables[$focus->table_name])) {
                 $sql = DBManagerFactory::getInstance()->repairTable($focus, true);
                 if (trim($sql) != '') {
-                    logThis('Running sql:'.$sql, $path);
+                    logThis('Running sql:' . $sql, $path);
                 }
                 $repairedTables[$focus->table_name] = true;
             }
 
             //Check to see if we need to create the audit table
             if ($focus->is_AuditEnabled() && !$focus->db->tableExists($focus->get_audit_table_name())) {
-                logThis('Creating audit table:'.$focus->get_audit_table_name(), $path);
+                logThis('Creating audit table:' . $focus->get_audit_table_name(), $path);
                 $focus->create_audit_table();
             }
         }
@@ -114,7 +111,7 @@ foreach ($dictionary as $meta) {
     $indices = $meta['indices'];
     $sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
     if (trim($sql) != '') {
-        logThis('Running sql:'.$sql, $path);
+        logThis('Running sql:' . $sql, $path);
     }
     $repairedTables[$tablename] = true;
 }
@@ -129,17 +126,17 @@ logThis(' Start Rebuilding the config file again', $path);
 
 //check and set the logger before rebuilding config
 if (!isset($sugar_config['logger'])) {
-    $sugar_config['logger'] = array(
+    $sugar_config['logger'] = [
         'level' => 'fatal',
-        'file' => array(
-                'ext' => '.log',
-                'name' => 'suitecrm',
-                'dateFormat' => '%c',
-                'maxSize' => '10MB',
-                'maxLogs' => 10,
-                'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
-            ),
-    );
+        'file' => [
+            'ext' => '.log',
+            'name' => 'suitecrm',
+            'dateFormat' => '%c',
+            'maxSize' => '10MB',
+            'maxLogs' => 10,
+            'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
+        ],
+    ];
 }
 //for upgraded version, set default lead conversion activity option to 'copy'
 if (!isset($sugar_config['lead_conv_activity_opt'])) {
@@ -153,7 +150,7 @@ logThis(' Finish Rebuilding the config file again', $path);
 
 set_upgrade_progress('end', 'in_progress');
 
-if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version'])) {
+if (isset($_SESSION['current_db_version'], $_SESSION['target_db_version'])) {
     if (version_compare($_SESSION['current_db_version'], $_SESSION['target_db_version'], '!=')) {
     }
 
@@ -171,7 +168,7 @@ if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version
             $category = 'license';
             $value = '0';
             $admin->saveSetting($category, 'users', $value);
-            $key = array('num_lic_oc', 'key', 'expire_date');
+            $key = ['num_lic_oc', 'key', 'expire_date'];
             $value = '';
             foreach ($key as $k) {
                 $admin->saveSetting($category, $k, $value);
@@ -258,9 +255,9 @@ $host = ($parsedSiteUrl['host'] != $httpHost) ? $httpHost : $parsedSiteUrl['host
 
 // aw: 9747 - use SERVER_PORT for users who don't plug in the site_url at install correctly
 if ($_SERVER['SERVER_PORT'] != 80) {
-    $port = ':'.$_SERVER['SERVER_PORT'];
+    $port = ':' . $_SERVER['SERVER_PORT'];
 } elseif (isset($parsedSiteUrl['port']) && $parsedSiteUrl['port'] != 80) {
-    $port = ':'.$parsedSiteUrl['port'];
+    $port = ':' . $parsedSiteUrl['port'];
 } else {
     $port = '';
 }
@@ -318,9 +315,7 @@ $stepCancel = 0;
 $stepRecheck = 0;
 
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
-unset($_SESSION['current_db_version']);
-unset($_SESSION['target_db_version']);
-
+unset($_SESSION['current_db_version'], $_SESSION['target_db_version']);
 
 ob_start();
 include __DIR__ . '/../Administration/UpgradeAccess.php';

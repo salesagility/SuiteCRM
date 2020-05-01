@@ -1,8 +1,9 @@
 <?php
+
 namespace Api\V8\Controller;
 
-use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\CreateRelationshipByLinkParams;
+use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetRelationshipParams;
 use Api\V8\Service\RelationshipService;

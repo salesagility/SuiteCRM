@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes_sugar.php');
+require_once 'modules/AOS_Products_Quotes/AOS_Products_Quotes_sugar.php';
 
 class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
 {
@@ -47,14 +45,11 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
         parent::__construct();
     }
 
-
-
-
-    public function save_lines($post_data, $parent, $groups = array(), $key = '')
+    public function save_lines($post_data, $parent, $groups = [], $key = '')
     {
         $line_count = isset($post_data[$key . 'name']) ? count($post_data[$key . 'name']) : 0;
         $j = 0;
-        for ($i = 0; $i < $line_count; ++$i) {
+        for ($i = 0; $i < $line_count; $i++) {
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -72,7 +67,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
-                        $product_quote->$field_name = $post_data[$key . $field_name][$i];
+                        $product_quote->{$field_name} = $post_data[$key . $field_name][$i];
                     }
                 }
                 if (isset($post_data[$key . 'group_number'][$i])) {
@@ -112,8 +107,9 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
 
     public function save($check_notify = false)
     {
-        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        require_once 'modules/AOS_Products_Quotes/AOS_Utils.php';
         perform_aos_save($this);
+
         return parent::save($check_notify);
     }
 
@@ -122,7 +118,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
      */
     public function mark_lines_deleted($parent)
     {
-        require_once('modules/Relationships/Relationship.php');
+        require_once 'modules/Relationships/Relationship.php';
         $product_quotes = $parent->get_linked_beans('aos_products_quotes', $this->object_name);
         foreach ($product_quotes as $product_quote) {
             $product_quote->mark_deleted($product_quote->id);

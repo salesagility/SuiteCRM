@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_MODULE_NAME' => 'Releases',
     'LBL_MODULE_TITLE' => 'Releases: Home',
     'LBL_SEARCH_FORM_TITLE' => 'Release Search',
@@ -60,10 +58,9 @@ $mod_strings = array(
     'ERR_DELETE_RECORD' => 'You must specify a record number to delete the release.',
     'NTC_STATUS' => 'Set status to Inactive to remove this release from the Release dropdown lists',
     'NTC_LIST_ORDER' => 'Set the order this release will appear in the Release dropdown lists',
-    'release_status_dom' =>
-        array(
-            'Active' => 'Active',
-            'Inactive' => 'Inactive',
-        ),
+    'release_status_dom' => [
+        'Active' => 'Active',
+        'Inactive' => 'Inactive',
+    ],
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
-);
+];

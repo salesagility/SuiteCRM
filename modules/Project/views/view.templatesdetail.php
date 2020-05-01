@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,29 +37,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class ProjectViewTemplatesDetail extends ViewDetail
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-        
-        return array(
-           $this->_getModuleTitleListParam($browserTitle),
-           "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>",
-           $mod_strings['LBL_PROJECT_TEMPLATE']
-           );
-    }
-    
     public function display()
     {
         global $beanFiles;
-        require_once($beanFiles['Project']);
+        require_once $beanFiles['Project'];
 
         $focus = new Project();
         $focus->retrieve($_REQUEST['record']);
@@ -77,11 +59,27 @@ class ProjectViewTemplatesDetail extends ViewDetail
     }
 
     /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            $this->_getModuleTitleListParam($browserTitle),
+            "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>",
+            $mod_strings['LBL_PROJECT_TEMPLATE']
+        ];
+    }
+
+    /**
      * @see SugarView::_displaySubPanels()
      */
     protected function _displaySubPanels()
     {
-        require_once('include/SubPanel/SubPanelTiles.php');
+        require_once 'include/SubPanel/SubPanelTiles.php';
         $subpanel = new SubPanelTiles($this->bean, 'ProjectTemplates');
         echo $subpanel->display(true, true);
     }

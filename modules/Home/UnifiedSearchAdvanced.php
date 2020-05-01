@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,19 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
 class UnifiedSearchAdvanced
 {
     public $query_string = '';
-    
-    /* path to search form */
+
+    // path to search form
     public $searchFormPath = 'include/SearchForm/SearchForm2.php';
 
-    /*search form class name*/
+    // search form class name
     public $searchFormClass = 'SearchForm';
 
     public function __construct()
@@ -82,8 +77,8 @@ class UnifiedSearchAdvanced
 
         // preferences are empty, select all
         if (empty($users_modules)) {
-            $users_modules = array();
-            foreach ($unified_search_modules_display as $module=>$data) {
+            $users_modules = [];
+            foreach ($unified_search_modules_display as $module => $data) {
                 if (!empty($data['visible'])) {
                     $users_modules[$module] = $beanList[$module];
                 }
@@ -93,9 +88,9 @@ class UnifiedSearchAdvanced
 
         $sugar_smarty = new Sugar_Smarty();
 
-        $modules_to_search = array();
+        $modules_to_search = [];
 
-        foreach ($users_modules as $key=>$module) {
+        foreach ($users_modules as $key => $module) {
             if (ACLController::checkAccess($key, 'list', true)) {
                 $modules_to_search[$key]['checked'] = true;
             }
@@ -114,11 +109,11 @@ class UnifiedSearchAdvanced
         $sugar_smarty->assign('LBL_SEARCH_BUTTON_TITLE', $app_strings['LBL_SEARCH_BUTTON_TITLE']);
         $sugar_smarty->assign('LBL_SEARCH', $app_strings['LBL_SEARCH']);
 
-        $json_enabled = array();
-        $json_disabled = array();
+        $json_enabled = [];
+        $json_disabled = [];
 
         //Now add the rest of the modules that are searchable via Global Search settings
-        foreach ($unified_search_modules_display as $module=>$data) {
+        foreach ($unified_search_modules_display as $module => $data) {
             if (!isset($modules_to_search[$module]) && $data['visible'] && ACLController::checkAccess($module, 'list', true)) {
                 $modules_to_search[$module]['checked'] = false;
             } else {
@@ -129,12 +124,12 @@ class UnifiedSearchAdvanced
         }
 
         //Create the two lists (doing it this way preserves the user's ordering choice for enabled modules)
-        foreach ($modules_to_search as $module=>$data) {
+        foreach ($modules_to_search as $module => $data) {
             $label = isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module;
             if (!empty($data['checked'])) {
-                $json_enabled[] = array("module" => $module, 'label' => $label);
+                $json_enabled[] = ['module' => $module, 'label' => $label];
             } else {
-                $json_disabled[] = array("module" => $module, 'label' => $label);
+                $json_disabled[] = ['module' => $module, 'label' => $label];
             }
         }
 
@@ -148,25 +143,22 @@ class UnifiedSearchAdvanced
 
         $sugar_smarty->assign('SHOWGSDIV', $showDiv);
         $sugar_smarty->debugging = false;
+
         return $sugar_smarty->fetch($tpl);
     }
 
-
     /**
-     * search
+     * search.
      *
      * Search function run when user goes to Show All and runs a search again.  This outputs the search results
      * calling upon the various listview display functions for each module searched on.
      *
      * Todo: Sync this up with SugarSpot.php search method.
-     *
-     *
      */
     public function search()
     {
         $unified_search_modules = $this->getUnifiedSearchModules();
         $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
-
 
         require_once 'include/ListView/ListViewSmarty.php';
 
@@ -176,7 +168,7 @@ class UnifiedSearchAdvanced
         $this->query_string = securexss(from_html(clean_string($this->query_string, 'UNIFIED_SEARCH')));
 
         if (!empty($_REQUEST['advanced']) && $_REQUEST['advanced'] != 'false') {
-            $modules_to_search = array();
+            $modules_to_search = [];
             if (!empty($_REQUEST['search_modules'])) {
                 foreach (explode(',', $_REQUEST['search_modules']) as $key) {
                     if (isset($unified_search_modules_display[$key]) && !empty($unified_search_modules_display[$key]['visible'])) {
@@ -189,7 +181,7 @@ class UnifiedSearchAdvanced
             $current_user->setPreference('globalSearch', $modules_to_search, 0, 'search'); // save selections to user preference
         } else {
             $users_modules = $current_user->getPreference('globalSearch', 'search');
-            $modules_to_search = array();
+            $modules_to_search = [];
 
             if (!empty($users_modules)) {
                 // use user's previous selections
@@ -199,7 +191,7 @@ class UnifiedSearchAdvanced
                     }
                 }
             } else {
-                foreach ($unified_search_modules_display as $module=>$data) {
+                foreach ($unified_search_modules_display as $module => $data) {
                     if (!empty($data['visible'])) {
                         $modules_to_search[$module] = $beanList[$module];
                     }
@@ -208,21 +200,20 @@ class UnifiedSearchAdvanced
             $current_user->setPreference('globalSearch', $modules_to_search, 'search');
         }
 
-
         $templateFile = 'modules/Home/UnifiedSearchAdvancedForm.tpl';
         if (file_exists('custom/' . $templateFile)) {
-            $templateFile = 'custom/'.$templateFile;
+            $templateFile = 'custom/' . $templateFile;
         }
 
         echo $this->getDropDownDiv($templateFile);
 
-        $module_results = array();
-        $module_counts = array();
+        $module_results = [];
+        $module_counts = [];
         $has_results = false;
 
         if (!empty($this->query_string)) {
             foreach ($modules_to_search as $moduleName => $beanName) {
-                require_once $beanFiles[$beanName] ;
+                require_once $beanFiles[$beanName];
                 $seed = new $beanName();
 
                 $lv = new ListViewSmarty();
@@ -230,20 +221,20 @@ class UnifiedSearchAdvanced
                 $mod_strings = return_module_language($current_language, $seed->module_dir);
 
                 //retrieve the original list view defs and store for processing in case of custom layout changes
-                require('modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
+                require 'modules/' . $seed->module_dir . '/metadata/listviewdefs.php';
                 $orig_listViewDefs = $listViewDefs;
 
-                if (file_exists('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php')) {
-                    require('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
+                if (file_exists('custom/modules/' . $seed->module_dir . '/metadata/listviewdefs.php')) {
+                    require 'custom/modules/' . $seed->module_dir . '/metadata/listviewdefs.php';
                 }
 
                 if (!isset($listViewDefs) || !isset($listViewDefs[$seed->module_dir])) {
                     continue;
                 }
 
-                $unifiedSearchFields = array() ;
-                $innerJoins = array();
-                foreach ($unified_search_modules[ $moduleName ]['fields'] as $field=>$def) {
+                $unifiedSearchFields = [];
+                $innerJoins = [];
+                foreach ($unified_search_modules[$moduleName]['fields'] as $field => $def) {
                     $listViewCheckField = strtoupper($field);
                     //check to see if the field is in listview defs
                     if (empty($listViewDefs[$seed->module_dir][$listViewCheckField]['default'])) {
@@ -271,46 +262,46 @@ class UnifiedSearchAdvanced
                         }
                     }
 
-                    $unifiedSearchFields[ $moduleName ] [ $field ] = $def ;
-                    $unifiedSearchFields[ $moduleName ] [ $field ][ 'value' ] = $this->query_string;
+                    $unifiedSearchFields[$moduleName][$field] = $def;
+                    $unifiedSearchFields[$moduleName][$field]['value'] = $this->query_string;
                 }
 
                 /*
                  * Use searchForm2->generateSearchWhere() to create the search query, as it can generate SQL for the full set of comparisons required
                  * generateSearchWhere() expects to find the search conditions for a field in the 'value' parameter of the searchFields entry for that field
                  */
-                require_once $beanFiles[$beanName] ;
+                require_once $beanFiles[$beanName];
                 $seed = new $beanName();
-                
-                require_once $this->searchFormPath;
-                $searchForm = new $this->searchFormClass($seed, $moduleName) ;
 
-                $searchForm->setup(array( $moduleName => array() ), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
-                $where_clauses = $searchForm->generateSearchWhere() ;
+                require_once $this->searchFormPath;
+                $searchForm = new $this->searchFormClass($seed, $moduleName);
+
+                $searchForm->setup([$moduleName => []], $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */);
+                $where_clauses = $searchForm->generateSearchWhere();
                 //add inner joins back into the where clause
-                $params = array('custom_select' => "");
-                foreach ($innerJoins as $field=>$def) {
+                $params = ['custom_select' => ''];
+                foreach ($innerJoins as $field => $def) {
                     if (isset($def['db_field'])) {
                         foreach ($def['db_field'] as $dbfield) {
                             $where_clauses[] = $dbfield . " LIKE '" . DBManagerFactory::getInstance()->quote($this->query_string) . "%'";
                         }
-                        $params['custom_select'] .= ", $dbfield";
+                        $params['custom_select'] .= ", {$dbfield}";
                         $params['distinct'] = true;
                         //$filterFields[$dbfield] = $dbfield;
                     }
                 }
 
                 if (count($where_clauses) > 0) {
-                    $where = '(('. implode(' ) OR ( ', $where_clauses) . '))';
+                    $where = '((' . implode(' ) OR ( ', $where_clauses) . '))';
                 } else {
                     /* Clear $where from prev. module
                        if in current module $where_clauses */
                     $where = '';
                 }
-                $displayColumns = array();
+                $displayColumns = [];
                 foreach ($listViewDefs[$seed->module_dir] as $colName => $param) {
                     if (!empty($param['default']) && $param['default'] == true) {
-                        $param['url_sort'] = true;//bug 27933
+                        $param['url_sort'] = true; //bug 27933
                         $displayColumns[$colName] = $param;
                     }
                 }
@@ -348,7 +339,7 @@ class UnifiedSearchAdvanced
         }
 
         if ($has_results) {
-            foreach ($module_counts as $name=>$value) {
+            foreach ($module_counts as $name => $value) {
                 echo $module_results[$name];
             }
         } else {
@@ -363,36 +354,35 @@ class UnifiedSearchAdvanced
     {
         global $beanList, $beanFiles, $dictionary;
 
-        $supported_modules = array();
+        $supported_modules = [];
 
-        foreach ($beanList as $moduleName=>$beanName) {
+        foreach ($beanList as $moduleName => $beanName) {
             if (!isset($beanFiles[$beanName])) {
                 continue;
             }
 
             $beanName = BeanFactory::getObjectName($moduleName);
             $manager = new VardefManager();
-            $manager->loadVardef($moduleName, $beanName) ;
+            $manager->loadVardef($moduleName, $beanName);
 
             // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
-            if (file_exists('custom/modules/'.$moduleName.'/metadata/metafiles.php')) {
-                require('custom/modules/'.$moduleName.'/metadata/metafiles.php');
-            } elseif (file_exists('modules/'.$moduleName.'/metadata/metafiles.php')) {
-                require('modules/'.$moduleName.'/metadata/metafiles.php');
+            if (file_exists('custom/modules/' . $moduleName . '/metadata/metafiles.php')) {
+                require 'custom/modules/' . $moduleName . '/metadata/metafiles.php';
+            } elseif (file_exists('modules/' . $moduleName . '/metadata/metafiles.php')) {
+                require 'modules/' . $moduleName . '/metadata/metafiles.php';
             }
 
-
             if (!empty($metafiles[$moduleName]['searchfields'])) {
-                require $metafiles[$moduleName]['searchfields'] ;
+                require $metafiles[$moduleName]['searchfields'];
             } else {
                 if (file_exists("modules/{$moduleName}/metadata/SearchFields.php")) {
-                    require "modules/{$moduleName}/metadata/SearchFields.php" ;
+                    require "modules/{$moduleName}/metadata/SearchFields.php";
                 }
             }
 
             //Load custom SearchFields.php if it exists
             if (file_exists("custom/modules/{$moduleName}/metadata/SearchFields.php")) {
-                require "custom/modules/{$moduleName}/metadata/SearchFields.php" ;
+                require "custom/modules/{$moduleName}/metadata/SearchFields.php";
             }
 
             //If there are $searchFields are empty, just continue, there are no search fields defined for the module
@@ -404,23 +394,23 @@ class UnifiedSearchAdvanced
 
             //If the bean supports unified search or if it's a custom module bean and unified search is not defined
             if (!empty($dictionary[$beanName]['unified_search']) || $isCustomModule) {
-                $fields = array();
-                foreach ($dictionary [ $beanName ][ 'fields' ] as $field => $def) {
+                $fields = [];
+                foreach ($dictionary[$beanName]['fields'] as $field => $def) {
                     // We cannot enable or disable unified_search for email in the vardefs as we don't actually have a vardef entry for 'email'
                     // the searchFields entry for 'email' doesn't correspond to any vardef entry. Instead it contains SQL to directly perform the search.
                     // So as a proxy we allow any field in the vardefs that has a name starting with 'email...' to be tagged with the 'unified_search' parameter
 
                     if (strpos($field, 'email') !== false) {
-                        $field = 'email' ;
+                        $field = 'email';
                     }
 
                     //bug: 38139 - allow phone to be searched through Global Search
                     if (strpos($field, 'phone') !== false) {
-                        $field = 'phone' ;
+                        $field = 'phone';
                     }
 
-                    if (!empty($def['unified_search']) && isset($searchFields [ $moduleName ] [ $field ])) {
-                        $fields [ $field ] = $searchFields [ $moduleName ] [ $field ] ;
+                    if (!empty($def['unified_search']) && isset($searchFields[$moduleName][$field])) {
+                        $fields[$field] = $searchFields[$moduleName][$field];
                     }
                 }
 
@@ -434,11 +424,11 @@ class UnifiedSearchAdvanced
                 }
 
                 if (count($fields) > 0) {
-                    $supported_modules [$moduleName] ['fields'] = $fields;
+                    $supported_modules[$moduleName]['fields'] = $fields;
                     if (isset($dictionary[$beanName]['unified_search_default_enabled']) && $dictionary[$beanName]['unified_search_default_enabled'] === true) {
-                        $supported_modules [$moduleName]['default'] = true;
+                        $supported_modules[$moduleName]['default'] = true;
                     } else {
-                        $supported_modules [$moduleName]['default'] = false;
+                        $supported_modules[$moduleName]['default'] = false;
                     }
                 }
             }
@@ -459,14 +449,14 @@ class UnifiedSearchAdvanced
 
         $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
         //Add the translated attribute for display label
-        $json_enabled = array();
-        $json_disabled = array();
-        foreach ($unified_search_modules_display as $module=>$data) {
+        $json_enabled = [];
+        $json_disabled = [];
+        foreach ($unified_search_modules_display as $module => $data) {
             $label = isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module;
             if ($data['visible'] === true) {
-                $json_enabled[] = array("module" => $module, 'label' => $label);
+                $json_enabled[] = ['module' => $module, 'label' => $label];
             } else {
-                $json_disabled[] = array("module" => $module, 'label' => $label);
+                $json_disabled[] = ['module' => $module, 'label' => $label];
             }
         }
 
@@ -475,42 +465,40 @@ class UnifiedSearchAdvanced
             $this->buildCache();
         }
 
-        include($this->cache_search);
+        include $this->cache_search;
 
         //Now add any new modules that may have since been added to unified_search_modules.php
-        foreach ($unified_search_modules as $module=>$data) {
+        foreach ($unified_search_modules as $module => $data) {
             if (!isset($unified_search_modules_display[$module])) {
                 $label = isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module;
                 if ($data['default']) {
-                    $json_enabled[] = array("module" => $module, 'label' => $label);
+                    $json_enabled[] = ['module' => $module, 'label' => $label];
                 } else {
-                    $json_disabled[] = array("module" => $module, 'label' => $label);
+                    $json_disabled[] = ['module' => $module, 'label' => $label];
                 }
             }
         }
 
-        return array('enabled' => $json_enabled, 'disabled' => $json_disabled);
+        return ['enabled' => $json_enabled, 'disabled' => $json_disabled];
     }
-
 
     /**
      * saveGlobalSearchSettings
      * This method handles the administrator's request to save the searchable modules selected and stores
-     * the results in the unified_search_modules_display.php file
-     *
+     * the results in the unified_search_modules_display.php file.
      */
     public function saveGlobalSearchSettings()
     {
         if (isset($_REQUEST['enabled_modules'])) {
             $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
 
-            $new_unified_search_modules_display = array();
+            $new_unified_search_modules_display = [];
 
             foreach (explode(',', $_REQUEST['enabled_modules']) as $module) {
                 $new_unified_search_modules_display[$module]['visible'] = true;
             }
 
-            foreach ($unified_search_modules_display as $module=>$data) {
+            foreach ($unified_search_modules_display as $module => $data) {
                 if (!isset($new_unified_search_modules_display[$module])) {
                     $new_unified_search_modules_display[$module]['visible'] = false;
                 }
@@ -519,7 +507,6 @@ class UnifiedSearchAdvanced
             $this->writeUnifiedSearchModulesDisplayFile($new_unified_search_modules_display);
         }
     }
-
 
     public static function unlinkUnifiedSearchModulesFile()
     {
@@ -530,10 +517,9 @@ class UnifiedSearchAdvanced
             unlink($cache_search);
         }
     }
-    
 
     /**
-     * getUnifiedSearchModules
+     * getUnifiedSearchModules.
      *
      * Returns the value of the $unified_search_modules variable based on the module's vardefs.php file
      * and which fields are marked with the unified_search attribute.
@@ -555,12 +541,12 @@ class UnifiedSearchAdvanced
         }
 
         include $cachedFile;
+
         return $unified_search_modules;
     }
 
-
     /**
-     * getUnifiedSearchModulesDisplay
+     * getUnifiedSearchModulesDisplay.
      *
      * Returns the value of the $unified_search_modules_display variable which is based on the $unified_search_modules
      * entries that have been selected to be allowed for searching.
@@ -572,10 +558,10 @@ class UnifiedSearchAdvanced
         if (!file_exists('custom/modules/unified_search_modules_display.php')) {
             $unified_search_modules = $this->getUnifiedSearchModules();
 
-            $unified_search_modules_display = array();
+            $unified_search_modules_display = [];
 
             if (!empty($unified_search_modules)) {
-                foreach ($unified_search_modules as $module=>$data) {
+                foreach ($unified_search_modules as $module => $data) {
                     $unified_search_modules_display[$module]['visible'] = (isset($data['default']) && $data['default']) ? true : false;
                 }
             }
@@ -583,7 +569,8 @@ class UnifiedSearchAdvanced
             $this->writeUnifiedSearchModulesDisplayFile($unified_search_modules_display);
         }
 
-        include('custom/modules/unified_search_modules_display.php');
+        include 'custom/modules/unified_search_modules_display.php';
+
         return $unified_search_modules_display;
     }
 
@@ -601,18 +588,18 @@ class UnifiedSearchAdvanced
             return false;
         }
 
-        if (!write_array_to_file("unified_search_modules_display", $unified_search_modules_display, 'custom/modules/unified_search_modules_display.php')) {
+        if (!write_array_to_file('unified_search_modules_display', $unified_search_modules_display, 'custom/modules/unified_search_modules_display.php')) {
             //Log error message and throw Exception
             global $app_strings;
-            $msg = string_format($app_strings['ERR_FILE_WRITE'], array('custom/modules/unified_search_modules_display.php'));
+            $msg = string_format($app_strings['ERR_FILE_WRITE'], ['custom/modules/unified_search_modules_display.php']);
             $GLOBALS['log']->error($msg);
+
             throw new Exception($msg);
         }
 
         return true;
     }
 }
-
 
 function unified_search_modules_cmp($a, $b)
 {

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * EmptyRowRule.php
+ * EmptyRowRule.php.
  *
  * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.  This rule goes through the panels
@@ -51,8 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author Collin Lee
  */
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class EmptyRowRule extends BaseRule
 {
@@ -60,14 +58,13 @@ class EmptyRowRule extends BaseRule
     {
     }
 
-
     public function parsePanels($panels, $view)
     {
-        foreach ($panels as $name=>$panel) {
-            foreach ($panel as $rowCount=>$row) {
+        foreach ($panels as $name => $panel) {
+            foreach ($panel as $rowCount => $row) {
                 $emptyCount = 0;
 
-                foreach ($row as $key=>$column) {
+                foreach ($row as $key => $column) {
                     if (is_array($column) && (!isset($column['name']) || empty($column['name']))) {
                         $emptyCount++;
                     } else {
@@ -80,13 +77,13 @@ class EmptyRowRule extends BaseRule
                 // If we have unset everything, then just remove the whole row entirely
                 if ($emptyCount == count($row)) {
                     unset($panels[$name][$rowCount]);
+
                     continue;
-                } else {
-                    if (count($row) > 2) {
-                        foreach ($row as $key=>$column) {
-                            if (empty($column) || $column == '') {
-                                unset($panels[$name][$rowCount][$key]);
-                            }
+                }
+                if (count($row) > 2) {
+                    foreach ($row as $key => $column) {
+                        if (empty($column) || $column == '') {
+                            unset($panels[$name][$rowCount][$key]);
                         }
                     }
                 }

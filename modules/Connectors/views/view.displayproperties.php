@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/connectors/sources/SourceFactory.php');
+require_once 'include/connectors/sources/SourceFactory.php';
 
 class ViewDisplayProperties extends ViewList
 {
@@ -64,23 +62,22 @@ class ViewDisplayProperties extends ViewList
      */
     public function display()
     {
-        require_once('include/connectors/utils/ConnectorUtils.php');
+        require_once 'include/connectors/utils/ConnectorUtils.php';
         $source = $_REQUEST['source_id'];
         $sources = ConnectorUtils::getConnectors();
         $modules_sources = ConnectorUtils::getDisplayConfig();
 
-        $enabled_modules = array();
-        $disabled_modules = array();
+        $enabled_modules = [];
+        $disabled_modules = [];
 
         //Find all modules this source has been enabled for
-        foreach ($modules_sources as $module=>$mapping) {
+        foreach ($modules_sources as $module => $mapping) {
             foreach ($modules_sources[$module] as $entry) {
                 if ($entry == $source) {
                     $enabled_modules[$module] = isset($GLOBALS['app_list_strings']['moduleList'][$module]) ? $GLOBALS['app_list_strings']['moduleList'][$module] : $module;
                 }
             }
         }
-
 
         global $moduleList, $beanList;
         //Do filtering here?
@@ -92,13 +89,13 @@ class ViewDisplayProperties extends ViewList
             if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
                 continue;
             }
-            if (empty($enabled_modules[$e]) && file_exists('modules/' . $e . '/metadata/studio.php') && file_exists('modules/' . $e . '/metadata/detailviewdefs.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || is_admin($current_user))) { // installed modules must also exist in the beanList
+            if (empty($enabled_modules[$e]) && file_exists('modules/' . $e . '/metadata/studio.php') && file_exists('modules/' . $e . '/metadata/detailviewdefs.php') && isset($GLOBALS['beanList'][$e]) && (in_array($e, $access) || is_admin($current_user))) { // installed modules must also exist in the beanList
                 $disabled_modules[$e] = isset($GLOBALS['app_list_strings']['moduleList'][$e]) ? $GLOBALS['app_list_strings']['moduleList'][$e] : $e;
             }
         }
 
         $s = SourceFactory::getSource($source);
-        
+
         // Not all sources can be connected to all modules
         $enabled_modules = $s->filterAllowedModules($enabled_modules);
         $disabled_modules = $s->filterAllowedModules($disabled_modules);
@@ -125,7 +122,7 @@ class ViewDisplayProperties extends ViewList
         $fields = $s->getRequiredConfigFields();
         $this->ss->assign('externalHasProperties', !empty($fields));
 
-        $this->ss->assign('externalChecked', !empty($sources[$source]['eapm']['enabled'])?" checked":"");
+        $this->ss->assign('externalChecked', !empty($sources[$source]['eapm']['enabled']) ? ' checked' : '');
         echo $this->ss->fetch($this->getCustomFilePathIfExists('modules/Connectors/tpls/display_properties.tpl'));
     }
 }

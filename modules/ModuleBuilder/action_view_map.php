@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,27 +44,26 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  //format '<action_name>' => '<view_name>',
- $action_view_map = array(
-                        'index' => 'main',
-                        'module'=>'module',
-                        'modulefields'=>'modulefields',
-                        'modulelabels'=>'modulelabels',
-                        'relationships'=>'relationships',
-                        'relationship'=>'relationship',
-                        'resetmodule'=>'resetmodule',
-                        'modulefield'=>'modulefield',
-                        'displaydeploy'=>'displaydeploy',
-                        'package'=>'package',
-                        'dropdown'=>'dropdown',
-                        'dropdowns'=>'dropdowns',
-                        'detailview' => 'detail',
-                        'editview' => 'edit',
-                        'popup' => 'popup',
-                        'home'=>'home',
-                        'visibilityeditor' => 'visibilityeditor',
-                        'exportcustomizations'=>'exportcustomizations',
-
-                    );
+ $action_view_map = [
+     'index' => 'main',
+     'module' => 'module',
+     'modulefields' => 'modulefields',
+     'modulelabels' => 'modulelabels',
+     'relationships' => 'relationships',
+     'relationship' => 'relationship',
+     'resetmodule' => 'resetmodule',
+     'modulefield' => 'modulefield',
+     'displaydeploy' => 'displaydeploy',
+     'package' => 'package',
+     'dropdown' => 'dropdown',
+     'dropdowns' => 'dropdowns',
+     'detailview' => 'detail',
+     'editview' => 'edit',
+     'popup' => 'popup',
+     'home' => 'home',
+     'visibilityeditor' => 'visibilityeditor',
+     'exportcustomizations' => 'exportcustomizations',
+ ];
     // add those we need from the global action_view_map
     $action_view_map['dc'] = 'dc';
     $action_view_map['dcajax'] = 'dcajax';

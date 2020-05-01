@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,21 +36,19 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$dictionary['Reminder_Invitee'] = array(
+$dictionary['Reminder_Invitee'] = [
     'table' => 'reminders_invitees',
     'audited' => false,
-    'fields' => array(
-        'reminder_id' => array(
+    'fields' => [
+        'reminder_id' => [
             'name' => 'reminder_id',
             'vname' => 'LBL_REMINDER_ID',
             'type' => 'id',
             'required' => true,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'related_invitee_module' => array(
+        ],
+        'related_invitee_module' => [
             'name' => 'related_invitee_module',
             'vname' => 'LBL_RELATED_INVITEE_MODULE',
             'type' => 'varchar',
@@ -59,39 +56,38 @@ $dictionary['Reminder_Invitee'] = array(
             'required' => true,
             'massupdate' => false,
             'studio' => false,
-        ),
-        'related_invitee_module_id' => array(
+        ],
+        'related_invitee_module_id' => [
             'name' => 'related_invitee_module_id',
             'vname' => 'LBL_RELATED_INVITEE_MODULE_ID',
             'type' => 'id',
             'required' => true,
             'massupdate' => false,
             'studio' => false,
-        ),
-    ),
-    'indices' => array(
-        array('name' => 'idx_reminder_invitee_name', 'type' => 'index', 'fields' => array('name')),
-        array(
+        ],
+    ],
+    'indices' => [
+        ['name' => 'idx_reminder_invitee_name', 'type' => 'index', 'fields' => ['name']],
+        [
             'name' => 'idx_reminder_invitee_assigned_user_id',
             'type' => 'index',
-            'fields' => array('assigned_user_id')
-        ),
-        array('name' => 'idx_reminder_invitee_reminder_id', 'type' => 'index', 'fields' => array('reminder_id')),
-        array(
+            'fields' => ['assigned_user_id']
+        ],
+        ['name' => 'idx_reminder_invitee_reminder_id', 'type' => 'index', 'fields' => ['reminder_id']],
+        [
             'name' => 'idx_reminder_invitee_related_invitee_module',
             'type' => 'index',
-            'fields' => array('related_invitee_module')
-        ),
-        array(
+            'fields' => ['related_invitee_module']
+        ],
+        [
             'name' => 'idx_reminder_invitee_related_invitee_module_id',
             'type' => 'index',
-            'fields' => array('related_invitee_module_id')
-        ),
-    ),
-
-);
+            'fields' => ['related_invitee_module_id']
+        ],
+    ],
+];
 
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Reminders_Invitees', 'Reminder_Invitee', array('basic','assignable'));
+VardefManager::createVardef('Reminders_Invitees', 'Reminder_Invitee', ['basic', 'assignable']);

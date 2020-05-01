@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGenericChart.php');
-
+require_once 'include/Dashlets/DashletGenericChart.php';
 
 class OutcomeByMonthDashlet extends DashletGenericChart
 {
-    public $obm_ids = array();
+    public $obm_ids = [];
     public $obm_date_start;
     public $obm_date_end;
 
@@ -61,6 +55,8 @@ class OutcomeByMonthDashlet extends DashletGenericChart
 
     /**
      * @see DashletGenericChart::__construct()
+     *
+     * @param mixed $id
      */
     public function __construct(
         $id,
@@ -73,7 +69,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         }
 
         if (empty($options['obm_date_end'])) {
-            $options['obm_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
+            $options['obm_date_end'] = $timedate->asDbDate($timedate->getNow()->modify('+6 months'));
         }
 
         parent::__construct($id, $options);
@@ -107,8 +103,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         $action = 'index';
         $query = 'true';
         $searchFormTab = 'advanced_search';
-        $groupBy = array( 'm', 'sales_stage', );
-
+        $groupBy = ['m', 'sales_stage'];
 
         $data = $this->getChartData($this->constructQuery());
 
@@ -116,9 +111,9 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         $data = $this->sortData($data, 'm', false, 'sales_stage', true, true);
 
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
-        $canvasId = 'rGraphOutcomeByMonth'.uniqid();
-        $chartWidth     = 900;
-        $chartHeight    = 500;
+        $canvasId = 'rGraphOutcomeByMonth' . uniqid();
+        $chartWidth = 900;
+        $chartHeight = 500;
         $autoRefresh = $this->processAutoRefresh();
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
@@ -126,33 +121,31 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         $jsonLabels = json_encode($chartReadyData['labels']);
         $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
-
         $jsonKey = json_encode($chartReadyData['key']);
         $jsonTooltips = json_encode($chartReadyData['tooltips']);
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
-
-        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
-            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
+        if (!is_array($chartReadyData['data']) || count($chartReadyData['data']) < 1) {
+            return "<h3 class='noGraphDataPoints'>{$this->noDataMessage}</h3>";
         }
 
         $chart = <<<EOD
-        <canvas id='$canvasId' class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
-             $autoRefresh
+        <canvas id='{$canvasId}' class='resizableCanvas'  width='{$chartWidth}' height='{$chartHeight}'>[No canvas support]</canvas>
+             {$autoRefresh}
          <script>
            var bar = new RGraph.Bar({
-            id: '$canvasId',
-            data:$jsonData,
+            id: '{$canvasId}',
+            data:{$jsonData},
             options: {
                 grouping: 'stacked',
-                labels: $jsonLabels,
+                labels: {$jsonLabels},
                 xlabels:true,
                 textSize:10,
                 labelsAbove: true,
                 //labelsAboveSize:10,
-                labelsAboveUnitsPre:'$currency_symbol',
-                labelsAboveUnitsPost:'$thousands_symbol',
+                labelsAboveUnitsPre:'{$currency_symbol}',
+                labelsAboveUnitsPost:'{$thousands_symbol}',
                 labelsAbovedecimals: 2,
                 //linewidth: 2,
                 eventsClick:outcomeByMonthClick,
@@ -163,7 +156,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
                 //shadowOffsety: 1,
                 //shadowBlur: 10,
                 //hmargin: 25,
-               // colors:$colours,
+               // colors:{$colours},
                 gutterLeft: 60,
                 gutterTop:50,
                 //gutterRight:160,
@@ -171,19 +164,19 @@ class OutcomeByMonthDashlet extends DashletGenericChart
                 //textAngle: 45,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
-                tooltips:$jsonTooltips,
+                tooltips:{$jsonTooltips},
                 tooltipsEvent:'mousemove',
-                colors:$colours,
-                key: $jsonKey,
-                keyColors: $colours,
+                colors:{$colours},
+                key: {$jsonKey},
+                keyColors: {$colours},
                 keyBackground:'rgba(255,255,255,0.7)',
                 //keyPosition: 'gutter',
-                //keyPositionX: $canvasId.width - 150,
+                //keyPositionX: {$canvasId}.width - 150,
                 //keyPositionY: 18,
                 //keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
-                unitsPre:'$currency_symbol',
-                unitsPost:'$thousands_symbol',
+                unitsPre:'{$currency_symbol}',
+                unitsPost:'{$thousands_symbol}',
                 keyHalign:'right',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 noyaxis: true
@@ -219,10 +212,10 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         }
 /*
          var sizeIncrement = new RGraph.Drawing.Text({
-            id: '$canvasId',
+            id: '{$canvasId}',
             x: 10,
             y: 20,
-            text: 'Opportunity size in ${currency_symbol}1$thousands_symbol',
+            text: 'Opportunity size in {$currency_symbol}1{$thousands_symbol}',
             options: {
                 font: 'Arial',
                 bold: true,
@@ -235,6 +228,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
 */
 </script>
 EOD;
+
         return $chart;
     }
 
@@ -243,18 +237,18 @@ EOD;
      */
     protected function constructQuery()
     {
-        $query = "SELECT sales_stage,".
-            DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
-            "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
-        $query .= " WHERE opportunities.date_closed >= ".DBManager::convert("'".$this->obm_date_start."'", 'date') .
-            " AND opportunities.date_closed <= ".DBManager::convert("'".$this->obm_date_end."'", 'date') .
-            " AND opportunities.deleted=0";
+        $query = 'SELECT sales_stage,' .
+            DBManager::convert('opportunities.date_closed', 'date_format', ["'%Y-%m'"], ["'YYYY-MM'"]) . ' as m, ' .
+            'sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ';
+        $query .= ' WHERE opportunities.date_closed >= ' . DBManager::convert("'" . $this->obm_date_start . "'", 'date') .
+            ' AND opportunities.date_closed <= ' . DBManager::convert("'" . $this->obm_date_end . "'", 'date') .
+            ' AND opportunities.deleted=0';
         if (count($this->obm_ids) > 0) {
             $query .= " AND opportunities.assigned_user_id IN ('" . implode("','", $this->obm_ids) . "')";
         }
-        $query .= " GROUP BY sales_stage,".
-            DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
-            " ORDER BY m";
+        $query .= ' GROUP BY sales_stage,' .
+            DBManager::convert('opportunities.date_closed', 'date_format', ["'%Y-%m'"], ["'YYYY-MM'"]) .
+            ' ORDER BY m';
 
         return $query;
     }
@@ -262,28 +256,29 @@ EOD;
     protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
-        $chart['labels'] = array();
-        $chart['data'] = array();
+        $chart['labels'] = [];
+        $chart['data'] = [];
         //Need to add all elements into the key, as they are stacked (even though the category is not present, the value could be)
-        $chart['key'] = array();
-        $chart['tooltips']= array();
+        $chart['key'] = [];
+        $chart['tooltips'] = [];
 
         foreach ($data as $i) {
-            $key = $i["m"];
-            $stage = $i["sales_stage"];
-            $stage_dom_option = $i["sales_stage_dom_option"];
+            $key = $i['m'];
+            $stage = $i['sales_stage'];
+            $stage_dom_option = $i['sales_stage_dom_option'];
             if (!in_array($key, $chart['labels'])) {
                 $chart['labels'][] = $key;
-                $chart['data'][] = array();
+                $chart['data'][] = [];
             }
             if (!in_array($stage, $chart['key'])) {
                 $chart['key'][] = $stage;
             }
 
-            $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
-            $chart['data'][count($chart['data'])-1][] = $formattedFloat;
-            $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage_dom_option'><input type='hidden' class='date' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
+            $formattedFloat = (float) number_format((float) $i['total'], 2, '.', '');
+            $chart['data'][count($chart['data']) - 1][] = $formattedFloat;
+            $chart['tooltips'][] = "<div><input type='hidden' class='stage' value='{$stage_dom_option}'><input type='hidden' class='date' value='{$key}'></div>" . $stage . '(' . $currency_symbol . $formattedFloat . $thousands_symbol . ') ' . $key;
         }
+
         return $chart;
     }
 }

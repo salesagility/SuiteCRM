@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ID' => 'ID',
@@ -74,7 +72,7 @@ $mod_strings = array(
     'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_SEARCH_QUERY_PLACEHOLDER' => 'Enter search...',
     'LBL_INDEX_STATS' => 'Index stats',
-    'LBL_OPTIMISE_NOW' => "Optimise now",
+    'LBL_OPTIMISE_NOW' => 'Optimise now',
     'LBL_TOTAL_RECORDS' => 'Total records',
     'LBL_INDEXED_RECORDS' => 'Indexed records',
     'LBL_UNINDEXED_RECORDS' => 'Unindexed records',
@@ -90,4 +88,4 @@ $mod_strings = array(
     'LBL_NEVER_OPTIMISED' => 'Never',
     'LBL_USE_AOD_SEARCH' => 'Use Advanced Search',
     'LBL_USE_VANILLA_SEARCH' => 'Use Basic Search',
-);
+];

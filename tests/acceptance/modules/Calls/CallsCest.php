@@ -3,12 +3,12 @@
 class CallsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -29,11 +29,11 @@ class CallsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the calls module.
+     * As an administrator I want to view the calls module
      */
     public function testScenarioViewCallsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the calls module for testing');
 
@@ -55,11 +55,11 @@ class CallsCest
      * As an administrator I want to verify the date field of a call
      */
     public function testScenarioCallDate(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\NavigationBarTester $NavigationBar,
-        \Step\Acceptance\Calls $calls,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\NavigationBarTester $NavigationBar,
+        Step\Acceptance\Calls $calls,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create a call');
 
@@ -69,7 +69,7 @@ class CallsCest
 
         // Create call
         $this->fakeData->seed($this->fakeDataSeed);
-        $callName = 'Test_'. $this->fakeData->company();
+        $callName = 'Test_' . $this->fakeData->company();
         $calls->createCall($callName);
 
         // Delete Record

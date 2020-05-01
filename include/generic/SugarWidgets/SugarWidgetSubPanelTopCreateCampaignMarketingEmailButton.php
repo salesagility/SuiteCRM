@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,7 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class SugarWidgetSubPanelTopCreateCampaignMarketingEmailButton extends SugarWidgetSubPanelTopButton
 {
     public function display($layout_def, $additionalFormFields = null, $nonbutton = false)
@@ -50,7 +49,7 @@ class SugarWidgetSubPanelTopCreateCampaignMarketingEmailButton extends SugarWidg
         $id = $layout_def['focus']->id;
         $module = $layout_def['focus']->module_name;
 
-        $href = "index.php?module=$module&action=WizardMarketing&campaign_id=$id" . (!empty($layout_def['func']) ? '&func=' . $layout_def['func'] : '');
+        $href = "index.php?module={$module}&action=WizardMarketing&campaign_id={$id}" . (!empty($layout_def['func']) ? '&func=' . $layout_def['func'] : '');
 
         $label = $app_strings['LBL_CREATE_BUTTON_LABEL'];
 

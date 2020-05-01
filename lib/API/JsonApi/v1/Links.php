@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,6 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\API\JsonApi\v1;
 
 use Psr\Log\LoggerAwareInterface;
@@ -46,49 +46,49 @@ use SuiteCRM\API\JsonApi\v1\Interfaces\JsonApiResponseInterface;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
 /**
- * Class Links
- * @package SuiteCRM\API\JsonApi\v1
+ * Class Links.
+ *
  * @see http://jsonapi.org/format/1.0/#document-links
  */
 class Links implements LoggerAwareInterface, JsonApiResponseInterface
 {
     /**
-     * @var string $self
+     * @var string
      */
     private $self;
 
     /**
-     * @var string $first
+     * @var string
      */
     private $first;
 
     /**
-     * @var bool $hasPagination
+     * @var bool
      */
     private $hasPagination;
 
     /**
-     * @var string $prev
+     * @var string
      */
     private $prev;
 
     /**
-     * @var string $next
+     * @var string
      */
     private $next;
 
     /**
-     * @var string $last
+     * @var string
      */
     private $last;
 
     /**
-     * @var string $href
+     * @var string
      */
     private $href;
 
     /**
-     * @var array $meta
+     * @var array
      */
     private $meta;
 
@@ -112,6 +112,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
 
     /**
      * @param string $url
+     *
      * @return Links
      */
     public function withSelf($url)
@@ -127,6 +128,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
 
     /**
      * Tells Links that you intend to display pagination links even if you do not set the pagination values.
+     *
      * @return Links
      */
     public function withPagination()
@@ -136,9 +138,9 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         return clone $this;
     }
 
-
     /**
      * @param string $url
+     *
      * @return Links
      */
     public function withFirst($url)
@@ -155,6 +157,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
 
     /**
      * @param string $url
+     *
      * @return Links
      */
     public function withPrev($url)
@@ -171,6 +174,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
 
     /**
      * @param string $url
+     *
      * @return Links
      */
     public function withNext($url)
@@ -187,6 +191,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
 
     /**
      * @param string $url
+     *
      * @return Links
      */
     public function withLast($url)
@@ -202,7 +207,8 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     }
 
     /**
-     * @param array|null $meta
+     * @param null|array $meta
+     *
      * @return Links
      */
     public function withMeta($meta)
@@ -216,9 +222,9 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         return clone $this;
     }
 
-
     /**
      * @param string $url
+     *
      * @return Links
      */
     public function withHref($url)
@@ -230,6 +236,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
 
     /**
      * @param string $related
+     *
      * @return Links
      */
     public function withRelated($related)
@@ -244,7 +251,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
      */
     public function toJsonApiResponse()
     {
-        $response = array();
+        $response = [];
         if ($this->hasSelf()) {
             $response['self'] = $this->self;
         }
@@ -280,6 +287,28 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         }
 
         return $response;
+    }
+
+    /**
+     * Sets a logger instance on the object.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getLogger()
+    {
+        if (!$this->logger) {
+            $this->setLogger(new Logger());
+        }
+
+        return $this->logger;
     }
 
     /**
@@ -324,6 +353,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
 
     /**
      * @param string $url
+     *
      * @return bool true === valid, false === invalid
      */
     private function validateUrl($url)
@@ -334,29 +364,5 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         );
 
         return false !== $isValid;
-    }
-
-    /**
-     * Sets a logger instance on the object.
-     *
-     * @param LoggerInterface $logger
-     *
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-    
-    
-    /**
-     * @return LoggerInterface
-     */
-    public function getLogger()
-    {
-        if (!$this->logger) {
-            $this->setLogger(new Logger());
-        }
-        return $this->logger;
     }
 }

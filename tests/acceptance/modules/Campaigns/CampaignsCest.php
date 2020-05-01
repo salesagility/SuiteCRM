@@ -5,12 +5,12 @@ use Faker\Generator;
 class CampaignsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class CampaignsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the campaigns module.
+     * As an administrator I want to view the campaigns module
      */
     public function testScenarioViewCampaignsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the campaigns module for testing');
 
@@ -54,13 +54,13 @@ class CampaignsCest
      * @param \Step\Acceptance\Campaigns $campaign
      *
      * As an admin user, I want to create a non-emails campaign so that I can
-     * test the standard fields.
+     * test the standard fields
      */
     public function testScenarioCreateNonEmailCampaign(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Campaigns $campaign
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Campaigns $campaign
     ) {
         $I->wantTo('Create Non-Email Campaign');
 
@@ -71,7 +71,7 @@ class CampaignsCest
 
         // Create campaign
         $this->fakeData->seed($this->fakeDataSeed);
-        $name = 'Test_'. $this->fakeData->company();
+        $name = 'Test_' . $this->fakeData->company();
         $campaign->createNonEmailCampaign($name);
 
         // Delete campaign
@@ -97,15 +97,15 @@ class CampaignsCest
      * @param \Step\Acceptance\EmailMan $EmailManTester
      *
      * As an admin user I want to create a Newsletter campaign so that I can
-     * test the standard fields.
+     * test the standard fields
      */
     public function testScenarioCreateNewsletterCampaign(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Campaigns $campaign,
-        \Step\Acceptance\EmailManTester $EmailManTester,
-        \Step\Acceptance\InboundEmailTester $inboundEmailTester
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Campaigns $campaign,
+        Step\Acceptance\EmailManTester $EmailManTester,
+        Step\Acceptance\InboundEmailTester $inboundEmailTester
     ) {
         $I->wantTo('Create Newsletter Campaign');
 

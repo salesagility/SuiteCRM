@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -53,7 +52,7 @@ class UtilityLib
     {
         $paths = new Paths();
         //Get the parameters
-        require_once $paths->getProjectPath().'/modules/Users/authentication/AuthenticationController.php';
+        require_once $paths->getProjectPath() . '/modules/Users/authentication/AuthenticationController.php';
         $authController = new \AuthenticationController();
         $username = $postData['username'];
         $password = $postData['password'];
@@ -73,9 +72,10 @@ class UtilityLib
     public function logout()
     {
         $paths = new Paths();
-        require_once $paths->getProjectPath().'/modules/Users/authentication/AuthenticationController.php';
+        require_once $paths->getProjectPath() . '/modules/Users/authentication/AuthenticationController.php';
         $authController = new \AuthenticationController();
         $authController->logout();
+
         return [];
     }
 
@@ -84,6 +84,6 @@ class UtilityLib
      */
     public function getServerInfo()
     {
-        return array();
+        return [];
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ID' => 'ID',
@@ -178,7 +176,7 @@ $mod_strings = array(
     'LBL_EMAIL_NAME' => 'Quote for',
     'LBL_QUOTE_DATE' => 'Quotation Date',
     'LBL_NO_TEMPLATE' => 'ERROR\nNo templates found. If you have not created a Quote template, go to the PDF templates module and create one',
-    'LBL_SUBTOTAL_TAX_AMOUNT' => 'Subtotal + Tax',//pre shipping
+    'LBL_SUBTOTAL_TAX_AMOUNT' => 'Subtotal + Tax', //pre shipping
     'LBL_EMAIL_PDF' => 'Email PDF',
     'LBL_ADD_GROUP' => 'Add Group',
     'LBL_DELETE_GROUP' => 'Delete Group',
@@ -203,4 +201,4 @@ $mod_strings = array(
     'LBL_AOS_LINE_ITEM_GROUPS' => 'Line Item Groups',
     'LBL_AOS_PRODUCT_QUOTES' => 'Product Quotes',
     'LBL_AOS_QUOTES_PROJECT' => 'Quotes: Project',
-);
+];

@@ -3,7 +3,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,15 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!ACLController::checkAccess('Calendar', 'list', true)) {
     ACLController::displayNoAccess(true);
 }
 
-require_once('modules/Calendar/Calendar.php');
-require_once('modules/Calendar/CalendarDisplay.php');
+require_once 'modules/Calendar/Calendar.php';
+require_once 'modules/Calendar/CalendarDisplay.php';
 
-$views = array("agendaDay" => array(),"basicDay" => array(), "basicWeek" => array(), "agendaWeek" => array(),"month" => array(), "sharedMonth" => array(), "sharedWeek" => array());
+$views = ['agendaDay' => [], 'basicDay' => [], 'basicWeek' => [], 'agendaWeek' => [], 'month' => [], 'sharedMonth' => [], 'sharedWeek' => []];
 
 global $cal_strings, $current_language;
 $cal_strings = return_module_language($current_language, 'Calendar');
@@ -65,10 +64,9 @@ if (empty($_REQUEST['view'])) {
 
     $_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];
 
-$cal = new Calendar($_REQUEST['view'], array(), $views);
+$cal = new Calendar($_REQUEST['view'], [], $views);
 
-
-if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
+if ($cal->view == 'sharedMonth' || $cal->view == 'sharedWeek') {
     $cal->init_shared();
     global $shared_user;
     $shared_user = new User();
@@ -90,10 +88,10 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
     $cal->setPrint(true);
 }
 
-$display = new CalendarDisplay($cal, "", $views);
+$display = new CalendarDisplay($cal, '', $views);
 
     $display->display_title();
-    if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
+    if ($cal->view == 'sharedMonth' || $cal->view == 'sharedWeek') {
         $display->display_shared_html($cal->view);
     }
     $display->display_calendar_header();

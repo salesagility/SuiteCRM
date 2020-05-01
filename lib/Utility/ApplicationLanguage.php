@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,18 +41,17 @@ namespace SuiteCRM\Utility;
 
 class ApplicationLanguage
 {
-
     /**
      * @param CurrentLanguage $currentLanguage
      * @param string $moduleName
+     *
      * @return array
      */
     public function getApplicationLanguageStrings(CurrentLanguage $currentLanguage)
     {
-        $applicationLanguageStrings =  array_merge(
+        return array_merge(
             return_application_language($currentLanguage->getCurrentLanguage()),
             return_app_list_strings_language($currentLanguage->getCurrentLanguage())
         );
-        return $applicationLanguageStrings;
     }
 }

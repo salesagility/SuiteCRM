@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,25 +42,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-$dictionary['projects_opportunities'] = array(
+$dictionary['projects_opportunities'] = [
     'table' => 'projects_opportunities',
-    'fields' => array(
-        array('name' => 'id', 'type' => 'varchar', 'len' => '36'),
-        array('name' => 'opportunity_id', 'type' => 'varchar', 'len' => '36'),
-        array('name' => 'project_id', 'type' => 'varchar', 'len' => '36'),
-        array('name' => 'date_modified', 'type' => 'datetime'),
-        array('name' => 'deleted', 'type' => 'bool', 'len' => '1', 'default' => '0', 'required' => false),
-    ),
-    'indices' => array(
-        array('name' => 'projects_opportunities_pk', 'type' =>'primary', 'fields'=>array('id')),
-        array('name' => 'idx_proj_opp_proj', 'type' =>'index', 'fields'=>array('project_id')),
-        array('name' => 'idx_proj_opp_opp', 'type' =>'index', 'fields'=>array('opportunity_id')),
-        array('name' => 'projects_opportunities_alt', 'type'=>'alternate_key', 'fields'=>array('project_id','opportunity_id')),
-    ),
-    'relationships' => array(
-        'projects_opportunities' => array(
+    'fields' => [
+        ['name' => 'id', 'type' => 'varchar', 'len' => '36'],
+        ['name' => 'opportunity_id', 'type' => 'varchar', 'len' => '36'],
+        ['name' => 'project_id', 'type' => 'varchar', 'len' => '36'],
+        ['name' => 'date_modified', 'type' => 'datetime'],
+        ['name' => 'deleted', 'type' => 'bool', 'len' => '1', 'default' => '0', 'required' => false],
+    ],
+    'indices' => [
+        ['name' => 'projects_opportunities_pk', 'type' => 'primary', 'fields' => ['id']],
+        ['name' => 'idx_proj_opp_proj', 'type' => 'index', 'fields' => ['project_id']],
+        ['name' => 'idx_proj_opp_opp', 'type' => 'index', 'fields' => ['opportunity_id']],
+        ['name' => 'projects_opportunities_alt', 'type' => 'alternate_key', 'fields' => ['project_id', 'opportunity_id']],
+    ],
+    'relationships' => [
+        'projects_opportunities' => [
             'lhs_module' => 'Project',
             'lhs_table' => 'project',
             'lhs_key' => 'id',
@@ -70,6 +69,6 @@ $dictionary['projects_opportunities'] = array(
             'join_table' => 'projects_opportunities',
             'join_key_lhs' => 'project_id',
             'join_key_rhs' => 'opportunity_id',
-        ),
-    ),
-);
+        ],
+    ],
+];

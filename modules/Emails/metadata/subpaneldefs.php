@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,15 +36,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$layout_defs['Emails'] = array(
+$layout_defs['Emails'] = [
     // list of what Subpanels to show in the DetailView
-    'subpanel_setup' => array(
-        'notes' => array(
+    'subpanel_setup' => [
+        'notes' => [
             'order' => 5,
             'sort_order' => 'asc',
             'sort_by' => 'name',
@@ -53,9 +51,9 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'notes',
             'title_key' => 'LBL_NOTES_SUBPANEL_TITLE',
             'module' => 'Notes',
-            'top_buttons' => array(),
-        ),
-        'accounts' => array(
+            'top_buttons' => [],
+        ],
+        'accounts' => [
             'order' => 10,
             'module' => 'Accounts',
             'sort_order' => 'asc',
@@ -64,12 +62,12 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'accounts',
             'add_subpanel_data' => 'account_id',
             'title_key' => 'LBL_ACCOUNTS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
-        'contacts' => array(
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopButtonQuickCreate'],
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
+        'contacts' => [
             'order' => 20,
             'module' => 'Contacts',
             'sort_order' => 'asc',
@@ -78,12 +76,12 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'contacts',
             'add_subpanel_data' => 'contact_id',
             'title_key' => 'LBL_CONTACTS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
-        'opportunities' => array(
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopButtonQuickCreate'],
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
+        'opportunities' => [
             'order' => 25,
             'module' => 'Opportunities',
             'sort_order' => 'asc',
@@ -92,12 +90,12 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'opportunities',
             'add_subpanel_data' => 'opportunity_id',
             'title_key' => 'LBL_OPPORTUNITY_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
-        'leads' => array(
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopButtonQuickCreate'],
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
+        'leads' => [
             'order' => 30,
             'module' => 'Leads',
             'sort_order' => 'asc',
@@ -106,12 +104,12 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'leads',
             'add_subpanel_data' => 'lead_id',
             'title_key' => 'LBL_LEADS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
-        'cases' => array(
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopButtonQuickCreate'],
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
+        'cases' => [
             'order' => 40,
             'module' => 'Cases',
             'sort_order' => 'desc',
@@ -120,12 +118,12 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'cases',
             'add_subpanel_data' => 'case_id',
             'title_key' => 'LBL_CASES_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
-        'users' => array(
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopButtonQuickCreate'],
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
+        'users' => [
             'order' => 50,
             'module' => 'Users',
             'sort_order' => 'asc',
@@ -134,11 +132,11 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'users',
             'add_subpanel_data' => 'user_id',
             'title_key' => 'LBL_USERS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
-        'bugs' => array(
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
+        'bugs' => [
             'order' => 60,
             'module' => 'Bugs',
             'sort_order' => 'desc',
@@ -147,14 +145,13 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'bugs',
             'add_subpanel_data' => 'bug_id',
             'title_key' => 'LBL_BUGS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopButtonQuickCreate'],
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
 
-
-        'project' => array(
+        'project' => [
             'order' => 80,
             'module' => 'Project',
             'sort_order' => 'asc',
@@ -163,13 +160,13 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'project',
             'add_subpanel_data' => 'project_id',
             'title_key' => 'LBL_PROJECT_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
-            ),
-        ),
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopButtonQuickCreate'],
+                ['widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect']
+            ],
+        ],
 
-        'meetings' => array(
+        'meetings' => [
             'order' => 1,
             'sort_order' => 'desc',
             'sort_by' => 'date_start',
@@ -177,10 +174,10 @@ $layout_defs['Emails'] = array(
             'module' => 'Meetings',
             'subpanel_name' => 'ForActivities',
             'get_subpanel_data' => 'meetings',
-            'top_buttons' => array(),
-        ),
-        'securitygroups' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'top_buttons' => [],
+        ],
+        'securitygroups' => [
+            'top_buttons' => [['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect']],
             'order' => 900,
             'sort_by' => 'name',
             'sort_order' => 'asc',
@@ -190,7 +187,6 @@ $layout_defs['Emails'] = array(
             'get_subpanel_data' => 'SecurityGroups',
             'add_subpanel_data' => 'securitygroup_id',
             'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
-        ),
-
-    ),
-);
+        ],
+    ],
+];

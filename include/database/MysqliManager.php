@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
  * Description: This file handles the Data base functionality for the application.
  * It acts as the DB abstraction layer for the application. It depends on helper classes
  * which generate the necessary SQL. This sql is then passed to PEAR DB classes.
@@ -91,12 +91,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-require_once('include/database/MysqlManager.php');
+require_once 'include/database/MysqlManager.php';
 
 /**
- * MySQL manager implementation for mysqli extension
+ * MySQL manager implementation for mysqli extension.
  */
 class MysqliManager extends MysqlManager
 {
@@ -111,15 +111,21 @@ class MysqliManager extends MysqlManager
     /**
      * @see DBManager::$backendFunctions
      */
-    protected $backendFunctions = array(
+    protected $backendFunctions = [
         'free_result' => 'mysqli_free_result',
         'close' => 'mysqli_close',
         'row_count' => 'mysqli_num_rows',
         'affected_row_count' => 'mysqli_affected_rows',
-    );
+    ];
 
     /**
      * @see MysqlManager::query()
+     *
+     * @param mixed $sql
+     * @param mixed $dieOnError
+     * @param mixed $msg
+     * @param mixed $suppress
+     * @param mixed $keepResult
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
     {
@@ -127,7 +133,7 @@ class MysqliManager extends MysqlManager
             return $this->queryArray($sql, $dieOnError, $msg, $suppress);
         }
 
-        static $queryMD5 = array();
+        static $queryMD5 = [];
 
         parent::countQuery($sql);
         $GLOBALS['log']->info('Query:' . $sql);
@@ -172,7 +178,6 @@ class MysqliManager extends MysqlManager
         $GLOBALS['log']->fatal("${line['file']}:${line['line']} ${line['function']} \nQuery: $sql\n");
         */
 
-
         if ($keepResult) {
             $this->lastResult = $result;
         }
@@ -182,7 +187,9 @@ class MysqliManager extends MysqlManager
     }
 
     /**
-     * Returns the number of rows affected by the last query
+     * Returns the number of rows affected by the last query.
+     *
+     * @param mixed $result
      *
      * @return int
      */
@@ -192,12 +199,16 @@ class MysqliManager extends MysqlManager
     }
 
     /**
-     * Returns the number of rows returned by the result
+     * Returns the number of rows returned by the result.
      *
      * This function can't be reliably implemented on most DB, do not use it.
+     *
      * @abstract
+     *
      * @deprecated
+     *
      * @param  resource $result
+     *
      * @return int
      */
     public function getRowCount($result)
@@ -205,9 +216,8 @@ class MysqliManager extends MysqlManager
         return mysqli_num_rows($result);
     }
 
-
     /**
-     * Disconnects from the database
+     * Disconnects from the database.
      *
      * Also handles any cleanup needed
      */
@@ -226,21 +236,14 @@ class MysqliManager extends MysqlManager
     }
 
     /**
-     * @see DBManager::freeDbResult()
-     */
-    protected function freeDbResult($dbResult)
-    {
-        if (!empty($dbResult)) {
-            mysqli_free_result($dbResult);
-        }
-    }
-
-    /**
      * @see DBManager::getFieldsArray()
+     *
+     * @param mixed $result
+     * @param mixed $make_lower_case
      */
     public function getFieldsArray($result, $make_lower_case = false)
     {
-        $field_array = array();
+        $field_array = [];
 
         if (!isset($result) || empty($result)) {
             return 0;
@@ -267,6 +270,8 @@ class MysqliManager extends MysqlManager
 
     /**
      * @see DBManager::fetchRow()
+     *
+     * @param mixed $result
      */
     public function fetchRow($result)
     {
@@ -284,6 +289,8 @@ class MysqliManager extends MysqlManager
 
     /**
      * @see DBManager::quote()
+     *
+     * @param mixed $string
      */
     public function quote($string)
     {
@@ -292,6 +299,8 @@ class MysqliManager extends MysqlManager
 
     /**
      * @see DBManager::connect()
+     *
+     * @param mixed $dieOnError
      */
     public function connect(array $configOptions = null, $dieOnError = false)
     {
@@ -302,7 +311,6 @@ class MysqliManager extends MysqlManager
         }
 
         if (!isset($this->database)) {
-
             //mysqli connector has a separate parameter for port.. We need to separate it out from the host name
             $dbhost = $configOptions['db_host_name'];
             $dbport = isset($configOptions['db_port']) ? ($configOptions['db_port'] == '' ? null : $configOptions['db_port']) : null;
@@ -321,12 +329,12 @@ class MysqliManager extends MysqlManager
                 $dbport
             );
             if (empty($this->database)) {
-                $GLOBALS['log']->fatal("Could not connect to DB server " . $dbhost . " as " . $configOptions['db_user_name'] . ". port " . $dbport . ": " . mysqli_connect_error());
+                $GLOBALS['log']->fatal('Could not connect to DB server ' . $dbhost . ' as ' . $configOptions['db_user_name'] . '. port ' . $dbport . ': ' . mysqli_connect_error());
                 if ($dieOnError) {
                     if (isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
                         sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
                     } else {
-                        sugar_die("Could not connect to the database. Please refer to suitecrm.log for details (2).");
+                        sugar_die('Could not connect to the database. Please refer to suitecrm.log for details (2).');
                     }
                 } else {
                     return false;
@@ -340,7 +348,7 @@ class MysqliManager extends MysqlManager
                 if (isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
                     sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
                 } else {
-                    sugar_die("Could not connect to the database. Please refer to suitecrm.log for details (2).");
+                    sugar_die('Could not connect to the database. Please refer to suitecrm.log for details (2).');
                 }
             } else {
                 return false;
@@ -357,7 +365,7 @@ class MysqliManager extends MysqlManager
 
         if (!empty($charset)) {
             mysqli_set_charset($this->database, $charset);
-	    }
+        }
 
         // https://github.com/salesagility/SuiteCRM/issues/7107
         // MySQL 5.7 is stricter regarding missing values in SQL statements and makes some tests fail.
@@ -365,7 +373,7 @@ class MysqliManager extends MysqlManager
         mysqli_query($this->database, "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode, 'STRICT_TRANS_TABLES', ''))");
 
         if ($this->checkError('Could Not Connect', $dieOnError)) {
-            $GLOBALS['log']->info("connected to db");
+            $GLOBALS['log']->info('connected to db');
         }
 
         $this->connectOptions = $configOptions;
@@ -374,14 +382,15 @@ class MysqliManager extends MysqlManager
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see MysqlManager::lastDbError()
      */
     public function lastDbError()
     {
         if ($this->database) {
             if (mysqli_errno($this->database)) {
-                return "MySQL error " . mysqli_errno($this->database) . ": " . mysqli_error($this->database);
+                return 'MySQL error ' . mysqli_errno($this->database) . ': ' . mysqli_error($this->database);
             }
         } else {
             $err = mysqli_connect_error();
@@ -396,35 +405,49 @@ class MysqliManager extends MysqlManager
     public function getDbInfo()
     {
         $charsets = $this->getCharsetInfo();
-        $charset_str = array();
+        $charset_str = [];
         foreach ($charsets as $name => $value) {
-            $charset_str[] = "$name = $value";
+            $charset_str[] = "{$name} = {$value}";
         }
 
-        return array(
-            "MySQLi Version" => @mysqli_get_client_info(),
-            "MySQLi Host Info" => @mysqli_get_host_info($this->database),
-            "MySQLi Server Info" => @mysqli_get_server_info($this->database),
-            "MySQLi Client Encoding" => @mysqli_character_set_name($this->database),
-            "MySQL Character Set Settings" => implode(", ", $charset_str),
-        );
+        return [
+            'MySQLi Version' => @mysqli_get_client_info(),
+            'MySQLi Host Info' => @mysqli_get_host_info($this->database),
+            'MySQLi Server Info' => @mysqli_get_server_info($this->database),
+            'MySQLi Client Encoding' => @mysqli_character_set_name($this->database),
+            'MySQL Character Set Settings' => implode(', ', $charset_str),
+        ];
     }
 
     /**
-     * Select database
+     * Check if this driver can be used.
+     *
+     * @return bool
+     */
+    public function valid()
+    {
+        return function_exists('mysqli_connect') && empty($GLOBALS['sugar_config']['mysqli_disabled']);
+    }
+
+    /**
+     * @see DBManager::freeDbResult()
+     *
+     * @param mixed $dbResult
+     */
+    protected function freeDbResult($dbResult)
+    {
+        if (!empty($dbResult)) {
+            mysqli_free_result($dbResult);
+        }
+    }
+
+    /**
+     * Select database.
+     *
      * @param string $dbname
      */
     protected function selectDb($dbname)
     {
         return mysqli_select_db($this->getDatabase(), $dbname);
-    }
-
-    /**
-     * Check if this driver can be used
-     * @return bool
-     */
-    public function valid()
-    {
-        return function_exists("mysqli_connect") && empty($GLOBALS['sugar_config']['mysqli_disabled']);
     }
 }

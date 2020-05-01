@@ -7,13 +7,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class OpportunitiesJjwg_MapsLogicHook
 {
     public $jjwg_Maps;
+
     public function __construct()
     {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }
-
-
-
 
     public function updateGeocodeInfo(&$bean, $event, $arguments)
     {
@@ -28,7 +26,7 @@ class OpportunitiesJjwg_MapsLogicHook
         // after_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
             // Find and Update the Related Projects - save() Triggers Logic Hooks
-            require_once('modules/Project/Project.php');
+            require_once 'modules/Project/Project.php';
             $projects = $bean->get_linked_beans('project', 'Project');
             foreach ($projects as $project) {
                 $project->custom_fields->retrieve();

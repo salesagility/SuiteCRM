@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,12 +41,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class EAPMViewDetail extends ViewDetail
 {
     private $_returnId;
+
+    public function display()
+    {
+        $this->bean->password = empty($this->bean->password) ? '' : EAPM::$passwordPlaceholder;
+        $this->ss->assign('return_id', $this->_returnId);
+        if ($GLOBALS['current_user']->is_admin || empty($this->bean) || empty($this->bean->id) || $this->bean->isOwner($GLOBALS['current_user']->id)) {
+            parent::display();
+        } else {
+            ACLController::displayNoAccess();
+        }
+    }
 
     protected function _getModuleTab()
     {
@@ -55,6 +63,8 @@ class EAPMViewDetail extends ViewDetail
 
     /**
      * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
      */
     protected function _getModuleTitleParams($browserTitle = false)
     {
@@ -81,35 +91,27 @@ class EAPMViewDetail extends ViewDetail
         $this->_returnId = $returnId;
 
         $iconPath = $this->getModuleTitleIconPath($this->module);
-        $params = array();
+        $params = [];
         if (!empty($iconPath) && !$browserTitle) {
-            $params[] = "<a href='index.php?module=Users&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='".translate('LBL_MODULE_NAME', 'Users')."' title='".translate('LBL_MODULE_NAME', 'Users')."' align='absmiddle'></a>";
+            $params[] = "<a href='index.php?module=Users&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='" . translate('LBL_MODULE_NAME', 'Users') . "' title='" . translate('LBL_MODULE_NAME', 'Users') . "' align='absmiddle'></a>";
         } else {
             $params[] = translate('LBL_MODULE_NAME', 'Users');
         }
-        $params[] = "<a href='index.php?module={$returnModule}&action=EditView&record={$returnId}'>".$returnName."</a>";
+        $params[] = "<a href='index.php?module={$returnModule}&action=EditView&record={$returnId}'>" . $returnName . '</a>';
         if ($returnAction == 'EditView') {
             $params[] = $GLOBALS['app_strings']['LBL_EDIT_BUTTON_LABEL'];
         }
+
         return $params;
     }
 
     /**
      * @see SugarView::getModuleTitleIconPath()
+     *
+     * @param mixed $module
      */
     protected function getModuleTitleIconPath($module)
     {
         return parent::getModuleTitleIconPath('Users');
-    }
-
-    public function display()
-    {
-        $this->bean->password = empty($this->bean->password) ? '' : EAPM::$passwordPlaceholder;
-        $this->ss->assign('return_id', $this->_returnId);
-        if ($GLOBALS['current_user']->is_admin || empty($this->bean) || empty($this->bean->id) || $this->bean->isOwner($GLOBALS['current_user']->id)) {
-            parent::display();
-        } else {
-            ACLController::displayNoAccess();
-        }
     }
 }

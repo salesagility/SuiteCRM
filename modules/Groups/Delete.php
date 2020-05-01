@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,4 +48,4 @@ if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
     $focus->mark_deleted($focus->id);
 }
 
-header("Location: index.php?module=Groups&action=index");
+header('Location: index.php?module=Groups&action=index');

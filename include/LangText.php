@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -46,82 +45,73 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * LangText
+ * LangText.
  *
  * @author gyula
  */
 class LangText
 {
-
     /**
-     * string
+     * string.
      */
     const LOG_LEVEL = 'fatal';
 
     /**
-     * integer
+     * integer.
      */
     const USING_MOD_STRINGS = 1;
 
     /**
-     * integer
+     * integer.
      */
     const USING_APP_STRINGS = 2;
 
     /**
-     * integer
+     * integer.
      */
     const USING_ALL_STRINGS = 3;
 
     /**
-     *
      * @var string
      */
     protected $key;
 
     /**
-     *
      * @var array
      */
     protected $args;
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     protected $use;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     protected $log;
 
     /**
-     *
-     * @var boolean
+     * @var bool
      */
     protected $throw;
-    
+
     /**
-     *
      * @var string
      */
     protected $module;
-    
+
     /**
-     *
      * @var string
      */
     protected $lang;
 
     /**
-     *
-     * @param string|null $key
-     * @param array|null $args
-     * @param integer $use
-     * @param boolean $log
-     * @param boolean $throw
+     * @param null|string $key
+     * @param null|array $args
+     * @param int $use
+     * @param bool $log
+     * @param bool $throw
      * @param string $module
      * @param string $lang
      */
@@ -137,34 +127,63 @@ class LangText
     }
 
     /**
-     *
-     * @global array $app_strings
-     * @global array $mod_strings
-     * @param string|null $key
-     * @param array|null $args
-     * @param integer|null $use
-     * @param string $module
-     * @param string $lang
      * @return string
-     * @throws ErrorMessageException
      */
-    public function getText($key = null, $args = null, $use = null, $module = null, $lang = null)
-    { // TODO: rename the methode to LangText::translate()
-
-        $this->selfUpdate($key, $args, $use);
-        $textResolved = $this->resolveText($module, $lang);
-        $text = $this->replaceArgs($textResolved);
-
-        return $text;
+    public function __toString()
+    {
+        return $this->getText();
     }
 
     /**
+     * @global array $app_strings
+     * @global array $mod_strings
      *
+     * @param null|string $key
+     * @param null|array $args
+     * @param null|int $use
+     * @param string $module
+     * @param string $lang
+     *
+     * @throws ErrorMessageException
+     *
+     * @return string
+     */
+    public function getText($key = null, $args = null, $use = null, $module = null, $lang = null)
+    { // TODO: rename the methode to LangText::translate()
+        $this->selfUpdate($key, $args, $use);
+        $textResolved = $this->resolveText($module, $lang);
+
+        return $this->replaceArgs($textResolved);
+    }
+
+    /**
+     * @param string $key
+     * @param null|array $args
+     * @param null|bool $log
+     * @param bool $throw
+     * @param string $module
+     * @param string $lang
+     * @param mixed $use
+     *
+     * @throws ErrorMessageException
+     *
+     * @return string
+     */
+    public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true, $module = null, $lang = null)
+    {
+        $text = new LangText($key, $args, $use, $log, $throw, $module, $lang);
+
+        return $text->getText();
+    }
+
+    /**
      * @global array $app_strings
      * @global array $mod_strings
      * @global array $app_list_strings
+     *
      * @param string $module
      * @param string $lang
+     *
      * @return string
      */
     protected function resolveText($module = null, $lang = null)
@@ -184,23 +203,25 @@ class LangText
     }
 
     /**
-     *
      * @global array $app_strings
      * @global array $mod_strings
      * @global array $app_list_strings
+     *
      * @return string
      */
     protected function resolveTextByGlobals()
     {
         // TODO: app_strings and mod_strings could be in separated methods
         global $app_strings, $mod_strings, $app_list_strings;
-        
+
         switch ($this->use) {
             case self::USING_MOD_STRINGS:
                 $text = $this->resolveTextByGlobal($mod_strings, $this->key);
+
                 break;
             case self::USING_APP_STRINGS:
                 $text = $this->resolveTextByGlobal($app_strings, $this->key);
+
                 break;
             case self::USING_ALL_STRINGS:
                 $text = $this->resolveTextByGlobal(
@@ -212,32 +233,34 @@ class LangText
                         $this->resolveTextByGlobal($app_list_strings, $this->key)
                     )
                 );
+
                 break;
             default:
                 ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
+
                 break;
         }
+
         return $text;
     }
 
     /**
-     *
      * @param array $texts
      * @param string $key
-     * @param string|null $default
+     * @param null|string $default
+     *
      * @return string
      */
     protected function resolveTextByGlobal($texts, $key, $default = null)
     {
-        $text = isset($texts[$key]) && $texts[$key] ? $texts[$key] : $default;
-        return $text;
+        return isset($texts[$key]) && $texts[$key] ? $texts[$key] : $default;
     }
 
     /**
-     *
      * @param string $text
      * @param string $module
      * @param string $lang
+     *
      * @return string
      */
     protected function updateTextByModuleLang($text, $module = null, $lang = null)
@@ -246,12 +269,13 @@ class LangText
         if (!$text && $moduleLang) {
             $text = isset($moduleLang[$this->key]) && $moduleLang[$this->key] ? $moduleLang[$this->key] : null;
         }
+
         return $text;
     }
 
     /**
-     *
      * @param string $text
+     *
      * @return string
      */
     protected function replaceArgs($text)
@@ -259,14 +283,14 @@ class LangText
         foreach ((array) $this->args as $name => $value) {
             $text = str_replace('{' . $name . '}', $value, $text);
         }
+
         return $text;
     }
 
     /**
-     *
-     * @param string|null $key
-     * @param array|null $args
-     * @param integer|null $use
+     * @param null|string $key
+     * @param null|array $args
+     * @param null|int $use
      */
     protected function selfUpdate($key = null, $args = null, $use = null)
     {
@@ -284,10 +308,10 @@ class LangText
     }
 
     /**
-     *
      * @param string $module
      * @param string $lang
-     * @return array|null
+     *
+     * @return null|array
      */
     protected function getModuleLang($module = null, $lang = null)
     {
@@ -303,33 +327,5 @@ class LangText
         }
 
         return $moduleLang;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $text = $this->getText();
-        return $text;
-    }
-
-    /**
-     *
-     * @param string $key
-     * @param array|null $args
-     * @param boolean|null $log
-     * @param boolean $throw
-     * @param string $module
-     * @param string $lang
-     * @return string
-     * @throws ErrorMessageException
-     */
-    public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true, $module = null, $lang = null)
-    {
-        $text = new LangText($key, $args, $use, $log, $throw, $module, $lang);
-        $translated = $text->getText();
-        return $translated;
     }
 }

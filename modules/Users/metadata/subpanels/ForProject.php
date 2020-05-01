@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,37 +40,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopSelectButton', 'title' => 'LBL_SELECT_USER_RESOURCE', 'popup_module' => 'Users', ),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopSelectButton', 'title' => 'LBL_SELECT_USER_RESOURCE', 'popup_module' => 'Users'],
+    ],
 
     'where' => '',
 
-    'list_fields' => array(
-        'object_image'=>array(
+    'list_fields' => [
+        'object_image' => [
             'widget_class' => 'SubPanelIcon',
             'width' => '2%',
-        ),
-        'name'=>array(
+        ],
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_RESOURCE_NAME',
             'width' => '93%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Users',
             'width' => '5%',
-        ),
-        'first_name' => array(
-            'usage'=>'query_only',
-        ),
-        'last_name' => array(
-            'usage'=>'query_only',
-        )
-    ),
-);
+        ],
+        'first_name' => [
+            'usage' => 'query_only',
+        ],
+        'last_name' => [
+            'usage' => 'query_only',
+        ]
+    ],
+];

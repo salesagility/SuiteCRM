@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Log management
+ * Log management.
  *
  * @method LoggerManager debug(string $message)
  * @method LoggerManager info(string $message)
@@ -54,6 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @method LoggerManager security(string $message)
  *
  * @api
+ *
  * @method debug(string $string)
  * @method info(string $string)
  * @method warn(string $string)
@@ -65,17 +64,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class LoggerManager
 {
+    //this is a list of different loggers that have been loaded
+    protected static $_loggers = [];
     /**
-     * This is the current log level
+     * This is the current log level.
+     *
      * @var string
      */
     private static $_level = 'fatal';
 
-    //this is a list of different loggers that have been loaded
-    protected static $_loggers = [];
-
     /**
-     * This is the instance of the LoggerManager
+     * This is the instance of the LoggerManager.
+     *
      * @var null|LoggerManager
      */
     private static $_instance;
@@ -114,7 +114,7 @@ class LoggerManager
      * Overloaded method that handles the logging requests.
      *
      * @param string $method
-     * @param string $message - also handles array as parameter, though that is deprecated.
+     * @param string $message - also handles array as parameter, though that is deprecated
      */
     public function __call(
         $method,
@@ -144,9 +144,11 @@ class LoggerManager
     }
 
     /**
-     * Check if this log level will be producing any logging
+     * Check if this log level will be producing any logging.
+     *
      * @param string $method
-     * @return boolean
+     *
+     * @return bool
      */
     public function wouldLog($method)
     {
@@ -165,10 +167,10 @@ class LoggerManager
 
     /**
      * Used for doing design-by-contract assertions in the code; when the condition fails we'll write
-     * the message to the debug log
+     * the message to the debug log.
      *
      * @param string $message
-     * @param boolean $condition
+     * @param bool $condition
      */
     public function assert(
         $message,
@@ -180,7 +182,7 @@ class LoggerManager
     }
 
     /**
-     * Sets the logger to the level indicated
+     * Sets the logger to the level indicated.
      *
      * @param string $name name of logger level to set it to
      */
@@ -193,7 +195,8 @@ class LoggerManager
     }
 
     /**
-     * Returns a logger instance
+     * Returns a logger instance.
+     *
      * @return LoggerManager
      */
     public static function getLogger()
@@ -207,7 +210,7 @@ class LoggerManager
 
     /**
      * Sets the logger to use a particular backend logger for the given level. Set level to 'default'
-     * to make it the default logger for the application
+     * to make it the default logger for the application.
      *
      * @param string $level name of logger level to set it to
      * @param string $logger name of logger class to use
@@ -217,32 +220,6 @@ class LoggerManager
         $logger
     ) {
         self::$_logMapping[$level] = $logger;
-    }
-
-    /**
-     * Finds all the available loggers in the application
-     */
-    protected function _findAvailableLoggers()
-    {
-        foreach (['include/SugarLogger', 'custom/include/SugarLogger'] as $location) {
-            if (is_dir($location) && $dir = opendir($location)) {
-                while (($file = readdir($dir)) !== false) {
-                    if ($file === '..'
-                        || $file === '.'
-                        || $file === 'LoggerTemplate.php'
-                        || $file === 'LoggerManager.php'
-                        || !is_file("$location/$file")
-                    ) {
-                        continue;
-                    }
-                    require_once("$location/$file");
-                    $loggerClass = basename($file, '.php');
-                    if (class_exists($loggerClass) && class_implements($loggerClass, 'LoggerTemplate')) {
-                        self::$_loggers[$loggerClass] = new $loggerClass();
-                    }
-                }
-            }
-        }
     }
 
     public static function getAvailableLoggers()
@@ -282,5 +259,31 @@ class LoggerManager
     public static function setLevelMapping($level, $value)
     {
         self::$_levelMapping[$level] = $value;
+    }
+
+    /**
+     * Finds all the available loggers in the application.
+     */
+    protected function _findAvailableLoggers()
+    {
+        foreach (['include/SugarLogger', 'custom/include/SugarLogger'] as $location) {
+            if (is_dir($location) && $dir = opendir($location)) {
+                while (($file = readdir($dir)) !== false) {
+                    if ($file === '..'
+                        || $file === '.'
+                        || $file === 'LoggerTemplate.php'
+                        || $file === 'LoggerManager.php'
+                        || !is_file("{$location}/{$file}")
+                    ) {
+                        continue;
+                    }
+                    require_once "{$location}/{$file}";
+                    $loggerClass = basename($file, '.php');
+                    if (class_exists($loggerClass) && class_implements($loggerClass, 'LoggerTemplate')) {
+                        self::$_loggers[$loggerClass] = new $loggerClass();
+                    }
+                }
+            }
+        }
     }
 }

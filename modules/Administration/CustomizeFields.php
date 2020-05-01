@@ -2,7 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $app_strings;
 global $app_list_strings;
 global $mod_strings;
@@ -52,8 +49,7 @@ global $theme;
 global $currentModule;
 global $gridline;
 
-
-echo getClassicModuleTitle('Customize Fields', array('Customize Fields'), false);
+echo getClassicModuleTitle('Customize Fields', ['Customize Fields'], false);
 
 ?>
 <table cellspacing="<?php echo $gridline; ?>" class="other view">
@@ -64,7 +60,7 @@ Module Name:
 <select>
 <?php
 foreach ($moduleList as $module) {
-    echo "<option>$module</option>";
+    echo "<option>{$module}</option>";
 }
 ?>
 </select>

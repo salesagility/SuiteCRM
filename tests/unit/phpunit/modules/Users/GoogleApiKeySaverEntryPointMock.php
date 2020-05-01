@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,38 +36,31 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 include_once __DIR__ . '/../../../../../modules/Users/GoogleApiKeySaverEntryPoint.php';
 
 /**
- * GoogleApiKeySaverEntryPointMock
+ * GoogleApiKeySaverEntryPointMock.
  *
  * @author gyula
  */
 class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
 {
-    
     /**
-     *
      * @var bool
      */
     protected $dieOk = false;
-    
+
     /**
-     *
      * @var string
      */
     protected $exitString;
 
     /**
-     *
      * @var string
      */
     protected $redirectUrl;
-    
+
     /**
-     *
      * @param string $exitString
      */
     public function protectedDie($exitString)
@@ -76,18 +68,16 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
         $this->dieOk = true;
         $this->exitString = $exitString;
     }
-    
+
     /**
-     *
      * @return bool
      */
     public function getDieOk()
     {
         return $this->dieOk;
     }
-    
+
     /**
-     *
      * @return string
      */
     public function getExitString()
@@ -96,7 +86,6 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
     }
 
     /**
-     *
      * @return string
      */
     public function getRedirectUrl()
@@ -105,6 +94,7 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint
     }
 
     /**
+     * @param mixed $url
      *
      * @return string
      */

@@ -70,7 +70,8 @@ abstract class Controller
     {
         if ($this->isActionRequest()) {
             $methodName = $this->getActionName();
-            $this->$methodName();
+            $this->{$methodName}();
+
             return;
         }
 
@@ -93,7 +94,7 @@ abstract class Controller
      */
     public function redirect($location)
     {
-        header("Location: $location");
+        header("Location: {$location}");
         exit;
     }
 

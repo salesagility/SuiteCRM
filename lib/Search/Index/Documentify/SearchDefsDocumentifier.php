@@ -63,7 +63,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     /** @var array a cache with fields definition */
     protected $fields = [];
     /** @var ArrayMapper */
-    protected $mapper = null;
+    protected $mapper;
     /** @var Logger */
     protected $logger;
 
@@ -86,7 +86,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
             ->setHideEmptyValues(true);
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function documentify(\SugarBean $bean, ParserSearchFields $parser = null)
     {
         $fields = &$this->getFieldsToIndexCached($bean, $parser);
@@ -109,7 +109,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
      * The mapping is cached in the class property `$fields`.
      *
      * @param string                  $module
-     * @param ParserSearchFields|null $parser
+     * @param null|ParserSearchFields $parser
      *
      * @return string[]
      */
@@ -132,13 +132,15 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
             }
 
             if (isset($field['query_type']) && $field['query_type'] != 'default') {
-                $this->logger->warn("[$module]->$key is not a supported query type [{$field['query_type']}]");
+                $this->logger->warn("[{$module}]->{$key} is not a supported query type [{$field['query_type']}]");
+
                 continue;
-            };
+            }
 
             if (!empty($field['operator']) && !in_array($field['operator'], $goodOperators)) {
-                $this->logger->warn("[$module]->$key has an unsupported operator [{$field['operator']}]");
+                $this->logger->warn("[{$module}]->{$key} has an unsupported operator [{$field['operator']}]");
                 $this->logger->warn("field:\n" . json_encode($field, JSON_PRETTY_PRINT));
+
                 continue;
             }
 
@@ -148,6 +150,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
 
             if (empty($field['db_field'])) {
                 $parsedFields[] = $key;
+
                 continue;
             }
 
@@ -157,9 +160,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
         }
 
         // injects the standard metadata fields as they are not present in the searchdefs
-        $parsedFields = array_merge($parsedFields, $this->getMetaData());
-
-        return $parsedFields;
+        return array_merge($parsedFields, $this->getMetaData());
     }
 
     /**
@@ -196,15 +197,16 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
         foreach ($fields as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $subvalue) {
-                    if (property_exists($bean, $subvalue) && !empty($bean->$subvalue)) {
-                        $body[$key][$subvalue] = $bean->$subvalue;
+                    if (property_exists($bean, $subvalue) && !empty($bean->{$subvalue})) {
+                        $body[$key][$subvalue] = $bean->{$subvalue};
                     }
                 }
+
                 continue;
             }
 
-            if (property_exists($bean, $value) && !empty($bean->$value)) {
-                $body[$value] = $bean->$value;
+            if (property_exists($bean, $value) && !empty($bean->{$value})) {
+                $body[$value] = $bean->{$value};
             }
         }
 

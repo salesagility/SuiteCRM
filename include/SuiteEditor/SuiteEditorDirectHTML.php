@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,25 +36,24 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class SuiteEditorDirectHTML
+ * Class SuiteEditorDirectHTML.
  *
  * use simple textarea as a SuiteEditor
  */
 class SuiteEditorDirectHTML implements SuiteEditorInterface
 {
     /**
-     * @var SuiteEditorSettings $settings
+     * @var SuiteEditorSettings
      */
     protected $settings;
 
     /**
-     * see more at SuiteEditorInterface
+     * see more at SuiteEditorInterface.
      *
      * @param SuiteEditorSettings $settings
      */
@@ -65,14 +63,15 @@ class SuiteEditorDirectHTML implements SuiteEditorInterface
     }
 
     /**
-     * see more at SuiteEditorInterface
+     * see more at SuiteEditorInterface.
      *
      * @return mixed
      */
     public function getHtml()
     {
         $smarty = new Sugar_Smarty();
-        $smarty->assign((array)$this->settings);
+        $smarty->assign((array) $this->settings);
+
         return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorDirectHTML.tpl'));
     }
 }

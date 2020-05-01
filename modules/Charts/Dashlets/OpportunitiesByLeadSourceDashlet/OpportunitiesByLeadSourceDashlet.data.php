@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,18 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$dashletData['OpportunitiesByLeadSourceDashlet']['searchFields'] = array(
-        'pbls_lead_sources' => array(
-                'name'  => 'pbls_lead_sources',
-                'vname' => 'LBL_LEAD_SOURCES',
-                'type'  => 'enum',
-            ),
-        'pbls_ids' => array(
-                'name'  => 'pbls_ids',
-                'vname' => 'LBL_USERS',
-                'type'  => 'user_name',
-            ),
-        );
+$dashletData['OpportunitiesByLeadSourceDashlet']['searchFields'] = [
+    'pbls_lead_sources' => [
+        'name' => 'pbls_lead_sources',
+        'vname' => 'LBL_LEAD_SOURCES',
+        'type' => 'enum',
+    ],
+    'pbls_ids' => [
+        'name' => 'pbls_ids',
+        'vname' => 'LBL_USERS',
+        'type' => 'user_name',
+    ],
+];

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,49 +42,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $current_user;
 global $mod_strings, $app_strings;
-$module_menu = array();
+$module_menu = [];
 
 // Each index of module_menu must be an array of:
 // the link url, display text for the link, and the icon name.
 
-
 // Create Project
 if (ACLController::checkAccess('Project', 'edit', true)) {
-    $module_menu[] = array(
+    $module_menu[] = [
         'index.php?module=Project&action=EditView&return_module=Project&return_action=DetailView',
         isset($mod_strings['LNK_NEW_PROJECT']) ? $mod_strings['LNK_NEW_PROJECT'] : '',
         'Create'
-    );
+    ];
 }
-
 
 // Project List
 if (ACLController::checkAccess('Project', 'list', true)) {
-    $module_menu[] = array(
+    $module_menu[] = [
         'index.php?module=Project&action=index',
         isset($mod_strings['LNK_PROJECT_LIST']) ? $mod_strings['LNK_PROJECT_LIST'] : '',
         'List'
-    );
+    ];
 }
 
 // Project List
 if (ACLController::checkAccess('Project', 'list', true)) {
-    $module_menu[] = array(
+    $module_menu[] = [
         'index.php?module=Project&action=ResourceList',
         isset($mod_strings['LBL_RESOURCE_CHART']) ? $mod_strings['LBL_RESOURCE_CHART'] : '',
         'Resource_Chart'
-    );
+    ];
 }
 
 // Project Tasks
 if (ACLController::checkAccess('ProjectTask', 'list', true)) {
-    $module_menu[] = array(
+    $module_menu[] = [
         'index.php?module=ProjectTask&action=index',
         isset($mod_strings['LNK_PROJECT_TASK_LIST']) ? $mod_strings['LNK_PROJECT_TASK_LIST'] : '',
         'View_Project_Tasks'
-    );
+    ];
 }

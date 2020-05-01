@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,8 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
- * Description:
+ * Description:.
  */
 //find all mailboxes of type bounce.
 
@@ -51,11 +50,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Retrieve the attached error report for a bounced email if it exists.
  *
  * @param Email $email
+ *
  * @return string
  */
 function retrieveErrorReportAttachment(Email $email)
 {
-    $contents = "";
+    $contents = '';
 
     $email->getNotes($email->id);
     foreach ($email->attachments as $note) {
@@ -78,36 +78,38 @@ function retrieveErrorReportAttachment(Email $email)
 }
 
 /**
- * Create a bounced log campaign entry
+ * Create a bounced log campaign entry.
  *
  * @param array $row
  * @param Email $email
  * @param string $email_description
+ *
  * @return string
  */
 function createBouncedCampaignLogEntry($row, $email, $email_description)
 {
-    $GLOBALS['log']->debug("Creating bounced email campaign log");
+    $GLOBALS['log']->debug('Creating bounced email campaign log');
     $bounce = new CampaignLog();
-    $bounce->campaign_id=$row['campaign_id'];
-    $bounce->target_tracker_key=$row['target_tracker_key'];
-    $bounce->target_id= $row['target_id'];
-    $bounce->target_type=$row['target_type'];
-    $bounce->list_id=$row['list_id'];
-    $bounce->marketing_id=$row['marketing_id'];
+    $bounce->campaign_id = $row['campaign_id'];
+    $bounce->target_tracker_key = $row['target_tracker_key'];
+    $bounce->target_id = $row['target_id'];
+    $bounce->target_type = $row['target_type'];
+    $bounce->list_id = $row['list_id'];
+    $bounce->marketing_id = $row['marketing_id'];
 
-    $bounce->activity_date=$email->date_created;
-    $bounce->related_type='Emails';
-    $bounce->related_id= $email->id;
+    $bounce->activity_date = $email->date_created;
+    $bounce->related_type = 'Emails';
+    $bounce->related_id = $email->id;
 
     if (checkBouncedEmailInvalid($email_description)) {
-        $bounce->activity_type='invalid email';
+        $bounce->activity_type = 'invalid email';
         markBounceEmailAddressInvalid($bounce);
     } else {
-        $bounce->activity_type='send error';
+        $bounce->activity_type = 'send error';
     }
-        
-    $return_id=$bounce->save();
+
+    $return_id = $bounce->save();
+
     return $return_id;
 }
 
@@ -124,7 +126,7 @@ function markBounceEmailAddressInvalid(CampaignLog $bounce)
         return;
     }
 
-    LoggerManager::getLogger()->info("Marking email address as invalid: ". $email_address);
+    LoggerManager::getLogger()->info('Marking email address as invalid: ' . $email_address);
     markEmailAddressInvalid($email_address);
 }
 
@@ -132,6 +134,7 @@ function markBounceEmailAddressInvalid(CampaignLog $bounce)
  * Given the email description returns whether the email should be marked invalid.
  *
  * @param string $email_description
+ *
  * @return bool
  */
 function checkBouncedEmailInvalid($email_description)
@@ -177,7 +180,7 @@ function markEmailAddressInvalid($email_address)
         return;
     }
     $sea = new SugarEmailAddress();
-    $rs = $sea->retrieve_by_string_fields(array('email_address_caps' => trim(strtoupper($email_address))));
+    $rs = $sea->retrieve_by_string_fields(['email_address_caps' => trim(strtoupper($email_address))]);
     if ($rs != null) {
         $sea->AddUpdateEmailAddress($email_address, 1, 0, $rs->id);
     }
@@ -187,45 +190,48 @@ function markEmailAddressInvalid($email_address)
  * Get the existing campaign log entry by tracker key.
  *
  * @param string Target Key
+ * @param mixed $identifier
+ *
  * @return array Campaign Log Row
  */
 function getExistingCampaignLogEntry($identifier)
 {
     $row = false;
     $targeted = new CampaignLog();
-    $where="campaign_log.activity_type='targeted' and campaign_log.target_tracker_key='{$identifier}'";
-    $query=$targeted->create_new_list_query('', $where);
-    $result=$targeted->db->query($query);
-    $row=$targeted->db->fetchByAssoc($result);
-    
-    return $row;
+    $where = "campaign_log.activity_type='targeted' and campaign_log.target_tracker_key='{$identifier}'";
+    $query = $targeted->create_new_list_query('', $where);
+    $result = $targeted->db->query($query);
+
+    return $targeted->db->fetchByAssoc($result);
 }
 
 /**
  * Scan the bounced email searching for a valid target identifier.
  *
  * @param string Email Description
+ * @param mixed $email_description
+ *
  * @return array Results including matches and identifier
  */
 function checkBouncedEmailForIdentifier($email_description)
 {
-    $matches = array();
-    $identifiers = array();
+    $matches = [];
+    $identifiers = [];
     $found = false;
     //Check if the identifier is present in the header.
     if (preg_match('/X-CampTrackID: [a-z0-9\-]*/i', $email_description, $matches)) {
         $identifiers = preg_split('/X-CampTrackID: /i', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
         $found = true;
-        $GLOBALS['log']->debug("Found campaign identifier in header of email");
+        $GLOBALS['log']->debug('Found campaign identifier in header of email');
     } else {
         if (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
             $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
             $found = true;
-            $GLOBALS['log']->debug("Found campaign identifier in body of email");
+            $GLOBALS['log']->debug('Found campaign identifier in body of email');
         }
     }
-    
-    return array('found' => $found, 'matches' => $matches, 'identifiers' => $identifiers);
+
+    return ['found' => $found, 'matches' => $matches, 'identifiers' => $identifiers];
 }
 
 function campaign_process_bounced_emails(&$email, &$email_header)
@@ -237,7 +243,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
     $email_description .= retrieveErrorReportAttachment($email);
 
     if (preg_match('/MAILER-DAEMON|POSTMASTER/i', $emailFromAddress)) {
-        $matches=array();
+        $matches = [];
 
         //do we have the identifier tag in the email?
         $identifierScanResults = checkBouncedEmailForIdentifier($email_description);
@@ -256,32 +262,33 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                     //do not create another campaign_log record is we already have an
                     //invalid email or send error entry for this tracker key.
                     $query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'";
-                    $query_log .=" and (activity_type='invalid email' or activity_type='send error')";
+                    $query_log .= " and (activity_type='invalid email' or activity_type='send error')";
                     $targeted = new CampaignLog();
-                    $result_log=$targeted->db->query($query_log);
-                    $row_log=$targeted->db->fetchByAssoc($result_log);
+                    $result_log = $targeted->db->query($query_log);
+                    $row_log = $targeted->db->fetchByAssoc($result_log);
 
                     if (empty($row_log)) {
                         $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);
+
                         return true;
-                    } else {
-                        $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
-                        return false;
                     }
-                } else {
-                    $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
+                    $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier {$identifier}");
+
                     return false;
                 }
-            } else {
-                $GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
+                $GLOBALS['log']->info('Warning: skipping bounced email with this tracker_key(identifier) in the message body: ' . $identifier);
+
                 return false;
             }
-        } else {
-            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
+            $GLOBALS['log']->info('Warning: Empty identifier for campaign log.');
+
             return false;
         }
-    } else {
-        $GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
+        $GLOBALS['log']->info('Warning: skipping bounced email because it does not have the removeme link.');
+
         return false;
     }
+    $GLOBALS['log']->info('Warning: skipping bounced email because the sender is not MAILER-DAEMON.');
+
+    return false;
 }

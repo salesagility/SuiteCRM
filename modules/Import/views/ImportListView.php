@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,22 +41,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/ListView/ListViewSmarty.php');
-
+require_once 'include/ListView/ListViewSmarty.php';
 
 class ImportListView
 {
     /**
      * @var array
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * @var array
      */
-    protected $headerColumns = array();
+    protected $headerColumns = [];
 
     /**
      * @var Sugar_Smarty
@@ -86,10 +83,11 @@ class ImportListView
     /**
      * Create a list view object that can display a data source which implements the Paginatable interface.
      *
-     * @throws Exception
      * @param  Paginatable $dataSource
      * @param  array $params
      * @param string $tableIdentifier
+     *
+     * @throws Exception
      */
     public function __construct($dataSource, $params, $tableIdentifier = '')
     {
@@ -102,10 +100,9 @@ class ImportListView
         $this->headerColumns = $this->dataSource->getHeaderColumns();
 
         if (!isset($params['offset'])) {
-            throw new Exception("Missing required parameter offset for ImportListView");
-        } else {
-            $this->dataSource->setCurrentOffset($params['offset']);
+            throw new Exception('Missing required parameter offset for ImportListView');
         }
+        $this->dataSource->setCurrentOffset($params['offset']);
 
         $this->recordsPerPage = isset($params['totalRecords']) ? $params['totalRecords'] : ($sugar_config['list_max_entries_per_page'] + 0);
         $this->data = $this->dataSource->loadDataSet($this->recordsPerPage)->getDataSet();
@@ -115,21 +112,22 @@ class ImportListView
     /**
      * Display the list view like table.
      *
-     * @param bool $return True if we should return the content rather than echoing.
+     * @param bool $return true if we should return the content rather than echoing
+     *
      * @return
      */
     public function display($return = false)
     {
         global $app_strings,$mod_strings;
 
-        $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],'previous' => $app_strings['LNK_LIST_PREVIOUS'],'end' => $app_strings['LNK_LIST_END'],
-                            'start' => $app_strings['LNK_LIST_START'],'of' => $app_strings['LBL_LIST_OF']);
+        $navStrings = ['next' => $app_strings['LNK_LIST_NEXT'], 'previous' => $app_strings['LNK_LIST_PREVIOUS'], 'end' => $app_strings['LNK_LIST_END'],
+            'start' => $app_strings['LNK_LIST_START'], 'of' => $app_strings['LBL_LIST_OF']];
         $this->ss->assign('navStrings', $navStrings);
         $this->ss->assign('pageData', $this->generatePaginationData());
         $this->ss->assign('tableID', $this->tableID);
         $this->ss->assign('colCount', count($this->headerColumns));
         $this->ss->assign('APP', $app_strings);
-        $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
+        $this->ss->assign('rowColor', ['oddListRow', 'evenListRow']);
         $this->ss->assign('displayColumns', $this->headerColumns);
         $this->ss->assign('data', $this->data);
         $this->ss->assign('maxColumns', $this->maxColumns);
@@ -137,9 +135,8 @@ class ImportListView
         $contents = $this->ss->fetch('modules/Import/tpls/listview.tpl');
         if ($return) {
             return $contents;
-        } else {
-            echo $contents;
         }
+        echo $contents;
     }
 
     /**
@@ -155,6 +152,7 @@ class ImportListView
                 $maxColumns = count($data);
             }
         }
+
         return $maxColumns;
     }
 
@@ -167,15 +165,14 @@ class ImportListView
     {
         $currentOffset = $this->dataSource->getCurrentOffset();
         $totalRecordsCount = $this->dataSource->getTotalRecordCount();
-        $nextOffset =  $currentOffset+ $this->recordsPerPage;
+        $nextOffset = $currentOffset + $this->recordsPerPage;
         $nextOffset = $nextOffset > $totalRecordsCount ? 0 : $nextOffset;
         $lastOffset = floor($totalRecordsCount / $this->recordsPerPage) * $this->recordsPerPage;
         $previousOffset = $currentOffset - $this->recordsPerPage;
-        $offsets = array('totalCounted'=> true, 'total' => $totalRecordsCount, 'next' => $nextOffset,
-                         'last' => $lastOffset, 'previous' => $previousOffset,
-                         'current' => $currentOffset, 'lastOffsetOnPage' => count($this->data) + $this->dataSource->getCurrentOffset() );
+        $offsets = ['totalCounted' => true, 'total' => $totalRecordsCount, 'next' => $nextOffset,
+            'last' => $lastOffset, 'previous' => $previousOffset,
+            'current' => $currentOffset, 'lastOffsetOnPage' => count($this->data) + $this->dataSource->getCurrentOffset()];
 
-        $pageData = array('offsets' => $offsets);
-        return $pageData;
+        return ['offsets' => $offsets];
     }
 }

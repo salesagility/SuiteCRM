@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,7 +44,7 @@ use RecursiveDirectoryIterator;
 use RecursiveFilterIterator;
 
 /**
- * StateCheckerDirectoryIterator
+ * StateCheckerDirectoryIterator.
  *
  * Readable directory iterator
  *
@@ -56,8 +55,8 @@ class StateCheckerDirectoryIterator extends RecursiveFilterIterator
     public function __construct($path)
     {
         if (!$path instanceof RecursiveDirectoryIterator) {
-            if (! is_readable($path) || ! is_dir($path)) {
-                throw new InvalidArgumentException("$path is not a valid directory or not readable");
+            if (!is_readable($path) || !is_dir($path)) {
+                throw new InvalidArgumentException("{$path} is not a valid directory or not readable");
             }
             $path = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         }

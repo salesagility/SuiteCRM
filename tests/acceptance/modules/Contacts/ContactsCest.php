@@ -5,12 +5,12 @@ use Faker\Generator;
 class ContactsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class ContactsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the contacts module.
+     * As an administrator I want to view the contacts module
      */
     public function testScenarioViewContactsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the contacts module for testing');
 
@@ -54,13 +54,13 @@ class ContactsCest
      * @param \Step\Acceptance\Contacts $contact
      *
      * As administrative user I want to create a contact so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateContact(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Contacts $contact
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Contacts $contact
     ) {
         $I->wantTo('Create a Contact');
 
@@ -71,7 +71,7 @@ class ContactsCest
 
         // Create contact
         $this->fakeData->seed($this->fakeDataSeed);
-        $contact->createContact('Test_'. $this->fakeData->company());
+        $contact->createContact('Test_' . $this->fakeData->company());
 
         // Delete contact
         $detailView->clickActionMenuItem('Delete');

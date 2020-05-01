@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,20 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGeneric.php');
-
+require_once 'include/Dashlets/DashletGeneric.php';
 
 class MyEmailsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings, $dashletData;
-        require('modules/Emails/Dashlets/MyEmailsDashlet/MyEmailsDashlet.data.php');
+        require 'modules/Emails/Dashlets/MyEmailsDashlet/MyEmailsDashlet.data.php';
 
         parent::__construct($id, $def);
 
@@ -69,10 +63,7 @@ class MyEmailsDashlet extends DashletGeneric
         $this->seedBean = new Email();
     }
 
-
-
-
-    public function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = [], $id = null)
     {
         global $current_language, $app_list_strings, $image_path, $current_user;
         //$where = 'emails.deleted = 0 AND emails.assigned_user_id = \''.$current_user->id.'\' AND emails.type = \'inbound\' AND emails.status = \'unread\'';
@@ -81,12 +72,12 @@ class MyEmailsDashlet extends DashletGeneric
         if ($this->myItemsOnly) {
             $this->filters['assigned_user_id'] = $current_user->id;
         }
-        $this->filters['type'] = array("inbound");
-        $this->filters['status'] = array("unread");
+        $this->filters['type'] = ['inbound'];
+        $this->filters['status'] = ['unread'];
 
-        $lvsParams = array();
-        $lvsParams['custom_select'] = " ,emails_text.from_addr as from_addr ";
-        $lvsParams['custom_from'] = " join emails_text on emails.id = emails_text.email_id ";
+        $lvsParams = [];
+        $lvsParams['custom_select'] = ' ,emails_text.from_addr as from_addr ';
+        $lvsParams['custom_from'] = ' join emails_text on emails.id = emails_text.email_id ';
         parent::process($lvsParams);
     }
 
@@ -95,40 +86,40 @@ class MyEmailsDashlet extends DashletGeneric
         global $current_language;
 
         $mod_strings = return_module_language($current_language, 'Emails');
-        $casesImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Cases.gif') . "\"";
+        $casesImageURL = '"' . SugarThemeRegistry::current()->getImageURL('Cases.gif') . '"';
 
-        $leadsImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Leads.gif') . "\"";
+        $leadsImageURL = '"' . SugarThemeRegistry::current()->getImageURL('Leads.gif') . '"';
 
-        $contactsImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Contacts.gif') . "\"";
+        $contactsImageURL = '"' . SugarThemeRegistry::current()->getImageURL('Contacts.gif') . '"';
 
-        $bugsImageURL = "\"" . SugarThemeRegistry::current()->getImageURL('Bugs.gif') . "\"";
+        $bugsImageURL = '"' . SugarThemeRegistry::current()->getImageURL('Bugs.gif') . '"';
 
-        $tasksURL = "\"" . SugarThemeRegistry::current()->getImageURL('Tasks.gif') . "\"";
+        $tasksURL = '"' . SugarThemeRegistry::current()->getImageURL('Tasks.gif') . '"';
         $script = <<<EOQ
         <script>
         function quick_create_overlib(id, theme, el) {
 
         var \$dialog = \$('<div></div>')
-		.html('<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,"yes");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?module=Cases&action=EditView&inbound_email_id=' + id + '\'>' +
+		.html('<a style=\\'width: 150px\\' class=\\'menuItem\\' onmouseover=\\'hiliteItem(this,"yes");\\' onmouseout=\\'unhiliteItem(this);\\' href=\\'index.php?module=Cases&action=EditView&inbound_email_id=' + id + '\\'>' +
             "<!--not_in_theme!--><img border='0' src='" + {$casesImageURL} + "' style='margin-right:5px'>" + '{$mod_strings['LBL_LIST_CASE']}' + '</a>' +
 
 
-            "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Leads&action=EditView&inbound_email_id=" + id + "'>" +
+            "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\\"yes\\");' onmouseout='unhiliteItem(this);' href='index.php?module=Leads&action=EditView&inbound_email_id=" + id + "'>" +
                     "<!--not_in_theme!--><img border='0' src='" + {$leadsImageURL} + "' style='margin-right:5px'>"
 
                     + '{$mod_strings['LBL_LIST_LEAD']}' + "</a>" +
 
-            "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Contacts&action=EditView&inbound_email_id=" + id + "'>" +
+            "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\\"yes\\");' onmouseout='unhiliteItem(this);' href='index.php?module=Contacts&action=EditView&inbound_email_id=" + id + "'>" +
                     "<!--not_in_theme!--><img border='0' src='" + {$contactsImageURL} + "' style='margin-right:5px'>"
 
                     + '{$mod_strings['LBL_LIST_CONTACT']}' + "</a>" +
 
-             "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Bugs&action=EditView&inbound_email_id=" + id + "'>"+
+             "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\\"yes\\");' onmouseout='unhiliteItem(this);' href='index.php?module=Bugs&action=EditView&inbound_email_id=" + id + "'>"+
                     "<!--not_in_theme!--><img border='0' src='" + {$bugsImageURL} + "' style='margin-right:5px'>"
 
                     + '{$mod_strings['LBL_LIST_BUG']}' + "</a>" +
 
-             "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' href='index.php?module=Tasks&action=EditView&inbound_email_id=" + id + "'>" +
+             "<a style='width: 150px' class='menuItem' onmouseover='hiliteItem(this,\\"yes\\");' onmouseout='unhiliteItem(this);' href='index.php?module=Tasks&action=EditView&inbound_email_id=" + id + "'>" +
                     "<!--not_in_theme!--><img border='0' src='" + {$tasksURL} + "' style='margin-right:5px'>"
 
                    + '{$mod_strings['LBL_LIST_TASK']}' + "</a>")
@@ -147,6 +138,7 @@ class MyEmailsDashlet extends DashletGeneric
         }
         </script>
 EOQ;
+
         return $script;
     }
 }

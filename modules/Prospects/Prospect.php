@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-require_once('include/SugarObjects/templates/person/Person.php');
+require_once 'include/SugarObjects/templates/person/Person.php';
 require_once __DIR__ . '/../../include/EmailInterface.php';
 
 class Prospect extends Person implements EmailInterface
@@ -96,29 +93,25 @@ class Prospect extends Person implements EmailInterface
     // These are for related fields
     public $assigned_user_name;
     public $module_dir = 'Prospects';
-    public $table_name = "prospects";
-    public $object_name = "Prospect";
+    public $table_name = 'prospects';
+    public $object_name = 'Prospect';
     public $new_schema = true;
     public $emailAddress;
 
     public $importable = true;
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array('assigned_user_name');
-
+    public $additional_column_fields = ['assigned_user_name'];
 
     public function __construct()
     {
         parent::__construct();
     }
 
-
-
-
     public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
         $this->_create_proper_name_field();
-        $this->email_and_name1 = $this->full_name." &lt;".$this->email1."&gt;";
+        $this->email_and_name1 = $this->full_name . ' &lt;' . $this->email1 . '&gt;';
     }
 
     public function fill_in_additional_detail_fields()
@@ -128,58 +121,68 @@ class Prospect extends Person implements EmailInterface
     }
 
     /**
-        builds a generic search based on the query string using or
-        do not include any $this-> because this is called on without having the class instantiated
-    */
+     * builds a generic search based on the query string using or
+     * do not include any $this-> because this is called on without having the class instantiated
+     * @param mixed $the_query_string
+     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = array();
+        $where_clauses = [];
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
-        array_push($where_clauses, "prospects.last_name like '$the_query_string%'");
-        array_push($where_clauses, "prospects.first_name like '$the_query_string%'");
-        array_push($where_clauses, "prospects.assistant like '$the_query_string%'");
+        array_push($where_clauses, "prospects.last_name like '{$the_query_string}%'");
+        array_push($where_clauses, "prospects.first_name like '{$the_query_string}%'");
+        array_push($where_clauses, "prospects.assistant like '{$the_query_string}%'");
 
         if (is_numeric($the_query_string)) {
-            array_push($where_clauses, "prospects.phone_home like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_mobile like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_work like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_other like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_fax like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.assistant_phone like '%$the_query_string%'");
+            array_push($where_clauses, "prospects.phone_home like '%{$the_query_string}%'");
+            array_push($where_clauses, "prospects.phone_mobile like '%{$the_query_string}%'");
+            array_push($where_clauses, "prospects.phone_work like '%{$the_query_string}%'");
+            array_push($where_clauses, "prospects.phone_other like '%{$the_query_string}%'");
+            array_push($where_clauses, "prospects.phone_fax like '%{$the_query_string}%'");
+            array_push($where_clauses, "prospects.assistant_phone like '%{$the_query_string}%'");
         }
 
-        $the_where = "";
+        $the_where = '';
         foreach ($where_clauses as $clause) {
-            if ($the_where != "") {
-                $the_where .= " or ";
+            if ($the_where != '') {
+                $the_where .= ' or ';
             }
             $the_where .= $clause;
         }
-
 
         return $the_where;
     }
 
     public function converted_prospect($prospectid, $contactid, $accountid, $opportunityid)
     {
-        $query = "UPDATE prospects set  contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$prospectid and deleted=0";
-        $this->db->query($query, true, "Error converting prospect: ");
+        $query = "UPDATE prospects set  contact_id={$contactid}, account_id={$accountid}, opportunity_id={$opportunityid} where  id={$prospectid} and deleted=0";
+        $this->db->query($query, true, 'Error converting prospect: ');
         //todo--status='Converted', converted='1',
     }
+
     public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':return true;
         }
+
         return false;
     }
 
     /**
-     *  This method will be used by Mail Merge in order to retieve the targets as specified in the query
+     *  This method will be used by Mail Merge in order to retieve the targets as specified in the query.
+     *
      *  @param query String - this is the query which contains the where clause for the query
+     * @param mixed $query
+     * @param mixed $fields
+     * @param mixed $offset
+     * @param mixed $limit
+     * @param mixed $max
+     * @param mixed $deleted
+     * @param mixed $module
      */
-    public function retrieveTargetList($query, $fields, $offset = 0, $limit= -99, $max = -99, $deleted = 0, $module = '')
+    public function retrieveTargetList($query, $fields, $offset = 0, $limit = -99, $max = -99, $deleted = 0, $module = '')
     {
         global  $beanList, $beanFiles;
         $module_name = $this->module_dir;
@@ -189,22 +192,22 @@ class Prospect extends Person implements EmailInterface
             $pattern = '/AND related_type = [\'#]([a-zA-Z]+)[\'#]/i';
             if (preg_match($pattern, $query, $matches)) {
                 $module_name = $matches[1];
-                $query = preg_replace($pattern, "", $query);
+                $query = preg_replace($pattern, '', $query);
             }
         }
 
         $count = count($fields);
         $index = 1;
-        $sel_fields = "";
+        $sel_fields = '';
         if (!empty($fields)) {
             foreach ($fields as $field) {
                 if ($field == 'id') {
                     $sel_fields .= 'prospect_lists_prospects.id id';
                 } else {
-                    $sel_fields .= strtolower($module_name).".".$field;
+                    $sel_fields .= strtolower($module_name) . '.' . $field;
                 }
                 if ($index < $count) {
-                    $sel_fields .= ",";
+                    $sel_fields .= ',';
                 }
                 $index++;
             }
@@ -212,21 +215,21 @@ class Prospect extends Person implements EmailInterface
 
         $module_name = ucfirst($module_name);
         $class_name = $beanList[$module_name];
-        require_once($beanFiles[$class_name]);
+        require_once $beanFiles[$class_name];
         $seed = new $class_name();
         if (empty($sel_fields)) {
-            $sel_fields = $seed->table_name.'.*';
+            $sel_fields = $seed->table_name . '.*';
         }
-        $select = "SELECT ".$sel_fields." FROM ".$seed->table_name;
-        $select .= " INNER JOIN prospect_lists_prospects ON prospect_lists_prospects.related_id = ".$seed->table_name.".id";
-        $select .= " INNER JOIN prospect_lists ON prospect_lists_prospects.prospect_list_id = prospect_lists.id";
-        $select .= " INNER JOIN prospect_list_campaigns ON prospect_list_campaigns.prospect_list_id = prospect_lists.id";
-        $select .= " INNER JOIN campaigns on campaigns.id = prospect_list_campaigns.campaign_id";
-        $select .= " WHERE prospect_list_campaigns.deleted = 0";
-        $select .= " AND prospect_lists_prospects.deleted = 0";
-        $select .= " AND prospect_lists.deleted = 0";
+        $select = 'SELECT ' . $sel_fields . ' FROM ' . $seed->table_name;
+        $select .= ' INNER JOIN prospect_lists_prospects ON prospect_lists_prospects.related_id = ' . $seed->table_name . '.id';
+        $select .= ' INNER JOIN prospect_lists ON prospect_lists_prospects.prospect_list_id = prospect_lists.id';
+        $select .= ' INNER JOIN prospect_list_campaigns ON prospect_list_campaigns.prospect_list_id = prospect_lists.id';
+        $select .= ' INNER JOIN campaigns on campaigns.id = prospect_list_campaigns.campaign_id';
+        $select .= ' WHERE prospect_list_campaigns.deleted = 0';
+        $select .= ' AND prospect_lists_prospects.deleted = 0';
+        $select .= ' AND prospect_lists.deleted = 0';
         if (!empty($query)) {
-            $select .= " AND ".$query;
+            $select .= ' AND ' . $query;
         }
 
         return $this->process_list_query($select, $offset, $limit, $max, $query);
@@ -234,26 +237,28 @@ class Prospect extends Person implements EmailInterface
 
     /**
      *  Given an id, looks up in the prospect_lists_prospects table
-     *  and retrieve the correct type for this id
+     *  and retrieve the correct type for this id.
+     *
+     * @param mixed $id
      */
     public function retrieveTarget($id)
     {
-        $query = "SELECT related_id, related_type FROM prospect_lists_prospects WHERE id = '".$this->db->quote($id)."'";
+        $query = "SELECT related_id, related_type FROM prospect_lists_prospects WHERE id = '" . $this->db->quote($id) . "'";
         $result = $this->db->query($query);
         if (($row = $this->db->fetchByAssoc($result))) {
             global  $beanList, $beanFiles;
             $module_name = $row['related_type'];
             $class_name = $beanList[$module_name];
-            require_once($beanFiles[$class_name]);
+            require_once $beanFiles[$class_name];
             $seed = new $class_name();
+
             return $seed->retrieve($row['related_id']);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
-
-    public function get_unlinked_email_query($type=array())
+    public function get_unlinked_email_query($type = [])
     {
         return get_unlinked_email_query($type, $this);
     }

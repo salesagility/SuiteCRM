@@ -5,12 +5,12 @@ use Faker\Generator;
 class MeetingsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class MeetingsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the meetings module.
+     * As an administrator I want to view the meetings module
      */
     public function testScenarioViewMeetingsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the meetings module for testing');
 
@@ -54,13 +54,13 @@ class MeetingsCest
      * @param \Step\Acceptance\Meetings $meeting
      *
      * As administrative user I want to create a meeting so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateMeeting(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Meetings $meeting
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Meetings $meeting
     ) {
         $I->wantTo('Create a meeting');
 
@@ -71,7 +71,7 @@ class MeetingsCest
 
         // Create meeting
         $this->fakeData->seed($this->fakeDataSeed);
-        $meeting->createMeeting('Test_'. $this->fakeData->company());
+        $meeting->createMeeting('Test_' . $this->fakeData->company());
 
         // Delete meeting
         $detailView->clickActionMenuItem('Delete');
@@ -88,10 +88,10 @@ class MeetingsCest
      * As administrative user I want to inline edit the start date
      */
     public function testScenarioEditStartDate(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Meetings $meeting
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Meetings $meeting
     ) {
         $I->wantTo('Create a meeting');
 
@@ -102,7 +102,7 @@ class MeetingsCest
 
         // Create meeting
         $this->fakeData->seed($this->fakeDataSeed);
-        $meeting->createMeeting('Test_'. $this->fakeData->company());
+        $meeting->createMeeting('Test_' . $this->fakeData->company());
 
         // Inline edit
         $I->doubleClick('#date_start');

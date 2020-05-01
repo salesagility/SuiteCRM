@@ -51,12 +51,10 @@ use Monolog\Handler\AbstractProcessingHandler;
  */
 class SugarLoggerHandler extends AbstractProcessingHandler
 {
-
     /**
-     * Writes the record down to the log of the implementing handler
+     * Writes the record down to the log of the implementing handler.
      *
      * @param  array $record
-     * @return void
      */
     protected function write(array $record)
     {
@@ -68,13 +66,14 @@ class SugarLoggerHandler extends AbstractProcessingHandler
 
         $level = $this->psrToSugarLevel($level);
 
-        $logger->$level("[$channel] $message");
+        $logger->{$level}("[{$channel}] {$message}");
     }
 
     /**
      * Converts a Monolog logging level to the corresponding level string as specified in the LoggerManager class.
      *
      * @param int $level
+     *
      * @return string
      */
     protected function psrToSugarLevel($level)

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class SugarWidgetFieldVarchar extends SugarWidgetReportField
 {
     public function __construct(&$layout_manager)
@@ -51,31 +49,32 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
 
     public function queryFilterEquals($layout_def)
     {
-        return $this->_get_column_select($layout_def)."='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
+        return $this->_get_column_select($layout_def) . "='" . DBManagerFactory::getInstance()->quote($layout_def['input_name0']) . "'\n";
     }
 
     public function queryFilterNot_Equals_Str($layout_def)
     {
-        return $this->_get_column_select($layout_def)."!='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
+        return $this->_get_column_select($layout_def) . "!='" . DBManagerFactory::getInstance()->quote($layout_def['input_name0']) . "'\n";
     }
 
     public function queryFilterContains(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)." LIKE '%".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."%'\n";
+        return $this->_get_column_select($layout_def) . " LIKE '%" . DBManagerFactory::getInstance()->quote($layout_def['input_name0']) . "%'\n";
     }
+
     public function queryFilterdoes_not_contain(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)." NOT LIKE '%".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."%'\n";
+        return $this->_get_column_select($layout_def) . " NOT LIKE '%" . DBManagerFactory::getInstance()->quote($layout_def['input_name0']) . "%'\n";
     }
 
     public function queryFilterStarts_With(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)." LIKE '".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."%'\n";
+        return $this->_get_column_select($layout_def) . " LIKE '" . DBManagerFactory::getInstance()->quote($layout_def['input_name0']) . "%'\n";
     }
 
     public function queryFilterEnds_With(&$layout_def)
     {
-        return $this->_get_column_select($layout_def)." LIKE '%".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
+        return $this->_get_column_select($layout_def) . " LIKE '%" . DBManagerFactory::getInstance()->quote($layout_def['input_name0']) . "'\n";
     }
 
     public function queryFilterone_of(&$layout_def)
@@ -83,12 +82,12 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
         foreach ($layout_def['input_name0'] as $key => $value) {
             $layout_def['input_name0'][$key] = DBManagerFactory::getInstance()->quote($value);
         }
+
         return $this->_get_column_select($layout_def) . " IN ('" . implode("','", $layout_def['input_name0']) . "')\n";
     }
 
     public function displayInput($layout_def)
     {
-        $str = '<input type="text" size="20" value="' . $layout_def['input_name0'] . '" name="' . $layout_def['name'] . '">';
-        return $str;
+        return '<input type="text" size="20" value="' . $layout_def['input_name0'] . '" name="' . $layout_def['name'] . '">';
     }
 }

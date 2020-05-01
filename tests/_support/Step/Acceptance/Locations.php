@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Locations extends \AcceptanceTester
 {
     /**
-     * Create an event location
+     * Create an event location.
      *
      * @param $name
      */

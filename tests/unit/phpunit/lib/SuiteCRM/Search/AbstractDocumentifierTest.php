@@ -37,32 +37,39 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM\Test;
 
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\SearchTestAbstract;
 
+require_once __DIR__ . '/AbstractDocumentifierMock.php';
+require_once __DIR__ . '/SearchTestAbstract.php';
 
-require_once __DIR__ . "/AbstractDocumentifierMock.php";
-require_once __DIR__ . "/SearchTestAbstract.php";
-
-
+/**
+ * @internal
+ */
 class AbstractDocumentifierTest extends SearchTestAbstract
 {
     /** @var AbstractDocumentifier */
     private $documentifier;
 
+    protected function setUp()
+    {
+        $this->documentifier = new AbstractDocumentifierMock();
+
+        return parent::setUp();
+    }
+
     public function testSanitizePhone()
     {
-        $data1 = "(+44) 012321323";
-        $expe1 = "+44012321323";
+        $data1 = '(+44) 012321323';
+        $expe1 = '+44012321323';
 
-        $data2 = "(+45) 0123-213-23";
-        $expe2 = "+45012321323";
+        $data2 = '(+45) 0123-213-23';
+        $expe2 = '+45012321323';
 
-        $data3 = "(ab) 0123 213 23";
-        $expe3 = "012321323";
+        $data3 = '(ab) 0123 213 23';
+        $expe3 = '012321323';
 
         self::assertEquals($expe1, $this->documentifier->sanitizePhone($data1));
         self::assertEquals($expe2, $this->documentifier->sanitizePhone($data2));
@@ -90,12 +97,5 @@ class AbstractDocumentifierTest extends SearchTestAbstract
         $this->documentifier->fixPhone($document);
 
         self::assertEquals($expected, $document);
-    }
-
-    protected function setUp()
-    {
-        $this->documentifier = new AbstractDocumentifierMock();
-
-        return parent::setUp();
     }
 }

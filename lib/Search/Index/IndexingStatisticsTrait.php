@@ -103,6 +103,7 @@ trait IndexingStatisticsTrait
 
         if ($this->indexedRecordsCount === 0) {
             $this->logger->debug('No record has been indexed');
+
             return;
         }
 
@@ -115,7 +116,7 @@ trait IndexingStatisticsTrait
             $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
             $fieldsSpeed = $this->indexedFieldsCount / $elapsed;
             $this->logger->debug(sprintf('Average speed is %01.3F fields/s', $fieldsSpeed));
-            $this->logger->debug("It would take ~$estimationString for 200,000 records, assuming a linear expansion");
+            $this->logger->debug("It would take ~{$estimationString} for 200,000 records, assuming a linear expansion");
         }
     }
 

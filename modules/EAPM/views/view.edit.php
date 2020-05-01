@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,8 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class EAPMViewEdit extends ViewEdit
 {
     private $_returnId;
@@ -51,6 +49,30 @@ class EAPMViewEdit extends ViewEdit
     {
         $this->setReturnId();
         parent::__construct();
+    }
+
+    public function display()
+    {
+        $this->bean->password = empty($this->bean->password) ? '' : EAPM::$passwordPlaceholder;
+
+        $this->ss->assign('return_id', $this->_returnId);
+
+        $cancelUrl = "index.php?action=EditView&module=Users&record={$this->_returnId}#tab5";
+
+        if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Import') {
+            $cancelUrl = 'index.php?module=Import&action=Step1&import_module=' . $_REQUEST['return_action'] . '&application=' . $_REQUEST['application'];
+        }
+        $this->ss->assign('cancelUrl', $cancelUrl);
+
+        if ($GLOBALS['current_user']->is_admin || empty($this->bean) || empty($this->bean->id) || $this->bean->isOwner($GLOBALS['current_user']->id)) {
+            if (!empty($this->bean) && empty($this->bean->id) && $this->_returnId != $GLOBALS['current_user']->id) {
+                $this->bean->assigned_user_id = $this->_returnId;
+            }
+
+            parent::display();
+        } else {
+            ACLController::displayNoAccess();
+        }
     }
 
     protected function setReturnId()
@@ -69,6 +91,8 @@ class EAPMViewEdit extends ViewEdit
 
     /**
      * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
      */
     protected function _getModuleTitleParams($browserTitle = false)
     {
@@ -94,13 +118,13 @@ class EAPMViewEdit extends ViewEdit
         $this->_returnId = $returnId;
 
         $iconPath = $this->getModuleTitleIconPath($this->module);
-        $params = array();
+        $params = [];
         if (!empty($iconPath) && !$browserTitle) {
-            $params[] = "<a href='index.php?module=Users&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='".translate('LBL_MODULE_NAME', 'Users')."' title='".translate('LBL_MODULE_NAME', 'Users')."' align='absmiddle'></a>";
+            $params[] = "<a href='index.php?module=Users&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='" . translate('LBL_MODULE_NAME', 'Users') . "' title='" . translate('LBL_MODULE_NAME', 'Users') . "' align='absmiddle'></a>";
         } else {
             $params[] = translate('LBL_MODULE_NAME', 'Users');
         }
-        $params[] = "<a href='index.php?module={$returnModule}&action=EditView&record={$returnId}'>".$returnName."</a>";
+        $params[] = "<a href='index.php?module={$returnModule}&action=EditView&record={$returnId}'>" . $returnName . '</a>';
         $params[] = $GLOBALS['app_strings']['LBL_EDIT_BUTTON_LABEL'];
 
         return $params;
@@ -108,33 +132,11 @@ class EAPMViewEdit extends ViewEdit
 
     /**
      * @see SugarView::getModuleTitleIconPath()
+     *
+     * @param mixed $module
      */
     protected function getModuleTitleIconPath($module)
     {
         return parent::getModuleTitleIconPath('Users');
-    }
-
-    public function display()
-    {
-        $this->bean->password = empty($this->bean->password) ? '' : EAPM::$passwordPlaceholder;
-
-        $this->ss->assign('return_id', $this->_returnId);
-
-        $cancelUrl = "index.php?action=EditView&module=Users&record={$this->_returnId}#tab5";
-
-        if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Import') {
-            $cancelUrl = "index.php?module=Import&action=Step1&import_module=". $_REQUEST['return_action'] . "&application=" . $_REQUEST['application'];
-        }
-        $this->ss->assign('cancelUrl', $cancelUrl);
-
-        if ($GLOBALS['current_user']->is_admin || empty($this->bean) || empty($this->bean->id) || $this->bean->isOwner($GLOBALS['current_user']->id)) {
-            if (!empty($this->bean) && empty($this->bean->id) && $this->_returnId != $GLOBALS['current_user']->id) {
-                $this->bean->assigned_user_id = $this->_returnId;
-            }
-            
-            parent::display();
-        } else {
-            ACLController::displayNoAccess();
-        }
     }
 }

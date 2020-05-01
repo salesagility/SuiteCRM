@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,50 +36,50 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
 
 class ViewDropdowns extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-        
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
     public function display()
     {
         $ajax = new AjaxCompose();
         $smarty = new Sugar_Smarty();
-        
+
         if (isset($_REQUEST['refreshTree'])) {
-            require_once('modules/ModuleBuilder/Module/DropDownTree.php');
+            require_once 'modules/ModuleBuilder/Module/DropDownTree.php';
             $mbt = new DropDownTree();
             $ajax->addSection('west', $mbt->getName(), $mbt->fetchNodes());
             $smarty->assign('refreshTree', true);
         }
-                
+
         global $mod_strings;
         $ajax->addCrumb($mod_strings['LBL_DROPDOWNEDITOR'], 'ModuleBuilder.main("dropdowns")');
-        
-        require_once('modules/ModuleBuilder/Module/DropDownBrowser.php');
+
+        require_once 'modules/ModuleBuilder/Module/DropDownBrowser.php';
         $dd = new DropDownBrowser();
-        
+
         $smarty->assign('LBL_BTN_ADDDROPDOWN', translate('LBL_BTN_ADDDROPDOWN'));
         $smarty->assign('dropdowns', $dd->getNodes());
         $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage('delete_inline', '', null, null, '.gif', $mod_strings['LBL_MB_DELETE']));
         $smarty->assign('editImage', SugarThemeRegistry::current()->getImage('edit_inline', '', null, null, '.gif', $mod_strings['LBL_EDIT']));
         $smarty->assign('action', 'savedropdown');
-        
 
         $ajax->addSection('center', $GLOBALS['mod_strings']['LBL_DROPDOWNEDITOR'], $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/dropdowns.tpl'));
         echo $ajax->getJavascript();
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,36 +43,23 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
-require_once('modules/ModuleBuilder/views/view.modulefields.php');
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
+require_once 'modules/ModuleBuilder/views/view.modulefields.php';
 class ViewLabels extends ViewModulefields
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
     //STUDIO LABELS ONLY//
     //TODO Bundle Studio and ModuleBuilder label handling to increase maintainability.
     public function display()
     {
         $editModule = $_REQUEST['view_module'];
-        $allLabels = (!empty($_REQUEST['labels']) && $_REQUEST['labels']== 'all');
+        $allLabels = (!empty($_REQUEST['labels']) && $_REQUEST['labels'] == 'all');
 
         if (!isset($_REQUEST['MB'])) {
             global $app_list_strings;
             $moduleNames = array_change_key_case($app_list_strings['moduleList']);
             $translatedEditModule = $moduleNames[strtolower($editModule)];
         }
-        $selected_lang = (!empty($_REQUEST['selected_lang'])? $_REQUEST['selected_lang']:$_SESSION['authenticated_user_language']);
+        $selected_lang = (!empty($_REQUEST['selected_lang']) ? $_REQUEST['selected_lang'] : $_SESSION['authenticated_user_language']);
         if (empty($selected_lang)) {
             $selected_lang = $GLOBALS['sugar_config']['default_language'];
         }
@@ -83,29 +69,28 @@ class ViewLabels extends ViewModulefields
         $smarty->assign('mod_strings', $mod_strings);
         $smarty->assign('available_languages', get_languages());
 
-
         $objectName = BeanFactory::getObjectName($editModule);
         VardefManager::loadVardef($editModule, $objectName);
         global $dictionary;
-        $vnames = array();
+        $vnames = [];
         //jchi 24557 . We should list all the lables in viewdefs(list,detail,edit,quickcreate) that the user can edit them.
-        require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' ;
-        $parser = new ListLayoutMetaDataParser(MB_LISTVIEW, $editModule) ;
+        require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php';
+        $parser = new ListLayoutMetaDataParser(MB_LISTVIEW, $editModule);
         foreach ($parser->getLayout() as $key => $def) {
             if (isset($def['label'])) {
                 $vnames[$def['label']] = $def['label'];
             }
         }
 
-        require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
+        require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php';
         $variableMap = $this->getVariableMap($editModule);
         foreach ($variableMap as $key => $value) {
-            $gridLayoutMetaDataParserTemp = new GridLayoutMetaDataParser($value, $editModule) ;
+            $gridLayoutMetaDataParserTemp = new GridLayoutMetaDataParser($value, $editModule);
             foreach ($gridLayoutMetaDataParserTemp->getLayout() as $panel) {
                 foreach ($panel as $row) {
                     foreach ($row as $fieldArray) { // fieldArray is an array('name'=>name,'label'=>label)
-                        if (isset($fieldArray [ 'label' ])) {
-                            $vnames[$fieldArray [ 'label' ] ] = $fieldArray [ 'label' ] ;
+                        if (isset($fieldArray['label'])) {
+                            $vnames[$fieldArray['label']] = $fieldArray['label'];
                         }
                     }
                 }
@@ -114,22 +99,22 @@ class ViewLabels extends ViewModulefields
         //end
 
         //Get Subpanel Labels:
-        require_once('include/SubPanel/SubPanel.php') ;
-        $subList =  SubPanel::getModuleSubpanels($editModule);
+        require_once 'include/SubPanel/SubPanel.php';
+        $subList = SubPanel::getModuleSubpanels($editModule);
         foreach ($subList as $subpanel => $titleLabel) {
             $vnames[$titleLabel] = $titleLabel;
         }
 
-        foreach ($dictionary[$objectName]['fields'] as $name=>$def) {
+        foreach ($dictionary[$objectName]['fields'] as $name => $def) {
             if (isset($def['vname'])) {
                 $vnames[$def['vname']] = $def['vname'];
             }
         }
-        $formatted_mod_strings = array();
+        $formatted_mod_strings = [];
 
         //we shouldn't set the $refresh=true here, or will lost template language mod_strings.
         //return_module_language($selected_lang, $editModule,false) : the mod_strings will be included from cache files here.
-        foreach (return_module_language($selected_lang, $editModule, false) as $name=>$label) {
+        foreach (return_module_language($selected_lang, $editModule, false) as $name => $label) {
             //#25294
             if ($allLabels || isset($vnames[$name]) || preg_match('/lbl_city|lbl_country|lbl_billing_address|lbl_alt_address|lbl_shipping_address|lbl_postal_code|lbl_state$/si', $name)) {
                 $formatted_mod_strings[$name] = htmlentities($label, ENT_QUOTES, 'UTF-8');
@@ -137,14 +122,14 @@ class ViewLabels extends ViewModulefields
         }
         //Grab everything from the custom files
         $mod_bak = $mod_strings;
-        $files = array(
-            "custom/modules/$editModule/language/$selected_lang.lang.php",
-            "custom/modules/$editModule/Ext/Language/$selected_lang.lang.ext.php"
-        );
+        $files = [
+            "custom/modules/{$editModule}/language/{$selected_lang}.lang.php",
+            "custom/modules/{$editModule}/Ext/Language/{$selected_lang}.lang.ext.php"
+        ];
         foreach ($files as $langfile) {
-            $mod_strings = array();
+            $mod_strings = [];
             if (is_file($langfile)) {
-                include($langfile);
+                include $langfile;
                 foreach ($mod_strings as $key => $label) {
                     $formatted_mod_strings[$key] = htmlentities($label, ENT_QUOTES, 'UTF-8');
                 }
@@ -157,43 +142,58 @@ class ViewLabels extends ViewModulefields
         $smarty->assign('APP', $GLOBALS['app_strings']);
         $smarty->assign('selected_lang', $selected_lang);
         $smarty->assign('defaultHelp', 'labelsBtn');
-        $smarty->assign('assistant', array('key'=>'labels', 'group'=>'module'));
+        $smarty->assign('assistant', ['key' => 'labels', 'group' => 'module']);
         $smarty->assign('labels_choice', $mod_strings['labelTypes']);
-        $smarty->assign('labels_current', $allLabels?"all":"");
+        $smarty->assign('labels_current', $allLabels ? 'all' : '');
 
         $ajax = new AjaxCompose();
         $ajax->addCrumb($mod_strings['LBL_STUDIO'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
-        $ajax->addCrumb($translatedEditModule, 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module='.$editModule.'")');
+        $ajax->addCrumb($translatedEditModule, 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $editModule . '")');
         $ajax->addCrumb($mod_strings['LBL_LABELS'], '');
 
         $html = $smarty->fetch('modules/ModuleBuilder/tpls/labels.tpl');
         $ajax->addSection('center', $GLOBALS['mod_strings']['LBL_SECTION_EDLABELS'], $html);
         echo $ajax->getJavascript();
     }
-    
+
     // fixing bug #39749: Quick Create in Studio
     public function getVariableMap($module)
     {
-        $variableMap = array(MB_EDITVIEW => 'EditView',
-                             MB_DETAILVIEW => 'DetailView',
-                             MB_QUICKCREATE => 'QuickCreate');
-        
-        $hideQuickCreateForModules = array('KBDocuments',
-                                           'ProjectTask',
-                                           'Campaigns',
-                                           'Quotes',
-                                           'ProductTemplates');
-        
+        $variableMap = [MB_EDITVIEW => 'EditView',
+            MB_DETAILVIEW => 'DetailView',
+            MB_QUICKCREATE => 'QuickCreate'];
+
+        $hideQuickCreateForModules = ['KBDocuments',
+            'ProjectTask',
+            'Campaigns',
+            'Quotes',
+            'ProductTemplates'];
+
         if (in_array($module, $hideQuickCreateForModules)) {
             if (isset($variableMap['quickcreate'])) {
                 unset($variableMap['quickcreate']);
             }
         }
-        
+
         if ($module == 'KBDocuments') {
-            $variableMap  = array();
+            $variableMap = [];
         }
-        
+
         return $variableMap;
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AM_ProjectTemplatesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAM_ProjectTemplates()
+    public function testAMProjectTemplates()
     {
         // Execute the constructor and check for the Object type and type attribute
         $am_projectTemplate = new AM_ProjectTemplates();

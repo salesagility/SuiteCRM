@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,26 +41,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Global registry
+ * Global registry.
+ *
  * @api
  */
 class SugarRegistry
 {
-    private static $_instances = array();
-    private $_data = array();
+    private static $_instances = [];
+    private $_data = [];
 
     public function __construct()
     {
-    }
-
-    public static function getInstance($name = 'default')
-    {
-        if (!isset(self::$_instances[$name])) {
-            self::$_instances[$name] = new self();
-        }
-        return self::$_instances[$name];
     }
 
     public function __get($key)
@@ -81,6 +73,15 @@ class SugarRegistry
     public function __unset($key)
     {
         unset($this->_data[$key]);
+    }
+
+    public static function getInstance($name = 'default')
+    {
+        if (!isset(self::$_instances[$name])) {
+            self::$_instances[$name] = new self();
+        }
+
+        return self::$_instances[$name];
     }
 
     public function addToGlobals()

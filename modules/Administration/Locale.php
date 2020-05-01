@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,24 +44,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user, $sugar_config;
 if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 }
 
-require_once('modules/Configurator/Configurator.php');
-
+require_once 'modules/Configurator/Configurator.php';
 
 echo getClassicModuleTitle(
-    "Administration",
-    array(
-            "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
-           $mod_strings['LBL_MANAGE_LOCALE'],
-           ),
+    'Administration',
+    [
+        "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . '</a>',
+        $mod_strings['LBL_MANAGE_LOCALE'],
+    ],
     false
-        );
+);
 
-$cfg			= new Configurator();
-$sugar_smarty	= new Sugar_Smarty();
-$errors			= array();
+$cfg = new Configurator();
+$sugar_smarty = new Sugar_Smarty();
+$errors = [];
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	HANDLE CHANGES
@@ -100,10 +100,10 @@ $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 $sugar_smarty->assign('LANGUAGES', get_languages());
-$sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
+$sugar_smarty->assign('JAVASCRIPT', get_set_focus_js());
 $sugar_smarty->assign('config', $sugar_config);
 $sugar_smarty->assign('error', $errors);
-$sugar_smarty->assign("exportCharsets", get_select_options_with_id($locale->getCharsetSelect(), $sugar_config['default_export_charset']));
+$sugar_smarty->assign('exportCharsets', get_select_options_with_id($locale->getCharsetSelect(), $sugar_config['default_export_charset']));
 //$sugar_smarty->assign('salutation', 'Mr.');
 //$sugar_smarty->assign('first_name', 'John');
 //$sugar_smarty->assign('last_name', 'Doe');

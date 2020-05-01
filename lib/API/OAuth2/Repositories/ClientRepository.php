@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,6 +47,7 @@ class ClientRepository implements ClientRepositoryInterface
 {
     /**
      * {@inheritdoc}
+     *
      * @return null|ClientEntity
      */
     public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
@@ -64,7 +64,7 @@ class ClientRepository implements ClientRepositoryInterface
 
         if (
             $mustValidateSecret === true
-            && (bool)$client->is_confidential === true
+            && (bool) $client->is_confidential === true
             && hash('sha256', $clientSecret) !== $client->secret
         ) {
             return null;

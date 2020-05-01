@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,82 +36,72 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+$viewdefs['Bugs']['EditView'] = [
+    'templateMeta' => ['form' => ['hidden' => ['<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
+        '<input type="hidden" name="contact_id" value="{$smarty.request.contact_id}">']
+    ],
+        'maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
 
-$viewdefs['Bugs']['EditView'] = array(
-    'templateMeta' => array('form'=>array('hidden'=>array('<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
-                                                          '<input type="hidden" name="contact_id" value="{$smarty.request.contact_id}">')
-                                                          ),
-                            'maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-                                            ),
+    'panels' => [
+        'lbl_bug_information' => [
+            [
+                [
+                    'name' => 'bug_number',
+                    'type' => 'readonly',
+                ],
+            ],
 
+            [
+                ['name' => 'name', 'displayParams' => ['size' => 60, 'required' => true]],
+            ],
 
- 'panels' =>array(
-      'lbl_bug_information' =>
-          array(
+            [
+                'priority',
+                'type',
+            ],
 
-            array(
-              array(
-                'name' => 'bug_number',
-                'type' => 'readonly',
-              ),
-            ),
+            [
+                'source',
+                'status',
+            ],
 
-            array(
-              array('name'=>'name', 'displayParams'=>array('size'=>60, 'required'=>true)),
-            ),
+            [
+                'product_category',
+                'resolution',
+            ],
 
-            array(
-              'priority',
-              'type',
-            ),
+            [
+                'found_in_release',
+                'fixed_in_release'
+            ],
 
-            array(
-              'source',
-              'status',
+            [
+                [
+                    'name' => 'description',
+                    'nl2br' => true,
+                ],
+            ],
 
-            ),
+            [
+                [
+                    'name' => 'work_log',
+                    'nl2br' => true,
+                ],
+            ],
+        ],
 
-            array(
-              'product_category',
-              'resolution',
-            ),
-
-
-            array(
-              'found_in_release',
-              'fixed_in_release'
-            ),
-
-            array(
-              array(
-                  'name' => 'description',
-                  'nl2br' => true,
-              ),
-            ),
-
-
-            array(
-              array(
-                  'name' => 'work_log',
-                  'nl2br' => true,
-              ),
-            ),
-
-      ),
-
-      'LBL_PANEL_ASSIGNMENT' =>
-      array(
-        array(
-            array(
-            'name' => 'assigned_user_name',
-            'label' => 'LBL_ASSIGNED_TO_NAME',
-          ),
-        ),
-      ),
-),
-
-);
+        'LBL_PANEL_ASSIGNMENT' => [
+            [
+                [
+                    'name' => 'assigned_user_name',
+                    'label' => 'LBL_ASSIGNED_TO_NAME',
+                ],
+            ],
+        ],
+    ],
+];

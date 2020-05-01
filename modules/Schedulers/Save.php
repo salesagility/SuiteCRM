@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/formbase.php');
+require_once 'include/formbase.php';
 
 $focus = new Scheduler();
 $focus = populateFromPost('', $focus);
@@ -55,14 +54,14 @@ if (!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' ||
     $_REQUEST['months'] = '*';
 
     // days of week
-    $xtDays = array(1 => 'mon',
-                    2 => 'tue',
-                    3 => 'wed',
-                    4 => 'thu',
-                    5 => 'fri',
-                    6 => 'sat',
-                    0 => 'sun');
-                    
+    $xtDays = [1 => 'mon',
+        2 => 'tue',
+        3 => 'wed',
+        4 => 'thu',
+        5 => 'fri',
+        6 => 'sat',
+        0 => 'sun'];
+
     if ((isset($_REQUEST['mon']) && $_REQUEST['mon'] == 'true') &&
         (isset($_REQUEST['tue']) && $_REQUEST['tue'] == 'true') &&
         (isset($_REQUEST['wed']) && $_REQUEST['wed'] == 'true') &&
@@ -84,14 +83,13 @@ if (!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' ||
         $_REQUEST['day_of_week'] = $day_string;
     }
 
-
     if ($_REQUEST['basic_period'] == 'min') {
-        $_REQUEST['mins'] = '*/'.$_REQUEST['basic_interval'];
+        $_REQUEST['mins'] = '*/' . $_REQUEST['basic_interval'];
         $_REQUEST['hours'] = '*';
     } else {
         // Bug # 44933 - hours cannot be greater than 23
         if ($_REQUEST['basic_interval'] < 24) {
-            $_REQUEST['hours'] = '*/'.$_REQUEST['basic_interval'];
+            $_REQUEST['hours'] = '*/' . $_REQUEST['basic_interval'];
         } else {
             $_REQUEST['hours'] = '0'; // setting it to run midnight every 24 hours
         }
@@ -101,7 +99,7 @@ if (!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' ||
 
 ////	END USE_ADV override
 ///////////////////////////////////////////////////////////////////////////////
-$focus->job_interval = $_REQUEST['mins']."::".$_REQUEST['hours']."::".$_REQUEST['day_of_month']."::".$_REQUEST['months']."::".$_REQUEST['day_of_week'];
+$focus->job_interval = $_REQUEST['mins'] . '::' . $_REQUEST['hours'] . '::' . $_REQUEST['day_of_month'] . '::' . $_REQUEST['months'] . '::' . $_REQUEST['day_of_week'];
 // deal with job types
 // neither
 if (($_REQUEST['job_function'] == 'url::') && ($_REQUEST['job_url'] == '' || $_REQUEST['job_url'] == 'http://')) {
@@ -113,32 +111,32 @@ if (($_REQUEST['job_function'] == 'url::') && ($_REQUEST['job_url'] == '' || $_R
 if (($_REQUEST['job_function'] != 'url::')) {
     $focus->job = $_REQUEST['job_function'];
 } elseif ($_REQUEST['job_url'] != '' && $_REQUEST['job_url'] != 'http://') { // url
-    $focus->job = 'url::'.$_REQUEST['job_url'];
+    $focus->job = 'url::' . $_REQUEST['job_url'];
 } // url wins if both passed
 
 // save should refresh ALL jobs
 $focus->save();
 $return_id = $focus->id;
 
-$edit='';
-if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {
+$edit = '';
+if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != '') {
     $return_module = $_REQUEST['return_module'];
 } else {
-    $return_module = "Schedulers";
+    $return_module = 'Schedulers';
 }
-if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") {
+if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != '') {
     $return_action = $_REQUEST['return_action'];
 } else {
-    $return_action = "DetailView";
+    $return_action = 'DetailView';
 }
-if (isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") {
+if (isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != '') {
     $return_id = $_REQUEST['return_id'];
 }
 if (!empty($_REQUEST['edit'])) {
-    $return_id='';
-    $edit='edit=true';
+    $return_id = '';
+    $edit = 'edit=true';
 }
 
-$GLOBALS['log']->debug("Saved record with id of ".$return_id);
+$GLOBALS['log']->debug('Saved record with id of ' . $return_id);
 
-header("Location: index.php?action=$return_action&module=$return_module&record=$return_id&$edit");
+header("Location: index.php?action={$return_action}&module={$return_module}&record={$return_id}&{$edit}");

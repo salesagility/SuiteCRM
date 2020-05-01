@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,10 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
 //TODO Rename this to edit link
 class SugarWidgetSubPanelRelFieldEditButton extends SugarWidgetField
 {
@@ -55,11 +51,10 @@ class SugarWidgetSubPanelRelFieldEditButton extends SugarWidgetField
 
     public function displayList($layout_def)
     {
-        die("<pre>" . print_r($layout_def, true) . "</pre>");
+        die('<pre>' . print_r($layout_def, true) . '</pre>');
 
         $rel = $layout_def['linked_field'];
         $module = $layout_def['module'];
-
 
         global $app_strings;
 
@@ -93,8 +88,8 @@ class SugarWidgetSubPanelRelFieldEditButton extends SugarWidgetField
             a.center();
 		}";
 
-        return "<script>$script</script>"
+        return "<script>{$script}</script>"
              . '<div onclick="editRel(\'p1_b1_accounts\', \'cac203f3-0380-495f-3231-4cf58f089f00\', \'Accounts\')">'
-             . $edit_icon_html . "</div>";
+             . $edit_icon_html . '</div>';
     }
 }

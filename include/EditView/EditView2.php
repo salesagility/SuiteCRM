@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,23 +36,22 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-require_once('include/TemplateHandler/TemplateHandler.php');
-require_once('include/EditView/SugarVCR.php');
+require_once 'include/TemplateHandler/TemplateHandler.php';
+require_once 'include/EditView/SugarVCR.php';
 
 /**
- * New EditView
+ * New EditView.
+ *
  * @api
  */
 class EditView
 {
     /**
-     * @var TemplateHandler $th
+     * @var TemplateHandler
      */
     public $th;
 
@@ -63,17 +61,17 @@ class EditView
     public $tpl;
 
     /**
-     * @var Note $notes
+     * @var Note
      */
     public $notes;
 
     /**
-     * @var string $id UUID
+     * @var string UUID
      */
     public $id;
 
     /**
-     * @var string $metadataFile path to metadatafile
+     * @var string path to metadatafile
      */
     public $metadataFile;
 
@@ -93,42 +91,42 @@ class EditView
     public $returnAction;
 
     /**
-     * @var string $returnModule module name
+     * @var string module name
      */
     public $returnModule;
 
     /**
-     * @var string $returnRelationship
+     * @var string
      */
     public $returnRelationship;
 
     /**
-     * @var string $returnRelationship
+     * @var string
      */
     public $returnName;
 
     /**
-     * @var string $returnId UUID
+     * @var string UUID
      */
     public $returnId;
 
     /**
-     * @var boolean $isDuplicate
+     * @var bool
      */
     public $isDuplicate;
 
     /**
-     * @var SugarBean $focus
+     * @var SugarBean
      */
     public $focus;
 
     /**
-     * @var string $module name of module
+     * @var string name of module
      */
     public $module;
 
     /**
-     * @var array $fieldDefs
+     * @var array
      */
     public $fieldDefs;
 
@@ -138,74 +136,74 @@ class EditView
     public $sectionPanels;
 
     /**
-     * @var string $view ;
+     * @var string ;
      */
     public $view = 'EditView';
 
     /**
-     * @var bool $formatFields
+     * @var bool
      */
     public $formatFields = true;
 
     /**
-     * @var bool $showDetailData
+     * @var bool
      */
     public $showDetailData = true;
 
     /**
-     * @var bool $showVCRControl
+     * @var bool
      */
     public $showVCRControl = true;
 
     /**
-     * @var bool $showSectionPanelsTitles
+     * @var bool
      */
     public $showSectionPanelsTitles = true;
 
     /**
-     * @var string $quickSearchCode
+     * @var string
      */
     public $quickSearchCode;
 
     /**
-     * @var Sugar_Smarty $ss
+     * @var Sugar_Smarty
      */
     public $ss;
 
     /**
-     * @var integer $offset
+     * @var int
      */
     public $offset = 0;
 
     /**
-     * @var bool $populateBean
+     * @var bool
      */
     public $populateBean = true;
 
     /**
-     * @var string $moduleTitleKey
+     * @var string
      */
     public $moduleTitleKey;
 
     /**
-     * @var SugarView|null $viewObject
+     * @var null|SugarView
      */
-    public $viewObject = null;
+    public $viewObject;
 
     /**
-     * @var string $formName
+     * @var string
      */
     public $formName = '';
 
     /**
-     * @var array $defs view definitions
+     * @var array view definitions
      */
     public $defs;
 
     /**
      * EditView constructor
      * This is the EditView constructor responsible for processing the new
-     * Meta-Data framework
+     * Meta-Data framework.
      *
      * @param string $module value of module this Edit view is for
      * @param SugarBean $focus An empty sugarbean object of module
@@ -213,7 +211,6 @@ class EditView
      * @param string $tpl value of file location to use in overriding default Smarty template
      * @param bool $createFocus value to tell whether to create a new bean if we do not have one with an id, this is used from ConvertLead
      * @param string $metadataFileName specifies the name of the metadata file eg 'editviewdefs'
-     *
      */
     public function setup(
         $module,
@@ -224,11 +221,11 @@ class EditView
         $metadataFileName = 'editviewdefs'
     ) {
         $this->th = $this->getTemplateHandler();
-        $this->th->ss =& $this->ss;
+        $this->th->ss = &$this->ss;
         $this->tpl = get_custom_file_if_exists($tpl);
         $this->module = $module;
         $this->focus = $focus;
-        $viewdefs = array();
+        $viewdefs = [];
         //this logic checks if the focus has an id and if it does not then it will create a new instance of the focus bean
         //but in convert lead we do not want to create a new instance and do not want to populate id.
         if ($createFocus) {
@@ -245,17 +242,17 @@ class EditView
         }
 
         if (!empty($this->metadataFile) && file_exists($this->metadataFile)) {
-            include($this->metadataFile);
+            include $this->metadataFile;
         } else {
             //If file doesn't exist we create a best guess
-            if (!file_exists("modules/$this->module/metadata/$metadataFileName.php")
-                && file_exists("modules/$this->module/EditView.html")
+            if (!file_exists("modules/{$this->module}/metadata/{$metadataFileName}.php")
+                && file_exists("modules/{$this->module}/EditView.html")
             ) {
-                require_once('include/SugarFields/Parsers/EditViewMetaParser.php');
+                require_once 'include/SugarFields/Parsers/EditViewMetaParser.php';
 
                 global $dictionary;
 
-                $htmlFile = "modules/" . $this->module . "/EditView.html";
+                $htmlFile = 'modules/' . $this->module . '/EditView.html';
                 $parser = new EditViewMetaParser();
                 if (!file_exists('modules/' . $this->module . '/metadata')) {
                     sugar_mkdir('modules/' . $this->module . '/metadata');
@@ -267,12 +264,12 @@ class EditView
             }
 
             // Flag an error... we couldn't create the best guess meta-data file
-            if (!file_exists("modules/$this->module/metadata/$metadataFileName.php")) {
+            if (!file_exists("modules/{$this->module}/metadata/{$metadataFileName}.php")) {
                 global $app_strings;
 
                 $error = str_replace(
                     '[file]',
-                    "modules/$this->module/metadata/$metadataFileName.php",
+                    "modules/{$this->module}/metadata/{$metadataFileName}.php",
                     $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']
                 );
                 $GLOBALS['log']->fatal($error);
@@ -280,7 +277,7 @@ class EditView
                 die();
             }
 
-            require("modules/$this->module/metadata/$metadataFileName.php");
+            require "modules/{$this->module}/metadata/{$metadataFileName}.php";
         }
 
         $this->defs = $viewdefs[$this->module][$this->view];
@@ -298,7 +295,7 @@ class EditView
         }
         if (!$this->focus) {
             $bean = $beanList[$this->module];
-            require_once($beanFiles[$bean]);
+            require_once $beanFiles[$bean];
             $obj = new $bean();
             $this->focus = $obj;
         }
@@ -316,9 +313,8 @@ class EditView
 
     /**
      * @param array $request
-     * @return void
      */
-    public function populateBean($request = array())
+    public function populateBean($request = [])
     {
         if (empty($request) && isset($_REQUEST) && !empty($_REQUEST)) {
             $request = $_REQUEST;
@@ -343,7 +339,8 @@ class EditView
 
     /**
      * enableFormatting
-     * This method is used to manually turn on/off the field formatting
+     * This method is used to manually turn on/off the field formatting.
+     *
      * @param $format boolean value to turn on/off field formatting
      */
     public function enableFormatting($format = true)
@@ -356,7 +353,7 @@ class EditView
      */
     public function requiredFirst()
     {
-        $panels = array('required' => array());
+        $panels = ['required' => []];
         $reqCol = -1;
         $reqRow = 0;
         foreach ($this->defs['panels'] as $key => $p) {
@@ -400,8 +397,8 @@ class EditView
             }
         }
 
-        $this->sectionPanels = array();
-        $this->sectionLabels = array();
+        $this->sectionPanels = [];
+        $this->sectionLabels = [];
         if (!empty($this->defs['panels']) && count($this->defs['panels']) > 0) {
             $keys = array_keys($this->defs['panels']);
             if (is_numeric($keys[0])) {
@@ -419,9 +416,9 @@ class EditView
         $panelCount = 0;
         static $itemCount = 100; //Start the generated tab indexes at 100 so they don't step on custom ones.
 
-        /* loop all the panels */
+        // loop all the panels
         foreach ($this->defs['panels'] as $key => $p) {
-            $panel = array();
+            $panel = [];
 
             if (!is_array($this->defs['panels'][$key])) {
                 $this->sectionPanels[strtoupper($key)] = $p;
@@ -431,8 +428,8 @@ class EditView
                     $columnsUsed = 0;
                     foreach ($rowDef as $col => $colDef) {
                         $panel[$row][$col] = is_array($p[$row][$col])
-                            ? array('field' => $p[$row][$col])
-                            : array('field' => array('name' => $p[$row][$col]));
+                            ? ['field' => $p[$row][$col]]
+                            : ['field' => ['name' => $p[$row][$col]]];
 
                         $panel[$row][$col]['field']['tabindex'] =
                             (isset($p[$row][$col]['tabindex']) && is_numeric($p[$row][$col]['tabindex']))
@@ -462,41 +459,8 @@ class EditView
                 $this->sectionPanels[strtoupper($key)] = $panel;
             }
 
-
             $panelCount++;
         } //foreach
-    }
-
-    /**
-     * Adds fillers to each row if required
-     *
-     * Panel alignment will be off if the panel doesn't have a row with the max column
-     * It will not be aligned to the other panels so we fill out the columns in the last row
-     *
-     * @param array $panel
-     * @return array
-     */
-    protected function getPanelWithFillers($panel)
-    {
-        $addFiller = true;
-        foreach ($panel as $row) {
-            if (count($row) == $this->defs['templateMeta']['maxColumns']
-                || 1 == count($panel)
-            ) {
-                $addFiller = false;
-                break;
-            }
-        }
-
-        if ($addFiller) {
-            $rowCount = count($panel);
-            $filler = count($panel[$rowCount - 1]);
-            while ($filler < $this->defs['templateMeta']['maxColumns']) {
-                $panel[$rowCount - 1][$filler++] = array('field' => array('name' => ''));
-            }
-        }
-
-        return $panel;
     }
 
     /**
@@ -565,7 +529,7 @@ class EditView
 
         $is_owner = $this->focus->isOwner($GLOBALS['current_user']->id);
 
-        $this->fieldDefs = array();
+        $this->fieldDefs = [];
         if ($this->focus) {
             global $current_user;
 
@@ -585,7 +549,7 @@ class EditView
                     ? array_merge($this->focus->field_defs[$name], $this->fieldDefs[$name])
                     : $this->focus->field_defs[$name];
 
-                foreach (array("formula", "default", "comments", "help") as $toEscape) {
+                foreach (['formula', 'default', 'comments', 'help'] as $toEscape) {
                     if (!empty($this->fieldDefs[$name][$toEscape])) {
                         $this->fieldDefs[$name][$toEscape] = htmlentities(
                             $this->fieldDefs[$name][$toEscape],
@@ -596,8 +560,7 @@ class EditView
                 }
 
                 if (
-                    isset($this->fieldDefs[$name]['options']) &&
-                    isset($app_list_strings[$this->fieldDefs[$name]['options']])
+                    isset($this->fieldDefs[$name]['options'], $app_list_strings[$this->fieldDefs[$name]['options']])
                 ) {
                     if (
                         isset($GLOBALS['sugar_config']['enable_autocomplete']) &&
@@ -622,9 +585,9 @@ class EditView
                     !isset($this->fieldDefs[$name]['options'][$this->fieldDefs[$name]['default_empty']])
                 ) {
                     $this->fieldDefs[$name]['options'] = array_merge(
-                        array(
+                        [
                             $this->fieldDefs[$name]['default_empty'] => $this->fieldDefs[$name]['default_empty']
-                        ),
+                        ],
                         $this->fieldDefs[$name]['options']
                     );
                 }
@@ -641,7 +604,7 @@ class EditView
                         isset($this->fieldDefs[$name]['function']['include']) &&
                         file_exists($this->fieldDefs[$name]['function']['include'])
                     ) {
-                        require_once($this->fieldDefs[$name]['function']['include']);
+                        require_once $this->fieldDefs[$name]['function']['include'];
                     }
 
                     if (
@@ -649,7 +612,7 @@ class EditView
                         $this->fieldDefs[$name]['function']['returns'] === 'html'
                     ) {
                         if (!empty($this->fieldDefs[$name]['function']['include'])) {
-                            require_once($this->fieldDefs[$name]['function']['include']);
+                            require_once $this->fieldDefs[$name]['function']['include'];
                         }
                         $value = call_user_func($function, $this->focus, $name, $value, $this->view);
                         $valueFormatted = true;
@@ -675,13 +638,12 @@ class EditView
 
                 if (!$valueFormatted) {
                     // $this->focus->format_field($this->focus->field_defs[$name]);
-                    $value = isset($this->focus->$name) ? $this->focus->$name : '';
+                    $value = isset($this->focus->{$name}) ? $this->focus->{$name} : '';
                 }
 
                 if (empty($this->fieldDefs[$name]['value'])) {
                     $this->fieldDefs[$name]['value'] = $value;
                 }
-
 
                 // This code is used for QuickCreates that go to Full Form view.  We want to overwrite the values
                 // from the bean with values from the request if they are set and either the bean is brand new
@@ -714,7 +676,7 @@ class EditView
                  * Only do if this fieldDef does not already have a value; if it does it will have been explicitly set,
                  * and that should overrule this less specific mechanism
                  */
-                if (isset($this->returnModule) && isset($this->returnName)
+                if (isset($this->returnModule, $this->returnName)
                     && empty($this->focus->id) && empty($this->fieldDefs['name']['value'])
                 ) {
                     if (($this->focus->field_defs[$name]['type'] === 'relate')
@@ -748,13 +710,14 @@ class EditView
         }
     }
 
-
     /**
      * display
      * This method makes the Smarty variable assignments and then displays the
      * generated view.
+     *
      * @param bool $showTitle boolean value indicating whether or not to show a title on the resulting page
      * @param bool $ajaxSave boolean value indicating whether or not the operation is an Ajax save request
+     *
      * @return string display for view as HTML
      */
     public function display($showTitle = true, $ajaxSave = false)
@@ -854,6 +817,7 @@ class EditView
         foreach ($this->fieldDefs as $field) {
             if (isset($field['type']) && $field['type'] === 'image') {
                 $this->th->ss->assign('enctype', 'enctype="multipart/form-data"');
+
                 break;
             }
         }
@@ -873,7 +837,6 @@ class EditView
             isset($this->defs['templateMeta']['includes']) ? $this->defs['templateMeta']['includes'] : null
         );
         $this->th->ss->assign('view', $this->view);
-
 
         //Calculate time & date formatting (may need to calculate this depending on a setting)
         global $timedate;
@@ -932,25 +895,24 @@ class EditView
             $ajaxSave,
             $this->defs
         );
-        /* BEGIN - SECURITY GROUPS */ 
+        // BEGIN - SECURITY GROUPS
         //if popup select add panel if user is a member of multiple groups to metadataFile
         global $sugar_config;
-        if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
-            && empty($this->focus->fetched_row['id']) && $this->focus->module_dir != "Users" && $this->focus->module_dir != "SugarFeed") {
-
+        if (isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
+            && empty($this->focus->fetched_row['id']) && $this->focus->module_dir != 'Users' && $this->focus->module_dir != 'SugarFeed') {
             //there are cases such as uploading an attachment to an email template where the request module may
             //not be the same as the current bean module. If that happens we can just skip it
             //however...let quickcreate through
-            if($this->view != 'QuickCreate' && (empty($_REQUEST['module']) || $_REQUEST['module'] != $this->focus->module_dir)) return $str;
-
-            require_once('modules/SecurityGroups/SecurityGroup.php');
+            if ($this->view != 'QuickCreate' && (empty($_REQUEST['module']) || $_REQUEST['module'] != $this->focus->module_dir)) {
+                return $str;
+            }
+            require_once 'modules/SecurityGroups/SecurityGroup.php';
             $security_modules = SecurityGroup::getSecurityModules();
-            if(in_array($this->focus->module_dir,array_keys($security_modules))) {
+            if (in_array($this->focus->module_dir, array_keys($security_modules))) {
                 global $current_user;
 
                 $group_count = SecurityGroup::getMembershipCount($current_user->id);
-                if($group_count > 1) {
-
+                if ($group_count > 1) {
                     //https://www.sugaroutfitters.com/support/securitysuite/2313
                     //if there is a parent then use the groups on that record as the default selected
                     //note: only the user's groups show in the drop down. A request may be made to include any already on parent
@@ -958,13 +920,13 @@ class EditView
 
                     $groups = SecurityGroup::getUserSecurityGroups($current_user->id);
                     $group_options = '';
-                    foreach($groups as $group) {
-                        $group_options .= '<option value="'.$group['id'].'" label="'.$group['name'].'" '.(empty($group['noninheritable'])?'selected="selected"':'').'>'.$group['name'].'</option>';
+                    foreach ($groups as $group) {
+                        $group_options .= '<option value="' . $group['id'] . '" label="' . $group['name'] . '" ' . (empty($group['noninheritable']) ? 'selected="selected"' : '') . '>' . $group['name'] . '</option>';
                     }
                     //multilingual support
                     global $current_language;
-                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');  
-                    
+                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');
+
                     $lbl_securitygroups_select = $ss_mod_strings['LBL_GROUP_SELECT'];
                     $lbl_securitygroups = $ss_mod_strings['LBL_LIST_FORM_TITLE'];
 
@@ -977,14 +939,14 @@ class EditView
                     $group_panel = preg_replace("/[\r\n]+/", '', $group_panel);
                     $group_panel_append = <<<EOQ
     <script>
-        $('#${form_name}_tabs .panel-content').append($('${group_panel}'));
+        $('#{$form_name}_tabs .panel-content').append($('{$group_panel}'));
     </script>
 EOQ;
                     $str .= $group_panel_append;
                 }
             }
         }
-        /* END - SECURITY GROUPS */
+        // END - SECURITY GROUPS
 
         return $str;
     }
@@ -999,13 +961,14 @@ EOQ;
 
     /**
      * @param $vardef
+     *
      * @return mixed|string
      */
     public function callFunction($vardef)
     {
         $can_execute = true;
-        $execute_function = array();
-        $execute_params = array();
+        $execute_function = [];
+        $execute_params = [];
         if (!empty($vardef['function_class'])) {
             $execute_function[] = $vardef['function_class'];
             $execute_function[] = $vardef['function_name'];
@@ -1015,17 +978,17 @@ EOQ;
 
         foreach ($vardef['function_params'] as $param) {
             if (empty($vardef['function_params_source']) || $vardef['function_params_source'] === 'parent') {
-                if (empty($this->focus->$param)) {
+                if (empty($this->focus->{$param})) {
                     $can_execute = false;
                 } else {
-                    $execute_params[] = $this->focus->$param;
+                    $execute_params[] = $this->focus->{$param};
                 }
             } else {
                 if ($vardef['function_params_source'] === 'this') {
-                    if (empty($this->focus->$param)) {
+                    if (empty($this->focus->{$param})) {
                         $can_execute = false;
                     } else {
-                        $execute_params[] = $this->focus->$param;
+                        $execute_params[] = $this->focus->{$param};
                     }
                 } else {
                     $can_execute = false;
@@ -1036,7 +999,7 @@ EOQ;
         $value = '';
         if ($can_execute) {
             if (!empty($vardef['function_require'])) {
-                require_once($vardef['function_require']);
+                require_once $vardef['function_require'];
             }
 
             $value = call_user_func_array($execute_function, $execute_params);
@@ -1050,10 +1013,11 @@ EOQ;
      * This is a helper method to extract a value from the request
      * Array.  We do some special processing for fields that start
      * with 'date_' by checking to see if they also include time
-     * and meridiem values
+     * and meridiem values.
      *
      * @param array $request The request Array
      * @param string $name The field name to extract value for
+     *
      * @return string value for given name
      */
     public function getValueFromRequest($request, $name)
@@ -1075,8 +1039,7 @@ EOQ;
                 $timeHourKey = 'time_hour_' . $key;
                 $timeMinuteKey = 'time_minute_' . $key;
 
-                if (isset($request[$timeHourKey])
-                    && isset($request[$timeMinuteKey])
+                if (isset($request[$timeHourKey], $request[$timeMinuteKey])
                 ) {
                     $d .= sprintf(
                         ' %s:%s',
@@ -1098,7 +1061,7 @@ EOQ;
         }
 
         //if it's a bean field - unformat it
-        require_once('include/SugarFields/SugarFieldHandler.php');
+        require_once 'include/SugarFields/SugarFieldHandler.php';
 
         $sfh = new SugarFieldHandler();
         $type = !empty($this->fieldDefs[$name]['custom_type'])
@@ -1109,11 +1072,12 @@ EOQ;
         return $sf ? $sf->unformatField($request[$name], $this->fieldDefs[$name]) : $request[$name];
     }
 
-
     /**
      * Allow Subviews to overwrite this method to show custom titles.
      * Examples: Projects & Project Templates.
      * params: $showTitle: boolean for backwards compatibility.
+     *
+     * @param mixed $showTitle
      */
     public function showTitle($showTitle = false)
     {
@@ -1131,11 +1095,46 @@ EOQ;
     }
 
     /**
-     * Get template handler object
+     * Get template handler object.
+     *
      * @return TemplateHandler
      */
     public function getTemplateHandler()
     {
         return new TemplateHandler();
+    }
+
+    /**
+     * Adds fillers to each row if required.
+     *
+     * Panel alignment will be off if the panel doesn't have a row with the max column
+     * It will not be aligned to the other panels so we fill out the columns in the last row
+     *
+     * @param array $panel
+     *
+     * @return array
+     */
+    protected function getPanelWithFillers($panel)
+    {
+        $addFiller = true;
+        foreach ($panel as $row) {
+            if (count($row) == $this->defs['templateMeta']['maxColumns']
+                || 1 == count($panel)
+            ) {
+                $addFiller = false;
+
+                break;
+            }
+        }
+
+        if ($addFiller) {
+            $rowCount = count($panel);
+            $filler = count($panel[$rowCount - 1]);
+            while ($filler < $this->defs['templateMeta']['maxColumns']) {
+                $panel[$rowCount - 1][$filler++] = ['field' => ['name' => '']];
+            }
+        }
+
+        return $panel;
     }
 }

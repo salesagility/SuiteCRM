@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,13 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-
 class Popup_Picker
 {
     public $_popupMeta;
@@ -54,42 +47,37 @@ class Popup_Picker
     public $_hide_clear_button = false;
 
     /**
-     * Creates a new Popup_Picker object. Controls displaying of single select and multi select popups
-     *
+     * Creates a new Popup_Picker object. Controls displaying of single select and multi select popups.
      */
     public function __construct()
     {
         global $currentModule, $popupMeta;
 
         // cn: bug 12269 - directory navigation attack - detect and stop.
-        if (isset($_REQUEST['metadata']) && strpos($_REQUEST['metadata'], "..") !== false) {
-            die("Directory navigation attack denied.");
+        if (isset($_REQUEST['metadata']) && strpos($_REQUEST['metadata'], '..') !== false) {
+            die('Directory navigation attack denied.');
         }
         if (empty($popupMeta)) {
             if (!empty($_REQUEST['metadata']) && $_REQUEST['metadata'] != 'undefined') { // if custom metadata is requested
-                require_once('modules/' . $currentModule . '/metadata/' . $_REQUEST['metadata'] . '.php');
+                require_once 'modules/' . $currentModule . '/metadata/' . $_REQUEST['metadata'] . '.php';
             } else {
-                require_once('modules/' . $currentModule . '/metadata/popupdefs.php');
+                require_once 'modules/' . $currentModule . '/metadata/popupdefs.php';
             }
         }
         $this->_popupMeta = $popupMeta;
 
-        require_once('modules/' . $currentModule . '/' . $this->_popupMeta['moduleMain'] . '.php');
-        if (isset($this->_popupMeta['create']['formBase']) && isset($_REQUEST['create']) && $_REQUEST['create'] == 'true') { // include create form
-            require_once('modules/' . $currentModule . '/' . $this->_popupMeta['create']['formBase']);
+        require_once 'modules/' . $currentModule . '/' . $this->_popupMeta['moduleMain'] . '.php';
+        if (isset($this->_popupMeta['create']['formBase'], $_REQUEST['create']) && $_REQUEST['create'] == 'true') { // include create form
+            require_once 'modules/' . $currentModule . '/' . $this->_popupMeta['create']['formBase'];
             $this->_create = true;
         }
     }
 
-
-
-    /*
-     *
-     */
+    //
     public function _get_where_clause()
     {
         $where = '';
-        $whereClauses = array();
+        $whereClauses = [];
         if (isset($_REQUEST['query'])) {
             foreach (array_keys($this->_popupMeta['whereClauses']) as $key) {
                 append_where_clause($whereClauses, $key, $this->_popupMeta['whereClauses'][$key]);
@@ -107,9 +95,6 @@ class Popup_Picker
         return $where;
     }
 
-    /**
-     *
-     */
     public function process_page()
     {
         global $theme;
@@ -118,7 +103,7 @@ class Popup_Picker
         global $currentModule;
         global $app_list_strings, $sugar_version, $sugar_config;
 
-        $output_html = "<script type=\"text/javascript\" src=\"" . getJSPath('include/javascript/sugar_3.js'). "\"></script>";
+        $output_html = '<script type="text/javascript" src="' . getJSPath('include/javascript/sugar_3.js') . '"></script>';
         $where = '';
 
         if (empty($_REQUEST[$currentModule . '_' . strtoupper($this->_popupMeta['moduleMain']) . '_offset'])) {
@@ -146,7 +131,7 @@ class Popup_Picker
             $formBody = empty($this->_popupMeta['create']['getFormBodyParams'][2]) ? '' : $this->_popupMeta['create']['getFormBodyParams'][2];
 
             $getFormMethod = (empty($this->_popupMeta['create']['getFormMethod']) ? 'getFormBody' : $this->_popupMeta['create']['getFormMethod']);
-            $formbody = $formBase->$getFormMethod($prefix, $mod, $formBody);
+            $formbody = $formBase->{$getFormMethod}($prefix, $mod, $formBody);
 
             $addform = '<table><tr><td nowrap="nowrap" valign="top">'
                 . str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
@@ -156,15 +141,15 @@ class Popup_Picker
 			<input type="hidden" name="create" value="true">
 			<input type="hidden" name="popup" value="true">
 			<input type="hidden" name="to_pdf" value="true">
-			<input type="hidden" name="return_module" value="$currentModule">
+			<input type="hidden" name="return_module" value="{$currentModule}">
 			<input type="hidden" name="return_action" value="Popup">
-			<input type="submit" name="button" class="button" title="$lbl_save_button_title" value="  $lbl_save_button_label  " />
+			<input type="submit" name="button" class="button" title="{$lbl_save_button_title}" value="  {$lbl_save_button_label}  " />
 			<input type="button" name="button" class="button" title="{$app_strings['LBL_CANCEL_BUTTON_TITLE']}" accesskey="{$app_strings['LBL_CANCEL_BUTTON_KEY']}" value="{$app_strings['LBL_CANCEL_BUTTON_LABEL']}" onclick="toggleDisplay('addform');" />
 EOQ;
             // if metadata contains custom inputs for the quickcreate
             if (!empty($this->_popupMeta['customInput']) && is_array($this->_popupMeta['customInput'])) {
                 foreach ($this->_popupMeta['customInput'] as $key => $value) {
-                    $formSave .= '<input type="hidden" name="' . $key . '" value="'. $value .'">\n';
+                    $formSave .= '<input type="hidden" name="' . $key . '" value="' . $value . '">\n';
                 }
             }
             $createButtonTranslation = translate($this->_popupMeta['create']['createButton']);
@@ -175,9 +160,8 @@ EOQ;
         }
         // END CREATE STUFF
 
-
         // search request inputs
-        $searchInputs = array();
+        $searchInputs = [];
         foreach ($this->_popupMeta['searchInputs'] as $input) {
             $searchInputs[$input] = empty($_REQUEST[$input]) ? '' : $_REQUEST[$input];
         }
@@ -188,7 +172,7 @@ EOQ;
 
         if (isset($_REQUEST['mass'])) {
             foreach (array_unique($_REQUEST['mass']) as $record) {
-                $button .= "<input style='display: none' checked type='checkbox' name='mass[]' value='$record'>\n";
+                $button .= "<input style='display: none' checked type='checkbox' name='mass[]' value='{$record}'>\n";
             }
         }
 
@@ -197,20 +181,20 @@ EOQ;
         if (!empty($_REQUEST['mode']) && strtoupper($_REQUEST['mode']) == 'MULTISELECT') {
             $multi_select = true;
             $button .= "<input type='hidden' name='mode' value='MultiSelect'>";
-            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('$currentModule',document.MassUpdate,'mass[]','" .$app_strings['ERR_NOTHING_SELECTED']."', request_data.field_to_name_array);\" title='"
-                .$app_strings['LBL_SELECT_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
+            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('{$currentModule}',document.MassUpdate,'mass[]','" . $app_strings['ERR_NOTHING_SELECTED'] . "', request_data.field_to_name_array);\" title='"
+                . $app_strings['LBL_SELECT_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_SELECT_BUTTON_LABEL'] . "  ' />\n";
         }
 
         //END:FOR MULTI-SELECT
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                . $app_strings['LBL_CLEAR_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_CLEAR_BUTTON_LABEL'] . "  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' value='  "
-            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' value='  "
+            . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  ' />\n";
 
         if (isset($this->_popupMeta['templateForm'])) {
             $form = new XTemplate($this->_popupMeta['templateForm']);
@@ -319,7 +303,7 @@ EOQ;
 			document.MassUpdate.saved_associated_data.value = escape('{' + checked_ids.join(',') + '}');
 
 			document.MassUpdate.action.value = \"Popup\";
-			document.MassUpdate.$currentModule" . '_' . strtoupper($this->_popupMeta['moduleMain']) . '_offset.value = offset;
+			document.MassUpdate.{$currentModule}" . '_' . strtoupper($this->_popupMeta['moduleMain']) . '_offset.value = offset;
 			document.MassUpdate.submit();
 		}
 		// reassigned the saved data from the saved checks
@@ -350,6 +334,7 @@ EOQ;
 		}
 		</script>';
         $output_html .= insert_popup_footer();
+
         return $output_html;
     }
 } // end of class Popup_Picker

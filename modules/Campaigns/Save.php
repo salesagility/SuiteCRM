@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 $focus = new Campaign();
 
 $focus->retrieve($_POST['record']);
@@ -57,7 +53,7 @@ if (!empty($_POST['assigned_user_id']) && ($focus->assigned_user_id != $_POST['a
     $check_notify = false;
 }
 
-require_once('include/formbase.php');
+require_once 'include/formbase.php';
 $focus = populateFromPost('', $focus);
 
 //store preformatted dates for 2nd save
@@ -67,17 +63,17 @@ $preformat_end_date = $focus->end_date;
 $focus->save($check_notify);
 $return_id = $focus->id;
 
-$GLOBALS['log']->debug("Saved record with id of ".$return_id);
+$GLOBALS['log']->debug('Saved record with id of ' . $return_id);
 
 //copy compaign targets on duplicate
-if (!empty($_REQUEST['duplicateSave']) &&  !empty($_REQUEST['duplicateId'])) {
+if (!empty($_REQUEST['duplicateSave']) && !empty($_REQUEST['duplicateId'])) {
     $copyFromCompaign = new Campaign();
     $copyFromCompaign->retrieve($_REQUEST['duplicateId']);
     $copyFromCompaign->load_relationship('prospectlists');
 
     $focus->load_relationship('prospectlists');
     $target_lists = $copyFromCompaign->prospectlists->get();
-    if (count($target_lists)>0) {
+    if (count($target_lists) > 0) {
         foreach ($target_lists as $prospect_list_id) {
             $focus->prospectlists->add($prospect_list_id);
         }
@@ -86,9 +82,8 @@ if (!empty($_REQUEST['duplicateSave']) &&  !empty($_REQUEST['duplicateId'])) {
     $focus->save();
 }
 
-
 //if type is set to newsletter then make sure there are prospect lists attached
-if ($focus->campaign_type =='NewsLetter') {
+if ($focus->campaign_type == 'NewsLetter') {
     //if this is a duplicate, and the "relate_to" and "relate_id" elements are not cleared out,
     //then prospect lists will get related to the original campaign on save of the prospect list, and then
     //will get related to the new newsletter campaign, meaning the same (un)subscription list will belong to
@@ -99,12 +94,12 @@ if ($focus->campaign_type =='NewsLetter') {
     }
 
     //add preformatted dates for 2nd save, to avoid formatting conversion errors
-    $focus->start_date = $preformat_start_date ;
-    $focus->end_date = $preformat_end_date ;
+    $focus->start_date = $preformat_start_date;
+    $focus->end_date = $preformat_end_date;
 
     $focus->load_relationship('prospectlists');
     $target_lists = $focus->prospectlists->get();
-    if (count($target_lists)<1) {
+    if (count($target_lists) < 1) {
         global $current_user;
         global $mod_strings;
         //if no prospect lists are attached, then lets create a subscription and unsubscription
@@ -112,25 +107,25 @@ if ($focus->campaign_type =='NewsLetter') {
 
         //create subscription list
         $subs = new ProspectList();
-        $subs->name = $focus->name.' '.$mod_strings['LBL_SUBSCRIPTION_LIST'];
-        $subs->assigned_user_id= $current_user->id;
-        $subs->list_type = "default";
+        $subs->name = $focus->name . ' ' . $mod_strings['LBL_SUBSCRIPTION_LIST'];
+        $subs->assigned_user_id = $current_user->id;
+        $subs->list_type = 'default';
         $subs->save();
         $focus->prospectlists->add($subs->id);
 
         //create unsubscription list
         $unsubs = new ProspectList();
-        $unsubs->name = $focus->name.' '.$mod_strings['LBL_UNSUBSCRIPTION_LIST'];
-        $unsubs->assigned_user_id= $current_user->id;
-        $unsubs->list_type = "exempt";
+        $unsubs->name = $focus->name . ' ' . $mod_strings['LBL_UNSUBSCRIPTION_LIST'];
+        $unsubs->assigned_user_id = $current_user->id;
+        $unsubs->list_type = 'exempt';
         $unsubs->save();
         $focus->prospectlists->add($unsubs->id);
 
         //create unsubscription list
         $test_subs = new ProspectList();
-        $test_subs->name = $focus->name.' '.$mod_strings['LBL_TEST_LIST'];
-        $test_subs->assigned_user_id= $current_user->id;
-        $test_subs->list_type = "test";
+        $test_subs->name = $focus->name . ' ' . $mod_strings['LBL_TEST_LIST'];
+        $test_subs->assigned_user_id = $current_user->id;
+        $test_subs->list_type = 'test';
         $test_subs->save();
         $focus->prospectlists->add($test_subs->id);
     }

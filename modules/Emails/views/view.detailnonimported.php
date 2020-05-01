@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,23 +37,22 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-require_once('modules/Emails/include/DetailView/EmailsNonImportedDetailView.php');
+require_once 'modules/Emails/include/DetailView/EmailsNonImportedDetailView.php';
 
 class EmailsViewDetailNonImported extends ViewDetail
 {
     /**
-     * @var Email $bean
+     * @var Email
      */
     public $bean;
+
     /**
      * EmailsViewDetailnonimported constructor.
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct()
     {
@@ -70,11 +68,11 @@ class EmailsViewDetailNonImported extends ViewDetail
         $request = $_REQUEST;
         $metadataFile = $this->getMetaDataFile();
         $viewdefs = $this->getFieldsInViewDefinitions($metadataFile);
-        $request['metadata'] = array();
+        $request['metadata'] = [];
         $request['metadata']['viewdefs'] = $viewdefs;
         $this->dv = new EmailsNonImportedDetailView();
         $this->dv->populateBean($request);
-        $this->dv->ss =& $this->ss;
+        $this->dv->ss = &$this->ss;
         $this->dv->setup(
             $this->module,
             $this->dv->focus,
@@ -83,7 +81,7 @@ class EmailsViewDetailNonImported extends ViewDetail
     }
 
     /**
-     * Display View
+     * Display View.
      */
     public function display()
     {
@@ -94,7 +92,7 @@ class EmailsViewDetailNonImported extends ViewDetail
     private function getFieldsInViewDefinitions($metadataFile)
     {
         require_once $metadataFile;
-        $fields_in_definition = array();
+        $fields_in_definition = [];
         $module_name = 'Emails';
         if (($viewdefs['Emails']['DetailView']['panels'])
         ) {

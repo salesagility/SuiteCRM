@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,8 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-/**
+/*
  *
  * This is a stand alone file that can be run from the command prompt for upgrading a
  * SuiteCRM Instance. Three parameters are required to be defined in order to execute this file.
@@ -67,7 +65,7 @@ function checkConfigForPermissions()
         ];
         ksort($sugar_config);
         if (is_writable('config.php')) {
-            write_array_to_file("sugar_config", $sugar_config, 'config.php');
+            write_array_to_file('sugar_config', $sugar_config, 'config.php');
         }
     }
 }
@@ -79,18 +77,17 @@ function checkLoggerSettings()
     }
     global $sugar_config;
     if (!isset($sugar_config['logger'])) {
-        $sugar_config['logger'] = array(
+        $sugar_config['logger'] = [
             'level' => 'fatal',
-            'file' =>
-                array(
-                    'ext' => '.log',
-                    'name' => 'suitecrm',
-                    'dateFormat' => '%c',
-                    'maxSize' => '10MB',
-                    'maxLogs' => 10,
-                    'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
-                ),
-        );
+            'file' => [
+                'ext' => '.log',
+                'name' => 'suitecrm',
+                'dateFormat' => '%c',
+                'maxSize' => '10MB',
+                'maxLogs' => 10,
+                'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
+            ],
+        ];
         ksort($sugar_config);
         if (is_writable('config.php')) {
             write_array_to_file('sugar_config', $sugar_config, 'config.php');
@@ -108,14 +105,13 @@ function checkResourceSettings()
         $sugar_config['resource_management'] =
             [
                 'special_query_limit' => 50000,
-                'special_query_modules' =>
-                    [
-                        0 => 'Reports',
-                        1 => 'Export',
-                        2 => 'Import',
-                        3 => 'Administration',
-                        4 => 'Sync',
-                    ],
+                'special_query_modules' => [
+                    0 => 'Reports',
+                    1 => 'Export',
+                    2 => 'Import',
+                    3 => 'Administration',
+                    4 => 'Sync',
+                ],
                 'default_limit' => 1000,
             ];
         ksort($sugar_config);
@@ -128,6 +124,7 @@ function checkResourceSettings()
 /**
  * @param $argv
  * @param $usage_regular
+ *
  * @return mixed
  */
 function verifyArguments($argv, $usage_regular)
@@ -179,7 +176,6 @@ function verifyArguments($argv, $usage_regular)
 
 // END UTILITIES THAT MUST BE LOCAL :(
 
-
 function rebuildRelations($pre_path = '')
 {
     $_REQUEST['silent'] = true;
@@ -203,9 +199,8 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 //Clean_string cleans out any file  passed in as a parameter
 $_SERVER['PHP_SELF'] = 'silentUpgrade.php';
 
-
 // USAGE
-$usage_regular = <<<eoq2
+$usage_regular = <<<'eoq2'
 Usage: php.exe -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSuiteCRMInstance] [admin-user]
 
 On Command Prompt Change directory to where silentUpgrade.php resides. Then type path to
@@ -222,7 +217,6 @@ Arguments:
 eoq2;
 // END USAGE
 
-
 // STANDARD REQUIRED SUGAR INCLUDES AND PRESETS
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
@@ -236,7 +230,6 @@ $_SESSION['step'] = 'silent'; // flag to NOT try redirect to 4.5.x upgrade wizar
 $_REQUEST = [];
 $_REQUEST['addTaskReminder'] = 'remind';
 
-
 define('SUGARCRM_INSTALL', 'SugarCRM_Install');
 define('DCE_INSTANCE', 'DCE_Instance');
 
@@ -248,16 +241,16 @@ $upgradeType = verifyArguments($argv, $usage_regular);
 $path = $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
 $subdirs = ['full', 'langpack', 'module', 'patch', 'theme', 'temp'];
 
-require_once('include/entryPoint.php');
-require_once('modules/UpgradeWizard/uw_utils.php');
-require_once('include/utils/php_zip_utils.php');
-require_once('include/utils/sugar_file_utils.php');
-require_once('include/SugarObjects/SugarConfig.php');
+require_once 'include/entryPoint.php';
+require_once 'modules/UpgradeWizard/uw_utils.php';
+require_once 'include/utils/php_zip_utils.php';
+require_once 'include/utils/sugar_file_utils.php';
+require_once 'include/SugarObjects/SugarConfig.php';
 global $sugar_config;
 $isDCEInstance = false;
 $errors = [];
 
-require('config.php');
+require 'config.php';
 if (isset($argv[3]) && is_dir($argv[3])) {
     $cwd = $argv[3];
     chdir($cwd);
@@ -326,7 +319,6 @@ unzip($argv[1], $unzip_dir);
 // mimic standard UW by copy patch zip to appropriate dir
 copy($argv[1], $install_file);
 //	END UPGRADE PREP
-
 
 if (function_exists('set_upgrade_vars')) {
     set_upgrade_vars();
@@ -446,8 +438,10 @@ logThis('End rebuild relationships.', $path);
 $sugar_version = getSilentUpgradeVar('origVersion');
 if (!$sugar_version) {
     global $silent_upgrade_vars_loaded;
-    logThis("Error retrieving silent upgrade var for sugar_version: cache dir is {$GLOBALS['sugar_config']['cache_dir']} -- full cache for \$silent_upgrade_vars_loaded is " . var_export($silent_upgrade_vars_loaded,
-            true), $path);
+    logThis("Error retrieving silent upgrade var for sugar_version: cache dir is {$GLOBALS['sugar_config']['cache_dir']} -- full cache for \$silent_upgrade_vars_loaded is " . var_export(
+        $silent_upgrade_vars_loaded,
+        true
+    ), $path);
 }
 
 //bug: 37214 - merge config_si.php settings if available
@@ -459,7 +453,6 @@ logThis('End merge_config_si_settings', $path);
 logThis('Begin upgrade_connectors', $path);
 upgrade_connectors();
 logThis('End upgrade_connectors', $path);
-
 
 //Unlink files that have been removed
 if (function_exists('unlinkUpgradeFiles')) {
@@ -474,7 +467,6 @@ if (function_exists('rebuildSprites') && function_exists('imagecreatetruecolor')
 if (version_compare($sugar_version, '6.5.0', '<') && function_exists('repairUpgradeHistoryTable')) {
     repairUpgradeHistoryTable();
 }
-
 
 //TAKE OUT TRASH
 if (empty($errors)) {
@@ -506,7 +498,7 @@ if (count($errors) > 0) {
     }
     echo "FAILED\n";
 } else {
-    logThis("***** SilentUpgrade completed successfully.", $path);
+    logThis('***** SilentUpgrade completed successfully.', $path);
     echo "********************************************************************\n";
     echo "*************************** SUCCESS*********************************\n";
     echo "********************************************************************\n";

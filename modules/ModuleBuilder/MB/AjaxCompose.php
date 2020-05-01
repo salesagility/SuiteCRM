@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,20 +36,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class AjaxCompose
 {
-    public $sections = array();
-    public $crumbs = array('Home'=>'ModuleBuilder.main("Home")',/* 'Assistant'=>'Assistant.mbAssistant.xy=Array("650, 40"); Assistant.mbAssistant.show();'*/);
-    public function addSection($name, $title, $content, $action='activate')
+    public $sections = [];
+    public $crumbs = ['Home' => 'ModuleBuilder.main("Home")'/* 'Assistant'=>'Assistant.mbAssistant.xy=Array("650, 40"); Assistant.mbAssistant.show();'*/];
+
+    public function addSection($name, $title, $content, $action = 'activate')
     {
         $crumb = '';
         if ($name == 'center') {
             $crumb = $this->getBreadCrumb();
         }
-        $this->sections[$name] = array('title'=>$title,'crumb'=>$crumb, 'content'=>$content, 'action'=>$action);
+        $this->sections[$name] = ['title' => $title, 'crumb' => $crumb, 'content' => $content, 'action' => $action];
     }
-    
+
     public function getJavascript()
     {
         if (!empty($this->sections['center'])) {
@@ -61,27 +60,28 @@ class AjaxCompose
                 $this->addSection('east2', '', '', 'deactivate');
             }
         }
-        
+
         $json = getJSONobj();
+
         return $json->encode($this->sections);
     }
-    
+
     public function addCrumb($name, $action)
     {
         $this->crumbs[$name] = $action;
     }
-    
+
     public function getBreadCrumb()
     {
         $crumbs = '';
-        $actions = array();
+        $actions = [];
         $count = 0;
-        foreach ($this->crumbs as $name=>$action) {
+        foreach ($this->crumbs as $name => $action) {
             if ($name == 'Home') {
-                $crumbs .= "<a onclick='$action' href='javascript:void(0)'>". getStudioIcon('home', 'home', 16, 16) . '</a>';
+                $crumbs .= "<a onclick='{$action}' href='javascript:void(0)'>" . getStudioIcon('home', 'home', 16, 16) . '</a>';
             } else {
-                if ($name=='Assistant') {
-                    $crumbs .= "<a id='showassist' onclick='$action' href='javascript:void(0)'>". getStudioIcon('assistant', 'assistant', 16, 16) . '</a>';
+                if ($name == 'Assistant') {
+                    $crumbs .= "<a id='showassist' onclick='{$action}' href='javascript:void(0)'>" . getStudioIcon('assistant', 'assistant', 16, 16) . '</a>';
                 } else {
                     if ($count > 0) {
                         $crumbs .= '&nbsp;>&nbsp;';
@@ -89,25 +89,26 @@ class AjaxCompose
                         $crumbs .= '&nbsp;|&nbsp;';
                     }
                     if (empty($action)) {
-                        $crumbs .="<span class='crumbLink'>$name</span>";
-                        $actions[] = "";
+                        $crumbs .= "<span class='crumbLink'>{$name}</span>";
+                        $actions[] = '';
                     } else {
-                        $crumbs .="<a href='javascript:void(0);' onclick='$action' class='crumbLink'>$name</a>";
+                        $crumbs .= "<a href='javascript:void(0);' onclick='{$action}' class='crumbLink'>{$name}</a>";
                         $actions[] = $action;
                     }
                     $count++;
                 }
             }
         }
-        if ($count > 1 && $actions[$count-2] != "") {
-            $crumbs = "<a onclick='{$actions[$count-2]}' href='javascript:void(0)'>". getStudioIcon('back', 'back', 16, 16) . '</a>&nbsp;'. $crumbs;
+        if ($count > 1 && $actions[$count - 2] != '') {
+            $crumbs = "<a onclick='{$actions[$count - 2]}' href='javascript:void(0)'>" . getStudioIcon('back', 'back', 16, 16) . '</a>&nbsp;' . $crumbs;
         }
+
         return $crumbs . '<br><br>';
     }
-    
-    public function echoErrorStatus($labelName='')
+
+    public function echoErrorStatus($labelName = '')
     {
-        $sections = array('failure'=>true,'failMsg'=>$labelName);
+        $sections = ['failure' => true, 'failMsg' => $labelName];
         $json = getJSONobj();
         echo $json->encode($sections);
     }

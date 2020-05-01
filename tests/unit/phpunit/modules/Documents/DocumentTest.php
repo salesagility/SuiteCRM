@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class DocumentTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -28,7 +31,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'disable_row_level_security', $document);
     }
 
-    public function testSaveAndGet_document_name()
+    public function testSaveAndGetDocumentName()
     {
         $document = new Document();
 
@@ -56,7 +59,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $document = new Document();
 
@@ -68,7 +71,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $document->get_summary_text());
     }
 
-    public function testis_authenticated()
+    public function testisAuthenticated()
     {
         $document = new Document();
 
@@ -80,7 +83,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $document->is_authenticated());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $document = new Document();
 
@@ -93,7 +96,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         self::markTestIncomplete('environment dependency (random generated token in url)');
 
@@ -105,16 +108,16 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
         // test the urls instead of the a tag itself
         $this->assertEquals('', $document->file_url, 'file url: [[' . $document->file_url . ']]');
-        //
+
         $this->assertEquals('', $document->file_url_noimage, 'file url noimage: [[' . $document->file_url_noimage . ']]');
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlistViewParseAdditionalSections()
     {
         $document = new Document();
 
         $xTemplateSection = null;
-        
+
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $ss = new Sugar_Smarty();
@@ -125,27 +128,27 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $document = new Document();
 
         //test with empty string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE  documents.deleted = 0 ORDER BY documents.document_name";
         $actual = $document->create_export_query('', '');
         $this->assertSame($expected, $actual);
-        
+
         //test with valid string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE documents.document_name = \"\" AND  documents.deleted = 0 ORDER BY documents.id";
         $actual = $document->create_export_query('documents.id', 'documents.document_name = ""');
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         self::markTestIncomplete();
-        
+
         $document = new Document();
         // Execute the method and verify that it returns expected results
 
@@ -157,25 +160,25 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $document->subcategory_id = '1';
         $document->document_name = 'test';
 
-        $expected = array(
-                'DELETED' => 0,
-                'DOCUMENT_NAME' => 'test',
-                'DOC_TYPE' => 'Sugar',
-                'FILENAME' => 'test',
-                'ACTIVE_DATE' => $document->active_date,
-                'CATEGORY_ID' => null,
-                'SUBCATEGORY_ID' => null,
-                'REVISION' => '1',
-                'LAST_REV_CREATED_NAME' => 'test',
-                'IS_TEMPLATE' => '0',
-                'FILE_URL' => '~'
-                                .'<a href=\'index.php\?entryPoint=download\&id=\&type=Documents\' target=\'_blank\'><img src="themes/\w+/images/def_image_inline\.\w+\?v='
-                                .'~',
-                'FILE_URL_NOIMAGE' => 'index.php?entryPoint=download&type=Documents&id=',
-                'LAST_REV_CREATED_BY' => 'test',
-                'NAME' => 'test',
-                'DOCUMENT_NAME_JAVASCRIPT' => null,
-        );
+        $expected = [
+            'DELETED' => 0,
+            'DOCUMENT_NAME' => 'test',
+            'DOC_TYPE' => 'Sugar',
+            'FILENAME' => 'test',
+            'ACTIVE_DATE' => $document->active_date,
+            'CATEGORY_ID' => null,
+            'SUBCATEGORY_ID' => null,
+            'REVISION' => '1',
+            'LAST_REV_CREATED_NAME' => 'test',
+            'IS_TEMPLATE' => '0',
+            'FILE_URL' => '~'
+                            . '<a href=\'index.php\?entryPoint=download\&id=\&type=Documents\' target=\'_blank\'><img src="themes/\w+/images/def_image_inline\.\w+\?v='
+                            . '~',
+            'FILE_URL_NOIMAGE' => 'index.php?entryPoint=download&type=Documents&id=',
+            'LAST_REV_CREATED_BY' => 'test',
+            'NAME' => 'test',
+            'DOCUMENT_NAME_JAVASCRIPT' => null,
+        ];
 
         $actual = $document->get_list_view_data();
         foreach ($expected as $expectedKey => $expectedVal) {
@@ -187,7 +190,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testmark_relationships_deleted()
+    public function testmarkRelationshipsDeleted()
     {
         $document = new Document();
 
@@ -200,7 +203,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $document = new Document();
         $this->assertEquals(false, $document->bean_implements('')); //test with blank value

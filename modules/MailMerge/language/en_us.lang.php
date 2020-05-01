@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_STEP_1' => 'Step 1: Select Module and Template',
     'LBL_MAILMERGE_MODULE' => 'Select Module: ',
     'LBL_MAILMERGE_SELECTED_MODULE' => 'Selected Module: ',
@@ -74,5 +72,4 @@ $mod_strings = array(
     'LBL_AVAILABLE' => 'Available',
     'LBL_SELECTED' => 'Selected',
     'LBL_RELATED_INFO_SELECTION' => 'Use the selections below to identify the related information you would like to display in your merged document. Skip this step if your template document contains no related information.',
-
-);
+];

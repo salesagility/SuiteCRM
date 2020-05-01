@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Leads extends \AcceptanceTester
 {
     /**
-     * Create a lead
+     * Create a lead.
      *
      * @param $name
      */

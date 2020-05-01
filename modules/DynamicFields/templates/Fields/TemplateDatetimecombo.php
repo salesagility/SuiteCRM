@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,31 +40,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateRange.php';
 
 class TemplateDatetimecombo extends TemplateRange
 {
     public $type = 'datetimecombo';
     public $len = '';
-    public $dateStrings = array(
+    public $dateStrings = [
         '-none-' => '',
-        'today'=>'now',
-        'yesterday'=> '-1 day',
-        'tomorrow'=>'+1 day',
-        'next week'=> '+1 week',
-        'next monday'=>'next monday',
-        'next friday'=>'next friday',
-        'two weeks'=> '+2 weeks',
-        'next month'=> '+1 month',
-        'first day of next month'=> 'first of next month', // must handle this non-GNU date string in SugarBean->populateDefaultValues; if we don't this will evaluate to 1969...
-        'three months'=> '+3 months',  //kbrill Bug #17023
-        'six months'=> '+6 months',
-        'next year'=> '+1 year',
-    );
-    
-    public $hoursStrings = array(
+        'today' => 'now',
+        'yesterday' => '-1 day',
+        'tomorrow' => '+1 day',
+        'next week' => '+1 week',
+        'next monday' => 'next monday',
+        'next friday' => 'next friday',
+        'two weeks' => '+2 weeks',
+        'next month' => '+1 month',
+        'first day of next month' => 'first of next month', // must handle this non-GNU date string in SugarBean->populateDefaultValues; if we don't this will evaluate to 1969...
+        'three months' => '+3 months',  //kbrill Bug #17023
+        'six months' => '+6 months',
+        'next year' => '+1 year',
+    ];
+
+    public $hoursStrings = [
         '' => '',
         '01' => '01',
         '02' => '02',
@@ -78,9 +76,9 @@ class TemplateDatetimecombo extends TemplateRange
         '10' => '10',
         '11' => '11',
         '12' => '12',
-    );
-    
-    public $hoursStrings24 = array(
+    ];
+
+    public $hoursStrings24 = [
         '' => '',
         '00' => '00',
         '01' => '01',
@@ -106,23 +104,23 @@ class TemplateDatetimecombo extends TemplateRange
         '21' => '21',
         '22' => '22',
         '23' => '23',
-    );
-    
-    public $minutesStrings = array(
+    ];
+
+    public $minutesStrings = [
         '' => '',
         '00' => '00',
         '15' => '15',
         '30' => '30',
         '45' => '45',
-    );
-    
-    public $meridiemStrings = array(
+    ];
+
+    public $meridiemStrings = [
         '' => '',
         'am' => 'am',
         'pm' => 'pm',
-    );
+    ];
 
-    public function get_db_default($modify=false)
+    public function get_db_default($modify = false)
     {
         return '';
     }
@@ -135,14 +133,15 @@ class TemplateDatetimecombo extends TemplateRange
             $def['display_default'] = $def['default'];
             $def['default'] = '';
         }
+
         return $def;
     }
-    
+
     public function populateFromPost()
     {
         parent::populateFromPost();
         if (!empty($_REQUEST['defaultDate']) && !empty($_REQUEST['defaultTime'])) {
-            $_REQUEST['default'] = $_REQUEST['defaultDate'].'&'.$_REQUEST['defaultTime'];
+            $_REQUEST['default'] = $_REQUEST['defaultDate'] . '&' . $_REQUEST['defaultTime'];
 
             $defaultTime = $_REQUEST['defaultTime'];
             $hours = substr($defaultTime, 0, 2);
@@ -169,24 +168,23 @@ class TemplateDatetimecombo extends TemplateRange
         } else {
             $_REQUEST['default'] = '';
         }
-        unset($_REQUEST['defaultDate']);
-        unset($_REQUEST['defaultTime']);
-        
-        foreach ($this->vardef_map as $vardef=>$field) {
+        unset($_REQUEST['defaultDate'], $_REQUEST['defaultTime']);
+
+        foreach ($this->vardef_map as $vardef => $field) {
             if (isset($_REQUEST[$vardef])) {
                 //  Bug #48826. Some fields are allowed to have special characters and must be decoded from the request
                 // Bug 49774, 49775: Strip html tags from 'formula' and 'dependency'.
                 if (is_string($_REQUEST[$vardef]) && in_array($vardef, $this->decode_from_request_fields_map)) {
-                    $this->$vardef = html_entity_decode(strip_tags(from_html($_REQUEST[$vardef])));
+                    $this->{$vardef} = html_entity_decode(strip_tags(from_html($_REQUEST[$vardef])));
                 } else {
-                    $this->$vardef = $_REQUEST[$vardef];
+                    $this->{$vardef} = $_REQUEST[$vardef];
                 }
 
                 if ($vardef != $field) {
-                    $this->$field = $this->$vardef;
+                    $this->{$field} = $this->{$vardef};
                 }
             }
         }
-        $GLOBALS['log']->debug('populate: '.print_r($this, true));
+        $GLOBALS['log']->debug('populate: ' . print_r($this, true));
     }
 }

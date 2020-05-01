@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,34 +41,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Connector's HTML helper
+ * Connector's HTML helper.
+ *
  * @api
  */
 class ConnectorHtmlHelper
 {
     /**
-     * Method return the HTML code for the hover link field
+     * Method return the HTML code for the hover link field.
      *
      * @param array $shown_sources
      * @param mixed $module
      * @param mixed $smarty
+     *
      * @return string
      */
     public function getConnectorButtonCode(array $shown_sources, $module, $smarty)
     {
-        require_once('include/connectors/formatters/FormatterFactory.php');
+        require_once 'include/connectors/formatters/FormatterFactory.php';
 
         return $this->getButton($shown_sources, $module, $smarty);
     }
 
     /**
-     * Get button for source
+     * Get button for source.
      *
      * @param string $shown_source
      * @param mixed $module
      * @param mixed $smarty
+     *
      * @return string
      */
     private function getButton(array $shown_sources, $module, $smarty)
@@ -84,9 +86,8 @@ class ConnectorHtmlHelper
                 $iconFilePath = $formatter->getIconFilePath();
                 $iconFilePath = empty($iconFilePath) ? 'themes/default/images/MoreDetail.png' : $iconFilePath;
 
-
-                $code .= '<!--not_in_theme!--><img id="dswidget_img" border="0" src="' . $iconFilePath .'" alt="'
-                         . $id .'" onclick="show_' . $id . '(event);">';
+                $code .= '<!--not_in_theme!--><img id="dswidget_img" border="0" src="' . $iconFilePath . '" alt="'
+                         . $id . '" onclick="show_' . $id . '(event);">';
 
                 $code .= "<script type='text/javascript' src='{sugar_getjspath file='include/connectors/formatters/default/company_detail.js'}'></script>";
                 //$code .= $formatter->getDetailViewFormat();
@@ -98,11 +99,12 @@ class ConnectorHtmlHelper
     }
 
     /**
-     * Get popup for sources
+     * Get popup for sources.
      *
      * @param array $shown_sources
      * @param mixed $module
      * @param mixed $smarty
+     *
      * @return string
      */
     private function getPopup(array $shown_sources, $module, $smarty)
@@ -140,7 +142,7 @@ class ConnectorHtmlHelper
             } else {
                 $dswidget_img = SugarThemeRegistry::current()->getImageURL('MoreDetail.png');
                 $singleIcon = empty($singleIcon) ? $dswidget_img : $singleIcon;
-                $code = '<!--not_in_theme!--><img id="dswidget_img" border="0" src="' . $singleIcon . '" alt="'.$app_strings['LBL_CONNECTORS_POPUPS']
+                $code = '<!--not_in_theme!--><img id="dswidget_img" border="0" src="' . $singleIcon . '" alt="' . $app_strings['LBL_CONNECTORS_POPUPS']
                         . '" onclick="return showConnectorMenu2(this);">';
             }
             $code .= "<script type='text/javascript' src='{sugar_getjspath file='include/connectors/formatters/default/company_detail.js'}'></script>\n";
@@ -154,6 +156,7 @@ class ConnectorHtmlHelper
             $code .= "</script>\n";
             $code .= $formatterCode;
         }
+
         return $code;
     }
 }

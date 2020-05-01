@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -50,12 +48,12 @@ class CasesController extends SugarController
         global $app_list_strings;
         $search = trim($_POST['search']);
 
-        $relevanceCalculation = "CASE WHEN name LIKE '$search' THEN 10 
-                                ELSE 0 END + CASE WHEN name LIKE '%$search%' THEN 5 
-                                ELSE 0 END + CASE WHEN description LIKE '%$search%' THEN 2 ELSE 0 END";
+        $relevanceCalculation = "CASE WHEN name LIKE '{$search}' THEN 10 
+                                ELSE 0 END + CASE WHEN name LIKE '%{$search}%' THEN 5 
+                                ELSE 0 END + CASE WHEN description LIKE '%{$search}%' THEN 2 ELSE 0 END";
 
-        $query = "SELECT id, $relevanceCalculation AS relevance FROM aok_knowledgebase 
-                  WHERE deleted = '0' AND $relevanceCalculation > 0 ORDER BY relevance DESC";
+        $query = "SELECT id, {$relevanceCalculation} AS relevance FROM aok_knowledgebase 
+                  WHERE deleted = '0' AND {$relevanceCalculation} > 0 ORDER BY relevance DESC";
 
         $offset = 0;
         $limit = 30;
@@ -106,12 +104,14 @@ class CasesController extends SugarController
     }
 
     /**
-     * Function for basic field validation (present and neither empty nor only white space
+     * Function for basic field validation (present and neither empty nor only white space.
+     *
      * @param string $question
+     *
      * @return bool
      */
     private function IsNullOrEmptyString($question)
     {
-        return (!isset($question) || trim($question) === '');
+        return !isset($question) || trim($question) === '';
     }
 }

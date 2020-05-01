@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,55 +42,52 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['roles_users'] = array(
-
+$dictionary['roles_users'] = [
     'table' => 'roles_users',
 
-    'fields' => array(
-        array(
+    'fields' => [
+        [
             'name' => 'id',
             'type' => 'varchar',
             'len' => '36',
-        ),
-        array(
+        ],
+        [
             'name' => 'role_id',
             'type' => 'varchar',
             'len' => '36',
-        ),
-        array(
+        ],
+        [
             'name' => 'user_id',
             'type' => 'varchar',
             'len' => '36',
-        )
-      , array('name' => 'date_modified','type' => 'datetime'),
-        array(
+        ], ['name' => 'date_modified', 'type' => 'datetime'],
+        [
             'name' => 'deleted',
             'type' => 'bool',
             'len' => '1',
             'default' => '0'
-        ),
-    ),
-    
-    'indices' => array(
-        array(
+        ],
+    ],
+
+    'indices' => [
+        [
             'name' => 'roles_userspk',
             'type' => 'primary',
-            'fields' => array( 'id' )
-        ),
-        array(
+            'fields' => ['id']
+        ],
+        [
             'name' => 'idx_ru_role_id',
             'type' => 'index',
-            'fields' => array('role_id')
-        ),
-        array(
+            'fields' => ['role_id']
+        ],
+        [
             'name' => 'idx_ru_user_id',
             'type' => 'index',
-            'fields' => array('user_id')
-        ),
-    ),
-    'relationships' => array('roles_users' => array('lhs_module'=> 'Roles', 'lhs_table'=> 'roles', 'lhs_key' => 'id',
-                              'rhs_module'=> 'Users', 'rhs_table'=> 'users', 'rhs_key' => 'id',
-                              'relationship_type'=>'many-to-many',
-                              'join_table'=> 'roles_users', 'join_key_lhs'=>'role_id', 'join_key_rhs'=>'user_id')),
-    
-);
+            'fields' => ['user_id']
+        ],
+    ],
+    'relationships' => ['roles_users' => ['lhs_module' => 'Roles', 'lhs_table' => 'roles', 'lhs_key' => 'id',
+        'rhs_module' => 'Users', 'rhs_table' => 'users', 'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'roles_users', 'join_key_lhs' => 'role_id', 'join_key_rhs' => 'user_id']],
+];

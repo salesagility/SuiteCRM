@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,14 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description: This file is used to override the default Meta-data DetailView behavior
  * to provide customization specific to the Campaigns module.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 class OpportunitiesViewEdit extends ViewEdit
 {
@@ -58,9 +58,6 @@ class OpportunitiesViewEdit extends ViewEdit
         parent::__construct();
         $this->useForSubpanel = true;
     }
-
-
-
 
     public function display()
     {
@@ -72,9 +69,9 @@ class OpportunitiesViewEdit extends ViewEdit
             $prePopProb = 'document.getElementsByName(\'sales_stage\')[0].onchange();';
         }
 
-        $probability_script=<<<EOQ
+        $probability_script = <<<EOQ
 	<script>
-	prob_array = $prob_array;
+	prob_array = {$prob_array};
 	document.getElementsByName('sales_stage')[0].onchange = function() {
 			if(typeof(document.getElementsByName('sales_stage')[0].value) != "undefined" && prob_array[document.getElementsByName('sales_stage')[0].value]
 			&& typeof(document.getElementsByName('probability')[0]) != "undefined"
@@ -84,7 +81,7 @@ class OpportunitiesViewEdit extends ViewEdit
 
 			}
 		};
-	$prePopProb
+	{$prePopProb}
 	</script>
 EOQ;
 

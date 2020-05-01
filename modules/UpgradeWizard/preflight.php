@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,8 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 // LEGACY for old versions - emulating upload.php
 // aw: make this better for later versions.
 //refreshing mod_strings
@@ -64,7 +63,7 @@ logThis('at preflight.php');
 //set the upgrade progress status.
 set_upgrade_progress('preflight', 'in_progress');
 $php_warnings = '';
-if (version_compare(phpversion(), '5.2.0') >=0) {
+if (version_compare(phpversion(), '5.2.0') >= 0) {
     $stop = true; // flag to show "next"
     if (isset($_SESSION['files'])) {
         unset($_SESSION['files']);
@@ -72,10 +71,9 @@ if (version_compare(phpversion(), '5.2.0') >=0) {
 
     $errors = preflightCheck();
 
-
     if (check_php_version() === -1) {
-        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." </span></b>";
-        $error_txt = '<span class="error">'.$phpVersion.'</span>';
+        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} " . constant('PHP_VERSION') . ' </span></b>';
+        $error_txt = '<span class="error">' . $phpVersion . '</span>';
         if (count($errors) == 0) {
             $errors[] = '';
         }
@@ -94,15 +92,15 @@ if (version_compare(phpversion(), '5.2.0') >=0) {
     if ((count($errors) == 1)) { // only diffs
         logThis('file preflight check passed successfully.');
         $stop = false;
-        $out  = $mod_strings['LBL_UW_PREFLIGHT_TESTS_PASSED']."<BR><BR><font color='red'>".$mod_strings['LBL_UW_PREFLIGHT_TESTS_PASSED3']."</font>";
+        $out = $mod_strings['LBL_UW_PREFLIGHT_TESTS_PASSED'] . "<BR><BR><font color='red'>" . $mod_strings['LBL_UW_PREFLIGHT_TESTS_PASSED3'] . '</font>';
         $stop = false;
 
         $disableEmail = (empty($current_user->email1)) ? 'DISABLED' : 'CHECKED';
 
         if (count($errors['manual']) > 0) {
-            $preserveFiles = array();
+            $preserveFiles = [];
 
-            $diffs =<<<eoq
+            $diffs = <<<eoq
 			<script type="text/javascript" language="Javascript">
 				function preflightToggleAll(cb) {
 					var checkAll = false;
@@ -132,7 +130,7 @@ if (version_compare(phpversion(), '5.2.0') >=0) {
 				</tr>
 				<tr>
 					<td valign='top'>
-						<input type='checkbox' name='addEmail' id='addEmail' $disableEmail>
+						<input type='checkbox' name='addEmail' id='addEmail' {$disableEmail}>
 					</td>
 					<td valign='top'>
 						{$mod_strings['LBL_UW_PREFLIGHT_EMAIL_REMINDER']}
@@ -168,14 +166,14 @@ eoq;
                 }
 
                 $diffs .= "<tr><td valign='top'>";
-                $diffs .= "<input type='checkbox' name='diff_files[]' value='{$diff}' $checked>";
+                $diffs .= "<input type='checkbox' name='diff_files[]' value='{$diff}' {$checked}>";
                 $diffs .= "</td><td valign='top'>";
                 $diffs .= str_replace(getcwd(), '.', $diff);
-                $diffs .= "</td></tr>";
+                $diffs .= '</td></tr>';
             }
-            $diffs .= "</table>";
-            $diffs .= "</div></p>";
-            $diffs .= "</form>";
+            $diffs .= '</table>';
+            $diffs .= '</div></p>';
+            $diffs .= '</form>';
 
             // list preserved files (templates, etc.)
             $preserve = '';
@@ -183,14 +181,14 @@ eoq;
                 if (empty($preserve)) {
                     $preserve .= "<table cellpadding='0' cellspacing='0' border='0'><tr><td><b>";
                     $preserve .= $mod_strings['LBL_UW_PREFLIGHT_PRESERVE_FILES'];
-                    $preserve .= "</b></td></tr>";
+                    $preserve .= '</b></td></tr>';
                 }
-                $preserve .= "<tr><td valign='top'><i>".str_replace(getcwd(), '.', $pf)."</i></td></tr>";
+                $preserve .= "<tr><td valign='top'><i>" . str_replace(getcwd(), '.', $pf) . '</i></td></tr>';
             }
             if (!empty($preserve)) {
                 $preserve .= '</table><br>';
             }
-            $diffs = $preserve.$diffs;
+            $diffs = $preserve . $diffs;
         } else { // NO FILE DIFFS REQUIRED
             $diffs = $mod_strings['LBL_UW_PREFLIGHT_NO_DIFFS'];
         }
@@ -202,24 +200,23 @@ eoq;
         foreach ($errors as $error) {
             if (is_array($error)) { // manual diff files
                 continue;
-            } else {
-                $out .= "{$error}<br />";
             }
+            $out .= "{$error}<br />";
         }
-        $out .= "</span><br />";
+        $out .= '</span><br />';
     }
 
-    $diffs ='';
+    $diffs = '';
 
     ///////////////////////////////////////////////////////////////////////////////
     ////	SCHEMA SCRIPT HANDLING
     logThis('starting schema preflight check...');
     //Check the current and target versions and store them in session variables
     if (empty($sugar_db_version)) {
-        include('sugar_version.php');
+        include 'sugar_version.php';
     }
     if (!isset($manifest['version']) || empty($manifest['version'])) {
-        include($_SESSION['unzip_dir'].'/manifest.php');
+        include $_SESSION['unzip_dir'] . '/manifest.php';
     }
 
     $origVersion = implodeVersion($sugar_db_version, 3, '0');
@@ -227,8 +224,8 @@ eoq;
 
     //save the versions as session variables
     $_SESSION['current_db_version'] = $sugar_db_version;
-    $_SESSION['target_db_version']  = $manifest['version'];
-    $_SESSION['upgrade_from_flavor']  = $manifest['name'];
+    $_SESSION['target_db_version'] = $manifest['version'];
+    $_SESSION['upgrade_from_flavor'] = $manifest['name'];
     // aw: BUG 10161: check flavor conversion sql files
     $sqlFile = ''; // cn: bug
     if (version_compare($sugar_db_version, $manifest['version'], '=')) {
@@ -237,18 +234,23 @@ eoq;
         switch ($manifest['name']) {
             case 'SugarCE to SugarPro':
                 $sqlFile = $origVersion . '_ce_to_pro_' . $type;
+
                 break;
             case 'SugarCE to SugarEnt':
                 $sqlFile = $origVersion . '_ce_to_ent_' . $type;
+
                 break;
             case 'SugarCE to SugarCorp':
                 $sqlFile = $origVersion . '_ce_to_corp_' . $db->dbType;
+
                 break;
             case 'SugarCE to SugarUlt':
                 $sqlFile = $origVersion . '_ce_to_ult_' . $db->dbType;
+
                 break;
             case 'SugarPro to SugarEnt':
                 $sqlFile = $origVersion . '_pro_to_ent_' . $type;
+
                 break;
             default:
                 break;
@@ -261,13 +263,13 @@ eoq;
         $sqlFile = $origVersion . '_to_' . $destVersion . '_' . $type;
     }
 
-    $newTables = array();
+    $newTables = [];
 
-    $sqlScript = $_SESSION['unzip_dir'].'/scripts/'.$sqlFile.'.sql';
+    $sqlScript = $_SESSION['unzip_dir'] . '/scripts/' . $sqlFile . '.sql';
 
-    logThis('looking for schema script at: '.$sqlScript);
+    logThis('looking for schema script at: ' . $sqlScript);
     if (is_file($sqlScript)) {
-        logThis('found schema upgrade script: '.$sqlScript);
+        logThis('found schema upgrade script: ' . $sqlScript);
 
         logThis('schema preflight using MySQL');
         if (function_exists('sugar_fopen')) {
@@ -276,7 +278,7 @@ eoq;
             $fp = fopen($sqlScript, 'rb');
         }
         $contents = stream_get_contents($fp);
-        $anyScriptChanges =$contents;
+        $anyScriptChanges = $contents;
 
         fclose($fp);
 
@@ -287,10 +289,10 @@ eoq;
             $_SESSION['alterCustomTableQueries'] = false;
         }
 
-        $schema  = "<p><a href='javascript:void(0); toggleNwFiles(\"schemashow\");'>{$mod_strings['LBL_UW_SHOW_SCHEMA']}</a>";
+        $schema = "<p><a href='javascript:void(0); toggleNwFiles(\"schemashow\");'>{$mod_strings['LBL_UW_SHOW_SCHEMA']}</a>";
         $schema .= "<div id='schemashow' style='display:none;'>";
         $schema .= "<textarea readonly cols='80' rows='10'>{$contents}</textarea>";
-        $schema .= "</div></p>";
+        $schema .= '</div></p>';
 
         if (!empty($sqlErrors)) {
             $stop = true;
@@ -299,7 +301,7 @@ eoq;
             foreach ($sqlErrors as $sqlError) {
                 $out .= "<br><span class='error'>{$sqlError}</span>";
             }
-            $out .= "</div><hr />";
+            $out .= '</div><hr />';
         }
     } else {
         $customTableSchema = '';
@@ -311,17 +313,17 @@ eoq;
     //php version suggestion
     $php_suggested_ver = '';
     if (check_php_version() === 0) {
-        $php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().". ".$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
+        $php_suggested_ver = $mod_strings['LBL_CURRENT_PHP_VERSION'] . phpversion() . '. ' . $mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'] . constant('SUITECRM_PHP_REC_VERSION') . $mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
     }
     if (empty($mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'])) {
         $mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'] = 'Upgrade may take some time';
     }
 
-    $style_for_out = empty($out)?'style=\'display:none\'':'';
-    $style_for_dif = empty($diffs)?'style=\'display:none\'':'';
-    $style_for_schemaChange = empty($schema)?'style=\'display:none\'':'';
+    $style_for_out = empty($out) ? 'style=\'display:none\'' : '';
+    $style_for_dif = empty($diffs) ? 'style=\'display:none\'' : '';
+    $style_for_schemaChange = empty($schema) ? 'style=\'display:none\'' : '';
 
-    $final =<<<eoq
+    $final = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
     <tr {$style_for_out}>
         <td colspan="2" align="left" valign="top">
@@ -367,7 +369,7 @@ eoq;
 
 eoq;
 
-    $form5 =<<<eoq5
+    $form5 = <<<'eoq5'
 <br>
 <div id="upgradeDiv" style="display:none">
     <table cellspacing="0" cellpadding="0" border="0">
@@ -379,7 +381,7 @@ eoq;
 
 eoq5;
 
-    $uwMain = $final.$form5;
+    $uwMain = $final . $form5;
 
     //set the upgrade progress status.
     set_upgrade_progress('preflight', 'done');
@@ -389,7 +391,7 @@ eoq5;
         $mod_strings['LBL_INCOMPATIBLE_PHP_VERSION'] = 'Php version 5.2.2 or above is required.';
     }
 
-    $php_verison_warning =<<<eoq
+    $php_verison_warning = <<<eoq
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -403,13 +405,13 @@ eoq;
 //Add the backward compatibility check as well.
 
 //Php Backward compatibility checks
-if (ini_get("zend.ze1_compatibility_mode")) {
+if (ini_get('zend.ze1_compatibility_mode')) {
     $stop = true;
     if (empty($mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'])) {
         $mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'] = 'Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off for proceeding further';
     }
 
-    $php_compatibility_warning =<<<eoq
+    $php_compatibility_warning = <<<eoq
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -425,14 +427,14 @@ if ($php_warnings != null) {
 }
 
 $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_UW_PREFLIGHT_TESTS_PASSED2']}</b>";
-$showBack		= false;
-$showCancel		= true;
-$showRecheck	= true;
-$showNext		= ($stop) ? false : true;
+$showBack = false;
+$showCancel = true;
+$showRecheck = true;
+$showNext = ($stop) ? false : true;
 
-$stepBack		= $_REQUEST['step'] - 1;
-$stepNext		= $_REQUEST['step'] + 1;
-$stepCancel		= -1;
-$stepRecheck	= $_REQUEST['step'];
+$stepBack = $_REQUEST['step'] - 1;
+$stepNext = $_REQUEST['step'] + 1;
+$stepCancel = -1;
+$stepRecheck = $_REQUEST['step'];
 
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';

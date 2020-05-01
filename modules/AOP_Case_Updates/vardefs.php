@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$dictionary['AOP_Case_Updates'] = array(
+$dictionary['AOP_Case_Updates'] = [
     'table' => 'aop_case_updates',
     'audited' => true,
     'duplicate_merge' => true,
-    'fields' => array(
-        'case' => array(
+    'fields' => [
+        'case' => [
             'name' => 'case',
             'type' => 'link',
             'relationship' => 'cases_aop_case_updates',
@@ -54,8 +52,8 @@ $dictionary['AOP_Case_Updates'] = array(
             'vname' => 'LBL_CASE',
             'side' => 'left',
             'id_name' => 'case_id',
-        ),
-        'case_name' => array(
+        ],
+        'case_name' => [
             'name' => 'case_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -66,14 +64,14 @@ $dictionary['AOP_Case_Updates'] = array(
             'table' => 'cases',
             'module' => 'Cases',
             'rname' => 'name',
-        ),
-        'case_id' => array(
+        ],
+        'case_id' => [
             'name' => 'case_id',
             'type' => 'id',
             'reportable' => false,
             'vname' => 'LBL_CASE_ID',
-        ),
-        'contact' => array(
+        ],
+        'contact' => [
             'name' => 'contact',
             'type' => 'link',
             'relationship' => 'contacts_aop_case_updates',
@@ -81,8 +79,8 @@ $dictionary['AOP_Case_Updates'] = array(
             'bean_name' => 'Contact',
             'source' => 'non-db',
             'vname' => 'LBL_CONTACT',
-        ),
-        'contact_name' => array(
+        ],
+        'contact_name' => [
             'name' => 'contact_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -93,28 +91,28 @@ $dictionary['AOP_Case_Updates'] = array(
             'table' => 'contacts',
             'module' => 'Contacts',
             'rname' => 'name',
-        ),
-        'contact_id' => array(
+        ],
+        'contact_id' => [
             'name' => 'contact_id',
             'type' => 'id',
             'reportable' => false,
             'vname' => 'LBL_CONTACT_ID',
-        ),
-        'internal' => array(
-                'name' => 'internal',
-                'vname' => 'LBL_INTERNAL',
-                'type' => 'bool',
-            ),
-        'notes' => array(
-                'name' => 'notes',
-                'type' => 'link',
-                'relationship' => 'aop_case_updates_notes',
-                'source' => 'non-db',
-                'vname' => 'LBL_NOTES',
-            ),
-    ),
-    'relationships' => array(
-        'cases_aop_case_updates' => array(
+        ],
+        'internal' => [
+            'name' => 'internal',
+            'vname' => 'LBL_INTERNAL',
+            'type' => 'bool',
+        ],
+        'notes' => [
+            'name' => 'notes',
+            'type' => 'link',
+            'relationship' => 'aop_case_updates_notes',
+            'source' => 'non-db',
+            'vname' => 'LBL_NOTES',
+        ],
+    ],
+    'relationships' => [
+        'cases_aop_case_updates' => [
             'lhs_module' => 'Cases',
             'lhs_table' => 'cases',
             'lhs_key' => 'id',
@@ -122,8 +120,8 @@ $dictionary['AOP_Case_Updates'] = array(
             'rhs_table' => 'aop_case_updates',
             'rhs_key' => 'case_id',
             'relationship_type' => 'one-to-many',
-        ),
-        'contacts_aop_case_updates' => array(
+        ],
+        'contacts_aop_case_updates' => [
             'lhs_module' => 'Contacts',
             'lhs_table' => 'contacts',
             'lhs_key' => 'id',
@@ -131,8 +129,8 @@ $dictionary['AOP_Case_Updates'] = array(
             'rhs_table' => 'aop_case_updates',
             'rhs_key' => 'contact_id',
             'relationship_type' => 'one-to-many',
-        ),
-        'aop_case_updates_notes' => array(
+        ],
+        'aop_case_updates_notes' => [
             'lhs_module' => 'AOP_Case_Updates',
             'lhs_table' => 'aop_case_updates',
             'lhs_key' => 'id',
@@ -142,12 +140,12 @@ $dictionary['AOP_Case_Updates'] = array(
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'AOP_Case_Updates',
-        ),
-    ),
+        ],
+    ],
     'optimistic_locking' => true,
     'unified_search' => true,
-);
+];
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('AOP_Case_Updates', 'AOP_Case_Updates', array('basic', 'assignable'));
+VardefManager::createVardef('AOP_Case_Updates', 'AOP_Case_Updates', ['basic', 'assignable']);

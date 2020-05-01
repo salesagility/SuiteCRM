@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_FROM_ADDR' => '"From" Address:',
     'LBL_REPLY_ADDR' => '"Reply-to" Address:',
     'LBL_REPLY_NAME' => '"Reply-to" Name:',
@@ -143,7 +141,7 @@ $mod_strings = array(
     'LBL_TRACK_DELETE_BUTTON_TITLE' => 'Delete Test Entries',
     'LBL_TRACK_DELETE_BUTTON_LABEL' => 'Delete Test Entries',
     'LBL_TRACK_DELETE_CONFIRM' => 'This option will delete log entries created by the test run. Continue?',
-    'ERR_NO_MAILBOX' => "The following marketing messages do not have a mail account associated with them.<BR>Please correct that before proceeding.",
+    'ERR_NO_MAILBOX' => 'The following marketing messages do not have a mail account associated with them.<BR>Please correct that before proceeding.',
     'LBL_LIST_TO_ACTIVITY' => 'View Status',
     'LBL_CURRENCY' => 'Currency:',
     'LBL_TARGETED' => 'Targeted',
@@ -152,7 +150,7 @@ $mod_strings = array(
     'LBL_NEWSLETTERS' => 'View Newsletters',
     'LBL_NEWSLETTER' => 'Newsletter',
     'LBL_SURVEY' => 'Survey',
-    'LBL_NEWSLETTER_FORENTRY'=>'NewsLetter',
+    'LBL_NEWSLETTER_FORENTRY' => 'NewsLetter',
     'LBL_CREATE_NEWSLETTER' => 'Create Newsletter',
     'LBL_LIST_NAME' => 'Name',
     'LBL_INBOUND_EMAIL_SETTINGS' => 'Inbound Email Settings',
@@ -376,8 +374,8 @@ $mod_strings = array(
     'LBL_LEAD_FORM_WIZARD' => 'Lead Form Wizard',
     'LBL_CAMPAIGN_INFORMATION' => 'OVERVIEW',
     'LBL_EDIT_BUTTON' => 'Launch Wizard',
-    'LBL_YEAR' => "Year",
-    'LBL_DAY' => "Day",
+    'LBL_YEAR' => 'Year',
+    'LBL_DAY' => 'Day',
     'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_INVALID' => 'Invalid' /*for 508 compliance fix*/,
     'LBL_VALID' => 'Valid' /*for 508 compliance fix*/,
@@ -465,5 +463,5 @@ $mod_strings = array(
     'LBL_QUEUE_ITEMS' => 'Queue Items',
     'LBL_PROSPECT_LISTS' => 'Prospect Lists',
     'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
-    'LBL_CAMPAIGN_SURVEY' => "Survey",
-);
+    'LBL_CAMPAIGN_SURVEY' => 'Survey',
+];

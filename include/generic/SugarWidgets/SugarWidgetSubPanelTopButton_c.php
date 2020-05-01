@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,10 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 //custom to get rid of create button on events
-
-
 
 class SugarWidgetSubPanelTopButton_c extends SugarWidget
 {
@@ -57,9 +54,13 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
     //TODO rename defines to layout defs and make it a member variable instead of passing it multiple layers with extra copying.
 
-    /** Take the keys for the strings and look them up.  Module is literal, the rest are label keys
-    */
-    public function __construct($module='', $title='', $access_key='', $form_value='')
+    /** Take the keys for the strings and look them up.  Module is literal, the rest are label keys.
+     * @param mixed $module
+     * @param mixed $title
+     * @param mixed $access_key
+     * @param mixed $form_value
+     */
+    public function __construct($module = '', $title = '', $access_key = '', $form_value = '')
     {
         global $app_strings;
 
@@ -104,10 +105,11 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
     public function getWidgetId($buttonSuffix = true)
     {
-        $widgetID = parent::getWidgetId() . '_'.preg_replace('[ ]', '', strtolower($this->form_value));
+        $widgetID = parent::getWidgetId() . '_' . preg_replace('[ ]', '', strtolower($this->form_value));
         if ($buttonSuffix) {
             $widgetID .= '_button';
         }
+
         return $widgetID;
     }
 
@@ -118,15 +120,14 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
         // Create the additional form fields with real values if they were not passed in
         if (empty($additionalFormFields) && $this->additional_form_fields) {
-            foreach ($this->additional_form_fields as $key=>$value) {
-                if (!empty($defines['focus']->$value)) {
-                    $additionalFormFields[$key] = $defines['focus']->$value;
+            foreach ($this->additional_form_fields as $key => $value) {
+                if (!empty($defines['focus']->{$value})) {
+                    $additionalFormFields[$key] = $defines['focus']->{$value};
                 } else {
                     $additionalFormFields[$key] = '';
                 }
             }
         }
-
 
         if (!empty($this->module)) {
             $defines['child_module_name'] = $this->module;
@@ -137,21 +138,20 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
         $defines['parent_bean_name'] = get_class($defines['focus']);
         $relationship_name = $this->get_subpanel_relationship_name($defines);
 
-
-        $formValues = array();
+        $formValues = [];
 
         //module_button is used to override the value of module name
         $formValues['module'] = $defines['child_module_name'];
-        $formValues[strtolower($defines['parent_bean_name'])."_id"] = $defines['focus']->id;
+        $formValues[strtolower($defines['parent_bean_name']) . '_id'] = $defines['focus']->id;
 
         if (isset($defines['focus']->name)) {
-            $formValues[strtolower($defines['parent_bean_name'])."_name"] = $defines['focus']->name;
+            $formValues[strtolower($defines['parent_bean_name']) . '_name'] = $defines['focus']->name;
             // #26451,add these fields for custom one-to-many relate field.
             if (!empty($defines['child_module_name'])) {
-                $formValues[$relationship_name."_name"] = $defines['focus']->name;
-                $childFocusName = !empty($GLOBALS['beanList'][$defines['child_module_name']]) ? $GLOBALS['beanList'][$defines['child_module_name']] : "";
-                if (!empty($GLOBALS['dictionary'][ $childFocusName ]["fields"][$relationship_name .'_name']['id_name'])) {
-                    $formValues[$GLOBALS['dictionary'][ $childFocusName ]["fields"][$relationship_name .'_name']['id_name']] = $defines['focus']->id;
+                $formValues[$relationship_name . '_name'] = $defines['focus']->name;
+                $childFocusName = !empty($GLOBALS['beanList'][$defines['child_module_name']]) ? $GLOBALS['beanList'][$defines['child_module_name']] : '';
+                if (!empty($GLOBALS['dictionary'][$childFocusName]['fields'][$relationship_name . '_name']['id_name'])) {
+                    $formValues[$GLOBALS['dictionary'][$childFocusName]['fields'][$relationship_name . '_name']['id_name']] = $defines['focus']->id;
                 }
             }
         }
@@ -159,7 +159,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
         $formValues['return_module'] = $currentModule;
 
         if ($currentModule == 'Campaigns') {
-            $formValues['return_action'] = "DetailView";
+            $formValues['return_action'] = 'DetailView';
         } else {
             $formValues['return_action'] = $defines['action'];
             if ($formValues['return_action'] == 'SubPanelViewer') {
@@ -171,33 +171,37 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
         $formValues['return_relationship'] = $relationship_name;
         switch (strtolower($currentModule)) {
             case 'prospects':
-                $name = $defines['focus']->account_name ;
-                break ;
+                $name = $defines['focus']->account_name;
+
+                break;
             case 'documents':
-                $name = $defines['focus']->document_name ;
-                break ;
+                $name = $defines['focus']->document_name;
+
+                break;
             case 'kbdocuments':
-                $name = $defines['focus']->kbdocument_name ;
-                break ;
+                $name = $defines['focus']->kbdocument_name;
+
+                break;
             case 'leads':
             case 'contacts':
-                $name = $defines['focus']->first_name . " " .$defines['focus']->last_name ;
-                break ;
+                $name = $defines['focus']->first_name . ' ' . $defines['focus']->last_name;
+
+                break;
             default:
-               $name = (isset($defines['focus']->name)) ? $defines['focus']->name : "";
+               $name = (isset($defines['focus']->name)) ? $defines['focus']->name : '';
         }
         $formValues['return_name'] = $name;
 
         // TODO: move this out and get $additionalFormFields working properly
         if (empty($additionalFormFields['parent_type'])) {
-            if ($defines['focus']->object_name=='Contact') {
+            if ($defines['focus']->object_name == 'Contact') {
                 $additionalFormFields['parent_type'] = 'Accounts';
             } else {
                 $additionalFormFields['parent_type'] = $defines['focus']->module_dir;
             }
         }
         if (empty($additionalFormFields['parent_name'])) {
-            if ($defines['focus']->object_name=='Contact') {
+            if ($defines['focus']->object_name == 'Contact') {
                 $additionalFormFields['parent_name'] = $defines['focus']->account_name;
                 $additionalFormFields['account_name'] = $defines['focus']->account_name;
             } else {
@@ -205,11 +209,11 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             }
         }
         if (empty($additionalFormFields['parent_id'])) {
-            if ($defines['focus']->object_name=='Contact') {
+            if ($defines['focus']->object_name == 'Contact') {
                 $additionalFormFields['parent_id'] = $defines['focus']->account_id;
                 $additionalFormFields['account_id'] = $defines['focus']->account_id;
             } else {
-                if ($defines['focus']->object_name=='Contract') {
+                if ($defines['focus']->object_name == 'Contract') {
                     $additionalFormFields['contract_id'] = $defines['focus']->id;
                 } else {
                     $additionalFormFields['parent_id'] = $defines['focus']->id;
@@ -217,57 +221,55 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             }
         }
 
-        if ($defines['focus']->object_name=='Opportunity') {
+        if ($defines['focus']->object_name == 'Opportunity') {
             $additionalFormFields['account_id'] = $defines['focus']->account_id;
             $additionalFormFields['account_name'] = $defines['focus']->account_name;
         }
 
-        if (!empty($defines['child_module_name']) and $defines['child_module_name']=='Contacts' and !empty($defines['parent_bean_name']) and $defines['parent_bean_name']=='contact') {
+        if (!empty($defines['child_module_name']) and $defines['child_module_name'] == 'Contacts' and !empty($defines['parent_bean_name']) and $defines['parent_bean_name'] == 'contact') {
             if (!empty($defines['focus']->id) and !empty($defines['focus']->name)) {
                 $formValues['reports_to_id'] = $defines['focus']->id;
                 $formValues['reports_to_name'] = $defines['focus']->name;
             }
         }
-        $formValues['action'] = "EditView";
+        $formValues['action'] = 'EditView';
 
         if ($asUrl) {
             $returnLink = '';
             foreach ($formValues as $key => $value) {
-                $returnLink .= $key.'='.$value.'&';
+                $returnLink .= $key . '=' . $value . '&';
             }
             foreach ($additionalFormFields as $key => $value) {
-                $returnLink .= $key.'='.$value.'&';
+                $returnLink .= $key . '=' . $value . '&';
             }
             $returnLink = rtrim($returnLink, '&');
 
             return $returnLink;
-        } else {
-            $form = 'form' . $relationship_name;
-            $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
-            foreach ($formValues as $key => $value) {
-                if (empty($value->defs)) {
-                    $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
-                }
-            }
-            // fill in additional form fields for all but action
-            foreach ($additionalFormFields as $key => $value) {
-                if ($key != 'action') {
-                    $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
-                }
-            }
-
-
-            return $button;
         }
+        $form = 'form' . $relationship_name;
+        $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
+        foreach ($formValues as $key => $value) {
+            if (empty($value->defs)) {
+                $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+            }
+        }
+        // fill in additional form fields for all but action
+        foreach ($additionalFormFields as $key => $value) {
+            if ($key != 'action') {
+                $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+            }
+        }
+
+        return $button;
     }
 
     /** This default function is used to create the HTML for a simple button */
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
-        $temp='';
+        $temp = '';
         $inputID = $this->getWidgetId();
 
-        if (!empty($this->acl) && ACLController::moduleSupportsACL($defines['module'])  &&  !ACLController::checkAccess($defines['module'], $this->acl, true)) {
+        if (!empty($this->acl) && ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], $this->acl, true)) {
             return $temp;
         }
 
@@ -286,12 +288,15 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
         if ($nonbutton) {
             // $button = "<a onclick=''>$this->form_value";
         }
+
         return $button;
     }
 
     /**
      * Returns a string that is the JSON encoded version of the popup request.
      * Perhaps this function should be moved to a more globally accessible location?
+     *
+     * @param mixed $popup_request_data
      */
     public function _create_json_encoded_popup_request($popup_request_data)
     {
@@ -300,7 +305,8 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
     /**
      * get_subpanel_relationship_name
-     * Get the relationship name based on the subapnel definition
+     * Get the relationship name based on the subapnel definition.
+     *
      * @param mixed $defines The subpanel definition
      */
     public function get_subpanel_relationship_name($defines)
@@ -318,6 +324,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
                 }
             }
         }
+
         return $relationship_name;
     }
 }

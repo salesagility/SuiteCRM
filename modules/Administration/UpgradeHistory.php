@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,10 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
 // The history of upgrades on the system
 class UpgradeHistory extends SugarBean
 {
@@ -65,15 +61,10 @@ class UpgradeHistory extends SugarBean
     public $manifest;
     public $enabled;
     public $tracker_visibility = false;
-    public $table_name = "upgrade_history";
-    public $object_name = "UpgradeHistory";
-    public $column_fields = array( "id", "filename", "md5sum", "type", "version", "status", "date_entered" );
+    public $table_name = 'upgrade_history';
+    public $object_name = 'UpgradeHistory';
+    public $column_fields = ['id', 'filename', 'md5sum', 'type', 'version', 'status', 'date_entered'];
     public $disable_custom_fields = true;
-
-    public function delete()
-    {
-        $this->db->query("delete from " . $this->table_name . " where id = " . $this->db->quoted($this->id));
-    }
 
     public function __construct()
     {
@@ -81,18 +72,25 @@ class UpgradeHistory extends SugarBean
         $this->disable_row_level_security = true;
     }
 
-
-
+    public function delete()
+    {
+        $this->db->query('delete from ' . $this->table_name . ' where id = ' . $this->db->quoted($this->id));
+    }
 
     public function getAllOrderBy($orderBy)
     {
-        $query = "SELECT id FROM " . $this->table_name . " ORDER BY ".$orderBy;
+        $query = 'SELECT id FROM ' . $this->table_name . ' ORDER BY ' . $orderBy;
+
         return $this->getList($query);
     }
+
     /**
-     * Given a name check if it exists in the table
+     * Given a name check if it exists in the table.
+     *
      * @param name    the unique key from the manifest
      * @param id      the id of the item you are comparing to
+     * @param mixed $patch_to_check
+     *
      * @return upgrade_history object if found, null otherwise
      */
     public function checkForExisting($patch_to_check)
@@ -100,18 +98,18 @@ class UpgradeHistory extends SugarBean
         $uh = new UpgradeHistory();
         if ($patch_to_check != null) {
             if (empty($patch_to_check->id_name)) {
-                $where = " WHERE name = '$patch_to_check->name' ";
+                $where = " WHERE name = '{$patch_to_check->name}' ";
             } else {
-                $where = " WHERE id_name = '$patch_to_check->id_name' ";
+                $where = " WHERE id_name = '{$patch_to_check->id_name}' ";
             }
 
             if (!empty($patch_to_check->id)) {
-                $where .= "  AND id != '$patch_to_check->id'  ";
+                $where .= "  AND id != '{$patch_to_check->id}'  ";
             } else {
-                $where .= "  AND id is not null  ";
+                $where .= '  AND id is not null  ';
             }
 
-            $query = "SELECT id FROM " . $this->table_name . " ". $where;
+            $query = 'SELECT id FROM ' . $this->table_name . ' ' . $where;
 
             $result = $uh->db->query($query);
             if (empty($result)) {
@@ -125,50 +123,55 @@ class UpgradeHistory extends SugarBean
                 return $uh->retrieve($row['id']);
             }
         }
+
         return null;
     }
 
     /**
-     * Check if this is an upgrade, if it is then return the latest version before this installation
+     * Check if this is an upgrade, if it is then return the latest version before this installation.
+     *
+     * @param mixed $id_name
+     * @param mixed $version
      */
     public function determineIfUpgrade($id_name, $version)
     {
-        $query = "SELECT id, version FROM " . $this->table_name . " WHERE id_name = '$id_name' ORDER BY date_entered DESC";
+        $query = 'SELECT id, version FROM ' . $this->table_name . " WHERE id_name = '{$id_name}' ORDER BY date_entered DESC";
         $result = $this->db->query($query);
         if (empty($result)) {
             return null;
-        } else {
-            $temp_version = 0;
-            $id = '';
-            while ($row = $this->db->fetchByAssoc($result)) {
-                if (!$this->is_right_version_greater(explode('.', $row['version']), explode('.', $temp_version))) {
-                    $temp_version = $row['version'];
-                    $id = $row['id'];
-                }
-            }//end while
-            if ($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false)) {
-                return array('id' => $id, 'version' => $temp_version);
-            } else {
-                return null;
-            }
         }
+        $temp_version = 0;
+        $id = '';
+        while ($row = $this->db->fetchByAssoc($result)) {
+            if (!$this->is_right_version_greater(explode('.', $row['version']), explode('.', $temp_version))) {
+                $temp_version = $row['version'];
+                $id = $row['id'];
+            }
+        }//end while
+        if ($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false)) {
+            return ['id' => $id, 'version' => $temp_version];
+        }
+
+        return null;
     }
 
     public function getAll()
     {
-        $query = "SELECT id FROM " . $this->table_name . " ORDER BY date_entered desc";
+        $query = 'SELECT id FROM ' . $this->table_name . ' ORDER BY date_entered desc';
+
         return $this->getList($query);
     }
 
     public function getList($query)
     {
-        return(parent::build_related_list($query, $this));
+        return parent::build_related_list($query, $this);
     }
 
     public function findByMd5($var_md5)
     {
-        $query = "SELECT id FROM " . $this->table_name . " where md5sum = '$var_md5'";
-        return(parent::build_related_list($query, $this));
+        $query = 'SELECT id FROM ' . $this->table_name . " where md5sum = '{$var_md5}'";
+
+        return parent::build_related_list($query, $this);
     }
 
     public function UninstallAvailable($patch_list, $patch_to_check)
@@ -179,10 +182,10 @@ class UpgradeHistory extends SugarBean
             if ((!empty($history_object->id_name) && !empty($patch_to_check->id_name) && strcmp($history_object->id_name, $patch_to_check->id_name) == 0) || strcmp($history_object->name, $patch_to_check->name) == 0) {
                 //we have found a match
                 //if the patch_to_check version is greater than the found version
-                return ($this->is_right_version_greater(explode('.', $history_object->version), explode('.', $patch_to_check->version)));
-            } else {
-                return true;
+                return $this->is_right_version_greater(explode('.', $history_object->version), explode('.', $patch_to_check->version));
             }
+
+            return true;
         }
         //we will only go through this loop if we have not found another UpgradeHistory object
         //with a matching unique_key in the database
@@ -193,8 +196,8 @@ class UpgradeHistory extends SugarBean
 
             //we will only resort to checking the files if we cannot find the unique_keys
             //or the unique_keys do not match
-            $patch_to_check_backup_path    = clean_path(remove_file_extension(from_html($patch_to_check->filename))).'-restore';
-            $more_recent_patch_backup_path = clean_path(remove_file_extension(from_html($more_recent_patch->filename))).'-restore';
+            $patch_to_check_backup_path = clean_path(remove_file_extension(from_html($patch_to_check->filename))) . '-restore';
+            $more_recent_patch_backup_path = clean_path(remove_file_extension(from_html($more_recent_patch->filename))) . '-restore';
             $patch_to_check_timestamp = TimeDate::getInstance()->fromUser($patch_to_check->date_entered)->getTimestamp();
             $more_resent_patch_timestamp = TimeDate::getInstance()->fromUser($more_recent_patch->date_entered)->getTimestamp();
             if (
@@ -213,19 +216,19 @@ class UpgradeHistory extends SugarBean
         if (is_file($check_path)) {
             if (file_exists($recent_path)) {
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
         } elseif (is_dir($check_path)) {
             $status = false;
 
             $d = dir($check_path);
             while ($f = $d->read()) {
-                if ($f == "." || $f == "..") {
+                if ($f == '.' || $f == '..') {
                     continue;
                 }
 
-                $status = $this->foundConflict("$check_path/$f", "$recent_path/$f");
+                $status = $this->foundConflict("{$check_path}/{$f}", "{$recent_path}/{$f}");
 
                 if ($status) {
                     break;
@@ -233,63 +236,67 @@ class UpgradeHistory extends SugarBean
             }
 
             $d->close();
-            return($status);
+
+            return $status;
         }
 
         return false;
     }
 
     /**
-     * Given a left version and a right version, determine if the right hand side is greater
+     * Given a left version and a right version, determine if the right hand side is greater.
      *
      * @param left           the client sugar version
      * @param right          the server version
      *
      * return               true if the right version is greater or they are equal
      *                      false if the left version is greater
+     * @param mixed $left
+     * @param mixed $right
+     * @param mixed $equals_is_greater
      */
     public function is_right_version_greater($left, $right, $equals_is_greater = true)
     {
         if (count($left) == 0 && count($right) == 0) {
             return $equals_is_greater;
-        } else {
-            if (count($left) == 0 || count($right) == 0) {
-                return true;
-            } else {
-                if ($left[0] == $right[0]) {
-                    array_shift($left);
-                    array_shift($right);
-                    return $this->is_right_version_greater($left, $right, $equals_is_greater);
-                } else {
-                    if ($left[0] < $right[0]) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
         }
+        if (count($left) == 0 || count($right) == 0) {
+            return true;
+        }
+        if ($left[0] == $right[0]) {
+            array_shift($left);
+            array_shift($right);
+
+            return $this->is_right_version_greater($left, $right, $equals_is_greater);
+        }
+        if ($left[0] < $right[0]) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * Given an array of id_names and versions, check if the dependencies are installed
+     * Given an array of id_names and versions, check if the dependencies are installed.
      *
      * @param dependencies	an array of id_name, version to check if these dependencies are installed
      * 						on the system
+     * @param mixed $dependencies
      *
      * @return not_found	an array of id_names that were not found to be installed on the system
      */
-    public function checkDependencies($dependencies = array())
+    public function checkDependencies($dependencies = [])
     {
-        $not_found = array();
+        $not_found = [];
         foreach ($dependencies as $dependent) {
             $found = false;
-            $query = "SELECT id FROM $this->table_name WHERE id_name = '".$dependent['id_name']."'";
+            $query = "SELECT id FROM {$this->table_name} WHERE id_name = '" . $dependent['id_name'] . "'";
             $matches = $this->getList($query);
             if (0 != count($matches)) {
                 foreach ($matches as $match) {
                     if ($this->is_right_version_greater(explode('.', $match->version), explode('.', $dependent['version']))) {
                         $found = true;
+
                         break;
                     }//fi
                 }//rof
@@ -300,7 +307,8 @@ class UpgradeHistory extends SugarBean
         }//rof
         return $not_found;
     }
-    public function retrieve($id = -1, $encode=true, $deleted=true)
+
+    public function retrieve($id = -1, $encode = true, $deleted = true)
     {
         return parent::retrieve($id, $encode, false);  //ignore the deleted filter. the table does not have the deleted column in it.
     }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,17 +43,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 use SuiteCRM\Utility\SuiteValidator;
 
 /**
- * handle requested subscriptions
+ * handle requested subscriptions.
  *
  * @param array $subs
  * @param Email $email
  * @param JSON $json
- * @param User|null $user
+ * @param null|User $user
+ *
  * @return string JSON
  */
 function handleSubs($subs, $email, $json, $user = null)
 {
-
     // flows into next case statement
     $db = DBManagerFactory::getInstance();
     global $current_user;
@@ -64,15 +62,14 @@ function handleSubs($subs, $email, $json, $user = null)
         $user = $current_user;
     }
 
-    $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
+    $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection');
     $viewFolders = $subs;
     $user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
     $tree = $email->et->getMailboxNodes(false);
     $return = $tree->generateNodesRaw();
     $out = $json->encode($return);
 
-
-    $sub = array();
+    $sub = [];
     foreach ($viewFolders as $f) {
         $query = 'SELECT * FROM folders WHERE folders.id LIKE "' . $f
             . '" OR folders.parent_folder LIKE "' . $f . '"';
@@ -87,22 +84,19 @@ function handleSubs($subs, $email, $json, $user = null)
     return $out;
 }
 
-
 //increate timeout for phpo script execution
 ini_set('max_execution_time', 300);
 //ajaxInit();
 
-
-require_once("include/OutboundEmail/OutboundEmail.php");
-require_once("include/ytree/Tree.php");
-require_once("include/ytree/ExtNode.php");
+require_once 'include/OutboundEmail/OutboundEmail.php';
+require_once 'include/ytree/Tree.php';
+require_once 'include/ytree/ExtNode.php';
 
 $email = new Email();
 $email->email2init();
 $ie = new InboundEmail();
 $ie->email = $email;
 $json = getJSONobj();
-
 
 $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
@@ -118,13 +112,11 @@ if (isset($_REQUEST['emailUIAction'])) {
     }
 
     switch ($_REQUEST['emailUIAction']) {
-
-
         ///////////////////////////////////////////////////////////////////////////
         ////    COMPOSE REPLY FORWARD
         // this is used in forward/reply
-        case "composeEmail":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: composeEmail");
+        case 'composeEmail':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: composeEmail');
             if (isset($_REQUEST['sugarEmail']) && $_REQUEST['sugarEmail'] == 'true' && isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
                 $ie->email->retrieve($_REQUEST['uid']);
                 $ie->email->from_addr = $ie->email->from_addr_name;
@@ -173,14 +165,11 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $out = $json->encode($ret, true);
                 echo $out;
             }
+
             break;
-
-        /**
-         * sendEmail handles both send and save draft duties
-         */
-        case "sendEmail":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: sendEmail");
-
+        // sendEmail handles both send and save draft duties
+        case 'sendEmail':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: sendEmail');
 
             $sea = new SugarEmailAddress();
 
@@ -195,45 +184,45 @@ if (isset($_REQUEST['emailUIAction'])) {
             }
 
             if ($email->email2Send($_REQUEST)) {
-                $ret = array(
+                $ret = [
                     'composeLayoutId' => $_REQUEST['composeLayoutId'],
-                );
+                ];
                 $out = $json->encode($ret, true);
                 echo $out; // async call to close the proper compose tab
             }
-            break;
 
-        case "uploadAttachment":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: uploadAttachment");
+            break;
+        case 'uploadAttachment':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: uploadAttachment');
             $metadata = $email->email2saveAttachment();
 
             if (!empty($metadata)) {
                 $out = $json->encode($metadata);
                 echo $out;
             }
-            break;
 
-        case "removeUploadedAttachment":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: removeUploadedAttachment");
+            break;
+        case 'removeUploadedAttachment':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: removeUploadedAttachment');
             $fileFromRequest = from_html($_REQUEST['file']);
             $fileGUID = substr($fileFromRequest, 0, 36);
             // Bug52727: sanitize fileGUID to remove path components: /\.
             $fileGUID = cleanDirName($fileGUID);
-            $fileName = $email->et->userCacheDir . "/" . $fileGUID;
+            $fileName = $email->et->userCacheDir . '/' . $fileGUID;
             $filePath = clean_path($fileName);
             unlink($filePath);
-            break;
 
-        case "fillComposeCache": // fills client-side compose email cache with signatures and email templates
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: fillComposeCache");
-            $out = array();
+            break;
+        case 'fillComposeCache': // fills client-side compose email cache with signatures and email templates
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: fillComposeCache');
+            $out = [];
             $email_templates_arr = $email->et->getEmailTemplatesArray();
             natcasesort($email_templates_arr);
             $out['emailTemplates'] = $email_templates_arr;
             $sigs = $current_user->getSignaturesArray();
             // clean "none"
             foreach ($sigs as $k => $v) {
-                if ($k == "") {
+                if ($k == '') {
                     $sigs[$k] = $app_strings['LBL_NONE'];
                 } else {
                     if (is_array($v) && isset($v['name'])) {
@@ -245,7 +234,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             }
             $out['signatures'] = $sigs;
             $out['fromAccounts'] = $email->et->getFromAccountsArray($ie);
-            $out['errorArray'] = array();
+            $out['errorArray'] = [];
 
             $oe = new OutboundEmail();
             if ($oe->doesUserOverrideAccountRequireCredentials($current_user->id)) {
@@ -255,15 +244,15 @@ if (isset($_REQUEST['emailUIAction'])) {
                     $overideAccount = $oe->createUserSystemOverrideAccount($current_user->id);
                 }
 
-                $out['errorArray'] = array($overideAccount->id => $app_strings['LBL_EMAIL_WARNING_MISSING_USER_CREDS']);
+                $out['errorArray'] = [$overideAccount->id => $app_strings['LBL_EMAIL_WARNING_MISSING_USER_CREDS']];
             }
 
             $ret = $json->encode($out);
             echo $ret;
-            break;
 
-        case "getSignature":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getSignature");
+            break;
+        case 'getSignature':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getSignature');
             if (isset($_REQUEST['id'])) {
                 $signature = $current_user->getSignature($_REQUEST['id']);
                 $signature['signature_html'] = from_html($signature['signature_html']);
@@ -272,18 +261,18 @@ if (isset($_REQUEST['emailUIAction'])) {
             } else {
                 die();
             }
-            break;
 
-    case "deleteSignature":
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteSignature");
+            break;
+    case 'deleteSignature':
+        $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: deleteSignature');
         if (isset($_REQUEST['id'])) {
-            require_once("modules/Users/UserSignature.php");
+            require_once 'modules/Users/UserSignature.php';
             $us = new UserSignature();
             $us->mark_deleted($_REQUEST['id']);
             $signatureArray = $current_user->getSignaturesArray();
             // clean "none"
             foreach ($signatureArray as $k => $v) {
-                if ($k == "") {
+                if ($k == '') {
                     $sigs[$k] = $app_strings['LBL_NONE'];
                 } else {
                     if (is_array($v) && isset($v['name'])) {
@@ -299,12 +288,12 @@ if (isset($_REQUEST['emailUIAction'])) {
         } else {
             die();
         }
+
         break;
     case 'getTemplateAttachments':
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
+        $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments');
         if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
             $db = DBManagerFactory::getInstance();
-
 
             $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
             $order = '';
@@ -312,19 +301,19 @@ if (isset($_REQUEST['emailUIAction'])) {
             $fullList = $seed->get_full_list($order, $where, '');
             $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
 
-            $js_fields_arr = array();
+            $js_fields_arr = [];
 
-            $i=1; // js doesn't like 0 index?
+            $i = 1; // js doesn't like 0 index?
             if (!empty($fullList)) {
                 foreach ($fullList as $note) {
-                    $js_fields_arr[$i] = array();
+                    $js_fields_arr[$i] = [];
 
                     foreach ($all_fields as $field) {
-                        if (isset($note->$field)) {
-                            $note->$field = from_html($note->$field);
-                            $note->$field = preg_replace('/\r\n/', '<BR>', $note->$field);
-                            $note->$field = preg_replace('/\n/', '<BR>', $note->$field);
-                            $js_fields_arr[$i][$field] = addslashes($note->$field);
+                        if (isset($note->{$field})) {
+                            $note->{$field} = from_html($note->{$field});
+                            $note->{$field} = preg_replace('/\r\n/', '<BR>', $note->{$field});
+                            $note->{$field} = preg_replace('/\n/', '<BR>', $note->{$field});
+                            $js_fields_arr[$i][$field] = addslashes($note->{$field});
                         }
                     }
                     $i++;
@@ -334,31 +323,31 @@ if (isset($_REQUEST['emailUIAction'])) {
             $out = $json->encode($js_fields_arr);
             echo $out;
         }
+
         break;
         ////    END COMPOSE REPLY FORWARD
         ///////////////////////////////////////////////////////////////////////////
 
-
         ///////////////////////////////////////////////////////////////////////////
         ////    MESSAGE HANDLING
-        case "displayView":
-            $ret = array();
+        case 'displayView':
+            $ret = [];
             $ie->retrieve($_REQUEST['ieId']);
             $ie->mailbox = $_REQUEST['mailbox'];
             $ie->connectMailserver();
 
             switch ($_REQUEST['type']) {
-                case "headers":
-                    $title = (string)($app_strings['LBL_EMAIL_VIEW_HEADERS']);
+                case 'headers':
+                    $title = (string) ($app_strings['LBL_EMAIL_VIEW_HEADERS']);
                     $text = $ie->getFormattedHeaders($_REQUEST['uid']);
-                    break;
 
-                case "raw":
-                    $title = (string)($app_strings['LBL_EMAIL_VIEW_RAW']);
+                    break;
+                case 'raw':
+                    $title = (string) ($app_strings['LBL_EMAIL_VIEW_RAW']);
                     $text = $ie->getFormattedRawSource($_REQUEST['uid']);
-                    break;
 
-                case "printable":
+                    break;
+                case 'printable':
 
                     break;
             }
@@ -368,17 +357,18 @@ if (isset($_REQUEST['emailUIAction'])) {
 
             $out = $json->encode($ret, true);
             echo $out;
-            break;
 
-        case "getQuickCreateForm":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getQuickCreateForm");
+            break;
+        case 'getQuickCreateForm':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getQuickCreateForm');
             if (isset($_REQUEST['qc_module']) && !empty($_REQUEST['qc_module'])) {
                 if (!ACLController::checkAccess($_REQUEST['qc_module'], 'edit', true)) {
-                    echo trim($json->encode(array('html' => translate('LBL_NO_ACCESS', 'ACL')), true));
+                    echo trim($json->encode(['html' => translate('LBL_NO_ACCESS', 'ACL')], true));
+
                     break;
                 }
-                $people = array("Users", "Contacts", "Leads", "Prospects");
-                $showSaveToAddressBookButton = false;//(in_array($_REQUEST['qc_module'], $people)) ? true : false;
+                $people = ['Users', 'Contacts', 'Leads', 'Prospects'];
+                $showSaveToAddressBookButton = false; //(in_array($_REQUEST['qc_module'], $people)) ? true : false;
 
                 if (isset($_REQUEST['sugarEmail']) && !empty($_REQUEST['sugarEmail'])) {
                     $ie->email->retrieve($_REQUEST['uid']); // uid is a sugar GUID in this case
@@ -399,11 +389,11 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 echo $out;
             }
-            break;
 
+            break;
         case 'saveQuickCreate':
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveQuickCreate");
-            require_once('include/MVC/Controller/ControllerFactory.php');
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveQuickCreate');
+            require_once 'include/MVC/Controller/ControllerFactory.php';
             if (isset($_REQUEST['qcmodule'])) {
                 $GLOBALS['log']->debug("********** QCmodule was set: {$_REQUEST['qcmodule']}");
             }
@@ -416,7 +406,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             if (isset($_REQUEST['sugarEmail']) && $_REQUEST['sugarEmail'] == 'true' && isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
                 $ie->email->retrieve($_REQUEST['uid']);
             } elseif (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) && isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
-                $GLOBALS['log']->debug("********** Quick Create from non-imported message");
+                $GLOBALS['log']->debug('********** Quick Create from non-imported message');
                 $ie->retrieve($_REQUEST['ieId']);
                 $ie->mailbox = $_REQUEST['mbox'];
                 $ie->connectMailserver();
@@ -431,7 +421,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                     $ie->getDuplicateEmailId($_REQUEST['uid'], $uid);
                 } // id
                 $ie->email->retrieve($ie->email->id);
-                $GLOBALS['log']->debug("**********Imported Email");
+                $GLOBALS['log']->debug('**********Imported Email');
                 $ie->email->assigned_user_id = $controller->bean->assigned_user_id;
                 $ie->email->assigned_user_name = $controller->bean->assigned_user_name;
             }
@@ -444,7 +434,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ie->email->save();
                 $mod = strtolower($controller->module);
                 $ie->email->load_relationship($mod);
-                $ie->email->$mod->add($controller->bean->id);
+                $ie->email->{$mod}->add($controller->bean->id);
                 if ($controller->bean->load_relationship('emails')) {
                     $controller->bean->emails->add($ie->email->id);
                 }
@@ -462,34 +452,34 @@ if (isset($_REQUEST['emailUIAction'])) {
                         } // if
                     } // if
                 } // if
-                echo $json->encode(array('id' => $ie->email->id));
+                echo $json->encode(['id' => $ie->email->id]);
             }
-            break;
 
-        case "getImportForm":
+            break;
+        case 'getImportForm':
             $ie->retrieve($_REQUEST['ieId']);
             //            $ie->mailbox = $_REQUEST['mailbox'];
             $ie->setEmailForDisplay($_REQUEST['uid']);
             $ret = $email->et->getImportForm($_REQUEST, $ie->email);
             $out = trim($json->encode($ret, false));
             echo $out;
-            break;
 
-        case "getRelateForm":
+            break;
+        case 'getRelateForm':
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
                 $uids = $json->decode(from_html($_REQUEST['uid']));
                 $email->retrieve($uids[0]);
-                $ret = $email->et->getImportForm(array(
+                $ret = $email->et->getImportForm([
                     'showTeam' => false,
                     'showAssignTo' => false,
                     'showDelete' => false
-                ), $email, 'RelateEditView');
+                ], $email, 'RelateEditView');
                 $out = trim($json->encode($ret, false));
                 echo $out;
             }
-            break;
 
-        case "getEmail2DetailView":
+            break;
+        case 'getEmail2DetailView':
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
                 $ret = $email->et->getDetailViewForEmail2($_REQUEST['uid']);
                 if (!isset($_REQUEST['print']) || $_REQUEST['print'] === false) {
@@ -499,9 +489,9 @@ if (isset($_REQUEST['emailUIAction'])) {
                     echo $ret['html'];
                 }
             }
-            break;
 
-        case "relateEmails":
+            break;
+        case 'relateEmails':
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) &&
                 isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id']) &&
                 isset($_REQUEST['parent_type']) && !empty($_REQUEST['parent_type'])
@@ -529,18 +519,18 @@ if (isset($_REQUEST['emailUIAction'])) {
                     // BUG FIX END
 
                     $email->load_relationship($mod);
-                    $email->$mod->add($modId);
+                    $email->{$mod}->add($modId);
                 }
             }
+
             break;
-
-
-        case "getAssignmentDialogContent":
-            $out = $email->distributionForm("");
+        case 'getAssignmentDialogContent':
+            $out = $email->distributionForm('');
             $out = trim($json->encode($out, false));
             echo $out;
+
             break;
-        case "doAssignmentAssign":
+        case 'doAssignmentAssign':
             $out = $email->et->doAssignment(
                 $_REQUEST['distribute_method'],
                 $_REQUEST['ieId'],
@@ -549,20 +539,21 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $_REQUEST['users']
             );
             echo $out;
+
             break;
-        case "doAssignmentDelete":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: doAssignmentDelete");
+        case 'doAssignmentDelete':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: doAssignmentDelete');
             if (isset($_REQUEST['uids']) && !empty($_REQUEST['uids']) &&
                 isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId']) &&
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])
             ) {
-                $email->et->markEmails("deleted", $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
+                $email->et->markEmails('deleted', $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
             }
 
             break;
-        case "markEmail":
+        case 'markEmail':
             global $app_strings;
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: markEmail");
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: markEmail');
             if (isset($_REQUEST['uids']) && !empty($_REQUEST['uids']) &&
                 isset($_REQUEST['type']) && !empty($_REQUEST['type']) &&
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder']) &&
@@ -572,7 +563,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 ) !== false))
             ) {
                 $uid = $json->decode(from_html($_REQUEST['uids']));
-                $uids = array();
+                $uids = [];
                 if (is_array($uid)) {
                     $uids = $uid;
                 } else {
@@ -583,16 +574,16 @@ if (isset($_REQUEST['emailUIAction'])) {
                     }
                 }   // else
                 $uids = implode($app_strings['LBL_EMAIL_DELIMITER'], $uids);
-                $GLOBALS['log']->debug("********** EMAIL 2.0 - Marking emails $uids as {$_REQUEST['type']}");
+                $GLOBALS['log']->debug("********** EMAIL 2.0 - Marking emails {$uids} as {$_REQUEST['type']}");
 
-                $ret = array();
+                $ret = [];
                 if (strpos(
                     $_REQUEST['folder'],
                     'sugar::'
                 ) !== false && ($_REQUEST['type'] == 'deleted') && !ACLController::checkAccess(
                     'Emails',
                     'delete'
-                        )
+                )
                 ) {
                     $ret['status'] = false;
                     $ret['message'] = $app_strings['LBL_EMAIL_DELETE_ERROR_DESC'];
@@ -602,20 +593,18 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 $out = trim($json->encode($ret, false));
                 echo $out;
-            } else {
             }
 
             break;
-
-        case "checkEmail2":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: checkEmail2");
+        case 'checkEmail2':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: checkEmail2');
 
             $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
-            $ret = array();
+            $ret = [];
             $ret['numberAccounts'] = count($showFolders);
 
-            $GLOBALS['log']->info("EMAIL2.0: async checkEmail - found [ " . $ret['numberAccounts'] . " ] accounts to check");
+            $GLOBALS['log']->info('EMAIL2.0: async checkEmail - found [ ' . $ret['numberAccounts'] . ' ] accounts to check');
 
             if (!empty($showFolders) && is_array($showFolders)) {
                 foreach ($showFolders as $ieId) {
@@ -630,24 +619,23 @@ if (isset($_REQUEST['emailUIAction'])) {
                     }
                 }
             } else {
-                $GLOBALS['log']->info("EMAIL2.0: at checkEmail() async call - not subscribed accounts to check.");
+                $GLOBALS['log']->info('EMAIL2.0: at checkEmail() async call - not subscribed accounts to check.');
             }
-
 
             $out = $json->encode($ret, true);
             echo $out;
-            break;
 
-        case "checkEmail":
+            break;
+        case 'checkEmail':
             $GLOBALS['log']->info("[EMAIL] - Start checkEmail action for user [{$current_user->user_name}]");
             if (isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
                 $ie->retrieve($_REQUEST['ieId']);
-                $ie->mailbox = (isset($_REQUEST['mbox']) && !empty($_REQUEST['mbox'])) ? $_REQUEST['mbox'] : "INBOX";
+                $ie->mailbox = (isset($_REQUEST['mbox']) && !empty($_REQUEST['mbox'])) ? $_REQUEST['mbox'] : 'INBOX';
                 $ie->checkEmail(false);
             } elseif (isset($_REQUEST['all']) && !empty($_REQUEST['all'])) {
                 $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
-                $GLOBALS['log']->info("[EMAIL] - checkEmail found " . count($showFolders) . " accounts to check for user [{$current_user->user_name}]");
+                $GLOBALS['log']->info('[EMAIL] - checkEmail found ' . count($showFolders) . " accounts to check for user [{$current_user->user_name}]");
 
                 if (!empty($showFolders) && is_array($showFolders)) {
                     foreach ($showFolders as $ieId) {
@@ -658,6 +646,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                             // If I-E not exist - skip check
                             if (is_null($ie->retrieve($ieId))) {
                                 $GLOBALS['log']->info("[EMAIL] - Inbound with GUID [{$ieId}] not exist");
+
                                 continue;
                             }
                             $ie->checkEmail(false);
@@ -665,7 +654,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                         }
                     }
                 } else {
-                    $GLOBALS['log']->info("EMAIL2.0: at checkEmail() async call - not subscribed accounts to check.");
+                    $GLOBALS['log']->info('EMAIL2.0: at checkEmail() async call - not subscribed accounts to check.');
                 }
             }
 
@@ -674,18 +663,18 @@ if (isset($_REQUEST['emailUIAction'])) {
             $out = $json->encode($return);
             echo $out;
             $GLOBALS['log']->info("[EMAIL] - Done checkEmail action for user [{$current_user->user_name}]");
-            break;
 
-        case "checkEmailProgress":
+            break;
+        case 'checkEmailProgress':
             $GLOBALS['log']->info("[EMAIL] - Start checkEmail action for user [{$current_user->user_name}]");
             if (isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
                 $ie->retrieve($_REQUEST['ieId']);
-                $ie->mailbox = (isset($_REQUEST['mbox']) && !empty($_REQUEST['mbox'])) ? $_REQUEST['mbox'] : "INBOX";
-                $synch = (isset($_REQUEST['synch']) && ($_REQUEST['synch'] == "true"));
+                $ie->mailbox = (isset($_REQUEST['mbox']) && !empty($_REQUEST['mbox'])) ? $_REQUEST['mbox'] : 'INBOX';
+                $synch = (isset($_REQUEST['synch']) && ($_REQUEST['synch'] == 'true'));
                 if (!$ie->is_personal) {
-                    $return = array('status' => "done");
+                    $return = ['status' => 'done'];
                 } else {
-                    if ($ie->protocol == "pop3") {
+                    if ($ie->protocol == 'pop3') {
                         $return = $ie->pop3_checkPartialEmail($synch);
                     } else {
                         $return = $ie->checkEmailIMAPPartial(false, $synch);
@@ -694,23 +683,22 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $return['ieid'] = $ie->id;
                 $return['synch'] = $synch;
                 if (isset($_REQUEST['totalcount']) && !empty($_REQUEST['totalcount']) && $_REQUEST['totalcount'] >= 0) {
-                    if ($ie->protocol == "pop3") {
+                    if ($ie->protocol == 'pop3') {
                         $return['totalcount'] = $_REQUEST['totalcount'];
                     } // else
                 }
                 echo $json->encode($return);
             } // if
             break;
-
-        case "getAllFoldersTree":
+        case 'getAllFoldersTree':
             $tree = $email->et->getMailboxNodes(true); // preserve cache files
             $return = $tree->generateNodesRaw();
             $out = $json->encode($return);
             echo $out;
             $GLOBALS['log']->info("[EMAIL] - Done checkEmail action for user [{$current_user->user_name}]");
-            break;
 
-        case "synchronizeEmail":
+            break;
+        case 'synchronizeEmail':
             $GLOBALS['log']->info("[EMAIL] Start action synchronizeEmail for user [{$current_user->user_name}]");
             $ie->syncEmail(true);
             $tree = $email->et->getMailboxNodes(true);
@@ -718,14 +706,14 @@ if (isset($_REQUEST['emailUIAction'])) {
             $out = $json->encode($return);
             echo $out;
             $GLOBALS['log']->info("[EMAIL] Done action synchronizeEmail for user [{$current_user->user_name}]");
-            break;
 
-        case "importEmail":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: importEmail");
+            break;
+        case 'importEmail':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: importEmail');
             $ie->retrieve($_REQUEST['ieId']);
             $ie->mailbox = $_REQUEST['mbox'];
             $ie->connectMailserver();
-            $return = array();
+            $return = [];
             $status = true;
             $count = 1;
             if (strpos($_REQUEST['uid'], $app_strings['LBL_EMAIL_DELIMITER']) !== false) {
@@ -738,7 +726,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                     } else {
                         $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
                     } // else
-                    $return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
+                    $return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . ' ' . $count . ', ' . $app_strings['LBL_STATUS'] . ' ' . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
                     $count++;
                     if (($_REQUEST['delete'] == 'true') && $status && ($current_user->is_admin == 1 || $ie->group_id == $current_user->id)) {
                         $ie->deleteMessageOnMailServer($uid);
@@ -753,7 +741,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 } else {
                     $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
                 } // else
-                $return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
+                $return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . ' ' . $count . ', ' . $app_strings['LBL_STATUS'] . ' ' . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
 
                 if (($_REQUEST['delete'] == 'true') && $status && ($current_user->is_admin == 1 || $ie->group_id == $current_user->id)) {
                     $ie->deleteMessageOnMailServer($_REQUEST['uid']);
@@ -761,18 +749,17 @@ if (isset($_REQUEST['emailUIAction'])) {
                 } // if
             } // else
             echo $json->encode($return);
-            break;
 
-        case "setReadFlag":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setReadFlag");
+            break;
+        case 'setReadFlag':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: setReadFlag');
             $ie->retrieve($_REQUEST['ieId']);
             $ie->setReadFlagOnFolderCache($_REQUEST['mbox'], $_REQUEST['uid']);
             $email->et->getListEmails($_REQUEST['ieId'], $_REQUEST['mbox'], 0, 'true');
             //unlink("{$cacheRoot}/{$_REQUEST['ieId']}/folders/{$_REQUEST['mbox']}.php");
             break;
-
-        case "deleteMessage":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteMessage");
+        case 'deleteMessage':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: deleteMessage');
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) && isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
                 $ie->retrieve($_REQUEST['ieId']);
                 $ie->mailbox = $_REQUEST['mbox'];
@@ -782,15 +769,15 @@ if (isset($_REQUEST['emailUIAction'])) {
                     $ie->deleteMessageFromCache($_REQUEST['uid']);
                 } else {
                     $GLOBALS['log']->debug("*** ERROR: tried to delete an email for an account for which {$current_user->full_name} is not the owner!");
-                    echo "NOOP: error see log";
+                    echo 'NOOP: error see log';
                 }
             } else {
-                echo "error: missing credentials";
+                echo 'error: missing credentials';
             }
-            break;
 
-        case "getSingleMessage":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getSingleMessage");
+            break;
+        case 'getSingleMessage':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getSingleMessage');
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) && isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
                 // this method needs to guarantee UTF-8 charset - encoding detection
                 // and conversion is unreliable, and can break valid UTF-8 text
@@ -798,12 +785,12 @@ if (isset($_REQUEST['emailUIAction'])) {
 
                 echo $json->encode($out);
             } else {
-                echo "error: no UID";
+                echo 'error: no UID';
             }
-            break;
 
-        case "getSingleMessageFromSugar":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getSingleMessageFromSugar");
+            break;
+        case 'getSingleMessageFromSugar':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getSingleMessageFromSugar');
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
                 $email->retrieve($_REQUEST['uid']);
                 //$email->description_html = from_html($email->description_html);
@@ -816,7 +803,6 @@ if (isset($_REQUEST['emailUIAction'])) {
 
                     $ret = $ie->email->et->getDraftAttachments($ret, $ie);
                     $ret = $ie->email->et->getFromAllAccountsArray($ie, $ret);
-
 
                     $out = $json->encode($ret, true);
                     echo $out;
@@ -849,27 +835,27 @@ eoq;
                     echo $json->encode($out);
                 }
             } else {
-                echo "error: no UID";
+                echo 'error: no UID';
             }
+
             break;
-
-        case "getMultipleMessages":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getMultipleMessages");
+        case 'getMultipleMessages':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getMultipleMessages');
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) && isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
-                $exUids = explode(",", $_REQUEST['uid']);
+                $exUids = explode(',', $_REQUEST['uid']);
 
-                $out = array();
+                $out = [];
                 foreach ($exUids as $k => $uid) {
                     if ($email->et->validCacheFileExists(
                         $_REQUEST['ieId'],
                         'messages',
-                        $_REQUEST['mbox'] . $uid . ".php"
+                        $_REQUEST['mbox'] . $uid . '.php'
                     )
                     ) {
                         $msg = $email->et->getCacheValue(
                             $_REQUEST['ieId'],
                             'messages',
-                            $_REQUEST['mbox'] . $uid . ".php",
+                            $_REQUEST['mbox'] . $uid . '.php',
                             'out'
                         );
                     } else {
@@ -890,15 +876,15 @@ eoq;
                 }
                 echo $json->encode($out);
             } else {
-                echo "error: no UID";
+                echo 'error: no UID';
             }
-            break;
 
-        case "getMultipleMessagesFromSugar":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getMultipleMessagesFromSugar");
+            break;
+        case 'getMultipleMessagesFromSugar':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getMultipleMessagesFromSugar');
             if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
-                $exIds = explode(",", $_REQUEST['uid']);
-                $out = array();
+                $exIds = explode(',', $_REQUEST['uid']);
+                $out = [];
 
                 foreach ($exIds as $id) {
                     $e = new Email();
@@ -915,24 +901,23 @@ eoq;
         ////    END MESSAGE HANDLING
         ///////////////////////////////////////////////////////////////////////////
 
-
         ///////////////////////////////////////////////////////////////////////////
         ////    LIST VIEW
-        case "getMessageCount":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getMessageCount");
+        case 'getMessageCount':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getMessageCount');
 
             $out = $ie->getCacheCount($_REQUEST['mbox']);
             echo $json->encode($out);
-            break;
 
-        case "getMessageList":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getMessageListJSON");
+            break;
+        case 'getMessageList':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getMessageListJSON');
             if (isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
                 // user view preferences
                 $email->et->saveListView($_REQUEST['ieId'], $_REQUEST['mbox']);
                 // list output
                 $ie->retrieve($_REQUEST['ieId']);
-                if (isset($_REQUEST['start']) && isset($_REQUEST['limit'])) {
+                if (isset($_REQUEST['start'], $_REQUEST['limit'])) {
                     $page = ceil($_REQUEST['start'] / $_REQUEST['limit']) + 1;
                 } else {
                     $page = 1;
@@ -951,14 +936,14 @@ eoq;
                 echo $msg = 'error: no ieID';
                 $GLOBALS['log']->error($msg);
             }
-            break;
 
-        case "getMessageListSugarFolders":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getMessageListSugarFoldersJSON");
+            break;
+        case 'getMessageListSugarFolders':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getMessageListSugarFoldersJSON');
             if (isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
                 // user view preferences
                 $email->et->saveListView($_REQUEST['ieId'], "SUGAR.{$_REQUEST['mbox']}");
-                if (isset($_REQUEST['start']) && isset($_REQUEST['limit'])) {
+                if (isset($_REQUEST['start'], $_REQUEST['limit'])) {
                     $page = ceil($_REQUEST['start'] / $_REQUEST['limit']) + 1;
                 } else {
                     $page = 1;
@@ -979,7 +964,7 @@ eoq;
                 $sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
                 if (!empty($sortSerial) && !empty($_REQUEST['ieId']) && !empty($_REQUEST['mbox'])) {
                     $sortArray = sugar_unserialize($sortSerial);
-                    $GLOBALS['log']->debug("********** EMAIL 2.0********** ary=" . print_r(
+                    $GLOBALS['log']->debug('********** EMAIL 2.0********** ary=' . print_r(
                         $sortArray,
                         true
                     ) . ' id=' . $_REQUEST['ieId'] . '; box=' . $_REQUEST['mbox']);
@@ -1023,28 +1008,28 @@ eoq;
                 echo $out;
                 ob_end_flush();
             } else {
-                echo "error: no ieID";
+                echo 'error: no ieID';
             }
+
             break;
         ////    END LIST VIEW
         ///////////////////////////////////////////////////////////////////////////
 
-
         ///////////////////////////////////////////////////////////////////////////
         ////    FOLDER ACTIONS
-        case "emptyTrash":
+        case 'emptyTrash':
             $email->et->emptyTrash($ie);
-            break;
 
-        case "clearInboundAccountCache":
+            break;
+        case 'clearInboundAccountCache':
             $email->et->clearInboundAccountCache($_REQUEST['ieId']);
-            break;
 
-        case "updateSubscriptions":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: updateSubscriptions");
+            break;
+        case 'updateSubscriptions':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: updateSubscriptions');
             if (isset($_REQUEST['subscriptions']) && !empty($_REQUEST['subscriptions'])) {
-                $subs = explode("::", $_REQUEST['subscriptions']);
-                $childrenSubs = array();
+                $subs = explode('::', $_REQUEST['subscriptions']);
+                $childrenSubs = [];
                 //Find all children of the group folder subscribed to and add
                 //them to the list of folders to show.
                 foreach ($subs as $singleSub) {
@@ -1060,14 +1045,14 @@ eoq;
             } else {
                 $GLOBALS['log']->fatal('Incorrect request for update subscriptions');
             }
-            break;
 
-        case "refreshSugarFolders":
+            break;
+        case 'refreshSugarFolders':
             try {
-                $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders");
+                $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders');
                 $rootNode = new ExtNode('', '');
                 $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
-                $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
+                $folderOpenState = (empty($folderOpenState)) ? '' : $folderOpenState;
                 $ret = $email->et->folder->getUserFolders(
                     $rootNode,
                     sugar_unserialize($folderOpenState),
@@ -1078,23 +1063,22 @@ eoq;
                 echo $out;
             } catch (SugarFolderEmptyException $e) {
                 $GLOBALS['log']->warn($e);
-                $out = $json->encode(array(
+                $out = $json->encode([
                     'message' => 'No folder selected warning message here...',
-                ));
+                ]);
                 echo $out;
             }
+
             break;
-
-
-        case "getFoldersForSettings":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getFoldersForSettings");
+        case 'getFoldersForSettings':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getFoldersForSettings');
             $ret = $email->et->folder->getFoldersForSettings($current_user);
             $out = $json->encode($ret);
             echo $out;
-            break;
 
-        case "moveEmails":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: moveEmails");
+            break;
+        case 'moveEmails':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: moveEmails');
             $ie->moveEmails(
                 $_REQUEST['sourceIeId'],
                 $_REQUEST['sourceFolder'],
@@ -1102,30 +1086,31 @@ eoq;
                 $_REQUEST['destinationFolder'],
                 $_REQUEST['emailUids']
             );
-            break;
 
-        case "saveNewFolder":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveNewFolder");
+            break;
+        case 'saveNewFolder':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveNewFolder');
             if (isset($_REQUEST['folderType']) && !empty($_REQUEST['folderType'])) {
                 switch ($_REQUEST['folderType']) {
-                    case "sugar":
+                    case 'sugar':
                         $ret = $email->et->saveNewFolder($_REQUEST['nodeLabel'], $_REQUEST['parentId']);
                         $out = $json->encode($ret);
                         echo $out;
-                        break;
 
-                    case "imap":
+                        break;
+                    case 'imap':
                         $ie->retrieve($_REQUEST['ieId']);
                         $ie->connectMailserver();
                         $ie->saveNewFolder($_REQUEST['newFolderName'], $_REQUEST['mbox']);
+
                         break;
                 }
             } else {
-                echo "NOOP: no folderType defined";
+                echo 'NOOP: no folderType defined';
             }
-            break;
 
-        case "setFolderViewSelection":
+            break;
+        case 'setFolderViewSelection':
             $isValidator = new SuiteValidator();
             $user =
                 isset($_REQUEST['user']) && $_REQUEST['user'] && $isValidator->isValidId($_REQUEST['user']) ?
@@ -1135,15 +1120,15 @@ eoq;
             $out = handleSubs($_REQUEST['ieIdShow'], $email, $json, $user);
 
             echo $out;
-            break;
 
-        case "deleteFolder":
+            break;
+        case 'deleteFolder':
             $v = $app_strings['LBL_NONE'];
-            $return = array();
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteFolder");
+            $return = [];
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: deleteFolder');
             if (isset($_REQUEST['folderType']) && !empty($_REQUEST['folderType'])) {
                 switch ($_REQUEST['folderType']) {
-                    case "sugar":
+                    case 'sugar':
                         $status = $email->et->folder->deleteChildrenCascade($_REQUEST['folder_id']);
                         if ($status == true) {
                             $return['status'] = true;
@@ -1152,9 +1137,9 @@ eoq;
                             $return['status'] = false;
                             $return['errorMessage'] = $app_strings['LBL_EMAIL_ERROR_DELETE_GROUP_FOLDER'];
                         }
-                        break;
 
-                    case "imap":
+                        break;
+                    case 'imap':
                         $ie->retrieve($_REQUEST['ieId']);
                         $ie->connectMailserver();
                         $returnArray = $ie->deleteFolder($_REQUEST['mbox']);
@@ -1168,19 +1153,21 @@ eoq;
                             $return['status'] = false;
                             $return['errorMessage'] = $errorMessage;
                         }
+
                         break;
                 }
             } else {
                 $return['status'] = false;
-                $return['errorMessage'] = "NOOP: no folderType defined";
+                $return['errorMessage'] = 'NOOP: no folderType defined';
             }
             $out = $json->encode($return);
             echo $out;
-            break;
-        case "renameFolder":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: renameFolder");
 
-            if (isset($_REQUEST['ieId']) && isset($_REQUEST['oldFolderName']) && !empty($_REQUEST['oldFolderName'])
+            break;
+        case 'renameFolder':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: renameFolder');
+
+            if (isset($_REQUEST['ieId'], $_REQUEST['oldFolderName']) && !empty($_REQUEST['oldFolderName'])
                 && isset($_REQUEST['newFolderName']) && !empty($_REQUEST['newFolderName'])
             ) {
                 $ie->retrieve($_REQUEST['ieId']);
@@ -1191,60 +1178,61 @@ eoq;
                     $email->et->folder->name = $_REQUEST['newFolderName'];
                     $email->et->folder->save();
                 } else {
-                    echo "NOOP - not a Sugar Folder";
+                    echo 'NOOP - not a Sugar Folder';
                 }
             }
             // no break
-        case "moveFolder":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: moveFolder");
+        case 'moveFolder':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: moveFolder');
             if (isset($_REQUEST['folderId']) && !empty($_REQUEST['folderId']) && isset($_REQUEST['newParentId']) && !empty($_REQUEST['newParentId']) && $_REQUEST['newParentId'] != $_REQUEST['folderId']) {
                 if (is_guid($_REQUEST['folderId']) && is_guid($_REQUEST['newParentId'])) {
                     $email->et->folder->retrieve($_REQUEST['folderId']);
-                    $email->et->folder->updateFolder(array(
-                        "record" => $_REQUEST['folderId'],
-                        "name" => $email->et->folder->name,
-                        "parent_folder" => $_REQUEST['newParentId'],
-                        "team_id" => $email->et->folder->team_id,
-                        "team_set_id" => $email->et->folder->team_set_id,
-                    ));
+                    $email->et->folder->updateFolder([
+                        'record' => $_REQUEST['folderId'],
+                        'name' => $email->et->folder->name,
+                        'parent_folder' => $_REQUEST['newParentId'],
+                        'team_id' => $email->et->folder->team_id,
+                        'team_set_id' => $email->et->folder->team_set_id,
+                    ]);
                 } else {
-                    echo "NOOP - not a Sugar Folder";
+                    echo 'NOOP - not a Sugar Folder';
                 }
             }
+
             break;
-        case "getGroupFolder":
+        case 'getGroupFolder':
             $email->et->folder->retrieve($_REQUEST['folderId']);
             $_REQUEST['record'] = $_REQUEST['folderId'];
-            $ret = array();
+            $ret = [];
             $ret['folderId'] = $email->et->folder->id;
             $ret['folderName'] = $email->et->folder->name;
             $ret['parentFolderId'] = $email->et->folder->parent_folder;
             $out = $json->encode($ret);
             echo $out;
+
             break;
-
-
-        case "rebuildFolders":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: rebuildFolders");
+        case 'rebuildFolders':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: rebuildFolders');
             $tree = $email->et->getMailboxNodes(false);
             $return = $tree->generateNodesRaw();
             $out = $json->encode($return);
             echo $out;
-            break;
 
-        case "setFolderOpenState":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderOpenState");
+            break;
+        case 'setFolderOpenState':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: setFolderOpenState');
             $email->et->saveFolderOpenState($_REQUEST['focusFolder'], $_REQUEST['focusFolderOpen']);
-            break;
 
-        case "saveListViewSortOrder":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveListViewSortOrder");
+            break;
+        case 'saveListViewSortOrder':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveListViewSortOrder');
             $email->et->saveListViewSortOrder(
                 $_REQUEST['ieId'],
                 $_REQUEST['focusFolder'],
                 $_REQUEST['sortBy'],
                 $_REQUEST['reverse']
             );
+
             break;
         ////    END FOLDER ACTIONS
         ///////////////////////////////////////////////////////////////////////////
@@ -1252,27 +1240,26 @@ eoq;
         ///////////////////////////////////////////////////////////////////////////
         ////    INBOUND EMAIL ACCOUNTS
 
-        case "retrieveAllOutbound":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: retrieveAllOutbound");
+        case 'retrieveAllOutbound':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: retrieveAllOutbound');
             global $current_user;
             $oe = new OutboundEmail();
             $outbounds = $oe->getUserMailers($current_user);
-            $results = array('outbound_account_list' => $outbounds, 'count' => count($outbounds));
+            $results = ['outbound_account_list' => $outbounds, 'count' => count($outbounds)];
             $out = $json->encode($results, false);
             echo $out;
 
             break;
-
-        case "editOutbound":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: editOutbound");
+        case 'editOutbound':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: editOutbound');
             if (isset($_REQUEST['outbound_email']) && !empty($_REQUEST['outbound_email'])) {
                 $oe = new OutboundEmail();
                 $oe->retrieve($_REQUEST['outbound_email']);
 
-                $ret = array();
+                $ret = [];
 
                 foreach ($oe->field_defs as $def) {
-                    $ret[$def] = $oe->$def;
+                    $ret[$def] = $oe->{$def};
                 }
                 $ret['mail_smtppass'] = ''; // don't send back the password
                 $ret['has_password'] = isset($oe->mail_smtppass);
@@ -1280,12 +1267,12 @@ eoq;
                 $out = $json->encode($ret, true);
                 echo $out;
             } else {
-                echo "NOOP";
+                echo 'NOOP';
             }
-            break;
 
-        case "deleteOutbound":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteOutbound");
+            break;
+        case 'deleteOutbound':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: deleteOutbound');
             if (isset($_REQUEST['outbound_email']) && !empty($_REQUEST['outbound_email'])) {
                 $oe = new OutboundEmail();
                 global $current_user;
@@ -1296,14 +1283,14 @@ eoq;
                 $confirmedDelete = (isset($_REQUEST['confirm']) && $_REQUEST['confirm']) ? true : false;
 
                 if (count($affectedInboundAccounts) > 0 && !$confirmedDelete) {
-                    $results = array(
+                    $results = [
                         'is_error' => true,
                         'error_message' => $app_strings['LBL_EMAIL_REMOVE_SMTP_WARNING'],
                         'outbound_email' => $_REQUEST['outbound_email']
-                    );
+                    ];
                 } else {
                     $oe->delete();
-                    $results = array('is_error' => false, 'error_message' => '');
+                    $results = ['is_error' => false, 'error_message' => ''];
                 }
 
                 $out = $json->encode($results);
@@ -1312,13 +1299,12 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP";
             }
-            break;
+                echo 'NOOP';
 
-        case "saveOutbound":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveOutbound");
+            break;
+        case 'saveOutbound':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveOutbound');
 
             $oe = new OutboundEmail();
             $oe->id = $_REQUEST['mail_id'];
@@ -1327,7 +1313,7 @@ eoq;
             $type = empty($_REQUEST['type']) ? 'user' : $_REQUEST['type'];
             $oe->type = $type;
             $oe->user_id = $current_user->id;
-            $oe->mail_sendtype = "SMTP";
+            $oe->mail_sendtype = 'SMTP';
 
             $oe->smtp_from_name = $_REQUEST['smtp_from_name'];
             $oe->smtp_from_addr = $_REQUEST['smtp_from_addr'];
@@ -1342,17 +1328,18 @@ eoq;
             }
             $oe = $oe->save();
             echo $oe->id;
-            break;
 
-        case "saveDefaultOutbound":
+            break;
+        case 'saveDefaultOutbound':
             global $current_user;
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveDefaultOutbound");
-            $outbound_id = empty($_REQUEST['id']) ? "" : $_REQUEST['id'];
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveDefaultOutbound');
+            $outbound_id = empty($_REQUEST['id']) ? '' : $_REQUEST['id'];
             $ie = new InboundEmail();
             $ie->setUsersDefaultOutboundServerId($current_user, $outbound_id);
+
             break;
-        case "testOutbound":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: testOutbound");
+        case 'testOutbound':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: testOutbound');
 
             $pass = '';
             if (!empty($_REQUEST['mail_smtppass'])) {
@@ -1377,32 +1364,32 @@ eoq;
 
             $out = $json->encode($out);
             echo $out;
-            break;
 
-        case "rebuildShowAccount":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: rebuildShowAccount");
+            break;
+        case 'rebuildShowAccount':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: rebuildShowAccount');
             $ret = $email->et->getShowAccountsOptions($ie);
-            $results = array('account_list' => $ret, 'count' => count($ret));
+            $results = ['account_list' => $ret, 'count' => count($ret)];
             $out = $json->encode($results);
             echo $out;
-            break;
 
-        case "rebuildShowAccountForSearch":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: rebuildShowAccount");
+            break;
+        case 'rebuildShowAccountForSearch':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: rebuildShowAccount');
             $ret = $email->et->getShowAccountsOptionsForSearch($ie);
             $out = $json->encode($ret);
             echo $out;
-            break;
 
-        case "deleteIeAccount":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteIeAccount");
+            break;
+        case 'deleteIeAccount':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: deleteIeAccount');
             if (isset($_REQUEST['group_id']) && $_REQUEST['group_id'] == $current_user->id) {
-                $ret = array();
-                $updateFolders = array();
+                $ret = [];
+                $updateFolders = [];
                 $ret['id'] = $_REQUEST['ie_id'];
                 $out = $json->encode($ret);
                 $ie->hardDelete($_REQUEST['ie_id']);
-                $out = $json->encode(array('id' => $_REQUEST['ie_id']));
+                $out = $json->encode(['id' => $_REQUEST['ie_id']]);
                 echo $out;
 
                 foreach ($showFolders as $id) {
@@ -1414,13 +1401,13 @@ eoq;
                 $showStore = base64_encode(serialize($updateFolders));
                 $current_user->setPreference('showFolders', $showStore, 0, 'Emails');
             }
-            break;
 
-        case "saveIeAccount":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveIeAccount");
+            break;
+        case 'saveIeAccount':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveIeAccount');
             if (isset($_REQUEST['server_url']) && !empty($_REQUEST['server_url'])) {
                 if (false === $ie->savePersonalEmailAccount($current_user->id, $current_user->user_name, false)) {
-                    $ret = array('error' => 'error');
+                    $ret = ['error' => 'error'];
                     $out = $json->encode($ret);
                     echo $out;
                 } else {
@@ -1432,7 +1419,7 @@ eoq;
                         $ie->modified_user_id_link = null;
                     }
                     if (!is_array($showFolders)) {
-                        $showFolders = array();
+                        $showFolders = [];
                     }
                     if (!in_array($ie->id, $showFolders)) {
                         $showFolders[] = $ie->id;
@@ -1444,7 +1431,7 @@ eoq;
                         $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
                         $email_signatures = sugar_unserialize(base64_decode($email_signatures));
                         if (empty($email_signatures)) {
-                            $email_signatures = array();
+                            $email_signatures = [];
                         }
 
                         $email_signatures[$ie->id] = $_REQUEST['account_signature_id'];
@@ -1457,13 +1444,13 @@ eoq;
                             continue;
                         }
                         if ($k == 'stored_options') {
-                            $ie->$k = sugar_unserialize(base64_decode($ie->$k));
+                            $ie->{$k} = sugar_unserialize(base64_decode($ie->{$k}));
                             if (isset($ie->stored_options['from_name'])) {
                                 $ie->stored_options['from_name'] = from_html($ie->stored_options['from_name']);
                             }
                         } elseif ($k == 'service') {
-                            $service = explode("::", $ie->$k);
-                            $retService = array();
+                            $service = explode('::', $ie->{$k});
+                            $retService = [];
 
                             foreach ($service as $serviceK => $serviceV) {
                                 if (!empty($serviceV)) {
@@ -1471,11 +1458,11 @@ eoq;
                                 }
                             }
 
-                            $ie->$k = $retService;
+                            $ie->{$k} = $retService;
                         }
 
-                        if (isset($ie->$k)) {
-                            $ret[$k] = $ie->$k;
+                        if (isset($ie->{$k})) {
+                            $ret[$k] = $ie->{$k};
                         }
                     }
 
@@ -1484,9 +1471,9 @@ eoq;
                 }
 
                 //If the user is saving the username/password then we need to update the outbound account.
-                $outboundMailUser = (isset($_REQUEST['mail_smtpuser'])) ? $_REQUEST['mail_smtpuser'] : "";
-                $outboundMailPass = (isset($_REQUEST['mail_smtppass'])) ? $_REQUEST['mail_smtppass'] : "";
-                $outboundMailId = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : "";
+                $outboundMailUser = (isset($_REQUEST['mail_smtpuser'])) ? $_REQUEST['mail_smtpuser'] : '';
+                $outboundMailPass = (isset($_REQUEST['mail_smtppass'])) ? $_REQUEST['mail_smtppass'] : '';
+                $outboundMailId = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : '';
 
                 if (!empty($outboundMailUser) && !empty($outboundMailPass) && !empty($outboundMailId)) {
                     $oe = new OutboundEmail();
@@ -1496,37 +1483,37 @@ eoq;
                     $oe->save();
                 }
             } else {
-                echo "NOOP";
+                echo 'NOOP';
             }
-            break;
 
-        case "getIeAccount":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getIeAccount");
+            break;
+        case 'getIeAccount':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getIeAccount');
             $ieId = $_REQUEST['ieId'];
             $ie->retrieve($ieId);
 
             if (($ie->group_id == $current_user->id) || ($current_user->is_admin)) {
-                $ret = array();
+                $ret = [];
 
                 foreach ($ie->field_defs as $k => $v) {
                     if ($k == 'stored_options') {
-                        $ie->$k = unserialize(base64_decode($ie->$k));
+                        $ie->{$k} = unserialize(base64_decode($ie->{$k}));
                         if (isset($ie->stored_options['from_name'])) {
                             $ie->stored_options['from_name'] = from_html($ie->stored_options['from_name']);
                         }
                     } elseif ($k == 'service') {
-                        $service = explode("::", $ie->$k);
-                        $retService = array();
+                        $service = explode('::', $ie->{$k});
+                        $retService = [];
                         foreach ($service as $serviceK => $serviceV) {
                             if (!empty($serviceV)) {
                                 $retService[$serviceK] = $serviceV;
                             }
                         }
 
-                        $ie->$k = $retService;
+                        $ie->{$k} = $retService;
                     }
 
-                    $ret[$k] = $ie->$k;
+                    $ret[$k] = $ie->{$k};
                 }
                 unset($ret['email_password']); // no need to send the password out
 
@@ -1543,24 +1530,22 @@ eoq;
                 $email_default_signatures = $current_user->getPreference('signature_default');
                 $email_account_signatures = $current_user->getEmailAccountSignatures(false, '');
 
-
                 $ret['email_account_signatures'] = $email_account_signatures;
-
 
                 $out = $json->encode($ret);
             } else {
-                $out = "NOOP: ID mismatch";
+                $out = 'NOOP: ID mismatch';
             }
             echo $out;
+
             break;
         ////    END INBOUND EMAIL ACCOUNTS
         ///////////////////////////////////////////////////////////////////////////
 
-
         ///////////////////////////////////////////////////////////////////////////
         ////    SEARCH
-        case "search":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: search");
+        case 'search':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: search');
             if (isset($_REQUEST['subject']) && !empty($_REQUEST['subject']) && isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
                 $metalist = $ie->search($_REQUEST['ieId'], $_REQUEST['subject']);
                 if (!isset($_REQUEST['page'])) {
@@ -1570,18 +1555,16 @@ eoq;
                 $out = $email->et->xmlOutput($metalist, 'Email', false);
                 @ob_end_clean();
                 ob_start();
-                header("Content-type: text/xml");
+                header('Content-type: text/xml');
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP: no search criteria found";
             }
+                echo 'NOOP: no search criteria found';
 
             break;
-
-        case "searchAdvanced":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: searchAdvanced");
+        case 'searchAdvanced':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: searchAdvanced');
 
             $metalist = $email->searchImportedEmails();
             $out = $email->et->jsonOuput($metalist, 'Email', $metalist['totalCount']);
@@ -1596,19 +1579,18 @@ eoq;
         ////    END SEARCH
         ///////////////////////////////////////////////////////////////////////////
 
-
         ///////////////////////////////////////////////////////////////////////////
         ////    SETTINGS
-        case "loadPreferences":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: loadPreferences");
+        case 'loadPreferences':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: loadPreferences');
             $prefs = $email->et->getUserPreferencesJS();
             $out = $json->encode($prefs);
             echo $out;
-            break;
 
-        case "saveSettingsGeneral":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveSettingsGeneral");
-            $emailSettings = array();
+            break;
+        case 'saveSettingsGeneral':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveSettingsGeneral');
+            $emailSettings = [];
             $emailSettings['emailCheckInterval'] = $_REQUEST['emailCheckInterval'];
             //$emailSettings['autoImport'] = isset($_REQUEST['autoImport']) ? '1' : '0';
             $emailSettings['alwaysSaveOutbound'] = '1';
@@ -1623,11 +1605,11 @@ eoq;
 
             $out = $json->encode($email->et->getUserPreferencesJS());
             echo $out;
-            break;
 
-        case "setPreference":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setPreference");
-            if (isset($_REQUEST['prefName']) && isset($_REQUEST['prefValue'])) {
+            break;
+        case 'setPreference':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: setPreference');
+            if (isset($_REQUEST['prefName'], $_REQUEST['prefValue'])) {
                 // handle potential JSON encoding
                 if (isset($_REQUEST['decode'])) {
                     $_REQUEST['prefValue'] = $json->decode(from_html($_REQUEST['prefValue']));
@@ -1635,58 +1617,57 @@ eoq;
 
                 $current_user->setPreference($_REQUEST['prefName'], $_REQUEST['prefValue'], '', 'Emails');
             }
+
             break;
         ////    END SETTINGS
         ///////////////////////////////////////////////////////////////////////////
 
-
         ///////////////////////////////////////////////////////////////////////////
         ////    ADDRESS BOOK
 
-        case "editContact":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: editContact");
+        case 'editContact':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: editContact');
             if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
-                $module = "Contacts";
+                $module = 'Contacts';
                 $ret = $email->et->getEditContact($_REQUEST['id'], $module);
             }
             $out = $json->encode($ret);
             echo $out;
+
             break;
-
-
-        /* The four calls below all have the same return signature */
-        case "removeContact":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: removeContacts");
-            if (strpos($_REQUEST['ids'], "::") !== false) {
-                $removeIds = explode("::", $_REQUEST['ids']);
+        // The four calls below all have the same return signature
+        case 'removeContact':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: removeContacts');
+            if (strpos($_REQUEST['ids'], '::') !== false) {
+                $removeIds = explode('::', $_REQUEST['ids']);
             } else {
                 $removeIds[] = $_REQUEST['ids'];
             }
             $email->et->removeContacts($removeIds);
 
             // no break
-        case "saveContactEdit":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveContactEdit");
+        case 'saveContactEdit':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: saveContactEdit');
             if (isset($_REQUEST['args']) && !empty($_REQUEST['args'])) {
                 $email->et->saveContactEdit($_REQUEST['args']);
             }
         // flow into getUserContacts();
         // no break
-        case "addContact":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: addContacts");
-            $contacts = array();
+        case 'addContact':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: addContacts');
+            $contacts = [];
 
             if (isset($_REQUEST['bean_module']) && !empty($_REQUEST['bean_module']) && isset($_REQUEST['bean_id']) && !empty($_REQUEST['bean_id'])) {
-                $contacts[$_REQUEST['bean_id']] = array(
+                $contacts[$_REQUEST['bean_id']] = [
                     'id' => $_REQUEST['bean_id'],
                     'module' => $_REQUEST['bean_module']
-                );
+                ];
                 $email->et->setContacts($contacts);
             }
 
             // no break
-        case "addContactsMultiple":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: addContacts");
+        case 'addContactsMultiple':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: addContacts');
             if (isset($_REQUEST['contactData'])) {
                 $contacts = $json->decode(from_HTML($_REQUEST['contactData']));
                 if ($contacts) {
@@ -1695,8 +1676,8 @@ eoq;
             }
 
             // no break
-        case "getUserContacts":
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getUserContacts");
+        case 'getUserContacts':
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: getUserContacts');
             $contacts = $email->et->getContacts();
 
             if (is_array($contacts) && !empty($contacts)) {
@@ -1704,14 +1685,13 @@ eoq;
                 $out = $json->encode($ret);
                 echo $out;
             } else {
-                echo "{}";
+                echo '{}';
             }
+
             break;
-
-
         // address book search
-        case "getUnionData":
-            $wheres = array();
+        case 'getUnionData':
+            $wheres = [];
             $person;
             if (isset($_REQUEST['first_name']) && !empty($_REQUEST['first_name'])) {
                 $wheres['first_name'] = $_REQUEST['first_name'];
@@ -1728,9 +1708,9 @@ eoq;
             $q = $email->et->_getPeopleUnionQuery($wheres, $person);
             $r = $ie->db->limitQuery($q, 0, 25, true);
 
-            $out = array();
+            $out = [];
             while ($a = $ie->db->fetchByAssoc($r)) {
-                $person = array();
+                $person = [];
                 $person['id'] = $a['id'];
                 $person['module'] = $a['module'];
                 $person['full_name'] = $locale->getLocaleFormattedName($a['first_name'], $a['last_name'], '');
@@ -1740,10 +1720,10 @@ eoq;
 
             $ret = $json->encode($out, true);
             echo $ret;
-            break;
 
-        case "getAddressSearchResults":
-            $wheres = array();
+            break;
+        case 'getAddressSearchResults':
+            $wheres = [];
             $person = 'contacts';
             $relatedBeanInfo = '';
             if (isset($_REQUEST['related_bean_id']) && !empty($_REQUEST['related_bean_id'])) {
@@ -1762,41 +1742,40 @@ eoq;
                 $person = $_REQUEST['person'];
             }
             if (!empty($_REQUEST['start'])) {
-                $start = (int)$_REQUEST['start'];
+                $start = (int) $_REQUEST['start'];
             } else {
                 $start = 0;
             }
 
             $qArray = $email->et->getRelatedEmail($person, $wheres, $relatedBeanInfo);
-            $out = array();
+            $out = [];
             $count = 0;
             if (!empty($qArray['query'])) {
                 $countq = $qArray['countQuery'];
                 $time = microtime(true);
                 $r = $ie->db->query($countq);
-                $GLOBALS['log']->debug("***QUERY counted in " . (microtime(true) - $time) . " milisec\n");
+                $GLOBALS['log']->debug('***QUERY counted in ' . (microtime(true) - $time) . " milisec\n");
                 if ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
                     $count = $row['c'];
                 }
                 $time = microtime(true);
 
                 //Handle sort and order requests
-                $sort = !empty($_REQUEST['sort']) ? $ie->db->getValidDBName($_REQUEST['sort']) : "id";
+                $sort = !empty($_REQUEST['sort']) ? $ie->db->getValidDBName($_REQUEST['sort']) : 'id';
                 $sort = ($sort == 'bean_id') ? 'id' : $sort;
                 $sort = ($sort == 'email') ? 'email_address' : $sort;
                 $sort = ($sort == 'name') ? 'last_name' : $sort;
                 $direction = !empty($_REQUEST['dir']) && in_array(
                     strtolower($_REQUEST['dir']),
-                    array("asc", "desc")
-                ) ? $_REQUEST['dir'] : "asc";
-                $order = (!empty($sort) && !empty($direction)) ? " ORDER BY {$sort} {$direction}" : "";
+                    ['asc', 'desc']
+                ) ? $_REQUEST['dir'] : 'asc';
+                $order = (!empty($sort) && !empty($direction)) ? " ORDER BY {$sort} {$direction}" : '';
 
-                $r = $ie->db->limitQuery($qArray['query'] . " $order ", $start, 25, true);
-                $GLOBALS['log']->debug("***QUERY Got results in " . (microtime(true) - $time) . " milisec\n");
-
+                $r = $ie->db->limitQuery($qArray['query'] . " {$order} ", $start, 25, true);
+                $GLOBALS['log']->debug('***QUERY Got results in ' . (microtime(true) - $time) . " milisec\n");
 
                 while ($a = $ie->db->fetchByAssoc($r)) {
-                    $person = array();
+                    $person = [];
                     $person['bean_id'] = $a['id'];
                     $person['bean_module'] = $a['module'];
                     $person['name'] = $locale->getLocaleFormattedName($a['first_name'], $a['last_name'], '');
@@ -1804,24 +1783,24 @@ eoq;
                     $out[] = $person;
                 }
             }
-            $ret = $email->et->jsonOuput(array('out' => $out), 'Person', $count);
+            $ret = $email->et->jsonOuput(['out' => $out], 'Person', $count);
 
             @ob_end_clean();
             ob_start();
             echo $ret;
             ob_end_flush();
-            break;
 
+            break;
         ////    END ADDRESS BOOK
         ///////////////////////////////////////////////////////////////////////////
-
 
         ///////////////////////////////////////////////////////////////////////////
         ////    MISC
 
         default:
-            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: default");
-            echo "NOOP";
+            $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: default');
+            echo 'NOOP';
+
             break;
     } // switch
 

@@ -98,7 +98,7 @@ class SearchModules
     private static function getAllModules()
     {
         $unifiedSearch = new \UnifiedSearchAdvanced();
-        $allModules = $unifiedSearch->retrieveEnabledAndDisabledModules();
-        return $allModules;
+
+        return $unifiedSearch->retrieveEnabledAndDisabledModules();
     }
 }

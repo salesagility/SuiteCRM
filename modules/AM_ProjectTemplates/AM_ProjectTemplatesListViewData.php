@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,34 +40,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/EditView/SugarVCR.php');
+require_once 'include/EditView/SugarVCR.php';
 
 /**
- * Data set for ListView
+ * Data set for ListView.
+ *
  * @api
  */
 class AM_ProjectTemplatesListViewData extends ListViewData
 {
-
-
     /**
-     * generates the additional details span to be retrieved via ajax
+     * generates the additional details span to be retrieved via ajax.
      *
      * @param GUID id id of the record
+     * @param mixed $id
+     *
      * @return array string to attach to field
      */
     public function getAdditionalDetailsAjax($id)
     {
         global $app_strings;
 
-        $jscalendarImage = '<span class="suitepicon suitepicon-action-info" title="'.$app_strings['LBL_ADDITIONAL_DETAILS'].'"></span>';
+        $jscalendarImage = '<span class="suitepicon suitepicon-action-info" title="' . $app_strings['LBL_ADDITIONAL_DETAILS'] . '"></span>';
         $jsdetailviewImage = '<span class="suitepicon suitepicon-action-view-record"></span>';
 
         $extra = "<span id='aadspan_" . $id . "' "
-                . "onclick=\"location.href='index.php?module=AM_ProjectTemplates&action=DetailView&record=". $id ."'\" "
-                . "><!--not_in_theme!-->".$app_strings['LBL_ADDITIONAL_DETAILS']."'</span>";
+                . "onclick=\"location.href='index.php?module=AM_ProjectTemplates&action=DetailView&record=" . $id . "'\" "
+                . '><!--not_in_theme!-->' . $app_strings['LBL_ADDITIONAL_DETAILS'] . "'</span>";
 
         //return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
     }

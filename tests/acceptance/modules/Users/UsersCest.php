@@ -11,12 +11,12 @@ use Step\Acceptance\UsersTester;
 class UsersCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -32,7 +32,7 @@ class UsersCest
         $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
-    
+
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users)
     {
         $I->loginAsAdmin();
@@ -68,7 +68,7 @@ class UsersCest
 
         $I->see('User Profile', '.panel-heading');
 
-        $I->click("Layout Options");
+        $I->click('Layout Options');
         $I->waitForElementVisible('input[name="user_count_collapsed_subpanels"]');
         $I->seeElement('input', ['name' => 'user_count_collapsed_subpanels']);
         $I->checkOption(['name' => 'user_count_collapsed_subpanels']);
@@ -85,7 +85,7 @@ class UsersCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $accountId = $accounts->createAccount('Test_'. $this->fakeData->company());
+        $accountId = $accounts->createAccount('Test_' . $this->fakeData->company());
 
         $I->visitPage('Accounts', 'DetailView', $accountId);
         $DetailView->waitForDetailViewVisible();
@@ -101,7 +101,7 @@ class UsersCest
         // Reset the collapsed subpanels
         $Users->gotoProfile();
         $I->see('User Profile', '.panel-heading');
-        $I->click("Layout Options");
+        $I->click('Layout Options');
         $I->seeElement('input', ['name' => 'user_count_collapsed_subpanels']);
         $I->uncheckOption(['name' => 'user_count_collapsed_subpanels']);
         $EditView->clickSaveButton();

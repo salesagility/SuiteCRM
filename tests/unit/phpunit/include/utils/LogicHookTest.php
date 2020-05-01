@@ -2,18 +2,21 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
         parent::setUp();
     }
-    
+
     protected function tearDown()
     {
         parent::tearDown();
     }
-    
+
     public function testinitialize()
     {
         //execute the method and test if it returns correct class instances
@@ -60,98 +63,88 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     public function testscanHooksDir()
     {
         //execute the method and test if it returns expected contents
-        $expected_hook_map = array(
-            'before_save' =>
-                array(
-                    array('file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0,),
-                ),
-            'after_save' =>
-                array(
-                    array('file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0,),
-                    array('file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 1,),
-                    array('file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 2,),
-                    array('file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 3,),
-                ),
-            'after_relationship_add' =>
-                array(
-                    array('file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0,),
-                ),
-            'after_relationship_delete' =>
-                array(
-                    array('file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0,),
-                ),
-        );
+        $expected_hook_map = [
+            'before_save' => [
+                ['file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0],
+            ],
+            'after_save' => [
+                ['file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0],
+                ['file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 1],
+                ['file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 2],
+                ['file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 3],
+            ],
+            'after_relationship_add' => [
+                ['file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0],
+            ],
+            'after_relationship_delete' => [
+                ['file' => 'custom/modules/Accounts/logic_hooks.php', 'index' => 0],
+            ],
+        ];
 
-
-        $expected_hookscan = array(
-            'before_save' =>
-                array(
-                    array(
-                        77,
-                        'updateGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateGeocodeInfo',
-                    ),
-                ),
-            'after_save' =>
-                array(
-                    array(
-                        77,
-                        'updateRelatedMeetingsGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedMeetingsGeocodeInfo',
-                    ),
-                    array(
-                        78,
-                        'updateRelatedProjectGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedProjectGeocodeInfo',
-                    ),
-                    array(
-                        79,
-                        'updateRelatedOpportunitiesGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedOpportunitiesGeocodeInfo',
-                    ),
-                    array(
-                        80,
-                        'updateRelatedCasesGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedCasesGeocodeInfo',
-                    ),
-                ),
-            'after_relationship_add' =>
-                array(
-                    array(
-                        77,
-                        'addRelationship',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'addRelationship',
-                    ),
-                ),
-            'after_relationship_delete' =>
-                array(
-                    array(
-                        77,
-                        'deleteRelationship',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'deleteRelationship',
-                    ),
-                ),
-        );
+        $expected_hookscan = [
+            'before_save' => [
+                [
+                    77,
+                    'updateGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateGeocodeInfo',
+                ],
+            ],
+            'after_save' => [
+                [
+                    77,
+                    'updateRelatedMeetingsGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedMeetingsGeocodeInfo',
+                ],
+                [
+                    78,
+                    'updateRelatedProjectGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedProjectGeocodeInfo',
+                ],
+                [
+                    79,
+                    'updateRelatedOpportunitiesGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedOpportunitiesGeocodeInfo',
+                ],
+                [
+                    80,
+                    'updateRelatedCasesGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedCasesGeocodeInfo',
+                ],
+            ],
+            'after_relationship_add' => [
+                [
+                    77,
+                    'addRelationship',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'addRelationship',
+                ],
+            ],
+            'after_relationship_delete' => [
+                [
+                    77,
+                    'deleteRelationship',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'deleteRelationship',
+                ],
+            ],
+        ];
 
         $LogicHook = new LogicHook();
         $LogicHook->scanHooksDir('custom/modules/Accounts');
         $hook_map = $LogicHook->getHooksMap();
         $hookscan = $LogicHook->getHooksList();
-
 
         if (file_exists('custom/modules/Accounts') && is_dir('custom/modules/Accounts')) {
             $this->assertSame($expected_hook_map, $hook_map);
@@ -176,112 +169,112 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     public function testloadHooks()
     {
         //execute the method and test if it returns expected contents
-        $expected_accounts = array(
-            'before_save' => array(
-                array(
+        $expected_accounts = [
+            'before_save' => [
+                [
                     77,
                     'updateGeocodeInfo',
                     'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
                     'AccountsJjwg_MapsLogicHook',
                     'updateGeocodeInfo'
-                ),
-            ),
-            'after_save' => array(
-                array(
+                ],
+            ],
+            'after_save' => [
+                [
                     77,
                     'updateRelatedMeetingsGeocodeInfo',
                     'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
                     'AccountsJjwg_MapsLogicHook',
                     'updateRelatedMeetingsGeocodeInfo'
-                ),
-                array(
+                ],
+                [
                     78,
                     'updateRelatedProjectGeocodeInfo',
                     'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
                     'AccountsJjwg_MapsLogicHook',
                     'updateRelatedProjectGeocodeInfo'
-                ),
-                array(
+                ],
+                [
                     79,
                     'updateRelatedOpportunitiesGeocodeInfo',
                     'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
                     'AccountsJjwg_MapsLogicHook',
                     'updateRelatedOpportunitiesGeocodeInfo'
-                ),
-                array(
+                ],
+                [
                     80,
                     'updateRelatedCasesGeocodeInfo',
                     'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
                     'AccountsJjwg_MapsLogicHook',
                     'updateRelatedCasesGeocodeInfo'
-                ),
-            ),
-            'after_relationship_add' => array(
-                array(
+                ],
+            ],
+            'after_relationship_add' => [
+                [
                     77,
                     'addRelationship',
                     'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
                     'AccountsJjwg_MapsLogicHook',
                     'addRelationship'
-                ),
-            ),
-            'after_relationship_delete' => array(
-                array(
+                ],
+            ],
+            'after_relationship_delete' => [
+                [
                     77,
                     'deleteRelationship',
                     'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
                     'AccountsJjwg_MapsLogicHook',
                     'deleteRelationship'
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
-        $expected_default = array(
-            'after_save' => array(
-                array(
+        $expected_default = [
+            'after_save' => [
+                [
                     1,
                     'AOD Index Changes',
                     'modules/AOD_Index/AOD_LogicHooks.php',
                     'AOD_LogicHooks',
                     'saveModuleChanges'
-                ),
-                array(30, 'popup_select', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_select'),
-                array(99, 'AOW_Workflow', 'modules/AOW_WorkFlow/AOW_WorkFlow.php', 'AOW_WorkFlow', 'run_bean_flows'),
-            ),
-            'after_delete' => array(
-                array(
+                ],
+                [30, 'popup_select', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_select'],
+                [99, 'AOW_Workflow', 'modules/AOW_WorkFlow/AOW_WorkFlow.php', 'AOW_WorkFlow', 'run_bean_flows'],
+            ],
+            'after_delete' => [
+                [
                     1,
                     'AOD Index changes',
                     'modules/AOD_Index/AOD_LogicHooks.php',
                     'AOD_LogicHooks',
                     'saveModuleDelete'
-                ),
-            ),
-            'after_restore' => array(
-                array(
+                ],
+            ],
+            'after_restore' => [
+                [
                     1,
                     'AOD Index changes',
                     'modules/AOD_Index/AOD_LogicHooks.php',
                     'AOD_LogicHooks',
                     'saveModuleRestore'
-                ),
-            ),
-            'after_ui_footer' => array(
-                array(10, 'popup_onload', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_onload'),
-            ),
-            'after_ui_frame' => array(
-                array(20, 'mass_assign', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'mass_assign'),
-                array(1, 'Load Social JS', 'include/social/hooks.php', 'hooks', 'load_js'),
-            ),
-        );
+                ],
+            ],
+            'after_ui_footer' => [
+                [10, 'popup_onload', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_onload'],
+            ],
+            'after_ui_frame' => [
+                [20, 'mass_assign', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'mass_assign'],
+                [1, 'Load Social JS', 'include/social/hooks.php', 'hooks', 'load_js'],
+            ],
+        ];
 
         $LogicHook = new LogicHook();
 
         //test with a valid module
         $accounts_hooks = $LogicHook->loadHooks('Accounts');
         if (
-            file_exists("custom/modules/Accounts/logic_hooks.php") ||
-            file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
+            file_exists('custom/modules/Accounts/logic_hooks.php') ||
+            file_exists('custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php')
         ) {
             $this->assertSame($expected_accounts, $accounts_hooks);
         } else {
@@ -291,8 +284,8 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         //test with an invalid module, it will get the application hooks
         $default_hooks = $LogicHook->loadHooks('');
         if (
-            file_exists("custom/modules/logic_hooks.php") ||
-            file_exists("custom/application/Ext/LogicHooks/logichooks.ext.php")
+            file_exists('custom/modules/logic_hooks.php') ||
+            file_exists('custom/application/Ext/LogicHooks/logichooks.ext.php')
         ) {
             //$this->assertSame($expected_default, $default_hooks);
         } else {
@@ -372,78 +365,74 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it returns expected contents
 
-        $expected = array(
-            /*'after_ui_frame' => Array (),*/
-            'before_save' =>
-                array(
-                    array(
-                        77,
-                        'updateGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateGeocodeInfo',
-                    ),
-                ),
-            'after_save' =>
-                array(
-                    array(
-                        77,
-                        'updateRelatedMeetingsGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedMeetingsGeocodeInfo',
-                    ),
-                    array(
-                        78,
-                        'updateRelatedProjectGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedProjectGeocodeInfo',
-                    ),
-                    array(
-                        79,
-                        'updateRelatedOpportunitiesGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedOpportunitiesGeocodeInfo',
-                    ),
-                    array(
-                        80,
-                        'updateRelatedCasesGeocodeInfo',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'updateRelatedCasesGeocodeInfo',
-                    ),
-                ),
-            'after_relationship_add' =>
-                array(
-                    array(
-                        77,
-                        'addRelationship',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'addRelationship',
-                    ),
-                ),
-            'after_relationship_delete' =>
-                array(
-                    array(
-                        77,
-                        'deleteRelationship',
-                        'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
-                        'AccountsJjwg_MapsLogicHook',
-                        'deleteRelationship',
-                    ),
-                ),
-        );
+        $expected = [
+            // 'after_ui_frame' => Array (),
+            'before_save' => [
+                [
+                    77,
+                    'updateGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateGeocodeInfo',
+                ],
+            ],
+            'after_save' => [
+                [
+                    77,
+                    'updateRelatedMeetingsGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedMeetingsGeocodeInfo',
+                ],
+                [
+                    78,
+                    'updateRelatedProjectGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedProjectGeocodeInfo',
+                ],
+                [
+                    79,
+                    'updateRelatedOpportunitiesGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedOpportunitiesGeocodeInfo',
+                ],
+                [
+                    80,
+                    'updateRelatedCasesGeocodeInfo',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'updateRelatedCasesGeocodeInfo',
+                ],
+            ],
+            'after_relationship_add' => [
+                [
+                    77,
+                    'addRelationship',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'addRelationship',
+                ],
+            ],
+            'after_relationship_delete' => [
+                [
+                    77,
+                    'deleteRelationship',
+                    'modules/Accounts/AccountsJjwg_MapsLogicHook.php',
+                    'AccountsJjwg_MapsLogicHook',
+                    'deleteRelationship',
+                ],
+            ],
+        ];
 
         $LogicHook = new LogicHook();
 
         //test with refresh false/default
         $hooks = $LogicHook->getHooks('Accounts');
         if (
-            file_exists("custom/modules/Accounts/logic_hooks.php") ||
-            file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
+            file_exists('custom/modules/Accounts/logic_hooks.php') ||
+            file_exists('custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php')
         ) {
             $this->assertEquals($expected, $hooks);
         } else {
@@ -453,8 +442,8 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         //test wit hrefresh true
         $hooks = $LogicHook->getHooks('Accounts', true);
         if (
-            file_exists("custom/modules/Accounts/logic_hooks.php") ||
-            file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
+            file_exists('custom/modules/Accounts/logic_hooks.php') ||
+            file_exists('custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php')
         ) {
             $this->assertSame($expected, $hooks);
         } else {
@@ -462,7 +451,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcall_custom_logic()
+    public function testcallCustomLogic()
     {
         //execute the method and test if it doesn't throws an exception
         $LogicHook = new LogicHook();
@@ -476,7 +465,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testprocess_hooks()
+    public function testprocessHooks()
     {
         // execute the method and test if it doesn't throws an exception
         $LogicHook = new LogicHook();
@@ -484,7 +473,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         $hooks = $LogicHook->loadHooks('');
 
         try {
-            $LogicHook->process_hooks($hooks, 'after_ui_footer', array());
+            $LogicHook->process_hooks($hooks, 'after_ui_footer', []);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());

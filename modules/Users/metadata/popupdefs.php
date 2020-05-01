@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,23 +40,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$popupMeta = array(
+$popupMeta = [
     'moduleMain' => 'User',
     'varName' => 'USER',
     'orderBy' => 'user_name',
-    'whereClauses' => array(
+    'whereClauses' => [
         'first_name' => 'users.first_name',
         'last_name' => 'users.last_name',
         'user_name' => 'users.user_name',
         'is_group' => 'users.is_group',
-    ),
-    'whereStatement'=> " users.status = 'Active' and users.portal_only= '0'",
-    'searchInputs' => array(
+    ],
+    'whereStatement' => " users.status = 'Active' and users.portal_only= '0'",
+    'searchInputs' => [
         'first_name',
         'last_name',
         'user_name',
         'is_group',
-    ),
-);
+    ],
+];

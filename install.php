@@ -1,42 +1,42 @@
 <?php
+
  /**
- *
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+  * SugarCRM Community Edition is a customer relationship management program developed by
+  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+  *
+  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+  *
+  * This program is free software; you can redistribute it and/or modify it under
+  * the terms of the GNU Affero General Public License version 3 as published by the
+  * Free Software Foundation with the addition of the following permission added
+  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+  *
+  * This program is distributed in the hope that it will be useful, but WITHOUT
+  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+  * details.
+  *
+  * You should have received a copy of the GNU Affero General Public License along with
+  * this program; if not, see http://www.gnu.org/licenses or write to the Free
+  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  * 02110-1301 USA.
+  *
+  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+  *
+  * The interactive user interfaces in modified source and object code versions
+  * of this program must display Appropriate Legal Notices, as required under
+  * Section 5 of the GNU Affero General Public License version 3.
+  *
+  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+  * these Appropriate Legal Notices must retain the display of the "Powered by
+  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+  */
  if (!defined('sugarEntry')) {
      define('sugarEntry', true);
  }
@@ -55,19 +55,19 @@ if (isset($_POST['smtp_tab_selected'])) {
     $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
 }
 
-/**
+/*
  * Check php version
  *
  * If less than minimum we refuse to install.
  */
 if (check_php_version() === -1) {
     $msg = 'The recommended PHP version to install SuiteCRM is ';
-    $msg .= constant('SUITECRM_PHP_REC_VERSION').'<br />';
+    $msg .= constant('SUITECRM_PHP_REC_VERSION') . '<br />';
     $msg .= 'Although the minimum PHP version required is ';
-    $msg .= constant('SUITECRM_PHP_MIN_VERSION').', ';
+    $msg .= constant('SUITECRM_PHP_MIN_VERSION') . ', ';
     $msg .= 'is not recommended due to the large number of fixed bugs, including security fixes, ';
     $msg .= 'released in the more modern versions.<br />';
-    $msg .= 'You are using PHP version  '. constant('PHP_VERSION').', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
+    $msg .= 'You are using PHP version  ' . constant('PHP_VERSION') . ', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
     $msg .= 'Please consider upgrading your PHP version. Instructions on <a href="http://php.net/migration70">http://php.net/migration70</a>. ';
     die($msg);
 }
@@ -79,17 +79,17 @@ if (empty($session_id)) {
 $GLOBALS['installing'] = true;
 define('SUGARCRM_IS_INSTALLING', $GLOBALS['installing']);
 $GLOBALS['sql_queries'] = 0;
-require_once('include/SugarLogger/LoggerManager.php');
-require_once('sugar_version.php');
-require_once('suitecrm_version.php');
-require_once('install/install_utils.php');
-require_once('install/install_defaults.php');
-require_once('include/TimeDate.php');
-require_once('include/Localization/Localization.php');
-require_once('include/SugarTheme/SugarTheme.php');
-require_once('include/utils/LogicHook.php');
-require_once('data/SugarBean.php');
-require_once('include/entryPoint.php');
+require_once 'include/SugarLogger/LoggerManager.php';
+require_once 'sugar_version.php';
+require_once 'suitecrm_version.php';
+require_once 'install/install_utils.php';
+require_once 'install/install_defaults.php';
+require_once 'include/TimeDate.php';
+require_once 'include/Localization/Localization.php';
+require_once 'include/SugarTheme/SugarTheme.php';
+require_once 'include/utils/LogicHook.php';
+require_once 'data/SugarBean.php';
+require_once 'include/entryPoint.php';
 //check to see if the script files need to be rebuilt, add needed variables to request array
 $_REQUEST['root_directory'] = getcwd();
 $_REQUEST['js_rebuild_concat'] = 'rebuild';
@@ -99,10 +99,9 @@ $silentInstall = true;
 
 //Todo, check if there is an instance where goto is not set, but a silent install is in place
 if (isset($_REQUEST['goto']) && $_REQUEST['goto'] != 'SilentInstall') {
-    require_once('jssource/minify.php');
+    require_once 'jssource/minify.php';
     $silentInstall = false;
 }
-
 
 $timedate = TimeDate::getInstance();
 // cn: set php.ini settings at entry points
@@ -125,19 +124,20 @@ $common = 'install/installCommon.js';
 ////	INSTALLER LANGUAGE
 function getSupportedInstallLanguages()
 {
-    $supportedLanguages = array(
-        'en_us'	=> 'English (US)',
-    );
+    $supportedLanguages = [
+        'en_us' => 'English (US)',
+    ];
     if (file_exists('install/lang.config.php')) {
-        include('install/lang.config.php');
+        include 'install/lang.config.php';
         if (!empty($config['languages'])) {
-            foreach ($config['languages'] as $k=>$v) {
+            foreach ($config['languages'] as $k => $v) {
                 if (file_exists('install/language/' . $k . '.lang.php')) {
                     $supportedLanguages[$k] = $v;
                 }
             }
         }
     }
+
     return $supportedLanguages;
 }
 $supportedLanguages = getSupportedInstallLanguages();
@@ -162,14 +162,14 @@ if (isset($_POST['language'])) {
 $current_language = isset($_SESSION['language']) ? $_SESSION['language'] : $default_lang;
 
 if (file_exists("install/language/{$current_language}.lang.php")) {
-    require_once("install/language/{$current_language}.lang.php");
+    require_once "install/language/{$current_language}.lang.php";
 } else {
-    require_once("install/language/{$default_lang}.lang.php");
+    require_once "install/language/{$default_lang}.lang.php";
 }
 
 if ($current_language != 'en_us') {
     $my_mod_strings = $mod_strings;
-    include('install/language/en_us.lang.php');
+    include 'install/language/en_us.lang.php';
     $mod_strings = sugarLangArrayMerge($mod_strings, $my_mod_strings);
 }
 
@@ -182,28 +182,28 @@ $help_url = get_help_button_url();
 
 //if this license print, then redirect and exit,
 if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint') {
-    include('install/licensePrint.php');
+    include 'install/licensePrint.php';
     exit();
 }
 
-if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
+if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == '1') {
     //if this is a system check, then just run the check and return,
     //this is an ajax call and there is no need for further processing
 
     if (isset($_REQUEST['uploadLogoFrame']) && ($_REQUEST['uploadLogoFrame'])) {
         echo 'I\'m an uploader iframe!';
+
         return;
     }
 
     // upload company logo
     if (isset($_REQUEST['uploadLogo']) && ($_REQUEST['uploadLogo'])) {
         $filepath = '';
-        $errors = array();
+        $errors = [];
 
         switch ($_FILES['company_logo']['error']) {
-
             case UPLOAD_ERR_OK:
-                $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG/*, IMAGETYPE_GIF */);
+                $allowedTypes = [IMAGETYPE_PNG, IMAGETYPE_JPEG/*, IMAGETYPE_GIF */];
                 $detectedType = exif_imagetype($_FILES['company_logo']['tmp_name']);
                 if (!in_array($detectedType, $allowedTypes)) {
                     $errors[] = $mod_strings['ERR_UPLOAD_FILETYPE'];
@@ -219,40 +219,41 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
                         $filepath = $destFile;
                     }
                 }
-                break;
 
+                break;
             case UPLOAD_ERR_INI_SIZE:
                 $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE'];
-                break;
 
+                break;
             case UPLOAD_ERR_FORM_SIZE:
                 $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_FORM_SIZE'];
-                break;
 
+                break;
             case UPLOAD_ERR_PARTIAL:
                 $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_PARTIAL'];
-                break;
 
+                break;
             case UPLOAD_ERR_NO_FILE:
                 $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_FILE'];
-                break;
 
+                break;
             case UPLOAD_ERR_NO_TMP_DIR:
                 $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_TMP_DIR'];
-                break;
 
+                break;
             case UPLOAD_ERR_CANT_WRITE:
                 $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_CANT_WRITE'];
-                break;
 
+                break;
             case UPLOAD_ERR_EXTENSION:
                 $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_EXTENSION'];
+
                 break;
             default:
                 $errors[] = $mod_strings['ERR_LANG_UPLOAD_UNKNOWN'];
+
                 break;
         }
-
 
         $result['filepath'] = $filepath;
         $result['errors'] = $errors ? $errors : false;
@@ -260,7 +261,7 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
         // TODO--low: validate file size & image width/height and save, show status result to client js
 
         if (isset($_REQUEST['callback']) && $_REQUEST['callback'] === 'uploadLogoCallback') {
-            echo "<script>window.top.window.uploadLogoCallback" . json_encode($result) . ");</script>";
+            echo '<script>window.top.window.uploadLogoCallback' . json_encode($result) . ');</script>';
         }
 
         return;
@@ -297,7 +298,7 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
         if (isset($validation_errors) && is_array($validation_errors)) {
             if (count($validation_errors) > 0) {
                 // $errors  = '<div id="errorMsgs">';
-                $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
+                $errors .= '<p>' . $mod_strings['LBL_SITECFG_FIX_ERRORS'] . '</p><ul>';
                 foreach ($validation_errors as $error) {
                     $errors .= '<li class="error">' . $error . '</li>';
                 }
@@ -306,20 +307,23 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
         }
 
         echo $errors;
+
         return;
     }
 
     if (isset($_REQUEST['checkInstallSystem']) && ($_REQUEST['checkInstallSystem'])) {
-        require_once('install/installSystemCheck.php');
+        require_once 'install/installSystemCheck.php';
         echo runCheck($install_script, $mod_strings);
+
         return;
     }
 
     //if this is a DB Settings check, then just run the check and return,
     //this is an ajax call and there is no need for further processing
     if (isset($_REQUEST['checkDBSettings']) && ($_REQUEST['checkDBSettings'])) {
-        require_once('install/checkDBSettings.php');
+        require_once 'install/checkDBSettings.php';
         echo checkDBSettings();
+
         return;
     }
 }
@@ -330,7 +334,7 @@ if (isset($_REQUEST['install_type']) && $_REQUEST['install_type'] == 'custom') {
 }
 
 //set the default settings into session
-foreach ($installer_defaults as $key =>$val) {
+foreach ($installer_defaults as $key => $val) {
     if (!isset($_SESSION[$key])) {
         $_SESSION[$key] = $val;
     }
@@ -342,7 +346,7 @@ print_debug_comment();
 $next_clicked = false;
 $next_step = 0;
 
-$workflow = array() ;
+$workflow = [];
 // If less then recommended PHP version, insert old_php.pho into workflow.
 if (check_php_version() === 0) {
     $workflow[] = 'old_php.php';
@@ -361,13 +365,13 @@ $workflow[] = 'installConfig.php';
 //$workflow[] = 'dbConfig_b.php';
 
 //define web root, which will be used as default for site_url
-if ($_SERVER['SERVER_PORT']=='80') {
-    $web_root = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
+if ($_SERVER['SERVER_PORT'] == '80') {
+    $web_root = $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
 } else {
-    $web_root = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].$_SERVER['PHP_SELF'];
+    $web_root = $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['PHP_SELF'];
 }
-$web_root = str_replace("/install.php", "", $web_root);
-$web_root = "http://$web_root";
+$web_root = str_replace('/install.php', '', $web_root);
+$web_root = "http://{$web_root}";
 
 if (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false) {
     //$workflow[] = 'siteConfig_a.php';
@@ -377,7 +381,7 @@ if (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false) {
     }
 } else {
     if (is_readable('config.php')) {
-        require_once('config.php');
+        require_once 'config.php';
     }
 }
 
@@ -386,11 +390,11 @@ if (empty($sugar_config['cache_dir']) && !empty($_SESSION['cache_dir'])) {
 }
 
 // set the form's php var to the loaded config's var else default to sane settings
-if (!isset($_SESSION['setup_site_url'])  || empty($_SESSION['setup_site_url'])) {
+if (!isset($_SESSION['setup_site_url']) || empty($_SESSION['setup_site_url'])) {
     if (isset($sugar_config['site_url']) && !empty($sugar_config['site_url'])) {
-        $_SESSION['setup_site_url']= $sugar_config['site_url'];
+        $_SESSION['setup_site_url'] = $sugar_config['site_url'];
     } else {
-        $_SESSION['setup_site_url']= $web_root;
+        $_SESSION['setup_site_url'] = $web_root;
     }
 }
 
@@ -413,8 +417,8 @@ if (!isset($_SESSION['cache_dir']) || empty($_SESSION['cache_dir'])) {
 //$workflow[] = 'confirmSettings.php';
 $workflow[] = 'performSetup.php';
 
-if (!isset($_SESSION['oc_install']) ||  $_SESSION['oc_install'] == false) {
-    if (isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && $_SESSION['install_type']=='custom') {
+if (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false) {
+    if (isset($_SESSION['install_type']) && !empty($_SESSION['install_type']) && $_SESSION['install_type'] == 'custom') {
         //$workflow[] = 'download_patches.php';
         $workflow[] = 'download_modules.php';
     }
@@ -423,27 +427,31 @@ if (!isset($_SESSION['oc_install']) ||  $_SESSION['oc_install'] == false) {
 //$workflow[] = 'register.php';
 $workflow[] = 'complete_install.php';
 
-
 // increment/decrement the workflow pointer
 if (!empty($_REQUEST['goto'])) {
     switch ($_REQUEST['goto']) {
         case $mod_strings['LBL_CHECKSYS_RECHECK']:
             $next_step = $_REQUEST['current_step'];
+
             break;
         case $mod_strings['LBL_BACK']:
             $next_step = $_REQUEST['current_step'] - 1;
+
             break;
         case 'resend':
         case $mod_strings['LBL_NEXT']:
         case $mod_strings['LBL_START']:
             $next_step = $_REQUEST['current_step'] + 1;
             $next_clicked = true;
+
             break;
         case 'SilentInstall':
             $next_step = 9999;
+
             break;
         case 'oc_convert':
             $next_step = 9191;
+
             break;
     }
 }
@@ -490,15 +498,13 @@ EOHTML;
     die();
 }
 
+$exclude_files = ['complete_install.php', 'register.php', 'download_modules.php'];
 
-
-$exclude_files = array('complete_install.php','register.php','download_modules.php');
-
-if (isset($next_step) && isset($workflow[$next_step]) && !in_array($workflow[$next_step], $exclude_files) && isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
+if (isset($next_step, $workflow[$next_step]) && !in_array($workflow[$next_step], $exclude_files) && isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
     $the_file = 'installDisabled.php';
     $disabled_title = $mod_strings['LBL_DISABLED_DESCRIPTION'];
     $disabled_title_2 = $mod_strings['LBL_DISABLED_TITLE_2'];
-    $disabled_text =<<<EOQ
+    $disabled_text = <<<EOQ
 		<p>{$mod_strings['LBL_DISABLED_DESCRIPTION']}</p>
 		<pre>
 			'installer_locked' => false,
@@ -508,7 +514,7 @@ if (isset($next_step) && isset($workflow[$next_step]) && !in_array($workflow[$ne
 		<p>{$mod_strings['LBL_DISABLED_HELP_1']} <a href="{$mod_strings['LBL_DISABLED_HELP_LNK']}" target="_blank">{$mod_strings['LBL_DISABLED_HELP_2']}</a>.</p>
 EOQ;
 } else {
-    $validation_errors = array();
+    $validation_errors = [];
     // process the data posted
     if ($next_clicked) {
         // store the submitted data because the 'Next' button was clicked
@@ -516,21 +522,20 @@ EOQ;
         case 'old_php.php':
         $_SESSION['language'] = $_REQUEST['language'];
         $_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
-        break;
 
+        break;
     case 'welcome.php':
             $_SESSION['language'] = $_REQUEST['language'];
             $_SESSION['setup_site_admin_user_name'] = 'admin';
 //        break;
 //      case 'license.php':
-                $_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
-                $_SESSION['license_submitted']      = true;
-
+                $_SESSION['setup_license_accept'] = get_boolean_from_request('setup_license_accept');
+                $_SESSION['license_submitted'] = true;
 
                 // eventually default all vars here, with overrides from config.php
                 if (is_readable('config.php')) {
                     global $sugar_config;
-                    include_once('config.php');
+                    include_once 'config.php';
                 }
 
                 $default_db_type = 'mysql';
@@ -542,16 +547,13 @@ EOQ;
                 break;
             //TODO--low: add this functionality to installConfig.php
             case 'installType.php':
-                $_SESSION['install_type']   = $_REQUEST['install_type'];
+                $_SESSION['install_type'] = $_REQUEST['install_type'];
                 if (isset($_REQUEST['setup_license_key']) && !empty($_REQUEST['setup_license_key'])) {
-                    $_SESSION['setup_license_key']  = $_REQUEST['setup_license_key'];
+                    $_SESSION['setup_license_key'] = $_REQUEST['setup_license_key'];
                 }
-                $_SESSION['licenseKey_submitted']      = true;
-
-
+                $_SESSION['licenseKey_submitted'] = true;
 
                 break;
-
             case 'installConfig.php':
 
                 //case 'systemOptions.php':
@@ -568,7 +570,7 @@ EOQ;
                 //validation is now done through ajax call to checkDBSettings.php
                 if (isset($_REQUEST['setup_db_drop_tables'])) {
                     $_SESSION['setup_db_drop_tables'] = $_REQUEST['setup_db_drop_tables'];
-                    if ($_SESSION['setup_db_drop_tables']=== true || $_SESSION['setup_db_drop_tables'] == 'true') {
+                    if ($_SESSION['setup_db_drop_tables'] === true || $_SESSION['setup_db_drop_tables'] == 'true') {
                         $_SESSION['setup_db_create_database'] = false;
                     }
                 }
@@ -576,23 +578,23 @@ EOQ;
 
                 //case 'siteConfig_a.php':
                 if (isset($_REQUEST['setup_site_url'])) {
-                    $_SESSION['setup_site_url']          = $_REQUEST['setup_site_url'];
+                    $_SESSION['setup_site_url'] = $_REQUEST['setup_site_url'];
                 }
                 if (isset($_REQUEST['setup_system_name'])) {
-                    $_SESSION['setup_system_name']    = $_REQUEST['setup_system_name'];
+                    $_SESSION['setup_system_name'] = $_REQUEST['setup_system_name'];
                 }
                 if (isset($_REQUEST['setup_db_collation'])) {
                     $_SESSION['setup_db_options']['collation'] = $_REQUEST['setup_db_collation'];
-		}
-		if(isset($_REQUEST['setup_db_charset'])) {
-                    $_SESSION['setup_db_options']['charset'] = $_REQUEST['setup_db_charset'];
                 }
-                $_SESSION['setup_site_admin_user_name']             = $_REQUEST['setup_site_admin_user_name'];
-                $_SESSION['setup_site_admin_password']              = $_REQUEST['setup_site_admin_password'];
-                $_SESSION['setup_site_admin_password_retype']       = $_REQUEST['setup_site_admin_password_retype'];
-                $_SESSION['siteConfig_submitted']               = true;
+        if (isset($_REQUEST['setup_db_charset'])) {
+            $_SESSION['setup_db_options']['charset'] = $_REQUEST['setup_db_charset'];
+        }
+                $_SESSION['setup_site_admin_user_name'] = $_REQUEST['setup_site_admin_user_name'];
+                $_SESSION['setup_site_admin_password'] = $_REQUEST['setup_site_admin_password'];
+                $_SESSION['setup_site_admin_password_retype'] = $_REQUEST['setup_site_admin_password_retype'];
+                $_SESSION['siteConfig_submitted'] = true;
 
-                $validation_errors = array();
+                $validation_errors = [];
                 $validation_errors = validate_siteConfig('a');
                 if (count($validation_errors) > 0 || $_REQUEST['goto'] == 'resend') {
                     $next_step--;
@@ -602,38 +604,39 @@ EOQ;
                 //case 'siteConfig_b.php':
                 $_SESSION['setup_site_sugarbeet_automatic_checks'] = get_boolean_from_request('setup_site_sugarbeet_automatic_checks');
 
-                $_SESSION['setup_site_custom_session_path']     = get_boolean_from_request('setup_site_custom_session_path');
+                $_SESSION['setup_site_custom_session_path'] = get_boolean_from_request('setup_site_custom_session_path');
                 if ($_SESSION['setup_site_custom_session_path']) {
-                    $_SESSION['setup_site_session_path']            = $_REQUEST['setup_site_session_path'];
+                    $_SESSION['setup_site_session_path'] = $_REQUEST['setup_site_session_path'];
                 } else {
                     $_SESSION['setup_site_session_path'] = '';
                 }
 
-                $_SESSION['setup_site_custom_log_dir']          = get_boolean_from_request('setup_site_custom_log_dir');
+                $_SESSION['setup_site_custom_log_dir'] = get_boolean_from_request('setup_site_custom_log_dir');
                 if ($_SESSION['setup_site_custom_log_dir']) {
-                    $_SESSION['setup_site_log_dir']                 = $_REQUEST['setup_site_log_dir'];
+                    $_SESSION['setup_site_log_dir'] = $_REQUEST['setup_site_log_dir'];
                 } else {
                     $_SESSION['setup_site_log_dir'] = '.';
                 }
 
-                $_SESSION['setup_site_specify_guid']            = get_boolean_from_request('setup_site_specify_guid');
+                $_SESSION['setup_site_specify_guid'] = get_boolean_from_request('setup_site_specify_guid');
                 if ($_SESSION['setup_site_specify_guid']) {
-                    $_SESSION['setup_site_guid']                    = $_REQUEST['setup_site_guid'];
+                    $_SESSION['setup_site_guid'] = $_REQUEST['setup_site_guid'];
                 } else {
                     $_SESSION['setup_site_guid'] = '';
                 }
-                $_SESSION['siteConfig_submitted']               = true;
+                $_SESSION['siteConfig_submitted'] = true;
                 if (isset($_REQUEST['setup_site_sugarbeet_anonymous_stats'])) {
                     $_SESSION['setup_site_sugarbeet_anonymous_stats'] = get_boolean_from_request('setup_site_sugarbeet_anonymous_stats');
                 } else {
                     $_SESSION['setup_site_sugarbeet_anonymous_stats'] = 0;
                 }
 
-                $validation_errors = array();
+                $validation_errors = [];
                 $validation_errors = validate_siteConfig('b');
                 if (count($validation_errors) > 0) {
                     $next_step--;
                 }
+
                 break;
         }
     }
@@ -641,9 +644,9 @@ EOQ;
     if ($next_step == 9999) {
         $the_file = 'SilentInstall';
     } elseif ($next_step == 9191) {
-        $_SESSION['oc_server_url']	= $_REQUEST['oc_server_url'];
-        $_SESSION['oc_username']    = $_REQUEST['oc_username'];
-        $_SESSION['oc_password']   	= $_REQUEST['oc_password'];
+        $_SESSION['oc_server_url'] = $_REQUEST['oc_server_url'];
+        $_SESSION['oc_username'] = $_REQUEST['oc_username'];
+        $_SESSION['oc_password'] = $_REQUEST['oc_password'];
         $the_file = 'oc_convert.php';
     } elseif ($next_step === 9) {
         $the_file = $workflow[4];
@@ -666,21 +669,22 @@ EOQ;
             if (!isset($_SESSION['test_session'])) {
                 $the_file = 'installDisabled.php';
                 // PHP.ini location -
-                $phpIniLocation = get_cfg_var("cfg_file_path");
+                $phpIniLocation = get_cfg_var('cfg_file_path');
                 $disabled_title = $mod_strings['LBL_SESSION_ERR_TITLE'];
                 $disabled_title_2 = $mod_strings['LBL_SESSION_ERR_TITLE'];
-                $disabled_text = $mod_strings['LBL_SESSION_ERR_DESCRIPTION']."<pre>{$phpIniLocation}</pre>";
+                $disabled_text = $mod_strings['LBL_SESSION_ERR_DESCRIPTION'] . "<pre>{$phpIniLocation}</pre>";
+
                 break;
             }
             // check to see if installer has been disabled
             if (is_readable('config.php') && (filesize('config.php') > 0)) {
-                include_once('config.php');
+                include_once 'config.php';
 
                 if (!isset($sugar_config['installer_locked']) || $sugar_config['installer_locked'] == true) {
                     $the_file = 'installDisabled.php';
                     $disabled_title = $mod_strings['LBL_DISABLED_DESCRIPTION'];
                     $disabled_title_2 = $mod_strings['LBL_DISABLED_TITLE_2'];
-                    $disabled_text =<<<EOQ
+                    $disabled_text = <<<EOQ
 					<p>{$mod_strings['LBL_DISABLED_DESCRIPTION']}</p>
 					<pre>
 						'installer_locked' => false,
@@ -697,10 +701,12 @@ EOQ;
                     }
                 }
             }
+
             break;
         case 'register.php':
         case 'complete_install.php':
             session_unset();
+
             break;
         case 'SilentInstall':
             $si_errors = false;
@@ -739,7 +745,7 @@ EOQ;
             if (!$si_errors) {
                 $the_file = 'performSetup.php';
             }
-            require_once('jssource/minify.php');
+            require_once 'jssource/minify.php';
             //since this is a SilentInstall we still need to make sure that
             //the appropriate files are writable
             // config.php
@@ -774,23 +780,23 @@ EOQ;
                 // if we have errors, just shoot them back now
                 if (count($validation_errors) > 0) {
                     foreach ($validation_errors as $error) {
-                        print($mod_strings['ERR_ERROR_GENERAL']."\n");
-                        print("    " . $error . "\n");
-                        print("Exit 1\n");
+                        echo $mod_strings['ERR_ERROR_GENERAL'] . "\n";
+                        echo '    ' . $error . "\n";
+                        echo "Exit 1\n";
                         exit(1);
                     }
                 }
             }
+
             break;
     }
 }
-
 
 $the_file = 'install/' . clean_string($the_file, 'FILE');
 
 if (is_file($the_file)) {
     installerHook('pre_installFileRequire', ['the_file' => $the_file]);
-    require($the_file);
+    require $the_file;
     installerHook('post_installFileRequire', ['the_file' => $the_file]);
 } else {
     LoggerManager::getLogger()->fatal('Install file not found: ' . $the_file);

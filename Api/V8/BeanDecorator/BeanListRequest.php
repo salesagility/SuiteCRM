@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\BeanDecorator;
 
 class BeanListRequest
@@ -19,27 +20,27 @@ class BeanListRequest
     protected $where = '';
 
     /**
-     * @var integer
+     * @var int
      */
     protected $offset = BeanManager::DEFAULT_OFFSET;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $limit = -1;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $max = BeanManager::DEFAULT_ALL_RECORDS;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $deleted = 0;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $singleSelect = true;
 
@@ -81,7 +82,7 @@ class BeanListRequest
     }
 
     /**
-     * @param integer $offset
+     * @param int $offset
      *
      * @return BeanListRequest
      */
@@ -93,7 +94,7 @@ class BeanListRequest
     }
 
     /**
-     * @param integer $limit
+     * @param int $limit
      *
      * @return BeanListRequest
      */
@@ -105,7 +106,7 @@ class BeanListRequest
     }
 
     /**
-     * @param integer $max
+     * @param int $max
      *
      * @return BeanListRequest
      */
@@ -117,7 +118,7 @@ class BeanListRequest
     }
 
     /**
-     * @param integer $deleted
+     * @param int $deleted
      *
      * @return BeanListRequest
      */
@@ -129,7 +130,7 @@ class BeanListRequest
     }
 
     /**
-     * @param boolean $singleSelect
+     * @param bool $singleSelect
      *
      * @return BeanListRequest
      */

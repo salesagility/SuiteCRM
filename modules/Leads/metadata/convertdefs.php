@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,201 +36,199 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$viewdefs['Contacts']['ConvertLead'] = array(
+$viewdefs['Contacts']['ConvertLead'] = [
     'copyData' => true,
     'required' => true,
-    'select' => "report_to_name",
+    'select' => 'report_to_name',
     'default_action' => 'create',
-    'templateMeta' => array(
-        'form'=>array(
-            'hidden'=>array(
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
                 '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
                 '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
                 '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
                 '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
                 '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">'
-            )
-        ),
+            ]
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-    ),
-    'panels' =>array(
-        'LNK_NEW_CONTACT' => array(
-            array(
-                array(
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'LNK_NEW_CONTACT' => [
+            [
+                [
                     'name' => 'first_name',
                     'customCode' => '{html_options name="Contactssalutation" options=$fields.salutation.options selected=$fields.salutation.value}&nbsp;<input name="Contactsfirst_name" size="25" maxlength="25" type="text" value="{$fields.first_name.value}">',
-                ),
+                ],
                 'title',
-            ),
-            array(
+            ],
+            [
                 'last_name',
                 'department',
-            ),
-            array(
-                array('name' => 'primary_address_street', 'label' => 'LBL_PRIMARY_ADDRESS'),
+            ],
+            [
+                ['name' => 'primary_address_street', 'label' => 'LBL_PRIMARY_ADDRESS'],
                 'phone_work',
-            ),
-            array(
-                array('name'=>'primary_address_city', 'label' => 'LBL_CITY'),
+            ],
+            [
+                ['name' => 'primary_address_city', 'label' => 'LBL_CITY'],
                 'phone_mobile',
-            ),
-            array(
-                array('name'=>'primary_address_state', 'label' => 'LBL_STATE'),
+            ],
+            [
+                ['name' => 'primary_address_state', 'label' => 'LBL_STATE'],
                 'phone_other',
-            ),
-            array(
-                array('name'=>'primary_address_postalcode', 'label' => 'LBL_POSTAL_CODE'),
+            ],
+            [
+                ['name' => 'primary_address_postalcode', 'label' => 'LBL_POSTAL_CODE'],
                 'phone_fax',
-            ),
-            array(
-                array('name'=>'primary_address_country', 'label' => 'LBL_COUNTRY'),
+            ],
+            [
+                ['name' => 'primary_address_country', 'label' => 'LBL_COUNTRY'],
                 'lead_source',
-            ),
-            array(
+            ],
+            [
                 'email1',
-
-            ),
-            array(
+            ],
+            [
                 'description'
-            ),
-        )
-    ),
-);
-$viewdefs['Accounts']['ConvertLead'] = array(
+            ],
+        ]
+    ],
+];
+$viewdefs['Accounts']['ConvertLead'] = [
     'copyData' => true,
     'required' => true,
-    'select' => "account_name",
+    'select' => 'account_name',
     'default_action' => 'create',
     'relationship' => 'accounts_contacts',
-    'templateMeta' => array(
-        'form'=>array(
-            'hidden'=>array(
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
                 '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
                 '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
                 '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
                 '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
                 '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">'
-            )
-        ),
+            ]
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-    ),
-    'panels' =>array(
-        'LNK_NEW_ACCOUNT' => array(
-            array(
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'LNK_NEW_ACCOUNT' => [
+            [
                 'name',
                 'phone_office',
-            ),
-            array(
+            ],
+            [
                 'website',
-            ),
-            array(
+            ],
+            [
                 'description'
-            ),
-        )
-    ),
-);
-$viewdefs['Opportunities']['ConvertLead'] = array(
+            ],
+        ]
+    ],
+];
+$viewdefs['Opportunities']['ConvertLead'] = [
     'copyData' => true,
     'required' => false,
-    'templateMeta' => array(
-        'form'=>array(
-            'hidden'=>array(
-            )
-        ),
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
+            ]
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-    ),
-    'panels' =>array(
-        'LNK_NEW_OPPORTUNITY' => array(
-            array(
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'LNK_NEW_OPPORTUNITY' => [
+            [
                 'name',
                 'currency_id'
-            ),
-            array(
+            ],
+            [
                 'sales_stage',
                 'amount'
-            ),
-            array(
+            ],
+            [
                 'date_closed',
                 ''
-            ),
-            array(
+            ],
+            [
                 'description'
-            ),
-        )
-    ),
-);
-$viewdefs['Notes']['ConvertLead'] = array(
+            ],
+        ]
+    ],
+];
+$viewdefs['Notes']['ConvertLead'] = [
     'copyData' => false,
     'required' => false,
-    'templateMeta' => array(
-        'form'=>array(
-            'hidden'=>array(
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
                 '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
                 '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
                 '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
                 '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
                 '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">'
-            )
-        ),
+            ]
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-    ),
-    'panels' =>array(
-        'LNK_NEW_NOTE' => array(
-            array(
-                array('name'=>'name', 'displayParams'=>array('size'=>90)),
-            ),
-            array(
-                array('name' => 'description', 'displayParams' => array('rows'=>10, 'cols'=>90) ),
-            ),
-        )
-    ),
-);
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'LNK_NEW_NOTE' => [
+            [
+                ['name' => 'name', 'displayParams' => ['size' => 90]],
+            ],
+            [
+                ['name' => 'description', 'displayParams' => ['rows' => 10, 'cols' => 90]],
+            ],
+        ]
+    ],
+];
 
-$viewdefs['Calls']['ConvertLead'] = array(
+$viewdefs['Calls']['ConvertLead'] = [
     'copyData' => false,
     'required' => false,
-    'templateMeta' => array(
-        'form'=>array(
-            'hidden'=>array(
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
                 '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
                 '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
                 '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
                 '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
                 '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">',
                 '<input type="hidden" name="Callsstatus" value="{sugar_translate label=\'call_status_default\'}">',
-            )
-        ),
+            ]
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-    ),
-    'panels' =>array(
-        'LNK_NEW_CALL' => array(
-            array(
-                array('name'=>'name', 'displayParams'=>array('size'=>90)),
-            ),
-            array(
-               'date_start',
-                array(
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'LNK_NEW_CALL' => [
+            [
+                ['name' => 'name', 'displayParams' => ['size' => 90]],
+            ],
+            [
+                'date_start',
+                [
                     'name' => 'duration_hours',
                     'label' => 'LBL_DURATION',
                     'customCode' => '{literal}
@@ -249,48 +246,47 @@ $viewdefs['Calls']['ConvertLead'] = array(
 {php}$this->_tpl_vars["minutes_values"] = $this->_tpl_vars["bean"]->minutes_values;{/php}
 {html_options name="Callsduration_minutes" options=$minutes_values selected=$fields.duration_minutes.value} &nbsp;
 <span class="dateFormat">{sugar_translate label="LBL_HOURS_MINUTES" module="Calls"}',
-                    'displayParams' =>
-                    array(
-                      'required' => true,
-                    ),
-                ),
-            ),
-            array(
-                array('name' => 'description', 'displayParams' => array('rows'=>10, 'cols'=>90) ),
-            ),
-        )
-    ),
-);
+                    'displayParams' => [
+                        'required' => true,
+                    ],
+                ],
+            ],
+            [
+                ['name' => 'description', 'displayParams' => ['rows' => 10, 'cols' => 90]],
+            ],
+        ]
+    ],
+];
 
-$viewdefs['Meetings']['ConvertLead'] = array(
+$viewdefs['Meetings']['ConvertLead'] = [
     'copyData' => false,
     'required' => false,
     'relationship' => 'meetings_users',
-    'templateMeta' => array(
-        'form'=>array(
-            'hidden'=>array(
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
                 '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
                 '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
                 '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
                 '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
                 '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">',
                 '<input type="hidden" name="Meetingsstatus" value="{sugar_translate label=\'meeting_status_default\'}">',
-            )
-        ),
+            ]
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-    ),
-    'panels' =>array(
-        'LNK_NEW_MEETING' => array(
-            array(
-                array('name'=>'name', 'displayParams'=>array('size'=>90)),
-            ),
-            array(
-               'date_start',
-                array(
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'LNK_NEW_MEETING' => [
+            [
+                ['name' => 'name', 'displayParams' => ['size' => 90]],
+            ],
+            [
+                'date_start',
+                [
                     'name' => 'duration_hours',
                     'label' => 'LBL_DURATION',
                     'customCode' => '{literal}
@@ -308,50 +304,49 @@ $viewdefs['Meetings']['ConvertLead'] = array(
 {php}$this->_tpl_vars["minutes_values"] = $this->_tpl_vars["bean"]->minutes_values;{/php}
 {html_options name="Meetingsduration_minutes" options=$minutes_values selected=$fields.duration_minutes.value} &nbsp;
 <span class="dateFormat">{sugar_translate label="LBL_HOURS_MINUTES" module="Calls"}',
-                    'displayParams' =>
-                    array(
-                      'required' => true,
-                    ),
-                ),
-            ),
-            array(
-                array('name' => 'description', 'displayParams' => array('rows'=>10, 'cols'=>90) ),
-            ),
-        )
-    ),
-);
+                    'displayParams' => [
+                        'required' => true,
+                    ],
+                ],
+            ],
+            [
+                ['name' => 'description', 'displayParams' => ['rows' => 10, 'cols' => 90]],
+            ],
+        ]
+    ],
+];
 
-$viewdefs['Tasks']['ConvertLead'] = array(
+$viewdefs['Tasks']['ConvertLead'] = [
     'copyData' => false,
     'required' => false,
-    'templateMeta' => array(
-        'form'=>array(
-            'hidden'=>array(
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
                 '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
                 '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
                 '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
                 '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
                 '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">'
-            )
-        ),
+            ]
+        ],
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-    ),
-    'panels' =>array(
-        'LNK_NEW_TASK' => array(
-            array(
-                array('name'=>'name', 'displayParams'=>array('size'=>90)),
-            ),
-            array(
-               'status', 'priority'
-            ),
-            
-            array(
-                array('name' => 'description', 'displayParams' => array('rows'=>10, 'cols'=>90) ),
-            ),
-        )
-    ),
-);
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+    ],
+    'panels' => [
+        'LNK_NEW_TASK' => [
+            [
+                ['name' => 'name', 'displayParams' => ['size' => 90]],
+            ],
+            [
+                'status', 'priority'
+            ],
+
+            [
+                ['name' => 'description', 'displayParams' => ['rows' => 10, 'cols' => 90]],
+            ],
+        ]
+    ],
+];

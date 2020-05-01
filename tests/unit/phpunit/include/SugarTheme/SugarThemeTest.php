@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SugarThemeTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testGetMimeType()

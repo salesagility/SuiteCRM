@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,11 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\API\JsonApi\v1\Enumerator;
 
 /**
- * Class ResourceEnum
- * @package SuiteCRM\API\JsonApi\v1
+ * Class ResourceEnum.
+ *
  * @see http://jsonapi.org/format/1.0/#document-resource-objects
  */
 class ResourceEnum

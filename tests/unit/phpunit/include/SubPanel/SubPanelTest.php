@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * @internal
+ */
 class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -110,7 +112,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         $subPanelDefs = ['get_subpanel_data' => 'accounts'];
         $counter->setSubPanelDefs($subPanelDefs);
 
-        $query  = $counter->makeSubPanelRowCountQuery();
+        $query = $counter->makeSubPanelRowCountQuery();
         $expectedQueryStart = 'SELECT COUNT(account_id) FROM accounts_contacts';
 
         $this->assertContains($expectedQueryStart, $query);

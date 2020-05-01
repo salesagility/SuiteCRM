@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_ACCEPT_THIS' => 'Accept?',
     'LBL_ADD_BUTTON' => 'Add',
     'LBL_ADD_INVITEE' => 'Add Invitees',
@@ -167,4 +165,4 @@ $mod_strings = array(
     // for google sync
     'LBL_GSYNC_ID' => 'Google Event ID',
     'LBL_GSYNC_LASTSYNC' => 'Last Google Sync Timestamp',
-);
+];

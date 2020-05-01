@@ -4,18 +4,17 @@ use Faker\Factory;
 use Faker\Generator;
 use Helper\WebDriverHelper;
 use Step\Acceptance\Emails;
-use Step\Acceptance\EmailsTester;
 use Step\Acceptance\ListView;
 
 class EmailsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -34,9 +33,9 @@ class EmailsCest
 
     /**
      * @param AcceptanceTester $I
-     * @param ListView $listView
+     * @param listView $listView
      *
-     * As an administrator I want to view the emails module.
+     * As an administrator I want to view the emails module
      */
     public function testScenarioViewEmailsModule(
         AcceptanceTester $I,
@@ -46,7 +45,7 @@ class EmailsCest
 
         // Navigate to emails list-view
         $I->loginAsAdmin();
-        
+
         $I->visitPage('Emails', 'index');
         $listView->waitForListViewVisible();
 
@@ -55,15 +54,14 @@ class EmailsCest
 
     /**
      * @param AcceptanceTester $I
-     * @param WebDriverHelper $webDriverHelper
+     * @param webDriverHelper $webDriverHelper
      *
-     * As an administrator I want to view an email body and check that it's not cached.
+     * As an administrator I want to view an email body and check that it's not cached
      */
     public function testScenarioViewEmailBodyHTML(
         AcceptanceTester $I,
         WebDriverHelper $webDriverHelper
     ) {
-
         // TODO: Refactor
 
         $I->wantTo('View the HTML of two emails');

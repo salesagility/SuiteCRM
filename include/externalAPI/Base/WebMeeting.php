@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,17 +37,22 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * External API to meeting system
+ * External API to meeting system.
+ *
  * @api
  */
 interface WebMeeting
 {
     public function scheduleMeeting($bean);
+
     public function unscheduleMeeting($bean);
+
     public function inviteAttendee($bean, $attendee, $sendInvites = false);
+
     public function uninviteAttendee($bean, $attendee);
+
     public function listMyMeetings();
+
     public function getMeetingDetails($bean);
 }

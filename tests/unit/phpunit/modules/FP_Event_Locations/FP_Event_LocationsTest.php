@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class FP_Event_LocationsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testFP_Event_Locations()
+    public function testFPEventLocations()
     {
         // Execute the constructor and check for the Object type and  attributes
         $fpEventLoc = new FP_Event_Locations();

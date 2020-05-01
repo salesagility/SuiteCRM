@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,16 +36,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dashletStrings['InvadersDashlet'] = array(
+$dashletStrings['InvadersDashlet'] = [
     'LBL_TITLE' => 'Invaders!',
     'LBL_DESCRIPTION' => 'A little way to pass the time',
     'LBL_DBLCLICK_HELP' => 'Use A and D to move, S to fire.',
     'LBL_START' => 'Click To Start',
     'LBL_GAME_OVER' => 'Game Over<br>(Click to play again)',
-
-);
+];

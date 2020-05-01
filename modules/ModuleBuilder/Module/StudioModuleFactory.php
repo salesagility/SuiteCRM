@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,21 +36,21 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
+require_once 'modules/ModuleBuilder/Module/StudioModule.php';
 
 /**
- * Class StudioModuleFactory
+ * Class StudioModuleFactory.
  */
 class StudioModuleFactory
 {
     /**
-     * @var array $loadedMods - array( 'module' => StudioModule )
+     * @var array - array( 'module' => StudioModule )
      */
-    protected static $loadedMods = array();
+    protected static $loadedMods = [];
 
     /**
      * @param string $module name
+     *
      * @return StudioModule
      */
     public static function getStudioModule($module)
@@ -73,6 +72,7 @@ class StudioModuleFactory
             }
         }
         self::$loadedMods[$module] = $sm;
+
         return $sm;
     }
 }

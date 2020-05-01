@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -8,23 +9,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 class PageParams extends BaseParam
 {
     /**
-     * @return integer
+     * @return int
      */
     public function getSize()
     {
-        return isset($this->parameters['size']) ? (int)$this->parameters['size'] : BeanManager::DEFAULT_ALL_RECORDS;
+        return isset($this->parameters['size']) ? (int) $this->parameters['size'] : BeanManager::DEFAULT_ALL_RECORDS;
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getNumber()
     {
-        return isset($this->parameters['number']) ? (int)$this->parameters['number'] : BeanManager::DEFAULT_OFFSET;
+        return isset($this->parameters['number']) ? (int) $this->parameters['number'] : BeanManager::DEFAULT_OFFSET;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configureParameters(OptionsResolver $resolver)
     {

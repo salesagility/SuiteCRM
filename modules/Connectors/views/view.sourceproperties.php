@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class ViewSourceProperties extends ViewList
 {
     public function __construct()
@@ -51,27 +48,24 @@ class ViewSourceProperties extends ViewList
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
         global $sugar_config;
 
-        require_once('include/connectors/sources/SourceFactory.php');
-        require_once('include/connectors/utils/ConnectorUtils.php');
+        require_once 'include/connectors/sources/SourceFactory.php';
+        require_once 'include/connectors/utils/ConnectorUtils.php';
 
         $source_id = $_REQUEST['source_id'];
         $connector_language = ConnectorUtils::getConnectorStrings($source_id);
         $source = SourceFactory::getSource($source_id);
         $properties = $source->getProperties();
 
-        $required_fields = array();
+        $required_fields = [];
         $config_fields = $source->getRequiredConfigFields();
         $fields = $source->getRequiredConfigFields();
         foreach ($fields as $field_id) {
             $label = isset($connector_language[$field_id]) ? $connector_language[$field_id] : $field_id;
-            $required_fields[$field_id]=$label;
+            $required_fields[$field_id] = $label;
         }
 
         // treat string as a template (the string resource plugin is unavailable in the current Smarty version)

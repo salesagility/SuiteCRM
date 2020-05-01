@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/resource/Observers/ResourceObserver.php');
+require_once 'include/resource/Observers/ResourceObserver.php';
 
 /**
  * WebResourceObserver.php
@@ -55,9 +52,10 @@ class WebResourceObserver extends ResourceObserver
 
     /**
      * notify
-     * Web implementation to notify the browser
-     * @param msg String message to possibly display
+     * Web implementation to notify the browser.
      *
+     * @param msg String message to possibly display
+     * @param mixed $msg
      */
     public function notify($msg = '')
     {

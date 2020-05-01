@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,21 +40,20 @@
 namespace SuiteCRM;
 
 /**
- * Class HTMLPurifierURISchemeCid
- * @package SuiteCRM
- * content-id: scheme implementation
+ * Class HTMLPurifierURISchemeCid.
  */
 class HTMLPurifierURISchemeCid extends \HTMLPurifier_URIScheme
 {
-    /** @var bool $browsable */
+    /** @var bool */
     public $browsable = true;
-    /** @var bool $may_omit_host */
+    /** @var bool */
     public $may_omit_host = true;
 
     /**
      * @param \HTMLPurifier_URI $uri
      * @param \HTMLPurifier_Config $config
      * @param \HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function doValidate(&$uri, $config, $context)
@@ -65,6 +63,7 @@ class HTMLPurifierURISchemeCid extends \HTMLPurifier_URIScheme
         $uri->host = null;
         $uri->query = null;
         $uri->fragment = null;
+
         return true;
     }
 }

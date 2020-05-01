@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,27 +42,29 @@ namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
- * Class SpecialOperator
- * @package SuiteCRM\API\JsonApi\v1\Filters\Operators
+ * Class SpecialOperator.
  */
 class SpecialOperator extends Operator
 {
     /**
-     * string representation of what an operator looks like
-     * @var string $tag
+     * string representation of what an operator looks like.
+     *
+     * @var string
      */
     protected $tag = '[[[operator]]]';
 
     /**
-     * Represents an the full operator format
-     * @var string $operatorFormatRegex
+     * Represents an the full operator format.
+     *
+     * @var string
      */
     protected $operatorFormatRegex = '\[\[\[[A-Za-z\_\-]+\]\]\]';
 
-
     /**
-     * Convert string to operator tag
+     * Convert string to operator tag.
+     *
      * @param string $operator
+     *
      * @return mixed
      */
     public function toFilterTag($operator)
@@ -73,8 +74,10 @@ class SpecialOperator extends Operator
 
     /**
      * @param string $operator
-     * @return bool
+     *
      * @throws \SuiteCRM\Exception\InvalidArgumentException
+     *
+     * @return bool
      */
     public function isValid($operator)
     {
@@ -89,8 +92,10 @@ class SpecialOperator extends Operator
 
     /**
      * @param string $operator
-     * @return bool
+     *
      * @throws InvalidArgumentException
+     *
+     * @return bool
      */
     public function isOperator($operator)
     {
@@ -98,7 +103,7 @@ class SpecialOperator extends Operator
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][SpecialOperator][isOperator][expected type to be string] $operator');
         }
 
-        if (preg_match('/'.$this->operatorFormatRegex.'/', $operator, $matches) === 1) {
+        if (preg_match('/' . $this->operatorFormatRegex . '/', $operator, $matches) === 1) {
             return true;
         }
 

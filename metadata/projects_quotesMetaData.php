@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,25 +42,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-$dictionary['projects_quotes'] = array(
+$dictionary['projects_quotes'] = [
     'table' => 'projects_quotes',
-    'fields' => array(
-        array('name' => 'id', 'type' => 'varchar', 'len' => '36'),
-        array('name' => 'quote_id', 'type' => 'varchar', 'len' => '36'),
-        array('name' => 'project_id', 'type' => 'varchar', 'len' => '36'),
-        array('name' => 'date_modified', 'type' => 'datetime'),
-        array('name' => 'deleted', 'type' => 'bool', 'len' => '1', 'default' => '0', 'required' => false),
-    ),
-    'indices' => array(
-        array('name' => 'projects_quotes_pk', 'type' =>'primary', 'fields'=>array('id')),
-        array('name' => 'idx_proj_quote_proj', 'type' =>'index', 'fields'=>array('project_id')),
-        array('name' => 'idx_proj_quote_quote', 'type' =>'index', 'fields'=>array('quote_id')),
-        array('name' => 'projects_quotes_alt', 'type'=>'alternate_key', 'fields'=>array('project_id','quote_id')),
-    ),
-    'relationships' => array(
-        'projects_quotes' => array(
+    'fields' => [
+        ['name' => 'id', 'type' => 'varchar', 'len' => '36'],
+        ['name' => 'quote_id', 'type' => 'varchar', 'len' => '36'],
+        ['name' => 'project_id', 'type' => 'varchar', 'len' => '36'],
+        ['name' => 'date_modified', 'type' => 'datetime'],
+        ['name' => 'deleted', 'type' => 'bool', 'len' => '1', 'default' => '0', 'required' => false],
+    ],
+    'indices' => [
+        ['name' => 'projects_quotes_pk', 'type' => 'primary', 'fields' => ['id']],
+        ['name' => 'idx_proj_quote_proj', 'type' => 'index', 'fields' => ['project_id']],
+        ['name' => 'idx_proj_quote_quote', 'type' => 'index', 'fields' => ['quote_id']],
+        ['name' => 'projects_quotes_alt', 'type' => 'alternate_key', 'fields' => ['project_id', 'quote_id']],
+    ],
+    'relationships' => [
+        'projects_quotes' => [
             'lhs_module' => 'Project',
             'lhs_table' => 'project',
             'lhs_key' => 'id',
@@ -70,6 +69,6 @@ $dictionary['projects_quotes'] = array(
             'join_table' => 'projects_quotes',
             'join_key_lhs' => 'project_id',
             'join_key_rhs' => 'quote_id',
-        ),
-    ),
-);
+        ],
+    ],
+];

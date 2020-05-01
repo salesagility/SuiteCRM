@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 logThis('-----------------------------------------------------------------------------');
 logThis('Upgrade started. At start.php');
 
@@ -55,7 +55,7 @@ if (isset($_REQUEST['showUpdateWizardMessage']) && $_REQUEST['showUpdateWizardMe
     // set a flag to skip the upload screen
     $_SESSION['skip_zip_upload'] = true;
 
-    $newUWMsg =<<<eoq
+    $newUWMsg = <<<eoq
 	<table cellspacing="0" cellpadding="3" border="0">
 		<tr>
 			<th>
@@ -72,8 +72,7 @@ eoq;
     echo $newUWMsg;
 }
 
-
-$uwMain =<<<eoq
+$uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 	<tr>
 		<th align="left">
@@ -107,12 +106,12 @@ $uwMain =<<<eoq
  </div>
 eoq;
 
-$showBack		= false;
-$showCancel		= true;
-$showRecheck	= false;
-$showNext		= true;
+$showBack = false;
+$showCancel = true;
+$showRecheck = false;
+$showNext = true;
 
-$stepBack		= 0;
-$stepNext		= 1;
-$stepCancel	= 0;
-$stepRecheck	= 0;
+$stepBack = 0;
+$stepNext = 1;
+$stepCancel = 0;
+$stepRecheck = 0;

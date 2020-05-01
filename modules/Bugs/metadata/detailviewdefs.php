@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,85 +36,78 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+$viewdefs['Bugs']['DetailView'] = [
+    'templateMeta' => ['form' => ['buttons' => ['EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES']],
+        'maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
 
-$viewdefs['Bugs']['DetailView'] = array(
-'templateMeta' => array('form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
-                        'maxColumns' => '2',
-                        'widths' => array(
-                                        array('label' => '10', 'field' => '30'),
-                                        array('label' => '10', 'field' => '30')
-                                        ),
-                        ),
+    'panels' => [
+        'lbl_bug_information' => [
+            [
+                'bug_number',
+                'priority',
+            ],
 
-'panels' =>array(
-  'lbl_bug_information'=>array(
-      array(
-        'bug_number',
-        'priority',
-      ),
+            [
+                [
+                    'name' => 'name',
+                    'label' => 'LBL_SUBJECT',
+                ],
+                'status',
+            ],
 
-      array(
-        array(
-          'name' => 'name',
-          'label' => 'LBL_SUBJECT',
-        ),
-        'status',
-      ),
+            [
+                'type',
+                'source',
+            ],
 
-      array(
-        'type',
-        'source',
-      ),
+            [
+                'product_category',
+                'resolution',
+            ],
 
-      array(
-        'product_category',
-        'resolution',
-      ),
+            [
+                [
+                    'name' => 'found_in_release',
+                    'label' => 'LBL_FOUND_IN_RELEASE',
+                ],
+                'fixed_in_release',
+            ],
 
-      array(
-        array(
-          'name' => 'found_in_release',
-          'label' => 'LBL_FOUND_IN_RELEASE',
-        ),
-        'fixed_in_release',
-      ),
+            [
+                'description',
+            ],
 
-      array(
-        'description',
-      ),
+            [
+                'work_log',
+            ],
+        ],
 
-      array(
-        'work_log',
-      ),
+        'LBL_PANEL_ASSIGNMENT' => [
+            [
+                [
+                    'name' => 'assigned_user_name',
+                    'label' => 'LBL_ASSIGNED_TO_NAME',
+                ],
 
-  ),
+                [
+                    'name' => 'date_modified',
+                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                    'label' => 'LBL_DATE_MODIFIED',
+                ],
+            ],
 
-      'LBL_PANEL_ASSIGNMENT' =>
-      array(
-
-        array(
-
-          array(
-            'name' => 'assigned_user_name',
-            'label' => 'LBL_ASSIGNED_TO_NAME',
-          ),
-
-          array(
-            'name' => 'date_modified',
-            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-            'label' => 'LBL_DATE_MODIFIED',
-          ),
-        ),
-
-        array(
-
-          array(
-            'name' => 'date_entered',
-            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-            'label' => 'LBL_DATE_ENTERED',
-          ),
-
-        ),
-      ),
-)
-);
+            [
+                [
+                    'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                    'label' => 'LBL_DATE_ENTERED',
+                ],
+            ],
+        ],
+    ]
+];

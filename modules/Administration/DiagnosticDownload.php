@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,31 +42,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $current_user;
 
-
 if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 }
 if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics']) {
-    sugar_die("Unauthorized access to diagnostic tool.");
+    sugar_die('Unauthorized access to diagnostic tool.');
 }
 
 if (!isset($_REQUEST['guid']) || !isset($_REQUEST['time'])) {
     die('Did not receive a filename to download');
 }
-$time = str_replace(array('.', '/', '\\'), '', $_REQUEST['time']);
-$guid = str_replace(array('.', '/', '\\'), '', $_REQUEST['guid']);
+$time = str_replace(['.', '/', '\\'], '', $_REQUEST['time']);
+$guid = str_replace(['.', '/', '\\'], '', $_REQUEST['guid']);
 $path = sugar_cached("diagnostic/{$guid}/diagnostic{$time}.zip");
 $filesize = filesize($path);
 ob_clean();
 header('Content-Description: File Transfer');
 header('Content-type: application/octet-stream');
-header("Pragma: public");
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Content-Disposition: attachment; filename=$guid.zip");
-header("Content-Transfer-Encoding: binary");
-header("Content-Length: $filesize");
+header('Pragma: public');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header("Content-Disposition: attachment; filename={$guid}.zip");
+header('Content-Transfer-Encoding: binary');
+header("Content-Length: {$filesize}");
 readfile($path);

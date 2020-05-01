@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -32,7 +35,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
     }
 
-    public function testcheck_date_relationships_load()
+    public function testcheckDateRelationshipsLoad()
     {
         $schedulersJob = new SchedulersJob();
         $schedulersJob->execute_time = '2015-01-01 00:00:00';
@@ -58,7 +61,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
     public function testfireUrl()
     {
         self::markTestIncomplete('environment dependency: curl_setopt(): CURLOPT_DNS_USE_GLOBAL_CACHE cannot be activated when thread safety is enabled ');
-        
+
         $schedulersJob = new SchedulersJob();
 
         //test with invalid param
@@ -71,26 +74,26 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         //$this->assertEquals(true, $result);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $schedulersJob = new SchedulersJob();
 
         $schedulersJob->job_name = 'test';
         $schedulersJob->job = 'function::test';
 
-        $expected = array(
-                'DELETED' => '0',
-                'REQUEUE' => '0',
-                'JOB_DELAY' => 0,
-                'JOB_NAME' => 'test',
-                'JOB' => 'function::test',
-        );
+        $expected = [
+            'DELETED' => '0',
+            'REQUEUE' => '0',
+            'JOB_DELAY' => 0,
+            'JOB_NAME' => 'test',
+            'JOB' => 'function::test',
+        ];
         $actual = $schedulersJob->get_list_view_data();
 
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $schedulersJob = new SchedulersJob();
 
@@ -192,7 +195,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
     }
 
-    public function testpostponeJobAndMark_deleted()
+    public function testpostponeJobAndMarkDeleted()
     {
         $schedulersJob = new SchedulersJob();
 
@@ -244,7 +247,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->save();
 
         $result = SchedulersJob::runJobId($schedulersJob->id, '');
-        $this->assertEquals('Job '.$schedulersJob->id.' is not marked as running.', $result);
+        $this->assertEquals('Job ' . $schedulersJob->id . ' is not marked as running.', $result);
 
         //test with valid job id and status but mismatch client
         $schedulersJob->client = 'client';
@@ -253,7 +256,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 
         $result = SchedulersJob::runJobId($schedulersJob->id, 'test_client');
 
-        $this->assertEquals('Job '.$schedulersJob->id.' belongs to another client, can not run as test_client.', $result);
+        $this->assertEquals('Job ' . $schedulersJob->id . ' belongs to another client, can not run as test_client.', $result);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
     }

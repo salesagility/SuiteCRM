@@ -1,8 +1,9 @@
 <?php
+
  if (!defined('sugarEntry')) {
      define('sugarEntry', true);
  }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,16 +44,16 @@
 
 chdir(dirname(__FILE__));
 
-require_once('include/entryPoint.php');
+require_once 'include/entryPoint.php';
 
 $sapi_type = php_sapi_name();
 // Allow only CLI invocation
 if (substr($sapi_type, 0, 3) != 'cli') {
-    sugar_die("run_job.php is CLI only.");
+    sugar_die('run_job.php is CLI only.');
 }
 
 if ($argc < 3 || empty($argv[1]) || empty($argv[2])) {
-    sugar_die("run_job.php requires job ID and client ID as parameters.");
+    sugar_die('run_job.php requires job ID and client ID as parameters.');
 }
 
 if (empty($current_language)) {
@@ -85,4 +86,4 @@ if (class_exists('DBManagerFactory')) {
     $db->disconnect();
 }
 
-exit($result?0:1);
+exit($result ? 0 : 1);

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,27 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-require_once('include/MVC/View/SugarView.php');
-require_once('modules/EmailMan/Forms.php');
+require_once 'include/MVC/View/SugarView.php';
+require_once 'modules/EmailMan/Forms.php';
 
 class ViewConfig extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-
-        return array(
-           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
-           translate('LBL_MASS_EMAIL_CONFIG_TITLE', 'Administration'),
-           );
-    }
-
     /**
      * @see SugarView::preDisplay()
      */
@@ -71,7 +55,7 @@ class ViewConfig extends SugarView
         if (!is_admin($current_user)
                 && !is_admin_for_module($GLOBALS['current_user'], 'Emails')
                 && !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
-            sugar_die("Unauthorized access to administration.");
+            sugar_die('Unauthorized access to administration.');
         }
     }
 
@@ -91,27 +75,27 @@ class ViewConfig extends SugarView
 
         $focus = new Administration();
         $focus->retrieveSettings(); //retrieve all admin settings.
-        $GLOBALS['log']->info("Mass Emailer(EmailMan) ConfigureSettings view");
+        $GLOBALS['log']->info('Mass Emailer(EmailMan) ConfigureSettings view');
 
-        $this->ss->assign("MOD", $mod_strings);
-        $this->ss->assign("APP", $app_strings);
+        $this->ss->assign('MOD', $mod_strings);
+        $this->ss->assign('APP', $app_strings);
 
-        $this->ss->assign("RETURN_MODULE", "Administration");
-        $this->ss->assign("RETURN_ACTION", "index");
+        $this->ss->assign('RETURN_MODULE', 'Administration');
+        $this->ss->assign('RETURN_ACTION', 'index');
 
-        $this->ss->assign("MODULE", $currentModule);
-        $this->ss->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
-        $this->ss->assign("HEADER", get_module_title("EmailMan", "{MOD.LBL_CONFIGURE_SETTINGS}", true));
-        $this->ss->assign("notify_fromaddress", $focus->settings['notify_fromaddress']);
-        $this->ss->assign("notify_send_from_assigning_user", (isset($focus->settings['notify_send_from_assigning_user']) && !empty($focus->settings['notify_send_from_assigning_user'])) ? "checked='checked'" : "");
-        $this->ss->assign("notify_on", ($focus->settings['notify_on']) ? "checked='checked'" : "");
+        $this->ss->assign('MODULE', $currentModule);
+        $this->ss->assign('PRINT_URL', 'index.php?' . $GLOBALS['request_string']);
+        $this->ss->assign('HEADER', get_module_title('EmailMan', '{MOD.LBL_CONFIGURE_SETTINGS}', true));
+        $this->ss->assign('notify_fromaddress', $focus->settings['notify_fromaddress']);
+        $this->ss->assign('notify_send_from_assigning_user', (isset($focus->settings['notify_send_from_assigning_user']) && !empty($focus->settings['notify_send_from_assigning_user'])) ? "checked='checked'" : '');
+        $this->ss->assign('notify_on', ($focus->settings['notify_on']) ? "checked='checked'" : '');
         if ($sugar_config['email_warning_notifications']) {
-            $this->ss->assign("email_warning_notifications", "checked='checked'");
+            $this->ss->assign('email_warning_notifications', "checked='checked'");
         } else {
-            $this->ss->assign("email_warning_notifications", '');
+            $this->ss->assign('email_warning_notifications', '');
         }
-        $this->ss->assign("notify_fromname", $focus->settings['notify_fromname']);
-        $this->ss->assign("notify_allow_default_outbound_on", (!empty($focus->settings['notify_allow_default_outbound']) && $focus->settings['notify_allow_default_outbound']) ? "checked='checked'" : "");
+        $this->ss->assign('notify_fromname', $focus->settings['notify_fromname']);
+        $this->ss->assign('notify_allow_default_outbound_on', (!empty($focus->settings['notify_allow_default_outbound']) && $focus->settings['notify_allow_default_outbound']) ? "checked='checked'" : '');
 
         $mailSmtpType = null;
         if (isset($focus->settings['mail_smtptype'])) {
@@ -119,86 +103,85 @@ class ViewConfig extends SugarView
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp type is not set for focus');
         }
-        
+
         $mailSmtpServer = null;
         if (isset($focus->settings['mail_smtpserver'])) {
             $mailSmtpServer = $focus->settings['mail_smtpserver'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp type is not set for focus');
         }
-        
+
         $mailSmtpPort = null;
         if (isset($focus->settings['mail_smtpport'])) {
             $mailSmtpPort = $focus->settings['mail_smtpport'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp port is not set for focus');
         }
-        
+
         $mailSmtpUser = null;
         if (isset($focus->settings['mail_smtpuser'])) {
             $mailSmtpUser = $focus->settings['mail_smtpuser'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp user is not set for focus');
         }
-        
+
         $mailSmtpAuthReq = null;
         if (isset($focus->settings['mail_smtpauth_req'])) {
             $mailSmtpAuthReq = $focus->settings['mail_smtpauth_req'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp auth req is not set for focus');
         }
-        
+
         $mailSmtpSsl = null;
         if (isset($focus->settings['mail_smtpssl'])) {
             $mailSmtpSsl = $focus->settings['mail_smtpssl'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp pass is not set for focus');
         }
-        
+
         $mailSmtpPass = null;
         if (isset($focus->settings['mail_smtppass'])) {
             $mailSmtpPass = $focus->settings['mail_smtppass'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp pass is not set for focus');
         }
-        
+
         $mailSendType = null;
         if (isset($focus->settings['mail_sendtype'])) {
             $mailSendType = $focus->settings['mail_sendtype'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail send type is not set for focus');
         }
-        
+
         $mailAllowUserSend = null;
         if (isset($sugar_config['email_allow_send_as_user'])) {
             $mailAllowUserSend = $sugar_config['email_allow_send_as_user'];
         } else {
             LoggerManager::getLogger()->warn('EmailMan view display error: mail allow user send is not set for focus');
         }
-        
-        
-        $this->ss->assign("mail_smtptype", $mailSmtpType);
-        $this->ss->assign("mail_smtpserver", $mailSmtpServer);
-        $this->ss->assign("mail_smtpport", $mailSmtpPort);
-        $this->ss->assign("mail_smtpuser", $mailSmtpUser);
-        $this->ss->assign("mail_smtpauth_req", ($mailSmtpAuthReq) ? "checked='checked'" : "");
-        $this->ss->assign("mail_haspass", empty($mailSmtpPass)?0:1);
-        $this->ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $mailSmtpSsl));
-        $this->ss->assign("mail_allow_user_send", ($mailAllowUserSend) ? "checked='checked'" : "");
+
+        $this->ss->assign('mail_smtptype', $mailSmtpType);
+        $this->ss->assign('mail_smtpserver', $mailSmtpServer);
+        $this->ss->assign('mail_smtpport', $mailSmtpPort);
+        $this->ss->assign('mail_smtpuser', $mailSmtpUser);
+        $this->ss->assign('mail_smtpauth_req', ($mailSmtpAuthReq) ? "checked='checked'" : '');
+        $this->ss->assign('mail_haspass', empty($mailSmtpPass) ? 0 : 1);
+        $this->ss->assign('MAIL_SSL_OPTIONS', get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $mailSmtpSsl));
+        $this->ss->assign('mail_allow_user_send', ($mailAllowUserSend) ? "checked='checked'" : '');
 
         //Assign the current users email for the test send dialogue.
-        $this->ss->assign("CURRENT_USER_EMAIL", $current_user->email1);
+        $this->ss->assign('CURRENT_USER_EMAIL', $current_user->email1);
 
         $showSendMail = false;
-        $outboundSendTypeCSSClass = "yui-hidden";
+        $outboundSendTypeCSSClass = 'yui-hidden';
         if (isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound']) {
             $showSendMail = true;
             $app_list_strings['notifymail_sendtype']['sendmail'] = 'sendmail';
-            $outboundSendTypeCSSClass = "";
+            $outboundSendTypeCSSClass = '';
         }
 
-        $this->ss->assign("OUTBOUND_TYPE_CLASS", $outboundSendTypeCSSClass);
-        $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $mailSendType));
+        $this->ss->assign('OUTBOUND_TYPE_CLASS', $outboundSendTypeCSSClass);
+        $this->ss->assign('mail_sendtype_options', get_select_options_with_id($app_list_strings['notifymail_sendtype'], $mailSendType));
 
         $configurator = new Configurator();
 
@@ -207,7 +190,7 @@ class ViewConfig extends SugarView
             throw new RuntimeException('System Email templates are missing');
         }
 
-        $email_templates_options =  get_select_options_with_id($email_templates_arr, $configurator->config['email_confirm_opt_in_email_template_id']);
+        $email_templates_options = get_select_options_with_id($email_templates_arr, $configurator->config['email_confirm_opt_in_email_template_id']);
         $this->ss->assign('EMAIL_OPT_IN_TEMPLATES', $email_templates_options);
 
         if (!isset($configurator->config['email_enable_auto_send_opt_in'])) {
@@ -226,9 +209,9 @@ class ViewConfig extends SugarView
         ////	USER EMAIL DEFAULTS
         // editors
         $editors = $app_list_strings['dom_email_editor_option'];
-        $newEditors = array();
+        $newEditors = [];
         foreach ($editors as $k => $v) {
-            if ($k != "") {
+            if ($k != '') {
                 $newEditors[$k] = $v;
             }
         }
@@ -255,10 +238,9 @@ class ViewConfig extends SugarView
                 $emailEnableConfirmOptIn
             )
         );
-        
+
         ////	END USER EMAIL DEFAULTS
         ///////////////////////////////////////////////////////////////////////////////
-
 
         //setting to manage.
         //emails_per_run
@@ -272,18 +254,33 @@ class ViewConfig extends SugarView
         }
 
         foreach (unserialize(base64_decode($sugar_config['email_xss'])) as $k => $v) {
-            $this->ss->assign($k."Checked", 'CHECKED');
+            $this->ss->assign($k . 'Checked', 'CHECKED');
         }
 
         ////	END EMAIL SECURITY
         ///////////////////////////////////////////////////////////////////////////////
 
-        require_once('modules/Emails/Email.php');
+        require_once 'modules/Emails/Email.php';
         $email = new Email();
         $this->ss->assign('ROLLOVER', $email->rolloverStyle);
         $this->ss->assign('THEME', $GLOBALS['theme']);
 
-        $this->ss->assign("JAVASCRIPT", get_validate_record_js());
+        $this->ss->assign('JAVASCRIPT', get_validate_record_js());
         $this->ss->display('modules/EmailMan/tpls/config.tpl');
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . '</a>',
+            translate('LBL_MASS_EMAIL_CONFIG_TITLE', 'Administration'),
+        ];
     }
 }

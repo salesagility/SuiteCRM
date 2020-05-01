@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class EAPMTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEAPM()
@@ -21,7 +24,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $eapm);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $eapm = new EAPM();
         $this->assertEquals(false, $eapm->bean_implements('')); //test with blank value
@@ -42,7 +45,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testcreate_new_list_query()
+    public function testcreateNewListQuery()
     {
         $eapm = new EAPM();
 
@@ -89,7 +92,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $eapm = new EAPM();
 
@@ -102,7 +105,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $eapm = new EAPM();
 
@@ -115,7 +118,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testsave_cleanup()
+    public function testsaveCleanup()
     {
         $eapm = new EAPM();
 
@@ -127,7 +130,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $eapm->api_data);
     }
 
-    public function testdelete_user_accounts()
+    public function testdeleteUserAccounts()
     {
         $eapm = new EAPM();
 
@@ -143,6 +146,6 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
     public function testgetEAPMExternalApiDropDown()
     {
         $result = getEAPMExternalApiDropDown();
-        $this->assertEquals(array('' => ''), $result);
+        $this->assertEquals(['' => ''], $result);
     }
 }

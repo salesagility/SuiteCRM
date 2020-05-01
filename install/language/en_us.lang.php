@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_BASIC_SEARCH' => 'Quick Filter',
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
     'LBL_BASIC_TYPE' => 'Basic Type',
@@ -95,7 +93,7 @@ $mod_strings = array(
     'ERR_DB_MYSQL_VERSION' => 'Your MySQL version (%s) is not supported by SuiteCRM. You will need to install a version that is compatible with the SuiteCRM application. Please consult the Compatibility Matrix in the Release Notes for supported MySQL versions.',
     'ERR_DB_NAME' => 'Database name cannot be blank.',
     'ERR_DB_MYSQL_DB_NAME_INVALID' => "Database name cannot contain a '\\', '/', or '.'",
-    'ERR_DB_MSSQL_DB_NAME_INVALID' => "Database name cannot begin with a number, '#', or '@' and cannot contain a space, '\"', \"'\", '*', '/', '\', '?', ':', '<', '>', '&', '!', or '-'",
+    'ERR_DB_MSSQL_DB_NAME_INVALID' => "Database name cannot begin with a number, '#', or '@' and cannot contain a space, '\"', \"'\", '*', '/', '\\', '?', ':', '<', '>', '&', '!', or '-'",
     'ERR_DB_OCI8_DB_NAME_INVALID' => "Database name can only consist of alphanumeric characters and the symbols '#', '_' or '$'",
     'ERR_DB_PASSWORD' => 'The passwords provided for the SuiteCRM database administrator do not match. Please re-enter the same passwords in the password fields.',
     'ERR_DB_PRIV_USER' => 'Provide a database administrator user name. The user is required for the initial connection to the database.',
@@ -128,7 +126,7 @@ $mod_strings = array(
     'ERR_SESSION_PATH' => 'Session path is required if you wish to specify your own.',
     'ERR_SI_NO_CONFIG' => 'You did not include config_si.php in the document root, or you did not define $sugar_config_si in config.php',
     'ERR_SITE_GUID' => 'Application ID is required if you wish to specify your own.',
-    'ERROR_SPRITE_SUPPORT' => "Currently we are not able to locate the GD library, as a result you will not be able to use the CSS Sprite functionality.",
+    'ERROR_SPRITE_SUPPORT' => 'Currently we are not able to locate the GD library, as a result you will not be able to use the CSS Sprite functionality.',
     'ERR_UPLOAD_MAX_FILESIZE' => 'Warning: Your PHP configuration should be changed to allow files of at least 6MB to be uploaded.',
     'LBL_UPLOAD_MAX_FILESIZE_TITLE' => 'Upload File Size',
     'ERR_URL_BLANK' => 'Provide the base URL for the SuiteCRM instance.',
@@ -324,8 +322,7 @@ $mod_strings = array(
     //welcome page variables
     'LBL_TITLE_ARE_YOU_READY' => 'Are you ready to install?',
     'REQUIRED_SYS_COMP' => 'Required System Components',
-    'REQUIRED_SYS_COMP_MSG' =>
-        'Before you begin, please be sure that you have the supported versions of the following system components:<br>
+    'REQUIRED_SYS_COMP_MSG' => 'Before you begin, please be sure that you have the supported versions of the following system components:<br>
                       <ul>
                       <li> Database/Database Management System (Examples: MariaDB, MySQL or SQL Server)</li>
                       <li> Web Server (Apache, IIS)</li>
@@ -333,8 +330,7 @@ $mod_strings = array(
                       Consult the Compatibility Matrix in the Release Notes for
                       compatible system components for the SuiteCRM version that you are installing.<br>',
     'REQUIRED_SYS_CHK' => 'Initial System Check',
-    'REQUIRED_SYS_CHK_MSG' =>
-        'When you begin the installation process, a system check will be performed on the web server on which the SuiteCRM files are located in order to
+    'REQUIRED_SYS_CHK_MSG' => 'When you begin the installation process, a system check will be performed on the web server on which the SuiteCRM files are located in order to
                       make sure the system is configured properly and has all of the necessary components
                       to successfully complete the installation. <br><br>
                       The system checks all of the following:<br>
@@ -352,10 +348,8 @@ $mod_strings = array(
                                   An error message will be displayed, explaining why your system did not pass the check.
                                   After making any necessary changes, you can undergo the system check again to continue the installation.<br>',
 
-
     'REQUIRED_INSTALLTYPE' => 'Typical or Custom install',
-    'REQUIRED_INSTALLTYPE_MSG' =>
-        'After the system check is performed, you can choose either
+    'REQUIRED_INSTALLTYPE_MSG' => 'After the system check is performed, you can choose either
                       the Typical or the Custom installation.<br><br>
                       For both <b>Typical</b> and <b>Custom</b> installations, you will need to know the following:<br>
                       <ul>
@@ -424,13 +418,12 @@ $mod_strings = array(
     'LBL_BACKWARD_COMPATIBILITY_ON' => 'Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off for proceeding further',
     'LBL_STREAM' => 'PHP allows to use stream',
 
-    'advanced_password_new_account_email' => array(
+    'advanced_password_new_account_email' => [
         'subject' => 'New account information',
         'type' => 'system',
         'description' => 'This template is used when the System Administrator sends a new password to a user.',
         'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>Here is your account username and temporary password:</p><p>Username : $contact_user_user_name </p><p>Password : $contact_user_user_hash </p><br><p>$config_site_url</p><br><p>After you log in using the above password, you may be required to reset the password to one of your own choice.</p>   </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
-        'txt_body' =>
-            '
+        'txt_body' => '
 Here is your account username and temporary password:
 Username : $contact_user_user_name
 Password : $contact_user_user_hash
@@ -439,32 +432,29 @@ $config_site_url
 
 After you log in using the above password, you may be required to reset the password to one of your own choice.',
         'name' => 'System-generated password email',
-    ),
-    'advanced_password_forgot_password_email' => array(
+    ],
+    'advanced_password_forgot_password_email' => [
         'subject' => 'Reset your account password',
         'type' => 'system',
         'description' => "This template is used to send a user a link to click to reset the user's account password.",
         'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>You recently requested on $contact_user_pwd_last_changed to be able to reset your account password. </p><p>Click on the link below to reset your password:</p><p> $contact_user_link_guid </p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
-        'txt_body' =>
-            '
+        'txt_body' => '
 You recently requested on $contact_user_pwd_last_changed to be able to reset your account password.
 
 Click on the link below to reset your password:
 
 $contact_user_link_guid',
         'name' => 'Forgot Password email',
-    ),
+    ],
 
-
-    'two_factor_auth_email' => array(
+    'two_factor_auth_email' => [
         'subject' => 'Two Factor Authentication Code',
         'type' => 'system',
-        'description' => "This template is used to send a user a code for Two Factor Authentication.",
+        'description' => 'This template is used to send a user a code for Two Factor Authentication.',
         'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>Two Factor Authentication code is <b>$code</b>.</p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
-        'txt_body' =>
-            'Two Factor Authentication code is $code.',
+        'txt_body' => 'Two Factor Authentication code is $code.',
         'name' => 'Two Factor Authentication email',
-    ),
+    ],
 
     // SMTP settings
 
@@ -496,7 +486,6 @@ $contact_user_link_guid',
     'LBL_EXCHANGE_SMTPPORT' => 'Exchange Server Port:',
     'LBL_EXCHANGE_SMTPSERVER' => 'Exchange Server:',
 
-
     'LBL_MAIL_SMTPUSER' => 'SMTP Username:',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
 
@@ -512,15 +501,12 @@ $contact_user_link_guid',
     'CURRENT_LOGO' => 'Current Logo:',
     'CURRENT_LOGO_HELP' => 'This logo is displayed in the centre of the login screen of the SuiteCRM application.',
 
-
     //Scenario selection of modules
     'LBL_WIZARD_SCENARIO_TITLE' => 'Scenario Selection',
     'LBL_WIZARD_SCENARIO_DESC' => 'This is to allow tailoring of the displayed modules based on your requirements. Each of the modules can be enabled after install using the administration page.',
     'LBL_WIZARD_SCENARIO_EMPTY' => 'There are no scenarios currently set in the configuration file (config.php)',
 
-
     // System Local Settings
-
 
     'LBL_LOCALE_TITLE' => 'System Locale Settings',
     'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
@@ -573,4 +559,4 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located (such as www.mydomain.com). If installing locally, it\'s better to use \'localhost\' than \'127.0.0.1\', for performance reasons.',
     'LBL_DBCONFIG_B_MSG1_LABEL' => '', // this label dynamically needed in install/installConfig.php:293
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
-);
+];

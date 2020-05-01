@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,10 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
 // record the last theme the user used
 $current_user->setPreference('lastTheme', $theme);
 $GLOBALS['current_user']->call_custom_logic('before_logout');
@@ -58,7 +55,7 @@ foreach ($_SESSION as $key => $val) {
     $_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP
 }
 if (isset($_COOKIE[session_name()])) {
-    setcookie(session_name(), '', time()-42000, '/', null, isSSL(), true);
+    setcookie(session_name(), '', time() - 42000, '/', null, isSSL(), true);
 }
 
 //Update the tracker_sessions table
@@ -68,5 +65,5 @@ session_destroy();
 LogicHook::initialize();
 $GLOBALS['logic_hook']->call_custom_logic('Users', 'after_logout');
 
-/** @var AuthenticationController $authController */
+// @var AuthenticationController $authController
 $authController->authController->logout();

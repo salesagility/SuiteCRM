@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,19 +40,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/EditView/SubpanelQuickCreate.php');
+require_once 'include/EditView/SubpanelQuickCreate.php';
 /**
- * Quick create form as a pop-up window
+ * Quick create form as a pop-up window.
+ *
  * @api
  */
 class PopupQuickCreate extends SubpanelQuickCreate
 {
-    public function __construct($module, $view='QuickCreate')
+    public function __construct($module, $view = 'QuickCreate')
     {
         $this->defaultProcess = false;
         parent::__construct($module, $view, true);
-        $this->ev->defs['templateMeta']['form']['buttons'] = array('POPUPSAVE', 'POPUPCANCEL');
+        $this->ev->defs['templateMeta']['form']['buttons'] = ['POPUPSAVE', 'POPUPCANCEL'];
     }
 
     public function process($module)
@@ -60,6 +60,7 @@ class PopupQuickCreate extends SubpanelQuickCreate
         $form_name = 'form_QuickCreate_' . $module;
         $this->ev->formName = $form_name;
         $this->ev->process(true, $form_name);
+
         return $this->ev->display(false, true);
     }
 }

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()

@@ -2,22 +2,22 @@
 
 /**
  * Class ModulesMetaCest
- * Tests /api/v8/modules API
+ * Tests /api/v8/modules API.
+ *
  * @see https://tools.ietf.org/html/rfc7519
  */
 class ModulesMetaCest
 {
     const RESOURCE = '/api/v8/modules/Accounts';
+    /** @var Faker\Generator */
+    protected $fakeData;
+
+    /** @var int */
+    protected $fakeDataSeed;
     private static $RECORD = '11111111-1111-1111-1111-111111111111';
     private static $RECORD_TYPE = 'Accounts';
     private static $FAVORITE_RESOURCE = '/api/v8/modules/Favorites';
     private static $ALL_FAVORITE_RESOURCE = '/api/v8/modules/favorites';
-    /** @var Faker\Generator $fakeData */
-    protected $fakeData;
-
-    /** @var integer $fakeDataSeed */
-    protected $fakeDataSeed;
-
 
     /**
      * @param AcceptanceTester $I
@@ -32,13 +32,14 @@ class ModulesMetaCest
     }
 
     /**
-     * Get list of modules
+     * Get list of modules.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/language
-     *
      */
     public function TestScenarioGetModuleMetaLanguages(ApiTester $I)
     {
@@ -63,13 +64,14 @@ class ModulesMetaCest
     }
 
     /**
-     * Get list of fields/attributes of a given module
+     * Get list of fields/attributes of a given module.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/attributes
-     *
      */
     public function TestScenarioGetModuleMetaAttributes(ApiTester $I)
     {
@@ -79,7 +81,6 @@ class ModulesMetaCest
 
         $url = $I->getInstanceURL() . self::RESOURCE . '/meta/attributes';
         $I->sendGET($url);
-
 
         $I->seeResponseCodeIs(200);
         $I->seeJsonApiContentNegotiation();
@@ -95,15 +96,15 @@ class ModulesMetaCest
         $I->assertNotEmpty($decodedResponse['meta']['Accounts']['attributes']);
     }
 
-
     /**
-     * Get menu metadata of a given module
+     * Get menu metadata of a given module.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/menu
-     *
      */
     public function TestScenarioGetModuleMetaMenu(ApiTester $I)
     {
@@ -139,8 +140,10 @@ class ModulesMetaCest
     }
 
     /**
-     * Get layout metadata of module view
+     * Get layout metadata of module view.
+     *
      * @param ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
@@ -168,8 +171,10 @@ class ModulesMetaCest
     }
 
     /**
-     * Get the current user's favorites for a single module
+     * Get the current user's favorites for a single module.
+     *
      * @param \ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
@@ -185,19 +190,19 @@ class ModulesMetaCest
         // Create account
         $I->comment('Create Account');
         $url = $I->getInstanceURL() . self::RESOURCE;
-        $accountName = 'Test'. $this->fakeData->name();
+        $accountName = 'Test' . $this->fakeData->name();
 
         $I->sendPost(
             $url,
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
                     'type' => 'Accounts',
-                    'attributes' => array(
+                    'attributes' => [
                         'name' => $accountName
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
         $I->seeResponseCodeIs(201);
@@ -213,19 +218,19 @@ class ModulesMetaCest
         $url = $I->getInstanceURL() . self::$FAVORITE_RESOURCE;
         $I->sendPost(
             $url,
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
                     'type' => 'Favorites',
-                    'attributes' => array(
+                    'attributes' => [
                         'name' => 'Accounts ' . self::$RECORD,
                         'assigned_user_id' => 1,
                         'assigned_user_name' => 'admin',
                         'parent_id' => self::$RECORD,
-                        'parent_type'=> 'Accounts'
-                    )
-                )
-            )
+                        'parent_type' => 'Accounts'
+                    ]
+                ]
+            ]
         );
 
         $I->seeResponseCodeIs(201);
@@ -237,7 +242,7 @@ class ModulesMetaCest
         $I->assertArrayHasKey('data', $decodedResponse);
         $I->assertArrayHasKey('attributes', $decodedResponse['data']);
         $I->assertArrayHasKey('assigned_user_id', $decodedResponse['data']['attributes']);
-        $I->assertEquals('1', (string)  $decodedResponse['data']['attributes']['assigned_user_id']);
+        $I->assertEquals('1', (string) $decodedResponse['data']['attributes']['assigned_user_id']);
 
         // Get Favorite
         $I->comment('Get Favorite');
@@ -262,9 +267,12 @@ class ModulesMetaCest
             $I->assertEquals(self::$RECORD, $decodedResponse['data']['id']);
         }
     }
+
     /**
-     * Get the current user's favorite records for all modules
+     * Get the current user's favorite records for all modules.
+     *
      * @param \ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
@@ -280,19 +288,19 @@ class ModulesMetaCest
         // Create account
         $I->comment('Create Account');
         $url = $I->getInstanceURL() . self::RESOURCE;
-        $accountName = 'Test'. $this->fakeData->name();
+        $accountName = 'Test' . $this->fakeData->name();
 
         $I->sendPost(
             $url,
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
                     'type' => 'Accounts',
-                    'attributes' => array(
+                    'attributes' => [
                         'name' => $accountName
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
 
         $I->seeResponseCodeIs(201);
@@ -308,19 +316,19 @@ class ModulesMetaCest
         $url = $I->getInstanceURL() . self::$FAVORITE_RESOURCE;
         $I->sendPost(
             $url,
-            array(
-                'data' => array(
+            [
+                'data' => [
                     'id' => '',
                     'type' => 'Favorites',
-                    'attributes' => array(
+                    'attributes' => [
                         'name' => 'Accounts ' . self::$RECORD,
                         'assigned_user_id' => 1,
                         'assigned_user_name' => 'admin',
                         'parent_id' => self::$RECORD,
-                        'parent_type'=> 'Accounts'
-                    )
-                )
-            )
+                        'parent_type' => 'Accounts'
+                    ]
+                ]
+            ]
         );
 
         $I->seeResponseCodeIs(201);
@@ -332,7 +340,7 @@ class ModulesMetaCest
         $I->assertArrayHasKey('data', $decodedResponse);
         $I->assertArrayHasKey('attributes', $decodedResponse['data']);
         $I->assertArrayHasKey('assigned_user_id', $decodedResponse['data']['attributes']);
-        $I->assertEquals('1', (string)  $decodedResponse['data']['attributes']['assigned_user_id']);
+        $I->assertEquals('1', (string) $decodedResponse['data']['attributes']['assigned_user_id']);
 
         // Get Favorite
         $I->comment('Get Favorite');
@@ -357,14 +365,15 @@ class ModulesMetaCest
     }
 
     /**
-     * Get the current user recently viewed records for all modules
+     * Get the current user recently viewed records for all modules.
+     *
      * @param \ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/viewed
      */
-
     public function TestScenarioGetModuleRecentlyViewed(ApiTester $I)
     {
         $I->loginAsAdmin();
@@ -395,14 +404,15 @@ class ModulesMetaCest
     }
 
     /**
-     * Get the current user recently viewed records for all modules
+     * Get the current user recently viewed records for all modules.
+     *
      * @param \ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/viewed
      */
-
     public function TestScenarioGetAllModulesRecentlyViewed(ApiTester $I)
     {
         $I->loginAsAdmin();
@@ -433,8 +443,10 @@ class ModulesMetaCest
     }
 
     /**
-     * Get the module filters
+     * Get the module filters.
+     *
      * @param \ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
@@ -462,8 +474,10 @@ class ModulesMetaCest
     }
 
     /**
-     * Get the module menus
+     * Get the module menus.
+     *
      * @param \ApiTester $I
+     *
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET

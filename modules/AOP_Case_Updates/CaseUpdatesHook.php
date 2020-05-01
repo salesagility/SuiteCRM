@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,41 +39,11 @@
 require_once 'util.php';
 
 /**
- * Class CaseUpdatesHook
+ * Class CaseUpdatesHook.
  */
 class CaseUpdatesHook
 {
     private $slug_size = 50;
-
-    /**
-     * @return string
-     */
-    private function getAssignToUser()
-    {
-        require_once 'modules/AOP_Case_Updates/AOPAssignManager.php';
-        $assignManager = new AOPAssignManager();
-
-        return $assignManager->getNextAssignedUser();
-    }
-
-    /**
-     * @return int
-     */
-    private function arrangeFilesArray()
-    {
-        $count = 0;
-        foreach ($_FILES['case_update_file'] as $key => $vals) {
-            foreach ($vals as $index => $val) {
-                if (!array_key_exists('case_update_file' . $index, $_FILES)) {
-                    $_FILES['case_update_file' . $index] = [];
-                    ++$count;
-                }
-                $_FILES['case_update_file' . $index][$key] = $val;
-            }
-        }
-
-        return $count;
-    }
 
     /**
      * @param aCase $case
@@ -126,7 +95,7 @@ class CaseUpdatesHook
 
         $fileCount = $this->arrangeFilesArray();
 
-        for ($x = 0; $x < $fileCount; ++$x) {
+        for ($x = 0; $x < $fileCount; $x++) {
             if ($_FILES['case_update_file']['error'][$x] === UPLOAD_ERR_NO_FILE) {
                 continue;
             }
@@ -159,37 +128,6 @@ class CaseUpdatesHook
             $srcFile = "upload://{$doc->document_revision_id}";
             $destFile = "upload://{$note->id}";
             copy($srcFile, $destFile);
-        }
-    }
-
-    /**
-     * @param $caseUpdateId
-     *
-     * @return Note
-     */
-    private function newNote($caseUpdateId)
-    {
-        $note = BeanFactory::newBean('Notes');
-        $note->parent_type = 'AOP_Case_Updates';
-        $note->parent_id = $caseUpdateId;
-        $note->not_use_rel_in_req = true;
-
-        return $note;
-    }
-
-    /**
-     * @param $case_id
-     * @param $account_id
-     */
-    private function linkAccountAndCase($case_id, $account_id)
-    {
-        if (!$account_id || !$case_id) {
-            return;
-        }
-        $case = BeanFactory::getBean('Cases', $case_id);
-        if (!$case->account_id) {
-            $case->account_id = $account_id;
-            $case->save();
         }
     }
 
@@ -282,6 +220,204 @@ class CaseUpdatesHook
     }
 
     /**
+     * @param aCase $case
+     */
+    public function closureNotifyPrep($case)
+    {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
+            return;
+        }
+        $case->send_closure_email = true;
+        if ($case->state !== 'Closed' || $case->fetched_row['state'] === 'Closed') {
+            $case->send_closure_email = false;
+        }
+    }
+
+    /**
+     * @param aCase $case
+     */
+    public function closureNotify($case)
+    {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
+            return;
+        }
+        if ($case->state !== 'Closed' || !$case->send_closure_email) {
+            return;
+        }
+        $this->sendClosureEmail($case);
+    }
+
+    /**
+     * Called by the after_relationship_save logic hook in cases. Checks to ensure this is a
+     * contact being added and sends an email to that contact.
+     *
+     * @param $bean
+     * @param $event
+     * @param $arguments
+     */
+    public function creationNotify($bean, $event, $arguments)
+    {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
+            return;
+        }
+        if ($arguments['module'] !== 'Cases' || $arguments['related_module'] !== 'Contacts') {
+            return;
+        }
+        if (!$bean->fetched_row) {
+            return;
+        }
+        if (!empty($arguments['related_bean'])) {
+            $contact = $arguments['related_bean'];
+        } else {
+            $contact = BeanFactory::getBean('Contacts', $arguments['related_id']);
+        }
+        $this->sendCreationEmail($bean, $contact);
+    }
+
+    /**
+     * @param SugarBean $bean
+     */
+    public function filterHTML($bean)
+    {
+        $bean->description = SugarCleaner::cleanHtml($bean->description, true);
+    }
+
+    /**
+     * @param AOP_Case_Updates $caseUpdate
+     */
+    public function sendCaseUpdate(AOP_Case_Updates $caseUpdate)
+    {
+        global $current_user, $sugar_config;
+        $email_template = new EmailTemplate();
+
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested module is not set for case update');
+        }
+
+        if ($module === 'Import') {
+            //Don't send email on import
+            LoggerManager::getLogger()->warn("Don't send email on import");
+
+            return;
+        }
+        if (!isAOPEnabled()) {
+            LoggerManager::getLogger()->warn("Don't send email if AOP enabled");
+
+            return;
+        }
+        if ($caseUpdate->internal) {
+            LoggerManager::getLogger()->warn("Don't send email if case update is internal");
+
+            return;
+        }
+        $signature = [];
+        $addDelimiter = true;
+        $aop_config = $sugar_config['aop'];
+        if ($caseUpdate->assigned_user_id) {
+            if ($aop_config['contact_email_template_id']) {
+                $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
+                $signature = $current_user->getDefaultSignature();
+            }
+            if ($email_template->id) {
+                foreach ($caseUpdate->getContacts() as $contact) {
+                    $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
+                    $emails = [];
+                    $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
+                    $caseUpdate->sendEmail(
+                        $emails,
+                        $email_template,
+                        $signature,
+                        $caseUpdate->case_id,
+                        $addDelimiter,
+                        $contact->id
+                    );
+                }
+            }
+        } else {
+            $emails = $caseUpdate->getEmailForUser();
+            if ($aop_config['user_email_template_id']) {
+                $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
+            }
+            $addDelimiter = false;
+            if ($emails && $email_template->id) {
+                LoggerManager::getLogger()->info('AOPCaseUpdates: Calling send email');
+                $caseUpdate->sendEmail(
+                    $emails,
+                    $email_template,
+                    $signature,
+                    $caseUpdate->case_id,
+                    $addDelimiter,
+                    $caseUpdate->contact_id
+                );
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    private function getAssignToUser()
+    {
+        require_once 'modules/AOP_Case_Updates/AOPAssignManager.php';
+        $assignManager = new AOPAssignManager();
+
+        return $assignManager->getNextAssignedUser();
+    }
+
+    /**
+     * @return int
+     */
+    private function arrangeFilesArray()
+    {
+        $count = 0;
+        foreach ($_FILES['case_update_file'] as $key => $vals) {
+            foreach ($vals as $index => $val) {
+                if (!array_key_exists('case_update_file' . $index, $_FILES)) {
+                    $_FILES['case_update_file' . $index] = [];
+                    $count++;
+                }
+                $_FILES['case_update_file' . $index][$key] = $val;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * @param $caseUpdateId
+     *
+     * @return Note
+     */
+    private function newNote($caseUpdateId)
+    {
+        $note = BeanFactory::newBean('Notes');
+        $note->parent_type = 'AOP_Case_Updates';
+        $note->parent_id = $caseUpdateId;
+        $note->not_use_rel_in_req = true;
+
+        return $note;
+    }
+
+    /**
+     * @param $case_id
+     * @param $account_id
+     */
+    private function linkAccountAndCase($case_id, $account_id)
+    {
+        if (!$account_id || !$case_id) {
+            return;
+        }
+        $case = BeanFactory::getBean('Cases', $case_id);
+        if (!$case->account_id) {
+            $case->account_id = $account_id;
+            $case->save();
+        }
+    }
+
+    /**
      * Changes the status of the supplied case based on the case_status_changes config values.
      *
      * @param $caseId
@@ -324,34 +460,6 @@ class CaseUpdatesHook
         }
 
         return $text;
-    }
-
-    /**
-     * @param aCase $case
-     */
-    public function closureNotifyPrep($case)
-    {
-        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
-            return;
-        }
-        $case->send_closure_email = true;
-        if ($case->state !== 'Closed' || $case->fetched_row['state'] === 'Closed') {
-            $case->send_closure_email = false;
-        }
-    }
-
-    /**
-     * @param aCase $case
-     */
-    public function closureNotify($case)
-    {
-        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
-            return;
-        }
-        if ($case->state !== 'Closed' || !$case->send_closure_email) {
-            return;
-        }
-        $this->sendClosureEmail($case);
     }
 
     /**
@@ -418,33 +526,6 @@ class CaseUpdatesHook
         $GLOBALS['log']->info('CaseUpdatesHook: Could not send email:  ' . $mailer->ErrorInfo);
 
         return false;
-    }
-
-    /**
-     * Called by the after_relationship_save logic hook in cases. Checks to ensure this is a
-     * contact being added and sends an email to that contact.
-     *
-     * @param $bean
-     * @param $event
-     * @param $arguments
-     */
-    public function creationNotify($bean, $event, $arguments)
-    {
-        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
-            return;
-        }
-        if ($arguments['module'] !== 'Cases' || $arguments['related_module'] !== 'Contacts') {
-            return;
-        }
-        if (!$bean->fetched_row) {
-            return;
-        }
-        if (!empty($arguments['related_bean'])) {
-            $contact = $arguments['related_bean'];
-        } else {
-            $contact = BeanFactory::getBean('Contacts', $arguments['related_id']);
-        }
-        $this->sendCreationEmail($bean, $contact);
     }
 
     /**
@@ -588,87 +669,5 @@ class CaseUpdatesHook
         $emailObj->created_by = '1';
         $emailObj->status = 'sent';
         $emailObj->save();
-    }
-
-    /**
-     * @param SugarBean $bean
-     */
-    public function filterHTML($bean)
-    {
-        $bean->description = SugarCleaner::cleanHtml($bean->description, true);
-    }
-
-    /**
-     * @param AOP_Case_Updates $caseUpdate
-     */
-    public function sendCaseUpdate(AOP_Case_Updates $caseUpdate)
-    {
-        global $current_user, $sugar_config;
-        $email_template = new EmailTemplate();
-
-        $module = null;
-        if (isset($_REQUEST['module'])) {
-            $module = $_REQUEST['module'];
-        } else {
-            LoggerManager::getLogger()->warn('Requested module is not set for case update');
-        }
-
-        if ($module === 'Import') {
-            //Don't send email on import
-            LoggerManager::getLogger()->warn("Don't send email on import");
-
-            return;
-        }
-        if (!isAOPEnabled()) {
-            LoggerManager::getLogger()->warn("Don't send email if AOP enabled");
-
-            return;
-        }
-        if ($caseUpdate->internal) {
-            LoggerManager::getLogger()->warn("Don't send email if case update is internal");
-
-            return;
-        }
-        $signature = [];
-        $addDelimiter = true;
-        $aop_config = $sugar_config['aop'];
-        if ($caseUpdate->assigned_user_id) {
-            if ($aop_config['contact_email_template_id']) {
-                $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
-                $signature = $current_user->getDefaultSignature();
-            }
-            if ($email_template->id) {
-                foreach ($caseUpdate->getContacts() as $contact) {
-                    $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
-                    $emails = [];
-                    $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
-                    $caseUpdate->sendEmail(
-                        $emails,
-                        $email_template,
-                        $signature,
-                        $caseUpdate->case_id,
-                        $addDelimiter,
-                        $contact->id
-                    );
-                }
-            }
-        } else {
-            $emails = $caseUpdate->getEmailForUser();
-            if ($aop_config['user_email_template_id']) {
-                $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
-            }
-            $addDelimiter = false;
-            if ($emails && $email_template->id) {
-                LoggerManager::getLogger()->info('AOPCaseUpdates: Calling send email');
-                $caseUpdate->sendEmail(
-                    $emails,
-                    $email_template,
-                    $signature,
-                    $caseUpdate->case_id,
-                    $addDelimiter,
-                    $caseUpdate->contact_id
-                );
-            }
-        }
     }
 }

@@ -63,9 +63,7 @@ class ElasticSearchClientBuilder
             self::$hosts = self::loadFromSugarConfig();
         }
 
-        $client = ClientBuilder::create()->setHosts(self::$hosts)->build();
-
-        return $client;
+        return ClientBuilder::create()->setHosts(self::$hosts)->build();
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection */
@@ -100,7 +98,7 @@ class ElasticSearchClientBuilder
         $parsedHost = parse_url($hostURL);
 
         if (!is_array($parsedHost)) {
-            throw new \InvalidArgumentException("Failed to parse Host URL '$hostURL'");
+            throw new \InvalidArgumentException("Failed to parse Host URL '{$hostURL}'");
         }
 
         $merged = array_merge($host, $parsedHost);
@@ -115,6 +113,7 @@ class ElasticSearchClientBuilder
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection */
+
     /**
      * Loads config from a json file.
      *
@@ -206,7 +205,7 @@ class ElasticSearchClientBuilder
      */
     private static function addHttp($url, $scheme = 'http')
     {
-        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+        if (!preg_match('~^(?:f|ht)tps?://~i', $url)) {
             $url = $scheme . '://' . $url;
         }
 

@@ -1,8 +1,8 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 class ACLRolesViewClassic extends ViewDetail
 {
@@ -14,15 +14,12 @@ class ACLRolesViewClassic extends ViewDetail
         $this->options['show_subpanels'] = false; //no longer works in 6.3.0
     }
 
-
-
-
     public function display()
     {
         $this->dv->process();
 
         $file = SugarController::getActionFilename($this->action);
-        $this->includeClassicFile('modules/'. $this->module . '/'. $file . '.php');
+        $this->includeClassicFile('modules/' . $this->module . '/' . $file . '.php');
     }
 
     public function preDisplay()

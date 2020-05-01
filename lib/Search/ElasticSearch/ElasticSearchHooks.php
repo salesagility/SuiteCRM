@@ -116,8 +116,6 @@ class ElasticSearchHooks
 
     /**
      * @param SugarBean $bean
-     *
-     * @return void
      */
     private function reIndex(SugarBean $bean)
     {
@@ -143,9 +141,6 @@ class ElasticSearchHooks
         }
     }
 
-    /**
-     * @return void
-     */
     private function getIndexer()
     {
         /** @noinspection PhpUndefinedFieldInspection */
@@ -179,9 +174,11 @@ class ElasticSearchHooks
         switch ($this->action) {
             case 'index':
                 $this->indexer->indexBean($bean);
+
                 break;
             case 'remove':
                 $this->indexer->removeBean($bean);
+
                 break;
             default:
                 throw new InvalidArgumentException('Wrong action provided');
@@ -193,11 +190,12 @@ class ElasticSearchHooks
      */
     private function handleError($exception)
     {
-        $message = "Failed to $this->action bean to index";
+        $message = "Failed to {$this->action} bean to index";
 
         if (isset($this->indexer)) {
             $this->indexer->getLogger()->error($message);
             $this->indexer->getLogger()->error($exception);
+
             return;
         }
 

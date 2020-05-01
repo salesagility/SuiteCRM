@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,71 +43,59 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $module_name = 'OAuth2Tokens';
 
 $searchdefs[$module_name] = [
-    'templateMeta' =>
-        [
-            'maxColumns' => '3',
-            'maxColumnsBasic' => '4',
-            'widths' =>
-                [
-                    'label' => '10',
-                    'field' => '30',
-                ],
+    'templateMeta' => [
+        'maxColumns' => '3',
+        'maxColumnsBasic' => '4',
+        'widths' => [
+            'label' => '10',
+            'field' => '30',
         ],
-    'layout' =>
-        [
-            'basic_search' =>
-                [
-                    'id' =>
-                        [
-                            'id' => 'id',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                ],
-            'advanced_search' =>
-                [
-                    'id' =>
-                        [
-                            'name' => 'id',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                    'oauth2client_name' =>
-                        [
-                            'name' => 'oauth2client_name',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                    'assigned_user_name' =>
-                        [
-                            'name' => 'assigned_user_name',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                    'token_is_revoked' =>
-                        [
-                            'name' => 'token_is_revoked',
-                            'label' => 'LBL_TOKEN_IS_REVOKED',
-                            'type' => 'bool',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                    'active_only' =>
-                        [
-                            'name' => 'active_only',
-                            'label' => 'LBL_IS_ACTIVE',
-                            'type' => 'bool',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                    'grant_type' =>
-                        [
-                            'type' => 'enum',
-                            'label' => 'LBL_GRANT_TYPE',
-                            'width' => '10%',
-                            'default' => true,
-                            'name' => 'grant_type',
-                        ],
-                ],
+    ],
+    'layout' => [
+        'basic_search' => [
+            'id' => [
+                'id' => 'id',
+                'default' => true,
+                'width' => '10%',
+            ],
         ],
+        'advanced_search' => [
+            'id' => [
+                'name' => 'id',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'oauth2client_name' => [
+                'name' => 'oauth2client_name',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'assigned_user_name' => [
+                'name' => 'assigned_user_name',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'token_is_revoked' => [
+                'name' => 'token_is_revoked',
+                'label' => 'LBL_TOKEN_IS_REVOKED',
+                'type' => 'bool',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'active_only' => [
+                'name' => 'active_only',
+                'label' => 'LBL_IS_ACTIVE',
+                'type' => 'bool',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'grant_type' => [
+                'type' => 'enum',
+                'label' => 'LBL_GRANT_TYPE',
+                'width' => '10%',
+                'default' => true,
+                'name' => 'grant_type',
+            ],
+        ],
+    ],
 ];

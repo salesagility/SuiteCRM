@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOS_Line_Item_Groups()
+    public function testAOSLineItemGroups()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosLineItemGroup = new AOS_Line_Item_Groups();
@@ -30,16 +33,16 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'tracker_visibility', $aosLineItemGroup);
     }
 
-    public function testsave_groups()
+    public function testsaveGroups()
     {
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 
         //populate required values
-        $post_data = array();
-        $post_data['group_number'] = array(0, 0);
-        $post_data['name'] = array('test1', 'test2');
-        $post_data['total_amount'] = array('100', '200');
-        $post_data['total_amount_usdollar'] = array('100', '200');
+        $post_data = [];
+        $post_data['group_number'] = [0, 0];
+        $post_data['name'] = ['test1', 'test2'];
+        $post_data['total_amount'] = ['100', '200'];
+        $post_data['total_amount_usdollar'] = ['100', '200'];
 
         //create parent bean for line item groups
         $aosContract = new AOS_Contracts();

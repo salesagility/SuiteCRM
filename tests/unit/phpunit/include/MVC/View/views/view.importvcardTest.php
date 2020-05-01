@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function testConstruct()
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcard();
@@ -29,9 +32,9 @@ class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
-         
+
         // cleanup
-        
+
         if (isset($request)) {
             $_REQUEST = $request;
         } else {

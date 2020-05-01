@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$connector_strings = array(
+$connector_strings = [
     'LBL_GET_STARTED' => 'Get Started!',
     'LBL_TOS1' => 'Terms of Use',
     'LBL_TOS3' => 'Privacy Policy',
@@ -53,4 +51,4 @@ $connector_strings = array(
     'LBL_REFERRAL_SUB' => 'to key decision makers',
     'LBL_ENGAGE' => 'Engage Customers',
     'LBL_ENGAGE_SUB' => 'with conversation starters',
-);
+];

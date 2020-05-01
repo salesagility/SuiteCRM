@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -55,10 +53,8 @@ $focus->load_user($username_password);
 if ($focus->is_authenticated()) {
     // save the user information into the session
     // go to the home screen
-    header("Location: ".$GLOBALS['app']->getLoginRedirect());
-    unset($_SESSION['login_password']);
-    unset($_SESSION['login_error']);
-    unset($_SESSION['login_user_name']);
+    header('Location: ' . $GLOBALS['app']->getLoginRedirect());
+    unset($_SESSION['login_password'], $_SESSION['login_error'], $_SESSION['login_user_name']);
 
     $_SESSION['authenticated_user_id'] = $focus->id;
 
@@ -92,13 +88,13 @@ if ($focus->is_authenticated()) {
     $_SESSION['authenticated_user_theme'] = $authenticated_user_theme;
     $_SESSION['authenticated_user_language'] = $authenticated_user_language;
 
-    $GLOBALS['log']->debug("authenticated_user_theme is $authenticated_user_theme");
-    $GLOBALS['log']->debug("authenticated_user_language is $authenticated_user_language");
+    $GLOBALS['log']->debug("authenticated_user_theme is {$authenticated_user_theme}");
+    $GLOBALS['log']->debug("authenticated_user_language is {$authenticated_user_language}");
 
     // Clear all uploaded import files for this user if it exists
 
-    require_once('modules/Import/ImportCacheFiles.php');
-    $tmp_file_name = ImportCacheFiles::getImportDir()."/IMPORT_" . $focus->id;
+    require_once 'modules/Import/ImportCacheFiles.php';
+    $tmp_file_name = ImportCacheFiles::getImportDir() . '/IMPORT_' . $focus->id;
 
     if (file_exists($tmp_file_name)) {
         unlink($tmp_file_name);
@@ -110,5 +106,5 @@ if ($focus->is_authenticated()) {
 
     // go back to the login screen.
     // create an error message for the user.
-    header("Location: index.php");
+    header('Location: index.php');
 }

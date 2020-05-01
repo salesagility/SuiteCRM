@@ -5,12 +5,12 @@ use Faker\Generator;
 class AccountsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class AccountsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the accounts module.
+     * As an administrator I want to view the accounts module
      */
     public function testScenarioViewAccountsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the accounts module for testing');
 
@@ -55,14 +55,14 @@ class AccountsCest
      * @param \Step\Acceptance\SideBar $sideBar
      *
      * As administrative user I want to create a report with the reports module so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateAccount(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\SideBar $sideBar
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\SideBar $sideBar
     ) {
         $I->wantTo('Create an Account');
 
@@ -117,9 +117,9 @@ class AccountsCest
      * As administrative user I want to inline edit a field on the list-view
      */
     public function testScenarioInlineEditListView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Inline edit an account on the list-view');
 
@@ -130,7 +130,7 @@ class AccountsCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $account_name = 'Test_'. $this->fakeData->company();
+        $account_name = 'Test_' . $this->fakeData->company();
         $accounts->createAccount($account_name);
 
         // Inline edit
@@ -143,11 +143,11 @@ class AccountsCest
     }
 
     public function testScenarioCreateAccountChild(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Accounts $accounts
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Accounts $accounts
     ) {
         $I->wantTo('Create a child Account');
 

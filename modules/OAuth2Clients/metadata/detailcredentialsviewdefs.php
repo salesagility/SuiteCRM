@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -52,49 +50,37 @@ $viewdefs[$module_name]['DetailView'] = [
         ],
     ],
     'panels' => [
-        'default' =>
-            [
-                0 =>
-                    [
-                        'name' => 'name',
-                    ],
-                2 =>
-                    [
-                        'name' => 'is_confidential',
-                    ],
-                3 =>
-                    [
-                        'name' => 'id',
-                    ],
-                4 =>
-                    [
-                        'name' => 'allowed_grant_type',
-                    ],
-                6 =>
-                    [
-                        'name' => 'assigned_user_name',
-                    ],
+        'default' => [
+            0 => [
+                'name' => 'name',
             ],
-        'LBL_PANEL_ASSIGNMENT' =>
-            [
-                0 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'date_entered',
-                                'customCode' =>
-                                    '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'date_modified',
-                                'label' => 'LBL_DATE_MODIFIED',
-                                'customCode' =>
-                                    '{$fields.date_modified.value} ' .
-                                    '{$APP.LBL_BY} ' .
-                                    '{$fields.modified_by_name.value}',
-                            ],
-                    ],
+            2 => [
+                'name' => 'is_confidential',
             ],
+            3 => [
+                'name' => 'id',
+            ],
+            4 => [
+                'name' => 'allowed_grant_type',
+            ],
+            6 => [
+                'name' => 'assigned_user_name',
+            ],
+        ],
+        'LBL_PANEL_ASSIGNMENT' => [
+            0 => [
+                0 => [
+                    'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                ],
+                1 => [
+                    'name' => 'date_modified',
+                    'label' => 'LBL_DATE_MODIFIED',
+                    'customCode' => '{$fields.date_modified.value} ' .
+                        '{$APP.LBL_BY} ' .
+                        '{$fields.modified_by_name.value}',
+                ],
+            ],
+        ],
     ],
 ];

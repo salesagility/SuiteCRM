@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,47 +37,53 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldBool extends SugarFieldBase
 {
     /**
+     * @author Navjeet Singh
+     *
+     * @param $parentFieldArray -
+     * @param mixed $vardef
+     * @param mixed $displayParams
+     * @param mixed $tabindex
      *
      * @return The html for a drop down if the search field is not 'my_items_only' or a dropdown for all other fields.
      *			This strange behavior arises from the special needs of PM. They want the my items to be checkboxes and all other boolean fields to be dropdowns.
-     * @author Navjeet Singh
-     * @param $parentFieldArray -
-     **/
+     */
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         //If there was a type override to specifically render it as a boolean, show the EditView checkbox
-        if (preg_match("/(favorites|current_user|open)_only.*/", $vardef['name'])) {
+        if (preg_match('/(favorites|current_user|open)_only.*/', $vardef['name'])) {
             return $this->fetch($this->findTemplate('EditView'));
-        } else {
-            return $this->fetch($this->findTemplate('SearchView'));
         }
+
+        return $this->fetch($this->findTemplate('SearchView'));
     }
 
     /**
      * @see SugarFieldBase::importSanitize()
+     *
+     * @param mixed $value
+     * @param mixed $vardef
+     * @param mixed $focus
      */
     public function importSanitize(
         $value,
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
-        $bool_values = array(0=>'0',1=>'no',2=>'off',3=>'n',4=>'yes',5=>'y',6=>'on',7=>'1');
+    ) {
+        $bool_values = [0 => '0', 1 => 'no', 2 => 'off', 3 => 'n', 4 => 'yes', 5 => 'y', 6 => 'on', 7 => '1'];
         $bool_search = array_search($value, $bool_values);
         if ($bool_search === false) {
             return false;
-        } else {
-            //Convert all the values to a real bool.
-            $value = (int) ($bool_search > 3);
         }
+        //Convert all the values to a real bool.
+        $value = (int) ($bool_search > 3);
+
         if (isset($vardef['dbType']) && $vardef['dbType'] == 'varchar') {
             $value = ($value ? 'on' : 'off');
         }
@@ -92,20 +97,17 @@ class SugarFieldBool extends SugarFieldBase
         // This does not return a smarty section, instead it returns a direct value
         if ($inputField == 'bool_true' || $inputField === true) { // Note: true must be absolute true
             return $app_list_strings['checkbox_dom']['1'];
-        } else {
-            if ($inputField == 'bool_false' || $inputField === false) { // Note: false must be absolute false
-                return $app_list_strings['checkbox_dom']['2'];
-            } else { // otherwise we return blank display
-                return '';
-            }
         }
+        if ($inputField == 'bool_false' || $inputField === false) { // Note: false must be absolute false
+            return $app_list_strings['checkbox_dom']['2'];
+        }   // otherwise we return blank display
+        return '';
     }
 
     public function unformatField($formattedField, $vardef)
     {
         if (empty($formattedField)) {
-            $unformattedField = false;
-            return $unformattedField;
+            return false;
         }
         if ($formattedField == '0' || $formattedField == 'off' || $formattedField == 'false' || $formattedField == 'no') {
             $unformattedField = false;

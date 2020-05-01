@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,10 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $current_user;
-
 
 $focus = new Email();
 // Get Group User IDs
@@ -52,7 +50,7 @@ $groupUserQuery = 'SELECT name, group_id FROM inbound_email ie INNER JOIN users 
 $r = $focus->db->query($groupUserQuery);
 $groupIds = '';
 while ($a = $focus->db->fetchByAssoc($r)) {
-    $groupIds .= "'".$a['group_id']."', ";
+    $groupIds .= "'" . $a['group_id'] . "', ";
 }
 $groupIds = substr($groupIds, 0, (strlen($groupIds) - 2));
 
@@ -69,7 +67,7 @@ $focus->assigned_user_id = $current_user->id;
 $focus->save();
 
 if (!empty($a2['id'])) {
-    header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id='.$current_user->id);
+    header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id=' . $current_user->id);
 } else {
-    header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id='.$current_user->id);
+    header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id=' . $current_user->id);
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,36 +40,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 /**
- * Created: Aug 22, 2011
+ * Created: Aug 22, 2011.
  */
 class SugarFieldRadioenum extends SugarFieldBase
 {
     /**
-     * Decrypt encrypt fields values before inserting them into the emails
+     * Decrypt encrypt fields values before inserting them into the emails.
      *
      * @param string $inputField
      * @param mixed $vardef
      * @param mixed $displayParams
      * @param int $tabindex
+     *
      * @return string
-    */
-    public function getEmailTemplateValue($inputField, $vardef, $displayParams = array(), $tabindex = 0)
+     */
+    public function getEmailTemplateValue($inputField, $vardef, $displayParams = [], $tabindex = 0)
     {
         global $app_list_strings;
-        
-        /**
-         * If array doesn't exist for some reason, return key.
-         */
+
+        // If array doesn't exist for some reason, return key.
         if (!empty($app_list_strings[$vardef['options']])) {
             if (isset($app_list_strings[$vardef['options']][$inputField])) {
                 return $app_list_strings[$vardef['options']][$inputField];
             }
         }
+
         return $inputField;
     }
 }

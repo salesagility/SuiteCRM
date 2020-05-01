@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,38 +47,35 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * LangException
+ * LangException.
  *
  * @author gyula
+ *
  * @todo should it implement or an interface enough for it?
  * (We can use any kind of exception if it's an interface but
  * can not guarantee the proper translation in each implementation)
  */
 class LangException extends Exception implements LangExceptionInterface
 {
-
     /**
-     *
      * @var LangText
      */
     protected $langMessage;
 
     /**
-     *
      * @param string $message
-     * @param integer $code
+     * @param int $code
      * @param Exception $previous (Throwable)
      * @param LangText $langMessage
      */
-    public function __construct($message = "", $code = 0, Exception $previous = null, LangText $langMessage = null)
+    public function __construct($message = '', $code = 0, Exception $previous = null, LangText $langMessage = null)
     {
         parent::__construct($message, $code, $previous);
         $this->langMessage = $langMessage;
     }
 
     /**
-     *
-     * @return string|null
+     * @return null|string
      */
     public function getLangMessage()
     {

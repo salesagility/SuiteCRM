@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$action_view_map['retrievesource']= 'retrievesource';
-$action_view_map['step1']= 'step1';
-$action_view_map['step2']= 'step2';
+$action_view_map['retrievesource'] = 'retrievesource';
+$action_view_map['step1'] = 'step1';
+$action_view_map['step2'] = 'step2';
 
 //Admin main page
 $action_view_map['connectorsettings'] = 'connectorsettings';
 
 //Admin pages for the connector properties
 $action_view_map['modifyproperties'] = 'modifyproperties';
-$action_view_map['sourceproperties']= 'sourceproperties';
+$action_view_map['sourceproperties'] = 'sourceproperties';
 
 //Admin pages to enable/disable connector for modules
 $action_view_map['modifydisplay'] = 'modifydisplay';

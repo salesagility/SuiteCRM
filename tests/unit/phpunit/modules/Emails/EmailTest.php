@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,6 +47,9 @@ require_once __DIR__ . '/SugarPHPMailerMock.php';
 require_once __DIR__ . '/NonGmailSentFolderHandlerMock.php';
 require_once __DIR__ . '/EmailMock.php';
 
+/**
+ * @internal
+ */
 class EmailTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -65,7 +67,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $mailer = new SugarPHPMailerMock();
         $ie = new InboundEmail();
         $ieId = $ie->save();
-        $this->assertTrue((bool)$ieId);
+        $this->assertTrue((bool) $ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
         $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
@@ -91,7 +93,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $mailer = new SugarPHPMailerMock();
         $ie = new InboundEmail();
         $ieId = $ie->save();
-        $this->assertTrue((bool)$ieId);
+        $this->assertTrue((bool) $ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
         $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
@@ -117,7 +119,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $mailer = new SugarPHPMailerMock();
         $ie = new InboundEmail();
         $ieId = $ie->save();
-        $this->assertTrue((bool)$ieId);
+        $this->assertTrue((bool) $ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
         $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
@@ -143,7 +145,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $mailer = new SugarPHPMailerMock();
         $ie = new InboundEmail();
         $ieId = $ie->save();
-        $this->assertTrue((bool)$ieId);
+        $this->assertTrue((bool) $ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
         $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
@@ -232,6 +234,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     public function testSetLastSaveAndStoreInSentErrorNo()
     {
         $email = new EmailMock();
+
         try {
             $email->setLastSaveAndStoreInSentErrorPublic(null);
             $this->assertTrue(false);
@@ -277,7 +280,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('EmailUI', $email->et);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         // test
         $email = new Email();
@@ -308,10 +311,10 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
         $email->email2init();
         $addresses = 'abc<abc@xyz.com>,xyz<xyz@abc.com>';
-        $expected = array(
-            array('email' => 'abc@xyz.com', 'display' => 'abc'),
-            array('email' => 'xyz@abc.com', 'display' => 'xyz')
-        );
+        $expected = [
+            ['email' => 'abc@xyz.com', 'display' => 'abc'],
+            ['email' => 'xyz@abc.com', 'display' => 'xyz']
+        ];
 
         $result = $email->email2ParseAddresses($addresses);
         $this->assertSame($expected, $result);
@@ -324,12 +327,12 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         //test with simplest format
         $addresses = 'abc@xyz.com,xyz@abc.com';
         $result = $email->email2ParseAddressesForAddressesOnly($addresses);
-        $this->assertEquals(array('abc@xyz.com', 'xyz@abc.com'), $result);
+        $this->assertEquals(['abc@xyz.com', 'xyz@abc.com'], $result);
 
         //test with more used format
         $addresses = 'abc<abc@xyz.com>,xyz<xyz@abc.com>';
         $result = $email->email2ParseAddressesForAddressesOnly($addresses);
-        $this->assertEquals(array('abc@xyz.com', 'xyz@abc.com'), $result);
+        $this->assertEquals(['abc@xyz.com', 'xyz@abc.com'], $result);
     }
 
     public function testemail2GetMime()
@@ -357,35 +360,35 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email = new Email();
 
         //test with required parametr set
-        $this->assertEquals(true, $email->isDraftEmail(array('saveDraft' => '1')));
+        $this->assertEquals(true, $email->isDraftEmail(['saveDraft' => '1']));
 
         //test with one of required attribute set
         $email->type = 'draft';
-        $this->assertEquals(false, $email->isDraftEmail(array()));
+        $this->assertEquals(false, $email->isDraftEmail([]));
 
         //test with both of required attribute set
         $email->status = 'draft';
-        $this->assertEquals(true, $email->isDraftEmail(array()));
+        $this->assertEquals(true, $email->isDraftEmail([]));
     }
 
     public function testgetNamePlusEmailAddressesForCompose()
     {
         $email = new Email();
 
-        $result = $email->getNamePlusEmailAddressesForCompose('Users', array(1));
+        $result = $email->getNamePlusEmailAddressesForCompose('Users', [1]);
         $this->assertGreaterThanOrEqual(0, strlen($result));
     }
 
-    public function test_arrayToDelimitedString()
+    public function testArrayToDelimitedString()
     {
         $email = new Email();
 
         //test with empty array
-        $result = $email->_arrayToDelimitedString(array());
+        $result = $email->_arrayToDelimitedString([]);
         $this->assertEquals('', $result);
 
         //test with valid array
-        $result = $email->_arrayToDelimitedString(array('value1', 'value2'));
+        $result = $email->_arrayToDelimitedString(['value1', 'value2']);
         $this->assertEquals('value1,value2', $result);
     }
 
@@ -725,7 +728,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testcheck_email_settings()
+    public function testcheckEmailSettings()
     {
         global $current_user;
 
@@ -741,7 +744,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $result);
     }
 
-    public function testjs_set_archived()
+    public function testjsSetArchived()
     {
         $email = new Email();
 
@@ -749,28 +752,28 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0, strlen($actual));
     }
 
-    public function testu_get_clear_form_js()
+    public function testuGetClearFormJs()
     {
         self::markTestIncomplete('environment dependency (CRLF?)');
         $email = new Email();
 
         //with empty params
-        $expected = "		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin
+        $expected = '		<script type="text/javascript" language="JavaScript"><!-- Begin
 			function clear_form(form) {
-				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true\";
-				if(typeof(form.advanced) != \"undefined\"){
-					newLoc += \"&advanced=\" + form.advanced.value;
+				var newLoc = "index.php?action=" + form.action.value + "&module=" + form.module.value + "&query=true&clear_query=true";
+				if(typeof(form.advanced) != "undefined"){
+					newLoc += "&advanced=" + form.advanced.value;
 				}
 				document.location.href= newLoc;
 			}
-		//  End --></script>";
+		//  End --></script>';
         $actual = $email->u_get_clear_form_js('', '', '');
-        $this->assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
+        $this->assertSame($expected, $actual, 'exp:[' . print_r($expected, true) . '] act:[' . print_r($actual, true) . ']');
 
         //with valid params
         $expected = "\n		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin\n			function clear_form(form) {\n				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true&type=out&assigned_user_id=1\";\n				if(typeof(form.advanced) != \"undefined\"){\n					newLoc += \"&advanced=\" + form.advanced.value;\n				}\n				document.location.href= newLoc;\n			}\n		//  End --></script>";
         $actual = $email->u_get_clear_form_js('out', '', '1');
-        $this->assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
+        $this->assertSame($expected, $actual, 'exp:[' . print_r($expected, true) . '] act:[' . print_r($actual, true) . ']');
     }
 
     public function testpickOneButton()
@@ -795,7 +798,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('html', $result);
     }
 
-    public function testparse_addrs()
+    public function testparseAddrs()
     {
         $email = new Email();
 
@@ -804,29 +807,29 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $addrs_names = 'abc;xyz';
         $addrs_emails = 'abc@email.com;xyz@email.com';
 
-        $expected = array(
-            array('email' => 'abc@email.com', 'display' => 'abc', 'contact_id' => '1'),
-            array('email' => 'xyz@email.com', 'display' => 'xyz', 'contact_id' => '2')
-        );
+        $expected = [
+            ['email' => 'abc@email.com', 'display' => 'abc', 'contact_id' => '1'],
+            ['email' => 'xyz@email.com', 'display' => 'xyz', 'contact_id' => '2']
+        ];
 
         $actual = $email->parse_addrs($addrs, $addrs_ids, $addrs_names, $addrs_emails);
 
         $this->assertSame($expected, $actual);
     }
 
-    public function testremove_empty_fields()
+    public function testremoveEmptyFields()
     {
         $email = new Email();
 
         //test for array with empty values
-        $expected = array('val1', 'val2');
-        $fields = array('val1', ' ', 'val2');
+        $expected = ['val1', 'val2'];
+        $fields = ['val1', ' ', 'val2'];
         $actual = $email->remove_empty_fields($fields);
         $this->assertSame($expected, $actual);
 
         //test for array without empty values
-        $expected = array('val1', 'val2');
-        $fields = array('val1', 'val2');
+        $expected = ['val1', 'val2'];
+        $fields = ['val1', 'val2'];
         $actual = $email->remove_empty_fields($fields);
         $this->assertSame($expected, $actual);
     }
@@ -839,12 +842,12 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->description = 'some text with sign';
 
         //test for strings with signature present
-        $sig = array('signature_html' => 'sign', 'signature' => 'sign');
+        $sig = ['signature_html' => 'sign', 'signature' => 'sign'];
         $result = $email->hasSignatureInBody($sig);
         $this->assertEquals(true, $result);
 
         //test for strings with signature absent
-        $sig = array('signature_html' => 'signature', 'signature' => 'signature');
+        $sig = ['signature_html' => 'signature', 'signature' => 'signature'];
         $result = $email->hasSignatureInBody($sig);
         $this->assertEquals(false, $result);
     }
@@ -866,7 +869,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test without assigned_user_id in url
         $url = 'index.php?module=Users&offset=6&stamp=1453274421025259800&return_module=Users&action=DetailView&record=seed_max_id';
-        $expected = array(
+        $expected = [
             'module' => 'Users',
             'action' => 'DetailView',
             'group' => '',
@@ -875,13 +878,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
             'offset' => '6',
             'stamp' => '1453274421025259800',
             'return_module' => 'Users',
-        );
+        ];
         $actual = $email->getStartPage($url);
         $this->assertSame($expected, $actual);
 
         //test with assigned_user_id in url
         $url = 'index.php?module=Users&offset=6&stamp=1453274421025259800&return_module=Users&action=DetailView&record=seed_max_id&assigned_user_id=1';
-        $expected = array(
+        $expected = [
             'module' => 'Users',
             'action' => 'DetailView',
             'group' => '',
@@ -892,7 +895,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
             'return_module' => 'Users',
             'assigned_user_id' => '1',
             'current_view' => 'DetailView&module=Users&assigned_user_id=1&type=',
-        );
+        ];
         $actual = $email->getStartPage($url);
         $this->assertSame($expected, $actual);
     }
@@ -912,7 +915,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email = new Email();
 
         //test without setting REQUEST parameters
-        $email->description_html = "some email description containing email text &amp; &#39; <br>&nbsp;";
+        $email->description_html = 'some email description containing email text &amp; &#39; <br>&nbsp;';
         $result = $email->handleBody(new SugarPHPMailer());
         $expected = "some email description containing email text & ' \n ";
         $actual = $email->description;
@@ -953,11 +956,10 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency (span os a?)');
 
-
         // test
         $email = new Email();
 
-        $expected = array('MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span');
+        $expected = ['MAIN' => 'span', 'PARENT' => 'a', 'CONTACT' => 'span'];
         $actual = $email->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
@@ -966,13 +968,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = new Email();
 
-        $expected = array('email', 'name');
+        $expected = ['email', 'name'];
         $actual = array_keys($email->getSystemDefaultEmail());
 
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_new_list_query()
+    public function testcreateNewListQuery()
     {
         $email = new Email();
 
@@ -987,7 +989,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $email = new Email();
 
@@ -1001,7 +1003,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $email->attachment_image);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $email = new Email();
 
@@ -1019,7 +1021,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('DetailView', $email->link_action);
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $email = new Email();
 
@@ -1034,7 +1036,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         // TODO: TASK: UNDEFINED - Update to handle new list view
 //        $email = new Email();
@@ -1092,7 +1094,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($actual));
     }
 
-    public function test_genereateSearchImportedEmailsQuery()
+    public function testGenereateSearchImportedEmailsQuery()
     {
         $email = new Email();
 
@@ -1102,7 +1104,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function test_generateSearchImportWhereClause()
+    public function testGenerateSearchImportWhereClause()
     {
         // test
         $email = new Email();
@@ -1146,10 +1148,10 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(
             'test string 1...',
             $email->trimLongTo('test string 1; test string2')
-        );//test with ; separator
+        ); //test with ; separator
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $email = new Email();
 

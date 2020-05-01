@@ -1,8 +1,5 @@
 <?php
- /**
- *
- *
- * @package
+/**
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +16,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 class AOD_LogicHooks
@@ -32,8 +28,9 @@ class AOD_LogicHooks
         if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
             return;
         }
+
         try {
-            $index = BeanFactory::getBean("AOD_Index")->getIndex();
+            $index = BeanFactory::getBean('AOD_Index')->getIndex();
             $index->index($bean->module_name, $bean->id);
         } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
@@ -48,8 +45,9 @@ class AOD_LogicHooks
         if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
             return;
         }
+
         try {
-            $index = BeanFactory::getBean("AOD_Index")->getIndex();
+            $index = BeanFactory::getBean('AOD_Index')->getIndex();
             $index->remove($bean->module_name, $bean->id);
         } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
@@ -64,8 +62,9 @@ class AOD_LogicHooks
         if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
             return;
         }
+
         try {
-            $index = BeanFactory::getBean("AOD_Index")->getIndex();
+            $index = BeanFactory::getBean('AOD_Index')->getIndex();
             $index->index($bean->module_name, $bean->id);
         } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());

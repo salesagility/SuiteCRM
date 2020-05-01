@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once 'modules/ModuleBuilder/parsers/relationships/OneToManyRelationship.php' ;
+require_once 'modules/ModuleBuilder/parsers/relationships/OneToManyRelationship.php';
 
 /*
  * Class to manage the metadata for a One-To-Many Relationship
@@ -74,8 +72,8 @@ require_once 'modules/ModuleBuilder/parsers/relationships/OneToManyRelationship.
 
 class ActivitiesRelationship extends OneToManyRelationship
 {
-    protected static $subpanelsAdded = array();
-    protected static $labelsAdded = array();
+    protected static $subpanelsAdded = [];
+    protected static $labelsAdded = [];
 
     /*
      * Constructor
@@ -84,12 +82,10 @@ class ActivitiesRelationship extends OneToManyRelationship
      */
     public function __construct($definition)
     {
-        parent::__construct($definition) ;
+        parent::__construct($definition);
     }
 
-    /*
-     * BUILD methods called during the build
-     */
+    // BUILD methods called during the build
 
     /*
      * Define the labels to be added to the module for the new relationships
@@ -97,17 +93,17 @@ class ActivitiesRelationship extends OneToManyRelationship
      */
     public function buildLabels()
     {
-        $labelDefinitions = array( ) ;
+        $labelDefinitions = [];
         if (!$this->relationship_only) {
             if (!isset(ActivitiesRelationship::$labelsAdded[$this->lhs_module])) {
                 foreach (getTypeDisplayList() as $typeDisplay) {
-                    $labelDefinitions [] = array(
+                    $labelDefinitions[] = [
                         'module' => 'application',
                         'system_label' => $typeDisplay,
-                        'display_label' => array(
+                        'display_label' => [
                             $this->lhs_module => $this->lhs_label ? $this->lhs_label : ucfirst($this->lhs_module)
-                        ),
-                    );
+                        ],
+                    ];
                 }
             }
 
@@ -123,48 +119,32 @@ class ActivitiesRelationship extends OneToManyRelationship
             }
             $lhs_display_label .= translate($this->lhs_module);
 
-            $labelDefinitions[] = array(
-                'module' => $this->lhs_module ,
+            $labelDefinitions[] = [
+                'module' => $this->lhs_module,
                 'system_label' => 'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE',
                 'display_label' => $rhs_display_label
-            );
-            $labelDefinitions[] = array(
+            ];
+            $labelDefinitions[] = [
                 'module' => $this->rhs_module,
                 'system_label' => 'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE',
                 'display_label' => $lhs_display_label
-            );
+            ];
 
             ActivitiesRelationship::$labelsAdded[$this->lhs_module] = true;
         }
-        return $labelDefinitions ;
+
+        return $labelDefinitions;
     }
 
-
-    /*
-     * @return array    An array of field definitions, ready for the vardefs, keyed by module
-     */
+    // @return array    An array of field definitions, ready for the vardefs, keyed by module
     public function buildVardefs()
     {
-        $vardefs = array( ) ;
+        $vardefs = [];
 
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition($this->lhs_module, $this->relationship_name) ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition($this->rhs_module, $this->relationship_name) ;
+        $vardefs[$this->rhs_module][] = $this->getLinkFieldDefinition($this->lhs_module, $this->relationship_name);
+        $vardefs[$this->lhs_module][] = $this->getLinkFieldDefinition($this->rhs_module, $this->relationship_name);
 
-
-        return $vardefs ;
-    }
-
-    protected function getLinkFieldDefinition($sourceModule, $relationshipName)
-    {
-        $vardef = array( ) ;
-        $vardef [ 'name' ] = $relationshipName;
-        $vardef [ 'type' ] = 'link' ;
-        $vardef [ 'relationship' ] = $relationshipName ;
-        $vardef [ 'source' ] = 'non-db' ;
-        $vardef [ 'module' ] = $sourceModule ;
-        $vardef [ 'bean_name' ] = BeanFactory::getObjectName($sourceModule) ;
-        $vardef [ 'vname' ] = strtoupper("LBL_{$relationshipName}_FROM_{$sourceModule}_TITLE");
-        return $vardef ;
+        return $vardefs;
     }
 
     /*
@@ -174,47 +154,60 @@ class ActivitiesRelationship extends OneToManyRelationship
     public function buildFieldsToLayouts()
     {
         if ($this->relationship_only) {
-            return array() ;
+            return [];
         }
 
-        return array( $this->rhs_module => $this->relationship_name . "_name" ) ; // this must match the name of the relate field from buildVardefs
+        return [$this->rhs_module => $this->relationship_name . '_name']; // this must match the name of the relate field from buildVardefs
     }
 
     public function buildSubpanelDefinitions()
     {
         if ($this->relationship_only || isset(ActivitiesRelationship::$subpanelsAdded[$this->lhs_module])) {
-            return array() ;
+            return [];
         }
 
         ActivitiesRelationship::$subpanelsAdded[$this->lhs_module] = true;
         $relationshipName = substr($this->relationship_name, 0, strrpos($this->relationship_name, '_'));
-        return array( $this->lhs_module => array(
-                      'activities' => $this->buildActivitiesSubpanelDefinition($relationshipName),
-                      'history' => $this->buildHistorySubpanelDefinition($relationshipName) ,
-                    ));
+
+        return [$this->lhs_module => [
+            'activities' => $this->buildActivitiesSubpanelDefinition($relationshipName),
+            'history' => $this->buildHistorySubpanelDefinition($relationshipName),
+        ]];
     }
 
-    /*
-     * @return array    An array of relationship metadata definitions
-     */
+    // @return array    An array of relationship metadata definitions
     public function buildRelationshipMetaData()
     {
-        $relationshipName = $this->definition [ 'relationship_name' ];
-        $relMetadata = array( ) ;
-        $relMetadata [ 'lhs_module' ] = $this->definition [ 'lhs_module' ] ;
-        $relMetadata [ 'lhs_table' ] = $this->getTablename($this->definition [ 'lhs_module' ]) ;
-        $relMetadata [ 'lhs_key' ] = 'id' ;
-        $relMetadata [ 'rhs_module' ] = $this->definition [ 'rhs_module' ] ;
-        $relMetadata [ 'rhs_table' ] = $this->getTablename($this->definition [ 'rhs_module' ]) ;
-        $relMetadata ['rhs_key'] = 'parent_id';
-        $relMetadata ['relationship_type'] = 'one-to-many';
-        $relMetadata ['relationship_role_column'] = 'parent_type';
-        $relMetadata ['relationship_role_column_value'] = $this->definition [ 'lhs_module' ] ;
+        $relationshipName = $this->definition['relationship_name'];
+        $relMetadata = [];
+        $relMetadata['lhs_module'] = $this->definition['lhs_module'];
+        $relMetadata['lhs_table'] = $this->getTablename($this->definition['lhs_module']);
+        $relMetadata['lhs_key'] = 'id';
+        $relMetadata['rhs_module'] = $this->definition['rhs_module'];
+        $relMetadata['rhs_table'] = $this->getTablename($this->definition['rhs_module']);
+        $relMetadata['rhs_key'] = 'parent_id';
+        $relMetadata['relationship_type'] = 'one-to-many';
+        $relMetadata['relationship_role_column'] = 'parent_type';
+        $relMetadata['relationship_role_column_value'] = $this->definition['lhs_module'];
 
-        return array( $this->lhs_module => array(
-            'relationships' => array($relationshipName => $relMetadata),
-            'fields' => '', 'indices' => '', 'table' => '')
-        ) ;
+        return [$this->lhs_module => [
+            'relationships' => [$relationshipName => $relMetadata],
+            'fields' => '', 'indices' => '', 'table' => '']
+        ];
+    }
+
+    protected function getLinkFieldDefinition($sourceModule, $relationshipName)
+    {
+        $vardef = [];
+        $vardef['name'] = $relationshipName;
+        $vardef['type'] = 'link';
+        $vardef['relationship'] = $relationshipName;
+        $vardef['source'] = 'non-db';
+        $vardef['module'] = $sourceModule;
+        $vardef['bean_name'] = BeanFactory::getObjectName($sourceModule);
+        $vardef['vname'] = strtoupper("LBL_{$relationshipName}_FROM_{$sourceModule}_TITLE");
+
+        return $vardef;
     }
 
     /*
@@ -223,32 +216,32 @@ class ActivitiesRelationship extends OneToManyRelationship
          */
     protected function buildActivitiesSubpanelDefinition($relationshipName)
     {
-        return array(
-            'order' => 10 ,
-            'sort_order' => 'desc' ,
-            'sort_by' => 'date_due' ,
-            'title_key' => 'LBL_ACTIVITIES_SUBPANEL_TITLE' ,
-            'type' => 'collection' ,
-            'subpanel_name' => 'activities' , //this value is not associated with a physical file
-            'module' => 'Activities' ,
-            'top_buttons' => array(
-                array( 'widget_class' => 'SubPanelTopCreateTaskButton' ) ,
-                array( 'widget_class' => 'SubPanelTopScheduleMeetingButton' ) ,
-                array( 'widget_class' => 'SubPanelTopScheduleCallButton' ) ,
-                array( 'widget_class' => 'SubPanelTopComposeEmailButton' ) ) ,
-                'collection_list' => array(
-                    'meetings' => array(
-                        'module' => 'Meetings' ,
-                        'subpanel_name' => 'ForActivities' ,
-                        'get_subpanel_data' => $relationshipName. '_meetings' ) ,
-                    'tasks' => array(
-                        'module' => 'Tasks' ,
-                        'subpanel_name' => 'ForActivities' ,
-                        'get_subpanel_data' => $relationshipName. '_tasks' ) ,
-                    'calls' => array(
-                        'module' => 'Calls' ,
-                        'subpanel_name' => 'ForActivities' ,
-                        'get_subpanel_data' => $relationshipName. '_calls' ) ) ) ;
+        return [
+            'order' => 10,
+            'sort_order' => 'desc',
+            'sort_by' => 'date_due',
+            'title_key' => 'LBL_ACTIVITIES_SUBPANEL_TITLE',
+            'type' => 'collection',
+            'subpanel_name' => 'activities', //this value is not associated with a physical file
+            'module' => 'Activities',
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopCreateTaskButton'],
+                ['widget_class' => 'SubPanelTopScheduleMeetingButton'],
+                ['widget_class' => 'SubPanelTopScheduleCallButton'],
+                ['widget_class' => 'SubPanelTopComposeEmailButton']],
+            'collection_list' => [
+                'meetings' => [
+                    'module' => 'Meetings',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => $relationshipName . '_meetings'],
+                'tasks' => [
+                    'module' => 'Tasks',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => $relationshipName . '_tasks'],
+                'calls' => [
+                    'module' => 'Calls',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => $relationshipName . '_calls']]];
     }
 
     /*
@@ -257,38 +250,38 @@ class ActivitiesRelationship extends OneToManyRelationship
      */
     protected function buildHistorySubpanelDefinition($relationshipName)
     {
-        return array(
-            'order' => 20 ,
-            'sort_order' => 'desc' ,
-            'sort_by' => 'date_modified' ,
-            'title_key' => 'LBL_HISTORY' ,
-            'type' => 'collection' ,
-            'subpanel_name' => 'history' , //this values is not associated with a physical file.
-            'module' => 'History' ,
-            'top_buttons' => array(
-                array( 'widget_class' => 'SubPanelTopCreateNoteButton' ) ,
-                array( 'widget_class' => 'SubPanelTopArchiveEmailButton'),
-                array( 'widget_class' => 'SubPanelTopSummaryButton' ) ) ,
-                'collection_list' => array(
-                    'meetings' => array(
-                        'module' => 'Meetings' ,
-                        'subpanel_name' => 'ForHistory' ,
-                        'get_subpanel_data' => $relationshipName. '_meetings' ) ,
-                    'tasks' => array(
-                        'module' => 'Tasks' ,
-                        'subpanel_name' => 'ForHistory' ,
-                        'get_subpanel_data' => $relationshipName. '_tasks' ) ,
-                    'calls' => array(
-                        'module' => 'Calls' ,
-                        'subpanel_name' => 'ForHistory' ,
-                        'get_subpanel_data' => $relationshipName. '_calls' ) ,
-                    'notes' => array(
-                        'module' => 'Notes' ,
-                        'subpanel_name' => 'ForHistory' ,
-                        'get_subpanel_data' => $relationshipName. '_notes' ) ,
-                    'emails' => array(
-                        'module' => 'Emails' ,
-                        'subpanel_name' => 'ForHistory' ,
-                        'get_subpanel_data' => $relationshipName. '_emails' ) ) )  ;
+        return [
+            'order' => 20,
+            'sort_order' => 'desc',
+            'sort_by' => 'date_modified',
+            'title_key' => 'LBL_HISTORY',
+            'type' => 'collection',
+            'subpanel_name' => 'history', //this values is not associated with a physical file.
+            'module' => 'History',
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopCreateNoteButton'],
+                ['widget_class' => 'SubPanelTopArchiveEmailButton'],
+                ['widget_class' => 'SubPanelTopSummaryButton']],
+            'collection_list' => [
+                'meetings' => [
+                    'module' => 'Meetings',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => $relationshipName . '_meetings'],
+                'tasks' => [
+                    'module' => 'Tasks',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => $relationshipName . '_tasks'],
+                'calls' => [
+                    'module' => 'Calls',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => $relationshipName . '_calls'],
+                'notes' => [
+                    'module' => 'Notes',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => $relationshipName . '_notes'],
+                'emails' => [
+                    'module' => 'Emails',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => $relationshipName . '_emails']]];
     }
 }

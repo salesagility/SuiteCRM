@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -47,8 +46,8 @@ use Psr\Log\LogLevel;
 /**
  * /**
  * PSR-3 Compliant logger
- * Class SuiteLogger
- * @package SuiteCRM\Utility
+ * Class SuiteLogger.
+ *
  * @see http://www.php-fig.org/psr/psr-3/
  */
 class SuiteLogger extends AbstractLogger
@@ -57,6 +56,7 @@ class SuiteLogger extends AbstractLogger
      * @param LogLevel|string $level
      * @param string $message eg 'hello {user}'
      * @param array $context eg array(user => 'joe')
+     *
      * @throws InvalidArgumentException
      */
     public function log($level, $message, array $context = [])
@@ -65,36 +65,44 @@ class SuiteLogger extends AbstractLogger
         $message = $this->interpolate($message, $context);
         switch ($level) {
             case LogLevel::EMERGENCY:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->fatal('[EMERGENCY] ' . $message);
+
                 break;
             case LogLevel::ALERT:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->fatal('[ALERT] ' . $message);
+
                 break;
             case LogLevel::CRITICAL:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->fatal('[CRITICAL] ' . $message);
+
                 break;
             case LogLevel::ERROR:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->fatal('[ERROR] ' . $message);
+
                 break;
             case LogLevel::WARNING:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->warn('[WARNING] ' . $message);
+
                 break;
             case LogLevel::NOTICE:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->warn('[NOTICE] ' . $message);
+
                 break;
             case LogLevel::INFO:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->info('[INFO] ' . $message);
+
                 break;
             case LogLevel::DEBUG:
-                /** @noinspection PhpUndefinedMethodInspection */
+                // @noinspection PhpUndefinedMethodInspection
                 $log->debug('[DEBUG] ' . $message);
+
                 break;
             default:
                 throw new InvalidArgumentException('Invalid log level type: ' . $level);
@@ -102,9 +110,11 @@ class SuiteLogger extends AbstractLogger
     }
 
     /**
-     * build a replacement array with braces around the context keys
+     * build a replacement array with braces around the context keys.
+     *
      * @param $message
      * @param array $context
+     *
      * @return string
      */
     private function interpolate($message, array $context = [])

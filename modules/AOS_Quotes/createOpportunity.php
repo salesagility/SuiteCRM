@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
- * @package Advanced OpenSales for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,10 +18,8 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
     if (!(ACLController::checkAccess('Opportunities', 'edit', true))) {
         ACLController::displayNoAccess();
         die;
@@ -29,9 +27,9 @@
 
     global $app_list_strings;
 
-    require_once('modules/AOS_Quotes/AOS_Quotes.php');
-    require_once('modules/Opportunities/Opportunity.php');
-    
+    require_once 'modules/AOS_Quotes/AOS_Quotes.php';
+    require_once 'modules/Opportunities/Opportunity.php';
+
     //Setting values in Quotes
     $quote = new AOS_Quotes();
     $quote->retrieve($_REQUEST['record']);
@@ -54,4 +52,4 @@
     $quote->load_relationship('opportunities');
     $quote->opportunities->add($opportunity->id);
     ob_clean();
-    header('Location: index.php?module=Opportunities&action=EditView&record='.$opportunity->id);
+    header('Location: index.php?module=Opportunities&action=EditView&record=' . $opportunity->id);

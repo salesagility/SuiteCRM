@@ -1,4 +1,5 @@
 <?php
+
 namespace Test\Api\V8;
 
 use ApiTester;
@@ -23,6 +24,7 @@ class GetRelationshipCest
      * @param Scenario $scenario
      *
      * @dataProvider shouldWorkDataProvider
+     *
      * @throws \Exception
      */
     public function shouldWork(ApiTester $I, Example $example, Scenario $scenario)

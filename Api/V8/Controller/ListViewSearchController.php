@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,8 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
 use Api\V8\Param\ListViewSearchParams;
 use Api\V8\Service\ListViewSearchService;
 use Exception;
@@ -53,13 +50,12 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * ListViewSearchController
+ * ListViewSearchController.
  *
  * @author gyula
  */
 class ListViewSearchController extends BaseController
 {
-    
     /**
      * @var ListViewSearchService
      */
@@ -72,13 +68,13 @@ class ListViewSearchController extends BaseController
     {
         $this->listViewSearchService = $listViewSearchService;
     }
-    
+
     /**
-     *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @param ListViewSearchParams $params
+     *
      * @return HttpResponse
      */
     public function getModuleSearchDefs(Request $request, Response $response, array $args, ListViewSearchParams $params)

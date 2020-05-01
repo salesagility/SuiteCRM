@@ -1,8 +1,8 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 class AOS_InvoicesViewEdit extends ViewEdit
 {
@@ -10,9 +10,6 @@ class AOS_InvoicesViewEdit extends ViewEdit
     {
         parent::__construct();
     }
-
-
-
 
     public function display()
     {
@@ -27,7 +24,7 @@ class AOS_InvoicesViewEdit extends ViewEdit
         $sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted='0' AND type='AOS_Invoices'";
         $res = $this->bean->db->query($sql);
 
-        $app_list_strings['template_ddown_c_list'] = array();
+        $app_list_strings['template_ddown_c_list'] = [];
         while ($row = $this->bean->db->fetchByAssoc($res)) {
             $app_list_strings['template_ddown_c_list'][$row['id']] = $row['name'];
         }

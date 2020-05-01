@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +39,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected $folderId = null;
+    protected $folderId;
 
     protected function setUp()
     {
@@ -52,9 +54,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
     }
 
     /**
-     * Test the object can be found
-     *
-     * @return void
+     * Test the object can be found.
      */
     public function testCanGetSugarFolderObject()
     {
@@ -116,10 +116,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $sugarfolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Test folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Test folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $sugarfolder->setFolder($fields);
 
@@ -158,10 +158,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $sugarfolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Test folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Test folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $sugarfolder->setFolder($fields);
 
@@ -179,10 +179,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $sugarfolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Test folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Test folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $sugarfolder->setFolder($fields);
 
@@ -192,10 +192,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $childSugarFolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'          => 'Child Test folder',
+        $fields = [
+            'name' => 'Child Test folder',
             'parent_folder' => $sugarfolder->id
-        );
+        ];
 
         $saved = $childSugarFolder->setFolder($fields);
 
@@ -219,10 +219,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $sugarfolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Test folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Test folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $sugarfolder->setFolder($fields);
 
@@ -232,10 +232,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $childSugarFolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'          => 'Child Test folder',
+        $fields = [
+            'name' => 'Child Test folder',
             'parent_folder' => $sugarfolder->id
-        );
+        ];
 
         $saved = $childSugarFolder->setFolder($fields);
 
@@ -243,11 +243,11 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $sugarfolder->has_child = 1;
 
-        $update = array(
+        $update = [
             'record' => $sugarfolder->id,
-            'name'   => 'Test Folder',
+            'name' => 'Test Folder',
             'parent_folder' => ''
-        );
+        ];
 
         $ret = $sugarfolder->updateFolder($update);
 
@@ -255,11 +255,11 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         // Try to update the child with parent
 
-        $update = array(
+        $update = [
             'record' => $sugarfolder->id,
-            'name'   => 'Test Folder',
+            'name' => 'Test Folder',
             'parent_folder' => $childSugarFolder->id
-        );
+        ];
 
         $ret = $sugarfolder->updateFolder($update);
 
@@ -286,10 +286,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder One',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder One',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderOne->setFolder($fields);
 
@@ -300,10 +300,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderTwo = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder Two',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder Two',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderTwo->setFolder($fields);
 
@@ -324,7 +324,6 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue($existInFolderTwo);
     }
 
-
     public function testMoveFolder()
     {
         $user = new User();
@@ -332,10 +331,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder One',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder One',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderOne->setFolder($fields);
 
@@ -346,10 +345,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderTwo = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder Two',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder Two',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderTwo->setFolder($fields);
 
@@ -360,10 +359,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $childFolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Child Folder',
-            'parent_folder'    => $parentFolderOne->id
-        );
+        $fields = [
+            'name' => 'Child Folder',
+            'parent_folder' => $parentFolderOne->id
+        ];
 
         $saved = $childFolder->setFolder($fields);
 
@@ -401,8 +400,8 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $dynamicSugarFolder->name = 'Dynamic Parent Folder';
 
         $dynamicSugarFolder->is_dynamic = true;
-        $dynamicSugarFolder->is_group   = true;
-        $dynamicSugarFolder->hrSortLocal = array();
+        $dynamicSugarFolder->is_group = true;
+        $dynamicSugarFolder->hrSortLocal = [];
 
         $saved = $dynamicSugarFolder->save();
         $this->assertTrue($saved);
@@ -425,17 +424,17 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolder->setFolder($fields);
         $this->assertTrue($saved);
 
         $saved = false;
 
-        $arrayOfEmailBeans = array();
+        $arrayOfEmailBeans = [];
 
         $deadBean = BeanFactory::newBean('Emails');
         $parentFolder->addBean($deadBean);
@@ -458,7 +457,6 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $count = $parentFolder->getCountUnread($parentFolder->id);
         $this->assertEquals(0, $count);
 
-
         // non-existent folder
         $newBean = BeanFactory::newBean('Emails');
         $newBean->save();
@@ -473,16 +471,16 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolder = new SugarFolder($user);
 
-        $parentFolder->name       = 'Parent Folder';
+        $parentFolder->name = 'Parent Folder';
         $parentFolder->is_dynamic = true;
-        $parentFolder->is_group   = true;
+        $parentFolder->is_group = true;
 
         $saved = $parentFolder->save();
 
         $this->assertTrue($saved);
         $saved = false;
 
-        $arrayOfEmailBeans = array();
+        $arrayOfEmailBeans = [];
 
         for ($i = 0; $i < 10; $i++) {
             $arrayOfEmailBeans[$i] = BeanFactory::newBean('Emails');
@@ -519,10 +517,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolder->setFolder($fields);
 
@@ -540,7 +538,6 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $parentFolder->deleteEmailFromFolder($bean->id);
     }
 
-
     public function testDeleteEmailsFromAllFolders()
     {
         $user = new User();
@@ -548,10 +545,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder One',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder One',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderOne->setFolder($fields);
 
@@ -562,10 +559,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderTwo = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder Two',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder Two',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderTwo->setFolder($fields);
 
@@ -600,14 +597,14 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne = new SugarFolder($user);
 
-        $parentFolderOne->name        = 'Parent Folder';
+        $parentFolderOne->name = 'Parent Folder';
         $parentFolderOne->folder_type = 'inbound';
 
         $saved = $parentFolderOne->save();
 
         $this->assertTrue($saved);
 
-        $arrayOfEmailBeans = array();
+        $arrayOfEmailBeans = [];
 
         for ($i = 0; $i < 10; $i++) {
             $arrayOfEmailBeans[$i] = BeanFactory::newBean('Emails');
@@ -618,33 +615,33 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $childFolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Child Folder',
-            'parent_folder'    => $parentFolderOne->id
-        );
+        $fields = [
+            'name' => 'Child Folder',
+            'parent_folder' => $parentFolderOne->id
+        ];
 
         $subChildFolderOne = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Sub Child Folder One',
-            'parent_folder'    => $childFolder->id
-        );
+        $fields = [
+            'name' => 'Sub Child Folder One',
+            'parent_folder' => $childFolder->id
+        ];
 
         $subChildFolderTwo = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Sub Child Folder Two',
-            'parent_folder'    => $childFolder->id
-        );
+        $fields = [
+            'name' => 'Sub Child Folder Two',
+            'parent_folder' => $childFolder->id
+        ];
 
         $anotherChildFolder = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Another Child Folder',
-            'parent_folder'    => $parentFolderOne->id
-        );
+        $fields = [
+            'name' => 'Another Child Folder',
+            'parent_folder' => $parentFolderOne->id
+        ];
 
-        $subs = array($anotherChildFolder->id, $parentFolderOne->id, $childFolder->id, $subChildFolderOne->id, $subChildFolderTwo->id);
+        $subs = [$anotherChildFolder->id, $parentFolderOne->id, $childFolder->id, $subChildFolderOne->id, $subChildFolderTwo->id];
         $parentFolderOne->setSubscriptions($subs);
 
         $email = new Email();
@@ -670,16 +667,16 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderOne->setFolder($fields);
 
         $this->assertTrue($saved);
 
-        $subs = array($parentFolderOne->id);
+        $subs = [$parentFolderOne->id];
 
         $ret = $parentFolderOne->setSubscriptions($subs, 0);
 
@@ -693,10 +690,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder',
-            'parent_folder'    => ''
-        );
+        $fields = [
+            'name' => 'Parent Folder',
+            'parent_folder' => ''
+        ];
 
         $saved = $parentFolderOne->setFolder($fields);
 

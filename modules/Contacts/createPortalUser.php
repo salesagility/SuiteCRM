@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @package Advanced OpenPortal
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +16,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 if (!defined('sugarEntry')) {
@@ -30,14 +27,14 @@ if (!isAOPEnabled()) {
 }
 global $sugar_config, $mod_strings;
 
-require_once('modules/Contacts/Contact.php');
+require_once 'modules/Contacts/Contact.php';
 
 $bean = new Contact();
 $bean->retrieve($_REQUEST['record']);
 
-if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_url", $sugar_config['aop'])) {
+if (array_key_exists('aop', $sugar_config) && array_key_exists('joomla_url', $sugar_config['aop'])) {
     $portalURL = $sugar_config['aop']['joomla_url'];
-    $wbsv = file_get_contents($portalURL.'/index.php?option=com_advancedopenportal&task=create&sug='.$_REQUEST['record']);
+    $wbsv = file_get_contents($portalURL . '/index.php?option=com_advancedopenportal&task=create&sug=' . $_REQUEST['record']);
     $res = json_decode($wbsv);
     if (!$res->success) {
         $msg = $res->error ? $res->error : $mod_strings['LBL_CREATE_PORTAL_USER_FAILED'];
@@ -49,4 +46,4 @@ if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_url", $su
     SugarApplication::appendErrorMessage($mod_strings['LBL_NO_JOOMLA_URL']);
 }
 
-SugarApplication::redirect("index.php?module=Contacts&action=DetailView&record=".$_REQUEST['record']);
+SugarApplication::redirect('index.php?module=Contacts&action=DetailView&record=' . $_REQUEST['record']);

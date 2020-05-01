@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,36 +41,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$file_access_control_map = array(
-    'modules' => array(
-        'administration' => array(
-            'actions' => array(
+ */
+$file_access_control_map = [
+    'modules' => [
+        'administration' => [
+            'actions' => [
                 'backups',
                 'updater',
-            ),
-            'links'	=> array(
+            ],
+            'links' => [
                 'update',
                 'backup_management',
                 'upgrade_wizard',
                 'moduleBuilder',
-            ),
-        ),
-        'upgradewizard' => array(
-                'actions' => array(
-                    'index',
-                ),
-        ),
-        'modulebuilder' => array(
-                'actions' => array(
-                    'index' => array('params' => array('type' => array('mb'))),
-                ),
-        ),
-    )
-);
+            ],
+        ],
+        'upgradewizard' => [
+            'actions' => [
+                'index',
+            ],
+        ],
+        'modulebuilder' => [
+            'actions' => [
+                'index' => ['params' => ['type' => ['mb']]],
+            ],
+        ],
+    ]
+];

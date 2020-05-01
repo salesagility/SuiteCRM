@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,219 +36,170 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$viewdefs ['Accounts'] =
-array(
-  'DetailView' =>
-  array(
-    'templateMeta' =>
-    array(
-      'form' =>
-      array(
-        'buttons' =>
-        array(
-            'SEND_CONFIRM_OPT_IN_EMAIL' => EmailAddress::getSendConfirmOptInEmailActionLinkDefs('Accounts'),
-          0 => 'EDIT',
-          1 => 'DUPLICATE',
-          2 => 'DELETE',
-          3 => 'FIND_DUPLICATES',
-          'AOS_GENLET' =>
-          array(
-            'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_PRINT_AS_PDF}">',
-          ),
-        ),
-      ),
-      'maxColumns' => '2',
-      'widths' =>
-      array(
-        0 =>
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-        1 =>
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-      ),
-      'includes' =>
-      array(
-        0 =>
-        array(
-          'file' => 'modules/Accounts/Account.js',
-        ),
-      ),
-      'useTabs' => true,
-      'tabDefs' =>
-      array(
-        'LBL_ACCOUNT_INFORMATION' =>
-        array(
-          'newTab' => true,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ADVANCED' =>
-        array(
-          'newTab' => true,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ASSIGNMENT' =>
-        array(
-          'newTab' => true,
-          'panelDefault' => 'expanded',
-        ),
-      ),
-    ),
-    'panels' =>
-    array(
-      'lbl_account_information' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'name',
-            'comment' => 'Name of the Company',
-            'label' => 'LBL_NAME',
-          ),
-          1 =>
-          array(
-            'name' => 'phone_office',
-            'comment' => 'The office phone number',
-            'label' => 'LBL_PHONE_OFFICE',
-          ),
-        ),
-        1 =>
-        array(
-          0 =>
-          array(
-            'name' => 'website',
-            'type' => 'link',
-            'label' => 'LBL_WEBSITE',
-            'displayParams' =>
-            array(
-              'link_target' => '_blank',
-            ),
-          ),
-          1 =>
-          array(
-            'name' => 'phone_fax',
-            'comment' => 'The fax phone number of this company',
-            'label' => 'LBL_FAX',
-          ),
-        ),
-        2 =>
-        array(
-          0 =>
-          array(
-            'name' => 'email1',
-            'studio' => 'false',
-            'label' => 'LBL_EMAIL',
-          ),
-        ),
-        3 =>
-        array(
-          0 =>
-          array(
-            'name' => 'billing_address_street',
-            'label' => 'LBL_BILLING_ADDRESS',
-            'type' => 'address',
-            'displayParams' =>
-            array(
-              'key' => 'billing',
-            ),
-          ),
-          1 =>
-          array(
-            'name' => 'shipping_address_street',
-            'label' => 'LBL_SHIPPING_ADDRESS',
-            'type' => 'address',
-            'displayParams' =>
-            array(
-              'key' => 'shipping',
-            ),
-          ),
-        ),
-        4 =>
-        array(
-          0 =>
-          array(
-            'name' => 'description',
-            'comment' => 'Full text of the note',
-            'label' => 'LBL_DESCRIPTION',
-          ),
-        ),
-        5 =>
-        array(
-          0 =>
-          array(
-            'name' => 'assigned_user_name',
-            'label' => 'LBL_ASSIGNED_TO',
-          ),
-        ),
-      ),
-      'LBL_PANEL_ADVANCED' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'account_type',
-            'comment' => 'The Company is of this type',
-            'label' => 'LBL_TYPE',
-          ),
-          1 =>
-          array(
-            'name' => 'industry',
-            'comment' => 'The company belongs in this industry',
-            'label' => 'LBL_INDUSTRY',
-          ),
-        ),
-        1 =>
-        array(
-          0 =>
-          array(
-            'name' => 'annual_revenue',
-            'comment' => 'Annual revenue for this company',
-            'label' => 'LBL_ANNUAL_REVENUE',
-          ),
-          1 =>
-          array(
-            'name' => 'employees',
-            'comment' => 'Number of employees, varchar to accomodate for both number (100) or range (50-100)',
-            'label' => 'LBL_EMPLOYEES',
-          ),
-        ),
-        2 =>
-        array(
-          0 =>
-          array(
-            'name' => 'parent_name',
-            'label' => 'LBL_MEMBER_OF',
-          ),
-        ),
-        3 =>
-        array(
-          0 => 'campaign_name',
-        ),
-      ),
-      'LBL_PANEL_ASSIGNMENT' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'date_entered',
-            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-          ),
-          1 =>
-          array(
-            'name' => 'date_modified',
-            'label' => 'LBL_DATE_MODIFIED',
-            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-          ),
-        ),
-      ),
-    ),
-  ),
-);
+$viewdefs['Accounts'] =
+[
+    'DetailView' => [
+        'templateMeta' => [
+            'form' => [
+                'buttons' => [
+                    'SEND_CONFIRM_OPT_IN_EMAIL' => EmailAddress::getSendConfirmOptInEmailActionLinkDefs('Accounts'),
+                    0 => 'EDIT',
+                    1 => 'DUPLICATE',
+                    2 => 'DELETE',
+                    3 => 'FIND_DUPLICATES',
+                    'AOS_GENLET' => [
+                        'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_PRINT_AS_PDF}">',
+                    ],
+                ],
+            ],
+            'maxColumns' => '2',
+            'widths' => [
+                0 => [
+                    'label' => '10',
+                    'field' => '30',
+                ],
+                1 => [
+                    'label' => '10',
+                    'field' => '30',
+                ],
+            ],
+            'includes' => [
+                0 => [
+                    'file' => 'modules/Accounts/Account.js',
+                ],
+            ],
+            'useTabs' => true,
+            'tabDefs' => [
+                'LBL_ACCOUNT_INFORMATION' => [
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ],
+                'LBL_PANEL_ADVANCED' => [
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ],
+                'LBL_PANEL_ASSIGNMENT' => [
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ],
+            ],
+        ],
+        'panels' => [
+            'lbl_account_information' => [
+                0 => [
+                    0 => [
+                        'name' => 'name',
+                        'comment' => 'Name of the Company',
+                        'label' => 'LBL_NAME',
+                    ],
+                    1 => [
+                        'name' => 'phone_office',
+                        'comment' => 'The office phone number',
+                        'label' => 'LBL_PHONE_OFFICE',
+                    ],
+                ],
+                1 => [
+                    0 => [
+                        'name' => 'website',
+                        'type' => 'link',
+                        'label' => 'LBL_WEBSITE',
+                        'displayParams' => [
+                            'link_target' => '_blank',
+                        ],
+                    ],
+                    1 => [
+                        'name' => 'phone_fax',
+                        'comment' => 'The fax phone number of this company',
+                        'label' => 'LBL_FAX',
+                    ],
+                ],
+                2 => [
+                    0 => [
+                        'name' => 'email1',
+                        'studio' => 'false',
+                        'label' => 'LBL_EMAIL',
+                    ],
+                ],
+                3 => [
+                    0 => [
+                        'name' => 'billing_address_street',
+                        'label' => 'LBL_BILLING_ADDRESS',
+                        'type' => 'address',
+                        'displayParams' => [
+                            'key' => 'billing',
+                        ],
+                    ],
+                    1 => [
+                        'name' => 'shipping_address_street',
+                        'label' => 'LBL_SHIPPING_ADDRESS',
+                        'type' => 'address',
+                        'displayParams' => [
+                            'key' => 'shipping',
+                        ],
+                    ],
+                ],
+                4 => [
+                    0 => [
+                        'name' => 'description',
+                        'comment' => 'Full text of the note',
+                        'label' => 'LBL_DESCRIPTION',
+                    ],
+                ],
+                5 => [
+                    0 => [
+                        'name' => 'assigned_user_name',
+                        'label' => 'LBL_ASSIGNED_TO',
+                    ],
+                ],
+            ],
+            'LBL_PANEL_ADVANCED' => [
+                0 => [
+                    0 => [
+                        'name' => 'account_type',
+                        'comment' => 'The Company is of this type',
+                        'label' => 'LBL_TYPE',
+                    ],
+                    1 => [
+                        'name' => 'industry',
+                        'comment' => 'The company belongs in this industry',
+                        'label' => 'LBL_INDUSTRY',
+                    ],
+                ],
+                1 => [
+                    0 => [
+                        'name' => 'annual_revenue',
+                        'comment' => 'Annual revenue for this company',
+                        'label' => 'LBL_ANNUAL_REVENUE',
+                    ],
+                    1 => [
+                        'name' => 'employees',
+                        'comment' => 'Number of employees, varchar to accomodate for both number (100) or range (50-100)',
+                        'label' => 'LBL_EMPLOYEES',
+                    ],
+                ],
+                2 => [
+                    0 => [
+                        'name' => 'parent_name',
+                        'label' => 'LBL_MEMBER_OF',
+                    ],
+                ],
+                3 => [
+                    0 => 'campaign_name',
+                ],
+            ],
+            'LBL_PANEL_ASSIGNMENT' => [
+                0 => [
+                    0 => [
+                        'name' => 'date_entered',
+                        'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                    ],
+                    1 => [
+                        'name' => 'date_modified',
+                        'label' => 'LBL_DATE_MODIFIED',
+                        'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                    ],
+                ],
+            ],
+        ],
+    ],
+];

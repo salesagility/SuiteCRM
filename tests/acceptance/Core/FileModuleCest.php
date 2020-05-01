@@ -5,12 +5,12 @@ use Faker\Generator;
 class FileModuleCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -34,6 +34,7 @@ class FileModuleCest
     }
 
     // Tests
+
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -43,8 +44,8 @@ class FileModuleCest
      * the module before testing.
      */
     public function testScenarioCreateFileModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a file module for testing');
 
@@ -63,12 +64,12 @@ class FileModuleCest
      * @param \Step\Acceptance\ListView $listView
      *
      * As administrative user I want to view my file test module so that I can see if it has been
-     * deployed correctly.
+     * deployed correctly
      */
     public function testScenarioViewFileTestModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View File Test Module');
         $I->loginAsAdmin();
@@ -87,14 +88,14 @@ class FileModuleCest
      * @param \Step\Acceptance\EditView $editView
      *
      * As administrative user I want to create a record with my file test module so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateRecord(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailview,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailview,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Create File Test Module Record');
         $I->loginAsAdmin();
@@ -110,8 +111,8 @@ class FileModuleCest
         $this->fakeData->seed($this->fakeDataSeed);
         $editView->waitForEditViewVisible();
         $fileDir = 'tests/_data/';
-        $fileName = $this->fakeData->lastName.'.test.txt';
-        $I->writeToFile($fileDir.$fileName, 'test file');
+        $fileName = $this->fakeData->lastName . '.test.txt';
+        $I->writeToFile($fileDir . $fileName, 'test file');
         $editView->attachFile('#uploadfile_file', $fileName);
         $I->wait(1);
         $editView->seeInField('#document_name', $fileName);
@@ -120,8 +121,8 @@ class FileModuleCest
         $editView->clickSaveButton();
         $detailview->waitForDetailViewVisible();
         $detailview->see($fileName, '#uploadfile');
-        
-        $I->deleteFile($fileDir.$fileName);
+
+        $I->deleteFile($fileDir . $fileName);
     }
 
     /**
@@ -133,13 +134,13 @@ class FileModuleCest
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
-        
+
         $I->loginAsAdmin();
 
         // Go to File Test Module
@@ -169,11 +170,11 @@ class FileModuleCest
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
-        \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit File Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -210,11 +211,11 @@ class FileModuleCest
      * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate File Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -237,7 +238,7 @@ class FileModuleCest
         $detailView->clickActionMenuItem('Duplicate');
 
         $this->fakeData->seed($this->fakeDataSeed);
-        $editView->fillField('#document_name', $this->fakeData->lastName.'.test.txt' . '1');
+        $editView->fillField('#document_name', $this->fakeData->lastName . '.test.txt' . '1');
 
         // Save record
         $editView->click('Save');
@@ -258,10 +259,10 @@ class FileModuleCest
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete File Test Module Record from detail view');
         $I->loginAsAdmin();

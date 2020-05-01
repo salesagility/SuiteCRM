@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Api\V8\JsonApi\Repository\Filter as FilterRepository;
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Filter extends BaseOption
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add(OptionsResolver $resolver)
     {

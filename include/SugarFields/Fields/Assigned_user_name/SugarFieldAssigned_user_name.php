@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,20 +36,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldAssigned_user_name extends SugarFieldBase
 {
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $vardef['options'] = get_user_array(false);
-        if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
+        if (!empty($vardef['function']['returns']) && $vardef['function']['returns'] == 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
             return $this->fetch($this->findTemplate('EditViewFunction'));
-        } else {
-            $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
-            return $this->fetch($this->findTemplate('SearchView'));
         }
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
+        return $this->fetch($this->findTemplate('SearchView'));
     }
 }

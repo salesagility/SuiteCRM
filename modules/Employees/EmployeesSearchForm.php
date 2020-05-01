@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SearchForm/SearchForm2.php');
+require_once 'include/SearchForm/SearchForm2.php';
 
 class EmployeesSearchForm extends SearchForm
 {
@@ -54,9 +52,9 @@ class EmployeesSearchForm extends SearchForm
         parent::__construct($oldSearchForm->seed, $oldSearchForm->module, $oldSearchForm->action);
         $this->setup(
             // $searchdefs
-            array($oldSearchForm->module => $oldSearchForm->searchdefs),
+            [$oldSearchForm->module => $oldSearchForm->searchdefs],
             // $searchFields
-            array($oldSearchForm->module => $oldSearchForm->searchFields),
+            [$oldSearchForm->module => $oldSearchForm->searchFields],
             // $tpl
             $oldSearchForm->tpl,
             // $displayView
@@ -64,10 +62,10 @@ class EmployeesSearchForm extends SearchForm
             // listViewDefs
             $oldSearchForm->listViewDefs
         );
-        
+
         $this->lv = $oldSearchForm->lv;
     }
-    
+
     public function generateSearchWhere($add_custom_fields = false, $module = '')
     {
         $onlyActive = false;
@@ -78,15 +76,16 @@ class EmployeesSearchForm extends SearchForm
             unset($this->searchFields['open_only_active_users']['value']);
         }
         $where_clauses = parent::generateSearchWhere($add_custom_fields, $module);
-        
+
         if ($onlyActive) {
             $where_clauses[] = "users.employee_status = 'Active'";
         }
-        
+
         // Add in code to remove portal/group/hidden users
-        $where_clauses[] = "users.portal_only = 0";
-        $where_clauses[] = "(users.is_group = 0 or users.is_group is null)";
-        $where_clauses[] = "users.show_on_employees = 1";
+        $where_clauses[] = 'users.portal_only = 0';
+        $where_clauses[] = '(users.is_group = 0 or users.is_group is null)';
+        $where_clauses[] = 'users.show_on_employees = 1';
+
         return $where_clauses;
     }
 }

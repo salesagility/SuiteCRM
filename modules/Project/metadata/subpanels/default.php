@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,55 +40,51 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'],
+    ],
 
     'where' => '',
-    
-    
-    'fill_in_additional_fields'=>true,
-    'list_fields' => array(
-        'name'=>array(
+
+    'fill_in_additional_fields' => true,
+    'list_fields' => [
+        'name' => [
             'vname' => 'LBL_LIST_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '35%',
-        ),
-        'assigned_user_name'=>array(
+        ],
+        'assigned_user_name' => [
             'vname' => 'LBL_LIST_ASSIGNED_USER_ID',
             'widget_class' => 'SubPanelDetailViewLink',
             'module' => 'Users',
             'target_record_key' => 'assigned_user_id',
             'target_module' => 'Users',
             'width' => '15%',
-             'sortable'=>false,
-        ),
-        'estimated_start_date' => array(
+            'sortable' => false,
+        ],
+        'estimated_start_date' => [
             'vname' => 'LBL_DATE_START',
             'width' => '25%',
             'sortable' => true,
-        ),
-        'estimated_end_date' => array(
+        ],
+        'estimated_end_date' => [
             'vname' => 'LBL_DATE_END',
             'width' => '25%',
             'sortable' => true,
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'Project',
             'width' => '3%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Project',
             'width' => '3%',
-        ),
-    ),
-);
+        ],
+    ],
+];

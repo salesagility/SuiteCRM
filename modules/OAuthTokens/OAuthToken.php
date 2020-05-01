@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,10 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once 'modules/OAuthKeys/OAuthKey.php';
 
 /**
- * OAuth token
+ * OAuth token.
  */
 class OAuthToken extends SugarBean
 {
+    const REQUEST = 1;
+    const ACCESS = 2;
+    const INVALID = 3;
     public $module_dir = 'OAuthTokens';
     public $object_name = 'OAuthToken';
     public $table_name = 'oauth_tokens';
@@ -67,11 +68,7 @@ class OAuthToken extends SugarBean
     // so it's an extension point for the future
     public $authdata;
 
-    const REQUEST = 1;
-    const ACCESS = 2;
-    const INVALID = 3;
-
-    public function __construct($token='', $secret='')
+    public function __construct($token = '', $secret = '')
     {
         parent::__construct();
         $this->token = $token;
@@ -80,57 +77,58 @@ class OAuthToken extends SugarBean
     }
 
     /**
-     * Set token state
+     * Set token state.
+     *
      * @param int $s
+     *
      * @return OAuthToken
      */
     public function setState($s)
     {
         $this->tstate = $s;
+
         return $this;
     }
 
     /**
-     * Associate the token with the consumer key
+     * Associate the token with the consumer key.
+     *
      * @param OAuthKey $consumer
+     *
      * @return OAuthToken
      */
     public function setConsumer($consumer)
     {
         $this->consumer = $consumer->id;
         $this->consumer_obj = $consumer;
+
         return $this;
     }
 
     /**
-     * Set callback URL for request token
+     * Set callback URL for request token.
+     *
      * @param string $url
+     *
      * @return OAuthToken
      */
     public function setCallbackURL($url)
     {
         $this->callback_url = $url;
+
         return $this;
     }
 
     /**
-     * Generate random token
-     * @return string
-     */
-    protected static function randomValue()
-    {
-        $zop = new SuiteCRM\Zend_Oauth_Provider();
-        return bin2hex($zop->generateToken(6));
-    }
-
-    /**
-     * Generate random token/secret pair and create token
+     * Generate random token/secret pair and create token.
+     *
      * @return OAuthToken
      */
     public static function generate()
     {
         $t = self::randomValue();
         $s = self::randomValue();
+
         return new self($t, $s);
     }
 
@@ -141,12 +139,15 @@ class OAuthToken extends SugarBean
             $this->new_with_id = true;
             $this->id = $this->token;
         }
+
         return parent::save();
     }
 
     /**
-     * Load token by ID
+     * Load token by ID.
+     *
      * @param string $token
+     *
      * @return OAuthToken
      */
     public static function load($token)
@@ -158,29 +159,33 @@ class OAuthToken extends SugarBean
         }
         $ltoken->token = $ltoken->id;
         if (!empty($ltoken->consumer)) {
-            $ltoken->consumer_obj = BeanFactory::getBean("OAuthKeys", $ltoken->consumer);
+            $ltoken->consumer_obj = BeanFactory::getBean('OAuthKeys', $ltoken->consumer);
             if (empty($ltoken->consumer_obj->id)) {
                 return null;
             }
         }
+
         return $ltoken;
     }
 
     /**
-     * Invalidate token
+     * Invalidate token.
      */
     public function invalidate()
     {
         $this->setState(self::INVALID);
         $this->verify = false;
+
         return $this->save();
     }
 
     /**
      * Create a new authorized token for specific user
-     * This bypasses normal OAuth process and creates a ready-made access token
+     * This bypasses normal OAuth process and creates a ready-made access token.
+     *
      * @param OAuthKey $consumer
      * @param User $user
+     *
      * @return OAuthToken
      */
     public static function createAuthorized($consumer, $user)
@@ -190,12 +195,15 @@ class OAuthToken extends SugarBean
         $token->setState(self::ACCESS);
         $token->assigned_user_id = $user->id;
         $token->save();
+
         return $token;
     }
 
     /**
-     * Authorize request token
+     * Authorize request token.
+     *
      * @param mixed $authdata
+     *
      * @return string Validation token
      */
     public function authorize($authdata)
@@ -209,23 +217,27 @@ class OAuthToken extends SugarBean
             $this->assigned_user_id = $authdata['user'];
         }
         $this->save();
+
         return $this->verify;
     }
 
     /**
-     * Copy auth data between tokens
+     * Copy auth data between tokens.
+     *
      * @param OAuthToken $token
+     *
      * @return OAuthToken
      */
     public function copyAuthData(OAuthToken $token)
     {
         $this->authdata = $token->authdata;
         $this->assigned_user_id = $token->assigned_user_id;
+
         return $this;
     }
 
     /**
-     * Get query string for the token
+     * Get query string for the token.
      */
     public function queryString()
     {
@@ -233,19 +245,20 @@ class OAuthToken extends SugarBean
     }
 
     /**
-     * Clean up stale tokens
+     * Clean up stale tokens.
      */
     public static function cleanup()
     {
         $db = DBManagerFactory::getInstance();
         // delete invalidated tokens older than 1 day
-        $db->query("DELETE FROM oauth_tokens WHERE tstate = ".self::INVALID." AND token_ts < ".(time()-60*60*24));
+        $db->query('DELETE FROM oauth_tokens WHERE tstate = ' . self::INVALID . ' AND token_ts < ' . (time() - 60 * 60 * 24));
         // delete request tokens older than 1 day
-        $db->query("DELETE FROM oauth_tokens WHERE tstate = ".self::REQUEST." AND token_ts < ".(time()-60*60*24));
+        $db->query('DELETE FROM oauth_tokens WHERE tstate = ' . self::REQUEST . ' AND token_ts < ' . (time() - 60 * 60 * 24));
     }
 
     /**
-     * Check if the nonce is valid
+     * Check if the nonce is valid.
+     *
      * @param string $key
      * @param string $nonce
      * @param string $ts
@@ -267,46 +280,67 @@ class OAuthToken extends SugarBean
         }
         $db->query(sprintf("DELETE FROM oauth_nonce WHERE conskey='%s' AND nonce_ts < %d", $db->quote($key), $ts));
         $db->query(sprintf("INSERT INTO oauth_nonce(conskey, nonce, nonce_ts) VALUES('%s', '%s', %d)", $db->quote($key), $db->quote($nonce), $ts));
+
         return SuiteCRM\Zend_Oauth_Provider::OK;
     }
 
     /**
-     * Delete token by ID
+     * Delete token by ID.
+     *
      * @param string id
+     * @param mixed $id
+     *
      * @see SugarBean::mark_deleted($id)
      */
     public function mark_deleted($id)
     {
-        $this->db->query("DELETE from {$this->table_name} WHERE id='".$this->db->quote($id)."'");
+        $this->db->query("DELETE from {$this->table_name} WHERE id='" . $this->db->quote($id) . "'");
     }
 
     /**
-     * Delete tokens by consumer ID
+     * Delete tokens by consumer ID.
+     *
      * @param string $user
+     * @param mixed $consumer_id
      */
     public static function deleteByConsumer($consumer_id)
     {
         $db = DBManagerFactory::getInstance();
-        $db->query("DELETE FROM oauth_tokens WHERE consumer='".$db->quote($consumer_id) ."'");
+        $db->query("DELETE FROM oauth_tokens WHERE consumer='" . $db->quote($consumer_id) . "'");
     }
 
     /**
-     * Delete tokens by user ID
+     * Delete tokens by user ID.
+     *
      * @param string $user
+     * @param mixed $user_id
      */
     public static function deleteByUser($user_id)
     {
         $db = DBManagerFactory::getInstance();
-        $db->query("DELETE FROM oauth_tokens WHERE assigned_user_id='".$db->quote($user_id) ."'");
+        $db->query("DELETE FROM oauth_tokens WHERE assigned_user_id='" . $db->quote($user_id) . "'");
+    }
+
+    /**
+     * Generate random token.
+     *
+     * @return string
+     */
+    protected static function randomValue()
+    {
+        $zop = new SuiteCRM\Zend_Oauth_Provider();
+
+        return bin2hex($zop->generateToken(6));
     }
 }
 
-function displayDateFromTs($focus, $field, $value, $view='ListView')
+function displayDateFromTs($focus, $field, $value, $view = 'ListView')
 {
     $field = strtoupper($field);
     if (!isset($focus[$field])) {
         return '';
     }
     global $timedate;
+
     return $timedate->asUser($timedate->fromTimestamp($focus[$field]));
 }

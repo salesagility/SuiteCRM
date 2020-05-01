@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,11 +18,8 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
 class AOW_Processed extends Basic
 {
     public $new_schema = true;
@@ -30,7 +27,7 @@ class AOW_Processed extends Basic
     public $object_name = 'AOW_Processed';
     public $table_name = 'aow_processed';
     public $importable = false;
-    public $disable_row_level_security = true ;
+    public $disable_row_level_security = true;
 
     public $id;
     public $name;
@@ -57,14 +54,12 @@ class AOW_Processed extends Basic
         parent::__construct();
     }
 
-
-
-
     public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL': return true;
         }
+
         return false;
     }
 }

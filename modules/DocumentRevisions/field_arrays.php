@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,37 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$fields_array['DocumentRevision'] = array('column_fields' => array("id"
-        ,"change_log"
-        ,"document_id"
-        ,"date_entered"
-        ,"created_by"
-        ,"filename"
-        ,"file_ext"
-        ,"file_mime_type"
-        ,"revision"
-        ,"date_modified"
-        ,"deleted"
-        ),
-        'list_fields' =>  array("id"
-        ,"change_log"
-        ,"document_id"
-        ,"date_entered"
-        ,"created_by"
-        ,"filename"
-        ,"file_ext"
-        ,"file_mime_type"
-        ,"revision"
-        ,"date_modified"
-        ,"deleted"
-        ,"latest_revision_id"
-        ),
-        'required_fields' => array("revision"=>1),
-);
+ */
+$fields_array['DocumentRevision'] = ['column_fields' => ['id', 'change_log', 'document_id', 'date_entered', 'created_by', 'filename', 'file_ext', 'file_mime_type', 'revision', 'date_modified', 'deleted'
+],
+    'list_fields' => ['id', 'change_log', 'document_id', 'date_entered', 'created_by', 'filename', 'file_ext', 'file_mime_type', 'revision', 'date_modified', 'deleted', 'latest_revision_id'
+    ],
+    'required_fields' => ['revision' => 1],
+];

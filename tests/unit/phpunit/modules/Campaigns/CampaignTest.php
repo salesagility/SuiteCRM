@@ -4,6 +4,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Campaigns/utils.php';
 
+/**
+ * @internal
+ */
 class CampaignTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -19,23 +22,23 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
     {
         $campaign = new Campaign();
         $campaign->name = create_guid();
-        $campaign->campaign_type = "NewsLetter";
+        $campaign->campaign_type = 'NewsLetter';
         $campaign->save();
         $campaign->load_relationship('prospectlists');
 
         // Add the lists to the campaign
         $exempt_list = new ProspectList();
-        $exempt_list->list_type = "exempt";
+        $exempt_list->list_type = 'exempt';
         $exempt_list->save();
         $campaign->prospectlists->add($exempt_list->id);
 
         $default_list = new ProspectList();
-        $default_list->list_type = "default";
+        $default_list->list_type = 'default';
         $default_list->save();
         $campaign->prospectlists->add($default_list->id);
 
         $test_list = new ProspectList();
-        $test_list->list_type = "test";
+        $test_list->list_type = 'test';
         $test_list->save();
         $campaign->prospectlists->add($test_list->id);
 
@@ -70,7 +73,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $campaign);
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlistViewParseAdditionalSections()
     {
         $campaign = new Campaign();
 
@@ -80,7 +83,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', isset($tpl->_tpl_vars['ASSIGNED_USER_NAME']) ? $tpl->_tpl_vars['ASSIGNED_USER_NAME'] : null);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $campaign = new Campaign();
 
@@ -92,7 +95,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $campaign->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
         $campaign = new Campaign();
@@ -108,7 +111,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testclear_campaign_prospect_list_relationship()
+    public function testclearCampaignProspectListRelationship()
     {
         $campaign = new Campaign();
 
@@ -122,7 +125,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testmark_relationships_deleted()
+    public function testmarkRelationshipsDeleted()
     {
         $campaign = new Campaign();
 
@@ -136,7 +139,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $campaign = new Campaign();
 
@@ -149,7 +152,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $campaign = new Campaign();
 
@@ -162,7 +165,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testupdate_currency_id()
+    public function testupdateCurrencyId()
     {
         $campaign = new Campaign();
 
@@ -175,26 +178,26 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $campaign = new Campaign();
 
         //execute the method and verify that it returns expected results
-        $expected = array(
-                'DELETED' => 0,
-                'TRACKER_COUNT' => '0',
-                'REFER_URL' => 'http://',
-                'IMPRESSIONS' => '0',
-                'OPTIONAL_LINK' => 'display:none',
-                'TRACK_CAMPAIGN_TITLE' => 'View Status',
+        $expected = [
+            'DELETED' => 0,
+            'TRACKER_COUNT' => '0',
+            'REFER_URL' => 'http://',
+            'IMPRESSIONS' => '0',
+            'OPTIONAL_LINK' => 'display:none',
+            'TRACK_CAMPAIGN_TITLE' => 'View Status',
             // The theme may fallback to default so we only care that the icon is the same.
-                'TRACK_CAMPAIGN_IMAGE' => '~images/view_status~',
-                'LAUNCH_WIZARD_TITLE' => 'Launch Wizard',
+            'TRACK_CAMPAIGN_IMAGE' => '~images/view_status~',
+            'LAUNCH_WIZARD_TITLE' => 'Launch Wizard',
             // The theme may fallback to default so we only care that the icon is the same.
-                'LAUNCH_WIZARD_IMAGE' => '~images/edit_wizard~',
-                'TRACK_VIEW_ALT_TEXT' => 'View Status',
-                'LAUNCH_WIZ_ALT_TEXT' => 'Launch Wizard',
-        );
+            'LAUNCH_WIZARD_IMAGE' => '~images/edit_wizard~',
+            'TRACK_VIEW_ALT_TEXT' => 'View Status',
+            'LAUNCH_WIZ_ALT_TEXT' => 'Launch Wizard',
+        ];
 
         $actual = $campaign->get_list_view_data();
         foreach ($expected as $expectedKey => $expectedVal) {
@@ -206,7 +209,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $campaign = new Campaign();
 
@@ -239,7 +242,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $campaign = new Campaign();
 
@@ -259,7 +262,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($campaign->content, $result->_tpl_vars['CAMPAIGN_DESCRIPTION']);
     }
 
-    public function testtrack_log_leads()
+    public function testtrackLogLeads()
     {
         $campaign = new Campaign();
 
@@ -268,7 +271,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testtrack_log_entries()
+    public function testtrackLogEntries()
     {
         $campaign = new Campaign();
 
@@ -279,11 +282,11 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
         //test with parameters
         $expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type='test1' AND archived=0 ";
-        $actual = $campaign->track_log_entries(array('test1', 'test2'));
+        $actual = $campaign->track_log_entries(['test1', 'test2']);
         $this->assertSame($expected, $actual);
     }
 
-    public function testget_queue_items()
+    public function testgetQueueItems()
     {
         $campaign = new Campaign();
 
@@ -423,7 +426,7 @@ WHERE  emailman.campaign_id = ''
         $expected = str_replace("\t", '', $expected);
         $expected = strtolower($expected);
 
-        $actual = $campaign->get_queue_items(array('EMAIL_MARKETING_ID_VALUE' => 1, 'group_by' => 'users.id'));
+        $actual = $campaign->get_queue_items(['EMAIL_MARKETING_ID_VALUE' => 1, 'group_by' => 'users.id']);
         $actual = trim($actual);
         $actual = str_replace(' ', '', $actual);
         $actual = str_replace("\n", '', $actual);
@@ -433,7 +436,7 @@ WHERE  emailman.campaign_id = ''
         $this->assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $campaign = new Campaign();
         $this->assertEquals(false, $campaign->bean_implements('')); //test with blank value
@@ -441,7 +444,7 @@ WHERE  emailman.campaign_id = ''
         $this->assertEquals(true, $campaign->bean_implements('ACL')); //test with valid value
     }
 
-    public function testcreate_list_count_query()
+    public function testcreateListCountQuery()
     {
         $campaign = new Campaign();
 

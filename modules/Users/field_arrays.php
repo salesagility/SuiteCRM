@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,50 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$fields_array['User'] = array(
-    'column_fields' => array(
+ */
+$fields_array['User'] = [
+    'column_fields' => [
         'id',
         'full_name',
-        'user_name'
-        ,'user_hash'
-        ,'first_name'
-        ,'last_name'
-        ,'description'
-        ,'date_entered'
-        ,'date_modified'
-        ,'modified_user_id'
-        , 'created_by'
-        ,'title'
-        ,'department'
-        ,'is_admin'
-        ,'phone_home'
-        ,'phone_mobile'
-        ,'phone_work'
-        ,'phone_other'
-        ,'phone_fax'
-        ,'address_street'
-        ,'address_city'
-        ,'address_state'
-        ,'address_postalcode'
-        ,'address_country'
-        ,'reports_to_id'
-        ,'portal_only'
-        ,'status'
-        ,'receive_notifications'
-        ,'employee_status'
-        ,'messenger_id'
-        ,'messenger_type'
-        ,'is_group'
-
-    ),
-    'list_fields' => array(
+        'user_name', 'user_hash', 'first_name', 'last_name', 'description', 'date_entered', 'date_modified', 'modified_user_id', 'created_by', 'title', 'department', 'is_admin', 'phone_home', 'phone_mobile', 'phone_work', 'phone_other', 'phone_fax', 'address_street', 'address_city', 'address_state', 'address_postalcode', 'address_country', 'reports_to_id', 'portal_only', 'status', 'receive_notifications', 'employee_status', 'messenger_id', 'messenger_type', 'is_group'
+    ],
+    'list_fields' => [
         'full_name',
         'id',
         'first_name',
@@ -99,46 +70,16 @@ $fields_array['User'] = array(
         'reports_to_name',
         'reports_to_id',
         'is_group'
-
-    ),
-    'export_fields' => array(
+    ],
+    'export_fields' => [
         'id',
-        'user_name'
-        ,'first_name'
-        ,'last_name'
-        ,'description'
-        ,'date_entered'
-        ,'date_modified'
-        ,'modified_user_id'
-        ,'created_by'
-        ,'title'
-        ,'department'
-        ,'is_admin'
-        ,'phone_home'
-        ,'phone_mobile'
-        ,'phone_work'
-        ,'phone_other'
-        ,'phone_fax'
-        ,'address_street'
-        ,'address_city'
-        ,'address_state'
-        ,'address_postalcode'
-        ,'address_country'
-        ,'reports_to_id'
-        ,'portal_only'
-        ,'status'
-        ,'receive_notifications'
-        ,'employee_status'
-        ,'messenger_id'
-        ,'messenger_type'
-        ,'is_group'
+        'user_name', 'first_name', 'last_name', 'description', 'date_entered', 'date_modified', 'modified_user_id', 'created_by', 'title', 'department', 'is_admin', 'phone_home', 'phone_mobile', 'phone_work', 'phone_other', 'phone_fax', 'address_street', 'address_city', 'address_state', 'address_postalcode', 'address_country', 'reports_to_id', 'portal_only', 'status', 'receive_notifications', 'employee_status', 'messenger_id', 'messenger_type', 'is_group'
+    ],
+    'required_fields' => ['last_name' => 1, 'user_name' => 2, 'status' => 3],
+];
 
-    ),
-    'required_fields' =>   array("last_name"=>1,'user_name'=>2,'status'=>3),
-);
-
-$fields_array['UserSignature'] = array(
-    'column_fields' => array(
+$fields_array['UserSignature'] = [
+    'column_fields' => [
         'id',
         'date_entered',
         'date_modified',
@@ -146,8 +87,8 @@ $fields_array['UserSignature'] = array(
         'user_id',
         'name',
         'signature',
-    ),
-    'list_fields' => array(
+    ],
+    'list_fields' => [
         'id',
         'date_entered',
         'date_modified',
@@ -155,5 +96,5 @@ $fields_array['UserSignature'] = array(
         'user_id',
         'name',
         'signature',
-    ),
-);
+    ],
+];

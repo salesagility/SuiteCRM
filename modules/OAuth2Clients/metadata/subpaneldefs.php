@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 $module_name = 'OAuth2Clients';
 
-$layout_defs[$module_name] = array(
+$layout_defs[$module_name] = [
     // sets up which panels to show, in which order, and with what linked_fields
-    'subpanel_setup' => array(
-        'oauth2tokens' => array(
-            'top_buttons' => array(),
+    'subpanel_setup' => [
+        'oauth2tokens' => [
+            'top_buttons' => [],
             'order' => 10,
             'module' => 'OAuth2Tokens',
             'sort_order' => 'asc',
@@ -56,6 +54,6 @@ $layout_defs[$module_name] = array(
             'subpanel_name' => 'default',
             'get_subpanel_data' => 'oauth2tokens',
             'title_key' => 'LBL_OAUTHTOKENS_SUBPANEL_TITLE',
-        ),
-    ),
-);
+        ],
+    ],
+];

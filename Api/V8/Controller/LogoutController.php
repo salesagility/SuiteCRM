@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Controller;
 
 use Api\V8\Service\LogoutService;

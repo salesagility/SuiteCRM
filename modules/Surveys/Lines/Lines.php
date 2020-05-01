@@ -15,7 +15,7 @@ function survey_questions_display_detail(Surveys $focus, $field, $value, $view)
     global $app_list_strings, $mod_strings;
     $smarty = new Sugar_Smarty();
     $questionBeans = $focus->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions');
-    $questions = array();
+    $questions = [];
     foreach ($questionBeans as $questionBean) {
         $questions[] = $questionBean->toArray();
     }
@@ -41,24 +41,24 @@ function survey_questions_display_edit(Surveys $focus, $field, $value, $view)
     global $mod_strings, $app_list_strings;
     $smarty = new Sugar_Smarty();
     if (empty($focus->id)) {
-        $questionBeans = array();
+        $questionBeans = [];
     } else {
         $questionBeans = $focus->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions', 'sort_order');
     }
-    $questions = array();
+    $questions = [];
     foreach ($questionBeans as $questionBean) {
-        $question = array();
+        $question = [];
         $question['id'] = $questionBean->id;
         $question['name'] = $questionBean->name;
         $question['type'] = $questionBean->type;
         $question['sort_order'] = $questionBean->sort_order;
-        $question['options'] = array();
+        $question['options'] = [];
         foreach ($questionBean->get_linked_beans(
             'surveyquestions_surveyquestionoptions',
             'SurveyQuestionOptions',
             'sort_order'
         ) as $option) {
-            $optionArr = array();
+            $optionArr = [];
             $optionArr['id'] = $option->id;
             $optionArr['name'] = $option->name;
             $question['options'][] = $optionArr;

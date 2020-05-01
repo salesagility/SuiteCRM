@@ -9,6 +9,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class AccountsJjwg_MapsLogicHook
 {
     public $jjwg_Maps;
+
     public function __construct()
     {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
@@ -27,7 +28,7 @@ class AccountsJjwg_MapsLogicHook
         // after_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
             // Find and Update the Related Projects - save() Triggers Logic Hooks
-            require_once('modules/Project/Project.php');
+            require_once 'modules/Project/Project.php';
             $projects = $bean->get_linked_beans('project', 'Project');
             foreach ($projects as $project) {
                 $project->custom_fields->retrieve();
@@ -44,7 +45,7 @@ class AccountsJjwg_MapsLogicHook
         // after_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
             // Find and Update the Related Opportunities - save() Triggers Logic Hooks
-            require_once('modules/Opportunities/Opportunity.php');
+            require_once 'modules/Opportunities/Opportunity.php';
             $opportunities = $bean->get_linked_beans('opportunities', 'Opportunity');
             foreach ($opportunities as $opportunity) {
                 $opportunity->custom_fields->retrieve();
@@ -61,7 +62,7 @@ class AccountsJjwg_MapsLogicHook
         // after_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
             // Find and Update the Related Cases - save() Triggers Logic Hooks
-            require_once('modules/Cases/Case.php');
+            require_once 'modules/Cases/Case.php';
             $cases = $bean->get_linked_beans('cases', 'aCase');
             foreach ($cases as $case) {
                 $case->custom_fields->retrieve();

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,28 +40,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/utils/array_utils.php');
+require_once 'include/utils/array_utils.php';
 class TemplateEnum extends TemplateText
 {
     public $max_size = 100;
     public $len = 100;
-    public $type='enum';
+    public $type = 'enum';
     public $ext1 = '';
     public $default_value = '';
-    public $dependency ; // any dependency information
+    public $dependency; // any dependency information
     public $supports_unified_search = true;
 
     public function __construct()
     {
         // ensure that the field dependency information is read in from any _REQUEST
-        $this->localVardefMap = array(
+        $this->localVardefMap = [
             'trigger' => 'trigger',
-            'action' => 'action' ,
+            'action' => 'action',
             'visibility_grid' => 'visibility_grid',
-        ) ;
-        $this->vardef_map = array_merge($this->vardef_map, $this->localVardefMap) ;
+        ];
+        $this->vardef_map = array_merge($this->vardef_map, $this->localVardefMap);
     }
 
     public function populateFromPost()
@@ -76,38 +74,38 @@ class TemplateEnum extends TemplateText
         // action = [ action 1 , action 2 , ... , action n ]
 
         // check first if we have the component parts of a dependency
-        $dependencyPresent = true ;
+        $dependencyPresent = true;
         foreach ($this->localVardefMap as $def) {
-            $dependencyPresent &= isset($this->$def) ;
+            $dependencyPresent &= isset($this->{$def});
         }
 
         if ($dependencyPresent) {
-            $dependencies = array() ;
+            $dependencies = [];
 
             if (is_array($this->trigger) && is_array($this->action)) {
-                for ($i = 0 ; $i < count($this->action) ; $i++) {
-                    $dependencies [ $this->trigger [ $i ] ] = $this->action [ $i ] ;
+                for ($i = 0; $i < count($this->action); $i++) {
+                    $dependencies[$this->trigger[$i]] = $this->action[$i];
                 }
-                $this->dependency = $dependencies ;
+                $this->dependency = $dependencies;
             } else {
-                if (! is_array($this->trigger) && ! is_array($this->action)) {
-                    $this->dependency = array( $this->trigger => $this->action ) ;
+                if (!is_array($this->trigger) && !is_array($this->action)) {
+                    $this->dependency = [$this->trigger => $this->action];
                 }
             }
             // tidy up
-            unset($this->trigger) ;
-            unset($this->action) ;
+            unset($this->trigger, $this->action);
         }
     }
+
     public function get_xtpl_edit()
     {
         $name = $this->name;
         $value = '';
-        if (isset($this->bean->$name)) {
-            $value = $this->bean->$name;
+        if (isset($this->bean->{$name})) {
+            $value = $this->bean->{$name};
         } else {
             if (empty($this->bean->id)) {
-                $value= $this->default_value;
+                $value = $this->default_value;
             }
         }
         if (!empty($this->help)) {
@@ -115,12 +113,12 @@ class TemplateEnum extends TemplateText
         }
 
         global $app_list_strings;
-        $returnXTPL = array();
+        $returnXTPL = [];
         $returnXTPL[strtoupper($this->name)] = $value;
         if (empty($this->ext1)) {
             $this->ext1 = $this->options;
         }
-        $returnXTPL[strtoupper('options_'.$this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], $value);
+        $returnXTPL[strtoupper('options_' . $this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], $value);
 
         return $returnXTPL;
     }
@@ -132,12 +130,13 @@ class TemplateEnum extends TemplateText
             $searchFor = $_REQUEST[$this->name];
         }
         global $app_list_strings;
-        $returnXTPL = array();
+        $returnXTPL = [];
         $returnXTPL[strtoupper($this->name)] = $searchFor;
         if (empty($this->ext1)) {
             $this->ext1 = $this->options;
         }
-        $returnXTPL[strtoupper('options_'.$this->name)] = get_select_options_with_id(add_blank_option($app_list_strings[$this->ext1]), $searchFor);
+        $returnXTPL[strtoupper('options_' . $this->name)] = get_select_options_with_id(add_blank_option($app_list_strings[$this->ext1]), $searchFor);
+
         return $returnXTPL;
     }
 
@@ -150,7 +149,7 @@ class TemplateEnum extends TemplateText
         $def['studio'] = 'visible';
         // this class may be extended, so only do the unserialize for genuine TemplateEnums
         if (get_class($this) == 'TemplateEnum' && empty($def['dependency'])) {
-            $def['dependency'] = isset($this->ext4)? unserialize(html_entity_decode($this->ext4)) : null ;
+            $def['dependency'] = isset($this->ext4) ? unserialize(html_entity_decode($this->ext4)) : null;
         }
         if (!empty($this->visibility_grid)) {
             $def['visibility_grid'] = $this->visibility_grid;
@@ -170,8 +169,8 @@ class TemplateEnum extends TemplateText
             }
         }
 
-        if (isset($this->bean->$name)) {
-            $key = $this->bean->$name;
+        if (isset($this->bean->{$name})) {
+            $key = $this->bean->{$name};
             global $app_list_strings;
             if (preg_match('/&amp;/s', $key)) {
                 $key = str_replace('&amp;', '&', $key);
@@ -181,11 +180,12 @@ class TemplateEnum extends TemplateText
                     return $app_list_strings[$this->ext1][$key];
                 }
 
-                if (isset($app_list_strings[$this->ext1][$this->bean->$name])) {
-                    return $app_list_strings[$this->ext1][$this->bean->$name];
+                if (isset($app_list_strings[$this->ext1][$this->bean->{$name}])) {
+                    return $app_list_strings[$this->ext1][$this->bean->{$name}];
                 }
             }
         }
+
         return '';
     }
 

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,73 +42,72 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	TABLE DEFINITION FOR EMAIL STUFF
-$dictionary['UserSignature'] = array(
+$dictionary['UserSignature'] = [
     'table' => 'users_signatures',
-    'fields' => array(
-        'id' => array(
-            'name'		=> 'id',
-            'vname'		=> 'LBL_ID',
-            'type'		=> 'id',
-            'required'	=> true,
-        ),
-        'date_entered' => array(
+    'fields' => [
+        'id' => [
+            'name' => 'id',
+            'vname' => 'LBL_ID',
+            'type' => 'id',
+            'required' => true,
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
-            'required'=>true,
-        ),
-        'date_modified' => array(
+            'required' => true,
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
-            'required'=>true,
-        ),
-        'deleted' => array(
+            'required' => true,
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
             'required' => false,
-            'reportable'=>false,
-        ),
-        'user_id' => array(
+            'reportable' => false,
+        ],
+        'user_id' => [
             'name' => 'user_id',
             'vname' => 'LBL_USER_ID',
             'type' => 'varchar',
             'len' => 36,
-        ),
-        'name' => array(
+        ],
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_SUBJECT',
             'type' => 'varchar',
             'required' => false,
             'len' => '255',
-        ),
-        'signature' => array(
+        ],
+        'signature' => [
             'name' => 'signature',
             'vname' => 'LBL_SIGNATURE',
             'type' => 'text',
             'reportable' => false,
-        ),
-        'signature_html' => array(
+        ],
+        'signature_html' => [
             'name' => 'signature_html',
             'vname' => 'LBL_SIGNATURE_HTML',
             'type' => 'text',
             'reportable' => false,
-        ),
-    ),
-    'indices' => array(
-        array(
+        ],
+    ],
+    'indices' => [
+        [
             'name' => 'users_signaturespk',
-            'type' =>'primary',
-            'fields' => array('id')
-        ),
-        array(
+            'type' => 'primary',
+            'fields' => ['id']
+        ],
+        [
             'name' => 'idx_usersig_uid',
             'type' => 'index',
-            'fields' => array('user_id')
-        )
-    ),
-);
+            'fields' => ['user_id']
+        ]
+    ],
+];

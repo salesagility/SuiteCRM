@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -50,7 +49,7 @@ global $modInvisList;
 global $adminOnlyList;
 global $report_include_modules;
 
-$moduleList = array();
+$moduleList = [];
 // this list defines the modules shown in the top tab list of the app
 //the order of this list is the default order displayed - do not change the order unless it is on purpose
 $moduleList[] = 'Home';
@@ -81,7 +80,7 @@ $moduleList[] = 'Spots';
 
 // this list defines all of the module names and bean names in the app
 // to create a new module's bean class, add the bean definition here
-$beanList = array();
+$beanList = [];
 //ACL Objects
 $beanList['ACLRoles'] = 'ACLRole';
 $beanList['ACLActions'] = 'ACLAction';
@@ -149,7 +148,7 @@ $beanList['AOBH_BusinessHours'] = 'AOBH_BusinessHours';
 
 // this list defines all of the files that contain the SugarBean class definitions from $beanList
 // to create a new module's bean class, add the file definition here
-$beanFiles = array();
+$beanFiles = [];
 
 $beanFiles['ACLAction'] = 'modules/ACLActions/ACLAction.php';
 $beanFiles['ACLRole'] = 'modules/ACLRoles/ACLRole.php';
@@ -216,9 +215,8 @@ $beanFiles['Configurator'] = 'modules/Configurator/Configurator.php';
 $beanFiles['Spots'] = 'modules/Spots/Spots.php';
 $beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
 
-
 // added these lists for security settings for tabs
-$modInvisList = array(
+$modInvisList = [
     'Administration',
     'Currencies',
     'CustomFields',
@@ -271,25 +269,25 @@ $modInvisList = array(
     'Alert',
     'ResourceCalendar',
     'AOBH_BusinessHours',
-);
+];
 
-$adminOnlyList = array(
+$adminOnlyList = [
     //module => list of actions  (all says all actions are admin only)
     //'Administration'=>array('all'=>1, 'SupportPortal'=>'allow'),
-    'Dropdown' => array('all' => 1),
-    'Dynamic' => array('all' => 1),
-    'DynamicFields' => array('all' => 1),
-    'Currencies' => array('all' => 1),
-    'EditCustomFields' => array('all' => 1),
-    'FieldsMetaData' => array('all' => 1),
-    'LabelEditor' => array('all' => 1),
-    'ACL' => array('all' => 1),
-    'ACLActions' => array('all' => 1),
-    'ACLRoles' => array('all' => 1),
-    'UpgradeWizard' => array('all' => 1),
-    'Studio' => array('all' => 1),
-    'Schedulers' => array('all' => 1),
-);
+    'Dropdown' => ['all' => 1],
+    'Dynamic' => ['all' => 1],
+    'DynamicFields' => ['all' => 1],
+    'Currencies' => ['all' => 1],
+    'EditCustomFields' => ['all' => 1],
+    'FieldsMetaData' => ['all' => 1],
+    'LabelEditor' => ['all' => 1],
+    'ACL' => ['all' => 1],
+    'ACLActions' => ['all' => 1],
+    'ACLRoles' => ['all' => 1],
+    'UpgradeWizard' => ['all' => 1],
+    'Studio' => ['all' => 1],
+    'Schedulers' => ['all' => 1],
+];
 
 $modInvisList[] = 'ACL';
 $modInvisList[] = 'ACLRoles';
@@ -301,7 +299,7 @@ $modInvisList[] = 'SavedSearch';
 $modInvisList[] = 'Studio';
 $modInvisList[] = 'Connectors';
 
-$report_include_modules = array();
+$report_include_modules = [];
 $report_include_modules['Currencies'] = 'Currency';
 //add prospects
 $report_include_modules['Prospects'] = 'Prospect';
@@ -318,7 +316,7 @@ $modInvisList[] = 'SugarFeed';
 
 // This is the mapping for modules that appear under a different module's tab
 // Be sure to also add the modules to $modInvisList, otherwise their tab will still appear
-$GLOBALS['moduleTabMap'] = array(
+$GLOBALS['moduleTabMap'] = [
     'UpgradeWizard' => 'Administration',
     'EmailMan' => 'Administration',
     'ModuleBuilder' => 'Administration',
@@ -328,7 +326,7 @@ $GLOBALS['moduleTabMap'] = array(
     'SugarFeed' => 'Administration',
     'DocumentRevisions' => 'Documents',
     'EmailMarketing' => 'Campaigns',
-);
+];
 $beanList['EAPM'] = 'EAPM';
 $beanFiles['EAPM'] = 'modules/EAPM/EAPM.php';
 $modules_exempt_from_availability_check['EAPM'] = 'EAPM';
@@ -356,7 +354,7 @@ $beanFiles['Favorites'] = 'modules/Favorites/Favorites.php';
 //Object list is only here to correct for modules that break
 //the bean class name == dictionary entry/object name convention
 //No future module should need an entry here.
-$objectList = array();
+$objectList = [];
 $objectList['Cases'] = 'Case';
 $objectList['Groups'] = 'User';
 $objectList['Users'] = 'User';
@@ -521,8 +519,6 @@ $beanList['OAuth2Clients'] = 'OAuth2Clients';
 $beanFiles['OAuth2Clients'] = 'modules/OAuth2Clients/OAuth2Clients.php';
 $modInvisList[] = 'OAuth2Clients';
 
-
-
 $beanList['SurveyResponses'] = 'SurveyResponses';
 $beanFiles['SurveyResponses'] = 'modules/SurveyResponses/SurveyResponses.php';
 $modules_exempt_from_availability_check['SurveyResponses'] = 'SurveyResponses';
@@ -547,11 +543,9 @@ $modules_exempt_from_availability_check['SurveyQuestionOptions'] = 'SurveyQuesti
 $report_include_modules['SurveyQuestionOptions'] = 'SurveyQuestionOptions';
 $modInvisList[] = 'SurveyQuestionOptions';
 
-
-
 if (file_exists('include/modules_override.php')) {
     include 'include/modules_override.php';
 }
 if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
-    include('custom/application/Ext/Include/modules.ext.php');
+    include 'custom/application/Ext/Include/modules.ext.php';
 }

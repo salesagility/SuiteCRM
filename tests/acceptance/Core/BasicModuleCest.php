@@ -5,12 +5,12 @@ use Faker\Generator;
 class BasicModuleCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -34,6 +34,7 @@ class BasicModuleCest
     }
 
     // Tests
+
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -43,9 +44,9 @@ class BasicModuleCest
      * the module before testing.
      */
     public function testScenarioCreateBasicModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Step\Acceptance\Repair $repair
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder,
+        Step\Acceptance\Repair $repair
     ) {
         $I->wantTo('Create a basic module for testing');
 
@@ -66,12 +67,12 @@ class BasicModuleCest
      * @param \Step\Acceptance\ListView $listView
      *
      * As administrative user I want to view my basic test module so that I can see if it has been
-     * deployed correctly.
+     * deployed correctly
      */
     public function testScenarioViewBasicTestModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Basic Test Module');
 
@@ -90,14 +91,14 @@ class BasicModuleCest
      * @param \Step\Acceptance\EditView $editView
      *
      * As administrative user I want to create a record with my basic test module so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateRecord(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create Basic Test Module Record');
 
@@ -128,10 +129,10 @@ class BasicModuleCest
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
 
@@ -163,11 +164,11 @@ class BasicModuleCest
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
-        \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit Basic Test Module Record from detail view');
 
@@ -206,11 +207,11 @@ class BasicModuleCest
      * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate Basic Test Module Record from detail view');
 
@@ -255,10 +256,10 @@ class BasicModuleCest
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete Basic Test Module Record from detail view');
 

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -75,39 +73,35 @@ class Note extends File
     public $contact_phone;
     public $contact_email;
     public $file_mime_type;
-    public $module_dir = "Notes";
-    public $default_note_name_dom = array('Meeting notes', 'Reminder');
-    public $table_name = "notes";
+    public $module_dir = 'Notes';
+    public $default_note_name_dom = ['Meeting notes', 'Reminder'];
+    public $table_name = 'notes';
     public $new_schema = true;
-    public $object_name = "Note";
+    public $object_name = 'Note';
     public $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array(
+    public $additional_column_fields = [
         'contact_name',
         'contact_phone',
         'contact_email',
         'parent_name',
         'first_name',
         'last_name'
-    );
-
+    ];
 
     public function __construct()
     {
         parent::__construct();
     }
 
-
-
-
     public function safeAttachmentName()
     {
         global $sugar_config;
 
         //get position of last "." in file name
-        $file_ext_beg = strrpos($this->filename, ".");
-        $file_ext = "";
+        $file_ext_beg = strrpos($this->filename, '.');
+        $file_ext = '';
 
         //get file extension
         if ($file_ext_beg !== false) {
@@ -118,9 +112,10 @@ class Note extends File
         foreach ($sugar_config['upload_badext'] as $badExt) {
             if (strtolower($file_ext) == strtolower($badExt)) {
                 //if found, then append with .txt and break out of lookup
-                $this->name = $this->name . ".txt";
+                $this->name = $this->name . '.txt';
                 $this->file_mime_type = 'text/';
-                $this->filename = $this->filename . ".txt";
+                $this->filename = $this->filename . '.txt';
+
                 break; // no need to look for more
             }
         }
@@ -129,8 +124,10 @@ class Note extends File
     /**
      * overrides SugarBean's method.
      * If a system setting is set, it will mark all related notes as deleted, and attempt to delete files that are
-     * related to those notes
+     * related to those notes.
+     *
      * @param string id ID
+     * @param mixed $id
      */
     public function mark_deleted($id)
     {
@@ -138,7 +135,7 @@ class Note extends File
 
         if ($this->parent_type == 'Emails') {
             if (isset($sugar_config['email_default_delete_attachments']) && $sugar_config['email_default_delete_attachments'] == true) {
-                $removeFile = "upload://$id";
+                $removeFile = "upload://{$id}";
                 if (file_exists($removeFile)) {
                     if (!unlink($removeFile)) {
                         $GLOBALS['log']->error("*** Could not unlink() file: [ {$removeFile} ]");
@@ -151,12 +148,12 @@ class Note extends File
         parent::mark_deleted($id);
     }
 
-    public function deleteAttachment($isduplicate = "false")
+    public function deleteAttachment($isduplicate = 'false')
     {
         $removeFile = null;
-        
+
         if ($this->ACLAccess('edit')) {
-            if ($isduplicate == "true") {
+            if ($isduplicate == 'true') {
                 return true;
             }
             $removeFile = "upload://{$this->id}";
@@ -187,10 +184,9 @@ class Note extends File
         return false;
     }
 
-
     public function get_summary_text()
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     /**
@@ -213,23 +209,23 @@ class Note extends File
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
-        $query = "SELECT notes.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name ";
+        $query = 'SELECT notes.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name ';
 
         $query .= $custom_join['select'];
 
-        $query .= " FROM notes ";
+        $query .= ' FROM notes ';
 
-        $query .= "	LEFT JOIN contacts ON notes.contact_id=contacts.id ";
-        $query .= "  LEFT JOIN users ON notes.assigned_user_id=users.id ";
+        $query .= '	LEFT JOIN contacts ON notes.contact_id=contacts.id ';
+        $query .= '  LEFT JOIN users ON notes.assigned_user_id=users.id ';
 
         $query .= $custom_join['join'];
 
-        $where_auto = " notes.deleted=0 AND (contacts.deleted IS NULL OR contacts.deleted=0)";
+        $where_auto = ' notes.deleted=0 AND (contacts.deleted IS NULL OR contacts.deleted=0)';
 
-        if ($where != "") {
-            $query .= "where $where AND " . $where_auto;
+        if ($where != '') {
+            $query .= "where {$where} AND " . $where_auto;
         } else {
-            $query .= "where " . $where_auto;
+            $query .= 'where ' . $where_auto;
         }
 
         $order_by = $this->process_order_by($order_by);
@@ -253,7 +249,7 @@ class Note extends File
         $this->getRelatedFields(
             'Contacts',
             $this->contact_id,
-            array('name' => 'contact_name', 'phone_work' => 'contact_phone')
+            ['name' => 'contact_name', 'phone_work' => 'contact_phone']
         );
         if (!empty($this->contact_name)) {
             $emailAddress = new SugarEmailAddress();
@@ -268,7 +264,6 @@ class Note extends File
             }
         }
     }
-
 
     public function get_list_view_data()
     {
@@ -300,7 +295,6 @@ class Note extends File
         $mod_strings = return_module_language($current_language, 'Notes');
         $note_fields['STATUS'] = $mod_strings['LBL_NOTE_STATUS'];
 
-
         return $note_fields;
     }
 
@@ -314,7 +308,7 @@ class Note extends File
                 global $current_user;
                 $is_owner = $current_user->id == $this->parent_name_owner;
             }
-            /* BEGIN - SECURITY GROUPS */
+            // BEGIN - SECURITY GROUPS
             //parent_name_owner not being set for whatever reason so we need to figure this out
             else {
                 if (!empty($this->parent_type) && !empty($this->parent_id)) {
@@ -325,14 +319,14 @@ class Note extends File
                     }
                 }
             }
-            require_once("modules/SecurityGroups/SecurityGroup.php");
+            require_once 'modules/SecurityGroups/SecurityGroup.php';
             $in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
-            /* END - SECURITY GROUPS */
+            // END - SECURITY GROUPS
         }
 
-        /* BEGIN - SECURITY GROUPS */
+        // BEGIN - SECURITY GROUPS
         /**
-         * if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)) {
+         * if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)) {.
          */
         if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess(
             $this->parent_type,
@@ -342,7 +336,7 @@ class Note extends File
             $in_group
         )
         ) {
-            /* END - SECURITY GROUPS */
+            // END - SECURITY GROUPS
             $array_assign['PARENT'] = 'a';
         } else {
             $array_assign['PARENT'] = 'span';
@@ -355,7 +349,7 @@ class Note extends File
                 global $current_user;
                 $is_owner = $current_user->id == $this->contact_name_owner;
             }
-            /* BEGIN - SECURITY GROUPS */
+            // BEGIN - SECURITY GROUPS
             //contact_name_owner not being set for whatever reason so we need to figure this out
             else {
                 global $current_user;
@@ -364,17 +358,17 @@ class Note extends File
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
             }
-            require_once("modules/SecurityGroups/SecurityGroup.php");
+            require_once 'modules/SecurityGroups/SecurityGroup.php';
             $in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
-            /* END - SECURITY GROUPS */
+            // END - SECURITY GROUPS
         }
 
-        /* BEGIN - SECURITY GROUPS */
+        // BEGIN - SECURITY GROUPS
         /**
-         * if( ACLController::checkAccess('Contacts', 'view', $is_owner)) {
+         * if( ACLController::checkAccess('Contacts', 'view', $is_owner)) {.
          */
         if (ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
-            /* END - SECURITY GROUPS */
+            // END - SECURITY GROUPS
             $array_assign['CONTACT'] = 'a';
         } else {
             $array_assign['CONTACT'] = 'span';

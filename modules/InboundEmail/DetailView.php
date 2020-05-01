@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+require_once 'include/DetailView/DetailView.php';
 
-
-require_once('include/DetailView/DetailView.php');
-
-require_once('include/SugarFolders/SugarFolders.php');
-
+require_once 'include/SugarFolders/SugarFolders.php';
 
 global $mod_strings;
 global $app_strings;
@@ -53,8 +50,8 @@ global $sugar_config;
 global $timedate;
 global $theme;
 
-/* start standard DetailView layout process */
-$GLOBALS['log']->info("InboundEmails DetailView");
+// start standard DetailView layout process
+$GLOBALS['log']->info('InboundEmails DetailView');
 $focus = new InboundEmail();
 $focus->retrieve($_REQUEST['record']);
 if (empty($focus->id)) {
@@ -62,11 +59,9 @@ if (empty($focus->id)) {
 } // if
 $focus->checkImap();
 $detailView = new DetailView();
-$offset=0;
+$offset = 0;
 
-
-
-/* end standard DetailView layout process */
+// end standard DetailView layout process
 $exServ = explode('::', $focus->service);
 if ($focus->delete_seen == 1) {
     $delete_seen = $mod_strings['LBL_MARK_READ_NO'];
@@ -80,7 +75,6 @@ if ($focus->delete_seen == 1) {
 //$queue = '<a href="index.php?module=Queues&action=EditView&record='.$a['id'].'">'.$a['name'].'</a>';
 $groupName = '';
 if ($focus->group_id) {
-    
     //$group = new Group();
     //$group->retrieve($focus->group_id);
     //$groupName = $group->user_name;
@@ -120,12 +114,12 @@ $from_name = '';
 $from_addr = '';
 $reply_to_name = '';
 $reply_to_addr = '';
-$distrib_method ='';
+$distrib_method = '';
 $filterDomain = '';
 $trashFolder = '';
 $sentFolder = '';
 $distributionMethod = '';
-$create_case_email_template='';
+$create_case_email_template = '';
 $create_case_email_template_name = $mod_strings['LBL_NONE'];
 $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
 
@@ -137,12 +131,12 @@ if (!empty($focus->stored_options)) {
     // FROM NAME and Address
     $storedOptions = unserialize(base64_decode($focus->stored_options));
 
-    $from_name = (isset($storedOptions['from_name']) ? $storedOptions['from_name'] : "");
-    $from_addr = (isset($storedOptions['from_addr']) ? $storedOptions['from_addr'] : "");
+    $from_name = (isset($storedOptions['from_name']) ? $storedOptions['from_name'] : '');
+    $from_addr = (isset($storedOptions['from_addr']) ? $storedOptions['from_addr'] : '');
     isValidEmailAddress($from_addr);
 
-    $reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : "";
-    $reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : "";
+    $reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : '';
+    $reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : '';
     // only-since option
     if ($storedOptions['only_since']) {
         $onlySince = $mod_strings['LBL_ONLY_SINCE_YES'];
@@ -178,10 +172,10 @@ if (!empty($focus->stored_options)) {
     } else {
         $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
     } // else
-    $distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : "";
-    $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
+    $distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : '';
+    $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : '';
     $email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;
-    
+
     if (isset($storedOptions['allow_outbound_group_usage']) && $storedOptions['allow_outbound_group_usage'] == 1) {
         $allow_outbound_group_usage = $app_list_strings['dom_email_bool']['bool_true'];
     }
@@ -198,7 +192,7 @@ if (!empty($distrib_method)) {
 $xtpl = new XTemplate('modules/InboundEmail/DetailView.html');
 ////	ERRORS from Save
 if (isset($_REQUEST['error'])) {
-    $xtpl->assign('ERROR', "<div class='error'>".$mod_strings['ERR_NO_OPTS_SAVED']."</div>");
+    $xtpl->assign('ERROR', "<div class='error'>" . $mod_strings['ERR_NO_OPTS_SAVED'] . '</div>');
 }
 //cma, June 24,2008 - Fix bug 21670. User status and group/personal statements are not localized.
 $userStatus = $mod_strings['LBL_STATUS_ACTIVE'];
@@ -206,13 +200,13 @@ if ('Inactive' == $focus->status) {
     $userStatus = $mod_strings['LBL_STATUS_INACTIVE'];
 }
 
-$xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_MODULE_NAME'],$focus->name), true));
+$xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', [$mod_strings['LBL_MODULE_NAME'], $focus->name], true));
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
 $xtpl->assign('CREATED_BY', $focus->created_by_name);
 $xtpl->assign('MODIFIED_BY', $focus->modified_by_name);
 $xtpl->assign('GRIDLINE', $gridline);
-$xtpl->assign('PRINT_URL', 'index.php?'.$GLOBALS['request_string']);
+$xtpl->assign('PRINT_URL', 'index.php?' . $GLOBALS['request_string']);
 $xtpl->assign('ID', $focus->id);
 $xtpl->assign('STATUS', $userStatus);
 $xtpl->assign('SERVER_URL', $focus->server_url);
@@ -232,13 +226,13 @@ $xtpl->assign('ALLOW_OUTBOUND_GROUP_USAGE', $allow_outbound_group_usage);
 
 // deferred
 //$xtpl->assign('QUEUE', $queue);
-$createCaseRowStyle = "display:none";
-$leaveMessagesOnMailServerStyle = "display:none";
+$createCaseRowStyle = 'display:none';
+$leaveMessagesOnMailServerStyle = 'display:none';
 if ($focus->is_personal) {
-    $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', "display:none");
+    $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', 'display:none');
 } else {
     $is_auto_import = $app_list_strings['checkbox_dom']['2'];
-    
+
     if (!empty($focus->groupfolder_id)) {
         $is_auto_import = $app_list_strings['checkbox_dom']['1'];
         $leaveMessagesOnMailServerStyle = "display:''";
@@ -255,12 +249,12 @@ $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE', $create_case_email_template_name);
 if ($focus->isPop3Protocol()) {
-    $xtpl->assign('TRASH_SENT_FOLDER_STYLE', "display:none");
+    $xtpl->assign('TRASH_SENT_FOLDER_STYLE', 'display:none');
 } else {
     $xtpl->assign('TRASH_SENT_FOLDER_STYLE', "display:''");
 } // else
 
-$possibleAction = "pick";
+$possibleAction = 'pick';
 if (!isset($app_list_strings['dom_mailbox_type'][$focus->mailbox_type])) {
     $possibleAction = $app_list_strings['dom_mailbox_type']['pick'];
 } else {
@@ -272,7 +266,6 @@ if ($focus->mailbox_type == 'createcase') {
 } else {
     $is_create_case = $app_list_strings['checkbox_dom']['2'];
 }
-
 
 $xtpl->assign('GROUP_NAME', $groupName);
 $xtpl->assign('IS_CREATE_CASE', $is_create_case);
@@ -298,10 +291,10 @@ if ($focus->handleIsPersonal()) {
 
 //Overrides for bounce mailbox accounts
 if ($focus->mailbox_type == 'bounce') {
-    $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_BOUNCE_MODULE_NAME'],$focus->name), true));
+    $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', [$mod_strings['LBL_BOUNCE_MODULE_NAME'], $focus->name], true));
 } else {
     if ($focus->is_personal == '1') {
-        $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
+        $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', [$mod_strings['LBL_PERSONAL_MODULE_NAME'], $focus->name], true));
     }
 }
 

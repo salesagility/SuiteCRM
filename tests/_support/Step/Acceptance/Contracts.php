@@ -5,9 +5,10 @@ namespace Step\Acceptance;
 class Contracts extends \AcceptanceTester
 {
     /**
-     * Create a contract
+     * Create a contract.
      *
      * @param $name
+     * @param mixed $account
      */
     public function createContract($name, $account)
     {

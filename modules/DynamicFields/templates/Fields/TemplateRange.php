@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,13 +40,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class TemplateRange extends TemplateText
 {
-
     /**
-     * __construct
+     * __construct.
      *
      * Constructor for class.  This constructor ensures that TemplateRanage instances have the
      * enable_range_search vardef value.
@@ -57,9 +54,8 @@ class TemplateRange extends TemplateText
         $this->vardef_map['options'] = 'options';
     }
 
-
     /**
-     * populateFromPost
+     * populateFromPost.
      *
      * @see parent::populateFromPost
      * This method checks to see if enable_range_search is set.  If so, ensure that the
@@ -75,14 +71,14 @@ class TemplateRange extends TemplateText
 
             if (isset($_REQUEST['view_module'])) {
                 $module = $_REQUEST['view_module'];
-                if (file_exists('modules/'.$module.'/metadata/SearchFields.php')) {
-                    require('modules/'.$module.'/metadata/SearchFields.php');
+                if (file_exists('modules/' . $module . '/metadata/SearchFields.php')) {
+                    require 'modules/' . $module . '/metadata/SearchFields.php';
                 }
-                
-                if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
-                    require('custom/modules/'.$module.'/metadata/SearchFields.php');
+
+                if (file_exists('custom/modules/' . $module . '/metadata/SearchFields.php')) {
+                    require 'custom/modules/' . $module . '/metadata/SearchFields.php';
                 }
-                
+
                 $field_name = $this->get_field_name($module, $_REQUEST['name']);
 
                 if (isset($searchFields[$module])) {
@@ -92,33 +88,32 @@ class TemplateRange extends TemplateText
 
                     $isDateField = $this->type == 'date' || $this->type == 'datetimecombo' || $this->type == 'datetime';
 
-
-                    $searchFields[$module][$field_name_range] = array('query_type'=>'default', 'enable_range_search'=>true);
+                    $searchFields[$module][$field_name_range] = ['query_type' => 'default', 'enable_range_search' => true];
                     if ($isDateField) {
                         $searchFields[$module][$field_name_range]['is_date_field'] = true;
                     }
 
-                    $searchFields[$module][$field_name_start] = array('query_type'=>'default', 'enable_range_search'=>true);
+                    $searchFields[$module][$field_name_start] = ['query_type' => 'default', 'enable_range_search' => true];
                     if ($isDateField) {
                         $searchFields[$module][$field_name_start]['is_date_field'] = true;
                     }
 
-                    $searchFields[$module][$field_name_end] = array('query_type'=>'default', 'enable_range_search'=>true);
+                    $searchFields[$module][$field_name_end] = ['query_type' => 'default', 'enable_range_search' => true];
                     if ($isDateField) {
                         $searchFields[$module][$field_name_end]['is_date_field'] = true;
                     }
 
-                    if (!file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
-                        mkdir_recursive('custom/modules/'.$module.'/metadata');
+                    if (!file_exists('custom/modules/' . $module . '/metadata/SearchFields.php')) {
+                        mkdir_recursive('custom/modules/' . $module . '/metadata');
                     }
-                    write_array_to_file("searchFields['{$module}']", $searchFields[$module], 'custom/modules/'.$module.'/metadata/SearchFields.php');
+                    write_array_to_file("searchFields['{$module}']", $searchFields[$module], 'custom/modules/' . $module . '/metadata/SearchFields.php');
                 }
 
-                if (file_exists($cachefile = sugar_cached("modules/$module/SearchForm_basic.tpl"))) {
+                if (file_exists($cachefile = sugar_cached("modules/{$module}/SearchForm_basic.tpl"))) {
                     unlink($cachefile);
                 }
 
-                if (file_exists($cachefile = sugar_cached("modules/$module/SearchForm_advanced.tpl"))) {
+                if (file_exists($cachefile = sugar_cached("modules/{$module}/SearchForm_advanced.tpl"))) {
                     unlink($cachefile);
                 }
             }
@@ -126,12 +121,12 @@ class TemplateRange extends TemplateText
             //Otherwise, try to restore the searchFields to their state prior to being enabled
             if (isset($_REQUEST['view_module'])) {
                 $module = $_REQUEST['view_module'];
-                if (file_exists('modules/'.$module.'/metadata/SearchFields.php')) {
-                    require('modules/'.$module.'/metadata/SearchFields.php');
+                if (file_exists('modules/' . $module . '/metadata/SearchFields.php')) {
+                    require 'modules/' . $module . '/metadata/SearchFields.php';
                 }
-                
-                if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
-                    require('custom/modules/'.$module.'/metadata/SearchFields.php');
+
+                if (file_exists('custom/modules/' . $module . '/metadata/SearchFields.php')) {
+                    require 'custom/modules/' . $module . '/metadata/SearchFields.php';
                 }
 
                 $field_name = $this->get_field_name($module, $_REQUEST['name']);
@@ -140,7 +135,6 @@ class TemplateRange extends TemplateText
                     $field_name_range = 'range_' . $field_name;
                     $field_name_start = 'start_range_' . $field_name;
                     $field_name_end = 'end_range_' . $field_name;
-
 
                     if (isset($searchFields[$module][$field_name_range])) {
                         unset($searchFields[$module][$field_name_range]);
@@ -154,26 +148,25 @@ class TemplateRange extends TemplateText
                         unset($searchFields[$module][$field_name_end]);
                     }
 
-                    if (!file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
-                        mkdir_recursive('custom/modules/'.$module.'/metadata');
+                    if (!file_exists('custom/modules/' . $module . '/metadata/SearchFields.php')) {
+                        mkdir_recursive('custom/modules/' . $module . '/metadata');
                     }
-                    write_array_to_file("searchFields['{$module}']", $searchFields[$module], 'custom/modules/'.$module.'/metadata/SearchFields.php');
+                    write_array_to_file("searchFields['{$module}']", $searchFields[$module], 'custom/modules/' . $module . '/metadata/SearchFields.php');
                 }
 
-                if (file_exists($cachefile = sugar_cached("modules/$module/SearchForm_basic.tpl"))) {
+                if (file_exists($cachefile = sugar_cached("modules/{$module}/SearchForm_basic.tpl"))) {
                     unlink($cachefile);
                 }
 
-                if (file_exists($cachefile = sugar_cached("modules/$module/SearchForm_advanced.tpl"))) {
+                if (file_exists($cachefile = sugar_cached("modules/{$module}/SearchForm_advanced.tpl"))) {
                     unlink($cachefile);
                 }
             }
         }
     }
 
-
     /**
-     * get_field_def
+     * get_field_def.
      *
      * @see parent::get_field_def
      * This method checks to see if the enable_range_search key/value entry should be
@@ -188,35 +181,35 @@ class TemplateRange extends TemplateText
         } else {
             $vardef['enable_range_search'] = false;
         }
+
         return $vardef;
     }
 
-
-    public static function repairCustomSearchFields($vardefs, $module, $package='')
+    public static function repairCustomSearchFields($vardefs, $module, $package = '')
     {
-        $fields = array();
+        $fields = [];
 
         //Find any range search enabled fields
-        foreach ($vardefs as $key=>$field) {
+        foreach ($vardefs as $key => $field) {
             if (!empty($field['enable_range_search'])) {
                 $fields[$field['name']] = $field;
             }
         }
 
         if (!empty($fields)) {
-            if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
-                require('custom/modules/'.$module.'/metadata/SearchFields.php');
+            if (file_exists('custom/modules/' . $module . '/metadata/SearchFields.php')) {
+                require 'custom/modules/' . $module . '/metadata/SearchFields.php';
             } else {
-                if (file_exists('modules/'.$module.'/metadata/SearchFields.php')) {
-                    require('modules/'.$module.'/metadata/SearchFields.php');
+                if (file_exists('modules/' . $module . '/metadata/SearchFields.php')) {
+                    require 'modules/' . $module . '/metadata/SearchFields.php';
                 } else {
                     if (file_exists('custom/modulebuilder/' . $package . '/modules/' . $module . '/metadata/SearchFields.php')) {
-                        require('custom/modulebuilder/' . $package . '/modules/' . $module . '/metadata/SearchFields.php');
+                        require 'custom/modulebuilder/' . $package . '/modules/' . $module . '/metadata/SearchFields.php';
                     }
                 }
             }
 
-            foreach ($fields as $field_name=>$field) {
+            foreach ($fields as $field_name => $field) {
                 $field_name_range = 'range_' . $field_name;
                 $field_name_start = 'start_range_' . $field_name;
                 $field_name_end = 'end_range_' . $field_name;
@@ -225,27 +218,27 @@ class TemplateRange extends TemplateText
 
                 $isDateField = $type == 'date' || $type == 'datetimecombo' || $type == 'datetime';
 
-                $searchFields[$module][$field_name_range] = array('query_type'=>'default', 'enable_range_search'=>true);
+                $searchFields[$module][$field_name_range] = ['query_type' => 'default', 'enable_range_search' => true];
                 if ($isDateField) {
                     $searchFields[$module][$field_name_range]['is_date_field'] = true;
                 }
 
-                $searchFields[$module][$field_name_start] = array('query_type'=>'default', 'enable_range_search'=>true);
+                $searchFields[$module][$field_name_start] = ['query_type' => 'default', 'enable_range_search' => true];
                 if ($isDateField) {
                     $searchFields[$module][$field_name_start]['is_date_field'] = true;
                 }
 
-                $searchFields[$module][$field_name_end] = array('query_type'=>'default', 'enable_range_search'=>true);
+                $searchFields[$module][$field_name_end] = ['query_type' => 'default', 'enable_range_search' => true];
                 if ($isDateField) {
                     $searchFields[$module][$field_name_end]['is_date_field'] = true;
                 }
             }
 
-            if (!file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
-                mkdir_recursive('custom/modules/'.$module.'/metadata');
+            if (!file_exists('custom/modules/' . $module . '/metadata/SearchFields.php')) {
+                mkdir_recursive('custom/modules/' . $module . '/metadata');
             }
 
-            write_array_to_file("searchFields['{$module}']", $searchFields[$module], 'custom/modules/'.$module.'/metadata/SearchFields.php');
+            write_array_to_file("searchFields['{$module}']", $searchFields[$module], 'custom/modules/' . $module . '/metadata/SearchFields.php');
         }
     }
 }

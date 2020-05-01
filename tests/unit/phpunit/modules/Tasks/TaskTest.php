@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class TaskTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -49,7 +52,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $task = new Task();
 
@@ -61,7 +64,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $task->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $task = new Task();
 
@@ -76,7 +79,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $task = new Task();
 
@@ -91,7 +94,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $task = new Task();
         $task->contact_id = 1;
@@ -105,7 +108,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_parent_fields()
+    public function testfillInAdditionalParentFields()
     {
         $task = new Task();
         $task->parent_type = 'Accounts';
@@ -120,7 +123,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $task = new Task();
         $current_theme = SugarThemeRegistry::current();
@@ -133,27 +136,27 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task->contact_phone = '1234567';
         $task->parent_name = 'test';
 
-        $expected = array(
-                'NAME' => 'test',
-                'DELETED' => 0,
-                'STATUS' => 'In Progress',
-                'DATE_DUE_FLAG' => '0',
-                'DATE_START_FLAG' => '0',
-                'PARENT_TYPE' => 'Accounts',
-                'PARENT_NAME' => 'test',
-                'CONTACT_NAME' => 'test',
-                'CONTACT_PHONE' => '1234567',
-                'PRIORITY' => 'Medium',
-                'PARENT_MODULE' => 'Accounts',
-                'SET_COMPLETE' => '<b><a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Tasks","","Completed","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a></b>',
-                'TITLE' => ": test\nAccount: test",
-        );
+        $expected = [
+            'NAME' => 'test',
+            'DELETED' => 0,
+            'STATUS' => 'In Progress',
+            'DATE_DUE_FLAG' => '0',
+            'DATE_START_FLAG' => '0',
+            'PARENT_TYPE' => 'Accounts',
+            'PARENT_NAME' => 'test',
+            'CONTACT_NAME' => 'test',
+            'CONTACT_PHONE' => '1234567',
+            'PRIORITY' => 'Medium',
+            'PARENT_MODULE' => 'Accounts',
+            'SET_COMPLETE' => '<b><a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Tasks","","Completed","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a></b>',
+            'TITLE' => ": test\nAccount: test",
+        ];
 
         $actual = $task->get_list_view_data();
         $this->assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $task = new Task();
 
@@ -176,7 +179,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($task->description, $result->_tpl_vars['TASK_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $task = new Task();
 
@@ -189,7 +192,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
     {
         $task = new Task();
 
-        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
+        $expected = ['MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a'];
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }

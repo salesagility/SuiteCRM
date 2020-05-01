@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ProspectTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -30,7 +33,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $prospect);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $prospect = new Prospect();
 
@@ -46,7 +49,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $prospect = new Prospect();
 
@@ -61,7 +64,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('last', 'full_name', $prospect);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         $prospect = new Prospect();
 
@@ -76,7 +79,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testconverted_prospect()
+    public function testconvertedProspect()
     {
         $prospect = new Prospect();
 
@@ -91,7 +94,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('Multiple errors in query');
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $prospect = new Prospect();
 
@@ -104,7 +107,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
     {
         $prospect = new Prospect();
 
-        $result = $prospect->retrieveTargetList('', array('id', 'first_name'), 0, 1, 1, 0, 'Accounts');
+        $result = $prospect->retrieveTargetList('', ['id', 'first_name'], 0, 1, 1, 0, 'Accounts');
         $this->assertTrue(is_array($result));
     }
 
@@ -116,10 +119,10 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_unlinked_email_query()
+    public function testgetUnlinkedEmailQuery()
     {
         self::markTestIncomplete('environment dependency (CRLF2)');
-        
+
         $prospect = new Prospect();
 
         $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Prospects' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Prospects' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";

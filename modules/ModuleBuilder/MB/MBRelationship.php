@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,12 +37,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once 'modules/ModuleBuilder/parsers/relationships/UndeployedRelationships.php' ;
-require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationships.php' ;
-require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php' ;
-require_once 'modules/ModuleBuilder/parsers/relationships/ManyToManyRelationship.php' ;
+require_once 'modules/ModuleBuilder/parsers/relationships/UndeployedRelationships.php';
+require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationships.php';
+require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php';
+require_once 'modules/ModuleBuilder/parsers/relationships/ManyToManyRelationship.php';
 
 /*
  * This is an Adapter for the new UndeployedRelationships Class to allow ModuleBuilder to use the new class without change
@@ -52,9 +49,8 @@ require_once 'modules/ModuleBuilder/parsers/relationships/ManyToManyRelationship
 
 class MBRelationship
 {
-    public $relatableModules = array( ) ; // required by MBModule
-    public $relationships = array( ) ; // required by view.relationships.php; must be kept in sync with the implementation
-
+    public $relatableModules = []; // required by MBModule
+    public $relationships = []; // required by view.relationships.php; must be kept in sync with the implementation
 
     /*
      * Constructor
@@ -64,16 +60,16 @@ class MBRelationship
      */
     public function __construct($name, $path, $key_name)
     {
-        $this->implementation = new UndeployedRelationships($path) ;
-        $this->moduleName = $key_name ;
-        $this->path = $path ;
+        $this->implementation = new UndeployedRelationships($path);
+        $this->moduleName = $key_name;
+        $this->path = $path;
         $this->updateRelationshipVariable();
     }
 
     public function findRelatableModules()
     {
         // do not call findRelatableModules in the constructor as it leads to an infinite loop if the implementation calls getPackage() which loads the packages which loads the module which findsRelatableModules which...
-        $this->relatableModules = $this->implementation->findRelatableModules() ;
+        $this->relatableModules = $this->implementation->findRelatableModules();
     }
 
     /*
@@ -83,20 +79,18 @@ class MBRelationship
      */
     public function addFromPost()
     {
-        return $this->implementation->addFromPost() ;
+        return $this->implementation->addFromPost();
     }
 
-    /*
-     * New function to replace the old MBModule subpanel property - now we obtain the 'subpanels' (actually related modules) from the relationships object
-     */
+    // New function to replace the old MBModule subpanel property - now we obtain the 'subpanels' (actually related modules) from the relationships object
     public function getRelationshipList()
     {
-        return $this->implementation->getRelationshipList() ;
+        return $this->implementation->getRelationshipList();
     }
 
     public function get($relationshipName)
     {
-        return $this->implementation->get($relationshipName) ;
+        return $this->implementation->get($relationshipName);
     }
 
     /*
@@ -119,40 +113,41 @@ class MBRelationship
     public function add($rel)
     {
         // convert old format definition to new format
-        if (! isset($rel [ 'lhs_module' ])) {
-            $rel [ 'lhs_module' ] = $this->moduleName ;
+        if (!isset($rel['lhs_module'])) {
+            $rel['lhs_module'] = $this->moduleName;
         }
-        $definition = AbstractRelationships::convertFromOldFormat($rel) ;
-        if (! isset($definition ['relationship_type'])) {
-            $definition ['relationship_type'] = 'many-to-many';
+        $definition = AbstractRelationships::convertFromOldFormat($rel);
+        if (!isset($definition['relationship_type'])) {
+            $definition['relationship_type'] = 'many-to-many';
         }
         // get relationship object from RelationshipFactory
-        $relationship = RelationshipFactory::newRelationship($definition) ;
+        $relationship = RelationshipFactory::newRelationship($definition);
         // add relationship to the set of relationships
-        $this->implementation->add($relationship) ;
-        $this->updateRelationshipVariable() ;
+        $this->implementation->add($relationship);
+        $this->updateRelationshipVariable();
+
         return $relationship;
     }
 
     public function delete($name)
     {
-        $this->implementation->delete($name) ;
-        $this->updateRelationshipVariable() ;
+        $this->implementation->delete($name);
+        $this->updateRelationshipVariable();
     }
 
     public function save()
     {
-        $this->implementation->save() ;
+        $this->implementation->save();
     }
 
     public function build($path)
     {
-        $this->implementation->build() ;
+        $this->implementation->build();
     }
 
     public function addInstallDefs(&$installDef)
     {
-        $this->implementation->addInstallDefs($installDef) ;
+        $this->implementation->addInstallDefs($installDef);
     }
 
     /*
@@ -170,8 +165,8 @@ class MBRelationship
     private function updateRelationshipVariable()
     {
         foreach ($this->implementation->getRelationshipList() as $relationshipName) {
-            $rel = $this->implementation->getOldFormat($relationshipName) ;
-            $this->relationships [ $relationshipName ] = $rel ;
+            $rel = $this->implementation->getOldFormat($relationshipName);
+            $this->relationships[$relationshipName] = $rel;
         }
     }
 }

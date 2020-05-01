@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,61 +40,56 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'],
+    ],
 
     'where' => '',
-    
-    
 
-    'list_fields' => array(
-        'first_name'=>array(
+    'list_fields' => [
+        'first_name' => [
             'usage' => 'query_only',
-        ),
-        'last_name'=>array(
+        ],
+        'last_name' => [
             'usage' => 'query_only',
-        ),
-        'salutation'=>array(
-            'name'=>'salutation',
+        ],
+        'salutation' => [
+            'name' => 'salutation',
             'usage' => 'query_only',
-        ),
-        'name'=>array(
+        ],
+        'name' => [
             'vname' => 'LBL_LIST_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'module' => 'Leads',
             'width' => '20%',
-        ),
-        'lead_source'=>array(
+        ],
+        'lead_source' => [
             'vname' => 'LBL_LIST_LEAD_SOURCE',
             'width' => '13%',
-        ),
-        'email1'=>array(
+        ],
+        'email1' => [
             'vname' => 'LBL_LIST_EMAIL_ADDRESS',
             'width' => '25%',
             'widget_class' => 'SubPanelEmailLink',
-        ),
-        'lead_source_description'=>array(
+        ],
+        'lead_source_description' => [
             'name' => 'lead_source_description',
             'vname' => 'LBL_LIST_LEAD_SOURCE_DESCRIPTION',
             'width' => '26%',
-            'sortable'=>false,
-        ),
-        'edit_button'=>array(
+            'sortable' => false,
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'Leads',
             'width' => '4%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Leads',
             'width' => '4%',
-        ),
-    ),
-);
+        ],
+    ],
+];

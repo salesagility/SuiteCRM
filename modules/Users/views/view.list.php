@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class UsersViewList extends ViewList
 {
     public function preDisplay()
@@ -63,10 +59,10 @@ class UsersViewList extends ViewList
             return;
         }
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
-            $this->lv->ss->assign("SEARCH", true);
+            $this->lv->ss->assign('SEARCH', true);
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
             if (!empty($this->where)) {
-                $this->where .= " AND";
+                $this->where .= ' AND';
             }
             $this->where .= " (users.status !='Reserved' or users.status is null) ";
             $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);

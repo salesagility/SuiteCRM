@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,22 +41,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
-require_once('modules/Users/Forms.php');
-require_once('modules/Configurator/Configurator.php');
+require_once 'modules/Users/Forms.php';
+require_once 'modules/Configurator/Configurator.php';
 
 class ViewWizard extends SugarView
 {
     /**
      * Constructor.
+     *
+     * @param null|mixed $bean
+     * @param mixed $view_object_map
      */
-    public function __construct($bean = null, $view_object_map = array())
+    public function __construct($bean = null, $view_object_map = [])
     {
         parent::__construct($bean, $view_object_map);
 
@@ -77,9 +80,9 @@ class ViewWizard extends SugarView
         $this->ss->assign('SUGAR_CSS', $css);
         $favicon = $themeObject->getImageURL('sugar_icon.ico', false);
         $this->ss->assign('FAVICON_URL', getJSPath($favicon));
-        $this->ss->assign('CSS', '<link rel="stylesheet" type="text/css" href="'.SugarThemeRegistry::current()->getCSSURL('wizard.css').'" />');
-        $this->ss->assign('JAVASCRIPT', user_get_validate_record_js().user_get_chooser_js().user_get_confsettings_js());
-        $this->ss->assign('PRINT_URL', 'index.php?'.$GLOBALS['request_string']);
+        $this->ss->assign('CSS', '<link rel="stylesheet" type="text/css" href="' . SugarThemeRegistry::current()->getCSSURL('wizard.css') . '" />');
+        $this->ss->assign('JAVASCRIPT', user_get_validate_record_js() . user_get_chooser_js() . user_get_confsettings_js());
+        $this->ss->assign('PRINT_URL', 'index.php?' . $GLOBALS['request_string']);
         $this->ss->assign('SKIP_WELCOME', isset($_REQUEST['skipwelcome']) && $_REQUEST['skipwelcome'] == 1);
         $this->ss->assign('ID', $current_user->id);
         $this->ss->assign('USER_NAME', $current_user->user_name);
@@ -115,7 +118,7 @@ class ViewWizard extends SugarView
         $this->options['show_javascript'] = true;
         $this->renderJavascript();
         $this->options['show_javascript'] = false;
-        $this->ss->assign("SUGAR_JS", ob_get_contents().$themeObject->getJS());
+        $this->ss->assign('SUGAR_JS', ob_get_contents() . $themeObject->getJS());
         ob_end_clean();
 
         $messenger_type = '<select tabindex="5" name="messenger_type">';
@@ -152,7 +155,7 @@ class ViewWizard extends SugarView
         $this->ss->assign('TIMEZONEOPTIONS', TimeDate::getTimezoneList());
 
         //// Numbers and Currency display
-        require_once('modules/Currencies/ListCurrency.php');
+        require_once 'modules/Currencies/ListCurrency.php';
         $currency = new ListCurrency();
 
         // 10/13/2006 Collin - Changed to use Localization.getConfigPreference
@@ -163,10 +166,10 @@ class ViewWizard extends SugarView
         $cur_id = $locale->getPrecedentPreference('currency', $current_user);
         if ($cur_id) {
             $selectCurrency = $currency->getSelectOptions($cur_id);
-            $this->ss->assign("CURRENCY", $selectCurrency);
+            $this->ss->assign('CURRENCY', $selectCurrency);
         } else {
             $selectCurrency = $currency->getSelectOptions();
-            $this->ss->assign("CURRENCY", $selectCurrency);
+            $this->ss->assign('CURRENCY', $selectCurrency);
         }
 
         $currenciesArray = $locale->currencies;
@@ -181,15 +184,14 @@ function setSymbolValue(id) {
 eoq;
         $this->ss->assign('currencySymbolJs', $currencySymbolsJs);
 
-
         // fill significant digits dropdown
         $significantDigits = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
         $sigDigits = '';
-        for ($i=0; $i<=6; $i++) {
+        for ($i = 0; $i <= 6; $i++) {
             if ($significantDigits == $i) {
-                $sigDigits .= "<option value=\"$i\" selected=\"true\">$i</option>";
+                $sigDigits .= "<option value=\"{$i}\" selected=\"true\">{$i}</option>";
             } else {
-                $sigDigits .= "<option value=\"$i\">{$i}</option>";
+                $sigDigits .= "<option value=\"{$i}\">{$i}</option>";
             }
         }
 
@@ -197,8 +199,8 @@ eoq;
 
         $num_grp_sep = $current_user->getPreference('num_grp_sep');
         $dec_sep = $current_user->getPreference('dec_sep');
-        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep));
-        $this->ss->assign("DEC_SEP", (empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep));
+        $this->ss->assign('NUM_GRP_SEP', (empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep));
+        $this->ss->assign('DEC_SEP', (empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep));
         $this->ss->assign('getNumberJs', $locale->getNumberJs());
 
         //// Name display format
@@ -207,8 +209,8 @@ eoq;
 
         $this->ss->assign('TIMEOPTIONS', get_select_options_with_id($sugar_config['time_formats'], $current_user->_userPreferenceFocus->getDefaultPreference('default_time_format')));
         $this->ss->assign('DATEOPTIONS', get_select_options_with_id($sugar_config['date_formats'], $current_user->_userPreferenceFocus->getDefaultPreference('default_date_format')));
-        $this->ss->assign("MAIL_SENDTYPE", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $current_user->getPreference('mail_sendtype')));
-        $this->ss->assign("NEW_EMAIL", $current_user->emailAddress->getEmailAddressWidgetEditView($current_user->id, $current_user->module_dir));
+        $this->ss->assign('MAIL_SENDTYPE', get_select_options_with_id($app_list_strings['notifymail_sendtype'], $current_user->getPreference('mail_sendtype')));
+        $this->ss->assign('NEW_EMAIL', $current_user->emailAddress->getEmailAddressWidgetEditView($current_user->id, $current_user->module_dir));
         $this->ss->assign('EMAIL_LINK_TYPE', get_select_options_with_id($app_list_strings['dom_email_link_type'], $current_user->getPreference('email_link_type')));
         $this->ss->assign('EDITOR_TYPE', get_select_options_with_id($app_list_strings['dom_editor_type'], $current_user->getPreference('editor_type')));
 
@@ -226,9 +228,9 @@ eoq;
         $mail_smtpport = $systemOutboundEmail->mail_smtpport;
         $mail_smtpssl = $systemOutboundEmail->mail_smtpssl;
         $mail_smtpdisplay = $systemOutboundEmail->mail_smtpdisplay;
-        $mail_smtpuser = "";
-        $mail_smtppass = "";
-        $mail_smtpauth_req=true;
+        $mail_smtpuser = '';
+        $mail_smtppass = '';
+        $mail_smtpauth_req = true;
         if (!empty($mail_smtpserver) && !empty($mail_smtptype)) {
             if (!$systemOutboundEmail->isAllowUserAccessToSystemDefaultOutbound()) {
                 $mail_smtpauth_req = $systemOutboundEmail->mail_smtpauth_req;
@@ -243,11 +245,11 @@ eoq;
         $isAdmin = is_admin($current_user);
         $this->ss->assign('IS_ADMIN', $isAdmin);
 
-        $this->ss->assign("mail_smtpdisplay", $mail_smtpdisplay);
-        $this->ss->assign("mail_smtpuser", $mail_smtpuser);
-        $this->ss->assign("mail_smtppass", $mail_smtppass);
+        $this->ss->assign('mail_smtpdisplay', $mail_smtpdisplay);
+        $this->ss->assign('mail_smtpuser', $mail_smtpuser);
+        $this->ss->assign('mail_smtppass', $mail_smtppass);
         $this->ss->assign('mail_smtpserver', $mail_smtpserver);
-        $this->ss->assign("mail_smtpauth_req", $mail_smtpauth_req);
+        $this->ss->assign('mail_smtpauth_req', $mail_smtpauth_req);
         $this->ss->assign('MAIL_SMTPPORT', $mail_smtpport);
         $this->ss->assign('MAIL_SMTPSSL', $mail_smtpssl);
 
@@ -260,12 +262,13 @@ eoq;
      * in the array.
      *
      * @param array $currenciesArray Array of currencies to sort
+     *
      * @return array|string Array of sorted currencies with the US Dollar as the first
      */
     public function correctCurrenciesSymbolsSort($currenciesArray)
     {
         $baseCurrencyId = '-99';
-        $newCurrenciesArray = array();
+        $newCurrenciesArray = [];
 
         $newCurrenciesArray[] = $currenciesArray[$baseCurrencyId]['symbol'];
         array_shift($currenciesArray);
@@ -273,14 +276,17 @@ eoq;
         foreach ($currenciesArray as $value) {
             $newCurrenciesArray[] = $value['symbol'];
         }
+
         return $this->pushCurrencyArrayToString($newCurrenciesArray);
     }
 
     /**
-     * Generates javascript array from a php array
+     * Generates javascript array from a php array.
      *
      * @see correctCurrenciesSymbolsSort
+     *
      * @param $array
+     *
      * @return array|string Javascript code snippet of currencies array
      */
     public function pushCurrencyArrayToString($array)
@@ -289,6 +295,7 @@ eoq;
         foreach ($array as $key => $value) {
             $return .= "currencies[{$key}] = '{$value}';\n";
         }
+
         return $return;
     }
 }

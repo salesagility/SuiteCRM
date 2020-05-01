@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$vardefs = array(
-    'fields' => array(
-
-        'SecurityGroups' => array(
+$vardefs = [
+    'fields' => [
+        'SecurityGroups' => [
             'name' => 'SecurityGroups',
             'type' => 'link',
             'relationship' => 'securitygroups_' . strtolower($module),
@@ -50,26 +46,24 @@ $vardefs = array(
             'bean_name' => 'SecurityGroup',
             'source' => 'non-db',
             'vname' => 'LBL_SECURITYGROUPS',
-        ),
-    ),
+        ],
+    ],
 
-    'relationships' => array(
-        'securitygroups_' . strtolower($module) =>
-            array(
-                'lhs_module' => 'SecurityGroups',
-                'lhs_table' => 'securitygroups',
-                'lhs_key' => 'id',
-                'rhs_module' => $module,
-                'rhs_table' => $table_name,
-                'rhs_key' => 'id',
-                'relationship_type' => 'many-to-many',
-                'join_table' => 'securitygroups_records',
-                'join_key_lhs' => 'securitygroup_id',
-                'join_key_rhs' => 'record_id',
-                'relationship_role_column' => 'module',
-                'relationship_role_column_value' => $module
-
-            ),
-    ),
-    'indices' => array()
-);
+    'relationships' => [
+        'securitygroups_' . strtolower($module) => [
+            'lhs_module' => 'SecurityGroups',
+            'lhs_table' => 'securitygroups',
+            'lhs_key' => 'id',
+            'rhs_module' => $module,
+            'rhs_table' => $table_name,
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'securitygroups_records',
+            'join_key_lhs' => 'securitygroup_id',
+            'join_key_rhs' => 'record_id',
+            'relationship_role_column' => 'module',
+            'relationship_role_column_value' => $module
+        ],
+    ],
+    'indices' => []
+];

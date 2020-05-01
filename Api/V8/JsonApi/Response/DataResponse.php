@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Response;
 
 class DataResponse implements \JsonSerializable
@@ -103,7 +104,7 @@ class DataResponse implements \JsonSerializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function jsonSerialize()
     {

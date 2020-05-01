@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once("data/Relationships/M2MRelationship.php");
+require_once 'data/Relationships/M2MRelationship.php';
 
 /**
  * Represents a one to many relationship that is table based.
+ *
  * @api
  */
 class One2MRelationship extends M2MRelationship
@@ -74,8 +73,8 @@ class One2MRelationship extends M2MRelationship
                     $this->lhsLinkDef = $this->rhsLinkDef = $links;
                 } else {
                     if (!empty($links[0]) && !empty($links[1])) {
-                        if ((!empty($links[0]['side']) && $links[0]['side'] == "right")
-                        || (!empty($links[0]['link_type']) && $links[0]['link_type'] == "one")) {
+                        if ((!empty($links[0]['side']) && $links[0]['side'] == 'right')
+                        || (!empty($links[0]['link_type']) && $links[0]['link_type'] == 'one')) {
                             //$links[0] is the RHS
                             $this->lhsLinkDef = $links[1];
                             $this->rhsLinkDef = $links[0];
@@ -113,22 +112,17 @@ class One2MRelationship extends M2MRelationship
         }
     }
 
-    protected function linkIsLHS($link)
-    {
-        return ($link->getSide() == REL_LHS && !$this->selfReferencing) ||
-               ($link->getSide() == REL_RHS && $this->selfReferencing);
-    }
-
     /**
-     * @param  $lhs SugarBean left side bean to add to the relationship.
-     * @param  $rhs SugarBean right side bean to add to the relationship.
+     * @param  $lhs sugarBean left side bean to add to the relationship
+     * @param  $rhs sugarBean right side bean to add to the relationship
      * @param  $additionalFields key=>value pairs of fields to save on the relationship
-     * @return boolean true if successful
+     *
+     * @return bool true if successful
      */
-    public function add($lhs, $rhs, $additionalFields = array())
+    public function add($lhs, $rhs, $additionalFields = [])
     {
         $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
-        
+
         //If the current data matches the existing data, don't do anything
         if (!$this->checkExisting($dataToInsert)) {
             // Pre-load the RHS relationship, which is used later in the add() function and expects a Bean
@@ -137,7 +131,7 @@ class One2MRelationship extends M2MRelationship
             // only the bean id is loaded into $rhs->$rhsLinkName)
             $rhsLinkName = $this->rhsLink;
             $rhs->load_relationship($rhsLinkName);
-            
+
             // If it's a One2Many self-referencing relationship
             // the positions of the default One (LHS) and Many (RHS) are swaped
             // so we should clear the links from the many (left) side
@@ -146,20 +140,20 @@ class One2MRelationship extends M2MRelationship
                 $linkName = $this->rhsLink;
                 // Load the relationship into the left hand side bean
                 $lhs->load_relationship($linkName);
-                
+
                 // Pick the loaded link
-                $link = $lhs->$linkName;
+                $link = $lhs->{$linkName};
                 // Get many (LHS) side bean
                 $focus = $link->getFocus();
                 // Get relations
                 $related = $link->getBeans();
-                
+
                 // Clear the relations from many side bean
                 foreach ($related as $relBean) {
                     $this->remove($focus, $relBean);
                 }
             } else { // For non self-referencing, remove all the relationships from the many (RHS) side
-                $this->removeAll($rhs->$rhsLinkName);
+                $this->removeAll($rhs->{$rhsLinkName});
             }
 
             // Add relationship
@@ -167,20 +161,34 @@ class One2MRelationship extends M2MRelationship
         }
     }
 
+    protected function linkIsLHS($link)
+    {
+        return ($link->getSide() == REL_LHS && !$this->selfReferencing) ||
+               ($link->getSide() == REL_RHS && $this->selfReferencing);
+    }
+
     /**
-     * Just overriding the function from M2M to prevent it from occuring
+     * Just overriding the function from M2M to prevent it from occuring.
      *
      * The logic for dealing with adding self-referencing one-to-many relations is in the add() method
+     *
+     * @param mixed $lhs
+     * @param mixed $rhs
+     * @param mixed $additionalFields
      */
-    protected function addSelfReferencing($lhs, $rhs, $additionalFields = array())
+    protected function addSelfReferencing($lhs, $rhs, $additionalFields = [])
     {
         //No-op on One2M.
     }
 
     /**
-     * Just overriding the function from M2M to prevent it from occuring
+     * Just overriding the function from M2M to prevent it from occuring.
+     *
+     * @param mixed $lhs
+     * @param mixed $rhs
+     * @param mixed $additionalFields
      */
-    protected function removeSelfReferencing($lhs, $rhs, $additionalFields = array())
+    protected function removeSelfReferencing($lhs, $rhs, $additionalFields = [])
     {
         //No-op on One2M.
     }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,17 +41,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * UsersViewQuickEdit.php
+ * UsersViewQuickEdit.php.
+ *
  * @author Collin Lee
  *
  * This class is a view extension of the include/MVC/View/views/view.edit.php file.  We are overriding the ViewQuickEdit class because the
  * Users module quick edit treatment has some specialized behavior during the save operation.  In particular, if the user's status is set to
  * Inactive, this needs to trigger a dialog to reassign records.  The quick edit functionality was introduced into the Users module in the 6.4 release.
- *
  */
-require_once('include/EditView/EditView2.php');
+require_once 'include/EditView/EditView2.php';
 
 class UsersViewQuickedit extends ViewQuickEdit
 {
@@ -60,10 +59,9 @@ class UsersViewQuickedit extends ViewQuickEdit
      */
     protected $footerTpl = 'modules/Users/tpls/QuickEditFooter.tpl';
 
-
     /**
      * @var defaultButtons Array of default buttons assigned to the form (see function.sugar_button.php)
      * We will still take the DCMENUCANCEL and DCMENUFULLFORM buttons, but we inject our own Save button via the QuickEditFooter.tpl file
      */
-    protected $defaultButtons = array('DCMENUCANCEL', 'DCMENUFULLFORM');
+    protected $defaultButtons = ['DCMENUCANCEL', 'DCMENUFULLFORM'];
 }

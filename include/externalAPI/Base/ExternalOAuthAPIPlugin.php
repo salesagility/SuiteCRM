@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,30 +37,37 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * External API based on Oauth
+ * External API based on Oauth.
+ *
  * @api
  */
 interface ExternalOAuthAPIPlugin
 {
     /**
-     * Get OAuth parameters, to create OAuth client
+     * Get OAuth parameters, to create OAuth client.
+     *
      * @return array
      */
     public function getOauthParams();
+
     /**
-     * Get OAuth request URL
+     * Get OAuth request URL.
+     *
      * @return string
      */
     public function getOauthRequestURL();
+
     /**
-     * Get OAuth authorization URL
+     * Get OAuth authorization URL.
+     *
      * @return string
      */
     public function getOauthAuthURL();
+
     /**
-     * Get OAuth access URL
+     * Get OAuth access URL.
+     *
      * @return string
      */
     public function getOauthAccessURL();

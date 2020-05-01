@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,71 +36,71 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-$dictionary['aos_contracts_documents'] = array(
+$dictionary['aos_contracts_documents'] = [
     'true_relationship_type' => 'many-to-many',
-    'relationships' => array(
-            'aos_contracts_documents' => array(
-                    'lhs_module' => 'AOS_Contracts',
-                    'lhs_table' => 'aos_contracts',
-                    'lhs_key' => 'id',
-                    'rhs_module' => 'Documents',
-                    'rhs_table' => 'documents',
-                    'rhs_key' => 'id',
-                    'relationship_type' => 'many-to-many',
-                    'join_table' => 'aos_contracts_documents',
-                    'join_key_lhs' => 'aos_contracts_id',
-                    'join_key_rhs' => 'documents_id',
-                ),
-        ),
+    'relationships' => [
+        'aos_contracts_documents' => [
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Documents',
+            'rhs_table' => 'documents',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'aos_contracts_documents',
+            'join_key_lhs' => 'aos_contracts_id',
+            'join_key_rhs' => 'documents_id',
+        ],
+    ],
     'table' => 'aos_contracts_documents',
-    'fields' => array(
-            0 => array(
-                    'name' => 'id',
-                    'type' => 'varchar',
-                    'len' => 36,
-                ),
-            1 => array(
-                    'name' => 'date_modified',
-                    'type' => 'datetime',
-                ),
-            2 => array(
-                    'name' => 'deleted',
-                    'type' => 'bool',
-                    'len' => '1',
-                    'default' => '0',
-                    'required' => true,
-                ),
-            3 => array(
-                    'name' => 'aos_contracts_id',
-                    'type' => 'varchar',
-                    'len' => 36,
-                ),
-            4 => array(
-                    'name' => 'documents_id',
-                    'type' => 'varchar',
-                    'len' => 36,
-                ),
-            5 => array(
-                    'name' => 'document_revision_id',
-                    'type' => 'varchar',
-                    'len' => '36',
-                ),
-        ),
-    'indices' => array(
-            0 => array(
-                    'name' => 'aos_contracts_documentsspk',
-                    'type' => 'primary',
-                    'fields' => array(
-                            0 => 'id',
-                        ),
-                ),
-            1 => array(
-                    'name' => 'aos_contracts_documents_alt',
-                    'type' => 'alternate_key',
-                    'fields' => array(
-                            0 => 'aos_contracts_id',
-                            1 => 'documents_id',
-                        ),
-                ),
-        ),
-);
+    'fields' => [
+        0 => [
+            'name' => 'id',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+        1 => [
+            'name' => 'date_modified',
+            'type' => 'datetime',
+        ],
+        2 => [
+            'name' => 'deleted',
+            'type' => 'bool',
+            'len' => '1',
+            'default' => '0',
+            'required' => true,
+        ],
+        3 => [
+            'name' => 'aos_contracts_id',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+        4 => [
+            'name' => 'documents_id',
+            'type' => 'varchar',
+            'len' => 36,
+        ],
+        5 => [
+            'name' => 'document_revision_id',
+            'type' => 'varchar',
+            'len' => '36',
+        ],
+    ],
+    'indices' => [
+        0 => [
+            'name' => 'aos_contracts_documentsspk',
+            'type' => 'primary',
+            'fields' => [
+                0 => 'id',
+            ],
+        ],
+        1 => [
+            'name' => 'aos_contracts_documents_alt',
+            'type' => 'alternate_key',
+            'fields' => [
+                0 => 'aos_contracts_id',
+                1 => 'documents_id',
+            ],
+        ],
+    ],
+];

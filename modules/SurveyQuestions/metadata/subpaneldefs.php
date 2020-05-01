@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,26 +42,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$layout_defs['SurveyQuestions'] = array(
+$layout_defs['SurveyQuestions'] = [
     // sets up which panels to show, in which order, and with what linked_fields
-    'subpanel_setup' => array(
-        'surveyquestions_surveyquestionoptions' => array(
-            'order'             => 100,
-            'module'            => 'SurveyQuestionOptions',
-            'subpanel_name'     => 'default',
-            'sort_order'        => 'asc',
-            'sort_by'           => 'id',
-            'title_key'         => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONOPTIONS_TITLE',
+    'subpanel_setup' => [
+        'surveyquestions_surveyquestionoptions' => [
+            'order' => 100,
+            'module' => 'SurveyQuestionOptions',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONOPTIONS_FROM_SURVEYQUESTIONOPTIONS_TITLE',
             'get_subpanel_data' => 'surveyquestions_surveyquestionoptions',
-            'top_buttons'       => array(
-                0 => array(
+            'top_buttons' => [
+                0 => [
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
-                ),
-                1 => array(
+                ],
+                1 => [
                     'widget_class' => 'SubPanelTopSelectButton',
-                    'mode'         => 'MultiSelect',
-                ),
-            ),
-        ),
-    ),
-);
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+    ],
+];

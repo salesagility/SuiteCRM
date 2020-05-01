@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,26 +36,23 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class SuiteEditorSettingsForTinyMCE
+ * Class SuiteEditorSettingsForTinyMCE.
  *
  * It's a non-extended class of SuiteEditorSettingsForDirectHTML
  * the TinyMCE need exactly same default settings as a Direct HTML editor
  * but class is extended for correct name convection
  *
  * see: class SuiteEditorSettingsForDirectHTML
- *
  */
 class SuiteEditorSettingsForTinyMCE extends SuiteEditorSettingsForDirectHTML
 {
-
     /**
-     * JSON setting for TinyMCE initializer script
+     * JSON setting for TinyMCE initializer script.
      *
      * @var string
      */

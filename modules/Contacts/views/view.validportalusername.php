@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * ContactsViewValidPortalUsername.php
+ * ContactsViewValidPortalUsername.php.
  *
  * This class overrides SugarView and provides an implementation for the ValidPortalUsername
  * method used for checking whether or not an existing portal user_name has already been assigned.
@@ -52,8 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author Collin Lee
  * */
- 
-require_once('include/MVC/View/SugarView.php');
+require_once 'include/MVC/View/SugarView.php';
 
 class ContactsViewValidPortalUsername extends SugarView
 {
@@ -72,7 +70,7 @@ class ContactsViewValidPortalUsername extends SugarView
     {
         if (!empty($_REQUEST['portal_name'])) {
             $portalUsername = $this->bean->db->quote($_REQUEST['portal_name']);
-            $result = $this->bean->db->query("Select count(id) as total from contacts where portal_name = '$portalUsername' and deleted='0'");
+            $result = $this->bean->db->query("Select count(id) as total from contacts where portal_name = '{$portalUsername}' and deleted='0'");
             $total = 0;
             while ($row = $this->bean->db->fetchByAssoc($result)) {
                 $total = $row['total'];

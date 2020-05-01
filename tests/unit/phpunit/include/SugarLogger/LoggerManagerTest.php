@@ -3,7 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
- * Class LoggerManagerTest
+ * Class LoggerManagerTest.
+ *
+ * @internal
  */
 class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
 {

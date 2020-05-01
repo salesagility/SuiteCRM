@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
- * @package Advanced OpenSales for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,20 +18,15 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-require_once('modules/AOS_Quotes/AOS_Quotes_sugar.php');
+require_once 'modules/AOS_Quotes/AOS_Quotes_sugar.php';
 class AOS_Quotes extends AOS_Quotes_sugar
 {
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function save($check_notify = false)
     {
@@ -50,9 +45,9 @@ class AOS_Quotes extends AOS_Quotes_sugar
             }
 
             if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-                $this->number = $this->db->getOne("SELECT MAX(CAST(number as INT))+1 FROM aos_quotes");
+                $this->number = $this->db->getOne('SELECT MAX(CAST(number as INT))+1 FROM aos_quotes');
             } else {
-                $this->number = $this->db->getOne("SELECT MAX(CAST(number as UNSIGNED))+1 FROM aos_quotes");
+                $this->number = $this->db->getOne('SELECT MAX(CAST(number as UNSIGNED))+1 FROM aos_quotes');
             }
 
             if ($this->number < $sugar_config['aos']['quotes']['initialNumber']) {
@@ -60,13 +55,13 @@ class AOS_Quotes extends AOS_Quotes_sugar
             }
         }
 
-        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        require_once 'modules/AOS_Products_Quotes/AOS_Utils.php';
 
         perform_aos_save($this);
 
         $return_id = parent::save($check_notify);
 
-        require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
+        require_once 'modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php';
         $productQuoteGroup = new AOS_Line_Item_Groups();
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,23 +44,25 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * Class CleanCacheCommands
+ * Class CleanCacheCommands.
  *
  * @category RoboTasks
- * @package  SuiteCRM\Robo\Plugin\Commands
+ *
  * @author   Jose C. Massón <jose@gcoop.coop>
  * @license  GNU GPLv3
- * @link     CleanCacheCommands
+ *
+ * @see     CleanCacheCommands
  */
 class CleanCacheCommands extends \Robo\Tasks
 {
     use CliRunnerTrait;
 
     /**
-     * Clean 'cache/' directory
+     * Clean 'cache/' directory.
+     *
      * @param array $opts
+     *
      * @throws \RuntimeException
-     * @return void
      *
      * @command cache:clean
      * @aliases clean:cache
@@ -73,9 +74,9 @@ class CleanCacheCommands extends \Robo\Tasks
         $this->bootstrap();
         $cacheDir = isset($sugar_config) && isset($sugar_config['cache_dir']) ? $sugar_config['cache_dir'] : 'cache';
 
-        $toDelete = array();
-        $doNotDelete = array('Emails', 'emails', '.', '..');
-        $cachesToDelete = array(
+        $toDelete = [];
+        $doNotDelete = ['Emails', 'emails', '.', '..'];
+        $cachesToDelete = [
             'Relationships',
             'csv',
             'dashlets',
@@ -88,7 +89,7 @@ class CleanCacheCommands extends \Robo\Tasks
             'pdf',
             'themes',
             'xml',
-        );
+        ];
 
         // Calculate sub-caches to clear
         $subCachesToDelete = new Finder();

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$queryString = ! empty($_REQUEST['query_string']) ? $_REQUEST['query_string'] : '';
+$queryString = !empty($_REQUEST['query_string']) ? $_REQUEST['query_string'] : '';
 
 $luceneSearch = !empty($sugar_config['aod']['enable_aod']);
 
@@ -49,19 +47,20 @@ if (array_key_exists('showGSDiv', $_REQUEST) || !empty($_REQUEST['search_fallbac
 
 if (!$luceneSearch) {
     if (!empty($sugar_config['aod']['enable_aod'])) {
-        echo "<a href='index.php?action=UnifiedSearch&module=Home&query_string=".urlencode($queryString)."'>".translate("LBL_USE_AOD_SEARCH", "AOD_Index")."</a>";
+        echo "<a href='index.php?action=UnifiedSearch&module=Home&query_string=" . urlencode($queryString) . "'>" . translate('LBL_USE_AOD_SEARCH', 'AOD_Index') . '</a>';
     }
-    require_once('modules/Home/UnifiedSearchAdvanced.php');
+    require_once 'modules/Home/UnifiedSearchAdvanced.php';
     global $mod_strings, $modListHeader, $app_strings, $beanList, $beanFiles;
     $usa = new UnifiedSearchAdvanced();
     $usa->search();
+
     return;
 }
-require_once('include/utils.php');
-echo "<a href='index.php?action=UnifiedSearch&module=Home&search_fallback=1&query_string=".urlencode($queryString)."'>".translate("LBL_USE_VANILLA_SEARCH", "AOD_Index")."</a>";
+require_once 'include/utils.php';
+echo "<a href='index.php?action=UnifiedSearch&module=Home&search_fallback=1&query_string=" . urlencode($queryString) . "'>" . translate('LBL_USE_VANILLA_SEARCH', 'AOD_Index') . '</a>';
 
-$index = BeanFactory::getBean("AOD_Index")->getIndex();
-$hits = array();
+$index = BeanFactory::getBean('AOD_Index')->getIndex();
+$hits = [];
 $start = 0;
 $amount = 20;
 $total = 0;
@@ -86,13 +85,12 @@ if ($queryString) {
     $hits = $res['hits'];
 }
 
-
 ?>
 <form name='UnifiedSearchAdvancedMain' action='index.php' method='POST' class="search_form">
     <input type='hidden' name='query_string' value='test'>
     <input type='hidden' name='action' value='UnifiedSearch'>
-    <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER", "AOD_Index");?>' value='<?php echo $queryString;?>'>
-    <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON", "AOD_Index");?>">&nbsp;
+    <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate('LBL_SEARCH_QUERY_PLACEHOLDER', 'AOD_Index'); ?>' value='<?php echo $queryString; ?>'>
+    <input type="submit" class="button primary" value="<?php echo translate('LBL_SEARCH_BUTTON', 'AOD_Index'); ?>">&nbsp;
 </form>
 <?php if ($hits) { ?>
 <table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
@@ -102,58 +100,58 @@ if ($queryString) {
         <th scope='col' width='10%'data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
-                        <?php echo translate("LBL_SEARCH_RESULT_MODULE", "AOD_Index"); ?>
+                        <?php echo translate('LBL_SEARCH_RESULT_MODULE', 'AOD_Index'); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='30%' data-toggle="true">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
-                        <?php echo translate("LBL_SEARCH_RESULT_NAME", "AOD_Index"); ?>
+                        <?php echo translate('LBL_SEARCH_RESULT_NAME', 'AOD_Index'); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='30%' data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
-                        <?php echo translate("LBL_SEARCH_RESULT_SUMMARY", "AOD_Index"); ?>
+                        <?php echo translate('LBL_SEARCH_RESULT_SUMMARY', 'AOD_Index'); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='25%' data-hide="phone,phonelandscape">
             <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_DATE_CREATED", "AOD_Index"); ?>
+                <?php echo translate('LBL_SEARCH_RESULT_DATE_CREATED', 'AOD_Index'); ?>
             </div>
         </th>
         <th scope='col' width='25%' data-hide="phone,phonelandscape">
             <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_DATE_MODIFIED", "AOD_Index"); ?>
+                <?php echo translate('LBL_SEARCH_RESULT_DATE_MODIFIED', 'AOD_Index'); ?>
             </div>
         </th>
         <th scope='col' width='10%'>
             <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_SCORE", "AOD_Index"); ?>
+                <?php echo translate('LBL_SEARCH_RESULT_SCORE', 'AOD_Index'); ?>
             </div>
         </th>
     </tr>
     </thead>
     <?php
 foreach ($hits as $hit) {
-    echo "<tr>"
-        ."<td>".$hit->label."</td>"
-        ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$hit->name."</a></td>"
-        ."<td>".$hit->summary."</td>"
-        ."<td>".$hit->date_entered."</td>"
-        ."<td>".$hit->date_modified."</td>"
-        ."<td>".getScoreDisplay($hit)."</td>"
-        ."</tr>";
+    echo '<tr>'
+        . '<td>' . $hit->label . '</td>'
+        . "<td><a href='index.php?module=" . $hit->record_module . '&action=DetailView&record=' . $hit->record_id . "'>" . $hit->name . '</a></td>'
+        . '<td>' . $hit->summary . '</td>'
+        . '<td>' . $hit->date_entered . '</td>'
+        . '<td>' . $hit->date_modified . '</td>'
+        . '<td>' . getScoreDisplay($hit) . '</td>'
+        . '</tr>';
 }
 ?>
 </table>
 
 <?php
         } else {
-            echo "<p>".translate("LBL_SEARCH_RESULT_EMPTY", "AOD_Index")."</p>";
+            echo '<p>' . translate('LBL_SEARCH_RESULT_EMPTY', 'AOD_Index') . '</p>';
         }
 ?>
 
@@ -162,40 +160,42 @@ function getRecordSummary(SugarBean $bean)
 {
     global $listViewDefs;
     if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir])) {
-        if (file_exists('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php')) {
-            require('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php');
+        if (file_exists('custom/modules/' . $bean->module_dir . '/metadata/listviewdefs.php')) {
+            require 'custom/modules/' . $bean->module_dir . '/metadata/listviewdefs.php';
         } else {
-            if (file_exists('modules/'.$bean->module_dir.'/metadata/listviewdefs.php')) {
-                require('modules/'.$bean->module_dir.'/metadata/listviewdefs.php');
+            if (file_exists('modules/' . $bean->module_dir . '/metadata/listviewdefs.php')) {
+                require 'modules/' . $bean->module_dir . '/metadata/listviewdefs.php';
             }
         }
     }
     if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir])) {
         return $bean->get_summary_text();
     }
-    $summary = array();
-    ;
+    $summary = [];
+
     foreach ($listViewDefs[$bean->module_dir] as $key => $entry) {
         if (!$entry['default']) {
             continue;
         }
         $key = strtolower($key);
 
-        if (in_array($key, array('date_entered','date_modified','name'))) {
+        if (in_array($key, ['date_entered', 'date_modified', 'name'])) {
             continue;
         }
-        $summary[] = $bean->$key;
+        $summary[] = $bean->{$key};
     }
     $summary = array_filter($summary);
+
     return implode(' || ', $summary);
 }
 function getScoreDisplay($hit)
 {
-    return number_format(100*$hit->score, 2);
+    return number_format(100 * $hit->score, 2);
 }
-function unCamelCase($input, $sep = " ")
+function unCamelCase($input, $sep = ' ')
 {
-    $output = preg_replace(array('/(?<=[^A-Z])([A-Z])/', '/(?<=[^0-9])([0-9])/'), $sep.'$0', $input);
+    $output = preg_replace(['/(?<=[^A-Z])([A-Z])/', '/(?<=[^0-9])([0-9])/'], $sep . '$0', $input);
+
     return ucwords($output);
 }
 function getModuleLabel($module)
@@ -222,7 +222,8 @@ function getCorrectMTime($filePath)
     } else {
         $adjustment = 0;
     }
-    return ($time + $adjustment);
+
+    return $time + $adjustment;
 }
 
 function doSearch($index, $queryString, $start = 0, $amount = 20)
@@ -231,13 +232,13 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
     $cachePath = 'cache/modules/AOD_Index/QueryCache/' . md5($queryString);
     if (is_file($cachePath)) {
         $mTime = getCorrectMTime($cachePath);
-        if ($mTime > (time() - 5*60)) {
+        if ($mTime > (time() - 5 * 60)) {
             $hits = unserialize(sugar_file_get_contents($cachePath));
         }
     }
     if (!isset($hits)) {
         $tmphits = $index->find($queryString);
-        $hits = array();
+        $hits = [];
         foreach ($tmphits as $hit) {
             $bean = BeanFactory::getBean($hit->record_module, $hit->record_id);
             if (empty($bean)) {
@@ -253,7 +254,7 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
                     continue;
                 }
             }
-            $newHit = new stdClass;
+            $newHit = new stdClass();
             $newHit->record_module = $hit->record_module;
             $newHit->record_id = $hit->record_id;
             $newHit->score = $hit->score;
@@ -270,7 +271,8 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
 
     $total = count($hits);
     $hits = array_slice($hits, $start, $amount);
-    $res = array('total'=>$total,'hits' => $hits);
+    $res = ['total' => $total, 'hits' => $hits];
+
     return $res;
 }
 
@@ -299,17 +301,17 @@ function getPaginateHTML($queryString, $start, $amount, $total)
             <input type="hidden" name="start" value="<?php echo $start; ?>">
             <input type="hidden" name="total" value="<?php echo $total; ?>">
             <input type="hidden" name="query_string" value="<?php echo $queryString; ?>">
-            <button type="submit" id="listViewStartButton_top" name="listViewStartButton" title="Start" class="button" <?php echo $first ? 'disabled="disabled"' : ''?>>
+            <button type="submit" id="listViewStartButton_top" name="listViewStartButton" title="Start" class="button" <?php echo $first ? 'disabled="disabled"' : ''; ?>>
                 <span class='suitepicon suitepicon-action-first'></span>
             </button>
-            <button type="submit" id="listViewPrevButton_top" name="listViewPrevButton" class="button" title="Previous" <?php echo $first ? 'disabled="disabled"' : ''?>>
+            <button type="submit" id="listViewPrevButton_top" name="listViewPrevButton" class="button" title="Previous" <?php echo $first ? 'disabled="disabled"' : ''; ?>>
                 <span class='suitepicon suitepicon-action-left'></span>
             </button>
-            <span class="pageNumbers">(<?php echo $total ? $start+1 : 0; ?> - <?php echo min($start + $amount, $total); ?> of <?php echo $total; ?>)</span>
-            <button type="submit" id="listViewNextButton_top" name="listViewNextButton" title="Next" class="button" <?php echo $last ? 'disabled="disabled"' : ''?>>
+            <span class="pageNumbers">(<?php echo $total ? $start + 1 : 0; ?> - <?php echo min($start + $amount, $total); ?> of <?php echo $total; ?>)</span>
+            <button type="submit" id="listViewNextButton_top" name="listViewNextButton" title="Next" class="button" <?php echo $last ? 'disabled="disabled"' : ''; ?>>
                 <span class='suitepicon suitepicon-action-right'></span>
             </button>
-            <button type="submit" id="listViewEndButton_top" name="listViewEndButton" title="End" class="button" <?php echo $last ? 'disabled="disabled"' : ''?>>
+            <button type="submit" id="listViewEndButton_top" name="listViewEndButton" title="End" class="button" <?php echo $last ? 'disabled="disabled"' : ''; ?>>
                 <span class='suitepicon suitepicon-action-last'></span>
             </button>
         </form>

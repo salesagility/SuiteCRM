@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,6 +44,6 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 $module_name = 'Alert';
- $metafiles[$module_name] = array(
-    'defaultviewdefs'  => 	'modules/' . $module_name . '/metadata/defaultviewdefs.php',
- );
+ $metafiles[$module_name] = [
+     'defaultviewdefs' => 'modules/' . $module_name . '/metadata/defaultviewdefs.php',
+ ];

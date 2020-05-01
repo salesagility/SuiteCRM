@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,22 +40,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 $module_name = 'AOS_Product_Categories';
-$listViewDefs[$module_name] = array(
-    'NAME' => array(
+$listViewDefs[$module_name] = [
+    'NAME' => [
         'width' => '32',
         'label' => 'LBL_NAME',
         'default' => true,
-        'link' => true),
-    'ASSIGNED_USER_NAME' => array(
+        'link' => true],
+    'ASSIGNED_USER_NAME' => [
         'width' => '9',
         'label' => 'LBL_ASSIGNED_TO_NAME',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-    
-);
+        'default' => true],
+];

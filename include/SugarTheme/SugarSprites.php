@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,14 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 // Singleton to load sprites metadata from SugarTheme
 
 class SugarSprites
 {
+    public $sprites = [];
+    public $dirs = [];
     private static $instance;
-    public $sprites = array();
-    public $dirs = array();
 
     private function __construct()
     {
@@ -65,12 +64,13 @@ class SugarSprites
         if (!self::$instance) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
     public function loadSpriteMeta($dir)
     {
-        if (! isset($this->dirs[$dir])) {
+        if (!isset($this->dirs[$dir])) {
             $this->loadMetaHelper($dir, 'sprites');
             $this->dirs[$dir] = true;
         }
@@ -79,9 +79,9 @@ class SugarSprites
     private function loadMetaHelper($dir, $file)
     {
         if (file_exists("cache/sprites/{$dir}/{$file}.meta.php")) {
-            $sprites = array();
-            $GLOBALS['log']->debug("Sprites: Loading sprites metadata for $dir");
-            include("cache/sprites/{$dir}/{$file}.meta.php");
+            $sprites = [];
+            $GLOBALS['log']->debug("Sprites: Loading sprites metadata for {$dir}");
+            include "cache/sprites/{$dir}/{$file}.meta.php";
             foreach ($sprites as $id => $meta) {
                 $this->sprites[$id] = $meta;
             }

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -142,7 +141,7 @@ class AuthorizationServer implements EmitterAwareInterface
     }
 
     /**
-     * Set the encryption key
+     * Set the encryption key.
      *
      * @param string $key
      */
@@ -156,6 +155,7 @@ class AuthorizationServer implements EmitterAwareInterface
      *
      * @param GrantTypeInterface $grantType
      * @param null|\DateInterval $accessTokenTTL
+     *
      * @throws \Exception
      */
     public function enableGrantType(GrantTypeInterface $grantType, \DateInterval $accessTokenTTL = null)
@@ -183,7 +183,7 @@ class AuthorizationServer implements EmitterAwareInterface
     }
 
     /**
-     * Validate an authorization request
+     * Validate an authorization request.
      *
      * @param ServerRequestInterface $request
      *
@@ -209,7 +209,7 @@ class AuthorizationServer implements EmitterAwareInterface
     }
 
     /**
-     * Complete an authorization request
+     * Complete an authorization request.
      *
      * @param AuthorizationRequest $authRequest
      * @param ResponseInterface    $response

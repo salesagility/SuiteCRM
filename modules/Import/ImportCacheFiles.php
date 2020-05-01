@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,33 +43,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: Static class to that is used to get the filenames for the various
  * cache files used
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  */
-
 class ImportCacheFiles
 {
-    /**#@+
+    /*#@+
      * Cache file names
      */
-    const FILE_MISCELLANEOUS      = 'misc';
-    const FILE_DUPLICATES         = 'dupes';
+    const FILE_MISCELLANEOUS = 'misc';
+    const FILE_DUPLICATES = 'dupes';
     const FILE_DUPLICATES_DISPLAY = 'dupesdisplay';
-    const FILE_ERRORS             = 'error';
-    const FILE_ERROR_RECORDS      = 'errorrecords';
+    const FILE_ERRORS = 'error';
+    const FILE_ERROR_RECORDS = 'errorrecords';
     const FILE_ERROR_RECORDS_ONLY = 'errorrecordsonly';
-    const FILE_STATUS             = 'status';
-    /**#@-*/
+    const FILE_STATUS = 'status';
+    // #@-
 
     /**
-     * List of all cache file names
+     * List of all cache file names.
      *
      * @var array
      */
-    protected static $all_files = array(
+    protected static $all_files = [
         self::FILE_MISCELLANEOUS,
         self::FILE_DUPLICATES,
         self::FILE_DUPLICATES_DISPLAY,
@@ -77,50 +75,34 @@ class ImportCacheFiles
         self::FILE_ERROR_RECORDS,
         self::FILE_ERROR_RECORDS_ONLY,
         self::FILE_STATUS,
-    );
+    ];
 
     /**
-     * Get import directory name
+     * Get import directory name.
+     *
      * @return string
      */
     public static function getImportDir()
     {
-        return "upload://import";
+        return 'upload://import';
     }
 
-
     /**
-     * Function generates a download link for the given import file
+     * Function generates a download link for the given import file.
      *
      * @param string $fileName String value of the upload file name
+     *
      * @return string The converted URL of the file name
      */
     public static function convertFileNameToUrl($fileName)
     {
-        $fileName = str_replace(self::getImportDir() . "/", "", $fileName);
-        $fileName = "index.php?entryPoint=download&id=ImportErrors&type=import&tempName=" . $fileName . "&isTempFile=1";
-        return $fileName;
-    }
+        $fileName = str_replace(self::getImportDir() . '/', '', $fileName);
 
-
-    /**
-     * Returns the filename for a temporary file
-     *
-     * @param  string $type string to prepend to the filename, typically to indicate the file's use
-     * @return string filename
-     */
-    private static function _createFileName($type = self::FILE_MISCELLANEOUS)
-    {
-        global $current_user;
-        $importdir = self::getImportDir();
-        // ensure dir exists and writable
-        UploadStream::ensureDir($importdir, true);
-
-        return "$importdir/{$type}_{$current_user->id}.csv";
+        return 'index.php?entryPoint=download&id=ImportErrors&type=import&tempName=' . $fileName . '&isTempFile=1';
     }
 
     /**
-     * Ensure that all cache files are writable or can be created
+     * Ensure that all cache files are writable or can be created.
      *
      * @return bool
      */
@@ -130,15 +112,17 @@ class ImportCacheFiles
             $filename = self::_createFileName($type);
             if (file_exists($filename) && !is_writable($filename)) {
                 return false;
-            } elseif (!is_writable(dirname($filename))) {
+            }
+            if (!is_writable(dirname($filename))) {
                 return false;
             }
         }
+
         return true;
     }
 
     /**
-     * Returns the duplicates filename (the ones used to download to csv file
+     * Returns the duplicates filename (the ones used to download to csv file.
      *
      * @return string filename
      */
@@ -148,7 +132,7 @@ class ImportCacheFiles
     }
 
     /**
-     * Returns the duplicates display filename (the one used for display in html)
+     * Returns the duplicates display filename (the one used for display in html).
      *
      * @return string filename
      */
@@ -158,7 +142,7 @@ class ImportCacheFiles
     }
 
     /**
-     * Returns the error filename
+     * Returns the error filename.
      *
      * @return string filename
      */
@@ -168,7 +152,7 @@ class ImportCacheFiles
     }
 
     /**
-     * Returns the error records filename
+     * Returns the error records filename.
      *
      * @return string filename
      */
@@ -178,7 +162,7 @@ class ImportCacheFiles
     }
 
     /**
-     * Returns the error records filename
+     * Returns the error records filename.
      *
      * @return string filename
      */
@@ -188,7 +172,7 @@ class ImportCacheFiles
     }
 
     /**
-     * Returns the status filename
+     * Returns the status filename.
      *
      * @return string filename
      */
@@ -198,7 +182,7 @@ class ImportCacheFiles
     }
 
     /**
-     * Clears out all cache files in the import directory
+     * Clears out all cache files in the import directory.
      */
     public static function clearCacheFiles()
     {
@@ -208,9 +192,26 @@ class ImportCacheFiles
             $files = dir($importdir);
             while (false !== ($file = $files->read())) {
                 if (!is_dir($file) && stristr($file, '.csv')) {
-                    unlink("$importdir/$file");
+                    unlink("{$importdir}/{$file}");
                 }
             }
         }
+    }
+
+    /**
+     * Returns the filename for a temporary file.
+     *
+     * @param  string $type string to prepend to the filename, typically to indicate the file's use
+     *
+     * @return string filename
+     */
+    private static function _createFileName($type = self::FILE_MISCELLANEOUS)
+    {
+        global $current_user;
+        $importdir = self::getImportDir();
+        // ensure dir exists and writable
+        UploadStream::ensureDir($importdir, true);
+
+        return "{$importdir}/{$type}_{$current_user->id}.csv";
     }
 }

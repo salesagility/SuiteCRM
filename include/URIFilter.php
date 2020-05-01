@@ -3,23 +3,19 @@
 namespace SuiteCRM;
 
 /**
- * Class SugarURIFilter
- * @package SuiteCRM
- * URI filter for HTMLPurifier
- * Approves only resource URIs that are in the list of trusted domains
- * Until we have comprehensive CSRF protection, we need to sanitize URLs in emails, etc.
- * to avoid CSRF attacks.
+ * Class SugarURIFilter.
  */
 class URIFilter extends \HTMLPurifier_URIFilter
 {
-    /** @var string $name */
+    /** @var string */
     public $name = 'SugarURIFilter';
 
-    /** @var array $allowed */
-    protected $allowed = array();
+    /** @var array */
+    protected $allowed = [];
 
     /**
      * @param \HTMLPurifier_Config $config
+     *
      * @return bool|void
      */
     public function prepare($config)
@@ -38,6 +34,7 @@ class URIFilter extends \HTMLPurifier_URIFilter
      * @param \HTMLPurifier_URI $uri
      * @param \HTMLPurifier_Config $config
      * @param \HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function filter(&$uri, $config, $context)
@@ -66,7 +63,7 @@ class URIFilter extends \HTMLPurifier_URIFilter
         foreach ($this->allowed as $allow) {
             // must be equal to our domain or subdomain of our domain
             if ($uri->host == $allow
-                || substr($uri->host, -(strlen($allow) + 1)) == ".$allow"
+                || substr($uri->host, -(strlen($allow) + 1)) == ".{$allow}"
             ) {
                 return true;
             }
@@ -86,7 +83,7 @@ class URIFilter extends \HTMLPurifier_URIFilter
             }
         }
 
-        $query_items = array();
+        $query_items = [];
         parse_str(from_html($uri->query), $query_items);
         // weird query, probably harmless
         if (empty($query_items)) {
@@ -103,11 +100,11 @@ class URIFilter extends \HTMLPurifier_URIFilter
         if (!empty($query_items['entryPoint'])
             && !in_array(
                 $query_items['entryPoint'],
-                array(
+                [
                     'download',
                     'image',
                     'getImage'
-                )
+                ]
             )
         ) {
             return false;

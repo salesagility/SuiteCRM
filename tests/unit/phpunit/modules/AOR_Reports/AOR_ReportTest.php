@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Report()
+    public function testAORReport()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
@@ -20,7 +23,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $aor_Report = new AOR_Report();
 
@@ -47,11 +50,11 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $_POST['aor_fields_group_display'][] = '1';
 
         //populate values for aor_chart related/child object
-        $_POST['aor_chart_id'] = array('test' => '');
-        $_POST['aor_chart_title'] = array('test' => 'test');
-        $_POST['aor_chart_type'] = array('test' => 'bar');
-        $_POST['aor_chart_x_field'] = array('test' => '1');
-        $_POST['aor_chart_y_field'] = array('test' => '2');
+        $_POST['aor_chart_id'] = ['test' => ''];
+        $_POST['aor_chart_title'] = ['test' => 'test'];
+        $_POST['aor_chart_type'] = ['test' => 'bar'];
+        $_POST['aor_chart_x_field'] = ['test' => '1'];
+        $_POST['aor_chart_y_field'] = ['test' => '2'];
 
         //populate aor_Report object values
         $aor_Report->name = 'test';
@@ -69,7 +72,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         unset($aor_Report);
     }
 
-    public function testload_report_beans()
+    public function testloadReportBeans()
     {
         $aor_Report = new AOR_Report();
 
@@ -90,13 +93,13 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testbuild_report_chart()
+    public function testbuildReportChart()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
         $chartBean = BeanFactory::getBean('AOR_Charts');
-        $charts = (array)$chartBean->get_full_list();
+        $charts = (array) $chartBean->get_full_list();
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
         $result = $aor_Report->build_report_chart();
@@ -104,18 +107,10 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             $this->assertContains($chart->id, $result);
         }
 
-        unset($GLOBALS['_SESSION']);
-        unset($GLOBALS['objectList']);
-        unset($GLOBALS['mod_strings']);
-        unset($GLOBALS['toHTML']);
-        unset($GLOBALS['module']);
-        unset($GLOBALS['action']);
-        unset($GLOBALS['disable_date_format']);
-        unset($GLOBALS['fill_in_rel_depth']);
-        unset($GLOBALS['currentModule']);
+        unset($GLOBALS['_SESSION'], $GLOBALS['objectList'], $GLOBALS['mod_strings'], $GLOBALS['toHTML'], $GLOBALS['module'], $GLOBALS['action'], $GLOBALS['disable_date_format'], $GLOBALS['fill_in_rel_depth'], $GLOBALS['currentModule']);
     }
 
-    public function testbuild_group_report()
+    public function testbuildGroupReport()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
@@ -139,7 +134,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->assertNotEquals($html2, $html3);
     }
 
-    public function testbuild_report_html()
+    public function testbuildReportHtml()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
@@ -172,7 +167,6 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
                 'module' => 'Meetings',
                 'field' => 'duration_hours',
                 'params' => ''
-
             ]
         ];
         $totals = ['label' => [10, 20, 30]];
@@ -185,7 +179,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     public function testcalculateTotal()
     {
         //execute the method with data preset and verify it returns expected result
-        $totals = array(10, 20, 30);
+        $totals = [10, 20, 30];
 
         $aor_Report = new AOR_Report();
 
@@ -195,7 +189,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(20, $aor_Report->calculateTotal('AVG', $totals));
     }
 
-    public function testbuild_report_csv()
+    public function testbuildReportCsv()
     {
         //this method uses exit so it cannot be tested
 
@@ -207,7 +201,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('Can Not be implemented');
     }
 
-    public function testbuild_report_query()
+    public function testbuildReportQuery()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
@@ -221,52 +215,52 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThanOrEqual(0, strlen($actual));
     }
 
-    public function testbuild_report_query_select()
+    public function testbuildReportQuerySelect()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
-        $query_array = array();
+        $query_array = [];
 
         //execute the method with parameters and verify that it returns an array.
         $actual = $aor_Report->build_report_query_select($query_array, 'name');
         $this->assertTrue(is_array($actual));
     }
 
-    public function testbuild_report_query_join()
+    public function testbuildReportQueryJoin()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
         //test with type custom and verify that it retunrs expected results
-        $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c '));
+        $expected = ['join' => ['accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c ']];
         $actual = $aor_Report->build_report_query_join(
             'contacts',
             'accounts_contacts',
             'accounts',
             new Account(),
             'custom',
-            array()
+            []
         );
         $this->assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
-        $expected = array(
-            'join' => array('accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"),
-            'id_select' => array('accounts_contacts' => '`accounts_contacts`.id AS \'accounts_contacts_id\''),
-            'id_select_group' => array('accounts_contacts' => '`accounts_contacts`.id')
-        );
+        $expected = [
+            'join' => ['accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"],
+            'id_select' => ['accounts_contacts' => '`accounts_contacts`.id AS \'accounts_contacts_id\''],
+            'id_select_group' => ['accounts_contacts' => '`accounts_contacts`.id']
+        ];
         $actual = $aor_Report->build_report_query_join(
             'contacts',
             'accounts_contacts',
             'accounts',
             new Account(),
             'relationship',
-            array()
+            []
         );
         $this->assertSame($expected, $actual);
     }
 
-    public function testbuild_report_access_query()
+    public function testbuildReportAccessQuery()
     {
         $aor_Report = new AOR_Report();
 
@@ -279,13 +273,13 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $result);
     }
 
-    public function testbuild_report_query_where()
+    public function testbuildReportQueryWhere()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
         //execute the method and verify that it retunrs expected results
-        $expected = array('where' => array('accounts.deleted = 0 '));
+        $expected = ['where' => ['accounts.deleted = 0 ']];
         $actual = $aor_Report->build_report_query_where();
         $this->assertSame($expected, $actual);
     }

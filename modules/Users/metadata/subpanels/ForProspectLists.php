@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,48 +40,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-            array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Users'),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Users'],
+    ],
 
     'where' => '',
-    
-    
 
-    'list_fields'=> array(
-        'first_name'=>array(
+    'list_fields' => [
+        'first_name' => [
             'usage' => 'query_only',
-        ),
-        'last_name'=>array(
+        ],
+        'last_name' => [
             'usage' => 'query_only',
-        ),
-        'name'=>array(
+        ],
+        'name' => [
             'vname' => 'LBL_LIST_NAME',
             'target_module' => 'Employees',
             'module' => 'Users',
             'target_module' => 'Employees',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '35%',
-        ),
-        'email1'=>array(
+        ],
+        'email1' => [
             'vname' => 'LBL_LIST_EMAIL',
             'widget_class' => 'SubPanelEmailLink',
             'width' => '35%',
-        ),
-        'phone_work'=>array(
+        ],
+        'phone_work' => [
             'vname' => 'LBL_LIST_PHONE',
             'width' => '26%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Users',
             'width' => '4%',
             'linked_field' => 'users',
-        ),
-    ),
-);
+        ],
+    ],
+];

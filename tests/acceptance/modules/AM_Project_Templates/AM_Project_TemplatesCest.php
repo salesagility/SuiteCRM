@@ -5,12 +5,12 @@ use Faker\Generator;
 class AM_Project_TemplatesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class AM_Project_TemplatesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the projectTemplates module.
+     * As an administrator I want to view the projectTemplates module
      */
     public function testScenarioViewProjectTemplatesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the projectTemplates module for testing');
         // Navigate to projectTemplates list-view
@@ -53,13 +53,13 @@ class AM_Project_TemplatesCest
      * @param \Step\Acceptance\ProjectTemplates $projectTemplate
      *
      * As administrative user I want to create a project template so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateProjectTemplate(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ProjectTemplates $projectTemplate
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\ProjectTemplates $projectTemplate
     ) {
         $I->wantTo('Create a project template');
 
@@ -70,7 +70,7 @@ class AM_Project_TemplatesCest
 
         // Create project template
         $this->fakeData->seed($this->fakeDataSeed);
-        $projectTemplate->createProjectTemplate('Test_'. $this->fakeData->company());
+        $projectTemplate->createProjectTemplate('Test_' . $this->fakeData->company());
 
         // Delete project template
         $detailView->clickActionMenuItem('Delete');

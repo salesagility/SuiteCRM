@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,121 +36,94 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $module_name = 'FP_Event_Locations';
-$viewdefs [$module_name] =
-array(
-  'DetailView' =>
-  array(
-    'templateMeta' =>
-    array(
-      'form' =>
-      array(
-        'buttons' =>
-        array(
-          0 => 'EDIT',
-          1 => 'DUPLICATE',
-          2 => 'DELETE',
-          3 => 'FIND_DUPLICATES',
-        ),
-      ),
-      'maxColumns' => '2',
-      'widths' =>
-      array(
-        0 =>
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-        1 =>
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-      ),
-      'useTabs' => false,
-      'tabDefs' =>
-      array(
-        'DEFAULT' =>
-        array(
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_EDITVIEW_PANEL1' =>
-        array(
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-      ),
-      'syncDetailEditViews' => true,
-    ),
-    'panels' =>
-    array(
-      'default' =>
-      array(
-        0 =>
-        array(
-          0 => 'name',
-          1 => 'date_entered',
-        ),
-        1 =>
-        array(
-          0 => 'description',
-          1 =>
-          array(
-            'name' => 'capacity',
-            'label' => 'LBL_CAPACITY',
-          ),
-        ),
-      ),
-      'lbl_editview_panel1' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'address',
-            'label' => 'LBL_ADDRESS',
-          ),
-          1 => '',
-        ),
-        1 =>
-        array(
-          0 =>
-          array(
-            'name' => 'address_city',
-            'label' => 'LBL_ADDRESS_CITY',
-          ),
-          1 => '',
-        ),
-        2 =>
-        array(
-          0 =>
-          array(
-            'name' => 'address_postalcode',
-            'label' => 'LBL_ADDRESS_POSTALCODE',
-          ),
-          1 => '',
-        ),
-        3 =>
-        array(
-          0 =>
-          array(
-            'name' => 'address_state',
-            'label' => 'LBL_ADDRESS_STATE',
-          ),
-          1 => '',
-        ),
-        4 =>
-        array(
-          0 =>
-          array(
-            'name' => 'address_country',
-            'label' => 'LBL_ADDRESS_COUNTRY',
-          ),
-          1 => '',
-        ),
-      ),
-    ),
-  ),
-);
+$viewdefs[$module_name] =
+[
+    'DetailView' => [
+        'templateMeta' => [
+            'form' => [
+                'buttons' => [
+                    0 => 'EDIT',
+                    1 => 'DUPLICATE',
+                    2 => 'DELETE',
+                    3 => 'FIND_DUPLICATES',
+                ],
+            ],
+            'maxColumns' => '2',
+            'widths' => [
+                0 => [
+                    'label' => '10',
+                    'field' => '30',
+                ],
+                1 => [
+                    'label' => '10',
+                    'field' => '30',
+                ],
+            ],
+            'useTabs' => false,
+            'tabDefs' => [
+                'DEFAULT' => [
+                    'newTab' => false,
+                    'panelDefault' => 'expanded',
+                ],
+                'LBL_EDITVIEW_PANEL1' => [
+                    'newTab' => false,
+                    'panelDefault' => 'expanded',
+                ],
+            ],
+            'syncDetailEditViews' => true,
+        ],
+        'panels' => [
+            'default' => [
+                0 => [
+                    0 => 'name',
+                    1 => 'date_entered',
+                ],
+                1 => [
+                    0 => 'description',
+                    1 => [
+                        'name' => 'capacity',
+                        'label' => 'LBL_CAPACITY',
+                    ],
+                ],
+            ],
+            'lbl_editview_panel1' => [
+                0 => [
+                    0 => [
+                        'name' => 'address',
+                        'label' => 'LBL_ADDRESS',
+                    ],
+                    1 => '',
+                ],
+                1 => [
+                    0 => [
+                        'name' => 'address_city',
+                        'label' => 'LBL_ADDRESS_CITY',
+                    ],
+                    1 => '',
+                ],
+                2 => [
+                    0 => [
+                        'name' => 'address_postalcode',
+                        'label' => 'LBL_ADDRESS_POSTALCODE',
+                    ],
+                    1 => '',
+                ],
+                3 => [
+                    0 => [
+                        'name' => 'address_state',
+                        'label' => 'LBL_ADDRESS_STATE',
+                    ],
+                    1 => '',
+                ],
+                4 => [
+                    0 => [
+                        'name' => 'address_country',
+                        'label' => 'LBL_ADDRESS_COUNTRY',
+                    ],
+                    1 => '',
+                ],
+            ],
+        ],
+    ],
+];

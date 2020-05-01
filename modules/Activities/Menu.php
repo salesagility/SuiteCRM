@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,47 +42,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $mod_strings, $app_strings;
 global $mod_strings;
 if (ACLController::checkAccess('Calls', 'edit', true)) {
-    $module_menu[]=array("index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView", $mod_strings['LNK_NEW_CALL'],"Schedule_Call");
+    $module_menu[] = ['index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView', $mod_strings['LNK_NEW_CALL'], 'Schedule_Call'];
 }
 if (ACLController::checkAccess('Meetings', 'edit', true)) {
-    $module_menu[]=array("index.php?module=Meetings&action=EditView&return_module=Meetings&return_action=DetailView", $mod_strings['LNK_NEW_MEETING'],"Schedule_Meetings");
+    $module_menu[] = ['index.php?module=Meetings&action=EditView&return_module=Meetings&return_action=DetailView', $mod_strings['LNK_NEW_MEETING'], 'Schedule_Meetings'];
 }
 if (ACLController::checkAccess('Tasks', 'edit', true)) {
-    $module_menu[]=array("index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView", $mod_strings['LNK_NEW_TASK'],"Create");
+    $module_menu[] = ['index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView', $mod_strings['LNK_NEW_TASK'], 'Create'];
 }
 if (ACLController::checkAccess('Notes', 'edit', true)) {
-    $module_menu[]=array("index.php?module=Notes&action=EditView&return_module=Notes&return_action=DetailView", $mod_strings['LNK_NEW_NOTE'],"Create");
+    $module_menu[] = ['index.php?module=Notes&action=EditView&return_module=Notes&return_action=DetailView', $mod_strings['LNK_NEW_NOTE'], 'Create'];
 }
 if (ACLController::checkAccess('Calls', 'list', true)) {
-    $module_menu[]=array("index.php?module=Calls&action=index&return_module=Calls&return_action=DetailView", $mod_strings['LNK_CALL_LIST'],"Calls");
+    $module_menu[] = ['index.php?module=Calls&action=index&return_module=Calls&return_action=DetailView', $mod_strings['LNK_CALL_LIST'], 'Calls'];
 }
 if (ACLController::checkAccess('Meetings', 'list', true)) {
-    $module_menu[]=array("index.php?module=Meetings&action=index&return_module=Meetings&return_action=DetailView", $mod_strings['LNK_MEETING_LIST'],"List");
+    $module_menu[] = ['index.php?module=Meetings&action=index&return_module=Meetings&return_action=DetailView', $mod_strings['LNK_MEETING_LIST'], 'List'];
 }
 if (ACLController::checkAccess('Tasks', 'list', true)) {
-    $module_menu[]=array("index.php?module=Tasks&action=index&return_module=Tasks&return_action=DetailView", $mod_strings['LNK_TASK_LIST'],"List");
+    $module_menu[] = ['index.php?module=Tasks&action=index&return_module=Tasks&return_action=DetailView', $mod_strings['LNK_TASK_LIST'], 'List'];
 }
 if (ACLController::checkAccess('Notes', 'list', true)) {
-    $module_menu[]=array("index.php?module=Notes&action=index&return_module=Notes&return_action=DetailView", $mod_strings['LNK_NOTE_LIST'],"List");
+    $module_menu[] = ['index.php?module=Notes&action=index&return_module=Notes&return_action=DetailView', $mod_strings['LNK_NOTE_LIST'], 'List'];
 }
 if (ACLController::checkAccess('Calendar', 'list', true)) {
-    $module_menu[]=array("index.php?module=Calendar&action=index&view=day", $mod_strings['LNK_VIEW_CALENDAR'],"Calendar");
+    $module_menu[] = ['index.php?module=Calendar&action=index&view=day', $mod_strings['LNK_VIEW_CALENDAR'], 'Calendar'];
 }
 if (ACLController::checkAccess('Calls', 'import', true)) {
-    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=Calls&return_module=Calls&return_action=index", $mod_strings['LNK_IMPORT_CALLS'],"Import", 'List');
+    $module_menu[] = ['index.php?module=Import&action=Step1&import_module=Calls&return_module=Calls&return_action=index', $mod_strings['LNK_IMPORT_CALLS'], 'Import', 'List'];
 }
 if (ACLController::checkAccess('Meetings', 'import', true)) {
-    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=Meetings&return_module=Meetings&return_action=index", $mod_strings['LNK_IMPORT_MEETINGS'],"Import", 'Meetings');
+    $module_menu[] = ['index.php?module=Import&action=Step1&import_module=Meetings&return_module=Meetings&return_action=index', $mod_strings['LNK_IMPORT_MEETINGS'], 'Import', 'Meetings'];
 }
 if (ACLController::checkAccess('Tasks', 'import', true)) {
-    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=Tasks&return_module=Tasks&return_action=index", $mod_strings['LNK_IMPORT_TASKS'],"Import", 'Tasks');
+    $module_menu[] = ['index.php?module=Import&action=Step1&import_module=Tasks&return_module=Tasks&return_action=index', $mod_strings['LNK_IMPORT_TASKS'], 'Import', 'Tasks'];
 }
 if (ACLController::checkAccess('Notes', 'import', true)) {
-    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=Notes&return_module=Notes&return_action=index", $mod_strings['LNK_IMPORT_NOTES'],"Import", 'Notes');
+    $module_menu[] = ['index.php?module=Import&action=Step1&import_module=Notes&return_module=Notes&return_action=index', $mod_strings['LNK_IMPORT_NOTES'], 'Import', 'Notes'];
 }

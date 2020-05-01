@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,19 +43,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class EmailTemplateParser
 {
     /**
-     * Official expression for variables, extended with underscore
+     * Official expression for variables, extended with underscore.
+     *
      * @see http://php.net/manual/en/language.variables.basics.php
      */
     const PATTERN = '/\$([a-zA-Z_\x7f-\xff]+_[a-zA-Z0-9_\x7f-\xff]*)/';
 
     /**
-     * Allowed keys as result
+     * Allowed keys as result.
+     *
      * @var array
      */
     private static $allowedAttributes = ['subject', 'body_html', 'body'];
 
     /**
-     * Allowed Non-DB fields
+     * Allowed Non-DB fields.
+     *
      * @var array
      */
     private static $allowedVariables = ['survey_url_display'];
@@ -90,7 +91,7 @@ class EmailTemplateParser
     /**
      * @var null|Surveys
      */
-    private $survey = null;
+    private $survey;
 
     /**
      * @param EmailTemplate $template
@@ -122,11 +123,23 @@ class EmailTemplateParser
 
         foreach (static::$allowedAttributes as $key) {
             if (property_exists($this->template, $key)) {
-                $templateData[$key] = $this->getParsedValue($this->template->$key);
+                $templateData[$key] = $this->getParsedValue($this->template->{$key});
             }
         }
 
         return $templateData;
+    }
+
+    /**
+     * @return Surveys
+     */
+    public function getSurvey()
+    {
+        if ($this->survey === null) {
+            $this->survey = \BeanFactory::getBean('Surveys', $this->campaign->survey_id);
+        }
+
+        return $this->survey;
     }
 
     /**
@@ -148,7 +161,8 @@ class EmailTemplateParser
     }
 
     /**
-     * This is need to be extended properly and replace the method below in the future
+     * This is need to be extended properly and replace the method below in the future.
+     *
      * @see EmailTemplate::parse_email_template
      *
      * @param string $variable
@@ -169,6 +183,7 @@ class EmailTemplateParser
                 $charVariable,
                 $charUnderscore
             ));
+
             return '';
         }
 
@@ -180,7 +195,7 @@ class EmailTemplateParser
         if (strtolower($moduleName) === 'contact') {
             if (in_array($this->module->object_name, ['Lead', 'Prospect'], true)) {
                 $moduleName = strtolower($this->module->object_name);
-            } else if ($this->module->object_name == 'User' && str_begin(strtolower($attribute), 'user_')) {
+            } elseif ($this->module->object_name == 'User' && str_begin(strtolower($attribute), 'user_')) {
                 $attribute = explode('_', $attribute, 2)[1];
                 $moduleName = 'user';
             }
@@ -193,11 +208,12 @@ class EmailTemplateParser
         if ($this->module instanceof $moduleName && property_exists($this->module, $attribute)) {
             if (isset($this->module->field_name_map[$attribute]['type']) && ($this->module->field_name_map[$attribute]['type']) === 'enum') {
                 $enum = $this->module->field_name_map[$attribute]['options'];
-                if (isset($app_list_strings[$enum][$this->module->$attribute])) {
-                    $this->module->$attribute = $app_list_strings[$enum][$this->module->$attribute];
+                if (isset($app_list_strings[$enum][$this->module->{$attribute}])) {
+                    $this->module->{$attribute} = $app_list_strings[$enum][$this->module->{$attribute}];
                 }
             }
-            return $this->module->$attribute;
+
+            return $this->module->{$attribute};
         }
 
         $GLOBALS['log']->warn(sprintf(
@@ -206,23 +222,13 @@ class EmailTemplateParser
             $attribute,
             get_class($this->module)
         ));
+
         return '';
     }
 
     /**
-     * @return Surveys
-     */
-    public function getSurvey()
-    {
-        if ($this->survey === null) {
-            $this->survey = \BeanFactory::getBean('Surveys', $this->campaign->survey_id);
-        }
-
-        return $this->survey;
-    }
-
-    /**
-     * This one will be removed once dynamic fields will be fixed
+     * This one will be removed once dynamic fields will be fixed.
+     *
      * @param string $attribute
      *
      * @return string

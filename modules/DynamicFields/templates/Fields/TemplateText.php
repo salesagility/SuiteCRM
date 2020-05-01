@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,11 +40,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateField.php';
 class TemplateText extends TemplateField
 {
-    public $type='varchar';
+    public $type = 'varchar';
     public $supports_unified_search = true;
 
     public function __construct()
@@ -55,21 +54,23 @@ class TemplateText extends TemplateField
     public function get_xtpl_edit()
     {
         $name = $this->name;
-        $returnXTPL = array();
+        $returnXTPL = [];
 
         if (!empty($this->help)) {
             $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
         }
 
-        if (isset($this->bean->$name)) {
-            $returnXTPL[$this->name] = $this->bean->$name;
+        if (isset($this->bean->{$name})) {
+            $returnXTPL[$this->name] = $this->bean->{$name};
         } else {
             if (empty($this->bean->id)) {
-                $returnXTPL[$this->name] =  $this->default_value;
+                $returnXTPL[$this->name] = $this->default_value;
             }
         }
+
         return $returnXTPL;
     }
+
     public function get_xtpl_search()
     {
         if (!empty($_REQUEST[$this->name])) {
@@ -77,14 +78,13 @@ class TemplateText extends TemplateField
         }
     }
 
-
-
     public function get_xtpl_detail()
     {
         $name = $this->name;
-        if (isset($this->bean->$name)) {
-            return $this->bean->$name;
+        if (isset($this->bean->{$name})) {
+            return $this->bean->{$name};
         }
+
         return '';
     }
 }

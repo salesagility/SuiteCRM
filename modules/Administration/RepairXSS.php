@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-include("include/modules.php"); // provides $moduleList, $beanList, etc.
+include 'include/modules.php'; // provides $moduleList, $beanList, etc.
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	UTILITIES
@@ -57,34 +54,33 @@ function cleanAllBeans()
 ////	END UTILITIES
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	PAGE OUTPUT
 if (isset($runSilent) && $runSilent == true) {
     // if called from Scheduler
     cleanAllBeans();
 } else {
-    $hide = array('Activities', 'Home', 'iFrames', 'Calendar', 'Dashboard');
+    $hide = ['Activities', 'Home', 'iFrames', 'Calendar', 'Dashboard'];
 
     sort($moduleList);
-    $options = array();
+    $options = [];
     $options[] = $app_strings['LBL_NONE'];
     $options['all'] = "--{$app_strings['LBL_TABGROUP_ALL']}--";
-    
+
     foreach ($moduleList as $module) {
         if (!in_array($module, $hide)) {
             $options[$module] = $module;
         }
     }
-    
+
     $options = get_select_options_with_id($options, '');
     $beanDropDown = "<select onchange='SUGAR.Administration.RepairXSS.refreshEstimate(this);' id='repairXssDropdown'>{$options}</select>";
-    
-    echo getClassicModuleTitle('Administration', array($mod_strings['LBL_REPAIRXSS_TITLE']), false);
+
+    echo getClassicModuleTitle('Administration', [$mod_strings['LBL_REPAIRXSS_TITLE']], false);
     echo "<script>var done = '{$mod_strings['LBL_DONE']}';</script>";
-    
+
     $smarty = new Sugar_Smarty();
-    $smarty->assign("mod", $mod_strings);
-    $smarty->assign("beanDropDown", $beanDropDown);
-    $smarty->display("modules/Administration/templates/RepairXSS.tpl");
+    $smarty->assign('mod', $mod_strings);
+    $smarty->assign('beanDropDown', $beanDropDown);
+    $smarty->display('modules/Administration/templates/RepairXSS.tpl');
 } // end else

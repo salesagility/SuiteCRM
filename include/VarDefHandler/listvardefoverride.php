@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -47,9 +43,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 if (isset($this->field_defs['assigned_user_name'])) {
     $this->field_defs['assigned_user_name'] = array_merge(
         $this->field_defs['assigned_user_name'],
-        array(
+        [
             'name' => 'assigned_user_name',
-            'rname'=>'user_name',
+            'rname' => 'user_name',
             'vname' => 'LBL_ASSIGNED_TO',
             'type' => 'relate',
             'reportable' => false,
@@ -57,37 +53,37 @@ if (isset($this->field_defs['assigned_user_name'])) {
             'link' => 'assigned_user_link',
             'id_name' => 'assigned_user_id',
             'massupdate' => false
-        )
+        ]
     );
 }
 
 if (isset($this->field_defs['created_by'])) {
     if (!isset($this->field_defs['created_by_name'])) {
-        $this->field_defs['created_by_name'] = array();
+        $this->field_defs['created_by_name'] = [];
     }
 
     $this->field_defs['created_by_name'] = array_merge(
         $this->field_defs['created_by_name'],
-        array(
+        [
             'name' => 'created_by_name',
-            'rname'=>'user_name',
+            'rname' => 'user_name',
             'vname' => 'LBL_CREATED',
             'type' => 'relate',
             'reportable' => false,
             'source' => 'non-db',
             'link' => 'created_by_link'
-        )
+        ]
     );
 }
 
 if (isset($this->field_defs['modified_user_id'])) {
     if (!isset($this->field_defs['modified_by_name'])) {
-        $this->field_defs['modified_by_name'] = array();
+        $this->field_defs['modified_by_name'] = [];
     }
 
     $this->field_defs['modified_by_name'] = array_merge(
         $this->field_defs['modified_by_name'],
-        array(
+        [
             'name' => 'modified_by_name',
             'rname' => 'user_name',
             'vname' => 'LBL_MODIFIED',
@@ -95,6 +91,6 @@ if (isset($this->field_defs['modified_user_id'])) {
             'reportable' => false,
             'source' => 'non-db',
             'link' => 'modified_user_link'
-        )
+        ]
     );
 }

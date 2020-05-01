@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,13 +47,12 @@ ini_set('display_errors', 1);
 global $beanList;
 global $beanFiles;
 
-
 if (empty($_REQUEST['module'])) {
     die("'module' was not defined");
 }
 
 if (!isset($beanList[$_REQUEST['module']])) {
-    die("'".$_REQUEST['module']."' is not defined in \$beanList");
+    die("'" . $_REQUEST['module'] . "' is not defined in \$beanList");
 }
 
 if (!isset($_REQUEST['subpanel'])) {
@@ -63,9 +63,9 @@ $subpanel = $_REQUEST['subpanel'];
 $record = '';
 $module = $_REQUEST['module'];
 
-$collection = array();
+$collection = [];
 
-include('include/SubPanel/SubPanel.php');
+include 'include/SubPanel/SubPanel.php';
 $layout_def_key = '';
 if (!empty($_REQUEST['layout_def_key'])) {
     $layout_def_key = $_REQUEST['layout_def_key'];

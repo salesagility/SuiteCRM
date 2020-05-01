@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
-
-
+$mod_strings = [
     'LBL_RE' => 'RE:',
 
     'ERR_BAD_LOGIN_PASSWORD' => 'Login or Password Incorrect',
@@ -73,7 +69,7 @@ $mod_strings = array(
     'LBL_FROM_ADDR' => '"From" Address',
     // as long as XTemplate doesn't support output escaping, transform
     // quotes to html-entities right here (bug #48913)
-    'LBL_FROM_ADDR_DESC' => "The email address provided here might not appear in the &quot;From&quot; address section of the email sent due to restrictions imposed by the mail service provider. In these circumstances, the email address defined in the outgoing mail server will be used.",
+    'LBL_FROM_ADDR_DESC' => 'The email address provided here might not appear in the &quot;From&quot; address section of the email sent due to restrictions imposed by the mail service provider. In these circumstances, the email address defined in the outgoing mail server will be used.',
     'LBL_FROM_NAME' => '"From" Name',
     'LBL_GROUP_QUEUE' => 'Assign To Group',
     'LBL_HOME' => 'Home',
@@ -166,4 +162,4 @@ $mod_strings = array(
     'LBL_SERVICE' => 'Service',
     'LBL_STORED_OPTIONS' => 'Stored Options',
     'LBL_GROUP_ID' => 'Group ID',
-);
+];

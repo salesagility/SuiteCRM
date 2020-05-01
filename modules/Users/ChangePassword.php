@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 use SuiteCRM\Utility\SuiteValidator;
 
 if (isset($_POST['saveConfig'])) {
-    require_once('modules/Users/User.php');
+    require_once 'modules/Users/User.php';
     $focus = new User();
     $isValidator = new SuiteValidator();
     if (!$isValidator->isValidId($_POST['record'])) {
@@ -69,13 +67,12 @@ if (isset($_POST['saveConfig'])) {
     SugarApplication::redirect('index.php?module=Home&action=index');
 }
 
-require_once('modules/Administration/Forms.php');
-require_once('modules/Configurator/Configurator.php');
+require_once 'modules/Administration/Forms.php';
+require_once 'modules/Configurator/Configurator.php';
 $configurator = new Configurator();
 $sugarConfig = SugarConfig::getInstance();
 
-
-require_once('include/SugarLogger/SugarLogger.php');
+require_once 'include/SugarLogger/SugarLogger.php';
 $sugar_smarty = new Sugar_Smarty();
 $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
@@ -90,20 +87,18 @@ $sugar_smarty->assign('PWDSETTINGS', $GLOBALS['sugar_config']['passwordsetting']
 $sugar_smarty->assign('ID', $current_user->id);
 $sugar_smarty->assign('IS_ADMIN', $current_user->is_admin);
 $sugar_smarty->assign('USER_NAME', $current_user->user_name);
-$sugar_smarty->assign("INSTRUCTION", $mod_strings['LBL_CHANGE_SYSTEM_PASSWORD']);
+$sugar_smarty->assign('INSTRUCTION', $mod_strings['LBL_CHANGE_SYSTEM_PASSWORD']);
 $sugar_smarty->assign('sugar_md', getWebPath('include/images/sugar_md_open.png'));
-$sugar_smarty->assign('OLD_PASSWORD_FIELD', '<td scope="row" width="30%">'.$mod_strings['LBL_OLD_PASSWORD'].':</td><td width="70%"><input type="password" size="26" tabindex="1" id="old_password" name="old_password"  value="" /></td>');
-$pwd_settings=$GLOBALS['sugar_config']['passwordsetting'];
-
+$sugar_smarty->assign('OLD_PASSWORD_FIELD', '<td scope="row" width="30%">' . $mod_strings['LBL_OLD_PASSWORD'] . ':</td><td width="70%"><input type="password" size="26" tabindex="1" id="old_password" name="old_password"  value="" /></td>');
+$pwd_settings = $GLOBALS['sugar_config']['passwordsetting'];
 
 $rules = "'','',''";
 $sugar_smarty->assign(
     'SUBMIT_BUTTON',
-    '<input title="'.$app_strings['LBL_SAVE_BUTTON_TITLE'].'" class="button" '
+    '<input title="' . $app_strings['LBL_SAVE_BUTTON_TITLE'] . '" class="button" '
   . 'onclick="if (!set_password(form,newrules(' . $rules . '))) return false; this.form.saveConfig.value=\'1\';" '
-  . 'type="submit" name="button" value="'.$app_strings['LBL_SAVE_BUTTON_LABEL'].'" />'
+  . 'type="submit" name="button" value="' . $app_strings['LBL_SAVE_BUTTON_LABEL'] . '" />'
 );
-
 
 if (isset($_SESSION['expiration_type']) && $_SESSION['expiration_type'] != '') {
     $sugar_smarty->assign('EXPIRATION_TYPE', $_SESSION['expiration_type']);

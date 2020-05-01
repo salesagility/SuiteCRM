@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewXML()

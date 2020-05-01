@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,29 +40,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$module_name='EAPM';
-$subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-    ),
+$module_name = 'EAPM';
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+    ],
 
     'where' => '',
 
-    'list_fields' => array(
-        'application'=>array(
+    'list_fields' => [
+        'application' => [
             'vname' => 'LBL_APPLICATION',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '25%',
-        ),
-        'name'=>array(
+        ],
+        'name' => [
             'vname' => 'LBL_NAME',
             'width' => '20%',
-        ),
-        'date_modified'=>array(
+        ],
+        'date_modified' => [
             'vname' => 'LBL_DATE_MODIFIED',
             'width' => '20%',
-        ),
-    ),
-);
+        ],
+    ],
+];

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewNoaccessTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testdisplay()

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,79 +36,65 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+$viewdefs['Notes'] =
+[
+    'QuickCreate' => [
+        'templateMeta' => [
+            'form' => [
+                'enctype' => 'multipart/form-data',
+            ],
+            'maxColumns' => '2',
+            'widths' => [
+                [
+                    'label' => '10',
+                    'field' => '30',
+                ],
 
-$viewdefs ['Notes'] =
-array(
-  'QuickCreate' =>
-  array(
-    'templateMeta' =>
-    array(
-      'form' =>
-      array(
-        'enctype' => 'multipart/form-data',
-      ),
-      'maxColumns' => '2',
-      'widths' =>
-      array(
-
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-      ),
-      'javascript' => '{sugar_getscript file="include/javascript/dashlets.js"}
+                [
+                    'label' => '10',
+                    'field' => '30',
+                ],
+            ],
+            'javascript' => '{sugar_getscript file="include/javascript/dashlets.js"}
 <script>toggle_portal_flag(); function toggle_portal_flag()  {literal} { {/literal} {$TOGGLE_JS} {literal} } {/literal} </script>',
-    ),
-    'panels' =>
-    array(
-      'default' =>
-      array(
+        ],
+        'panels' => [
+            'default' => [
+                [
+                    'contact_name',
+                    'parent_name',
+                ],
+                [
+                    [
+                        'name' => 'name',
+                        'label' => 'LBL_SUBJECT',
+                        'displayParams' => [
+                            'size' => 50,
+                            'required' => true,
+                        ],
+                    ],
+                    [
+                        'name' => 'assigned_user_name', 'label' => 'LBL_ASSIGNED_TO',
+                    ],
+                ],
 
-        array(
-           'contact_name',
-           'parent_name',
-        ),
-        array(
+                [
+                    'filename',
+                ],
 
-          array(
-            'name' => 'name',
-            'label' => 'LBL_SUBJECT',
-            'displayParams' =>
-            array(
-              'size' => 50,
-              'required' => true,
-            ),
-          ),
-          array(
-              'name' => 'assigned_user_name','label' => 'LBL_ASSIGNED_TO',
-          ),
-        ),
-
-        array(
-           'filename',
-        ),
-
-        array(
-
-          array(
-            'name' => 'description',
-            'label' => 'LBL_NOTE_STATUS',
-            'displayParams' =>
-            array(
-              'rows' => 6,
-              'cols' => 75,
-            ),
-          ),
-        ),
-         array(
-           
-        ),
-      ),
-    ),
-  ),
-);
+                [
+                    [
+                        'name' => 'description',
+                        'label' => 'LBL_NOTE_STATUS',
+                        'displayParams' => [
+                            'rows' => 6,
+                            'cols' => 75,
+                        ],
+                    ],
+                ],
+                [
+                ],
+            ],
+        ],
+    ],
+];

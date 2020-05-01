@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class DropDownBrowser
 {
     // Restrict the full dropdown list to remove some options that shouldn't be edited by the end users
-    public static $restrictedDropdowns = array(
+    public static $restrictedDropdowns = [
         'eapm_list',
         'eapm_list_documents',
         'eapm_list_import',
@@ -50,17 +47,17 @@ class DropDownBrowser
         'Elastic_boost_options',
         // 'moduleList', // We may want to put this in at a later date
         // 'moduleListSingular', // Same with this
-    );
+    ];
 
     public function getNodes()
     {
         global $mod_strings, $app_list_strings;
-        $nodes = array();
+        $nodes = [];
 //      $nodes[$mod_strings['LBL_EDIT_DROPDOWNS']] = array( 'name'=>$mod_strings['LBL_EDIT_DROPDOWNS'], 'action' =>'module=ModuleBuilder&action=globaldropdown&view_package=studio', 'imageTitle' => 'SPUploadCSS', 'help' => 'editDropDownBtn');
         //     $nodes[$mod_strings['LBL_ADD_DROPDOWN']] = array( 'name'=>$mod_strings['LBL_ADD_DROPDOWN'], 'action'=>'module=ModuleBuilder&action=globaldropdown&view_package=studio','imageTitle' => 'SPSync', 'help' => 'addDropDownBtn');
-        
+
         $my_list_strings = $app_list_strings;
-        foreach ($my_list_strings as $key=>$value) {
+        foreach ($my_list_strings as $key => $value) {
             if (!is_array($value)) {
                 unset($my_list_strings[$key]);
             }
@@ -74,9 +71,10 @@ class DropDownBrowser
         asort($dropdowns);
         foreach ($dropdowns as $dd) {
             if (!empty($dd)) {
-                $nodes[$dd] = array( 'name'=>$dd, 'action'=>"module=ModuleBuilder&action=dropdown&view_package=studio&dropdown_name=$dd",'imageTitle' => 'SPSync', 'help' => 'editDropDownBtn');
+                $nodes[$dd] = ['name' => $dd, 'action' => "module=ModuleBuilder&action=dropdown&view_package=studio&dropdown_name={$dd}", 'imageTitle' => 'SPSync', 'help' => 'editDropDownBtn'];
             }
         }
+
         return $nodes;
     }
 }

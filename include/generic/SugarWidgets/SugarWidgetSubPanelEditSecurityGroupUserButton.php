@@ -1,9 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- * SugarWidgetSubPanelEditRoleButton
+ * SugarWidgetSubPanelEditRoleButton.
  *
  * SugarCRM is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004 - 2007 SugarCRM Inc.
@@ -38,10 +39,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  */
-
-
-
-require_once('include/generic/SugarWidgets/SugarWidgetField.php');
+require_once 'include/generic/SugarWidgets/SugarWidgetField.php';
 
 class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
 {
@@ -50,7 +48,7 @@ class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
         return '&nbsp;';
     }
 
-    public function & displayDetail($layout_def)
+    public function &displayDetail($layout_def)
     {
         return $this->displayList($layout_def);
     }
@@ -71,8 +69,9 @@ class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
         //based on listview since that lets you select records
         if ($layout_def['ListView']) {
             return '<a href="' . $href . '"'
-                . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_EDIT'] .'</a>&nbsp;';
+                . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_EDIT'] . '</a>&nbsp;';
         }
+
         return '';
     }
 }

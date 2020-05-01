@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,8 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
 use Api\V8\Param\ListViewColumnsParams;
 use Api\V8\Service\ListViewService;
 use Exception;
@@ -53,13 +50,12 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * ListViewController
+ * ListViewController.
  *
  * @author gyula
  */
 class ListViewController extends BaseController
 {
-    
     /**
      * @var ListViewService
      */
@@ -72,13 +68,13 @@ class ListViewController extends BaseController
     {
         $this->listViewService = $listViewService;
     }
-    
+
     /**
-     *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @param ListViewColumnsParams $params
+     *
      * @return HttpResponse
      */
     public function getListViewColumns(Request $request, Response $response, array $args, ListViewColumnsParams $params)

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: Menu for the Import module. Just inherits the menu used in
  * whatever module is being imported into.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
@@ -50,4 +49,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 // we now handle the module menu via overriding the view's getMenu() method
-$module_menu = array();
+$module_menu = [];

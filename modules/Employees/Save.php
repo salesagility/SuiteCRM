@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-require_once('modules/MySettings/TabController.php');
-require_once('include/SugarFields/SugarFieldHandler.php');
+require_once 'modules/MySettings/TabController.php';
+require_once 'include/SugarFields/SugarFieldHandler.php';
 
 $tabs_def = urldecode(isset($_REQUEST['display_tabs_def']) ? $_REQUEST['display_tabs_def'] : '');
-$DISPLAY_ARR = array();
+$DISPLAY_ARR = [];
 parse_str($tabs_def, $DISPLAY_ARR);
 
 //there was an issue where a non-admin user could use a proxy tool to intercept the save on their own Employee
@@ -55,9 +52,9 @@ parse_str($tabs_def, $DISPLAY_ARR);
 //of the non-admin user to be associated with the admin user thereby allowing the non-admin to reset the password
 //of the admin user.
 if (isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees') && ($_POST['record'] != $GLOBALS['current_user']->id)) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 } elseif (!isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees')) {
-    sugar_die("Unauthorized access to user administration.");
+    sugar_die('Unauthorized access to user administration.');
 }
 
 $focus = new Employee();
@@ -72,35 +69,30 @@ populateFromRow($focus, $_POST);
 $focus->save();
 $return_id = $focus->id;
 
-
-if (isset($_POST['return_module']) && $_POST['return_module'] != "") {
+if (isset($_POST['return_module']) && $_POST['return_module'] != '') {
     $return_module = $_POST['return_module'];
 } else {
-    $return_module = "Employees";
+    $return_module = 'Employees';
 }
-if (isset($_POST['return_action']) && $_POST['return_action'] != "") {
+if (isset($_POST['return_action']) && $_POST['return_action'] != '') {
     $return_action = $_POST['return_action'];
 } else {
-    $return_action = "DetailView";
+    $return_action = 'DetailView';
 }
-if (isset($_POST['return_id']) && $_POST['return_id'] != "") {
+if (isset($_POST['return_id']) && $_POST['return_id'] != '') {
     $return_id = $_POST['return_id'];
 }
 
-$GLOBALS['log']->debug("Saved record with id of ".$return_id);
+$GLOBALS['log']->debug('Saved record with id of ' . $return_id);
 
-
-header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
-
+header("Location: index.php?action={$return_action}&module={$return_module}&record={$return_id}");
 
 function populateFromRow(&$focus, $row)
 {
-    
-    
     //only employee specific field values need to be copied.
-    $e_fields=array('first_name','last_name','reports_to_id','description','phone_home','phone_mobile','phone_work','phone_other','phone_fax','address_street','address_city','address_state','address_country','address_country', 'address_postalcode', 'messenger_id','messenger_type');
+    $e_fields = ['first_name', 'last_name', 'reports_to_id', 'description', 'phone_home', 'phone_mobile', 'phone_work', 'phone_other', 'phone_fax', 'address_street', 'address_city', 'address_state', 'address_country', 'address_country', 'address_postalcode', 'messenger_id', 'messenger_type'];
     if (is_admin($GLOBALS['current_user'])) {
-        $e_fields = array_merge($e_fields, array('title','department','employee_status'));
+        $e_fields = array_merge($e_fields, ['title', 'department', 'employee_status']);
     }
     // Also add custom fields
     $sfh = new SugarFieldHandler();
@@ -111,15 +103,15 @@ function populateFromRow(&$focus, $row)
             if ($sf != null) {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
             } else {
-                $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
+                $GLOBALS['log']->fatal("Field '{$fieldName}' does not have a SugarField handler");
             }
         }
     }
-    $nullvalue='';
+    $nullvalue = '';
     foreach ($e_fields as $field) {
         $rfield = $field; // fetch returns it in lowercase only
         if (isset($row[$rfield])) {
-            $focus->$field = $row[$rfield];
+            $focus->{$field} = $row[$rfield];
         }
     }
 }

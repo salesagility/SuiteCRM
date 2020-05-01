@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -63,7 +61,7 @@ $mod_strings = [
     'LBL_ACCESS_TOKEN_EXPIRES' => 'Access token expires',
     'LBL_REFRESH_TOKEN_EXPIRES' => 'Refresh token expires',
 
-    'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
+    'LNK_OAUTH2_TOKEN_LIST' => 'List OAuth2 Tokens',
     'LNK_OAUTH2_CLIENT_LIST' => 'List OAuth2 Clients',
 
     'LNK_NEW_OAUTH2_CLIENT' => 'Create OAuth2 Client',
@@ -71,5 +69,4 @@ $mod_strings = [
     'LNK_NEW_OAUTH2_CREDENTIALS_CLIENT' => 'New Client Credentials Client',
     'LNK_NEW_OAUTH2_IMPLICIT_CLIENT' => 'New Implicit Client',
     'LNK_NEW_OAUTH2_AUTHORIZATION_CLIENT' => 'New Authorization Client',
-
 ];

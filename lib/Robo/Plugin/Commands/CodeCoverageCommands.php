@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +39,9 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
-use SuiteCRM\Utility\OperatingSystem;
-use SuiteCRM\Robo\Traits\RoboTrait;
 use Robo\Task\Base\loadTasks;
+use SuiteCRM\Robo\Traits\RoboTrait;
+use SuiteCRM\Utility\OperatingSystem;
 
 class CodeCoverageCommands extends \Robo\Tasks
 {
@@ -50,7 +49,8 @@ class CodeCoverageCommands extends \Robo\Tasks
     use RoboTrait;
 
     /**
-     * Runs code coverage
+     * Runs code coverage.
+     *
      * @param array $opts
      * @option bool $ci Should be set to true if using a Continuous Integration environment.
      */
@@ -89,7 +89,7 @@ class CodeCoverageCommands extends \Robo\Tasks
     }
 
     /**
-     * Run code coverage command
+     * Run code coverage command.
      */
     private function generateCodeCoverageFile()
     {
@@ -100,10 +100,8 @@ class CodeCoverageCommands extends \Robo\Tasks
     private function getCodeCoverageCommand()
     {
         $os = new OperatingSystem();
-        $command =
-            $os->toOsPath('./vendor/bin/phpunit')
-            . ' --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
 
-        return $command;
+        return $os->toOsPath('./vendor/bin/phpunit')
+            . ' --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
     }
 }

@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class PDFTemplates extends \AcceptanceTester
 {
     /**
-     * Create a PDF Template
+     * Create a PDF Template.
      *
      * @param $name
      */

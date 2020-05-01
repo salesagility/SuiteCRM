@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,23 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $mod_strings;
 global $current_user;
 
-
 if (ACLController::checkAccess('Documents', 'edit', true)) {
-    $module_menu[]=array("index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView", $mod_strings['LNK_NEW_DOCUMENT'],"Create");
+    $module_menu[] = ['index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView', $mod_strings['LNK_NEW_DOCUMENT'], 'Create'];
 }
 if (ACLController::checkAccess('Documents', 'list', true)) {
-    $module_menu[]=array("index.php?module=Documents&action=index", $mod_strings['LNK_DOCUMENT_LIST'],"List");
+    $module_menu[] = ['index.php?module=Documents&action=index', $mod_strings['LNK_DOCUMENT_LIST'], 'List'];
 }
 if (ACLController::checkAccess('Documents', 'detail', true)) {
     $admin = new Administration();
     $admin->retrieveSettings();
     $user_merge = $current_user->getPreference('mailmerge_on');
     if ($user_merge == 'on' && isset($admin->settings['system_mailmerge_on']) && $admin->settings['system_mailmerge_on']) {
-        $module_menu[]=array("index.php?module=MailMerge&action=index&reset=true", $mod_strings['LNK_NEW_MAIL_MERGE'],"Documents");
+        $module_menu[] = ['index.php?module=MailMerge&action=index&reset=true', $mod_strings['LNK_NEW_MAIL_MERGE'], 'Documents'];
     }
 }

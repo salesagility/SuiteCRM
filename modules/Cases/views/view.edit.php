@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-require_once('include/SugarTinyMCE.php');
+require_once 'include/SugarTinyMCE.php';
 
 class CasesViewEdit extends ViewEdit
 {
@@ -45,8 +44,6 @@ class CasesViewEdit extends ViewEdit
     {
         parent::__construct();
     }
-
-
 
     public function display()
     {
@@ -62,9 +59,9 @@ class CasesViewEdit extends ViewEdit
                     $('#internal_label').closest('.edit-view-row-item').hide();
                     $('#addFileButton').closest('.edit-view-row-item').hide();
                     $('#case_update_form_label').closest('.edit-view-row-item').hide();";
-         }
-         $newScript .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));";
-         
-         echo '<script>$(document).ready(function(){' . $newScript . '})</script>';
+        }
+        $newScript .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));";
+
+        echo '<script>$(document).ready(function(){' . $newScript . '})</script>';
     }
 }

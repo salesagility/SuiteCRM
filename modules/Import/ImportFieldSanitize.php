@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,17 +43,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: class for sanitizing field values
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  */
-require_once('modules/Import/sources/ImportFile.php');
+require_once 'modules/Import/sources/ImportFile.php';
 
 class ImportFieldSanitize
 {
     /**
-     * properties set to handle locale formatting
+     * properties set to handle locale formatting.
      */
     public $dateformat;
     public $timeformat;
@@ -66,31 +65,34 @@ class ImportFieldSanitize
 
     /**
      * array of modules/users_last_import ids pairs that are created in this class
-     * needs to be reset after the row is imported
+     * needs to be reset after the row is imported.
      */
-    public static $createdBeans = array();
+    public static $createdBeans = [];
 
     /**
-     * true if we will create related beans during the sanitize process
+     * true if we will create related beans during the sanitize process.
      */
     public $addRelatedBean = false;
-    
+
     /**
      * Checks the SugarField defintion for an available santization method.
      *
      * @param  $value  string
      * @param  $vardef array
      * @param  $focus  object bean of the module we're importing into
+     * @param mixed $name
+     * @param mixed $params
+     *
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function __call(
         $name,
         $params
-        ) {
+    ) {
         static $sfh;
-        
+
         if (!isset($sfh)) {
-            require_once('include/SugarFields/SugarFieldHandler.php');
+            require_once 'include/SugarFields/SugarFieldHandler.php';
             $sfh = new SugarFieldHandler();
         }
         $value = $params[0];
@@ -105,28 +107,29 @@ class ImportFieldSanitize
         } else {
             $this->addRelatedBean = false;
         }
-        
+
         $field = $sfh::getSugarField(ucfirst($name));
         if ($field instanceof SugarFieldBase) {
             $value = $field->importSanitize($value, $vardef, $focus, $this);
         }
-        
+
         return $value;
     }
 
     /**
-     * Validate date fields
+     * Validate date fields.
      *
      * @param  $value  string
      * @param  $vardef array
      * @param  $focus  object bean of the module we're importing into
+     *
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function date(
         $value,
         $vardef,
         &$focus
-        ) {
+    ) {
         global $timedate;
 
         $format = $this->dateformat;
@@ -149,24 +152,25 @@ class ImportFieldSanitize
     }
 
     /**
-     * Validate email fields
+     * Validate email fields.
      *
      * @param  $value  string
      * @param  $vardef array
      * @param  $focus  object bean of the module we're importing into
+     *
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function email(
         $value,
         $vardef
-        ) {
+    ) {
         // cache $sea instance
         static $sea;
-        
+
         if (!($sea instanceof SugarEmailAddress)) {
-            $sea = new SugarEmailAddress;
+            $sea = new SugarEmailAddress();
         }
-        
+
         if (!empty($value) && !preg_match($sea->regex, $value)) {
             return false;
         }
@@ -175,18 +179,19 @@ class ImportFieldSanitize
     }
 
     /**
-     * Validate sync_to_outlook field
+     * Validate sync_to_outlook field.
      *
      * @param  $value     string
      * @param  $vardef    array
      * @param  $bad_names array used to return list of bad users/teams in $value
+     *
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function synctooutlook(
         $value,
         $vardef,
         &$bad_names
-        ) {
+    ) {
         static $focus_user;
 
         // cache this object since we'll be reusing it a bunch
@@ -194,19 +199,19 @@ class ImportFieldSanitize
             $focus_user = new User();
         }
 
-
-        if (!empty($value) && strtolower($value) != "all") {
-            $theList   = explode(",", $value);
-            $isValid   = true;
-            $bad_names = array();
+        if (!empty($value) && strtolower($value) != 'all') {
+            $theList = explode(',', $value);
+            $isValid = true;
+            $bad_names = [];
             foreach ($theList as $eachItem) {
                 if ($focus_user->retrieve_user_id($eachItem)
                         || $focus_user->retrieve($eachItem)
                 ) {
                     // all good
                 } else {
-                    $isValid     = false;
+                    $isValid = false;
                     $bad_names[] = $eachItem;
+
                     continue;
                 }
             }
@@ -219,18 +224,19 @@ class ImportFieldSanitize
     }
 
     /**
-     * Validate time fields
+     * Validate time fields.
      *
      * @param  $value    string
      * @param  $vardef   array
      * @param  $focus  object bean of the module we're importing into
+     *
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function time(
         $value,
         $vardef,
         $focus
-        ) {
+    ) {
         global $timedate;
 
         $format = $this->timeformat;
@@ -265,31 +271,32 @@ class ImportFieldSanitize
     }
 
     /**
-     * Added to handle Bug 24104, to make sure the date/time value is correct ( i.e. 20/20/2008 doesn't work )
+     * Added to handle Bug 24104, to make sure the date/time value is correct ( i.e. 20/20/2008 doesn't work ).
      *
      * @param  $value  string
      * @param  $format string
+     *
      * @return string sanitized and validated value on success, bool false on failure
      */
     public function isValidTimeDate(
         $value,
         $format
-        ) {
+    ) {
         global $timedate;
 
-        $dateparts = array();
+        $dateparts = [];
         $reg = $timedate->get_regular_expression($format);
-        preg_match('@'.$reg['format'].'@', $value, $dateparts);
+        preg_match('@' . $reg['format'] . '@', $value, $dateparts);
 
         if (empty($dateparts)) {
             return false;
         }
         if (isset($reg['positions']['a'])
-                && !in_array($dateparts[$reg['positions']['a']], array('am','pm'))) {
+                && !in_array($dateparts[$reg['positions']['a']], ['am', 'pm'])) {
             return false;
         }
         if (isset($reg['positions']['A'])
-                && !in_array($dateparts[$reg['positions']['A']], array('AM','PM'))) {
+                && !in_array($dateparts[$reg['positions']['A']], ['AM', 'PM'])) {
             return false;
         }
         if (isset($reg['positions']['h']) && (

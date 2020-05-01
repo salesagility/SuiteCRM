@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Homepage dashlet manager
+ * Homepage dashlet manager.
+ *
  * @api
  */
 class MySugar
@@ -81,7 +81,7 @@ class MySugar
         }
 
         if (!is_file(sugar_cached('dashlets/dashlets.php'))) {
-            require_once('include/Dashlets/DashletCacheBuilder.php');
+            require_once 'include/Dashlets/DashletCacheBuilder.php';
 
             $dc = new DashletCacheBuilder();
             $dc->buildCache();
@@ -96,10 +96,10 @@ class MySugar
             $dashlets = $current_user->getPreference('dashlets', $this->type);
 
             $guid = create_guid();
-            $options = array();
+            $options = [];
             if (isset($_POST['type'], $_POST['type_module']) && $_POST['type'] == 'web') {
                 $dashlet_module = 'Home';
-                require_once('include/Dashlets/DashletRssFeedTitle.php');
+                require_once 'include/Dashlets/DashletRssFeedTitle.php';
                 $options['url'] = $_POST['type_module'];
                 $webDashlet = new DashletRssFeedTitle($options['url']);
                 $options['title'] = $webDashlet->generateTitle();
@@ -111,20 +111,18 @@ class MySugar
                 $dashlet_module = 'Home';
             }
 
-            $dashlets[$guid] = array('className' => $dashletsFiles[$_REQUEST['id']]['class'],
-                                         'module' => $dashlet_module,
-                                         'options' => $options,
-                                         'fileLocation' => $dashletsFiles[$_REQUEST['id']]['file']);
-
+            $dashlets[$guid] = ['className' => $dashletsFiles[$_REQUEST['id']]['class'],
+                'module' => $dashlet_module,
+                'options' => $options,
+                'fileLocation' => $dashletsFiles[$_REQUEST['id']]['file']];
 
             if (!array_key_exists('current_tab', $_SESSION)) {
-                $_SESSION["current_tab"] = '0';
+                $_SESSION['current_tab'] = '0';
             }
 
             array_unshift($pages[$_SESSION['current_tab']]['columns'][0]['dashlets'], $guid);
 
             $current_user->setPreference('dashlets', $dashlets, 0, $this->type);
-
 
             echo $guid;
         } else {
@@ -152,12 +150,12 @@ class MySugar
                 }
             }
             if (!empty($sortOrder) && !empty($orderBy)) {
-                $dashlets[$id]['sort_options'] = array('sortOrder' => $sortOrder, 'orderBy' => $orderBy);
+                $dashlets[$id]['sort_options'] = ['sortOrder' => $sortOrder, 'orderBy' => $orderBy];
                 $current_user->setPreference('dashlets', $dashlets, 0, $this->type);
             }
 
-            require_once($dashlets[$id]['fileLocation']);
-            $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
+            require_once $dashlets[$id]['fileLocation'];
+            $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : []));
             if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) { // save settings
                 $dashletDefs[$id]['options'] = $dashlet->saveOptions($_REQUEST);
                 $current_user->setPreference('dashlets', $dashletDefs, 0, $this->type);
@@ -166,19 +164,19 @@ class MySugar
                 $dashlet->isConfigurable = false;
                 echo $dashlet->getTitle('') . $app_strings['LBL_RELOAD_PAGE'];
             } else {
-                $lvsParams = array();
+                $lvsParams = [];
                 if (!empty($dashlets[$id]['sort_options'])) {
                     $lvsParams = $dashlets[$id]['sort_options'];
                 }
                 $dashlet->process($lvsParams);
-                $contents =  $dashlet->display();
+                $contents = $dashlet->display();
                 // Many dashlets expect to be able to initialize in the display() function, so we have to create the header second
                 echo $dashlet->getHeader();
                 echo $contents;
                 echo $dashlet->getFooter();
             }
         } else {
-            header("Location: index.php?action=index&module=". $this->type);
+            header('Location: index.php?action=index&module=' . $this->type);
         }
     }
 
@@ -190,16 +188,14 @@ class MySugar
             $id = $_REQUEST['id'];
             $dashlets = $current_user->getPreference('dashlets', $this->type);
 
-            require_once($dashlets[$id]['fileLocation']);
-            $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
+            require_once $dashlets[$id]['fileLocation'];
+            $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : []));
             $dashlet->process();
             echo $dashlet->displayScript();
         } else {
-            header("Location: index.php?action=index&module=". $this->type);
+            header('Location: index.php?action=index&module=' . $this->type);
         }
     }
-
-
 
     public function deleteDashlet()
     {
@@ -236,11 +232,11 @@ class MySugar
 
     public function dashletsDialog()
     {
-        require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
+        require_once 'include/MySugar/DashletsDialog/DashletsDialog.php';
 
         global $current_language, $app_strings;
 
-        $chartsList = array();
+        $chartsList = [];
         $DashletsDialog = new DashletsDialog();
 
         $DashletsDialog->getDashlets();
@@ -267,7 +263,7 @@ class MySugar
 
         $html = $sugar_smarty->fetch('include/MySugar/tpls/addDashletsDialog.tpl');
         // Bug 34451 - Added hack to make the "Add Dashlet" dialog window not look weird in IE6.
-        $script = <<<EOJS
+        $script = <<<'EOJS'
 if (YAHOO.env.ua.ie > 5 && YAHOO.env.ua.ie < 7) {
     document.getElementById('dashletsList').style.width = '430px';
     document.getElementById('dashletsList').style.overflow = 'hidden';
@@ -275,13 +271,12 @@ if (YAHOO.env.ua.ie > 5 && YAHOO.env.ua.ie < 7) {
 EOJS;
 
         $json = getJSONobj();
-        echo 'response = ' . $json->encode(array('html' => $html, 'script' => $script));
+        echo 'response = ' . $json->encode(['html' => $html, 'script' => $script]);
     }
-
 
     public function searchModuleToolsDashlets($searchStr, $category)
     {
-        require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
+        require_once 'include/MySugar/DashletsDialog/DashletsDialog.php';
 
         global $app_strings;
 
@@ -292,6 +287,7 @@ EOJS;
                 $DashletsDialog->getDashlets('module');
                 $dashletIndex = 'Module Views';
                 $searchCategoryString = $app_strings['LBL_SEARCH_MODULES'];
+
                 break;
             case 'tools':
                 $DashletsDialog->getDashlets('tools');
@@ -303,8 +299,8 @@ EOJS;
         }
         $allDashlets = $DashletsDialog->dashlets;
 
-        $searchResult = array();
-        $searchResult[$dashletIndex] = array();
+        $searchResult = [];
+        $searchResult[$dashletIndex] = [];
 
         foreach ($allDashlets[$dashletIndex] as $dashlet) {
             if (stripos($dashlet['title'], $searchStr) !== false) {
@@ -327,19 +323,19 @@ EOJS;
 
     public function searchChartsDashlets($searchStr)
     {
-        require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
+        require_once 'include/MySugar/DashletsDialog/DashletsDialog.php';
 
         global $current_language, $app_strings;
 
-        $chartsList = array();
+        $chartsList = [];
         $DashletsDialog = new DashletsDialog();
 
         $DashletsDialog->getDashlets('charts');
 
         $allDashlets = $DashletsDialog->dashlets;
 
-        foreach ($allDashlets as $category=>$dashlets) {
-            $searchResult[$category] = array();
+        foreach ($allDashlets as $category => $dashlets) {
+            $searchResult[$category] = [];
             foreach ($dashlets as $dashlet) {
                 if (stripos($dashlet['title'], $searchStr) !== false) {
                     array_push($searchResult[$category], $dashlet);
@@ -370,7 +366,7 @@ EOJS;
         }
 
         $json = getJSONobj();
-        echo 'response = ' . $json->encode(array('html' => $html, 'script' => ''));
+        echo 'response = ' . $json->encode(['html' => $html, 'script' => '']);
     }
 
     public function configureDashlet()
@@ -382,16 +378,17 @@ EOJS;
             $dashletDefs = $current_user->getPreference('dashlets', $this->type); // load user's dashlets config
             $dashletLocation = $dashletDefs[$id]['fileLocation'];
 
-            require_once($dashletDefs[$id]['fileLocation']);
+            require_once $dashletDefs[$id]['fileLocation'];
 
-            $dashlet = new $dashletDefs[$id]['className']($id, (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array()));
+            $dashlet = new $dashletDefs[$id]['className']($id, (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : []));
             if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) { // save settings
                 $dashletDefs[$id]['options'] = $dashlet->saveOptions($_REQUEST);
                 $current_user->setPreference('dashlets', $dashletDefs, 0, $this->type);
             } else { // display options
                 $json = getJSONobj();
-                return 'result = ' . $json->encode((array('header' => $dashlet->title . ' : ' . $app_strings['LBL_OPTIONS'],
-                                                         'body'  => $dashlet->displayOptions())));
+
+                return 'result = ' . $json->encode((['header' => $dashlet->title . ' : ' . $app_strings['LBL_OPTIONS'],
+                    'body' => $dashlet->displayOptions()]));
             }
         } else {
             return '0';
@@ -407,7 +404,7 @@ EOJS;
         }
 
         if (!empty($_POST['layout'])) {
-            $newColumns = array();
+            $newColumns = [];
 
             $newLayout = explode('|', $_POST['layout']);
 
@@ -422,8 +419,8 @@ EOJS;
             $current_user->setPreference('pages', $pages, 0, $this->type);
 
             return '1';
-        } else {
-            return '0';
         }
+
+        return '0';
     }
 }

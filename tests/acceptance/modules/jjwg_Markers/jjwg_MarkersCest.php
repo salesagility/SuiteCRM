@@ -5,12 +5,12 @@ use Faker\Generator;
 class jjwg_MarkersCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class jjwg_MarkersCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the mapsMarkers module.
+     * As an administrator I want to view the mapsMarkers module
      */
     public function testScenarioViewMapsMarkersModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the mapsMarkers module for testing');
 
@@ -54,13 +54,13 @@ class jjwg_MarkersCest
      * @param \Step\Acceptance\MapsMarkers $mapMarker
      *
      * As administrative user I want to create a map marker so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateMapMarker(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsMarkers $mapMarker
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\MapsMarkers $mapMarker
     ) {
         $I->wantTo('Create a Map Marker');
 
@@ -71,7 +71,7 @@ class jjwg_MarkersCest
 
         // Create map marker
         $this->fakeData->seed($this->fakeDataSeed);
-        $mapMarker->createMapMarker('Test_'. $this->fakeData->company());
+        $mapMarker->createMapMarker('Test_' . $this->fakeData->company());
 
         // Delete map marker
         $detailView->clickActionMenuItem('Delete');

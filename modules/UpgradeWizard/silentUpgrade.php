@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,10 +35,13 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $arguments
  */
 
 /**
  * @param array $arguments
+ *
  * @return string
  */
 function build_argument_string($arguments = [])
@@ -94,7 +96,7 @@ $php_dir = (isset($p_info['dirname']) && $p_info['dirname'] !== '.') ? $p_info['
 $step1 = $php_path . "php -f {$php_dir}silentUpgrade_step1.php " . build_argument_string($argv);
 passthru($step1, $output);
 if ($output !== 0) {
-    echo "***************         step1 failed         ***************: $output\n";
+    echo "***************         step1 failed         ***************: {$output}\n";
 }
 $has_error = $output !== 0;
 
@@ -117,6 +119,6 @@ if ($run_dce_upgrade) {
 }
 
 if ($output !== 0) {
-    echo "***************         silentupgrade failed         ***************: $output\n";
+    echo "***************         silentupgrade failed         ***************: {$output}\n";
 }
 exit($output);

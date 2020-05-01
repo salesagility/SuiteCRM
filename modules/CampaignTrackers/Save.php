@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/formbase.php');
+require_once 'include/formbase.php';
 
 $focus = new CampaignTracker();
 
@@ -56,32 +54,31 @@ $check_notify = false;
 foreach ($focus->column_fields as $field) {
     if (isset($_POST[$field])) {
         $value = $_POST[$field];
-        $focus->$field = $value;
+        $focus->{$field} = $value;
     }
 }
 
 foreach ($focus->additional_column_fields as $field) {
     if (isset($_POST[$field])) {
         $value = $_POST[$field];
-        $focus->$field = $value;
+        $focus->{$field} = $value;
     }
 }
 //set check box states.
-if (isset($_POST['is_optout']) && $_POST['is_optout'] =='on') {
-    $focus->is_optout=1;
-    $focus->tracker_url='index.php?entryPoint=removeme';
+if (isset($_POST['is_optout']) && $_POST['is_optout'] == 'on') {
+    $focus->is_optout = 1;
+    $focus->tracker_url = 'index.php?entryPoint=removeme';
 } else {
-    $focus->is_optout=0;
+    $focus->is_optout = 0;
 }
 
 $focus->save($check_notify);
 $return_id = $focus->id;
-$GLOBALS['log']->debug("Saved record with id of ".$return_id);
+$GLOBALS['log']->debug('Saved record with id of ' . $return_id);
 
 if (isset($_POST['response_json']) && $_POST['response_json']) {
-    $results['data'] = array('id' => $focus->id);
+    $results['data'] = ['id' => $focus->id];
     echo json_encode($results);
     die();
-} else {
-    handleRedirect('', '');
 }
+    handleRedirect('', '');

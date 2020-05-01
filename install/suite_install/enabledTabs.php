@@ -1,6 +1,6 @@
 <?php
 
-$enabled_tabs = array();
+$enabled_tabs = [];
 $enabled_tabs[] = 'Home';
 $enabled_tabs[] = 'Accounts';
 $enabled_tabs[] = 'Contacts';

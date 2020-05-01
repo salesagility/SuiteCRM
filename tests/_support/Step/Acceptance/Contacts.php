@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Contacts extends \AcceptanceTester
 {
     /**
-     * Create a contact
+     * Create a contact.
      *
      * @param $name
      */

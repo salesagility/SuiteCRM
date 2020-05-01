@@ -2,7 +2,7 @@
 
 // modules/jjwg_Areas/controller.php
 
-include_once('include/utils.php');
+include_once 'include/utils.php';
 
 class jjwg_AreasController extends SugarController
 {

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,28 +36,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/json_config.php');
-
+require_once 'include/json_config.php';
 
 class CampaignsViewDetail extends ViewDetail
 {
-
     public function __construct()
     {
-
         parent::__construct();
         //turn off normal display of subpanels
         $this->options['show_subpanels'] = false;
-
     }
-
-
-
 
     public function preDisplay()
     {
@@ -68,7 +59,6 @@ class CampaignsViewDetail extends ViewDetail
         }
         parent::preDisplay();
         $this->options['show_subpanels'] = false;
-
     }
 
     public function display()
@@ -77,7 +67,7 @@ class CampaignsViewDetail extends ViewDetail
         $this->ss->assign('APP_LIST', $app_list_strings);
 
         if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'set_target') {
-            require_once('modules/Campaigns/utils.php');
+            require_once 'modules/Campaigns/utils.php';
             //call function to create campaign logs
             $mess = track_campaign_prospects($this->bean);
 
@@ -86,17 +76,16 @@ class CampaignsViewDetail extends ViewDetail
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 1500);
             window.setTimeout(\"ajax_C_LOG_Status.showStatus('" . $mess . "')\",2000);
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 5000); ";
-            $this->ss->assign("MSG_SCRIPT", $confirm_msg);
-
+            $this->ss->assign('MSG_SCRIPT', $confirm_msg);
         }
 
         if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter')) {
-            $this->ss->assign("ADD_BUTTON_STATE", "submit");
-            $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
+            $this->ss->assign('ADD_BUTTON_STATE', 'submit');
+            $this->ss->assign('TARGET_BUTTON_STATE', 'hidden');
         } else {
-            $this->ss->assign("ADD_BUTTON_STATE", "hidden");
-            $this->ss->assign("DISABLE_LINK", "display:none");
-            $this->ss->assign("TARGET_BUTTON_STATE", "submit");
+            $this->ss->assign('ADD_BUTTON_STATE', 'hidden');
+            $this->ss->assign('DISABLE_LINK', 'display:none');
+            $this->ss->assign('TARGET_BUTTON_STATE', 'submit');
         }
 
         $currency = new Currency();
@@ -105,8 +94,10 @@ class CampaignsViewDetail extends ViewDetail
             if ($currency->deleted != 1) {
                 $this->ss->assign('CURRENCY', $currency->iso4217 . ' ' . $currency->symbol);
             } else {
-                $this->ss->assign('CURRENCY',
-                    $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
+                $this->ss->assign(
+                    'CURRENCY',
+                    $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol()
+                );
             }
         } else {
             $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
@@ -117,7 +108,7 @@ class CampaignsViewDetail extends ViewDetail
         //We want to display subset of available, panels, so we will call subpanel
         //object directly instead of using sugarview.
         $GLOBALS['focus'] = $this->bean;
-        require_once('include/SubPanel/SubPanelTiles.php');
+        require_once 'include/SubPanel/SubPanelTiles.php';
         $subpanel = new SubPanelTiles($this->bean, $this->module);
         //get available list of subpanels
         $alltabs = $subpanel->subpanel_definitions->get_available_tabs();
@@ -125,9 +116,9 @@ class CampaignsViewDetail extends ViewDetail
             //iterate through list, and filter out all but 3 subpanels
             foreach ($alltabs as $key => $name) {
                 if ($name != 'prospectlists' && $name != 'emailmarketing' && $name != 'tracked_urls' && $name != 'history'
-                    /* BEGIN - SECURITY GROUPS */
+                    // BEGIN - SECURITY GROUPS
                     && $name != 'securitygroups'
-                    /* END - SECURITY GROUPS */
+                    // END - SECURITY GROUPS
                 ) {
                     //exclude subpanels that are not prospectlists, emailmarketing, or tracked urls
                     $subpanel->subpanel_definitions->exclude_tab($name);
@@ -143,6 +134,5 @@ class CampaignsViewDetail extends ViewDetail
         }
         //show filtered subpanel list
         echo $subpanel->display();
-
     }
 }

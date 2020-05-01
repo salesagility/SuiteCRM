@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +19,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
@@ -31,30 +29,28 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 $module_name = 'AOS_Contracts';
-  $searchdefs[$module_name] = array(
-                    'templateMeta' => array(
-                            'maxColumns' => '3',
-                            'maxColumnsBasic' => '4',
-                            'widths' => array('label' => '10', 'field' => '30'),
-                           ),
-                    'layout' => array(
-                        'basic_search' => array(
-                            'name',
-                            array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
-                            array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
-
-                            ),
-                        'advanced_search' => array(
-                            'name',
-                            'contract_account',
-                            'opportunity',
-                            'start_date',
-                            'end_date',
-                            'total_contract_value',
-                            'status',
-                            'contract_type',
-                            array('name' => 'assigned_user_id', 'label' => 'LBL_ASSIGNED_TO_NAME', 'type' => 'enum', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
-                            
-                        ),
-                    ),
-               );
+  $searchdefs[$module_name] = [
+      'templateMeta' => [
+          'maxColumns' => '3',
+          'maxColumnsBasic' => '4',
+          'widths' => ['label' => '10', 'field' => '30'],
+      ],
+      'layout' => [
+          'basic_search' => [
+              'name',
+              ['name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'],
+              ['name' => 'favorites_only', 'label' => 'LBL_FAVORITES_FILTER', 'type' => 'bool'],
+          ],
+          'advanced_search' => [
+              'name',
+              'contract_account',
+              'opportunity',
+              'start_date',
+              'end_date',
+              'total_contract_value',
+              'status',
+              'contract_type',
+              ['name' => 'assigned_user_id', 'label' => 'LBL_ASSIGNED_TO_NAME', 'type' => 'enum', 'function' => ['name' => 'get_user_array', 'params' => [false]]],
+          ],
+      ],
+  ];

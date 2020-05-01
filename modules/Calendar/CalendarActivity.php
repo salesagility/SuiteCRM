@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -52,6 +50,7 @@ class CalendarActivity
 
     /**
      * CalendarActivity constructor.
+     *
      * @param $args
      */
     public function __construct($args)
@@ -74,7 +73,6 @@ class CalendarActivity
 
         $sugar_bean = $args;
         $this->sugar_bean = $sugar_bean;
-
 
         if ($sugar_bean->object_name === 'Task') {
             if (!empty($this->sugar_bean->date_start)) {
@@ -99,7 +97,7 @@ class CalendarActivity
             if (empty($mins)) {
                 $mins = 0;
             }
-            $this->end_time = $this->start_time->get("+$hours hours $mins minutes");
+            $this->end_time = $this->start_time->get("+{$hours} hours {$mins} minutes");
         }
         // Convert it back to database time so we can properly manage it for getting the proper start and end dates
         $timedate->tzGMT($this->start_time);
@@ -107,13 +105,15 @@ class CalendarActivity
     }
 
     /**
-     * Get where clause for fetching entries from DB for within two dates timespan
+     * Get where clause for fetching entries from DB for within two dates timespan.
+     *
      * @param string $table_name t
      * @param string $rel_table table for accept status, not used in Tasks
      * @param SugarDateTime $start_ts_obj start date
      * @param SugarDateTime $end_ts_obj end date
      * @param string $field_name date field in table
      * @param string $field_end_date
+     *
      * @return string
      */
     public static function get_occurs_within_where_clause(
@@ -131,18 +131,20 @@ class CalendarActivity
             $end_ts_obj,
             $field_name,
             $field_end_date,
-            array('self', 'within')
+            ['self', 'within']
         );
     }
 
     /**
-     * Get where clause for fetching entries from DB for until certain date timespan
+     * Get where clause for fetching entries from DB for until certain date timespan.
+     *
      * @param string $table_name t
      * @param string $rel_table table for accept status, not used in Tasks
      * @param SugarDateTime $start_ts_obj start date
      * @param SugarDateTime $end_ts_obj end date
      * @param string $field_name date field in table
      * @param string $field_end_date
+     *
      * @return string
      */
     public static function get_occurs_until_where_clause(
@@ -160,7 +162,7 @@ class CalendarActivity
             $end_ts_obj,
             $field_name,
             $field_end_date,
-            array('self', 'until')
+            ['self', 'until']
         );
     }
 
@@ -168,11 +170,12 @@ class CalendarActivity
      * @param $user_focus
      * @param $start_date_time
      * @param $end_date_time
+     *
      * @return array
      */
     public static function get_freebusy_activities($user_focus, $start_date_time, $end_date_time)
     {
-        $act_list = array();
+        $act_list = [];
         $vcal_focus = new vCal();
         $vcal_str = $vcal_focus->get_vcal_freebusy($user_focus);
 
@@ -180,10 +183,10 @@ class CalendarActivity
         $utc = new DateTimeZone('UTC');
         foreach ($lines as $line) {
             if (preg_match('/^FREEBUSY.*?:([^\/]+)\/([^\/]+)/i', $line, $matches)) {
-                $dates_arr = array(
+                $dates_arr = [
                     SugarDateTime::createFromFormat(vCal::UTC_FORMAT, $matches[1], $utc),
                     SugarDateTime::createFromFormat(vCal::UTC_FORMAT, $matches[2], $utc)
-                );
+                ];
                 $act_list[] = new CalendarActivity($dates_arr);
             }
         }
@@ -192,15 +195,17 @@ class CalendarActivity
     }
 
     /**
-     * Get array of activities
+     * Get array of activities.
+     *
      * @param array $activities
      * @param string $user_id
-     * @param boolean $show_tasks
+     * @param bool $show_tasks
      * @param SugarDateTime $view_start_time start date
      * @param SugarDateTime $view_end_time end date
      * @param string $view view; not used for now, left for compatibility
-     * @param boolean $show_calls
-     * @param boolean $show_completed use to allow filtering completed events
+     * @param bool $show_calls
+     * @param bool $show_completed use to allow filtering completed events
+     *
      * @return array
      */
     public static function get_activities(
@@ -215,8 +220,8 @@ class CalendarActivity
     ) {
         global $current_user;
         global $beanList;
-        $act_list = array();
-        $seen_ids = array();
+        $act_list = [];
+        $seen_ids = [];
 
         $completedCalls = '';
         $completedMeetings = '';
@@ -229,7 +234,7 @@ class CalendarActivity
 
         foreach ($activities as $key => $activity) {
             if (ACLController::checkAccess($key, 'list', true)) {
-                /* END - SECURITY GROUPS */
+                // END - SECURITY GROUPS
                 $class = $beanList[$key];
                 $bean = new $class();
 
@@ -290,7 +295,8 @@ class CalendarActivity
     }
 
     /**
-     * Get where clause for fetching entries from DB (is used by certain get_occurs.. methods)
+     * Get where clause for fetching entries from DB (is used by certain get_occurs.. methods).
+     *
      * @param string $table_name t
      * @param string $rel_table table for accept status, not used in Tasks
      * @param SugarDateTime $start_ts_obj start date
@@ -298,6 +304,7 @@ class CalendarActivity
      * @param string $field_name date field in table
      * @param $field_end_date
      * @param array $callback callback function to generete specific SQL query-part
+     *
      * @return string
      */
     protected static function getOccursWhereClauseGeneral(
@@ -321,7 +328,7 @@ class CalendarActivity
         $where .= call_user_func($callback, $field_date, $field_end_date, $start_day, $end_day);
 
         if (!empty($rel_table)) {
-            $where .= " AND $rel_table.accept_status != 'decline'";
+            $where .= " AND {$rel_table}.accept_status != 'decline'";
         }
 
         $where .= ')';
@@ -330,28 +337,32 @@ class CalendarActivity
     }
 
     /**
-     * Helper-method to generate within two dates sql clause
+     * Helper-method to generate within two dates sql clause.
+     *
      * @param $field_date string table_name.field_name to compare
      * @param $field_date_end
      * @param $start_day string period start date
      * @param $end_day string period end date
+     *
      * @return string
      */
     protected static function within($field_date, $field_date_end, $start_day, $end_day)
     {
-        return "$field_date >= $start_day AND $field_date < $end_day";
+        return "{$field_date} >= {$start_day} AND {$field_date} < {$end_day}";
     }
 
     /**
-     * Helper-method to generate until some date sql clause
+     * Helper-method to generate until some date sql clause.
+     *
      * @param $field_date string table_name.field_name to compare
      * @param $field_date_end
      * @param $start_day string period start date
      * @param $end_day string period end date
+     *
      * @return string
      */
     protected static function until($field_date, $field_date_end, $start_day, $end_day)
     {
-        return "($field_date >= $start_day AND $field_date < $end_day) OR ($field_date < $start_day AND $field_date_end > $start_day)";
+        return "({$field_date} >= {$start_day} AND {$field_date} < {$end_day}) OR ({$field_date} < {$start_day} AND {$field_date_end} > {$start_day})";
     }
 }

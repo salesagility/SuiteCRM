@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,36 +36,39 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
+require_once 'modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php';
 
 /**
- * Returns the XML metadata which can be used to register the SP with the IDP
+ * Returns the XML metadata which can be used to register the SP with the IDP.
  *
  * @param array $settingsInfo a SAML2 settings array structure
- * @return string the xml metadata
+ *
  * @throws OneLogin_Saml2_Error In case the settings/metadata are invalid
+ *
+ * @return string the xml metadata
  */
-function getSAML2Metadata($settingsInfo) {
+function getSAML2Metadata($settingsInfo)
+{
     $auth = new OneLogin_Saml2_Auth($settingsInfo);
     $settings = $auth->getSettings();
     $metadata = $settings->getSPMetadata();
     $errors = $settings->validateMetadata($metadata);
     if (!empty($errors)) {
         throw new OneLogin_Saml2_Error(
-            'Invalid SP metadata: '.implode(', ', $errors),
+            'Invalid SP metadata: ' . implode(', ', $errors),
             OneLogin_Saml2_Error::METADATA_SP_INVALID
         );
     }
+
     return $metadata;
 }
 
 /**
- * Class SAML2Authenticate for SAML2 auth
+ * Class SAML2Authenticate for SAML2 auth.
  */
 class SAML2Authenticate extends SugarAuthenticate
 {
@@ -76,15 +78,16 @@ class SAML2Authenticate extends SugarAuthenticate
     /**
      * @var OneLogin_Saml2_Auth
      */
-    private $samlLogoutAuth = null;
+    private $samlLogoutAuth;
 
     /**
      * @var array
      */
-    private $samlLogoutArgs = array();
+    private $samlLogoutArgs = [];
 
     /**
-     * pre login initialization - use SAML2 to authenticate a user login process
+     * pre login initialization - use SAML2 to authenticate a user login process.
+     *
      * @throws OneLogin_Saml2_Error
      */
     public function pre_login()
@@ -95,7 +98,7 @@ class SAML2Authenticate extends SugarAuthenticate
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
         if (isset($_REQUEST['SAMLResponse']) && $_REQUEST['SAMLResponse']) {
-            if (isset($_SESSION) && isset($_SESSION['AuthNRequestID'])) {
+            if (isset($_SESSION, $_SESSION['AuthNRequestID'])) {
                 $requestID = $_SESSION['AuthNRequestID'];
             } else {
                 $requestID = null;
@@ -134,8 +137,10 @@ class SAML2Authenticate extends SugarAuthenticate
     }
 
     /**
-     * override SugarAuthenticate and use SAML2 authentication
+     * override SugarAuthenticate and use SAML2 authentication.
+     *
      * @param SugarApplication $app
+     *
      * @return bool
      */
     public function redirectToLogin(SugarApplication $app)
@@ -152,7 +157,8 @@ class SAML2Authenticate extends SugarAuthenticate
     }
 
     /**
-     * Called when a user requests to logout, and use SAML2 logout
+     * Called when a user requests to logout, and use SAML2 logout.
+     *
      * @throws OneLogin_Saml2_Error
      */
     public function logout()
@@ -174,7 +180,7 @@ class SAML2Authenticate extends SugarAuthenticate
     }
 
     /**
-     * call before from user logout page clear the session, store logout information for SAML2 logout
+     * call before from user logout page clear the session, store logout information for SAML2 logout.
      */
     public function preLogout()
     {
@@ -182,7 +188,7 @@ class SAML2Authenticate extends SugarAuthenticate
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
         $returnTo = null;
-        $paramters = array();
+        $paramters = [];
         $nameId = null;
         $sessionIndex = null;
         $nameIdFormat = null;
@@ -198,6 +204,6 @@ class SAML2Authenticate extends SugarAuthenticate
         }
 
         $this->samlLogoutAuth = $auth;
-        $this->samlLogoutArgs = array('returnTo' => $returnTo, 'parameters' => $paramters, 'nameId' => $nameId, 'sessionIndex' => $sessionIndex, 'false' => false, 'nameIdFormat' => $nameIdFormat);
+        $this->samlLogoutArgs = ['returnTo' => $returnTo, 'parameters' => $paramters, 'nameId' => $nameId, 'sessionIndex' => $sessionIndex, 'false' => false, 'nameIdFormat' => $nameIdFormat];
     }
 }

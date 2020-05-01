@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,18 +42,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
+ */
+
 global $app_strings;
 
-$dashletMeta['AOK_Knowledge_Base_CategoriesDashlet'] = array('module'		=> 'AOK_Knowledge_Base_Categories',
-                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOK_Knowledge_Base_Categories'),
-                                          'description' => 'A customizable view into AOK_Knowledge_Base_Categories',
-                                          'icon'        => 'icon_AOK_Knowledge_Base_Categories_32.gif',
-                                          'category'    => 'Module Views');
+$dashletMeta['AOK_Knowledge_Base_CategoriesDashlet'] = ['module' => 'AOK_Knowledge_Base_Categories',
+    'title' => translate('LBL_HOMEPAGE_TITLE', 'AOK_Knowledge_Base_Categories'),
+    'description' => 'A customizable view into AOK_Knowledge_Base_Categories',
+    'icon' => 'icon_AOK_Knowledge_Base_Categories_32.gif',
+    'category' => 'Module Views'];

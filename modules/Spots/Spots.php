@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -82,6 +81,8 @@ class Spots extends Basic
 
     /**
      *This replaces the label values in the config with the corresponding keys (to make language agnostic).
+     *
+     * @param mixed $check_notify
      */
     public function save($check_notify = false)
     {
@@ -90,8 +91,8 @@ class Spots extends Basic
         $config = htmlspecialchars_decode($_REQUEST['config']);
         $jsonConfig = json_decode($config, true);
 
-        $colsLabels = array();
-        $rowsLabels = array();
+        $colsLabels = [];
+        $rowsLabels = [];
         if (isset($jsonConfig['cols']) && count($jsonConfig['cols']) > 0) {
             $colsLabels = $this->getKeysForLabels($type, $jsonConfig['cols']);
             $jsonConfig['cols'] = $colsLabels;
@@ -214,7 +215,7 @@ class Spots extends Basic
      */
     public function getKeysForLabels($type, $items)
     {
-        $keys = array();
+        $keys = [];
         foreach ($items as $i) {
             $key = $this->getKeyForLabel($type, $i);
             //Check that the returned array has only 1 element, else there is a potential error
@@ -224,10 +225,9 @@ class Spots extends Basic
             if ($countOfMatches !== 1) {
                 $this->logSpotsErrorWithKeyMatching($type);
 
-                return array();
-            } else {
-                $keys[] = reset($key);
+                return [];
             }
+            $keys[] = reset($key);
         }
 
         return $keys;
@@ -241,7 +241,7 @@ class Spots extends Basic
     public function logSpotsErrorWithKeyMatching($type)
     {
         global $mod_strings;
-        $GLOBALS['log']->error($mod_strings['LBL_AN_DUPLICATE_LABEL_FOR_SUBAREA'].' '.$type);
+        $GLOBALS['log']->error($mod_strings['LBL_AN_DUPLICATE_LABEL_FOR_SUBAREA'] . ' ' . $type);
     }
 
     /**
@@ -259,27 +259,35 @@ class Spots extends Basic
         switch ($type) {
             case 'getAccountsSpotsData':
                 $labelPrefix = 'LBL_AN_ACCOUNTS_';
+
                 break;
             case 'getLeadsSpotsData':
                 $labelPrefix = 'LBL_AN_LEADS_';
+
                 break;
             case 'getSalesSpotsData':
                 $labelPrefix = 'LBL_AN_SALES_';
+
                 break;
             case 'getServiceSpotsData':
                 $labelPrefix = 'LBL_AN_SERVICE_';
+
                 break;
             case 'getActivitiesSpotsData':
                 $labelPrefix = 'LBL_AN_ACTIVITIES_';
+
                 break;
             case 'getMarketingSpotsData':
                 $labelPrefix = 'LBL_AN_MARKETING_';
+
                 break;
             case 'getMarketingActivitySpotsData':
                 $labelPrefix = 'LBL_AN_MARKETINGACTIVITY';
+
                 break;
             case 'getQuotesSpotsData':
                 $labelPrefix = 'LBL_AN_QUOTES_';
+
                 break;
         }
         $allMatchingLabels = array_keys($mod_strings, $label);

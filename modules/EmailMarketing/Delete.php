@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-
 $focus = new EmailMarketing();
 
 if (!isset($_REQUEST['record'])) {
-    sugar_die("A record number must be specified to delete the marketing campaign.");
+    sugar_die('A record number must be specified to delete the marketing campaign.');
 }
 $focus->retrieve($_REQUEST['record']);
 if (!$focus->ACLAccess('Delete')) {
@@ -60,8 +53,8 @@ if (!$focus->ACLAccess('Delete')) {
 $focus->mark_deleted($_REQUEST['record']);
 
 if (isset($_REQUEST['record'])) {
-    $query = "DELETE FROM emailman WHERE marketing_id ='" . $_REQUEST['record'] ."'";
+    $query = "DELETE FROM emailman WHERE marketing_id ='" . $_REQUEST['record'] . "'";
     $focus->db->query($query);
 }
 
-header("Location: index.php?module=".$_REQUEST['return_module']."&action=".$_REQUEST['return_action']."&record=".$_REQUEST['return_id']);
+header('Location: index.php?module=' . $_REQUEST['return_module'] . '&action=' . $_REQUEST['return_action'] . '&record=' . $_REQUEST['return_id']);

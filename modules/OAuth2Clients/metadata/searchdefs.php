@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,43 +43,35 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $module_name = 'OAuth2Clients';
 
 $searchdefs[$module_name] = [
-    'templateMeta' =>
-        [
-            'maxColumns' => '3',
-            'maxColumnsBasic' => '4',
-            'widths' =>
-                [
-                    'label' => '10',
-                    'field' => '30',
-                ],
+    'templateMeta' => [
+        'maxColumns' => '3',
+        'maxColumnsBasic' => '4',
+        'widths' => [
+            'label' => '10',
+            'field' => '30',
         ],
-    'layout' =>
-        [
-            'basic_search' =>
-                [
-                    'name' =>
-                        [
-                            'id' => 'name',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                ],
-            'advanced_search' =>
-                [
-                    'name' =>
-                        [
-                            'name' => 'name',
-                            'default' => true,
-                            'width' => '10%',
-                        ],
-                    'allowed_grant_type' =>
-                        [
-                            'type' => 'enum',
-                            'label' => 'LBL_ALLOWED_GRANT_TYPE',
-                            'width' => '10%',
-                            'default' => true,
-                            'name' => 'allowed_grant_type',
-                        ],
-                ],
+    ],
+    'layout' => [
+        'basic_search' => [
+            'name' => [
+                'id' => 'name',
+                'default' => true,
+                'width' => '10%',
+            ],
         ],
+        'advanced_search' => [
+            'name' => [
+                'name' => 'name',
+                'default' => true,
+                'width' => '10%',
+            ],
+            'allowed_grant_type' => [
+                'type' => 'enum',
+                'label' => 'LBL_ALLOWED_GRANT_TYPE',
+                'width' => '10%',
+                'default' => true,
+                'name' => 'allowed_grant_type',
+            ],
+        ],
+    ],
 ];

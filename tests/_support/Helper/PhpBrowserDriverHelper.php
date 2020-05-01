@@ -7,16 +7,14 @@ use Codeception\Module;
 use SuiteCRM\Enumerator\DatabaseDriver;
 
 /**
- * Class PhpBrowserDriverHelper
- * @package Helper
- * Helps to get configuration / environment variables for the PhpBrowser Driver
+ * Class PhpBrowserDriverHelper.
  */
 class PhpBrowserDriverHelper extends Module
 {
-
     /**
-     * @return array|mixed|null
      * @throws ModuleException
+     *
+     * @return null|array|mixed
      */
     public function getConfig()
     {
@@ -25,8 +23,10 @@ class PhpBrowserDriverHelper extends Module
 
     /**
      * Gets the 'INSTANCE_URL' environment variable or 'url' in a yaml file.
-     * @return string the test instance url.
+     *
      * @throws ModuleException
+     *
+     * @return string the test instance url
      */
     public function getInstanceURL()
     {
@@ -38,8 +38,11 @@ class PhpBrowserDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_DRIVER' environment variable or 'database_driver' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
+     *
      * @see DatabaseDriver
      */
     public function getDatabaseDriver()
@@ -52,8 +55,10 @@ class PhpBrowserDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_NAME' environment variable or 'database_name' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getDatabaseName()
     {
@@ -63,11 +68,12 @@ class PhpBrowserDriverHelper extends Module
         );
     }
 
-
     /**
      * Gets the 'DATABASE_HOST' environment variable or 'database_host' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getDatabaseHost()
     {
@@ -79,8 +85,10 @@ class PhpBrowserDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_USER' environment variable or 'database_user' in a yaml file.
-     * @return string the test instance url.
+     *
      * @throws ModuleException
+     *
+     * @return string the test instance url
      */
     public function getDatabaseUser()
     {
@@ -92,8 +100,10 @@ class PhpBrowserDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_PASSWORD' environment variable or 'database_password' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getDatabasePassword()
     {
@@ -103,12 +113,12 @@ class PhpBrowserDriverHelper extends Module
         );
     }
 
-
     /**
      * Gets the 'INSTANCE_ADMIN_USER' environment variable or 'instance_admin_user' in a yaml file.
      *
-     * @return string
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getAdminUser()
     {
@@ -120,8 +130,10 @@ class PhpBrowserDriverHelper extends Module
 
     /**
      * Gets the 'INSTANCE_ADMIN_PASSWORD' environment variable or 'instance_admin_password' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getAdminPassword()
     {
@@ -132,8 +144,9 @@ class PhpBrowserDriverHelper extends Module
     }
 
     /**
-     * @return array|false|string
      * @throws ModuleException
+     *
+     * @return array|false|string
      */
     public function getPasswordGrantClientId()
     {
@@ -144,8 +157,9 @@ class PhpBrowserDriverHelper extends Module
     }
 
     /**
-     * @return string
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getPasswordGrantClientSecret()
     {
@@ -156,8 +170,9 @@ class PhpBrowserDriverHelper extends Module
     }
 
     /**
-     * @return array|false|string
      * @throws ModuleException
+     *
+     * @return array|false|string
      */
     public function getClientCredentialsGrantClientId()
     {
@@ -168,8 +183,9 @@ class PhpBrowserDriverHelper extends Module
     }
 
     /**
-     * @return string
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getClientCredentialsGrantClientSecret()
     {
@@ -182,8 +198,10 @@ class PhpBrowserDriverHelper extends Module
     /**
      * @param string $variable
      * @param string $default
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     private function getEnvironmentVariableOrDefault($variable, $default)
     {

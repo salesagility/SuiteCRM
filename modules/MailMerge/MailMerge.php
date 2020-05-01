@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class MailMerge
 {
     public $mm_data_dir;
@@ -70,8 +68,8 @@ class MailMerge
             if (isset($this->template)) {
                 $this->CreateHeaderFile();
                 $this->CreateDataSource();
-                $file = $this->CreateDocument($this->template);
-                return $file;
+
+                return $this->CreateDocument($this->template);
             }
         } else {
             return '';
@@ -88,10 +86,10 @@ class MailMerge
     public function CleanUp()
     {
         //remove the temp files
-        unlink($this->mm_data_dir.'/Temp/'.$this->datasource_file);
-        unlink($this->mm_data_dir.'/Temp/'.$this->header_file);
+        unlink($this->mm_data_dir . '/Temp/' . $this->datasource_file);
+        unlink($this->mm_data_dir . '/Temp/' . $this->header_file);
         rmdir($this->mm_data_dir);
-        rmdir($this->mm_data_dir.'/Temp/');
+        rmdir($this->mm_data_dir . '/Temp/');
         $this->Quit();
     }
 
@@ -105,7 +103,7 @@ class MailMerge
             $this->obj->Selection->MoveRight();
         }
 
-        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->header_file);
+        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir . '/Temp/' . $this->header_file);
         $this->obj->ActiveDocument->Close();
     }
 
@@ -116,11 +114,11 @@ class MailMerge
 
         for ($i = 0; $i < $this->rowcnt; $i++) {
             foreach ($this->fieldList as $field => $value) {
-                $this->obj->Selection->TypeText($this->list[$i]->$field);
+                $this->obj->Selection->TypeText($this->list[$i]->{$field});
                 $this->obj->Selection->MoveRight();
             }
         }
-        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->datasource_file);
+        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir . '/Temp/' . $this->datasource_file);
         $this->obj->ActiveDocument->Close();
     }
 
@@ -129,28 +127,29 @@ class MailMerge
         //$this->obj->Documents->Open($this->mm_data_dir.'/Templates/'.$template[0].'.dot');
         $this->obj->Documents->Open($template[0]);
 
-        $this->obj->ActiveDocument->MailMerge->OpenHeaderSource($this->mm_data_dir.'/Temp/'.$this->header_file);
+        $this->obj->ActiveDocument->MailMerge->OpenHeaderSource($this->mm_data_dir . '/Temp/' . $this->header_file);
 
-        $this->obj->ActiveDocument->MailMerge->OpenDataSource($this->mm_data_dir.'/Temp/'.$this->datasource_file);
+        $this->obj->ActiveDocument->MailMerge->OpenDataSource($this->mm_data_dir . '/Temp/' . $this->datasource_file);
 
         $this->obj->ActiveDocument->MailMerge->Execute();
-        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/'.$template[1].'.doc');
+        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir . '/' . $template[1] . '.doc');
         //$this->obj->Documents[$template[0]]->Close();
         //$this->obj->Documents[$template[1].'.doc']->Close();
         $this->obj->ActiveDocument->Close();
-        return $template[1].'.doc';
+
+        return $template[1] . '.doc';
     }
 
     public function Initialize()
     {
         $this->rowcnt = count($this->list);
         $this->fieldcnt = count($this->fieldList);
-        $this->obj = new COM("word.application") or die("Unable to instanciate Word");
+        $this->obj = new COM('word.application') or die('Unable to instanciate Word');
         $this->obj->Visible = $this->visible;
 
         //try to make the temp dir
         sugar_mkdir($this->mm_data_dir);
-        sugar_mkdir($this->mm_data_dir.'/Temp/');
+        sugar_mkdir($this->mm_data_dir . '/Temp/');
     }
 
     public function Quit()

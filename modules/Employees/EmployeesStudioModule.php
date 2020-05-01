@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
+require_once 'modules/ModuleBuilder/Module/StudioModule.php';
 
 class EmployeesStudioModule extends StudioModule
 {
@@ -51,7 +49,7 @@ class EmployeesStudioModule extends StudioModule
     public function getModule()
     {
         $normalModules = parent::getModule();
-        
+
         if (isset($normalModules[translate('LBL_RELATIONSHIPS')])) {
             unset($normalModules[translate('LBL_RELATIONSHIPS')]);
         }

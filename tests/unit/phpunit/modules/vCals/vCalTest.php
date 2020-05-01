@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class vCalTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -30,7 +33,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $vcal);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $vcal = new vCal();
 
@@ -42,7 +45,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $vcal->get_summary_text());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $vcal = new vCal();
 
@@ -57,7 +60,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $vcal = new vCal();
 
@@ -72,7 +75,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $vcal = new vCal();
 
@@ -87,10 +90,10 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testget_freebusy_lines_cache()
+    public function testgetFreebusyLinesCache()
     {
         self::markTestIncomplete('Asserting String Start Width is imposible if expected is empty srting');
-        
+
         $vcal = new vCal();
         $user_bean = new User('1');
 
@@ -103,7 +106,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->assertStringEndsWith($expectedEnd, $result);
     }
 
-    public function testcreate_sugar_freebusy()
+    public function testcreateSugarFreebusy()
     {
         global $locale, $timedate;
 
@@ -118,7 +121,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThanOrEqual(0, strlen($result));
     }
 
-    public function testget_vcal_freebusy()
+    public function testgetVcalFreebusy()
     {
         $vcal = new vCal();
         $user_focus = new User('1');
@@ -132,7 +135,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $this->assertStringEndsWith($expectedEnd, $result);
     }
 
-    public function testcache_sugar_vcal()
+    public function testcacheSugarVcal()
     {
         $vcal = new vCal();
         $user_focus = new User('1');
@@ -146,7 +149,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcache_sugar_vcal_freebusy()
+    public function testcacheSugarVcalFreebusy()
     {
         $vcal = new vCal();
         $user_focus = new User('1');
@@ -160,7 +163,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfold_ical_lines()
+    public function testfoldIcalLines()
     {
         //test with short strings
         $result = vCal::fold_ical_lines('testkey', 'testvalue');
@@ -168,61 +171,61 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         //test with longer strings
         $expected = "testkey11111111111111111111111111111111111111111111111111111111111111111111\r\n	11111111111111111111111111111111:testvalue11111111111111111111111111111111\r\n	11111111111111111111111111111111111111111111111111111111111111111111";
-        $result = vCal::fold_ical_lines('testkey'.str_repeat('1', 100), 'testvalue'.str_repeat('1', 100));
+        $result = vCal::fold_ical_lines('testkey' . str_repeat('1', 100), 'testvalue' . str_repeat('1', 100));
         $this->assertEquals($expected, $result);
     }
 
-    public function testcreate_ical_array_from_string()
+    public function testcreateIcalArrayFromString()
     {
         $iCalString = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VFREEBUSY\r\nORGANIZER;CN= :VFREEBUSY\r\nDTSTART:2016-01-09 00:00:00\r\nDTEND:2016-03-09 00:00:00\r\nDTSTAMP:2016-01-10 11:07:15\r\nEND:VFREEBUSY\r\nEND:VCALENDAR\r\n";
-        $expected = array(
-                        array('BEGIN', 'VCALENDAR'),
-                        array('VERSION', '2.0'),
-                        array('PRODID', '-//SugarCRM//SugarCRM Calendar//EN'),
-                        array('BEGIN', 'VFREEBUSY'),
-                        array('ORGANIZER;CN= ', 'VFREEBUSY'),
-                        array('DTSTART', '2016-01-09 00:00:00'),
-                        array('DTEND', '2016-03-09 00:00:00'),
-                        array('DTSTAMP', '2016-01-10 11:07:15'),
-                        array('END', 'VFREEBUSY'),
-                        array('END', 'VCALENDAR'),
-                    );
+        $expected = [
+            ['BEGIN', 'VCALENDAR'],
+            ['VERSION', '2.0'],
+            ['PRODID', '-//SugarCRM//SugarCRM Calendar//EN'],
+            ['BEGIN', 'VFREEBUSY'],
+            ['ORGANIZER;CN= ', 'VFREEBUSY'],
+            ['DTSTART', '2016-01-09 00:00:00'],
+            ['DTEND', '2016-03-09 00:00:00'],
+            ['DTSTAMP', '2016-01-10 11:07:15'],
+            ['END', 'VFREEBUSY'],
+            ['END', 'VCALENDAR'],
+        ];
         $actual = vCal::create_ical_array_from_string($iCalString);
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_ical_string_from_array()
+    public function testcreateIcalStringFromArray()
     {
         $expected = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VFREEBUSY\r\nORGANIZER;CN= :VFREEBUSY\r\nDTSTART:2016-01-09 00:00:00\r\nDTEND:2016-03-09 00:00:00\r\nDTSTAMP:2016-01-10 11:07:15\r\nEND:VFREEBUSY\r\nEND:VCALENDAR\r\n";
-        $iCalArray = array(
-                array('BEGIN', 'VCALENDAR'),
-                array('VERSION', '2.0'),
-                array('PRODID', '-//SugarCRM//SugarCRM Calendar//EN'),
-                array('BEGIN', 'VFREEBUSY'),
-                array('ORGANIZER;CN= ', 'VFREEBUSY'),
-                array('DTSTART', '2016-01-09 00:00:00'),
-                array('DTEND', '2016-03-09 00:00:00'),
-                array('DTSTAMP', '2016-01-10 11:07:15'),
-                array('END', 'VFREEBUSY'),
-                array('END', 'VCALENDAR'),
-        );
+        $iCalArray = [
+            ['BEGIN', 'VCALENDAR'],
+            ['VERSION', '2.0'],
+            ['PRODID', '-//SugarCRM//SugarCRM Calendar//EN'],
+            ['BEGIN', 'VFREEBUSY'],
+            ['ORGANIZER;CN= ', 'VFREEBUSY'],
+            ['DTSTART', '2016-01-09 00:00:00'],
+            ['DTEND', '2016-03-09 00:00:00'],
+            ['DTSTAMP', '2016-01-10 11:07:15'],
+            ['END', 'VFREEBUSY'],
+            ['END', 'VCALENDAR'],
+        ];
         $actual = vCal::create_ical_string_from_array($iCalArray);
         $this->assertSame($expected, $actual);
     }
 
-    public function testescape_ical_chars()
+    public function testescapeIcalChars()
     {
         $this->assertSame('', vCal::escape_ical_chars(''));
         $this->assertSame('\;\,', vCal::escape_ical_chars(';,'));
     }
 
-    public function testunescape_ical_chars()
+    public function testunescapeIcalChars()
     {
         $this->assertSame('', vCal::unescape_ical_chars(''));
         $this->assertSame('; , \\', vCal::unescape_ical_chars('\\; \\, \\\\'));
     }
 
-    public function testget_ical_event()
+    public function testgetIcalEvent()
     {
         $user = new User(1);
         $meeting = new Meeting();

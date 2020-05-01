@@ -4,6 +4,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once __DIR__ . '/../../../../../modules/Users/authentication/SAML2Authenticate/SAML2Authenticate.php';
 
+/**
+ * @internal
+ */
 class SAML2MetadataTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEntryPointNoAuth()
@@ -19,6 +22,7 @@ class SAML2MetadataTest extends SuitePHPUnitFrameworkTestCase
 
         $failed = false;
         $settings = ['sp' => [], 'idp' => []];
+
         try {
             getSAML2Metadata($settings);
         } catch (Exception $e) {

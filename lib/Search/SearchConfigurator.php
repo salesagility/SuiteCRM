@@ -111,6 +111,7 @@ class SearchConfigurator
             case 'BasicAndAodEngine':
                 // Basic search and AOD
                 $enableAod = true;
+
                 break;
             default:
                 // SearchWrapper with a specific engine

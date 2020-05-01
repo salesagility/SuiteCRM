@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -50,14 +53,13 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('Merge bean is broken at the moment');
         //$this->assertTrue(isset($mergeRecord->merge_bean->id));
-        
+
         $this->assertEquals(1, $mergeRecord->merge_bean->id);
     }
 
-    public function testload_merge_bean()
+    public function testloadMergeBean()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         $mergeRecord = new MergeRecord();
 
@@ -78,7 +80,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('User', $mergeRecord->merge_bean);
     }
 
-    public function testload_merge_bean2()
+    public function testloadMergeBean2()
     {
         $mergeRecord = new MergeRecord();
 
@@ -99,10 +101,9 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertInstanceOf('User', $mergeRecord->merge_bean2);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         $mergeRecord = new MergeRecord();
 
@@ -117,7 +118,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -134,7 +135,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -150,10 +151,9 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $mergeRecord->get_summary_text());
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         $mergeRecord = new MergeRecord();
 
@@ -164,10 +164,9 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuildGenericWhereClause()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         $mergeRecord = new MergeRecord();
 
@@ -184,7 +183,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $mergeRecord = new MergeRecord();
 
@@ -196,7 +195,6 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
     public function testACLAccess()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         $mergeRecord = new MergeRecord();
 
@@ -212,29 +210,27 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $mergeRecord->ACLAccess('delete'));
     }
 
-    public function testpopulate_search_params()
+    public function testpopulateSearchParams()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Meetings');
 
-        $expected = array(
-                          'id' => array('name' => 'id', 'vname' => 'LBL_ID', 'type' => 'id', 'required' => true, 'reportable' => true, 'comment' => 'Unique identifier', 'inline_edit' => false, 'value' => '1', 'search_type' => 'Exact'),
-                          'name' => array('name' => 'name', 'vname' => 'LBL_SUBJECT', 'required' => true, 'type' => 'name', 'dbType' => 'varchar', 'unified_search' => true, 'full_text_search' => array('boost' => 3), 'len' => '50', 'comment' => 'Meeting name', 'importable' => 'required', 'value' => 'test', 'search_type' => 'Exact'),
-                        );
+        $expected = [
+            'id' => ['name' => 'id', 'vname' => 'LBL_ID', 'type' => 'id', 'required' => true, 'reportable' => true, 'comment' => 'Unique identifier', 'inline_edit' => false, 'value' => '1', 'search_type' => 'Exact'],
+            'name' => ['name' => 'name', 'vname' => 'LBL_SUBJECT', 'required' => true, 'type' => 'name', 'dbType' => 'varchar', 'unified_search' => true, 'full_text_search' => ['boost' => 3], 'len' => '50', 'comment' => 'Meeting name', 'importable' => 'required', 'value' => 'test', 'search_type' => 'Exact'],
+        ];
 
-        $mergeRecord->populate_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
+        $mergeRecord->populate_search_params(['nameSearchField' => 'test', 'idSearchField' => '1']);
 
         $this->assertSame($expected, $mergeRecord->field_search_params);
     }
 
-    public function testget_inputs_for_search_params()
+    public function testgetInputsForSearchParams()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         $mergeRecord = new MergeRecord();
 
@@ -242,17 +238,17 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = "<input type='hidden' name='idSearchField' value='1' />\n<input type='hidden' name='idSearchType' value='' />\n<input type='hidden' name='nameSearchField' value='test' />\n<input type='hidden' name='nameSearchType' value='' />\n";
 
-        $result = $mergeRecord->get_inputs_for_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
+        $result = $mergeRecord->get_inputs_for_search_params(['nameSearchField' => 'test', 'idSearchField' => '1']);
 
         $this->assertSame($expected, $result);
     }
 
-    public function testemail_addresses_query()
+    public function testemailAddressesQuery()
     {
         $table = 'accounts';
         $module = 'Accounts';
         $bean_id = 1;
-        $expected = $table.".id IN (SELECT ear.bean_id FROM email_addresses ea
+        $expected = $table . ".id IN (SELECT ear.bean_id FROM email_addresses ea
                                 LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
                                 WHERE ear.bean_module = '{$module}'
                                 AND ear.bean_id != '{$bean_id}'
@@ -264,7 +260,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testrelease_name_query()
+    public function testreleaseNameQuery()
     {
         $mergeRecord = new MergeRecord();
 
@@ -277,10 +273,9 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame('', $result);
     }
 
-    public function testcreate_where_statement()
+    public function testcreateWhereStatement()
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
-
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -291,24 +286,24 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Contacts');
-        $mergeRecord->populate_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
+        $mergeRecord->populate_search_params(['nameSearchField' => 'test', 'idSearchField' => '1']);
 
-        $expected = array(
+        $expected = [
             0 => "contacts.id='1'",
             1 => "contacts.name='test'",
             2 => "contacts.id !=''",
-        );
+        ];
 
         $actual = $mergeRecord->create_where_statement();
 
         $this->assertSame($expected, $actual);
     }
 
-    public function testgenerate_where_statement()
+    public function testgenerateWhereStatement()
     {
         $mergeRecord = new MergeRecord();
 
-        $clauses = array("contacts.id='1'",  "contacts.name='test'", "contacts.id !=''");
+        $clauses = ["contacts.id='1'",  "contacts.name='test'", "contacts.id !=''"];
         $expected = "contacts.id='1' AND contacts.name='test' AND contacts.id !=''";
 
         $actual = $mergeRecord->generate_where_statement($clauses);

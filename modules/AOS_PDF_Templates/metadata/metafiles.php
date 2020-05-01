@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,7 +19,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
@@ -31,11 +29,11 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 $module_name = 'AOS_PDF_Templates';
- $metafiles[$module_name] = array(
-    'detailviewdefs'  => 	'modules/' . $module_name . '/metadata/detailviewdefs.php',
-    'editviewdefs'    => 	'modules/' . $module_name . '/metadata/editviewdefs.php',
-    'listviewdefs'    => 	'modules/' . $module_name . '/metadata/listviewdefs.php',
-    'searchdefs'      =>    'modules/' . $module_name . '/metadata/searchdefs.php',
-    'popupdefs'	      =>    'modules/' . $module_name . '/metadata/popupdefs.php',
-    'searchfields'	  =>    'modules/' . $module_name . '/metadata/SearchFields.php',
- );
+ $metafiles[$module_name] = [
+     'detailviewdefs' => 'modules/' . $module_name . '/metadata/detailviewdefs.php',
+     'editviewdefs' => 'modules/' . $module_name . '/metadata/editviewdefs.php',
+     'listviewdefs' => 'modules/' . $module_name . '/metadata/listviewdefs.php',
+     'searchdefs' => 'modules/' . $module_name . '/metadata/searchdefs.php',
+     'popupdefs' => 'modules/' . $module_name . '/metadata/popupdefs.php',
+     'searchfields' => 'modules/' . $module_name . '/metadata/SearchFields.php',
+ ];

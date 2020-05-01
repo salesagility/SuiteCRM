@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/utils/array_utils.php');
+require_once 'include/utils/array_utils.php';
 
 /**
  * @return bool
@@ -53,43 +48,51 @@ require_once('include/utils/array_utils.php');
  */
 function create_include_lang_dir()
 {
-    if (!is_dir("custom/include/language")) {
-        return sugar_mkdir("custom/include/language", null, true);
+    if (!is_dir('custom/include/language')) {
+        return sugar_mkdir('custom/include/language', null, true);
     }
 
     return true;
 }
 
 /**
- * @return bool
  * @param module string
+ * @param mixed $module
+ *
+ * @return bool
  * @desc Creates the module's language directory under the custom directory.
  */
 function create_module_lang_dir($module)
 {
-    if (!is_dir("custom/modules/$module/language")) {
-        return sugar_mkdir("custom/modules/$module/language", null, true);
+    if (!is_dir("custom/modules/{$module}/language")) {
+        return sugar_mkdir("custom/modules/{$module}/language", null, true);
     }
 
     return true;
 }
 
 /**
- * @return string&
  * @param the_array array, language string, module string
+ * @param mixed $old_contents
+ * @param mixed $key
+ * @param mixed $value
+ * @param mixed $language
+ * @param mixed $module
+ *
+ * @return string&
  * @desc Returns the contents of the customized language pack.
  */
 function &create_field_lang_pak_contents($old_contents, $key, $value, $language, $module)
 {
     if (!empty($old_contents)) {
-        $old_contents = preg_replace("'[^\[\n\r]+\[\'{$key}\'\][^\;]+;[\ \r\n]*'i", '', $old_contents);
-        $contents = str_replace("\n?>", "\n\$mod_strings['{$key}'] = '$value';\n?>", $old_contents);
+        $old_contents = preg_replace("'[^\\[\n\r]+\\[\\'{$key}\\'\\][^\\;]+;[\\ \r\n]*'i", '', $old_contents);
+        $contents = str_replace("\n?>", "\n\$mod_strings['{$key}'] = '{$value}';\n?>", $old_contents);
     } else {
         $contents = "<?php\n"
             . '// Creation date: ' . date('Y-m-d H:i:s') . "\n"
-            . "// Module: $module\n"
-            . "// Language: $language\n\n"
-            . "\$mod_strings['$key'] = '$value';"
+            . "// Module: {$module}\n"
+            . "// Language: {$language}\n\n"
+            . "\$mod_strings['{$key}'] = '{$value}';"
             . "\n?>";
     }
 
@@ -97,15 +100,18 @@ function &create_field_lang_pak_contents($old_contents, $key, $value, $language,
 }
 
 /**
- * @return string&
  * @param the_array array, language string
+ * @param mixed $the_array
+ * @param mixed $language
+ *
+ * @return string&
  * @desc Returns the contents of the customized language pack.
  */
 function &create_dropdown_lang_pak_contents(&$the_array, $language)
 {
     $contents = "<?php\n" .
                '// ' . date('Y-m-d H:i:s') . "\n" .
-               "// Language: $language\n\n" .
+               "// Language: {$language}\n\n" .
                '$app_list_strings = ' .
                var_export($the_array, true) .
                ";\n?>";
@@ -114,8 +120,13 @@ function &create_dropdown_lang_pak_contents(&$the_array, $language)
 }
 
 /**
- * @return bool
  * @param module string, key string, value string
+ * @param mixed $module
+ * @param mixed $key
+ * @param mixed $value
+ * @param mixed $overwrite
+ *
+ * @return bool
  * @desc Wrapper function that will create a field label for every language.
  */
 function create_field_label_all_lang($module, $key, $value, $overwrite = false)
@@ -134,21 +145,27 @@ function create_field_label_all_lang($module, $key, $value, $overwrite = false)
 }
 
 /**
- * @return bool
  * @param module string, language string, key string, value string
+ * @param mixed $module
+ * @param mixed $language
+ * @param mixed $key
+ * @param mixed $value
+ * @param mixed $overwrite
+ *
+ * @return bool
  * @desc Returns true if new field label can be created, false otherwise.
  *       Probable reason for returning false: new_field_key already exists.
  */
-function create_field_label($module, $language, $key, $value, $overwrite=false)
+function create_field_label($module, $language, $key, $value, $overwrite = false)
 {
     $return_value = false;
     $mod_strings = return_module_language($language, $module);
 
     if (isset($mod_strings[$key]) && !$overwrite) {
-        $GLOBALS['log']->info("Tried to create a key that already exists: $key");
+        $GLOBALS['log']->info("Tried to create a key that already exists: {$key}");
     } else {
-        $mod_strings = array_merge($mod_strings, array($key => $value));
-        $dirname = "custom/modules/$module/language";
+        $mod_strings = array_merge($mod_strings, [$key => $value]);
+        $dirname = "custom/modules/{$module}/language";
         $dir_exists = is_dir($dirname);
 
         if (!$dir_exists) {
@@ -156,7 +173,7 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
         }
 
         if ($dir_exists) {
-            $filename = "$dirname/$language.lang.php";
+            $filename = "{$dirname}/{$language}.lang.php";
             if (is_file($filename) && filesize($filename) > 0) {
                 $old_contents = file_get_contents($filename);
             } else {
@@ -164,9 +181,8 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
             }
             $handle = sugar_fopen($filename, 'wb');
 
-
             if ($handle) {
-                $contents =create_field_lang_pak_contents(
+                $contents = create_field_lang_pak_contents(
                     $old_contents,
                     $key,
                     $value,
@@ -176,15 +192,15 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
 
                 if (fwrite($handle, $contents)) {
                     $return_value = true;
-                    $GLOBALS['log']->info("Successful write to: $filename");
+                    $GLOBALS['log']->info("Successful write to: {$filename}");
                 }
 
                 fclose($handle);
             } else {
-                $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
+                $GLOBALS['log']->info("Unable to write edited language pak to file: {$filename}");
             }
         } else {
-            $GLOBALS['log']->info("Unable to create dir: $dirname");
+            $GLOBALS['log']->info("Unable to create dir: {$dirname}");
         }
     }
 
@@ -192,8 +208,10 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
 }
 
 /**
- * @return bool
  * @param dropdown_name string
+ * @param mixed $dropdown_name
+ *
+ * @return bool
  * @desc Wrapper function that creates a dropdown type for all languages.
  */
 function create_dropdown_type_all_lang($dropdown_name)
@@ -212,8 +230,12 @@ function create_dropdown_type_all_lang($dropdown_name)
 }
 
 /**
- * @return bool
  * @param app_list_strings array
+ * @param mixed $contents
+ * @param mixed $language
+ * @param mixed $custom_dir_name
+ *
+ * @return bool
  * @desc Saves the app_list_strings to file in the 'custom' dir.
  */
 function save_custom_app_list_strings_contents(&$contents, $language, $custom_dir_name = '')
@@ -231,24 +253,24 @@ function save_custom_app_list_strings_contents(&$contents, $language, $custom_di
     }
 
     if ($dir_exists) {
-        $filename = "$dirname/$language.lang.php";
+        $filename = "{$dirname}/{$language}.lang.php";
         $handle = @sugar_fopen($filename, 'wt');
 
         if ($handle) {
             if (fwrite($handle, $contents)) {
                 $return_value = true;
-                $GLOBALS['log']->info("Successful write to: $filename");
+                $GLOBALS['log']->info("Successful write to: {$filename}");
             }
 
             fclose($handle);
         } else {
-            $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
+            $GLOBALS['log']->info("Unable to write edited language pak to file: {$filename}");
         }
     } else {
-        $GLOBALS['log']->info("Unable to create dir: $dirname");
+        $GLOBALS['log']->info("Unable to create dir: {$dirname}");
     }
     if ($return_value) {
-        $cache_key = 'app_list_strings.'.$language;
+        $cache_key = 'app_list_strings.' . $language;
         sugar_cache_clear($cache_key);
     }
 
@@ -256,8 +278,11 @@ function save_custom_app_list_strings_contents(&$contents, $language, $custom_di
 }
 
 /**
- * @return bool
  * @param app_list_strings array
+ * @param mixed $app_list_strings
+ * @param mixed $language
+ *
+ * @return bool
  * @desc Saves the app_list_strings to file in the 'custom' dir.
  */
 function save_custom_app_list_strings(&$app_list_strings, $language)
@@ -272,29 +297,29 @@ function save_custom_app_list_strings(&$app_list_strings, $language)
     }
 
     if ($dir_exists) {
-        $filename = "$dirname/$language.lang.php";
+        $filename = "{$dirname}/{$language}.lang.php";
         $handle = @sugar_fopen($filename, 'wt');
 
         if ($handle) {
-            $contents =create_dropdown_lang_pak_contents(
+            $contents = create_dropdown_lang_pak_contents(
                 $app_list_strings,
                 $language
             );
 
             if (fwrite($handle, $contents)) {
                 $return_value = true;
-                $GLOBALS['log']->info("Successful write to: $filename");
+                $GLOBALS['log']->info("Successful write to: {$filename}");
             }
 
             fclose($handle);
         } else {
-            $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
+            $GLOBALS['log']->info("Unable to write edited language pak to file: {$filename}");
         }
     } else {
-        $GLOBALS['log']->info("Unable to create dir: $dirname");
+        $GLOBALS['log']->info("Unable to create dir: {$dirname}");
     }
     if ($return_value) {
-        $cache_key = 'app_list_strings.'.$language;
+        $cache_key = 'app_list_strings.' . $language;
         sugar_cache_clear($cache_key);
     }
 
@@ -305,7 +330,7 @@ function return_custom_app_list_strings_file_contents($language, $custom_filenam
 {
     $contents = '';
 
-    $filename = "custom/include/language/$language.lang.php";
+    $filename = "custom/include/language/{$language}.lang.php";
     if (!empty($custom_filename)) {
         $filename = $custom_filename;
     }
@@ -318,8 +343,11 @@ function return_custom_app_list_strings_file_contents($language, $custom_filenam
 }
 
 /**
- * @return bool
  * @param dropdown_name string, language string
+ * @param mixed $dropdown_name
+ * @param mixed $language
+ *
+ * @return bool
  * @desc Creates a new dropdown type.
  */
 function create_dropdown_type($dropdown_name, $language)
@@ -328,16 +356,16 @@ function create_dropdown_type($dropdown_name, $language)
     $app_list_strings = return_app_list_strings_language($language);
 
     if (isset($app_list_strings[$dropdown_name])) {
-        $GLOBALS['log']->info("Tried to create a dropdown list key that already exists: $dropdown_name");
+        $GLOBALS['log']->info("Tried to create a dropdown list key that already exists: {$dropdown_name}");
     } else {
         // get the contents of the custom app list strings file
         $contents = return_custom_app_list_strings_file_contents($language);
 
         // add the new dropdown_name to it
         if ($contents == '') {
-            $new_contents = "<?php\n\$app_list_strings['$dropdown_name'] = array(''=>'');\n?>";
+            $new_contents = "<?php\n\$app_list_strings['{$dropdown_name}'] = array(''=>'');\n?>";
         } else {
-            $new_contents = str_replace('?>', "\$app_list_strings['$dropdown_name'] = array(''=>'');\n?>", $contents);
+            $new_contents = str_replace('?>', "\$app_list_strings['{$dropdown_name}'] = array(''=>'');\n?>", $contents);
         }
 
         // save the new contents to file
@@ -348,22 +376,27 @@ function create_dropdown_type($dropdown_name, $language)
 }
 
 /**
- * @return string&
  * @param identifier string, pairs array, first_entry string, selected_key string
+ * @param mixed $identifier
+ * @param mixed $pairs
+ * @param mixed $first_entry
+ * @param mixed $selected_key
+ *
+ * @return string&
  * @desc Generates the HTML for a dropdown list.
  */
-function &create_dropdown_html($identifier, &$pairs, $first_entry='', $selected_key='')
+function &create_dropdown_html($identifier, &$pairs, $first_entry = '', $selected_key = '')
 {
-    $html = "<select name=\"$identifier\">\n";
+    $html = "<select name=\"{$identifier}\">\n";
 
     if ('' != $first_entry) {
-        $html .= "<option name=\"\">$first_entry</option>\n";
+        $html .= "<option name=\"\">{$first_entry}</option>\n";
     }
 
     foreach ($pairs as $key => $value) {
         $html .= $selected_key == $key ?
-               "<option name=\"$key\" selected=\"selected\">$value</option>\n" :
-               "<option name=\"$key\">$value</option>\n";
+               "<option name=\"{$key}\" selected=\"selected\">{$value}</option>\n" :
+               "<option name=\"{$key}\">{$value}</option>\n";
     }
 
     $html .= "</select>\n";
@@ -371,11 +404,10 @@ function &create_dropdown_html($identifier, &$pairs, $first_entry='', $selected_
     return $html;
 }
 
-
 function dropdown_item_delete($dropdown_type, $language, $index)
 {
     $app_list_strings_to_edit = return_app_list_strings_language($language);
-    $dropdown_array =$app_list_strings_to_edit[$dropdown_type];
+    $dropdown_array = $app_list_strings_to_edit[$dropdown_type];
     helper_dropdown_item_delete($dropdown_array, $index);
 
     $contents = return_custom_app_list_strings_file_contents($language);
@@ -399,7 +431,7 @@ function helper_dropdown_item_delete(&$dropdown_array, $index)
 function dropdown_item_move_up($dropdown_type, $language, $index)
 {
     $app_list_strings_to_edit = return_app_list_strings_language($language);
-    $dropdown_array =$app_list_strings_to_edit[$dropdown_type];
+    $dropdown_array = $app_list_strings_to_edit[$dropdown_type];
 
     if ($index > 0 && $index < count($dropdown_array)) {
         $key = '';
@@ -411,6 +443,7 @@ function dropdown_item_move_up($dropdown_type, $language, $index)
             if ($i == $index) {
                 $key = $k;
                 $value = $v;
+
                 break;
             }
 
@@ -435,7 +468,7 @@ function dropdown_item_move_up($dropdown_type, $language, $index)
 function dropdown_item_move_down($dropdown_type, $language, $index)
 {
     $app_list_strings_to_edit = return_app_list_strings_language($language);
-    $dropdown_array =$app_list_strings_to_edit[$dropdown_type];
+    $dropdown_array = $app_list_strings_to_edit[$dropdown_type];
 
     if ($index >= 0 && $index < count($dropdown_array) - 1) {
         $key = '';
@@ -447,6 +480,7 @@ function dropdown_item_move_down($dropdown_type, $language, $index)
             if ($i == $index) {
                 $key = $k;
                 $value = $v;
+
                 break;
             }
 
@@ -471,7 +505,7 @@ function dropdown_item_move_down($dropdown_type, $language, $index)
 function dropdown_item_insert($dropdown_type, $language, $index, $key, $value)
 {
     $app_list_strings_to_edit = return_app_list_strings_language($language);
-    $dropdown_array =$app_list_strings_to_edit[$dropdown_type];
+    $dropdown_array = $app_list_strings_to_edit[$dropdown_type];
     helper_dropdown_item_insert($dropdown_array, $index, $key, $value);
 
     // get the contents of the custom app list strings file
@@ -487,7 +521,7 @@ function dropdown_item_insert($dropdown_type, $language, $index, $key, $value)
 
 function helper_dropdown_item_insert(&$dropdown_array, $index, $key, $value)
 {
-    $pair = array($key => $value);
+    $pair = [$key => $value];
     if ($index <= 0) {
         $dropdown_array = array_merge($pair, $dropdown_array);
     }
@@ -503,7 +537,7 @@ function helper_dropdown_item_insert(&$dropdown_array, $index, $key, $value)
 function dropdown_item_edit($dropdown_type, $language, $key, $value)
 {
     $app_list_strings_to_edit = return_app_list_strings_language($language);
-    $dropdown_array =$app_list_strings_to_edit[$dropdown_type];
+    $dropdown_array = $app_list_strings_to_edit[$dropdown_type];
 
     $dropdown_array[$key] = $value;
 
@@ -533,7 +567,7 @@ function replace_or_add_dropdown_type(
 
     if (empty($file_contents)) {
         // empty file, must create the php tags
-        $new_contents = "<?php\n$new_entry\n?>";
+        $new_contents = "<?php\n{$new_entry}\n?>";
     } else {
         // existing file, try to replace
         $new_contents = replace_dropdown_type(
@@ -546,8 +580,8 @@ function replace_or_add_dropdown_type(
 
         if ($new_contents == $file_contents) {
             // replace failed, append to end of file
-            $new_contents = str_replace("?>", '', $file_contents);
-            $new_contents .= "\n$new_entry\n?>";
+            $new_contents = str_replace('?>', '', $file_contents);
+            $new_contents .= "\n{$new_entry}\n?>";
         }
     }
 
@@ -568,7 +602,7 @@ function replace_or_add_app_string(
 
     if (empty($file_contents)) {
         // empty file, must create the php tags
-        $new_contents = "<?php\n$new_entry\n?>";
+        $new_contents = "<?php\n{$new_entry}\n?>";
     } else {
         // existing file, try to replace
         $new_contents = replace_app_string(
@@ -581,23 +615,22 @@ function replace_or_add_app_string(
 
         if ($new_contents == $file_contents) {
             // replace failed, append to end of file
-            $new_contents = str_replace("?>", '', $file_contents);
-            $new_contents .= "\n$new_entry\n?>";
+            $new_contents = str_replace('?>', '', $file_contents);
+            $new_contents .= "\n{$new_entry}\n?>";
         }
     }
 
     return $new_contents;
 }
 
-
 function dropdown_duplicate_check($dropdown_type, &$file_contents)
 {
     if (!empty($dropdown_type) &&
         !empty($file_contents)) {
-        $pattern = '/\$app_list_strings\[\''. $dropdown_type .
+        $pattern = '/\$app_list_strings\[\'' . $dropdown_type .
             '\'\][\ ]*=[\ ]*array[\ ]*\([^\)]*\)[\ ]*;/';
 
-        $result = array();
+        $result = [];
         preg_match_all($pattern, $file_contents, $result);
 
         if (count($result[0]) > 1) {
@@ -605,8 +638,9 @@ function dropdown_duplicate_check($dropdown_type, &$file_contents)
             $new_contents = preg_replace($pattern, '', $file_contents);
 
             // Append the new entry.
-            $new_contents = str_replace("?>", '', $new_contents);
-            $new_contents .= "\n$new_entry\n?>";
+            $new_contents = str_replace('?>', '', $new_contents);
+            $new_contents .= "\n{$new_entry}\n?>";
+
             return $new_contents;
         }
 
@@ -626,7 +660,7 @@ function replace_dropdown_type(
     if (!empty($dropdown_type) &&
         is_array($dropdown_array) &&
         !empty($file_contents)) {
-        $pattern = '/\$app_list_strings\[\''. $dropdown_type .
+        $pattern = '/\$app_list_strings\[\'' . $dropdown_type .
             '\'\][\ ]*=[\ ]*array[\ ]*\([^\)]*\)[\ ]*;/';
         $replacement = override_value_to_string(
             'app_list_strings',
@@ -649,7 +683,7 @@ function replace_app_string(
     if (!empty($name) &&
         is_string($value) &&
         !empty($file_contents)) {
-        $pattern = '/\$app_strings\[\''. $name .'\'\][\ ]*=[\ ]*\'[^\']*\'[\ ]*;/';
+        $pattern = '/\$app_strings\[\'' . $name . '\'\][\ ]*=[\ ]*\'[^\']*\'[\ ]*;/';
         $replacement = override_value_to_string(
             'app_strings',
             $name,
@@ -665,9 +699,9 @@ function app_string_duplicate_check($name, &$file_contents)
 {
     if (!empty($name) &&
         !empty($file_contents)) {
-        $pattern = '/\$app_strings\[\''. $name .'\'\][\ ]*=[\ ]*\'[^\']*\'[\ ]*;/';
+        $pattern = '/\$app_strings\[\'' . $name . '\'\][\ ]*=[\ ]*\'[^\']*\'[\ ]*;/';
 
-        $result = array();
+        $result = [];
         preg_match_all($pattern, $file_contents, $result);
 
         if (count($result[0]) > 1) {
@@ -675,10 +709,12 @@ function app_string_duplicate_check($name, &$file_contents)
             $new_contents = preg_replace($pattern, '', $file_contents);
 
             // Append the new entry.
-            $new_contents = str_replace("?>", '', $new_contents);
-            $new_contents .= "\n$new_entry\n?>";
+            $new_contents = str_replace('?>', '', $new_contents);
+            $new_contents .= "\n{$new_entry}\n?>";
+
             return $new_contents;
         }
+
         return $file_contents;
     }
 

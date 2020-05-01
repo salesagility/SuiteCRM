@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,26 +36,25 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class TemplateHandler
 {
     /**
-     * @var string $cacheDir
+     * @var string
      */
     public $cacheDir;
 
     /**
-     * @var string $themeDir
+     * @var string
      */
     public $themeDir = 'themes/';
 
     /**
-     * @var string $templateDir
+     * @var string
      */
     public $templateDir = 'modules/';
 
     /**
-     * @var Sugar_Smarty|null $ss
+     * @var null|Sugar_Smarty
      */
     public $ss;
 
@@ -68,9 +66,6 @@ class TemplateHandler
         $this->cacheDir = sugar_cached('');
     }
 
-
-
-
     public function loadSmarty()
     {
         if ($this->ss === null) {
@@ -78,11 +73,9 @@ class TemplateHandler
         }
     }
 
-
     /**
      * clearAll
-     * Helper function to remove all .tpl files in the cache directory
-     *
+     * Helper function to remove all .tpl files in the cache directory.
      */
     public static function clearAll()
     {
@@ -92,13 +85,12 @@ class TemplateHandler
         }
     }
 
-
     /**
      * clearCache
-     * Helper function to remove cached .tpl files for a particular module
+     * Helper function to remove cached .tpl files for a particular module.
      *
-     * @param String $module The module directory to clear
-     * @param String $view Optional view value (DetailView, EditView, etc.)
+     * @param string $module The module directory to clear
+     * @param string $view Optional view value (DetailView, EditView, etc.)
      */
     public static function clearCache($module, $view = '')
     {
@@ -145,15 +137,14 @@ class TemplateHandler
 
     /**
      * Builds a template
-     * This is a private function that should be called only from checkTemplate method
+     * This is a private function that should be called only from checkTemplate method.
      *
      * @param string $module module name
      * @param string $view need (eg DetailView, EditView, etc)
      * @param string $tpl generic tpl to use
-     * @param boolean $ajaxSave parameter indicating whether or not this is coming from an Ajax call
+     * @param bool $ajaxSave parameter indicating whether or not this is coming from an Ajax call
      * @param array $metaDataDefs metadata definition as Array
-     * @return void
-     **/
+     */
     public function buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs)
     {
         global $theme;
@@ -167,7 +158,7 @@ class TemplateHandler
         // TODO: TASK: UNDEFINED - Move built_in_buttons into the metadata file.
         $this->ss->assign(
             'built_in_buttons',
-            array('CANCEL', 'DELETE', 'DUPLICATE', 'EDIT', 'FIND_DUPLICATES', 'SAVE', 'CONNECTOR')
+            ['CANCEL', 'DELETE', 'DUPLICATE', 'EDIT', 'FIND_DUPLICATES', 'SAVE', 'CONNECTOR']
         );
         $contents = $this->ss->fetch($tpl);
         // Insert validation and quick search stuff here
@@ -180,9 +171,9 @@ class TemplateHandler
             }
 
             $defs = $dictionary[$mod]['fields'];
-            $defs2 = array();
+            $defs2 = [];
             //Retrieve all panel field definitions with displayParams Array field set
-            $panelFields = array();
+            $panelFields = [];
 
             foreach ($metaDataDefs['panels'] as $panel) {
                 foreach ($panel as $row) {
@@ -192,8 +183,8 @@ class TemplateHandler
                         }
 
                         if (is_array($entry) &&
-                            isset($entry['name']) &&
-                            isset($entry['displayParams']['required']) &&
+                            isset($entry['name'], $entry['displayParams']['required'])
+                             &&
                             $entry['displayParams']['required']
                         ) {
                             $panelFields[$entry['name']] = $entry;
@@ -202,14 +193,14 @@ class TemplateHandler
                         if (is_array($entry)) {
                             $defs2[$entry['name']] = $entry;
                         } else {
-                            $defs2[$entry] = array('name' => $entry);
+                            $defs2[$entry] = ['name' => $entry];
                         }
                     } //foreach
                 } //foreach
             } //foreach
 
             foreach ($panelFields as $field => $value) {
-                $nameList = array();
+                $nameList = [];
                 if (!is_array($value['displayParams']['required'])) {
                     $nameList[] = $field;
                 } else {
@@ -219,8 +210,8 @@ class TemplateHandler
                 }
 
                 foreach ($nameList as $x) {
-                    if (isset($defs[$x]) &&
-                        isset($defs[$x]['type']) &&
+                    if (isset($defs[$x], $defs[$x]['type'])
+                         &&
                         !isset($defs[$x]['required'])
                     ) {
                         $defs[$x]['required'] = true;
@@ -238,11 +229,11 @@ class TemplateHandler
             $javascript->setFormName($view);
 
             $javascript->setSugarBean($sugarBean);
-            if ($view !== "ConvertLead") {
+            if ($view !== 'ConvertLead') {
                 $javascript->addAllFields('', null, true);
             }
 
-            $validatedFields = array();
+            $validatedFields = [];
             $javascript->addToValidateBinaryDependency(
                 'assigned_user_name',
                 'alpha',
@@ -271,7 +262,7 @@ class TemplateHandler
                     ) {
                         $vname = $def['vname'];
                     } else {
-                        $vname = "undefined";
+                        $vname = 'undefined';
                     }
                     $javascript->addToValidateBinaryDependency(
                         $name,
@@ -304,7 +295,7 @@ class TemplateHandler
 
                     $defs = $dictionary[$mod]['fields'];
                     $contents .= '{literal}';
-                    $contents .= $this->createQuickSearchCode($defs, array(), $view);
+                    $contents .= $this->createQuickSearchCode($defs, [], $view);
                     $contents .= '{/literal}';
                 }
             }
@@ -318,18 +309,18 @@ class TemplateHandler
             fclose($fh);
         }
 
-
         $this->ss->left_delimiter = '{';
         $this->ss->right_delimiter = '}';
     }
 
     /**
-     * Checks if a template exists
+     * Checks if a template exists.
      *
      * @param string $module module name
      * @param string $view view need (eg DetailView, EditView, etc)
      * @param bool $checkFormName
      * @param string $formName
+     *
      * @return bool
      */
     public function checkTemplate($module, $view, $checkFormName = false, $formName = '')
@@ -344,13 +335,14 @@ class TemplateHandler
     }
 
     /**
-     * Retrieves and displays a template
+     * Retrieves and displays a template.
      *
      * @param string $module module name
      * @param string $view need (eg DetailView, EditView, etc)
      * @param string $tpl generic tpl to use
-     * @param boolean $ajaxSave parameter indicating whether or not this is from an Ajax operation
-     * @param array|null $metaDataDefs Optional metadata definition Array
+     * @param bool $ajaxSave parameter indicating whether or not this is from an Ajax operation
+     * @param null|array $metaDataDefs Optional metadata definition Array
+     *
      * @return string
      */
     public function displayTemplate($module, $view, $tpl, $ajaxSave = false, $metaDataDefs = null)
@@ -363,20 +355,20 @@ class TemplateHandler
         $file = $this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl';
         if (file_exists($file)) {
             return $this->ss->fetch($file);
-        } else {
-            global $app_strings;
-            $GLOBALS['log']->fatal($app_strings['ERR_NO_SUCH_FILE'] . ": $file");
-
-            return $app_strings['ERR_NO_SUCH_FILE'] . ": $file";
         }
+        global $app_strings;
+        $GLOBALS['log']->fatal($app_strings['ERR_NO_SUCH_FILE'] . ": {$file}");
+
+        return $app_strings['ERR_NO_SUCH_FILE'] . ": {$file}";
     }
 
     /**
-     * Deletes an existing template
+     * Deletes an existing template.
      *
      * @param string $module module name
      * @param string $view view need (eg DetailView, EditView, etc)
-     * @return boolean true if successful
+     *
+     * @return bool true if successful
      */
     public function deleteTemplate($module, $view)
     {
@@ -395,7 +387,6 @@ class TemplateHandler
         return false;
     }
 
-
     /**
      * createQuickSearchCode
      * This function creates the $sqs_objects array that will be used by the quicksearch Javascript
@@ -405,17 +396,19 @@ class TemplateHandler
      * @param array $defs2 The Meta-Data file definitions
      * @param string $view
      * @param string $module
+     *
      * @return string
+     *
      * @internal param array $def The vardefs.php definitions
      */
     public function createQuickSearchCode($defs, $defs2, $view = '', $module = '')
     {
-        $sqs_objects = array();
-        require_once('include/QuickSearchDefaults.php');
+        $sqs_objects = [];
+        require_once 'include/QuickSearchDefaults.php';
         if ($this instanceof TemplateHandler) { //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
             $qsd = QuickSearchDefaults::getQuickSearchDefaults($this->getQSDLookup());
         } else {
-            $qsd = QuickSearchDefaults::getQuickSearchDefaults(array());
+            $qsd = QuickSearchDefaults::getQuickSearchDefaults([]);
         }
         $qsd->setFormName($view);
         if (preg_match('/^SearchForm_.+/', $view)) {
@@ -499,11 +492,11 @@ class TemplateHandler
                     } else {
                         $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSParent($field['module']);
                         if (!isset($field['field_list']) && !isset($field['populate_list'])) {
-                            $sqs_objects[$name . '_' . $parsedView]['populate_list'] = array(
+                            $sqs_objects[$name . '_' . $parsedView]['populate_list'] = [
                                 $field['name'],
                                 $field['id_name']
-                            );
-                            $sqs_objects[$name . '_' . $parsedView]['field_list'] = array('name', 'id');
+                            ];
+                            $sqs_objects[$name . '_' . $parsedView]['field_list'] = ['name', 'id'];
                         } else {
                             $sqs_objects[$name . '_' . $parsedView]['populate_list'] = $field['field_list'];
                             $sqs_objects[$name . '_' . $parsedView]['field_list'] = $field['populate_list'];
@@ -531,8 +524,8 @@ class TemplateHandler
                 $field = $defs[$f['name']];
                 if ($view === 'ConvertLead') {
                     $field['name'] = $module . $field['name'];
-                    if (isset($field['module']) &&
-                        isset($field['id_name']) &&
+                    if (isset($field['module'], $field['id_name'])
+                         &&
                         substr($field['id_name'], -4) === '_ida'
                     ) {
                         $lc_module = strtolower($field['module']);
@@ -549,7 +542,6 @@ class TemplateHandler
                     }
                 }
                 $name = $qsd->form_name . '_' . $field['name'];
-
 
                 if ($field['type'] === 'relate' && isset($field['module']) && (preg_match(
                     '/_name$|_c$/si',
@@ -611,12 +603,12 @@ class TemplateHandler
                                         if ($matches[0] === 'Contacts') {
                                             $sqs_objects[$name] = $qsd->getQSContact($field['name'], $field['id_name']);
                                             if (preg_match('/_c$/si', $name) || !empty($field['quicksearch'])) {
-                                                $sqs_objects[$name]['field_list'] = array(
+                                                $sqs_objects[$name]['field_list'] = [
                                                     'salutation',
                                                     'first_name',
                                                     'last_name',
                                                     'id'
-                                                );
+                                                ];
                                             }
                                         }
                                     }
@@ -626,21 +618,21 @@ class TemplateHandler
                     } else {
                         $sqs_objects[$name] = $qsd->getQSParent($field['module']);
                         if (!isset($field['field_list']) && !isset($field['populate_list'])) {
-                            $sqs_objects[$name]['populate_list'] = array($field['name'], $field['id_name']);
+                            $sqs_objects[$name]['populate_list'] = [$field['name'], $field['id_name']];
                             // now handle quicksearches where the column to match is not 'name' but rather specified in 'rname'
                             if (!isset($field['rname'])) {
-                                $sqs_objects[$name]['field_list'] = array('name', 'id');
+                                $sqs_objects[$name]['field_list'] = ['name', 'id'];
                             } else {
-                                $sqs_objects[$name]['field_list'] = array($field['rname'], 'id');
+                                $sqs_objects[$name]['field_list'] = [$field['rname'], 'id'];
                                 $sqs_objects[$name]['order'] = $field['rname'];
-                                $sqs_objects[$name]['conditions'] = array(
-                                    array(
+                                $sqs_objects[$name]['conditions'] = [
+                                    [
                                         'name' => $field['rname'],
                                         'op' => 'like_custom',
                                         'end' => '%',
                                         'value' => ''
-                                    )
-                                );
+                                    ]
+                                ];
                             }
                         } else {
                             $sqs_objects[$name]['populate_list'] = $field['field_list'];
@@ -676,6 +668,7 @@ class TemplateHandler
                                 $populate_list_item === $sqs_objects[$name]['field_list'][$k]
                             ) {
                                 $found = true;
+
                                 break;
                             }
                         }
@@ -694,7 +687,7 @@ class TemplateHandler
             $quicksearch_js .= 'if(typeof sqs_objects == \'undefined\'){var sqs_objects = new Array;}';
             $json = getJSONobj();
             foreach ($sqs_objects as $sqsfield => $sqsfieldArray) {
-                $quicksearch_js .= "sqs_objects['$sqsfield']={$json->encode($sqsfieldArray)};";
+                $quicksearch_js .= "sqs_objects['{$sqsfield}']={$json->encode($sqsfieldArray)};";
             }
 
             return $quicksearch_js . '</script>';
@@ -703,14 +696,15 @@ class TemplateHandler
         return '';
     }
 
-
     /**
-     * Get lookup array for QuickSearchDefaults custom class
+     * Get lookup array for QuickSearchDefaults custom class.
+     *
      * @return array
+     *
      * @see QuickSearchDefaults::getQuickSearchDefaults()
      */
     protected function getQSDLookup()
     {
-        return array();
+        return [];
     }
 }

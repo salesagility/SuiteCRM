@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,21 +40,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class TemplateDecimal extends TemplateFloat
 {
     public $type = 'decimal';
-    public $default = null;
-    public $default_value = null;
+    public $default;
+    public $default_value;
 
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function get_db_type()
     {
@@ -62,6 +57,7 @@ class TemplateDecimal extends TemplateFloat
             return parent::get_db_type();
         }
         $precision = (!empty($this->precision)) ? $this->precision : 6;
-        return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $this->len, $precision);
+
+        return ' ' . sprintf(DBManagerFactory::getInstance()->getColumnType('decimal_tpl'), $this->len, $precision);
     }
 }

@@ -39,10 +39,10 @@
 
 namespace SuiteCRM\Search;
 
-use SugarBean;
 use BeanFactory;
 use LoggerManager;
 use RuntimeException;
+use SugarBean;
 use SuiteCRM\Exception\Exception;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -58,7 +58,7 @@ class SearchResults
 {
     /** @var array Contains the results ids */
     private $hits;
-    /** @var array Contains the scores of each hit. This should match in structure with $hits */
+    /** @var array Contains the scores of each hit. This should match in structure with */
     private $scores;
     /** @var array Similar to scores, but customisable by the search engine */
     private $options;
@@ -109,6 +109,7 @@ class SearchResults
      * Fetches the results (originally just module->id) as Beans.
      *
      * @see getHits()
+     *
      * @return array
      */
     public function getHitsAsBeans()
@@ -117,9 +118,9 @@ class SearchResults
         $parsed = [];
 
         foreach ($hits as $module => $beans) {
-            foreach ((array)$beans as $bean) {
+            foreach ((array) $beans as $bean) {
                 $obj = BeanFactory::getBean($module, $bean);
-                
+
                 // if a search found a bean but suitecrm does not, it could happens
                 // maybe the bean is deleted but elsasticsearch is not re-indexing yet.
                 // so at this point we trying to rebuild the index and try again to get bean:
@@ -127,7 +128,7 @@ class SearchResults
                     ElasticSearch\ElasticSearchIndexer::repairElasticsearchIndex();
                     $obj = BeanFactory::getBean($module, $bean);
                 }
-                
+
                 if (!$obj) {
                     throw new Exception('Error retrieveing bean: ' . $module . ' [' . $bean . ']');
                 }
@@ -139,79 +140,6 @@ class SearchResults
         }
 
         return $parsed;
-    }
-    
-    /**
-     *
-     * @param SugarBean $obj
-     * @param array $fieldDefs
-     * @return SugarBean
-     */
-    protected function updateFieldDefLinks(SugarBean $obj, $fieldDefs)
-    {
-        foreach ($fieldDefs as &$fieldDef) {
-            if (isset($obj->{$fieldDef['name']})) {
-                $obj = $this->updateObjLinks($obj, $fieldDef);
-            }
-        }
-        return $obj;
-    }
-    
-    /**
-     * Update related links in a bean to show it on results page
-     *
-     * @param SugarBean $obj
-     * @param array $fieldDef
-     * @return SugarBean
-     */
-    protected function updateObjLinks(SugarBean $obj, &$fieldDef)
-    {
-        if ($fieldDef['type'] == 'relate' && isset($fieldDef['link']) && isset($fieldDef['id_name']) && $fieldDef['id_name']) {
-            $relId = $this->getRelatedId($obj, $fieldDef['id_name'], $fieldDef['link']);
-            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
-        } elseif ($fieldDef['name'] == 'name') {
-            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
-        }
-        return $obj;
-    }
-    
-    /**
-     * resolve related record ID
-     *
-     * @param string $idName
-     * @param string $link
-     * @return null|string
-     */
-    protected function getRelatedId(SugarBean $obj, $idName, $link)
-    {
-        $relId = $obj->id;
-        $relField = $idName;
-        if (isset($obj->$link)) {
-            $link2 = $obj->$link;
-            $link2Focus = $link2->getFocus();
-            $relId = $link2Focus->$relField;
-        } elseif (isset($obj->$relField)) {
-            $relId = $obj->$relField;
-        } else {
-            LoggerManager::getLogger()->warn('Unresolved related ID for field: '. $relField);
-        }
-        return $relId;
-    }
-    
-    /**
-     *
-     * @global array $sugar_config
-     * @param string $label
-     * @param string $module
-     * @param string $record
-     * @param string $action
-     * @return string
-     */
-    protected function getLink($label, $module, $record, $action)
-    {
-        global $sugar_config;
-        $link = "<a href=\"{$sugar_config['site_url']}/index.php?action={$action}&module={$module}&record={$record}&offset=1\"><span>{$label}</span></a>";
-        return $link;
     }
 
     /**
@@ -268,5 +196,85 @@ class SearchResults
     public function isGroupedByModule()
     {
         return $this->groupedByModule;
+    }
+
+    /**
+     * @param SugarBean $obj
+     * @param array $fieldDefs
+     *
+     * @return SugarBean
+     */
+    protected function updateFieldDefLinks(SugarBean $obj, $fieldDefs)
+    {
+        foreach ($fieldDefs as &$fieldDef) {
+            if (isset($obj->{$fieldDef['name']})) {
+                $obj = $this->updateObjLinks($obj, $fieldDef);
+            }
+        }
+
+        return $obj;
+    }
+
+    /**
+     * Update related links in a bean to show it on results page.
+     *
+     * @param SugarBean $obj
+     * @param array $fieldDef
+     *
+     * @return SugarBean
+     */
+    protected function updateObjLinks(SugarBean $obj, &$fieldDef)
+    {
+        if ($fieldDef['type'] == 'relate' && isset($fieldDef['link'], $fieldDef['id_name']) && $fieldDef['id_name']) {
+            $relId = $this->getRelatedId($obj, $fieldDef['id_name'], $fieldDef['link']);
+            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
+        } elseif ($fieldDef['name'] == 'name') {
+            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
+        }
+
+        return $obj;
+    }
+
+    /**
+     * resolve related record ID.
+     *
+     * @param string $idName
+     * @param string $link
+     *
+     * @return null|string
+     */
+    protected function getRelatedId(SugarBean $obj, $idName, $link)
+    {
+        $relId = $obj->id;
+        $relField = $idName;
+        if (isset($obj->{$link})) {
+            $link2 = $obj->{$link};
+            $link2Focus = $link2->getFocus();
+            $relId = $link2Focus->{$relField};
+        } elseif (isset($obj->{$relField})) {
+            $relId = $obj->{$relField};
+        } else {
+            LoggerManager::getLogger()->warn('Unresolved related ID for field: ' . $relField);
+        }
+
+        return $relId;
+    }
+
+    /**
+     * @global array $sugar_config
+     *
+     * @param string $label
+     * @param string $module
+     * @param string $record
+     * @param string $action
+     *
+     * @return string
+     */
+    protected function getLink($label, $module, $record, $action)
+    {
+        global $sugar_config;
+        $link = "<a href=\"{$sugar_config['site_url']}/index.php?action={$action}&module={$module}&record={$record}&offset=1\"><span>{$label}</span></a>";
+
+        return $link;
     }
 }

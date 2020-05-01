@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,14 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  This class is used to include the json server config inline. Previous method
  * of using <script src=json_server.php></script> causes multiple server hits per page load
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 global $app_strings, $json;
 $json = getJSONobj();
@@ -77,11 +78,11 @@ class json_config
     {
         global $json, $sugar_config;
 
-        $str = "\nvar ". $this->global_registry_var_name." = new Object();\n";
-        $str .= "\n".$this->global_registry_var_name.".config = {\"site_url\":\"".getJavascriptSiteURL()."\"};\n";
+        $str = "\nvar " . $this->global_registry_var_name . " = new Object();\n";
+        $str .= "\n" . $this->global_registry_var_name . '.config = {"site_url":"' . getJavascriptSiteURL() . "\"};\n";
 
-        $str .= $this->global_registry_var_name.".meta = new Object();\n";
-        $str .= $this->global_registry_var_name.".meta.modules = new Object();\n";
+        $str .= $this->global_registry_var_name . ".meta = new Object();\n";
+        $str .= $this->global_registry_var_name . ".meta.modules = new Object();\n";
 
         /*
         $modules_arr = array('Meetings','Calls');
@@ -112,9 +113,9 @@ class json_config
         } else {
             $theme = $sugar_config['default_theme'];
         }
-        $user_arr = array();
+        $user_arr = [];
         $user_arr['theme'] = $theme;
-        $user_arr['fields'] = array();
+        $user_arr['fields'] = [];
         $user_arr['module'] = 'User';
         $user_arr['fields']['id'] = $current_user->id;
         $user_arr['fields']['user_name'] = $current_user->user_name;
@@ -124,7 +125,8 @@ class json_config
         $user_arr['fields']['email'] = $current_user->email1;
         $user_arr['fields']['gmt_offset'] = $timedate->getUserUTCOffset();
         $user_arr['fields']['date_time_format'] = $current_user->getUserDateTimePreferences();
-        $str = "\n".$this->global_registry_var_name.".current_user = ".$json->encode($user_arr).";\n";
+        $str = "\n" . $this->global_registry_var_name . '.current_user = ' . $json->encode($user_arr) . ";\n";
+
         return $str;
     }
 
@@ -133,23 +135,23 @@ class json_config
         global $json;
         if (empty($module)) {
             return '';
-        } else {
-            if (empty($record)) {
-                return "\n".$this->global_registry_var_name.'["focus"] = {"module":"'.$module.'",users_arr:[],fields:{"id":"-1"}}'."\n";
-            }
+        }
+        if (empty($record)) {
+            return "\n" . $this->global_registry_var_name . '["focus"] = {"module":"' . $module . '",users_arr:[],fields:{"id":"-1"}}' . "\n";
         }
 
         $module_arr = $this->meeting_retrieve($module, $record);
-        return "\n".$this->global_registry_var_name."['focus'] = ". $json->encode($module_arr).";\n";
+
+        return "\n" . $this->global_registry_var_name . "['focus'] = " . $json->encode($module_arr) . ";\n";
     }
 
-    /*	multiple project module related changes added by haris raheem*/
+    // multiple project module related changes added by haris raheem
     public function meeting_retrieve($module, $record)
     {
         global $json, $response;
         global $beanFiles, $beanList;
-        require_once($beanFiles[$beanList[$module]]);
-        $focus = new $beanList[$module];
+        require_once $beanFiles[$beanList[$module]];
+        $focus = new $beanList[$module]();
 
         if (empty($module) || empty($record)) {
             return '';
@@ -166,40 +168,39 @@ class json_config
             } else {
                 if ($module == 'Project') {
                     $focus->load_relationships('users');
-                    $users=$focus->get_linked_beans('project_users_1', 'User');
+                    $users = $focus->get_linked_beans('project_users_1', 'User');
                 } else {
                     if ($module == 'AM_ProjectTemplates') {
                         $focus->load_relationships('users');
-                        $users=$focus->get_linked_beans('am_projecttemplates_users_1', 'User');
+                        $users = $focus->get_linked_beans('am_projecttemplates_users_1', 'User');
                     }
                 }
             }
         }
-        
-        
-        $module_arr['users_arr'] = array();
+
+        $module_arr['users_arr'] = [];
 
         foreach ($users as $user) {
             array_push($module_arr['users_arr'], $this->populateBean($user));
         }
 
-        $module_arr['orig_users_arr_hash'] = array();
+        $module_arr['orig_users_arr_hash'] = [];
 
         foreach ($users as $user) {
             $module_arr['orig_users_arr_hash'][$user->id] = '1';
         }
 
-        $module_arr['contacts_arr'] = array();
+        $module_arr['contacts_arr'] = [];
 
         $focus->load_relationships('contacts');
 
         if ($module == 'Project') {
-            $contacts=$focus->get_linked_beans('project_contacts_1', 'Contact');
+            $contacts = $focus->get_linked_beans('project_contacts_1', 'Contact');
         } else {
             if ($module == 'AM_ProjectTemplates') {
-                $contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
+                $contacts = $focus->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
             } else {
-                $contacts=$focus->get_linked_beans('contacts', 'Contact');
+                $contacts = $focus->get_linked_beans('contacts', 'Contact');
             }
         }
 
@@ -207,15 +208,16 @@ class json_config
             array_push($module_arr['users_arr'], $this->populateBean($contact));
         }
 
-        $module_arr['leads_arr'] = array();
+        $module_arr['leads_arr'] = [];
 
         if ($module != 'Project' && $module != 'AM_ProjectTemplates') {
             $focus->load_relationships('leads');
-            $leads=$focus->get_linked_beans('leads', 'Lead');
+            $leads = $focus->get_linked_beans('leads', 'Lead');
             foreach ($leads as $lead) {
                 array_push($module_arr['users_arr'], $this->populateBean($lead));
             }
         }
+
         return $module_arr;
     }
 
@@ -226,40 +228,42 @@ class json_config
         $mod_list_strings = return_mod_list_strings_language($current_language, $currentModule);
 
         global $json;
-        $str = "\n".$this->global_registry_var_name."['calendar_strings'] =  {\"dom_cal_month_long\":". $json->encode($mod_list_strings['dom_cal_month_long']).",\"dom_cal_weekdays_long\":". $json->encode($mod_list_strings['dom_cal_weekdays_long'])."}\n";
+        $str = "\n" . $this->global_registry_var_name . "['calendar_strings'] =  {\"dom_cal_month_long\":" . $json->encode($mod_list_strings['dom_cal_month_long']) . ',"dom_cal_weekdays_long":' . $json->encode($mod_list_strings['dom_cal_weekdays_long']) . "}\n";
         if (empty($module)) {
             $module = 'Home';
         }
         $currentModule = $module;
         $mod_strings = return_module_language($current_language, $currentModule);
-        return  $str . "\n".$this->global_registry_var_name."['meeting_strings'] =  ". $json->encode($mod_strings)."\n";
+
+        return  $str . "\n" . $this->global_registry_var_name . "['meeting_strings'] =  " . $json->encode($mod_strings) . "\n";
     }
 
     // HAS MEETING SPECIFIC CODE:
     public function populateBean(&$focus)
     {
-        require_once('include/utils/db_utils.php');
+        require_once 'include/utils/db_utils.php';
         $all_fields = $focus->column_fields;
         // MEETING SPECIFIC
-        $all_fields = array_merge($all_fields, array('required','accept_status','name')); // need name field for contacts and users
+        $all_fields = array_merge($all_fields, ['required', 'accept_status', 'name']); // need name field for contacts and users
         $all_fields = $this->listFilter($focus->module_dir, $all_fields);
         //$all_fields = array_merge($focus->column_fields,$focus->additional_column_fields);
 
-        $module_arr = array();
+        $module_arr = [];
 
         $module_arr['module'] = $focus->object_name;
 
-        $module_arr['fields'] = array();
+        $module_arr['fields'] = [];
 
         foreach ($all_fields as $field) {
-            if (isset($focus->$field) && !is_object($focus->$field)) {
-                $focus->$field =  from_html($focus->$field);
-                $focus->$field =  preg_replace("/\r\n/", "<BR>", $focus->$field);
-                $focus->$field =  preg_replace("/\n/", "<BR>", $focus->$field);
-                $module_arr['fields'][$field] = $focus->$field;
+            if (isset($focus->{$field}) && !is_object($focus->{$field})) {
+                $focus->{$field} = from_html($focus->{$field});
+                $focus->{$field} = preg_replace("/\r\n/", '<BR>', $focus->{$field});
+                $focus->{$field} = preg_replace("/\n/", '<BR>', $focus->{$field});
+                $module_arr['fields'][$field] = $focus->{$field};
             }
         }
-        $GLOBALS['log']->debug("JSON_SERVER:populate bean:");
+        $GLOBALS['log']->debug('JSON_SERVER:populate bean:');
+
         return $module_arr;
     }
 
@@ -278,8 +282,8 @@ class json_config
             return $fields;
         }
 
-        $noAccessFields = array(
-            'Users' => array(
+        $noAccessFields = [
+            'Users' => [
                 'show_on_employees' => true,
                 'portal_only' => true,
                 'is_group' => true,
@@ -293,17 +297,19 @@ class json_config
                 'user_hash' => true,
                 'password' => true,
                 'last_login' => true,
-            ),
-        );
+            ],
+        ];
         if (!empty($noAccessFields[$module])) {
             $fields = array_diff($fields, array_keys($noAccessFields[$module]));
         }
+
         return $fields;
     }
 
     /**
-     * Get current user
-     * @return User|null
+     * Get current user.
+     *
+     * @return null|User
      */
     protected function getCurrentUser()
     {

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/generic/SugarWidgets/SugarWidgetSubPanelTopButton.php');
+require_once 'include/generic/SugarWidgets/SugarWidgetSubPanelTopButton.php';
 
 class SugarWidgetSubPanelDelegatesSelectButton extends SugarWidgetSubPanelTopButton
 {
@@ -49,10 +48,10 @@ class SugarWidgetSubPanelDelegatesSelectButton extends SugarWidgetSubPanelTopBut
     {
         global $mod_strings;
         $button = "<script src='include/javascript/checkbox.js' type='text/javascript'></script>";
-        $button  .= "<form id='CustSelectForm' name='CustSelectForm' method='post' action=''>";
+        $button .= "<form id='CustSelectForm' name='CustSelectForm' method='post' action=''>";
 
         // $button .= "<input id='custom_hidden_5' type='hidden' name='custom_hidden_5' value=''/>";
-        $button .= "<input id='Custom_Select' class='button' type='button' name='Custom_Select' onclick='select_targets()' value='".$mod_strings['LBL_SELECT_DELEGATES']."'/>\n</form>";
+        $button .= "<input id='Custom_Select' class='button' type='button' name='Custom_Select' onclick='select_targets()' value='" . $mod_strings['LBL_SELECT_DELEGATES'] . "'/>\n</form>";
 
         return $button;
     }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,22 +40,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class ViewConfigureAjaxUI extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        return array(
-            "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME') . "</a>",
-            translate('LBL_CONFIG_AJAX')
-        );
-    }
-
     /**
      * @see SugarView::preDisplay()
      */
@@ -64,7 +50,7 @@ class ViewConfigureAjaxUI extends SugarView
         global $current_user;
 
         if (!is_admin($current_user)) {
-            sugar_die("Unauthorized access to administration.");
+            sugar_die('Unauthorized access to administration.');
         }
     }
 
@@ -75,18 +61,18 @@ class ViewConfigureAjaxUI extends SugarView
     {
         global $sugar_config, $moduleList;
         //create array of subpanels to show, used to create Drag and Drop widget
-        $enabled = array();
-        $disabled = array();
+        $enabled = [];
+        $disabled = [];
         $banned = ajaxBannedModules();
 
         foreach ($moduleList as $module) {
             if (!in_array($module, $banned)) {
-                $enabled[] = array("module" => $module, 'label' => translate($module));
+                $enabled[] = ['module' => $module, 'label' => translate($module)];
             }
         }
         if (!empty($sugar_config['addAjaxBannedModules'])) {
             foreach ($sugar_config['addAjaxBannedModules'] as $module) {
-                $disabled[] = array("module" => $module, 'label' => translate($module));
+                $disabled[] = ['module' => $module, 'label' => translate($module)];
             }
         }
 
@@ -95,5 +81,18 @@ class ViewConfigureAjaxUI extends SugarView
         $this->ss->assign('title', $this->getModuleTitle(false));
 
         echo $this->ss->fetch('modules/Administration/templates/ConfigureAjaxUI.tpl');
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        return [
+            "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME') . '</a>',
+            translate('LBL_CONFIG_AJAX')
+        ];
     }
 }

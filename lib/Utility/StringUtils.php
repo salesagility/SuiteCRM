@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class StringUtils
 {
     /**
-     * Converts a string from camelCase to snake_case
+     * Converts a string from camelCase to snake_case.
      *
      * @param string $input
      * @param bool   $uppercase

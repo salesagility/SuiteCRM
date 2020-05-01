@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -61,7 +59,7 @@ class formLetter
     public static function getModuleTemplates($module)
     {
         $db = DBManagerFactory::getInstance();
-        $templates = array();
+        $templates = [];
 
         $sql = "SELECT id,name FROM aos_pdf_templates WHERE type = '" . $module . "' AND deleted = 0  AND active = 1 ORDER BY name";
         $result = $db->query($sql);
@@ -173,8 +171,10 @@ class formLetter
             echo '</tbody></table>
                               <input type="hidden" name="templateID" value="" />
                             <input type="hidden" name="module" value="' . $module . '" />
-                            <input type="hidden" name="uid" value="' . clean_string($_REQUEST['record'],
-                    'STANDARDSPACE') . '" />
+                            <input type="hidden" name="uid" value="' . clean_string(
+                $_REQUEST['record'],
+                'STANDARDSPACE'
+            ) . '" />
                            </form>
                         </div>
                      </div>

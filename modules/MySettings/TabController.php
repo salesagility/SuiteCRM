@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,11 +40,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class TabController
 {
-    public $required_modules = array('Home');
+    public $required_modules = ['Home'];
 
     /**
      * @var bool flag of validation of the cache
@@ -55,25 +53,25 @@ class TabController
     {
         $administration = new Administration();
         $administration->retrieveSettings('MySettings');
-        if (isset($administration->settings) && isset($administration->settings['MySettings_tab'])) {
+        if (isset($administration->settings, $administration->settings['MySettings_tab'])) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function get_system_tabs()
     {
         global $moduleList;
-    
+
         static $system_tabs_result = null;
-    
+
         // if the value is not already cached, then retrieve it.
         if (empty($system_tabs_result) || !self::$isCacheValid) {
             $administration = new Administration();
             $administration->retrieveSettings('MySettings');
-            if (isset($administration->settings) && isset($administration->settings['MySettings_tab'])) {
-                $tabs= $administration->settings['MySettings_tab'];
+            if (isset($administration->settings, $administration->settings['MySettings_tab'])) {
+                $tabs = $administration->settings['MySettings_tab'];
                 $trimmed_tabs = trim($tabs);
                 //make sure serialized string is not empty
                 if (!empty($trimmed_tabs)) {
@@ -96,7 +94,7 @@ class TabController
             }
             self::$isCacheValid = true;
         }
-        
+
         return $system_tabs_result;
     }
 
@@ -108,7 +106,7 @@ class TabController
         foreach ($tabs as $tab) {
             unset($unsetTabs[$tab]);
         }
-    
+
         $should_hide_iframes = !file_exists('modules/iFrames/iFrame.php');
         if ($should_hide_iframes) {
             if (isset($unsetTabs['iFrames'])) {
@@ -120,11 +118,8 @@ class TabController
             }
         }
 
-        return array($tabs,$unsetTabs);
+        return [$tabs, $unsetTabs];
     }
-
-
-
 
     public function set_system_tabs($tabs)
     {
@@ -138,11 +133,12 @@ class TabController
     {
         $administration = new Administration();
         $administration->retrieveSettings('MySettings');
-        if (isset($administration->settings) && isset($administration->settings['MySettings_disable_useredit'])) {
+        if (isset($administration->settings, $administration->settings['MySettings_disable_useredit'])) {
             if ($administration->settings['MySettings_disable_useredit'] == 'yes') {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -159,45 +155,45 @@ class TabController
         }
     }
 
-
     public function get_key_array($arr)
     {
-        $new = array();
+        $new = [];
         if (!empty($arr)) {
             foreach ($arr as $val) {
                 $new[$val] = $val;
             }
         }
+
         return $new;
     }
 
-    public function set_user_tabs($tabs, &$user, $type='display')
+    public function set_user_tabs($tabs, &$user, $type = 'display')
     {
         if (empty($user)) {
             global $current_user;
-            $current_user->setPreference($type .'_tabs', $tabs);
+            $current_user->setPreference($type . '_tabs', $tabs);
         } else {
-            $user->setPreference($type .'_tabs', $tabs);
+            $user->setPreference($type . '_tabs', $tabs);
         }
     }
 
-    public function get_user_tabs(&$user, $type='display')
+    public function get_user_tabs(&$user, $type = 'display')
     {
         $system_tabs = $this->get_system_tabs();
-        $tabs = $user->getPreference($type .'_tabs');
+        $tabs = $user->getPreference($type . '_tabs');
         if (!empty($tabs)) {
             $tabs = $this->get_key_array($tabs);
             if ($type == 'display') {
-                $tabs['Home'] =  'Home';
+                $tabs['Home'] = 'Home';
             }
+
             return $tabs;
-        } else {
-            if ($type == 'display') {
-                return $system_tabs;
-            } else {
-                return array();
-            }
         }
+        if ($type == 'display') {
+            return $system_tabs;
+        }
+
+        return [];
     }
 
     public function get_unset_tabs($user)
@@ -208,27 +204,29 @@ class TabController
         foreach ($tabs as $tab) {
             unset($unsetTabs[$tab]);
         }
+
         return $unsetTabs;
     }
 
     public function get_old_user_tabs($user)
     {
         $system_tabs = $this->get_system_tabs();
-    
+
         $tabs = $user->getPreference('tabs');
-    
+
         if (!empty($tabs)) {
             $tabs = $this->get_key_array($tabs);
-            $tabs['Home'] =  'Home';
+            $tabs['Home'] = 'Home';
             foreach ($tabs as $tab) {
                 if (!isset($system_tabs[$tab])) {
                     unset($tabs[$tab]);
                 }
             }
+
             return $tabs;
-        } else {
-            return $system_tabs;
         }
+
+        return $system_tabs;
     }
 
     public function get_old_tabs($user)
@@ -239,8 +237,8 @@ class TabController
         foreach ($tabs as $tab) {
             unset($system_tabs[$tab]);
         }
-    
-        return array($tabs,$system_tabs);
+
+        return [$tabs, $system_tabs];
     }
 
     public function get_tabs($user)
@@ -249,10 +247,10 @@ class TabController
         $hide_tabs = $this->get_user_tabs($user, 'hide');
         $remove_tabs = $this->get_user_tabs($user, 'remove');
         $system_tabs = $this->get_system_tabs();
-    
+
         // remove access to tabs that roles do not give them permission to
 
-        foreach ($system_tabs as $key=>$value) {
+        foreach ($system_tabs as $key => $value) {
             if (!isset($display_tabs[$key])) {
                 $display_tabs[$key] = $value;
             }
@@ -260,7 +258,7 @@ class TabController
 
         // removes tabs from display_tabs if not existant in roles
         // or exist in the hidden tabs
-        foreach ($display_tabs as $key=>$value) {
+        foreach ($display_tabs as $key => $value) {
             if (!isset($system_tabs[$key])) {
                 unset($display_tabs[$key]);
             }
@@ -270,14 +268,14 @@ class TabController
         }
 
         // removes tabs from hide_tabs if not existant in roles
-        foreach ($hide_tabs as $key=>$value) {
+        foreach ($hide_tabs as $key => $value) {
             if (!isset($system_tabs[$key])) {
                 unset($hide_tabs[$key]);
             }
         }
-        
+
         // remove tabs from user if admin has removed specific tabs
-        foreach ($remove_tabs as $key=>$value) {
+        foreach ($remove_tabs as $key => $value) {
             if (isset($display_tabs[$key])) {
                 unset($display_tabs[$key]);
             }
@@ -286,7 +284,7 @@ class TabController
             }
         }
 
-        return array($display_tabs, $hide_tabs, $remove_tabs);
+        return [$display_tabs, $hide_tabs, $remove_tabs];
     }
 
     public function restore_tabs($user)

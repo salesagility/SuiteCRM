@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,23 +36,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/charts/Charts.php');
+require_once 'include/charts/Charts.php';
 
 class Chart_pipeline_by_sales_stage
 {
-    public $modules = array('Opportunities');
+    public $modules = ['Opportunities'];
     public $order = 0;
+
     public function __construct()
     {
     }
-
-
-
 
     public function draw($extra_tools)
     {
@@ -69,7 +65,6 @@ class Chart_pipeline_by_sales_stage
 
         $user_dateFormat = $timedate->get_date_format();
         $current_module_strings = return_module_language($current_language, 'Charts');
-
 
         if (isset($_REQUEST['pbss_refresh'])) {
             $refresh = $_REQUEST['pbss_refresh'];
@@ -110,26 +105,26 @@ class Chart_pipeline_by_sales_stage
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] is:");
             $GLOBALS['log']->debug($current_user->getPreference('pbss_date_end'));
         } else {
-            $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
-            $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: ".$date_end);
+            $date_end = $timedate->asUserDate($timedate->fromString('2010-01-01'));
+            $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: " . $date_end);
         }
 
         // cn: format date_start|end to user's preferred
-        $dateDisplayStart	= strftime($timedate->get_user_date_format(), strtotime($date_start));
-        $dateDisplayEnd   	= strftime($timedate->get_user_date_format(), strtotime($date_end));
-        $seps				= array("-", "/");
-        $dates				= array($date_start, $date_end);
-        $dateFileNameSafe	= str_replace($seps, "_", $dates);
-        $dateXml[0]			= $timedate->swap_formats($date_start, $user_dateFormat, $timedate->dbDayFormat);
-        $dateXml[1]			= $timedate->swap_formats($date_end, $user_dateFormat, $timedate->dbDayFormat);
+        $dateDisplayStart = strftime($timedate->get_user_date_format(), strtotime($date_start));
+        $dateDisplayEnd = strftime($timedate->get_user_date_format(), strtotime($date_end));
+        $seps = ['-', '/'];
+        $dates = [$date_start, $date_end];
+        $dateFileNameSafe = str_replace($seps, '_', $dates);
+        $dateXml[0] = $timedate->swap_formats($date_start, $user_dateFormat, $timedate->dbDayFormat);
+        $dateXml[1] = $timedate->swap_formats($date_end, $user_dateFormat, $timedate->dbDayFormat);
 
-        $tempx = array();
-        $datax = array();
-        $datax_selected= array();
+        $tempx = [];
+        $datax = [];
+        $datax_selected = [];
         $user_tempx = $current_user->getPreference('pbss_sales_stages');
         //get list of sales stage keys to display
         if (!empty($user_tempx) && count($user_tempx) > 0 && !isset($_REQUEST['pbss_sales_stages'])) {
-            $tempx = $user_tempx ;
+            $tempx = $user_tempx;
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_sales_stages'] is:");
             $GLOBALS['log']->debug($user_tempx);
         } elseif (isset($_REQUEST['pbss_sales_stages']) && count($_REQUEST['pbss_sales_stages']) > 0) {
@@ -151,11 +146,11 @@ class Chart_pipeline_by_sales_stage
             $datax = $app_list_strings['sales_stage_dom'];
             $datax_selected = array_keys($app_list_strings['sales_stage_dom']);
         }
-        $GLOBALS['log']->debug("datax is:");
+        $GLOBALS['log']->debug('datax is:');
         $GLOBALS['log']->debug($datax);
 
-        $ids = array();
-        $new_ids = array();
+        $ids = [];
+        $new_ids = [];
         $user_ids = $current_user->getPreference('pbss_ids');
         //get list of user ids for which to display data
         if (!empty($user_ids) && count($user_ids) != 0 && !isset($_REQUEST['pbss_ids'])) {
@@ -184,27 +179,26 @@ class Chart_pipeline_by_sales_stage
                 $id_hash = $id_hash * -1;
             }
         }
-        $GLOBALS['log']->debug("ids is:");
+        $GLOBALS['log']->debug('ids is:');
         $GLOBALS['log']->debug($ids);
 
-        $cache_file_name	= sugar_cached("xml/").$current_user->getUserPrivGuid()."_lead_source_by_outcome_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
+        $cache_file_name = sugar_cached('xml/') . $current_user->getUserPrivGuid() . '_lead_source_by_outcome_' . $dateFileNameSafe[0] . '_' . $dateFileNameSafe[1] . '.xml';
 
-        $GLOBALS['log']->debug("cache file name is: $cache_file_name");
+        $GLOBALS['log']->debug("cache file name is: {$cache_file_name}");
 
-        $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&pbss_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'pipeline_by_sales_stage_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a>&nbsp;&nbsp;'.$extra_tools.'</div>';
+        $tools = '<div align="right"><a href="index.php?module=' . $currentModule . '&action=' . $action . '&pbss_refresh=true" class="tabFormAdvLink">' . SugarThemeRegistry::current()->getImage('refresh', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_REFRESH']) . '&nbsp;' . $current_module_strings['LBL_REFRESH'] . '</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'pipeline_by_sales_stage_edit\');" class="tabFormAdvLink">' . SugarThemeRegistry::current()->getImage('edit', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_EDIT']) . '&nbsp;' . $current_module_strings['LBL_EDIT'] . '</a>&nbsp;&nbsp;' . $extra_tools . '</div>';
 
         echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_SALES_STAGE_FORM_TITLE'], $tools, false) . '</span>'; ?>
 
 <?php
-    $cal_lang = "en";
+    $cal_lang = 'en';
         $cal_dateformat = $timedate->get_cal_date_format();
         if (empty($_SESSION['pbss_sales_stages'])) {
-            $_SESSION['pbss_sales_stages'] = "";
+            $_SESSION['pbss_sales_stages'] = '';
         }
         if (empty($_SESSION['pbss_ids'])) {
-            $_SESSION['pbss_ids'] = "";
+            $_SESSION['pbss_ids'] = '';
         }
-
 
         // set populate values
         $puser_date_start = $current_user->getPreference('user_date_start'); ?>
@@ -216,13 +210,13 @@ class Chart_pipeline_by_sales_stage
 <input type="hidden" name="pbss_refresh" value="true">
 <table cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
 <tr>
-	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_START']?></b> <br><span class="dateFormat"><?php echo "(".$timedate->get_user_date_format().")"; ?></span></td>
+	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_START']; ?></b> <br><span class="dateFormat"><?php echo '(' . $timedate->get_user_date_format() . ')'; ?></span></td>
 	<td valign='top' ><input class="text" name="pbss_date_start" size='12' maxlength='10' id='date_start' value='<?php if (isset($date_start)) {
             echo $date_start;
         } ?>'> <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span> </td>
 </tr>
 <tr>
-	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_END']; ?></b><br><span class="dateFormat"><?php echo "(".$timedate->get_user_date_format().")"; ?></span></td>
+	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_END']; ?></b><br><span class="dateFormat"><?php echo '(' . $timedate->get_user_date_format() . ')'; ?></span></td>
 	<td valign='top' ><input class="text" name="pbss_date_end" size='12' maxlength='10' id='date_end' value='<?php if (isset($date_end)) {
             echo $date_end;
         } ?>'>  <span id="date_end_trigger" class="suitepicon suitepicon-module-calendar"></span></td>
@@ -238,16 +232,16 @@ class Chart_pipeline_by_sales_stage
 <tr>
 <?php
 global $app_strings; ?>
-	<td align="right" colspan="2"><input class="button" onclick="return verify_chart_data(pipeline_by_sales_stage);" type="submit" title="<?php echo $app_strings['LBL_SELECT_BUTTON_TITLE']; ?>" value="<?php echo $app_strings['LBL_SELECT_BUTTON_LABEL']?>" /><input class="button" onClick="javascript: toggleDisplay('pipeline_by_sales_stage_edit');" type="button" title="<?php echo $app_strings['LBL_CANCEL_BUTTON_TITLE']; ?>" accessKey="<?php echo $app_strings['LBL_CANCEL_BUTTON_KEY']; ?>" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']?>"/></td>
+	<td align="right" colspan="2"><input class="button" onclick="return verify_chart_data(pipeline_by_sales_stage);" type="submit" title="<?php echo $app_strings['LBL_SELECT_BUTTON_TITLE']; ?>" value="<?php echo $app_strings['LBL_SELECT_BUTTON_LABEL']; ?>" /><input class="button" onClick="javascript: toggleDisplay('pipeline_by_sales_stage_edit');" type="button" title="<?php echo $app_strings['LBL_CANCEL_BUTTON_TITLE']; ?>" accessKey="<?php echo $app_strings['LBL_CANCEL_BUTTON_KEY']; ?>" value="<?php echo $app_strings['LBL_CANCEL_BUTTON_LABEL']; ?>"/></td>
 </tr>
 </table>
 </form>
 <script type="text/javascript">
 Calendar.setup ({
-	inputField : "date_start", ifFormat : "<?php echo $cal_dateformat ?>", showsTime : false, button : "date_start_trigger", singleClick : true, step : 1, weekNumbers:false
+	inputField : "date_start", ifFormat : "<?php echo $cal_dateformat; ?>", showsTime : false, button : "date_start_trigger", singleClick : true, step : 1, weekNumbers:false
 });
 Calendar.setup ({
-	inputField : "date_end", ifFormat : "<?php echo $cal_dateformat ?>", showsTime : false, button : "date_end_trigger", singleClick : true, step : 1, weekNumbers:false
+	inputField : "date_end", ifFormat : "<?php echo $cal_dateformat; ?>", showsTime : false, button : "date_end_trigger", singleClick : true, step : 1, weekNumbers:false
 });
 </script>
 </div>
@@ -255,8 +249,8 @@ Calendar.setup ({
 	<?php
 
 // draw table
-echo "<P align='center'>".$this->gen_xml($datax, $dateXml[0], $dateXml[1], $ids, $cache_file_name, $refresh, 'hBarF', $current_module_strings)."</P>";
-        echo "<P align='center'><span class='chartFootnote'>".$current_module_strings['LBL_SALES_STAGE_FORM_DESC']."</span></P>";
+echo "<P align='center'>" . $this->gen_xml($datax, $dateXml[0], $dateXml[1], $ids, $cache_file_name, $refresh, 'hBarF', $current_module_strings) . '</P>';
+        echo "<P align='center'><span class='chartFootnote'>" . $current_module_strings['LBL_SALES_STAGE_FORM_DESC'] . '</span></P>';
 
         if (file_exists($cache_file_name)) {
             $file_date = $timedate->asUser($timedate->fromTimestamp(filemtime($cache_file_name)));
@@ -265,26 +259,33 @@ echo "<P align='center'>".$this->gen_xml($datax, $dateXml[0], $dateXml[1], $ids,
         } ?>
 
 <span class='chartFootnote'>
-<p align="right"><i><?php  echo $current_module_strings['LBL_CREATED_ON'].' '.$file_date; ?></i></p>
+<p align="right"><i><?php  echo $current_module_strings['LBL_CREATED_ON'] . ' ' . $file_date; ?></i></p>
 </span>
 <?php
 echo get_validate_chart_js();
     }
 
-
-
     /**
-    * Creates opportunity pipeline image as a HORIZONTAL accumlated BAR GRAPH for multiple users.
-    * param $datax- the sales stage data to display in the x-axis
-    * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-    * All Rights Reserved..
-    * Contributor(s): ______________________________________..
-    */
+     * Creates opportunity pipeline image as a HORIZONTAL accumlated BAR GRAPH for multiple users.
+     * param $datax- the sales stage data to display in the x-axis
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+     *
+     * @param mixed $datax
+     * @param mixed $date_start
+     * @param mixed $date_end
+     * @param mixed $user_id
+     * @param mixed $cache_file_name
+     * @param mixed $refresh
+     * @param mixed $chart_size
+     * @param null|mixed $current_module_strings
+     */
     public function gen_xml(
-        $datax = array('foo', 'bar'),
+        $datax = ['foo', 'bar'],
         $date_start = '2071-10-15',
         $date_end = '2071-10-15',
-        $user_id = array('1'),
+        $user_id = ['1'],
         $cache_file_name = 'a_file',
         $refresh = false,
         $chart_size = 'hBarF',
@@ -302,56 +303,54 @@ echo get_validate_chart_js();
         global $timedate;
 
         if (!file_exists($cache_file_name) || $refresh == true) {
-            $GLOBALS['log']->debug("starting pipeline chart");
-            $GLOBALS['log']->debug("datax is:");
+            $GLOBALS['log']->debug('starting pipeline chart');
+            $GLOBALS['log']->debug('datax is:');
             $GLOBALS['log']->debug($datax);
-            $GLOBALS['log']->debug("user_id is: ");
+            $GLOBALS['log']->debug('user_id is: ');
             $GLOBALS['log']->debug($user_id);
-            $GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
-            $opp = new Opportunity;
-            $where="";
+            $GLOBALS['log']->debug("cache_file_name is: {$cache_file_name}");
+            $opp = new Opportunity();
+            $where = '';
             //build the where clause for the query that matches $user
             $count = count($user_id);
-            $id = array();
+            $id = [];
             $user_list = get_user_array(false);
             foreach ($user_id as $key) {
                 $new_ids[$key] = $user_list[$key];
             }
-            if ($count>0) {
-                foreach ($new_ids as $the_id=>$the_name) {
-                    $id[] = "'".$the_id."'";
+            if ($count > 0) {
+                foreach ($new_ids as $the_id => $the_name) {
+                    $id[] = "'" . $the_id . "'";
                 }
-                $ids = implode(",", $id);
-                $where .= "opportunities.assigned_user_id IN ($ids) ";
+                $ids = implode(',', $id);
+                $where .= "opportunities.assigned_user_id IN ({$ids}) ";
             }
             //build the where clause for the query that matches $datax
             $count = count($datax);
-            $dataxArr = array();
-            if ($count>0) {
-                foreach ($datax as $key=>$value) {
-                    $dataxArr[] = "'".$key."'";
+            $dataxArr = [];
+            if ($count > 0) {
+                foreach ($datax as $key => $value) {
+                    $dataxArr[] = "'" . $key . "'";
                 }
-                $dataxArr = implode(",", $dataxArr);
-                $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
+                $dataxArr = implode(',', $dataxArr);
+                $where .= "AND opportunities.sales_stage IN	({$dataxArr}) ";
             }
 
             //build the where clause for the query that matches $date_start and $date_end
-            $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
-						AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
-            $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
+            $where .= '	AND opportunities.date_closed >= ' . DBManager::convert("'" . $date_start . "'", 'date') . '
+						AND opportunities.date_closed <= ' . DBManager::convert("'" . $date_end . "'", 'date');
+            $where .= '	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ';
 
             //Now do the db queries
             //query for opportunity data that matches $datax and $user
-            $query = "	SELECT opportunities.sales_stage,
+            $query = '	SELECT opportunities.sales_stage,
 							users.user_name,
 							opportunities.assigned_user_id,
 							count( * ) AS opp_count,
 							sum(amount_usdollar/1000) AS total
-						FROM users,opportunities  ";
-            $query .= "WHERE " .$where;
-            $query .= " GROUP BY opportunities.sales_stage,users.user_name,opportunities.assigned_user_id";
-
-
+						FROM users,opportunities  ';
+            $query .= 'WHERE ' . $where;
+            $query .= ' GROUP BY opportunities.sales_stage,users.user_name,opportunities.assigned_user_id';
 
             $result = $opp->db->query($query, true);
             //build pipeline by sales stage data
@@ -370,19 +369,19 @@ echo get_validate_chart_js();
             $dateStartDisplay = $timedate->asUserDate($timedate->fromString($date_start));
             $dateEndDisplay = $timedate->asUserDate($timedate->fromString($date_end));
 
-            $fileContents = '     <yData defaultAltText="'.$current_module_strings['LBL_ROLLOVER_DETAILS'].'">'."\n";
-            $stageArr = array();
-            $usernameArr = array();
-            $rowTotalArr = array();
+            $fileContents = '     <yData defaultAltText="' . $current_module_strings['LBL_ROLLOVER_DETAILS'] . '">' . "\n";
+            $stageArr = [];
+            $usernameArr = [];
+            $rowTotalArr = [];
             $rowTotalArr[] = 0;
             while ($row = $opp->db->fetchByAssoc($result, false)) {
-                if ($row['total']*$div<=100) {
-                    $sum = round($row['total']*$div, 2);
+                if ($row['total'] * $div <= 100) {
+                    $sum = round($row['total'] * $div, 2);
                 } else {
-                    $sum = round($row['total']*$div);
+                    $sum = round($row['total'] * $div);
                 }
                 if (!isset($stageArr[$row['sales_stage']]['row_total'])) {
-                    $stageArr[$row['sales_stage']]['row_total']=0;
+                    $stageArr[$row['sales_stage']]['row_total'] = 0;
                 }
                 $stageArr[$row['sales_stage']][$row['assigned_user_id']]['opp_count'] = $row['opp_count'];
                 $stageArr[$row['sales_stage']][$row['assigned_user_id']]['total'] = $sum;
@@ -392,68 +391,69 @@ echo get_validate_chart_js();
                 $usernameArr[$row['assigned_user_id']] = $row['user_name'];
                 $total += $sum;
             }
-            foreach ($datax as $key=>$translation) {
+            foreach ($datax as $key => $translation) {
                 if (isset($stageArr[$key]['row_total'])) {
-                    $rowTotalArr[]=$stageArr[$key]['row_total'];
+                    $rowTotalArr[] = $stageArr[$key]['row_total'];
                 }
-                if (isset($stageArr[$key]['row_total']) && $stageArr[$key]['row_total']>100) {
+                if (isset($stageArr[$key]['row_total']) && $stageArr[$key]['row_total'] > 100) {
                     $stageArr[$key]['row_total'] = round($stageArr[$key]['row_total']);
                 }
-                $fileContents .= '     <dataRow title="'.$translation.'" endLabel="';
+                $fileContents .= '     <dataRow title="' . $translation . '" endLabel="';
                 if (isset($stageArr[$key]['row_total'])) {
-                    $fileContents .= currency_format_number($stageArr[$key]['row_total'], array('currency_symbol' => true));
+                    $fileContents .= currency_format_number($stageArr[$key]['row_total'], ['currency_symbol' => true]);
                 }
-                $fileContents .= '">'."\n";
+                $fileContents .= '">' . "\n";
                 if (isset($stageArr[$key]['people'])) {
                     asort($stageArr[$key]['people']);
                     reset($stageArr[$key]['people']);
-                    foreach ($stageArr[$key]['people'] as $nameKey=>$nameValue) {
-                        $fileContents .= '          <bar id="'.$nameKey.'" totalSize="'.$stageArr[$key][$nameKey]['total'].'" altText="'.$nameValue.': '.format_number($stageArr[$key][$nameKey]['opp_count'], 0, 0).' '.$current_module_strings['LBL_OPPS_WORTH'].' '.format_number($stageArr[$key][$nameKey]['total'], 2, 2).$current_module_strings['LBL_OPP_THOUSANDS'].' '.$current_module_strings['LBL_OPPS_IN_STAGE'].' '.$translation.'" url="index.php?module=Opportunities&action=index&assigned_user_id[]='.$nameKey.'&sales_stage='.urlencode($key).'&date_start='.$date_start.'&date_closed='.$date_end.'&query=true&searchFormTab=advanced_search"/>'."\n";
+                    foreach ($stageArr[$key]['people'] as $nameKey => $nameValue) {
+                        $fileContents .= '          <bar id="' . $nameKey . '" totalSize="' . $stageArr[$key][$nameKey]['total'] . '" altText="' . $nameValue . ': ' . format_number($stageArr[$key][$nameKey]['opp_count'], 0, 0) . ' ' . $current_module_strings['LBL_OPPS_WORTH'] . ' ' . format_number($stageArr[$key][$nameKey]['total'], 2, 2) . $current_module_strings['LBL_OPP_THOUSANDS'] . ' ' . $current_module_strings['LBL_OPPS_IN_STAGE'] . ' ' . $translation . '" url="index.php?module=Opportunities&action=index&assigned_user_id[]=' . $nameKey . '&sales_stage=' . urlencode($key) . '&date_start=' . $date_start . '&date_closed=' . $date_end . '&query=true&searchFormTab=advanced_search"/>' . "\n";
                     }
                 }
-                $fileContents .= '     </dataRow>'."\n";
+                $fileContents .= '     </dataRow>' . "\n";
             }
-            $fileContents .= '     </yData>'."\n";
+            $fileContents .= '     </yData>' . "\n";
             $max = get_max($rowTotalArr);
-            if ($chart_size=='hBarF') {
-                $length = "10";
+            if ($chart_size == 'hBarF') {
+                $length = '10';
             } else {
-                $length = "4";
+                $length = '4';
             }
-            $fileContents .= '     <xData min="0" max="'.$max.'" length="'.$length.'" prefix="'.$symbol.'" suffix="" kDelim="'.$kDelim.'" />'."\n";
-            $fileContents .= '     <colorLegend status="on">'."\n";
-            $i=0;
+            $fileContents .= '     <xData min="0" max="' . $max . '" length="' . $length . '" prefix="' . $symbol . '" suffix="" kDelim="' . $kDelim . '" />' . "\n";
+            $fileContents .= '     <colorLegend status="on">' . "\n";
+            $i = 0;
             asort($new_ids);
-            foreach ($new_ids as $key=>$value) {
+            foreach ($new_ids as $key => $value) {
                 $color = generate_graphcolor($key, $i);
-                $fileContents .= '          <mapping id="'.$key.'" name="'.$value.'" color="'.$color.'"/>'."\n";
+                $fileContents .= '          <mapping id="' . $key . '" name="' . $value . '" color="' . $color . '"/>' . "\n";
                 $i++;
             }
-            $fileContents .= '     </colorLegend>'."\n";
-            $fileContents .= '     <graphInfo>'."\n";
-            $fileContents .= '          <![CDATA['.$current_module_strings['LBL_DATE_RANGE'].' '.$dateStartDisplay.' '.$current_module_strings['LBL_DATE_RANGE_TO'].' '.$dateEndDisplay.'<BR/>'.$current_module_strings['LBL_OPP_SIZE'].' '.$symbol.'1'.$current_module_strings['LBL_OPP_THOUSANDS'].']]>'."\n";
-            $fileContents .= '     </graphInfo>'."\n";
+            $fileContents .= '     </colorLegend>' . "\n";
+            $fileContents .= '     <graphInfo>' . "\n";
+            $fileContents .= '          <![CDATA[' . $current_module_strings['LBL_DATE_RANGE'] . ' ' . $dateStartDisplay . ' ' . $current_module_strings['LBL_DATE_RANGE_TO'] . ' ' . $dateEndDisplay . '<BR/>' . $current_module_strings['LBL_OPP_SIZE'] . ' ' . $symbol . '1' . $current_module_strings['LBL_OPP_THOUSANDS'] . ']]>' . "\n";
+            $fileContents .= '     </graphInfo>' . "\n";
             $fileContents .= '     <chartColors ';
             foreach ($barChartColors as $key => $value) {
-                $fileContents .= ' '.$key.'='.'"'.$value.'" ';
+                $fileContents .= ' ' . $key . '=' . '"' . $value . '" ';
             }
-            $fileContents .= ' />'."\n";
-            $fileContents .= '</graphData>'."\n";
+            $fileContents .= ' />' . "\n";
+            $fileContents .= '</graphData>' . "\n";
             $total = $total;
-            $title = '<graphData title="'.$current_module_strings['LBL_TOTAL_PIPELINE'].currency_format_number($total, array('currency_symbol' => true)).$app_strings['LBL_THOUSANDS_SYMBOL'].'">'."\n";
-            $fileContents = $title.$fileContents;
+            $title = '<graphData title="' . $current_module_strings['LBL_TOTAL_PIPELINE'] . currency_format_number($total, ['currency_symbol' => true]) . $app_strings['LBL_THOUSANDS_SYMBOL'] . '">' . "\n";
+            $fileContents = $title . $fileContents;
 
             save_xml_file($cache_file_name, $fileContents);
         }
 
-        if ($chart_size=='hBarF') {
-            $width = "800";
-            $height = "400";
+        if ($chart_size == 'hBarF') {
+            $width = '800';
+            $height = '400';
         } else {
-            $width = "350";
-            $height = "400";
+            $width = '350';
+            $height = '400';
         }
         $return = create_chart($chart_size, $cache_file_name, $width, $height);
+
         return $return;
     }
 
@@ -496,17 +496,17 @@ echo get_validate_chart_js();
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] is:");
             $GLOBALS['log']->debug($current_user->getPreference('pbss_date_end'));
         } else {
-            $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
-            $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: ".$date_end);
+            $date_end = $timedate->asUserDate($timedate->fromString('2010-01-01'));
+            $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: " . $date_end);
         }
 
-        $tempx = array();
-        $datax = array();
-        $datax_selected= array();
+        $tempx = [];
+        $datax = [];
+        $datax_selected = [];
         $user_tempx = $current_user->getPreference('pbss_sales_stages');
         //get list of sales stage keys to display
         if (!empty($user_tempx) && count($user_tempx) > 0 && !isset($_REQUEST['pbss_sales_stages'])) {
-            $tempx = $user_tempx ;
+            $tempx = $user_tempx;
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_sales_stages'] is:");
             $GLOBALS['log']->debug($user_tempx);
         } elseif (isset($_REQUEST['pbss_sales_stages']) && count($_REQUEST['pbss_sales_stages']) > 0) {
@@ -528,13 +528,11 @@ echo get_validate_chart_js();
             $datax = $app_list_strings['sales_stage_dom'];
             $datax_selected = array_keys($app_list_strings['sales_stage_dom']);
         }
-        $GLOBALS['log']->debug("datax is:");
+        $GLOBALS['log']->debug('datax is:');
         $GLOBALS['log']->debug($datax);
 
-
-
-        $ids = array();
-        $new_ids = array();
+        $ids = [];
+        $new_ids = [];
         $user_ids = $current_user->getPreference('pbss_ids');
         //get list of user ids for which to display data
         if (!empty($user_ids) && count($user_ids) != 0 && !isset($_REQUEST['pbss_ids'])) {
@@ -555,54 +553,54 @@ echo get_validate_chart_js();
         }
 
         $user_id = $ids;
-        $opp = new Opportunity;
-        $where="";
+        $opp = new Opportunity();
+        $where = '';
         //build the where clause for the query that matches $user
         $count = count($user_id);
-        $id = array();
+        $id = [];
         $user_list = get_user_array(false);
         foreach ($user_id as $key) {
             $new_ids[$key] = $user_list[$key];
         }
-        if ($count>0) {
-            foreach ($new_ids as $the_id=>$the_name) {
-                $id[] = "'".$the_id."'";
+        if ($count > 0) {
+            foreach ($new_ids as $the_id => $the_name) {
+                $id[] = "'" . $the_id . "'";
             }
-            $ids = implode(",", $id);
-            $where .= "opportunities.assigned_user_id IN ($ids) ";
+            $ids = implode(',', $id);
+            $where .= "opportunities.assigned_user_id IN ({$ids}) ";
         }
         //build the where clause for the query that matches $datax
         $count = count($datax);
-        $dataxArr = array();
-        if ($count>0) {
-            foreach ($datax as $key=>$value) {
-                $dataxArr[] = "'".$key."'";
+        $dataxArr = [];
+        if ($count > 0) {
+            foreach ($datax as $key => $value) {
+                $dataxArr[] = "'" . $key . "'";
             }
-            $dataxArr = implode(",", $dataxArr);
-            $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
+            $dataxArr = implode(',', $dataxArr);
+            $where .= "AND opportunities.sales_stage IN	({$dataxArr}) ";
         }
 
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
-					AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
-        $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
+        $where .= '	AND opportunities.date_closed >= ' . DBManager::convert("'" . $date_start . "'", 'date') . '
+					AND opportunities.date_closed <= ' . DBManager::convert("'" . $date_end . "'", 'date');
+        $where .= '	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ';
 
         //Now do the db queries
         //query for opportunity data that matches $datax and $user
-        $query = "	SELECT opportunities.sales_stage,
+        $query = '	SELECT opportunities.sales_stage,
 						users.user_name,
 						opportunities.assigned_user_id,
 						count( * ) AS opp_count,
 						sum(amount_usdollar/1000) AS total
-					FROM users,opportunities  ";
-        $query .= "WHERE " .$where;
-        $query .= " GROUP BY opportunities.sales_stage,users.user_name,opportunities.assigned_user_id";
+					FROM users,opportunities  ';
+        $query .= 'WHERE ' . $where;
+        $query .= ' GROUP BY opportunities.sales_stage,users.user_name,opportunities.assigned_user_id';
 
         return $query;
     }
 
     public function constructGroupBy()
     {
-        return array( 'sales_stage', 'user_name' );
+        return ['sales_stage', 'user_name'];
     }
 }

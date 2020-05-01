@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function testConstruct()
     {
         // Execute the constructor and check for the Object type and options attribute
         $view = new ViewModulelistmenu();
@@ -31,7 +34,7 @@ class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
 
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, is_array($renderedContent));
-        
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

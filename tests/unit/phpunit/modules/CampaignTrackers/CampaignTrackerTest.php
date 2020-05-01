@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -45,7 +48,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $campaignTracker = new CampaignTracker();
 
@@ -57,7 +60,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $campaignTracker->get_summary_text());
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $campaignTracker = new CampaignTracker();
 

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,16 +43,14 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ValidatorInterface;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
- * Class ValueValidator
- * @package SuiteCRM\API\JsonApi\v1\Filters\Validators
+ * Class ValueValidator.
  */
 class ValueValidator implements ValidatorInterface
 {
-
     /**
      * @var array
      */
-    private static $BANNED_RESERVED_CHARACTERS = array(
+    private static $BANNED_RESERVED_CHARACTERS = [
         // commented out characters are the allowed
         '+',
         // ',',
@@ -71,27 +68,29 @@ class ValueValidator implements ValidatorInterface
         ')',
         '*',
         '/',
-//        ':',
-//        ';',
+        //        ':',
+        //        ';',
         '<',
         '=',
         '>',
         '?',
         '@',
-        "\\",
+        '\\',
         '^',
-//        '`',
+        //        '`',
         '{',
         '|',
         '}',
         '~',
-//        ' '
-    );
+        //        ' '
+    ];
 
     /**
      * @param mixed $value
-     * @return bool
+     *
      * @throws InvalidArgumentException
+     *
+     * @return bool
      */
     public function isValid($value)
     {

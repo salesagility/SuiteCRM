@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class TimeDateTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testget_date_format()
+    public function testgetDateFormat()
     {
         // Validate that it gets the date format from the user's preferences.
         $user = new User();
@@ -18,7 +21,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testget_time_format()
+    public function testgetTimeFormat()
     {
         // Validate that it gets the time format from the user's preferences.
         $user = new User();
@@ -32,7 +35,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testget_date_time_format()
+    public function testgetDateTimeFormat()
     {
         // Validate that it gets the date time format from the user's preferences.
         $user = new User();
@@ -47,7 +50,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testget_first_day_of_week()
+    public function testgetFirstDayOfWeek()
     {
         // Validate that it gets the first day of the week from the user's
         // preferences.
@@ -62,7 +65,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testget_first_day_of_week_defaultResponse()
+    public function testgetFirstDayOfWeekDefaultResponse()
     {
         // When no user is specified for the TimeDate,
         // it defaults to 0 aka Sunday.
@@ -72,7 +75,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testmerge_date_time()
+    public function testmergeDateTime()
     {
         // Merges the date and time formats given two strings.
         // Literally just puts a space in between them.
@@ -82,9 +85,9 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testsplit_date_time()
+    public function testsplitDateTime()
     {
-        // Splits the date time format into an array of two items when given 
+        // Splits the date time format into an array of two items when given
         // a valid string.
         $timeDate = new TimeDate();
         $actual = $timeDate->split_date_time('Y-m-d H:i:s');
@@ -101,7 +104,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testto_db_time()
+    public function testtoDbTime()
     {
         // Test that the function returns the time but not the date, even if
         // a date is provided.
@@ -122,7 +125,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($expected2, $actual2);
     }
 
-    public function testto_db_date_time()
+    public function testtoDbDateTime()
     {
         // Test that the function returns the full date time as an array.
         // We create a user here, but it doesn't actually take the user's

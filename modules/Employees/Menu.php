@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $mod_strings;
 global $current_user;
-$module_menu=array();
+$module_menu = [];
 
 if (empty($_REQUEST['record'])) {
     $employee_id = '';
@@ -54,7 +53,7 @@ if (empty($_REQUEST['record'])) {
 }
 
 if (is_admin($current_user)) {
-    $module_menu[] = array("index.php?module=Employees&action=EditView&return_module=Employees&return_action=DetailView", $mod_strings['LNK_NEW_EMPLOYEE'],"Create");
+    $module_menu[] = ['index.php?module=Employees&action=EditView&return_module=Employees&return_action=DetailView', $mod_strings['LNK_NEW_EMPLOYEE'], 'Create'];
 }
-    
-$module_menu[] = array("index.php?module=Employees&action=index&return_module=Employees&return_action=DetailView", $mod_strings['LNK_EMPLOYEE_LIST'],"List");
+
+$module_menu[] = ['index.php?module=Employees&action=index&return_module=Employees&return_action=DetailView', $mod_strings['LNK_EMPLOYEE_LIST'], 'List'];

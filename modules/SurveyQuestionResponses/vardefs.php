@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,107 +36,106 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$dictionary['SurveyQuestionResponses'] = array(
-    'table'              => 'surveyquestionresponses',
-    'audited'            => true,
-    'inline_edit'        => true,
-    'duplicate_merge'    => true,
-    'fields'             => array(
-        'answer'                                        => array(
-            'name'  => 'answer',
+$dictionary['SurveyQuestionResponses'] = [
+    'table' => 'surveyquestionresponses',
+    'audited' => true,
+    'inline_edit' => true,
+    'duplicate_merge' => true,
+    'fields' => [
+        'answer' => [
+            'name' => 'answer',
             'vname' => 'LBL_ANSWER',
-            'type'  => 'text',
-        ),
-        'answer_bool'                                   => array(
-            'name'  => 'answer_bool',
+            'type' => 'text',
+        ],
+        'answer_bool' => [
+            'name' => 'answer_bool',
             'vname' => 'LBL_ANSWER',
-            'type'  => 'bool',
-        ),
-        'answer_datetime'                               => array(
-            'name'  => 'answer_datetime',
+            'type' => 'bool',
+        ],
+        'answer_datetime' => [
+            'name' => 'answer_datetime',
             'vname' => 'LBL_ANSWER',
-            'type'  => 'datetime',
-        ),
-        "surveyquestionoptions_surveyquestionresponses" => array(
-            'name'         => 'surveyquestionoptions_surveyquestionresponses',
-            'type'         => 'link',
+            'type' => 'datetime',
+        ],
+        'surveyquestionoptions_surveyquestionresponses' => [
+            'name' => 'surveyquestionoptions_surveyquestionresponses',
+            'type' => 'link',
             'relationship' => 'surveyquestionoptions_surveyquestionresponses',
-            'source'       => 'non-db',
-            'module'       => 'SurveyQuestionOptions',
-            'bean_name'    => 'SurveyQuestionOptions',
-            'vname'        => 'LBL_SURVEYQUESTIONOPTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONOPTIONS_TITLE',
-        ),
-        "surveyquestion"                                => array(
-            'name'         => 'surveyquestion',
-            'type'         => 'link',
+            'source' => 'non-db',
+            'module' => 'SurveyQuestionOptions',
+            'bean_name' => 'SurveyQuestionOptions',
+            'vname' => 'LBL_SURVEYQUESTIONOPTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONOPTIONS_TITLE',
+        ],
+        'surveyquestion' => [
+            'name' => 'surveyquestion',
+            'type' => 'link',
             'relationship' => 'surveyquestions_surveyquestionresponses',
-            'source'       => 'non-db',
-            'module'       => 'SurveyQuestions',
-            'bean_name'    => 'SurveyQuestions',
-            'vname'        => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONS_TITLE',
-            'id_name'      => 'surveyquestion_id',
-            'link_type'    => 'one',
-            'side'         => 'left',
-        ),
-        "surveyquestion_name"                           => array(
-            'name'    => 'surveyquestion_name',
-            'type'    => 'relate',
-            'source'  => 'non-db',
-            'vname'   => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONS_TITLE',
-            'save'    => true,
+            'source' => 'non-db',
+            'module' => 'SurveyQuestions',
+            'bean_name' => 'SurveyQuestions',
+            'vname' => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONS_TITLE',
             'id_name' => 'surveyquestion_id',
-            'link'    => 'surveyquestion',
-            'table'   => 'surveyquestions',
-            'module'  => 'SurveyQuestions',
-            'rname'   => 'name',
-        ),
-        "surveyquestion_id"                             => array(
-            'name'       => 'surveyquestion_id',
-            'type'       => 'id',
+            'link_type' => 'one',
+            'side' => 'left',
+        ],
+        'surveyquestion_name' => [
+            'name' => 'surveyquestion_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONS_TITLE',
+            'save' => true,
+            'id_name' => 'surveyquestion_id',
+            'link' => 'surveyquestion',
+            'table' => 'surveyquestions',
+            'module' => 'SurveyQuestions',
+            'rname' => 'name',
+        ],
+        'surveyquestion_id' => [
+            'name' => 'surveyquestion_id',
+            'type' => 'id',
             'reportable' => false,
-            'vname'      => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONRESPONSES_TITLE',
-        ),
-        "surveyresponse"                                => array(
-            'name'         => 'surveyresponse',
-            'type'         => 'link',
+            'vname' => 'LBL_SURVEYQUESTIONS_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONRESPONSES_TITLE',
+        ],
+        'surveyresponse' => [
+            'name' => 'surveyresponse',
+            'type' => 'link',
             'relationship' => 'surveyresponses_surveyquestionresponses',
-            'source'       => 'non-db',
-            'module'       => 'SurveyResponses',
-            'bean_name'    => 'SurveyResponses',
-            'vname'        => 'LBL_SURVEYRESPONSES_SURVEYQUESTIONRESPONSES_FROM_SURVEYRESPONSES_TITLE',
-            'id_name'      => 'surveyresponse_id',
-            'link_type'    => 'one',
-            'side'         => 'left',
-        ),
-        "surveyresponse_name"                           => array(
-            'name'    => 'surveyresponse_name',
-            'type'    => 'relate',
-            'source'  => 'non-db',
-            'vname'   => 'LBL_SURVEYRESPONSES_SURVEYQUESTIONRESPONSES_FROM_SURVEYRESPONSES_TITLE',
-            'save'    => true,
+            'source' => 'non-db',
+            'module' => 'SurveyResponses',
+            'bean_name' => 'SurveyResponses',
+            'vname' => 'LBL_SURVEYRESPONSES_SURVEYQUESTIONRESPONSES_FROM_SURVEYRESPONSES_TITLE',
             'id_name' => 'surveyresponse_id',
-            'link'    => 'survey_response',
-            'table'   => 'surveyresponses',
-            'module'  => 'SurveyResponses',
-            'rname'   => 'name',
-        ),
-        "surveyresponse_id"                             => array(
-            'name'       => 'surveyresponse_id',
-            'type'       => 'id',
+            'link_type' => 'one',
+            'side' => 'left',
+        ],
+        'surveyresponse_name' => [
+            'name' => 'surveyresponse_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_SURVEYRESPONSES_SURVEYQUESTIONRESPONSES_FROM_SURVEYRESPONSES_TITLE',
+            'save' => true,
+            'id_name' => 'surveyresponse_id',
+            'link' => 'survey_response',
+            'table' => 'surveyresponses',
+            'module' => 'SurveyResponses',
+            'rname' => 'name',
+        ],
+        'surveyresponse_id' => [
+            'name' => 'surveyresponse_id',
+            'type' => 'id',
             'reportable' => false,
-            'vname'      => 'LBL_SURVEYRESPONSES_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONRESPONSES_TITLE',
-        ),
-    ),
-    'relationships'      => array(),
+            'vname' => 'LBL_SURVEYRESPONSES_SURVEYQUESTIONRESPONSES_FROM_SURVEYQUESTIONRESPONSES_TITLE',
+        ],
+    ],
+    'relationships' => [],
     'optimistic_locking' => true,
-    'unified_search'     => true,
-);
+    'unified_search' => true,
+];
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
 VardefManager::createVardef(
     'SurveyQuestionResponses',
     'SurveyQuestionResponses',
-    array('basic', 'assignable', 'security_groups')
+    ['basic', 'assignable', 'security_groups']
 );

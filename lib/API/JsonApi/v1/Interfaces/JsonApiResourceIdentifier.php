@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,8 +40,7 @@
 namespace SuiteCRM\API\JsonApi\v1\Interfaces;
 
 /**
- * Interface JsonApiResourceIdentifier
- * @package SuiteCRM\API\JsonApi\v1\Interfaces
+ * Interface JsonApiResourceIdentifier.
  */
 interface JsonApiResourceIdentifier
 {
@@ -53,7 +51,8 @@ interface JsonApiResourceIdentifier
 
     /**
      * @param string $id
-     * @return Resource|$this
+     *
+     * @return $this|resource
      */
     public function withId($id);
 
@@ -64,7 +63,8 @@ interface JsonApiResourceIdentifier
 
     /**
      * @param string $type
-     * @return Resource|$this
+     *
+     * @return $this|resource
      */
     public function withType($type);
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,12 +47,10 @@ use Api\V8\Param\Options as ParamOption;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class GetFieldListParams
- * @package Api\V8\Param
+ * Class GetFieldListParams.
  */
 class GetFieldListParams extends BaseParam
 {
-    
     /**
      * @return string
      */
@@ -63,7 +60,6 @@ class GetFieldListParams extends BaseParam
     }
 
     /**
-     *
      * @param OptionsResolver $resolver
      */
     protected function configureParameters(OptionsResolver $resolver)

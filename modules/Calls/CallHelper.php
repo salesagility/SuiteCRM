@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,14 +35,19 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $focus
+ * @param mixed $field
+ * @param mixed $value
+ * @param mixed $view
  */
-
 
 /**
  * @param $focus
  * @param $field
  * @param $value
  * @param $view
+ *
  * @return string
  */
 function getDurationMinutesOptions($focus, $field, $value, $view)
@@ -51,24 +55,24 @@ function getDurationMinutesOptions($focus, $field, $value, $view)
     if (isset($_REQUEST['duration_minutes'])) {
         $focus->duration_minutes = $_REQUEST['duration_minutes'];
     }
-    
+
     if (!isset($focus->duration_minutes)) {
         $focus->duration_minutes = $focus->minutes_value_default;
     }
-    
+
     global $timedate;
     //setting default date and time
     if (is_null($focus->date_start)) {
         $focus->date_start = $timedate->to_display_date(gmdate($timedate->get_date_time_format()));
     }
     if (is_null($focus->duration_hours)) {
-        $focus->duration_hours = "0";
+        $focus->duration_hours = '0';
     }
     if (is_null($focus->duration_minutes)) {
-        $focus->duration_minutes = "1";
+        $focus->duration_minutes = '1';
     }
-    
-    if ($view == 'EditView' || $view == 'MassUpdate' || $view == "QuickCreate") {
+
+    if ($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate') {
         $html = '<select id="duration_minutes" ';
         if ($view != 'MassUpdate') {
             $html .= 'onchange="SugarWidgetScheduler.update_time();" ';
@@ -77,6 +81,7 @@ function getDurationMinutesOptions($focus, $field, $value, $view)
         $html .= 'name="duration_minutes">';
         $html .= get_select_options_with_id($focus->minutes_values, $focus->duration_minutes);
         $html .= '</select>';
+
         return $html;
     }
 

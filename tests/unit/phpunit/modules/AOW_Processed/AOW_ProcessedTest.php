@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOW_Processed()
+    public function testAOWProcessed()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowProcessed = new AOW_Processed();
@@ -29,7 +32,7 @@ class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'importable', $aowProcessed);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $aowProcessed = new AOW_Processed();
         $this->assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value

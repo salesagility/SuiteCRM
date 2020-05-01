@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,12 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
+$dictionary['OAuthKey'] = ['table' => 'oauth_consumer',
     'comment' => 'OAuth consumer keys',
-    'audited'=>false,
-    'fields' => array(
-          'c_key' =>
-          array(
+    'audited' => false,
+    'fields' => [
+        'c_key' => [
             'name' => 'c_key',
             'vname' => 'LBL_CONSKEY',
             'type' => 'varchar',
@@ -54,39 +54,36 @@ $dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
             'comment' => 'Consumer public key',
             'importable' => 'required',
             'massupdate' => 0,
-            'reportable'=>false,
+            'reportable' => false,
             'studio' => 'hidden',
-          ),
-          'c_secret' =>
-          array(
+        ],
+        'c_secret' => [
             'name' => 'c_secret',
             'vname' => 'LBL_CONSSECRET',
             //'type' => 'encrypt',
             'type' => 'varchar',
-              'required' => true,
+            'required' => true,
             'comment' => 'Consumer secret key',
             'importable' => 'required',
             'massupdate' => 0,
-            'reportable'=>false,
+            'reportable' => false,
             'studio' => 'hidden',
-          ),
-          'tokens' =>
-          array(
+        ],
+        'tokens' => [
             'name' => 'tokens',
             'type' => 'link',
             'relationship' => 'consumer_tokens',
-            'module'=>'OAuthTokens',
-            'bean_name'=>'OAuthToken',
-            'source'=>'non-db',
-            'vname'=>'LBL_TOKENS',
-          ),
-
-    ),
-    'indices' => array(
-       array('name' =>'ckey', 'type' =>'unique', 'fields'=>array('c_key')),
-    )
-);
+            'module' => 'OAuthTokens',
+            'bean_name' => 'OAuthToken',
+            'source' => 'non-db',
+            'vname' => 'LBL_TOKENS',
+        ],
+    ],
+    'indices' => [
+        ['name' => 'ckey', 'type' => 'unique', 'fields' => ['c_key']],
+    ]
+];
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('OAuthKeys', 'OAuthKey', array('basic','assignable'));
+VardefManager::createVardef('OAuthKeys', 'OAuthKey', ['basic', 'assignable']);

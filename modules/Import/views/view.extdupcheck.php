@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,15 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: view handler for step 1 of the import process
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  */
-require_once('modules/Import/views/ImportView.php');
-require_once('modules/Import/ImportDuplicateCheck.php');
+require_once 'modules/Import/views/ImportView.php';
+require_once 'modules/Import/ImportDuplicateCheck.php';
 
-require_once('include/upload_file.php');
+require_once 'include/upload_file.php';
 
 class ImportViewExtdupcheck extends ImportView
 {
@@ -64,45 +63,44 @@ class ImportViewExtdupcheck extends ImportView
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config;
 
-        $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" alt="'.$app_strings['LNK_DELETE'].'" border="0"'));
-        $this->ss->assign("PUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('publish_inline', 'align="absmiddle" alt="'.$mod_strings['LBL_PUBLISH'].'" border="0"'));
-        $this->ss->assign("UNPUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('unpublish_inline', 'align="absmiddle" alt="'.$mod_strings['LBL_UNPUBLISH'].'" border="0"'));
-        $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
-        $this->ss->assign("JAVASCRIPT", $this->_getJS());
-        $this->ss->assign("CURRENT_STEP", $this->currentStep);
+        $this->ss->assign('MODULE_TITLE', $this->getModuleTitle(false));
+        $this->ss->assign('DELETE_INLINE_PNG', SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" alt="' . $app_strings['LNK_DELETE'] . '" border="0"'));
+        $this->ss->assign('PUBLISH_INLINE_PNG', SugarThemeRegistry::current()->getImage('publish_inline', 'align="absmiddle" alt="' . $mod_strings['LBL_PUBLISH'] . '" border="0"'));
+        $this->ss->assign('UNPUBLISH_INLINE_PNG', SugarThemeRegistry::current()->getImage('unpublish_inline', 'align="absmiddle" alt="' . $mod_strings['LBL_UNPUBLISH'] . '" border="0"'));
+        $this->ss->assign('IMPORT_MODULE', $_REQUEST['import_module']);
+        $this->ss->assign('JAVASCRIPT', $this->_getJS());
+        $this->ss->assign('CURRENT_STEP', $this->currentStep);
 
         //BEGIN DRAG DROP WIDGET
         $idc = new ImportDuplicateCheck($this->bean);
         $dupe_indexes = $idc->getDuplicateCheckIndexes();
 
-        $dupe_disabled =  array();
+        $dupe_disabled = [];
 
-        foreach ($dupe_indexes as $dk=>$dv) {
-            $dupe_disabled[] =  array("dupeVal" => $dk, "label" => $dv);
+        foreach ($dupe_indexes as $dk => $dv) {
+            $dupe_disabled[] = ['dupeVal' => $dk, 'label' => $dv];
         }
 
-
         //set dragdrop value
-        $this->ss->assign('enabled_dupes', json_encode(array()));
+        $this->ss->assign('enabled_dupes', json_encode([]));
         $this->ss->assign('disabled_dupes', json_encode($dupe_disabled));
         //END DRAG DROP WIDGET
 
-        $this->ss->assign("RECORDTHRESHOLD", $sugar_config['import_max_records_per_file']);
+        $this->ss->assign('RECORDTHRESHOLD', $sugar_config['import_max_records_per_file']);
 
         $content = $this->ss->fetch('modules/Import/tpls/extdupcheck.tpl');
-        $this->ss->assign("CONTENT", $content);
+        $this->ss->assign('CONTENT', $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
 
     /**
-     * Returns JS used in this view
+     * Returns JS used in this view.
      */
     private function _getJS()
     {
         global $mod_strings;
 
-        return <<<EOJAVASCRIPT
+        return <<<'EOJAVASCRIPT'
 <script type="text/javascript">
 
 document.getElementById('goback').onclick = function(){

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,8 +35,12 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $focus
+ * @param mixed $field
+ * @param mixed $value
+ * @param mixed $view
  */
-
 function display_email_lines($focus, $field, $value, $view)
 {
     global $app_list_strings;
@@ -51,7 +54,7 @@ function display_email_lines($focus, $field, $value, $view)
         $html .= '<button type="button" onclick="add_emailLine()"><img src="' . SugarThemeRegistry::current()->getImageURL('id-ff-add.png') . '"></button>';
         $html .= '<table id="emailLine_table" width="100%"></table>';
 
-        $html .= "<script>";
+        $html .= '<script>';
 
         if (isset($params['email_target_type'])) {
             foreach ($params['email_target_type'] as $key => $field) {
@@ -61,7 +64,7 @@ function display_email_lines($focus, $field, $value, $view)
                 $html .= "load_emailline('" . $params['email_to_type'][$key] . "','" . $params['email_target_type'][$key] . "','" . $params['email'][$key] . "');";
             }
         }
-        $html .= "</script>";
+        $html .= '</script>';
 
         return $html;
     }
@@ -77,12 +80,15 @@ function display_email_lines($focus, $field, $value, $view)
                     switch ($type) {
                         case 'Specify User':
                             $recipients['User'][] = BeanFactory::getBean('Users', $typeValues[$key])->name;
+
                             break;
                         case 'Email Address':
                             $recipients['Emails'][] = $typeValues[$key];
+
                             break;
                         case 'Users':
                             $recipients['Users'][] = $typeValues[$key][0];
+
                             break;
                     }
                 }
@@ -96,7 +102,7 @@ function display_email_lines($focus, $field, $value, $view)
             }
         );
 
-        return implode("<br><br>", $result);
+        return implode('<br><br>', $result);
     }
 
     return '';

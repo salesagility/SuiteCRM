@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,7 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class SugarWidgetSubPanelTopFilterButton extends SugarWidgetSubPanelTopButton
 {
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
@@ -49,7 +48,7 @@ class SugarWidgetSubPanelTopFilterButton extends SugarWidgetSubPanelTopButton
 
         $button = "<script src='include/SubPanel/SubPanel.js'></script>";
 
-        $button .= "<input class='button' type='button'  value='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  id='". $this->getWidgetId() ."'  name='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  title='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."' onclick=\"showSearchPanel('" .  strtolower($this->widget_id) . "');return false;\" />";
+        $button .= "<input class='button' type='button'  value='" . $app_strings['LBL_SUBPANEL_FILTER_LABEL'] . "'  id='" . $this->getWidgetId() . "'  name='" . $app_strings['LBL_SUBPANEL_FILTER_LABEL'] . "'  title='" . $app_strings['LBL_SUBPANEL_FILTER_LABEL'] . "' onclick=\"showSearchPanel('" . strtolower($this->widget_id) . "');return false;\" />";
 
         return $button;
     }

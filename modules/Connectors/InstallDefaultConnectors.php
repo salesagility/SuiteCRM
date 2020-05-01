@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,34 +40,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+$default_modules_sources = [
+    'Accounts' => [
+        'ext_rest_insideview' => 'ext_rest_insideview',
+    ],
+    'Contacts' => [
+        'ext_rest_insideview' => 'ext_rest_insideview',
+    ],
+    'Leads' => [
+        'ext_rest_insideview' => 'ext_rest_insideview',
+    ],
+    'Prospects' => [
+    ],
+    'Opportunities' => [
+        'ext_rest_insideview' => 'ext_rest_insideview',
+    ],
+];
 
-
-$default_modules_sources = array(
-  'Accounts' =>
-  array(
-     'ext_rest_insideview' => 'ext_rest_insideview',
-  ),
-  'Contacts' =>
-  array(
-     'ext_rest_insideview' => 'ext_rest_insideview',
-  ),
-  'Leads' =>
-  array(
-     'ext_rest_insideview' => 'ext_rest_insideview',
-  ),
-  'Prospects' =>
-  array(
-
-  ),
-  'Opportunities' =>
-  array(
-    'ext_rest_insideview' => 'ext_rest_insideview',
-  ),
-);
-
-$previous_connectors = array();
+$previous_connectors = [];
 if (file_exists('custom/modules/Connectors/metadata/connectors.php')) {
-    require('custom/modules/Connectors/metadata/connectors.php');
+    require 'custom/modules/Connectors/metadata/connectors.php';
 
     foreach ($connectors as $connector_array) {
         $connector_id = $connector_array['id'];
@@ -78,7 +70,7 @@ if (file_exists('custom/modules/Connectors/metadata/connectors.php')) {
 // Merge in old modules the customer added instead of overriding it completely with defaults
 // If they have customized their connectors modules
 if (file_exists('custom/modules/Connectors/metadata/display_config.php')) {
-    require('custom/modules/Connectors/metadata/display_config.php');
+    require 'custom/modules/Connectors/metadata/display_config.php';
 
     // Remove the default settings from being copied over since they already existed
     foreach ($default_modules_sources as $module => $sources) {

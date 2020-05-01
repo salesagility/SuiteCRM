@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,7 +38,7 @@
  */
 
 /**
- * install aop
+ * install aop.
  */
 function install_aop()
 {
@@ -50,15 +49,15 @@ function install_aop()
     $sugar_config['aop']['distribution_user_id'] = '';
     $sugar_config['aop']['support_from_address'] = '';
     $sugar_config['aop']['support_from_name'] = '';
-    $sugar_config['aop'] = array('distribution_method' => 'roundRobin');
+    $sugar_config['aop'] = ['distribution_method' => 'roundRobin'];
     $templates = getTemplates();
     foreach ($templates as $configKey => $templateData) {
         $template = new EmailTemplate();
         foreach ($templateData as $field => $value) {
-            $template->$field = $value;
+            $template->{$field} = $value;
         }
         $template->save();
-        $sugar_config['aop'][$configKey . "_id"] = $template->id;
+        $sugar_config['aop'][$configKey . '_id'] = $template->id;
     }
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
@@ -67,15 +66,15 @@ function install_aop()
 }
 
 /**
- * installAOPHooks
+ * installAOPHooks.
  */
 function installAOPHooks()
 {
     require_once __DIR__ . '/../../ModuleInstall/ModuleInstaller.php';
 
-    $hooks = array(
+    $hooks = [
         //Contacts
-        array(
+        [
             'module' => 'Contacts',
             'hook' => 'after_save',
             'order' => 1,
@@ -83,9 +82,9 @@ function installAOPHooks()
             'file' => 'modules/Contacts/updatePortal.php',
             'class' => 'updatePortal',
             'function' => 'updateUser',
-        ),
+        ],
         // Cases
-        array(
+        [
             'module' => 'Cases',
             'hook' => 'before_save',
             'order' => 10,
@@ -93,8 +92,8 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Updates/CaseUpdatesHook.php',
             'class' => 'CaseUpdatesHook',
             'function' => 'saveUpdate',
-        ),
-        array(
+        ],
+        [
             'module' => 'Cases',
             'hook' => 'before_save',
             'order' => 11,
@@ -102,8 +101,8 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Events/CaseEventsHook.php',
             'class' => 'CaseEventsHook',
             'function' => 'saveUpdate',
-        ),
-        array(
+        ],
+        [
             'module' => 'Cases',
             'hook' => 'before_save',
             'order' => 12,
@@ -111,8 +110,8 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Updates/CaseUpdatesHook.php',
             'class' => 'CaseUpdatesHook',
             'function' => 'closureNotifyPrep',
-        ),
-        array(
+        ],
+        [
             'module' => 'Cases',
             'hook' => 'after_save',
             'order' => 10,
@@ -120,8 +119,8 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Updates/CaseUpdatesHook.php',
             'class' => 'CaseUpdatesHook',
             'function' => 'closureNotify',
-        ),
-        array(
+        ],
+        [
             'module' => 'Cases',
             'hook' => 'after_relationship_add',
             'order' => 9,
@@ -129,8 +128,8 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Updates/CaseUpdatesHook.php',
             'class' => 'CaseUpdatesHook',
             'function' => 'assignAccount',
-        ),
-        array(
+        ],
+        [
             'module' => 'Cases',
             'hook' => 'after_relationship_add',
             'order' => 10,
@@ -138,8 +137,8 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Updates/CaseUpdatesHook.php',
             'class' => 'CaseUpdatesHook',
             'function' => 'creationNotify',
-        ),
-        array(
+        ],
+        [
             'module' => 'Cases',
             'hook' => 'after_retrieve',
             'order' => 10,
@@ -147,9 +146,9 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Updates/CaseUpdatesHook.php',
             'class' => 'CaseUpdatesHook',
             'function' => 'filterHTML',
-        ),
+        ],
         //Emails
-        array(
+        [
             'module' => 'Emails',
             'hook' => 'after_save',
             'order' => 10,
@@ -157,14 +156,14 @@ function installAOPHooks()
             'file' => 'modules/AOP_Case_Updates/CaseUpdatesHook.php',
             'class' => 'CaseUpdatesHook',
             'function' => 'saveEmailUpdate',
-        ),
-    );
+        ],
+    ];
 
     foreach ($hooks as $hook) {
         check_logic_hook_file(
             $hook['module'],
             $hook['hook'],
-            array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function'])
+            [$hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']]
         );
     }
 }
@@ -174,8 +173,8 @@ function installAOPHooks()
  */
 function getTemplates()
 {
-    $templates = array();
-    $templates['case_closure_email_template'] = array(
+    $templates = [];
+    $templates['case_closure_email_template'] = [
         'name' => 'Case Closure',
         'published' => 'off',
         'description' => 'Template for informing a contact that their case has been closed.',
@@ -194,9 +193,9 @@ function getTemplates()
 					    <tr><td>Reference</td><td>$acase_case_number</td></tr>
 					    <tr><td>Resolution</td><td>$acase_resolution</td></tr>
 					    </tbody></table>'
-    );
+    ];
 
-    $templates['joomla_account_creation_email_template'] = array(
+    $templates['joomla_account_creation_email_template'] = [
         'name' => 'Joomla Account Creation',
         'published' => 'off',
         'description' => 'Template used when informing a contact that they\'ve been given an account on the joomla portal.',
@@ -208,9 +207,9 @@ function getTemplates()
         'body_html' => '<p>Hi $contact_name,</p>
 					    <p>An account has been created for you at <a href="$portal_address">$portal_address</a>.</p>
 					    <p>You may login using this email address and the password $joomla_pass</p>'
-    );
+    ];
 
-    $templates['case_creation_email_template'] = array(
+    $templates['case_creation_email_template'] = [
         'name' => 'Case Creation',
         'published' => 'off',
         'description' => 'Template to send to a contact when a case is received from them.',
@@ -229,9 +228,9 @@ function getTemplates()
 					    <tr><td>Reference</td><td>$acase_case_number</td></tr>
 					    <tr><td>Description</td><td>$acase_description</td></tr>
 					    </tbody></table>'
-    );
+    ];
 
-    $templates['contact_email_template'] = array(
+    $templates['contact_email_template'] = [
         'name' => 'Contact Case Update',
         'published' => 'off',
         'description' => 'Template to send to a contact when their case is updated.',
@@ -247,9 +246,9 @@ function getTemplates()
 					    <p>You\'ve had an update to your case $acase_name (# $acase_case_number) on $aop_case_updates_date_entered:</p>
 					    <p><strong>$user_first_name $user_last_name said:</strong></p>
 					    <p style="padding-left:30px;">$aop_case_updates_description</p>'
-    );
+    ];
 
-    $templates['user_email_template'] = array(
+    $templates['user_email_template'] = [
         'name' => 'User Case Update',
         'published' => 'off',
         'description' => 'Email template to send to a SuiteCRM user when their case is updated.',
@@ -268,7 +267,7 @@ function getTemplates()
 					     <p><strong>$contact_first_name $contact_last_name, said:</strong></p>
 					     <p style="padding-left:30px;">$aop_case_updates_description</p>
 					     <p>You may review this Case at: $sugarurl/index.php?module=Cases&action=DetailView&record=$acase_id;</p>'
-    );
+    ];
 
     return $templates;
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Very basic HTTP client
+ * Very basic HTTP client.
+ *
  * @api
  * Used in various places of the code and can be mocked out.
  * Presently does only one op - POST to url.
@@ -52,16 +52,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SugarHttpClient
 {
     protected $last_error = '';
+
     /**
-     * sends POST request to REST service via CURL
+     * sends POST request to REST service via CURL.
+     *
      * @param string $url URL to call
      * @param string $postArgs POST args
      */
     public function callRest($url, $postArgs)
     {
-        if (!function_exists("curl_init")) {
+        if (!function_exists('curl_init')) {
             $this->last_error = 'ERROR_NO_CURL';
-            $GLOBALS['log']->fatal("REST call failed - no cURL!");
+            $GLOBALS['log']->fatal('REST call failed - no cURL!');
+
             return false;
         }
         $curl = curl_init($url);
@@ -72,22 +75,25 @@ class SugarHttpClient
         curl_setopt($curl, CURLOPT_TIMEOUT, 10);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        $GLOBALS['log']->debug("HTTP client call: $url -> $postArgs");
+        $GLOBALS['log']->debug("HTTP client call: {$url} -> {$postArgs}");
         $response = curl_exec($curl);
         if ($response === false) {
             $this->last_error = 'ERROR_REQUEST_FAILED';
             $curl_errno = curl_errno($curl);
             $curl_error = curl_error($curl);
-            $GLOBALS['log']->error("HTTP client: cURL call failed: error $curl_errno: $curl_error");
+            $GLOBALS['log']->error("HTTP client: cURL call failed: error {$curl_errno}: {$curl_error}");
+
             return false;
         }
-        $GLOBALS['log']->debug("HTTP client response: $response");
+        $GLOBALS['log']->debug("HTTP client response: {$response}");
         curl_close($curl);
+
         return $response;
     }
 
     /**
-     * Returns code of last error that happened to the client
+     * Returns code of last error that happened to the client.
+     *
      * @return string
      */
     public function getLastError()

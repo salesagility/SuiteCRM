@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,6 +40,7 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interpreters;
 
 use Behat\Gherkin\Filter\FilterInterface;
+use Psr\Container\ContainerInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByIdFilters\ByIdFilter;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
@@ -50,42 +50,41 @@ use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\Exception;
 use SuiteCRM\Utility\StringValidator;
 
-use Psr\Container\ContainerInterface;
-
 /**
- * Class FilterInterpreter
- * @package SuiteCRM\API\JsonApi\v1\Filters\Interpreters
+ * Class FilterInterpreter.
  */
 class FilterInterpreter
 {
     /**
-     * @var ContainerInterface $containers
+     * @var ContainerInterface
      */
     private $containers;
 
     /**
-     * @var FieldOperator $fieldOperator
+     * @var FieldOperator
      */
     private static $fieldOperator;
 
     /**
-     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] $filterOperators
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]
      */
     private static $filterOperators;
 
     /**
-     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] 
      */
     private static $filterFieldOperators;
 
     /**
-     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] 
      */
     private static $filterSpecialOperators;
 
     /**
      * FilterInterpreter constructor.
+     *
      * @param ContainerInterface $containers
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      */
     public function __construct(ContainerInterface $containers)
@@ -111,8 +110,10 @@ class FilterInterpreter
 
     /**
      * @param array $filterStructure
-     * @return bool
+     *
      * @throws InvalidArgumentException
+     *
+     * @return bool
      */
     public function isFilterByPreMadeName(array $filterStructure)
     {
@@ -125,8 +126,10 @@ class FilterInterpreter
 
     /**
      * @param array $filterStructure
-     * @return bool
+     *
      * @throws InvalidArgumentException
+     *
+     * @return bool
      */
     public function isFilterById(array $filterStructure)
     {
@@ -141,8 +144,10 @@ class FilterInterpreter
 
     /**
      * @param array $filterStructure  [table => [field => [operator, operand, ... ], ...]
-     * @return bool
+     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function isFilterByAttributes(array $filterStructure)
     {
@@ -151,6 +156,7 @@ class FilterInterpreter
         }
 
         $fieldValidator = new FieldValidator($this->containers);
+
         return count($filterStructure) >= 1 &&
             is_array(current($filterStructure)) === true &&
             array_keys($filterStructure)[0] !== '[id]' &&
@@ -158,10 +164,13 @@ class FilterInterpreter
     }
 
     /**
-     * Convert the filter structure for a parser into an SQL where clause
+     * Convert the filter structure for a parser into an SQL where clause.
+     *
      * @param array $filterStructure
-     * @return string
+     *
      * @throws Exception
+     *
+     * @return string
      */
     public function getFilterByPreMadeName(array $filterStructure)
     {
@@ -169,7 +178,7 @@ class FilterInterpreter
         $filterName = current($filterStructure);
         $interpreters = $this->containers->get('ByPreMadeFilterInterpreters');
 
-        /** @var  \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByPreMadeFilterInterpreter $interpreter */
+        /** @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByPreMadeFilterInterpreter $interpreter */
         foreach ($interpreters as $interpreter) {
             if ($interpreter->hasByPreMadeFilter($filterName)) {
                 $filter = $interpreter->getByPreMadeFilter();
@@ -184,10 +193,13 @@ class FilterInterpreter
     }
 
     /**
-     * Convert the filter structure for a parser into an SQL where clause
+     * Convert the filter structure for a parser into an SQL where clause.
+     *
      * @param array $filterStructure  [table => [field => [operator, operand, ... ], ...]
-     * @return string|ByIdFilter
+     *
      * @throws Exception
+     *
+     * @return ByIdFilter|string
      */
     public function getFilterById(array $filterStructure)
     {
@@ -206,11 +218,14 @@ class FilterInterpreter
     }
 
     /**
-     * Convert the filter structure for a parser into an SQL where clause
+     * Convert the filter structure for a parser into an SQL where clause.
+     *
      * @param array $filterStructure [table => [field => [operator, operand, ... ], ...]
      * @param array $args Route arguments
-     * @return string
+     *
      * @throws BadRequestException
+     *
+     * @return string
      */
     public function getFilterByAttributes(array $filterStructure, array $args)
     {
@@ -218,7 +233,6 @@ class FilterInterpreter
         $filterOperator = new FieldOperator($this->containers);
         $operator = new Operator($this->containers);
         foreach ($filterStructure as $beanType => $filterFields) {
-            //
             if ($filterOperator->isValid($beanType) === false) {
                 throw new BadRequestException('[getFilterByAttributes][invalid filter]');
             }
@@ -235,7 +249,7 @@ class FilterInterpreter
                 }
                 $fieldName = $filterOperator->stripFilterTag($field);
                 if (isset($module->field_defs[$fieldName]) === false) {
-                    throw new BadRequestException('[getFilterByAttributes][field does not exist] "'.$fieldName.'"');
+                    throw new BadRequestException('[getFilterByAttributes][field does not exist] "' . $fieldName . '"');
                 }
 
                 if (is_array($fieldOperations) === false) {
@@ -247,7 +261,7 @@ class FilterInterpreter
                 $index = 0;
                 $end = count($fieldOperations);
                 $lastOperator = null;
-                $operands = array();
+                $operands = [];
                 while ($index < $end) {
                     // Lets play: Is this element an operator or an operand?
                     if ($operator->hasOperator(current($fieldOperations))) {
@@ -275,7 +289,7 @@ class FilterInterpreter
                         );
 
                         // Clear the operands for the next operator
-                        $operands = array();
+                        $operands = [];
 
                         // We need to start again.
                         // So lets keep going ...
@@ -309,40 +323,14 @@ class FilterInterpreter
     }
 
     /**
-     * @param string $tableName
-     * @param OperatorInterface|FilterInterface $filterOperator
-     * @param OperatorInterface|FilterInterface $lastOperator
-     * @param string $field
-     * @param array $operands
-     * @param array $args route arguments
-     * @return string
-     */
-    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands, array $args)
-    {
-        // detect custom field and change table to {table}_cstm
-        if ($this->isCustomField($filterOperator->stripFilterTag($field), $args)) {
-            $tableName = $this->toCustomTable($tableName);
-        }
-
-        // Lets build the last operation into a SQL Query
-        $sqlField = implode('.', array($tableName, $filterOperator->stripFilterTag($field)));
-        $sqlOperator = $lastOperator->toSqlOperator();
-        $sqlOperands = $lastOperator->toSqlOperands($operands);
-
-        // Here's where the real magic happens
-        return implode(' ', array($sqlField, $sqlOperator, $sqlOperands));
-    }
-
-
-    /**
      * @param string $operator
-     * @return OperatorInterface
+     *
      * @throws Exception
+     *
+     * @return OperatorInterface
      */
     protected function getOperator($operator)
     {
-
-        //
         $isInOperatorsArray = function ($operatorNeedle, $operatorsHaystack) {
             foreach ($operatorsHaystack as $operator) {
                 /** @var OperatorInterface $operator */
@@ -350,25 +338,27 @@ class FilterInterpreter
                     return $operator;
                 }
             }
+
             return false;
         };
 
-        //
         $isInFieldsOperatorsArray = $isInOperatorsArray($operator, self::$filterFieldOperators);
         $isInSpecialOperatorsArray = $isInOperatorsArray($operator, self::$filterSpecialOperators);
         $isInOperatorArray = $isInOperatorsArray($operator, self::$filterOperators);
 
         if ($isInFieldsOperatorsArray !== false) {
             return $isInFieldsOperatorsArray;
-        } elseif ($isInSpecialOperatorsArray !== false) {
+        }
+        if ($isInSpecialOperatorsArray !== false) {
             return $isInSpecialOperatorsArray;
-        } elseif ($isInOperatorArray !== false) {
+        }
+        if ($isInOperatorArray !== false) {
             return $isInOperatorArray;
         }
 
         throw new Exception(
             '[JsonApi][v1][Filters][FilterInterpreter][getOperator]' .
-            '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
+            '[parserFieldFilters][operator not found] please ensure that an operator has been added to ' .
             'containers '
         );
     }
@@ -376,6 +366,7 @@ class FilterInterpreter
     /**
      * @param string $field
      * @param array $args route arguments
+     *
      * @return bool
      */
     protected function isCustomField($field, array $args)
@@ -396,8 +387,10 @@ class FilterInterpreter
 
     /**
      * @param string $table
-     * @return string custom version of the table
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return string custom version of the table
      */
     protected function toCustomTable($table)
     {
@@ -410,5 +403,31 @@ class FilterInterpreter
         }
 
         return $table . '_cstm';
+    }
+
+    /**
+     * @param string $tableName
+     * @param FilterInterface|OperatorInterface $filterOperator
+     * @param FilterInterface|OperatorInterface $lastOperator
+     * @param string $field
+     * @param array $operands
+     * @param array $args route arguments
+     *
+     * @return string
+     */
+    private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands, array $args)
+    {
+        // detect custom field and change table to {table}_cstm
+        if ($this->isCustomField($filterOperator->stripFilterTag($field), $args)) {
+            $tableName = $this->toCustomTable($tableName);
+        }
+
+        // Lets build the last operation into a SQL Query
+        $sqlField = implode('.', [$tableName, $filterOperator->stripFilterTag($field)]);
+        $sqlOperator = $lastOperator->toSqlOperator();
+        $sqlOperands = $lastOperator->toSqlOperands($operands);
+
+        // Here's where the real magic happens
+        return implode(' ', [$sqlField, $sqlOperator, $sqlOperands]);
     }
 }

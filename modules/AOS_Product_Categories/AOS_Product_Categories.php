@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,26 +38,15 @@
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/AOS_Product_Categories/AOS_Product_Categories_sugar.php');
+require_once 'modules/AOS_Product_Categories/AOS_Product_Categories_sugar.php';
 class AOS_Product_Categories extends AOS_Product_Categories_sugar
 {
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
-
-    private function clearParent()
-    {
-        $this->parent_category_id = '';
-        $this->parent_category_name = '';
-        $this->parent_category = '';
-    }
-
 
     public function save($check_notify = false)
     {
@@ -69,6 +57,7 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar
             while ($tmp && $tmp->parent_category_id) {
                 if ($tmp->parent_category_id == $this->id) {
                     $this->clearParent();
+
                     break;
                 }
                 $tmp = new AOS_Product_Categories();
@@ -77,5 +66,12 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar
         }
 
         return parent::save($check_notify);
+    }
+
+    private function clearParent()
+    {
+        $this->parent_category_id = '';
+        $this->parent_category_name = '';
+        $this->parent_category = '';
     }
 }

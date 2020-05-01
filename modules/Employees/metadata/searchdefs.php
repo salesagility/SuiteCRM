@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,78 +43,71 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
-  $searchdefs['Employees'] = array(
-                    'templateMeta' => array('maxColumns' => '3', 'maxColumnsBasic' => '4',
-                            'widths' => array('label' => '10', 'field' => '30'),
-                           ),
-                    'layout' => array(
-                        'basic_search' => array(
-                            array('name'=>'search_name','label' =>'LBL_NAME', 'type' => 'name'),
-                            array('name'=>'open_only_active_users', 'label'=>'LBL_ONLY_ACTIVE', 'type' => 'bool'),
-                            ),
-                        'advanced_search' => array(
-                            'first_name',
-                            'last_name',
-                            'employee_status',
-                            'title',
-                            'phone' =>
-                              array(
-                                'name' => 'phone',
-                                'label' => 'LBL_ANY_PHONE',
-                                'type' => 'name',
-                                'default' => true,
-                                'width' => '10%',
-                              ),
-                            'department',
-                            'email' =>
-                              array(
-                                'name' => 'email',
-                                'label' => 'LBL_ANY_EMAIL',
-                                'type' => 'name',
-                                'default' => true,
-                                'width' => '10%',
-                              ),
-                            'address_street' =>
-                              array(
-                                'name' => 'address_street',
-                                'label' => 'LBL_ANY_ADDRESS',
-                                'type' => 'name',
-                                'default' => true,
-                                'width' => '10%',
-                              ),
-                              'address_city' =>
-                              array(
-                                'name' => 'address_city',
-                                'label' => 'LBL_CITY',
-                                'type' => 'name',
-                                'default' => true,
-                                'width' => '10%',
-                              ),
-                            'address_state' =>
-                              array(
-                                'name' => 'address_state',
-                                'label' => 'LBL_STATE',
-                                'type' => 'name',
-                                'default' => true,
-                                'width' => '10%',
-                              ),
-                              'address_postalcode' =>
-                              array(
-                                'name' => 'address_postalcode',
-                                'label' => 'LBL_POSTAL_CODE',
-                                'type' => 'name',
-                                'default' => true,
-                                'width' => '10%',
-                              ),
-                             
-                            'address_country' =>
-                              array(
-                                'name' => 'address_country',
-                                'label' => 'LBL_COUNTRY',
-                                'type' => 'name',
-                                'default' => true,
-                                'width' => '10%',
-                              ),
-                            ),
-                    ),
-               );
+  $searchdefs['Employees'] = [
+      'templateMeta' => ['maxColumns' => '3', 'maxColumnsBasic' => '4',
+          'widths' => ['label' => '10', 'field' => '30'],
+      ],
+      'layout' => [
+          'basic_search' => [
+              ['name' => 'search_name', 'label' => 'LBL_NAME', 'type' => 'name'],
+              ['name' => 'open_only_active_users', 'label' => 'LBL_ONLY_ACTIVE', 'type' => 'bool'],
+          ],
+          'advanced_search' => [
+              'first_name',
+              'last_name',
+              'employee_status',
+              'title',
+              'phone' => [
+                  'name' => 'phone',
+                  'label' => 'LBL_ANY_PHONE',
+                  'type' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+              'department',
+              'email' => [
+                  'name' => 'email',
+                  'label' => 'LBL_ANY_EMAIL',
+                  'type' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+              'address_street' => [
+                  'name' => 'address_street',
+                  'label' => 'LBL_ANY_ADDRESS',
+                  'type' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+              'address_city' => [
+                  'name' => 'address_city',
+                  'label' => 'LBL_CITY',
+                  'type' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+              'address_state' => [
+                  'name' => 'address_state',
+                  'label' => 'LBL_STATE',
+                  'type' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+              'address_postalcode' => [
+                  'name' => 'address_postalcode',
+                  'label' => 'LBL_POSTAL_CODE',
+                  'type' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+
+              'address_country' => [
+                  'name' => 'address_country',
+                  'label' => 'LBL_COUNTRY',
+                  'type' => 'name',
+                  'default' => true,
+                  'width' => '10%',
+              ],
+          ],
+      ],
+  ];

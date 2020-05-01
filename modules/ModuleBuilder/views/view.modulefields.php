@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,32 +36,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
+require_once 'modules/ModuleBuilder/views/view.modulefield.php';
 
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
-require_once('modules/ModuleBuilder/views/view.modulefield.php');
- 
 class ViewModulefields extends SugarView
 {
     public $mbModule;
-    
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-        
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
 
     public function display()
     {
         $smarty = new Sugar_Smarty();
         global $mod_strings;
-        $bak_mod_strings=$mod_strings;
+        $bak_mod_strings = $mod_strings;
         $smarty->assign('mod_strings', $mod_strings);
 
         $module_name = $_REQUEST['view_module'];
@@ -70,8 +55,8 @@ class ViewModulefields extends SugarView
         global $current_language;
         $module_strings = return_module_language($current_language, $module_name);
 
-        $fieldsData = array();
-        $customFieldsData = array();
+        $fieldsData = [];
+        $customFieldsData = [];
 
         //use fieldTypes variable to map field type to displayed field type
         $fieldTypes = $mod_strings['fieldTypes'];
@@ -80,14 +65,14 @@ class ViewModulefields extends SugarView
 
         if (!isset($_REQUEST['view_package']) || $_REQUEST['view_package'] == 'studio') {
             //$this->loadPackageHelp($module_name);
-            $studioClass = new stdClass;
+            $studioClass = new stdClass();
             $studioClass->name = $module_name;
 
             $objectName = BeanFactory::getObjectName($module_name);
 
             VardefManager::loadVardef($module_name, $objectName, true);
             global $dictionary;
-            $f = array($mod_strings['LBL_HCUSTOM']=>array(), $mod_strings['LBL_HDEFAULT']=>array());
+            $f = [$mod_strings['LBL_HCUSTOM'] => [], $mod_strings['LBL_HDEFAULT'] => []];
 
             foreach ($dictionary[$objectName]['fields'] as $def) {
                 if ($this->isValidStudioField($def)) {
@@ -109,7 +94,7 @@ class ViewModulefields extends SugarView
             $studioClass->mbvardefs->vardefs['fields'] = $f;
             $smarty->assign('module', $studioClass);
 
-            $package = new stdClass;
+            $package = new stdClass();
             $package->name = '';
             $smarty->assign('package', $package);
             global $current_user;
@@ -120,14 +105,14 @@ class ViewModulefields extends SugarView
             $smarty->assign('studio', true);
             $ajax = new AjaxCompose();
             $ajax->addCrumb($mod_strings['LBL_STUDIO'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
-            $ajax->addCrumb(translate($module_name), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module='.$module_name.'")');
+            $ajax->addCrumb(translate($module_name), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $module_name . '")');
             $ajax->addCrumb($mod_strings['LBL_FIELDS'], '');
             $ajax->addSection('center', $mod_strings['LBL_EDIT_FIELDS'], $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/fields.tpl'));
             $_REQUEST['field'] = '';
 
             echo $ajax->getJavascript();
         } else {
-            require_once('modules/ModuleBuilder/MB/ModuleBuilder.php');
+            require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php';
             $mb = new ModuleBuilder();
             $mb->getPackage($_REQUEST['view_package']);
             $package = $mb->packages[$_REQUEST['view_package']];
@@ -137,17 +122,17 @@ class ViewModulefields extends SugarView
             $this->loadPackageHelp($module_name);
             $this->mbModule->getVardefs(true);
             $this->mbModule->mbvardefs->vardefs['fields'] = array_reverse($this->mbModule->mbvardefs->vardefs['fields'], true);
-            $loadedFields = array();
+            $loadedFields = [];
 
-            if (file_exists($this->mbModule->path. '/language/'.$current_language.'.lang.php')) {
-                include($this->mbModule->path .'/language/'.$current_language.'.lang.php');
+            if (file_exists($this->mbModule->path . '/language/' . $current_language . '.lang.php')) {
+                include $this->mbModule->path . '/language/' . $current_language . '.lang.php';
                 $this->mbModule->setModStrings($current_language, $mod_strings);
-            } elseif (file_exists($this->mbModule->path. '/language/en_us.lang.php')) {
-                include($this->mbModule->path .'/language/en_us.lang.php');
+            } elseif (file_exists($this->mbModule->path . '/language/en_us.lang.php')) {
+                include $this->mbModule->path . '/language/en_us.lang.php';
                 $this->mbModule->setModStrings('en_us', $mod_strings);
             }
 
-            foreach ($this->mbModule->mbvardefs->vardefs['fields'] as $k=>$v) {
+            foreach ($this->mbModule->mbvardefs->vardefs['fields'] as $k => $v) {
                 if ($k != $this->mbModule->name) {
                     foreach ($v as $field => $def) {
                         if (in_array($field, array_keys($this->mbModule->mbvardefs->vardefs['fields'][$this->mbModule->name]))) {
@@ -159,14 +144,14 @@ class ViewModulefields extends SugarView
                 }
             }
 
-            foreach ($this->mbModule->mbvardefs->vardefs['fields'] as $k=>$v) {
+            foreach ($this->mbModule->mbvardefs->vardefs['fields'] as $k => $v) {
                 if ($k != $module_name) {
-                    $titleLBL[$k]=translate("LBL_".strtoupper($k), 'ModuleBuilder');
+                    $titleLBL[$k] = translate('LBL_' . strtoupper($k), 'ModuleBuilder');
                 } else {
-                    $titleLBL[$k]=$k;
+                    $titleLBL[$k] = $k;
                 }
                 foreach ($v as $field => $def) {
-                    /**
+                    /*
                      * https://github.com/salesagility/SuiteCRM/issues/879
                      *
                      * Added check for to see if field is a valid studio field
@@ -175,7 +160,7 @@ class ViewModulefields extends SugarView
                         if (isset($loadedFields[$field])) {
                             unset($this->mbModule->mbvardefs->vardefs['fields'][$k][$field]);
                         } else {
-                            $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['label'] = isset($def['vname']) && isset($this->mbModule->mblanguage->strings[$current_language.'.lang.php'][$def['vname']]) ? $this->mbModule->mblanguage->strings[$current_language.'.lang.php'][$def['vname']] : $field;
+                            $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['label'] = isset($def['vname']) && isset($this->mbModule->mblanguage->strings[$current_language . '.lang.php'][$def['vname']]) ? $this->mbModule->mblanguage->strings[$current_language . '.lang.php'][$def['vname']] : $field;
                             $customFieldsData[$field] = ($k == $this->mbModule->name) ? true : false;
                             $loadedFields[$field] = true;
 
@@ -202,10 +187,10 @@ class ViewModulefields extends SugarView
 
             $ajax = new AjaxCompose();
             $ajax->addCrumb($bak_mod_strings['LBL_MODULEBUILDER'], 'ModuleBuilder.main("mb")');
-            $ajax->addCrumb($package->name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name.'")');
-            $ajax->addCrumb($module_name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_package='.$package->name.'&view_module='. $module_name . '")');
+            $ajax->addCrumb($package->name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package=' . $package->name . '")');
+            $ajax->addCrumb($module_name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_package=' . $package->name . '&view_module=' . $module_name . '")');
             $ajax->addCrumb($bak_mod_strings['LBL_FIELDS'], '');
-            $ajax->addSection('center', $bak_mod_strings["LBL_FIELDS"], $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/fields.tpl'));
+            $ajax->addSection('center', $bak_mod_strings['LBL_FIELDS'], $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/fields.tpl'));
             $_REQUEST['field'] = '';
 
             echo $ajax->getJavascript();
@@ -214,15 +199,15 @@ class ViewModulefields extends SugarView
 
     public function loadPackageHelp(
         $name
-        ) {
-        $this->mbModule->help['default'] = (empty($name))?'create':'modify';
+    ) {
+        $this->mbModule->help['default'] = (empty($name)) ? 'create' : 'modify';
         $this->mbModule->help['group'] = 'module';
         $this->mbModule->help['group'] = 'module';
     }
 
     public function cullFields(
         $def
-        ) {
+    ) {
         if (!empty($def['parent_id'])) {
             unset($def['parent_id']);
         }
@@ -232,14 +217,15 @@ class ViewModulefields extends SugarView
         if (!empty($def['currency_id'])) {
             unset($def['currency_id']);
         }
+
         return $def;
     }
-    
+
     public function isValidStudioField(
         $def
-        ) {
+    ) {
         if (isset($def['studio'])) {
-            if (is_array($def [ 'studio' ])) {
+            if (is_array($def['studio'])) {
                 if (isset($def['studio']['editField']) && $def['studio']['editField'] == true) {
                     return true;
                 }
@@ -255,12 +241,27 @@ class ViewModulefields extends SugarView
                 }
             }
         }
-        if (empty($def ['source']) || $def ['source'] == 'db' || $def ['source'] == 'custom_fields') {
-            if ($def ['type'] != 'id' && (empty($def ['dbType']) || $def ['dbType'] != 'id')) {
+        if (empty($def['source']) || $def['source'] == 'db' || $def['source'] == 'custom_fields') {
+            if ($def['type'] != 'id' && (empty($def['dbType']) || $def['dbType'] != 'id')) {
                 return true;
             }
         }
-        
+
         return false;
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

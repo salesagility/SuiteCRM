@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
 {
     /**
-     * Returns list of beans of currencies including default system currency
+     * Returns list of beans of currencies including default system currency.
      *
      * @param bool $refresh cache
+     *
      * @return array list of beans
      */
     public static function getCurrenciesList($refresh = false)
@@ -58,18 +57,20 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
             $list = $currency->get_full_list('name');
             $currency->retrieve('-99');
             if (is_array($list)) {
-                $list = array_merge(array($currency), $list);
+                $list = array_merge([$currency], $list);
             } else {
-                $list = array($currency);
+                $list = [$currency];
             }
         }
+
         return $list;
     }
 
     /**
-     * Overriding display of value of currency because of currencies are not stored in app_list_strings
+     * Overriding display of value of currency because of currencies are not stored in app_list_strings.
      *
      * @param array $layout_def
+     *
      * @return string for display
      */
     public function &displayListPlain($layout_def)
@@ -81,35 +82,38 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
             $currency->retrieve($value);
             $currencies[$value] = $currency->symbol . ' ' . $currency->iso4217;
         }
+
         return $currencies[$value];
     }
 
     /**
-     * Overriding sorting because of default currency is not present in DB
+     * Overriding sorting because of default currency is not present in DB.
      *
      * @param array $layout_def
+     *
      * @return string for order by
      */
     public function queryOrderBy($layout_def)
     {
         $tmpList = self::getCurrenciesList();
-        $list = array();
+        $list = [];
         foreach ($tmpList as $bean) {
             $list[$bean->id] = $bean->symbol . ' ' . $bean->iso4217;
         }
 
         $field_def = $this->reporter->all_fields[$layout_def['column_key']];
         if (!empty($field_def['sort_on'])) {
-            $order_by = $layout_def['table_alias'].".".$field_def['sort_on'];
+            $order_by = $layout_def['table_alias'] . '.' . $field_def['sort_on'];
         } else {
             $order_by = $this->_get_column_select($layout_def);
         }
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
-            $order_dir = "ASC";
+            $order_dir = 'ASC';
         } else {
-            $order_dir = "DESC";
+            $order_dir = 'DESC';
         }
+
         return $this->reporter->db->orderByEnum($order_by, $list, $order_dir);
     }
 }

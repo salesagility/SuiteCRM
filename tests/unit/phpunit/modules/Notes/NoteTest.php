@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class NoteTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -45,7 +48,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test.php.txt', $note->filename);
     }
 
-    public function testmark_deleted()
+    public function testmarkDeleted()
     {
         $note = new Note();
 
@@ -67,7 +70,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $result);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $note = new Note();
 
@@ -79,7 +82,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $note->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $note = new Note();
 
@@ -94,7 +97,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $note = new Note();
 
@@ -107,7 +110,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $note = new Note();
 
@@ -120,7 +123,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $note = new Note();
         $id = 'abcdef12345';
@@ -129,16 +132,16 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         $note->filename = 'test.txt';
         $note->contact_name = 'test contact';
 
-        $expected = array(
-                      'ID' => $id,
-                      'FILENAME' => 'test.txt',
-                      'PARENT_TYPE' => 'Account',
-                      'EMBED_FLAG' => '0',
-                      'DELETED' => 0,
-                      'CONTACT_NAME' => 'test contact',
-                      'PARENT_MODULE' => 'Account',
-                      'STATUS' => 'Note',
-                    );
+        $expected = [
+            'ID' => $id,
+            'FILENAME' => 'test.txt',
+            'PARENT_TYPE' => 'Account',
+            'EMBED_FLAG' => '0',
+            'DELETED' => 0,
+            'CONTACT_NAME' => 'test contact',
+            'PARENT_MODULE' => 'Account',
+            'STATUS' => 'Note',
+        ];
 
         $actual = $note->get_list_view_data();
 
@@ -149,12 +152,12 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
     {
         $note = new Note();
 
-        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
+        $expected = ['MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a'];
         $actual = $note->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $note = new Note();
 

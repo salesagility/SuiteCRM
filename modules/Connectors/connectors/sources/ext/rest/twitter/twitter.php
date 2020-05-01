@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/connectors/sources/ext/rest/rest.php');
+require_once 'include/connectors/sources/ext/rest/rest.php';
 
 class ext_rest_twitter extends ext_rest
 {
@@ -56,37 +55,38 @@ class ext_rest_twitter extends ext_rest
         //Used to enable hover for the formatter
         $this->_enable_in_hover = false;
 
-        $this->allowedModuleList = array('Accounts' => $app_list_strings['moduleList']['Accounts'],
+        $this->allowedModuleList = ['Accounts' => $app_list_strings['moduleList']['Accounts'],
             'Contacts' => $app_list_strings['moduleList']['Contacts'],
-            'Leads' => $app_list_strings['moduleList']['Leads']);
+            'Leads' => $app_list_strings['moduleList']['Leads']];
     }
 
     /**
-     * function to force only to let the modules in the allowed list to appear in the enable connectors,
+     * function to force only to let the modules in the allowed list to appear in the enable connectors,.
      *
      * @param array $moduleList
+     *
      * @return array
      */
     public function filterAllowedModules($moduleList)
     {
         // InsideView currently has no ability to talk to modules other than these four
-        $outModuleList = array();
+        $outModuleList = [];
         foreach ($moduleList as $module) {
             if (!in_array($module, $this->allowedModuleList)) {
                 continue;
-            } else {
-                $outModuleList[$module] = $module;
             }
+            $outModuleList[$module] = $module;
         }
+
         return $outModuleList;
     }
 
-    public function getItem($args = array(), $module = null)
+    public function getItem($args = [], $module = null)
     {
         return null;
     }
 
-    public function getList($args = array(), $module = null)
+    public function getList($args = [], $module = null)
     {
         return null;
     }

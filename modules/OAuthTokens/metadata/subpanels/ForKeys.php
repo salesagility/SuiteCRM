@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,33 +40,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+    ],
 
     'where' => '',
 
-    'list_fields' => array(
-       'id'=>array(
-            'name'=>'id',
+    'list_fields' => [
+        'id' => [
+            'name' => 'id',
             'width' => '10%',
             'vname' => 'LBL_ID',
-        ),
-        'tstate'=>array(
-            'name'=>'tstate',
+        ],
+        'tstate' => [
+            'name' => 'tstate',
             'width' => '10%',
             'vname' => 'LBL_STATUS',
-        ),
-        'token_ts'=>array(
-            'name'=>'token_ts',
+        ],
+        'token_ts' => [
+            'name' => 'token_ts',
             'width' => '10%',
             'vname' => 'LBL_TS',
             'function' => 'testfunc',
-        ),
-        'assigned_user_name' => array(
+        ],
+        'assigned_user_name' => [
             'name' => 'assigned_user_name',
             'module' => 'Users',
             'target_record_key' => 'assigned_user_id',
@@ -74,12 +71,12 @@ $subpanel_layout = array(
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '10%',
             'vname' => 'LBL_ASSIGNED_TO_NAME',
-        ),
-        'del_button'=>array(
+        ],
+        'del_button' => [
             'widget_class' => 'SubPanelDeleteButton',
             'vname' => 'LBL_LIST_DELETE',
             'width' => '6%',
-            'sortable'=>false,
-        ),
-        )
-);
+            'sortable' => false,
+        ],
+    ]
+];

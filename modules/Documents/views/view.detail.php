@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,23 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class DocumentsViewDetail extends ViewDetail
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        $params = array();
-        $params[] = $this->_getModuleTitleListParam($browserTitle);
-        $params[] = $this->bean->document_name;
-        
-        return $params;
-    }
-
     public function display()
     {
         //check to see if the file field is empty.  This should not occur and would only happen when an error has ocurred during upload, or from db manipulation of record.
@@ -67,7 +52,20 @@ class DocumentsViewDetail extends ViewDetail
             $this->displayErrors();
         }
 
-
         parent::display();
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        $params = [];
+        $params[] = $this->_getModuleTitleListParam($browserTitle);
+        $params[] = $this->bean->document_name;
+
+        return $params;
     }
 }

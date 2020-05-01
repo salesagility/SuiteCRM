@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,29 +43,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once __DIR__ . '/../../../../../modules/Emails/NonGmailSentFolderHandler.php';
 
 /**
- * NonGmailSentFolderHandlerMock
+ * NonGmailSentFolderHandlerMock.
  *
  * @author gyula
  */
 class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
 {
     /**
-     *
      * @param InboundEmail $ie
      * @param SugarPHPMailer $mail
-     * @param string $sentFolder
-     * @return bool
-     */
-    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
-    {
-        LoggerManager::getLogger()->debug('NonGmailSentFolderHandlerMock::connectToNonGmailServer() is called');
-        return true; // emulate a success connection
-    }
-
-    /**
      *
-     * @param InboundEmail $ie
-     * @param SugarPHPMailer $mail
      * @return string
      */
     public function getProblemOfStoringInNonGmailSentFolderPublic(InboundEmail $ie, SugarPHPMailer $mail)
@@ -76,14 +61,30 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
     }
 
     /**
-     *
      * @param InboundEmail $ie
      * @param SugarPHPMailer $mail
      * @param string $sentFolder
+     * @param mixed $options
+     *
      * @return bool
      */
-    public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
+    public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = '\\Seen')
     {
         return parent::connectToNonGmailServer($ie, $mail, $sentFolder, $options);
+    }
+
+    /**
+     * @param InboundEmail $ie
+     * @param SugarPHPMailer $mail
+     * @param string $sentFolder
+     * @param mixed $options
+     *
+     * @return bool
+     */
+    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = '\\Seen')
+    {
+        LoggerManager::getLogger()->debug('NonGmailSentFolderHandlerMock::connectToNonGmailServer() is called');
+
+        return true; // emulate a success connection
     }
 }

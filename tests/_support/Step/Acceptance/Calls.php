@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Calls extends \AcceptanceTester
 {
     /**
-     * Create a call
+     * Create a call.
      *
      * @param string $name
      */
@@ -30,13 +30,16 @@ class Calls extends \AcceptanceTester
         $I->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
     }
+
     /**
-     * Create a call and relate to a module
+     * Create a call and relate to a module.
      *
      * @param $name, $module_name, $module, $params
-     *
+     * @param mixed $module_name
+     * @param mixed $module
+     * @param mixed $params
      */
-    public function createCallRelateModule($name, $module_name, $module, $params = array())
+    public function createCallRelateModule($name, $module_name, $module, $params = [])
     {
         $I = new EditView($this->getScenario());
         $DetailView = new DetailView($this->getScenario());
@@ -54,7 +57,7 @@ class Calls extends \AcceptanceTester
 
         if (!empty($params)) {
             foreach ($params as $field => $value) {
-                $I->selectOption('#'.$field, $value);
+                $I->selectOption('#' . $field, $value);
             }
         }
 

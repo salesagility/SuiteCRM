@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,86 +36,85 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 class Surveys extends Basic
 {
-
-    /** @var bool $new_schema */
+    /** @var bool */
     public $new_schema = true;
 
-    /** @var string $module_dir */
+    /** @var string */
     public $module_dir = 'Surveys';
 
-    /** @var string $object_name */
+    /** @var string */
     public $object_name = 'Surveys';
 
-    /** @var string $table_name */
+    /** @var string */
     public $table_name = 'surveys';
 
-    /** @var bool $importable */
+    /** @var bool */
     public $importable = false;
 
     /**
      * To ensure that modules created and deployed under CE will continue to function under team security
-     * if the instance is upgraded to PRO
-     * @var bool $disable_row_level_security
+     * if the instance is upgraded to PRO.
+     *
+     * @var bool
      */
     public $disable_row_level_security = true;
 
-    /** @var string $id */
+    /** @var string */
     public $id;
 
-    /** @var  string $name */
+    /** @var string */
     public $name;
 
-    /** @var  string $date_entered */
+    /** @var string */
     public $date_entered;
 
-    /** @var  string $date_modified */
+    /** @var string */
     public $date_modified;
 
-    /** @var  string $modified_user_id */
+    /** @var string */
     public $modified_user_id;
 
-    /** @var  string $modified_by_name */
+    /** @var string */
     public $modified_by_name;
 
-    /** @var  string $created_by */
+    /** @var string */
     public $created_by;
 
-    /** @var  string $created_by_name */
+    /** @var string */
     public $created_by_name;
 
-    /** @var  string $description */
+    /** @var string */
     public $description;
 
-    /** @var  int|bool $deleted */
+    /** @var bool|int */
     public $deleted;
 
-    /** @var  string $created_by_link */
+    /** @var string */
     public $created_by_link;
 
-    /** @var  string $modified_user_link */
+    /** @var string */
     public $modified_user_link;
 
-    /** @var  string $assigned_user_id */
+    /** @var string */
     public $assigned_user_id;
 
-    /** @var  string $assigned_user_name */
+    /** @var string */
     public $assigned_user_name;
 
-    /** @var  string $assigned_user_link */
+    /** @var string */
     public $assigned_user_link;
 
-    /** @var  string $SecurityGroups
+    /** @var  string
      * */
     public $SecurityGroups;
 
-    /** @var  string $status */
+    /** @var string */
     public $status;
 
     /**
@@ -129,6 +127,7 @@ class Surveys extends Basic
 
     /**
      * @param string $interface
+     *
      * @return bool
      */
     public function bean_implements($interface)
@@ -143,6 +142,7 @@ class Surveys extends Basic
 
     /**
      * @param bool $check_notify
+     *
      * @return string
      */
     public function save($check_notify = false)
@@ -178,6 +178,30 @@ class Surveys extends Basic
     }
 
     /**
+     * @return array
+     */
+    public function getMatrixOptions()
+    {
+        return [
+            0 => !empty($this->satisfied_text) ? $this->satisfied_text : 'Satisfied',
+            1 => !empty($this->neither_text) ? $this->neither_text : 'Neither Satisfied nor Dissatisfied',
+            2 => !empty($this->dissatisfied_text) ? $this->dissatisfied_text : 'Dissatisfied',
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubmitText()
+    {
+        if (!empty($this->submit_text)) {
+            return $this->submit_text;
+        }
+
+        return 'Submit';
+    }
+
+    /**
      * @param array $options
      * @param array $ids
      * @param array $deleted
@@ -199,29 +223,5 @@ class Surveys extends Basic
             $optionBean->sort_order = $key;
             $optionBean->save();
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function getMatrixOptions()
-    {
-        return array(
-            0 => !empty($this->satisfied_text) ? $this->satisfied_text : 'Satisfied',
-            1 => !empty($this->neither_text) ? $this->neither_text : 'Neither Satisfied nor Dissatisfied',
-            2 => !empty($this->dissatisfied_text) ? $this->dissatisfied_text : 'Dissatisfied',
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubmitText()
-    {
-        if (!empty($this->submit_text)) {
-            return $this->submit_text;
-        }
-
-        return "Submit";
     }
 }

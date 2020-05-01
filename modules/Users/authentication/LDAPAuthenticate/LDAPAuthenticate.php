@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,23 +41,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 /**
  * This file is used to control the authentication process.
  * It will call on the user authenticate and controll redirection
- * based on the users validation
- *
+ * based on the users validation.
  */
-require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
+require_once 'modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php';
 class LDAPAuthenticate extends SugarAuthenticate
 {
     public $userAuthenticateClass = 'LDAPAuthenticateUser';
     public $authenticationDir = 'LDAPAuthenticate';
+
     /**
      * Constructs LDAPAuthenticate
-     * This will load the user authentication class
+     * This will load the user authentication class.
      *
      * @return LDAPAuthenticate
      */
@@ -65,6 +62,4 @@ class LDAPAuthenticate extends SugarAuthenticate
     {
         parent::__construct();
     }
-
-
 }

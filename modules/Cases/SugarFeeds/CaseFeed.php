@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,13 +40,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/SugarFeed/feedLogicBase.php');
-
+require_once 'modules/SugarFeed/feedLogicBase.php';
 
 class CaseFeed extends FeedLogicBase
 {
     public $module = 'Cases';
+
     public function pushFeed($bean, $event, $arguments)
     {
         $text = '';
@@ -56,10 +55,10 @@ class CaseFeed extends FeedLogicBase
                 $acc = BeanFactory::getBean('Accounts', $bean->account_id);
                 $accountName = $acc->name;
             }
-            $text =  '{SugarFeed.CREATED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name.'] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $accountName . ']: '. $bean->description;
+            $text = '{SugarFeed.CREATED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name . '] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $accountName . ']: ' . $bean->description;
         } else {
             if (!empty($bean->fetched_row['status']) && $bean->fetched_row['status'] != $bean->status && strpos($bean->status, 'Closed') !== false) {
-                $text =  '{SugarFeed.CLOSED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name. '] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $bean->account_name . ']';
+                $text = '{SugarFeed.CLOSED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name . '] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $bean->account_name . ']';
             }
         }
 

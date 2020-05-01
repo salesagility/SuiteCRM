@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,20 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $app_list_strings, $app_strings, $mod_strings;
 
-require_once('modules/Studio/DropDowns/DropDownHelper.php');
-require_once('modules/Studio/parsers/StudioParser.php');
+require_once 'modules/Studio/DropDowns/DropDownHelper.php';
+require_once 'modules/Studio/parsers/StudioParser.php';
 $dh = new DropDownHelper();
 $dh->getDropDownModules();
 $smarty = new Sugar_Smarty();
 $smarty->assign('MOD', $GLOBALS['mod_strings']);
-$title=getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_RENAME_TABS']), false);
+$title = getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_RENAME_TABS']], false);
 $smarty->assign('title', $title);
-$selected_lang = (!empty($_REQUEST['dropdown_lang'])?$_REQUEST['dropdown_lang']:$_SESSION['authenticated_user_language']);
+$selected_lang = (!empty($_REQUEST['dropdown_lang']) ? $_REQUEST['dropdown_lang'] : $_SESSION['authenticated_user_language']);
 if (empty($selected_lang)) {
     $selected_lang = $GLOBALS['sugar_config']['default_language'];
 }
@@ -63,21 +61,21 @@ if ($selected_lang == $GLOBALS['current_language']) {
 } else {
     $my_list_strings = return_app_list_strings_language($selected_lang);
 }
-foreach ($my_list_strings as $key=>$value) {
+foreach ($my_list_strings as $key => $value) {
     if (!is_array($value)) {
         unset($my_list_strings[$key]);
     }
 }
 $modules = array_keys($dh->modules);
-$dropdown_modules = array(''=>$GLOBALS['mod_strings']['LBL_DD_ALL']);
+$dropdown_modules = ['' => $GLOBALS['mod_strings']['LBL_DD_ALL']];
 foreach ($modules as $module) {
-    $dropdown_modules[$module] = (!empty($app_list_strings['moduleList'][$module]))?$app_list_strings['moduleList'][$module]: $module;
+    $dropdown_modules[$module] = (!empty($app_list_strings['moduleList'][$module])) ? $app_list_strings['moduleList'][$module] : $module;
 }
 $smarty->assign('dropdown_modules', $dropdown_modules);
-if (!empty($_REQUEST['dropdown_module']) &&  !empty($dropdown_modules[$_REQUEST['dropdown_module']])) {
+if (!empty($_REQUEST['dropdown_module']) && !empty($dropdown_modules[$_REQUEST['dropdown_module']])) {
     $smarty->assign('dropdown_module', $_REQUEST['dropdown_module']);
-    $dropdowns = (!empty($dh->modules[$_REQUEST['dropdown_module']]))?$dh->modules[$_REQUEST['dropdown_module']]: array();
-    foreach ($dropdowns as $ok=>$dk) {
+    $dropdowns = (!empty($dh->modules[$_REQUEST['dropdown_module']])) ? $dh->modules[$_REQUEST['dropdown_module']] : [];
+    foreach ($dropdowns as $ok => $dk) {
         if (!isset($my_list_strings[$dk]) || !is_array($my_list_strings[$dk])) {
             unset($dropdowns[$ok]);
         }
@@ -100,11 +98,11 @@ if (!empty($_REQUEST['newDropdown'])) {
     }
     $selected_dropdown = $my_list_strings[$_REQUEST['dropdown_name']];
 
-    foreach ($selected_dropdown as $key=>$value) {
+    foreach ($selected_dropdown as $key => $value) {
         if ($selected_lang != $_SESSION['authenticated_user_language'] && !empty($app_list_strings[$_REQUEST['dropdown_name']]) && isset($app_list_strings[$_REQUEST['dropdown_name']][$key])) {
-            $selected_dropdown[$key]=array('lang'=>$value, 'user_lang'=> '['.$app_list_strings[$_REQUEST['dropdown_name']][$key] . ']');
+            $selected_dropdown[$key] = ['lang' => $value, 'user_lang' => '[' . $app_list_strings[$_REQUEST['dropdown_name']][$key] . ']'];
         } else {
-            $selected_dropdown[$key]=array('lang'=>$value);
+            $selected_dropdown[$key] = ['lang' => $value];
         }
     }
 
@@ -126,10 +124,10 @@ if (strcmp($_REQUEST['dropdown_name'], 'moduleList') == 0) {
 $imageSave = SugarThemeRegistry::current()->getImage('studio_save', '', null, null, '.gif', $mod_strings['LBL_SAVE']);
 $imageUndo = SugarThemeRegistry::current()->getImage('studio_undo', '', null, null, '.gif', $mod_strings['LBL_UNDO']);
 $imageRedo = SugarThemeRegistry::current()->getImage('studio_redo', '', null, null, '.gif', $mod_strings['LBL_REDO']);
-$buttons = array();
-$buttons[] = array('text'=>$mod_strings['LBL_BTN_UNDO'],'actionScript'=>"onclick='jstransaction.undo()'" );
-$buttons[] = array('text'=>$mod_strings['LBL_BTN_REDO'],'actionScript'=>"onclick='jstransaction.redo()'" );
-$buttons[] = array('text'=>$mod_strings['LBL_BTN_SAVE'],'actionScript'=>"onclick='if(check_form(\"editdropdown\")){document.editdropdown.submit();}'");
+$buttons = [];
+$buttons[] = ['text' => $mod_strings['LBL_BTN_UNDO'], 'actionScript' => "onclick='jstransaction.undo()'"];
+$buttons[] = ['text' => $mod_strings['LBL_BTN_REDO'], 'actionScript' => "onclick='jstransaction.redo()'"];
+$buttons[] = ['text' => $mod_strings['LBL_BTN_SAVE'], 'actionScript' => "onclick='if(check_form(\"editdropdown\")){document.editdropdown.submit();}'"];
 $buttonTxt = StudioParser::buildImageButtons($buttons);
 $smarty->assign('buttons', $buttonTxt);
 $smarty->assign('dropdown_lang', $selected_lang);
@@ -138,4 +136,4 @@ $editImage = SugarThemeRegistry::current()->getImage('edit_inline', '', null, nu
 $smarty->assign('editImage', $editImage);
 $deleteImage = SugarThemeRegistry::current()->getImage('delete_inline', '', null, null, '.gif', $mod_strings['LBL_DELETE']);
 $smarty->assign('deleteImage', $deleteImage);
-$smarty->display("modules/Studio/DropDowns/EditView.tpl");
+$smarty->display('modules/Studio/DropDowns/EditView.tpl');

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -38,12 +41,12 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         //test setPreference method
         $userPreference->setPreference('test', 'test val', 'test_category');
 
-        if (!isset($_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'])) {
+        if (!isset($_SESSION[$user->user_name . '_PREFERENCES']['test_category']['test'])) {
             LoggerManager::getLogger()->warn('no session');
             $result = null;
             self::markTestIncomplete('environment dependency: This test needs session');
         } else {
-            $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
+            $result = $_SESSION[$user->user_name . '_PREFERENCES']['test_category']['test'];
         }
 
         $this->assertEquals('test val', $result);
@@ -55,7 +58,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
     }
-    
+
     public function testgetDefaultPreference()
     {
         global $sugar_config;
@@ -83,7 +86,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($email_link_type, $result);
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         // execute the constructor and check for the Object type and  attributes
         $userPreference = new UserPreference();
@@ -98,7 +101,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $userPreference);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
     }
-    
+
     public function testSavePreferencesToDBAndResetPreferences()
     {
         self::markTestIncomplete('environment dependency');
@@ -113,19 +116,19 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $userPreference->savePreferencesToDB();
 
         //retrieve it back and verify
-        $result = $userPreference->retrieve_by_string_fields(array(
-                'assigned_user_id' => $user->id,
-                'category' => 'test_category',
-        ));
-        
+        $result = $userPreference->retrieve_by_string_fields([
+            'assigned_user_id' => $user->id,
+            'category' => 'test_category',
+        ]);
+
         //$this->assertFalse(isset($result->id));
 
         //reset the preferences and verify that it is deleted
         $userPreference->resetPreferences();
-        $result = $userPreference->retrieve_by_string_fields(array(
-                'assigned_user_id' => $user->id,
-                'category' => 'test_category',
-        ));
+        $result = $userPreference->retrieve_by_string_fields([
+            'assigned_user_id' => $user->id,
+            'category' => 'test_category',
+        ]);
         $this->assertEquals(null, $result);
     }
 

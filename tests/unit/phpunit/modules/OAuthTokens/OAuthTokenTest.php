@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         // Execute the constructor and check for the Object type and  attributes
         $oauthToken = new OAuthToken();
@@ -222,11 +225,11 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
     public function testdisplayDateFromTs()
     {
         //test with empty array
-        $result = displayDateFromTs(array('' => ''), 'timestamp', '');
+        $result = displayDateFromTs(['' => ''], 'timestamp', '');
         $this->assertEquals('', $result);
 
         //test with a valid array
-        $result = displayDateFromTs(array('TIMESTAMP' => '1272508903'), 'timestamp', '');
+        $result = displayDateFromTs(['TIMESTAMP' => '1272508903'], 'timestamp', '');
         $this->assertEquals('04/29/2010 02:41', $result);
     }
 }

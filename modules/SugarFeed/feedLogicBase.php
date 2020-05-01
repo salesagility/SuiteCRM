@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,23 +40,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class FeedLogicBase
 {
     public $module = '';
-    
+
     public function pushFeed($bean, $event, $arguments)
     {
     }
 
     public function installHook($file, $className)
     {
-        check_logic_hook_file($this->module, "before_save", array(1, $this->module . " push feed",  $file, $className, "pushFeed"));
+        check_logic_hook_file($this->module, 'before_save', [1, $this->module . ' push feed',  $file, $className, 'pushFeed']);
     }
 
     public function removeHook($file, $className)
     {
-        remove_logic_hook($this->module, "before_save", array(1, $this->module . " push feed",  $file, $className, "pushFeed"));
+        remove_logic_hook($this->module, 'before_save', [1, $this->module . ' push feed',  $file, $className, 'pushFeed']);
     }
 }

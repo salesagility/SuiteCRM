@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -58,55 +56,55 @@ $dashletData['MyCasesDashlet']['searchFields'] = [
     ]
 ];
 
-$dashletData['MyCasesDashlet']['columns'] = array(
-    'case_number' => array(
+$dashletData['MyCasesDashlet']['columns'] = [
+    'case_number' => [
         'width' => '6',
         'label' => 'LBL_NUMBER',
         'default' => true
-    ),
-    'name' => array(
+    ],
+    'name' => [
         'width' => '40',
         'label' => 'LBL_LIST_SUBJECT',
         'link' => true,
         'default' => true
-    ),
-    'account_name' => array(
+    ],
+    'account_name' => [
         'width' => '29',
         'link' => true,
         'module' => 'Accounts',
         'id' => 'ACCOUNT_ID',
         'ACLTag' => 'ACCOUNT',
         'label' => 'LBL_ACCOUNT_NAME',
-        'related_fields' => array('account_id')
-    ),
-    'priority' => array(
+        'related_fields' => ['account_id']
+    ],
+    'priority' => [
         'width' => '15',
         'label' => 'LBL_PRIORITY',
         'default' => true
-    ),
-    'status' => array(
+    ],
+    'status' => [
         'width' => '8',
         'label' => 'LBL_STATUS',
         'default' => true
-    ),
-    'resolution' => array(
+    ],
+    'resolution' => [
         'width' => '8',
         'label' => 'LBL_RESOLUTION'
-    ),
-    'date_entered' => array(
+    ],
+    'date_entered' => [
         'width' => '15',
         'label' => 'LBL_DATE_ENTERED'
-    ),
-    'date_modified' => array(
+    ],
+    'date_modified' => [
         'width' => '15',
         'label' => 'LBL_DATE_MODIFIED'
-    ),
-    'created_by' => array(
+    ],
+    'created_by' => [
         'width' => '8',
         'label' => 'LBL_CREATED'
-    ),
-    'assigned_user_name' => array(
+    ],
+    'assigned_user_name' => [
         'width' => '8',
         'label' => 'LBL_LIST_ASSIGNED_USER'
-    ),
-);
+    ],
+];

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Advanced OpenReports, SugarCRM Reporting.
  * @package Advanced OpenReports for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -25,15 +26,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility <info@salesagility.com>
  */
 
-
 global $mod_strings, $app_strings, $sugar_config;
- 
+
 if (ACLController::checkAccess('AOR_Reports', 'edit', true)) {
-    $module_menu[]=array("index.php?module=AOR_Reports&action=EditView&return_module=AOR_Reports&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOR_Reports');
+    $module_menu[] = ['index.php?module=AOR_Reports&action=EditView&return_module=AOR_Reports&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Create', 'AOR_Reports'];
 }
 if (ACLController::checkAccess('AOR_Reports', 'list', true)) {
-    $module_menu[]=array("index.php?module=AOR_Reports&action=index&return_module=AOR_Reports&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'AOR_Reports');
+    $module_menu[] = ['index.php?module=AOR_Reports&action=index&return_module=AOR_Reports&return_action=DetailView', $mod_strings['LNK_LIST'], 'List', 'AOR_Reports'];
 }
 if (ACLController::checkAccess('AOR_Reports', 'import', true)) {
-    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=AOR_Reports&return_module=AOR_Reports&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'AOR_Reports');
+    $module_menu[] = ['index.php?module=Import&action=Step1&import_module=AOR_Reports&return_module=AOR_Reports&return_action=index', $app_strings['LBL_IMPORT'], 'Import', 'AOR_Reports'];
 }

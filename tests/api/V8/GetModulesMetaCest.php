@@ -25,6 +25,7 @@ class GetModulesMetaCest
      * @param Example $example
      *
      * @dataProvider shouldWorkDataProvider
+     *
      * @throws Exception
      */
     public function shouldWork(ApiTester $I, Example $example)
@@ -38,13 +39,12 @@ class GetModulesMetaCest
         $I->seeResponseContainsJson(['type' => 'modules']);
         $I->seeResponseContainsJson(
             [
-                'data' =>
-                    [
-                        'Accounts' => [
-                            'label' => 'Accounts',
-                            'access' => ['access']
-                        ],
+                'data' => [
+                    'Accounts' => [
+                        'label' => 'Accounts',
+                        'access' => ['access']
                     ],
+                ],
             ]
         );
     }

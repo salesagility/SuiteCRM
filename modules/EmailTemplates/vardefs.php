@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,40 +36,39 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['EmailTemplate'] = array(
+$dictionary['EmailTemplate'] = [
     'table' => 'email_templates',
     'comment' => 'Templates used in email processing',
-    'fields' => array(
-        'id' => array(
+    'fields' => [
+        'id' => [
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
             'comment' => 'Unique identifier'
-        ),
-        'date_entered' => array(
+        ],
+        'date_entered' => [
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record created',
             'inline_edit' => false
-        ),
-        'date_modified' => array(
+        ],
+        'date_modified' => [
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record last modified',
             'inline_edit' => false
-        ),
-        'modified_user_id' => array(
+        ],
+        'modified_user_id' => [
             'name' => 'modified_user_id',
             'rname' => 'user_name',
             'id_name' => 'modified_user_id',
@@ -81,22 +79,22 @@ $dictionary['EmailTemplate'] = array(
             'isnull' => 'false',
             'dbType' => 'id',
             'comment' => 'User who last modified record'
-        ),
-        'created_by' => array(
+        ],
+        'created_by' => [
             'name' => 'created_by',
             'vname' => 'LBL_CREATED_BY',
             'type' => 'varchar',
             'len' => '36',
             'comment' => 'User who created record'
-        ),
-        'published' => array(
+        ],
+        'published' => [
             'name' => 'published',
             'vname' => 'LBL_PUBLISHED',
             'type' => 'varchar',
             'len' => '3',
             'comment' => ''
-        ),
-        'name' => array(
+        ],
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'varchar',
@@ -104,41 +102,41 @@ $dictionary['EmailTemplate'] = array(
             'comment' => 'Email template name',
             'importable' => 'required',
             'required' => true
-        ),
-        'description' => array(
+        ],
+        'description' => [
             'name' => 'description',
             'vname' => 'LBL_DESCRIPTION',
             'type' => 'text',
             'comment' => 'Email template description'
-        ),
-        'subject' => array(
+        ],
+        'subject' => [
             'name' => 'subject',
             'vname' => 'LBL_SUBJECT',
             'type' => 'varchar',
             'len' => '255',
             'comment' => 'Email subject to be used in resulting email'
-        ),
-        'body' => array(
+        ],
+        'body' => [
             'name' => 'body',
             'vname' => 'LBL_BODY',
             'type' => 'longtext',
             'comment' => 'Plain text body to be used in resulting email'
-        ),
-        'body_html' => array(
+        ],
+        'body_html' => [
             'name' => 'body_html',
             'vname' => 'LBL_PLAIN_TEXT',
             'type' => 'longtext',
             'comment' => 'HTML formatted email body to be used in resulting email'
-        ),
-        'deleted' => array(
+        ],
+        'deleted' => [
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
             'required' => false,
             'reportable' => false,
             'comment' => 'Record deletion indicator'
-        ),
-        'assigned_user_id' => array(
+        ],
+        'assigned_user_id' => [
             'name' => 'assigned_user_id',
             'rname' => 'user_name',
             'id_name' => 'assigned_user_id',
@@ -153,8 +151,8 @@ $dictionary['EmailTemplate'] = array(
             'audited' => true,
             'comment' => 'User ID assigned to record',
             'duplicate_merge' => 'disabled'
-        ),
-        'assigned_user_name' => array(
+        ],
+        'assigned_user_name' => [
             'name' => 'assigned_user_name',
             'link' => 'assigned_user_link',
             'vname' => 'LBL_ASSIGNED_TO_NAME',
@@ -166,8 +164,8 @@ $dictionary['EmailTemplate'] = array(
             'id_name' => 'assigned_user_id',
             'module' => 'Users',
             'duplicate_merge' => 'disabled'
-        ),
-        'assigned_user_link' => array(
+        ],
+        'assigned_user_link' => [
             'name' => 'assigned_user_link',
             'type' => 'link',
             'relationship' => 'emailtemplates_assigned_user',
@@ -180,16 +178,16 @@ $dictionary['EmailTemplate'] = array(
             'rname' => 'user_name',
             'id_name' => 'assigned_user_id',
             'table' => 'users',
-        ),
-        'text_only' => array(
+        ],
+        'text_only' => [
             'name' => 'text_only',
             'vname' => 'LBL_TEXT_ONLY',
             'type' => 'bool',
             'required' => false,
             'reportable' => false,
             'comment' => 'Should be checked if email template is to be sent in text only'
-        ),
-        'type' => array(
+        ],
+        'type' => [
             'name' => 'type',
             'vname' => 'LBL_TYPE',
             'type' => 'enum',
@@ -197,34 +195,33 @@ $dictionary['EmailTemplate'] = array(
             'reportable' => false,
             'options' => 'emailTemplates_type_list',
             'comment' => 'Type of the email template'
-        ),
-    ),
-    'indices' => array(
-        array(
+        ],
+    ],
+    'indices' => [
+        [
             'name' => 'email_templatespk',
             'type' => 'primary',
-            'fields' => array('id')
-        ),
-        array(
+            'fields' => ['id']
+        ],
+        [
             'name' => 'idx_email_template_name',
             'type' => 'index',
-            'fields' => array('name')
-        )
-    ),
-    'relationships' => array(
-        'emailtemplates_assigned_user' =>
-            array(
-                'lhs_module' => 'Users',
-                'lhs_table' => 'users',
-                'lhs_key' => 'id',
-                'rhs_module' => 'EmailTemplates',
-                'rhs_table' => 'email_templates',
-                'rhs_key' => 'assigned_user_id',
-                'relationship_type' => 'one-to-many'
-            )
-    ),
-);
+            'fields' => ['name']
+        ]
+    ],
+    'relationships' => [
+        'emailtemplates_assigned_user' => [
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'EmailTemplates',
+            'rhs_table' => 'email_templates',
+            'rhs_key' => 'assigned_user_id',
+            'relationship_type' => 'one-to-many'
+        ]
+    ],
+];
 
-VardefManager::createVardef('EmailTemplates', 'EmailTemplate', array(
+VardefManager::createVardef('EmailTemplates', 'EmailTemplate', [
     'security_groups',
-));
+]);

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
 class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
 {
     public function display($widget_data, $additionalFormFields = null, $nonbutton = false)
@@ -53,11 +47,11 @@ class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
         global $app_strings;
         global $currentModule;
 
-        $popup_request_data = array(
+        $popup_request_data = [
             'call_back_function' => 'set_return',
             'form_name' => 'EditView',
-            'field_to_name_array' => array(),
-        );
+            'field_to_name_array' => [],
+        ];
 
         $json_encoded_php_array = $this->_create_json_encoded_popup_request($popup_request_data);
         $title = $app_strings['LBL_ACCUMULATED_HISTORY_BUTTON_TITLE'];
@@ -65,18 +59,20 @@ class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
         $value = $app_strings['LBL_ACCUMULATED_HISTORY_BUTTON_LABEL'];
         $module_name = 'Activities';
         $id = $widget_data['focus']->id;
-        $initial_filter = "&record=$id&module_name=$currentModule";
+        $initial_filter = "&record={$id}&module_name={$currentModule}";
         if (ACLController::moduleSupportsACL($widget_data['module']) && !ACLController::checkAccess($widget_data['module'], 'detail', true)) {
-            $temp =  '<input disabled type="button" name="summary_button" id="summary_button"'
+            $temp = '<input disabled type="button" name="summary_button" id="summary_button"'
             . ' class="button"'
             . ' title="' . $title . '"'
             . ' value="' . $value . '"';
+
             return $temp;
         }
+
         return '<input type="button" name="summary_button" id="summary_button"'
             . ' class="button"'
             . ' title="' . $title . '"'
             . ' value="' . $value . '"'
-            . " onclick='open_popup(\"$module_name\",600,400,\"$initial_filter\",false,false,$json_encoded_php_array);' />\n";
+            . " onclick='open_popup(\"{$module_name}\",600,400,\"{$initial_filter}\",false,false,{$json_encoded_php_array});' />\n";
     }
 }

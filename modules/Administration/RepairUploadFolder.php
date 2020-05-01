@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,15 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-/**
+/*
  * @var DirectoryIterator $node
  * @var User $current_user
  * @var SugarBean $bean
  * @var DBManager $db
  */
 global $beanList, $current_user, $db, $mod_strings;
-$validBeans = array();
+$validBeans = [];
 if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
@@ -69,10 +69,10 @@ foreach ($beanList as $moduleName => $className) {
 
 echo '<pre>';
 $directory = new DirectoryIterator('upload://');
-$stat = array(
+$stat = [
     'total' => 0,
     'removed' => 0
-);
+];
 foreach ($directory as $node) {
     if (!$node->isFile()) {
         continue;
@@ -80,23 +80,23 @@ foreach ($directory as $node) {
     if (!is_guid($node->getFilename())) {
         continue;
     }
-    $stat['total'] ++;
+    $stat['total']++;
 
     $row = false;
     foreach ($validBeans as $bean) {
-        $filter = array('deleted');
-        $where = array();
+        $filter = ['deleted'];
+        $where = [];
         foreach ($bean->getFilesFields() as $fieldName) {
             $where[] = $fieldName . '=' . $db->quoted($node->getFilename());
             $filter[] = $fieldName;
         }
         $where = '(' . implode(' OR ', $where) . ')';
 
-        $row = $db->fetchOne($bean->create_new_list_query('', $where, $filter, array(), 0));
+        $row = $db->fetchOne($bean->create_new_list_query('', $where, $filter, [], 0));
         if (!empty($row)) {
             break;
         }
-        $row = $db->fetchOne($bean->create_new_list_query('', $where, $filter, array(), 1));
+        $row = $db->fetchOne($bean->create_new_list_query('', $where, $filter, [], 1));
         if (!empty($row)) {
             break;
         }
@@ -104,12 +104,12 @@ foreach ($directory as $node) {
 
     if ($row == false) {
         if (unlink('upload://' . $node->getFilename())) {
-            $stat['removed'] ++;
+            $stat['removed']++;
         }
     } elseif ($row['deleted'] == 1) {
         $bean->populateFromRow($row);
         if ($bean->deleteFiles()) {
-            $stat['removed'] ++;
+            $stat['removed']++;
         }
     }
 

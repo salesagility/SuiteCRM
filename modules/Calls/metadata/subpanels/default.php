@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,83 +40,77 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
+$subpanel_layout = [
     //Removed button because this layout def is a component of
     //the activities sub-panel.
-    
-    'top_buttons' => array(
-        array(
-             'widget_class'=>'SubPanelTopCreateButton',
-                ),
-            array(
-             'widget_class'=>'SubPanelTopSelectButton', 'popup_module' => 'Calls'
-                ),
-    ),
-    
-    'list_fields' => array(
-        'object_image'=>array(
+
+    'top_buttons' => [
+        [
+            'widget_class' => 'SubPanelTopCreateButton',
+        ],
+        [
+            'widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Calls'
+        ],
+    ],
+
+    'list_fields' => [
+        'object_image' => [
             'vname' => 'LBL_OBJECT_IMAGE',
             'widget_class' => 'SubPanelIcon',
             'width' => '2%',
-        ),
-        'close_button'=>array(
+        ],
+        'close_button' => [
             'widget_class' => 'SubPanelCloseButton',
             'vname' => 'LBL_LIST_CLOSE',
             'width' => '6%',
-            'sortable'=>false,
-        ),
-        'name'=>array(
-             'vname' => 'LBL_LIST_SUBJECT',
-             'widget_class' => 'SubPanelDetailViewLink',
-             'width' => '30%',
-        ),
-        'status'=>array(
-             'widget_class' => 'SubPanelActivitiesStatusField',
-             'vname' => 'LBL_STATUS',
-             'width' => '15%',
-             
-        ),
-        'contact_name'=>array(
-             'widget_class' => 'SubPanelDetailViewLink',
-             'target_record_key' => 'contact_id',
-             'target_module' => 'Contacts',
-             'module' => 'Contacts',
-             'vname' => 'LBL_LIST_CONTACT',
-             'width' => '11%',
-             'sortable'=>false,
-        ),
-            
-        'date_start'=>array(
-             'vname' => 'LBL_DATE_TIME',
-             'width' => '10%',
-        ),
-        'assigned_user_name' => array(
+            'sortable' => false,
+        ],
+        'name' => [
+            'vname' => 'LBL_LIST_SUBJECT',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '30%',
+        ],
+        'status' => [
+            'widget_class' => 'SubPanelActivitiesStatusField',
+            'vname' => 'LBL_STATUS',
+            'width' => '15%',
+        ],
+        'contact_name' => [
+            'widget_class' => 'SubPanelDetailViewLink',
+            'target_record_key' => 'contact_id',
+            'target_module' => 'Contacts',
+            'module' => 'Contacts',
+            'vname' => 'LBL_LIST_CONTACT',
+            'width' => '11%',
+            'sortable' => false,
+        ],
+
+        'date_start' => [
+            'vname' => 'LBL_DATE_TIME',
+            'width' => '10%',
+        ],
+        'assigned_user_name' => [
             'name' => 'assigned_user_name',
             'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'assigned_user_id',
             'target_module' => 'Employees',
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
-             'widget_class' => 'SubPanelEditButton',
-             'width' => '2%',
-        ),
-        'remove_button'=>array(
+            'widget_class' => 'SubPanelEditButton',
+            'width' => '2%',
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
-             'widget_class' => 'SubPanelRemoveButton',
-             'width' => '2%',
-        ),
-        'time_start'=>array(
-            'usage'=>'query_only',
-    
-        ),
-        'recurring_source'=>array(
-            'usage'=>'query_only',
-        ),
-                    
-    ),
-);
+            'widget_class' => 'SubPanelRemoveButton',
+            'width' => '2%',
+        ],
+        'time_start' => [
+            'usage' => 'query_only',
+        ],
+        'recurring_source' => [
+            'usage' => 'query_only',
+        ],
+    ],
+];

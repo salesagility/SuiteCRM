@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,17 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
- * Description:
+ * Description:.
  */
-
-
-
-
-
-
-
-
 class Role extends SugarBean
 {
     public $field_name_map;
@@ -79,9 +70,6 @@ class Role extends SugarBean
         parent::__construct();
     }
 
-
-
-
     public function get_summary_text()
     {
         return $this->name;
@@ -94,11 +82,11 @@ class Role extends SugarBean
 
     public function query_modules($allow = 1)
     {
-        $query = "SELECT module_id FROM roles_modules WHERE ";
-        $query .= "role_id = '$this->id' AND allow = '$allow' AND deleted=0";
+        $query = 'SELECT module_id FROM roles_modules WHERE ';
+        $query .= "role_id = '{$this->id}' AND allow = '{$allow}' AND deleted=0";
         $result = $this->db->query($query);
 
-        $return_array = array();
+        $return_array = [];
 
         while ($row = $this->db->fetchByAssoc($result)) {
             array_push($return_array, $row['module_id']);
@@ -106,18 +94,19 @@ class Role extends SugarBean
 
         return $return_array;
     }
+
     public function set_module_relationship($role_id, &$mod_ids, $allow)
     {
         foreach ($mod_ids as $mod_id) {
             if ($mod_id != '') {
-                $this->set_relationship('roles_modules', array( 'module_id'=>$mod_id, 'role_id'=>$role_id, 'allow'=>$allow ));
+                $this->set_relationship('roles_modules', ['module_id' => $mod_id, 'role_id' => $role_id, 'allow' => $allow]);
             }
         }
     }
 
     public function clear_module_relationship($role_id)
     {
-        $query = "DELETE FROM roles_modules WHERE role_id='$role_id'";
+        $query = "DELETE FROM roles_modules WHERE role_id='{$role_id}'";
         $this->db->query($query);
     }
 
@@ -125,31 +114,29 @@ class Role extends SugarBean
     {
         foreach ($user_ids as $user_id) {
             if ($user_id != '') {
-                $this->set_relationship('roles_users', array( 'user_id'=>$user_id, 'role_id'=>$role_id ));
+                $this->set_relationship('roles_users', ['user_id' => $user_id, 'role_id' => $role_id]);
             }
         }
     }
 
     public function clear_user_relationship($role_id, $user_id)
     {
-        $query = "DELETE FROM roles_users WHERE role_id='$role_id' AND user_id='$user_id'";
+        $query = "DELETE FROM roles_users WHERE role_id='{$role_id}' AND user_id='{$user_id}'";
         $this->db->query($query);
     }
 
     public function query_user_allowed_modules($user_id)
     {
-        $userArray = array();
+        $userArray = [];
         global $app_list_strings;
 
-
-
-        $sql = "SELECT role_id FROM roles_users WHERE user_id='$user_id'";
+        $sql = "SELECT role_id FROM roles_users WHERE user_id='{$user_id}'";
 
         $result = $this->db->query($sql);
 
         while ($row = $this->db->fetchByAssoc($result)) {
-            $role_id = $row["role_id"];
-            $sql = "SELECT module_id FROM roles_modules WHERE role_id='$role_id' AND allow='1'";
+            $role_id = $row['role_id'];
+            $sql = "SELECT module_id FROM roles_modules WHERE role_id='{$role_id}' AND allow='1'";
             $res = $this->db->query($sql);
 
             while ($col = $this->db->fetchByAssoc($res)) {
@@ -167,9 +154,9 @@ class Role extends SugarBean
     {
         global $moduleList;
 
-        $returnArray = array();
+        $returnArray = [];
 
-        foreach ($moduleList as $key=>$val) {
+        foreach ($moduleList as $key => $val) {
             if (array_key_exists($val, $allowed)) {
                 continue;
             }
@@ -183,18 +170,17 @@ class Role extends SugarBean
     {
         // First, get the list of IDs.
 
+        $query = "SELECT user_id as id FROM roles_users WHERE role_id='{$this->id}' AND deleted=0";
 
+        $user = new User();
 
-        $query = "SELECT user_id as id FROM roles_users WHERE role_id='$this->id' AND deleted=0";
-
-        $user =  new User();
         return $this->build_related_list($query, $user);
     }
 
     public function check_user_role_count($user_id)
     {
-        $query =  "SELECT count(*) AS num FROM roles_users WHERE ";
-        $query .= "user_id='$user_id' AND deleted=0";
+        $query = 'SELECT count(*) AS num FROM roles_users WHERE ';
+        $query .= "user_id='{$user_id}' AND deleted=0";
         $result = $this->db->query($query);
 
         $row = $this->db->fetchByAssoc($result);

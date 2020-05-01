@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,22 +42,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
-$fields_array['ProspectList'] = array('column_fields' => array(
-                "id", "date_entered",
-                "date_modified", "modified_user_id",
-                "assigned_user_id", "created_by",
-                "name", "description",'list_type','domain_name',
-    ),
-        'list_fields' =>  array(
-                'id', 'name', 'description','list_type',
-                'assigned_user_id','assigned_user_name',
-    ),
-    'required_fields' =>  array('name'=>1,'list_type'=>2),
-);
+ */
+$fields_array['ProspectList'] = ['column_fields' => [
+    'id', 'date_entered',
+    'date_modified', 'modified_user_id',
+    'assigned_user_id', 'created_by',
+    'name', 'description', 'list_type', 'domain_name',
+],
+    'list_fields' => [
+        'id', 'name', 'description', 'list_type',
+        'assigned_user_id', 'assigned_user_name',
+    ],
+    'required_fields' => ['name' => 1, 'list_type' => 2],
+];

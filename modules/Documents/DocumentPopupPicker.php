@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,15 +37,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/Popups/Popup_picker.php');
+require_once 'include/Popups/Popup_picker.php';
 
 /**
- * Class DocumentPopupPicker
+ * Class DocumentPopupPicker.
  *
  * DocumentPopupPicker class is used to filter
  * documents on compose email pop-up.
@@ -65,14 +63,15 @@ class DocumentPopupPicker extends Popup_Picker
     {
         $where = '';
         if (isset($_REQUEST['query'])) {
-            $where_clauses = array();
-            append_where_clause($where_clauses, "document_name", "documents.document_name");
-            append_where_clause($where_clauses, "category_id", "documents.category_id");
-            append_where_clause($where_clauses, "subcategory_id", "documents.subcategory_id");
-            append_where_clause($where_clauses, "template_type", "documents.template_type");
-            append_where_clause($where_clauses, "is_template", "documents.is_template");
+            $where_clauses = [];
+            append_where_clause($where_clauses, 'document_name', 'documents.document_name');
+            append_where_clause($where_clauses, 'category_id', 'documents.category_id');
+            append_where_clause($where_clauses, 'subcategory_id', 'documents.subcategory_id');
+            append_where_clause($where_clauses, 'template_type', 'documents.template_type');
+            append_where_clause($where_clauses, 'is_template', 'documents.is_template');
             $where = generate_where_statement($where_clauses);
         }
+
         return $where;
     }
 }

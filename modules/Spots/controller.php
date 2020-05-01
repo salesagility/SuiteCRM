@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -47,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SpotsController extends SugarController
 {
     protected $nullSqlPlaceholder = '';
-    protected $action_remap = array('DetailView' => 'editview', 'index' => 'listview');
+    protected $action_remap = ['DetailView' => 'editview', 'index' => 'listview'];
 
     //These are the file paths for the cached results of the spot data sets
     protected $spotFilePath = 'cache/modules/Spots/';
@@ -97,20 +96,20 @@ class SpotsController extends SugarController
         if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
             global $current_user;
             $owner_where = $module->getOwnerWhere($current_user->id);
-            $where = ' AND '.$owner_where;
+            $where = ' AND ' . $owner_where;
         }
 
         if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
-            /* BEGIN - SECURITY GROUPS */
+            // BEGIN - SECURITY GROUPS
             if ($module->bean_implements('ACL') && ACLController::requireSecurityGroup($module->module_dir, 'list')) {
                 require_once 'modules/SecurityGroups/SecurityGroup.php';
                 global $current_user;
                 $owner_where = $module->getOwnerWhere($current_user->id);
                 $group_where = SecurityGroup::getGroupWhere($alias, $module->module_dir, $current_user->id);
                 if (!empty($owner_where)) {
-                    $where .= ' AND ('.$owner_where.' or '.$group_where.') ';
+                    $where .= ' AND (' . $owner_where . ' or ' . $group_where . ') ';
                 } else {
-                    $where .= ' AND '.$group_where;
+                    $where .= ' AND ' . $group_where;
                 }
             }
         }
@@ -126,7 +125,7 @@ class SpotsController extends SugarController
     public function action_getAccountsSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->accountsFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -143,15 +142,15 @@ class SpotsController extends SugarController
     public function action_createAccountsSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $query = <<<EOF
         SELECT
-            COALESCE(name,'$this->nullSqlPlaceholder') as accountName,
-            COALESCE(account_type,'$this->nullSqlPlaceholder') as account_type,
-            COALESCE(industry,'$this->nullSqlPlaceholder') as industry,
-            COALESCE(billing_address_country,'$this->nullSqlPlaceholder') as billing_address_country
+            COALESCE(name,'{$this->nullSqlPlaceholder}') as accountName,
+            COALESCE(account_type,'{$this->nullSqlPlaceholder}') as account_type,
+            COALESCE(industry,'{$this->nullSqlPlaceholder}') as industry,
+            COALESCE(billing_address_country,'{$this->nullSqlPlaceholder}') as billing_address_country
         FROM accounts
         WHERE accounts.deleted = 0
 EOF;
@@ -159,7 +158,7 @@ EOF;
         $accounts = BeanFactory::getBean('Accounts');
         $aclWhere = $this->buildSpotsAccessQuery($accounts, $accounts->table_name);
 
-        $queryString = $query.$aclWhere;
+        $queryString = $query . $aclWhere;
 
         $result = $db->query($queryString);
 
@@ -182,7 +181,7 @@ EOF;
     public function action_getLeadsSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->leadsFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -199,17 +198,17 @@ EOF;
     public function action_createLeadsSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
         SELECT
             RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser,
             leads.status,
-            COALESCE(lead_source, '$this->nullSqlPlaceholder') as leadSource,
-			COALESCE(campaigns.name, '$this->nullSqlPlaceholder') as campaignName,
+            COALESCE(lead_source, '{$this->nullSqlPlaceholder}') as leadSource,
+			COALESCE(campaigns.name, '{$this->nullSqlPlaceholder}') as campaignName,
 			CAST(YEAR(leads.date_entered) as CHAR(10)) as year,
-            COALESCE(QUARTER(leads.date_entered),'$this->nullSqlPlaceholder') as quarter,
+            COALESCE(QUARTER(leads.date_entered),'{$this->nullSqlPlaceholder}') as quarter,
 			concat('(',MONTH(leads.date_entered),') ',MONTHNAME(leads.date_entered)) as month,
 			CAST(WEEK(leads.date_entered) as CHAR(5)) as week,
 			DAYNAME(leads.date_entered) as day
@@ -219,16 +218,16 @@ EOF;
         SELECT
             RTRIM(LTRIM(COALESCE(users.first_name,'')+' '+COALESCE(users.last_name,''))) as assignedUser,
             leads.status,
-            COALESCE(lead_source, '$this->nullSqlPlaceholder') as leadSource,
-			COALESCE(campaigns.name, '$this->nullSqlPlaceholder') as campaignName,
+            COALESCE(lead_source, '{$this->nullSqlPlaceholder}') as leadSource,
+			COALESCE(campaigns.name, '{$this->nullSqlPlaceholder}') as campaignName,
 			CAST(YEAR(leads.date_entered) as CHAR(10)) as year,
-            COALESCE(DATEPART(qq,leads.date_entered),'$this->nullSqlPlaceholder') as quarter,
+            COALESCE(DATEPART(qq,leads.date_entered),'{$this->nullSqlPlaceholder}') as quarter,
 			'(' + CAST(DATEPART(mm,leads.date_entered)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,leads.date_entered)) as month,
 			CAST(DATEPART(wk,leads.date_entered) as CHAR(5)) as week,
 			DATENAME(weekday,leads.date_entered) as day
 EOF;
 
-        $fromClause = <<<EOF
+        $fromClause = <<<'EOF'
         FROM leads
         INNER JOIN users
             ON leads.assigned_user_id = users.id
@@ -236,16 +235,16 @@ EOF;
 			ON leads.campaign_id = campaigns.id
 			AND campaigns.deleted = 0
 EOF;
-        $whereClause = <<<EOF
+        $whereClause = <<<'EOF'
         WHERE leads.deleted = 0
         AND users.deleted = 0
 EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -259,7 +258,7 @@ EOF;
         $aclWhereUsers = $this->buildSpotsAccessQuery($users, $users->table_name);
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereLeads.$aclWhereUsers.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereLeads . $aclWhereUsers . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -287,7 +286,7 @@ EOF;
     public function action_getSalesSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->salesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -304,7 +303,7 @@ EOF;
     public function action_createSalesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -312,18 +311,18 @@ EOF;
 			accounts.name as accountName,
             opportunities.name as opportunityName,
             RTRIM(LTRIM(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')))) as assignedUser,
-            COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunity_type,
+            COALESCE(opportunity_type,'{$this->nullSqlPlaceholder}') as opportunity_type,
             lead_source,
             amount,
             sales_stage,
             probability,
             date_closed as expectedCloseDate,
-			COALESCE(QUARTER(date_closed),'$this->nullSqlPlaceholder') as salesQuarter,
+			COALESCE(QUARTER(date_closed),'{$this->nullSqlPlaceholder}') as salesQuarter,
 			concat('(',MONTH(date_closed),') ',MONTHNAME(date_closed)) as salesMonth,
 			CAST(WEEK(date_closed) as CHAR(5)) as salesWeek,
 			DAYNAME(date_closed) as salesDay,
 			CAST(YEAR(date_closed) as CHAR(10)) as salesYear,
-            COALESCE(campaigns.name,'$this->nullSqlPlaceholder') as campaign
+            COALESCE(campaigns.name,'{$this->nullSqlPlaceholder}') as campaign
 EOF;
 
         $mssqlSelect = <<<EOF
@@ -331,21 +330,21 @@ EOF;
 			accounts.name as accountName,
             opportunities.name as opportunityName,
             RTRIM(LTRIM(COALESCE(first_name,'')+' '+COALESCE(last_name,''))) as assignedUser,
-            COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunity_type,
+            COALESCE(opportunity_type,'{$this->nullSqlPlaceholder}') as opportunity_type,
             lead_source,
             amount,
             sales_stage,
             probability,
             date_closed as expectedCloseDate,
-            COALESCE(DATEPART(qq,date_closed),'$this->nullSqlPlaceholder') as salesQuarter,
+            COALESCE(DATEPART(qq,date_closed),'{$this->nullSqlPlaceholder}') as salesQuarter,
 			'(' + CAST(DATEPART(mm,date_closed)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,date_closed)) as salesMonth,
 			CAST(DATEPART(wk,date_closed) as CHAR(5)) as salesWeek,
 			DATENAME(weekday,date_closed) as salesDay,
 			CAST(YEAR(date_closed) as CHAR(10)) as salesYear,
-            COALESCE(campaigns.name,'$this->nullSqlPlaceholder') as campaign
+            COALESCE(campaigns.name,'{$this->nullSqlPlaceholder}') as campaign
 EOF;
 
-        $fromClause = <<<EOF
+        $fromClause = <<<'EOF'
         FROM opportunities
 		INNER JOIN accounts_opportunities
 			ON accounts_opportunities.opportunity_id = opportunities.id
@@ -357,7 +356,7 @@ EOF;
             ON opportunities.campaign_id = campaigns.id
             AND campaigns.deleted = 0
 EOF;
-        $whereClause = <<<EOF
+        $whereClause = <<<'EOF'
         WHERE opportunities.deleted = 0
         AND accounts_opportunities.deleted = 0
         AND accounts.deleted = 0
@@ -366,9 +365,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -384,7 +383,7 @@ EOF;
         $aclWhereUsers = $this->buildSpotsAccessQuery($users, $users->table_name);
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereOpps.$aclWhereAccounts.$aclWhereUsers.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereOpps . $aclWhereAccounts . $aclWhereUsers . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -419,7 +418,7 @@ EOF;
     public function action_getServiceSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->servicesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -436,7 +435,7 @@ EOF;
     public function action_createServiceSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -448,9 +447,9 @@ EOF;
             DAYNAME(cases.date_entered) as day,
             CAST(WEEK(cases.date_entered) as CHAR(5)) as week,
             concat('(',MONTH(cases.date_entered),') ',MONTHNAME(cases.date_entered)) as month,
-            COALESCE(QUARTER(cases.date_entered),'$this->nullSqlPlaceholder') as quarter,
+            COALESCE(QUARTER(cases.date_entered),'{$this->nullSqlPlaceholder}') as quarter,
             CAST(YEAR(cases.date_entered) as CHAR(10)) as year,
-            COALESCE(NULLIF(RTRIM(LTRIM(CONCAT(COALESCE(u2.first_name,''),' ',COALESCE(u2.last_name,'')))),''),'$this->nullSqlPlaceholder') as contactName,
+            COALESCE(NULLIF(RTRIM(LTRIM(CONCAT(COALESCE(u2.first_name,''),' ',COALESCE(u2.last_name,'')))),''),'{$this->nullSqlPlaceholder}') as contactName,
             RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
 EOF;
         $mssqlSelect = <<<EOF
@@ -462,13 +461,13 @@ EOF;
             DATENAME(weekday,cases.date_entered) as day,
             CAST(DATEPART(wk,cases.date_entered) as CHAR(5)) as week,
             '(' + CAST(DATEPART(mm,cases.date_entered)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,cases.date_entered)) as month,
-            COALESCE(DATEPART(qq,cases.date_entered),'$this->nullSqlPlaceholder') as quarter,
+            COALESCE(DATEPART(qq,cases.date_entered),'{$this->nullSqlPlaceholder}') as quarter,
             CAST(YEAR(cases.date_entered) as CHAR(10)) as year,
-            COALESCE(NULLIF(RTRIM(LTRIM(COALESCE(u2.first_name,'') + ' ' + COALESCE(u2.last_name,''))),''),'$this->nullSqlPlaceholder') as contactName,
+            COALESCE(NULLIF(RTRIM(LTRIM(COALESCE(u2.first_name,'') + ' ' + COALESCE(u2.last_name,''))),''),'{$this->nullSqlPlaceholder}') as contactName,
             RTRIM(LTRIM(COALESCE(users.first_name,'') + ' ' + COALESCE(users.last_name,''))) as assignedUser
 EOF;
 
-        $fromClause = <<<EOF
+        $fromClause = <<<'EOF'
         FROM cases
         INNER JOIN users
             ON cases.assigned_user_id = users.id
@@ -478,7 +477,7 @@ EOF;
             ON cases.contact_created_by_id = u2.id
             AND u2.deleted = 0
 EOF;
-        $whereClause = <<<EOF
+        $whereClause = <<<'EOF'
         WHERE cases.deleted = 0
         AND users.deleted = 0
         AND accounts.deleted = 0
@@ -486,9 +485,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -502,7 +501,7 @@ EOF;
         $aclWhereAccounts = $this->buildSpotsAccessQuery($accounts, $accounts->table_name);
         $aclWhereUsers = $this->buildSpotsAccessQuery($users, $users->table_name);
 
-        $queryString = $query.$aclWhereCases.$aclWhereAccounts.$aclWhereUsers;
+        $queryString = $query . $aclWhereCases . $aclWhereAccounts . $aclWhereUsers;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -532,7 +531,7 @@ EOF;
     public function action_getActivitiesSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->activitiesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -549,10 +548,10 @@ EOF;
     public function action_createActivitiesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
-        $mysqlQueryCalls = <<<EOF
+        $mysqlQueryCalls = <<<'EOF'
         SELECT
             'call' as type
             , calls.name
@@ -565,7 +564,7 @@ EOF;
         WHERE calls.deleted = 0
 EOF;
 
-        $mysqlQueryMeetings = <<<EOF
+        $mysqlQueryMeetings = <<<'EOF'
         UNION ALL
         SELECT
             'meeting' as type
@@ -579,7 +578,7 @@ EOF;
         WHERE meetings.deleted = 0
 EOF;
 
-        $mysqlQueryTasks = <<<EOF
+        $mysqlQueryTasks = <<<'EOF'
         UNION ALL
         SELECT
             'task' as type
@@ -593,7 +592,7 @@ EOF;
         WHERE tasks.deleted = 0
 EOF;
 
-        $mssqlQueryCalls = <<<EOF
+        $mssqlQueryCalls = <<<'EOF'
         SELECT
             'call' as type
             , calls.name
@@ -605,7 +604,7 @@ EOF;
             AND users.deleted = 0
         WHERE calls.deleted = 0
 EOF;
-        $mssqlQueryMeetings = <<<EOF
+        $mssqlQueryMeetings = <<<'EOF'
         UNION ALL
         SELECT
             'meeting' as type
@@ -618,7 +617,7 @@ EOF;
             AND users.deleted = 0
         WHERE meetings.deleted = 0
 EOF;
-        $mssqlQueryTasks = <<<EOF
+        $mssqlQueryTasks = <<<'EOF'
         UNION ALL
         SELECT
             'task' as type
@@ -641,9 +640,9 @@ EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlQueryCalls.$aclWhereCalls.$mssqlQueryMeetings.$aclWhereMeetings.$mssqlQueryTasks.$aclWhereTasks;
+            $query = $mssqlQueryCalls . $aclWhereCalls . $mssqlQueryMeetings . $aclWhereMeetings . $mssqlQueryTasks . $aclWhereTasks;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlQueryCalls.$aclWhereCalls.$mysqlQueryMeetings.$aclWhereMeetings.$mysqlQueryTasks.$aclWhereTasks;
+            $query = $mysqlQueryCalls . $aclWhereCalls . $mysqlQueryMeetings . $aclWhereMeetings . $mysqlQueryTasks . $aclWhereTasks;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -672,7 +671,7 @@ EOF;
     public function action_getMarketingSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->marketingsFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -689,16 +688,16 @@ EOF;
     public function action_createMarketingSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
         SELECT
-              COALESCE(campaigns.status,'$this->nullSqlPlaceholder') as campaignStatus
-            , COALESCE(campaigns.campaign_type,'$this->nullSqlPlaceholder') as campaignType
-            , COALESCE(campaigns.budget,'$this->nullSqlPlaceholder') as campaignBudget
-            , COALESCE(campaigns.expected_cost,'$this->nullSqlPlaceholder') as campaignExpectedCost
-            , COALESCE(campaigns.expected_revenue,'$this->nullSqlPlaceholder') as campaignExpectedRevenue
+              COALESCE(campaigns.status,'{$this->nullSqlPlaceholder}') as campaignStatus
+            , COALESCE(campaigns.campaign_type,'{$this->nullSqlPlaceholder}') as campaignType
+            , COALESCE(campaigns.budget,'{$this->nullSqlPlaceholder}') as campaignBudget
+            , COALESCE(campaigns.expected_cost,'{$this->nullSqlPlaceholder}') as campaignExpectedCost
+            , COALESCE(campaigns.expected_revenue,'{$this->nullSqlPlaceholder}') as campaignExpectedRevenue
             , opportunities.name as opportunityName
             , opportunities.amount as opportunityAmount
             , opportunities.sales_stage as opportunitySalesStage
@@ -708,11 +707,11 @@ EOF;
 
         $mssqlSelect = <<<EOF
         SELECT
-              COALESCE(campaigns.status,'$this->nullSqlPlaceholder') as campaignStatus
-            , COALESCE(campaigns.campaign_type,'$this->nullSqlPlaceholder') as campaignType
-            , COALESCE(campaigns.budget,'$this->nullSqlPlaceholder') as campaignBudget
-            , COALESCE(campaigns.expected_cost,'$this->nullSqlPlaceholder') as campaignExpectedCost
-            , COALESCE(campaigns.expected_revenue,'$this->nullSqlPlaceholder') as campaignExpectedRevenue
+              COALESCE(campaigns.status,'{$this->nullSqlPlaceholder}') as campaignStatus
+            , COALESCE(campaigns.campaign_type,'{$this->nullSqlPlaceholder}') as campaignType
+            , COALESCE(campaigns.budget,'{$this->nullSqlPlaceholder}') as campaignBudget
+            , COALESCE(campaigns.expected_cost,'{$this->nullSqlPlaceholder}') as campaignExpectedCost
+            , COALESCE(campaigns.expected_revenue,'{$this->nullSqlPlaceholder}') as campaignExpectedRevenue
             , opportunities.name as opportunityName
             , opportunities.amount as opportunityAmount
             , opportunities.sales_stage as opportunitySalesStage
@@ -720,7 +719,7 @@ EOF;
             , accounts.name as accountsName
 EOF;
 
-        $fromClause = <<<EOF
+        $fromClause = <<<'EOF'
         FROM opportunities
         LEFT JOIN users
             ON opportunities.assigned_user_id = users.id
@@ -735,15 +734,15 @@ EOF;
             ON opportunities.campaign_id = campaigns.id
             AND campaigns.deleted = 0
 EOF;
-        $whereClause = <<<EOF
+        $whereClause = <<<'EOF'
         WHERE opportunities.deleted = 0
 EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -758,7 +757,7 @@ EOF;
         $aclWhereAccounts = $this->buildSpotsAccessQuery($accounts, $accounts->table_name);
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereOpps.$aclWhereUsers.$aclWhereAccounts.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereOpps . $aclWhereUsers . $aclWhereAccounts . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -787,7 +786,7 @@ EOF;
     public function action_getMarketingActivitySpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->marketingActivitiesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -804,10 +803,10 @@ EOF;
     public function action_createMarketingActivitySpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
-        $query = <<<EOF
+        $query = <<<'EOF'
         SELECT
             campaigns.name,
             campaign_log.activity_date,
@@ -825,7 +824,7 @@ EOF;
         $campaigns = BeanFactory::getBean('Campaigns');
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
-        $queryString = $query.$aclWhereCampaigns;
+        $queryString = $query . $aclWhereCampaigns;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {
@@ -849,7 +848,7 @@ EOF;
     public function action_getQuotesSpotsData()
     {
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName;
+        $fileLocation = $this->spotFilePath . $userId . '_' . $this->quotesFileName;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -866,7 +865,7 @@ EOF;
     public function action_createQuotesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = array();
+        $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -896,7 +895,7 @@ EOF;
             DAYNAME(aos_quotes.date_entered) as dateCreatedDay,
             CAST(WEEK(aos_quotes.date_entered) as CHAR(5)) as dateCreatedWeek,
             concat('(',MONTH(aos_quotes.date_entered),') ',MONTHNAME(aos_quotes.date_entered)) as dateCreatedMonth,
-            COALESCE(QUARTER(aos_quotes.date_entered),'$this->nullSqlPlaceholder') as dateCreatedQuarter,
+            COALESCE(QUARTER(aos_quotes.date_entered),'{$this->nullSqlPlaceholder}') as dateCreatedQuarter,
             YEAR(aos_quotes.date_entered) as dateCreatedYear
 EOF;
 
@@ -927,11 +926,11 @@ EOF;
             DATENAME(weekday,aos_quotes.date_entered) as dateCreatedDay,
             CAST(DATEPART(wk,aos_quotes.date_entered) as CHAR(5)) as dateCreatedWeek,
             '(' + CAST(DATEPART(mm,aos_quotes.date_entered)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,aos_quotes.date_entered)) as dateCreatedMonth,
-            COALESCE(DATEPART(qq,aos_quotes.date_entered),'$this->nullSqlPlaceholder') as dateCreatedQuarter,
+            COALESCE(DATEPART(qq,aos_quotes.date_entered),'{$this->nullSqlPlaceholder}') as dateCreatedQuarter,
             CAST(YEAR(aos_quotes.date_entered) as CHAR(10)) as dateCreatedYear
 EOF;
 
-        $fromClause = <<<EOF
+        $fromClause = <<<'EOF'
         FROM aos_quotes
         LEFT JOIN accounts
             ON aos_quotes.billing_account_id = accounts.id
@@ -955,15 +954,15 @@ EOF;
             ON aos_products.aos_product_category_id = aos_product_categories.id
             AND aos_product_categories.deleted = 0
 EOF;
-        $whereClause = <<<EOF
+        $whereClause = <<<'EOF'
         WHERE aos_quotes.deleted = 0
 EOF;
 
         $query = '';
         if ($this->getDatabaseType() === 'mssql') {
-            $query = $mssqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mssqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } elseif ($this->getDatabaseType() === 'mysql') {
-            $query = $mysqlSelect.' '.$fromClause.' '.$whereClause;
+            $query = $mysqlSelect . ' ' . $fromClause . ' ' . $whereClause;
         } else {
             $GLOBALS['log']->error($mod_strings['LBL_AN_UNSUPPORTED_DB']);
 
@@ -988,7 +987,7 @@ EOF;
         $aclWhereProductCategories = $this->buildSpotsAccessQuery($asoProductCategories, $asoProductCategories->table_name);
         $aclWhereProducts = $this->buildSpotsAccessQuery($aosProducts, $aosProducts->table_name);
 
-        $queryString = $query.$aclWhereOpps.$aclWhereQuotes.$aclWhereAccounts.$aclWhereContacts.$aclWhereProductQuotes.$aclWhereUsers.$aclWhereProductCategories.$aclWhereProducts;
+        $queryString = $query . $aclWhereOpps . $aclWhereQuotes . $aclWhereAccounts . $aclWhereContacts . $aclWhereProductQuotes . $aclWhereUsers . $aclWhereProductCategories . $aclWhereProducts;
         $result = $db->query($queryString);
 
         while ($row = $db->fetchByAssoc($result)) {

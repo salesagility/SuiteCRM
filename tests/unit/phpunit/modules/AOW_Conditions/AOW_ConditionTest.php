@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOW_Condition()
+    public function testAOWCondition()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowCondition = new AOW_Condition();
@@ -30,7 +33,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'tracker_visibility', $aowCondition);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
@@ -38,17 +41,17 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
     }
 
-    public function testsave_lines()
+    public function testsaveLines()
     {
         $aowCondition = new AOW_Condition();
 
         //populate required values
-        $post_data = array();
-        $post_data['name'] = array('test1', 'test2');
-        $post_data['field'] = array('field1', 'field2');
-        $post_data['operator'] = array('=', '!=');
-        $post_data['value_type'] = array('int', 'string');
-        $post_data['value'] = array('1', 'abc');
+        $post_data = [];
+        $post_data['name'] = ['test1', 'test2'];
+        $post_data['field'] = ['field1', 'field2'];
+        $post_data['operator'] = ['=', '!='];
+        $post_data['value_type'] = ['int', 'string'];
+        $post_data['value'] = ['1', 'abc'];
 
         //create parent bean
         $aowWorkFlow = new AOW_WorkFlow();

@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\Core\Loader;
 
 use Api\Core\Config\ApiConfig;
@@ -9,7 +10,7 @@ use Slim\Container;
 class ContainerLoader
 {
     /**
-     * Load all service containers and add slim settings
+     * Load all service containers and add slim settings.
      *
      * @return ContainerInterface
      */

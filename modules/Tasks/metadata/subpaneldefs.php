@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-$layout_defs['Tasks'] = array(
+$layout_defs['Tasks'] = [
     // sets up which panels to show, in which order, and with what linked_fields
-    'subpanel_setup' => array(
-        'history' => array(
+    'subpanel_setup' => [
+        'history' => [
             'order' => 40,
             'title_key' => 'LBL_HISTORY_SUBPANEL_TITLE',
             'type' => 'collection',
@@ -54,19 +54,19 @@ $layout_defs['Tasks'] = array(
             'sort_by' => 'date_entered',
             'header_definition_from_subpanel' => 'calls',
             'module' => 'History',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopCreateNoteButton'),
-            ),
-            'collection_list' => array(
-                'notes' => array(
+            'top_buttons' => [
+                ['widget_class' => 'SubPanelTopCreateNoteButton'],
+            ],
+            'collection_list' => [
+                'notes' => [
                     'module' => 'Notes',
                     'subpanel_name' => 'ForTasks',
                     'get_subpanel_data' => 'notes',
-                ),
-            ),
-        ), /* end history subpanel def */
-        'securitygroups' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+                ],
+            ],
+        ], // end history subpanel def
+        'securitygroups' => [
+            'top_buttons' => [['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect']],
             'order' => 900,
             'sort_by' => 'name',
             'sort_order' => 'asc',
@@ -76,6 +76,6 @@ $layout_defs['Tasks'] = array(
             'get_subpanel_data' => 'SecurityGroups',
             'add_subpanel_data' => 'securitygroup_id',
             'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
-        ),
-    ),
-);
+        ],
+    ],
+];

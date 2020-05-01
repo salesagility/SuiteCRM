@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Api\V8\JsonApi\Repository\Sort as SortRepository;
@@ -11,7 +12,7 @@ class Sort extends BaseOption
     const REGEX_SORT_PATTERN = '/[^\w\-]/';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add(OptionsResolver $resolver)
     {

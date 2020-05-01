@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,9 +39,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $tempArray
  */
-
-
 
 //to_string methods to get strings for values
 
@@ -52,8 +52,6 @@ function var_export_helper($tempArray)
 {
     return var_export($tempArray, true);
 }
-
-
 
 /*
  * this function is used to overide a value in an array and returns the string code to write
@@ -66,30 +64,33 @@ function var_export_helper($tempArray)
 
 function override_value_to_string($array_name, $value_name, $value)
 {
-    $string = "\${$array_name}[". var_export($value_name, true). "] = ";
+    $string = "\${$array_name}[" . var_export($value_name, true) . '] = ';
     $string .= var_export_helper($value, true);
-    return $string . ";";
+
+    return $string . ';';
 }
 
 function add_blank_option($options)
 {
     if (is_array($options)) {
         if (!isset($options['']) && !isset($options['0'])) {
-            $options = array_merge(array(''=>''), $options);
+            $options = array_merge(['' => ''], $options);
         }
     } else {
-        $options = array(''=>'');
+        $options = ['' => ''];
     }
+
     return $options;
 }
 
 /**
- * Exports array to string
+ * Exports array to string.
  *
  * @param array $key_names array of keys
  * @param string $array_name  name of the array
  * @param mixed $value value of the array
  * @param bool $eval evaluates the generated string if true, note that the array name must be in the global space!
+ *
  * @return mixed|string string $array_name['a']['b']['c'][.] = 'hello'
  */
 function override_value_to_string_recursive($key_names, $array_name, $value, $eval = false)
@@ -99,17 +100,17 @@ function override_value_to_string_recursive($key_names, $array_name, $value, $ev
         $log->deprecated('$eval parameter is deprecated');
     }
 
-    return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
+    return "\${$array_name}" . override_recursive_helper($key_names, $array_name, $value);
 }
 
 function override_recursive_helper($key_names, $array_name, $value)
 {
     if (empty($key_names)) {
-        return "=".var_export_helper($value, true).";";
-    } else {
-        $key = array_shift($key_names);
-        return "[".var_export($key, true)."]". override_recursive_helper($key_names, $array_name, $value);
+        return '=' . var_export_helper($value, true) . ';';
     }
+    $key = array_shift($key_names);
+
+    return '[' . var_export($key, true) . ']' . override_recursive_helper($key_names, $array_name, $value);
 }
 
 function override_value_to_string_recursive2($array_name, $value_name, $value, $save_empty = true)
@@ -117,18 +118,18 @@ function override_value_to_string_recursive2($array_name, $value_name, $value, $
     $quoted_vname = var_export($value_name, true);
     if (is_array($value)) {
         $str = '';
-        $newArrayName = $array_name . "[$quoted_vname]";
-        foreach ($value as $key=>$val) {
-            $str.= override_value_to_string_recursive2($newArrayName, $key, $val, $save_empty);
+        $newArrayName = $array_name . "[{$quoted_vname}]";
+        foreach ($value as $key => $val) {
+            $str .= override_value_to_string_recursive2($newArrayName, $key, $val, $save_empty);
         }
+
         return $str;
-    } else {
-        if (!$save_empty && empty($value)) {
-            return;
-        } else {
-            return "\$$array_name" . "[$quoted_vname] = " . var_export($value, true) . ";\n";
-        }
     }
+    if (!$save_empty && empty($value)) {
+        return;
+    }
+
+    return "\${$array_name}" . "[{$quoted_vname}] = " . var_export($value, true) . ";\n";
 }
 
 /**
@@ -136,6 +137,7 @@ function override_value_to_string_recursive2($array_name, $value_name, $value, $
  * Loops are not checked for so this function should be used with caution.
  *
  * @param $obj
+ *
  * @return array representation of $obj
  */
 function object_to_array_recursive($obj)
@@ -150,9 +152,10 @@ function object_to_array_recursive($obj)
             $ret[$key] = object_to_array_recursive($val);
         }
     }
+
     return $ret;
 }
-/**
+    /**
      * This function returns an array of all the key=>value pairs in $array1
      * that are wither not present, or different in $array2.
      * If a key exists in $array2 but not $array1, it will not be reported.
@@ -162,13 +165,14 @@ function object_to_array_recursive($obj)
      * @param array $array1, the array which contains all the key=>values you wish to check againts
      * @param array $array2, the array which
      * @param array $allowEmpty, will return the value if it is empty in $array1 and not in $array2,
-     * otherwise empty values in $array1 are ignored.
+     * otherwise empty values in $array1 are ignored
+     *
      * @return array containing the differences between the two arrays
      */
     function deepArrayDiff($array1, $array2, $allowEmpty = false)
     {
-        $diff = array();
-        foreach ($array1 as $key=>$value) {
+        $diff = [];
+        foreach ($array1 as $key => $value) {
             if (is_array($value)) {
                 if ((!isset($array2[$key]) || !is_array($array2[$key])) && (isset($value) || $allowEmpty)) {
                     $diff[$key] = $value;
@@ -184,29 +188,30 @@ function object_to_array_recursive($obj)
                 }
             }
         }
+
         return $diff;
     }
-    
+
     /**
-     * Recursivly set a value in an array, creating sub arrays as necessary
+     * Recursivly set a value in an array, creating sub arrays as necessary.
      *
      * @param unknown_type $array
      * @param unknown_type $key
+     * @param mixed $value
      */
     function setDeepArrayValue(&$array, $key, $value)
     {
         //if _ is at position zero, that is invalid.
-        if (strrpos($key, "_")) {
+        if (strrpos($key, '_')) {
             list($key, $remkey) = explode('_', $key, 2);
             if (!isset($array[$key]) || !is_array($array[$key])) {
-                $array[$key] = array();
+                $array[$key] = [];
             }
             setDeepArrayValue($array[$key], $remkey, $value);
         } else {
             $array[$key] = $value;
         }
     }
-
 
 // This function iterates through the given arrays and combines the values of each key, to form one array
 // Returns FALSE if number of elements in the arrays do not match; otherwise, returns merged array
@@ -225,7 +230,7 @@ function array_merge_values($arr1, $arr2)
 }
 
 /**
- * Search an array for a given value ignorning case sensitivity
+ * Search an array for a given value ignorning case sensitivity.
  *
  * @param unknown_type $key
  * @param unknown_type $haystack
@@ -240,13 +245,13 @@ function array_search_insensitive($key, $haystack)
     foreach ($haystack as $k => $v) {
         if (strtolower($v) == strtolower($key)) {
             $found = true;
+
             break;
         }
     }
 
     return $found;
 }
-
 
 /**
  * This function is useful to format properly indices definitions before
@@ -264,33 +269,36 @@ function array_search_insensitive($key, $haystack)
  *  - trim the string.
  *  - whitespace after '('
  *  - whitespace before ')'
+ *
  * @param  array $indexArray an index definition
+ *
  * @return array $indexArray an index definition
  */
 function fixIndexArrayFormat($indexArray)
 {
     foreach ($indexArray as $key => $value) {
-        $indexArray[$key] = preg_replace("/\s+/u", " ", $value);
+        $indexArray[$key] = preg_replace('/\\s+/u', ' ', $value);
         $indexArray[$key] = trim($indexArray[$key]);
         $indexArray[$key] = str_replace(['( ', ' )'], ['(', ')'], $indexArray[$key]);
     }
+
     return $indexArray;
 }
 
-
 /**
  * Wrapper around PHP's ArrayObject class that provides dot-notation recursive searching
- * for multi-dimensional arrays
+ * for multi-dimensional arrays.
  */
 class SugarArray extends ArrayObject
 {
     /**
-     * Return the value matching $key if exists, otherwise $default value
+     * Return the value matching $key if exists, otherwise $default value.
      *
      * This method uses dot notation to look through multi-dimensional arrays
      *
      * @param string $key key to look up
      * @param mixed $default value to return if $key does not exist
+     *
      * @return mixed
      */
     public function get($key, $default = null)
@@ -300,7 +308,7 @@ class SugarArray extends ArrayObject
 
     /**
      * Provided as a convinience method for fetching a value within an existing
-     * array without instantiating a SugarArray
+     * array without instantiating a SugarArray.
      *
      * NOTE: This should only used where refactoring an array into a SugarArray
      *       is unfeasible.  This operation is more expensive than a direct
@@ -309,6 +317,7 @@ class SugarArray extends ArrayObject
      * @param array $haystack haystack
      * @param string $needle needle
      * @param mixed $default default value to return
+     *
      * @return mixed
      */
     public static function staticGet($haystack, $needle, $default = null)
@@ -317,6 +326,7 @@ class SugarArray extends ArrayObject
             return $default;
         }
         $array = new self($haystack);
+
         return $array->get($needle, $default);
     }
 
@@ -328,6 +338,7 @@ class SugarArray extends ArrayObject
 
         $exploded = explode('.', $key);
         $current_key = array_shift($exploded);
+
         return $this->_getRecursive($this->_getFromSource($current_key, $default), $exploded, $default);
     }
 
@@ -335,13 +346,14 @@ class SugarArray extends ArrayObject
     {
         if ($raw_config === $default) {
             return $default;
-        } elseif (count($children) == 0) {
+        }
+        if (count($children) == 0) {
             return $raw_config;
-        } else {
-            $next_key = array_shift($children);
-            return isset($raw_config[$next_key]) ?
+        }
+        $next_key = array_shift($children);
+
+        return isset($raw_config[$next_key]) ?
                 $this->_getRecursive($raw_config[$next_key], $children, $default) :
                 $default;
-        }
     }
 }

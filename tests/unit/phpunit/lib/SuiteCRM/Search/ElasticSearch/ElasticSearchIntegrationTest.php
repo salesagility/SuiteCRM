@@ -43,10 +43,12 @@ use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchWrapper;
 
-
 /** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
+/**
+ * @internal
+ */
 class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 {
     const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
@@ -78,11 +80,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         parent::tearDown();
     }
 
-    private function restore()
-    {
-        $this->indexer->removeIndex('test');
-    }
-
     public function testPing()
     {
         $result = $this->indexer->ping();
@@ -95,125 +92,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     {
         $this->indexer->setDocumentifier(new JsonSerializerDocumentifier());
         $this->indexRunner();
-    }
-
-    /**
-     * Starts indexing using the indexer stored as a field.
-     */
-    private function indexRunner()
-    {
-        /** @var Contact $bean */
-        $bean = BeanFactory::newBean('Contacts');
-
-        // Create unique test vars
-        $firstName = uniqid();
-        $lastName = uniqid();
-        $full_name_update = md5(time());
-        $city = uniqid() . 'City';
-
-        // Assign the vars to the bean
-        $bean->first_name = $firstName;
-        $bean->last_name = $lastName;
-        $bean->primary_address_city = $city;
-
-        // Save the bean to the database and retrieve the new id
-        $bean->save();
-        $id = $bean->id;
-
-        // Perform a new indexing
-        echo PHP_EOL;
-        $this->indexer->index();
-
-        $this->waitForIndexing();
-
-        // Attempt to search the newly added bean by full name
-        $results = SearchWrapper::search(
-            $this->searchEngine,
-            SearchQuery::fromString("$firstName $lastName", 1)
-        )->getHits();
-
-        self::assertArrayHasKey(
-            'Contacts',
-            $results,
-            'Unable to find by full name!'
-        );
-        self::assertEquals(
-            $id,
-            $results['Contacts'][0],
-            'Wrong id returned by the search engine.'
-        );
-
-        // lets test a more complex query
-        // Search by city
-
-        $query = SearchQuery::fromString("address.primary.city:$city", 1);
-
-        $results = SearchWrapper::search(
-            $this->searchEngine,
-            $query
-        )->getHits();
-
-        self::assertArrayHasKey(
-            'Contacts',
-            $results,
-            "Unable to find by city [$city]!"
-        );
-        self::assertEquals(
-            $id,
-            $results['Contacts'][0],
-            'Wrong id returned by the search engine.'
-        );
-
-        $bean = BeanFactory::getBean('Contacts', $id);
-
-        $bean->first_name = $full_name_update;
-
-        // injecting this indexer so that it'll have the same parameters
-        /** @noinspection PhpUndefinedFieldInspection */
-        $bean->indexer = $this->indexer;
-
-        $bean->save();
-        // the hooks should cause another indexing to happen
-
-        $this->waitForIndexing();
-
-        $results = SearchWrapper::search(
-            $this->searchEngine,
-            SearchQuery::fromString($full_name_update, 1)
-        )->getHits();
-
-        self::assertArrayHasKey(
-            'Contacts',
-            $results,
-            "Unable to find by updated username!"
-        );
-        self::assertEquals(
-            $bean->id,
-            $results['Contacts'][0],
-            "Wrong ID retrieved"
-        );
-
-        // remove the bean...
-        $this->indexer->removeBean($bean);
-
-        $this->waitForIndexing();
-
-        // make a search query for the deleted bean
-        $results = SearchWrapper::search(
-            $this->searchEngine,
-            SearchQuery::fromString($full_name_update, 1)
-        );
-
-        self::assertEmpty($results->getHits(), "The deleted bean should not have been found!");
-    }
-
-    /**
-     * The indexing on Elasticsearch is scheduled each second.
-     * No results will be available before that time.
-     **/
-    private function waitForIndexing()
-    {
-        sleep(1);
     }
 
     public function testWithSearchdefs()
@@ -249,7 +127,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->indexer->index();
         // Make sure that just one module has been indexed
         $actual = $this->indexer->getIndexedModulesCount();
-        self::assertEquals(1, $actual, "Only one module [$module] should have been indexed.");
+        self::assertEquals(1, $actual, "Only one module [{$module}] should have been indexed.");
 
         // Create a new record in the module
         $firstName = 'Some';
@@ -270,18 +148,18 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // Make sure that one and only one record has been updated;
         $actual = $this->indexer->getIndexedRecordsCount();
-        self::assertEquals(1, $actual, "Only one record should have been updated");
+        self::assertEquals(1, $actual, 'Only one record should have been updated');
 
         // Perform a search to see if the new record can be found
         // As usual, wait for Elasticsearch to do its magic
         $this->waitForIndexing();
         $results = SearchWrapper::search(
             $this->searchEngine,
-            SearchQuery::fromString("$firstName AND $lastName", 1)
+            SearchQuery::fromString("{$firstName} AND {$lastName}", 1)
         )->getHits();
 
-        self::assertArrayHasKey($module, $results, "No results found");
-        self::assertContains($id, $results[$module], "Records not found");
+        self::assertArrayHasKey($module, $results, 'No results found');
+        self::assertContains($id, $results[$module], 'Records not found');
 
         // Now try to fetch the bean again, edit it and save, and mark as deleted
         $bean = BeanFactory::getBean($module, $id);
@@ -313,32 +191,19 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->waitForIndexing();
         $results = SearchWrapper::search(
             $this->searchEngine,
-            SearchQuery::fromString("$firstName2 AND $lastName", 1)
+            SearchQuery::fromString("{$firstName2} AND {$lastName}", 1)
         )->getHits();
 
         self::assertArrayHasKey($module, $results, 'Wrong count of indexed beans');
         self::assertContains($id2, $results[$module], 'Wrong ID found');
 
-        $results = SearchWrapper::search($this->searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
+        $results = SearchWrapper::search($this->searchEngine, SearchQuery::fromString("{$firstName} AND {$lastName}", 1));
         self::assertEmpty($results->getHits(), 'There should be no search results, as the record was deleted');
-    }
-
-    private function populateContactsTable()
-    {
-        /** @var Contact $bean */
-        $bean = BeanFactory::newBean('Contacts');
-        $bean->first_name = 'Test';
-        $bean->last_name = 'Person';
-
-        $sql = DBManagerFactory::getInstance()->truncateTableSQL($bean->table_name);
-        DBManagerFactory::getInstance()->query($sql);
-
-        $bean->save();
     }
 
     public function testMeta()
     {
-        $module = "TestModule";
+        $module = 'TestModule';
         $meta1 = ['foo' => 'baz'];
         $meta2 = ['foz' => 'bar'];
 
@@ -352,5 +217,142 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $actual = $this->indexer->getMeta($module);
 
         self::assertEquals($meta2, $actual);
+    }
+
+    private function restore()
+    {
+        $this->indexer->removeIndex('test');
+    }
+
+    /**
+     * Starts indexing using the indexer stored as a field.
+     */
+    private function indexRunner()
+    {
+        /** @var Contact $bean */
+        $bean = BeanFactory::newBean('Contacts');
+
+        // Create unique test vars
+        $firstName = uniqid();
+        $lastName = uniqid();
+        $full_name_update = md5(time());
+        $city = uniqid() . 'City';
+
+        // Assign the vars to the bean
+        $bean->first_name = $firstName;
+        $bean->last_name = $lastName;
+        $bean->primary_address_city = $city;
+
+        // Save the bean to the database and retrieve the new id
+        $bean->save();
+        $id = $bean->id;
+
+        // Perform a new indexing
+        echo PHP_EOL;
+        $this->indexer->index();
+
+        $this->waitForIndexing();
+
+        // Attempt to search the newly added bean by full name
+        $results = SearchWrapper::search(
+            $this->searchEngine,
+            SearchQuery::fromString("{$firstName} {$lastName}", 1)
+        )->getHits();
+
+        self::assertArrayHasKey(
+            'Contacts',
+            $results,
+            'Unable to find by full name!'
+        );
+        self::assertEquals(
+            $id,
+            $results['Contacts'][0],
+            'Wrong id returned by the search engine.'
+        );
+
+        // lets test a more complex query
+        // Search by city
+
+        $query = SearchQuery::fromString("address.primary.city:{$city}", 1);
+
+        $results = SearchWrapper::search(
+            $this->searchEngine,
+            $query
+        )->getHits();
+
+        self::assertArrayHasKey(
+            'Contacts',
+            $results,
+            "Unable to find by city [{$city}]!"
+        );
+        self::assertEquals(
+            $id,
+            $results['Contacts'][0],
+            'Wrong id returned by the search engine.'
+        );
+
+        $bean = BeanFactory::getBean('Contacts', $id);
+
+        $bean->first_name = $full_name_update;
+
+        // injecting this indexer so that it'll have the same parameters
+        // @noinspection PhpUndefinedFieldInspection
+        $bean->indexer = $this->indexer;
+
+        $bean->save();
+        // the hooks should cause another indexing to happen
+
+        $this->waitForIndexing();
+
+        $results = SearchWrapper::search(
+            $this->searchEngine,
+            SearchQuery::fromString($full_name_update, 1)
+        )->getHits();
+
+        self::assertArrayHasKey(
+            'Contacts',
+            $results,
+            'Unable to find by updated username!'
+        );
+        self::assertEquals(
+            $bean->id,
+            $results['Contacts'][0],
+            'Wrong ID retrieved'
+        );
+
+        // remove the bean...
+        $this->indexer->removeBean($bean);
+
+        $this->waitForIndexing();
+
+        // make a search query for the deleted bean
+        $results = SearchWrapper::search(
+            $this->searchEngine,
+            SearchQuery::fromString($full_name_update, 1)
+        );
+
+        self::assertEmpty($results->getHits(), 'The deleted bean should not have been found!');
+    }
+
+    /**
+     * The indexing on Elasticsearch is scheduled each second.
+     * No results will be available before that time.
+     */
+    private function waitForIndexing()
+    {
+        sleep(1);
+    }
+
+    private function populateContactsTable()
+    {
+        /** @var Contact $bean */
+        $bean = BeanFactory::newBean('Contacts');
+        $bean->first_name = 'Test';
+        $bean->last_name = 'Person';
+
+        $sql = DBManagerFactory::getInstance()->truncateTableSQL($bean->table_name);
+        DBManagerFactory::getInstance()->query($sql);
+
+        $bean->save();
     }
 }

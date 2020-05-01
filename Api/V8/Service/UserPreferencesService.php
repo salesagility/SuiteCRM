@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -52,14 +51,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * UserPreferencesService
+ * UserPreferencesService.
  *
  * @author gyula
  */
 class UserPreferencesService
 {
-
-    
     /**
      * @var BeanManager
      */
@@ -75,29 +72,30 @@ class UserPreferencesService
     }
 
     /**
-     *
      * @param GetUserPreferencesParams $params
+     *
      * @return DocumentResponse
      */
     public function getUserPreferences(GetUserPreferencesParams $params)
     {
         // needs to determinate the user preferences
         $user = $this->beanManager->getBeanSafe('Users', $params->getUserId());
-        
+
         $db = DBManagerFactory::getInstance();
-        $result = $db->query("SELECT contents, category FROM user_preferences WHERE assigned_user_id='$user->id' AND deleted = 0", false, 'Failed to load user preferences');
+        $result = $db->query("SELECT contents, category FROM user_preferences WHERE assigned_user_id='{$user->id}' AND deleted = 0", false, 'Failed to load user preferences');
         $preferences = [];
         while ($row = $db->fetchByAssoc($result)) {
             $category = $row['category'];
             $preferences[$category] = unserialize(base64_decode($row['contents']));
         }
-        
+
         $dataResponse = new DataResponse('UserPreference', $params->getUserId());
         $attributeResponse = new AttributeResponse($preferences);
         $dataResponse->setAttributes($attributeResponse);
-        
+
         $response = new DocumentResponse();
         $response->setData($dataResponse);
+
         return $response;
     }
 }

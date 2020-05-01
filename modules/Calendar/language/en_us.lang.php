@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
-
+$mod_strings = [
     'LBL_SHAREDWEEK' => 'Shared Week',
     'LBL_SHAREDMONTH' => 'Shared Month',
 
@@ -97,7 +94,6 @@ $mod_strings = array(
     'LBL_CREATE_CALL' => 'Log Call',
     'LBL_HOURS_ABBREV' => 'h',
     'LBL_MINS_ABBREV' => 'm',
-
 
     'LBL_YES' => 'Yes',
     'LBL_NO' => 'No',
@@ -166,60 +162,55 @@ $mod_strings = array(
     'LBL_BODY' => 'Body',
     'LBL_BORDER' => 'Border',
     'LBL_TEXT' => 'Text',
-);
+];
 
-
-$mod_list_strings = array(
-    'dom_cal_weekdays' =>
-        array(
-            '0' => "Sun",
-            '1' => "Mon",
-            '2' => "Tue",
-            '3' => "Wed",
-            '4' => "Thu",
-            '5' => "Fri",
-            '6' => "Sat",
-        ),
-    'dom_cal_weekdays_long' =>
-        array(
-            '0' => "Sunday",
-            '1' => "Monday",
-            '2' => "Tuesday",
-            '3' => "Wednesday",
-            '4' => "Thursday",
-            '5' => "Friday",
-            '6' => "Saturday",
-        ),
-    'dom_cal_month' =>
-        array(
-            '0' => "",
-            '1' => "Jan",
-            '2' => "Feb",
-            '3' => "Mar",
-            '4' => "Apr",
-            '5' => "May",
-            '6' => "Jun",
-            '7' => "Jul",
-            '8' => "Aug",
-            '9' => "Sep",
-            '10' => "Oct",
-            '11' => "Nov",
-            '12' => "Dec",
-        ),
-    'dom_cal_month_long' =>
-        array(
-            '0' => "",
-            '1' => "January",
-            '2' => "February",
-            '3' => "March",
-            '4' => "April",
-            '5' => "May",
-            '6' => "June",
-            '7' => "July",
-            '8' => "August",
-            '9' => "September",
-            '10' => "October",
-            '11' => "November",
-            '12' => "December",
-        ),
-);
+$mod_list_strings = [
+    'dom_cal_weekdays' => [
+        '0' => 'Sun',
+        '1' => 'Mon',
+        '2' => 'Tue',
+        '3' => 'Wed',
+        '4' => 'Thu',
+        '5' => 'Fri',
+        '6' => 'Sat',
+    ],
+    'dom_cal_weekdays_long' => [
+        '0' => 'Sunday',
+        '1' => 'Monday',
+        '2' => 'Tuesday',
+        '3' => 'Wednesday',
+        '4' => 'Thursday',
+        '5' => 'Friday',
+        '6' => 'Saturday',
+    ],
+    'dom_cal_month' => [
+        '0' => '',
+        '1' => 'Jan',
+        '2' => 'Feb',
+        '3' => 'Mar',
+        '4' => 'Apr',
+        '5' => 'May',
+        '6' => 'Jun',
+        '7' => 'Jul',
+        '8' => 'Aug',
+        '9' => 'Sep',
+        '10' => 'Oct',
+        '11' => 'Nov',
+        '12' => 'Dec',
+    ],
+    'dom_cal_month_long' => [
+        '0' => '',
+        '1' => 'January',
+        '2' => 'February',
+        '3' => 'March',
+        '4' => 'April',
+        '5' => 'May',
+        '6' => 'June',
+        '7' => 'July',
+        '8' => 'August',
+        '9' => 'September',
+        '10' => 'October',
+        '11' => 'November',
+        '12' => 'December',
+    ],
+];

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,42 +36,39 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 $module_name = 'Emails';
-$viewdefs[$module_name]['EditView'] = array(
-    'templateMeta' => array(
+$viewdefs[$module_name]['EditView'] = [
+    'templateMeta' => [
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
-        ),
-        'form' => array(
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+        'form' => [
             'headerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
             'footerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
-            'buttons' => array(),
-            'includes' => array(
-                array(
+            'buttons' => [],
+            'includes' => [
+                [
                     'file' => 'modules/Emails/include/DetailView/ImportView.js'
-                ),
-                array(
+                ],
+                [
                     'file' => 'modules/Emails/include/DetailView/import.js'
-                )
-            ),
-        ),
-    ),
-    'panels' => array(
-        'LBL_EMAIL_INFORMATION' => array(
-            array(
-                'parent_name' => array(
+                ]
+            ],
+        ],
+    ],
+    'panels' => [
+        'LBL_EMAIL_INFORMATION' => [
+            [
+                'parent_name' => [
                     'name' => 'assigned_user_name',
                     'label' => 'LBL_ASSIGNED_TO',
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 'parent_name'
-            ),
-
-        )
-    )
-
-);
+            ],
+        ]
+    ]
+];

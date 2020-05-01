@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,57 +40,52 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-       array('widget_class' => 'SubPanelTopCreateButton'),
-       array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Documents','field_to_name_array'=>array('document_revision_id'=>'REL_ATTRIBUTE_document_revision_id')),
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+        ['widget_class' => 'SubPanelTopCreateButton'],
+        ['widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Documents', 'field_to_name_array' => ['document_revision_id' => 'REL_ATTRIBUTE_document_revision_id']],
+    ],
 
     'where' => '',
-    
-    
 
-    'list_fields'=> array(
-      'document_name'=> array(
+    'list_fields' => [
+        'document_name' => [
             'name' => 'document_name',
             'vname' => 'LBL_LIST_DOCUMENT_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '40%',
-       ),
-       'is_template'=>array(
+        ],
+        'is_template' => [
             'name' => 'is_template',
             'vname' => 'LBL_LIST_IS_TEMPLATE',
             'width' => '15%',
-            'widget_type'=>'checkbox',
-        ),
-       'template_type'=>array(
+            'widget_type' => 'checkbox',
+        ],
+        'template_type' => [
             'name' => 'template_types',
             'vname' => 'LBL_LIST_TEMPLATE_TYPE',
             'width' => '20%',
-        ),
-       'latest_revision'=>array(
+        ],
+        'latest_revision' => [
             'name' => 'latest_revision',
             'vname' => 'LBL_LATEST_REVISION',
             'width' => '15%',
             'sortable' => false
-        ),
-        'edit_button'=>array(
+        ],
+        'edit_button' => [
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
             'module' => 'Documents',
             'width' => '5%',
-        ),
-        'remove_button'=>array(
+        ],
+        'remove_button' => [
             'vname' => 'LBL_REMOVE',
             'widget_class' => 'SubPanelRemoveButton',
             'module' => 'Documents',
             'width' => '5%',
-        ),
-        'document_revision_id'=>array(
-            'usage'=>'query_only'
-        ),
-    ),
-);
+        ],
+        'document_revision_id' => [
+            'usage' => 'query_only'
+        ],
+    ],
+];

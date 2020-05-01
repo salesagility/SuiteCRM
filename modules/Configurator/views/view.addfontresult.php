@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/MVC/View/SugarView.php');
+require_once 'include/MVC/View/SugarView.php';
 class ConfiguratorViewAddFontResult extends SugarView
 {
-    public $log="";
+    public $log = '';
+
     /**
-     * display the form
+     * display the form.
      */
     public function display()
     {
@@ -58,33 +58,34 @@ class ConfiguratorViewAddFontResult extends SugarView
         $error = $this->addFont();
 
         $this->ss->assign(
-            "MODULE_TITLE",
+            'MODULE_TITLE',
             getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_ID'],
-                array($mod_strings['LBL_ADDFONTRESULT_TITLE']),
+                [$mod_strings['LBL_ADDFONTRESULT_TITLE']],
                 false
-                )
-            );
+            )
+        );
         if ($error) {
-            $this->ss->assign("error", $this->log);
+            $this->ss->assign('error', $this->log);
         } else {
-            $this->ss->assign("info", $this->log);
+            $this->ss->assign('info', $this->log);
         }
-        $this->ss->assign("MOD", $mod_strings);
-        $this->ss->assign("APP", $app_strings);
+        $this->ss->assign('MOD', $mod_strings);
+        $this->ss->assign('APP', $app_strings);
         //display
         $this->ss->display('modules/Configurator/tpls/addFontResult.tpl');
     }
 
     /**
-     * This method prepares the received data and call the addFont method of the fontManager
-     * @return boolean true on success
+     * This method prepares the received data and call the addFont method of the fontManager.
+     *
+     * @return bool true on success
      */
     private function addFont()
     {
-        $this->log="";
-        $error=false;
-        $files = array("pdf_metric_file","pdf_font_file");
+        $this->log = '';
+        $error = false;
+        $files = ['pdf_metric_file', 'pdf_font_file'];
         foreach ($files as $k) {
             // handle uploaded file
             $uploadFile = new UploadFile($k);
@@ -92,19 +93,19 @@ class ConfiguratorViewAddFontResult extends SugarView
                 $uploadFile->final_move(basename($_FILES[$k]['name']));
                 $uploadFileNames[$k] = $uploadFile->get_upload_path(basename($_FILES[$k]['name']));
             } else {
-                $this->log = translate('ERR_PDF_NO_UPLOAD', "Configurator");
-                $error=true;
+                $this->log = translate('ERR_PDF_NO_UPLOAD', 'Configurator');
+                $error = true;
             }
         }
         if (!$error) {
-            require_once('include/Sugarpdf/FontManager.php');
+            require_once 'include/Sugarpdf/FontManager.php';
             $fontManager = new FontManager();
             $error = $fontManager->addFont(
-                $uploadFileNames["pdf_font_file"],
-                $uploadFileNames["pdf_metric_file"],
+                $uploadFileNames['pdf_font_file'],
+                $uploadFileNames['pdf_metric_file'],
                 $_REQUEST['pdf_embedded'],
                 $_REQUEST['pdf_encoding_table'],
-                array(),
+                [],
                 htmlspecialchars_decode($_REQUEST['pdf_cidinfo'], ENT_QUOTES),
                 $_REQUEST['pdf_style_list']
             );
@@ -113,6 +114,7 @@ class ConfiguratorViewAddFontResult extends SugarView
                 $this->log .= implode("\n", $fontManager->errors);
             }
         }
+
         return $error;
     }
 }

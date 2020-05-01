@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,24 +36,24 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class SugarAutoLoader
 {
-    public static $map = array(
+    public static $map = [
         'XTemplate' => 'XTemplate/xtpl.php',
         'ListView' => 'include/ListView/ListView.php',
         'Sugar_Smarty' => 'include/Sugar_Smarty.php',
         'Javascript' => 'include/javascript/javascript.php',
-    );
+    ];
 
-    public static $noAutoLoad = array(
+    public static $noAutoLoad = [
         'Tracker' => true,
-    );
+    ];
 
-    public static $moduleMap = array();
+    public static $moduleMap = [];
 
     /**
      * @param $class
+     *
      * @return bool
      */
     public static function autoload($class)
@@ -98,8 +97,26 @@ class SugarAutoLoader
         return false;
     }
 
+    public static function loadAll()
+    {
+        foreach (self::$map as $class => $file) {
+            require_once $file;
+        }
+
+        if (isset($GLOBALS['beanFiles'])) {
+            $files = $GLOBALS['beanFiles'];
+        } else {
+            include 'include/modules.php';
+            $files = $beanFiles;
+        }
+        foreach ($files as $class => $file) {
+            require_once $file;
+        }
+    }
+
     /**
      * @param $class
+     *
      * @return bool|string
      */
     protected static function getFilenameForViewClass($class)
@@ -114,17 +131,17 @@ class SugarAutoLoader
         if (substr($class, 0, 4) == 'View') {
             $view = strtolower(substr($class, 4));
             if ($module) {
-                $modulepath = "modules/$module/views/view.$view.php";
-                if (file_exists("custom/$modulepath")) {
-                    return "custom/$modulepath";
+                $modulepath = "modules/{$module}/views/view.{$view}.php";
+                if (file_exists("custom/{$modulepath}")) {
+                    return "custom/{$modulepath}";
                 }
                 if (file_exists($modulepath)) {
                     return $modulepath;
                 }
             } else {
-                $basepath = "include/MVC/View/views/view.$view.php";
-                if (file_exists("custom/$basepath")) {
-                    return "custom/$basepath";
+                $basepath = "include/MVC/View/views/view.{$view}.php";
+                if (file_exists("custom/{$basepath}")) {
+                    return "custom/{$basepath}";
                 }
                 if (file_exists($basepath)) {
                     return $basepath;
@@ -155,7 +172,7 @@ class SugarAutoLoader
                 //We need to lowercase the portion after SugarWidgetField
                 $name = substr($class, 16);
                 if (!empty($name)) {
-                    $class = 'SugarWidgetField'.strtolower($name);
+                    $class = 'SugarWidgetField' . strtolower($name);
                 }
             }
 
@@ -166,22 +183,5 @@ class SugarAutoLoader
         }
 
         return false;
-    }
-
-    public static function loadAll()
-    {
-        foreach (self::$map as $class => $file) {
-            require_once $file;
-        }
-
-        if (isset($GLOBALS['beanFiles'])) {
-            $files = $GLOBALS['beanFiles'];
-        } else {
-            include 'include/modules.php';
-            $files = $beanFiles;
-        }
-        foreach ($files as $class => $file) {
-            require_once $file;
-        }
     }
 }

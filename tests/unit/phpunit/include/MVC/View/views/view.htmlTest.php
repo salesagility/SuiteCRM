@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()

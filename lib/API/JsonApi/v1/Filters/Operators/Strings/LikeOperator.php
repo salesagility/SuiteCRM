@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,13 +44,13 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
- * Class LikeOperator
- * @package SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings
+ * Class LikeOperator.
  */
 class LikeOperator extends Operator implements OperatorInterface
 {
     /**
-     * Return filter operator
+     * Return filter operator.
+     *
      * @return string
      */
     public function toFilterOperator()
@@ -60,7 +59,8 @@ class LikeOperator extends Operator implements OperatorInterface
     }
 
     /**
-     * Return SQL operator
+     * Return SQL operator.
+     *
      * @return string
      */
     public function toSqlOperator()
@@ -70,14 +70,16 @@ class LikeOperator extends Operator implements OperatorInterface
 
     /**
      * @param string $operator
-     * @return bool
+     *
      * @throws \SuiteCRM\Exception\InvalidArgumentException
+     *
+     * @return bool
      */
     public function isValid($operator)
     {
         if (!is_string($operator)) {
             throw new InvalidArgumentException(
-                '[JsonApi][v1][Filters][Operators][Strings]'.
+                '[JsonApi][v1][Filters][Operators][Strings]' .
                 '[LikeOperator][isValid][expected type to be string] $operator'
             );
         }

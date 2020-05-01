@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/Users/UserSignature.php');
+require_once 'modules/Users/UserSignature.php';
 global $current_user;
 
 $us = new UserSignature();
@@ -60,7 +58,7 @@ $us->save();
 $js = '
 <script type="text/javascript">
 function refreshTemplates() {
-	window.opener.refresh_signature_list("'.$us->id.'","'.$us->name.'");
+	window.opener.refresh_signature_list("' . $us->id . '","' . $us->name . '");
 	window.close();
 }
 

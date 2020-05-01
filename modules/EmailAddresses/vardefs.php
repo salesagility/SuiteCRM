@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,20 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-/**
- * Stub class to allow Link class easily use SugarEmailAddress
- */
+// Stub class to allow Link class easily use SugarEmailAddress
 global $dictionary;
 if (file_exists('custom/metadata/email_addressesMetaData.php')) {
-    include('custom/metadata/email_addressesMetaData.php');
+    include 'custom/metadata/email_addressesMetaData.php';
 } else {
-    include('metadata/email_addressesMetaData.php');
+    include 'metadata/email_addressesMetaData.php';
 }
 
 if (file_exists('custom/metadata/emails_beansMetaData.php')) {
-    include('custom/metadata/emails_beansMetaData.php');
+    include 'custom/metadata/emails_beansMetaData.php';
 } else {
-    include('metadata/emails_beansMetaData.php');
+    include 'metadata/emails_beansMetaData.php';
 }

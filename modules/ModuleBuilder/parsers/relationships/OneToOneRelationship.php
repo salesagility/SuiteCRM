@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php' ;
+require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php';
 
 /*
  * Class to manage the metadata for a One-To-One Relationship
@@ -69,26 +67,21 @@ require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.p
 
 class OneToOneRelationship extends AbstractRelationship
 {
-
     /*
      * Constructor
      * @param array $definition Parameters passed in as array with keys defined in parent::keys
      */
     public function __construct($definition)
     {
-        parent::__construct($definition) ;
+        parent::__construct($definition);
     }
-    
-    /*
-     * BUILD methods called during the build
-     */
-    
-    /*
-     * @return array    An array of relationship metadata definitions
-     */
+
+    // BUILD methods called during the build
+
+    // @return array    An array of relationship metadata definitions
     public function buildRelationshipMetaData()
     {
-        return array( $this->lhs_module => $this->getRelationshipMetaData(MB_ONETOONE) ) ;
+        return [$this->lhs_module => $this->getRelationshipMetaData(MB_ONETOONE)];
     }
 
     /* Build a set of Link Field definitions for this relationship
@@ -96,40 +89,40 @@ class OneToOneRelationship extends AbstractRelationship
      */
     public function buildVardefs()
     {
-        $vardefs = array( ) ;
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition(
+        $vardefs = [];
+        $vardefs[$this->rhs_module][] = $this->getLinkFieldDefinition(
             $this->lhs_module,
             $this->relationship_name,
             false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE',
             $this->relationship_only ? false : $this->getIDName($this->lhs_module)
-        ) ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition(
+        );
+        $vardefs[$this->lhs_module][] = $this->getLinkFieldDefinition(
             $this->rhs_module,
             $this->relationship_name,
             false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE',
             $this->relationship_only ? false : $this->getIDName($this->rhs_module)
-        ) ;
-        
+        );
+
         if (!$this->relationship_only) {
-            $vardefs [ $this->lhs_module ] [] = $this->getRelateFieldDefinition($this->rhs_module, $this->relationship_name, $this->getRightModuleSystemLabel()) ;
-            $vardefs [ $this->rhs_module ] [] = $this->getRelateFieldDefinition($this->lhs_module, $this->relationship_name, $this->getLeftModuleSystemLabel()) ;
-            $vardefs [ $this->lhs_module ] [] = $this->getLink2FieldDefinition(
+            $vardefs[$this->lhs_module][] = $this->getRelateFieldDefinition($this->rhs_module, $this->relationship_name, $this->getRightModuleSystemLabel());
+            $vardefs[$this->rhs_module][] = $this->getRelateFieldDefinition($this->lhs_module, $this->relationship_name, $this->getLeftModuleSystemLabel());
+            $vardefs[$this->lhs_module][] = $this->getLink2FieldDefinition(
                 $this->rhs_module,
                 $this->relationship_name,
                 false,
                 'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
-            ) ;
-            $vardefs [ $this->rhs_module ] [] = $this->getLink2FieldDefinition(
+            );
+            $vardefs[$this->rhs_module][] = $this->getLink2FieldDefinition(
                 $this->lhs_module,
                 $this->relationship_name,
                 false,
                 'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE'
-            ) ;
+            );
         }
-        
-        return $vardefs ;
+
+        return $vardefs;
     }
 
     /*
@@ -139,16 +132,16 @@ class OneToOneRelationship extends AbstractRelationship
     public function buildFieldsToLayouts()
     {
         if ($this->relationship_only) {
-            return array() ;
+            return [];
         }
- 
+
         if ($this->lhs_module == $this->rhs_module) { // don't add in two fields on recursive relationships
-            return array( $this->lhs_module => $this->getValidDBName($this->relationship_name . "_name") );
-        } else {
-            return array(
-                $this->lhs_module => $this->getValidDBName($this->relationship_name . "_name") ,
-                $this->rhs_module => $this->getValidDBName($this->relationship_name . "_name")
-            ) ;
+            return [$this->lhs_module => $this->getValidDBName($this->relationship_name . '_name')];
         }
+
+        return [
+            $this->lhs_module => $this->getValidDBName($this->relationship_name . '_name'),
+            $this->rhs_module => $this->getValidDBName($this->relationship_name . '_name')
+        ];
     }
 }

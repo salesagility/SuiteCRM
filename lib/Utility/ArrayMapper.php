@@ -52,7 +52,7 @@ use Symfony\Component\Yaml\Yaml;
 class ArrayMapper
 {
     /** @var array|object */
-    private $mappable = null;
+    private $mappable;
     /** @var array */
     private $mappings = [];
     /** @var null|array */
@@ -115,7 +115,7 @@ class ArrayMapper
     }
 
     /**
-     * @return array|null
+     * @return null|array
      */
     public function getRegexMappings()
     {
@@ -123,7 +123,7 @@ class ArrayMapper
     }
 
     /**
-     * @param array|null $regexMappings
+     * @param null|array $regexMappings
      *
      * @return ArrayMapper fluent setter
      */
@@ -173,6 +173,7 @@ class ArrayMapper
 
         return $this;
     }
+
     //endregion
 
     /**
@@ -188,7 +189,7 @@ class ArrayMapper
     /**
      * Maps the given array using the given parameters.
      *
-     * @param array|null $keys
+     * @param null|array $keys
      *
      * @return array
      */
@@ -236,7 +237,7 @@ class ArrayMapper
      * Starts mapping an array recursively.
      *
      * @param array      $array
-     * @param array|null $keys
+     * @param null|array $keys
      */
     private function mapArray(array $array, array $keys = null)
     {
@@ -255,7 +256,7 @@ class ArrayMapper
      * Starts mapping an array recursively.
      *
      * @param object     $obj
-     * @param array|null $keys
+     * @param null|array $keys
      */
     private function mapObject($obj, array $keys = null)
     {
@@ -264,12 +265,12 @@ class ArrayMapper
         }
 
         foreach ($keys as $key) {
-            $this->loop($key, !isset($obj->$key) ? null : $obj->$key);
+            $this->loop($key, !isset($obj->{$key}) ? null : $obj->{$key});
         }
     }
 
     /**
-     * Main loop action
+     * Main loop action.
      *
      * @param string $key
      * @param mixed  $value
@@ -317,12 +318,14 @@ class ArrayMapper
         if (is_array($structure)) {
             $this->mapArray($structure);
             array_pop($this->path);
+
             return true;
         }
 
         if (is_object($structure)) {
             $this->mapObject($structure);
             array_pop($this->path);
+
             return true;
         }
 
@@ -346,6 +349,7 @@ class ArrayMapper
         $this->handleValue($value, $mappedPath);
 
         array_pop($this->path);
+
         return true;
     }
 
@@ -363,12 +367,13 @@ class ArrayMapper
             }
 
             foreach ($matches as $key => $match) {
-                $mappedPath = str_replace("@$key", $match, $mappedPath);
+                $mappedPath = str_replace("@{$key}", $match, $mappedPath);
             }
 
             $this->handleValue($value, $mappedPath);
 
             array_pop($this->path);
+
             return true;
         }
 
@@ -385,6 +390,7 @@ class ArrayMapper
     {
         $this->handleValue($value, $path);
         array_pop($this->path);
+
         return true;
     }
 
@@ -397,8 +403,7 @@ class ArrayMapper
     {
         $this->path[] = $key;
 
-        $path = implode('.', $this->path);
-        return $path;
+        return implode('.', $this->path);
     }
 
     /**
@@ -412,6 +417,7 @@ class ArrayMapper
             $value = mb_convert_encoding($value, 'UTF-8', 'HTML-ENTITIES');
             $value = trim($value);
         }
+
         return $value;
     }
 
@@ -481,6 +487,7 @@ class ArrayMapper
         }
 
         array_pop($this->path);
+
         return true;
     }
 

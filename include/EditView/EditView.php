@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,29 +42,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
- * Old EditView
+ * Old EditView.
+ *
  * @deprecated
  */
 class EditView
 {
     /**
-     * smarty object
+     * smarty object.
+     *
      * @var object
      */
     public $ss;
     /**
-     * location of template to use
+     * location of template to use.
+     *
      * @var string
      */
     public $template;
     /**
-     * Module to use
+     * Module to use.
+     *
      * @var string
      */
     public $module;
 
     /**
-     *
      * @param string $module module to use
      * @param string $template template of the form to retreive
      */
@@ -77,13 +80,12 @@ class EditView
 
     /**
      * Processes / setups the template
-     * assigns all things to the template like mod_srings and app_strings
-     *
+     * assigns all things to the template like mod_srings and app_strings.
      */
     public function process()
     {
         global $current_language, $app_strings, $sugar_version, $sugar_config, $timedate, $theme;
-        ;
+
         $module_strings = return_module_language($current_language, $this->module);
 
         $this->ss->assign('SUGAR_VERSION', $sugar_version);
@@ -94,9 +96,8 @@ class EditView
         $this->ss->assign('MOD', $module_strings);
     }
 
-
     /**
-     * Displays the template
+     * Displays the template.
      *
      * @return string HTML of parsed template
      */

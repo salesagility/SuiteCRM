@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateField.php';
 class TemplateBoolean extends TemplateField
 {
     public $default_value = '0';
@@ -52,67 +51,66 @@ class TemplateBoolean extends TemplateField
     public function get_xtpl_edit()
     {
         $name = $this->name;
-        $returnXTPL = array();
+        $returnXTPL = [];
         if (!empty($this->help)) {
             $returnXTPL[$this->name . '_help'] = translate($this->help, $this->bean->module_dir);
         }
-        if (isset($this->bean->$name)) {
-            if (strcmp($this->bean->$name, '1') ==0  || strcmp($this->bean->$name, 'on')==0 || strcmp($this->bean->$name, 'yes')==0 || strcmp($this->bean->$name, 'true')==0) {
+        if (isset($this->bean->{$name})) {
+            if (strcmp($this->bean->{$name}, '1') == 0 || strcmp($this->bean->{$name}, 'on') == 0 || strcmp($this->bean->{$name}, 'yes') == 0 || strcmp($this->bean->{$name}, 'true') == 0) {
                 $returnXTPL[$this->name . '_checked'] = 'checked';
                 $returnXTPL[$this->name] = 'checked';
             }
         } else {
             if (empty($this->bean->id)) {
                 if (!empty($this->default_value)) {
-                    if (!(strcmp($this->default_value, 'false')==0 || strcmp($this->default_value, 'no')==0 || strcmp($this->default_value, 'off')==0)) {
+                    if (!(strcmp($this->default_value, 'false') == 0 || strcmp($this->default_value, 'no') == 0 || strcmp($this->default_value, 'off') == 0)) {
                         $returnXTPL[$this->name . '_checked'] = 'checked';
                         $returnXTPL[$this->name] = 'checked';
                     }
                 }
-                $returnXTPL[strtoupper($this->name)] =  $this->default_value;
+                $returnXTPL[strtoupper($this->name)] = $this->default_value;
             }
         }
-
-
 
         return $returnXTPL;
     }
 
-
-
-
     public function get_xtpl_search()
     {
         if (!empty($_REQUEST[$this->name])) {
-            $returnXTPL = array();
+            $returnXTPL = [];
 
             if ($_REQUEST[$this->name] == '1' || $_REQUEST[$this->name] == 'on' || $_REQUEST[$this->name] == 'yes') {
                 $returnXTPL[$this->name . '_checked'] = 'checked';
                 $returnXTPL[$this->name] = 'checked';
             }
+
             return $returnXTPL;
         }
+
         return '';
     }
 
     public function get_xtpl_detail()
     {
         $name = $this->name;
-        $returnXTPL = array();
+        $returnXTPL = [];
         if (!empty($this->help)) {
             $returnXTPL[$this->name . '_help'] = translate($this->help, $this->bean->module_dir);
         }
         $returnXTPL[$this->name . '_checked'] = '';
         $returnXTPL[$this->name] = '';
 
-        if (isset($this->bean->$name)) {
-            if (strcmp($this->bean->$name, '1') ==0  || strcmp($this->bean->$name, 'on')==0 || strcmp($this->bean->$name, 'yes')==0 || strcmp($this->bean->$name, 'true')==0) {
+        if (isset($this->bean->{$name})) {
+            if (strcmp($this->bean->{$name}, '1') == 0 || strcmp($this->bean->{$name}, 'on') == 0 || strcmp($this->bean->{$name}, 'yes') == 0 || strcmp($this->bean->{$name}, 'true') == 0) {
                 $returnXTPL[$this->name . '_checked'] = 'checked';
                 $returnXTPL[$this->name] = 'checked';
             }
         }
+
         return $returnXTPL;
     }
+
     public function get_xtpl_list()
     {
         return $this->get_xtpl_edit();

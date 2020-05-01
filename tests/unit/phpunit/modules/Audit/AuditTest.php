@@ -3,6 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Audit/Audit.php';
+/**
+ * @internal
+ */
 class AuditTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -24,7 +27,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('Audit', 'object_name', $audit);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $audit = new Audit();
 
@@ -36,7 +39,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $audit->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $audit = new Audit();
 
@@ -51,7 +54,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
@@ -65,7 +68,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
@@ -79,7 +82,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_parent_fields()
+    public function testfillInAdditionalParentFields()
     {
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
@@ -93,7 +96,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
@@ -107,7 +110,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testget_audit_link()
+    public function testgetAuditLink()
     {
         $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
@@ -121,7 +124,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestIncomplete('method has no implementation');
     }
 
-    public function testget_audit_list()
+    public function testgetAuditList()
     {
         global $focus;
         $focus = new Account(); //use audit enabbled module object

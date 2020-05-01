@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,22 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-
-
-
-
 global $timedate;
 global $current_user;
-
 
 $campaign = new Campaign();
 $campaign->retrieve($_REQUEST['record']);
 
-$query = "SELECT prospect_list_id as id FROM prospect_list_campaigns WHERE campaign_id='$campaign->id' AND deleted=0";
+$query = "SELECT prospect_list_id as id FROM prospect_list_campaigns WHERE campaign_id='{$campaign->id}' AND deleted=0";
 
 $fromName = $_REQUEST['from_name'];
 $fromEmail = $_REQUEST['from_address'];
@@ -66,36 +58,35 @@ $template_id = $_REQUEST['email_template'];
 
 $dateval = $timedate->merge_date_time($date_start, $time_start);
 
-
 $listresult = $campaign->db->query($query);
 
 while ($list = $campaign->db->fetchByAssoc($listresult)) {
     $prospect_list = $list['id'];
     $focus = new ProspectList();
-    
+
     $focus->retrieve($prospect_list);
 
-    $query = "SELECT prospect_id,contact_id,lead_id FROM prospect_lists_prospects WHERE prospect_list_id='$focus->id' AND deleted=0";
+    $query = "SELECT prospect_id,contact_id,lead_id FROM prospect_lists_prospects WHERE prospect_list_id='{$focus->id}' AND deleted=0";
     $result = $focus->db->query($query);
 
     while ($row = $focus->db->fetchByAssoc($result)) {
         $prospect_id = $row['prospect_id'];
         $contact_id = $row['contact_id'];
         $lead_id = $row['lead_id'];
-        
-        if ($prospect_id <> '') {
-            $moduleName = "Prospects";
+
+        if ($prospect_id != '') {
+            $moduleName = 'Prospects';
             $moduleID = $row['prospect_id'];
         }
-        if ($contact_id <> '') {
-            $moduleName = "Contacts";
+        if ($contact_id != '') {
+            $moduleName = 'Contacts';
             $moduleID = $row['contact_id'];
         }
-        if ($lead_id <> '') {
-            $moduleName = "Leads";
+        if ($lead_id != '') {
+            $moduleName = 'Leads';
             $moduleID = $row['lead_id'];
         }
-        
+
         $mailer = new EmailMan();
         $mailer->module = $moduleName;
         $mailer->module_id = $moduleID;
@@ -109,7 +100,6 @@ while ($list = $campaign->db->fetchByAssoc($listresult)) {
     }
 }
 
-
 $header_URL = "Location: index.php?action=DetailView&module=Campaigns&record={$_REQUEST['record']}";
-$GLOBALS['log']->debug("about to post header URL of: $header_URL");
+$GLOBALS['log']->debug("about to post header URL of: {$header_URL}");
 SugarApplication::headerRedirect($header_URL);

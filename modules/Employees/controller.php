@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class EmployeesController extends SugarController
 {
     public function __construct()
@@ -45,16 +43,14 @@ class EmployeesController extends SugarController
         parent::__construct();
     }
 
-
-
-
     public function action_editview()
     {
         if (is_admin($GLOBALS['current_user']) || $_REQUEST['record'] == $GLOBALS['current_user']->id) {
             $this->view = 'edit';
         } else {
-            sugar_die("Unauthorized access to employees.");
+            sugar_die('Unauthorized access to employees.');
         }
+
         return true;
     }
 
@@ -69,9 +65,9 @@ class EmployeesController extends SugarController
             $u->mark_deleted($u->id);
             $GLOBALS['log']->info("User id: {$GLOBALS['current_user']->id} deleted user record: {$_REQUEST['record']}");
 
-            SugarApplication::redirect("index.php?module=Employees&action=index");
+            SugarApplication::redirect('index.php?module=Employees&action=index');
         } else {
-            sugar_die("Unauthorized access to administration.");
+            sugar_die('Unauthorized access to administration.');
         }
     }
 }

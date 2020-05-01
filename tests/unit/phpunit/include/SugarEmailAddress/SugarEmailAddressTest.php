@@ -1,9 +1,13 @@
 <?php
 
-use SuiteCRM\Test\TestLogger;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\TestLogger;
 
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ *
+ * @internal
+ */
 class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -32,16 +36,16 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     protected function tearDown()
     {
         $db = DBManagerFactory::getInstance();
-        $query = /** @lang sql */
+        $query = // @lang sql
             "DELETE FROM email_addresses WHERE email_address = 'test9@email.com'";
         $db->query($query);
-        $query = /** @lang sql */
+        $query = // @lang sql
             "DELETE FROM aod_indexevent WHERE record_id = 'test_contact_1'";
         $db->query($query);
-        $query = /** @lang sql */
+        $query = // @lang sql
             "DELETE FROM contacts_cstm WHERE id_c = 'test_contact_1'";
         $db->query($query);
-        $query = /** @lang sql */
+        $query = // @lang sql
             "DELETE FROM sugarfeed WHERE related_id = 'test_contact_1'";
         $db->query($query);
 
@@ -53,7 +57,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testSave()
     {
-        $query = "SELECT * FROM email_addr_bean_rel";
+        $query = 'SELECT * FROM email_addr_bean_rel';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -61,23 +65,22 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableEmailAddrBeanRel = $rows;
 
-
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
         // test
-        /** @noinspection PhpDeprecationInspection */
+        // @noinspection PhpDeprecationInspection
         $this->ea->save(null, null, null, null, null, null, null, null);
         self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
 
         $GLOBALS['log'] = $logger;
 
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addr_bean_rel');
         foreach ($tableEmailAddrBeanRel as $row) {
-            $query = "INSERT email_addr_bean_rel INTO (";
+            $query = 'INSERT email_addr_bean_rel INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
@@ -182,9 +185,9 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         // test
         $c->email1 = 'test5@email.com';
         $this->ea->handleLegacyRetrieve($c);
-        self::assertSame(array(
+        self::assertSame([
             'email1' => 'test5@email.com',
-        ), $c->fetched_row);
+        ], $c->fetched_row);
     }
 
     /**
@@ -228,7 +231,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $_request = $_REQUEST;
         }
 
-        $query = "SELECT * FROM email_addr_bean_rel";
+        $query = 'SELECT * FROM email_addr_bean_rel';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -236,7 +239,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableEmailAddrBeanRel = $rows;
 
-        $query = "SELECT * FROM contacts";
+        $query = 'SELECT * FROM contacts';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -244,15 +247,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableContacts = $rows;
 
-        $query = "SELECT * FROM email_addresses";
+        $query = 'SELECT * FROM email_addresses';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         }
         $tableEmailAddresses = $rows;
-
-
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
@@ -264,11 +265,11 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $db = DBManagerFactory::getInstance();
 
         // test
-        $db->query(/** @lang sql */
+        $db->query(// @lang sql
             "delete  from email_addr_bean_rel  WHERE email_addr_bean_rel.bean_id = '' AND email_addr_bean_rel.bean_module = '' and email_addr_bean_rel.deleted=0"
         );
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -282,7 +283,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->addAddress('test8@email.com');
         $this->ea->addAddress('test9@email.com');
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -291,7 +292,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->saveEmail(false, null);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -302,7 +303,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->addAddress('test10@email.com');
         $this->ea->addAddress('test11@email.com');
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -311,7 +312,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->saveEmail(false, null);
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -323,13 +324,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->addAddress('test13@email.com');
         $this->ea->addresses[1]['primary_address'] = 1;
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
         self::assertEquals(4, $row['cnt']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 AND primary_address = 1";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -338,13 +339,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->saveEmail(false, null);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 AND primary_address = 1 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
         self::assertEquals(1, $row['cnt']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -358,13 +359,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->addAddress('test15@email.com');
         $this->ea->addresses[1]['primary_address'] = 1;
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
         self::assertEquals(6, $row['cnt']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 AND primary_address = 1";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -373,13 +374,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $this->ea->saveEmail(false, null);
         self::assertCount(5, $GLOBALS['log']->calls['fatal']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 AND primary_address = 1 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
         self::assertEquals(1, $row['cnt']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "select count(*) as cnt from email_addr_bean_rel eabr WHERE eabr.bean_id = '' AND eabr.bean_module = '' and eabr.deleted=0 ";
         $r = $db->query($q);
         $row = $db->fetchByAssoc($r);
@@ -393,42 +394,40 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $GLOBALS['log'] = $logger;
 
-
-
         if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);
         }
 
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addresses');
         foreach ($tableEmailAddresses as $row) {
-            $query = "INSERT email_addresses INTO (";
+            $query = 'INSERT email_addresses INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
 
-        DBManagerFactory::getInstance()->query("DELETE FROM contacts");
+        DBManagerFactory::getInstance()->query('DELETE FROM contacts');
         foreach ($tableContacts as $row) {
-            $query = "INSERT contact INTO (";
+            $query = 'INSERT contact INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
 
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addr_bean_rel');
         foreach ($tableEmailAddrBeanRel as $row) {
-            $query = "INSERT email_addr_bean_rel INTO (";
+            $query = 'INSERT email_addr_bean_rel INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
@@ -440,7 +439,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetCountEmailAddressByBean()
     {
-        $query = "SELECT * FROM email_addresses";
+        $query = 'SELECT * FROM email_addresses';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -458,26 +457,26 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
         $c->id = 'test_contact_1';
@@ -487,26 +486,23 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(1, $result0);
         self::assertEquals(0, $result1);
 
-
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-
-
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addresses');
         foreach ($tableEmailAddresses as $row) {
-            $query = "INSERT email_addresses INTO (";
+            $query = 'INSERT email_addresses INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
@@ -526,39 +522,39 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
         $results = $this->ea->getRelatedId('test@email.com', 'Contacts');
-        self::assertEquals(array('test_contact_1'), $results);
+        self::assertEquals(['test_contact_1'], $results);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
     }
@@ -578,34 +574,33 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $current_user = BeanFactory::getBean('Users', 1);
         }
 
-
         $results = $this->ea->getBeansByEmailAddress('test@email.com');
-        self::assertEquals(array(), $results);
+        self::assertEquals([], $results);
 
         // test
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
@@ -614,30 +609,30 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(1, $results);
         self::assertSame($expected->id, $results[0]->id);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
         // test
 
         $results = $this->ea->getBeansByEmailAddress('');
-        self::assertEquals(array(), $results);
+        self::assertEquals([], $results);
 
         // test
         $i = 2;
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_invalid_{$i}', 'InvalidClass', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TESTINVALID@EMAIL.COM')";
         $db->query($q);
 
@@ -645,15 +640,15 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log'] = new TestLogger();
 
         $results = $this->ea->getBeansByEmailAddress('testinvalid@email.com');
-        self::assertEquals(array(), $results);
+        self::assertEquals([], $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         $GLOBALS['log'] = $logger;
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
 
@@ -663,37 +658,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         // test if bean is deleted then no results
         $i = 4;
         $this->getBeansByEmailAddressDeletedLinksTest($db, $i, 0, 1);
-
-    }
-
-    private function getBeansByEmailAddressDeletedLinksTest($db, $i, $ea_deleted, $bean_deleted) {
-        // must have differing values
-        self::assertFalse($ea_deleted == $bean_deleted);
-        $q = /** @lang sql */
-            "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
-          VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
-        ";
-        $db->query($q);
-        $q = /** @lang sql */
-            "INSERT INTO email_addresses (id, email_address_caps, deleted) VALUES ('test_email_{$i}', 'TEST{$i}@EMAIL.COM', $ea_deleted)";
-        $db->query($q);
-        $q = /** @lang sql */
-            "INSERT INTO contacts (id, first_name, deleted) VALUES ('test_contact_{$i}', 'Test_$i}', $bean_deleted)";
-        $db->query($q);
-
-        $results = $this->ea->getBeansByEmailAddress("test{$i}@email.com");
-        self::assertEquals(array(), $results);
-
-        $q = /** @lang sql */
-            "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
-        $db->query($q);
-        $q = /** @lang sql */
-            "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
-        $db->query($q);
-        $q = /** @lang sql */
-            "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
-        $db->query($q);
     }
 
     /**
@@ -705,7 +669,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log'] = new TestLogger();
 
         $db = DBManagerFactory::getInstance();
-
 
         // test
         $results = $this->ea->populateAddresses('', '');
@@ -737,16 +700,16 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
         $results = $this->ea->populateAddresses('', $module);
-        if (array() !== $this->ea->addresses) {
+        if ([] !== $this->ea->addresses) {
             throw new Exception('Assert error 4');
         }
-        self::assertEquals(array(), $this->ea->addresses);
+        self::assertEquals([], $this->ea->addresses);
 
         // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
-        $_REQUEST['non-exists-or-invalid1emailAddress0'] = array();
+        $_REQUEST['non-exists-or-invalid1emailAddress0'] = [];
         $results = $this->ea->populateAddresses('', $module);
 
         // test
@@ -848,36 +811,36 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $i = 1;
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "UPDATE email_addresses SET opt_out = 1, invalid_email = 0 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = true;
-        $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
+        $results = $this->ea->populateAddresses('', $module, ['emailAddress0' => 'test@email.com']);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
-        $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
+        $results = $this->ea->populateAddresses('', $module, ['emailAddress0' => 'test@email.com']);
 
         self::assertEquals(false, $results);
-        self::assertSame(array(
-            0 => array(
+        self::assertSame([
+            0 => [
                 'email_address' => 'test@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
@@ -885,15 +848,15 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
                 'opt_out' => '0',
                 'email_address_id' => null,
                 'confirm_opt_in_flag' => '0',
-            ),
-        ), $this->ea->addresses);
+            ],
+        ], $this->ea->addresses);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "UPDATE email_addresses SET opt_out = 1, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
-        $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
-        self::assertSame(array(
-            0 => array(
+        $results = $this->ea->populateAddresses('', $module, ['emailAddress0' => 'test@email.com']);
+        self::assertSame([
+            0 => [
                 'email_address' => 'test@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
@@ -901,22 +864,20 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
                 'opt_out' => '0',
                 'email_address_id' => null,
                 'confirm_opt_in_flag' => '0',
-            ),
-        ), $this->ea->addresses);
+            ],
+        ], $this->ea->addresses);
 
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-
         $GLOBALS['log'] = $logger;
-
     }
 
     /**
@@ -924,7 +885,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testAddAddress()
     {
-        $query = "SELECT * FROM email_addr_bean_rel";
+        $query = 'SELECT * FROM email_addr_bean_rel';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -932,7 +893,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableEmailAddrBeanRel = $rows;
 
-        $query = "SELECT * FROM contacts";
+        $query = 'SELECT * FROM contacts';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -940,7 +901,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableContacts = $rows;
 
-        $query = "SELECT * FROM email_addresses";
+        $query = 'SELECT * FROM email_addresses';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -948,11 +909,10 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableEmailAddresses = $rows;
 
-
         $this->ea->addAddress('test20@email.com', true);
         $this->ea->addAddress('test21@email.com', true);
-        self::assertSame(array(
-            0 => array(
+        self::assertSame([
+            0 => [
                 'email_address' => 'test20@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
@@ -960,8 +920,8 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
                 'opt_out' => '0',
                 'email_address_id' => null,
                 'confirm_opt_in_flag' => null,
-            ),
-            1 => array(
+            ],
+            1 => [
                 'email_address' => 'test21@email.com',
                 'primary_address' => '1',
                 'reply_to_address' => '0',
@@ -969,39 +929,37 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
                 'opt_out' => '0',
                 'email_address_id' => null,
                 'confirm_opt_in_flag' => null
-            ),
-        ), $this->ea->addresses);
+            ],
+        ], $this->ea->addresses);
 
-
-
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addresses');
         foreach ($tableEmailAddresses as $row) {
-            $query = "INSERT email_addresses INTO (";
+            $query = 'INSERT email_addresses INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
 
-        DBManagerFactory::getInstance()->query("DELETE FROM contacts");
+        DBManagerFactory::getInstance()->query('DELETE FROM contacts');
         foreach ($tableContacts as $row) {
-            $query = "INSERT contact INTO (";
+            $query = 'INSERT contact INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
 
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addr_bean_rel');
         foreach ($tableEmailAddrBeanRel as $row) {
-            $query = "INSERT email_addr_bean_rel INTO (";
+            $query = 'INSERT email_addr_bean_rel INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
@@ -1074,76 +1032,76 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     public function testSplitEmailAddress()
     {
         $result = $this->ea->splitEmailAddress(null);
-        self::assertSame(array(
+        self::assertSame([
             'name' => '',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('invalid');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'invalid',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('test@email.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => '',
             'email' => 'test@email.com',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('<Mr. Tester> test@email.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'Mr. Tester test@email.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('<Mr. Tester test@email.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'Mr. Tester test@email.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('Mr. Tester> test@email.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'Mr. Tester test@email.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('te st@email.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'te st@email.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('te st@ema il.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'te st@ema il.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('te st@em>a il.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'te st@ema il.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('te <st@ema il.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'te st@ema il.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('te st@em>a il.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'te st@ema il.com',
             'email' => '',
-        ), $result);
+        ], $result);
 
         $result = $this->ea->splitEmailAddress('te <st@em>a il.com');
-        self::assertSame(array(
+        self::assertSame([
             'name' => 'te st@ema il.com',
             'email' => '',
-        ), $result);
+        ], $result);
     }
 
     /**
@@ -1168,8 +1126,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     {
         $isValidator = new \SuiteCRM\Utility\SuiteValidator();
 
-
-        $query = "SELECT * FROM email_addr_bean_rel";
+        $query = 'SELECT * FROM email_addr_bean_rel';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -1177,7 +1134,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableEmailAddrBeanRel = $rows;
 
-        $query = "SELECT * FROM contacts";
+        $query = 'SELECT * FROM contacts';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -1185,7 +1142,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableContacts = $rows;
 
-        $query = "SELECT * FROM email_addresses";
+        $query = 'SELECT * FROM email_addresses';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -1193,11 +1150,10 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableEmailAddresses = $rows;
 
-
         $db = DBManagerFactory::getInstance();
 
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           DELETE FROM email_addresses 
             WHERE 
@@ -1216,7 +1172,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($isValidator->isValidId($result));
 
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           DELETE FROM email_addresses 
             WHERE 
@@ -1226,42 +1182,38 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $result = $this->ea->getEmailGUID('test@email.com');
         self::assertTrue($isValidator->isValidId($result));
 
-
-
-
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addresses');
         foreach ($tableEmailAddresses as $row) {
-            $query = "INSERT email_addresses INTO (";
+            $query = 'INSERT email_addresses INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
 
-        DBManagerFactory::getInstance()->query("DELETE FROM contacts");
+        DBManagerFactory::getInstance()->query('DELETE FROM contacts');
         foreach ($tableContacts as $row) {
-            $query = "INSERT contact INTO (";
+            $query = 'INSERT contact INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
 
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
+        DBManagerFactory::getInstance()->query('DELETE FROM email_addr_bean_rel');
         foreach ($tableEmailAddrBeanRel as $row) {
-            $query = "INSERT email_addr_bean_rel INTO (";
+            $query = 'INSERT email_addr_bean_rel INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
-
     }
 
     /**
@@ -1280,19 +1232,18 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, 1);
         self::assertEquals('', $result);
 
-
         // test
         $i = 1;
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address, email_address_caps) VALUES ('test_email_{$i}', 'test@email.com', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
@@ -1300,13 +1251,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $result);
 
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
     }
@@ -1324,19 +1275,18 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $result = $this->ea->getPrimaryAddress($c);
         self::assertEquals('', $result);
 
-
         // test
         $i = 1;
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address, email_address_caps) VALUES ('test_email_{$i}', 'test@email.com', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
@@ -1345,13 +1295,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test@email.com', $result);
 
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
     }
@@ -1365,32 +1315,31 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $c = BeanFactory::getBean('Contacts');
 
-
         // test
         $i = 1;
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address, email_address_caps) VALUES ('test_email_{$i}', 'test@email.com', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
         $c->id = "test_contact_{$i}";
 
-        $query = /** @lang sql */
+        $query = // @lang sql
             "UPDATE email_addr_bean_rel SET deleted = 0 WHERE email_address_id = 'test_email_{$i}'";
         $db->query($query);
 
         $result = $this->ea->getReplyToAddress($c);
         self::assertEquals('test@email.com', $result);
 
-        $query = /** @lang sql */
+        $query = // @lang sql
             "UPDATE email_addr_bean_rel SET reply_to_address = 1 WHERE email_address_id = 'test_email_{$i}'";
         $db->query($query);
 
@@ -1398,16 +1347,15 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test@email.com', $result);
 
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
-
 
         // test
         $result = $this->ea->getReplyToAddress($c);
@@ -1429,7 +1377,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $id = null;
         $module = null;
 
-        $query = /** @lang sql */
+        $query = // @lang sql
             "
             SELECT count(*) as cnt
                 FROM email_addresses ea 
@@ -1470,7 +1418,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetEmailAddressWidgetEditView()
     {
-        $query = "SELECT * FROM accounts_cstm";
+        $query = 'SELECT * FROM accounts_cstm';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
@@ -1478,40 +1426,38 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
         $tableAccountsCstm = $rows;
 
-
         $db = DBManagerFactory::getInstance();
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        $env = array();
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        $env = [];
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
 
         $i = 1;
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
-
 
         // test
         $result = $this->ea->getEmailAddressWidgetEditView(null, null);
@@ -1534,7 +1480,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $result = $this->ea->getEmailAddressWidgetEditView('', 'non-exists-module', true);
 
         self::assertFalse($result);
-
 
         if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
@@ -1657,13 +1602,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         }
 
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
@@ -1679,14 +1624,12 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $GLOBALS['log'] = $logger;
 
-
-
-        DBManagerFactory::getInstance()->query("DELETE FROM accounts_cstm");
+        DBManagerFactory::getInstance()->query('DELETE FROM accounts_cstm');
         foreach ($tableAccountsCstm as $row) {
-            $query = "INSERT accounts_cstm INTO (";
+            $query = 'INSERT accounts_cstm INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
@@ -1701,19 +1644,18 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $db = DBManagerFactory::getInstance();
 
         $i = 1;
-        $q = /** @lang sql */
+        $q = // @lang sql
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO email_addresses (id, email_address_caps) VALUES ('test_email_{$i}', 'TEST@EMAIL.COM')";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
-
 
         // test
         $result = $this->ea->getEmailAddressWidgetDetailView(null);
@@ -1741,15 +1683,14 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-
         // test
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
         $db->query($q);
-        $q = /** @lang sql */
+        $q = // @lang sql
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
     }
@@ -1764,20 +1705,19 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        $env = array();
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        $env = [];
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
-
 
         // test
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
@@ -1794,7 +1734,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddress0'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
-        self::assertEquals(/** @lang html */
+        self::assertEquals(// @lang html
             '<input type="hidden" name="_email_widget_id" value="">
 <input type="hidden" name="emailAddressWidget" value="">
 
@@ -1811,7 +1751,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_POST['emailAddress0'] = true;
         $_POST['emailAddressOptOutFlag'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
-        self::assertEquals(/** @lang html */
+        self::assertEquals(// @lang html
             '<input type="hidden" name="_email_widget_id" value="">
 <input type="hidden" name="emailAddressWidget" value="">
 
@@ -1829,7 +1769,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_POST['emailAddressInvalidFlag'] = '';
         $_POST['emailAddress0'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
-        self::assertEquals(/** @lang html */
+        self::assertEquals(// @lang html
             '<input type="hidden" name="_email_widget_id" value="">
 <input type="hidden" name="emailAddressWidget" value="">
 
@@ -1851,7 +1791,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_POST['emailAddressReplyToFlag'] = '';
         $_POST['emailAddress0'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
-        self::assertEquals(/** @lang html */
+        self::assertEquals(// @lang html
             '<input type="hidden" name="_email_widget_id" value="">
 <input type="hidden" name="emailAddressWidget" value="">
 
@@ -1873,7 +1813,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_POST['emailAddressDeleteFlag'] = '';
         $_POST['emailAddress0'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
-        self::assertEquals(/** @lang html */
+        self::assertEquals(// @lang html
             '<input type="hidden" name="_email_widget_id" value="">
 <input type="hidden" name="emailAddressWidget" value="">
 
@@ -1895,7 +1835,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $_POST['emailAddressVerifiedValue1'] = '';
         $_POST['emailAddress0'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
-        self::assertEquals(/** @lang html */
+        self::assertEquals(// @lang html
             '<input type="hidden" name="_email_widget_id" value="">
 <input type="hidden" name="emailAddressWidget" value="">
 
@@ -1911,7 +1851,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $result
         );
         self::assertCount(31, $GLOBALS['log']->calls['fatal']);
-
 
         // test
         if (isset($env['$_POST'])) {
@@ -1936,22 +1875,21 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        $env = array();
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        $env = [];
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
+        // @noinspection UnSafeIsSetOverArrayInspection
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
 
         $focus = new Contact();
-
 
         // test
         $result = $this->ea->getFormBaseURL(null);
@@ -2000,14 +1938,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
         // test
-        $_REQUEST['ContactstestidemailAddressPrimaryFlag'] = array('testadentprimflg1', 'testadentprimflg2');
+        $_REQUEST['ContactstestidemailAddressPrimaryFlag'] = ['testadentprimflg1', 'testadentprimflg2'];
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress' .
             '&ContactstestidemailAddress0=testadrr0&ContactstestidemailAddressVerifiedValue1=testverfdv1' .
             '&ContactstestidemailAddressPrimaryFlag[0]=testadentprimflg1' .
             '&ContactstestidemailAddressPrimaryFlag[1]=testadentprimflg2', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
-
 
         // tear down
         if (isset($env['$_POST'])) {
@@ -2090,14 +2027,13 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependecy in test');
 
-        $query = "SELECT * FROM accounts_cstm";
+        $query = 'SELECT * FROM accounts_cstm';
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         }
         $tableAccountsCstm = $rows;
-
 
         // test
         $c = BeanFactory::getBean('Contacts');
@@ -2115,7 +2051,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse(strpos($result, '--None--'));
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-
         // test
         $result = getEmailAddressWidget($a, null, null, 'ConvertLead');
         self::assertFalse(strpos($result, '--None--'));
@@ -2126,7 +2061,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         $result = getEmailAddressWidget($c, null, null, 'DetailView');
-        self::assertEquals(/** @lang html */
+        self::assertEquals(// @lang html
             '
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
 								<tr>
@@ -2142,30 +2077,24 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $result = getEmailAddressWidget(null, null, null, null);
         self::assertEquals('', $result);
 
-
         // test
         $GLOBALS['log'] = $logger;
 
-
-
-
-        DBManagerFactory::getInstance()->query("DELETE FROM accounts_cstm");
+        DBManagerFactory::getInstance()->query('DELETE FROM accounts_cstm');
         foreach ($tableAccountsCstm as $row) {
-            $query = "INSERT accounts_cstm INTO (";
+            $query = 'INSERT accounts_cstm INTO (';
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = "'{$value}'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
     }
 
-
     public function testGetOptInStatus()
     {
         self::markTestIncomplete('COI_STAT_CONFIRMED_OPT_IN');
-
 
         global $sugar_config;
 
@@ -2217,7 +2146,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             SugarEmailAddress::COI_FLAG_OPT_IN_DISABLED,
             $emailAddress->getOptInStatus()
         );
-
 
         // Test opt in status, email failed
         $emailAddress = new SugarEmailAddress();
@@ -2287,7 +2215,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $emailAddress->getOptInStatus()
         );
 
-
         // Test opt in status, email failed
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
@@ -2301,7 +2228,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             SugarEmailAddress::COI_FLAG_OPT_IN,
             $emailAddress->getOptInStatus()
         );
-
 
         //
         // Test Scenario: when email_enable_confirm_opt_in is confirmed opt in
@@ -2357,7 +2283,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $emailAddress->getOptInStatus()
         );
 
-
         // Test opt in status, email failed
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
@@ -2371,5 +2296,36 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_CONFIRMED,
             $emailAddress->getOptInStatus()
         );
+    }
+
+    private function getBeansByEmailAddressDeletedLinksTest($db, $i, $ea_deleted, $bean_deleted)
+    {
+        // must have differing values
+        self::assertFalse($ea_deleted == $bean_deleted);
+        $q = // @lang sql
+            "
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
+        ";
+        $db->query($q);
+        $q = // @lang sql
+            "INSERT INTO email_addresses (id, email_address_caps, deleted) VALUES ('test_email_{$i}', 'TEST{$i}@EMAIL.COM', {$ea_deleted})";
+        $db->query($q);
+        $q = // @lang sql
+            "INSERT INTO contacts (id, first_name, deleted) VALUES ('test_contact_{$i}', 'Test_{$i}}', {$bean_deleted})";
+        $db->query($q);
+
+        $results = $this->ea->getBeansByEmailAddress("test{$i}@email.com");
+        self::assertEquals([], $results);
+
+        $q = // @lang sql
+            "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
+        $db->query($q);
+        $q = // @lang sql
+            "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
+        $db->query($q);
+        $q = // @lang sql
+            "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
+        $db->query($q);
     }
 }

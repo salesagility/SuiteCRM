@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,15 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Prospects/ProspectFormBase.php');
+require_once 'modules/Prospects/ProspectFormBase.php';
 $prospectForm = new ProspectFormBase();
 if (!isset($_REQUEST['return_module'])) {
-    $_REQUEST['return_module']='Prospects';
+    $_REQUEST['return_module'] = 'Prospects';
 }
 if (!isset($_REQUEST['return_action'])) {
-    $_REQUEST['return_action']='index';
+    $_REQUEST['return_action'] = 'index';
 }
 
 $prospectForm->handleSave('', true, false);

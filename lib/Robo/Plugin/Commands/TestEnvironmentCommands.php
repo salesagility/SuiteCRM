@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,6 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use SuiteCRM\Utility\OperatingSystem;
@@ -47,8 +47,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
     use \SuiteCRM\Robo\Traits\RoboTrait;
 
     /**
-     * Configure environment for testing
+     * Configure environment for testing.
+     *
      * @see https://docs.suitecrm.com/developer/appendix-c---automated-testing/#_environment_variables
+     *
      * @param array $opts optional command line arguments
      */
     public function configureTests(
@@ -118,7 +120,9 @@ class TestEnvironmentCommands extends \Robo\Tasks
 
     /**
      * Download and install ChromeDriver.
+     *
      * @command chromedriver:install
+     *
      * @param array $opts
      * @option bool $reinstall Forces the Chrome WebDriver executable to be reinstalled, can be used to get a newer version.
      * @usage chromedriver:install --reinstall
@@ -157,7 +161,9 @@ class TestEnvironmentCommands extends \Robo\Tasks
 
     /**
      * Run ChromeDriver.
+     *
      * @command chromedriver:run
+     *
      * @param array $opts
      * @option string $url_base The base URL from which the WebDriver will be run.
      */
@@ -178,7 +184,8 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * Configures local environment to look like travis
+     * Configures local environment to look like travis.
+     *
      * @param array $opts
      */
     public function fakeTravis(
@@ -192,7 +199,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
 
         $this->askDefaultOptionWhenEmpty('Is Travis Environment:', true, $opts['travis']);
         $this->askDefaultOptionWhenEmpty('Travis commit range:', 'master..develop', $opts['travis_commit_range']);
-        $opts['travis_commit_range'] = '\''. $opts['travis_commit_range'] .'\'';
+        $opts['travis_commit_range'] = '\'' . $opts['travis_commit_range'] . '\'';
         $this->askDefaultOptionWhenEmpty('Is Pull request:', true, $opts['travis_pull_request']);
 
         $os = new OperatingSystem();
@@ -219,15 +226,17 @@ class TestEnvironmentCommands extends \Robo\Tasks
 
         $this->say('Fake Travis Environment Complete');
     }
+
     /**
-     * Install unix environment variables for the testing framework
+     * Install unix environment variables for the testing framework.
+     *
      * @param array $opts optional command line arguments
      */
     private function installUnixEnvironmentVariables(array $opts)
     {
         $environment_string_unix = $this->toUnixEnvironmentVariables($opts);
 
-        $homePath = getenv("HOME");
+        $homePath = getenv('HOME');
         $bashAliasesPath = $homePath
             . DIRECTORY_SEPARATOR
             . '.bash_aliases';
@@ -242,7 +251,6 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $bashAliasesFile = file_get_contents($bashAliasesPath);
         $bashAliasesLines = explode(PHP_EOL, $bashAliasesFile);
 
-
         // Delete existing variables
         $self = $this;
         foreach ($opts as $optionKey => $optionValue) {
@@ -253,8 +261,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
                 // clear line
                 if (stristr($line, $optionKeyReplaced) !== false) {
                     $self->say('Removed: ' . $optionKeyReplaced);
+
                     return '';
                 }
+
                 return $line;
             }, $bashAliasesLines);
         }
@@ -273,7 +283,6 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $this->writeln($newBashAliasesFile);
 
         if ($this->confirm('May I overwrite ' . $bashAliasesPath . '?')) {
-
             // write current file to backup file
             $this->say('Saving existing copy of .bash_aliases to ' . $bashAliasesPath . '~');
             file_put_contents($bashAliasesPath . '~', $bashAliasesFile);
@@ -288,14 +297,15 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     * Install windows environment variables for the testing framework
+     * Install windows environment variables for the testing framework.
+     *
      * @param array $opts optional command line arguments
      */
     private function installWindowsEnvironmentVariables(array $opts)
     {
         $windows_environment_variables = $this->toWindowsEnvironmentVariables($opts);
 
-        $this->writeln("Generate Script");
+        $this->writeln('Generate Script');
         $this->writeln($windows_environment_variables);
         if ($this->confirm('May I overwrite the environment variables?')) {
             $this->say('Overwriting environment variables');
@@ -314,6 +324,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
     /**
      * @param array $opts <key,value
      * @param string $format sprintf format
+     *
      * @return string environment variables script
      */
     private function toEnvironmentVariables(array $opts, $format)
@@ -325,11 +336,13 @@ class TestEnvironmentCommands extends \Robo\Tasks
                 $script .= sprintf($format, strtoupper($optionKeyReplaced), $optionValue);
             }
         }
+
         return $script;
     }
 
     /**
      * @param array $opts optional command line arguments
+     *
      * @return string environment variables script
      */
     private function toWindowsEnvironmentVariables(array $opts)
@@ -339,6 +352,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
 
     /**
      * @param array $opts optional command line arguments
+     *
      * @return string environment variables script
      */
     private function toUnixEnvironmentVariables(array $opts)
@@ -346,9 +360,9 @@ class TestEnvironmentCommands extends \Robo\Tasks
         return $this->toEnvironmentVariables($opts, 'export %s=%s;' . PHP_EOL);
     }
 
-
     /**
      * Gets the URL for installing the latest version of ChromeDriver.
+     *
      * @return string url
      */
     private function getChromeWebDriverUrl()
@@ -358,24 +372,34 @@ class TestEnvironmentCommands extends \Robo\Tasks
 
         if ($os->isOsWindows()) {
             $this->say('Windows detected');
+
             return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_win32.zip';
-        } elseif ($os->isOsLinux()) {
-            $this->say('Linux detected');
-            return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_linux64.zip';
-        } elseif ($os->isOsMacOSX()) {
-            $this->say('macOS detected');
-            return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_mac64.zip';
-        } elseif ($os->isOsBSD()) {
-            $this->say('BSD detected');
-            throw new \DomainException('Unsupported operating system');
-        } elseif ($os->isOsSolaris()) {
-            $this->say('Solaris detected');
-            throw new \DomainException('Unsupported operating system');
-        } elseif ($os->isOsUnknown()) {
-            throw new \DomainException('Unknown operating system');
-        } else {
-            throw new \DomainException('Unable to detect operating system');
         }
+        if ($os->isOsLinux()) {
+            $this->say('Linux detected');
+
+            return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_linux64.zip';
+        }
+        if ($os->isOsMacOSX()) {
+            $this->say('macOS detected');
+
+            return 'https://chromedriver.storage.googleapis.com/' . $latestRelease . '/chromedriver_mac64.zip';
+        }
+        if ($os->isOsBSD()) {
+            $this->say('BSD detected');
+
+            throw new \DomainException('Unsupported operating system');
+        }
+        if ($os->isOsSolaris()) {
+            $this->say('Solaris detected');
+
+            throw new \DomainException('Unsupported operating system');
+        }
+        if ($os->isOsUnknown()) {
+            throw new \DomainException('Unknown operating system');
+        }
+
+        throw new \DomainException('Unable to detect operating system');
     }
 
     /**
@@ -396,6 +420,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
     /**
      * @param $zipPath
      * @param $unzippedPath
+     *
      * @return bool
      */
     private function unzip($zipPath, $unzippedPath)
@@ -406,8 +431,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
         if ($res === true) {
             $zip->extractTo($unzippedPath);
             $zip->close();
+
             return true;
         }
+
         return false;
     }
 
@@ -437,9 +464,11 @@ class TestEnvironmentCommands extends \Robo\Tasks
             chmod($binPath, 100);
         } elseif ($os->isOsBSD()) {
             $this->say('BSD detected');
+
             throw new \DomainException('Unsupported operating system');
         } elseif ($os->isOsSolaris()) {
             $this->say('Solaris detected');
+
             throw new \DomainException('Unsupported operating system');
         } elseif ($os->isOsUnknown()) {
             throw new \DomainException('Unknown operating system');
@@ -451,7 +480,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
             throw new \RuntimeException('Unable to find ChromeDriver ' . $binPath);
         }
 
-        $this->say('Hint: open terminal and run `'.$os->toOsPath('./vendor/bin/codecept').' run [test suite] --env custom`');
+        $this->say('Hint: open terminal and run `' . $os->toOsPath('./vendor/bin/codecept') . ' run [test suite] --env custom`');
         $this->say('Starting ChromeDriver');
         $this->_exec(
             $binPath

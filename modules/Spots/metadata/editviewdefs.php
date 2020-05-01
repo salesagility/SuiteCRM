@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,39 +37,35 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 $module_name = 'Spots';
-$viewdefs[$module_name]['EditView'] = array(
-    'templateMeta' => array(
-
-        'form' => array(
-            'hidden' => array(
+$viewdefs[$module_name]['EditView'] = [
+    'templateMeta' => [
+        'form' => [
+            'hidden' => [
                 0 => '<input type="hidden" name="config" value="{$fields.config.value}">',
-            ),
-        ),
+            ],
+        ],
 
         'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30'),
-        ),
-        'includes' => array(
-            0 => array(
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30'],
+        ],
+        'includes' => [
+            0 => [
                 'file' => 'modules/Favorites/favorites.js'
-            )
-        )
-    ),
+            ]
+        ]
+    ],
 
-    'panels' => array(
-        'default' => array(
-
-            array(
+    'panels' => [
+        'default' => [
+            [
                 'name', 'type',
-            ),
+            ],
 
-            array(
+            [
                 'configurationGUI',
-            ),
-        ),
-
-    ),
-
-);
+            ],
+        ],
+    ],
+];

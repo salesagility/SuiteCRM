@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
- * @package Advanced OpenSales for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,18 +18,16 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
     if (!(ACLController::checkAccess('AOS_Invoices', 'edit', true))) {
         ACLController::displayNoAccess();
         die;
     }
 
-    require_once('modules/AOS_Quotes/AOS_Quotes.php');
-    require_once('modules/AOS_Invoices/AOS_Invoices.php');
-    require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
+    require_once 'modules/AOS_Quotes/AOS_Quotes.php';
+    require_once 'modules/AOS_Invoices/AOS_Invoices.php';
+    require_once 'modules/AOS_Products_Quotes/AOS_Products_Quotes.php';
 
     global $timedate;
     //Setting values in Quotes
@@ -67,21 +65,21 @@
     }
     $rawRow['total_amount'] = format_number($rawRow['total_amount']);
     $invoice->populateFromRow($rawRow);
-    $invoice->process_save_dates =false;
+    $invoice->process_save_dates = false;
     $invoice->save();
 
     //Setting invoice quote relationship
-    require_once('modules/Relationships/Relationship.php');
+    require_once 'modules/Relationships/Relationship.php';
     $key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Invoices', $GLOBALS['db']);
     if (!empty($key)) {
         $quote->load_relationship($key);
-        $quote->$key->add($invoice->id);
+        $quote->{$key}->add($invoice->id);
     }
 
     //Setting Group Line Items
-    $sql = "SELECT * FROM aos_line_item_groups WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
+    $sql = "SELECT * FROM aos_line_item_groups WHERE parent_type = 'AOS_Quotes' AND parent_id = '" . $quote->id . "' AND deleted = 0";
     $result = $this->bean->db->query($sql);
-    $quoteToInvoiceGroupIds = array();
+    $quoteToInvoiceGroupIds = [];
     while ($row = $this->bean->db->fetchByAssoc($result)) {
         $quoteGroupId = $row['id'];
         $row['id'] = '';
@@ -112,7 +110,7 @@
     }
 
     //Setting Line Items
-    $sql = "SELECT * FROM aos_products_quotes WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
+    $sql = "SELECT * FROM aos_products_quotes WHERE parent_type = 'AOS_Quotes' AND parent_id = '" . $quote->id . "' AND deleted = 0";
     $result = $this->bean->db->query($sql);
     while ($row = $this->bean->db->fetchByAssoc($result)) {
         $row['id'] = '';
@@ -136,4 +134,4 @@
         $prod_invoice->save();
     }
     ob_clean();
-    header('Location: index.php?module=AOS_Invoices&action=EditView&record='.$invoice->id);
+    header('Location: index.php?module=AOS_Invoices&action=EditView&record=' . $invoice->id);

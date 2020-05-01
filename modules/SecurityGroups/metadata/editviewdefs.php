@@ -1,49 +1,28 @@
 <?php
 
 $module_name = 'SecurityGroups';
-$viewdefs[$module_name]['EditView'] = array(
+$viewdefs[$module_name]['EditView'] = [
+    'templateMeta' => ['maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
 
-    'templateMeta' => array('maxColumns' => '2',
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
 
-                            'widths' => array(
+    'panels' => [
+        'default' => [
+            [
+                ['name' => 'name', 'displayParams' => ['required' => true]],
+                'assigned_user_name',
+            ],
 
-                                            array('label' => '10', 'field' => '30'),
-
-                                            array('label' => '10', 'field' => '30')
-
-                                            ),
-
-                                            ),
-
-                                            
-
-                                            
- 'panels' =>array(
-  'default' =>
-  array(
-    
-    array(
-      array('name' => 'name', 'displayParams'=>array('required'=>true)),
-      'assigned_user_name',
-    ),
-
-
-
-
-
-
-
-    array(
-        'noninheritable',
-    ),
-    array(
-      'description',
-    ),
-  ),
-
-                                                    
-),
-
-                        
-
-);
+            [
+                'noninheritable',
+            ],
+            [
+                'description',
+            ],
+        ],
+    ],
+];

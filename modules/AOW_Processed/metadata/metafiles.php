@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,16 +18,13 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
- $metafiles['AOW_Processed'] = array(
-    'detailviewdefs'  => 	'modules/AOW_Processed/metadata/detailviewdefs.php',
-    'editviewdefs'    => 	'modules/AOW_Processed/metadata/editviewdefs.php',
-    'listviewdefs'    => 	'modules/AOW_Processed/metadata/listviewdefs.php',
-    'searchdefs'      =>    'modules/AOW_Processed/metadata/searchdefs.php',
-    'popupdefs'	      =>    'modules/AOW_Processed/metadata/popupdefs.php',
-    'searchfields'	  =>    'modules/AOW_Processed/metadata/SearchFields.php',
- );
+ $metafiles['AOW_Processed'] = [
+     'detailviewdefs' => 'modules/AOW_Processed/metadata/detailviewdefs.php',
+     'editviewdefs' => 'modules/AOW_Processed/metadata/editviewdefs.php',
+     'listviewdefs' => 'modules/AOW_Processed/metadata/listviewdefs.php',
+     'searchdefs' => 'modules/AOW_Processed/metadata/searchdefs.php',
+     'popupdefs' => 'modules/AOW_Processed/metadata/popupdefs.php',
+     'searchfields' => 'modules/AOW_Processed/metadata/SearchFields.php',
+ ];

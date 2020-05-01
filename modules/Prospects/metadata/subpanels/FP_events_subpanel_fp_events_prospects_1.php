@@ -1,9 +1,9 @@
 <?php
+
 // created: 2013-04-29 15:58:53
-$subpanel_layout['list_fields'] = array(
-  'checkbox' =>
-  array(
-    'vname' => '<ul id="selectLinkTop" class="clickMenu selectmenu SugarActionMenu" name="">
+$subpanel_layout['list_fields'] = [
+    'checkbox' => [
+        'vname' => '<ul id="selectLinkTop" class="clickMenu selectmenu SugarActionMenu" name="">
                     <li class="sugar_action_button">
                       <input class="checkallContacts" class="checkbox massall" type="checkbox" name="checkallContacts" style="float: left;margin: 2px 0 0 2px;" onclick="">
                       <ul class="cust_list" style="background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #CCCCCC;box-shadow: 0 5px 10px #999999;float: left;left: 0;list-style: none outside none;margin: 0;overflow: hidden;padding: 8px 0;position: absolute;top: 18px;width: auto;z-index: 10;display: none;">
@@ -14,97 +14,83 @@ $subpanel_layout['list_fields'] = array(
                       <span class="cust_select" class="subhover"><span class="suitepicon suitepicon-action-caret"></span></span>
                     </li>
                     </ul>',
-    'widget_type' => 'checkbox',
-    'widget_class' => 'SubPanelCheck',
-    'checkbox_value' => true,
-    'width' => '5%',
-    'sortable' => false,
-    'default' => true,
-  ),
-  'name' =>
-  array(
-    'name' => 'name',
-    'vname' => 'LBL_LIST_NAME',
-    'sort_by' => 'last_name',
-    'sort_order' => 'asc',
-    'widget_class' => 'SubPanelDetailViewLink',
-    'module' => 'Prospects',
-    'width' => '23%',
-    'default' => true,
-  ),
-  'account_name' =>
-  array(
-    'type' => 'varchar',
-    'vname' => 'LBL_ACCOUNT_NAME',
-    'width' => '10%',
-    'default' => true,
-  ),
-  'phone_work' =>
-  array(
-    'vname' => 'LBL_LIST_PHONE',
-    'width' => '10%',
-    'default' => true,
-  ),
-  'email1' =>
-  array(
-    'vname' => 'LBL_LIST_EMAIL_ADDRESS',
-    'width' => '15%',
-    'widget_class' => 'SubPanelEmailLink',
-    'sortable' => false,
-    'default' => true,
-  ),
-  'event_status_name' =>
-  array(
-    'vname' => 'LBL_STATUS',
-    'width' => '10%',
-    'sortable' => false,
-    'default' => true,
-  ),
-  'event_accept_status' =>
-  array(
-    'width' => '10%',
-    'sortable' => false,
-    'default' => true,
-    'vname' => 'LBL_ACCEPT_STATUS',
-  ),
-  'edit_button' =>
-  array(
-    'vname' => 'LBL_EDIT_BUTTON',
-    'widget_class' => 'SubPanelEditButton',
-    'module' => 'Contacts',
-    'width' => '5%',
-    'default' => true,
-  ),
-  'remove_button' =>
-  array(
-    'vname' => 'LBL_REMOVE',
-    'widget_class' => 'SubPanelRemoveButton',
-    'module' => 'Contacts',
-    'width' => '5%',
-    'default' => true,
-  ),
-  'e_accept_status_fields' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'event_status_id' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'e_invite_status_fields' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'event_invite_id' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'first_name' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'last_name' =>
-  array(
-    'usage' => 'query_only',
-  ),
-);
+        'widget_type' => 'checkbox',
+        'widget_class' => 'SubPanelCheck',
+        'checkbox_value' => true,
+        'width' => '5%',
+        'sortable' => false,
+        'default' => true,
+    ],
+    'name' => [
+        'name' => 'name',
+        'vname' => 'LBL_LIST_NAME',
+        'sort_by' => 'last_name',
+        'sort_order' => 'asc',
+        'widget_class' => 'SubPanelDetailViewLink',
+        'module' => 'Prospects',
+        'width' => '23%',
+        'default' => true,
+    ],
+    'account_name' => [
+        'type' => 'varchar',
+        'vname' => 'LBL_ACCOUNT_NAME',
+        'width' => '10%',
+        'default' => true,
+    ],
+    'phone_work' => [
+        'vname' => 'LBL_LIST_PHONE',
+        'width' => '10%',
+        'default' => true,
+    ],
+    'email1' => [
+        'vname' => 'LBL_LIST_EMAIL_ADDRESS',
+        'width' => '15%',
+        'widget_class' => 'SubPanelEmailLink',
+        'sortable' => false,
+        'default' => true,
+    ],
+    'event_status_name' => [
+        'vname' => 'LBL_STATUS',
+        'width' => '10%',
+        'sortable' => false,
+        'default' => true,
+    ],
+    'event_accept_status' => [
+        'width' => '10%',
+        'sortable' => false,
+        'default' => true,
+        'vname' => 'LBL_ACCEPT_STATUS',
+    ],
+    'edit_button' => [
+        'vname' => 'LBL_EDIT_BUTTON',
+        'widget_class' => 'SubPanelEditButton',
+        'module' => 'Contacts',
+        'width' => '5%',
+        'default' => true,
+    ],
+    'remove_button' => [
+        'vname' => 'LBL_REMOVE',
+        'widget_class' => 'SubPanelRemoveButton',
+        'module' => 'Contacts',
+        'width' => '5%',
+        'default' => true,
+    ],
+    'e_accept_status_fields' => [
+        'usage' => 'query_only',
+    ],
+    'event_status_id' => [
+        'usage' => 'query_only',
+    ],
+    'e_invite_status_fields' => [
+        'usage' => 'query_only',
+    ],
+    'event_invite_id' => [
+        'usage' => 'query_only',
+    ],
+    'first_name' => [
+        'usage' => 'query_only',
+    ],
+    'last_name' => [
+        'usage' => 'query_only',
+    ],
+];

@@ -3,7 +3,6 @@
 namespace SuiteCRM\Test\Driver;
 
 use Exception;
-use Helper\WebDriverHelper;
 
 class WebDriver extends \Codeception\Module\WebDriver
 {
@@ -16,14 +15,6 @@ class WebDriver extends \Codeception\Module\WebDriver
         parent::_initialize();
     }
 
-    protected function initialWindowSize()
-    {
-        $config = $this->_getConfig();
-        $width =  isset($config['width']) ? $config['width'] : 1920;
-        $height = isset($config['height']) ? $config['height'] : 1080;
-        $this->resizeWindow($width, $height);
-    }
-
     public function _afterSuite()
     {
         parent::_afterSuite();
@@ -32,6 +23,7 @@ class WebDriver extends \Codeception\Module\WebDriver
     /**
      * @param $element
      * @param int $timeout
+     *
      * @throws Exception
      */
     public function waitForElementVisible($element, $timeout = 3)
@@ -42,6 +34,7 @@ class WebDriver extends \Codeception\Module\WebDriver
     /**
      * @param $element
      * @param int $timeout
+     *
      * @throws Exception
      */
     public function waitForElementNotVisible($element, $timeout = 3)
@@ -53,10 +46,19 @@ class WebDriver extends \Codeception\Module\WebDriver
      * @param string $text
      * @param int $timeout
      * @param null $selector
+     *
      * @throws Exception
      */
     public function waitForText($text, $timeout = 3, $selector = null)
     {
         parent::waitForText($text, $timeout, $selector);
+    }
+
+    protected function initialWindowSize()
+    {
+        $config = $this->_getConfig();
+        $width = isset($config['width']) ? $config['width'] : 1920;
+        $height = isset($config['height']) ? $config['height'] : 1080;
+        $this->resizeWindow($width, $height);
     }
 }

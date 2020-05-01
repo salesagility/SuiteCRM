@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -101,30 +99,28 @@ class SpotsDashlet extends Dashlet
      */
     public function display()
     {
-
         //As the dashlet may point to a pivot that has been marked as deleted, check this here
 
         if (is_null($this->spotId) || $this->spotId === '') {
-            return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_NO_SPOTS_SELECTED'].'</span><br />'; // return parent::display for title and such
-        } else {
-            if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
-                return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
-            }
-
-            $ss = new Sugar_Smarty();
-            $ss->assign('id', $this->id);
-            $ss->assign('showUI', $this->showGui);
-            $ss->assign('spotToLoad', $this->spotId);
-
-            $spot = BeanFactory::getBean('Spots', $this->spotId);
-
-            $ss->assign('config', $spot->config);
-            $ss->assign('type', $spot->type);
-
-            $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
-
-            return parent::display().$str.'<br />'; // return parent::display for title and such
+            return parent::display('') . '<span style="margin-left:10px;" class="dashletAnalyticMessage">' . $this->dashletStrings['LBL_NO_SPOTS_SELECTED'] . '</span><br />'; // return parent::display for title and such
         }
+        if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
+            return parent::display('') . '<span style="margin-left:10px;" class="dashletAnalyticMessage">' . $this->dashletStrings['LBL_SPOTS_POINTED_DELETED'] . '</span><br />'; // return parent::display for title and such
+        }
+
+        $ss = new Sugar_Smarty();
+        $ss->assign('id', $this->id);
+        $ss->assign('showUI', $this->showGui);
+        $ss->assign('spotToLoad', $this->spotId);
+
+        $spot = BeanFactory::getBean('Spots', $this->spotId);
+
+        $ss->assign('config', $spot->config);
+        $ss->assign('type', $spot->type);
+
+        $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
+
+        return parent::display() . $str . '<br />'; // return parent::display for title and such
     }
 
     /**
@@ -157,12 +153,11 @@ class SpotsDashlet extends Dashlet
 
         $ss->assign('spots', $this->getSpotsList());
 
-        return parent::displayOptions().$ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashletOptions.tpl');
+        return parent::displayOptions() . $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashletOptions.tpl');
     }
 
     /**
      * Returns a json_encoded string of the available spots names.
-     *
      *
      * @return json_encoded string of the list of available spots names
      */
@@ -194,7 +189,7 @@ class SpotsDashlet extends Dashlet
      */
     public function saveOptions($req)
     {
-        $options = array();
+        $options = [];
         $options['title'] = $_REQUEST['title'];
         if (isset($_REQUEST['showGui'])) {
             $options['showGui'] = $_REQUEST['showGui'];

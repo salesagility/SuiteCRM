@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$layout_defs['FP_Event_Locations'] = array(
-    'subpanel_setup' => array(
-        'fp_event_locations_fp_events_1' => array(
+$layout_defs['FP_Event_Locations'] = [
+    'subpanel_setup' => [
+        'fp_event_locations_fp_events_1' => [
             'order' => 10,
             'module' => 'FP_events',
             'subpanel_name' => 'default',
@@ -51,19 +52,15 @@ $layout_defs['FP_Event_Locations'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE',
             'get_subpanel_data' => 'fp_event_locations_fp_events_1',
-            'top_buttons' =>
-                array(
-                    0 =>
-                        array(
-                            'widget_class' => 'SubPanelTopButtonQuickCreate',
-                        ),
-                    1 =>
-                        array(
-                            'widget_class' => 'SubPanelTopSelectButton',
-                            'mode' => 'MultiSelect',
-                        ),
-                ),
-        ),
-
-    ),
-);
+            'top_buttons' => [
+                0 => [
+                    'widget_class' => 'SubPanelTopButtonQuickCreate',
+                ],
+                1 => [
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+    ],
+];

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class EmployeesViewList extends ViewList
 {
     public function preDisplay()
@@ -56,21 +53,21 @@ class EmployeesViewList extends ViewList
     }
 
     /**
-     * Overridden from ViewList prepareSearchForm so we can tack on some additional where clauses
-     *
+     * Overridden from ViewList prepareSearchForm so we can tack on some additional where clauses.
      */
     public function prepareSearchForm()
     {
         parent::prepareSearchForm();
-        require_once('modules/Employees/EmployeesSearchForm.php');
+        require_once 'modules/Employees/EmployeesSearchForm.php';
         $newForm = new EmployeesSearchForm($this->searchForm);
         $this->searchForm = $newForm;
     }
 
     /**
-     * Return the "breadcrumbs" to display at the top of the page
+     * Return the "breadcrumbs" to display at the top of the page.
      *
      * @param  bool $show_help optional, true if we show the help links
+     *
      * @return HTML string containing breadcrumb title
      */
     public function getModuleTitle($show_help = true)
@@ -79,13 +76,13 @@ class EmployeesViewList extends ViewList
 
         $theTitle = "<div class='moduleTitle'>\n<h2>";
 
-        $module = preg_replace("/ /", "", $this->module);
+        $module = preg_replace('/ /', '', $this->module);
 
         $params = $this->_getModuleTitleParams();
         $count = count($params);
         $index = 0;
 
-        if (SugarThemeRegistry::current()->directionality == "rtl") {
+        if (SugarThemeRegistry::current()->directionality == 'rtl') {
             $params = array_reverse($params);
         }
 
@@ -99,9 +96,8 @@ class EmployeesViewList extends ViewList
         }
 
         if (!empty($paramString)) {
-            $theTitle .= "<h2> $paramString </h2>\n";
+            $theTitle .= "<h2> {$paramString} </h2>\n";
         }
-
 
         if ($show_help) {
             $theTitle .= "<span class='utils'>";
@@ -119,6 +115,7 @@ EOHTML;
         }
 
         $theTitle .= "</span></div>\n";
+
         return $theTitle;
     }
 
@@ -131,7 +128,7 @@ EOHTML;
             return;
         }
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
-            $this->lv->ss->assign("SEARCH", true);
+            $this->lv->ss->assign('SEARCH', true);
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
 
             $tplFile = 'include/ListView/ListViewGeneric.tpl';
@@ -139,7 +136,7 @@ EOHTML;
                 $tplFile = 'include/ListView/ListViewNoMassUpdate.tpl';
             }
             if (!empty($this->where)) {
-                $this->where .= " AND ";
+                $this->where .= ' AND ';
             }
             $this->where .= "(users.status <> 'Reserved' or users.status is null) ";
             $this->lv->setup($this->seed, $tplFile, $this->where, $this->params);

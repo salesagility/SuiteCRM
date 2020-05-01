@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -46,25 +46,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  //		Function: name of the function to be called in TreeData.php, the function will be called statically.
  //		PARAM prefixed properties: array of these property/values will be passed to the function as parameter.
 
-
-require_once('include/JSON.php');
-require_once('include/upload_file.php');
+require_once 'include/JSON.php';
+require_once 'include/upload_file.php';
 
 if (!is_dir($cachedir = sugar_cached('images/'))) {
     mkdir_recursive($cachedir);
 }
 
 // cn: bug 11012 - fixed some MIME types not getting picked up.  Also changed array iterator.
-$imgType = array('image/gif', 'image/png', 'image/x-png', 'image/bmp', 'image/jpeg', 'image/jpg', 'image/pjpeg');
+$imgType = ['image/gif', 'image/png', 'image/x-png', 'image/bmp', 'image/jpeg', 'image/jpg', 'image/pjpeg'];
 
-$ret = array();
+$ret = [];
 
 foreach ($_FILES as $k => $file) {
     if (in_array(strtolower($_FILES[$k]['type']), $imgType) && $_FILES[$k]['size'] > 0) {
         $upload_file = new UploadFile($k);
         // check the file
         if ($upload_file->confirm_upload()) {
-            $dest = $cachedir.basename($upload_file->get_stored_file_name()); // target name
+            $dest = $cachedir . basename($upload_file->get_stored_file_name()); // target name
             $guid = create_guid();
             if ($upload_file->final_move($guid)) { // move to uploads
                 $path = $upload_file->get_upload_path($guid);

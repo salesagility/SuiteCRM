@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM\API\OAuth2\Repositories;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -59,11 +57,12 @@ class UserRepository implements UserRepositoryInterface
     ) {
         $paths = new Paths();
 
-        require_once $paths->getProjectPath().'/modules/Users/authentication/AuthenticationController.php';
+        require_once $paths->getProjectPath() . '/modules/Users/authentication/AuthenticationController.php';
         $authController = new \AuthenticationController();
 
         if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
             $usr = new \User();
+
             return new UserEntity($usr->retrieve_user_id($username));
         }
 

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,12 +39,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $ss
+ * @param mixed $vardef
  */
-
-
-
-
-
 function get_body(&$ss, $vardef)
 {
     global $app_list_strings;
@@ -52,8 +50,8 @@ function get_body(&$ss, $vardef)
     //$edit_mod_strings['COLUMN_TITLE_DEFAULT_VALUE'] = $edit_mod_strings['COLUMN_TITLE_URL'];
     $vars = $ss->get_template_vars();
     $fields = $vars['module']->mbvardefs->vardefs['fields'];
-    $fieldOptions = array();
-    foreach ($fields as $id=>$def) {
+    $fieldOptions = [];
+    foreach ($fields as $id => $def) {
         $fieldOptions[$id] = $def['name'];
     }
     $ss->assign('fieldOpts', $fieldOptions);
@@ -61,5 +59,6 @@ function get_body(&$ss, $vardef)
     $ss->assign('TARGET_OPTIONS', get_select_options_with_id($app_list_strings['link_target_dom'], $link_target));
     $ss->assign('LINK_TARGET', $link_target);
     $ss->assign('LINK_TARGET_LABEL', $app_list_strings['link_target_dom'][$link_target]);
+
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/url.tpl');
 }

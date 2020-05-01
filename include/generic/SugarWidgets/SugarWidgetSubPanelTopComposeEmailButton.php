@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -49,14 +48,16 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
     {
         global $app_strings;
         $this->form_value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
+
         return parent::getWidgetId();
     }
 
     public function &_get_form($defines, $additionalFormFields = null, $nonbutton = false)
     {
         if ((ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true) ||
-                $defines['module'] == "Activities" & !ACLController::checkAccess("Emails", 'edit', true))) {
+                $defines['module'] == 'Activities' & !ACLController::checkAccess('Emails', 'edit', true))) {
             $temp = '';
+
             return $temp;
         }
 
@@ -67,21 +68,20 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         //martin Bug 19660
         $client = $current_user->getEmailClient();
 
-        /** @var Person|Company|Opportunity $bean */
+        /** @var Company|Opportunity|Person $bean */
         $bean = $defines['focus'];
 
         if ($client != 'sugar') {
             // awu: Not all beans have emailAddress property, we must account for this
             if (isset($bean->emailAddress)) {
                 $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
-                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\"/>";
+                $button = "<input class='button' type='button' value='{$value}' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='{$title}' onclick=\"location.href='mailto:{$to_addrs}';return false;\"/>";
             } else {
-                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:';return false;\"/>";
+                $button = "<input class='button' type='button' value='{$value}' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='{$title}' onclick=\"location.href='mailto:';return false;\"/>";
             }
         } else {
             // Generate the compose package for the quick create options.
             require_once 'modules/Emails/EmailUI.php';
-
 
             // Opportunities does not have an email1 field
             // we need to use the related account email instead
@@ -100,8 +100,8 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
             . $bean->module_name . '" data-record-id="'
             . $bean->id . '" data-module-name="'
-            . $bean->name .'" data-email-address="'
-            . $bean->email1 .'">'
+            . $bean->name . '" data-email-address="'
+            . $bean->email1 . '">'
             . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
             . '</a>';
         }
@@ -111,11 +111,11 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
-        $focus = new Meeting;
+        $focus = new Meeting();
         if (!$focus->ACLAccess('EditView')) {
             return '';
         }
-        
+
         $inputID = $this->getWidgetId();
 
         $button = $this->_get_form($defines, $additionalFormFields);
@@ -124,7 +124,7 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         $client = $current_user->getEmailClient();
 
         if ($client == 'sugar') {
-            $button .= "<input class='button' type='button' id='$inputID' value='$this->form_value'>";
+            $button .= "<input class='button' type='button' id='{$inputID}' value='{$this->form_value}'>";
         }
 
         return $button;

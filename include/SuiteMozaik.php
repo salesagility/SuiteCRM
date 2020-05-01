@@ -5,57 +5,57 @@ class SuiteMozaik
     private $mozaikPath = 'include/javascript/mozaik';
     private $vendorPath;
 
-    private static $defaultThumbnails = array(
-        'headline' => array(
+    private static $defaultThumbnails = [
+        'headline' => [
             'label' => 'Headline',
             //'tpl' => 'tpls/default/headline.html',
             'tpl' => 'string:<p><h1>Add your headline here..</h1></p>',
             'thumbnail' => 'tpls/default/thumbs/headline.png',
-        ),
-        'content' => array(
+        ],
+        'content' => [
             'label' => 'Content',
             'tpl' => 'string:<h2>Title</h2><p>{lipsum}</p>',
             'thumbnail' => 'tpls/default/thumbs/content1.png',
-        ),
-        'content2' => array(
+        ],
+        'content2' => [
             'label' => 'Content with two columns',
             'tpl' => 'string:<table style="width:100%;"><tbody><tr><td><h2>Title</h2></td><td><h2>Title</h2></td></tr><tr><td>{lipsum}</td><td>{lipsum}</td></tr></tbody></table>',
             'thumbnail' => 'tpls/default/thumbs/content2.png',
-        ),
-        'content3' => array(
+        ],
+        'content3' => [
             'label' => 'Content with three columns',
             'tpl' => 'string:<table style="width:100%;"><tbody><tr><td><h2>Title</h2></td><td><h2>Title</h2></td><td><h2>Title</h2></td></tr><tr><td>{lipsum}</td><td>{lipsum}</td><td>{lipsum}</td></tr></tbody></table>',
             'thumbnail' => 'tpls/default/thumbs/content3.png',
-        ),
-        'image1left' => array(
+        ],
+        'image1left' => [
             'label' => 'Content with left image',
             'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{imageSmall}</td><td><h2>Title</h2>{lipsum}</td></tr></tbody></table>',
             'thumbnail' => 'tpls/default/thumbs/image1left.png',
-        ),
-        'image1right' => array(
+        ],
+        'image1right' => [
             'label' => 'Content with right image',
             'tpl' => 'string:<table style="width:100%;"><tbody><tr><td><h2>Title</h2>{lipsum}</td><td>{imageSmall}</td></tr></tbody></table>',
             'thumbnail' => 'tpls/default/thumbs/image1right.png',
-        ),
-        'image2' => array(
+        ],
+        'image2' => [
             'label' => 'Content with two image',
             'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{imageSmall}</td><td><h2>Title</h2>{lipsum}</td><td>{imageSmall}</td><td><h2>Title</h2>{lipsum}</td></tr></tbody></table>',
             'thumbnail' => 'tpls/default/thumbs/image2.png',
-        ),
-        'image3' => array(
+        ],
+        'image3' => [
             'label' => 'Content with three image',
             'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{image}</td><td>{image}</td><td>{image}</td></tr><tr><td><h2>Title</h2>{lipsum}</td><td><h2>Title</h2>{lipsum}</td><td><h2>Title</h2>{lipsum}</td></tr></tbody></table>',
             'thumbnail' => 'tpls/default/thumbs/image3.png',
-        ),
-        'footer' => array(
+        ],
+        'footer' => [
             'label' => 'Footer',
             //'tpl' => 'tpls/default/footer.html',
             'tpl' => 'string:<p class="footer">Take your footer contents and information here..</p>',
             'thumbnail' => 'tpls/default/thumbs/footer.png',
-        ),
-    );
+        ],
+    ];
 
-    private $thumbsCache = array();
+    private $thumbsCache = [];
 
     private $autoInsertThumbnails = true;
 
@@ -65,7 +65,7 @@ class SuiteMozaik
     {
         $this->vendorPath = $this->mozaikPath . '/vendor';
         if ($this->autoInsertThumbnails) {
-            if (count($this->getThumbs())==0 || self::$devMode) {
+            if (count($this->getThumbs()) == 0 || self::$devMode) {
                 $ord = 0;
                 foreach (self::$defaultThumbnails as $thumbName => $thumbData) {
                     $templateSectionLine = new TemplateSectionLine();
@@ -79,31 +79,13 @@ class SuiteMozaik
                     $templateSectionLine->save();
                 }
             }
-            $this->thumbsCache = array();
+            $this->thumbsCache = [];
         }
-    }
-
-    private function getContentLipsum()
-    {
-        return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus odio ante, in feugiat ex pretium eu. In pharetra tincidunt urna et malesuada. Etiam aliquet auctor justo eu placerat. In nec sollicitudin enim. Nulla facilisi. In viverra velit turpis, et lobortis nunc eleifend id. Curabitur semper tincidunt vulputate. Nullam fermentum pellentesque ullamcorper.';
-    }
-
-    private function getContentImageSample($width = null)
-    {
-        if (is_numeric($width)) {
-            $width = ' width="' . $width . '"';
-        } else {
-            $width = '';
-        }
-        $splits = explode('index.php', $_SERVER['REQUEST_URI']);
-        $url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $splits[0];
-        $image = '<img src="' . $url . $this->mozaikPath . '/tpls/default/images/sample.jpg" ' . $width . ' />';
-        return $image;
     }
 
     public function getDependenciesHTML()
     {
-        $html = <<<HTML
+        return <<<HTML
 <script src='{$this->vendorPath}/tinymce/tinymce/tinymce.min.js'></script>
 <script src="{$this->vendorPath}/gymadarasz/imagesloaded/imagesloaded.pkgd.min.js"></script>
 
@@ -111,35 +93,17 @@ class SuiteMozaik
 <link rel="stylesheet" media="screen" type="text/css" href="{$this->vendorPath}/../colorpicker/css/colorpicker.css" />
 <script type="text/javascript" src="{$this->vendorPath}/../colorpicker/js/colorpicker.js"></script>
 HTML;
-        return $html;
     }
 
     public function getIncludeHTML()
     {
-        $html = <<<HTML
+        return <<<HTML
 <link rel="stylesheet" href="{$this->mozaikPath}/jquery.mozaik.css">
 <script src='{$this->mozaikPath}/jquery.mozaik.js'></script>
 HTML;
-        return $html;
     }
 
-    private function tinyMCESetupArgumentFixer($tinyMCESetup = '{}')
-    {
-        if (!$tinyMCESetup) {
-            $tinyMCESetup = '{}';
-        }
-
-        if (is_array($tinyMCESetup) || is_object($tinyMCESetup)) {
-            $tinyMCESetup = json_encode($tinyMCESetup);
-        }
-
-        if (!preg_match('/^tinyMCE\s*:\s*/', $tinyMCESetup)) {
-            $tinyMCESetup = "tinyMCE: $tinyMCESetup";
-        }
-        return $tinyMCESetup;
-    }
-
-    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = '600', $thumbs = array(), $tinyMCESetup = '{}')
+    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = '600', $thumbs = [], $tinyMCESetup = '{}')
     {
         if (is_numeric($width)) {
             $width .= 'px';
@@ -155,7 +119,8 @@ HTML;
         if ($textareaId) {
             $refreshTextareaScript = $this->getRefreshTextareaScript($textareaId, $elementId, $width);
         }
-        $html = <<<HTML
+
+        return <<<HTML
 <style type="text/css">
 #{$elementId} {position: relative; top: 0; left: 0;}
 #{$elementId} ul.mozaik-thumbs li.mozaik-thumbnail {padding: 5px 0;}
@@ -202,7 +167,6 @@ HTML;
 
 </script>
 HTML;
-        return $html;
     }
 
     public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = '600', $group = '', $tinyMCESetup = '{}')
@@ -215,7 +179,44 @@ HTML;
         $mozaikHTML .= $this->getIncludeHTML();
         $thumbs = $this->getThumbs($group);
         $mozaikHTML .= $this->getElementHTML($contents, $textareaId, $elementId, $width, $thumbs, $tinyMCESetup);
+
         return $mozaikHTML;
+    }
+
+    private function getContentLipsum()
+    {
+        return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus odio ante, in feugiat ex pretium eu. In pharetra tincidunt urna et malesuada. Etiam aliquet auctor justo eu placerat. In nec sollicitudin enim. Nulla facilisi. In viverra velit turpis, et lobortis nunc eleifend id. Curabitur semper tincidunt vulputate. Nullam fermentum pellentesque ullamcorper.';
+    }
+
+    private function getContentImageSample($width = null)
+    {
+        if (is_numeric($width)) {
+            $width = ' width="' . $width . '"';
+        } else {
+            $width = '';
+        }
+        $splits = explode('index.php', $_SERVER['REQUEST_URI']);
+        $url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $splits[0];
+        $image = '<img src="' . $url . $this->mozaikPath . '/tpls/default/images/sample.jpg" ' . $width . ' />';
+
+        return $image;
+    }
+
+    private function tinyMCESetupArgumentFixer($tinyMCESetup = '{}')
+    {
+        if (!$tinyMCESetup) {
+            $tinyMCESetup = '{}';
+        }
+
+        if (is_array($tinyMCESetup) || is_object($tinyMCESetup)) {
+            $tinyMCESetup = json_encode($tinyMCESetup);
+        }
+
+        if (!preg_match('/^tinyMCE\s*:\s*/', $tinyMCESetup)) {
+            $tinyMCESetup = "tinyMCE: {$tinyMCESetup}";
+        }
+
+        return $tinyMCESetup;
     }
 
     private function getRefreshTextareaScript($textareaId, $elementId, $width = 'initial')
@@ -223,7 +224,8 @@ HTML;
         if (is_numeric($width)) {
             $width .= 'px';
         }
-        $js = <<<SCRIPT
+
+        return <<<SCRIPT
 $(window).mouseup(function(){
      $('#{$textareaId}').val($('#{$elementId}').getMozaikValue({width: '{$width}'}));
 
@@ -239,7 +241,6 @@ $(window).mouseup(function(){
      }
 });
 SCRIPT;
-        return $js;
     }
 
     private function getThumbs($group = '')
@@ -250,31 +251,30 @@ SCRIPT;
             $db = DBManagerFactory::getInstance();
             $_group = $db->quote($group);
             $templateSectionLineBean = BeanFactory::getBean('TemplateSectionLine');
-            $thumbBeans = $templateSectionLineBean->get_full_list('ord', "(grp LIKE '$_group' OR grp IS NULL)");
-            $thumbs = array();
+            $thumbBeans = $templateSectionLineBean->get_full_list('ord', "(grp LIKE '{$_group}' OR grp IS NULL)");
+            $thumbs = [];
             if ($thumbBeans) {
                 foreach ($thumbBeans as $thumbBean) {
-                    $thumbs[$thumbBean->name] = array(
+                    $thumbs[$thumbBean->name] = [
                         'label' => $thumbBean->thumbnail ? $this->getThumbImageHTML($thumbBean->thumbnail, $thumbBean->name) : $thumbBean->name,
                         'tpl' => 'string:' . html_entity_decode($thumbBean->description),
-                    );
+                    ];
                 }
             }
             $this->thumbsCache[$cacheGroup] = $thumbs;
         }
 
-        $thumbs = $this->thumbsCache[$cacheGroup];
-
-        return $thumbs;
+        return $this->thumbsCache[$cacheGroup];
     }
 
     private function getThumbImageHTML($src, $label)
     {
         if (file_exists($src)) {
-            $html = '<img src="' . $src. '" alt="' . $label . '">';
+            $html = '<img src="' . $src . '" alt="' . $label . '">';
         } else {
             $html = $label;
         }
+
         return $html;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -51,28 +49,28 @@ global $app_strings;
 global $theme;
 
 if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
+    sugar_die('Unauthorized access to administration.');
 }
 
-require_once('modules/Configurator/Configurator.php');
+require_once 'modules/Configurator/Configurator.php';
 
 echo getClassicModuleTitle(
-    "Administration",
-    array(
+    'Administration',
+    [
         "<a href='index.php?module=Administration&action=index'>" .
         translate('LBL_MODULE_NAME', 'Administration') .
-        "</a>",
+        '</a>',
         $mod_strings['LBL_AOP_ADMIN_MANAGE_AOP'],
-    ),
+    ],
     false
 );
 
 $cfg = new Configurator();
 $sugar_smarty = new Sugar_Smarty();
-$errors = array();
+$errors = [];
 
 if (!array_key_exists('aop', $cfg->config)) {
-    $cfg->config['aop'] = array(
+    $cfg->config['aop'] = [
         'enable_aop' => 1,
         'enable_portal' => '',
         'joomla_url' => '',
@@ -87,8 +85,8 @@ if (!array_key_exists('aop', $cfg->config)) {
         'joomla_account_creation_email_template_id' => '',
         'support_from_address' => '',
         'support_from_name' => '',
-        'case_status_changes' => json_encode(array()),
-    );
+        'case_status_changes' => json_encode([]),
+    ];
 }
 if (!array_key_exists('enable_aop', $cfg->config['aop'])) {
     $cfg->config['aop']['enable_aop'] = 1;
@@ -97,7 +95,7 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     $joomlaUrl = strtolower(trim($_REQUEST['joomla_url']));
     if (!empty($joomlaUrl)) {
         $cfg->config['aop']['joomla_url'] =
-            preg_match("@^https?://@", $joomlaUrl) ? $joomlaUrl : 'http://' . $joomlaUrl;
+            preg_match('@^https?://@', $joomlaUrl) ? $joomlaUrl : 'http://' . $joomlaUrl;
     } else {
         $cfg->config['aop']['joomla_url'] = '';
     }
@@ -130,7 +128,7 @@ $distributionMethod = get_select_options_with_id($distribStrings, $cfg->config['
 $distributionOptions = getAOPAssignField('distribution_options', $cfg->config['aop']['distribution_options']);
 
 if (!empty($cfg->config['aop']['distribution_user_id'])) {
-    $distributionUserName = BeanFactory::getBean("Users", $cfg->config['aop']['distribution_user_id'])->name;
+    $distributionUserName = BeanFactory::getBean('Users', $cfg->config['aop']['distribution_user_id'])->name;
 } else {
     $distributionUserName = '';
 }
@@ -162,7 +160,7 @@ $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 $sugar_smarty->assign('LANGUAGES', get_languages());
-$sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
+$sugar_smarty->assign('JAVASCRIPT', get_set_focus_js());
 $sugar_smarty->assign('config', $cfg->config['aop']);
 $sugar_smarty->assign('error', $errors);
 
@@ -178,7 +176,6 @@ if ($cfg->config['aop']['case_status_changes']) {
     }
 }
 
-
 $sugar_smarty->assign('currentStatuses', $currentStatuses);
 
 $buttons = <<<EOQ
@@ -192,7 +189,7 @@ $buttons = <<<EOQ
                 &nbsp;<input title="{$mod_strings['LBL_CANCEL_BUTTON_TITLE']}"  onclick="document.location.href='index.php?module=Administration&action=index'" class="button"  type="button" name="cancel" value="  {$app_strings['LBL_CANCEL_BUTTON_LABEL']}  " >
 EOQ;
 
-$sugar_smarty->assign("BUTTONS", $buttons);
+$sugar_smarty->assign('BUTTONS', $buttons);
 
 $sugar_smarty->display('modules/Administration/AOPAdmin.tpl');
 
@@ -201,7 +198,7 @@ $javascript->setFormName('ConfigureSettings');
 echo $javascript->getScript();
 ?>
     <script type="text/template" id="statusRowTemplate">
-        <?= getStatusRowTemplate($mod_strings, $statusDropdown, $statusDropdown) ?>
+        <?php echo getStatusRowTemplate($mod_strings, $statusDropdown, $statusDropdown); ?>
     </script>
     <script language="Javascript" type="text/javascript">
 
@@ -348,11 +345,12 @@ echo $javascript->getScript();
  * @param $mod_strings
  * @param $ifDropdown
  * @param $thenDropdown
+ *
  * @return string
  */
 function getStatusRowTemplate($mod_strings, $ifDropdown, $thenDropdown)
 {
-    $html = <<<EOF
+    return <<<EOF
     <tr>
         <td  scope="row" width="100">{$mod_strings['LBL_AOP_IF_STATUS']}: </td>
         <td width="100">
@@ -365,6 +363,4 @@ function getStatusRowTemplate($mod_strings, $ifDropdown, $thenDropdown)
         <td><button class="removeStatusButton" type="button">{$mod_strings['LBL_AOP_REMOVE_STATUS']}</button></td>
     </tr>
 EOF;
-
-    return $html;
 }

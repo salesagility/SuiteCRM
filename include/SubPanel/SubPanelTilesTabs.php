@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SubPanel/SubPanel.php');
-require_once('include/SubPanel/SubPanelDefinitions.php');
-require_once('include/SubPanel/SubPanelTiles.php');
+require_once 'include/SubPanel/SubPanel.php';
+require_once 'include/SubPanel/SubPanelDefinitions.php';
+require_once 'include/SubPanel/SubPanelTiles.php';
 /**
- * Tabbed subpanel tiles
+ * Tabbed subpanel tiles.
+ *
  * @api
  */
 class SubPanelTilesTabs extends SubPanelTiles
 {
-    public function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
+    public function __construct(&$focus, $layout_def_key = '', $layout_def_override = '')
     {
         $this->focus = $focus;
         $this->id = $focus->id;
@@ -66,18 +66,18 @@ class SubPanelTilesTabs extends SubPanelTiles
         $layoutParams = $this->module;
         //WDong Bug: 12258 "All" tab in the middle of a record's detail view is not localized.
         if ($selectedGroup != translate('LBL_TABGROUP_ALL')) {
-            $layoutParams .= ':'.$selectedGroup;
+            $layoutParams .= ':' . $selectedGroup;
         }
 
         // see if user current user has custom subpanel layout
         return $current_user->getPreference('subpanelLayout', $layoutParams);
     }
 
-    public function applyUserCustomLayoutToTabs($tabs, $key='All')
+    public function applyUserCustomLayoutToTabs($tabs, $key = 'All')
     {
         //WDong Bug: 12258 "All" tab in the middle of a record's detail view is not localized.
-        if ($key=='All') {
-            $key=translate('LBL_TABGROUP_ALL');
+        if ($key == 'All') {
+            $key = translate('LBL_TABGROUP_ALL');
         }
         $usersCustomLayout = SubPanelTilesTabs::getSubpanelGroupLayout($key);
         if (!empty($usersCustomLayout)) {
@@ -88,7 +88,7 @@ class SubPanelTilesTabs extends SubPanelTiles
             $diff = array_diff($tabs, $usersCustomLayout);
             $tabs = array_intersect($usersCustomLayout, $tabs);
             foreach ($diff as $subpanel) {
-                $tabs []= $subpanel;
+                $tabs[] = $subpanel;
             }
         }
 
@@ -101,16 +101,18 @@ class SubPanelTilesTabs extends SubPanelTiles
      * @param boolean $showTabs	Call the view code to display the generated tabs
      * @param string $selectedGroup	(Optional) Name of any selected tab (defaults to 'All')
      */
-    public function getTabs($showTabs = true, $selectedGroup='')
+    public function getTabs($showTabs = true, $selectedGroup = '')
     {
         $args = func_get_args();
-        return call_user_func_array(array($this, '_getTabs'), $args);
+
+        return call_user_func_array([$this, '_getTabs'], $args);
     }
-    public function _getTabs($tabs, $showTabs = true, $selectedGroup='All')
+
+    public function _getTabs($tabs, $showTabs = true, $selectedGroup = 'All')
     {
         //WDong Bug: 12258 "All" tab in the middle of a record's detail view is not localized.
-        if ($selectedGroup=='All') {
-            $selectedGroup=translate('LBL_TABGROUP_ALL');
+        if ($selectedGroup == 'All') {
+            $selectedGroup = translate('LBL_TABGROUP_ALL');
         }
 
         // Set up a mapping from subpanelID, found in the $tabs list, to the source module name
@@ -120,26 +122,26 @@ class SubPanelTilesTabs extends SubPanelTiles
         // for use when constructing the module by module tabs, not the subpanel tabs, as we move away from using module names to represent
         // subpanels, and use unique subpanel IDs instead.
 
-        $moduleNames = array() ;
+        $moduleNames = [];
         foreach ($tabs as $subpanelID) {
             // Bug #44344 : Custom relationships under same module only show once in subpanel tabs
             // use object property instead new object to have ability run unit test (can override subpanel_definitions)
-            $subpanel =  $this->subpanel_definitions->load_subpanel($subpanelID);
+            $subpanel = $this->subpanel_definitions->load_subpanel($subpanelID);
             if ($subpanel !== false) {
-                $moduleNames [ $subpanelID ] = $subpanel->get_module_name() ;
+                $moduleNames[$subpanelID] = $subpanel->get_module_name();
             }
         }
 
-        $groups =  array() ;
-        $found = array() ;
+        $groups = [];
+        $found = [];
 
         foreach ($GLOBALS['tabStructure'] as $mainTab => $subModules) {
             foreach ($subModules['modules'] as $key => $subModule) {
                 foreach ($tabs as $subpanelID) {
-                    if (isset($moduleNames[ $subpanelID ]) && strcasecmp($subModule, $moduleNames[ $subpanelID ]) === 0) {
+                    if (isset($moduleNames[$subpanelID]) && strcasecmp($subModule, $moduleNames[$subpanelID]) === 0) {
                         // Bug #44344 : Custom relationships under same module only show once in subpanel tabs
-                        $groups [ translate($mainTab) ] [ 'modules' ] [] = $subpanelID ;
-                        $found [ $subpanelID ] = true ;
+                        $groups[translate($mainTab)]['modules'][] = $subpanelID;
+                        $found[$subpanelID] = true;
                     }
                 }
             }
@@ -148,18 +150,18 @@ class SubPanelTilesTabs extends SubPanelTiles
         // Put all the remaining subpanels into the 'Other' tab.
 
         foreach ($tabs as $subpanelID) {
-            if (! isset($found [ $subpanelID ])) {
-                $groups [ translate('LBL_TABGROUP_OTHER') ]['modules'] [] = $subpanelID ;
+            if (!isset($found[$subpanelID])) {
+                $groups[translate('LBL_TABGROUP_OTHER')]['modules'][] = $subpanelID;
             }
         }
 
-        /* Move history to same tab as activities */
+        // Move history to same tab as activities
         if (in_array('history', $tabs) && in_array('activities', $tabs)) {
             foreach ($groups as $mainTab => $group) {
                 if (in_array('activities', array_map('strtolower', $group['modules']))) {
                     if (!in_array('history', array_map('strtolower', $group['modules']))) {
-                        /* Move hist from there to here */
-                        $groups[$mainTab]['modules'] []= 'history';
+                        // Move hist from there to here
+                        $groups[$mainTab]['modules'][] = 'history';
                     }
                 } else {
                     if (false !== ($i = array_search('history', array_map('strtolower', $group['modules'])))) {
@@ -177,9 +179,9 @@ class SubPanelTilesTabs extends SubPanelTiles
          * it will be overwritten in this union operation.
          */
         if (count($groups) <= 1) {
-            $groups = array(translate('LBL_TABGROUP_ALL') => array('label' => translate('LBL_TABGROUP_ALL'), 'modules' => $tabs));
+            $groups = [translate('LBL_TABGROUP_ALL') => ['label' => translate('LBL_TABGROUP_ALL'), 'modules' => $tabs]];
         } else {
-            $groups = array(translate('LBL_TABGROUP_ALL') => array('label' => translate('LBL_TABGROUP_ALL'), 'modules' => $tabs)) + $groups;
+            $groups = [translate('LBL_TABGROUP_ALL') => ['label' => translate('LBL_TABGROUP_ALL'), 'modules' => $tabs]] + $groups;
         }
         /* Note - all $display checking and array_intersects with $tabs
          * are now redundant (thanks to GroupedTabStructure), and could
@@ -187,19 +189,20 @@ class SubPanelTilesTabs extends SubPanelTiles
          * that the tabs get renedered correctly.
          */
 
-        $retTabs = array();
+        $retTabs = [];
         if ($showTabs) {
-            require_once('include/SubPanel/SugarTab.php');
+            require_once 'include/SubPanel/SugarTab.php';
             $sugarTab = new SugarTab();
 
-            $displayTabs = array();
-            $otherTabs = array();
+            $displayTabs = [];
+            $otherTabs = [];
 
             foreach ($groups as $key => $tab) {
                 $display = false;
-                foreach ($tab['modules'] as $subkey=>$subtab) {
+                foreach ($tab['modules'] as $subkey => $subtab) {
                     if (in_array(strtolower($subtab), $tabs)) {
                         $display = true;
+
                         break;
                     }
                 }
@@ -213,17 +216,17 @@ class SubPanelTilesTabs extends SubPanelTiles
                 if ($display) {
                     $relevantTabs = SubPanelTilesTabs::applyUserCustomLayoutToTabs($tabs, $key);
 
-                    $sugarTabs[$key] = array(
-                             'label'=>(!empty($tab['label']) ? $tab['label']: $key),
-                             'type'=>$selected
-                    );
+                    $sugarTabs[$key] = [
+                        'label' => (!empty($tab['label']) ? $tab['label'] : $key),
+                        'type' => $selected
+                    ];
 
-                    $otherTabs[$key] = array('key'=>$key, 'tabs'=>array());
+                    $otherTabs[$key] = ['key' => $key, 'tabs' => []];
 
                     $orderedTabs = array_intersect($relevantTabs, array_map('strtolower', $groups[$key]['modules']));
 
                     foreach ($orderedTabs as $subkey => $subtab) {
-                        $otherTabs[$key]['tabs'][$subkey] = array('key'=>$subtab, 'label'=>translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$subtab]['title_key']));
+                        $otherTabs[$key]['tabs'][$subkey] = ['key' => $subtab, 'label' => translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$subtab]['title_key'])];
                     }
 
                     if ($selectedGroup == $key) {

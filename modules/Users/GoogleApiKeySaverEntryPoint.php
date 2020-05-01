@@ -2,7 +2,7 @@
 
 use SuiteCRM\LangText;
 
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,7 +40,7 @@ use SuiteCRM\LangText;
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-/**
+/*
  * Entry Point for saving Google API tokens during account authorization.
  *
  * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
@@ -52,37 +52,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * class GoogleApiKeySaverEntryPoint
+ * class GoogleApiKeySaverEntryPoint.
  */
 class GoogleApiKeySaverEntryPoint
 {
-
     /**
-     *
      * @var User
      */
     protected $currentUser;
 
     /**
-     *
      * @var array
      */
     protected $sugarConfig;
 
     /**
-     *
      * @var Google_Client
      */
     protected $client;
 
     /**
-     *
      * @var array
      */
     protected $request;
 
     /**
-     *
      * @param User $current_user
      * @param array $sugar_config
      * @param Google_Client $client
@@ -99,7 +93,6 @@ class GoogleApiKeySaverEntryPoint
     }
 
     /**
-     *
      * @throws Exception 1 - google_auth_json requested variable is missing, 2 - Invalid json for auth config
      */
     protected function handleEntryPoint()
@@ -121,10 +114,10 @@ class GoogleApiKeySaverEntryPoint
 
         $this->handleRequest();
     }
-    
+
     /**
-     *
      * @param array $config
+     *
      * @throws Exception 2 - web is not set in the config json, 3 - client_id is not set in config json, 4 - client_secret is not set in config json
      */
     protected function validateConfig($config)
@@ -141,7 +134,7 @@ class GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * handle requested action handler method
+     * handle requested action handler method.
      */
     protected function handleRequest()
     {
@@ -159,7 +152,7 @@ class GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * create and redirect to auth URL
+     * create and redirect to auth URL.
      */
     protected function handleRequestGetnew()
     {
@@ -168,7 +161,7 @@ class GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * set google api token
+     * set google api token.
      *
      * @throws Exception 1 - Unable to get User bean. 2 - Unable to retrive user by ID
      */
@@ -192,12 +185,12 @@ class GoogleApiKeySaverEntryPoint
             $user->setPreference('GoogleApiRefreshToken', base64_encode($accessRefreshToken), false, 'GoogleSync');
         }
         $user->savePreferencesToDB();
-        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        $url = $this->sugarConfig['site_url'] . '/index.php?module=Users&action=EditView&record=' . $this->currentUser->id;
         $this->redirect($url);
     }
 
     /**
-     * set google api token to invalid
+     * set google api token to invalid.
      *
      * @throws Exception 1 - Unable to get User bean. 2 - Unable to retrive user by ID
      */
@@ -213,17 +206,17 @@ class GoogleApiKeySaverEntryPoint
         }
         $user->setPreference('GoogleApiToken', '', false, 'GoogleSync');
         $user->savePreferencesToDB();
-        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        $url = $this->sugarConfig['site_url'] . '/index.php?module=Users&action=EditView&record=' . $this->currentUser->id;
         $this->redirect($url);
     }
 
     /**
      * shows an error - pick error message from language file instead
-     * using simple requested text as it is an XSS vulnerability issue
+     * using simple requested text as it is an XSS vulnerability issue.
      */
     protected function handleRequestError()
     {
-        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        $url = $this->sugarConfig['site_url'] . '/index.php?module=Users&action=EditView&record=' . $this->currentUser->id;
         $tpl = new Sugar_Smarty();
         $txtKey = $this->request['error'];
         $tpl->assign('error', LangText::get($txtKey));
@@ -239,21 +232,23 @@ class GoogleApiKeySaverEntryPoint
     {
         LoggerManager::getLogger()->error('Unkown entry point function given.');
         // If we don't get a known return, we just silently return to the user profile.
-        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        $url = $this->sugarConfig['site_url'] . '/index.php?module=Users&action=EditView&record=' . $this->currentUser->id;
         $this->redirect($url);
     }
-    
+
     /**
-     * protected function for SugarApplication::redirect() so test mock can override it
+     * protected function for SugarApplication::redirect() so test mock can override it.
+     *
      * @param string $url
      */
     protected function redirect($url)
     {
         SugarApplication::redirect($url);
     }
-    
+
     /**
-     * protected function for die() so test mock can override it
+     * protected function for die() so test mock can override it.
+     *
      * @param string $exitstring
      */
     protected function protectedDie($exitstring)

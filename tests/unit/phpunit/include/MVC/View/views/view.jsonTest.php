@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewJson()

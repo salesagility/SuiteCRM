@@ -51,7 +51,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Consider using the translation framework to localise the error message.
  *
  * An example could be: "An error has occurred while performing the search. Your query syntax might not be valid."
- *
  */
 class SearchUserFriendlyException extends SearchException
 {

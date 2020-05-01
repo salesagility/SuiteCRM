@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function testConstruct()
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcardsave();

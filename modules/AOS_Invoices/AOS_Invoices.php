@@ -1,9 +1,8 @@
 <?php
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,23 +19,19 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/AOS_Invoices/AOS_Invoices_sugar.php');
+require_once 'modules/AOS_Invoices/AOS_Invoices_sugar.php';
 class AOS_Invoices extends AOS_Invoices_sugar
 {
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function save($check_notify = false)
     {
@@ -55,9 +50,9 @@ class AOS_Invoices extends AOS_Invoices_sugar
             }
 
             if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-                $this->number = $this->db->getOne("SELECT MAX(CAST(number as INT))+1 FROM aos_invoices");
+                $this->number = $this->db->getOne('SELECT MAX(CAST(number as INT))+1 FROM aos_invoices');
             } else {
-                $this->number = $this->db->getOne("SELECT MAX(CAST(number as UNSIGNED))+1 FROM aos_invoices");
+                $this->number = $this->db->getOne('SELECT MAX(CAST(number as UNSIGNED))+1 FROM aos_invoices');
             }
 
             if ($this->number < $sugar_config['aos']['invoices']['initialNumber']) {
@@ -65,13 +60,13 @@ class AOS_Invoices extends AOS_Invoices_sugar
             }
         }
 
-        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        require_once 'modules/AOS_Products_Quotes/AOS_Utils.php';
 
         perform_aos_save($this);
 
         $return_id = parent::save($check_notify);
 
-        require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
+        require_once 'modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php';
         $productQuoteGroup = new AOS_Line_Item_Groups();
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 

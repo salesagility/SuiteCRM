@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * @internal
+ */
 class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
 {
-    public function testFP_events()
+    public function testFPEvents()
     {
         // Execute the constructor and check for the Object type and  attributes
         $fpEvents = new FP_events();
@@ -18,7 +21,7 @@ class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $fpEvents);
     }
 
-    public function testemail_templates()
+    public function testemailTemplates()
     {
         global $app_list_strings;
 

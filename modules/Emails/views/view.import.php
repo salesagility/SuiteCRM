@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,17 +37,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 class EmailsViewImport extends ViewEdit
 {
-
     /**
-     * @var Email $bean
+     * @var Email
      */
     public $bean;
 
@@ -75,7 +71,7 @@ class EmailsViewImport extends ViewEdit
 
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
-        $this->ev->ss =& $this->ss;
+        $this->ev->ss = &$this->ss;
 
         // Set a distinct view name to avoid cache conflicts with regular edit view
         $this->ev->formName = 'EditNonImported';

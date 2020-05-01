@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,33 +36,33 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarObjects/templates/person/Person.php');
-require_once('include/MVC/SugarModule.php');
-require_once('include/utils.php');
+require_once 'include/SugarObjects/templates/person/Person.php';
+require_once 'include/MVC/SugarModule.php';
+require_once 'include/utils.php';
 
 /**
- * quicksearchQuery class, handles AJAX calls from quicksearch.js
+ * quicksearchQuery class, handles AJAX calls from quicksearch.js.
  *
  * @copyright  2004-2007 SugarCRM Inc.
  * @license    http://www.sugarcrm.com/crm/products/sugar-professional-eula.html  SugarCRM Professional End User License
+ *
  * @since      Class available since Release 4.5.1
  */
 class quicksearchQuery
 {
     /**
-     * Condition operators
+     * Condition operators.
+     *
      * @var string
      */
-    const CONDITION_CONTAINS    = 'contains';
+    const CONDITION_CONTAINS = 'contains';
     const CONDITION_LIKE_CUSTOM = 'like_custom';
-    const CONDITION_EQUAL       = 'equal';
+    const CONDITION_EQUAL = 'equal';
 
     protected $extra_where;
 
     /**
-     * Query a module for a list of items
+     * Query a module for a list of items.
      *
      * @param array $args
      * example for querying Account module with 'a':
@@ -80,6 +79,7 @@ class quicksearchQuery
      *        'order' => 'name', // order by
      *        'limit' => '30', // limit, number of records to return
      *       )
+     *
      * @return array list of elements returned
      */
     public function query($args)
@@ -92,47 +92,50 @@ class quicksearchQuery
     }
 
     /**
-     * get_contact_array
+     * get_contact_array.
      *
+     * @param mixed $args
      */
     public function get_contact_array($args)
     {
-        $args    = $this->prepareArguments($args);
-        $args    = $this->updateContactArrayArguments($args);
-        $data    = $this->getRawResults($args);
+        $args = $this->prepareArguments($args);
+        $args = $this->updateContactArrayArguments($args);
+        $data = $this->getRawResults($args);
         $results = $this->prepareResults($data, $args);
 
         return $this->getFilteredJsonResults($results);
     }
 
     /**
-     * Returns the list of users, faster than using query method for Users module
+     * Returns the list of users, faster than using query method for Users module.
      *
      * @param array $args arguments used to construct query, see query() for example
+     *
      * @return array list of users returned
      */
     public function get_user_array($args)
     {
         $condition = $args['conditions'][0]['value'];
-        $results   = $this->getUserResults($condition);
+        $results = $this->getUserResults($condition);
 
         return $this->getJsonEncodedData($results);
     }
 
-
     /**
-     * Returns search results from external API
+     * Returns search results from external API.
      *
      * @param array $args
+     *
      * @return array
      */
     public function externalApi($args)
     {
-        require_once('include/externalAPI/ExternalAPIFactory.php');
-        $data = array();
+        require_once 'include/externalAPI/ExternalAPIFactory.php';
+        $data = [];
+
         try {
             $api = ExternalAPIFactory::loadAPI($args['api']);
-            $data['fields']     = $api->searchDoc($_REQUEST['query']);
+            $data['fields'] = $api->searchDoc($_REQUEST['query']);
             $data['totalCount'] = count($data['fields']);
         } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
@@ -141,12 +144,12 @@ class quicksearchQuery
         return $this->getJsonEncodedData($data);
     }
 
-
     /**
-     * Internal function to construct where clauses
+     * Internal function to construct where clauses.
      *
-     * @param Object $focus
+     * @param object $focus
      * @param array $args
+     *
      * @return string
      */
     protected function constructWhere($focus, $args)
@@ -156,14 +159,14 @@ class quicksearchQuery
 
         $table = $focus->getTableName();
         if (!empty($table)) {
-            $table_prefix = $db->getValidDBName($table).".";
+            $table_prefix = $db->getValidDBName($table) . '.';
         } else {
             $table_prefix = '';
         }
-        $conditionArray = array();
+        $conditionArray = [];
 
         if (!isset($args['conditions']) || !is_array($args['conditions'])) {
-            $args['conditions'] = array();
+            $args['conditions'] = [];
         }
 
         foreach ($args['conditions'] as $condition) {
@@ -182,11 +185,11 @@ class quicksearchQuery
                             $table_prefix . $db->getValidDBName($condition['name']),
                             $db->quote(
                                 $condition['value']
-                    )
+                            )
                         )
                     );
-                    break;
 
+                    break;
                 case self::CONDITION_LIKE_CUSTOM:
                     $like = '';
                     if (!empty($condition['begin'])) {
@@ -204,12 +207,12 @@ class quicksearchQuery
                         if (strpos($nameFormat, 'l') > strpos($nameFormat, 'f')) {
                             array_push(
                                 $conditionArray,
-                                $db->concat($table, array('first_name','last_name')) . " like '$like'"
+                                $db->concat($table, ['first_name', 'last_name']) . " like '{$like}'"
                             );
                         } else {
                             array_push(
                                 $conditionArray,
-                                $db->concat($table, array('last_name','first_name')) . " like '$like'"
+                                $db->concat($table, ['last_name', 'first_name']) . " like '{$like}'"
                             );
                         }
                     } else {
@@ -218,26 +221,26 @@ class quicksearchQuery
                             $table_prefix . $db->getValidDBName($condition['name']) . sprintf(" like '%s'", $like)
                         );
                     }
-                    break;
 
+                    break;
                 case self::CONDITION_EQUAL:
                     if ($condition['value']) {
                         array_push(
                             $conditionArray,
                             sprintf("(%s = '%s')", $db->getValidDBName($condition['name']), $db->quote($condition['value']))
-                            );
+                        );
                     }
-                    break;
 
+                    break;
                 default:
                     array_push(
                         $conditionArray,
-                        $table_prefix.$db->getValidDBName($condition['name']) . sprintf(" like '%s%%'", $db->quote($condition['value']))
+                        $table_prefix . $db->getValidDBName($condition['name']) . sprintf(" like '%s%%'", $db->quote($condition['value']))
                     );
             }
         }
 
-        $whereClauseArray = array();
+        $whereClauseArray = [];
         if (!empty($conditionArray)) {
             $whereClauseArray[] = sprintf('(%s)', implode(" {$args['group']} ", $conditionArray));
         }
@@ -253,10 +256,11 @@ class quicksearchQuery
     }
 
     /**
-     * Returns formatted data
+     * Returns formatted data.
      *
      * @param array $results
      * @param array $args
+     *
      * @return array
      */
     protected function formatResults($results, $args)
@@ -265,10 +269,10 @@ class quicksearchQuery
 
         $app_list_strings = null;
         $data['totalCount'] = count($results);
-        $data['fields']     = array();
+        $data['fields'] = [];
 
         for ($i = 0; $i < count($results); $i++) {
-            $data['fields'][$i] = array();
+            $data['fields'][$i] = [];
             $data['fields'][$i]['module'] = $results[$i]->object_name;
 
             //C.L.: Bug 43395 - For Quicksearch, do not return values with salutation and title formatting
@@ -278,13 +282,12 @@ class quicksearchQuery
             $listData = $results[$i]->get_list_view_data();
 
             foreach ($args['field_list'] as $field) {
-                if ($field == "user_hash") {
+                if ($field == 'user_hash') {
                     continue;
                 }
                 // handle enums
                 if ((isset($results[$i]->field_name_map[$field]['type']) && $results[$i]->field_name_map[$field]['type'] == 'enum')
                     || (isset($results[$i]->field_name_map[$field]['custom_type']) && $results[$i]->field_name_map[$field]['custom_type'] == 'enum')) {
-
                     // get fields to match enum vals
                     if (empty($app_list_strings)) {
                         $current_language = get_current_language();
@@ -293,16 +296,15 @@ class quicksearchQuery
 
                     // match enum vals to text vals in language pack for return
                     if (!empty($app_list_strings[$results[$i]->field_name_map[$field]['options']])) {
-                        $results[$i]->$field = $app_list_strings[$results[$i]->field_name_map[$field]['options']][$results[$i]->$field];
+                        $results[$i]->{$field} = $app_list_strings[$results[$i]->field_name_map[$field]['options']][$results[$i]->{$field}];
                     }
                 }
-
 
                 if (isset($listData[$field])) {
                     $data['fields'][$i][$field] = $listData[$field];
                 } else {
-                    if (isset($results[$i]->$field)) {
-                        $data['fields'][$i][$field] = $results[$i]->$field;
+                    if (isset($results[$i]->{$field})) {
+                        $data['fields'][$i][$field] = $results[$i]->{$field};
                     } else {
                         $data['fields'][$i][$field] = '';
                     }
@@ -330,19 +332,21 @@ class quicksearchQuery
     }
 
     /**
-     * Filter duplicate results from the list
+     * Filter duplicate results from the list.
      *
      * @param array $list
+     *
      * @return	array
      */
     protected function filterResults($list)
     {
-        $fieldsFiltered = array();
+        $fieldsFiltered = [];
         foreach ($list['fields'] as $field) {
             $found = false;
             foreach ($fieldsFiltered as $item) {
                 if ($item === $field) {
                     $found = true;
+
                     break;
                 }
             }
@@ -353,7 +357,7 @@ class quicksearchQuery
         }
 
         $list['totalCount'] = count($fieldsFiltered);
-        $list['fields']     = $fieldsFiltered;
+        $list['fields'] = $fieldsFiltered;
 
         return $list;
     }
@@ -362,14 +366,15 @@ class quicksearchQuery
      * Returns raw search results. Filters should be applied later.
      *
      * @param array $args
-     * @param boolean $singleSelect
+     * @param bool $singleSelect
+     *
      * @return array
      */
     protected function getRawResults($args, $singleSelect = false)
     {
         $orderBy = !empty($args['order']) ? $args['order'] : '';
-        $limit   = !empty($args['limit']) ? (int)$args['limit'] : '';
-        $data    = array();
+        $limit = !empty($args['limit']) ? (int) $args['limit'] : '';
+        $data = [];
 
         foreach ($args['modules'] as $module) {
             $focus = SugarModule::get($module)->loadBean();
@@ -378,28 +383,28 @@ class quicksearchQuery
 
             if ($focus->ACLAccess('ListView', true)) {
                 $where = $this->constructWhere($focus, $args);
-                $data  = $this->updateData($data, $focus, $orderBy, $where, $limit, $singleSelect);
+                $data = $this->updateData($data, $focus, $orderBy, $where, $limit, $singleSelect);
             }
         }
-
 
         return $data;
     }
 
     /**
-     * Returns search results with all fixes applied
+     * Returns search results with all fixes applied.
      *
      * @param array $data
      * @param array $args
+     *
      * @return array
      */
     protected function prepareResults($data, $args)
     {
         $results['totalCount'] = $count = count($data);
-        $results['fields']     = array();
+        $results['fields'] = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $field = array();
+            $field = [];
             $field['module'] = $data[$i]->object_name;
 
             $field = $this->overrideContactId($field, $data[$i], $args);
@@ -412,27 +417,28 @@ class quicksearchQuery
     }
 
     /**
-     * Returns user search results
+     * Returns user search results.
      *
      * @param string $condition
+     *
      * @return array
      */
     protected function getUserResults($condition)
     {
         $users = $this->getUserArray($condition);
 
-        $results = array();
+        $results = [];
         $results['totalCount'] = count($users);
-        $results['fields']     = array();
+        $results['fields'] = [];
 
         foreach ($users as $id => $name) {
             array_push(
                 $results['fields'],
-                array(
+                [
                     'id' => (string) $id,
                     'user_name' => $name,
                     'module' => 'Users'
-            )
+                ]
             );
         }
 
@@ -440,14 +446,15 @@ class quicksearchQuery
     }
 
     /**
-     * Merges current module search results to given list and returns it
+     * Merges current module search results to given list and returns it.
      *
      * @param array $data
      * @param SugarBean $focus
      * @param string $orderBy
      * @param string $where
      * @param string $limit
-     * @param boolean $singleSelect
+     * @param bool $singleSelect
+     *
      * @return array
      */
     protected function updateData($data, $focus, $orderBy, $where, $limit, $singleSelect = false)
@@ -458,10 +465,11 @@ class quicksearchQuery
     }
 
     /**
-     * Updates search result with proper contact name
+     * Updates search result with proper contact name.
      *
      * @param array $result
      * @param array $args
+     *
      * @return string
      */
     protected function updateContactName($result, $args)
@@ -478,11 +486,12 @@ class quicksearchQuery
     }
 
     /**
-     * Overrides contact_id and reports_to_id params (to 'id')
+     * Overrides contact_id and reports_to_id params (to 'id').
      *
      * @param array $result
      * @param object $data
      * @param array $args
+     *
      * @return array
      */
     protected function overrideContactId($result, $data, $args)
@@ -491,7 +500,7 @@ class quicksearchQuery
             $result[$field] = (preg_match('/reports_to_id$/s', $field)
                                || preg_match('/contact_id$/s', $field))
                 ? $data->id // "reports_to_id" to "id"
-                : $data->$field;
+                : $data->{$field};
         }
 
         return $result;
@@ -501,6 +510,8 @@ class quicksearchQuery
      * Returns prepared arguments. Should be redefined in child classes.
      *
      * @param array $arguments
+     * @param mixed $args
+     *
      * @return array
      */
     protected function prepareArguments($args)
@@ -512,14 +523,14 @@ class quicksearchQuery
             $sugar_config['list_max_entries_per_page'] = ($args['limit'] + 1);
         }
 
-        $defaults = array(
+        $defaults = [
             'order_by_name' => false,
-        );
+        ];
         $this->extra_where = '';
 
         // Sanitize group
-        /* BUG: 52684 properly check for 'and' jeff@neposystems.com */
-        if (!empty($args['group'])  && strcasecmp($args['group'], 'and') == 0) {
+        // BUG: 52684 properly check for 'and' jeff@neposystems.com
+        if (!empty($args['group']) && strcasecmp($args['group'], 'and') == 0) {
             $args['group'] = 'AND';
         } else {
             $args['group'] = 'OR';
@@ -533,6 +544,7 @@ class quicksearchQuery
      *
      * @param array $field
      * @param array $args
+     *
      * @return array
      */
     protected function prepareField($field, $args)
@@ -541,9 +553,10 @@ class quicksearchQuery
     }
 
     /**
-     * Returns user array
+     * Returns user array.
      *
      * @param string $condition
+     *
      * @return array
      */
     protected function getUserArray($condition)
@@ -556,16 +569,17 @@ class quicksearchQuery
 
     /**
      * Returns additional where condition for non private teams and removes arguments that have been replaced with
-     * custom where clauses
+     * custom where clauses.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getNonPrivateTeamsWhere(&$args)
     {
         $db = DBManagerFactory::getInstance();
 
-        $where = array();
+        $where = [];
         $teams_filtered = false;
 
         if (isset($args['conditions']) && is_array($args['conditions'])) {
@@ -579,6 +593,7 @@ class quicksearchQuery
                                 $db->quote($condition['value'])
                             );
                             unset($args['conditions'][$i]);
+
                             break;
                         case 'user_id':
                             $where[] = sprintf(
@@ -593,16 +608,17 @@ class quicksearchQuery
         }
 
         if (!$teams_filtered) {
-            $where[] ='teams.private = 0';
+            $where[] = 'teams.private = 0';
         }
 
         return implode(' AND ', $where);
     }
 
     /**
-     * Returns JSON encoded data
+     * Returns JSON encoded data.
      *
      * @param array $data
+     *
      * @return string
      */
     protected function getJsonEncodedData($data)
@@ -613,10 +629,11 @@ class quicksearchQuery
     }
 
     /**
-     * Returns formatted JSON encoded search results
+     * Returns formatted JSON encoded search results.
      *
      * @param array $args
      * @param array $results
+     *
      * @return string
      */
     protected function getFormattedJsonResults($results, $args)
@@ -627,9 +644,10 @@ class quicksearchQuery
     }
 
     /**
-     * Returns filtered JSON encoded search results
+     * Returns filtered JSON encoded search results.
      *
      * @param array $results
+     *
      * @return string
      */
     protected function getFilteredJsonResults($results)
@@ -640,9 +658,10 @@ class quicksearchQuery
     }
 
     /**
-     * Returns updated arguments array
+     * Returns updated arguments array.
      *
      * @param array $args
+     *
      * @return array
      */
     protected function updateQueryArguments($args)
@@ -653,9 +672,10 @@ class quicksearchQuery
     }
 
     /**
-     * Returns updated arguments array for contact query
+     * Returns updated arguments array for contact query.
      *
      * @param array $args
+     *
      * @return array
      */
     protected function updateContactArrayArguments($args)
@@ -664,15 +684,16 @@ class quicksearchQuery
     }
 
     /**
-     * Returns updated arguments array for team query
+     * Returns updated arguments array for team query.
      *
      * @param array $args
+     *
      * @return array
      */
     protected function updateTeamArrayArguments($args)
     {
         $this->extra_where = $this->getNonPrivateTeamsWhere($args);
-        $args['modules'] = array('Teams');
+        $args['modules'] = ['Teams'];
 
         return $args;
     }

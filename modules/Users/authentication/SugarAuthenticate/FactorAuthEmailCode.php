@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,21 +36,19 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 include_once get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/FactorAuthInterface.php');
 include_once __DIR__ . '/../../../../include/SugarPHPMailer.php';
 
 class FactorAuthEmailCode implements FactorAuthInterface
 {
-
     /**
      * Shows an input form for email code authentication
-     * (like login page for pwd)
+     * (like login page for pwd).
+     *
      * @throws \RuntimeException
      */
     public function showTokenInput()
@@ -85,13 +82,15 @@ class FactorAuthEmailCode implements FactorAuthInterface
      * otherwise false.
      *
      * @param string $token
-     * @return bool
+     *
      * @throws \phpmailerException
+     *
+     * @return bool
      */
     public function sendToken($token)
     {
         global $current_user, $sugar_config;
-        
+
         if (!$this->validateTokenMessage()) {
             $msg = 'Factor Authentication mail is invalid';
             $GLOBALS['log']->warn($msg);
@@ -152,13 +151,17 @@ class FactorAuthEmailCode implements FactorAuthInterface
             $msg .= 'Two factor email template is not set, change settings on password management page.';
             $GLOBALS['log']->warn($msg);
             SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL']);
+
             return false;
-        } elseif ($emailTpl && !preg_match('/\$code\b/', $emailTpl->body_html)) {
+        }
+        if ($emailTpl && !preg_match('/\$code\b/', $emailTpl->body_html)) {
             $msg .= 'Two factor email template should contains a $code at least.';
             $GLOBALS['log']->warn($msg);
             SugarApplication::appendErrorMessage($mod_strings['ERR_NO_2FACTOR_EMAIL_TMPL_CODE']);
+
             return false;
         }
+
         return true;
     }
 }

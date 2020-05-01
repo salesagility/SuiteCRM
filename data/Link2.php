@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
  * Description:  Represents a relationship from a single bean's perspective.
  * Does not actively do work but is used by SugarBean to manipulate relationships.
  * Work is deferred to the relationship classes.
@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 require_once 'data/Relationships/RelationshipFactory.php';
 
 /**
@@ -70,10 +70,10 @@ class Link2
     protected $beans;  //beans on the other side of the link
     protected $rows;   //any additional fields on the relationship
     protected $loaded; //true if this link has been loaded from the database
-    protected $relationship_fields = array();
+    protected $relationship_fields = [];
     //Used to store unsaved beans on this relationship that will be combined with the ones pulled from the DB
     // if getBeans() is called.
-    protected $tempBeans = array();
+    protected $tempBeans = [];
 
     /**
      * @param  $linkName String name of a link field in the module's vardefs
@@ -81,7 +81,7 @@ class Link2
      * @param  $linkDef array Optional vardef for the link in case it can't be found in the passed in bean
      * for the global dictionary
      */
-    public function __construct($linkName, $bean, $linkDef = array())
+    public function __construct($linkName, $bean, $linkDef = [])
     {
         $this->focus = $bean;
         //Try to load the link vardef from the beans field defs. Otherwise start searching
@@ -112,7 +112,7 @@ class Link2
                 }
             }
             if (empty($this->def['name'])) {
-                $GLOBALS['log']->fatal("failed to find link for $linkName");
+                $GLOBALS['log']->fatal("failed to find link for {$linkName}");
 
                 return;
             }
@@ -127,14 +127,14 @@ class Link2
         $this->relationship = SugarRelationshipFactory::getInstance()->getRelationship($this->def['relationship']);
 
         // Fix to restore functionality from Link.php that needs to be rewritten but for now this will do.
-        $this->relationship_fields = (!empty($this->def['rel_fields'])) ? $this->def['rel_fields'] : array();
+        $this->relationship_fields = (!empty($this->def['rel_fields'])) ? $this->def['rel_fields'] : [];
 
         if (!$this->loadedSuccesfully()) {
             $logFunction = 'fatal';
             if (!isset($this->def['source']) || $this->def['source'] === 'non-db') {
                 $logFunction = 'warn';
             }
-            $GLOBALS['log']->$logFunction("{$this->name} for {$this->def['relationship']} failed to load\n");
+            $GLOBALS['log']->{$logFunction}("{$this->name} for {$this->def['relationship']} failed to load\n");
         }
         //Following behavior is tied to a property(ignore_role) value in the vardef.
         // It alters the values of 2 properties, ignore_role_filter and add_distinct.
@@ -150,6 +150,17 @@ class Link2
     }
 
     /**
+     * @param $name
+     * @param $val
+     */
+    public function __set($name, $val)
+    {
+        if ($name == 'beans') {
+            $this->beans = $val;
+        }
+    }
+
+    /**
      * Returns false if no relationship was found for this link.
      *
      * @return bool
@@ -159,11 +170,10 @@ class Link2
         return !empty($this->relationship);
     }
 
-
     /**
      * @param array $params
      */
-    public function load($params = array())
+    public function load($params = [])
     {
         $data = $this->query($params);
         $this->rows = $data['rows'];
@@ -181,7 +191,7 @@ class Link2
      *                      rhs_value: The value to search for.
      *                      limit: The maximum number of rows
      *                      deleted: If deleted is set to 1, only deleted records related
- *                          to the current record will be returned.
+     *                          to the current record will be returned.
      *                      Example:
      *                      'where' => array(
      *                      'lhs_field' => 'source',
@@ -193,17 +203,18 @@ class Link2
     {
         if (is_object($this->relationship) && method_exists($this->relationship, 'load')) {
             return $this->relationship->load($this, $params);
-        } else {
-            $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
-            return null;
         }
+        $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
+
+        return null;
     }
 
     /**
      * @param array $params
+     *
      * @return array ids of records related through this link
      */
-    public function get($params = array())
+    public function get($params = [])
     {
         if (!$this->loaded) {
             $this->load($params);
@@ -223,9 +234,9 @@ class Link2
 
         if ($this->getSide() == REL_LHS) {
             return $this->relationship->getRHSModule();
-        } else {
-            return $this->relationship->getLHSModule();
         }
+
+        return $this->relationship->getLHSModule();
     }
 
     /**
@@ -239,14 +250,14 @@ class Link2
 
         if ($this->getSide() == REL_LHS) {
             return $this->relationship->getRHSLink();
-        } else {
-            return $this->relationship->getLHSLink();
         }
+
+        return $this->relationship->getLHSLink();
     }
 
     /**
      * @return string "many" if multiple records can be related through this link
-     *                or "one" if at most, one record can be related.
+     *                or "one" if at most, one record can be related
      */
     public function getType()
     {
@@ -271,8 +282,8 @@ class Link2
     }
 
     /**
-    * @return Array of related fields
-    */
+     * @return array of related fields
+     */
     public function getRelatedFields()
     {
         return $this->relationship_fields;
@@ -287,9 +298,10 @@ class Link2
     {
         if (!empty($this->relationship_fields) && !empty($this->relationship_fields[$name])) {
             return $this->relationship_fields[$name];
-        } else {
-            return null;
-        } //For now return null. Later try the relationship object directly.
+        }
+
+        return null;
+        //For now return null. Later try the relationship object directly.
     }
 
     /**
@@ -346,21 +358,23 @@ class Link2
                     || $this->name != $this->relationship->def['join_key_lhs'])
             ) {
                 return REL_LHS;
-            } else {
-                return REL_RHS;
             }
+
+            return REL_RHS;
         } elseif (!empty($this->def['id_name'])) {
             //Next try using the id_name and relationship join keys
             if (isset($this->relationship->def['join_key_lhs'])
                 && $this->def['id_name'] == $this->relationship->def['join_key_lhs']) {
                 return REL_RHS;
-            } elseif (isset($this->relationship->def['join_key_rhs'])
+            }
+            if (isset($this->relationship->def['join_key_rhs'])
                 && $this->def['id_name'] == $this->relationship->def['join_key_rhs']) {
                 return REL_LHS;
             }
         }
 
         $GLOBALS['log']->error("Unable to get proper side for link {$this->name}");
+
         return null;
     }
 
@@ -393,7 +407,7 @@ class Link2
      *
      * @return String/Array query to grab just ids for this relationship
      */
-    public function getQuery($params = array())
+    public function getQuery($params = [])
     {
         return $this->relationship->getQuery($this, $params);
     }
@@ -408,7 +422,7 @@ class Link2
      *
      * @return string/array query to use when joining for subpanels
      */
-    public function getSubpanelQuery($params = array(), $return_array = false)
+    public function getSubpanelQuery($params = [], $return_array = false)
     {
         if (!empty($this->def['ignore_role'])) {
             $params['ignore_role'] = true;
@@ -436,14 +450,14 @@ class Link2
      *                      'rhs_value' => 'external'
      *                      )
      *
-     * @return SugarBean[] array of SugarBeans related through this link.
+     * @return SugarBean[] array of SugarBeans related through this link
      */
-    public function getBeans($params = array())
+    public function getBeans($params = [])
     {
         //Some deprecated code attempts to pass in the old format to getBeans with a large number of useless parameters.
         //reset the parameters if they are not in the new array format.
         if (!is_array($params)) {
-            $params = array();
+            $params = [];
         }
 
         if (!$this->loaded && empty($params)) {
@@ -457,10 +471,10 @@ class Link2
             $rows = $data['rows'];
         }
 
-        $result = array();
+        $result = [];
         if (!$this->beansAreLoaded() || !empty($params)) {
             if (!is_array($this->beans)) {
-                $this->beans = array();
+                $this->beans = [];
             }
 
             $rel_module = $this->getRelatedModuleName();
@@ -468,12 +482,12 @@ class Link2
             //First swap in the temp loaded beans, only if we are doing a complete load (no params)
             if (empty($params)) {
                 $result = $this->tempBeans;
-                $this->tempBeans = array();
+                $this->tempBeans = [];
             }
 
             //now load from the rows
             if (is_array($rows) || is_object($rows)) {
-                foreach ((array)$rows as $id => $vals) {
+                foreach ((array) $rows as $id => $vals) {
                     if (empty($this->beans[$id])) {
                         $tmpBean = BeanFactory::getBean($rel_module, $id);
                         if ($tmpBean !== false) {
@@ -499,7 +513,7 @@ class Link2
     }
 
     /**
-     * @return bool true if this link has initialized its related beans.
+     * @return bool true if this link has initialized its related beans
      */
     public function beansAreLoaded()
     {
@@ -515,18 +529,18 @@ class Link2
      *
      * @param array $rel_keys array of ids or SugarBean objects. If you have the bean in memory, pass it in.
      * @param array $additional_values the values should be passed as key value pairs with column name
-     * as the key name and column value as key value.
+     * as the key name and column value as key value
      *
-     * @return bool|array Return true if all relationships were added.
+     * @return array|bool Return true if all relationships were added.
      * Return an array with the failed keys if any of them failed.
      */
-    public function add($rel_keys, $additional_values = array())
+    public function add($rel_keys, $additional_values = [])
     {
         if (!is_array($rel_keys)) {
-            $rel_keys = array($rel_keys);
+            $rel_keys = [$rel_keys];
         }
 
-        $failures = array();
+        $failures = [];
 
         foreach ($rel_keys as $key) {
             //We must use beans for LogicHooks and other business logic to fire correctly
@@ -561,19 +575,19 @@ class Link2
         return true;
     }
 
-
     /**
      * @param $rel_keys
      * @param array $additional_values
+     *
      * @return array|bool
      */
     public function remove($rel_keys)
     {
         if (!is_array($rel_keys)) {
-            $rel_keys = array($rel_keys);
+            $rel_keys = [$rel_keys];
         }
 
-        $failures = array();
+        $failures = [];
 
         foreach ($rel_keys as $key) {
             //We must use beans for LogicHooks and other business logic to fire correctly
@@ -627,30 +641,17 @@ class Link2
             }
             if ($this->getSide() == REL_LHS) {
                 return $this->relationship->remove($this->focus, $related_id);
-            } else {
-                return $this->relationship->remove($related_id, $this->focus);
             }
-        } else {
-            return $this->relationship->removeAll($this);
+
+            return $this->relationship->remove($related_id, $this->focus);
         }
-    }
 
-    /**
-     * Returns a SugarBean with the given ID from the related module.
-     *
-     * @param bool $id id of related record to retrieve
-     *
-     * @return SugarBean
-     */
-    protected function getRelatedBean($id = false)
-    {
-        $params = array('encode' => true, 'deleted' => true);
-
-        return BeanFactory::getBean($this->getRelatedModuleName(), $id, $params);
+        return $this->relationship->removeAll($this);
     }
 
     /**
      * @param $name
+     *
      * @return array|bool|SugarRelationship
      */
     public function &__get($name)
@@ -674,18 +675,7 @@ class Link2
                 return $this->rows;
         }
 
-        return $this->$name;
-    }
-
-    /**
-     * @param $name
-     * @param $val
-     */
-    public function __set($name, $val)
-    {
-        if ($name == 'beans') {
-            $this->beans = $val;
-        }
+        return $this->{$name};
     }
 
     /**
@@ -714,8 +704,21 @@ class Link2
         if (!is_array($this->beans) && isset($this->tempBeans[$bean->id])) {
             unset($this->tempBeans[$bean->id]);
         } else {
-            unset($this->beans[$bean->id]);
-            unset($this->rows[$bean->id]);
+            unset($this->beans[$bean->id], $this->rows[$bean->id]);
         }
+    }
+
+    /**
+     * Returns a SugarBean with the given ID from the related module.
+     *
+     * @param bool $id id of related record to retrieve
+     *
+     * @return SugarBean
+     */
+    protected function getRelatedBean($id = false)
+    {
+        $params = ['encode' => true, 'deleted' => true];
+
+        return BeanFactory::getBean($this->getRelatedModuleName(), $id, $params);
     }
 }

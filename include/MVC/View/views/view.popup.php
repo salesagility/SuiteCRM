@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 include_once __DIR__ . '/../../../../include/utils/layout_utils.php';
 
 class ViewPopup extends SugarView
@@ -45,11 +43,11 @@ class ViewPopup extends SugarView
     /**
      * @var string
      */
-    public $type ='list';
+    public $type = 'list';
     /**
      * @var array
      */
-    protected $override_popup = array();
+    protected $override_popup = [];
 
     /**
      * ViewPopup constructor.
@@ -59,10 +57,8 @@ class ViewPopup extends SugarView
         parent::__construct();
     }
 
-
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function display()
     {
@@ -73,8 +69,8 @@ class ViewPopup extends SugarView
             sugar_cleanup(true);
         }
 
-        if (isset($_REQUEST['metadata']) && strpos($_REQUEST['metadata'], "..") !== false) {
-            die("Directory navigation attack denied.");
+        if (isset($_REQUEST['metadata']) && strpos($_REQUEST['metadata'], '..') !== false) {
+            die('Directory navigation attack denied.');
         }
         if (!empty($_REQUEST['metadata']) && $_REQUEST['metadata'] != 'undefined'
             && file_exists('custom/modules/' . $this->module . '/metadata/' . $_REQUEST['metadata'] . '.php')) {
@@ -95,12 +91,12 @@ class ViewPopup extends SugarView
                 $listViewDefs[$this->module] = $popupMeta['listviewdefs'];
             } else {
                 //otherwise include the file
-                require_once($popupMeta['listviewdefs']);
+                require_once $popupMeta['listviewdefs'];
             }
         } elseif (file_exists('custom/modules/' . $this->module . '/metadata/listviewdefs.php')) {
-            require_once('custom/modules/' . $this->module . '/metadata/listviewdefs.php');
+            require_once 'custom/modules/' . $this->module . '/metadata/listviewdefs.php';
         } elseif (file_exists('modules/' . $this->module . '/metadata/listviewdefs.php')) {
-            require_once('modules/' . $this->module . '/metadata/listviewdefs.php');
+            require_once 'modules/' . $this->module . '/metadata/listviewdefs.php';
         }
 
         //check for searchdefs as well
@@ -111,31 +107,31 @@ class ViewPopup extends SugarView
                 $searchdefs[$this->module]['layout']['advanced_search'] = $popupMeta['searchdefs'];
             } else {
                 //otherwise include the file
-                require_once($popupMeta['searchdefs']);
+                require_once $popupMeta['searchdefs'];
             }
         } else {
-            if (empty($searchdefs) && file_exists('custom/modules/'.$this->module.'/metadata/searchdefs.php')) {
-                require_once('custom/modules/'.$this->module.'/metadata/searchdefs.php');
+            if (empty($searchdefs) && file_exists('custom/modules/' . $this->module . '/metadata/searchdefs.php')) {
+                require_once 'custom/modules/' . $this->module . '/metadata/searchdefs.php';
             } else {
-                if (empty($searchdefs) && file_exists('modules/'.$this->module.'/metadata/searchdefs.php')) {
-                    require_once('modules/'.$this->module.'/metadata/searchdefs.php');
+                if (empty($searchdefs) && file_exists('modules/' . $this->module . '/metadata/searchdefs.php')) {
+                    require_once 'modules/' . $this->module . '/metadata/searchdefs.php';
                 }
             }
         }
 
         //if you click the pagination button, it will populate the search criteria here
-        if (!empty($this->bean) && isset($_REQUEST[$this->module.'2_'.strtoupper($this->bean->object_name).'_offset'])) {
+        if (!empty($this->bean) && isset($_REQUEST[$this->module . '2_' . strtoupper($this->bean->object_name) . '_offset'])) {
             if (!empty($_REQUEST['current_query_by_page'])) {
-                $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount',
-                    'sortOrder', 'orderBy', 'request_data', 'current_query_by_page');
+                $blockVariables = ['mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount',
+                    'sortOrder', 'orderBy', 'request_data', 'current_query_by_page'];
                 $current_query_by_page = json_decode(html_entity_decode($_REQUEST['current_query_by_page']), true);
-                foreach ($current_query_by_page as $search_key=>$search_value) {
-                    if ($search_key != $this->module.'2_'.strtoupper($this->bean->object_name).'_offset'
+                foreach ($current_query_by_page as $search_key => $search_value) {
+                    if ($search_key != $this->module . '2_' . strtoupper($this->bean->object_name) . '_offset'
                         && !in_array($search_key, $blockVariables)) {
                         if (!is_array($search_value)) {
                             $_REQUEST[$search_key] = securexss($search_value);
                         } else {
-                            foreach ($search_value as $key=>&$val) {
+                            foreach ($search_value as $key => &$val) {
                                 $val = securexss($val);
                             }
                             $_REQUEST[$search_key] = $search_value;
@@ -146,9 +142,9 @@ class ViewPopup extends SugarView
         }
 
         if (!empty($listViewDefs) && !empty($searchdefs)) {
-            require_once('include/Popups/PopupSmarty.php');
-            $displayColumns = array();
-            $filter_fields = array();
+            require_once 'include/Popups/PopupSmarty.php';
+            $displayColumns = [];
+            $filter_fields = [];
             $popup = new PopupSmarty($this->bean, $this->module);
             foreach ($listViewDefs[$this->module] as $col => $params) {
                 $filter_fields[strtolower($col)] = true;
@@ -180,7 +176,7 @@ class ViewPopup extends SugarView
             $massUpdateData = '';
             if (isset($_REQUEST['mass'])) {
                 foreach (array_unique($_REQUEST['mass']) as $record) {
-                    $massUpdateData .= "<input style='display: none' checked type='checkbox' name='mass[]' value='$record'>\n";
+                    $massUpdateData .= "<input style='display: none' checked type='checkbox' name='mass[]' value='{$record}'>\n";
                 }
             }
             $popup->massUpdateData = $massUpdateData;
@@ -215,9 +211,9 @@ class ViewPopup extends SugarView
             echo $popup->display();
         } else {
             if (file_exists('modules/' . $this->module . '/Popup_picker.php')) {
-                require_once('modules/' . $this->module . '/Popup_picker.php');
+                require_once 'modules/' . $this->module . '/Popup_picker.php';
             } else {
-                require_once('include/Popups/Popup_picker.php');
+                require_once 'include/Popups/Popup_picker.php';
             }
 
             $popup = new Popup_Picker();

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,28 +40,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/utils/array_utils.php');
-require_once('include/utils/sugar_file_utils.php');
+require_once 'include/utils/array_utils.php';
+require_once 'include/utils/sugar_file_utils.php';
 
 /**
- * Convert all \ to / in path, remove multiple '/'s and '/./'
+ * Convert all \ to / in path, remove multiple '/'s and '/./'.
+ *
  * @param string $path
+ *
  * @return string
  */
 function clean_path($path)
 {
     // clean directory/file path with a functional equivalent
     $appendpath = '';
-    if (is_windows() && strlen($path) >= 2 && $path[0].$path[1] == "\\\\") {
+    if (is_windows() && strlen($path) >= 2 && $path[0] . $path[1] == '\\\\') {
         $path = substr($path, 2);
-        $appendpath = "\\\\";
+        $appendpath = '\\\\';
     }
-    $path = str_replace("\\", "/", $path);
-    $path = str_replace("//", "/", $path);
-    $path = str_replace("/./", "/", $path);
-    return($appendpath.$path);
+    $path = str_replace('\\', '/', $path);
+    $path = str_replace('//', '/', $path);
+    $path = str_replace('/./', '/', $path);
+
+    return $appendpath . $path;
 }
 
 function create_cache_directory($file)
@@ -77,84 +78,85 @@ function create_cache_directory($file)
             sugar_mkdir($dir, 0775);
         }
     }
-    return $dir . '/'. $paths[count($paths) - 1];
+
+    return $dir . '/' . $paths[count($paths) - 1];
 }
 
 function get_module_dir_list()
 {
-    $modules = array();
+    $modules = [];
     $path = 'modules';
     $d = dir($path);
     while ($entry = $d->read()) {
         if ($entry != '..' && $entry != '.') {
-            if (is_dir($path. '/'. $entry)) {
+            if (is_dir($path . '/' . $entry)) {
                 $modules[$entry] = $entry;
             }
         }
     }
+
     return $modules;
 }
 
-function mk_temp_dir($base_dir, $prefix="")
+function mk_temp_dir($base_dir, $prefix = '')
 {
     $temp_dir = tempnam($base_dir, $prefix);
     if (!$temp_dir || !unlink($temp_dir)) {
-        return(false);
+        return false;
     }
 
     if (sugar_mkdir($temp_dir)) {
-        return($temp_dir);
+        return $temp_dir;
     }
 
-    return(false);
+    return false;
 }
 
 function remove_file_extension($filename)
 {
-    return(substr($filename, 0, strrpos($filename, ".")));
+    return substr($filename, 0, strrpos($filename, '.'));
 }
 
-function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $header='')
+function write_array_to_file($the_name, $the_array, $the_file, $mode = 'w', $header = '')
 {
     if (!empty($header) && ($mode != 'a' || !file_exists($the_file))) {
         $the_string = $header;
     } else {
-        $the_string =   "<?php\n" .
+        $the_string = "<?php\n" .
                     '// created: ' . date('Y-m-d H:i:s') . "\n";
     }
-    $the_string .=  "\$$the_name = " .
+    $the_string .= "\${$the_name} = " .
                     var_export_helper($the_array) .
-                    ";";
+                    ';';
 
     return sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
 }
 
-function write_encoded_file($soap_result, $write_to_dir, $write_to_file="")
+function write_encoded_file($soap_result, $write_to_dir, $write_to_file = '')
 {
     // this function dies when encountering an error -- use with caution!
     // the path/file is returned upon success
 
-
-
-    if ($write_to_file == "") {
-        $write_to_file = $write_to_dir . "/" . $soap_result['filename'];
+    if ($write_to_file == '') {
+        $write_to_file = $write_to_dir . '/' . $soap_result['filename'];
     }
 
     $file = $soap_result['data'];
-    $write_to_file = str_replace("\\", "/", $write_to_file);
+    $write_to_file = str_replace('\\', '/', $write_to_file);
 
     $dir_to_make = dirname($write_to_file);
     if (!is_dir($dir_to_make)) {
         mkdir_recursive($dir_to_make);
     }
-    $fh = sugar_fopen($write_to_file, "wb");
+    $fh = sugar_fopen($write_to_file, 'wb');
     fwrite($fh, base64_decode($file));
     fclose($fh);
 
     if (md5_file($write_to_file) != $soap_result['md5']) {
-        die("MD5 error after writing file $write_to_file");
+        die("MD5 error after writing file {$write_to_file}");
     }
-    return($write_to_file);
+
+    return $write_to_file;
 }
 
 function create_custom_directory($file)
@@ -170,13 +172,16 @@ function create_custom_directory($file)
             sugar_mkdir($dir, 0755);
         }
     }
-    return $dir . '/'. $paths[count($paths) - 1];
+
+    return $dir . '/' . $paths[count($paths) - 1];
 }
 
 /**
  * This function will recursively generates md5s of files and returns an array of all md5s.
+ *
  * @param string $path The path of the root directory to scan - must end with '/'
  * @param array $ignore_dirs array of filenames/directory names to ignore running md5 on - default 'cache' and 'upload'
+ *
  * @return array
  */
 function generateMD5array($path, $ignore_dirs = ['cache', 'upload', '.git', 'vendor', '.idea'])
@@ -219,26 +224,25 @@ function generateMD5array($path, $ignore_dirs = ['cache', 'upload', '.git', 'ven
 }
 
 /**
- * Function to compare two directory structures and return the items in path_a that didn't match in path_b
+ * Function to compare two directory structures and return the items in path_a that didn't match in path_b.
  *
  * @param	$path_a The path of the first root directory to scan - must end with '/'
  * @param	$path_b The path of the second root directory to scan - must end with '/'
  * @param	$ignore_dirs array of filenames/directory names to ignore running md5 on - default 'cache' and 'upload'
  * @result	array containing all the md5s of everything in $path_a that didn't have a match in $path_b
  */
-function md5DirCompare($path_a, $path_b, $ignore_dirs = array('cache', 'upload'))
+function md5DirCompare($path_a, $path_b, $ignore_dirs = ['cache', 'upload'])
 {
     $md5array_a = generateMD5array($path_a, $ignore_dirs);
     $md5array_b = generateMD5array($path_b, $ignore_dirs);
 
-    $result = array_diff($md5array_a, $md5array_b);
-
-    return $result;
+    return array_diff($md5array_a, $md5array_b);
 }
 
 /**
  * Function to retrieve all file names of matching pattern in a directory (and it's subdirectories)
- * example: getFiles($arr, './modules', '.+/EditView.php/'); // grabs all EditView.phps
+ * example: getFiles($arr, './modules', '.+/EditView.php/'); // grabs all EditView.phps.
+ *
  * @param array $arr return array to populate matches
  * @param string $dir directory to look in [ USE ./ in front of the $dir! ]
  * @param regex $pattern optional pattern to match against
@@ -249,7 +253,7 @@ function getFiles(&$arr, $dir, $pattern = null)
         return;
     }
     $d = dir($dir);
-    while ($e =$d->read()) {
+    while ($e = $d->read()) {
         if (substr($e, 0, 1) == '.') {
             continue;
         }
@@ -270,13 +274,14 @@ function getFiles(&$arr, $dir, $pattern = null)
 
 /**
  * Function to split up large files for download
- * used in download.php
+ * used in download.php.
+ *
  * @param string $filename
  * @param int $retbytes
  */
-function readfile_chunked($filename, $retbytes=true)
+function readfile_chunked($filename, $retbytes = true)
 {
-    $chunksize = 1*(1024*1024); // how many bytes per chunk
+    $chunksize = 1 * (1024 * 1024); // how many bytes per chunk
     $buffer = '';
     $cnt = 0;
     $handle = sugar_fopen($filename, 'rb');
@@ -295,11 +300,13 @@ function readfile_chunked($filename, $retbytes=true)
     if ($retbytes && $status) {
         return $cnt; // return num. bytes delivered like readfile() does.
     }
+
     return $status;
 }
 /**
  * Renames a file. If $new_file already exists, it will first unlink it and then rename it.
- * used in SugarLogger.php
+ * used in SugarLogger.php.
+ *
  * @param string $old_filename
  * @param string $new_filename
  */
@@ -323,6 +330,7 @@ function fileToHash($file)
 {
     $hash = md5($file);
     $_SESSION['file2Hash'][$hash] = $file;
+
     return $hash;
 }
 
@@ -331,21 +339,20 @@ function hashToFile($hash)
     if (!empty($_SESSION['file2Hash'][$hash])) {
         return $_SESSION['file2Hash'][$hash];
     }
+
     return false;
 }
 
-
-
 /**
  * get_file_extension
- * This function returns the file extension portion of a given filename
+ * This function returns the file extension portion of a given filename.
  *
  * @param $filename String of filename to return extension
  * @param $string_to_lower boolean value indicating whether or not to return value as lowercase, true by default
  *
  * @return extension String value, blank if no extension found
  */
-function get_file_extension($filename, $string_to_lower=true)
+function get_file_extension($filename, $string_to_lower = true)
 {
     $ret = '';
 
@@ -363,7 +370,6 @@ function get_file_extension($filename, $string_to_lower=true)
     return $ret;
 }
 
-
 /**
  * get_mime_content_type_from_filename
  * This function is similar to mime_content_type, but does not require a real
@@ -371,13 +377,13 @@ function get_file_extension($filename, $string_to_lower=true)
  * extension and returns a best guess mime content type.
  *
  * @param $filename String of filename to return mime content type
- * @return mime content type as String value (defaults to 'application/octet-stream' for filenames with extension, empty otherwise)
  *
+ * @return mime content type as String value (defaults to 'application/octet-stream' for filenames with extension, empty otherwise)
  */
 function get_mime_content_type_from_filename($filename)
 {
     if (strpos($filename, '.') !== false) {
-        $mime_types = array(
+        $mime_types = [
             'txt' => 'text/plain',
             'htm' => 'text/html',
             'html' => 'text/html',
@@ -430,7 +436,7 @@ function get_mime_content_type_from_filename($filename)
             // open office
             'odt' => 'application/vnd.oasis.opendocument.text',
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-        );
+        ];
 
         $exp = explode('.', $filename);
         $pop = array_pop($exp);
@@ -472,10 +478,12 @@ function cleanFileName($name)
 
 /**
  * Filter dir name to not contain path components - no slashes, no .., etc.
+ *
  * @param string $name
+ *
  * @return string
  */
 function cleanDirName($name)
 {
-    return str_replace(array("\\", "/", "."), "", $name);
+    return str_replace(['\\', '/', '.'], '', $name);
 }

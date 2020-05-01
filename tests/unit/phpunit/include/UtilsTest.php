@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -48,61 +47,63 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 include_once __DIR__ . '/../../../../include/utils.php';
 
+/**
+ * @internal
+ */
 class UtilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testGetAppString()
     {
         global $app_strings;
-        
+
         // setup: test works only if it is not exists
         $this->assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
-        
+
         // test if label is not set
-        
+
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
+
         // test if label is empty (bool:false)
-        
+
         $app_strings['TEST_NONEXISTS_LABEL'] = '';
-        
+
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
+
         // test if it founds
-        
+
         $app_strings['TEST_NONEXISTS_LABEL'] = 'Hello test';
-        
+
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('Hello test', $result);
-        
 
         unset($app_strings['TEST_NONEXISTS_LABEL']);
     }
 
     public function testencodeMultienumValue()
     {
-        $this->assertEquals('', encodeMultienumValue(array()));
-        $this->assertEquals('^foo^', encodeMultienumValue(array('foo')));
-        $this->assertEquals('^foo^,^bar^', encodeMultienumValue(array('foo', 'bar')));
+        $this->assertEquals('', encodeMultienumValue([]));
+        $this->assertEquals('^foo^', encodeMultienumValue(['foo']));
+        $this->assertEquals('^foo^,^bar^', encodeMultienumValue(['foo', 'bar']));
     }
 
     public function testunencodeMultienum()
     {
-        $this->assertEquals(array('foo'), unencodeMultienum('^foo^'));
-        $this->assertEquals(array('foo', 'bar'), unencodeMultienum('^foo^,^bar^'));
+        $this->assertEquals(['foo'], unencodeMultienum('^foo^'));
+        $this->assertEquals(['foo', 'bar'], unencodeMultienum('^foo^,^bar^'));
         // Will return the same array if given an array.
-        $this->assertEquals(array('foo', 'bar'), unencodeMultienum(['foo', 'bar']));
+        $this->assertEquals(['foo', 'bar'], unencodeMultienum(['foo', 'bar']));
     }
 
-    public function testget_languages()
+    public function testgetLanguages()
     {
         $this->assertEquals(['en_us' => 'English (US)'], get_languages());
         $this->assertEquals(['en_us' => 'English (US)'], get_all_languages());
         $this->assertEquals('English (US)', get_language_display('en_us'));
     }
 
-    public function testget_current_language()
+    public function testgetCurrentLanguage()
     {
         global $sugar_config;
 
@@ -116,7 +117,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('bar', get_current_language());
     }
 
-    public function testis_admin()
+    public function testisAdmin()
     {
         // Returns true if the user is an admin.
         $user = new \User();
@@ -131,8 +132,8 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         // Returns false if no user object is passed.
         $this->assertFalse(is_admin(null));
     }
-  
-    public function testcheck_php_version()
+
+    public function testcheckPhpVersion()
     {
         // These are used because the tests would fail if the supported
         // versions changed, and the constants can't be redefined. So we
@@ -142,20 +143,20 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         $recommendedVersion = '7.1.0';
 
         // Returns -1 when the version is less than the minimum version.
-        $this->assertEquals(-1, check_php_version("5.4.0", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(-1, check_php_version('5.4.0', $minimumVersion, $recommendedVersion));
 
         // Returns 0 when the version is above the minimum but below the recommended version.
-        $this->assertEquals(0, check_php_version("7.0.0", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(0, check_php_version('7.0.0', $minimumVersion, $recommendedVersion));
 
         // Returns 1 when the version is at or above the recommended version.
-        $this->assertEquals(1, check_php_version("7.1.0", $minimumVersion, $recommendedVersion));
-        $this->assertEquals(1, check_php_version("7.2.0", $minimumVersion, $recommendedVersion));
-        $this->assertEquals(1, check_php_version("8.0.0", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version('7.1.0', $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version('7.2.0', $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version('8.0.0', $minimumVersion, $recommendedVersion));
         // Handles versions with a `-dev` suffix correctly.
-        $this->assertEquals(1, check_php_version("7.4.0-dev", $minimumVersion, $recommendedVersion));
+        $this->assertEquals(1, check_php_version('7.4.0-dev', $minimumVersion, $recommendedVersion));
     }
 
-    public function testreturn_bytes()
+    public function testreturnBytes()
     {
         // Test bytes. If you input just '8', it'll output 8.
         $this->assertEquals(8, return_bytes('8'));

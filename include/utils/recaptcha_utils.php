@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
        die('Not A Valid Entry Point');
 }
 
-use \ReCaptcha\ReCaptcha as ReCaptcha;
-use \ReCaptcha\Response as Response;
+use ReCaptcha\ReCaptcha as ReCaptcha;
+use ReCaptcha\Response as Response;
 use SuiteCRM\Utility\SuiteLogger as SuiteLogger;
 
 /**
- * @return array|null
+ * @return null|array
  */
 function getRecaptchaSettings()
 {
@@ -59,7 +57,9 @@ function getRecaptchaSettings()
 
 /**
  * @param array $settings
+ *
  * @see getRecaptchaSettings()
+ *
  * @return bool|string false if setting is not found
  */
 function getRecaptchaSiteKey(array $settings)
@@ -77,7 +77,9 @@ function getRecaptchaChallengeField()
 
 /**
  * @param array $settings
+ *
  * @see getRecaptchaSettings()
+ *
  * @return bool|string false if setting is not found
  */
 function getRecaptchaPrivateKey(array $settings)
@@ -87,7 +89,9 @@ function getRecaptchaPrivateKey(array $settings)
 
 /**
  * @param array $settings
+ *
  * @see getRecaptchaSettings()
+ *
  * @return bool|string false if setting is not found
  */
 function getRecaptchaEnabled(array $settings)
@@ -97,7 +101,9 @@ function getRecaptchaEnabled(array $settings)
 
 /**
  * @param array $settings
+ *
  * @see getRecaptchaSettings()
+ *
  * @return bool
  */
 function isRecaptchaEnabled(array $settings)
@@ -106,7 +112,7 @@ function isRecaptchaEnabled(array $settings)
 }
 
 /**
- * @return string|null
+ * @return null|string
  */
 function getRecapthaResponse()
 {
@@ -114,7 +120,7 @@ function getRecapthaResponse()
 }
 
 /**
- * @return string|null
+ * @return null|string
  */
 function getRemoteIpAddress()
 {
@@ -125,6 +131,7 @@ function getRemoteIpAddress()
  * @param ReCaptcha $reCaptcha
  * @param string $response
  * @param string $remoteIpAddress
+ *
  * @return Response
  */
 function verifyRecapthaResponse(ReCaptcha $reCaptcha, $response, $remoteIpAddress)
@@ -134,6 +141,7 @@ function verifyRecapthaResponse(ReCaptcha $reCaptcha, $response, $remoteIpAddres
 
 /**
  * @param Response $response
+ *
  * @return bool
  */
 function isRecapthaResponseVerified(Response $response)
@@ -143,6 +151,7 @@ function isRecapthaResponseVerified(Response $response)
 
 /**
  * @param Response $response
+ *
  * @return string
  */
 function getRecaptchaErrors(Response $response)
@@ -186,9 +195,9 @@ function displayRecaptchaValidation()
     if (!isRecapthaResponseVerified($response)) {
         $log->warning(
             'FAILED TO VERIFY RECAPCHA, ip[{remoteIpAddress}]',
-            array(
+            [
                 'remoteIpAddress' => getRemoteIpAddress()
-            )
+            ]
         );
 
         return getRecaptchaErrors($response);
@@ -213,6 +222,7 @@ function displayRecaptcha()
         || empty(getRecaptchaPrivateKey($settings))
     ) {
         $log->info('Captcha Settings are disabled');
+
         return $captchaContentTemplate->fetch(__DIR__ . '/recaptcha_disabled.tpl');
     }
 

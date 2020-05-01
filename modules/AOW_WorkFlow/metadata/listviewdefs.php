@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,55 +18,47 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-$listViewDefs ['AOW_WorkFlow'] =
-array(
-  'NAME' =>
-  array(
-    'width' => '15%',
-    'label' => 'LBL_NAME',
-    'default' => true,
-    'link' => true,
-  ),
-  'FLOW_MODULE' =>
-  array(
-    'type' => 'enum',
-    'default' => true,
-    'studio' => 'visible',
-    'label' => 'LBL_FLOW_MODULE',
-    'width' => '15%',
-  ),
-  'STATUS' =>
-  array(
-    'type' => 'enum',
-    'default' => true,
-    'studio' => 'visible',
-    'label' => 'LBL_STATUS',
-    'width' => '15%',
-  ),
-  'ASSIGNED_USER_NAME' =>
-  array(
-    'width' => '15%',
-    'label' => 'LBL_ASSIGNED_TO_NAME',
-    'module' => 'Employees',
-    'id' => 'ASSIGNED_USER_ID',
-    'default' => true,
-  ),
-  'DATE_ENTERED' =>
-  array(
-    'type' => 'datetime',
-    'label' => 'LBL_DATE_ENTERED',
-    'width' => '15%',
-    'default' => true,
-  ),
-  'DATE_MODIFIED' =>
-  array(
-    'type' => 'datetime',
-    'label' => 'LBL_DATE_MODIFIED',
-    'width' => '10%',
-    'default' => true,
-  ),
-);
+$listViewDefs['AOW_WorkFlow'] =
+[
+    'NAME' => [
+        'width' => '15%',
+        'label' => 'LBL_NAME',
+        'default' => true,
+        'link' => true,
+    ],
+    'FLOW_MODULE' => [
+        'type' => 'enum',
+        'default' => true,
+        'studio' => 'visible',
+        'label' => 'LBL_FLOW_MODULE',
+        'width' => '15%',
+    ],
+    'STATUS' => [
+        'type' => 'enum',
+        'default' => true,
+        'studio' => 'visible',
+        'label' => 'LBL_STATUS',
+        'width' => '15%',
+    ],
+    'ASSIGNED_USER_NAME' => [
+        'width' => '15%',
+        'label' => 'LBL_ASSIGNED_TO_NAME',
+        'module' => 'Employees',
+        'id' => 'ASSIGNED_USER_ID',
+        'default' => true,
+    ],
+    'DATE_ENTERED' => [
+        'type' => 'datetime',
+        'label' => 'LBL_DATE_ENTERED',
+        'width' => '15%',
+        'default' => true,
+    ],
+    'DATE_MODIFIED' => [
+        'type' => 'datetime',
+        'label' => 'LBL_DATE_MODIFIED',
+        'width' => '10%',
+        'default' => true,
+    ],
+];

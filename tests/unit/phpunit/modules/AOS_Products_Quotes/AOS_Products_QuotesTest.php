@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -33,18 +36,18 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testsave_lines()
+    public function testsaveLines()
     {
         DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
 
         $aosProductsQuotes = new AOS_Products_Quotes();
 
         //populate required values
-        $post_data = array();
-        $post_data['name'] = array('test1', 'test2');
-        $post_data['group_number'] = array('1', '2');
-        $post_data['product_id'] = array('1', '1');
-        $post_data['product_unit_price'] = array(100, 200);
+        $post_data = [];
+        $post_data['name'] = ['test1', 'test2'];
+        $post_data['group_number'] = ['1', '2'];
+        $post_data['product_id'] = ['1', '1'];
+        $post_data['product_unit_price'] = [100, 200];
 
         //create parent bean
         $aosQuote = new AOS_Quotes();
@@ -57,7 +60,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(count($post_data['name']), count($product_quote_lines));
     }
 
-    public function testAOS_Products_Quotes()
+    public function testAOSProductsQuotes()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosProductsQuotes = new AOS_Products_Quotes();
@@ -73,7 +76,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $aosProductsQuotes);
     }
 
-    public function testmark_lines_deleted()
+    public function testmarkLinesDeleted()
     {
         $aosProductsQuotes = new AOS_Products_Quotes();
 

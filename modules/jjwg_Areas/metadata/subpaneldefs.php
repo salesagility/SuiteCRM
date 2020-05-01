@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$layout_defs['jjwg_Areas'] = array(
-    'subpanel_setup' => array(
-        'jjwg_maps_jjwg_areas' => array(
+$layout_defs['jjwg_Areas'] = [
+    'subpanel_setup' => [
+        'jjwg_maps_jjwg_areas' => [
             'order' => 100,
             'module' => 'jjwg_Maps',
             'subpanel_name' => 'default',
@@ -51,19 +52,15 @@ $layout_defs['jjwg_Areas'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_JJWG_MAPS_JJWG_AREAS_FROM_JJWG_MAPS_TITLE',
             'get_subpanel_data' => 'jjwg_maps_jjwg_areas',
-            'top_buttons' =>
-                array(
-                    0 =>
-                        array(
-                            'widget_class' => 'SubPanelTopCreateButton',
-                        ),
-                    1 =>
-                        array(
-                            'widget_class' => 'SubPanelTopSelectButton',
-                            'mode' => 'MultiSelect',
-                        ),
-                ),
-        ),
-
-    ),
-);
+            'top_buttons' => [
+                0 => [
+                    'widget_class' => 'SubPanelTopCreateButton',
+                ],
+                1 => [
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+    ],
+];

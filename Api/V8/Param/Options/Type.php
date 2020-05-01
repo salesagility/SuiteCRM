@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -7,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Type extends BaseOption
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add(OptionsResolver $resolver)
     {

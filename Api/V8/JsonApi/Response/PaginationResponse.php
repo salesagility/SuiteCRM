@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Response;
 
 class PaginationResponse extends LinksResponse
@@ -88,7 +89,7 @@ class PaginationResponse extends LinksResponse
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function jsonSerialize()
     {

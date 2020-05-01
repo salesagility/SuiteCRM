@@ -5,12 +5,12 @@ use Faker\Generator;
 class ContractsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class ContractsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the contracts module.
+     * As an administrator I want to view the contracts module
      */
     public function testScenarioViewContractsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the contracts module for testing');
 
@@ -55,14 +55,14 @@ class ContractsCest
      * @param \Step\Acceptance\AccountsTester $account
      *
      * As administrative user I want to create a contract so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateContract(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Contracts $contract,
-        \Step\Acceptance\AccountsTester $account
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Contracts $contract,
+        Step\Acceptance\AccountsTester $account
     ) {
         $I->wantTo('Create a Contract');
 
@@ -73,7 +73,7 @@ class ContractsCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $account_name = 'Test_'. $this->fakeData->company();
+        $account_name = 'Test_' . $this->fakeData->company();
         $account->createAccount($account_name);
 
         // Navigate to contracts list-view
@@ -82,7 +82,7 @@ class ContractsCest
 
         // Create contract
         $this->fakeData->seed($this->fakeDataSeed);
-        $contract->createContract('Test_'. $this->fakeData->company(), $account_name);
+        $contract->createContract('Test_' . $this->fakeData->company(), $account_name);
 
         // Delete contract
         $detailView->clickActionMenuItem('Delete');

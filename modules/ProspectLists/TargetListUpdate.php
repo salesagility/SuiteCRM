@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,7 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /*
  ARGS:
 
@@ -55,38 +54,38 @@ require_once 'include/formbase.php';
 
 global $beanFiles,$beanList;
 $bean_name = $beanList[$_REQUEST['module']];
-require_once($beanFiles[$bean_name]);
+require_once $beanFiles[$bean_name];
 $focus = new $bean_name();
 
-$uids = array();
+$uids = [];
 if ($_REQUEST['select_entire_list'] == '1') {
     $order_by = '';
 
-    require_once('include/MassUpdate.php');
+    require_once 'include/MassUpdate.php';
     $mass = new MassUpdate();
     $mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_query_by_page']);
     $ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
-    /* BEGIN - SECURITY GROUPS */
+    // BEGIN - SECURITY GROUPS
     //need to hijack the $ret_array['where'] of securitygorup required
     if ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup($focus->module_dir, 'list')) {
-        require_once('modules/SecurityGroups/SecurityGroup.php');
+        require_once 'modules/SecurityGroups/SecurityGroup.php';
         global $current_user;
         $owner_where = $focus->getOwnerWhere($current_user->id);
         $group_where = SecurityGroup::getGroupWhere($focus->table_name, $focus->module_dir, $current_user->id);
         if (!empty($owner_where)) {
             if (empty($ret_array['where'])) {
-                $ret_array['where'] = " (".  $owner_where." or ".$group_where.") ";
+                $ret_array['where'] = ' (' . $owner_where . ' or ' . $group_where . ') ';
             } else {
-                $ret_array['where'] .= " AND (".  $owner_where." or ".$group_where.") ";
+                $ret_array['where'] .= ' AND (' . $owner_where . ' or ' . $group_where . ') ';
             }
         } else {
-            $ret_array['where'] .= ' AND '.  $group_where;
+            $ret_array['where'] .= ' AND ' . $group_where;
         }
     }
-    /* END - SECURITY GROUPS */
+    // END - SECURITY GROUPS
     $query = $focus->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
     $result = DBManagerFactory::getInstance()->query($query, true);
-    $uids = array();
+    $uids = [];
     while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
         array_push($uids, $val['id']);
     }
@@ -98,15 +97,17 @@ if ($_REQUEST['select_entire_list'] == '1') {
 $relationship = '';
 foreach ($focus->get_linked_fields() as $field => $def) {
     if ($focus->load_relationship($field)) {
-        if ($focus->$field->getRelatedModuleName() == 'ProspectLists') {
+        if ($focus->{$field}->getRelatedModuleName() == 'ProspectLists') {
             $relationship = $field;
+
             break;
-            $relationship ='';
+            $relationship = '';
             foreach ($focus->get_linked_fields() as $field => $def) {
                 if ($focus->load_relationship($field)) {
-                    if ($focus->$field->getRelatedModuleName() == 'ProspectLists') {
+                    if ($focus->{$field}->getRelatedModuleName() == 'ProspectLists') {
                         $relationship = $field;
                     }
+
                     break;
                 }
             }
@@ -121,7 +122,6 @@ if ($relationship != '') {
         $focus->prospect_lists->add($_REQUEST['prospect_list']);
     }
 }
-
 
 if ($relationship != '') {
     foreach ($uids as $id) {
@@ -138,7 +138,6 @@ if ($relationship != '') {
         }
     }
 }
-
 
 handleRedirect();
 exit;

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('soap/SoapHelperFunctions.php');
+require_once 'soap/SoapHelperFunctions.php';
 class MailMergeController extends SugarController
 {
     public function __construct()
@@ -46,13 +44,10 @@ class MailMergeController extends SugarController
         parent::__construct();
     }
 
-
-
-
     public function action_search()
     {
         global $beanList;
-        
+
         //set ajax view
         $this->view = 'ajax';
         //get the module
@@ -63,9 +58,9 @@ class MailMergeController extends SugarController
         $term = !empty($_REQUEST['term']) ? DBManagerFactory::getInstance()->quote($_REQUEST['term']) : '';
 
         $max = !empty($_REQUEST['max']) ? $_REQUEST['max'] : 10;
-        $order_by = !empty($_REQUEST['order_by']) ? $_REQUEST['order_by'] : $lmodule.".name";
+        $order_by = !empty($_REQUEST['order_by']) ? $_REQUEST['order_by'] : $lmodule . '.name';
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
-        $response = array();
+        $response = [];
 
         if (!empty($module)) {
             $where = '';
@@ -74,10 +69,10 @@ class MailMergeController extends SugarController
 
             if (!empty($term)) {
                 if ($module == 'Contacts' || $module == 'Leads') {
-                    $where = $lmodule.".first_name like '%".$term."%' OR ".$lmodule.".last_name like '%".$term."%'";
-                    $order_by = $lmodule.".last_name";
+                    $where = $lmodule . ".first_name like '%" . $term . "%' OR " . $lmodule . ".last_name like '%" . $term . "%'";
+                    $order_by = $lmodule . '.last_name';
                 } else {
-                    $where = $lmodule.".name like '".$term."%'";
+                    $where = $lmodule . ".name like '" . $term . "%'";
                 }
             }
 
@@ -101,7 +96,7 @@ class MailMergeController extends SugarController
             $seed = SugarModule::get($module)->loadBean();
 
             if ($using_cp) {
-                $fields = array('id', 'first_name', 'last_name');
+                $fields = ['id', 'first_name', 'last_name'];
                 $dataList = $seed->retrieveTargetList($where, $fields, $offset, -1, $max, $deleted);
             } else {
                 $dataList = $seed->get_list($order_by, $where, $offset, -1, $max, $deleted);
@@ -110,16 +105,16 @@ class MailMergeController extends SugarController
             $list = $dataList['list'];
             $row_count = $dataList['row_count'];
 
-            $output_list = array();
+            $output_list = [];
             foreach ($list as $value) {
                 $output_list[] = get_return_value($value, $module);
             }
 
-            $response['result'] = array('result_count'=>$row_count,'entry_list'=>$output_list);
+            $response['result'] = ['result_count' => $row_count, 'entry_list' => $output_list];
         }
 
         $json = getJSONobj();
         $json_response = $json->encode($response, true);
-        print $json_response;
+        echo $json_response;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class UserPreferencesController extends SugarController
 {
     public function action_save_rich_text_preferences()
@@ -47,12 +44,12 @@ class UserPreferencesController extends SugarController
         global $current_user;
         if (!empty($current_user)) {
             $height = isset($_REQUEST['height']) ? $_REQUEST['height'] : '325px';
-            $width =  isset($_REQUEST['width']) ? $_REQUEST['width'] : '95%';
+            $width = isset($_REQUEST['width']) ? $_REQUEST['width'] : '95%';
             $current_user->setPreference('text_editor_height', $height);
             $current_user->setPreference('text_editor_width', $width);
             $current_user->savePreferencesToDB();
             $json = getJSONobj();
-            $retArray = array();
+            $retArray = [];
             $retArray['height'] = $height;
             $retArray['width'] = $width;
             echo 'result = ' . $json->encode($retArray);

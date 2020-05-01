@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,14 +36,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 
 class SugarFieldDatetime extends SugarFieldBase
 {
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
-
         // Create Smarty variables for the Calendar picker widget
         if (!isset($displayParams['showMinutesDropdown'])) {
             $displayParams['showMinutesDropdown'] = false;
@@ -65,7 +62,7 @@ class SugarFieldDatetime extends SugarFieldBase
         if (!isset($displayParams['hiddeCalendar'])) {
             $displayParams['hiddeCalendar'] = false;
         }
-        
+
         // jpereira@dri - #Bug49552 - Datetime field unable to follow parent class methods
         //jchi , bug #24557 , 10/31/2008
         if (isset($vardef['name']) && ($vardef['name'] == 'date_entered' || $vardef['name'] == 'date_modified')) {
@@ -85,16 +82,16 @@ class SugarFieldDatetime extends SugarFieldBase
         $displayParams['hiddeCalendar'] = false;
 
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
         return $this->fetch($this->findTemplate('EditView'));
     }
-
 
     public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if ($this->isRangeSearchView($vardef)) {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             $id = isset($displayParams['idName']) ? $displayParams['idName'] : $vardef['name'];
-            $this->ss->assign('original_id', (string)($id));
+            $this->ss->assign('original_id', (string) ($id));
             $this->ss->assign('id_range', "range_{$id}");
             $this->ss->assign('id_range_start', "start_range_{$id}");
             $this->ss->assign('id_range_end', "end_range_{$id}");
@@ -102,8 +99,10 @@ class SugarFieldDatetime extends SugarFieldBase
             if (file_exists('custom/include/SugarFields/Fields/Datetimecombo/RangeSearchForm.tpl')) {
                 return $this->fetch('custom/include/SugarFields/Fields/Datetimecombo/RangeSearchForm.tpl');
             }
+
             return $this->fetch('include/SugarFields/Fields/Datetimecombo/RangeSearchForm.tpl');
         }
+
         return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'EditView');
     }
 
@@ -122,38 +121,42 @@ class SugarFieldDatetime extends SugarFieldBase
             }
             // convert without TZ
             return $timedate->to_display($inputField, $timedate->get_db_date_format(), $timedate->get_date_format($user));
-        } else {
-            if (!$timedate->check_matching_format($inputField, TimeDate::DB_DATETIME_FORMAT)) {
-                return $inputField;
-            }
-            return $timedate->to_display_date_time($inputField, true, true, $user);
         }
+        if (!$timedate->check_matching_format($inputField, TimeDate::DB_DATETIME_FORMAT)) {
+            return $inputField;
+        }
+
+        return $timedate->to_display_date_time($inputField, true, true, $user);
     }
 
     public function save(&$bean, $inputData, $field, $def, $prefix = '')
     {
         global $timedate;
-        if (!isset($inputData[$prefix.$field])) {
+        if (!isset($inputData[$prefix . $field])) {
             return;
         }
 
-        $offset = strlen(trim($inputData[$prefix.$field])) < 11 ? false : true;
-        if ($timedate->check_matching_format($inputData[$prefix.$field], TimeDate::DB_DATE_FORMAT)) {
-            $bean->$field = $inputData[$prefix.$field];
+        $offset = strlen(trim($inputData[$prefix . $field])) < 11 ? false : true;
+        if ($timedate->check_matching_format($inputData[$prefix . $field], TimeDate::DB_DATE_FORMAT)) {
+            $bean->{$field} = $inputData[$prefix . $field];
         } else {
-            $bean->$field = $timedate->to_db_date($inputData[$prefix.$field], $offset);
+            $bean->{$field} = $timedate->to_db_date($inputData[$prefix . $field], $offset);
         }
     }
 
     /**
      * @see SugarFieldBase::importSanitize()
+     *
+     * @param mixed $value
+     * @param mixed $vardef
+     * @param mixed $focus
      */
     public function importSanitize(
         $value,
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
+    ) {
         global $timedate;
 
         $format = $timedate->merge_date_time($settings->dateformat, $settings->timeformat);
@@ -176,7 +179,7 @@ class SugarFieldDatetime extends SugarFieldBase
                     // is kind of reasonable - no sane time format puts seconds first
                     $timeparts = explode($sep, $timepart);
                     if (!empty($timeparts[2])) {
-                        $timepart = implode($sep, array($timeparts[0], $timeparts[1]));
+                        $timepart = implode($sep, [$timeparts[0], $timeparts[1]]);
                     }
                 }
             }
@@ -192,9 +195,9 @@ class SugarFieldDatetime extends SugarFieldBase
         } catch (Exception $e) {
             return false;
         }
+
         return $date->asDb();
     }
-
 
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
@@ -203,7 +206,6 @@ class SugarFieldDatetime extends SugarFieldBase
         //check to see if the date is in the proper format
         $user_dateFormat = $timedate->get_date_format();
         if (!empty($vardef['value']) && !$timedate->check_matching_format($vardef['value'], $user_dateFormat)) {
-
             //date is not in proper user format, so get the SugarDateTiemObject and inject the vardef with a new element
             $sdt = $timedate->fromString($vardef['value'], $current_user);
 

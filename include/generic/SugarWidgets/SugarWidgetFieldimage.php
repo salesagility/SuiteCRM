@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class SugarWidgetFieldImage extends SugarWidgetFieldVarchar
 {
     public function displayListPlain($layout_def)
     {
         $value = $this->_get_list_value($layout_def);
-        return "<a href=\"javascript:SUGAR.image.lightbox('index.php?entryPoint=download&id=$value&type=SugarFieldImage&isTempFile=1')\">"
-               . translate("LBL_VIEW_IMAGE") . '</a>';
+
+        return "<a href=\"javascript:SUGAR.image.lightbox('index.php?entryPoint=download&id={$value}&type=SugarFieldImage&isTempFile=1')\">"
+               . translate('LBL_VIEW_IMAGE') . '</a>';
     }
 }

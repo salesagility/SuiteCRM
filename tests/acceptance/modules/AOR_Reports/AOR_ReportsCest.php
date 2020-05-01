@@ -5,12 +5,12 @@ use Faker\Generator;
 class AOR_ReportsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -32,12 +32,12 @@ class AOR_ReportsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Reports $reports
      *
-     * As an administrator I want to view the reports module.
+     * As an administrator I want to view the reports module
      */
     public function testScenarioViewReportsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Reports $reports
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Reports $reports
     ) {
         $I->wantTo('View the reports module for testing');
 
@@ -58,15 +58,15 @@ class AOR_ReportsCest
      * @param \Step\Acceptance\Reports $reports
      *
      * As administrative user I want to create a report with the reports module so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateReport(
-        \AcceptanceTester $I,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\SideBar $sidebar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Reports $reports
+        AcceptanceTester $I,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\SideBar $sidebar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Reports $reports
     ) {
         $I->wantTo('Create a Report');
 
@@ -81,7 +81,7 @@ class AOR_ReportsCest
 
         // Create a report
         $this->fakeData->seed($this->fakeDataSeed);
-        $reports->createReport('Test_'. $this->fakeData->company(), 'Accounts');
+        $reports->createReport('Test_' . $this->fakeData->company(), 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
@@ -102,12 +102,12 @@ class AOR_ReportsCest
      * As administrative user I want to view the report by selecting it in the list view
      */
     public function testScenarioViewReportFromListView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\SideBar $sidebar,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\Reports $reports
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\SideBar $sidebar,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\Reports $reports
     ) {
         $I->wantTo('Select Report from list view');
 
@@ -122,7 +122,7 @@ class AOR_ReportsCest
 
         // Create a report
         $this->fakeData->seed($this->fakeDataSeed);
-        $reportName = 'Test_'. $this->fakeData->company();
+        $reportName = 'Test_' . $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -150,12 +150,12 @@ class AOR_ReportsCest
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditReportFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\SideBar $sidebar,
-        \Step\Acceptance\Reports $reports
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\SideBar $sidebar,
+        Step\Acceptance\Reports $reports
     ) {
         $I->wantTo('Edit a Report from the detail view');
 
@@ -170,7 +170,7 @@ class AOR_ReportsCest
 
         // Create a report
         $this->fakeData->seed($this->fakeDataSeed);
-        $reportName = 'Test_'. $this->fakeData->company();
+        $reportName = 'Test_' . $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -199,12 +199,12 @@ class AOR_ReportsCest
      * As administrative user I want to duplicate the report
      */
     public function testScenarioDuplicateReportFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\SideBar $sidebar,
-        \Step\Acceptance\Reports $reports
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\SideBar $sidebar,
+        Step\Acceptance\Reports $reports
     ) {
         $I->wantTo('Duplicate Report from detail view');
 
@@ -219,7 +219,7 @@ class AOR_ReportsCest
 
         // Create a report
         $this->fakeData->seed($this->fakeDataSeed);
-        $reportName = 'Test_'. $this->fakeData->company();
+        $reportName = 'Test_' . $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -250,12 +250,12 @@ class AOR_ReportsCest
      * As administrative user I want to delete the report by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\SideBar $sidebar,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\Reports $reports
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\SideBar $sidebar,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\Reports $reports
     ) {
         $I->wantTo('Delete Report from detail view');
 
@@ -270,7 +270,7 @@ class AOR_ReportsCest
 
         // Create a report
         $this->fakeData->seed($this->fakeDataSeed);
-        $reportName = 'Test_'. $this->fakeData->company();
+        $reportName = 'Test_' . $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();

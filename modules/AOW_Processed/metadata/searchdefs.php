@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,25 +18,22 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
-  $searchdefs['AOW_Processed'] = array(
-                    'templateMeta' => array(
-                            'maxColumns' => '3',
-                            'maxColumnsBasic' => '4',
-                            'widths' => array('label' => '10', 'field' => '30'),
-                           ),
-                    'layout' => array(
-                        'basic_search' => array(
-                            'aow_workflow',
-                            ),
-                        'advanced_search' => array(
-                            'aow_workflow',
-                            'parent_name',
-                            'status'
-                        ),
-                    ),
-               );
+  $searchdefs['AOW_Processed'] = [
+      'templateMeta' => [
+          'maxColumns' => '3',
+          'maxColumnsBasic' => '4',
+          'widths' => ['label' => '10', 'field' => '30'],
+      ],
+      'layout' => [
+          'basic_search' => [
+              'aow_workflow',
+          ],
+          'advanced_search' => [
+              'aow_workflow',
+              'parent_name',
+              'status'
+          ],
+      ],
+  ];

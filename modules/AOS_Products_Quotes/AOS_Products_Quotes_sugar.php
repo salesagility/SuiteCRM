@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -83,14 +82,10 @@ class AOS_Products_Quotes_sugar extends Basic
     public $number;
     public $currency_id;
 
-
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function bean_implements($interface)
     {
@@ -98,6 +93,7 @@ class AOS_Products_Quotes_sugar extends Basic
             case 'ACL':
                 return false;
         }
+
         return false;
     }
 }

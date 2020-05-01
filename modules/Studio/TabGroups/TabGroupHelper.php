@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-require_once('modules/Administration/Common.php');
+require_once 'modules/Administration/Common.php';
 class TabGroupHelper
 {
-    public $modules = array();
+    public $modules = [];
+
     public function getAvailableModules($lang = '')
     {
-        static $availableModules = array();
+        static $availableModules = [];
         if (!empty($availableModules)) {
             return $availableModules;
         }
@@ -59,12 +56,13 @@ class TabGroupHelper
             $specifyLanguageAppListStrings = return_app_list_strings_language($lang);
         }
         foreach ($GLOBALS['moduleList'] as $value) {
-            $availableModules[$value] = array('label'=>$specifyLanguageAppListStrings['moduleList'][$value], 'value'=>$value);
+            $availableModules[$value] = ['label' => $specifyLanguageAppListStrings['moduleList'][$value], 'value' => $value];
         }
 
         if (should_hide_iframes() && isset($availableModules['iFrames'])) {
             unset($availableModules['iFrames']);
         }
+
         return $availableModules;
     }
 
@@ -80,24 +78,23 @@ class TabGroupHelper
         global $sugar_config;
 
         //Get the selected tab group language
-        $grouptab_lang = (!empty($params['grouptab_lang'])?$params['grouptab_lang']:$_SESSION['authenticated_user_language']);
+        $grouptab_lang = (!empty($params['grouptab_lang']) ? $params['grouptab_lang'] : $_SESSION['authenticated_user_language']);
 
-        $tabGroups = array();
-        $selected_lang = (!empty($params['dropdown_lang'])?$params['dropdown_lang']:$_SESSION['authenticated_user_language']);
+        $tabGroups = [];
+        $selected_lang = (!empty($params['dropdown_lang']) ? $params['dropdown_lang'] : $_SESSION['authenticated_user_language']);
         $slot_count = $params['slot_count'];
-        $completedIndexes = array();
+        $completedIndexes = [];
         for ($count = 0; $count < $slot_count; $count++) {
             if ($params['delete_' . $count] == 1 || !isset($params['slot_' . $count])) {
                 continue;
             }
-
 
             $index = $params['slot_' . $count];
             if (isset($completedIndexes[$index])) {
                 continue;
             }
 
-            $labelID = (!empty($params['tablabelid_' . $index]))?$params['tablabelid_' . $index]: 'LBL_GROUPTAB' . $count . '_'. time();
+            $labelID = (!empty($params['tablabelid_' . $index])) ? $params['tablabelid_' . $index] : 'LBL_GROUPTAB' . $count . '_' . time();
             $labelValue = SugarCleaner::stripTags(from_html($params['tablabel_' . $index]), false);
             $app_strings = return_application_language($grouptab_lang);
             if (empty($app_strings[$labelID]) || $app_strings[$labelID] != $labelValue) {
@@ -120,10 +117,10 @@ class TabGroupHelper
 
                 $app_strings[$labelID] = $labelValue;
             }
-            $tabGroups[$labelID] = array('label'=>$labelID);
-            $tabGroups[$labelID]['modules']= array();
-            for ($subcount = 0; isset($params[$index.'_' . $subcount]); $subcount++) {
-                $tabGroups[$labelID]['modules'][] = $params[$index.'_' . $subcount];
+            $tabGroups[$labelID] = ['label' => $labelID];
+            $tabGroups[$labelID]['modules'] = [];
+            for ($subcount = 0; isset($params[$index . '_' . $subcount]); $subcount++) {
+                $tabGroups[$labelID]['modules'][] = $params[$index . '_' . $subcount];
             }
 
             $completedIndexes[$index] = true;
@@ -131,8 +128,8 @@ class TabGroupHelper
 
         // Force a rebuild of the app language
         global $current_user;
-        include(get_custom_file_if_exists('modules/Administration/RebuildJSLang.php'));
-        sugar_cache_clear('app_strings.'.$grouptab_lang);
+        include get_custom_file_if_exists('modules/Administration/RebuildJSLang.php');
+        sugar_cache_clear('app_strings.' . $grouptab_lang);
         $newFile = create_custom_directory('include/tabConfig.php');
         write_array_to_file("GLOBALS['tabStructure']", $tabGroups, $newFile);
         $GLOBALS['tabStructure'] = $tabGroups;

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,20 +40,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGeneric.php');
-
+require_once 'include/Dashlets/DashletGeneric.php';
 
 class MyProjectTaskDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
-        require('modules/ProjectTask/Dashlets/MyProjectTaskDashlet/MyProjectTaskDashlet.data.php');
+        require 'modules/ProjectTask/Dashlets/MyProjectTaskDashlet/MyProjectTaskDashlet.data.php';
 
         parent::__construct($id, $def);
 
@@ -67,14 +61,11 @@ class MyProjectTaskDashlet extends DashletGeneric
         $this->seedBean = new ProjectTask();
     }
 
-
-
-
     public function buildWhere()
     {
         $resultArray = parent::buildWhere();
 
-        $resultArray[] = $this->seedBean->table_name . '.' . "percent_complete != 100";
+        $resultArray[] = $this->seedBean->table_name . '.' . 'percent_complete != 100';
 
         return $resultArray;
     }

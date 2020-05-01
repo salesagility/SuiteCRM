@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,35 +36,33 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php');
-require_once('modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php');
+require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php';
+require_once 'modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php';
 require_once 'modules/ModuleBuilder/parsers/constants.php';
 
 class DashletMetaDataParser extends ListLayoutMetaDataParser
 {
-
     /**
-     * @var array $columns
+     * @var array
      * Columns is used by the view to construct the listview - each column is built by calling the named function
      */
-    public $columns = array(
+    public $columns = [
         'LBL_DEFAULT' => 'getDefaultFields',
         'LBL_AVAILABLE' => 'getAdditionalFields',
         'LBL_HIDDEN' => 'getAvailableFields'
-    );
+    ];
 
     /**
-     * @var string $_view
+     * @var string
      */
     protected $_view;
 
     /**
-     * @var bool $search
+     * @var bool
      */
     protected $search;
 
@@ -74,7 +71,6 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
      *
      * Must set:
      * $this->columns   Array of 'Column LBL'=>function_to_retrieve_fields_for_this_column() - expected by the view
-     *
      *
      * @param string $view
      * @param string $moduleName The name of the module to which this listview belongs
@@ -87,7 +83,7 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
         $this->_packageName = $packageName;
         $this->_view = $view;
         if ($this->search) {
-            $this->columns = array('LBL_DEFAULT' => 'getAdditionalFields', 'LBL_HIDDEN' => 'getAvailableFields');
+            $this->columns = ['LBL_DEFAULT' => 'getAdditionalFields', 'LBL_HIDDEN' => 'getAvailableFields'];
             parent::__construct(MB_DASHLETSEARCH, $moduleName, $packageName);
         } else {
             parent::__construct(MB_DASHLET, $moduleName, $packageName);
@@ -96,10 +92,11 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
     }
 
     /**
-     * Dashlets contain both a searchview and list view definition, therefore we need to merge only the relevant info
+     * Dashlets contain both a searchview and list view definition, therefore we need to merge only the relevant info.
      *
      * @param array $viewDefinitions
      * @param array $fieldDefinitions
+     *
      * @return array
      */
     public function mergeFieldDefinitions($viewDefinitions, $fieldDefinitions)
@@ -128,34 +125,16 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
 
     /**
      * @param array $defs
+     *
      * @return array
      */
     public function convertSearchToListDefs($defs)
     {
-        $temp = array();
+        $temp = [];
         foreach ($defs as $key => $value) {
             $temp[$key] = $value;
             if (!isset($temp[$key]['name'])) {
                 $temp[$key]['name'] = $key;
-            }
-        }
-
-        return $temp;
-    }
-
-    /**
-     * @param array $defs
-     * @return array
-     */
-    private function ConvertSearchToDashletDefs($defs)
-    {
-        $temp = array();
-        foreach ($defs as $key => $value) {
-            if ($value['default']) {
-                //$temp[$key] = $value;
-                $temp[$key] = array('default' => '');
-            } else {
-                $temp[$key] = $value;
             }
         }
 
@@ -168,7 +147,7 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
     public function handleSave($populate = true)
     {
         if (empty($this->_packageName)) {
-            foreach (array(MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $value) {
+            foreach ([MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION] as $value) {
                 $file = $this->implementation->getFileName(MB_DASHLET, $this->_moduleName, null, $value);
                 if (file_exists($file)) {
                     break;
@@ -198,9 +177,9 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
         }
         $out = "<?php\n";
 
-        require($file);
+        require $file;
         if (!isset($dashletData[$dashletName])) {
-            sugar_die("unable to load Module Dashlet Definition");
+            sugar_die('unable to load Module Dashlet Definition');
         }
         if ($fh = sugar_fopen($writeFile, 'w')) {
             if ($this->_view == MB_DASHLETSEARCH) {
@@ -208,10 +187,30 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
             } else {
                 $dashletData[$dashletName]['columns'] = $this->_viewdefs;
             }
-            $out .= "\$dashletData['$writeTodashletName']['searchFields'] = " . var_export_helper($dashletData[$dashletName]['searchFields']) . ";\n";
-            $out .= "\$dashletData['$writeTodashletName']['columns'] = " . var_export_helper($dashletData[$dashletName]['columns']) . ";\n";
+            $out .= "\$dashletData['{$writeTodashletName}']['searchFields'] = " . var_export_helper($dashletData[$dashletName]['searchFields']) . ";\n";
+            $out .= "\$dashletData['{$writeTodashletName}']['columns'] = " . var_export_helper($dashletData[$dashletName]['columns']) . ";\n";
             fwrite($fh, $out);
             fclose($fh);
         }
+    }
+
+    /**
+     * @param array $defs
+     *
+     * @return array
+     */
+    private function ConvertSearchToDashletDefs($defs)
+    {
+        $temp = [];
+        foreach ($defs as $key => $value) {
+            if ($value['default']) {
+                //$temp[$key] = $value;
+                $temp[$key] = ['default' => ''];
+            } else {
+                $temp[$key] = $value;
+            }
+        }
+
+        return $temp;
     }
 }

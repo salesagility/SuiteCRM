@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,10 +36,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/MVC/Controller/SugarController.php');
+require_once 'include/MVC/Controller/SugarController.php';
 /**
- * MVC Controller Factory
+ * MVC Controller Factory.
+ *
  * @api
  */
 class ControllerFactory
@@ -48,15 +47,17 @@ class ControllerFactory
     /**
      * Obtain an instance of the correct controller.
      *
+     * @param mixed $module
+     *
      * @return an instance of SugarController
      */
     public static function getController($module)
     {
-        $class = ucfirst($module).'Controller';
+        $class = ucfirst($module) . 'Controller';
         $customClass = 'Custom' . $class;
-        if (file_exists('custom/modules/'.$module.'/controller.php')) {
+        if (file_exists('custom/modules/' . $module . '/controller.php')) {
             $customClass = 'Custom' . $class;
-            require_once('custom/modules/'.$module.'/controller.php');
+            require_once 'custom/modules/' . $module . '/controller.php';
             if (class_exists($customClass)) {
                 $controller = new $customClass();
             } else {
@@ -64,8 +65,8 @@ class ControllerFactory
                     $controller = new $class();
                 }
             }
-        } elseif (file_exists('modules/'.$module.'/controller.php')) {
-            require_once('modules/'.$module.'/controller.php');
+        } elseif (file_exists('modules/' . $module . '/controller.php')) {
+            require_once 'modules/' . $module . '/controller.php';
             if (class_exists($customClass)) {
                 $controller = new $customClass();
             } else {
@@ -75,7 +76,7 @@ class ControllerFactory
             }
         } else {
             if (file_exists('custom/include/MVC/Controller/SugarController.php')) {
-                require_once('custom/include/MVC/Controller/SugarController.php');
+                require_once 'custom/include/MVC/Controller/SugarController.php';
             }
             if (class_exists('CustomSugarController')) {
                 $controller = new CustomSugarController();
@@ -85,6 +86,7 @@ class ControllerFactory
         }
         //setup the controller
         $controller->setup($module);
+
         return $controller;
     }
 }

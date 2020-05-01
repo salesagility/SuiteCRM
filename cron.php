@@ -1,8 +1,9 @@
 <?php
+
  if (!defined('sugarEntry')) {
      define('sugarEntry', true);
  }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,23 +46,23 @@
 //this is to make sure it can find dce_config.php
 chdir(dirname(__FILE__));
 
-require_once('include/entryPoint.php');
+require_once 'include/entryPoint.php';
 
 $sapi_type = php_sapi_name();
 if (substr($sapi_type, 0, 3) != 'cli') {
-    sugar_die("cron.php is CLI only.");
+    sugar_die('cron.php is CLI only.');
 }
 
 if (!is_windows()) {
     require_once 'include/utils.php';
     $cronUser = getRunningUser();
- 
+
     if ($cronUser == '') {
         $GLOBALS['log']->warning('cron.php: can\'t determine running user. No cron user checks will occur.');
     } elseif (array_key_exists('cron', $sugar_config) && array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
         if (!in_array($cronUser, $sugar_config['cron']['allowed_cron_users'])) {
-            $GLOBALS['log']->fatal("cron.php: running as $cronUser is not allowed in allowed_cron_users ".
-                                   "in config.php. Exiting.");
+            $GLOBALS['log']->fatal("cron.php: running as {$cronUser} is not allowed in allowed_cron_users " .
+                                   'in config.php. Exiting.');
             if ($cronUser == 'root') {
                 // Additional advice so that people running as root aren't led to adding root as an allowed user:
                 $GLOBALS['log']->fatal('cron.php: root\'s crontab should not be used for cron.php. ' .
@@ -87,13 +88,13 @@ $current_user = new User();
 $current_user->getSystemUser();
 
 $GLOBALS['log']->debug('--------------------------------------------> at cron.php <--------------------------------------------');
-$cron_driver = !empty($sugar_config['cron_class'])?$sugar_config['cron_class']:'SugarCronJobs';
-$GLOBALS['log']->debug("Using $cron_driver as CRON driver");
+$cron_driver = !empty($sugar_config['cron_class']) ? $sugar_config['cron_class'] : 'SugarCronJobs';
+$GLOBALS['log']->debug("Using {$cron_driver} as CRON driver");
 
-if (file_exists("custom/include/SugarQueue/$cron_driver.php")) {
-    require_once "custom/include/SugarQueue/$cron_driver.php";
+if (file_exists("custom/include/SugarQueue/{$cron_driver}.php")) {
+    require_once "custom/include/SugarQueue/{$cron_driver}.php";
 } else {
-    require_once "include/SugarQueue/$cron_driver.php";
+    require_once "include/SugarQueue/{$cron_driver}.php";
 }
 
 $jobq = new $cron_driver();
@@ -116,5 +117,5 @@ if (session_id()) {
 }
 
 if ($exit_on_cleanup) {
-    exit($jobq->runOk()?0:1);
+    exit($jobq->runOk() ? 0 : 1);
 }

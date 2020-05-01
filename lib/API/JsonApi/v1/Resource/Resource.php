@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,26 +36,32 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 namespace SuiteCRM\API\JsonApi\v1\Resource;
 
-use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
+use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\API\v8\Exception\ConflictException;
 
 /**
- * Class Resource
- * @package SuiteCRM\API\JsonApi\v1\Resource
+ * Class Resource.
+ *
  * @see http://jsonapi.org/format/1.0/#document-resource-objects
  */
 class Resource extends ResourceIdentifier
 {
-    protected static $JSON_API_SKIP_RESERVED_KEYWORDS = array(
+    const DATA_RELATIONSHIPS = '/data/relationships/';
+    const RELATIONSHIPS = 'relationships';
+    const LINKS = 'links';
+    const META = 'meta';
+    const ATTRIBUTES = 'attributes';
+    protected static $JSON_API_SKIP_RESERVED_KEYWORDS = [
         'id',
         'type',
-    );
+    ];
 
-    protected static $JSON_API_RESERVED_KEYWORDS = array(
+    protected static $JSON_API_RESERVED_KEYWORDS = [
         'id',
         'type',
         'data',
@@ -75,30 +80,26 @@ class Resource extends ResourceIdentifier
         'next',
         'related',
         'errors',
-    );
-    const DATA_RELATIONSHIPS = '/data/relationships/';
-    const RELATIONSHIPS = 'relationships';
-    const LINKS = 'links';
-    const META = 'meta';
-    const ATTRIBUTES = 'attributes';
+    ];
 
     /**
-     * @var array $attributes
+     * @var array
      */
     protected $attributes;
 
     /**
-     * @var array $relationships
+     * @var array
      */
     protected $relationships;
 
     /**
-     * @var Links $links
+     * @var Links
      */
     protected $links;
 
     /**
-     * @var string $source rfc6901
+     * @var string rfc6901
+     *
      * @see https://tools.ietf.org/html/rfc6901
      */
     protected $source;
@@ -106,9 +107,12 @@ class Resource extends ResourceIdentifier
     /**
      * @param array $data
      * @param string $source rfc6901
-     * @return Resource|$this
+     *
      * @throws ConflictException
      * @throws BadRequestException
+     *
+     * @return $this|resource
+     *
      * @see https://tools.ietf.org/html/rfc6901
      */
     public function fromJsonApiRequest(array $data, $source = ResourceEnum::DEFAULT_SOURCE)
@@ -122,12 +126,14 @@ class Resource extends ResourceIdentifier
         if ($this->type === null) {
             $exception = new ConflictException('[Missing "type" key in data]');
             $exception->setSource('/data/attributes/type');
+
             throw $exception;
         }
 
         if (!isset($data[self::ATTRIBUTES])) {
             $exception = new BadRequestException('[Missing attributes]');
             $exception->setSource('/data/attributes');
+
             throw $exception;
         }
 
@@ -138,7 +144,7 @@ class Resource extends ResourceIdentifier
     }
 
     /**
-     * @param Resource $resource
+     * @param resource $resource
      */
     public function mergeAttributes(Resource $resource)
     {
@@ -154,14 +160,14 @@ class Resource extends ResourceIdentifier
         return $this->toJsonApiResponseWithFields(array_keys($this->attributes));
     }
 
-
     /**
      * @param array $fields
+     *
      * @return array - Return only the fields which exist in the $fields
      */
     public function toJsonApiResponseWithFields(array $fields)
     {
-        $response = array();
+        $response = [];
 
         $response['id'] = $this->id;
         $response['type'] = $this->type;
@@ -171,8 +177,8 @@ class Resource extends ResourceIdentifier
                 continue;
             }
             if (in_array($attribute, $fields) === true) {
-                if (substr($attribute, -5) === "_file") {
-                    $value = "<OMITTED>";
+                if (substr($attribute, -5) === '_file') {
+                    $value = '<OMITTED>';
                 } else {
                     $value = $this->attributes[$attribute];
                 }
@@ -197,6 +203,7 @@ class Resource extends ResourceIdentifier
 
     /**
      * @param Links $links
+     *
      * @return $this
      */
     public function withLinks(Links $links)
@@ -208,12 +215,14 @@ class Resource extends ResourceIdentifier
 
     /**
      * @param Relationship $relationship
-     * @return Resource|$this
+     *
+     * @return $this|resource
      */
-    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship)
+    public function withRelationship(Relationship $relationship)
     {
         $relationshipName = $relationship->getRelatationshipName();
         $this->relationships[$relationshipName] = $relationship->toJsonApiResponse();
+
         return clone $this;
     }
 
@@ -223,13 +232,15 @@ class Resource extends ResourceIdentifier
     }
 
     /**
-     * Reserved words which must not be used in the Json API Request / Response
+     * Reserved words which must not be used in the Json API Request / Response.
+     *
      * @return array
      */
     public function getReservedKeywords()
     {
         return self::$JSON_API_RESERVED_KEYWORDS;
     }
+
     /**
      * @throws ConflictException
      */
@@ -239,6 +250,7 @@ class Resource extends ResourceIdentifier
         if ($this->id === null) {
             $exception = new ConflictException('[Missing "id" key in data]"');
             $exception->setSource($this->source . '/attributes/id');
+
             throw $exception;
         }
 
@@ -246,12 +258,14 @@ class Resource extends ResourceIdentifier
         if ($this->type === null) {
             $exception = new ConflictException('[Missing "type" key in data]');
             $exception->setSource($this->source . '/attributes/type');
+
             throw $exception;
         }
     }
 
     /**
      * @param array $data
+     *
      * @throws BadRequestException
      */
     private function relationshipFromDataArray(array $data)
@@ -263,6 +277,7 @@ class Resource extends ResourceIdentifier
                 if (isset($relationship['data']) === false) {
                     $exception = new BadRequestException('[Resource] [missing relationship data]');
                     $exception->setSource('/data/relationships/{link}/data');
+
                     throw $exception;
                 }
 
@@ -302,7 +317,7 @@ class Resource extends ResourceIdentifier
         global $sugar_config;
         foreach ($data[self::ATTRIBUTES] as $attributeName => $attributeValue) {
             if ($this->attributes === null) {
-                $this->attributes = array();
+                $this->attributes = [];
             }
 
             // Filter security sensitive information from attributes
@@ -320,6 +335,7 @@ class Resource extends ResourceIdentifier
     /**
      * @param $toOneRelationship
      * @param $relationshipName
+     *
      * @throws BadRequestException
      */
     private function validateToOneRelationshipFromDataArray($toOneRelationship, $relationshipName)
@@ -328,12 +344,14 @@ class Resource extends ResourceIdentifier
         if (isset($toOneRelationship['id']) === false || empty($toOneRelationship['id'])) {
             $exception = new BadRequestException('[Resource] [missing "to one" relationship field] "id"');
             $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/id');
+
             throw $exception;
         }
 
         if (isset($toOneRelationship['type']) === false || empty($toOneRelationship['type'])) {
             $exception = new BadRequestException('[Resource] [missing "to one" relationship field] "type"');
             $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/type');
+
             throw $exception;
         }
 
@@ -341,6 +359,7 @@ class Resource extends ResourceIdentifier
             $exception = new BadRequestException('[Resource] [invalid "to one" relationship field] "attributes"');
             $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/attributes');
             $exception->setDetail('A related item\'s cannot be updated in the relationships object');
+
             throw $exception;
         }
     }
@@ -349,6 +368,7 @@ class Resource extends ResourceIdentifier
      * @param $toManyRelationship
      * @param $relationshipName
      * @param $toManyRelationshipName
+     *
      * @throws BadRequestException
      */
     private function validateToManyRelationshipFromDataArray(
@@ -361,6 +381,7 @@ class Resource extends ResourceIdentifier
             $exception->setSource(
                 self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/id'
             );
+
             throw $exception;
         }
 
@@ -369,6 +390,7 @@ class Resource extends ResourceIdentifier
             $exception->setSource(
                 self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/type'
             );
+
             throw $exception;
         }
 
@@ -378,6 +400,7 @@ class Resource extends ResourceIdentifier
                 self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/attributes'
             );
             $exception->setDetail('A related item\'s cannot be updated in the relationships object');
+
             throw $exception;
         }
     }

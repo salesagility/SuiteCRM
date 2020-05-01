@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,14 +40,14 @@
 namespace SuiteCRM\Utility;
 
 /**
- * Class StringValidator
- * @package SuiteCRM\Utility
+ * Class StringValidator.
  */
 class StringValidator
 {
     /**
      * @param string $haystack
      * @param string $needle
+     *
      * @return bool true when $haystack starts with $needle
      */
     public static function startsWith($haystack, $needle)
@@ -62,12 +61,14 @@ class StringValidator
         }
 
         $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
+
+        return substr($haystack, 0, $length) === $needle;
     }
 
     /**
      * @param string $haystack
      * @param string $needle
+     *
      * @return bool true when $haystack ends with $needle
      */
     public static function endsWith($haystack, $needle)

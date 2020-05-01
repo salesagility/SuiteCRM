@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Invoices extends \AcceptanceTester
 {
     /**
-     * Create an invoice
+     * Create an invoice.
      *
      * @param $name
      */

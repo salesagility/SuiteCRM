@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -47,9 +46,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once __DIR__ . '/InboundEmailMock.php';
 
 /**
- * NonGmailSentFolderHandlerTest
+ * NonGmailSentFolderHandlerTest.
  *
  * @author gyula
+ *
+ * @internal
  */
 class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
@@ -175,19 +176,19 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();
         $sentFolder = null;
+
         try {
             $handler->connectToNonGmailServerPublic($ie, $mail, $sentFolder);
             $this->assertTrue(false);
         } catch (InvalidArgumentException $e) {
             $this->assertEquals(NonGmailSentFolderHandler::ERR_SHOULD_BE_STRING, $e->getCode());
         }
-        
-        
+
         // positive test imposible until using imap_xxx fucntions.. (valid imap resource needed)
 //        $sentFolder = 'foo';
 //        $ret = $handler->connectToNonGmailServerPublic($ie, $mail, $sentFolder);
 //        $this->assertFalse($ret);
-  
+
 //        $ie = new InboundEmailMock();
 //        $ret = $handler->connectToNonGmailServerPublic($ie, $mail, $sentFolder);
 //        $this->assertTrue($ret);

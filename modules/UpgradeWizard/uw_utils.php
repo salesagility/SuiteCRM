@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
 
 /**
- * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time
+ * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time.
  *
  * @example ('6.5.6') returns 656
  * @example ('6.5.6beta2') returns 656
@@ -58,6 +56,7 @@ include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
  * @param int $size number of the first parts of version which are requested
  * @param string $lastSymbol replace last part of version by some string
  * @param string $delimiter delimiter for result
+ *
  * @return string
  */
 function implodeVersion($version, $size = 0, $lastSymbol = '', $delimiter = '')
@@ -85,7 +84,8 @@ function implodeVersion($version, $size = 0, $lastSymbol = '', $delimiter = '')
 }
 
 /**
- * Helper function for upgrade - get path from upload:// name
+ * Helper function for upgrade - get path from upload:// name.
+ *
  * @param string $path
  * return string
  */
@@ -94,23 +94,32 @@ function getUploadRelativeName($path)
     if (class_exists('UploadFile')) {
         return UploadFile::realpath($path);
     }
-    if (substr($path, 0, 9) == "upload://") {
-        $path = rtrim($GLOBALS['sugar_config']['upload_dir'], "/\\")."/".substr($path, 9);
+    if (substr($path, 0, 9) == 'upload://') {
+        $path = rtrim($GLOBALS['sugar_config']['upload_dir'], '/\\') . '/' . substr($path, 9);
     }
+
     return $path;
 }
 
 /**
- * Backs-up files that are targeted for patch/upgrade to a restore directory
- * @param string rest_dir Full path to the directory containing the original, replaced files.
+ * Backs-up files that are targeted for patch/upgrade to a restore directory.
+ *
+ * @param string rest_dir Full path to the directory containing the original, replaced files
  * @param string install_file Full path to the uploaded patch/upgrade zip file
  * @param string unzip_dir Full path to the unzipped files in a temporary directory
  * @param string zip_from_dir Name of directory that the unzipped files containing the actuall replacement files
  * @param array errors Collection of errors to be displayed at end of process
- * @param string path Optional full path to the log file.
+ * @param string path Optional full path to the log file
+ * @param mixed $rest_dir
+ * @param mixed $install_file
+ * @param mixed $unzip_dir
+ * @param mixed $zip_from_dir
+ * @param mixed $errors
+ * @param mixed $path
+ *
  * @return array errors
  */
-function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_dir, $errors, $path='')
+function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_dir, $errors, $path = '')
 {
     global $mod_strings;
     // create restore file directory
@@ -118,7 +127,7 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
 
     if (file_exists($rest_dir) && is_dir($rest_dir)) {
         logThis('backing up files to be overwritten...', $path);
-        $newFiles = findAllFiles(clean_path($unzip_dir . '/' . $zip_from_dir), array());
+        $newFiles = findAllFiles(clean_path($unzip_dir . '/' . $zip_from_dir), []);
 
         // keep this around for canceling
         $_SESSION['uw_restore_dir'] = getUploadRelativeName($rest_dir);
@@ -154,61 +163,64 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
         }
     }
     logThis('file backup done.', $path);
+
     return $errors;
 }
 
 /**
  * Copies files from the unzipped patch to the destination.
- * @param string unzip_dir Full path to the temporary directory created during unzip operation.
+ *
+ * @param string unzip_dir Full path to the temporary directory created during unzip operation
  * @param string zip_from_dir Name of folder containing the unzipped files; usually the name of the Patch without the
- * extension.
- * @param string path Optional full path to alternate upgradeWizard log file.
- * @return array Two element array containing to $copiedFiles and $skippedFiles.
+ * extension
+ * @param string path Optional full path to alternate upgradeWizard log file
+ * @param mixed $unzip_dir
+ * @param mixed $zip_from_dir
+ * @param mixed $path
+ *
+ * @return array two element array containing to $copiedFiles and $skippedFiles
  */
-
-
-
-function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
+function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path = '')
 {
     logThis('Starting file copy process...', $path);
     global $sugar_version;
-    $backwardModules='';
+    $backwardModules = '';
 
     $modules = getAllModules();
-    $backwardModules = array();
+    $backwardModules = [];
     foreach ($modules as $mod) {
-        if (is_dir(clean_path(getcwd().'/modules/'.$mod.'/.500'))) {
-            $files = array();
-            $files= findAllFiles(clean_path(getcwd().'/modules/'.$mod.'/.500'), $files);
-            if (count($files) >0) {
+        if (is_dir(clean_path(getcwd() . '/modules/' . $mod . '/.500'))) {
+            $files = [];
+            $files = findAllFiles(clean_path(getcwd() . '/modules/' . $mod . '/.500'), $files);
+            if (count($files) > 0) {
                 //backward compatibility is on
                 $backwardModules[] = $mod;
             }
         }
     }
 
-    $newFiles = findAllFiles(clean_path($unzip_dir . '/' . $zip_from_dir), array());
+    $newFiles = findAllFiles(clean_path($unzip_dir . '/' . $zip_from_dir), []);
     $zipPath = clean_path($unzip_dir . '/' . $zip_from_dir);
 
     // handle special do-not-overwrite conditions
-    $doNotOverwrite = array();
+    $doNotOverwrite = [];
     $doNotOverwrite[] = '__stub';
     if (isset($_REQUEST['overwrite_files_serial'])) {
         $doNotOverwrite = explode('::', $_REQUEST['overwrite_files_serial']);
     }
 
-    $copiedFiles = array();
-    $skippedFiles = array();
+    $copiedFiles = [];
+    $skippedFiles = [];
 
     foreach ($newFiles as $file) {
         $cleanFile = str_replace($zipPath, '', $file);
         $srcFile = $zipPath . $cleanFile;
         $targetFile = clean_path(getcwd() . '/' . $cleanFile);
-        if ($backwardModules != null && count($backwardModules) >0) {
+        if ($backwardModules != null && count($backwardModules) > 0) {
             foreach ($backwardModules as $mod) {
                 $splitPath = explode('/', trim($cleanFile));
                 if ('modules' == trim($splitPath[1]) && $mod == trim($splitPath[2])) {
-                    $cleanFile = str_replace('/modules/'.$mod, '/modules/'.$mod.'/.500', $cleanFile);
+                    $cleanFile = str_replace('/modules/' . $mod, '/modules/' . $mod . '/.500', $cleanFile);
                     $targetFile = clean_path(getcwd() . '/' . $cleanFile);
                 }
             }
@@ -217,13 +229,14 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
             mkdir_recursive(dirname($targetFile)); // make sure the directory exists
         }
 
-        if ((!file_exists($targetFile)) || /* brand new file */
-            (!in_array($targetFile, $doNotOverwrite)) /* manual diff file */
+        if ((!file_exists($targetFile)) || // brand new file
+            (!in_array($targetFile, $doNotOverwrite)) // manual diff file
         ) {
             // handle sugar_version.php
             if (strpos($targetFile, 'sugar_version.php') !== false && !preg_match('/\/portal\/sugar_version\.php$/i', $targetFile)) {
                 logThis('Skipping "sugar_version.php" - file copy will occur at end of successful upgrade', $path);
                 $_SESSION['sugar_version_file'] = $srcFile;
+
                 continue;
             }
 
@@ -241,13 +254,12 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
     }
     logThis('File copy done.', $path);
 
-    $ret = array();
+    $ret = [];
     $ret['copiedFiles'] = $copiedFiles;
     $ret['skippedFiles'] = $skippedFiles;
 
     return $ret;
 }
-
 
 //On cancel put back the copied files from 500 to 451 state
 function copyFilesOnCancel($step)
@@ -255,8 +267,7 @@ function copyFilesOnCancel($step)
     //place holder for cancel action
 }
 
-
-function removeFileFromPath($file, $path, $deleteNot=array())
+function removeFileFromPath($file, $path, $deleteNot = [])
 {
     $removed = 0;
     $cur = $path . '/' . $file;
@@ -277,7 +288,7 @@ function removeFileFromPath($file, $path, $deleteNot=array())
     }
     $d = dir($path);
     while (false !== ($e = $d->read())) {  // Fixed bug. !== is required to literally match the type and value of false, so that a filename that could evaluate and cast to false, ie "false" or "0", still allows the while loop to continue.  From example at http://www.php.net/manual/en/function.dir.php
-        $next = $path . '/'. $e;
+        $next = $path . '/' . $e;
         if (substr($e, 0, 1) != '.' && is_dir($next)) {
             $removed += removeFileFromPath($file, $next, $deleteNot);
         }
@@ -287,22 +298,24 @@ function removeFileFromPath($file, $path, $deleteNot=array())
 }
 
 /**
- * This function copies/overwrites between directories
+ * This function copies/overwrites between directories.
  *
  * @param string the directory name to remove
- * @param boolean whether to just empty the given directory, without deleting the given directory.
- * @return boolean True/False whether the directory was deleted.
+ * @param bool whether to just empty the given directory, without deleting the given directory
+ * @param mixed $from
+ * @param mixed $to
+ *
+ * @return bool true/False whether the directory was deleted
  */
-
 function copyRecursiveBetweenDirectories($from, $to)
 {
     if (file_exists($from)) {
-        $modifiedFiles = array();
+        $modifiedFiles = [];
         $modifiedFiles = findAllFiles(clean_path($from), $modifiedFiles);
         $cwd = clean_path(getcwd());
         foreach ($modifiedFiles as $file) {
             $srcFile = clean_path($file);
-            if (strpos($srcFile, ".svn") === false) {
+            if (strpos($srcFile, '.svn') === false) {
                 $targetFile = str_replace($from, $to, $srcFile);
 
                 if (!is_dir(dirname($targetFile))) {
@@ -313,33 +326,34 @@ function copyRecursiveBetweenDirectories($from, $to)
                 if (strpos($targetFile, 'sugar_version.php') !== false && !preg_match('/\/portal\/sugar_version\.php$/i', $targetFile)) {
                     logThis('Skipping "sugar_version.php" - file copy will occur at end of successful upgrade', $targetFile);
                     $_SESSION['sugar_version_file'] = $srcFile;
+
                     continue;
                 }
 
                 if (!copy($srcFile, $targetFile)) {
-                    logThis("*** ERROR: could not copy file $srcFile to $targetFile");
+                    logThis("*** ERROR: could not copy file {$srcFile} to {$targetFile}");
                 }
             }
         }
     }
 }
 
-function deleteDirectory($dirname, $only_empty=false)
+function deleteDirectory($dirname, $only_empty = false)
 {
     if (!is_dir($dirname)) {
         return false;
     }
-    $dscan = array(realpath($dirname));
-    $darr = array();
+    $dscan = [realpath($dirname)];
+    $darr = [];
     while (!empty($dscan)) {
         $dcur = array_pop($dscan);
         $darr[] = $dcur;
-        if ($d=opendir($dcur)) {
-            while ($f=readdir($d)) {
-                if ($f=='.' || $f=='..') {
+        if ($d = opendir($dcur)) {
+            while ($f = readdir($d)) {
+                if ($f == '.' || $f == '..') {
                     continue;
                 }
-                $f=$dcur.'/'.$f;
+                $f = $dcur . '/' . $f;
                 if (is_dir($f)) {
                     $dscan[] = $f;
                 } else {
@@ -349,31 +363,35 @@ function deleteDirectory($dirname, $only_empty=false)
             closedir($d);
         }
     }
-    $i_until = ($only_empty)? 1 : 0;
-    for ($i=count($darr)-1; $i>=$i_until; $i--) {
+    $i_until = ($only_empty) ? 1 : 0;
+    for ($i = count($darr) - 1; $i >= $i_until; $i--) {
         if (rmdir($darr[$i])) {
             logThis('Success :Copying file to destination: ' . $darr[$i]);
         } else {
             logThis('Copy problem:Copying file to destination: ' . $darr[$i]);
         }
     }
-    return (($only_empty)? (count(scandir)<=2) : (!is_dir($dirname)));
+
+    return ($only_empty) ? (count(scandir) <= 2) : (!is_dir($dirname));
 }
 /**
  * Get all the customized modules. Compare the file md5s with the base md5s
  * If a file has been modified then put the module in the list of customized
  * modules. Show the list in the preflight check UI.
+ *
+ * @param mixed $unzip_dir
+ * @param mixed $zip_from_dir
+ * @param mixed $delete_dirs
  */
-
 function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir, $delete_dirs)
 {
     if ($delete_dirs != null) {
         foreach ($delete_dirs as $del_dir) {
             deleteDirectory($del_dir);
-            $newFiles = findAllFiles(clean_path($unzip_dir . '/' . $zip_from_dir.'/'.$del_dir), array());
-            $zipPath = clean_path($unzip_dir . '/' . $zip_from_dir.'/'.$del_dir);
-            $copiedFiles = array();
-            $skippedFiles = array();
+            $newFiles = findAllFiles(clean_path($unzip_dir . '/' . $zip_from_dir . '/' . $del_dir), []);
+            $zipPath = clean_path($unzip_dir . '/' . $zip_from_dir . '/' . $del_dir);
+            $copiedFiles = [];
+            $skippedFiles = [];
 
             foreach ($newFiles as $file) {
                 $cleanFile = str_replace($zipPath, '', $file);
@@ -389,6 +407,7 @@ function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir, $delete_dirs
                     if (strpos($targetFile, 'sugar_version.php') !== false) {
                         logThis('Skipping sugar_version.php - file copy will occur at end of successful upgrade');
                         $_SESSION['sugar_version_file'] = $srcFile;
+
                         continue;
                     }
 
@@ -406,7 +425,7 @@ function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir, $delete_dirs
             }
         }
     }
-    $ret = array();
+    $ret = [];
     $ret['copiedFiles'] = $copiedFiles;
     $ret['skippedFiles'] = $skippedFiles;
 
@@ -420,7 +439,7 @@ function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir, $delete_dirs
 // to use this function to empty a directory, write:
 // recursive_remove_directory('path/to/full_directory');
 
-function recursive_empty_or_remove_directory($directory, $exclude_dirs=null, $exclude_files=null, $empty=true)
+function recursive_empty_or_remove_directory($directory, $exclude_dirs = null, $exclude_files = null, $empty = true)
 {
     // if the path has a slash at the end we remove it here
     if (substr($directory, -1) == '/') {
@@ -431,78 +450,73 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null, $ex
     if (!file_exists($directory) || !is_dir($directory)) {
         // ... we return false and exit the function
         return false;
-
-    // ... if the path is not readable
-    } elseif (!is_readable($directory)) {
+        // ... if the path is not readable
+    }
+    if (!is_readable($directory)) {
         // ... we return false and exit the function
         return false;
+        // ... else if the path is readable
+    }
 
-    // ... else if the path is readable
-    } else {
+    // we open the directory
+    $handle = opendir($directory);
 
-        // we open the directory
-        $handle = opendir($directory);
+    // and scan through the items inside
+    while (false !== ($item = readdir($handle))) {
+        // if the filepointer is not the current directory
+        // or the parent directory
+        if ($item != '.' && $item != '..') {
+            // we build the new path to delete
+            $path = $directory . '/' . $item;
 
-        // and scan through the items inside
-        while (false !== ($item = readdir($handle))) {
-            // if the filepointer is not the current directory
-            // or the parent directory
-            if ($item != '.' && $item != '..') {
-                // we build the new path to delete
-                $path = $directory.'/'.$item;
-
-                // if the new path is a directory
-                //add another check if the dir is in the list to exclude delete
-                if (is_dir($path) && $exclude_dirs != null && in_array($path, $exclude_dirs)) {
-                    //do nothing
-                } else {
-                    if (is_dir($path)) {
-                        // we call this function with the new path
-                        recursive_empty_or_remove_directory($path);
-                    }
-                    // if the new path is a file
-                    else {
-                        // we remove the file
-                        if ($exclude_files != null && in_array($path, $exclude_files)) {
-                            //do nothing
-                        } else {
-                            unlink($path);
-                        }
+            // if the new path is a directory
+            //add another check if the dir is in the list to exclude delete
+            if (is_dir($path) && $exclude_dirs != null && in_array($path, $exclude_dirs)) {
+                //do nothing
+            } else {
+                if (is_dir($path)) {
+                    // we call this function with the new path
+                    recursive_empty_or_remove_directory($path);
+                }
+                // if the new path is a file
+                else {
+                    // we remove the file
+                    if ($exclude_files != null && in_array($path, $exclude_files)) {
+                        //do nothing
+                    } else {
+                        unlink($path);
                     }
                 }
             }
         }
-        // close the directory
-        closedir($handle);
-
-        // if the option to empty is not set to true
-        if ($empty == false) {
-            // try to delete the now empty directory
-            if (!rmdir($directory)) {
-                // return false if not possible
-                return false;
-            }
-        }
-        // return success
-        return true;
     }
+    // close the directory
+    closedir($handle);
+
+    // if the option to empty is not set to true
+    if ($empty == false) {
+        // try to delete the now empty directory
+        if (!rmdir($directory)) {
+            // return false if not possible
+            return false;
+        }
+    }
+    // return success
+    return true;
 }
 // ------------------------------------------------------------
 
-
-
-
 function getAllCustomizedModules()
 {
-    require_once('files.md5');
+    require_once 'files.md5';
 
-    $return_array = array();
+    $return_array = [];
     $modules = getAllModules();
     foreach ($modules as $mod) {
         //find all files in each module if the files have been modified
         //as compared to the base version then add the module to the
         //customized modules array
-        $modFiles = findAllFiles(clean_path(getcwd())."/modules/$mod", array());
+        $modFiles = findAllFiles(clean_path(getcwd()) . "/modules/{$mod}", []);
         foreach ($modFiles as $file) {
             $fileContents = file_get_contents($file);
             $file = str_replace(clean_path(getcwd()), '', $file);
@@ -510,15 +524,17 @@ function getAllCustomizedModules()
                 if (md5($fileContents) != $md5_string['./' . $file]) {
                     //A file has been customized in the module. Put the module into the
                     // customized modules array.
-                    echo 'Changed File'.$file;
+                    echo 'Changed File' . $file;
                     $return_array[$mod];
+
                     break;
                 }
             } else {
                 // This is a new file in user's version and indicates that module has been
                 //customized. Put the module in the customized array.
-                echo 'New File'.$file;
+                echo 'New File' . $file;
                 $return_array[$mod];
+
                 break;
             }
         }
@@ -529,12 +545,13 @@ function getAllCustomizedModules()
 
 /**
  * Array of all Modules in the version bein upgraded
- * This method returns an Array of all modules
- * @return $modules Array of modules.
+ * This method returns an Array of all modules.
+ *
+ * @return $modules array of modules
  */
 function getAllModules()
 {
-    $modules = array();
+    $modules = [];
     $d = dir('modules');
     while ($e = $d->read()) {
         if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
@@ -542,27 +559,28 @@ function getAllModules()
         }
         $modules[] = $e;
     }
+
     return $modules;
 }
 
 //Remove files with the smae md5
 
-function removeMd5MatchingFiles($deleteNot=array())
+function removeMd5MatchingFiles($deleteNot = [])
 {
-    $md5_string = array();
-    if (file_exists(clean_path(getcwd().'/files.md5'))) {
-        require(clean_path(getcwd().'/files.md5'));
+    $md5_string = [];
+    if (file_exists(clean_path(getcwd() . '/files.md5'))) {
+        require clean_path(getcwd() . '/files.md5');
     }
     $modulesAll = getAllModules();
     foreach ($modulesAll as $mod) {
-        $allModFiles = array();
-        if (is_dir('modules/'.$mod)) {
-            $allModFiles = findAllFiles('modules/'.$mod, $allModFiles);
+        $allModFiles = [];
+        if (is_dir('modules/' . $mod)) {
+            $allModFiles = findAllFiles('modules/' . $mod, $allModFiles);
             foreach ($allModFiles as $file) {
                 if (file_exists($file) && !in_array(basename($file), $deleteNot)) {
-                    if (isset($md5_string['./'.$file])) {
+                    if (isset($md5_string['./' . $file])) {
                         $fileContents = file_get_contents($file);
-                        if (md5($fileContents) == $md5_string['./'.$file]) {
+                        if (md5($fileContents) == $md5_string['./' . $file]) {
                             unlink($file);
                         }
                     }
@@ -573,11 +591,14 @@ function removeMd5MatchingFiles($deleteNot=array())
 }
 
 /**
- * Handles requirements for creating reminder Tasks and Emails
- * @param array skippedFiles Array of files that were not overwriten and must be manually mereged.
- * @param string path Optional full path to alternate upgradeWizard log.
+ * Handles requirements for creating reminder Tasks and Emails.
+ *
+ * @param array skippedFiles Array of files that were not overwriten and must be manually mereged
+ * @param string path Optional full path to alternate upgradeWizard log
+ * @param mixed $skippedFiles
+ * @param mixed $path
  */
-function commitHandleReminders($skippedFiles, $path='')
+function commitHandleReminders($skippedFiles, $path = '')
 {
     global $mod_strings;
     global $current_user;
@@ -635,8 +656,8 @@ function commitHandleReminders($skippedFiles, $path='')
             $email->from_addr = $current_user->email1;
             isValidEmailAddress($email->from_addr);
             $email->to_addrs_arr = $email->parse_addrs($current_user->email1, '', '', '');
-            $email->cc_addrs_arr = array();
-            $email->bcc_addrs_arr = array();
+            $email->cc_addrs_arr = [];
+            $email->bcc_addrs_arr = [];
             $email->date_entered = $nowDateTime;
             $email->date_modified = $nowDateTime;
             $email->send();
@@ -650,7 +671,7 @@ function deleteCache()
     //Clean modules from cache
     $cachedir = sugar_cached('modules');
     if (is_dir($cachedir)) {
-        $allModFiles = array();
+        $allModFiles = [];
         $allModFiles = findAllFiles($cachedir, $allModFiles, true);
         foreach ($allModFiles as $file) {
             if (file_exists($file)) {
@@ -666,7 +687,7 @@ function deleteCache()
     //Clean jsLanguage from cache
     $cachedir = sugar_cached('jsLanguage');
     if (is_dir($cachedir)) {
-        $allModFiles = array();
+        $allModFiles = [];
         $allModFiles = findAllFiles($cachedir, $allModFiles);
         foreach ($allModFiles as $file) {
             if (file_exists($file)) {
@@ -677,7 +698,7 @@ function deleteCache()
     //Clean smarty from cache
     $cachedir = sugar_cached('smarty');
     if (is_dir($cachedir)) {
-        $allModFiles = array();
+        $allModFiles = [];
         $allModFiles = findAllFiles($cachedir, $allModFiles);
         foreach ($allModFiles as $file) {
             if (file_exists($file)) {
@@ -686,7 +707,7 @@ function deleteCache()
         }
     }
     //Rebuild dashlets cache
-    require_once('include/Dashlets/DashletCacheBuilder.php');
+    require_once 'include/Dashlets/DashletCacheBuilder.php';
     $dc = new DashletCacheBuilder();
     $dc->buildCache();
 }
@@ -706,90 +727,88 @@ function deleteChance()
     }
 }
 
-
-
 /**
  * upgradeUWFiles
- * This function copies upgrade wizard files from new patch if that dir exists
+ * This function copies upgrade wizard files from new patch if that dir exists.
  *
  * @param $file String path to uploaded zip file
  */
 function upgradeUWFiles($file)
 {
-    $cacheUploadUpgradesTemp = mk_temp_dir(sugar_cached("upgrades/temp"));
+    $cacheUploadUpgradesTemp = mk_temp_dir(sugar_cached('upgrades/temp'));
 
     unzip($file, $cacheUploadUpgradesTemp);
 
-    if (!file_exists("$cacheUploadUpgradesTemp/manifest.php")) {
-        logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
+    if (!file_exists("{$cacheUploadUpgradesTemp}/manifest.php")) {
+        logThis('*** ERROR: no manifest file detected while bootstraping upgrade wizard files!');
+
         return;
     }
-    include("$cacheUploadUpgradesTemp/manifest.php");
+    include "{$cacheUploadUpgradesTemp}/manifest.php";
 
-
-    $allFiles = array();
+    $allFiles = [];
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
 
     // Localization
-    if (file_exists("$from_dir/include/Localization/Localization.php")) {
-        $allFiles[] = "$from_dir/include/Localization/Localization.php";
+    if (file_exists("{$from_dir}/include/Localization/Localization.php")) {
+        $allFiles[] = "{$from_dir}/include/Localization/Localization.php";
     }
     // upgradeWizard
-    if (file_exists("$from_dir/modules/UpgradeWizard")) {
-        $allFiles[] = findAllFiles("$from_dir/modules/UpgradeWizard", $allFiles);
+    if (file_exists("{$from_dir}/modules/UpgradeWizard")) {
+        $allFiles[] = findAllFiles("{$from_dir}/modules/UpgradeWizard", $allFiles);
     }
     // moduleInstaller
-    if (file_exists("$from_dir/ModuleInstall")) {
-        $allFiles[] = findAllFiles("$from_dir/ModuleInstall", $allFiles);
+    if (file_exists("{$from_dir}/ModuleInstall")) {
+        $allFiles[] = findAllFiles("{$from_dir}/ModuleInstall", $allFiles);
     }
-    if (file_exists("$from_dir/include/javascript/yui")) {
-        $allFiles[] = findAllFiles("$from_dir/include/javascript/yui", $allFiles);
+    if (file_exists("{$from_dir}/include/javascript/yui")) {
+        $allFiles[] = findAllFiles("{$from_dir}/include/javascript/yui", $allFiles);
     }
-    if (file_exists("$from_dir/HandleAjaxCall.php")) {
-        $allFiles[] = "$from_dir/HandleAjaxCall.php";
+    if (file_exists("{$from_dir}/HandleAjaxCall.php")) {
+        $allFiles[] = "{$from_dir}/HandleAjaxCall.php";
     }
-    if (file_exists("$from_dir/include/SugarTheme")) {
-        $allFiles[] = findAllFiles("$from_dir/include/SugarTheme", $allFiles);
+    if (file_exists("{$from_dir}/include/SugarTheme")) {
+        $allFiles[] = findAllFiles("{$from_dir}/include/SugarTheme", $allFiles);
     }
-    if (file_exists("$from_dir/include/SugarCache")) {
-        $allFiles[] = findAllFiles("$from_dir/include/SugarCache", $allFiles);
+    if (file_exists("{$from_dir}/include/SugarCache")) {
+        $allFiles[] = findAllFiles("{$from_dir}/include/SugarCache", $allFiles);
     }
-    if (file_exists("$from_dir/include/utils/external_cache.php")) {
-        $allFiles[] = "$from_dir/include/utils/external_cache.php";
+    if (file_exists("{$from_dir}/include/utils/external_cache.php")) {
+        $allFiles[] = "{$from_dir}/include/utils/external_cache.php";
     }
-    if (file_exists("$from_dir/include/upload_file.php")) {
-        $allFiles[] = "$from_dir/include/upload_file.php";
+    if (file_exists("{$from_dir}/include/upload_file.php")) {
+        $allFiles[] = "{$from_dir}/include/upload_file.php";
     }
-    if (file_exists("$from_dir/include/file_utils.php")) {
-        $allFiles[] = "$from_dir/include/file_utils.php";
+    if (file_exists("{$from_dir}/include/file_utils.php")) {
+        $allFiles[] = "{$from_dir}/include/file_utils.php";
     }
-    if (file_exists("$from_dir/include/upload_file.php")) {
-        $allFiles[] = "$from_dir/include/upload_file.php";
+    if (file_exists("{$from_dir}/include/upload_file.php")) {
+        $allFiles[] = "{$from_dir}/include/upload_file.php";
     }
-    if (file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
-        $allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
+    if (file_exists("{$from_dir}/include/utils/sugar_file_utils.php")) {
+        $allFiles[] = "{$from_dir}/include/utils/sugar_file_utils.php";
     }
-    if (file_exists("$from_dir/include/utils/autoloader.php")) {
-        $allFiles[] = "$from_dir/include/utils/autoloader.php";
+    if (file_exists("{$from_dir}/include/utils/autoloader.php")) {
+        $allFiles[] = "{$from_dir}/include/utils/autoloader.php";
     }
 
-    if (file_exists("$from_dir/include/UploadFile.php")) {
-        $allFiles[] = "$from_dir/include/UploadFile.php";
+    if (file_exists("{$from_dir}/include/UploadFile.php")) {
+        $allFiles[] = "{$from_dir}/include/UploadFile.php";
     }
-    if (file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
-        $allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
+    if (file_exists("{$from_dir}/include/SugarTheme/SugarTheme.php")) {
+        $allFiles[] = "{$from_dir}/include/SugarTheme/SugarTheme.php";
     }
 
     // add extra files to post upgrade process
-    if (file_exists(realpath("$from_dir/../scripts/files_to_add_post.php"))) {
-        include(realpath("$from_dir/../scripts/files_to_add_post.php"));
+    if (file_exists(realpath("{$from_dir}/../scripts/files_to_add_post.php"))) {
+        include realpath("{$from_dir}/../scripts/files_to_add_post.php");
         if (isset($filesToAddPost) && is_array($filesToAddPost) && $filesToAddPost) {
             foreach ($filesToAddPost as $file) {
-                if (file_exists("$from_dir/$file")) {
-                    $allFiles[] = "$from_dir/$file";
-                    $GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
+                if (file_exists("{$from_dir}/{$file}")) {
+                    $allFiles[] = "{$from_dir}/{$file}";
+                    $GLOBALS['log']->info("File added to post upgrade: {$from_dir}/{$file}");
                 } else {
-                    $GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
+                    $GLOBALS['log']->error("File not found for post upgrade: {$from_dir}/{$file}");
                 }
             }
         }
@@ -799,56 +818,53 @@ function upgradeUWFiles($file)
 
     if ($filesInCustom = checkCustomOverrides($from_dir)) {
         global $mod_strings;
-        $alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"];
-        echo "<div class=\"error\">$alertMessage<br><ul>";
+        $alertMessage = $mod_strings['LBL_UPGRD_CSTM_CHK'];
+        echo "<div class=\"error\">{$alertMessage}<br><ul>";
         foreach ($filesInCustom as $fileInCustom) {
-            echo "<li>$fileInCustom => custom/$fileInCustom</li>";
+            echo "<li>{$fileInCustom} => custom/{$fileInCustom}</li>";
         }
-        echo "</ul></div>";
+        echo '</ul></div>';
     }
     upgradeUWFilesCopy($allFiles, $from_dir);
 }
 
 /**
- * find files in custom folder if it also in upgrade pack
+ * find files in custom folder if it also in upgrade pack.
  *
  * @param string $fromDir uploaded temp directory
+ *
  * @return array filelist (or empty array if there is no any)
  */
 function checkCustomOverrides($fromDir)
 {
-    $ret = array();
+    $ret = [];
 
     logThis(' -------------- Check Custom Overrides ------------- ');
 
     $path = realpath($fromDir);
-    logThis("Upload temp directory: $fromDir");
+    logThis("Upload temp directory: {$fromDir}");
 
     // read all upgrade files
 
     $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
 
     foreach ($objects as $name => $object) {
-
         // check only files (folder doesn't matter)
 
         if (!is_dir($name)) {
-
             // get the original file name
 
-            $orig = str_replace("$fromDir/", '', $name);
+            $orig = str_replace("{$fromDir}/", '', $name);
 
             // original file exists?
 
             if (file_exists($orig)) {
-
                 // custom for this file exists?
 
-                if (file_exists("custom/$orig")) {
-
+                if (file_exists("custom/{$orig}")) {
                     // grab the customized files
 
-                    logThis("A file in upgrade pack found in custom folder: $orig");
+                    logThis("A file in upgrade pack found in custom folder: {$orig}");
                     $ret[] = $orig;
                 }
             }
@@ -859,9 +875,10 @@ function checkCustomOverrides($fromDir)
 }
 
 /**
- * upgradeUWFilesCopy
+ * upgradeUWFilesCopy.
  *
  * This function recursively copies files from the upgradeUWFiles Array
+ *
  * @see upgradeUWFiles
  *
  * @param array $allFiles Array of files to copy over after zip file has been uploaded
@@ -873,25 +890,25 @@ function upgradeUWFilesCopy($allFiles, $from_dir)
         if (is_array($file)) {
             upgradeUWFilesCopy($file, $from_dir);
         } else {
-            $destFile = str_replace($from_dir."/", "", $file);
+            $destFile = str_replace($from_dir . '/', '', $file);
             if (!is_dir(dirname($destFile))) {
                 mkdir_recursive(dirname($destFile)); // make sure the directory exists
             }
 
             if (stristr($file, 'uw_main.tpl')) {
-                logThis('Skipping "'.$file.'" - file copy will during commit step.');
+                logThis('Skipping "' . $file . '" - file copy will during commit step.');
             } else {
-                logThis('updating UpgradeWizard code: '.$destFile);
+                logThis('updating UpgradeWizard code: ' . $destFile);
                 copy_recursive($file, $destFile);
             }
         }
     }
 }
 
-
-
 /**
- * gets valid patch file names that exist in upload/upgrade/patch/
+ * gets valid patch file names that exist in upload/upgrade/patch/.
+ *
+ * @param mixed $returnFull
  */
 function getValidPatchName($returnFull = true)
 {
@@ -902,12 +919,12 @@ function getValidPatchName($returnFull = true)
     global $sugar_config;
     $uh = new UpgradeHistory();
     list($base_upgrade_dir, $base_tmp_upgrade_dir) = getUWDirs();
-    $return = array();
+    $return = [];
 
     // scan for new files (that are not installed)
     logThis('finding new files for upgrade');
     $upgrade_content = '';
-    $upgrade_contents = findAllFiles($base_upgrade_dir, array(), false, 'zip');
+    $upgrade_contents = findAllFiles($base_upgrade_dir, [], false, 'zip');
     //other variations of zip file i.e. ZIP, zIp,zIP,Zip,ZIp,ZiP
     $ready = "<ul>\n";
     $ready .= "
@@ -936,7 +953,7 @@ function getValidPatchName($returnFull = true)
     $disabled = '';
 
     // assume old patches are there.
-    $upgradeToVersion = array(); // fill with valid patches - we will only use the latest qualified found patch
+    $upgradeToVersion = []; // fill with valid patches - we will only use the latest qualified found patch
 
     // cn: bug 10609 - notices for uninitialized variables
     $icon = '';
@@ -949,7 +966,7 @@ function getValidPatchName($returnFull = true)
     $disabled = '';
 
     foreach ($upgrade_contents as $upgrade_content) {
-        if (!preg_match("#.*\.zip\$#i", $upgrade_content)) {
+        if (!preg_match('#.*\\.zip$#i', $upgrade_content)) {
             continue;
         }
 
@@ -962,14 +979,16 @@ function getValidPatchName($returnFull = true)
          * Edge-case: manual upgrade with a FTP of a patch; UH table has no entry for it.  Assume nothing. :( */
         if (0 == count($md5_matches)) {
             $target_manifest = remove_file_extension($upgrade_content) . '-manifest.php';
-            require_once($target_manifest);
+            require_once $target_manifest;
 
             if (empty($manifest['version'])) {
                 logThis("*** Potential error: patch found with no version [ {$upgrade_content} ]");
+
                 continue;
             }
             if (!isset($manifest['type']) || $manifest['type'] != 'patch') {
                 logThis("*** Potential error: patch found with either no 'type' or non-patch type [ {$upgrade_content} ]");
+
                 continue;
             }
 
@@ -988,7 +1007,7 @@ function getValidPatchName($returnFull = true)
                 $icon = getImageForType($manifest['type']);
             } else {
                 $path_parts = pathinfo($manifest['icon']);
-                $icon = "<!--not_in_theme!--><img src=\"" . remove_file_extension($upgrade_content) . "-icon." . $path_parts['extension'] . "\">";
+                $icon = '<!--not_in_theme!--><img src="' . remove_file_extension($upgrade_content) . '-icon.' . $path_parts['extension'] . '">';
             }
         }
     }
@@ -1004,8 +1023,8 @@ function getValidPatchName($returnFull = true)
 
     // cn: 10606 - cannot upload a patch file since this returned always.
     if (!empty($cleanUpgradeContent)) {
-        $ready .= "<tr><td>$icon</td><td>$name</td><td>$type</td><td>$version</td><td>$published_date</td><td>$uninstallable</td><td>$description</td>\n";
-        $ready .=<<<eoq
+        $ready .= "<tr><td>{$icon}</td><td>{$name}</td><td>{$type}</td><td>{$version}</td><td>{$published_date}</td><td>{$uninstallable}</td><td>{$description}</td>\n";
+        $ready .= <<<eoq
 	        <td>
 				<form action="index.php" method="post">
 					<input type="hidden" name="module" value="UpgradeWizard">
@@ -1017,10 +1036,8 @@ function getValidPatchName($returnFull = true)
 				</form>
 			</td></table>
 eoq;
-        $disabled = "DISABLED";
+        $disabled = 'DISABLED';
     }
-
-
 
     if (empty($cleanUpgradeContent)) {
         $ready .= "<tr><td colspan='7'><i>None</i></td>\n";
@@ -1036,9 +1053,11 @@ eoq;
     }
 }
 
-
 /**
- * finalizes upgrade by setting upgrade versions in DB (config table) and sugar_version.php
+ * finalizes upgrade by setting upgrade versions in DB (config table) and sugar_version.php.
+ *
+ * @param mixed $version
+ *
  * @return bool true on success
  */
 function updateVersions($version)
@@ -1051,14 +1070,15 @@ function updateVersions($version)
 
     // handle file copy
     if (isset($_SESSION['sugar_version_file']) && !empty($_SESSION['sugar_version_file'])) {
-        if (!copy($_SESSION['sugar_version_file'], clean_path(getcwd().'/sugar_version.php'))) {
+        if (!copy($_SESSION['sugar_version_file'], clean_path(getcwd() . '/sugar_version.php'))) {
             logThis('*** ERROR: sugar_version.php could not be copied to destination! Cannot complete upgrade', $path);
+
             return false;
-        } else {
-            logThis('sugar_version.php successfully updated!', $path);
         }
+        logThis('sugar_version.php successfully updated!', $path);
     } else {
         logThis('*** ERROR: no sugar_version.php file location found! - cannot complete upgrade...', $path);
+
         return false;
     }
 
@@ -1072,36 +1092,40 @@ function updateVersions($version)
     $db->query($q2);
 
     logThis('updateVersions() complete.', $path);
+
     return true;
 }
 
-
-
 /**
- * gets a module's lang pack - does not need to be a SugarModule
+ * gets a module's lang pack - does not need to be a SugarModule.
+ *
  * @param lang string Language
  * @param module string Path to language folder
+ * @param mixed $lang
+ * @param mixed $module
+ *
  * @return array mod_strings
  */
 function getModuleLanguagePack($lang, $module)
 {
-    $mod_strings = array();
+    $mod_strings = [];
 
     if (!empty($lang) && !empty($module)) {
-        $langPack = clean_path(getcwd().'/'.$module.'/language/'.$lang.'.lang.php');
-        $langPackEn = clean_path(getcwd().'/'.$module.'/language/en_us.lang.php');
+        $langPack = clean_path(getcwd() . '/' . $module . '/language/' . $lang . '.lang.php');
+        $langPackEn = clean_path(getcwd() . '/' . $module . '/language/en_us.lang.php');
 
         if (file_exists($langPack)) {
-            include($langPack);
+            include $langPack;
         } elseif (file_exists($langPackEn)) {
-            include($langPackEn);
+            include $langPackEn;
         }
     }
 
     return $mod_strings;
 }
 /**
- * checks system compliance for 4.5+ codebase
+ * checks system compliance for 4.5+ codebase.
+ *
  * @return array Mixed values
  */
 function checkSystemCompliance()
@@ -1117,33 +1141,33 @@ function checkSystemCompliance()
     }
 
     $installer_mod_strings = getModuleLanguagePack($current_language, './install');
-    $ret = array();
+    $ret = [];
     $ret['error_found'] = false;
 
     // PHP version
     if (check_php_version() === -1) {
-        $ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
+        $ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} " . constant('PHP_VERSION') . ' )</span></b>';
         $ret['error_found'] = true;
     }
 
     if (check_php_version() === 0) {
-        $ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['LBL_CURRENT_PHP_VERSION']} ".constant('PHP_VERSION').". ";
-        $ret['phpVersion'] .= $mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'].'</span></b>';
+        $ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['LBL_CURRENT_PHP_VERSION']} " . constant('PHP_VERSION') . '. ';
+        $ret['phpVersion'] .= $mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'] . constant('SUITECRM_PHP_REC_VERSION') . $mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'] . '</span></b>';
         $ret['warn_found'] = true;
     }
 
     if (check_php_version() === 1) {
-        $ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} ".constant('PHP_VERSION')." )</span></b>";
-    };
+        $ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} " . constant('PHP_VERSION') . ' )</span></b>';
+    }
 
     // database and connect
     $canInstall = $db->canInstall();
     if ($canInstall !== true) {
         $ret['error_found'] = true;
         if (count($canInstall) == 1) {
-            $ret['dbVersion'] = "<b><span class=stop>" . $installer_mod_strings[$canInstall[0]] . "</span></b>";
+            $ret['dbVersion'] = '<b><span class=stop>' . $installer_mod_strings[$canInstall[0]] . '</span></b>';
         } else {
-            $ret['dbVersion'] = "<b><span class=stop>" . sprintf($installer_mod_strings[$canInstall[0]], $canInstall[1]) . "</span></b>";
+            $ret['dbVersion'] = '<b><span class=stop>' . sprintf($installer_mod_strings[$canInstall[0]], $canInstall[1]) . '</span></b>';
         }
     }
 
@@ -1181,7 +1205,6 @@ function checkSystemCompliance()
         $ret['error_found'] = false;
     }
 
-
     // safe mode
     if ('1' == ini_get('safe_mode')) {
         $ret['safeModeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_SAFE_MODE']}</span></b>";
@@ -1191,13 +1214,13 @@ function checkSystemCompliance()
     }
 
     // memory limit
-    $ret['memory_msg']     = "";
-    $memory_limit   = "-1";//ini_get('memory_limit');
+    $ret['memory_msg'] = '';
+    $memory_limit = '-1'; //ini_get('memory_limit');
     $sugarMinMem = constant('SUGARCRM_MIN_MEM');
     // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
-    if ($memory_limit == "") {          // memory_limit disabled at compile time, no memory limit
+    if ($memory_limit == '') {          // memory_limit disabled at compile time, no memory limit
         $ret['memory_msg'] = "<b><span class=\"go\">{$installer_mod_strings['LBL_CHECKSYS_MEM_OK']}</span></b>";
-    } elseif ($memory_limit == "-1") {   // memory_limit enabled, but set to unlimited
+    } elseif ($memory_limit == '-1') {   // memory_limit enabled, but set to unlimited
         $ret['memory_msg'] = "<b><span class=\"go\">{$installer_mod_strings['LBL_CHECKSYS_MEM_UNLIMITED']}</span></b>";
     } else {
         rtrim($memory_limit, 'M');
@@ -1210,7 +1233,7 @@ function checkSystemCompliance()
         }
     }
     // zip support
-    if (!class_exists("ZipArchive")) {
+    if (!class_exists('ZipArchive')) {
         $ret['ZipStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_ZIP']}</span></b>";
         $ret['error_found'] = true;
     } else {
@@ -1251,23 +1274,24 @@ function checkSystemCompliance()
     return $ret;
 }
 
-
 /**
- * is a file that we blow away automagically
+ * is a file that we blow away automagically.
+ *
+ * @param mixed $file
  */
 function isAutoOverwriteFile($file)
 {
-    $overwriteDirs = array(
+    $overwriteDirs = [
         './sugar_version.php',
         './modules/UpgradeWizard/uw_main.tpl',
-    );
-    $file = trim('.'.str_replace(clean_path(getcwd()), '', $file));
+    ];
+    $file = trim('.' . str_replace(clean_path(getcwd()), '', $file));
 
     if (in_array($file, $overwriteDirs)) {
         return true;
     }
 
-    $fileExtension = substr(strrchr($file, "."), 1);
+    $fileExtension = substr(strrchr($file, '.'), 1);
     if ($fileExtension == 'tpl' || $fileExtension == 'html') {
         return false;
     }
@@ -1276,15 +1300,18 @@ function isAutoOverwriteFile($file)
 }
 
 /**
- * flatfile logger
+ * flatfile logger.
+ *
+ * @param mixed $entry
+ * @param mixed $path
  */
-function logThis($entry, $path='')
+function logThis($entry, $path = '')
 {
     global $mod_strings;
     if (file_exists('include/utils/sugar_file_utils.php')) {
-        require_once('include/utils/sugar_file_utils.php');
+        require_once 'include/utils/sugar_file_utils.php';
     }
-    $log = empty($path) ? clean_path(getcwd().'/upgradeWizard.log') : clean_path($path);
+    $log = empty($path) ? clean_path(getcwd() . '/upgradeWizard.log') : clean_path($path);
 
     // create if not exists
     if (!file_exists($log)) {
@@ -1310,10 +1337,10 @@ function logThis($entry, $path='')
         }
     }
 
-    $line = date('r').' [UpgradeWizard] - '.$entry."\n";
+    $line = date('r') . ' [UpgradeWizard] - ' . $entry . "\n";
 
     if (@fwrite($fp, $line) === false) {
-        $GLOBALS['log']->fatal('UpgradeWizard could not write to upgradeWizard.log: '.$entry);
+        $GLOBALS['log']->fatal('UpgradeWizard could not write to upgradeWizard.log: ' . $entry);
         die($mod_strings['ERR_UW_LOG_FILE_UNWRITABLE']);
     }
 
@@ -1329,11 +1356,11 @@ function logThis($entry, $path='')
  *  Prior to 5.1 we have been using editviewdefs as the base for quickcreatedefs. If a custom field was added to edit view layout, it
  *  was automatically picked up by the quick create. [Addresses Bug 21469]
  *  This function will check if customizations were made, and will create quickcreatedefs.php in the /cutom/working/$module_name directory.
- **/
+ */
 function updateQuickCreateDefs()
 {
     $d = dir('modules');
-    $studio_modules = array();
+    $studio_modules = [];
 
     while ($e = $d->read()) { //collect all studio modules.
         if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
@@ -1349,14 +1376,14 @@ function updateQuickCreateDefs()
         //exists custom/$modname/editviewdefs.php (module was customized) &&
         //!exists custom/$modname/quickcreateviewdefs.php
 
-        $editviewdefs = "custom/working/modules/".$modname."/metadata/editviewdefs.php";
-        $quickcreatedefs = "custom/working/modules/".$modname."/metadata/quickcreatedefs.php";
+        $editviewdefs = 'custom/working/modules/' . $modname . '/metadata/editviewdefs.php';
+        $quickcreatedefs = 'custom/working/modules/' . $modname . '/metadata/quickcreatedefs.php';
 
-        if (!file_exists("modules/".$modname."/metadata/quickcreatedefs.php") &&
+        if (!file_exists('modules/' . $modname . '/metadata/quickcreatedefs.php') &&
             file_exists($editviewdefs) &&
             !file_exists($quickcreatedefs)) {
             //clone editviewdef and save it in custom/working/modules/metadata
-            $GLOBALS['log']->debug("Copying editviewdefs.php as quickcreatedefs.php for the $modname module in custom/working/modules/$modname/metadata!");
+            $GLOBALS['log']->debug("Copying editviewdefs.php as quickcreatedefs.php for the {$modname} module in custom/working/modules/{$modname}/metadata!");
             if (copy($editviewdefs, $quickcreatedefs)) {
                 if (file_exists($quickcreatedefs) && is_readable($quickcreatedefs)) {
                     $file = file($quickcreatedefs);
@@ -1371,213 +1398,256 @@ function updateQuickCreateDefs()
                     //write back.
                     fclose($fp);
                 } else {
-                    $GLOBALS['log']->debug("Failed to replace 'EditView' with QuickCreate because $quickcreatedefs is either not readable or does not exist.");
+                    $GLOBALS['log']->debug("Failed to replace 'EditView' with QuickCreate because {$quickcreatedefs} is either not readable or does not exist.");
                 }
             } else {
-                $GLOBALS['log']->debug("Failed to copy $editviewdefs to $quickcreatedefs!");
+                $GLOBALS['log']->debug("Failed to copy {$editviewdefs} to {$quickcreatedefs}!");
             }
         }
     }
 }
 
 /**
- * test perms for CREATE queries
+ * test perms for CREATE queries.
+ *
+ * @param mixed $db
+ * @param mixed $out
  */
 function testPermsCreate($db, $out)
 {
     logThis('Checking CREATE TABLE permissions...');
     global $mod_strings;
 
-    if (!$db->checkPrivilege("CREATE TABLE")) {
+    if (!$db->checkPrivilege('CREATE TABLE')) {
         logThis('cannot CREATE TABLE!');
         $out['db']['dbNoCreate'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_CREATE']}</span></td></tr>";
     }
+
     return $out;
 }
 
 /**
- * test perms for INSERT
+ * test perms for INSERT.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsInsert($db, $out, $skip=false)
+function testPermsInsert($db, $out, $skip = false)
 {
     logThis('Checking INSERT INTO permissions...');
     global $mod_strings;
 
-    if (!$db->checkPrivilege("INSERT")) {
+    if (!$db->checkPrivilege('INSERT')) {
         logThis('cannot INSERT INTO!');
         $out['db']['dbNoInsert'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_INSERT']}</span></td></tr>";
     }
+
     return $out;
 }
 
-
 /**
- * test perms for UPDATE TABLE
+ * test perms for UPDATE TABLE.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsUpdate($db, $out, $skip=false)
+function testPermsUpdate($db, $out, $skip = false)
 {
     logThis('Checking UPDATE TABLE permissions...');
     global $mod_strings;
-    if (!$db->checkPrivilege("UPDATE")) {
+    if (!$db->checkPrivilege('UPDATE')) {
         logThis('cannot UPDATE TABLE!');
         $out['db']['dbNoUpdate'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_UPDATE']}</span></td></tr>";
     }
+
     return $out;
 }
 
-
 /**
- * test perms for SELECT
+ * test perms for SELECT.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsSelect($db, $out, $skip=false)
+function testPermsSelect($db, $out, $skip = false)
 {
     logThis('Checking SELECT permissions...');
     global $mod_strings;
-    if (!$db->checkPrivilege("SELECT")) {
+    if (!$db->checkPrivilege('SELECT')) {
         logThis('cannot SELECT!');
         $out['db']['dbNoSelect'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_SELECT']}</span></td></tr>";
     }
+
     return $out;
 }
 
 /**
- * test perms for DELETE
+ * test perms for DELETE.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsDelete($db, $out, $skip=false)
+function testPermsDelete($db, $out, $skip = false)
 {
     logThis('Checking DELETE FROM permissions...');
     global $mod_strings;
-    if (!$db->checkPrivilege("DELETE")) {
+    if (!$db->checkPrivilege('DELETE')) {
         logThis('cannot DELETE FROM!');
         $out['db']['dbNoDelete'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_DELETE']}</span></td></tr>";
     }
+
     return $out;
 }
 
-
 /**
- * test perms for ALTER TABLE ADD COLUMN
+ * test perms for ALTER TABLE ADD COLUMN.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsAlterTableAdd($db, $out, $skip=false)
+function testPermsAlterTableAdd($db, $out, $skip = false)
 {
     logThis('Checking ALTER TABLE ADD COLUMN permissions...');
     global $mod_strings;
-    if (!$db->checkPrivilege("ADD COLUMN")) {
+    if (!$db->checkPrivilege('ADD COLUMN')) {
         logThis('cannot ADD COLUMN!');
         $out['db']['dbNoAddColumn'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_ADD_COLUMN']}</span></td></tr>";
     }
+
     return $out;
 }
 
 /**
- * test perms for ALTER TABLE ADD COLUMN
+ * test perms for ALTER TABLE ADD COLUMN.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsAlterTableChange($db, $out, $skip=false)
+function testPermsAlterTableChange($db, $out, $skip = false)
 {
     logThis('Checking ALTER TABLE CHANGE COLUMN permissions...');
     global $mod_strings;
-    if (!$db->checkPrivilege("CHANGE COLUMN")) {
+    if (!$db->checkPrivilege('CHANGE COLUMN')) {
         logThis('cannot CHANGE COLUMN!');
         $out['db']['dbNoChangeColumn'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_CHANGE_COLUMN']}</span></td></tr>";
     }
+
     return $out;
 }
 
 /**
- * test perms for ALTER TABLE DROP COLUMN
+ * test perms for ALTER TABLE DROP COLUMN.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsAlterTableDrop($db, $out, $skip=false)
+function testPermsAlterTableDrop($db, $out, $skip = false)
 {
     logThis('Checking ALTER TABLE DROP COLUMN permissions...');
     global $mod_strings;
-    if (!$db->checkPrivilege("DROP COLUMN")) {
+    if (!$db->checkPrivilege('DROP COLUMN')) {
         logThis('cannot DROP COLUMN!');
         $out['db']['dbNoDropColumn'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_DROP_COLUMN']}</span></td></tr>";
     }
+
     return $out;
 }
 
-
 /**
- * test perms for DROP TABLE
+ * test perms for DROP TABLE.
+ *
+ * @param mixed $db
+ * @param mixed $out
+ * @param mixed $skip
  */
-function testPermsDropTable($db, $out, $skip=false)
+function testPermsDropTable($db, $out, $skip = false)
 {
     logThis('Checking DROP TABLE permissions...');
     global $mod_strings;
-    if (!$db->checkPrivilege("DROP TABLE")) {
+    if (!$db->checkPrivilege('DROP TABLE')) {
         logThis('cannot DROP TABLE!');
         $out['db']['dbNoDropTable'] = true;
         $out['dbOut'] .= "<tr><td align='left'><span class='error'>{$mod_strings['LBL_UW_DB_NO_DROP_TABLE']}</span></td></tr>";
     }
+
     return $out;
 }
 
 function getFormattedError($error, $query)
 {
-    $error = "<div><b>".$error;
+    $error = '<div><b>' . $error;
     $error .= "</b>::{$query}</div>";
 
     return $error;
 }
 
 /**
- * parses a query finding the table name
+ * parses a query finding the table name.
+ *
  * @param string query The query
+ * @param mixed $query
+ *
  * @return string table The table
  */
 function getTableFromQuery($query)
 {
-    $standardQueries = array('ALTER TABLE', 'DROP TABLE', 'CREATE TABLE', 'INSERT INTO', 'UPDATE', 'DELETE FROM');
-    $query = preg_replace("/[^A-Za-z0-9\_\s]/", "", $query);
+    $standardQueries = ['ALTER TABLE', 'DROP TABLE', 'CREATE TABLE', 'INSERT INTO', 'UPDATE', 'DELETE FROM'];
+    $query = preg_replace('/[^A-Za-z0-9\\_\\s]/', '', $query);
     $query = trim(str_replace($standardQueries, '', $query));
 
-    $firstSpc = strpos($query, " ");
+    $firstSpc = strpos($query, ' ');
     $end = ($firstSpc > 0) ? $firstSpc : strlen($query);
-    $table = substr($query, 0, $end);
 
-    return $table;
+    return substr($query, 0, $end);
 }
 
 //prelicense check
 
 function preLicenseCheck()
 {
-    require_once('modules/UpgradeWizard/uw_files.php');
+    require_once 'modules/UpgradeWizard/uw_files.php';
 
     global $sugar_config;
     global $mod_strings;
     global $sugar_version;
 
     if (empty($sugar_version)) {
-        require('sugar_version.php');
+        require 'sugar_version.php';
     }
 
     if (!isset($_SESSION['unzip_dir']) || empty($_SESSION['unzip_dir'])) {
         logThis('unzipping files in upgrade archive...');
-        $errors					= array();
+        $errors = [];
         list($base_upgrade_dir, $base_tmp_upgrade_dir) = getUWDirs();
         $unzip_dir = '';
         //also come up with mechanism to read from upgrade-progress file
         if (!isset($_SESSION['install_file']) || empty($_SESSION['install_file']) || !is_file($_SESSION['install_file'])) {
             if (file_exists(clean_path($base_tmp_upgrade_dir)) && $handle = opendir(clean_path($base_tmp_upgrade_dir))) {
                 while (false !== ($file = readdir($handle))) {
-                    if ($file !="." && $file !="..") {
-                        if (is_file($base_tmp_upgrade_dir."/".$file."/manifest.php")) {
-                            require_once($base_tmp_upgrade_dir."/".$file."/manifest.php");
-                            $package_name= $manifest['copy_files']['from_dir'];
-                            if (file_exists($base_tmp_upgrade_dir."/".$file."/".$package_name) && file_exists($base_tmp_upgrade_dir."/".$file."/scripts") && file_exists($base_tmp_upgrade_dir."/".$file."/manifest.php")) {
-                                $unzip_dir = $base_tmp_upgrade_dir."/".$file;
-                                if (file_exists("$base_upgrade_dir/patch/".$package_name.'.zip')) {
-                                    $_SESSION['install_file'] = $package_name.".zip";
+                    if ($file != '.' && $file != '..') {
+                        if (is_file($base_tmp_upgrade_dir . '/' . $file . '/manifest.php')) {
+                            require_once $base_tmp_upgrade_dir . '/' . $file . '/manifest.php';
+                            $package_name = $manifest['copy_files']['from_dir'];
+                            if (file_exists($base_tmp_upgrade_dir . '/' . $file . '/' . $package_name) && file_exists($base_tmp_upgrade_dir . '/' . $file . '/scripts') && file_exists($base_tmp_upgrade_dir . '/' . $file . '/manifest.php')) {
+                                $unzip_dir = $base_tmp_upgrade_dir . '/' . $file;
+                                if (file_exists("{$base_upgrade_dir}/patch/" . $package_name . '.zip')) {
+                                    $_SESSION['install_file'] = $package_name . '.zip';
+
                                     break;
                                 }
                             }
@@ -1590,9 +1660,9 @@ function preLicenseCheck()
             unlinkUWTempFiles();
             resetUwSession();
             echo 'Upload File not found so redirecting to Upgrade Start ';
-            $redirect_new_wizard = $sugar_config['site_url' ].'/index.php?module=UpgradeWizard&action=index';
-            echo '<form name="redirect" action="' .$redirect_new_wizard. '"  method="POST">';
-            $upgrade_directories_not_found =<<<eoq
+            $redirect_new_wizard = $sugar_config['site_url'] . '/index.php?module=UpgradeWizard&action=index';
+            echo '<form name="redirect" action="' . $redirect_new_wizard . '"  method="POST">';
+            $upgrade_directories_not_found = <<<'eoq'
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -1602,16 +1672,17 @@ function preLicenseCheck()
 	</table>
 eoq;
             $uwMain = $upgrade_directories_not_found;
+
             return '';
         }
-        $install_file			= "$base_upgrade_dir/patch/".basename(urldecode($_SESSION['install_file']));
-        $show_files				= true;
+        $install_file = "{$base_upgrade_dir}/patch/" . basename(urldecode($_SESSION['install_file']));
+        $show_files = true;
         if (empty($unzip_dir)) {
-            $unzip_dir				= mk_temp_dir($base_tmp_upgrade_dir);
+            $unzip_dir = mk_temp_dir($base_tmp_upgrade_dir);
         }
-        $zip_from_dir			= ".";
-        $zip_to_dir				= ".";
-        $zip_force_copy			= array();
+        $zip_from_dir = '.';
+        $zip_to_dir = '.';
+        $zip_force_copy = [];
 
         if (!$unzip_dir) {
             logThis('Could not create a temporary directory using mk_temp_dir( $base_tmp_upgrade_dir )');
@@ -1619,28 +1690,28 @@ eoq;
         }
 
         //double check whether unzipped .
-        if (file_exists($unzip_dir ."/scripts") && file_exists($unzip_dir."/manifest.php")) {
+        if (file_exists($unzip_dir . '/scripts') && file_exists($unzip_dir . '/manifest.php')) {
             //already unzipped
         } else {
             unzip($install_file, $unzip_dir);
         }
 
         // assumption -- already validated manifest.php at time of upload
-        require_once("$unzip_dir/manifest.php");
+        require_once "{$unzip_dir}/manifest.php";
 
-        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
-            $zip_from_dir   = $manifest['copy_files']['from_dir'];
+        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != '') {
+            $zip_from_dir = $manifest['copy_files']['from_dir'];
         }
-        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != "") {
-            $zip_to_dir     = $manifest['copy_files']['to_dir'];
+        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != '') {
+            $zip_to_dir = $manifest['copy_files']['to_dir'];
         }
-        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != "") {
-            $zip_force_copy     = $manifest['copy_files']['force_copy'];
+        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != '') {
+            $zip_force_copy = $manifest['copy_files']['force_copy'];
         }
         if (isset($manifest['version'])) {
-            $version    = $manifest['version'];
+            $version = $manifest['version'];
         }
-        if (!is_writable("config.php")) {
+        if (!is_writable('config.php')) {
             return $mod_strings['ERR_UW_CONFIG'];
         }
 
@@ -1659,9 +1730,9 @@ eoq;
         unlinkUWTempFiles();
         resetUwSession();
         echo 'Upload File not found so redirecting to Upgrade Start ';
-        $redirect_new_wizard = $sugar_config['site_url' ].'/index.php?module=UpgradeWizard&action=index';
-        echo '<form name="redirect" action="' .$redirect_new_wizard. '"  method="POST">';
-        $upgrade_directories_not_found =<<<eoq
+        $redirect_new_wizard = $sugar_config['site_url'] . '/index.php?module=UpgradeWizard&action=index';
+        echo '<form name="redirect" action="' . $redirect_new_wizard . '"  method="POST">';
+        $upgrade_directories_not_found = <<<'eoq'
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -1671,20 +1742,21 @@ eoq;
 	</table>
 eoq;
         $uwMain = $upgrade_directories_not_found;
+
         return '';
     }
 
-    logThis('is SugarConfig there '.file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php")));
-    if (file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php"))) {
-        $file = clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php");
-        $destFile = str_replace(clean_path($unzip_dir.'/'.$zip_from_dir), $cwd, $file);
+    logThis('is SugarConfig there ' . file_exists(clean_path($unzip_dir . '/' . $zip_from_dir . '/include/SugarObjects/SugarConfig.php')));
+    if (file_exists(clean_path($unzip_dir . '/' . $zip_from_dir . '/include/SugarObjects/SugarConfig.php'))) {
+        $file = clean_path($unzip_dir . '/' . $zip_from_dir . '/include/SugarObjects/SugarConfig.php');
+        $destFile = str_replace(clean_path($unzip_dir . '/' . $zip_from_dir), $cwd, $file);
         if (!is_dir(dirname($destFile))) {
             mkdir_recursive(dirname($destFile)); // make sure the directory exists
         }
         copy($file, $destFile);
         //also copy include utils array utils
-        $file = clean_path($unzip_dir.'/'.$zip_from_dir."/include/utils/array_utils.php");
-        $destFile = str_replace(clean_path($unzip_dir.'/'.$zip_from_dir), $cwd, $file);
+        $file = clean_path($unzip_dir . '/' . $zip_from_dir . '/include/utils/array_utils.php');
+        $destFile = str_replace(clean_path($unzip_dir . '/' . $zip_from_dir), $cwd, $file);
         if (!is_dir(dirname($destFile))) {
             mkdir_recursive(dirname($destFile)); // make sure the directory exists
         }
@@ -1692,27 +1764,25 @@ eoq;
     }
 }
 
-
 function preflightCheck()
 {
-    require_once('modules/UpgradeWizard/uw_files.php');
+    require_once 'modules/UpgradeWizard/uw_files.php';
 
     global $sugar_config;
     global $mod_strings;
     global $sugar_version;
 
     if (empty($sugar_version)) {
-        require('sugar_version.php');
+        require 'sugar_version.php';
     }
 
-    unset($_SESSION['rebuild_relationships']);
-    unset($_SESSION['rebuild_extensions']);
+    unset($_SESSION['rebuild_relationships'], $_SESSION['rebuild_extensions']);
 
     // don't bother if are rechecking
-    $manualDiff			= array();
+    $manualDiff = [];
     if (!isset($_SESSION['unzip_dir']) || empty($_SESSION['unzip_dir'])) {
         logThis('unzipping files in upgrade archive...');
-        $errors					= array();
+        $errors = [];
         list($base_upgrade_dir, $base_tmp_upgrade_dir) = getUWDirs();
         $unzip_dir = '';
         //Following is if User logged out unexpectedly and then logged into UpgradeWizard again.
@@ -1720,14 +1790,15 @@ function preflightCheck()
         if (!isset($_SESSION['install_file']) || empty($_SESSION['install_file']) || !is_file($_SESSION['install_file'])) {
             if (file_exists($base_tmp_upgrade_dir) && $handle = opendir($base_tmp_upgrade_dir)) {
                 while (false !== ($file = readdir($handle))) {
-                    if ($file !="." && $file !="..") {
-                        if (is_file($base_tmp_upgrade_dir."/".$file."/manifest.php")) {
-                            require_once($base_tmp_upgrade_dir."/".$file."/manifest.php");
-                            $package_name= $manifest['copy_files']['from_dir'];
-                            if (file_exists($base_tmp_upgrade_dir."/".$file."/".$package_name) && file_exists($base_tmp_upgrade_dir."/".$file."/scripts") && file_exists($base_tmp_upgrade_dir."/".$file."/manifest.php")) {
-                                $unzip_dir = $base_tmp_upgrade_dir."/".$file;
-                                if (file_exists("$base_upgrade_dir/patch/".$package_name.'.zip')) {
-                                    $_SESSION['install_file'] = $package_name.".zip";
+                    if ($file != '.' && $file != '..') {
+                        if (is_file($base_tmp_upgrade_dir . '/' . $file . '/manifest.php')) {
+                            require_once $base_tmp_upgrade_dir . '/' . $file . '/manifest.php';
+                            $package_name = $manifest['copy_files']['from_dir'];
+                            if (file_exists($base_tmp_upgrade_dir . '/' . $file . '/' . $package_name) && file_exists($base_tmp_upgrade_dir . '/' . $file . '/scripts') && file_exists($base_tmp_upgrade_dir . '/' . $file . '/manifest.php')) {
+                                $unzip_dir = $base_tmp_upgrade_dir . '/' . $file;
+                                if (file_exists("{$base_upgrade_dir}/patch/" . $package_name . '.zip')) {
+                                    $_SESSION['install_file'] = $package_name . '.zip';
+
                                     break;
                                 }
                             }
@@ -1740,9 +1811,9 @@ function preflightCheck()
             unlinkUWTempFiles();
             resetUwSession();
             echo 'Upload File not found so redirecting to Upgrade Start ';
-            $redirect_new_wizard = $sugar_config['site_url' ].'/index.php?module=UpgradeWizard&action=index';
-            echo '<form name="redirect" action="' .$redirect_new_wizard. '"  method="POST">';
-            $upgrade_directories_not_found =<<<eoq
+            $redirect_new_wizard = $sugar_config['site_url'] . '/index.php?module=UpgradeWizard&action=index';
+            echo '<form name="redirect" action="' . $redirect_new_wizard . '"  method="POST">';
+            $upgrade_directories_not_found = <<<'eoq'
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -1752,16 +1823,17 @@ function preflightCheck()
 	</table>
 eoq;
             $uwMain = $upgrade_directories_not_found;
+
             return '';
         }
-        $install_file			= "$base_upgrade_dir/patch/".basename(urldecode($_SESSION['install_file']));
-        $show_files				= true;
+        $install_file = "{$base_upgrade_dir}/patch/" . basename(urldecode($_SESSION['install_file']));
+        $show_files = true;
         if (empty($unzip_dir)) {
-            $unzip_dir				= mk_temp_dir($base_tmp_upgrade_dir);
+            $unzip_dir = mk_temp_dir($base_tmp_upgrade_dir);
         }
-        $zip_from_dir			= ".";
-        $zip_to_dir				= ".";
-        $zip_force_copy			= array();
+        $zip_from_dir = '.';
+        $zip_to_dir = '.';
+        $zip_force_copy = [];
 
         if (!$unzip_dir) {
             logThis('Could not create a temporary directory using mk_temp_dir( $base_tmp_upgrade_dir )');
@@ -1769,28 +1841,28 @@ eoq;
         }
 
         //double check whether unzipped .
-        if (file_exists($unzip_dir ."/scripts") && file_exists($unzip_dir."/manifest.php")) {
+        if (file_exists($unzip_dir . '/scripts') && file_exists($unzip_dir . '/manifest.php')) {
             //already unzipped
         } else {
             unzip($install_file, $unzip_dir);
         }
 
         // assumption -- already validated manifest.php at time of upload
-        require_once("$unzip_dir/manifest.php");
+        require_once "{$unzip_dir}/manifest.php";
 
-        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
-            $zip_from_dir   = $manifest['copy_files']['from_dir'];
+        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != '') {
+            $zip_from_dir = $manifest['copy_files']['from_dir'];
         }
-        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != "") {
-            $zip_to_dir     = $manifest['copy_files']['to_dir'];
+        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != '') {
+            $zip_to_dir = $manifest['copy_files']['to_dir'];
         }
-        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != "") {
-            $zip_force_copy     = $manifest['copy_files']['force_copy'];
+        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != '') {
+            $zip_force_copy = $manifest['copy_files']['force_copy'];
         }
         if (isset($manifest['version'])) {
-            $version    = $manifest['version'];
+            $version = $manifest['version'];
         }
-        if (!is_writable("config.php")) {
+        if (!is_writable('config.php')) {
             return $mod_strings['ERR_UW_CONFIG'];
         }
 
@@ -1809,9 +1881,9 @@ eoq;
         unlinkUWTempFiles();
         resetUwSession();
         echo 'Upload File not found so redirecting to Upgrade Start ';
-        $redirect_new_wizard = $sugar_config['site_url' ].'/index.php?module=UpgradeWizard&action=index';
-        echo '<form name="redirect" action="' .$redirect_new_wizard. '"  method="POST">';
-        $upgrade_directories_not_found =<<<eoq
+        $redirect_new_wizard = $sugar_config['site_url'] . '/index.php?module=UpgradeWizard&action=index';
+        echo '<form name="redirect" action="' . $redirect_new_wizard . '"  method="POST">';
+        $upgrade_directories_not_found = <<<'eoq'
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -1821,24 +1893,25 @@ eoq;
 	</table>
 eoq;
         $uwMain = $upgrade_directories_not_found;
+
         return '';
     }
     //copy minimum required files
     fileCopy('include/utils/sugar_file_utils.php');
 
-    $upgradeFiles = findAllFiles(clean_path("$unzip_dir/$zip_from_dir"), array());
-    $cache_html_files= array();
+    $upgradeFiles = findAllFiles(clean_path("{$unzip_dir}/{$zip_from_dir}"), []);
+    $cache_html_files = [];
 
     // get md5 sums
-    $md5_string = array();
-    if (file_exists(clean_path(getcwd().'/files.md5'))) {
-        require(clean_path(getcwd().'/files.md5'));
+    $md5_string = [];
+    if (file_exists(clean_path(getcwd() . '/files.md5'))) {
+        require clean_path(getcwd() . '/files.md5');
     }
 
     // file preflight checks
     logThis('verifying md5 checksums for files...');
     foreach ($upgradeFiles as $file) {
-        if (in_array(str_replace(clean_path("$unzip_dir/$zip_from_dir") . "/", '', $file), $uw_files)) {
+        if (in_array(str_replace(clean_path("{$unzip_dir}/{$zip_from_dir}") . '/', '', $file), $uw_files)) {
             continue;
         } // skip already loaded files
 
@@ -1851,21 +1924,21 @@ eoq;
 
         // check that we can move/delete the upgraded file
         if (!is_writable($file)) {
-            $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'].": ".$file;
+            $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'] . ': ' . $file;
         }
         // check that destination files are writable
-        $destFile = getcwd().str_replace(clean_path($unzip_dir.'/'.$zip_from_dir), '', $file);
+        $destFile = getcwd() . str_replace(clean_path($unzip_dir . '/' . $zip_from_dir), '', $file);
 
         if (is_file($destFile)) { // of course it needs to exist first...
             if (!is_writable($destFile)) {
-                $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'].": ".$destFile;
+                $errors[] = $mod_strings['ERR_UW_FILE_NOT_WRITABLE'] . ': ' . $destFile;
             }
         }
 
         ///////////////////////////////////////////////////////////////////////
         ////	DIFFS
         // compare md5s and build up a manual merge list
-        $targetFile = clean_path(".".str_replace(getcwd(), '', $destFile));
+        $targetFile = clean_path('.' . str_replace(getcwd(), '', $destFile));
         $targetMd5 = '0';
         if (is_file($destFile)) {
             if (strpos($targetFile, '.php')) {
@@ -1887,7 +1960,7 @@ eoq;
         }
 
         if (isset($md5_string[$targetFile]) && $md5_string[$targetFile] != $targetMd5) {
-            logThis('found a file with a differing md5: ['.$targetFile.']');
+            logThis('found a file with a differing md5: [' . $targetFile . ']');
             $manualDiff[] = $destFile;
         }
         ////	END DIFFS
@@ -1901,9 +1974,9 @@ eoq;
 
 function fileCopy($file_path)
 {
-    if (file_exists(clean_path($_SESSION['unzip_dir'].'/'.$_SESSION['zip_from_dir'].'/'.$file_path))) {
-        $file = clean_path($_SESSION['unzip_dir'].'/'.$_SESSION['zip_from_dir'].'/'.$file_path);
-        $destFile = str_replace(clean_path($_SESSION['unzip_dir'].'/'.$_SESSION['zip_from_dir']), clean_path(getcwd()), $file);
+    if (file_exists(clean_path($_SESSION['unzip_dir'] . '/' . $_SESSION['zip_from_dir'] . '/' . $file_path))) {
+        $file = clean_path($_SESSION['unzip_dir'] . '/' . $_SESSION['zip_from_dir'] . '/' . $file_path);
+        $destFile = str_replace(clean_path($_SESSION['unzip_dir'] . '/' . $_SESSION['zip_from_dir']), clean_path(getcwd()), $file);
         if (!is_dir(dirname($destFile))) {
             mkdir_recursive(dirname($destFile)); // make sure the directory exists
         }
@@ -1914,14 +1987,15 @@ function getChecklist($steps, $step)
 {
     global $mod_strings;
 
-    $skip = array('start', 'cancel', 'uninstall','end');
-    $j=0;
-    $i=1;
-    $ret  = '<table cellpadding="3" cellspacing="4" border="0">';
-    $ret .= '<tr><th colspan="3" align="left">'.$mod_strings['LBL_UW_CHECKLIST'].':</th></tr>';
+    $skip = ['start', 'cancel', 'uninstall', 'end'];
+    $j = 0;
+    $i = 1;
+    $ret = '<table cellpadding="3" cellspacing="4" border="0">';
+    $ret .= '<tr><th colspan="3" align="left">' . $mod_strings['LBL_UW_CHECKLIST'] . ':</th></tr>';
     foreach ($steps['desc'] as $k => $desc) {
         if (in_array($steps['files'][$j], $skip)) {
             $j++;
+
             continue;
         }
 
@@ -1936,8 +2010,8 @@ function getChecklist($steps, $step)
 
         if ($k == $_REQUEST['step']) {
             //$status = $mod_strings['LBL_UW_IN_PROGRESS'];
-            $desc_mod_pre = "<font color=blue><i>";
-            $desc_mod_post = "</i></font>";
+            $desc_mod_pre = '<font color=blue><i>';
+            $desc_mod_post = '</i></font>';
         }
 
         $ret .= "<tr><td>&nbsp;</td><td><b>{$i}: {$desc_mod_pre}{$desc}{$desc_mod_post}</b></td>";
@@ -1945,7 +2019,8 @@ function getChecklist($steps, $step)
         $i++;
         $j++;
     }
-    $ret .= "</table>";
+    $ret .= '</table>';
+
     return $ret;
 }
 
@@ -1962,22 +2037,22 @@ function prepSystemForUpgrade()
     ///////////////////////////////////////////////////////////////////////////////
     ////	Make sure variables exist
     if (empty($base_upgrade_dir)) {
-        $base_upgrade_dir       = $p_base_upgrade_dir;
+        $base_upgrade_dir = $p_base_upgrade_dir;
     }
     if (empty($base_tmp_upgrade_dir)) {
-        $base_tmp_upgrade_dir   = $p_base_tmp_upgrade_dir;
+        $base_tmp_upgrade_dir = $p_base_tmp_upgrade_dir;
     }
     sugar_mkdir($base_tmp_upgrade_dir, 0775, true);
     if (!isset($subdirs) || empty($subdirs)) {
-        $subdirs = array('full', 'langpack', 'module', 'patch', 'theme');
+        $subdirs = ['full', 'langpack', 'module', 'patch', 'theme'];
     }
 
     $upgrade_progress_dir = $base_tmp_upgrade_dir;
-    $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
+    $upgrade_progress_file = $upgrade_progress_dir . '/upgrade_progress.php';
     if (file_exists($upgrade_progress_file)) {
         if (function_exists('get_upgrade_progress') && function_exists('didThisStepRunBefore')) {
             if (didThisStepRunBefore('end')) {
-                include($upgrade_progress_file);
+                include $upgrade_progress_file;
                 unset($upgrade_config);
                 unlink($upgrade_progress_file);
             }
@@ -1985,12 +2060,12 @@ function prepSystemForUpgrade()
     }
 
     // increase the cuttoff time to 1 hour
-    ini_set("max_execution_time", "3600");
+    ini_set('max_execution_time', '3600');
 
     // make sure dirs exist
     if ($subdirs != null) {
         foreach ($subdirs as $subdir) {
-            sugar_mkdir("$base_upgrade_dir/$subdir", 0775, true);
+            sugar_mkdir("{$base_upgrade_dir}/{$subdir}", 0775, true);
         }
     }
     // array of special scripts that are executed during (un)installation-- key is type of script, value is filename
@@ -2001,12 +2076,12 @@ function prepSystemForUpgrade()
         define('SUGARCRM_POST_UNINSTALL_FILE', 'scripts/post_uninstall.php');
     }
 
-    $script_files = array(
-        "pre-install" => constant('SUGARCRM_PRE_INSTALL_FILE'),
-        "post-install" => constant('SUGARCRM_POST_INSTALL_FILE'),
-        "pre-uninstall" => constant('SUGARCRM_PRE_UNINSTALL_FILE'),
-        "post-uninstall" => constant('SUGARCRM_POST_UNINSTALL_FILE'),
-    );
+    $script_files = [
+        'pre-install' => constant('SUGARCRM_PRE_INSTALL_FILE'),
+        'post-install' => constant('SUGARCRM_POST_INSTALL_FILE'),
+        'pre-uninstall' => constant('SUGARCRM_PRE_UNINSTALL_FILE'),
+        'post-uninstall' => constant('SUGARCRM_POST_UNINSTALL_FILE'),
+    ];
 
     // check that the upload limit is set to 6M or greater
     define('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES', 6 * 1024 * 1024);  // 6 Megabytes
@@ -2014,9 +2089,9 @@ function prepSystemForUpgrade()
     $upload_max_filesize_bytes = return_bytes($upload_max_filesize);
 
     if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
-        $GLOBALS['log']->debug("detected upload_max_filesize: $upload_max_filesize");
+        $GLOBALS['log']->debug("detected upload_max_filesize: {$upload_max_filesize}");
         $admin_strings = return_module_language($current_language, 'Administration');
-        echo '<p class="error">'.$admin_strings['MSG_INCREASE_UPLOAD_MAX_FILESIZE'].' '.get_cfg_var('cfg_file_path')."</p>\n";
+        echo '<p class="error">' . $admin_strings['MSG_INCREASE_UPLOAD_MAX_FILESIZE'] . ' ' . get_cfg_var('cfg_file_path') . "</p>\n";
     }
 }
 
@@ -2034,7 +2109,7 @@ if (!function_exists('extractFile')) {
 
         unzip_file($zip_file, $file_in_zip, $my_zip_dir);
 
-        return("$my_zip_dir/$file_in_zip");
+        return "{$my_zip_dir}/{$file_in_zip}";
     }
 }
 
@@ -2042,7 +2117,8 @@ if (!function_exists('extractManifest')) {
     function extractManifest($zip_file)
     {
         logThis('extracting manifest.');
-        return(extractFile($zip_file, "manifest.php"));
+
+        return extractFile($zip_file, 'manifest.php');
     }
 }
 
@@ -2051,14 +2127,14 @@ if (!function_exists('getInstallType')) {
     {
         // detect file type
         global $subdirs;
-        $subdirs = array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
+        $subdirs = ['full', 'langpack', 'module', 'patch', 'theme', 'temp'];
         foreach ($subdirs as $subdir) {
-            if (preg_match("#/$subdir/#", $type_string)) {
-                return($subdir);
+            if (preg_match("#/{$subdir}/#", $type_string)) {
+                return $subdir;
             }
         }
         // return empty if no match
-        return("");
+        return '';
     }
 }
 
@@ -2067,63 +2143,73 @@ function getImageForType($type)
     global $image_path;
     global $mod_strings;
 
-    $icon = "";
+    $icon = '';
     switch ($type) {
-        case "full":
-            $icon = SugarThemeRegistry::current()->getImage("Upgrade", "", null, null, '.gif', $mod_strings['LBL_UPGRADE']);
+        case 'full' :
+            $icon = SugarThemeRegistry::current()->getImage('Upgrade', '', null, null, '.gif', $mod_strings['LBL_UPGRADE']);
+
             break;
-        case "langpack":
-            $icon = SugarThemeRegistry::current()->getImage("LanguagePacks", "", null, null, '.gif', $mod_strings['LBL_LANGPACKS']);
+        case 'langpack':
+            $icon = SugarThemeRegistry::current()->getImage('LanguagePacks', '', null, null, '.gif', $mod_strings['LBL_LANGPACKS']);
+
             break;
-        case "module":
-            $icon = SugarThemeRegistry::current()->getImage("ModuleLoader", "", null, null, '.gif', $mod_strings['LBL_MODULELOADER']);
+        case 'module':
+            $icon = SugarThemeRegistry::current()->getImage('ModuleLoader', '', null, null, '.gif', $mod_strings['LBL_MODULELOADER']);
+
             break;
-        case "patch":
-            $icon = SugarThemeRegistry::current()->getImage("PatchUpgrades", "", null, null, '.gif', $mod_strings['LBL_PATCHUPGRADES']);
+        case 'patch':
+            $icon = SugarThemeRegistry::current()->getImage('PatchUpgrades', '', null, null, '.gif', $mod_strings['LBL_PATCHUPGRADES']);
+
             break;
-        case "theme":
-            $icon = SugarThemeRegistry::current()->getImage("Themes", "", null, null, '.gif', $mod_strings['LBL_THEMES']);
+        case 'theme':
+            $icon = SugarThemeRegistry::current()->getImage('Themes', '', null, null, '.gif', $mod_strings['LBL_THEMES']);
+
             break;
         default:
             break;
     }
-    return($icon);
+
+    return $icon;
 }
 
 if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
-        require_once((string)$the_file);
-        if (isset($app_list_strings["language_pack_name"])) {
-            return($app_list_strings["language_pack_name"]);
+        require_once (string) $the_file;
+        if (isset($app_list_strings['language_pack_name'])) {
+            return $app_list_strings['language_pack_name'];
         }
-        return("");
+
+        return '';
     }
 }
 
 function getUITextForType($type)
 {
-    if ($type == "full") {
-        return("Full Upgrade");
+    if ($type == 'full') {
+        return 'Full Upgrade';
     }
-    if ($type == "langpack") {
-        return("Language Pack");
+    if ($type == 'langpack') {
+        return 'Language Pack';
     }
-    if ($type == "module") {
-        return("Module");
+    if ($type == 'module') {
+        return 'Module';
     }
-    if ($type == "patch") {
-        return("Patch");
+    if ($type == 'patch') {
+        return 'Patch';
     }
-    if ($type == "theme") {
-        return("Theme");
+    if ($type == 'theme') {
+        return 'Theme';
     }
 }
 
 if (!function_exists('validate_manifest')) {
     /**
-     * Verifies a manifest from a patch or module to be compatible with the current Sugar version and flavor
+     * Verifies a manifest from a patch or module to be compatible with the current Sugar version and flavor.
+     *
      * @param array manifest Standard manifest array
+     * @param mixed $manifest
+     *
      * @return string Error message, blank on success
      */
     function validate_manifest($manifest)
@@ -2136,7 +2222,7 @@ if (!function_exists('validate_manifest')) {
         global $sugar_flavor;
         global $mod_strings;
 
-        include('suitecrm_version.php');
+        include 'suitecrm_version.php';
 
         if (!isset($manifest['type'])) {
             return $mod_strings['ERROR_MANIFEST_TYPE'];
@@ -2144,8 +2230,8 @@ if (!function_exists('validate_manifest')) {
 
         $type = $manifest['type'];
 
-        if (getInstallType("/$type/") == "") {
-            return $mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.";
+        if (getInstallType("/{$type}/") == '') {
+            return $mod_strings['ERROR_PACKAGE_TYPE'] . ": '" . $type . "'.";
         }
 
         if (isset($manifest['acceptable_php_versions'])) {
@@ -2162,18 +2248,17 @@ if (!function_exists('validate_manifest')) {
             if (!$version_ok && isset($manifest['acceptable_php_versions']['regex_matches'])) {
                 $matches_empty = false;
                 foreach ($manifest['acceptable_php_versions']['regex_matches'] as $match) {
-                    if (preg_match("/$match/", PHP_VERSION)) {
+                    if (preg_match("/{$match}/", PHP_VERSION)) {
                         $version_ok = true;
                     }
                 }
             }
 
             if (!$matches_empty && !$version_ok) {
-                return $mod_strings['ERROR_PHP_VERSION_INCOMPATIBLE']."<br />".
-                $mod_strings['ERR_UW_PHP_VERSION'].PHP_VERSION;
+                return $mod_strings['ERROR_PHP_VERSION_INCOMPATIBLE'] . '<br />' .
+                $mod_strings['ERR_UW_PHP_VERSION'] . PHP_VERSION;
             }
         }
-
 
         if (!isset($manifest['acceptable_suitecrm_versions'])) {
             // If sugarcrm version set 'acceptable_sugar_versions', and acceptable_suitecrm_versions not set check on sugar version.
@@ -2191,14 +2276,14 @@ if (!function_exists('validate_manifest')) {
                 if (!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
                     $matches_empty = false;
                     foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
-                        if (preg_match("/$match/", $sugar_version)) {
+                        if (preg_match("/{$match}/", $sugar_version)) {
                             $version_ok = true;
                         }
                     }
                 }
 
                 if (!$matches_empty && !$version_ok) {
-                    return $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . "<br />" .
+                    return $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . '<br />' .
                     $mod_strings['ERR_UW_VERSION'] . $sugar_version;
                 }
             } else {
@@ -2221,14 +2306,14 @@ if (!function_exists('validate_manifest')) {
             if (!$version_ok && isset($manifest['acceptable_suitecrm_versions']['regex_matches'])) {
                 $matches_empty = false;
                 foreach ($manifest['acceptable_suitecrm_versions']['regex_matches'] as $match) {
-                    if (preg_match("/$match/", $suitecrm_version)) {
+                    if (preg_match("/{$match}/", $suitecrm_version)) {
                         $version_ok = true;
                     }
                 }
             }
 
             if (!$matches_empty && !$version_ok) {
-                return $mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . "<br />" .
+                return $mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . '<br />' .
                 $mod_strings['ERR_UW_SUITECRM_VERSION'] . $suitecrm_version;
             }
         }
@@ -2239,7 +2324,6 @@ if (!function_exists('validate_manifest')) {
 
 function unlinkUploadFiles()
 {
-    return;
     //	logThis('at unlinkUploadFiles()');
 //
 //	if(isset($_SESSION['install_file']) && !empty($_SESSION['install_file'])) {
@@ -2253,7 +2337,7 @@ function unlinkUploadFiles()
 }
 
 /**
- * deletes files created by unzipping a package
+ * deletes files created by unzipping a package.
  */
 function unlinkUWTempFiles()
 {
@@ -2261,11 +2345,11 @@ function unlinkUWTempFiles()
     global $path;
 
     logThis('at unlinkUWTempFiles()');
-    $tempDir='';
+    $tempDir = '';
     list($upgDir, $tempDir) = getUWDirs();
 
     if (file_exists($tempDir) && is_dir($tempDir)) {
-        $files = findAllFiles($tempDir, array(), false);
+        $files = findAllFiles($tempDir, [], false);
         rsort($files);
         foreach ($files as $file) {
             if (!is_dir($file)) {
@@ -2274,30 +2358,36 @@ function unlinkUWTempFiles()
             }
         }
         // now do dirs
-        $files = findAllFiles($tempDir, array(), true);
+        $files = findAllFiles($tempDir, [], true);
         foreach ($files as $dir) {
             if (is_dir($dir)) {
                 //logThis('removing dir ['.$dir.']', $path);
                 @rmdir($dir);
             }
         }
-        $cacheFile = sugar_cached("modules/UpgradeWizard/_persistence.php");
+        $cacheFile = sugar_cached('modules/UpgradeWizard/_persistence.php');
         if (is_file($cacheFile)) {
             logThis("Unlinking Upgrade cache file: '_persistence.php'", $path);
             @unlink($cacheFile);
         }
     }
-    logThis("finished!");
+    logThis('finished!');
 }
 
 /**
- * finds all files in the passed path, but skips select directories
+ * finds all files in the passed path, but skips select directories.
+ *
  * @param string dir Relative path
  * @param array the_array Collections of found files/dirs
  * @param bool include_dir True if we want to include directories in the
  * returned collection
+ * @param mixed $dir
+ * @param mixed $theArray
+ * @param mixed $includeDirs
+ * @param mixed $skipDirs
+ * @param mixed $echo
  */
-function uwFindAllFiles($dir, $theArray, $includeDirs=false, $skipDirs=array(), $echo=false)
+function uwFindAllFiles($dir, $theArray, $includeDirs = false, $skipDirs = [], $echo = false)
 {
     // check skips
     if (whetherNeedToSkipDir($dir, $skipDirs)) {
@@ -2314,7 +2404,7 @@ function uwFindAllFiles($dir, $theArray, $includeDirs=false, $skipDirs=array(), 
 
     while ($f = $d->read()) {
         // bug 40793 Skip Directories array in upgradeWizard does not function correctly
-        if ($f == "." || $f == ".." || whetherNeedToSkipDir("$dir/$f", $skipDirs)) { // skip *nix self/parent
+        if ($f == '.' || $f == '..' || whetherNeedToSkipDir("{$dir}/{$f}", $skipDirs)) { // skip *nix self/parent
             continue;
         }
 
@@ -2324,26 +2414,25 @@ function uwFindAllFiles($dir, $theArray, $includeDirs=false, $skipDirs=array(), 
             ob_flush();
         }
 
-        if (is_dir("$dir/$f")) {
+        if (is_dir("{$dir}/{$f}")) {
             if ($includeDirs) { // add the directory if flagged
-                $theArray[] = clean_path("$dir/$f");
+                $theArray[] = clean_path("{$dir}/{$f}");
             }
 
             // recurse in
-            $theArray = uwFindAllFiles("$dir/$f/", $theArray, $includeDirs, $skipDirs, $echo);
+            $theArray = uwFindAllFiles("{$dir}/{$f}/", $theArray, $includeDirs, $skipDirs, $echo);
         } else {
-            $theArray[] = clean_path("$dir/$f");
+            $theArray[] = clean_path("{$dir}/{$f}");
         }
     }
     rsort($theArray);
     $d->close();
+
     return $theArray;
 }
 
-
-
 /**
- * unset's UW's Session Vars
+ * unset's UW's Session Vars.
  */
 function resetUwSession()
 {
@@ -2423,12 +2512,13 @@ function getCustomTables()
 
 function alterCustomTables($customTables)
 {
-    return array();
+    return [];
 }
 
 function getAllTables()
 {
     $db = DBManagerFactory::getInstance();
+
     return $db->getTablesArray();
 }
 
@@ -2437,7 +2527,7 @@ function printAlterTableSql($tables)
     $alterTableSql = '';
 
     foreach ($tables as $table) {
-        $alterTableSql .= "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;" . "\n";
+        $alterTableSql .= 'ALTER TABLE ' . $table . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;' . "\n";
     }
 
     return $alterTableSql;
@@ -2448,44 +2538,41 @@ function executeConvertTablesSql($tables)
     $db = DBManagerFactory::getInstance();
 
     foreach ($tables as $table) {
-        $query = "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
+        $query = 'ALTER TABLE ' . $table . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
         if (!empty($table)) {
-            logThis("Sending query: ".$query);
-            $db->query($query);//, true, "An error has occurred while performing db query.  See log file for details.<br>");
+            logThis('Sending query: ' . $query);
+            $db->query($query); //, true, "An error has occurred while performing db query.  See log file for details.<br>");
         }
     }
+
     return true;
 }
 
 function testThis()
 {
-    $files = uwFindAllFiles(getcwd().'/test', array());
+    $files = uwFindAllFiles(getcwd() . '/test', []);
 
     $out = "<table cellpadding='1' cellspacing='0' border='0'>\n";
 
     $priorPath = '';
     foreach ($files as $file) {
-        $relativeFile = clean_path(str_replace(getcwd().'/test', '', $file));
+        $relativeFile = clean_path(str_replace(getcwd() . '/test', '', $file));
         $relativeFile = ($relativeFile[0] == '/') ? substr($relativeFile, 1, strlen($relativeFile)) : $relativeFile;
 
         $relativePath = dirname($relativeFile);
 
         if ($relativePath == $priorPath) { // same dir, new file
-            $out .= "<tr><td>".basename($relativeFile)."</td></tr>";
+            $out .= '<tr><td>' . basename($relativeFile) . '</td></tr>';
             $priorPath = $relativePath;
-        } else { // new dir
-        }
+        }   // new dir
     }
 
-    $out .= "</table>";
+    $out .= '</table>';
 
     echo $out;
 }
 
-
-
-
-function testThis2($dir, $id=0, $hide=false)
+function testThis2($dir, $id = 0, $hide = false)
 {
     global $mod_strings;
     $path = $dir;
@@ -2501,28 +2588,25 @@ function testThis2($dir, $id=0, $hide=false)
             continue;
         }
 
-        if (is_dir($path.'/'.$file)) {
-            $file = $path.'/'.$file;
+        if (is_dir($path . '/' . $file)) {
+            $file = $path . '/' . $file;
             $newI = create_guid();
-            $out .= "<tr><td valign='top'><a href='javascript:toggleNwFiles(\"{$newI}\");'>".SugarThemeRegistry::current()->getImage("Workflow", "", null, null, ".gif", $mod_strings['LBL_WORKFLOW'])."</a></td>\n";
-            $out .= "<td valign='top'><b><a href='javascript:toggleNwFiles(\"{$newI}\");'>".basename($file)."</a></b></td></tr>";
-            $out .= "<tr><td></td><td valign='top'>".testThis2($file, $newI, true)."</td></tr>";
+            $out .= "<tr><td valign='top'><a href='javascript:toggleNwFiles(\"{$newI}\");'>" . SugarThemeRegistry::current()->getImage('Workflow', '', null, null, '.gif', $mod_strings['LBL_WORKFLOW']) . "</a></td>\n";
+            $out .= "<td valign='top'><b><a href='javascript:toggleNwFiles(\"{$newI}\");'>" . basename($file) . '</a></b></td></tr>';
+            $out .= "<tr><td></td><td valign='top'>" . testThis2($file, $newI, true) . '</td></tr>';
         } else {
             $out .= "<tr><td valign='top'>&nbsp;</td>\n";
-            $out .= "<td valign='top'>".basename($file)."</td></tr>";
+            $out .= "<td valign='top'>" . basename($file) . '</td></tr>';
         }
     }
 
-    $out .= "</tr></table>";
-    $out .= "</div>";
+    $out .= '</tr></table>';
+    $out .= '</div>';
 
     closedir($dh);
+
     return $out;
 }
-
-
-
-
 
 function testThis3(&$files, $id, $hide, $previousPath = '')
 {
@@ -2549,10 +2633,10 @@ function testThis3(&$files, $id, $hide, $previousPath = '')
             $out .= "<td valign='top' align='left'>{$fileName}</td></tr>";
         } else { // new directory
             $newI = $k;
-            $out .= "<tr><td valign='top'><a href='javascript:toggleNwFiles(\"{$newI}\");'>".SugarThemeRegistry::current()->getImage("Workflow", "", null, null, ".gif", $mod_strings['LBL_WORKFLOW'])."</a></td>\n";
-            $out .= "<td valign='top'><b><a href='javascript:toggleNwFiles(\"{$newI}\");'>".$fileName."</a></b></td></tr>";
+            $out .= "<tr><td valign='top'><a href='javascript:toggleNwFiles(\"{$newI}\");'>" . SugarThemeRegistry::current()->getImage('Workflow', '', null, null, '.gif', $mod_strings['LBL_WORKFLOW']) . "</a></td>\n";
+            $out .= "<td valign='top'><b><a href='javascript:toggleNwFiles(\"{$newI}\");'>" . $fileName . '</a></b></td></tr>';
             $recurse = testThis3($files, $newI, true, $previousPath);
-            $out .= "<tr><td></td><td valign='top'>".$recurse."</td></tr>";
+            $out .= "<tr><td></td><td valign='top'>" . $recurse . '</td></tr>';
         }
 
         $previousPath = $path;
@@ -2565,11 +2649,11 @@ function testThis3(&$files, $id, $hide, $previousPath = '')
 	</table>
 	</div>
 eoq;
+
     return $ret;
 }
 
-
-function testThis4($filePath, $fileNodes=array(), $fileName='')
+function testThis4($filePath, $fileNodes = [], $fileName = '')
 {
     $path = dirname($filePath);
     $file = basename($filePath);
@@ -2579,7 +2663,7 @@ function testThis4($filePath, $fileNodes=array(), $fileName='')
     foreach ($exFile as $pathSegment) {
         if (is_array($fileNodes[$pathSegment])) { // path already processed
         } else { // newly found path
-            $fileNodes[$pathSegment] = array();
+            $fileNodes[$pathSegment] = [];
         }
 
         if ($fileName != '') {
@@ -2590,13 +2674,12 @@ function testThis4($filePath, $fileNodes=array(), $fileName='')
     return $fileNodes;
 }
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
 ////	SYSTEM CHECK FUNCTIONS
 /**
  * generates an array with all files in the SugarCRM root directory, skipping
- * cache/
+ * cache/.
+ *
  * @return array files Array of files with absolute paths
  */
 function getFilesForPermsCheck()
@@ -2604,27 +2687,32 @@ function getFilesForPermsCheck()
     global $sugar_config;
 
     logThis('Got JSON call to find all files...');
-    $filesNotWritable = array();
-    $filesNWPerms = array();
+    $filesNotWritable = [];
+    $filesNWPerms = [];
 
     // add directories here that should be skipped when doing file permissions checks (cache/upload is the nasty one)
-    $skipDirs = array(
+    $skipDirs = [
         $sugar_config['upload_dir'],
-    );
-    $files = uwFindAllFiles(".", array(), true, $skipDirs, true);
+    ];
+    $files = uwFindAllFiles('.', [], true, $skipDirs, true);
+
     return $files;
 }
 
 /**
- * checks files for permissions
+ * checks files for permissions.
+ *
  * @param array files Array of files with absolute paths
+ * @param mixed $files
+ * @param mixed $echo
+ *
  * @return string result of check
  */
-function checkFiles($files, $echo=false)
+function checkFiles($files, $echo = false)
 {
     global $mod_strings;
-    $filesNotWritable = array();
-    $i=0;
+    $filesNotWritable = [];
+    $i = 0;
     $filesOut = "
 		<a href='javascript:void(0); toggleNwFiles(\"filesNw\");'>{$mod_strings['LBL_UW_SHOW_NW_FILES']}</a>
 		<div id='filesNw' style='display:none;'>
@@ -2640,7 +2728,7 @@ function checkFiles($files, $echo=false)
     foreach ($files as $file) {
         if ($isWindows) {
             if (!is_writable_windows($file)) {
-                logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
+                logThis('WINDOWS: File [' . $file . '] not readable - saving for display');
                 // don't warn yet - we're going to use this to check against replacement files
                 // aw: commented out; it's a hack to allow upgrade wizard to continue on windows... will fix later
                 /*$filesNotWritable[$i] = $file;
@@ -2654,18 +2742,18 @@ function checkFiles($files, $echo=false)
             }
         } else {
             if (!is_writable($file)) {
-                logThis('File ['.$file.'] not writable - saving for display');
+                logThis('File [' . $file . '] not writable - saving for display');
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
                 $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
                 $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
                 $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
-                $filesOut .= "<tr>".
-                    "<td><span class='error'>{$file}</span></td>".
-                    "<td>{$filesNWPerms[$i]}</td>".
-                    "<td>".$owner['name']."</td>".
-                    "<td>".$group['name']."</td>".
-                    "</tr>";
+                $filesOut .= '<tr>' .
+                    "<td><span class='error'>{$file}</span></td>" .
+                    "<td>{$filesNWPerms[$i]}</td>" .
+                    '<td>' . $owner['name'] . '</td>' .
+                    '<td>' . $group['name'] . '</td>' .
+                    '</tr>';
             }
         }
         $i++;
@@ -2675,7 +2763,7 @@ function checkFiles($files, $echo=false)
     // not a stop error
     $errors['files']['filesNotWritable'] = (count($filesNotWritable) > 0) ? true : false;
     if (count($filesNotWritable) < 1) {
-        $filesOut = (string)($mod_strings['LBL_UW_FILE_NO_ERRORS']);
+        $filesOut = (string) ($mod_strings['LBL_UW_FILE_NO_ERRORS']);
     }
 
     return $filesOut;
@@ -2687,18 +2775,18 @@ function deletePackageOnCancel()
     global $sugar_config;
     list($base_upgrade_dir, $base_tmp_upgrade_dir) = getUWDirs();
     logThis('running delete');
-    if (!isset($_SESSION['install_file']) || ($_SESSION['install_file'] == "")) {
-        logThis('ERROR: trying to delete non-existent file: ['.$_REQUEST['install_file'].']');
+    if (!isset($_SESSION['install_file']) || ($_SESSION['install_file'] == '')) {
+        logThis('ERROR: trying to delete non-existent file: [' . $_REQUEST['install_file'] . ']');
         $error = $mod_strings['ERR_UW_NO_FILE_UPLOADED'];
     }
     // delete file in upgrades/patch
-    $delete_me = "$base_upgrade_dir/patch/".basename(urldecode($_REQUEST['install_file']));
+    $delete_me = "{$base_upgrade_dir}/patch/" . basename(urldecode($_REQUEST['install_file']));
     if (@unlink($delete_me)) {
         //logThis('unlinking: '.$delete_me);
-        $out = basename($delete_me).$mod_strings['LBL_UW_FILE_DELETED'];
+        $out = basename($delete_me) . $mod_strings['LBL_UW_FILE_DELETED'];
     } else {
-        logThis('ERROR: could not delete ['.$delete_me.']');
-        $error = $mod_strings['ERR_UW_FILE_NOT_DELETED'].$delete_me;
+        logThis('ERROR: could not delete [' . $delete_me . ']');
+        $error = $mod_strings['ERR_UW_FILE_NOT_DELETED'] . $delete_me;
     }
 
     if (!empty($error)) {
@@ -2711,40 +2799,40 @@ function handleExecuteSqlKeys($db, $tableName, $disable)
     if (empty($tableName)) {
         return true;
     }
-    if (is_callable(array($db, "supports"))) {
+    if (is_callable([$db, 'supports'])) {
         // new API
-        return $disable?$db->disableKeys($tableName):$db->enableKeys($tableName);
-    } else {
-        // old api
-        $op = $disable?"DISABLE":"ENABLE";
-        return $db->query("ALTER TABLE $tableName $op KEYS");
+        return $disable ? $db->disableKeys($tableName) : $db->enableKeys($tableName);
     }
+    // old api
+    $op = $disable ? 'DISABLE' : 'ENABLE';
+
+    return $db->query("ALTER TABLE {$tableName} {$op} KEYS");
 }
 
-function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='')
+function parseAndExecuteSqlFile($sqlScript, $forStepQuery = '', $resumeFromQuery = '')
 {
     global $sugar_config;
     $alterTableSchema = '';
-    $sqlErrors = array();
+    $sqlErrors = [];
     if (!isset($_SESSION['sqlSkippedQueries'])) {
-        $_SESSION['sqlSkippedQueries'] = array();
+        $_SESSION['sqlSkippedQueries'] = [];
     }
     $db = DBManagerFactory::getInstance();
-    $disable_keys = ($db->dbType == "mysql"); // have to use old way for now for upgrades
-    if (strpos($resumeFromQuery, ",") != false) {
-        $resumeFromQuery = explode(",", $resumeFromQuery);
+    $disable_keys = ($db->dbType == 'mysql'); // have to use old way for now for upgrades
+    if (strpos($resumeFromQuery, ',') != false) {
+        $resumeFromQuery = explode(',', $resumeFromQuery);
     }
     if (file_exists($sqlScript)) {
         $fp = fopen($sqlScript, 'rb');
         $contents = stream_get_contents($fp);
-        $anyScriptChanges =$contents;
+        $anyScriptChanges = $contents;
         $resumeAfterFound = false;
         if (rewind($fp)) {
             $completeLine = '';
             $count = 0;
             while ($line = fgets($fp)) {
                 if (strpos($line, '--') === false) {
-                    $completeLine .= " ".trim($line);
+                    $completeLine .= ' ' . trim($line);
                     if (strpos($line, ';') !== false) {
                         $query = '';
                         $query = str_replace(';', '', $completeLine);
@@ -2753,17 +2841,18 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
 
                         if ($query != null && $resumeFromQuery != null) {
                             if (!$resumeAfterFound) {
-                                if (strpos($query, ",") != false) {
-                                    $queArray = explode(",", $query);
-                                    for ($i=0; $i<count($resumeFromQuery); $i++) {
-                                        if (strcasecmp(trim($resumeFromQuery[$i]), trim($queArray[$i]))==0) {
+                                if (strpos($query, ',') != false) {
+                                    $queArray = explode(',', $query);
+                                    for ($i = 0; $i < count($resumeFromQuery); $i++) {
+                                        if (strcasecmp(trim($resumeFromQuery[$i]), trim($queArray[$i])) == 0) {
                                             $resumeAfterFound = true;
                                         } else {
                                             $resumeAfterFound = false;
+
                                             break;
                                         }
                                     }//for
-                                } elseif (strcasecmp(trim($resumeFromQuery), trim($query))==0) {
+                                } elseif (strcasecmp(trim($resumeFromQuery), trim($query)) == 0) {
                                     $resumeAfterFound = true;
                                 }
                             }
@@ -2771,7 +2860,7 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
                                 $count++;
                             }
                             // if $count=1 means it is just found so skip the query. Run the next one
-                            if ($query != null && $resumeAfterFound && $count >1) {
+                            if ($query != null && $resumeAfterFound && $count > 1) {
                                 $tableName = getAlterTable($query);
                                 if ($disable_keys) {
                                     handleExecuteSqlKeys($db, $tableName, true);
@@ -2784,8 +2873,8 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
                                 if ($disable_keys) {
                                     handleExecuteSqlKeys($db, $tableName, false);
                                 }
-                                $progQuery[$forStepQuery]=$query;
-                                post_install_progress($progQuery, $action='set');
+                                $progQuery[$forStepQuery] = $query;
+                                post_install_progress($progQuery, $action = 'set');
                             }//if
                         } elseif ($query != null) {
                             $tableName = getAlterTable($query);
@@ -2796,8 +2885,8 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
                             if ($disable_keys) {
                                 handleExecuteSqlKeys($db, $tableName, false);
                             }
-                            $progQuery[$forStepQuery]=$query;
-                            post_install_progress($progQuery, $action='set');
+                            $progQuery[$forStepQuery] = $query;
+                            post_install_progress($progQuery, $action = 'set');
                             if ($db->checkError()) {
                                 //put in the array to use later on
                                 $_SESSION['sqlSkippedQueries'][] = $query;
@@ -2811,17 +2900,17 @@ function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='
     }
 }
 
-
 function getAlterTable($query)
 {
     $query = strtolower($query);
     if (preg_match('/^\s*alter\s+table\s+/', $query)) {
-        $sqlArray = explode(" ", $query);
+        $sqlArray = explode(' ', $query);
         $key = array_search('table', $sqlArray);
-        return $sqlArray[($key+1)];
-    } else {
-        return '';
+
+        return $sqlArray[($key + 1)];
     }
+
+    return '';
 }
 
 function set_upgrade_vars()
@@ -2831,51 +2920,51 @@ function set_upgrade_vars()
     if (!is_dir($upgrade_progress_dir)) {
         mkdir_recursive($upgrade_progress_dir);
     }
-    $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
+    $upgrade_progress_file = $upgrade_progress_dir . '/upgrade_progress.php';
     if (file_exists($upgrade_progress_file)) {
-        include($upgrade_progress_file);
+        include $upgrade_progress_file;
     } else {
         fopen($upgrade_progress_file, 'wb+');
     }
     if (!isset($upgrade_config) || $upgrade_config == null) {
-        $upgrade_config = array();
-        $upgrade_config[1]['upgrade_vars']=array();
+        $upgrade_config = [];
+        $upgrade_config[1]['upgrade_vars'] = [];
     }
-    if (isset($upgrade_config[1]) && isset($upgrade_config[1]['upgrade_vars']) && !is_array($upgrade_config[1]['upgrade_vars'])) {
-        $upgrade_config[1]['upgrade_vars'] = array();
+    if (isset($upgrade_config[1], $upgrade_config[1]['upgrade_vars']) && !is_array($upgrade_config[1]['upgrade_vars'])) {
+        $upgrade_config[1]['upgrade_vars'] = [];
     }
 
     if (!isset($upgrade_vars) || $upgrade_vars == null) {
-        $upgrade_vars = array();
+        $upgrade_vars = [];
     }
     if (isset($_SESSION['unzip_dir']) && !empty($_SESSION['unzip_dir']) && file_exists($_SESSION['unzip_dir'])) {
-        $upgrade_vars['unzip_dir']=$_SESSION['unzip_dir'];
+        $upgrade_vars['unzip_dir'] = $_SESSION['unzip_dir'];
     }
     if (isset($_SESSION['install_file']) && !empty($_SESSION['install_file']) && file_exists($_SESSION['install_file'])) {
-        $upgrade_vars['install_file']=$_SESSION['install_file'];
+        $upgrade_vars['install_file'] = $_SESSION['install_file'];
     }
     if (isset($_SESSION['Upgraded451Wizard']) && !empty($_SESSION['Upgraded451Wizard'])) {
-        $upgrade_vars['Upgraded451Wizard']=$_SESSION['Upgraded451Wizard'];
+        $upgrade_vars['Upgraded451Wizard'] = $_SESSION['Upgraded451Wizard'];
     }
     if (isset($_SESSION['license_shown']) && !empty($_SESSION['license_shown'])) {
-        $upgrade_vars['license_shown']=$_SESSION['license_shown'];
+        $upgrade_vars['license_shown'] = $_SESSION['license_shown'];
     }
     if (isset($_SESSION['Initial_451to500_Step']) && !empty($_SESSION['Initial_451to500_Step'])) {
-        $upgrade_vars['Initial_451to500_Step']=$_SESSION['Initial_451to500_Step'];
+        $upgrade_vars['Initial_451to500_Step'] = $_SESSION['Initial_451to500_Step'];
     }
     if (isset($_SESSION['zip_from_dir']) && !empty($_SESSION['zip_from_dir'])) {
-        $upgrade_vars['zip_from_dir']=$_SESSION['zip_from_dir'];
+        $upgrade_vars['zip_from_dir'] = $_SESSION['zip_from_dir'];
     }
     //place into the upgrade_config array and rewrite config array only if new values are being inserted
     if (isset($upgrade_vars) && $upgrade_vars != null && count($upgrade_vars) > 0) {
-        foreach ($upgrade_vars as $key=>$val) {
+        foreach ($upgrade_vars as $key => $val) {
             if ($key != null && $val != null) {
-                $upgrade_config[1]['upgrade_vars'][$key]=$upgrade_vars[$key];
+                $upgrade_config[1]['upgrade_vars'][$key] = $upgrade_vars[$key];
             }
         }
         ksort($upgrade_config);
         if (is_writable($upgrade_progress_file) && write_array_to_file(
-            "upgrade_config",
+            'upgrade_config',
             $upgrade_config,
             $upgrade_progress_file
         )) {
@@ -2887,19 +2976,19 @@ function set_upgrade_vars()
 function initialize_session_vars()
 {
     $upgrade_progress_dir = sugar_cached('upgrades/temp');
-    $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
+    $upgrade_progress_file = $upgrade_progress_dir . '/upgrade_progress.php';
     if (file_exists($upgrade_progress_file)) {
-        include($upgrade_progress_file);
-        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) >0) {
-            $currVarsArray=$upgrade_config[1]['upgrade_vars'];
+        include $upgrade_progress_file;
+        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) > 0) {
+            $currVarsArray = $upgrade_config[1]['upgrade_vars'];
             //print_r($currVarsArray);
-            if (isset($currVarsArray) && $currVarsArray != null && is_array($currVarsArray) && count($currVarsArray)>0) {
-                foreach ($currVarsArray as $key=>$val) {
-                    if ($key != null && $val !=null) {
+            if (isset($currVarsArray) && $currVarsArray != null && is_array($currVarsArray) && count($currVarsArray) > 0) {
+                foreach ($currVarsArray as $key => $val) {
+                    if ($key != null && $val != null) {
                         //set session variables
-                        $_SESSION[$key]=$val;
+                        $_SESSION[$key] = $val;
                         //set varibales
-                        '$'.$key=$val;
+                        '$' . $key = $val;
                     }
                 }
             }
@@ -2908,15 +2997,15 @@ function initialize_session_vars()
 }
 //track the upgrade progress on each step
 //track the upgrade progress on each step
-function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepSubState='')
+function set_upgrade_progress($currStep, $currState, $currStepSub = '', $currStepSubState = '')
 {
     $upgrade_progress_dir = sugar_cached('upgrades/temp');
     if (!is_dir($upgrade_progress_dir)) {
         mkdir_recursive($upgrade_progress_dir);
     }
-    $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
+    $upgrade_progress_file = $upgrade_progress_dir . '/upgrade_progress.php';
     if (file_exists($upgrade_progress_file)) {
-        include($upgrade_progress_file);
+        include $upgrade_progress_file;
     } else {
         if (function_exists('sugar_fopen')) {
             sugar_fopen($upgrade_progress_file, 'w+');
@@ -2925,31 +3014,31 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
         }
     }
     if (!isset($upgrade_config) || $upgrade_config == null) {
-        $upgrade_config = array();
-        $upgrade_config[1]['upgrade_vars']=array();
+        $upgrade_config = [];
+        $upgrade_config[1]['upgrade_vars'] = [];
     }
     if (!is_array($upgrade_config[1]['upgrade_vars'])) {
-        $upgrade_config[1]['upgrade_vars'] = array();
+        $upgrade_config[1]['upgrade_vars'] = [];
     }
     if ($currStep != null && $currState != null) {
         if (count($upgrade_config) > 0) {
-            if ($currStepSub != null && $currStepSubState !=null) {
+            if ($currStepSub != null && $currStepSubState != null) {
                 //check if new status to be set or update
                 //get the latest in array. since it has sub components prepare an array
                 if (!empty($upgrade_config[count($upgrade_config)][$currStep]) && is_array($upgrade_config[count($upgrade_config)][$currStep])) {
                     $latestStepSub = currSubStep($upgrade_config[count($upgrade_config)][$currStep]);
                     if ($latestStepSub == $currStepSub) {
-                        $upgrade_config[count($upgrade_config)][$currStep][$latestStepSub]=$currStepSubState;
+                        $upgrade_config[count($upgrade_config)][$currStep][$latestStepSub] = $currStepSubState;
                         $upgrade_config[count($upgrade_config)][$currStep][$currStep] = $currState;
                     } else {
-                        $upgrade_config[count($upgrade_config)][$currStep][$currStepSub]=$currStepSubState;
+                        $upgrade_config[count($upgrade_config)][$currStep][$currStepSub] = $currStepSubState;
                         $upgrade_config[count($upgrade_config)][$currStep][$currStep] = $currState;
                     }
                 } else {
-                    $currArray = array();
+                    $currArray = [];
                     $currArray[$currStep] = $currState;
                     $currArray[$currStepSub] = $currStepSubState;
-                    $upgrade_config[count($upgrade_config)+1][$currStep] = $currArray;
+                    $upgrade_config[count($upgrade_config) + 1][$currStep] = $currArray;
                 }
             } else {
                 //get the current upgrade progress
@@ -2957,20 +3046,20 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
                 //set the upgrade progress
                 if ($latestStep == $currStep) {
                     //update the current step with new progress status
-                    $upgrade_config[count($upgrade_config)][$latestStep]=$currState;
+                    $upgrade_config[count($upgrade_config)][$latestStep] = $currState;
                 } else {
                     //it's a new step
-                    $upgrade_config[count($upgrade_config)+1][$currStep]=$currState;
+                    $upgrade_config[count($upgrade_config) + 1][$currStep] = $currState;
                 }
                 // now check if there elements within array substeps
             }
         } else {
             //set the upgrade progress  (just starting)
-            $upgrade_config[count($upgrade_config)+1][$currStep]= $currState;
+            $upgrade_config[count($upgrade_config) + 1][$currStep] = $currState;
         }
 
         if (is_writable($upgrade_progress_file) && write_array_to_file(
-            "upgrade_config",
+            'upgrade_config',
             $upgrade_config,
             $upgrade_progress_file
         )) {
@@ -2982,44 +3071,46 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
 function get_upgrade_progress()
 {
     $upgrade_progress_dir = sugar_cached('upgrades/temp');
-    $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
+    $upgrade_progress_file = $upgrade_progress_dir . '/upgrade_progress.php';
     $currState = '';
 
     if (file_exists($upgrade_progress_file)) {
-        include($upgrade_progress_file);
+        include $upgrade_progress_file;
         if (!isset($upgrade_config) || $upgrade_config == null) {
-            $upgrade_config = array();
+            $upgrade_config = [];
         }
-        if ($upgrade_config != null && count($upgrade_config) >1) {
+        if ($upgrade_config != null && count($upgrade_config) > 1) {
             $currArr = $upgrade_config[count($upgrade_config)];
             if (is_array($currArr)) {
-                foreach ($currArr as $key=>$val) {
+                foreach ($currArr as $key => $val) {
                     $currState = $key;
                 }
             }
         }
     }
+
     return $currState;
 }
 function currSubStep($currStep)
 {
     $currSubStep = '';
     if (is_array($currStep)) {
-        foreach ($currStep as $key=>$val) {
+        foreach ($currStep as $key => $val) {
             if ($key != null) {
                 $currState = $key;
             }
         }
     }
+
     return $currState;
 }
 function currUpgradeState($currState)
 {
     $currState = '';
     if (is_array($currState)) {
-        foreach ($currState as $key=>$val) {
+        foreach ($currState as $key => $val) {
             if (is_array($val)) {
-                foreach ($val as $k=>$v) {
+                foreach ($val as $k => $v) {
                     if ($k != null) {
                         $currState = $k;
                     }
@@ -3029,48 +3120,52 @@ function currUpgradeState($currState)
             }
         }
     }
+
     return $currState;
 }
 
-function didThisStepRunBefore($step, $SubStep='')
+function didThisStepRunBefore($step, $SubStep = '')
 {
     if ($step == null) {
         return;
     }
     $upgrade_progress_dir = sugar_cached('upgrades/temp');
-    $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
+    $upgrade_progress_file = $upgrade_progress_dir . '/upgrade_progress.php';
     $currState = '';
     $stepRan = false;
     if (file_exists($upgrade_progress_file)) {
-        include($upgrade_progress_file);
-        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) >0) {
-            for ($i=1; $i<=count($upgrade_config); $i++) {
+        include $upgrade_progress_file;
+        if (isset($upgrade_config) && $upgrade_config != null && is_array($upgrade_config) && count($upgrade_config) > 0) {
+            for ($i = 1; $i <= count($upgrade_config); $i++) {
                 if (is_array($upgrade_config[$i])) {
-                    foreach ($upgrade_config[$i] as $key=>$val) {
-                        if ($key==$step) {
+                    foreach ($upgrade_config[$i] as $key => $val) {
+                        if ($key == $step) {
                             if (is_array($upgrade_config[$i][$step])) {
                                 //now process
-                                foreach ($upgrade_config[$i][$step] as $k=>$v) {
+                                foreach ($upgrade_config[$i][$step] as $k => $v) {
                                     if (is_array($v)) {
-                                        foreach ($v as $k1=>$v1) {
+                                        foreach ($v as $k1 => $v1) {
                                             if ($SubStep != null) {
-                                                if ($SubStep ==$k1 && $v1=='done') {
+                                                if ($SubStep == $k1 && $v1 == 'done') {
                                                     $stepRan = true;
+
                                                     break;
                                                 }
                                             }
                                         }//foreach
-                                    } elseif ($SubStep !=null) {
-                                        if ($SubStep==$k && $v=='done') {
+                                    } elseif ($SubStep != null) {
+                                        if ($SubStep == $k && $v == 'done') {
                                             $stepRan = true;
+
                                             break;
                                         }
-                                    } elseif ($step==$k && $v=='done') {
+                                    } elseif ($step == $k && $v == 'done') {
                                         $stepRan = true;
+
                                         break;
                                     }
                                 }//foreach
-                            } elseif ($val=='done') {
+                            } elseif ($val == 'done') {
                                 $stepRan = true;
                             }
                         }
@@ -3079,48 +3174,49 @@ function didThisStepRunBefore($step, $SubStep='')
             }//for
         }
     }
+
     return $stepRan;
 }
 
-
-
 //get and set post install status
-function post_install_progress($progArray='', $action='')
+function post_install_progress($progArray = '', $action = '')
 {
     $upgrade_progress_dir = sugar_cached('upgrades/temp');
-    $upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
-    if ($action=='' || $action=='get') {
+    $upgrade_progress_file = $upgrade_progress_dir . '/upgrade_progress.php';
+    if ($action == '' || $action == 'get') {
         //get the state of post install
-        $currProg = array();
+        $currProg = [];
         if (file_exists($upgrade_progress_file)) {
-            include($upgrade_progress_file);
-            if (is_array($upgrade_config[count($upgrade_config)]['commit']['post_install']) && count($upgrade_config[count($upgrade_config)]['commit']['post_install'])>0) {
-                foreach ($upgrade_config[count($upgrade_config)]['commit']['post_install'] as $k=> $v) {
-                    $currProg[$k]=$v;
+            include $upgrade_progress_file;
+            if (is_array($upgrade_config[count($upgrade_config)]['commit']['post_install']) && count($upgrade_config[count($upgrade_config)]['commit']['post_install']) > 0) {
+                foreach ($upgrade_config[count($upgrade_config)]['commit']['post_install'] as $k => $v) {
+                    $currProg[$k] = $v;
                 }
             }
         }
+
         return $currProg;
-    } elseif ($action=='set') {
+    }
+    if ($action == 'set') {
         if (!is_dir($upgrade_progress_dir) && !mkdir($upgrade_progress_dir) && !is_dir($upgrade_progress_dir)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $upgrade_progress_dir));
         }
         if (file_exists($upgrade_progress_file)) {
-            include($upgrade_progress_file);
+            include $upgrade_progress_file;
         } else {
             fopen($upgrade_progress_file, 'wb+');
         }
         if (!is_array($upgrade_config[count($upgrade_config)]['commit']['post_install'])) {
-            $upgrade_config[count($upgrade_config)]['commit']['post_install']=array();
+            $upgrade_config[count($upgrade_config)]['commit']['post_install'] = [];
             $upgrade_config[count($upgrade_config)]['commit']['post_install']['post_install'] = 'in_progress';
         }
         if ($progArray != null && is_array($progArray)) {
-            foreach ($progArray as $key=>$val) {
-                $upgrade_config[count($upgrade_config)]['commit']['post_install'][$key]=$val;
+            foreach ($progArray as $key => $val) {
+                $upgrade_config[count($upgrade_config)]['commit']['post_install'][$key] = $val;
             }
         }
         if (is_writable($upgrade_progress_file) && write_array_to_file(
-            "upgrade_config",
+            'upgrade_config',
             $upgrade_config,
             $upgrade_progress_file
         )) {
@@ -3129,7 +3225,7 @@ function post_install_progress($progArray='', $action='')
     }
 }
 
-function repairDBForUpgrade($execute=false, $path='')
+function repairDBForUpgrade($execute = false, $path = '')
 {
     global $current_user, $beanFiles;
     global $dictionary;
@@ -3138,55 +3234,52 @@ function repairDBForUpgrade($execute=false, $path='')
     $db = &DBManagerFactory::getInstance();
     $sql = '';
     VardefManager::clearVardef();
-    require_once('include/ListView/ListView.php');
+    require_once 'include/ListView/ListView.php';
     foreach ($beanFiles as $bean => $file) {
-        require_once($file);
+        require_once $file;
         $focus = new $bean();
         $sql .= $db->repairTable($focus, $execute);
     }
     //echo $sql;
     $olddictionary = $dictionary;
     unset($dictionary);
-    include('modules/TableDictionary.php');
+    include 'modules/TableDictionary.php';
     foreach ($dictionary as $meta) {
         $tablename = $meta['table'];
         $fielddefs = $meta['fields'];
         $indices = $meta['indices'];
         $sql .= $db->repairTableParams($tablename, $fielddefs, $indices, $execute);
     }
-    $qry_str = "";
+    $qry_str = '';
     foreach (explode("\n", $sql) as $line) {
-        if (!empty($line) && substr($line, -2) != "*/") {
-            $line .= ";";
+        if (!empty($line) && substr($line, -2) != '*/') {
+            $line .= ';';
         }
         $qry_str .= $line . "\n";
     }
     $sql = str_replace(
-        array(
+        [
             "\n",
             '&#039;',
-        ),
-        array(
+        ],
+        [
             '',
             "'",
-        ),
+        ],
         preg_replace('#(/\*.+?\*/\n*)#', '', $qry_str)
     );
-    logThis("*******START EXECUTING DB UPGRADE QUERIES***************", $path);
+    logThis('*******START EXECUTING DB UPGRADE QUERIES***************', $path);
     logThis($sql, $path);
-    logThis("*******END EXECUTING DB UPGRADE QUERIES****************", $path);
+    logThis('*******END EXECUTING DB UPGRADE QUERIES****************', $path);
     if (!$execute) {
         return $sql;
     }
 }
 
-
-
 /**
  * upgradeUserPreferences
  * This method updates the user_preferences table and sets the pages/dashlets for users
- * which have ACL access to Trackers so that the Tracker dashlets are set in their user perferences
- *
+ * which have ACL access to Trackers so that the Tracker dashlets are set in their user perferences.
  */
 function upgradeUserPreferences()
 {
@@ -3238,7 +3331,6 @@ function upgradeUserPreferences()
             $changed = true;
         }
 
-
         // we need to force save the changes to disk, otherwise we lose them.
         if ($changed) {
             $current_user->savePreferencesToDB();
@@ -3246,10 +3338,11 @@ function upgradeUserPreferences()
     } //while
 }
 
-
 /**
- * Checks if a locale name format is part of the default list, if not adds it to the config
+ * Checks if a locale name format is part of the default list, if not adds it to the config.
+ *
  * @param $name_format string a local name format string such as 's f l'
+ *
  * @return bool true on successful write to config file, false on failure;
  */
 function upgradeLocaleNameFormat($name_format)
@@ -3267,17 +3360,17 @@ function upgradeLocaleNameFormat($name_format)
         }
     }
     if (!in_array($name_format, $sugar_config['name_formats'])) {
-        $new_config = sugarArrayMerge($sugar_config['name_formats'], array($name_format=>$name_format));
+        $new_config = sugarArrayMerge($sugar_config['name_formats'], [$name_format => $name_format]);
         $sugar_config['name_formats'] = $new_config;
         if (!rebuildConfigFile($sugar_config, $sugar_version)) {
             $errors[] = $uw_strings['ERR_UW_CONFIG_WRITE'];
+
             return false;
         }
     }
+
     return true;
 }
-
-
 
 function add_custom_modules_favorites_search()
 {
@@ -3288,7 +3381,7 @@ function add_custom_modules_favorites_search()
             continue;
         }
 
-        $matches = array();
+        $matches = [];
         preg_match('/^[a-z0-9]{1,5}_[a-z0-9_]+$/i', $module_dir, $matches);
 
         // Make sure the module was created by module builder
@@ -3309,30 +3402,30 @@ function add_custom_modules_favorites_search()
         if (file_exists($read_searchdefs_from) && file_exists($read_SearchFields_from)) {
             $found_sf1 = false;
             $found_sf2 = false;
-            require($read_searchdefs_from);
+            require $read_searchdefs_from;
             foreach ($searchdefs[$module_dir]['layout']['basic_search'] as $sf_array) {
                 if (isset($sf_array['name']) && $sf_array['name'] == 'favorites_only') {
                     $found_sf1 = true;
                 }
             }
 
-            require($read_SearchFields_from);
+            require $read_SearchFields_from;
             if (isset($searchFields[$module_dir]['favorites_only'])) {
                 $found_sf2 = true;
             }
 
             if (!$found_sf1 && !$found_sf2) {
-                $searchdefs[$module_dir]['layout']['basic_search']['favorites_only'] = array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',);
-                $searchdefs[$module_dir]['layout']['advanced_search']['favorites_only'] = array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',);
-                $searchFields[$module_dir]['favorites_only'] = array(
-                    'query_type'=>'format',
+                $searchdefs[$module_dir]['layout']['basic_search']['favorites_only'] = ['name' => 'favorites_only', 'label' => 'LBL_FAVORITES_FILTER', 'type' => 'bool'];
+                $searchdefs[$module_dir]['layout']['advanced_search']['favorites_only'] = ['name' => 'favorites_only', 'label' => 'LBL_FAVORITES_FILTER', 'type' => 'bool'];
+                $searchFields[$module_dir]['favorites_only'] = [
+                    'query_type' => 'format',
                     'operator' => 'subquery',
                     'subquery' => 'SELECT sugarfavorites.record_id FROM sugarfavorites
 								WHERE sugarfavorites.deleted=0
-									and sugarfavorites.module = \''.$module_dir.'\'
+									and sugarfavorites.module = \'' . $module_dir . '\'
 									and sugarfavorites.assigned_user_id = \'{0}\'',
-                    'db_field'=>array('id')
-                );
+                    'db_field' => ['id']
+                ];
 
                 if (!is_dir("custom/{$full_module_dir}/metadata")) {
                     mkdir_recursive("custom/{$full_module_dir}/metadata");
@@ -3354,20 +3447,20 @@ function add_custom_modules_favorites_search()
     }
 }
 
-
 /**
- * upgradeModulesForTeamsets
+ * upgradeModulesForTeamsets.
  *
  * This method adds the team_set_id values to the module tables that have the new team_set_id column
  * added through the SugarCRM 5.5.x upgrade process.  It also adds the values into the team_sets and
  * team_sets_teams tables.
  *
  * @param filter Array of modules to process; empty by default
+ * @param mixed $filter
  */
-function upgradeModulesForTeamsets($filter=array())
+function upgradeModulesForTeamsets($filter = [])
 {
-    require('include/modules.php');
-    foreach ($beanList as $moduleName=>$beanName) {
+    require 'include/modules.php';
+    foreach ($beanList as $moduleName => $beanName) {
         if (!empty($filter) && array_search($moduleName, $filter) === false) {
             continue;
         }
@@ -3391,18 +3484,17 @@ function upgradeModulesForTeamsets($filter=array())
     //Upgrade users table
     $bean = loadBean('Users');
     upgradeTeamColumn($bean, 'default_team');
-    $result = DBManagerFactory::getInstance()->query("SELECT id FROM teams where deleted=0");
+    $result = DBManagerFactory::getInstance()->query('SELECT id FROM teams where deleted=0');
     while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
         $teamset = new TeamSet();
         $teamset->addTeams($row['id']);
     }
 }
 
-
 /**
  * upgradeTeamColumn
  * Helper function to create a team_set_id column and also set team_set_id column
- * to have the value of the $column_name parameter
+ * to have the value of the $column_name parameter.
  *
  * @param $bean SugarBean which we are adding team_set_id column to
  * @param $column_name The name of the column containing the default team_set_id value
@@ -3412,7 +3504,6 @@ function upgradeTeamColumn($bean, $column_name)
     //first let's check to ensure that the team_set_id field is defined, if not it could be the case that this is an older
     //module that does not use the SugarObjects
     if (empty($bean->field_defs['team_set_id']) && $bean->module_dir != 'Trackers') {
-
         //at this point we could assume that since we have a team_id defined and not a team_set_id that we need to
         //add that field and the corresponding relationships
         $object = $bean->object_name;
@@ -3427,28 +3518,28 @@ function upgradeTeamColumn($bean, $column_name)
         }
 
         $path = 'include/SugarObjects/implements/team_security/vardefs.php';
-        require($path);
+        require $path;
         //go through each entry in the vardefs from team_security and unset anything that is already set in the core module
         //this will ensure we have the proper ordering.
         $fieldDiff = array_diff_assoc($vardefs['fields'], $GLOBALS['dictionary'][$bean->object_name]['fields']);
 
-        $file = 'custom/Extension/modules/' . $bean->module_dir. '/Ext/Vardefs/teams.php';
+        $file = 'custom/Extension/modules/' . $bean->module_dir . '/Ext/Vardefs/teams.php';
         $contents = "<?php\n";
         if (!empty($fieldDiff)) {
             foreach ($fieldDiff as $key => $val) {
-                $contents .= "\n\$GLOBALS['dictionary']['". $object . "']['fields']['". $key . "']=" . var_export_helper($val) . ";";
+                $contents .= "\n\$GLOBALS['dictionary']['" . $object . "']['fields']['" . $key . "']=" . var_export_helper($val) . ';';
             }
         }
         $relationshipDiff = array_diff_assoc($vardefs['relationships'], $GLOBALS['dictionary'][$bean->object_name]['relationships']);
         if (!empty($relationshipDiff)) {
             foreach ($relationshipDiff as $key => $val) {
-                $contents .= "\n\$GLOBALS['dictionary']['". $object . "']['relationships']['". $key . "']=" . var_export_helper($val) . ";";
+                $contents .= "\n\$GLOBALS['dictionary']['" . $object . "']['relationships']['" . $key . "']=" . var_export_helper($val) . ';';
             }
         }
         $indexDiff = array_diff_assoc($vardefs['indices'], $GLOBALS['dictionary'][$bean->object_name]['indices']);
         if (!empty($indexDiff)) {
             foreach ($indexDiff as $key => $val) {
-                $contents .= "\n\$GLOBALS['dictionary']['". $object . "']['indices']['". $key . "']=" . var_export_helper($val) . ";";
+                $contents .= "\n\$GLOBALS['dictionary']['" . $object . "']['indices']['" . $key . "']=" . var_export_helper($val) . ';';
             }
         }
         if ($fh = @sugar_fopen($file, 'wt')) {
@@ -3456,10 +3547,9 @@ function upgradeTeamColumn($bean, $column_name)
             fclose($fh);
         }
 
-
         //we have written out the teams.php into custom/Extension/modules/{$module_dir}/Ext/Vardefs/teams.php'
         //now let's merge back into vardefs.ext.php
-        require_once('ModuleInstall/ModuleInstaller.php');
+        require_once 'ModuleInstall/ModuleInstaller.php';
         $mi = new ModuleInstaller();
         $mi->merge_files('Ext/Vardefs/', 'vardefs.ext.php');
         VardefManager::loadVardef($bean->module_dir, $bean->object_name, true);
@@ -3472,16 +3562,16 @@ function upgradeTeamColumn($bean, $column_name)
         if (!isset($FieldArray['team_set_id'])) {
             DBManagerFactory::getInstance()->addColumn($bean->table_name, $bean->field_defs['team_set_id']);
         }
-        $indexArray =  DBManagerFactory::getInstance()->helper->get_indices($bean->table_name);
+        $indexArray = DBManagerFactory::getInstance()->helper->get_indices($bean->table_name);
 
-        $indexName = getValidDBName('idx_'.strtolower($bean->table_name).'_tmst_id', true, 34);
-        $indexDef = array(
-            array(
+        $indexName = getValidDBName('idx_' . strtolower($bean->table_name) . '_tmst_id', true, 34);
+        $indexDef = [
+            [
                 'name' => $indexName,
                 'type' => 'index',
-                'fields' => array('team_set_id')
-            )
-        );
+                'fields' => ['team_set_id']
+            ]
+        ];
         if (!isset($indexArray[$indexName])) {
             DBManagerFactory::getInstance()->addIndexes($bean->table_name, $indexDef);
         }
@@ -3498,23 +3588,22 @@ function upgradeTeamColumn($bean, $column_name)
  */
 function upgradeFolderSubscriptionsTeamSetId()
 {
-    logThis("In upgradeFolderSubscriptionsTeamSetId()");
-    $query = "UPDATE folders SET team_set_id = team_id";
+    logThis('In upgradeFolderSubscriptionsTeamSetId()');
+    $query = 'UPDATE folders SET team_set_id = team_id';
     $result = DBManagerFactory::getInstance()->query($query);
-    logThis("Finished upgradeFolderSubscriptionsTeamSetId()");
+    logThis('Finished upgradeFolderSubscriptionsTeamSetId()');
 }
 
 /**
- * upgradeModulesForTeam
+ * upgradeModulesForTeam.
  *
  * This method update the associated_user_id, name, name_2 to the private team records on teams table
  * This function is used for upgrade process from 5.1.x and 5.2.x.
- *
  */
 function upgradeModulesForTeam()
 {
-    logThis("In upgradeModulesForTeam()");
-    $result = DBManagerFactory::getInstance()->query("SELECT id, user_name, first_name, last_name FROM users where deleted=0");
+    logThis('In upgradeModulesForTeam()');
+    $result = DBManagerFactory::getInstance()->query('SELECT id, user_name, first_name, last_name FROM users where deleted=0');
 
     while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
         $results2 = DBManagerFactory::getInstance()->query("SELECT id FROM teams WHERE name = '({$row['user_name']})'");
@@ -3527,12 +3616,12 @@ function upgradeModulesForTeam()
             $team->new_user_created($user);
             $team_id = $team->id;
         } else {
-            $team_id =$assoc['id'];
+            $team_id = $assoc['id'];
         }
 
         //upgrade the team
-        $name = is_null($row['first_name'])?'':$row['first_name'];
-        $name_2 = is_null($row['last_name'])?'':$row['last_name'];
+        $name = is_null($row['first_name']) ? '' : $row['first_name'];
+        $name_2 = is_null($row['last_name']) ? '' : $row['last_name'];
         $associated_user_id = $row['id'];
 
         //Bug 32914
@@ -3551,29 +3640,27 @@ function upgradeModulesForTeam()
 
     //Update team_set_id
     if ($ce_to_pro_or_ent) {
-        DBManagerFactory::getInstance()->query("update users set team_set_id = (select teams.id from teams where teams.associated_user_id = users.id)");
-        DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.associated_user_id = users.id)");
+        DBManagerFactory::getInstance()->query('update users set team_set_id = (select teams.id from teams where teams.associated_user_id = users.id)');
+        DBManagerFactory::getInstance()->query('update users set default_team = (select teams.id from teams where teams.associated_user_id = users.id)');
     }
 }
-
 
 function addNewSystemTabsFromUpgrade($from_dir)
 {
     global $path;
     if (isset($_SESSION['upgrade_from_flavor'])) {
-
         //check to see if there are any new files that need to be added to systems tab
         //retrieve old modules list
         logThis('check to see if new modules exist', $path);
-        $oldModuleList = array();
-        $newModuleList = array();
-        include($from_dir.'/include/modules.php');
+        $oldModuleList = [];
+        $newModuleList = [];
+        include $from_dir . '/include/modules.php';
         $oldModuleList = $moduleList;
-        include('include/modules.php');
+        include 'include/modules.php';
         $newModuleList = $moduleList;
 
         //include tab controller
-        require_once('modules/MySettings/TabController.php');
+        require_once 'modules/MySettings/TabController.php';
         $newTB = new TabController();
 
         //make sure new modules list has a key we can reference directly
@@ -3587,7 +3674,7 @@ function addNewSystemTabsFromUpgrade($from_dir)
             }
         }
         //new modules list now has left over modules which are new to this install, so lets add them to the system tabs
-        logThis('new modules to add are '.var_export($newModuleList, true), $path);
+        logThis('new modules to add are ' . var_export($newModuleList, true), $path);
 
         if (!empty($newModuleList)) {
             //grab the existing system tabs
@@ -3612,14 +3699,13 @@ function addNewSystemTabsFromUpgrade($from_dir)
  * fixing the language files that may have been affected and then updating the
  * fields_meta_data table accordingly.  It also refreshes any vardefs that may
  * have been affected.
- *
  */
 function fix_dropdown_list()
 {
     if (file_exists('custom/include/language')) {
-        $files = array();
-        $affected_modules = array();
-        $affected_keys = array();
+        $files = [];
+        $affected_modules = [];
+        $affected_keys = [];
 
         getFiles($files, 'custom/include/language', '/\.php$/i');
         foreach ($files as $file) {
@@ -3629,14 +3715,14 @@ function fix_dropdown_list()
                 //We're saying if the .php file was modified 30 seconds no more than php.bak file then we
                 //run these additional cleanup checks
                 if ($php_mod_time - $bak_mod_time < 30) {
-                    $app_list_strings = array();
-                    $GLOBALS['app_list_strings'] = array();
-                    require($file . '.bak');
+                    $app_list_strings = [];
+                    $GLOBALS['app_list_strings'] = [];
+                    require $file . '.bak';
                     $bak_app_list_strings = array_merge($app_list_strings, $GLOBALS['app_list_strings']);
 
-                    $app_list_strings = array();
-                    $GLOBALS['app_list_strings'] = array();
-                    require($file);
+                    $app_list_strings = [];
+                    $GLOBALS['app_list_strings'] = [];
+                    require $file;
                     $php_app_list_strings = array_merge($app_list_strings, $GLOBALS['app_list_strings']);
 
                     //Get the file contents
@@ -3644,25 +3730,25 @@ function fix_dropdown_list()
 
                     //Now simulate a fix for the file before we compare w/ the .php file
                     //we also append to the $contents
-                    foreach ($bak_app_list_strings as $key=>$entry) {
+                    foreach ($bak_app_list_strings as $key => $entry) {
                         if (preg_match('/([^A-Za-z_])/', $key, $matches) && is_array($entry)) {
                             $new_key = preg_replace('/[^A-Za-z_]/', '_', $key);
                             $bak_app_list_strings[$new_key] = $bak_app_list_strings[$key];
                             unset($bak_app_list_strings[$key]);
                             //Now if the entry doesn't exists in the .php file, then add to contents
                             if (!isset($php_app_list_strings[$new_key])) {
-                                $contents .= "\n\$GLOBALS['app_list_strings']['{$new_key}'] = " . var_export_helper($bak_app_list_strings[$new_key]) . ";";
+                                $contents .= "\n\$GLOBALS['app_list_strings']['{$new_key}'] = " . var_export_helper($bak_app_list_strings[$new_key]) . ';';
                             }
                         } //if
                     } //foreach
 
                     //Now load the .php file to do the comparison
-                    foreach ($php_app_list_strings as $key=>$entry) {
+                    foreach ($php_app_list_strings as $key => $entry) {
                         if (isset($bak_app_list_strings[$key])) {
                             $diff = array_diff($bak_app_list_strings[$key], $entry);
                             if (!empty($diff)) {
                                 //There is a difference, so copy the $bak_app_list_strings version into the .php file
-                                $contents .= "\n\$GLOBALS['app_list_strings']['{$key}'] = " . var_export_helper($bak_app_list_strings[$key]) . ";";
+                                $contents .= "\n\$GLOBALS['app_list_strings']['{$key}'] = " . var_export_helper($bak_app_list_strings[$key]) . ';';
                             } //if
                         } //if
                     } //foreach
@@ -3680,10 +3766,10 @@ function fix_dropdown_list()
                 }
             }
 
-            unset($GLOBALS['app_strings']);
-            unset($GLOBALS['app_list_strings']);
-            $app_list_strings = array();
-            require($file);
+            unset($GLOBALS['app_strings'], $GLOBALS['app_list_strings']);
+
+            $app_list_strings = [];
+            require $file;
             $touched = false;
             $contents = file_get_contents($file);
             if (!isset($GLOBALS['app_list_strings'])) {
@@ -3693,7 +3779,7 @@ function fix_dropdown_list()
             }
 
             if (isset($GLOBALS['app_list_strings']) && is_array($GLOBALS['app_list_strings'])) {
-                foreach ($GLOBALS['app_list_strings'] as $key=>$entry) {
+                foreach ($GLOBALS['app_list_strings'] as $key => $entry) {
                     if (preg_match('/([^A-Za-z_])/', $key, $matches) && is_array($entry)) {
                         $result = DBManagerFactory::getInstance()->query("SELECT custom_module FROM fields_meta_data WHERE ext1 = '{$key}'");
                         if (!empty($result)) {
@@ -3712,7 +3798,7 @@ function fix_dropdown_list()
                         $GLOBALS['app_list_strings'][$new_key] = $GLOBALS['app_list_strings'][$key];
                         unset($GLOBALS['app_list_strings'][$key]);
 
-                        $pattern_match = "/(\[\s*\'{$key}\'\s*\])/";
+                        $pattern_match = "/(\\[\\s*\\'{$key}\\'\\s*\\])/";
                         $new_key = "['{$new_key}']";
                         $out = preg_replace($pattern_match, $new_key, $contents);
                         $contents = $out;
@@ -3729,28 +3815,28 @@ function fix_dropdown_list()
                         if (preg_match('/language\/([^\.]+)\.lang\.php$/', $file, $matches)) {
                             $language = $matches[1];
 
-                            $app_list_strings = array();
+                            $app_list_strings = [];
 
-                            if (file_exists("include/language/$language.lang.php")) {
-                                include("include/language/$language.lang.php");
+                            if (file_exists("include/language/{$language}.lang.php")) {
+                                include "include/language/{$language}.lang.php";
                             }
-                            if (file_exists("include/language/$language.lang.override.php")) {
-                                $app_list_strings =  _mergeCustomAppListStrings("include/language/$language.lang.override.php", $app_list_strings) ;
+                            if (file_exists("include/language/{$language}.lang.override.php")) {
+                                $app_list_strings = _mergeCustomAppListStrings("include/language/{$language}.lang.override.php", $app_list_strings);
                             }
-                            if (file_exists("custom/application/Ext/Language/$language.ext.lang.php")) {
-                                $app_list_strings =  _mergeCustomAppListStrings("custom/application/Ext/Language/$language.ext.lang.php", $app_list_strings) ;
+                            if (file_exists("custom/application/Ext/Language/{$language}.ext.lang.php")) {
+                                $app_list_strings = _mergeCustomAppListStrings("custom/application/Ext/Language/{$language}.ext.lang.php", $app_list_strings);
                             }
-                            if (file_exists("custom/application/Ext/Language/$language.lang.ext.php")) {
-                                $app_list_strings =  _mergeCustomAppListStrings("custom/application/Ext/Language/$language.lang.ext.php", $app_list_strings) ;
+                            if (file_exists("custom/application/Ext/Language/{$language}.lang.ext.php")) {
+                                $app_list_strings = _mergeCustomAppListStrings("custom/application/Ext/Language/{$language}.lang.ext.php", $app_list_strings);
                             }
 
                             $all_non_custom_include_language_strings = $app_strings;
                             $all_non_custom_include_language_list_strings = $app_list_strings;
 
-                            $unset_keys = array();
+                            $unset_keys = [];
                             if (!empty($GLOBALS['app_list_strings'])) {
-                                foreach ($GLOBALS['app_list_strings'] as $key=>$value) {
-                                    $diff = array();
+                                foreach ($GLOBALS['app_list_strings'] as $key => $value) {
+                                    $diff = [];
                                     if (isset($all_non_custom_include_language_list_strings[$key])) {
                                         $diff = array_diff($all_non_custom_include_language_list_strings[$key], $GLOBALS['app_list_strings'][$key]);
                                     }
@@ -3766,7 +3852,7 @@ function fix_dropdown_list()
                             }
 
                             if (!empty($GLOBALS['app_strings'])) {
-                                foreach ($GLOBALS['app_strings'] as $key=>$value) {
+                                foreach ($GLOBALS['app_strings'] as $key => $value) {
                                     if (!empty($all_non_custom_include_language_strings[$key])) {
                                         unset($GLOBALS['app_strings'][$key]);
                                     }
@@ -3776,13 +3862,13 @@ function fix_dropdown_list()
 
                         $out = "<?php \n";
                         if (!empty($GLOBALS['app_strings'])) {
-                            foreach ($GLOBALS['app_strings'] as $key=>$entry) {
-                                $out .= "\n\$GLOBALS['app_strings']['$key']=" . var_export_helper($entry) . ";";
+                            foreach ($GLOBALS['app_strings'] as $key => $entry) {
+                                $out .= "\n\$GLOBALS['app_strings']['{$key}']=" . var_export_helper($entry) . ';';
                             }
                         }
 
-                        foreach ($GLOBALS['app_list_strings'] as $key=>$entry) {
-                            $out .= "\n\$GLOBALS['app_list_strings']['$key']=" . var_export_helper($entry) . ";";
+                        foreach ($GLOBALS['app_list_strings'] as $key => $entry) {
+                            $out .= "\n\$GLOBALS['app_list_strings']['{$key}']=" . var_export_helper($entry) . ';';
                         } //foreach
 
                         $touched = true;
@@ -3798,7 +3884,8 @@ function fix_dropdown_list()
                         fclose($fp);
                     } else {
                         //If we can't update the file, just return
-                        $GLOBALS['log']->error("Unable to update file contents in fix_dropdown_list.");
+                        $GLOBALS['log']->error('Unable to update file contents in fix_dropdown_list.');
+
                         return;
                     }
                 } //if($touched)
@@ -3807,28 +3894,27 @@ function fix_dropdown_list()
 
         //Update db entries (the order matters here... need to process database changes first)
         if (!empty($affected_keys)) {
-            foreach ($affected_keys as $old_key=>$new_key) {
+            foreach ($affected_keys as $old_key => $new_key) {
                 DBManagerFactory::getInstance()->query("UPDATE fields_meta_data SET ext1 = '{$new_key}' WHERE ext1 = '{$old_key}'");
             }
         }
 
         //Update vardef files for affected modules
         if (!empty($affected_modules)) {
-            foreach ($affected_modules as $module=>$object) {
+            foreach ($affected_modules as $module => $object) {
                 VardefManager::refreshVardefs($module, $object);
             }
         }
     }
 }
 
-
 function update_iframe_dashlets()
 {
-    require_once(sugar_cached('dashlets/dashlets.php'));
+    require_once sugar_cached('dashlets/dashlets.php');
 
     $db = DBManagerFactory::getInstance();
     $query = "SELECT id, contents, assigned_user_id FROM user_preferences WHERE deleted = 0 AND category = 'Home'";
-    $result = $db->query($query, true, "Unable to update new default dashlets! ");
+    $result = $db->query($query, true, 'Unable to update new default dashlets! ');
     while ($row = $db->fetchByAssoc($result)) {
         $content = unserialize(base64_decode($row['contents']));
         $assigned_user_id = $row['assigned_user_id'];
@@ -3849,67 +3935,70 @@ function update_iframe_dashlets()
     }
 }
 
-
 /**
- * convertImageToText
+ * convertImageToText.
+ *
  * @deprecated
  * This method attempts to convert date type image to text on Microsoft SQL Server.
  * This method could NOT be used in any other type of datebases.
+ *
+ * @param mixed $table_name
+ * @param mixed $column_name
  */
 function convertImageToText($table_name, $column_name)
 {
-    $set_lang = "SET LANGUAGE us_english";
+    $set_lang = 'SET LANGUAGE us_english';
     DBManagerFactory::getInstance()->query($set_lang);
     if (DBManagerFactory::getInstance()->lastError()) {
-        logThis('An error occurred when performing this query-->'.$set_lang);
+        logThis('An error occurred when performing this query-->' . $set_lang);
     }
-    $q="SELECT data_type
+    $q = "SELECT data_type
         FROM INFORMATION_SCHEMA.Tables T JOIN INFORMATION_SCHEMA.Columns C
-        ON T.TABLE_NAME = C.TABLE_NAME where T.TABLE_NAME = '$table_name' and C.COLUMN_NAME = '$column_name'";
-    $res= DBManagerFactory::getInstance()->query($q);
+        ON T.TABLE_NAME = C.TABLE_NAME where T.TABLE_NAME = '{$table_name}' and C.COLUMN_NAME = '{$column_name}'";
+    $res = DBManagerFactory::getInstance()->query($q);
     if (DBManagerFactory::getInstance()->lastError()) {
-        logThis('An error occurred when performing this query-->'.$q);
+        logThis('An error occurred when performing this query-->' . $q);
     }
-    $row= DBManagerFactory::getInstance()->fetchByAssoc($res);
+    $row = DBManagerFactory::getInstance()->fetchByAssoc($res);
 
     if (trim(strtolower($row['data_type'])) == 'image') {
         $addContent_temp = "alter table {$table_name} add {$column_name}_temp text null";
         DBManagerFactory::getInstance()->query($addContent_temp);
         if (DBManagerFactory::getInstance()->lastError()) {
-            logThis('An error occurred when performing this query-->'.$addContent_temp);
+            logThis('An error occurred when performing this query-->' . $addContent_temp);
         }
         $qN = "select count=datalength({$column_name}), id, {$column_name} from {$table_name}";
         $result = DBManagerFactory::getInstance()->query($qN);
         while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
-            if ($row['count'] >8000) {
+            if ($row['count'] > 8000) {
                 $contentLength = $row['count'];
                 $start = 1;
-                $next=8000;
+                $next = 8000;
                 $convertedContent = '';
-                while ($contentLength >0) {
+                while ($contentLength > 0) {
                     $stepsQuery = "select cont=convert(varchar(max), convert(varbinary(8000), substring({$column_name},{$start},{$next}))) from {$table_name} where id= '{$row['id']}'";
                     $steContQ = DBManagerFactory::getInstance()->query($stepsQuery);
                     if (DBManagerFactory::getInstance()->lastError()) {
-                        logThis('An error occurred when performing this query-->'.$stepsQuery);
+                        logThis('An error occurred when performing this query-->' . $stepsQuery);
                     }
                     $stepCont = DBManagerFactory::getInstance()->fetchByAssoc($steContQ);
                     if (isset($stepCont['cont'])) {
-                        $convertedContent = $convertedContent.$stepCont['cont'];
+                        $convertedContent = $convertedContent . $stepCont['cont'];
                     }
-                    $start = $start+$next;
+                    $start = $start + $next;
                     $contentLength = $contentLength - $next;
                 }
-                $addContentDataText="update {$table_name} set {$column_name}_temp = '{$convertedContent}' where id= '{$row['id']}'";
+                $addContentDataText = "update {$table_name} set {$column_name}_temp = '{$convertedContent}' where id= '{$row['id']}'";
                 DBManagerFactory::getInstance()->query($addContentDataText);
                 if (DBManagerFactory::getInstance()->lastError()) {
-                    logThis('An error occurred when performing this query-->'.$addContentDataText);
+                    logThis('An error occurred when performing this query-->' . $addContentDataText);
                 }
             } else {
-                $addContentDataText="update {$table_name} set {$column_name}_temp =
+                $addContentDataText = "update {$table_name} set {$column_name}_temp =
                 convert(varchar(max), convert(varbinary(8000), {$column_name})) where id= '{$row['id']}'";
                 DBManagerFactory::getInstance()->query($addContentDataText);
                 if (DBManagerFactory::getInstance()->lastError()) {
-                    logThis('An error occurred when performing this query-->'.$addContentDataText);
+                    logThis('An error occurred when performing this query-->' . $addContentDataText);
                 }
             }
         }
@@ -3917,12 +4006,12 @@ function convertImageToText($table_name, $column_name)
         $dropColumn = "alter table {$table_name} drop column {$column_name}";
         DBManagerFactory::getInstance()->query($dropColumn);
         if (DBManagerFactory::getInstance()->lastError()) {
-            logThis('An error occurred when performing this query-->'.$dropColumn);
+            logThis('An error occurred when performing this query-->' . $dropColumn);
         }
         $changeColumnName = "EXEC sp_rename '{$table_name}.[{$column_name}_temp]','{$column_name}','COLUMN'";
         DBManagerFactory::getInstance()->query($changeColumnName);
         if (DBManagerFactory::getInstance()->lastError()) {
-            logThis('An error occurred when performing this query-->'.$changeColumnName);
+            logThis('An error occurred when performing this query-->' . $changeColumnName);
         }
     }
 }
@@ -3935,33 +4024,32 @@ function convertImageToText($table_name, $column_name)
 function clearHelpFiles()
 {
     $modulePath = clean_path(getcwd() . '/modules');
-    $allHelpFiles = array();
-    getFiles($allHelpFiles, $modulePath, "/en_us.help.*/");
+    $allHelpFiles = [];
+    getFiles($allHelpFiles, $modulePath, '/en_us.help.*/');
 
     foreach ($allHelpFiles as $the_file) {
         if (is_file($the_file)) {
             unlink($the_file);
-            logThis("Deleted file: $the_file");
+            logThis("Deleted file: {$the_file}");
         }
     }
 }
 
-
-
 /**
- * upgradeDateTimeFields
+ * upgradeDateTimeFields.
  *
  * This method came from bug: 39757 where the date_end field is a date field and not a datetime field
  * which prevents you from performing timezone offset calculations once the data has been saved.
  *
  * @param path String location to log file, empty by default
+ * @param mixed $path
  */
 function upgradeDateTimeFields($path)
 {
     //bug: 39757
     $db = DBManagerFactory::getInstance();
-    $meetingsSql = "UPDATE meetings SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
-    $callsSql = "UPDATE calls SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
+    $meetingsSql = 'UPDATE meetings SET date_end = ' . $db->convert('date_start', 'add_time', ['duration_hours', 'duration_minutes']);
+    $callsSql = 'UPDATE calls SET date_end = ' . $db->convert('date_start', 'add_time', ['duration_hours', 'duration_minutes']);
     logThis('upgradeDateTimeFields Meetings SQL:' . $meetingsSql, $path);
     $db->query($meetingsSql);
 
@@ -3970,8 +4058,9 @@ function upgradeDateTimeFields($path)
 }
 
 /**
- * upgradeDocumentTypeFields
+ * upgradeDocumentTypeFields.
  *
+ * @param mixed $path
  */
 function upgradeDocumentTypeFields($path)
 {
@@ -3987,7 +4076,6 @@ function upgradeDocumentTypeFields($path)
     $db->query($meetingsSql);
 }
 
-
 /**
  * merge_config_si_settings
  * This method checks for the presence of a config_si.php file and, if found, merges the configuration
@@ -3999,16 +4087,23 @@ function upgradeDocumentTypeFields($path)
  * @param config_location String optional value to config.php file location
  * @param config_si_location String optional value to config_si.php file location
  * @param path String file of the location of log file to write to
- * @return boolean value indicating whether or not a merge was attempted with config_si.php file
+ * @param mixed $write_to_upgrade_log
+ * @param mixed $config_location
+ * @param mixed $config_si_location
+ * @param mixed $path
+ *
+ * @return bool value indicating whether or not a merge was attempted with config_si.php file
  */
-function merge_config_si_settings($write_to_upgrade_log=false, $config_location='', $config_si_location='', $path='')
+function merge_config_si_settings($write_to_upgrade_log = false, $config_location = '', $config_si_location = '', $path = '')
 {
     if (!empty($config_location) && !file_exists($config_location)) {
         if ($write_to_upgrade_log) {
             logThis('config.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
         }
+
         return false;
-    } elseif (empty($config_location)) {
+    }
+    if (empty($config_location)) {
         global $argv;
         //We are assuming this is from the silentUpgrade scripts so argv[3] will point to SugarCRM install location
         if (isset($argv[3]) && is_dir($argv[3])) {
@@ -4021,31 +4116,34 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
         if ($write_to_upgrade_log) {
             logThis('config.php file at (' . $config_location . ') could not be found.  Skip merging.', $path);
         }
+
         return false;
     }
     if ($write_to_upgrade_log) {
         logThis('Loading config.php file at (' . $config_location . ') for merging.', $path);
     }
 
-    include($config_location);
+    include $config_location;
     if (empty($sugar_config)) {
         if ($write_to_upgrade_log) {
             logThis('config.php contents are empty.  Skip merging.', $path);
         }
+
         return false;
     }
-
 
     if (!empty($config_si_location) && !file_exists($config_si_location)) {
         if ($write_to_upgrade_log) {
             logThis('config_si.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
         }
+
         return false;
-    } elseif (empty($config_si_location)) {
+    }
+    if (empty($config_si_location)) {
         if (isset($argv[0]) && is_file($argv[0])) {
             $php_file = $argv[0];
             $p_info = pathinfo($php_file);
-            $php_dir = (isset($p_info['dirname']) && $p_info['dirname'] != '.') ?  $p_info['dirname'] . DIRECTORY_SEPARATOR : '';
+            $php_dir = (isset($p_info['dirname']) && $p_info['dirname'] != '.') ? $p_info['dirname'] . DIRECTORY_SEPARATOR : '';
             $config_si_location = $php_dir . 'config_si.php';
         }
     }
@@ -4055,24 +4153,25 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
         if ($write_to_upgrade_log) {
             logThis('config_si.php file at (' . $config_si_location . ') could not be found.  Skip merging.', $path);
         }
+
         return false;
     }
     if ($write_to_upgrade_log) {
         logThis('Loading config_si.php file at (' . $config_si_location . ') for merging.', $path);
     }
 
-    include($config_si_location);
+    include $config_si_location;
     if (empty($sugar_config_si)) {
         if ($write_to_upgrade_log) {
             logThis('config_si.php contents are empty.  Skip merging.', $path);
         }
+
         return false;
     }
 
-
     //Now perform the merge operation
     $modified = false;
-    foreach ($sugar_config_si as $key=>$value) {
+    foreach ($sugar_config_si as $key => $value) {
         if (!preg_match('/^setup_/', $key) && !isset($sugar_config[$key])) {
             if ($write_to_upgrade_log) {
                 logThis('Merge key (' . $key . ') with value (' . $value . ')', $path);
@@ -4087,35 +4186,36 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
             logThis('Update config.php file with new values', $path);
         }
 
-        if (!write_array_to_file("sugar_config", $sugar_config, $config_location)) {
+        if (!write_array_to_file('sugar_config', $sugar_config, $config_location)) {
             if ($write_to_upgrade_log) {
                 logThis('*** ERROR: could not write to config.php', $path);
             }
+
             return false;
         }
     } else {
         if ($write_to_upgrade_log) {
             logThis('config.php values are in sync with config_si.php values.  Skipped merging.', $path);
         }
+
         return false;
     }
 
     if ($write_to_upgrade_log) {
         logThis('End merge_config_si_settings', $path);
     }
+
     return true;
 }
 
-
 /**
- * upgrade_connectors
+ * upgrade_connectors.
  *
  * This function handles support for upgrading connectors it is invoked from both end.php and silentUpgrade_step2.php
- *
  */
 function upgrade_connectors()
 {
-    require_once('include/connectors/utils/ConnectorUtils.php');
+    require_once 'include/connectors/utils/ConnectorUtils.php';
     remove_linkedin_config();
 
     if (!ConnectorUtils::updateMetaDataFiles()) {
@@ -4131,17 +4231,16 @@ function upgrade_connectors()
 }
 
 /**
- * remove_linkedin_config
+ * remove_linkedin_config.
  *
  * This function removes linkedin config from custom/modules/Connectors/metadata/display_config.php, linkedin connector is removed in 6.5.16
- *
  */
 function remove_linkedin_config()
 {
     $display_file = 'custom/modules/Connectors/metadata/display_config.php';
 
     if (file_exists($display_file)) {
-        require($display_file);
+        require $display_file;
 
         if (!empty($modules_sources)) {
             foreach ($modules_sources as $module => $config) {
@@ -4151,7 +4250,7 @@ function remove_linkedin_config()
             }
             if (!write_array_to_file('modules_sources', $modules_sources, $display_file)) {
                 //Log error
-                $GLOBALS['log']->fatal("Cannot write \$modules_sources to " . $display_file);
+                $GLOBALS['log']->fatal('Cannot write $modules_sources to ' . $display_file);
             }
         }
     }
@@ -4159,24 +4258,23 @@ function remove_linkedin_config()
     $search_file = 'custom/modules/Connectors/metadata/searchdefs.php';
 
     if (file_exists($search_file)) {
-        require($search_file);
+        require $search_file;
 
         if (isset($searchdefs['ext_rest_linkedin'])) {
             unset($searchdefs['ext_rest_linkedin']);
 
             if (!write_array_to_file('searchdefs', $searchdefs, $search_file)) {
                 //Log error
-                $GLOBALS['log']->fatal("Cannot write \$searchdefs to " . $search_file);
+                $GLOBALS['log']->fatal('Cannot write $searchdefs to ' . $search_file);
             }
         }
     }
 }
 
 /**
- * remove_linkedin_connector
+ * remove_linkedin_connector.
  *
  * This function removes linkedin connector from upgrade, linkedin connector is removed in 6.5.16
- *
  */
 function remove_linkedin_connector()
 {
@@ -4197,58 +4295,59 @@ function remove_linkedin_connector()
     }
 }
 
-
 /**
  * Enable the InsideView connector for the four default modules.
+ *
+ * @param mixed $path
  */
-function upgradeEnableInsideViewConnector($path='')
+function upgradeEnableInsideViewConnector($path = '')
 {
     logThis('Begin upgradeEnableInsideViewConnector', $path);
 
     // Load up the existing mapping and hand it to the InsideView connector to have it setup the correct logic hooks
     $mapFile = 'modules/Connectors/connectors/sources/ext/rest/insideview/mapping.php';
-    if (file_exists('custom/'.$mapFile)) {
+    if (file_exists('custom/' . $mapFile)) {
         logThis('Found CUSTOM mappings', $path);
-        require('custom/'.$mapFile);
+        require 'custom/' . $mapFile;
     } else {
         logThis('Used default mapping', $path);
-        require($mapFile);
+        require $mapFile;
     }
 
-    require_once('include/connectors/sources/SourceFactory.php');
+    require_once 'include/connectors/sources/SourceFactory.php';
     $source = SourceFactory::getSource('ext_rest_insideview');
 
     // $mapping is brought in from the mapping.php file above
     $source->saveMappingHook($mapping);
 
-    require_once('include/connectors/utils/ConnectorUtils.php');
+    require_once 'include/connectors/utils/ConnectorUtils.php';
     ConnectorUtils::installSource('ext_rest_insideview');
 
     // Now time to set the various modules to active, because this part ignores the default config
-    require(CONNECTOR_DISPLAY_CONFIG_FILE);
+    require CONNECTOR_DISPLAY_CONFIG_FILE;
     // $modules_sources come from that config file
     foreach ($source->allowedModuleList as $module) {
         $modules_sources[$module]['ext_rest_insideview'] = 'ext_rest_insideview';
     }
     if (!write_array_to_file('modules_sources', $modules_sources, CONNECTOR_DISPLAY_CONFIG_FILE)) {
         //Log error and return empty array
-        logThis("Cannot write \$modules_sources to " . CONNECTOR_DISPLAY_CONFIG_FILE, $path);
+        logThis('Cannot write $modules_sources to ' . CONNECTOR_DISPLAY_CONFIG_FILE, $path);
     }
 
     logThis('End upgradeEnableInsideViewConnector', $path);
 }
 
-function repair_long_relationship_names($path='')
+function repair_long_relationship_names($path = '')
 {
-    logThis("Begin repair_long_relationship_names", $path);
-    require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php' ;
+    logThis('Begin repair_long_relationship_names', $path);
+    require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php';
     $GLOBALS['mi_remove_tables'] = false;
-    $touched = array();
+    $touched = [];
     foreach ($GLOBALS['moduleList'] as $module) {
-        $relationships = new DeployedRelationships($module) ;
+        $relationships = new DeployedRelationships($module);
         foreach ($relationships->getRelationshipList() as $rel_name) {
             if (strlen($rel_name) > 27 && empty($touched[$rel_name])) {
-                logThis("Rebuilding relationship fields for $rel_name", $path);
+                logThis("Rebuilding relationship fields for {$rel_name}", $path);
                 $touched[$rel_name] = true;
                 $rel_obj = $relationships->get($rel_name);
                 $rel_obj->setReadonly(false);
@@ -4256,11 +4355,11 @@ function repair_long_relationship_names($path='')
                 $relationships->save();
                 $relationships->add($rel_obj);
                 $relationships->save();
-                $relationships->build() ;
+                $relationships->build();
             }
         }
     }
-    logThis("End repair_long_relationship_names", $path);
+    logThis('End repair_long_relationship_names', $path);
 }
 
 function removeSilentUpgradeVarsCache()
@@ -4274,7 +4373,7 @@ function removeSilentUpgradeVarsCache()
         unlink($cacheFile);
     }
 
-    $silent_upgrade_vars_loaded = array(); // Set to empty to reset it
+    $silent_upgrade_vars_loaded = []; // Set to empty to reset it
 
     return true;
 }
@@ -4288,9 +4387,9 @@ function loadSilentUpgradeVars()
         // We have no pre existing vars
         if (!file_exists($cacheFile)) {
             // Set the vars array so it's loaded
-            $silent_upgrade_vars_loaded = array('vars' => array());
+            $silent_upgrade_vars_loaded = ['vars' => []];
         } else {
-            require_once($cacheFile);
+            require_once $cacheFile;
             $silent_upgrade_vars_loaded = $silent_upgrade_vars_cache;
         }
     }
@@ -4309,14 +4408,15 @@ function writeSilentUpgradeVars()
     $cacheFileDir = "{$GLOBALS['sugar_config']['cache_dir']}/silentUpgrader";
     $cacheFile = "{$cacheFileDir}/silentUpgradeCache.php";
 
-    require_once('include/dir_inc.php');
+    require_once 'include/dir_inc.php';
     if (!mkdir_recursive($cacheFileDir)) {
         return false;
     }
-    require_once('include/utils/file_utils.php');
+    require_once 'include/utils/file_utils.php';
     if (!write_array_to_file('silent_upgrade_vars_cache', $silent_upgrade_vars_loaded, $cacheFile, 'w')) {
         global $path;
         logThis("WARNING: writeSilentUpgradeVars could not write to {$cacheFile}", $path);
+
         return false;
     }
 
@@ -4346,17 +4446,15 @@ function getSilentUpgradeVar($var)
 
     if (!isset($silent_upgrade_vars_loaded['vars'][$var])) {
         return null;
-    } else {
-        return $silent_upgrade_vars_loaded['vars'][$var];
     }
+
+    return $silent_upgrade_vars_loaded['vars'][$var];
 }
 
-
 /**
- * add_unified_search_to_custom_modules_vardefs
+ * add_unified_search_to_custom_modules_vardefs.
  *
  * This method calls the repair code to remove the unified_search_modules.php fiel
- *
  */
 function add_unified_search_to_custom_modules_vardefs()
 {
@@ -4366,7 +4464,9 @@ function add_unified_search_to_custom_modules_vardefs()
 }
 
 /**
- * change from using the older SugarCache in 6.1 and below to the new one in 6.2
+ * change from using the older SugarCache in 6.1 and below to the new one in 6.2.
+ *
+ * @param mixed $file
  */
 function upgradeSugarCache($file)
 {
@@ -4376,42 +4476,42 @@ function upgradeSugarCache($file)
     unzip($file, $cacheUploadUpgradesTemp);
 
     if (!file_exists(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"))) {
-        logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
+        logThis('*** ERROR: no manifest file detected while bootstraping upgrade wizard files!');
+
         return;
     }
-    include(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"));
-
+    include clean_path("{$cacheUploadUpgradesTemp}/manifest.php");
 
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
-    $allFiles = array();
-    if (file_exists("$from_dir/include/SugarCache")) {
-        $allFiles = findAllFiles("$from_dir/include/SugarCache", $allFiles);
+    $allFiles = [];
+    if (file_exists("{$from_dir}/include/SugarCache")) {
+        $allFiles = findAllFiles("{$from_dir}/include/SugarCache", $allFiles);
     }
-    if (file_exists("$from_dir/include/database")) {
-        $allFiles = findAllFiles("$from_dir/include/database", $allFiles);
+    if (file_exists("{$from_dir}/include/database")) {
+        $allFiles = findAllFiles("{$from_dir}/include/database", $allFiles);
     }
-    if (file_exists("$from_dir/include/utils/external_cache.php")) {
-        $allFiles[] = "$from_dir/include/utils/external_cache.php";
+    if (file_exists("{$from_dir}/include/utils/external_cache.php")) {
+        $allFiles[] = "{$from_dir}/include/utils/external_cache.php";
     }
-    if (file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
-        $allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
+    if (file_exists("{$from_dir}/include/utils/sugar_file_utils.php")) {
+        $allFiles[] = "{$from_dir}/include/utils/sugar_file_utils.php";
     }
-    if (file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
-        $allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
+    if (file_exists("{$from_dir}/include/utils/sugar_file_utils.php")) {
+        $allFiles[] = "{$from_dir}/include/utils/sugar_file_utils.php";
     }
-    if (file_exists("$from_dir/include/utils/autoloader.php")) {
-        $allFiles[] = "$from_dir/include/utils/autoloader.php";
+    if (file_exists("{$from_dir}/include/utils/autoloader.php")) {
+        $allFiles[] = "{$from_dir}/include/utils/autoloader.php";
     }
 
     foreach ($allFiles as $k => $file) {
-        $destFile = str_replace($from_dir."/", "", $file);
+        $destFile = str_replace($from_dir . '/', '', $file);
         if (!is_dir(dirname($destFile))) {
             mkdir_recursive(dirname($destFile)); // make sure the directory exists
         }
         if (stristr($file, 'uw_main.tpl')) {
-            logThis('Skipping "'.$file.'" - file copy will during commit step.');
+            logThis('Skipping "' . $file . '" - file copy will during commit step.');
         } else {
-            logThis('updating UpgradeWizard code: '.$destFile);
+            logThis('updating UpgradeWizard code: ' . $destFile);
             copy_recursive($file, $destFile);
         }
     }
@@ -4419,7 +4519,7 @@ function upgradeSugarCache($file)
 
 /**
  * unlinkUpgradeFiles
- * This is a helper function to clean up
+ * This is a helper function to clean up.
  *
  * @param $version String value of current system version (pre upgrade)
  */
@@ -4430,7 +4530,7 @@ function unlinkUpgradeFiles($version)
     }
 
     //First check if we even have the scripts_for_patch/files_to_remove directory
-    require_once('modules/UpgradeWizard/UpgradeRemoval.php');
+    require_once 'modules/UpgradeWizard/UpgradeRemoval.php';
 
     /*
     if(empty($_SESSION['unzip_dir']))
@@ -4442,13 +4542,13 @@ function unlinkUpgradeFiles($version)
     }
     */
 
-    if (isset($_SESSION['unzip_dir']) && file_exists($_SESSION['unzip_dir'].'/scripts/files_to_remove')) {
-        $files_to_remove = glob($_SESSION['unzip_dir'].'/scripts/files_to_remove/*.php');
+    if (isset($_SESSION['unzip_dir']) && file_exists($_SESSION['unzip_dir'] . '/scripts/files_to_remove')) {
+        $files_to_remove = glob($_SESSION['unzip_dir'] . '/scripts/files_to_remove/*.php');
 
         foreach ($files_to_remove as $script) {
             if (preg_match('/UpgradeRemoval(\d+)x\.php/', $script, $matches)) {
                 $upgradeClass = 'UpgradeRemoval' . $matches[1] . 'x';
-                require_once($_SESSION['unzip_dir'].'/scripts/files_to_remove/' . $upgradeClass . '.php');
+                require_once $_SESSION['unzip_dir'] . '/scripts/files_to_remove/' . $upgradeClass . '.php';
                 if (class_exists($upgradeClass) == false) {
                     continue;
                 }
@@ -4475,8 +4575,8 @@ function unlinkUpgradeFiles($version)
 
         foreach ($files_to_remove as $script) {
             if (preg_match('/\/files_to_remove\/(.*?)\.php$/', $script, $matches)) {
-                require_once($script);
-                $upgradeClass  = $matches[1];
+                require_once $script;
+                $upgradeClass = $matches[1];
 
                 if (!class_exists($upgradeClass)) {
                     continue;
@@ -4496,7 +4596,7 @@ function unlinkUpgradeFiles($version)
     }
 }
 
-if (!function_exists("getValidDBName")) {
+if (!function_exists('getValidDBName')) {
     /*
      * Return a version of $proposed that can be used as a column name in any of our supported databases
      * Practically this means no longer than 25 characters as the smallest identifier length for our supported DBs is 30 chars for Oracle plus we add on at least four characters in some places (for indicies for example)
@@ -4507,46 +4607,50 @@ if (!function_exists("getValidDBName")) {
     function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
     {
         // first strip any invalid characters - all but alphanumerics and -
-        $name = preg_replace('/[^\w-]+/i', '', $name) ;
-        $len = strlen($name) ;
+        $name = preg_replace('/[^\w-]+/i', '', $name);
+        $len = strlen($name);
         $result = $name;
         if ($ensureUnique) {
             $md5str = md5($name);
-            $tail = substr($name, -11) ;
-            $temp = substr($md5str, strlen($md5str)-4);
-            $result = substr($name, 0, 10) . $temp . $tail ;
+            $tail = substr($name, -11);
+            $temp = substr($md5str, strlen($md5str) - 4);
+            $result = substr($name, 0, 10) . $temp . $tail;
         } else {
             if ($len > ($maxLen - 5)) {
                 $result = substr($name, 0, 11) . substr($name, 11 - $maxLen + 5);
             }
         }
-        return strtolower($result) ;
+
+        return strtolower($result);
     }
 }
 
 /**
  * Get UW directories
- * Provides compatibility with both 6.3 and pre-6.3 setup
+ * Provides compatibility with both 6.3 and pre-6.3 setup.
  */
 function getUWDirs()
 {
     if (!class_exists('UploadStream')) {
         // we're still running the old code
         global $sugar_config;
-        return array($sugar_config['upload_dir'] . "/upgrades", $sugar_config['cache_dir'] . "upload/upgrades/temp");
-    } else {
-        if (!in_array("upload", stream_get_wrappers())) {
-            UploadStream::register(); // just in case file was copied, but not run
-        }
-        return array("upload://upgrades", sugar_cached("upgrades/temp"));
+
+        return [$sugar_config['upload_dir'] . '/upgrades', $sugar_config['cache_dir'] . 'upload/upgrades/temp'];
     }
+    if (!in_array('upload', stream_get_wrappers())) {
+        UploadStream::register(); // just in case file was copied, but not run
+    }
+
+    return ['upload://upgrades', sugar_cached('upgrades/temp')];
 }
 
 /**
- * Whether directory exists within list of directories to skip
+ * Whether directory exists within list of directories to skip.
+ *
  * @param string $dir dir to be checked
  * @param array $skipDirs list with skipped dirs
- * @return boolean
+ *
+ * @return bool
  */
 function whetherNeedToSkipDir($dir, $skipDirs)
 {
@@ -4555,18 +4659,18 @@ function whetherNeedToSkipDir($dir, $skipDirs)
             return true;
         }
     }
+
     return false;
 }
-
 
 /*
  * rebuildSprites
  * @param silentUpgrade boolean flag indicating whether or not we should treat running the SugarSpriteBuilder as an upgrade operation
  *
  */
-function rebuildSprites($fromUpgrade=true)
+function rebuildSprites($fromUpgrade = true)
 {
-    require_once('modules/Administration/SugarSpriteBuilder.php');
+    require_once 'modules/Administration/SugarSpriteBuilder.php';
     $sb = new SugarSpriteBuilder();
     $sb->cssMinify = true;
     $sb->fromSilentUpgrade = $fromUpgrade;
@@ -4580,7 +4684,7 @@ function rebuildSprites($fromUpgrade=true)
     // add all theme image directories
     if ($dh = opendir('themes')) {
         while (($dir = readdir($dh)) !== false) {
-            if ($dir != "." && $dir != ".." && $dir != 'default' && is_dir('themes/'.$dir)) {
+            if ($dir != '.' && $dir != '..' && $dir != 'default' && is_dir('themes/' . $dir)) {
                 $sb->addDirectory($dir, "themes/{$dir}/images");
             }
         }
@@ -4588,13 +4692,13 @@ function rebuildSprites($fromUpgrade=true)
     }
 
     // add all theme custom image directories
-    $custom_themes_dir = "custom/themes";
+    $custom_themes_dir = 'custom/themes';
     if (is_dir($custom_themes_dir)) {
         if ($dh = opendir($custom_themes_dir)) {
             while (($dir = readdir($dh)) !== false) {
                 //Since the custom theme directories don't require an images directory
                 // we check for it implicitly
-                if ($dir != "." && $dir != ".." && is_dir('custom/themes/'.$dir."/images")) {
+                if ($dir != '.' && $dir != '..' && is_dir('custom/themes/' . $dir . '/images')) {
                     $sb->addDirectory($dir, "custom/themes/{$dir}/images");
                 }
             }
@@ -4607,26 +4711,24 @@ function rebuildSprites($fromUpgrade=true)
     $sb->createSprites();
 }
 
-
 /**
- * repairSearchFields
+ * repairSearchFields.
  *
  * This method goes through the list of SearchFields files based and calls TemplateRange::repairCustomSearchFields
  * method on the files in an attempt to ensure the range search attributes are properly set in SearchFields.php.
  *
  * @param $globString String value used for glob search defaults to searching for all SearchFields.php files in modules directory
  * @param $path String value used to point to log file should logging be required.  Defaults to empty.
- *
  */
-function repairSearchFields($globString='modules/*/metadata/SearchFields.php', $path='')
+function repairSearchFields($globString = 'modules/*/metadata/SearchFields.php', $path = '')
 {
     if (!empty($path)) {
         logThis('Begin repairSearchFields', $path);
     }
 
-    require_once('include/dir_inc.php');
-    require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
-    require('include/modules.php');
+    require_once 'include/dir_inc.php';
+    require_once 'modules/DynamicFields/templates/Fields/TemplateRange.php';
+    require 'include/modules.php';
 
     global $beanList;
     $searchFieldsFiles = glob($globString);
@@ -4651,20 +4753,20 @@ function repairSearchFields($globString='modules/*/metadata/SearchFields.php', $
 }
 
 /**
- * repairUpgradeHistoryTable
+ * repairUpgradeHistoryTable.
  *
  * This is a helper function used in the upgrade process to fix upgrade_history entries so that the filename column points
  * to the new upload directory location introduced in 6.4 versions
  */
 function repairUpgradeHistoryTable()
 {
-    require_once('modules/Configurator/Configurator.php');
+    require_once 'modules/Configurator/Configurator.php';
     new Configurator();
     global $sugar_config;
 
     //Now upgrade the upgrade_history table entries
     $results = DBManagerFactory::getInstance()->query('SELECT id, filename FROM upgrade_history');
-    $upload_dir = $sugar_config['cache_dir'].'upload/';
+    $upload_dir = $sugar_config['cache_dir'] . 'upload/';
 
     //Create regular expression string to
     $match = '/^' . str_replace('/', '\/', $upload_dir) . '(.*?)$/';

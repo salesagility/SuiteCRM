@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,25 +42,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $app_list_strings, $app_strings, $mod_strings;
 
-require_once('modules/Studio/TabGroups/TabGroupHelper.php');
-require_once('modules/Studio/parsers/StudioParser.php');
+require_once 'modules/Studio/TabGroups/TabGroupHelper.php';
+require_once 'modules/Studio/parsers/StudioParser.php';
 
-$tabGroupSelected_lang = (!empty($_GET['lang'])?$_GET['lang']:$_SESSION['authenticated_user_language']);
+$tabGroupSelected_lang = (!empty($_GET['lang']) ? $_GET['lang'] : $_SESSION['authenticated_user_language']);
 $tg = new TabGroupHelper();
 $smarty = new Sugar_Smarty();
 if (empty($GLOBALS['tabStructure'])) {
     require 'include/tabConfig.php';
 }
-$title=getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_CONFIGURE_GROUP_TABS']), false);
+$title = getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_CONFIGURE_GROUP_TABS']], false);
 
-#30205
+//30205
 $selectedAppLanguages = return_application_language($tabGroupSelected_lang);
-require_once('include/GroupedTabs/GroupedTabStructure.php');
+require_once 'include/GroupedTabs/GroupedTabStructure.php';
 $availableModules = $tg->getAvailableModules($tabGroupSelected_lang);
 $smarty->assign('availableModuleList', $availableModules);
 $modList = array_keys($availableModules);
@@ -72,26 +70,25 @@ foreach ($groupedTabStructure as $mainTab => $subModules) {
 }
 
 $smarty->assign('tabs', $groupedTabStructure);
-#end of 30205
+//end of 30205
 $selectedLanguageModStrings = return_module_language($tabGroupSelected_lang, 'Studio');
 $smarty->assign('TGMOD', $selectedLanguageModStrings);
 $smarty->assign('MOD', $GLOBALS['mod_strings']);
 $smarty->assign('otherLabel', 'LBL_TABGROUP_OTHER');
-$selected_lang = (!empty($_REQUEST['dropdown_lang'])?$_REQUEST['dropdown_lang']:$_SESSION['authenticated_user_language']);
+$selected_lang = (!empty($_REQUEST['dropdown_lang']) ? $_REQUEST['dropdown_lang'] : $_SESSION['authenticated_user_language']);
 if (empty($selected_lang)) {
     $selected_lang = $GLOBALS['sugar_config']['default_language'];
 }
 
 $smarty->assign('dropdown_languages', get_languages());
 
-
 $imageSave = SugarThemeRegistry::current()->getImage('studio_save', '', null, null, '.gif', $mod_strings['LBL_SAVE']);
 
-$buttons = array();
-$buttons [] = array( 'text' => $GLOBALS['mod_strings']['LBL_BTN_SAVEPUBLISH'],'actionScript'=>"onclick='studiotabs.generateForm(\"edittabs\");document.edittabs.submit()'" ) ;
-$html = "" ;
+$buttons = [];
+$buttons[] = ['text' => $GLOBALS['mod_strings']['LBL_BTN_SAVEPUBLISH'], 'actionScript' => "onclick='studiotabs.generateForm(\"edittabs\");document.edittabs.submit()'"];
+$html = '';
 foreach ($buttons as $button) {
-    $html .= "<td><input type='button' valign='center' class='button' style='cursor:pointer' onmousedown='this.className=\"buttonOn\";return false;' onmouseup='this.className=\"button\"' onmouseout='this.className=\"button\"' {$button['actionScript']} value = '{$button['text']}' ></td>" ;
+    $html .= "<td><input type='button' valign='center' class='button' style='cursor:pointer' onmousedown='this.className=\"buttonOn\";return false;' onmouseup='this.className=\"button\"' onmouseout='this.className=\"button\"' {$button['actionScript']} value = '{$button['text']}' ></td>";
 }
 $smarty->assign('buttons', $html);
 $smarty->assign('title', $title);
@@ -119,4 +116,4 @@ if (isset($sugar_config['other_group_tab_displayed'])) {
 $smarty->assign('tabGroupSelected_lang', $tabGroupSelected_lang);
 
 $smarty->assign('available_languages', get_languages());
-$smarty->display("modules/Studio/TabGroups/EditViewTabs.tpl");
+$smarty->display('modules/Studio/TabGroups/EditViewTabs.tpl');

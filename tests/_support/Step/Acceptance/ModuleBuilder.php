@@ -1,4 +1,5 @@
 <?php
+
 namespace Step\Acceptance;
 
 use SuiteCRM\Enumerator\SugarObjectType;
@@ -9,6 +10,7 @@ class ModuleBuilder extends Administration
      * @param string $packageName
      * @param string $moduleName
      * @param string $moduleType
+     *
      * @see SugarObjectType
      */
     public function createModule($packageName, $moduleName, $moduleType)
@@ -43,25 +45,30 @@ class ModuleBuilder extends Administration
             $I->fillField(['name' => 'label'], $moduleName);
             $I->checkOption('[name=importable]');
 
-
             switch ($moduleType) {
                 case SugarObjectType::basic:
                     $I->click('#type_basic');
+
                     break;
                 case SugarObjectType::company:
                     $I->click('#type_company');
+
                     break;
                 case SugarObjectType::file:
                     $I->click('#type_file');
+
                     break;
                 case SugarObjectType::issue:
                     $I->click('#type_issue');
+
                     break;
                 case SugarObjectType::person:
                     $I->click('#type_person');
+
                     break;
                 case SugarObjectType::sale:
                     $I->click('#type_sale');
+
                     break;
             }
 
@@ -129,8 +136,7 @@ class ModuleBuilder extends Administration
 
     /**
      * @param string $packageName
-     * @param boolean $packageExists
-     *
+     * @param bool $packageExists
      */
     public function deployPackage($packageName, $packageExists = false)
     {

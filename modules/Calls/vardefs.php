@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,126 +42,115 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activity representing a phone call',
-    'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true, 'fields' => array(
+$dictionary['Call'] = ['table' => 'calls', 'comment' => 'A Call is an activity representing a phone call',
+    'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true, 'fields' => [
+        'name' => [
+            'name' => 'name',
+            'vname' => 'LBL_SUBJECT',
+            'dbType' => 'varchar',
+            'type' => 'name',
+            'len' => '50',
+            'comment' => 'Brief description of the call',
+            'unified_search' => true,
+            'full_text_search' => ['boost' => 3],
+            'required' => true,
+            'importable' => 'required',
+        ],
 
-        'name' =>
-            array(
-                'name' => 'name',
-                'vname' => 'LBL_SUBJECT',
-                'dbType' => 'varchar',
-                'type' => 'name',
-                'len' => '50',
-                'comment' => 'Brief description of the call',
-                'unified_search' => true,
-                'full_text_search' => array('boost' => 3),
-                'required' => true,
-                'importable' => 'required',
-            ),
+        'duration_hours' => [
+            'name' => 'duration_hours',
+            'vname' => 'LBL_DURATION_HOURS',
+            'type' => 'int',
+            'len' => '2',
+            'comment' => 'Call duration, hours portion',
+            'required' => true,
+        ],
+        'duration_minutes' => [
+            'name' => 'duration_minutes',
+            'vname' => 'LBL_DURATION_MINUTES',
+            'type' => 'int',
+            'function' => ['name' => 'getDurationMinutesOptions', 'returns' => 'html', 'include' => 'modules/Calls/CallHelper.php'],
+            'len' => '2',
+            'group' => 'duration_hours',
+            'importable' => 'required',
+            'comment' => 'Call duration, minutes portion'
+        ],
 
-        'duration_hours' =>
-            array(
-                'name' => 'duration_hours',
-                'vname' => 'LBL_DURATION_HOURS',
-                'type' => 'int',
-                'len' => '2',
-                'comment' => 'Call duration, hours portion',
-                'required' => true,
-            ),
-        'duration_minutes' =>
-            array(
-                'name' => 'duration_minutes',
-                'vname' => 'LBL_DURATION_MINUTES',
-                'type' => 'int',
-                'function' => array('name' => 'getDurationMinutesOptions', 'returns' => 'html', 'include' => 'modules/Calls/CallHelper.php'),
-                'len' => '2',
-                'group' => 'duration_hours',
-                'importable' => 'required',
-                'comment' => 'Call duration, minutes portion'
-            ),
+        'date_start' => [
+            'name' => 'date_start',
+            'vname' => 'LBL_DATE',
+            'type' => 'datetimecombo',
+            'dbType' => 'datetime',
+            'comment' => 'Date in which call is schedule to (or did) start',
+            'importable' => 'required',
+            'required' => true,
+            'enable_range_search' => true,
+            'options' => 'date_range_search_dom',
+        ],
 
-        'date_start' =>
-            array(
-                'name' => 'date_start',
-                'vname' => 'LBL_DATE',
-                'type' => 'datetimecombo',
-                'dbType' => 'datetime',
-                'comment' => 'Date in which call is schedule to (or did) start',
-                'importable' => 'required',
-                'required' => true,
-                'enable_range_search' => true,
-                'options' => 'date_range_search_dom',
-            ),
+        'date_end' => [
+            'name' => 'date_end',
+            'vname' => 'LBL_DATE_END',
+            'type' => 'datetimecombo',
+            'dbType' => 'datetime',
+            'massupdate' => false,
+            'comment' => 'Date is which call is scheduled to (or did) end',
+            'enable_range_search' => true,
+            'options' => 'date_range_search_dom',
+        ],
 
-        'date_end' =>
-            array(
-                'name' => 'date_end',
-                'vname' => 'LBL_DATE_END',
-                'type' => 'datetimecombo',
-                'dbType' => 'datetime',
-                'massupdate' => false,
-                'comment' => 'Date is which call is scheduled to (or did) end',
-                'enable_range_search' => true,
-                'options' => 'date_range_search_dom',
-            ),
+        'parent_type' => [
+            'name' => 'parent_type',
+            'vname' => 'LBL_PARENT_TYPE',
+            'type' => 'parent_type',
+            'dbType' => 'varchar',
+            'required' => false,
+            'group' => 'parent_name',
+            'options' => 'parent_type_display',
+            'len' => 255,
+            'comment' => 'The Sugar object to which the call is related'
+        ],
 
-        'parent_type' =>
-            array(
-                'name' => 'parent_type',
-                'vname' => 'LBL_PARENT_TYPE',
-                'type' => 'parent_type',
-                'dbType' => 'varchar',
-                'required' => false,
-                'group' => 'parent_name',
-                'options' => 'parent_type_display',
-                'len' => 255,
-                'comment' => 'The Sugar object to which the call is related'
-            ),
-
-        'parent_name' =>
-            array(
-                'name' => 'parent_name',
-                'parent_type' => 'record_type_display',
-                'type_name' => 'parent_type',
-                'id_name' => 'parent_id',
-                'vname' => 'LBL_LIST_RELATED_TO',
-                'type' => 'parent',
-                'group' => 'parent_name',
-                'source' => 'non-db',
-                'options' => 'parent_type_display',
-            ),
-        'status' =>
-            array(
-                'name' => 'status',
-                'vname' => 'LBL_STATUS',
-                'type' => 'enum',
-                'len' => 100,
-                'options' => 'call_status_dom',
-                'comment' => 'The status of the call (Held, Not Held, etc.)',
-                'required' => true,
-                'importable' => 'required',
-                'default' => 'Planned',
-                'studio' => array('detailview' => false)
-            ),
-        'direction' =>
-            array(
-                'name' => 'direction',
-                'vname' => 'LBL_DIRECTION',
-                'type' => 'enum',
-                'len' => 100,
-                'options' => 'call_direction_dom',
-                'comment' => 'Indicates whether call is inbound or outbound'
-            ),
-        'parent_id' =>
-            array(
-                'name' => 'parent_id',
-                'vname' => 'LBL_LIST_RELATED_TO_ID',
-                'type' => 'id',
-                'group' => 'parent_name',
-                'reportable' => false,
-                'comment' => 'The ID of the parent Sugar object identified by parent_type'
-            ),
-        'reminder_checked' => array(
+        'parent_name' => [
+            'name' => 'parent_name',
+            'parent_type' => 'record_type_display',
+            'type_name' => 'parent_type',
+            'id_name' => 'parent_id',
+            'vname' => 'LBL_LIST_RELATED_TO',
+            'type' => 'parent',
+            'group' => 'parent_name',
+            'source' => 'non-db',
+            'options' => 'parent_type_display',
+        ],
+        'status' => [
+            'name' => 'status',
+            'vname' => 'LBL_STATUS',
+            'type' => 'enum',
+            'len' => 100,
+            'options' => 'call_status_dom',
+            'comment' => 'The status of the call (Held, Not Held, etc.)',
+            'required' => true,
+            'importable' => 'required',
+            'default' => 'Planned',
+            'studio' => ['detailview' => false]
+        ],
+        'direction' => [
+            'name' => 'direction',
+            'vname' => 'LBL_DIRECTION',
+            'type' => 'enum',
+            'len' => 100,
+            'options' => 'call_direction_dom',
+            'comment' => 'Indicates whether call is inbound or outbound'
+        ],
+        'parent_id' => [
+            'name' => 'parent_id',
+            'vname' => 'LBL_LIST_RELATED_TO_ID',
+            'type' => 'id',
+            'group' => 'parent_name',
+            'reportable' => false,
+            'comment' => 'The ID of the parent Sugar object identified by parent_type'
+        ],
+        'reminder_checked' => [
             'name' => 'reminder_checked',
             'vname' => 'LBL_REMINDER',
             'type' => 'bool',
@@ -168,21 +158,20 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'comment' => 'checkbox indicating whether or not the reminder value is set (Meta-data only)',
             'massupdate' => false,
             'studio' => false,
-        ),
-        'reminder_time' =>
-            array(
-                'name' => 'reminder_time',
-                'vname' => 'LBL_REMINDER_TIME',
-                'type' => 'enum',
-                'dbType' => 'int',
-                'options' => 'reminder_time_options',
-                'reportable' => false,
-                'massupdate' => false,
-                'default' => -1,
-                'comment' => 'Specifies when a reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
-                'studio' => false,
-            ),
-        'email_reminder_checked' => array(
+        ],
+        'reminder_time' => [
+            'name' => 'reminder_time',
+            'vname' => 'LBL_REMINDER_TIME',
+            'type' => 'enum',
+            'dbType' => 'int',
+            'options' => 'reminder_time_options',
+            'reportable' => false,
+            'massupdate' => false,
+            'default' => -1,
+            'comment' => 'Specifies when a reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
+            'studio' => false,
+        ],
+        'email_reminder_checked' => [
             'name' => 'email_reminder_checked',
             'vname' => 'LBL_EMAIL_REMINDER',
             'type' => 'bool',
@@ -190,21 +179,20 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'comment' => 'checkbox indicating whether or not the email reminder value is set (Meta-data only)',
             'massupdate' => false,
             'studio' => false,
-        ),
-        'email_reminder_time' =>
-            array(
-                'name' => 'email_reminder_time',
-                'vname' => 'LBL_EMAIL_REMINDER_TIME',
-                'type' => 'enum',
-                'dbType' => 'int',
-                'options' => 'reminder_time_options',
-                'reportable' => false,
-                'massupdate' => false,
-                'default' => -1,
-                'comment' => 'Specifies when a email reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
-                'studio' => false,
-            ),
-        'email_reminder_sent' => array(
+        ],
+        'email_reminder_time' => [
+            'name' => 'email_reminder_time',
+            'vname' => 'LBL_EMAIL_REMINDER_TIME',
+            'type' => 'enum',
+            'dbType' => 'int',
+            'options' => 'reminder_time_options',
+            'reportable' => false,
+            'massupdate' => false,
+            'default' => -1,
+            'comment' => 'Specifies when a email reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
+            'studio' => false,
+        ],
+        'email_reminder_sent' => [
             'name' => 'email_reminder_sent',
             'vname' => 'LBL_EMAIL_REMINDER_SENT',
             'default' => 0,
@@ -212,9 +200,9 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'comment' => 'Whether email reminder is already sent',
             'studio' => false,
             'massupdate' => false,
-        ),
+        ],
 
-        'reminders' => array(
+        'reminders' => [
             'required' => false,
             'name' => 'reminders',
             'vname' => 'LBL_REMINDER',
@@ -226,342 +214,316 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'duplicate_merge_dom_value' => 0,
             'audited' => false,
             'reportable' => false,
-            'function' =>
-                array(
-                    'name' => 'Reminder::getRemindersListView',
-                    'returns' => 'html',
-                    'include' => 'modules/Reminders/Reminder.php'
-                ),
-        ),
+            'function' => [
+                'name' => 'Reminder::getRemindersListView',
+                'returns' => 'html',
+                'include' => 'modules/Reminders/Reminder.php'
+            ],
+        ],
 
-        'outlook_id' =>
-            array(
-                'name' => 'outlook_id',
-                'vname' => 'LBL_OUTLOOK_ID',
-                'type' => 'varchar',
-                'len' => '255',
-                'reportable' => false,
-                'comment' => 'When the Sugar Plug-in for Microsoft Outlook syncs an Outlook appointment, this is the Outlook appointment item ID'
-            ),
-        'accept_status' => array(
+        'outlook_id' => [
+            'name' => 'outlook_id',
+            'vname' => 'LBL_OUTLOOK_ID',
+            'type' => 'varchar',
+            'len' => '255',
+            'reportable' => false,
+            'comment' => 'When the Sugar Plug-in for Microsoft Outlook syncs an Outlook appointment, this is the Outlook appointment item ID'
+        ],
+        'accept_status' => [
             'name' => 'accept_status',
             'vname' => 'LBL_ACCEPT_STATUS',
             'dbType' => 'varchar',
             'type' => 'varchar',
             'len' => '20',
             'source' => 'non-db',
-        ),
+        ],
         //bug 39559
-        'set_accept_links' => array(
+        'set_accept_links' => [
             'name' => 'accept_status',
             'vname' => 'LBL_ACCEPT_LINK',
             'dbType' => 'varchar',
             'type' => 'varchar',
             'len' => '20',
             'source' => 'non-db',
-        ),
-        'contact_name' =>
-            array(
-                'name' => 'contact_name',
-                'rname' => 'name',
-                'db_concat_fields' => array(0 => 'first_name', 1 => 'last_name'),
-                'id_name' => 'contact_id',
-                'massupdate' => false,
-                'vname' => 'LBL_CONTACT_NAME',
-                'type' => 'relate',
-                'link' => 'contacts',
-                'table' => 'contacts',
-                'isnull' => 'true',
-                'module' => 'Contacts',
-                'join_name' => 'contacts',
-                'dbType' => 'varchar',
-                'source' => 'non-db',
-                'len' => 36,
-                'importable' => 'false',
-                'studio' => array('required' => false, 'listview' => true, 'visible' => false),
-            ),
-        'opportunities' =>
-            array(
-                'name' => 'opportunities',
-                'type' => 'link',
-                'relationship' => 'opportunity_calls',
-                'source' => 'non-db',
-                'link_type' => 'one',
-                'vname' => 'LBL_OPPORTUNITY',
-            ),
-        'leads' =>
-            array(
-                'name' => 'leads',
-                'type' => 'link',
-                'relationship' => 'calls_leads',
-                'source' => 'non-db',
-                'vname' => 'LBL_LEADS',
-            ),
+        ],
+        'contact_name' => [
+            'name' => 'contact_name',
+            'rname' => 'name',
+            'db_concat_fields' => [0 => 'first_name', 1 => 'last_name'],
+            'id_name' => 'contact_id',
+            'massupdate' => false,
+            'vname' => 'LBL_CONTACT_NAME',
+            'type' => 'relate',
+            'link' => 'contacts',
+            'table' => 'contacts',
+            'isnull' => 'true',
+            'module' => 'Contacts',
+            'join_name' => 'contacts',
+            'dbType' => 'varchar',
+            'source' => 'non-db',
+            'len' => 36,
+            'importable' => 'false',
+            'studio' => ['required' => false, 'listview' => true, 'visible' => false],
+        ],
+        'opportunities' => [
+            'name' => 'opportunities',
+            'type' => 'link',
+            'relationship' => 'opportunity_calls',
+            'source' => 'non-db',
+            'link_type' => 'one',
+            'vname' => 'LBL_OPPORTUNITY',
+        ],
+        'leads' => [
+            'name' => 'leads',
+            'type' => 'link',
+            'relationship' => 'calls_leads',
+            'source' => 'non-db',
+            'vname' => 'LBL_LEADS',
+        ],
         // Bug #42619 Missed back-relation from Project module
-        'project' => array(
+        'project' => [
             'name' => 'project',
             'type' => 'link',
             'relationship' => 'projects_calls',
             'source' => 'non-db',
             'vname' => 'LBL_PROJECTS'
-        ),
-        'case' =>
-            array(
-                'name' => 'case',
-                'type' => 'link',
-                'relationship' => 'case_calls',
-                'source' => 'non-db',
-                'link_type' => 'one',
-                'vname' => 'LBL_CASE',
-            ),
-        'accounts' =>
-            array(
-                'name' => 'accounts',
-                'type' => 'link',
-                'relationship' => 'account_calls',
-                'module' => 'Accounts',
-                'bean_name' => 'Account',
-                'source' => 'non-db',
-                'vname' => 'LBL_ACCOUNT',
-            ),
-        'contacts' =>
-            array(
-                'name' => 'contacts',
-                'type' => 'link',
-                'relationship' => 'calls_contacts',
-                'source' => 'non-db',
-                'vname' => 'LBL_CONTACTS',
-            ),
-        'aos_contracts' =>
-            array(
-                'name' => 'aos_contracts',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_calls',
-                'source'=>'non-db',
-                'vname'=>'LBL_CONTRACT',
-            ),
-        'users' =>
-            array(
-                'name' => 'users',
-                'type' => 'link',
-                'relationship' => 'calls_users',
-                'source' => 'non-db',
-                'vname' => 'LBL_USERS',
-            ),
-        'notes' =>
-            array(
-                'name' => 'notes',
-                'type' => 'link',
-                'relationship' => 'calls_notes',
-                'module' => 'Notes',
-                'bean_name' => 'Note',
-                'source' => 'non-db',
-                'vname' => 'LBL_NOTES',
-            ),
-        'created_by_link' =>
-            array(
-                'name' => 'created_by_link',
-                'type' => 'link',
-                'relationship' => 'calls_created_by',
-                'vname' => 'LBL_CREATED_BY_USER',
-                'link_type' => 'one',
-                'module' => 'Users',
-                'bean_name' => 'User',
-                'source' => 'non-db',
-            ),
-        'modified_user_link' =>
-            array(
-                'name' => 'modified_user_link',
-                'type' => 'link',
-                'relationship' => 'calls_modified_user',
-                'vname' => 'LBL_MODIFIED_BY_USER',
-                'link_type' => 'one',
-                'module' => 'Users',
-                'bean_name' => 'User',
-                'source' => 'non-db',
-            ),
-        'assigned_user_link' =>
-            array(
-                'name' => 'assigned_user_link',
-                'type' => 'link',
-                'relationship' => 'calls_assigned_user',
-                'vname' => 'LBL_ASSIGNED_TO_USER',
-                'link_type' => 'one',
-                'module' => 'Users',
-                'bean_name' => 'User',
-                'source' => 'non-db',
-            ),
-        'contact_id' => array(
+        ],
+        'case' => [
+            'name' => 'case',
+            'type' => 'link',
+            'relationship' => 'case_calls',
+            'source' => 'non-db',
+            'link_type' => 'one',
+            'vname' => 'LBL_CASE',
+        ],
+        'accounts' => [
+            'name' => 'accounts',
+            'type' => 'link',
+            'relationship' => 'account_calls',
+            'module' => 'Accounts',
+            'bean_name' => 'Account',
+            'source' => 'non-db',
+            'vname' => 'LBL_ACCOUNT',
+        ],
+        'contacts' => [
+            'name' => 'contacts',
+            'type' => 'link',
+            'relationship' => 'calls_contacts',
+            'source' => 'non-db',
+            'vname' => 'LBL_CONTACTS',
+        ],
+        'aos_contracts' => [
+            'name' => 'aos_contracts',
+            'type' => 'link',
+            'relationship' => 'aos_contracts_calls',
+            'source' => 'non-db',
+            'vname' => 'LBL_CONTRACT',
+        ],
+        'users' => [
+            'name' => 'users',
+            'type' => 'link',
+            'relationship' => 'calls_users',
+            'source' => 'non-db',
+            'vname' => 'LBL_USERS',
+        ],
+        'notes' => [
+            'name' => 'notes',
+            'type' => 'link',
+            'relationship' => 'calls_notes',
+            'module' => 'Notes',
+            'bean_name' => 'Note',
+            'source' => 'non-db',
+            'vname' => 'LBL_NOTES',
+        ],
+        'created_by_link' => [
+            'name' => 'created_by_link',
+            'type' => 'link',
+            'relationship' => 'calls_created_by',
+            'vname' => 'LBL_CREATED_BY_USER',
+            'link_type' => 'one',
+            'module' => 'Users',
+            'bean_name' => 'User',
+            'source' => 'non-db',
+        ],
+        'modified_user_link' => [
+            'name' => 'modified_user_link',
+            'type' => 'link',
+            'relationship' => 'calls_modified_user',
+            'vname' => 'LBL_MODIFIED_BY_USER',
+            'link_type' => 'one',
+            'module' => 'Users',
+            'bean_name' => 'User',
+            'source' => 'non-db',
+        ],
+        'assigned_user_link' => [
+            'name' => 'assigned_user_link',
+            'type' => 'link',
+            'relationship' => 'calls_assigned_user',
+            'vname' => 'LBL_ASSIGNED_TO_USER',
+            'link_type' => 'one',
+            'module' => 'Users',
+            'bean_name' => 'User',
+            'source' => 'non-db',
+        ],
+        'contact_id' => [
             'name' => 'contact_id',
             'type' => 'id',
             'source' => 'non-db',
-        ),
-        'repeat_type' =>
-            array(
-                'name' => 'repeat_type',
-                'vname' => 'LBL_REPEAT_TYPE',
-                'type' => 'enum',
-                'len' => 36,
-                'options' => 'repeat_type_dom',
-                'comment' => 'Type of recurrence',
-                'importable' => 'false',
-                'massupdate' => false,
-                'reportable' => false,
-                'studio' => 'false',
-            ),
-        'repeat_interval' =>
-            array(
-                'name' => 'repeat_interval',
-                'vname' => 'LBL_REPEAT_INTERVAL',
-                'type' => 'int',
-                'len' => 3,
-                'default' => 1,
-                'comment' => 'Interval of recurrence',
-                'importable' => 'false',
-                'massupdate' => false,
-                'reportable' => false,
-                'studio' => 'false',
-            ),
-        'repeat_dow' =>
-            array(
-                'name' => 'repeat_dow',
-                'vname' => 'LBL_REPEAT_DOW',
-                'type' => 'varchar',
-                'len' => 7,
-                'comment' => 'Days of week in recurrence',
-                'importable' => 'false',
-                'massupdate' => false,
-                'reportable' => false,
-                'studio' => 'false',
-            ),
-        'repeat_until' =>
-            array(
-                'name' => 'repeat_until',
-                'vname' => 'LBL_REPEAT_UNTIL',
-                'type' => 'date',
-                'comment' => 'Repeat until specified date',
-                'importable' => 'false',
-                'massupdate' => false,
-                'reportable' => false,
-                'studio' => 'false',
-            ),
-        'repeat_count' =>
-            array(
-                'name' => 'repeat_count',
-                'vname' => 'LBL_REPEAT_COUNT',
-                'type' => 'int',
-                'len' => 7,
-                'comment' => 'Number of recurrence',
-                'importable' => 'false',
-                'massupdate' => false,
-                'reportable' => false,
-                'studio' => 'false',
-            ),
-        'repeat_parent_id' =>
-            array(
-                'name' => 'repeat_parent_id',
-                'vname' => 'LBL_REPEAT_PARENT_ID',
-                'type' => 'id',
-                'len' => 36,
-                'comment' => 'Id of the first element of recurring records',
-                'importable' => 'false',
-                'massupdate' => false,
-                'reportable' => false,
-                'studio' => 'false',
-            ),
-        'recurring_source' =>
-            array(
-                'name' => 'recurring_source',
-                'vname' => 'LBL_RECURRING_SOURCE',
-                'type' => 'varchar',
-                'len' => 36,
-                'comment' => 'Source of recurring call',
-                'importable' => false,
-                'massupdate' => false,
-                'reportable' => false,
-                'studio' => false,
-            ),
-        'reschedule_history' =>
-            array(
-                'required' => false,
+        ],
+        'repeat_type' => [
+            'name' => 'repeat_type',
+            'vname' => 'LBL_REPEAT_TYPE',
+            'type' => 'enum',
+            'len' => 36,
+            'options' => 'repeat_type_dom',
+            'comment' => 'Type of recurrence',
+            'importable' => 'false',
+            'massupdate' => false,
+            'reportable' => false,
+            'studio' => 'false',
+        ],
+        'repeat_interval' => [
+            'name' => 'repeat_interval',
+            'vname' => 'LBL_REPEAT_INTERVAL',
+            'type' => 'int',
+            'len' => 3,
+            'default' => 1,
+            'comment' => 'Interval of recurrence',
+            'importable' => 'false',
+            'massupdate' => false,
+            'reportable' => false,
+            'studio' => 'false',
+        ],
+        'repeat_dow' => [
+            'name' => 'repeat_dow',
+            'vname' => 'LBL_REPEAT_DOW',
+            'type' => 'varchar',
+            'len' => 7,
+            'comment' => 'Days of week in recurrence',
+            'importable' => 'false',
+            'massupdate' => false,
+            'reportable' => false,
+            'studio' => 'false',
+        ],
+        'repeat_until' => [
+            'name' => 'repeat_until',
+            'vname' => 'LBL_REPEAT_UNTIL',
+            'type' => 'date',
+            'comment' => 'Repeat until specified date',
+            'importable' => 'false',
+            'massupdate' => false,
+            'reportable' => false,
+            'studio' => 'false',
+        ],
+        'repeat_count' => [
+            'name' => 'repeat_count',
+            'vname' => 'LBL_REPEAT_COUNT',
+            'type' => 'int',
+            'len' => 7,
+            'comment' => 'Number of recurrence',
+            'importable' => 'false',
+            'massupdate' => false,
+            'reportable' => false,
+            'studio' => 'false',
+        ],
+        'repeat_parent_id' => [
+            'name' => 'repeat_parent_id',
+            'vname' => 'LBL_REPEAT_PARENT_ID',
+            'type' => 'id',
+            'len' => 36,
+            'comment' => 'Id of the first element of recurring records',
+            'importable' => 'false',
+            'massupdate' => false,
+            'reportable' => false,
+            'studio' => 'false',
+        ],
+        'recurring_source' => [
+            'name' => 'recurring_source',
+            'vname' => 'LBL_RECURRING_SOURCE',
+            'type' => 'varchar',
+            'len' => 36,
+            'comment' => 'Source of recurring call',
+            'importable' => false,
+            'massupdate' => false,
+            'reportable' => false,
+            'studio' => false,
+        ],
+        'reschedule_history' => [
+            'required' => false,
+            'name' => 'reschedule_history',
+            'vname' => 'LBL_RESCHEDULE_HISTORY',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'studio' => 'visible',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => 0,
+            'audited' => false,
+            'reportable' => false,
+            'function' => [
                 'name' => 'reschedule_history',
-                'vname' => 'LBL_RESCHEDULE_HISTORY',
-                'type' => 'varchar',
-                'source' => 'non-db',
-                'studio' => 'visible',
-                'massupdate' => 0,
-                'importable' => 'false',
-                'duplicate_merge' => 'disabled',
-                'duplicate_merge_dom_value' => 0,
-                'audited' => false,
-                'reportable' => false,
-                'function' =>
-                    array(
-                        'name' => 'reschedule_history',
-                        'returns' => 'html',
-                        'include' => 'modules/Calls/reschedule_history.php',
-                    ),
-            ),
-        'reschedule_count' =>
-            array(
-                'required' => false,
+                'returns' => 'html',
+                'include' => 'modules/Calls/reschedule_history.php',
+            ],
+        ],
+        'reschedule_count' => [
+            'required' => false,
+            'name' => 'reschedule_count',
+            'vname' => 'LBL_RESCHEDULE_COUNT',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'studio' => 'visible',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => 0,
+            'audited' => false,
+            'reportable' => false,
+            'function' => [
                 'name' => 'reschedule_count',
-                'vname' => 'LBL_RESCHEDULE_COUNT',
-                'type' => 'varchar',
-                'source' => 'non-db',
-                'studio' => 'visible',
-                'massupdate' => 0,
-                'importable' => 'false',
-                'duplicate_merge' => 'disabled',
-                'duplicate_merge_dom_value' => 0,
-                'audited' => false,
-                'reportable' => false,
-                'function' =>
-                    array(
-                        'name' => 'reschedule_count',
-                        'returns' => 'html',
-                        'include' => 'modules/Calls/reschedule_history.php',
-                    ),
-            ),
-        'calls_reschedule' =>
-            array(
-                'name' => 'calls_reschedule',
-                'vname' => 'LBL_CALLS_RESCHEDULE',
-                'type' => 'link',
-                'relationship' => 'calls_reschedule',
-                'module' => 'Calls_Reschedule',
-                'bean_name' => 'Calls_Reschedule',
-                'source' => 'non-db',
-            ),
-    ),
-    'indices' => array(
-        array(
+                'returns' => 'html',
+                'include' => 'modules/Calls/reschedule_history.php',
+            ],
+        ],
+        'calls_reschedule' => [
+            'name' => 'calls_reschedule',
+            'vname' => 'LBL_CALLS_RESCHEDULE',
+            'type' => 'link',
+            'relationship' => 'calls_reschedule',
+            'module' => 'Calls_Reschedule',
+            'bean_name' => 'Calls_Reschedule',
+            'source' => 'non-db',
+        ],
+    ],
+    'indices' => [
+        [
             'name' => 'idx_call_name',
             'type' => 'index',
-            'fields' => array('name'),
-        ),
-        array(
+            'fields' => ['name'],
+        ],
+        [
             'name' => 'idx_status',
             'type' => 'index',
-            'fields' => array('status'),
-        ),
-        array(
+            'fields' => ['status'],
+        ],
+        [
             'name' => 'idx_calls_date_start',
             'type' => 'index',
-            'fields' => array('date_start'),
-        ),
-        array(
+            'fields' => ['date_start'],
+        ],
+        [
             'name' => 'idx_calls_par_del',
             'type' => 'index',
-            'fields' => array('parent_id', 'parent_type', 'deleted')
-        ),
-        array(
+            'fields' => ['parent_id', 'parent_type', 'deleted']
+        ],
+        [
             'name' => 'idx_calls_assigned_del',
             'type' => 'index',
-            'fields' => array('deleted', 'assigned_user_id')),
-    ),
-    'relationships' => array(
-        'calls_assigned_user' => array(
+            'fields' => ['deleted', 'assigned_user_id']],
+    ],
+    'relationships' => [
+        'calls_assigned_user' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -569,8 +531,8 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'rhs_table' => 'calls',
             'rhs_key' => 'assigned_user_id',
             'relationship_type' => 'one-to-many'
-        ),
-        'calls_modified_user' => array(
+        ],
+        'calls_modified_user' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -578,8 +540,8 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'rhs_table' => 'calls',
             'rhs_key' => 'modified_user_id',
             'relationship_type' => 'one-to-many'
-        ),
-        'calls_created_by' => array(
+        ],
+        'calls_created_by' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -587,8 +549,8 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'rhs_table' => 'calls',
             'rhs_key' => 'created_by',
             'relationship_type' => 'one-to-many'
-        ),
-        'calls_notes' => array(
+        ],
+        'calls_notes' => [
             'lhs_module' => 'Calls',
             'lhs_table' => 'calls',
             'lhs_key' => 'id',
@@ -598,8 +560,8 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'Calls',
-        ),
-        'calls_reschedule' => array(
+        ],
+        'calls_reschedule' => [
             'lhs_module' => 'Calls',
             'lhs_table' => 'calls',
             'lhs_key' => 'id',
@@ -607,11 +569,11 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'rhs_table' => 'calls_reschedule',
             'rhs_key' => 'call_id',
             'relationship_type' => 'one-to-many',
-        ),
-    ),
-//This enables optimistic locking for Saves From EditView
+        ],
+    ],
+    //This enables optimistic locking for Saves From EditView
     'optimistic_locking' => true,
-);
+];
 
-VardefManager::createVardef('Calls', 'Call', array('default', 'assignable', 'security_groups',
-));
+VardefManager::createVardef('Calls', 'Call', ['default', 'assignable', 'security_groups',
+]);

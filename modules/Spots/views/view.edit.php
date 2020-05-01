@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -55,9 +53,10 @@ class SpotsViewEdit extends ViewEdit
     }
 
     /**
-     * Return the "breadcrumbs" to display at the top of the page
+     * Return the "breadcrumbs" to display at the top of the page.
      *
      * @param  bool $show_help optional, true if we show the help links
+     *
      * @return HTML string containing breadcrumb title
      */
     public function getModuleTitle(
@@ -67,12 +66,12 @@ class SpotsViewEdit extends ViewEdit
 
         $theTitle = "<div class='moduleTitle'>\n";
 
-        $module = preg_replace("/ /", "", $this->module);
+        $module = preg_replace('/ /', '', $this->module);
 
         $params = $this->_getModuleTitleParams();
         $index = 0;
 
-        if (SugarThemeRegistry::current()->directionality == "rtl") {
+        if (SugarThemeRegistry::current()->directionality == 'rtl') {
             $params = array_reverse($params);
         }
         if (count($params) > 1) {
@@ -89,11 +88,11 @@ class SpotsViewEdit extends ViewEdit
         }
 
         if (!empty($paramString)) {
-            $theTitle .= "<h2> $paramString </h2>";
+            $theTitle .= "<h2> {$paramString} </h2>";
 
             if (!empty($this->bean->id)) {
                 $theTitle .= "<div class='favorite' record_id='" . $this->bean->id . "' module='" . $this->bean->module_dir . "'><div class='favorite_icon_outline'>" . SugarThemeRegistry::current()->getImage('favorite-star-outline', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')) . "</div>
-                                                    <div class='favorite_icon_fill'>" . SugarThemeRegistry::current()->getImage('favorite-star', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')) . "</div></div>";
+                                                    <div class='favorite_icon_fill'>" . SugarThemeRegistry::current()->getImage('favorite-star', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')) . '</div></div>';
             }
         }
 
@@ -104,7 +103,7 @@ class SpotsViewEdit extends ViewEdit
             if ($this->type == 'list') {
                 $theTitle .= '<a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>';
             }
-            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            $url = ajaxLink("index.php?module={$module}&action=EditView&return_module={$module}&return_action=DetailView");
             if ($show_help) {
                 $theTitle .= <<<EOHTML
 &nbsp;
@@ -115,10 +114,11 @@ class SpotsViewEdit extends ViewEdit
 </a>
 EOHTML;
             }
-            $theTitle .= "</span>";
+            $theTitle .= '</span>';
         }
 
         $theTitle .= "<div class='clear'></div></div>\n";
+
         return $theTitle;
     }
 }

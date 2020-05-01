@@ -5,12 +5,12 @@ use Faker\Generator;
 class InvoicesCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class InvoicesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the invoices module.
+     * As an administrator I want to view the invoices module
      */
     public function testScenarioViewInvoicesModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the invoices module for testing');
 
@@ -54,13 +54,13 @@ class InvoicesCest
      * @param \Step\Acceptance\Invoices $invoice
      *
      * As administrative user I want to create an invoice so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateInvoice(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Invoices $invoice
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Invoices $invoice
     ) {
         $I->wantTo('Create an Invoice');
 
@@ -71,7 +71,7 @@ class InvoicesCest
 
         // Create invoice
         $this->fakeData->seed($this->fakeDataSeed);
-        $invoice->createInvoice('Test_'. $this->fakeData->company());
+        $invoice->createInvoice('Test_' . $this->fakeData->company());
 
         // Delete invoice
         $detailView->clickActionMenuItem('Delete');
@@ -83,17 +83,17 @@ class InvoicesCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
-     * @param \\Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\Invoices $invoice
      *
      * As administrative user I want to create an invoice and check the number rounding
      */
     public function testScenarioInvoiceRounding(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\Invoices $invoice
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\Invoices $invoice
     ) {
         $I->wantTo('Create an Invoice');
 
@@ -104,7 +104,7 @@ class InvoicesCest
 
         // Create invoice
         $this->fakeData->seed($this->fakeDataSeed);
-        $invoice->createInvoice('Test_'. $this->fakeData->company());
+        $invoice->createInvoice('Test_' . $this->fakeData->company());
 
         // Set total
         $detailView->clickActionMenuItem('Edit');

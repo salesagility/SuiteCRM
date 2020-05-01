@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -68,9 +67,8 @@ class CodingStandardCommands extends \Robo\Tasks
         $this->say('Coding Standards: PSR2');
 
         $paths = new Paths();
-        $result = $this->_exec('php vendor/bin/php-cs-fixer fix --dry-run --path-mode=intersection ' . $paths->getProjectPath() . ' --verbose --show-progress=run-in --config=' . $paths->getProjectPath() . '/.php_cs.dist');
 
-        return $result;
+        return $this->_exec('php vendor/bin/php-cs-fixer fix --dry-run --path-mode=intersection ' . $paths->getProjectPath() . ' --verbose --show-progress=run-in --config=' . $paths->getProjectPath() . '/.php_cs.dist');
     }
 
     /**

@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOP_Case_UpdatesTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOP_Case_UpdatesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOP_Case_Updates()
+    public function testAOPCaseUpdates()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aopCaseUpdates = new AOP_Case_Updates();

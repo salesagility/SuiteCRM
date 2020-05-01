@@ -1,6 +1,5 @@
 <?php
 
-
 class SecurityGroup_sugar extends Basic
 {
     public $new_schema = true;
@@ -23,23 +22,17 @@ class SecurityGroup_sugar extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
 
-
-
-
-
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
 
     public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL': return true;
         }
+
         return false;
     }
 }

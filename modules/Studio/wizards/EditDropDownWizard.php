@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,18 +40,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-require_once('modules/Studio/DropDowns/DropDownHelper.php');
+require_once 'modules/Studio/DropDowns/DropDownHelper.php';
 class EditDropDownWizard extends StudioWizard
 {
     public $wizard = 'EditDropDownWizard';
+
     public function welcome()
     {
         return 'You can rename the global dropdown list here.';
     }
+
     public function back()
     {
         ob_clean();
@@ -62,27 +60,30 @@ class EditDropDownWizard extends StudioWizard
         header('Location: index.php?action=wizard&module=Studio&wizard=StudioWizard');
         sugar_cleanup(true);
     }
+
     public function options()
     {
         //		return array('EditDropdown'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'], 'CreateDropdown'=>$GLOBALS['mod_strings']['LBL_ED_CREATE_DROPDOWN'] );
     }
-    
+
     public function process($option)
     {
         switch ($option) {
             case 'EditDropdown':
                 parent::process($option);
-                require_once('modules/Studio/DropDowns/EditView.php');
+                require_once 'modules/Studio/DropDowns/EditView.php';
+
                 break;
             case 'SaveDropDown':
                 DropDownHelper::saveDropDown($_REQUEST);
-                require_once('modules/Studio/DropDowns/EditView.php');
+                require_once 'modules/Studio/DropDowns/EditView.php';
+
                 break;
             default:
                  parent::process($option);
         }
     }
-    
+
     public function display()
     {
         // override the parent display - don't display any wizard stuff

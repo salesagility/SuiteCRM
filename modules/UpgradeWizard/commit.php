@@ -4,7 +4,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,7 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 require_once 'include/SugarLogger/SugarLogger.php';
 
 $trackerManager = TrackerManager::getInstance();
@@ -66,7 +64,6 @@ return_module_language($curr_lang, 'UpgradeWizard', true);
 $standardErrorLevel = error_reporting();
 logThis('Setting error_reporting() to E_ERROR while running upgrade');
 
-
 //set_time_limit(0);
 /*
  * [unzip_dir] => /Users/curisu/www/head/cache/upload//upgrades/temp/QSugp3
@@ -83,19 +80,19 @@ if (didThisStepRunBefore('commit')) {
 }
 //Initialize session errors array
 if (!isset($_SESSION['sqlSkippedQueries']) && !is_array($_SESSION['sqlSkippedQueries'])) {
-    $_SESSION['sqlSkippedQueries'] = array();
+    $_SESSION['sqlSkippedQueries'] = [];
 }
 // prevent "REFRESH" double commits
 if (!isset($_SESSION['committed'])) {
     //$_SESSION['committed'] = true; // flag to prevent refresh double-commit
     //set the flag at the end though
-    unset($_SESSION['rebuild_relationships']);
-    unset($_SESSION['rebuild_extensions']);
+    unset($_SESSION['rebuild_relationships'], $_SESSION['rebuild_extensions']);
+
     //put checks for follwing files
 
     if (!isset($_SESSION['unzip_dir']) || empty($_SESSION['unzip_dir'])) {
         logThis('unzipping files in upgrade archive...');
-        $errors = array();
+        $errors = [];
         list($base_upgrade_dir, $base_tmp_upgrade_dir) = getUWDirs();
         $unzip_dir = '';
         //also come up with mechanism to read from upgrade-progress file
@@ -104,15 +101,16 @@ if (!isset($_SESSION['committed'])) {
                 while (false !== ($file = readdir($handle))) {
                     if ($file != '.' && $file != '..') {
                         //echo $base_tmp_upgrade_dir."/".$file.'</br>';
-                        if (is_file($base_tmp_upgrade_dir.'/'.$file.'/manifest.php')) {
-                            require_once $base_tmp_upgrade_dir.'/'.$file.'/manifest.php';
+                        if (is_file($base_tmp_upgrade_dir . '/' . $file . '/manifest.php')) {
+                            require_once $base_tmp_upgrade_dir . '/' . $file . '/manifest.php';
                             $package_name = $manifest['copy_files']['from_dir'];
                             //echo file_exists($base_tmp_upgrade_dir."/".$file."/".$package_name).'</br>';
-                            if (file_exists($base_tmp_upgrade_dir.'/'.$file.'/'.$package_name) && file_exists($base_tmp_upgrade_dir.'/'.$file.'/scripts') && file_exists($base_tmp_upgrade_dir.'/'.$file.'/manifest.php')) {
+                            if (file_exists($base_tmp_upgrade_dir . '/' . $file . '/' . $package_name) && file_exists($base_tmp_upgrade_dir . '/' . $file . '/scripts') && file_exists($base_tmp_upgrade_dir . '/' . $file . '/manifest.php')) {
                                 //echo 'Yeah this the directory '. $base_tmp_upgrade_dir."/".$file;
-                                $unzip_dir = $base_tmp_upgrade_dir.'/'.$file;
-                                if (file_exists("$base_upgrade_dir/patch/".$package_name.'.zip')) {
-                                    $_SESSION['install_file'] = $package_name.'.zip';
+                                $unzip_dir = $base_tmp_upgrade_dir . '/' . $file;
+                                if (file_exists("{$base_upgrade_dir}/patch/" . $package_name . '.zip')) {
+                                    $_SESSION['install_file'] = $package_name . '.zip';
+
                                     break;
                                 }
                             }
@@ -125,9 +123,9 @@ if (!isset($_SESSION['committed'])) {
             unlinkUWTempFiles();
             resetUwSession();
             echo 'Upload File not found so redirecting to Upgrade Start ';
-            $redirect_new_wizard = $sugar_config['site_url'].'/index.php?module=UpgradeWizard&action=index';
-            echo '<form name="redirect" action="'.$redirect_new_wizard.'"  method="POST">';
-            $upgrade_directories_not_found = <<<eoq
+            $redirect_new_wizard = $sugar_config['site_url'] . '/index.php?module=UpgradeWizard&action=index';
+            echo '<form name="redirect" action="' . $redirect_new_wizard . '"  method="POST">';
+            $upgrade_directories_not_found = <<<'eoq'
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -140,14 +138,14 @@ eoq;
 
             return '';
         }
-        $install_file = "$base_upgrade_dir/patch/".basename(urldecode($_SESSION['install_file']));
+        $install_file = "{$base_upgrade_dir}/patch/" . basename(urldecode($_SESSION['install_file']));
         $show_files = true;
         if (empty($unzip_dir)) {
             $unzip_dir = mk_temp_dir($base_tmp_upgrade_dir);
         }
         $zip_from_dir = '.';
         $zip_to_dir = '.';
-        $zip_force_copy = array();
+        $zip_force_copy = [];
 
         if (!$unzip_dir) {
             logThis('Could not create a temporary directory using mk_temp_dir( $base_tmp_upgrade_dir )');
@@ -155,14 +153,14 @@ eoq;
         }
 
         //double check whether unzipped .
-        if (file_exists($unzip_dir.'/scripts') && file_exists($unzip_dir.'/manifest.php')) {
+        if (file_exists($unzip_dir . '/scripts') && file_exists($unzip_dir . '/manifest.php')) {
             //already unzipped
         } else {
             unzip($install_file, $unzip_dir);
         }
 
         // assumption -- already validated manifest.php at time of upload
-        require_once "$unzip_dir/manifest.php";
+        require_once "{$unzip_dir}/manifest.php";
 
         if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != '') {
             $zip_from_dir = $manifest['copy_files']['from_dir'];
@@ -196,9 +194,9 @@ eoq;
         unlinkUWTempFiles();
         resetUwSession();
         echo 'Upload File not found so redirecting to Upgrade Start ';
-        $redirect_new_wizard = $sugar_config['site_url'].'/index.php?module=UpgradeWizard&action=index';
-        echo '<form name="redirect" action="'.$redirect_new_wizard.'"  method="POST">';
-        $upgrade_directories_not_found = <<<eoq
+        $redirect_new_wizard = $sugar_config['site_url'] . '/index.php?module=UpgradeWizard&action=index';
+        echo '<form name="redirect" action="' . $redirect_new_wizard . '"  method="POST">';
+        $upgrade_directories_not_found = <<<'eoq'
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -211,19 +209,19 @@ eoq;
 
         return '';
     }
-    $install_file = "$base_upgrade_dir/patch/".basename(urldecode($_SESSION['install_file']));
+    $install_file = "{$base_upgrade_dir}/patch/" . basename(urldecode($_SESSION['install_file']));
     $file_action = '';
     $uh_status = '';
-    $errors = array();
+    $errors = [];
     $out = '';
     $backupFilesExist = false;
-    $rest_dir = remove_file_extension($install_file).'-restore';
+    $rest_dir = remove_file_extension($install_file) . '-restore';
 
     ///////////////////////////////////////////////////////////////////////////////
     ////	MAKE BACKUPS OF TARGET FILES
     if (!didThisStepRunBefore('commit', 'commitMakeBackupFiles')) {
         set_upgrade_progress('commit', 'in_progress', 'commitMakeBackupFiles', 'in_progress');
-        $errors = commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_dir, array());
+        $errors = commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_dir, []);
         set_upgrade_progress('commit', 'in_progress', 'commitMakeBackupFiles', 'done');
     }
     ////	END MAKE BACKUPS OF TARGET FILES
@@ -232,7 +230,7 @@ eoq;
     ///////////////////////////////////////////////////////////////////////////////
     ////	HANDLE PREINSTALL SCRIPTS
     if (empty($errors)) {
-        $file = "$unzip_dir/".constant('SUGARCRM_PRE_INSTALL_FILE');
+        $file = "{$unzip_dir}/" . constant('SUGARCRM_PRE_INSTALL_FILE');
         if (is_file($file)) {
             $out .= "{$mod_strings['LBL_UW_INCLUDING']}: {$file} <br>\n";
             include $file;
@@ -251,7 +249,7 @@ eoq;
     //Clean smarty from cache
     $cachedir = sugar_cached('smarty');
     if (is_dir($cachedir)) {
-        $allModFiles = array();
+        $allModFiles = [];
         $allModFiles = findAllFiles($cachedir, $allModFiles);
         foreach ($allModFiles as $file) {
             //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
@@ -267,12 +265,12 @@ eoq;
 
     if (file_exists('modules/UpgradeWizard/SugarMerge/SugarMerge.php')) {
         require_once 'modules/UpgradeWizard/SugarMerge/SugarMerge.php';
-        if (isset($_SESSION['unzip_dir']) && isset($_SESSION['zip_from_dir']) && !isset($_SESSION['sugarMergeRunResults'])) {
-            $merger = new SugarMerge($_SESSION['unzip_dir'].'/'.$_SESSION['zip_from_dir']);
+        if (isset($_SESSION['unzip_dir'], $_SESSION['zip_from_dir']) && !isset($_SESSION['sugarMergeRunResults'])) {
+            $merger = new SugarMerge($_SESSION['unzip_dir'] . '/' . $_SESSION['zip_from_dir']);
             //Perform the actual merge and store which modules were merged.  We will rolllback the files if the
             //user determines that they did not want to upgade a particular module.
             $_SESSION['sugarMergeRunResults'] = $merger->mergeAll(true, true, true);
-            logThis('Commit step finished SugarMerge run with the following results:'.print_r($_SESSION['sugarMergeRunResults'], true));
+            logThis('Commit step finished SugarMerge run with the following results:' . print_r($_SESSION['sugarMergeRunResults'], true));
         }
     }
 
@@ -302,7 +300,7 @@ eoq;
     }
     if (empty($errors)) {
         if (!didThisStepRunBefore('commit', 'post_install')) {
-            $file = "$unzip_dir/".constant('SUGARCRM_POST_INSTALL_FILE');
+            $file = "{$unzip_dir}/" . constant('SUGARCRM_POST_INSTALL_FILE');
             if (is_file($file)) {
                 //set_upgrade_progress('commit','in_progress','post_install','in_progress');
                 $progArray['post_install'] = 'in_progress';
@@ -326,17 +324,17 @@ eoq;
 
         //set the logger before rebuilding config
         if (!isset($sugar_config['logger'])) {
-            $sugar_config['logger'] = array(
+            $sugar_config['logger'] = [
                 'level' => 'fatal',
-                'file' => array(
-                        'ext' => '.log',
-                        'name' => 'suitecrm',
-                        'dateFormat' => '%c',
-                        'maxSize' => '10MB',
-                        'maxLogs' => 10,
-                        'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
-                    ),
-            );
+                'file' => [
+                    'ext' => '.log',
+                    'name' => 'suitecrm',
+                    'dateFormat' => '%c',
+                    'maxSize' => '10MB',
+                    'maxLogs' => 10,
+                    'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
+                ],
+            ];
         }
 
         if (!rebuildConfigFile($sugar_config, $sugar_version)) {
@@ -355,13 +353,13 @@ eoq;
         //Clean modules from cache
         $cachedir = sugar_cached('modules');
         if (is_dir($cachedir)) {
-            logThis("clear $cachedir files");
-            $allModFiles = array();
+            logThis("clear {$cachedir} files");
+            $allModFiles = [];
             $allModFiles = findAllFiles($cachedir, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
                 if (file_exists($file)) {
-                    logThis('unlink '.$file);
+                    logThis('unlink ' . $file);
                     unlink($file);
                 }
             }
@@ -369,13 +367,13 @@ eoq;
         //Clean jsLanguage from cache
         $cachedir = sugar_cached('jsLanguage');
         if (is_dir($cachedir)) {
-            logThis("clear $cachedir files");
-            $allModFiles = array();
+            logThis("clear {$cachedir} files");
+            $allModFiles = [];
             $allModFiles = findAllFiles($cachedir, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
                 if (file_exists($file)) {
-                    logThis('unlink '.$file);
+                    logThis('unlink ' . $file);
                     unlink($file);
                 }
             }
@@ -396,8 +394,8 @@ eoq;
     }
 
     //add tabs
-    $from_dir = remove_file_extension($install_file).'-restore';
-    logThis('call addNewSystemTabsFromUpgrade('.$from_dir.')');
+    $from_dir = remove_file_extension($install_file) . '-restore';
+    logThis('call addNewSystemTabsFromUpgrade(' . $from_dir . ')');
     addNewSystemTabsFromUpgrade($from_dir);
     logThis('finished addNewSystemTabsFromUpgrade');
 
@@ -430,8 +428,8 @@ eoq;
     ///////////////////////////////////////////////////////////////////////////////
 } else {
     $backupFilesExist = false;
-    $copiedFiles = array();
-    $skippedFiles = array();
+    $copiedFiles = [];
+    $skippedFiles = [];
 }
 
 // flag to prvent double-commits via refresh
@@ -446,7 +444,7 @@ if (empty($errors)) {
 $backupDesc = '';
 if ($backupFilesExist) {
     $backupDesc .= "<b>{$mod_strings['LBL_UW_BACKUP_FILES_EXIST_TITLE']}</b><br />";
-    $backupDesc .= $mod_strings['LBL_UW_BACKUP_FILES_EXIST'].': '.$rest_dir;
+    $backupDesc .= $mod_strings['LBL_UW_BACKUP_FILES_EXIST'] . ': ' . $rest_dir;
 }
 
 $customized_mods_Desc = '';
@@ -461,8 +459,8 @@ if (version_compare($_SESSION['current_db_version'], $_SESSION['target_db_versio
 
     //old schema to be dropped
     $old_schema_contents = '';
-    if (file_exists($_SESSION['unzip_dir'].'/scripts/drop_'.$origVersion.'_schema_after_upgrade_'.$destVersion.'.php')) {
-        require_once $_SESSION['unzip_dir'].'/scripts/drop_'.$origVersion.'_schema_after_upgrade_'.$destVersion.'.php';
+    if (file_exists($_SESSION['unzip_dir'] . '/scripts/drop_' . $origVersion . '_schema_after_upgrade_' . $destVersion . '.php')) {
+        require_once $_SESSION['unzip_dir'] . '/scripts/drop_' . $origVersion . '_schema_after_upgrade_' . $destVersion . '.php';
         ob_start();
         $old_schema_contents = @drop_preUpgardeSchema(true);
         ob_end_clean();
@@ -494,7 +492,7 @@ if (count($copiedFiles) > 0) {
     $copiedDesc .= "<div id='copiedFiles' style='display:none;'>";
 
     foreach ($copiedFiles as $file) {
-        $copiedDesc .= $file.'<br />';
+        $copiedDesc .= $file . '<br />';
     }
     $copiedDesc .= '</div>';
 }
@@ -506,7 +504,7 @@ if (count($skippedFiles) > 0) {
     $skippedDesc .= "<div id='skippedFiles' style='display:none;'>";
 
     foreach ($skippedFiles as $file) {
-        $skippedDesc .= $file.'<br />';
+        $skippedDesc .= $file . '<br />';
     }
     $skippedDesc .= '</div>';
 }
@@ -522,9 +520,9 @@ if (isset($_SESSION['sqlSkippedQueries']) && $_SESSION['sqlSkippedQueries'] != n
     $skipped_queries_Desc .= "<a href='javascript:void(0); toggleNwFiles(\"skippedQueries\");'>{$mod_strings['LBL_UW_SHOW']}</a>";
     $skipped_queries_Desc .= "<div id='skippedQueries' style='display:none;'>";
     if ($_SESSION['sqlSkippedQueries'] != null) {
-        $skipped_queries_Desc .= $mod_strings['LBL_UW_SKIPPED_QUERIES_ALREADY_EXIST'].'<br />';
+        $skipped_queries_Desc .= $mod_strings['LBL_UW_SKIPPED_QUERIES_ALREADY_EXIST'] . '<br />';
         foreach ($_SESSION['sqlSkippedQueries'] as $skippedQ) {
-            $skipped_queries_Desc .= $skippedQ.'<br />';
+            $skipped_queries_Desc .= $skippedQ . '<br />';
         }
     }
 }
@@ -541,8 +539,6 @@ if (empty($mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'])) {
 commitHandleReminders($skippedFiles);
 ////	HANDLE REMINDERS
 ///////////////////////////////////////////////////////////////////////////////
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	OUTPUT
@@ -650,9 +646,9 @@ if (!class_exists('SugarThemeRegistry')) {
 
 $themeObject = SugarThemeRegistry::current();
 
-$styleJSFilePath = sugar_cached($themeObject->getJSPath().DIRECTORY_SEPARATOR.'style-min.js');
+$styleJSFilePath = sugar_cached($themeObject->getJSPath() . DIRECTORY_SEPARATOR . 'style-min.js');
 if (file_exists($styleJSFilePath)) {
-    logThis("Rebuilding style js file: $styleJSFilePath");
+    logThis("Rebuilding style js file: {$styleJSFilePath}");
     unlink($styleJSFilePath);
     SugarThemeRegistry::current()->clearJSCache();
     SugarThemeRegistry::current()->getJS();

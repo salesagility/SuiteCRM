@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,8 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/json_config.php');
+require_once 'include/json_config.php';
 
 class ProjectViewEdit extends ViewEdit
 {
@@ -48,16 +46,13 @@ class ProjectViewEdit extends ViewEdit
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
         global $json;
-        
+
         $this->bean->is_template = 0;
-        $this->ev->ss->assign("is_template", 0);
-        
+        $this->ev->ss->assign('is_template', 0);
+
         $json = getJSONobj();
         $json_config = new json_config();
         if (isset($this->bean->json_id) && !empty($this->bean->json_id)) {

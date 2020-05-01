@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\BeanDecorator;
 
 class BeanListResponse
@@ -19,7 +20,7 @@ class BeanListResponse
     public function __construct(array $result = [])
     {
         $this->beans = isset($result['list']) ? $result['list'] : [];
-        $this->rowCount = isset($result['row_count']) ? (int)$result['row_count'] : 0;
+        $this->rowCount = isset($result['row_count']) ? (int) $result['row_count'] : 0;
     }
 
     /**
@@ -31,7 +32,7 @@ class BeanListResponse
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getRowCount()
     {

@@ -1,3 +1,3 @@
 <?php
 
-$view_config['actions']['marker_detail_map'] = array('show_all' => false);
+$view_config['actions']['marker_detail_map'] = ['show_all' => false];

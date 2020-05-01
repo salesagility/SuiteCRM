@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,12 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class OAuth2ClientsViewDetail extends ViewDetail
 {
     /**
-     * @var OAuth2Clients $bean
+     * @var OAuth2Clients
      */
     public $bean;
 
     /**
-     * @var string $formName
+     * @var string
      */
     public $formName;
 
@@ -60,7 +58,17 @@ class OAuth2ClientsViewDetail extends ViewDetail
     public function getMetaDataFile()
     {
         $this->setViewType();
+
         return parent::getMetaDataFile();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function display()
+    {
+        $this->dv->formName = $this->formName;
+        parent::display();
     }
 
     private function setViewType()
@@ -69,20 +77,13 @@ class OAuth2ClientsViewDetail extends ViewDetail
             case 'password':
                 $this->type = 'detailpassword';
                 $this->formName = 'DetailPassword';
+
                 break;
             case 'client_credentials':
                 $this->type = 'detailcredentials';
                 $this->formName = 'DetailCredentials';
+
                 break;
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function display()
-    {
-        $this->dv->formName = $this->formName;
-        parent::display();
     }
 }

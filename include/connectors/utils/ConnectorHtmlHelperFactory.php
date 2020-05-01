@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Connector's HTML helper factory
+ * Connector's HTML helper factory.
+ *
  * @api
  */
 class ConnectorHtmlHelperFactory
@@ -52,17 +52,18 @@ class ConnectorHtmlHelperFactory
     const CONNECTOR_HTML_HELPER_CUSTOM = 'custom/include/connectors/utils/ConnectorHtmlHelper.php';
 
     /**
-     * Return instance of HTML helper class
+     * Return instance of HTML helper class.
      *
      * @return ConnectorHtmlHelper
      */
     public static function build()
     {
         if (file_exists(self::CONNECTOR_HTML_HELPER_CUSTOM)) {
-            require_once(self::CONNECTOR_HTML_HELPER_CUSTOM);
+            require_once self::CONNECTOR_HTML_HELPER_CUSTOM;
         } else {
-            require_once(self::CONNECTOR_HTML_HELPER_MAIN);
+            require_once self::CONNECTOR_HTML_HELPER_MAIN;
         }
+
         return new ConnectorHtmlHelper();
     }
 }

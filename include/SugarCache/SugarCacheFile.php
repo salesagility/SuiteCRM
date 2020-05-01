@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarCache/SugarCacheAbstract.php');
+require_once 'include/SugarCache/SugarCacheAbstract.php';
 
 class SugarCacheFile extends SugarCacheAbstract
 {
@@ -57,22 +54,6 @@ class SugarCacheFile extends SugarCacheAbstract
      * @see SugarCacheAbstract::$_priority
      */
     protected $_priority = 990;
-
-    /**
-     * @see SugarCacheAbstract::useBackend()
-     */
-    public function useBackend()
-    {
-        if (!parent::useBackend()) {
-            return false;
-        }
-
-        if (!empty($GLOBALS['sugar_config']['external_cache_enabled_file'])) {
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * @see SugarCacheAbstract::__construct()
@@ -104,35 +85,57 @@ class SugarCacheFile extends SugarCacheAbstract
     }
 
     /**
-     * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability.
      */
     public function __wakeup()
     {
         // clean all properties
         foreach (get_object_vars($this) as $k => $v) {
-            $this->$k = null;
+            $this->{$k} = null;
         }
-        throw new Exception("Not a serializable object");
+
+        throw new Exception('Not a serializable object');
+    }
+
+    /**
+     * @see SugarCacheAbstract::useBackend()
+     */
+    public function useBackend()
+    {
+        if (!parent::useBackend()) {
+            return false;
+        }
+
+        if (!empty($GLOBALS['sugar_config']['external_cache_enabled_file'])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * @see SugarCacheAbstract::_setExternal()
      *
      * Does nothing; we write to cache on destroy
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function _setExternal(
         $key,
         $value
-        ) {
+    ) {
         $this->_cacheChanged = true;
     }
 
     /**
      * @see SugarCacheAbstract::_getExternal()
+     *
+     * @param mixed $key
      */
     protected function _getExternal(
         $key
-        ) {
+    ) {
         // load up the external cache file
         if (is_file($cachedfile = sugar_cached($this->_cacheFileName))) {
             $this->localCache = unserialize(file_get_contents($cachedfile));
@@ -149,10 +152,12 @@ class SugarCacheFile extends SugarCacheAbstract
      * @see SugarCacheAbstract::_clearExternal()
      *
      * Does nothing; we write to cache on destroy
+     *
+     * @param mixed $key
      */
     protected function _clearExternal(
         $key
-        ) {
+    ) {
         $this->_cacheChanged = true;
     }
 

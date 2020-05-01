@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testEmailAddress()

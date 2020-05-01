@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -17,13 +18,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
+ *
  * @copyright Andrew Mclaughlan 2014
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
 /**
  * delete_project_tasks.php
- * Used to delete a project's related tasks after a project is deleted
+ * Used to delete a project's related tasks after a project is deleted.
  */
 class delete_project_tasks
 {
@@ -31,10 +33,10 @@ class delete_project_tasks
     {
         $db = DBManagerFactory::getInstance();
         $Task = BeanFactory::getBean('ProjectTask');
-        $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$bean->id."'");
+        $tasks = $Task->get_full_list('order_number', "project_task.project_id = '" . $bean->id . "'");
 
         foreach ($tasks as $task) {
-            $query = "UPDATE project_task SET deleted ='1' WHERE id ='".$task->id."'";
+            $query = "UPDATE project_task SET deleted ='1' WHERE id ='" . $task->id . "'";
             $update = $db->query($query);
         }
     }

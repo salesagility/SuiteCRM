@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_MODULE_NAME' => 'Home',
     'LBL_NEW_FORM_TITLE' => 'New Contact',
     'LBL_FIRST_NAME' => 'First Name:',
@@ -98,13 +96,13 @@ $mod_strings = array(
     'LBL_SEARCH_RESULTS' => 'Search Result',
 
     // Dashlet Categories
-    'dashlet_categories_dom' => array(
+    'dashlet_categories_dom' => [
         'Module Views' => 'Module Views',
         'Portal' => 'Portal',
         'Charts' => 'Charts',
         'Tools' => 'Tools',
         'Miscellaneous' => 'Miscellaneous'
-    ),
+    ],
     'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
@@ -131,7 +129,7 @@ $mod_strings = array(
 
     'LBL_DASHLET_SEARCH' => 'Find SuiteCRM Dashlet',
 
-//ABOUT page
+    //ABOUT page
     'LBL_VERSION' => 'Version',
     'LBL_BUILD' => 'Build',
 
@@ -246,4 +244,4 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_EXCEPTION_END_MESSAGE' => 'Contact an administrator if the problem persists. More information available in the logs.',
 
     'LBL_ELASTIC_SEARCH_DEFAULT' => 'No results matching your search criteria. Try broadening your search.'
-);
+];

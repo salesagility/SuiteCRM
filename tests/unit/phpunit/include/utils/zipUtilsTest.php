@@ -1,7 +1,11 @@
 <?php
+
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/php_zip_utils.php';
+/**
+ * @internal
+ */
 class zip_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testunzip()
@@ -9,17 +13,17 @@ class zip_utilsTest extends SuitePHPUnitFrameworkTestCase
 //        $this->markTestIncomplete('Can Not be implemented');
     }
 
-    public function testunzip_file()
+    public function testunzipFile()
     {
 //        $this->markTestIncomplete('Can Not be implemented');
     }
 
-    public function testzip_dir()
+    public function testzipDir()
     {
 //        $this->markTestIncomplete('Can Not be implemented');
     }
 
-    public function testzip_files_list()
+    public function testzipFilesList()
     {
 //        $this->markTestIncomplete('Can Not be implemented');
     }

@@ -1,11 +1,12 @@
 <?php
 
 use Codeception\Actor;
-use Faker\Factory;
 use Codeception\Lib\Friend;
+use Faker\Factory;
 
 /**
- * Inherited Methods
+ * Inherited Methods.
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -41,7 +42,7 @@ class AcceptanceTester extends Actor
     use _generated\AcceptanceTesterActions;
 
     /**
-     * Define custom actions here
+     * Define custom actions here.
      */
 
     /**
@@ -79,7 +80,7 @@ class AcceptanceTester extends Actor
     }
 
     /**
-     * Clicks the logout link in the users menu
+     * Clicks the logout link in the users menu.
      */
     public function logout()
     {
@@ -108,7 +109,7 @@ class AcceptanceTester extends Actor
      *
      * @param string $module SuiteCRM module name
      * @param string $action View action name, e.g. index, EditView, DetailView.
-     * @param string|null $record The id of a record, used for EditView and DetailView routes.
+     * @param null|string $record the id of a record, used for EditView and DetailView routes
      */
     public function visitPage($module, $action, $record = null)
     {

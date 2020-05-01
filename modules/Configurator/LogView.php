@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,15 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
 global $mod_strings;
 if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 $filter = '';
 if (!empty($_REQUEST['filter'])) {
-    $filter = 	$_REQUEST['filter'];
+    $filter = $_REQUEST['filter'];
 }
 $ignore_self = false;
 if (!empty($_REQUEST['ignore_self'])) {
@@ -70,9 +69,9 @@ echo <<<EOQ
 <input type='submit' name='display' value='{$mod_strings['LBL_REFRESH_FROM_MARK']}'>
 <input type='button' onclick='document.logview.doaction.value="next";document.logview.submit()' name='next' value='{$mod_strings['LBL_NEXT_']}'>
 <br>
-{$mod_strings['LBL_SEARCH']} <input type='text' name='filter' value='$filter'>&nbsp;{$mod_strings['LBL_REG_EXP']} <input type='checkbox' name='reg_ex' $reg_ex>
+{$mod_strings['LBL_SEARCH']} <input type='text' name='filter' value='{$filter}'>&nbsp;{$mod_strings['LBL_REG_EXP']} <input type='checkbox' name='reg_ex' {$reg_ex}>
 <br>
-{$mod_strings['LBL_IGNORE_SELF']} <input type='checkbox' name='ignore_self' $ignore_self>
+{$mod_strings['LBL_IGNORE_SELF']} <input type='checkbox' name='ignore_self' {$ignore_self}>
 </form>
 EOQ;
 
@@ -86,11 +85,11 @@ $config = SugarConfig::getInstance();
 $ext = $config->get('logger.file.ext');
 $logfile = $config->get('logger.file.name');
 $log_dir = $config->get('log_dir');
-$log_dir = $log_dir . (empty($log_dir)?'':'/');
+$log_dir = $log_dir . (empty($log_dir) ? '' : '/');
 $file_suffix = $config->get('logger.file.suffix');
-$date_suffix = "";
+$date_suffix = '';
 if (!empty($file_suffix)) {
-    $date_suffix = "_" . date(str_replace("%", "", $file_suffix));
+    $date_suffix = '_' . date(str_replace('%', '', $file_suffix));
 }
 
 $logFile = $log_dir . $logfile . $date_suffix . $ext;
@@ -99,12 +98,13 @@ if (!file_exists($logFile)) {
     die('No Log File');
 }
 $lastMatch = false;
-$doaction =(!empty($_REQUEST['doaction']))?$_REQUEST['doaction']:'';
+$doaction = (!empty($_REQUEST['doaction'])) ? $_REQUEST['doaction'] : '';
 
 switch ($doaction) {
     case 'mark':
         echo "<h3>{$mod_strings['LBL_MARKING_WHERE_START_LOGGING']}</h3><br>";
         $_SESSION['log_file_size'] = filesize($logFile);
+
         break;
     case 'next':
         if (!empty($_SESSION['last_log_file_size'])) {
@@ -113,20 +113,21 @@ switch ($doaction) {
             $_SESSION['log_file_size'] = 0;
         }
         $_REQUEST['display'] = true;
+
         break;
     case 'all':
         $_SESSION['log_file_size'] = 0;
         $_REQUEST['display'] = true;
+
         break;
 }
 
-
 if (!empty($_REQUEST['display'])) {
     echo "<h3>{$mod_strings['LBL_DISPLAYING_LOG']}</h3>";
-    $process_id =  getmypid();
+    $process_id = getmypid();
 
-    echo $mod_strings['LBL_YOUR_PROCESS_ID'].' [' . $process_id. ']';
-    echo '<br>'.$mod_strings['LBL_YOUR_IP_ADDRESS'].' ' . $_SERVER['REMOTE_ADDR'];
+    echo $mod_strings['LBL_YOUR_PROCESS_ID'] . ' [' . $process_id . ']';
+    echo '<br>' . $mod_strings['LBL_YOUR_IP_ADDRESS'] . ' ' . $_SERVER['REMOTE_ADDR'];
     if ($ignore_self) {
         echo $mod_strings['LBL_IT_WILL_BE_IGNORED'];
     }
@@ -140,7 +141,7 @@ if (!empty($_REQUEST['display'])) {
         $pos = $_SESSION['log_file_size'] - $cur_size;
     }
     if ($_SESSION['log_file_size'] == $cur_size) {
-        echo $mod_strings['LBL_LOG_NOT_CHANGED'].'<br>';
+        echo $mod_strings['LBL_LOG_NOT_CHANGED'] . '<br>';
     } else {
         $fp = sugar_fopen($logFile, 'r');
         fseek($fp, $pos, SEEK_END);
@@ -155,7 +156,7 @@ if (!empty($_REQUEST['display'])) {
                 echo $line;
             } else {
                 $lastMatch = false;
-                if (empty($result) || ($ignore_self &&$result[LOG_NAME] == $_SERVER['REMOTE_ADDR'])) {
+                if (empty($result) || ($ignore_self && $result[LOG_NAME] == $_SERVER['REMOTE_ADDR'])) {
                 } else {
                     if (empty($filter) || (!$reg_ex && substr_count($line, $filter) > 0) || ($reg_ex && preg_match($filter, $line))) {
                         $lastMatch = true;

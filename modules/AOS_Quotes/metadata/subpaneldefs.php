@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  * Advanced OpenSales, Advanced, robust set of sales modules.
  * @package Advanced OpenSales for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -25,11 +26,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility <info@salesagility.com>
  */
 
-
-$layout_defs['AOS_Quotes'] = array(
-    'subpanel_setup' => array(
-        'aos_quotes_aos_contracts' =>
-        array(
+$layout_defs['AOS_Quotes'] = [
+    'subpanel_setup' => [
+        'aos_quotes_aos_contracts' => [
             'order' => 100,
             'module' => 'AOS_Contracts',
             'subpanel_name' => 'default',
@@ -37,67 +36,56 @@ $layout_defs['AOS_Quotes'] = array(
             'sort_by' => 'id',
             'title_key' => 'AOS_Contracts',
             'get_subpanel_data' => 'aos_quotes_aos_contracts',
-            'top_buttons' =>
-            array(
-                0 =>
-                array(
+            'top_buttons' => [
+                0 => [
                     'widget_class' => 'SubPanelTopCreateButton',
-                ),
-                    1 =>
-                    array(
+                ],
+                1 => [
                     'widget_class' => 'SubPanelTopSelectButton',
                     'popup_module' => 'AOS_Contracts',
                     'mode' => 'MultiSelect',
-                ),
-            ),
-        ),
-    
-    'aos_quotes_aos_invoices' =>
-    array(
-        'order' => 100,
-        'module' => 'AOS_Invoices',
-        'subpanel_name' => 'default',
-        'sort_order' => 'asc',
-        'sort_by' => 'id',
-        'title_key' => 'AOS_Invoices',
-        'get_subpanel_data' => 'aos_quotes_aos_invoices',
-        'top_buttons' =>
-        array(
-                0 =>
-             array(
-                'widget_class' => 'SubPanelTopCreateButton',
-            ),
-            1 =>
-            array(
-                'widget_class' => 'SubPanelTopSelectButton',
-                'popup_module' => 'AOS_Invoices',
-                'mode' => 'MultiSelect',
-            ),
-        ),
-    ),
-    
-    'aos_quotes_project' =>
-    array(
-        'order' => 100,
-        'module' => 'Project',
-        'subpanel_name' => 'default',
-        'sort_order' => 'asc',
-        'sort_by' => 'id',
-        'title_key' => 'Project',
-        'get_subpanel_data' => 'aos_quotes_project',
-        'top_buttons' =>
-        array(
-            0 =>
-            array(
-                'widget_class' => 'SubPanelTopCreateButton',
-            ),
-            1 =>
-            array(
-                'widget_class' => 'SubPanelTopSelectButton',
-                'popup_module' => 'Accounts',
-                'mode' => 'MultiSelect',
-                ),
-        ),
-    ),
-),
-);
+                ],
+            ],
+        ],
+
+        'aos_quotes_aos_invoices' => [
+            'order' => 100,
+            'module' => 'AOS_Invoices',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'AOS_Invoices',
+            'get_subpanel_data' => 'aos_quotes_aos_invoices',
+            'top_buttons' => [
+                0 => [
+                    'widget_class' => 'SubPanelTopCreateButton',
+                ],
+                1 => [
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'popup_module' => 'AOS_Invoices',
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+
+        'aos_quotes_project' => [
+            'order' => 100,
+            'module' => 'Project',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'Project',
+            'get_subpanel_data' => 'aos_quotes_project',
+            'top_buttons' => [
+                0 => [
+                    'widget_class' => 'SubPanelTopCreateButton',
+                ],
+                1 => [
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'popup_module' => 'Accounts',
+                    'mode' => 'MultiSelect',
+                ],
+            ],
+        ],
+    ],
+];

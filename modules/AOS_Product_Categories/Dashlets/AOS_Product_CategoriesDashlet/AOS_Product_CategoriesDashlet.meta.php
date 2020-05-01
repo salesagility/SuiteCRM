@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,18 +42,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
+ */
+
 global $app_strings;
 
-$dashletMeta['AOS_Product_CategoriesDashlet'] = array('module'		=> 'AOS_Product_Categories',
-                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOS_Product_Categories'),
-                                          'description' => 'A customizable view into AOS_Product_Categories',
-                                          'icon'        => 'icon_AOS_Product_Categories_32.gif',
-                                          'category'    => 'Module Views');
+$dashletMeta['AOS_Product_CategoriesDashlet'] = ['module' => 'AOS_Product_Categories',
+    'title' => translate('LBL_HOMEPAGE_TITLE', 'AOS_Product_Categories'),
+    'description' => 'A customizable view into AOS_Product_Categories',
+    'icon' => 'icon_AOS_Product_Categories_32.gif',
+    'category' => 'Module Views'];

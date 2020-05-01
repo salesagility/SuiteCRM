@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,14 +40,14 @@
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use Api\Core\Config\ApiConfig;
+use Api\V8\BeanDecorator\BeanManager;
 use DateTime;
 use DBManager;
+use DBManagerFactory;
 use OAuth2Clients;
 use Robo\Tasks;
-use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Robo\Traits\CliRunnerTrait;
-use Api\V8\BeanDecorator\BeanManager;
-use DBManagerFactory;
+use SuiteCRM\Robo\Traits\RoboTrait;
 use User;
 
 class ApiCommands extends Tasks
@@ -75,7 +74,7 @@ class ApiCommands extends Tasks
     ];
 
     /**
-     * ApiCommands constructor
+     * ApiCommands constructor.
      */
     public function __construct()
     {
@@ -85,9 +84,11 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Configures the SuiteCRM V8 API with all defaults
+     * Configures the SuiteCRM V8 API with all defaults.
+     *
      * @param string $name
      * @param string $password
+     *
      * @throws \Exception
      */
     public function apiConfigureV8($name, $password)
@@ -105,7 +106,8 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Generate OAuth2 public/private keys
+     * Generate OAuth2 public/private keys.
+     *
      * @param array $opts
      * @option string $privateKey set a custom path to the oauth2 private key.
      * @option string $publicKey set a custom path to the oauth2 public key.
@@ -138,7 +140,8 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Sets the Oauth2 key permissions
+     * Sets the Oauth2 key permissions.
+     *
      * @param array $opts
      * @option string $privateKey set a custom path to the oauth2 private key.
      * @option string $publicKey set a custom path to the oauth2 public key.
@@ -157,10 +160,12 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Update OAuth2 encryption keys
+     * Update OAuth2 encryption keys.
+     *
      * @param array $opts
      * @option string $privateKey set a custom path to the oauth2 encryption key.
      * @option string $apiConfig set a custom path to ApiConfig file.
+     *
      * @throws \Exception
      */
     public function apiUpdateEncryptionKey(
@@ -177,23 +182,25 @@ class ApiCommands extends Tasks
         );
 
         file_put_contents(
-            $opts['apiConfig'], $configFileContents, LOCK_EX
+            $opts['apiConfig'],
+            $configFileContents,
+            LOCK_EX
         );
     }
 
     /**
-     * Rebuild .Htaccess file
+     * Rebuild .Htaccess file.
      */
     public function apiRebuildHtaccessFile()
     {
         @require __DIR__ . '/../../../../modules/Administration/UpgradeAccess.php';
     }
 
-
     /**
-     * Creates OAuth2 client
+     * Creates OAuth2 client.
+     *
      * @param string $name
-     * @return void
+     *
      * @throws \Exception
      */
     public function apiCreateClient($name)
@@ -217,15 +224,17 @@ class ApiCommands extends Tasks
         $clientBean->save();
         $clientBean->retrieve($clientBean->id);
 
-        $this->outputClientCredentials(!empty($clientBean->fetched_row['id']) ? compact('clientBean',
-            'clientSecret') : []);
+        $this->outputClientCredentials(!empty($clientBean->fetched_row['id']) ? compact(
+            'clientBean',
+            'clientSecret'
+        ) : []);
     }
 
     /**
-     * Creates a SuiteCRM user for the V8 API
+     * Creates a SuiteCRM user for the V8 API.
+     *
      * @param string $name
      * @param string $password
-     * @return void
      */
     public function apiCreateUser($name, $password)
     {
@@ -249,7 +258,8 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Export a postman environment for the V8 API
+     * Export a postman environment for the V8 API.
+     *
      * @param array $opts
      * @option string $postmanENV set a custom path to output a postman environment.
      */
@@ -281,7 +291,8 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Returns client credentials
+     * Returns client credentials.
+     *
      * @param array $client
      */
     private function outputClientCredentials(array $client)
@@ -312,7 +323,8 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Returns user credentials
+     * Returns user credentials.
+     *
      * @param array $user
      */
     private function outputUserCredentials(array $user)
@@ -339,10 +351,12 @@ class ApiCommands extends Tasks
     }
 
     /**
-     * Returns the number of duplicate name records from a table
+     * Returns the number of duplicate name records from a table.
+     *
      * @param string $name
      * @param string $table
      * @param string $row
+     *
      * @return int
      */
     private function getNameCount($name, $table, $row)
@@ -353,15 +367,15 @@ class ApiCommands extends Tasks
 SELECT
     count(`id`) AS `count`
 FROM
-    `$table`
+    `{$table}`
 WHERE
-    `$row` LIKE '$nameQuoted %'
+    `{$row}` LIKE '{$nameQuoted} %'
 SQL;
 
         $result = $this->db->fetchOne($query);
 
         $count = $result
-            ? (int)$result['count']
+            ? (int) $result['count']
             : 0;
 
         $count++;

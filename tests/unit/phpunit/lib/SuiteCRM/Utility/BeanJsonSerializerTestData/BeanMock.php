@@ -53,12 +53,12 @@ class BeanMock extends \SugarBean
         $array = json_decode(file_get_contents($file), true);
 
         foreach ($array as $key => $item) {
-            $this->$key = $item;
+            $this->{$key} = $item;
         }
     }
 
     public function load_relationships()
     {
-        echo "load_relationships() has been called on the mocked class!";
+        echo 'load_relationships() has been called on the mocked class!';
     }
 }

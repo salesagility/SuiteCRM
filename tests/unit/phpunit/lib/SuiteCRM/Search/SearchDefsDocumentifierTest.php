@@ -1,5 +1,7 @@
-<?php /** @noinspection ALL */
-/**
+<?php
+
+/** @noinspection ALL */
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,6 +43,9 @@ use Mockery as m;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\SearchTestAbstract;
 
+/**
+ * @internal
+ */
 class SearchDefsDocumentifierTest extends SearchTestAbstract
 {
     public function testGetFieldsToIndex()
@@ -78,16 +83,14 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                 'first' => 'Foo',
                 'last' => 'Bar',
             ],
-            'phone' =>
-                [
-                    'fax' => '132',
+            'phone' => [
+                'fax' => '132',
+            ],
+            'address' => [
+                'alt' => [
+                    'city' => 'FooCity',
                 ],
-            'address' =>
-                [
-                    'alt' => [
-                        'city' => 'FooCity',
-                    ],
-                ],
+            ],
         ];
 
         $actual = $documentifier->documentify($contact, $mockParser);
@@ -111,10 +114,9 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
 
         $actual = $documentifier->documentify($account);
         $expected = [
-            'name' =>
-                [
-                    'name' => 'SuperDogs Ldt.',
-                ],
+            'name' => [
+                'name' => 'SuperDogs Ldt.',
+            ],
             'annual_revenue' => '123 (USD)',
             'address' => [
                 'billing' => [
@@ -123,10 +125,9 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                     'country' => 'FooCountry',
                 ],
             ],
-            'phone' =>
-                [
-                    'office' => '123456789',
-                ],
+            'phone' => [
+                'office' => '123456789',
+            ],
         ];
 
         self::assertEquals($expected, $actual);
@@ -134,212 +135,174 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
 
     /**
      * @param string $mockModule
+     *
      * @return array
      */
     private function getFields($mockModule)
     {
         return [
             $mockModule => [
-                'first_name' =>
-                    [
-                        'query_type' => 'default',
+                'first_name' => [
+                    'query_type' => 'default',
+                ],
+                'last_name' => [
+                    'query_type' => 'default',
+                ],
+                'search_name' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'first_name',
+                        'last_name',
                     ],
-                'last_name' =>
-                    [
-                        'query_type' => 'default',
+                    'force_unifiedsearch' => true,
+                ],
+                'account_name' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'accounts.name',
                     ],
-                'search_name' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'first_name',
-                                'last_name',
-                            ],
-                        'force_unifiedsearch' => true,
+                ],
+                'lead_source' => [
+                    'query_type' => 'default',
+                    'operator' => '=',
+                    'options' => 'lead_source_dom',
+                    'template_var' => 'LEAD_SOURCE_OPTIONS',
+                ],
+                'do_not_call' => [
+                    'query_type' => 'default',
+                    'input_type' => 'checkbox',
+                    'operator' => '=',
+                ],
+                'phone' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'phone_mobile',
+                        'phone_work',
+                        'phone_other',
+                        'phone_fax',
+                        'assistant_phone',
                     ],
-                'account_name' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'accounts.name',
-                            ],
+                ],
+                'email' => [
+                    'query_type' => 'default',
+                    'operator' => 'subquery',
+                    'subquery' => 'SELECT eabr.bean_id FROM email_addr_bean_rel eabr JOIN email_addresses ea ON (ea.id = eabr.email_address_id) WHERE eabr.deleted=0 AND ea.email_address LIKE',
+                    'db_field' => [
+                        'id',
                     ],
-                'lead_source' =>
-                    [
-                        'query_type' => 'default',
-                        'operator' => '=',
-                        'options' => 'lead_source_dom',
-                        'template_var' => 'LEAD_SOURCE_OPTIONS',
+                ],
+                'optinprimary' => [
+                    'type' => 'enum',
+                    'options' => 'email_confirmed_opt_in_dom',
+                    'query_type' => 'default',
+                    'operator' => 'subquery',
+                    'subquery' => 'SELECT eabr.bean_id FROM email_addr_bean_rel eabr JOIN email_addresses ea ON (ea.id = eabr.email_address_id) WHERE eabr.deleted=0 AND eabr.primary_address = \'1\' AND ea.confirm_opt_in LIKE',
+                    'db_field' => [
+                        'id',
                     ],
-                'do_not_call' =>
-                    [
-                        'query_type' => 'default',
-                        'input_type' => 'checkbox',
-                        'operator' => '=',
-                    ],
-                'phone' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'phone_mobile',
-                                'phone_work',
-                                'phone_other',
-                                'phone_fax',
-                                'assistant_phone',
-                            ],
-                    ],
-                'email' =>
-                    [
-                        'query_type' => 'default',
-                        'operator' => 'subquery',
-                        'subquery' => 'SELECT eabr.bean_id FROM email_addr_bean_rel eabr JOIN email_addresses ea ON (ea.id = eabr.email_address_id) WHERE eabr.deleted=0 AND ea.email_address LIKE',
-                        'db_field' =>
-                            [
-                                'id',
-                            ],
-                    ],
-                'optinprimary' =>
-                    [
-                        'type' => 'enum',
-                        'options' => 'email_confirmed_opt_in_dom',
-                        'query_type' => 'default',
-                        'operator' => 'subquery',
-                        'subquery' => 'SELECT eabr.bean_id FROM email_addr_bean_rel eabr JOIN email_addresses ea ON (ea.id = eabr.email_address_id) WHERE eabr.deleted=0 AND eabr.primary_address = \'1\' AND ea.confirm_opt_in LIKE',
-                        'db_field' =>
-                            [
-                                'id',
-                            ],
-                        'vname' => 'LBL_OPT_IN_FLAG_PRIMARY',
-                    ],
-                'favorites_only' =>
-                    [
-                        'query_type' => 'format',
-                        'operator' => 'subquery',
-                        'checked_only' => true,
-                        'subquery' => 'SELECT favorites.parent_id FROM favorites
+                    'vname' => 'LBL_OPT_IN_FLAG_PRIMARY',
+                ],
+                'favorites_only' => [
+                    'query_type' => 'format',
+                    'operator' => 'subquery',
+                    'checked_only' => true,
+                    'subquery' => 'SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
 			                        and favorites.parent_type = \'Contacts\'
 			                        and favorites.assigned_user_id = \'{1}\'',
-                        'db_field' =>
-                            [
-                                'id',
-                            ],
+                    'db_field' => [
+                        'id',
                     ],
-                'assistant' =>
-                    [
-                        'query_type' => 'default',
+                ],
+                'assistant' => [
+                    'query_type' => 'default',
+                ],
+                'address_street' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'primary_address_street',
+                        'alt_address_street',
                     ],
-                'address_street' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'primary_address_street',
-                                'alt_address_street',
-                            ],
+                ],
+                'address_city' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'primary_address_city',
+                        'alt_address_city',
                     ],
-                'address_city' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'primary_address_city',
-                                'alt_address_city',
-                            ],
+                ],
+                'address_state' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'primary_address_state',
+                        'alt_address_state',
                     ],
-                'address_state' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'primary_address_state',
-                                'alt_address_state',
-                            ],
+                ],
+                'address_postalcode' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'primary_address_postalcode',
+                        'alt_address_postalcode',
                     ],
-                'address_postalcode' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'primary_address_postalcode',
-                                'alt_address_postalcode',
-                            ],
+                ],
+                'address_country' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'primary_address_country',
+                        'alt_address_country',
                     ],
-                'address_country' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'primary_address_country',
-                                'alt_address_country',
-                            ],
+                ],
+                'current_user_only' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'assigned_user_id',
                     ],
-                'current_user_only' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'assigned_user_id',
-                            ],
-                        'my_items' => true,
-                        'vname' => 'LBL_CURRENT_USER_FILTER',
-                        'type' => 'bool',
+                    'my_items' => true,
+                    'vname' => 'LBL_CURRENT_USER_FILTER',
+                    'type' => 'bool',
+                ],
+                'assigned_user_id' => [
+                    'query_type' => 'default',
+                ],
+                'account_id' => [
+                    'query_type' => 'default',
+                    'db_field' => [
+                        'accounts.id',
                     ],
-                'assigned_user_id' =>
-                    [
-                        'query_type' => 'default',
-                    ],
-                'account_id' =>
-                    [
-                        'query_type' => 'default',
-                        'db_field' =>
-                            [
-                                'accounts.id',
-                            ],
-                    ],
-                'campaign_name' =>
-                    [
-                        'query_type' => 'default',
-                    ],
-                'range_date_entered' =>
-                    [
-                        'query_type' => 'default',
-                        'enable_range_search' => true,
-                        'is_date_field' => true,
-                    ],
-                'start_range_date_entered' =>
-                    [
-                        'query_type' => 'default',
-                        'enable_range_search' => true,
-                        'is_date_field' => true,
-                    ],
-                'end_range_date_entered' =>
-                    [
-                        'query_type' => 'default',
-                        'enable_range_search' => true,
-                        'is_date_field' => true,
-                    ],
-                'range_date_modified' =>
-                    [
-                        'query_type' => 'default',
-                        'enable_range_search' => true,
-                        'is_date_field' => true,
-                    ],
-                'start_range_date_modified' =>
-                    [
-                        'query_type' => 'default',
-                        'enable_range_search' => true,
-                        'is_date_field' => true,
-                    ],
-                'end_range_date_modified' =>
-                    [
-                        'query_type' => 'default',
-                        'enable_range_search' => true,
-                        'is_date_field' => true,
-                    ],
+                ],
+                'campaign_name' => [
+                    'query_type' => 'default',
+                ],
+                'range_date_entered' => [
+                    'query_type' => 'default',
+                    'enable_range_search' => true,
+                    'is_date_field' => true,
+                ],
+                'start_range_date_entered' => [
+                    'query_type' => 'default',
+                    'enable_range_search' => true,
+                    'is_date_field' => true,
+                ],
+                'end_range_date_entered' => [
+                    'query_type' => 'default',
+                    'enable_range_search' => true,
+                    'is_date_field' => true,
+                ],
+                'range_date_modified' => [
+                    'query_type' => 'default',
+                    'enable_range_search' => true,
+                    'is_date_field' => true,
+                ],
+                'start_range_date_modified' => [
+                    'query_type' => 'default',
+                    'enable_range_search' => true,
+                    'is_date_field' => true,
+                ],
+                'end_range_date_modified' => [
+                    'query_type' => 'default',
+                    'enable_range_search' => true,
+                    'is_date_field' => true,
+                ],
             ]
         ];
     }
@@ -352,57 +315,47 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
         return [
             'first_name',
             'last_name',
-            'search_name' =>
-                [
-                    'first_name',
-                    'last_name',
-                ],
-            'account_name' =>
-                [
-                    'accounts.name',
-                ],
-            'phone' =>
-                [
-                    'phone_mobile',
-                    'phone_work',
-                    'phone_other',
-                    'phone_fax',
-                    'assistant_phone',
-                ],
-            'address_street' =>
-                [
-                    'primary_address_street',
-                    'alt_address_street',
-                ],
-            'address_city' =>
-                [
-                    'primary_address_city',
-                    'alt_address_city',
-                ],
-            'address_state' =>
-                [
-                    'primary_address_state',
-                    'alt_address_state',
-                ],
-            'address_postalcode' =>
-                [
-                    'primary_address_postalcode',
-                    'alt_address_postalcode',
-                ],
-            'address_country' =>
-                [
-                    'primary_address_country',
-                    'alt_address_country',
-                ],
-            'current_user_only' =>
-                [
-                    'assigned_user_id',
-                ],
+            'search_name' => [
+                'first_name',
+                'last_name',
+            ],
+            'account_name' => [
+                'accounts.name',
+            ],
+            'phone' => [
+                'phone_mobile',
+                'phone_work',
+                'phone_other',
+                'phone_fax',
+                'assistant_phone',
+            ],
+            'address_street' => [
+                'primary_address_street',
+                'alt_address_street',
+            ],
+            'address_city' => [
+                'primary_address_city',
+                'alt_address_city',
+            ],
+            'address_state' => [
+                'primary_address_state',
+                'alt_address_state',
+            ],
+            'address_postalcode' => [
+                'primary_address_postalcode',
+                'alt_address_postalcode',
+            ],
+            'address_country' => [
+                'primary_address_country',
+                'alt_address_country',
+            ],
+            'current_user_only' => [
+                'assigned_user_id',
+            ],
             'lead_source',
-            'account_id' =>
-                [
-                    'accounts.id',
-                ],
+            'account_id' => [
+                'accounts.id',
+            ],
             'assistant',
             'assigned_user_id',
             'campaign_name',
@@ -420,6 +373,7 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
 
     /**
      * @param $mockModule
+     *
      * @return m\MockInterface
      */
     private function getMockParser($mockModule)
@@ -431,6 +385,7 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
             ->once()
             ->with()
             ->andReturn($mockFields);
+
         return $mockParser;
     }
 }

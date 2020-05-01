@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-$fields_array['Schedulers_jobs'] = array(
-    'column_fields' => array(
+$fields_array['Schedulers_jobs'] = [
+    'column_fields' => [
         'id',
         'deleted',
         'date_entered',
@@ -51,14 +51,14 @@ $fields_array['Schedulers_jobs'] = array(
         'job_id',
         'execute_time',
         'status',
-    ),
-    'list_fields' => array(
+    ],
+    'list_fields' => [
         'id',
         'job_id',
         'execute_time'
-    ),
-    'required_fields' => array(
+    ],
+    'required_fields' => [
         'job_id' => 1,
         'execute_time' => 1
-    )
-);
+    ]
+];

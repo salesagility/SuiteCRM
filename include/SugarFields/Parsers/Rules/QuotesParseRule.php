@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class QuotesParseRule extends BaseRule
 {
@@ -50,16 +48,13 @@ class QuotesParseRule extends BaseRule
     {
     }
 
-
-
-
     public function preParse($panels, $view)
     {
         if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
+            foreach ($panels as $name => $panel) {
                 if ($name == 'default') {
-                    foreach ($panel as $rowCount=>$row) {
-                        foreach ($row as $key=>$column) {
+                    foreach ($panel as $rowCount => $row) {
+                        foreach ($row as $key => $column) {
                             if ($this->matches($column, '/billing_address_country/')) {
                                 $column['label'] = 'LBL_BILL_TO';
                                 $column['name'] = 'billing_address_street';
@@ -88,20 +83,20 @@ class QuotesParseRule extends BaseRule
         if ($view == 'EditView') {
             $processedBillToPanel = false;
 
-            foreach ($panels as $name=>$panel) {
+            foreach ($panels as $name => $panel) {
                 // This panel is an exception in that it has nested tables...
                 if ($name == 'lbl_bill_to' && !$processedBillToPanel) {
                     $billToPanel = $panel;
-                    $newBillPanel = array();
+                    $newBillPanel = [];
                     foreach ($billToPanel as $subpanel) {
-                        $col = array();
-                        foreach ($subpanel as $rowCount=>$row) {
+                        $col = [];
+                        foreach ($subpanel as $rowCount => $row) {
                             if (!is_array($row)) {
                                 if (!$this->matches($row, '/^(shipping|billing)_address_(street|city|state|country|postalcode)$/si')) {
                                     $col[] = $row;
                                 }
                             } else {
-                                foreach ($row as $key=>$column) {
+                                foreach ($row as $key => $column) {
                                     if (is_array($column)) {
                                         continue;
                                     }
@@ -123,11 +118,12 @@ class QuotesParseRule extends BaseRule
                     } //foreach
                     $panels['lbl_bill_to'] = $newBillPanel;
                     $processedBillToPanel = true;
+
                     continue;
                 } //if
 
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         //We are just going to clean up address fields since we have
                         //to insert a new address panel anyway
                         if ($this->matches($column, '/^(shipping|billing)_address_(street|city|state|country|postalcode)$/si')) {

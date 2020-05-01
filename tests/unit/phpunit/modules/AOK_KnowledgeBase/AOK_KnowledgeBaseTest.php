@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOK_KnowledgeBaseTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOK_KnowledgeBase()
+    public function testAOKKnowledgeBase()
     {
         // Execute the constructor and check for the Object type and type attribute
         $aok_KnowledgeBase = new AOK_KnowledgeBase();

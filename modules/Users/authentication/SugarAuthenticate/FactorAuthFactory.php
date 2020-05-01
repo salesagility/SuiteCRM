@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,11 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 include_once __DIR__ . '/../../../../include/Exceptions/SuiteException.php';
 
@@ -52,11 +49,14 @@ class FactorAuthFactory
     /**
      * @var FactorAuthInterface[]
      */
-    protected static $instances = array();
+    protected static $instances = [];
 
     /**
-     * @return FactorAuthInterface
+     * @param null|mixed $user
+     *
      * @throws SuiteException
+     *
+     * @return FactorAuthInterface
      */
     public function getFactorAuth($user = null)
     {
@@ -76,6 +76,7 @@ class FactorAuthFactory
             include_once $factorAuthClassFile;
             self::$instances[$factorAuthClass] = new $factorAuthClass();
         }
+
         return self::$instances[$factorAuthClass];
     }
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
 class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveButton
 {
     /**
-     *
      * @see SugarWidgetSubPanelRemoveButton::displayList()
+     *
      * @param $layout_def
+     *
      * @return bool|string
      */
     public function displayList(&$layout_def)
@@ -58,6 +54,7 @@ class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveBu
         if (!$layout_def['EditView']) {
             return false;
         }
+
         return parent::displayList($layout_def);
     }
 }

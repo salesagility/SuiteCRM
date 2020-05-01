@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StoreQuery
 {
-    public $query = array();
+    public $query = [];
 
     public function addToQuery($name, $val)
     {
@@ -51,12 +50,13 @@ class StoreQuery
     }
 
     /**
-     * SaveQuery
+     * SaveQuery.
      *
      * This function handles saving the query parameters to the user preferences.
      * SavedSearch.php does something very similar when saving saved searches as well.
      *
      * @see SavedSearch
+     *
      * @param $name String name  to identify this query
      */
     public function SaveQuery($name)
@@ -85,7 +85,7 @@ class StoreQuery
                             } else {
                                 if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
                                     if (preg_match('/[^\d]/', $value)) {
-                                        require_once('modules/Currencies/Currency.php');
+                                        require_once 'modules/Currencies/Currency.php';
                                         $this->query[$key] = unformat_number($value);
                                         //Flag this value as having been unformatted
                                         $this->query[$key . '_unformatted_number'] = true;
@@ -116,7 +116,7 @@ class StoreQuery
 
     public function clearQuery($name)
     {
-        $this->query = array();
+        $this->query = [];
         $this->saveQuery($name);
     }
 
@@ -127,7 +127,7 @@ class StoreQuery
             global $current_user;
             $this->query = StoreQuery::getStoredQueryForUser($name);
             if (empty($this->query)) {
-                $this->query = array();
+                $this->query = [];
             }
             if (!empty($this->populate_only) && !empty($this->query['query'])) {
                 $this->query['query'] = 'MSI';
@@ -143,7 +143,6 @@ class StoreQuery
             $bean = loadBean($this->query['module']);
         }
 
-
         foreach ($this->query as $key => $value) {
             // todo wp: remove this
             if ($key != 'advanced' && $key != 'module' && $key != 'lvso') {
@@ -157,7 +156,7 @@ class StoreQuery
                             $value = $timedate->to_display_date($value, false);
                         } else {
                             if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
-                                require_once('modules/Currencies/Currency.php');
+                                require_once 'modules/Currencies/Currency.php';
                                 $value = format_number($value);
                                 if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
                                     $value = $this->query[$key . '_currency_symbol'] . $value;
@@ -199,7 +198,6 @@ class StoreQuery
         return $saveType;
     }
 
-
     public function saveFromRequest($name)
     {
         if (isset($_REQUEST['query'])) {
@@ -224,7 +222,7 @@ class StoreQuery
                 if ($saveType == 'all') {
                     // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
                     // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
-                    $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths');
+                    $blockVariables = ['mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths'];
                     if (isset($_REQUEST['use_store_query']) && $_REQUEST['use_stored_query']) {
                         $this->query = array_merge(StoreQuery::getStoredQueryForUser($name), $_REQUEST);
                     } else {
@@ -265,9 +263,10 @@ class StoreQuery
     }
 
     /**
-     * Static method to retrieve the user's stored query for a particular module
+     * Static method to retrieve the user's stored query for a particular module.
      *
      * @param string $module
+     *
      * @return array
      */
     public static function getStoredQueryForUser($module)

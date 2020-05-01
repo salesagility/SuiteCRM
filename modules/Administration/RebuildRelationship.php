@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 include 'include/modules.php';
 
-global $mod_strings ;
+global $mod_strings;
 $db = DBManagerFactory::getInstance();
 
-$log = & $GLOBALS [ 'log' ] ;
+$log = &$GLOBALS['log'];
 
 $query = 'DELETE FROM relationships';
 $db->query($query);
@@ -66,9 +64,9 @@ foreach ($GLOBALS['beanFiles'] as $bean => $file) {
         $focus = new $bean();
         if ($focus instanceof SugarBean) {
             $table_name = $focus->table_name;
-            $empty = array();
-            if (empty($_REQUEST ['silent'])) {
-                echo $mod_strings ['LBL_REBUILD_REL_PROC_META'] . $focus->table_name . '...';
+            $empty = [];
+            if (empty($_REQUEST['silent'])) {
+                echo $mod_strings['LBL_REBUILD_REL_PROC_META'] . $focus->table_name . '...';
             }
             SugarBean::createRelationshipMeta($focus->getObjectName(), $db, $table_name, $empty, $focus->module_dir);
             SugarBean::createRelationshipMeta(
@@ -79,15 +77,15 @@ foreach ($GLOBALS['beanFiles'] as $bean => $file) {
                 $focus->module_dir,
                 true
             );
-            if (empty($_REQUEST ['silent'])) {
-                echo $mod_strings ['LBL_DONE'] . '<br>';
+            if (empty($_REQUEST['silent'])) {
+                echo $mod_strings['LBL_DONE'] . '<br>';
             }
         }
     }
 }
 
 // finally, whip through the list of relationships defined in TableDictionary.php, that is all the relationships in the metadata directory, and install those
-$dictionary = array();
+$dictionary = [];
 require 'modules/TableDictionary.php';
 //for module installer in case we already loaded the table dictionary
 if (file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')) {
@@ -95,29 +93,28 @@ if (file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php'
 }
 $rel_dictionary = $dictionary;
 foreach ($rel_dictionary as $rel_name => $rel_data) {
-    $table = isset($rel_data ['table']) ? $rel_data ['table'] : '';
+    $table = isset($rel_data['table']) ? $rel_data['table'] : '';
 
-    if (empty($_REQUEST ['silent'])) {
-        echo $mod_strings ['LBL_REBUILD_REL_PROC_C_META'] . $rel_name . '...';
+    if (empty($_REQUEST['silent'])) {
+        echo $mod_strings['LBL_REBUILD_REL_PROC_C_META'] . $rel_name . '...';
     }
     SugarBean::createRelationshipMeta($rel_name, $db, $table, $rel_dictionary, '');
-    if (empty($_REQUEST ['silent'])) {
-        echo $mod_strings ['LBL_DONE'] . '<br>';
+    if (empty($_REQUEST['silent'])) {
+        echo $mod_strings['LBL_DONE'] . '<br>';
     }
 }
 
 //clean relationship cache..will be rebuilt upon first access.
-if (empty($_REQUEST ['silent'])) {
-    echo $mod_strings ['LBL_REBUILD_REL_DEL_CACHE'];
+if (empty($_REQUEST['silent'])) {
+    echo $mod_strings['LBL_REBUILD_REL_DEL_CACHE'];
 }
 Relationship::delete_cache();
 
 //////////////////////////////////////////////////////////////////////////////
 // Remove the "Rebuild Relationships" red text message on admin login
 
-
-if (empty($_REQUEST ['silent'])) {
-    echo $mod_strings ['LBL_REBUILD_REL_UPD_WARNING'];
+if (empty($_REQUEST['silent'])) {
+    echo $mod_strings['LBL_REBUILD_REL_UPD_WARNING'];
 }
 
 $rel = new Relationship();
@@ -125,10 +122,10 @@ Relationship::delete_cache();
 $rel->build_relationship_cache();
 
 // unset the session variable so it is not picked up in DisplayWarnings.php
-if (isset($_SESSION ['rebuild_relationships'])) {
-    unset($_SESSION ['rebuild_relationships']);
+if (isset($_SESSION['rebuild_relationships'])) {
+    unset($_SESSION['rebuild_relationships']);
 }
 
-if (empty($_REQUEST ['silent'])) {
-    echo $mod_strings ['LBL_DONE'];
+if (empty($_REQUEST['silent'])) {
+    echo $mod_strings['LBL_DONE'];
 }

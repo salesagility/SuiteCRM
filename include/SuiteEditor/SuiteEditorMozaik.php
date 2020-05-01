@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,49 +36,48 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class SuiteEditorMozaik
+ * Class SuiteEditorMozaik.
  *
  * Use Mozaik Editor as SuiteEditor
  */
 class SuiteEditorMozaik implements SuiteEditorInterface
 {
     /**
-     * @var SuiteEditorSettings $settings
+     * @var SuiteEditorSettings
      */
     protected $settings;
 
     /**
-     * @var SuiteMozaik $mozaik
+     * @var SuiteMozaik
      */
     protected $mozaik;
 
     /**
-     * see at SuiteEditorInterface
+     * see at SuiteEditorInterface.
      *
      * @param SuiteEditorSettings $settings
      */
     public function setup(SuiteEditorSettings $settings = null)
     {
         $this->settings = $settings;
-        require_once('include/SuiteMozaik.php');
+        require_once 'include/SuiteMozaik.php';
         $this->mozaik = new SuiteMozaik();
     }
 
     /**
-     * see at SuiteEditorInterface
+     * see at SuiteEditorInterface.
      *
      * @return mixed
      */
     public function getHtml()
     {
         $smarty = new Sugar_Smarty();
-        $smarty->assign((array)$this->settings);
+        $smarty->assign((array) $this->settings);
         $smarty->assign('mozaik', $this->mozaik->getAllHTML(
             $this->settings->contents,
             $this->settings->textareaId,
@@ -88,6 +86,7 @@ class SuiteEditorMozaik implements SuiteEditorInterface
             $this->settings->group,
             $this->settings->tinyMCESetup
         ));
+
         return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorMozaik.tpl'));
     }
 }

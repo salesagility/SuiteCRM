@@ -5,12 +5,12 @@ use Faker\Generator;
 class LeadsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class LeadsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the leads module.
+     * As an administrator I want to view the leads module
      */
     public function testScenarioViewLeadsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the leads module for testing');
 
@@ -54,13 +54,13 @@ class LeadsCest
      * @param \Step\Acceptance\Leads $lead
      *
      * As administrative user I want to create a laed so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateLead(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Leads $lead
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Leads $lead
     ) {
         $I->wantTo('Create a Lead');
 
@@ -71,7 +71,7 @@ class LeadsCest
 
         // Create lead
         $this->fakeData->seed($this->fakeDataSeed);
-        $lead->createLead('Test_'. $this->fakeData->company());
+        $lead->createLead('Test_' . $this->fakeData->company());
 
         // Delete lead
         $detailView->clickActionMenuItem('Delete');

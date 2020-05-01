@@ -5,12 +5,12 @@ use Faker\Generator;
 class IssueModuleCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -34,6 +34,7 @@ class IssueModuleCest
     }
 
     // Tests
+
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
@@ -43,8 +44,8 @@ class IssueModuleCest
      * the module before testing.
      */
     public function testScenarioCreateIssueModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ModuleBuilder $moduleBuilder
+        AcceptanceTester $I,
+        Step\Acceptance\ModuleBuilder $moduleBuilder
     ) {
         $I->wantTo('Create a issue module for testing');
         $I->loginAsAdmin();
@@ -62,12 +63,12 @@ class IssueModuleCest
      * @param \Step\Acceptance\ListView $listView
      *
      * As administrative user I want to view my issue test module so that I can see if it has been
-     * deployed correctly.
+     * deployed correctly
      */
     public function testScenarioViewIssueTestModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View Issue Test Module');
         $I->loginAsAdmin();
@@ -86,14 +87,14 @@ class IssueModuleCest
      * @param \Step\Acceptance\DetailView $detailView
      *
      * As administrative user I want to create a record with my issue test module so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateRecord(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\EditView $editView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\EditView $editView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Create Issue Test Module Record');
         $I->loginAsAdmin();
@@ -123,10 +124,10 @@ class IssueModuleCest
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Select Record from list view');
         $I->loginAsAdmin();
@@ -157,11 +158,11 @@ class IssueModuleCest
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
-        \AcceptanceTester$I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Edit Issue Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -199,11 +200,11 @@ class IssueModuleCest
      * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\EditView $editView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\EditView $editView
     ) {
         $I->wantTo('Duplicate Issue Test Module Record from detail view');
         $I->loginAsAdmin();
@@ -247,10 +248,10 @@ class IssueModuleCest
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
-        \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\DetailView $detailView
+        AcceptanceTester $I,
+        Step\Acceptance\NavigationBarTester $navigationBar,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\DetailView $detailView
     ) {
         $I->wantTo('Delete Issue Test Module Record from detail view');
         $I->loginAsAdmin();

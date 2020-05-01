@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Response;
 
 class AttributeResponse extends MetaResponse
@@ -13,7 +14,7 @@ class AttributeResponse extends MetaResponse
     /**
      * @param array|\stdClass $properties
      *
-     * @throws \InvalidArgumentException When attribute object includes forbidden keys.
+     * @throws \InvalidArgumentException when attribute object includes forbidden keys
      */
     public function __construct($properties = [])
     {

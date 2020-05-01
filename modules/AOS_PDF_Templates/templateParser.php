@@ -2,9 +2,8 @@
 
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +20,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
@@ -39,13 +37,14 @@ class templateParser
                 if ($focus_arr['type'] == 'relate') {
                     if (isset($focus_arr['module']) && $focus_arr['module'] != '' && $focus_arr['module'] != 'EmailAddress') {
                         $idName = $focus_arr['id_name'];
-                        $relate_focus = BeanFactory::getBean($focus_arr['module'], $focus->$idName);
+                        $relate_focus = BeanFactory::getBean($focus_arr['module'], $focus->{$idName});
 
                         $string = templateParser::parse_template_bean($string, $focus_arr['name'], $relate_focus);
                     }
                 }
             }
         }
+
         return $string;
     }
 
@@ -53,75 +52,83 @@ class templateParser
      * @param $string
      * @param $key
      * @param $focus
-     * @return mixed
+     *
      * @throws Exception
+     *
+     * @return mixed
      */
     public function parse_template_bean($string, $key, &$focus)
     {
         global $app_strings, $sugar_config;
-        $repl_arr = array();
+        $repl_arr = [];
         $isValidator = new SuiteValidator();
 
         foreach ($focus->field_defs as $field_def) {
             if (isset($field_def['name']) && $field_def['name'] != '') {
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'currency') {
-                    $params = array(
+                    $params = [
                         'currency_symbol' => false
-                    );
+                    ];
 
-                    $repl_arr[$key . "_" . $fieldName] = currency_format_number(
+                    $repl_arr[$key . '_' . $fieldName] = currency_format_number(
                         $focus->{$fieldName},
                         $params
                     );
                 } elseif (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
-                    $repl_arr[$key . "_" . $fieldName] = translate(
+                    $repl_arr[$key . '_' . $fieldName] = translate(
                         $field_def['options'],
                         $focus->module_dir,
                         $focus->{$fieldName}
                     );
                 } elseif ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
                     $mVals = unencodeMultienum($focus->{$fieldName});
-                    $translatedVals = array();
+                    $translatedVals = [];
 
                     foreach ($mVals as $mVal) {
                         $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
                     }
 
-                    $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
+                    $repl_arr[$key . '_' . $fieldName] = implode(', ', $translatedVals);
                 } //Fix for Windows Server as it needed to be converted to a string.
                 elseif ($field_def['type'] == 'int') {
-                    $repl_arr[$key . "_" . $fieldName] = (string)$focus->$fieldName;
+                    $repl_arr[$key . '_' . $fieldName] = (string) $focus->{$fieldName};
                 } elseif ($field_def['type'] == 'bool') {
-                    if ($focus->{$fieldName} == "1") {
-                        $repl_arr[$key . "_" . $fieldName] = "true";
+                    if ($focus->{$fieldName} == '1') {
+                        $repl_arr[$key . '_' . $fieldName] = 'true';
                     } else {
-                        $repl_arr[$key . "_" . $fieldName] = "false";
+                        $repl_arr[$key . '_' . $fieldName] = 'false';
                     }
                 } elseif ($field_def['type'] == 'image') {
-                    $secureLink = $sugar_config['site_url'] . '/' . "public/" . $focus->id . '_' . $fieldName;
+                    $secureLink = $sugar_config['site_url'] . '/' . 'public/' . $focus->id . '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/' . $focus->id . '_' . $fieldName;
                     // create a copy with correct extension by mime type
                     if (!file_exists('public')) {
                         sugar_mkdir('public', 0777);
                     }
-                    if (!copy($file_location, "public/{$focus->id}".  '_' . (string)$fieldName)) {
-                        $secureLink = $sugar_config['site_url'] . '/'. $file_location;
+                    if (!copy($file_location, "public/{$focus->id}" . '_' . (string) $fieldName)) {
+                        $secureLink = $sugar_config['site_url'] . '/' . $file_location;
                     }
 
                     if (empty($focus->{$fieldName})) {
-                        $repl_arr[$key . "_" . $fieldName] = "";
+                        $repl_arr[$key . '_' . $fieldName] = '';
                     } else {
                         $link = $secureLink;
-                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="' . $field_def['width'] . '" height="' . $field_def['height'] . '"/>';
+                        $repl_arr[$key . '_' . $fieldName] = '<img src="' . $link . '" width="' . $field_def['width'] . '" height="' . $field_def['height'] . '"/>';
                     }
                 } elseif ($field_def['type'] == 'wysiwyg') {
-                    $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'],
-                        ENT_COMPAT, 'UTF-8');
-                    $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->{$fieldName},
-                        ENT_COMPAT, 'UTF-8');
+                    $repl_arr[$key . '_' . $field_def['name']] = html_entity_decode(
+                        $focus->{$field_def}['name'],
+                        ENT_COMPAT,
+                        'UTF-8'
+                    );
+                    $repl_arr[$key . '_' . $fieldName] = html_entity_decode(
+                        $focus->{$fieldName},
+                        ENT_COMPAT,
+                        'UTF-8'
+                    );
                 } else {
-                    $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
+                    $repl_arr[$key . '_' . $fieldName] = $focus->{$fieldName};
                 }
             }
         } // end foreach()
@@ -174,14 +181,14 @@ class templateParser
             }
 
             if ($value != '' && is_string($value)) {
-                $string = str_replace("\$$name", $value, $string);
+                $string = str_replace("\${$name}", $value, $string);
             } else {
                 if (strpos($name, 'address') > 0) {
-                    $string = str_replace("\$$name<br />", '', $string);
-                    $string = str_replace("\$$name <br />", '', $string);
-                    $string = str_replace("\$$name", '', $string);
+                    $string = str_replace("\${$name}<br />", '', $string);
+                    $string = str_replace("\${$name} <br />", '', $string);
+                    $string = str_replace("\${$name}", '', $string);
                 } else {
-                    $string = str_replace("\$$name", '&nbsp;', $string);
+                    $string = str_replace("\${$name}", '&nbsp;', $string);
                 }
             }
         }

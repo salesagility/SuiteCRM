@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class ProductCategories extends \AcceptanceTester
 {
     /**
-     * Create product category
+     * Create product category.
      *
      * @param $name
      */

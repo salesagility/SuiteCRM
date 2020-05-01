@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Response;
 
 use Api\Core\Config\ApiConfig;
@@ -8,7 +9,15 @@ use JsonSerializable;
 class ErrorResponse implements JsonSerializable
 {
     /**
-     * @var integer
+     * In debug mode, ErrorResponse should shows full description about occurred exceptions.
+     *
+     * @todo  documentation needs to be updated at this point (about debug exceptions)
+     *
+     * @var bool
+     */
+    protected $debugExceptions;
+    /**
+     * @var int
      */
     private $status;
 
@@ -21,24 +30,14 @@ class ErrorResponse implements JsonSerializable
      * @var string
      */
     private $detail;
-    
+
     /**
-     *
      * @var Exception
      */
     private $exception;
-    
+
     /**
-     * In debug mode, ErrorResponse should shows full description about occurred exceptions.
-     *
-     * @todo  documentation needs to be updated at this point (about debug exceptions)
-     * @var boolean
-     */
-    protected $debugExceptions;
-    
-    /**
-     *
-     * @param bool|null $debugExceptions optional - using ApiConfig setting by default
+     * @param null|bool $debugExceptions optional - using ApiConfig setting by default
      */
     public function __construct($debugExceptions = null)
     {
@@ -49,7 +48,7 @@ class ErrorResponse implements JsonSerializable
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -57,7 +56,7 @@ class ErrorResponse implements JsonSerializable
     }
 
     /**
-     * @param integer $status
+     * @param int $status
      */
     public function setStatus($status)
     {
@@ -95,19 +94,51 @@ class ErrorResponse implements JsonSerializable
     {
         $this->detail = $detail;
     }
-    
+
     /**
-     *
      * @param Exception $exception
      */
     public function setException(Exception $exception)
     {
         $this->exception = $exception;
     }
-    
+
     /**
-     *
+     * @return array
+     */
+    public function getExceptionArray()
+    {
+        if (!$this->exception) {
+            return null;
+        }
+
+        return self::exceptionToArray($this->exception);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize()
+    {
+        $ret = [
+            'errors' => [
+                'status' => $this->getStatus(),
+                'title' => $this->getTitle(),
+                'detail' => $this->getDetail(),
+            ]
+        ];
+
+        // do it only in debug mode!!!!
+        if ($this->debugExceptions) {
+            $ret['errors']['exception'] = $this->getExceptionArray();
+        }
+
+        return $ret;
+    }
+
+    /**
      * @param Exception $exception
+     *
      * @return array
      */
     protected static function exceptionToArray(Exception $exception)
@@ -121,38 +152,5 @@ class ErrorResponse implements JsonSerializable
             'trace' => $exception->getTrace(),
             'traceAsString' => $exception->getTraceAsString(),
         ];
-    }
-    
-    /**
-     *
-     * @return array
-     */
-    public function getExceptionArray()
-    {
-        if (!$this->exception) {
-            return null;
-        }
-        return self::exceptionToArray($this->exception);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function jsonSerialize()
-    {
-        $ret = [
-            'errors' => [
-                'status' => $this->getStatus(),
-                'title' => $this->getTitle(),
-                'detail' => $this->getDetail(),
-            ]
-        ];
-        
-        // do it only in debug mode!!!!
-        if ($this->debugExceptions) {
-            $ret['errors']['exception'] = $this->getExceptionArray();
-        }
-        
-        return $ret;
     }
 }

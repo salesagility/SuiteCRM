@@ -4,7 +4,5 @@
         die('Not A Valid Entry Point');
     }
 
-    $dictionary['facebook'] = array(
-
-
-    );
+    $dictionary['facebook'] = [
+    ];

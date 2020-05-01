@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -74,12 +73,9 @@ class AOR_Condition extends Basic
         parent::__construct();
     }
 
-
-
-
     public function save_lines($post_data, $parent, $key = '')
     {
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
+        require_once 'modules/AOW_WorkFlow/aow_utils.php';
 
         $postData = null;
         if (isset($post_data[$key . 'field'])) {
@@ -89,7 +85,7 @@ class AOR_Condition extends Basic
         }
 
         $j = 0;
-        foreach ((array)$postData as $i => $field) {
+        foreach ((array) $postData as $i => $field) {
             if (!isset($post_data[$key . 'deleted'][$i])) {
                 LoggerManager::getLogger()->warn('AOR Condition trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
             }
@@ -105,6 +101,7 @@ class AOR_Condition extends Basic
                             switch ($condition->value_type) {
                                 case 'Date':
                                     $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
+
                                     break;
                                 default:
                                     $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
@@ -117,7 +114,7 @@ class AOR_Condition extends Basic
                                     $post_data[$key . $field_name][$i] = isset($post_data[$key . $field_name][$i]);
                                 } else {
                                     if ($field_name == 'module_path') {
-                                        $post_data[$key . $field_name][$i] = base64_encode(serialize(explode(":", $post_data[$key . $field_name][$i])));
+                                        $post_data[$key . $field_name][$i] = base64_encode(serialize(explode(':', $post_data[$key . $field_name][$i])));
                                     }
                                 }
                             }
@@ -128,11 +125,11 @@ class AOR_Condition extends Basic
                             }
                             $condition->parenthesis = $lastParenthesisStartConditionId;
                         } else {
-                            $condition->$field_name = $post_data[$key . $field_name][$i];
+                            $condition->{$field_name} = $post_data[$key . $field_name][$i];
                         }
                     } else {
                         if ($field_name == 'parameter') {
-                            $condition->$field_name = 0;
+                            $condition->{$field_name} = 0;
                         }
                     }
                 }
@@ -143,7 +140,7 @@ class AOR_Condition extends Basic
                 }
                 if (trim($condition->field) != '' || $condition->parenthesis) {
                     if (isset($_POST['aor_conditions_order'][$i])) {
-                        $condition->condition_order = (int)$_POST['aor_conditions_order'][$i];
+                        $condition->condition_order = (int) $_POST['aor_conditions_order'][$i];
                     } else {
                         $condition->condition_order = ++$j;
                     }

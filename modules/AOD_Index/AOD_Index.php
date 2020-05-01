@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,10 +38,10 @@
  */
 
 /**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN.
  */
-require_once('modules/AOD_Index/AOD_Index_sugar.php');
-require_once('modules/AOD_Index/LuceneUtils.php');
+require_once 'modules/AOD_Index/AOD_Index_sugar.php';
+require_once 'modules/AOD_Index/LuceneUtils.php';
 
 class AOD_Index extends AOD_Index_sugar
 {
@@ -53,20 +52,18 @@ class AOD_Index extends AOD_Index_sugar
         Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive());
     }
 
-
-
-
     public function isEnabled()
     {
         global $sugar_config;
+
         return !empty($sugar_config['aod']['enable_aod']);
     }
 
     public function find($queryString)
     {
         $queryString = strtolower($queryString);
-        $hits = $this->getLuceneIndex()->find($queryString);
-        return $hits;
+
+        return $this->getLuceneIndex()->find($queryString);
     }
 
     public function optimise()
@@ -85,69 +82,15 @@ class AOD_Index extends AOD_Index_sugar
         $index = BeanFactory::getBean('AOD_Index', 1);
         if (!empty($index) && !empty($index->id)) {
             return $index;
-        } else {
-            $index = new AOD_Index();
-            $index->id = 1;
-            $index->new_with_id = true;
-            $index->name = "Index";
-            $index->location = "modules/AOD_Index/Index/Index";
-            $index->save();
-            return $index;
         }
-    }
+        $index = new AOD_Index();
+        $index->id = 1;
+        $index->new_with_id = true;
+        $index->name = 'Index';
+        $index->location = 'modules/AOD_Index/Index/Index';
+        $index->save();
 
-    /**
-     * @param $revision
-     * @return bool|Zend_Search_Lucene_Document
-     */
-    private function getDocumentForRevision($revision)
-    {
-        $path = getDocumentRevisionPath($revision->id);
-        if (!file_exists($path)) {
-            return array("error"=>"File not found");
-        }
-        //Convert the file to a lucene document
-        $mime = $revision->file_mime_type;
-        switch ($mime) {
-            case 'application/pdf':
-                $document = createPDFDocument($path);
-                break;
-            case 'application/msword':
-                $document = createDocDocument($path);
-                break;
-            case 'application/vnd.oasis.opendocument.text':
-                $document = createOdtDocument($path);
-                break;
-            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                $document = createDocXDocument($path);
-                break;
-            case 'text/html':
-                $document = createHTMLDocument($path);
-                break;
-            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                $document = createXLSXDocument($path);
-                break;
-            case 'application/rtf':
-                $document = createRTFDocument($path);
-                // no break
-            case 'text/csv':
-            case 'text/plain':
-                $document = createTextDocument($path);
-                break;
-            case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-                $document = createPPTXDocument($path);
-                break;
-            case 'application/vnd.oasis.opendocument.spreadsheet':
-            case 'application/vnd.ms-powerpoint':
-            case 'application/vnd.ms-excel':
-            default:
-                return array("error"=>"Mime type $mime not supported");
-        }
-        if (!$document) {
-            return array("error"=>"Failed to parse document");
-        }
-        $document->addField(Zend_Search_Lucene_Field::text("filename", $revision->filename));
-        return array("error"=>false,"document"=>$document);
+        return $index;
     }
 
     public function getDocumentForBean(SugarBean $bean)
@@ -155,102 +98,62 @@ class AOD_Index extends AOD_Index_sugar
         if ($bean->module_name == 'DocumentRevisions') {
             $document = $this->getDocumentForRevision($bean);
         } else {
-            $document = array("error"=>false,"document"=>new Zend_Search_Lucene_Document());
+            $document = ['error' => false, 'document' => new Zend_Search_Lucene_Document()];
         }
-        if ($document["error"]) {
+        if ($document['error']) {
             return $document;
         }
-        $document["document"]->addField(Zend_Search_Lucene_Field::Keyword("aod_id", $bean->module_name." ".$bean->id));
-        $document["document"]->addField(Zend_Search_Lucene_Field::UnIndexed("record_id", $bean->id));
-        $document["document"]->addField(Zend_Search_Lucene_Field::UnIndexed("record_module", $bean->module_name));
+        $document['document']->addField(Zend_Search_Lucene_Field::Keyword('aod_id', $bean->module_name . ' ' . $bean->id));
+        $document['document']->addField(Zend_Search_Lucene_Field::UnIndexed('record_id', $bean->id));
+        $document['document']->addField(Zend_Search_Lucene_Field::UnIndexed('record_module', $bean->module_name));
         foreach ($GLOBALS['dictionary'][$bean->getObjectName()]['fields'] as $key => $field) {
             switch ($field['type']) {
-                case "enum":
+                case 'enum':
                     if (property_exists($bean, $key)) {
-                        $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key), 'UTF-8'));
+                        $document['document']->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->{$key}), 'UTF-8'));
                     }
-                    break;
 
-                case "multienum":
-                    if (property_exists($bean, $key)) {
-                        $vals = unencodeMultienum($bean->$key);
-                        $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ", $vals)), 'UTF-8'));
-                    }
                     break;
-                case "name":
-                case "phone":
-                case "html":
-                case "text":
-                case "url":
-                case "varchar":
+                case 'multienum':
                     if (property_exists($bean, $key)) {
-                        $val = strtolower($bean->$key);
+                        $vals = unencodeMultienum($bean->{$key});
+                        $document['document']->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(' ', $vals)), 'UTF-8'));
+                    }
+
+                    break;
+                case 'name':
+                case 'phone':
+                case 'html':
+                case 'text':
+                case 'url':
+                case 'varchar':
+                    if (property_exists($bean, $key)) {
+                        $val = strtolower($bean->{$key});
                     } else {
                         $val = '';
                     }
                     $field = Zend_Search_Lucene_Field::unStored($key, $val, 'UTF-8');
                     $field->boost = $this->getBoost($bean->module_name, $key);
-                    $document["document"]->addField($field);
+                    $document['document']->addField($field);
+
                     break;
-                case "address":
-                case "bool":
-                case "currency":
-                case "date":
-                case "datetimecombo":
-                case "decimal":
-                case "float":
-                case "iframe":
-                case "int":
-                case "radioenum":
-                case "relate":
+                case 'address':
+                case 'bool':
+                case 'currency':
+                case 'date':
+                case 'datetimecombo':
+                case 'decimal':
+                case 'float':
+                case 'iframe':
+                case 'int':
+                case 'radioenum':
+                case 'relate':
                 default:
                     break;
             }
         }
 
         return $document;
-    }
-
-    private function getBoost($module, $field)
-    {
-        $fieldBoosts = array('name' =>0.5, 'first_name' => 0.5, 'last_name' => 0.5);
-        $moduleBoosts = array('Accounts' => 0.5, 'Contacts' => 0.5, 'Leads' => 0.5, 'Opportunities' => 0.5);
-        $boost = 1;
-        if (!empty($fieldBoosts[$field])) {
-            $boost += $fieldBoosts[$field];
-        }
-        if (!empty($moduleBoosts[$module])) {
-            $boost += $moduleBoosts[$module];
-        }
-        return $boost;
-    }
-
-    private function getIndexEvent($module, $beanId)
-    {
-        global $timedate;
-        $indexEventBean = BeanFactory::getBean("AOD_IndexEvent");
-        $indexEvents = $indexEventBean->get_full_list('', "aod_indexevent.record_id = '".$beanId."' AND aod_indexevent.record_module = '".$module."'");
-        if ($indexEvents) {
-            $indexEvent = $indexEvents[0];
-            if (count($indexEvents) > 1) {
-                for ($x = 1; $x < count($indexEvents); $x++) {
-                    $duplicateIE = $indexEvents[$x];
-                    $duplicateIE->mark_deleted($duplicateIE->id);
-                }
-            }
-        } else {
-            $indexEvent = BeanFactory::newBean("AOD_IndexEvent");
-            $indexEvent->record_id = $beanId;
-            $indexEvent->record_module = $module;
-        }
-        /*
-         * "Now" is cached in the SugarBean which means for long running processes (such as the indexing scheduler) that
-         * the date_modified could be in the past. This caused issues when comparing the date modified of the event with that
-         * of a bean. Here we explicitly set the date modified to be the current date.
-         */
-        $indexEvent->update_date_modified = false;
-        $indexEvent->date_modified = $timedate->asDb(new DateTime());
-        return $indexEvent;
     }
 
     public function commit()
@@ -263,11 +166,11 @@ class AOD_Index extends AOD_Index_sugar
 
     public static function isModuleSearchable($module, $beanName)
     {
-        $whiteList = array("DocumentRevisions","Cases");
+        $whiteList = ['DocumentRevisions', 'Cases'];
         if (in_array($module, $whiteList)) {
             return true;
         }
-        $blackList = array("AOD_IndexEvent","AOD_Index","AOW_Actions","AOW_Conditions","AOW_Processed","SchedulersJobs");
+        $blackList = ['AOD_IndexEvent', 'AOD_Index', 'AOW_Actions', 'AOW_Conditions', 'AOW_Processed', 'SchedulersJobs'];
         if (in_array($module, $blackList)) {
             return false;
         }
@@ -276,6 +179,7 @@ class AOD_Index extends AOD_Index_sugar
         if (empty($GLOBALS['dictionary'][$beanName]['unified_search'])) {
             return false;
         }
+
         return true;
     }
 
@@ -290,7 +194,7 @@ class AOD_Index extends AOD_Index_sugar
             }
             $bean_name = $GLOBALS['beanList'][$module];
             $bean = new $bean_name();
-            if (!$bean || ! $bean instanceof SugarBean) {
+            if (!$bean || !$bean instanceof SugarBean) {
                 return false;
             }
 
@@ -319,18 +223,16 @@ class AOD_Index extends AOD_Index_sugar
             $indexEvent->save();
         } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
+
             return false;
         }
+
         return true;
-    }
-    private function getIdForDoc($module, $beanId)
-    {
-        return $module . " " . $beanId;
     }
 
     public function remove($module, $beanId)
     {
-        $term  = new Zend_Search_Lucene_Index_Term($module.' '.$beanId, 'aod_id');
+        $term = new Zend_Search_Lucene_Index_Term($module . ' ' . $beanId, 'aod_id');
         $query = new Zend_Search_Lucene_Search_Query_Term($term);
         $hits = $this->getLuceneIndex()->find($query);
         foreach ($hits as $hit) {
@@ -338,8 +240,136 @@ class AOD_Index extends AOD_Index_sugar
         }
     }
 
+    public function getIndexableModules()
+    {
+        $modules = [];
+        $beanList = $GLOBALS['beanList'];
+        ksort($beanList);
+        foreach ($beanList as $beanModule => $beanName) {
+            if (self::isModuleSearchable($beanModule, $beanName)) {
+                $modules[$beanModule] = $beanName;
+            }
+        }
+
+        return $modules;
+    }
+
+    /**
+     * @param $revision
+     *
+     * @return bool|Zend_Search_Lucene_Document
+     */
+    private function getDocumentForRevision($revision)
+    {
+        $path = getDocumentRevisionPath($revision->id);
+        if (!file_exists($path)) {
+            return ['error' => 'File not found'];
+        }
+        //Convert the file to a lucene document
+        $mime = $revision->file_mime_type;
+        switch ($mime) {
+            case 'application/pdf':
+                $document = createPDFDocument($path);
+
+                break;
+            case 'application/msword':
+                $document = createDocDocument($path);
+
+                break;
+            case 'application/vnd.oasis.opendocument.text':
+                $document = createOdtDocument($path);
+
+                break;
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                $document = createDocXDocument($path);
+
+                break;
+            case 'text/html':
+                $document = createHTMLDocument($path);
+
+                break;
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                $document = createXLSXDocument($path);
+
+                break;
+            case 'application/rtf':
+                $document = createRTFDocument($path);
+                // no break
+            case 'text/csv':
+            case 'text/plain':
+                $document = createTextDocument($path);
+
+                break;
+            case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                $document = createPPTXDocument($path);
+
+                break;
+            case 'application/vnd.oasis.opendocument.spreadsheet':
+            case 'application/vnd.ms-powerpoint':
+            case 'application/vnd.ms-excel':
+            default:
+                return ['error' => "Mime type {$mime} not supported"];
+        }
+        if (!$document) {
+            return ['error' => 'Failed to parse document'];
+        }
+        $document->addField(Zend_Search_Lucene_Field::text('filename', $revision->filename));
+
+        return ['error' => false, 'document' => $document];
+    }
+
+    private function getBoost($module, $field)
+    {
+        $fieldBoosts = ['name' => 0.5, 'first_name' => 0.5, 'last_name' => 0.5];
+        $moduleBoosts = ['Accounts' => 0.5, 'Contacts' => 0.5, 'Leads' => 0.5, 'Opportunities' => 0.5];
+        $boost = 1;
+        if (!empty($fieldBoosts[$field])) {
+            $boost += $fieldBoosts[$field];
+        }
+        if (!empty($moduleBoosts[$module])) {
+            $boost += $moduleBoosts[$module];
+        }
+
+        return $boost;
+    }
+
+    private function getIndexEvent($module, $beanId)
+    {
+        global $timedate;
+        $indexEventBean = BeanFactory::getBean('AOD_IndexEvent');
+        $indexEvents = $indexEventBean->get_full_list('', "aod_indexevent.record_id = '" . $beanId . "' AND aod_indexevent.record_module = '" . $module . "'");
+        if ($indexEvents) {
+            $indexEvent = $indexEvents[0];
+            if (count($indexEvents) > 1) {
+                for ($x = 1; $x < count($indexEvents); $x++) {
+                    $duplicateIE = $indexEvents[$x];
+                    $duplicateIE->mark_deleted($duplicateIE->id);
+                }
+            }
+        } else {
+            $indexEvent = BeanFactory::newBean('AOD_IndexEvent');
+            $indexEvent->record_id = $beanId;
+            $indexEvent->record_module = $module;
+        }
+        /*
+         * "Now" is cached in the SugarBean which means for long running processes (such as the indexing scheduler) that
+         * the date_modified could be in the past. This caused issues when comparing the date modified of the event with that
+         * of a bean. Here we explicitly set the date modified to be the current date.
+         */
+        $indexEvent->update_date_modified = false;
+        $indexEvent->date_modified = $timedate->asDb(new DateTime());
+
+        return $indexEvent;
+    }
+
+    private function getIdForDoc($module, $beanId)
+    {
+        return $module . ' ' . $beanId;
+    }
+
     /**
      * Returns a handle on the actual lucene index.
+     *
      * @return Zend_Search_Lucene_Interface
      */
     private function getLuceneIndex()
@@ -353,20 +383,7 @@ class AOD_Index extends AOD_Index_sugar
         //$this->index->setMaxMergeDocs(50);
         Zend_Search_Lucene_Search_Query_Fuzzy::setDefaultPrefixLength(1);
         $this->index->setMergeFactor(5);
+
         return $this->index;
-    }
-
-
-    public function getIndexableModules()
-    {
-        $modules = array();
-        $beanList = $GLOBALS['beanList'];
-        ksort($beanList);
-        foreach ($beanList as $beanModule => $beanName) {
-            if (self::isModuleSearchable($beanModule, $beanName)) {
-                $modules[$beanModule] = $beanName;
-            }
-        }
-        return $modules;
     }
 }

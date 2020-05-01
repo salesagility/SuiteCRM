@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /*
  * This file checks if you are invited to an external meeting, which is too expensive
  * to do per-row in lists so we direct them here and check before either forwarding
@@ -51,8 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user, $mod_strings, $app_strings, $app_list_strings;
 $db = DBManagerFactory::getInstance();
 
-
-$ret = $db->query("SELECT id FROM meetings_users WHERE meeting_id = '".$db->quote($_REQUEST['meeting_id'])."' AND user_id = '".$current_user->id."' AND deleted = 0", true);
+$ret = $db->query("SELECT id FROM meetings_users WHERE meeting_id = '" . $db->quote($_REQUEST['meeting_id']) . "' AND user_id = '" . $current_user->id . "' AND deleted = 0", true);
 $row = $db->fetchByAssoc($ret);
 
 $meetingBean = loadBean('Meetings');
@@ -64,8 +63,8 @@ if ($_REQUEST['host_meeting'] == '1') {
     } else {
         //since they are now the owner of the meeting nor an Admin they cannot start the meeting.
         $tplFile = 'modules/Meetings/tpls/extMeetingNoStart.tpl';
-        if (file_exists('custom/'.$tplFile)) {
-            $tplFile = 'custom/'.$tplFile;
+        if (file_exists('custom/' . $tplFile)) {
+            $tplFile = 'custom/' . $tplFile;
         }
 
         $ss = new Sugar_Smarty();
@@ -79,8 +78,8 @@ if ($_REQUEST['host_meeting'] == '1') {
     } else {
         //if the user is not invited or the owner of the meeting or an admin then they cannot join the meeting.
         $tplFile = 'modules/Meetings/tpls/extMeetingNotInvited.tpl';
-        if (file_exists('custom/'.$tplFile)) {
-            $tplFile = 'custom/'.$tplFile;
+        if (file_exists('custom/' . $tplFile)) {
+            $tplFile = 'custom/' . $tplFile;
         }
 
         $ss = new Sugar_Smarty();

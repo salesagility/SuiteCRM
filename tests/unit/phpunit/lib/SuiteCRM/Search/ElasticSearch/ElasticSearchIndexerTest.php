@@ -1,8 +1,9 @@
 <?php
-/** @noinspection PhpMethodParametersCountMismatchInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
 
-/**
+/** @noinspection PhpMethodParametersCountMismatchInspection */
+// @noinspection PhpUnhandledExceptionInspection
+
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -50,19 +51,28 @@ use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 include_once __DIR__ . '/../../Utility/BeanJsonSerializerTestData/BeanMock.php';
 include_once __DIR__ . '/../SearchTestAbstract.php';
 
+/**
+ * @internal
+ */
 class ElasticSearchIndexerTest extends SearchTestAbstract
 {
+    protected function tearDown()
+    {
+        m::close();
+        parent::tearDown();
+    }
+
     public function testGetModulesToIndex()
     {
         $indexer = new ElasticSearchIndexer(null);
 
         $modules = $indexer->getModulesToIndex();
 
-        self::assertTrue(is_array($modules), "Result is not an array.");
+        self::assertTrue(is_array($modules), 'Result is not an array.');
 
-        self::assertTrue(count($modules) > 0, "The array is empty.");
+        self::assertTrue(count($modules) > 0, 'The array is empty.');
 
-        self::assertTrue(in_array('Contacts', $modules), "Contacts was not found in the list of modules to index");
+        self::assertTrue(in_array('Contacts', $modules), 'Contacts was not found in the list of modules to index');
     }
 
     public function testIndexBeans()
@@ -84,14 +94,14 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $bean7 = BeanFactory::newBean($mockedModule);
         $bean8 = BeanFactory::newBean($mockedModule);
 
-        $bean1->fromArray(["id" => 1, 'name' => 'name 1', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
-        $bean2->fromArray(["id" => 2, 'name' => 'name 2', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
-        $bean3->fromArray(["id" => 3, 'name' => 'name 3', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
-        $bean4->fromArray(["id" => 4, 'name' => 'name 4', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
-        $bean5->fromArray(["id" => 5, 'name' => 'name 5', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
-        $bean6->fromArray(["id" => 6, 'name' => 'name 6', "deleted" => true, "module_name" => $mockedModule, "column_fields" => ["name"]]);
-        $bean7->fromArray(["id" => 7, 'name' => 'name 7', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]]);
-        $bean8->fromArray(["id" => 8, 'name' => 'name 8', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]]);
+        $bean1->fromArray(['id' => 1, 'name' => 'name 1', 'deleted' => false, 'module_name' => $mockedModule, 'column_fields' => ['name']]);
+        $bean2->fromArray(['id' => 2, 'name' => 'name 2', 'deleted' => false, 'module_name' => $mockedModule, 'column_fields' => ['name']]);
+        $bean3->fromArray(['id' => 3, 'name' => 'name 3', 'deleted' => false, 'module_name' => $mockedModule, 'column_fields' => ['name']]);
+        $bean4->fromArray(['id' => 4, 'name' => 'name 4', 'deleted' => false, 'module_name' => $mockedModule, 'column_fields' => ['name']]);
+        $bean5->fromArray(['id' => 5, 'name' => 'name 5', 'deleted' => false, 'module_name' => $mockedModule, 'column_fields' => ['name']]);
+        $bean6->fromArray(['id' => 6, 'name' => 'name 6', 'deleted' => true, 'module_name' => $mockedModule, 'column_fields' => ['name']]);
+        $bean7->fromArray(['id' => 7, 'name' => 'name 7', 'opt' => 'ciao', 'deleted' => false, 'module_name' => $mockedModule, 'column_fields' => ['name', 'opt']]);
+        $bean8->fromArray(['id' => 8, 'name' => 'name 8', 'opt' => 'ciao', 'deleted' => false, 'module_name' => $mockedModule, 'column_fields' => ['name', 'opt']]);
 
         $mockedBeans = [$bean1, $bean2, $bean3, $bean4, $bean5, $bean6, $bean7, $bean8];
 
@@ -101,10 +111,10 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $i->indexBeans($mockedModule, $mockedBeans);
 
-        self::assertEquals(null, $i->getIndexedModulesCount(), "Wrong number of modules indexed");
-        self::assertEquals(1, $i->getRemovedRecordsCount(), "Wrong number of records removed");
-        self::assertEquals(7, $i->getIndexedRecordsCount(), "Wrong number of records indexed");
-        self::assertEquals(9, $i->getIndexedFieldsCount(), "Wrong number of fields indexed");
+        self::assertEquals(null, $i->getIndexedModulesCount(), 'Wrong number of modules indexed');
+        self::assertEquals(1, $i->getRemovedRecordsCount(), 'Wrong number of records removed');
+        self::assertEquals(7, $i->getIndexedRecordsCount(), 'Wrong number of records indexed');
+        self::assertEquals(9, $i->getIndexedFieldsCount(), 'Wrong number of fields indexed');
     }
 
     public function testGettersAndSetters()
@@ -142,16 +152,6 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $indexer->indexBean($bean);
     }
 
-    /**
-     * @return SugarBean
-     */
-    private function getTestBean()
-    {
-        /** @var SugarBean $bean */
-        $bean = new BeanMock(__DIR__ . '/../../Utility/BeanJsonSerializerTestData/ContactBean.json');
-        return $bean;
-    }
-
     public function testMakeIndexParamsFromBean()
     {
         $bean = $this->getTestBean();
@@ -163,86 +163,6 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $actual = self::invokeMethod($indexer, 'makeIndexParamsFromBean', [$bean]);
 
         self::assertEquals($expected, $actual);
-    }
-
-    /**
-     * @return array
-     */
-    private function getExpectedHeader()
-    {
-        $expected = [
-            'index' => 'main',
-            'type' => 'Contacts',
-            'id' => '00000000-0000-0000-0000-000000000000',
-        ];
-        return $expected;
-    }
-
-    /**
-     * @return array
-     */
-    private function getExpectedBody()
-    {
-        $expected = [
-            'meta' =>
-                [
-                    'created' =>
-                        [
-                            'date' => '2018-06-12 11:01:34',
-                            'user_id' => '1',
-                            'user_name' => 'Administrator',
-                        ],
-                    'modified' =>
-                        [
-                            'date' => '2018-06-12 11:01:34',
-                            'user_id' => '1',
-                            'user_name' => 'Administrator',
-                        ],
-                    'assigned' =>
-                        [
-                            'user_id' => 'seed_max_id',
-                            'user_name' => 'Max Jensen',
-                        ],
-                ],
-            'name' =>
-                [
-                    'salutation' => 'Ms.',
-                    'first' => 'Cindy',
-                    'last' => 'Espana',
-                ],
-            'account' =>
-                [
-                    'title' => 'Director Operations',
-                    'department' => 'Genetics',
-                    'name' => 'Start Over Trust',
-                    'id' => '39363e96-5eed-0221-9889-5b1fa86ebb52',
-                ],
-            'phone' =>
-                [
-                    'home' => '4451633872',
-                    'mobile' => '9788363300',
-                    'work' => '7111123512',
-                ],
-            'address' =>
-                [
-                    'primary' =>
-                        [
-                            'street' => '345 Sugar Blvd.',
-                            'city' => 'Salt Lake City',
-                            'state' => 'CA',
-                            'postalcode' => '58821',
-                            'country' => 'USA',
-                        ],
-                ],
-            'lead' => [
-                'type' => 'Web Site',
-            ],
-            'email' =>
-                [
-                    0 => 'kid79@example.co.jp',
-                ],
-        ];
-        return $expected;
     }
 
     public function testMakeIndexParamsBodyFromBean1()
@@ -266,12 +186,11 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
                 'first' => 'Cindy',
                 'last' => 'Espana',
             ],
-            'phone' =>
-                [
-                    'mobile' => '9788363300',
-                    'work' => '7111123512',
-                    'home' => '4451633872',
-                ],
+            'phone' => [
+                'mobile' => '9788363300',
+                'work' => '7111123512',
+                'home' => '4451633872',
+            ],
             'address' => [
                 'primary' => [
                     'street' => '345 Sugar Blvd.',
@@ -282,23 +201,20 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
                 ],
             ],
             'meta' => [
-                'created' =>
-                    [
-                        'date' => '2018-06-12 11:01:34',
-                        'user_id' => '1',
-                        'user_name' => 'Administrator',
-                    ],
-                'modified' =>
-                    [
-                        'date' => '2018-06-12 11:01:34',
-                        'user_id' => '1',
-                        'user_name' => 'Administrator',
-                    ],
-                'assigned' =>
-                    [
-                        'user_id' => 'seed_max_id',
-                        'user_name' => 'Max Jensen',
-                    ],
+                'created' => [
+                    'date' => '2018-06-12 11:01:34',
+                    'user_id' => '1',
+                    'user_name' => 'Administrator',
+                ],
+                'modified' => [
+                    'date' => '2018-06-12 11:01:34',
+                    'user_id' => '1',
+                    'user_name' => 'Administrator',
+                ],
+                'assigned' => [
+                    'user_id' => 'seed_max_id',
+                    'user_name' => 'Max Jensen',
+                ],
             ],
             'lead_source' => 'Web Site',
         ];
@@ -318,8 +234,8 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
                 'ignore' => [404],
             ],
             'body' => [
-                ['delete' => ['index' => 'main', 'type' => 'Contacts', 'id' => '00000000-0000-0000-0000-000000000000',]],
-                ['delete' => ['index' => 'main', 'type' => 'Contacts', 'id' => '00000000-0000-0000-0000-000000000000',]],
+                ['delete' => ['index' => 'main', 'type' => 'Contacts', 'id' => '00000000-0000-0000-0000-000000000000']],
+                ['delete' => ['index' => 'main', 'type' => 'Contacts', 'id' => '00000000-0000-0000-0000-000000000000']],
             ]
         ];
 
@@ -394,6 +310,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->once()
             ->withNoArgs()
             ->andReturn($mockIndices);
+
         return [$mockClient, $mockIndices];
     }
 
@@ -438,12 +355,6 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $indexer->removeAllIndices();
 
         // no exception should appear here, as the 404 has to be caught.
-    }
-
-    protected function tearDown()
-    {
-        m::close();
-        parent::tearDown();
     }
 
     public function testPing()
@@ -508,7 +419,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $module = 'Accounts';
         $index = 'test';
 
-        $params = ['index' => $index, 'filter_path' => "$index.mappings.$module._meta"];
+        $params = ['index' => $index, 'filter_path' => "{$index}.mappings.{$module}._meta"];
         $response = [$index => ['mappings' => [$module => ['_meta' => $meta]]]];
 
         list($client, $indices) = $this->getMockIndices();
@@ -548,7 +459,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
     public function testCreateIndexWithBody()
     {
         $index = 'test';
-        $body = ["mappings" => ['my_type' => ['_source' => ['enabled' => true]]]];
+        $body = ['mappings' => ['my_type' => ['_source' => ['enabled' => true]]]];
         $params = ['index' => $index, 'body' => $body];
 
         list($client, $indices) = $this->getMockIndices();
@@ -561,5 +472,82 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $i = new i($client);
 
         $i->createIndex($index, $body);
+    }
+
+    /**
+     * @return SugarBean
+     */
+    private function getTestBean()
+    {
+        /** @var SugarBean $bean */
+        return new BeanMock(__DIR__ . '/../../Utility/BeanJsonSerializerTestData/ContactBean.json');
+    }
+
+    /**
+     * @return array
+     */
+    private function getExpectedHeader()
+    {
+        return [
+            'index' => 'main',
+            'type' => 'Contacts',
+            'id' => '00000000-0000-0000-0000-000000000000',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getExpectedBody()
+    {
+        return [
+            'meta' => [
+                'created' => [
+                    'date' => '2018-06-12 11:01:34',
+                    'user_id' => '1',
+                    'user_name' => 'Administrator',
+                ],
+                'modified' => [
+                    'date' => '2018-06-12 11:01:34',
+                    'user_id' => '1',
+                    'user_name' => 'Administrator',
+                ],
+                'assigned' => [
+                    'user_id' => 'seed_max_id',
+                    'user_name' => 'Max Jensen',
+                ],
+            ],
+            'name' => [
+                'salutation' => 'Ms.',
+                'first' => 'Cindy',
+                'last' => 'Espana',
+            ],
+            'account' => [
+                'title' => 'Director Operations',
+                'department' => 'Genetics',
+                'name' => 'Start Over Trust',
+                'id' => '39363e96-5eed-0221-9889-5b1fa86ebb52',
+            ],
+            'phone' => [
+                'home' => '4451633872',
+                'mobile' => '9788363300',
+                'work' => '7111123512',
+            ],
+            'address' => [
+                'primary' => [
+                    'street' => '345 Sugar Blvd.',
+                    'city' => 'Salt Lake City',
+                    'state' => 'CA',
+                    'postalcode' => '58821',
+                    'country' => 'USA',
+                ],
+            ],
+            'lead' => [
+                'type' => 'Web Site',
+            ],
+            'email' => [
+                0 => 'kid79@example.co.jp',
+            ],
+        ];
     }
 }

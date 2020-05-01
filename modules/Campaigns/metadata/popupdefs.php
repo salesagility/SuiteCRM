@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,44 +40,40 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-$popupMeta = array(
+$popupMeta = [
     'moduleMain' => 'Campaign',
     'varName' => 'CAMPAIGN',
     'orderBy' => 'name',
-    'whereClauses' =>
-        array('name' => 'campaigns.name'),
-    'searchInputs' =>
-        array('name'),
-    'listviewdefs' => array(
-        'NAME' => array(
+    'whereClauses' => ['name' => 'campaigns.name'],
+    'searchInputs' => ['name'],
+    'listviewdefs' => [
+        'NAME' => [
             'width' => '20',
             'label' => 'LBL_LIST_CAMPAIGN_NAME',
             'link' => true,
-            'default' => true),
-         'CAMPAIGN_TYPE' => array(
+            'default' => true],
+        'CAMPAIGN_TYPE' => [
             'width' => '10',
             'label' => 'LBL_LIST_TYPE',
-            'default' => true),
-        'STATUS' => array(
+            'default' => true],
+        'STATUS' => [
             'width' => '10',
             'label' => 'LBL_LIST_STATUS',
-            'default' => true),
-        'START_DATE' => array(
+            'default' => true],
+        'START_DATE' => [
             'width' => '10',
             'label' => 'LBL_LIST_START_DATE',
-            'default' => true),
-        'END_DATE' => array(
+            'default' => true],
+        'END_DATE' => [
             'width' => '10',
             'label' => 'LBL_LIST_END_DATE',
-            'default' => true),
-    ),
-    'searchdefs'   => array(
+            'default' => true],
+    ],
+    'searchdefs' => [
         'name',
         'campaign_type',
         'status',
         'start_date',
         'end_date'
-    )
-);
+    ]
+];

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,13 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
- * Class for separate storage of Email texts
+ * Class for separate storage of Email texts.
  */
 class EmailText extends SugarBean
 {
     public $disable_row_level_security = true;
     public $table_name = 'emails_text';
-    public $module_name = "EmailText";
+    public $module_name = 'EmailText';
     public $module_dir = 'EmailText';
     public $object_name = 'EmailText';
     public $disable_custom_fields = true;

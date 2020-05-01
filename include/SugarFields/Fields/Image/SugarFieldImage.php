@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,48 +36,49 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/SugarFields/Fields/File/SugarFieldFile.php');
+require_once 'include/SugarFields/Fields/File/SugarFieldFile.php';
 
 class SugarFieldImage extends SugarFieldFile
 {
     public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)
     {
         if (isset($displayParams['module']) && !empty($displayParams['module'])) {
-            $this->ss->assign("module", $displayParams['module']);
+            $this->ss->assign('module', $displayParams['module']);
         } else {
-            $this->ss->assign("module", $_REQUEST['module']);
+            $this->ss->assign('module', $_REQUEST['module']);
         }
+
         return parent::getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col);
     }
+
     public function save(&$bean, $params, $field, $vardef, $prefix = '')
     {
-        $fakeDisplayParams = array();
+        $fakeDisplayParams = [];
         $this->fillInOptions($vardef, $fakeDisplayParams);
 
-        require_once('include/upload_file.php');
+        require_once 'include/upload_file.php';
         $upload_file = new UploadFile($prefix . $field . '_file');
         //remove file
         if (isset($_REQUEST['remove_file_' . $field]) && $params['remove_file_' . $field] == 1) {
-            $upload_file->unlink_file($bean->$field);
-            $bean->$field = "";
+            $upload_file->unlink_file($bean->{$field});
+            $bean->{$field} = '';
         }
 
         $move = false;
         if (isset($_FILES[$prefix . $field . '_file']) && $upload_file->confirm_upload()) {
             if ($this->verify_image($upload_file)) {
-                $bean->$field = $upload_file->get_stored_file_name();
+                $bean->{$field} = $upload_file->get_stored_file_name();
                 $move = true;
             } else {
                 //not valid image.
-                $GLOBALS['log']->fatal("Image Field : Not a Valid Image.");
+                $GLOBALS['log']->fatal('Image Field : Not a Valid Image.');
                 $temp = $vardef['vname'];
                 $temp = translate($temp, $bean->module_name);
-                SugarApplication::appendErrorMessage($temp . " Field :  Not a valid image format.");
+                SugarApplication::appendErrorMessage($temp . ' Field :  Not a valid image format.');
             }
         }
 
@@ -92,21 +92,21 @@ class SugarFieldImage extends SugarFieldFile
 
             $docType = isset($vardef['docType']) && isset($params[$prefix . $vardef['docType']]) ?
                 $params[$prefix . $vardef['docType']] : '';
-            $upload_file->upload_doc($bean, $bean->id, $docType, $bean->$field, $upload_file->mime_type);
+            $upload_file->upload_doc($bean, $bean->id, $docType, $bean->{$field}, $upload_file->mime_type);
         } else {
             if (!empty($old_id)) {
                 // It's a duplicate, I think
 
                 if (empty($params[$prefix . $vardef['docUrl']])) {
-                    $upload_file->duplicate_file($old_id, $bean->id, $bean->$field);
+                    $upload_file->duplicate_file($old_id, $bean->id, $bean->{$field});
                 } else {
                     $docType = $vardef['docType'];
-                    $bean->$docType = $params[$prefix . $field . '_old_doctype'];
+                    $bean->{$docType} = $params[$prefix . $field . '_old_doctype'];
                 }
             } else {
                 if (!empty($params[$prefix . $field . '_remoteName'])) {
                     // We aren't moving, we might need to do some remote linking
-                    $displayParams = array();
+                    $displayParams = [];
                     $this->fillInOptions($vardef, $displayParams);
 
                     if (isset($params[$prefix . $vardef['docId']])
@@ -114,13 +114,13 @@ class SugarFieldImage extends SugarFieldFile
                 && isset($params[$prefix . $vardef['docType']])
                 && !empty($params[$prefix . $vardef['docType']])
             ) {
-                        $bean->$field = $params[$prefix . $field . '_remoteName'];
+                        $bean->{$field} = $params[$prefix . $field . '_remoteName'];
 
-                        require_once('include/utils/file_utils.php');
-                        $extension = get_file_extension($bean->$field);
+                        require_once 'include/utils/file_utils.php';
+                        $extension = get_file_extension($bean->{$field});
                         if (!empty($extension)) {
                             $bean->file_ext = $extension;
-                            $bean->file_mime_type = get_mime_content_type_from_filename($bean->$field);
+                            $bean->file_mime_type = get_mime_content_type_from_filename($bean->{$field});
                         }
                     }
                 }
@@ -132,7 +132,7 @@ class SugarFieldImage extends SugarFieldFile
     {
         global $sugar_config;
 
-        $valid_ext = isset($sugar_config['image_ext']) ? $sugar_config['image_ext'] : array("image/jpeg","image/png");
+        $valid_ext = isset($sugar_config['image_ext']) ? $sugar_config['image_ext'] : ['image/jpeg', 'image/png'];
 
         $img_size = getimagesize($upload_file->temp_file_location);
         $filetype = $img_size['mime'];
@@ -140,6 +140,7 @@ class SugarFieldImage extends SugarFieldFile
             return true;
         }
     }
+
     private function fillInOptions(&$vardef, &$displayParams)
     {
         if (isset($vardef['allowEapm']) && $vardef['allowEapm'] == true) {

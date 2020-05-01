@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 define('MB_BASEMETADATALOCATION', 'base');
 define('MB_CUSTOMMETADATALOCATION', 'custom');
 define('MB_WORKINGMETADATALOCATION', 'working');
@@ -70,6 +70,6 @@ define('MB_VISIBILITY', 'visibility');
 
 class MBConstants
 {
-    public static $EMPTY = array( 'name' => '(empty)' , 'label' => '(empty)' ) ;
-    public static $FILLER = array( 'name' => '(filler)' , 'label' => 'LBL_FILLER' ) ; // would prefer to have label => translate('LBL_FILLER') but can't be done in a static, and don't want to require instantiating a new object to get these constants
+    public static $EMPTY = ['name' => '(empty)', 'label' => '(empty)'];
+    public static $FILLER = ['name' => '(filler)', 'label' => 'LBL_FILLER']; // would prefer to have label => translate('LBL_FILLER') but can't be done in a static, and don't want to require instantiating a new object to get these constants
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -47,26 +46,21 @@ require_once __DIR__ . '/EmailsDataAddress.php';
 require_once __DIR__ . '/EmailsDataAddressCollector.php';
 
 /**
- *
  * @author gyula
  */
 class EmailsControllerActionGetFromFields
 {
-
     /**
-     *
      * @var User
      */
     protected $currentUser;
-    
+
     /**
-     *
      * @var EmailsDataAddressCollector
      */
     protected $collector;
 
     /**
-     *
      * @param User $currentUser
      * @param EmailsDataAddressCollector $collector
      */
@@ -77,9 +71,9 @@ class EmailsControllerActionGetFromFields
     }
 
     /**
-     *
      * @param Email $email
      * @param InboundEmail $ie
+     *
      * @return string JSON
      */
     public function handleActionGetFromFields(Email $email, InboundEmail $ie)
@@ -100,15 +94,15 @@ class EmailsControllerActionGetFromFields
             $defaultEmailSignature
         );
 
-        $dataEncoded = json_encode(array('data' => $dataAddresses), JSON_UNESCAPED_UNICODE);
-        $results = utf8_decode($dataEncoded);
-        return $results;
+        $dataEncoded = json_encode(['data' => $dataAddresses], JSON_UNESCAPED_UNICODE);
+
+        return utf8_decode($dataEncoded);
     }
 
     /**
+     * @param null|string $accountSignatures
      *
-     * @param string|null $accountSignatures
-     * @return array|null
+     * @return null|array
      */
     protected function getEmailSignatures($accountSignatures = null)
     {
@@ -123,17 +117,16 @@ class EmailsControllerActionGetFromFields
     }
 
     /**
-     *
      * @return array
      */
     protected function getDefaultSignatures()
     {
         $defaultEmailSignature = $this->currentUser->getDefaultSignature();
         if (empty($defaultEmailSignature)) {
-            $defaultEmailSignature = array(
+            $defaultEmailSignature = [
                 'html' => '<br>',
                 'plain' => '\r\n',
-            );
+            ];
             $defaultEmailSignature['no_default_available'] = true;
         } else {
             $defaultEmailSignature['no_default_available'] = false;

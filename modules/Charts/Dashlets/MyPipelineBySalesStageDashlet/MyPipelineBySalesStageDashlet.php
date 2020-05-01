@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,23 +40,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGenericChart.php');
+require_once 'include/Dashlets/DashletGenericChart.php';
 
 class MyPipelineBySalesStageDashlet extends DashletGenericChart
 {
     public $mypbss_date_start;
     public $mypbss_date_end;
-    public $mypbss_sales_stages = array();
+    public $mypbss_sales_stages = [];
 
     protected $_seedName = 'Opportunities';
 
     /**
      * @see DashletGenericChart::__construct()
+     *
+     * @param mixed $id
      */
     public function __construct(
         $id,
@@ -68,7 +65,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
             $options['mypbss_date_start'] = $timedate->nowDbDate();
         }
         if (empty($options['mypbss_date_end'])) {
-            $options['mypbss_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
+            $options['mypbss_date_end'] = $timedate->asDbDate($timedate->getNow()->modify('+6 months'));
         }
         if (empty($options['title'])) {
             $options['title'] = translate('LBL_MY_PIPELINE_FORM_TITLE', 'Home');
@@ -84,7 +81,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
     {
         global $app_list_strings;
 
-        $selected_datax = array();
+        $selected_datax = [];
         if (count($this->mypbss_sales_stages) > 0) {
             foreach ($this->mypbss_sales_stages as $key) {
                 $selected_datax[] = $key;
@@ -112,7 +109,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         $searchFormTab = 'advanced_search';
         $userId = $current_user->id;
 
-        $url_params = array( 'assigned_user_id' => $current_user->id );
+        $url_params = ['assigned_user_id' => $current_user->id];
         $group_by = $this->constructGroupBy();
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
@@ -124,16 +121,16 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
-        $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
+        $subtitle = translate('LBL_OPP_SIZE', 'Charts') . ' ' . $currency_symbol . '1' . translate('LBL_OPP_THOUSANDS', 'Charts');
 
         $query = $this->constructQuery();
         $data = $this->getChartData($query);
 
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
 
-        $canvasId = 'rGraphOppByLeadSourceByOutcome'.uniqid();
-        $chartWidth     = 900;
-        $chartHeight    = 500;
+        $canvasId = 'rGraphOppByLeadSourceByOutcome' . uniqid();
+        $chartWidth = 900;
+        $chartHeight = 500;
         $autoRefresh = $this->processAutoRefresh();
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
@@ -144,7 +141,6 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         $total = $chartReadyData['total'];
 
-
         $jsonKey = json_encode($chartReadyData['key']);
         $jsonTooltips = json_encode($chartReadyData['tooltips']);
 
@@ -153,31 +149,31 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         $startDate = $timedate->to_display_date($this->mypbss_date_start, false);
         $endDate = $timedate->to_display_date($this->mypbss_date_end, false);
 
-        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
-            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
+        if (!is_array($chartReadyData['data']) || count($chartReadyData['data']) < 1) {
+            return "<h3 class='noGraphDataPoints'>{$this->noDataMessage}</h3>";
         }
 
         $chart = <<<EOD
-        <canvas id='$canvasId'   class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
-        <input type='hidden' class='module' value='$module' />
-        <input type='hidden' class='action' value='$action' />
-        <input type='hidden' class='query' value='$queryable' />
-        <input type='hidden' class='searchFormTab' value='$searchFormTab' />
-        <input type='hidden' class='userId' value='$userId' />
-        <input type='hidden' class='startDate' value='$startDate' />
-        <input type='hidden' class='endDate' value='$endDate' />
-             $autoRefresh
+        <canvas id='{$canvasId}'   class='resizableCanvas'  width='{$chartWidth}' height='{$chartHeight}'>[No canvas support]</canvas>
+        <input type='hidden' class='module' value='{$module}' />
+        <input type='hidden' class='action' value='{$action}' />
+        <input type='hidden' class='query' value='{$queryable}' />
+        <input type='hidden' class='searchFormTab' value='{$searchFormTab}' />
+        <input type='hidden' class='userId' value='{$userId}' />
+        <input type='hidden' class='startDate' value='{$startDate}' />
+        <input type='hidden' class='endDate' value='{$endDate}' />
+             {$autoRefresh}
          <script>
-        window["chartHBarKeys$canvasId"] = $jsonKey;
+        window["chartHBarKeys{$canvasId}"] = {$jsonKey};
            var hbar = new RGraph.HBar({
-            id: '$canvasId',
-            data:$jsonData,
+            id: '{$canvasId}',
+            data:{$jsonData},
             options: {
                 //grouping: 'stacked',
                 colorsSequential:true,
                 tooltipsEvent:'mousemove',
-                tooltips:$jsonTooltips,
-                labels: $jsonLabels,
+                tooltips:{$jsonTooltips},
+                labels: {$jsonLabels},
                 xlabels:true,
                 labelsAbove: true,
                 labelsAbovedecimals: 2,
@@ -198,18 +194,18 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
                 //textAngle: 45,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
-                tooltips:$jsonTooltips,
+                tooltips:{$jsonTooltips},
                 tooltipsEvent:'mousemove',
-                colors:$colours,
-                key: $jsonKey,
-                keyColors: $colours,
+                colors:{$colours},
+                key: {$jsonKey},
+                keyColors: {$colours},
                 //keyPosition: 'gutter',
-                keyPositionX: $canvasId.width - 190,
+                keyPositionX: {$canvasId}.width - 190,
                 //keyPositionY: 18,
                 keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
-                unitsPre:'$currency_symbol',
-                unitsPost:'$thousands_symbol',
+                unitsPre:'{$currency_symbol}',
+                unitsPost:'{$thousands_symbol}',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 noyaxis: true
             }
@@ -244,10 +240,10 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         }
 /*
         new RGraph.Drawing.Text({
-            id: '$canvasId',
+            id: '{$canvasId}',
             x: 10,
             y: 30,
-            text: 'Pipeline total is ${currency_symbol}$total$thousands_symbol',
+            text: 'Pipeline total is {$currency_symbol}$total$thousands_symbol',
             options: {
                 font: 'Arial',
                 bold: true,
@@ -262,8 +258,6 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
 EOD;
 
         return $chart;
-
-
         /*
         $sugarChart->setData($dataset);
         $total = format_number($this->getHorizBarTotal($dataset), 0, 0, array('convert'=>true));
@@ -298,9 +292,10 @@ EOD;
 
     /**
      * awu: Bug 16794 - this function is a hack to get the correct sales stage order
-     * until i can clean it up later
+     * until i can clean it up later.
      *
      * @param  $query string
+     *
      * @return array
      */
     public function getChartData(
@@ -308,9 +303,9 @@ EOD;
     ) {
         global $app_list_strings, $db;
 
-        $data = array();
-        $temp_data = array();
-        $selected_datax = array();
+        $data = [];
+        $temp_data = [];
+        $selected_datax = [];
 
         $user_sales_stage = $this->mypbss_sales_stages;
         $tempx = $user_sales_stage;
@@ -346,11 +341,71 @@ EOD;
                 }
             }
         }
+
         return $data;
     }
 
     /**
+     * @see DashletGenericChart::constructQuery()
+     */
+    protected function constructQuery()
+    {
+        $query = 'SELECT opportunities.sales_stage,
+                        users.user_name,
+                        opportunities.assigned_user_id,
+                        count(*) AS opp_count,
+                        sum(amount_usdollar/1000) AS total
+                    FROM users,opportunities  ';
+        $query .= " WHERE opportunities.assigned_user_id IN ('{$GLOBALS['current_user']->id}') " .
+            ' AND opportunities.date_closed >= ' . DBManager::convert("'" . $this->mypbss_date_start . "'", 'date') .
+            ' AND opportunities.date_closed <= ' . DBManager::convert("'" . $this->mypbss_date_end . "'", 'date') .
+            ' AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ';
+        if (count($this->mypbss_sales_stages) > 0) {
+            $query .= " AND opportunities.sales_stage IN ('" . implode("','", $this->mypbss_sales_stages) . "') ";
+        }
+        $query .= ' GROUP BY opportunities.sales_stage ,users.user_name,opportunities.assigned_user_id';
+
+        return $query;
+    }
+
+    /**
+     * @see DashletGenericChart::constructGroupBy()
+     */
+    protected function constructGroupBy()
+    {
+        $groupBy = ['sales_stage'];
+
+        array_push($groupBy, 'user_name');
+
+        return $groupBy;
+    }
+
+    protected function prepareChartData($dataset, $currency_symbol, $thousands_symbol)
+    {
+        //Use the  lead_source to categorise the data for the charts
+        $chart['labels'] = [];
+        $chart['data'] = [];
+        //Need to add all elements into the key, as they are stacked (even though the category is not present, the value could be)
+        $chart['key'] = [];
+        $chart['tooltips'] = [];
+        $chart['total'] = 0;
+
+        foreach ($dataset as $data) {
+            $formattedFloat = (float) number_format((float) $data['total'], 2, '.', '');
+            $chart['labels'][] = $data['sales_stage'];
+            $chart['key'][] = $data['key'];
+            $chart['data'][] = $formattedFloat;
+            $chart['total'] += $formattedFloat;
+            $chart['tooltips'][] = "'" . $data['sales_stage']
+                . "' amounts to {$currency_symbol}{$formattedFloat}{$thousands_symbol} (click bar to drill-through)";
+        }
+
+        return $chart;
+    }
+
+    /**
      * @param  $dataset array
+     *
      * @return int
      */
     private function getHorizBarTotal(
@@ -362,61 +417,5 @@ EOD;
         }
 
         return $total;
-    }
-
-    /**
-     * @see DashletGenericChart::constructQuery()
-     */
-    protected function constructQuery()
-    {
-        $query = "SELECT opportunities.sales_stage,
-                        users.user_name,
-                        opportunities.assigned_user_id,
-                        count(*) AS opp_count,
-                        sum(amount_usdollar/1000) AS total
-                    FROM users,opportunities  ";
-        $query .= " WHERE opportunities.assigned_user_id IN ('{$GLOBALS['current_user']->id}') " .
-            " AND opportunities.date_closed >= ". DBManager::convert("'".$this->mypbss_date_start."'", 'date').
-            " AND opportunities.date_closed <= ". DBManager::convert("'".$this->mypbss_date_end."'", 'date') .
-            " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
-        if (count($this->mypbss_sales_stages) > 0) {
-            $query .= " AND opportunities.sales_stage IN ('" . implode("','", $this->mypbss_sales_stages) . "') ";
-        }
-        $query .= " GROUP BY opportunities.sales_stage ,users.user_name,opportunities.assigned_user_id";
-
-        return $query;
-    }
-
-    /**
-     * @see DashletGenericChart::constructGroupBy()
-     */
-    protected function constructGroupBy()
-    {
-        $groupBy = array('sales_stage');
-
-        array_push($groupBy, 'user_name');
-        return $groupBy;
-    }
-
-    protected function prepareChartData($dataset, $currency_symbol, $thousands_symbol)
-    {
-        //Use the  lead_source to categorise the data for the charts
-        $chart['labels'] = array();
-        $chart['data'] = array();
-        //Need to add all elements into the key, as they are stacked (even though the category is not present, the value could be)
-        $chart['key'] = array();
-        $chart['tooltips']= array();
-        $chart['total'] = 0;
-
-        foreach ($dataset as $data) {
-            $formattedFloat = (float)number_format((float)$data['total'], 2, '.', '');
-            $chart['labels'][] = $data['sales_stage'];
-            $chart['key'][] = $data['key'];
-            $chart['data'][] = $formattedFloat;
-            $chart['total']+=$formattedFloat;
-            $chart['tooltips'][] = "'" . $data['sales_stage']
-                . "' amounts to $currency_symbol$formattedFloat$thousands_symbol (click bar to drill-through)";
-        }
-        return $chart;
     }
 }

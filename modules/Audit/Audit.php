@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,30 +40,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-require_once('modules/Audit/field_assoc.php');
+require_once 'modules/Audit/field_assoc.php';
 
 class Audit extends SugarBean
 {
-    public $module_dir = "Audit";
-    public $object_name = "Audit";
-
+    public $module_dir = 'Audit';
+    public $object_name = 'Audit';
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array();
+    public $additional_column_fields = [];
+
+    public $new_schema = true;
 
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
-
-    public $new_schema = true;
 
     public function get_summary_text()
     {
@@ -97,7 +89,7 @@ class Audit extends SugarBean
     public function get_audit_list()
     {
         global $focus, $genericAssocFieldsArray, $moduleAssocFieldsArray, $current_user, $timedate, $app_strings;
-        $audit_list = array();
+        $audit_list = [];
         if (!empty($_REQUEST['record'])) {
             $result = $focus->retrieve($_REQUEST['record']);
 
@@ -107,16 +99,16 @@ class Audit extends SugarBean
         }
 
         if ($focus && $focus->is_AuditEnabled()) {
-            $order= ' order by '.$focus->get_audit_table_name().'.date_created desc' ;//order by contacts_audit.date_created desc
+            $order = ' order by ' . $focus->get_audit_table_name() . '.date_created desc'; //order by contacts_audit.date_created desc
             $unknown_label = translate('LBL_UNKNOWN', 'Users');
-            $query = "SELECT ".$focus->get_audit_table_name().".*, IFNULL(users.user_name, '".$unknown_label."') AS user_name FROM ".$focus->get_audit_table_name() . " LEFT JOIN users ON ".$focus->get_audit_table_name().".created_by = users.id WHERE ".$focus->get_audit_table_name().".parent_id = '$focus->id'".$order;
+            $query = 'SELECT ' . $focus->get_audit_table_name() . ".*, IFNULL(users.user_name, '" . $unknown_label . "') AS user_name FROM " . $focus->get_audit_table_name() . ' LEFT JOIN users ON ' . $focus->get_audit_table_name() . '.created_by = users.id WHERE ' . $focus->get_audit_table_name() . ".parent_id = '{$focus->id}'" . $order;
 
             $result = $focus->db->query($query);
             // We have some data.
-            require('metadata/audit_templateMetaData.php');
+            require 'metadata/audit_templateMetaData.php';
             $fieldDefs = $dictionary['audit']['fields'];
-            while (($row = $focus->db->fetchByAssoc($result))!= null) {
-                $temp_list = array();
+            while (($row = $focus->db->fetchByAssoc($result)) != null) {
+                $temp_list = [];
 
                 foreach ($fieldDefs as $field) {
                     if (isset($row[$field['name']])) {
@@ -132,14 +124,14 @@ class Audit extends SugarBean
                             $date_created = '';
                             if (!empty($temp_list[$field['name']])) {
                                 $date_created = $timedate->to_display_date_time($temp_list[$field['name']]);
-                                $date_created = !empty($date_created)?$date_created:$temp_list[$field['name']];
+                                $date_created = !empty($date_created) ? $date_created : $temp_list[$field['name']];
                             }
-                            $temp_list[$field['name']]=$date_created;
+                            $temp_list[$field['name']] = $date_created;
                         }
-                        if (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string' || $field['name'] == 'before_value_text' || $field['name'] == 'after_value_text') && ($row['data_type'] == "enum" || $row['data_type'] == "multienum")) {
+                        if (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string' || $field['name'] == 'before_value_text' || $field['name'] == 'after_value_text') && ($row['data_type'] == 'enum' || $row['data_type'] == 'multienum')) {
                             global $app_list_strings;
                             $enum_keys = unencodeMultienum($temp_list[$field['name']]);
-                            $enum_values = array();
+                            $enum_values = [];
                             foreach ($enum_keys as $enum_key) {
                                 if (isset($focus->field_defs[$row['field_name']]['options'])) {
                                     $domain = $focus->field_defs[$row['field_name']]['options'];
@@ -151,12 +143,12 @@ class Audit extends SugarBean
                             if (!empty($enum_values)) {
                                 $temp_list[$field['name']] = implode(', ', $enum_values);
                             }
-                            if ($temp_list['data_type']==='date') {
-                                $temp_list[$field['name']]=$timedate->to_display_date($temp_list[$field['name']], false);
+                            if ($temp_list['data_type'] === 'date') {
+                                $temp_list[$field['name']] = $timedate->to_display_date($temp_list[$field['name']], false);
                             }
-                        } elseif (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string') && ($row['data_type'] == "datetimecombo")) {
+                        } elseif (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string') && ($row['data_type'] == 'datetimecombo')) {
                             if (!empty($temp_list[$field['name']]) && $temp_list[$field['name']] != 'NULL') {
-                                $temp_list[$field['name']]=$timedate->to_display_date_time($temp_list[$field['name']]);
+                                $temp_list[$field['name']] = $timedate->to_display_date_time($temp_list[$field['name']]);
                             } else {
                                 $temp_list[$field['name']] = '';
                             }
@@ -174,6 +166,7 @@ class Audit extends SugarBean
                 $audit_list[] = $temp_list;
             }
         }
+
         return $audit_list;
     }
 
@@ -182,22 +175,22 @@ class Audit extends SugarBean
         global $focus,  $genericAssocFieldsArray, $moduleAssocFieldsArray;
 
         if (!empty($moduleAssocFieldsArray[$focus->object_name]) && array_key_exists($fieldName, $moduleAssocFieldsArray[$focus->object_name])) {
-            $assocFieldsArray =  $moduleAssocFieldsArray[$focus->object_name];
+            $assocFieldsArray = $moduleAssocFieldsArray[$focus->object_name];
         } elseif (array_key_exists($fieldName, $genericAssocFieldsArray)) {
-            $assocFieldsArray =  $genericAssocFieldsArray;
+            $assocFieldsArray = $genericAssocFieldsArray;
         } else {
             return $fieldValue;
         }
-        $query = "";
+        $query = '';
         $field_arr = $assocFieldsArray[$fieldName];
-        $query = "SELECT ";
+        $query = 'SELECT ';
         if (is_array($field_arr['select_field_name'])) {
             $count = count($field_arr['select_field_name']);
             $index = 1;
             foreach ($field_arr['select_field_name'] as $col) {
                 $query .= $col;
                 if ($index < $count) {
-                    $query .= ", ";
+                    $query .= ', ';
                 }
                 $index++;
             }
@@ -205,18 +198,20 @@ class Audit extends SugarBean
             $query .= $field_arr['select_field_name'];
         }
 
-        $query .= " FROM ".$field_arr['table_name']." WHERE ".$field_arr['select_field_join']." = '".$fieldValue."'";
+        $query .= ' FROM ' . $field_arr['table_name'] . ' WHERE ' . $field_arr['select_field_join'] . " = '" . $fieldValue . "'";
 
         $result = $focus->db->query($query);
         if (!empty($result)) {
             if ($row = $focus->db->fetchByAssoc($result)) {
                 if (is_array($field_arr['select_field_name'])) {
-                    $returnVal = "";
+                    $returnVal = '';
                     foreach ($field_arr['select_field_name'] as $col) {
-                        $returnVal .= $row[$col]." ";
+                        $returnVal .= $row[$col] . ' ';
                     }
+
                     return $returnVal;
                 }
+
                 return $row[$field_arr['select_field_name']];
             }
         }

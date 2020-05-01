@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,26 +44,26 @@ use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
- * Class Operator
- * @package SuiteCRM\API\JsonApi\v1\Filters\Operators
+ * Class Operator.
  */
 class Operator
 {
     /**
-     * string representation of what an operator looks like
-     * @var string $tag
+     * string representation of what an operator looks like.
+     *
+     * @var string
      */
     protected $tag = '[[operator]]';
 
     /**
-     * Represents an the full operator format
-     * @var string $operatorFormatRegex
+     * Represents an the full operator format.
+     *
+     * @var string
      */
     protected $operatorFormatRegex = '\[\[[A-Za-z\_\-]+\]\]';
 
-
     /**
-     * @var ContainerInterface $containers;
+     * @var ContainerInterface;
      */
     protected $containers;
 
@@ -74,8 +73,10 @@ class Operator
     }
 
     /**
-     * Convert string to operator tag
+     * Convert string to operator tag.
+     *
      * @param string $operator
+     *
      * @return string
      */
     public function toFilterTag($operator)
@@ -84,8 +85,10 @@ class Operator
     }
 
     /**
-     * Convert operator tag simple string
+     * Convert operator tag simple string.
+     *
      * @param string $operator
+     *
      * @return string
      */
     public function stripFilterTag($operator)
@@ -93,13 +96,16 @@ class Operator
         $operatorAsArray = str_split($operator);
         $operatorTagAsArray = str_split($this->toFilterTag(' '));
         $arrayDiff = array_diff($operatorAsArray, $operatorTagAsArray);
+
         return implode('', $arrayDiff);
     }
 
     /**
      * @param string $operator
-     * @return bool
+     *
      * @throws \SuiteCRM\Exception\InvalidArgumentException
+     *
+     * @return bool
      */
     public function isValid($operator)
     {
@@ -109,7 +115,7 @@ class Operator
             );
         }
 
-        if (preg_match('/^'.$this->operatorFormatRegex.'$/', $operator, $matches) === 1) {
+        if (preg_match('/^' . $this->operatorFormatRegex . '$/', $operator, $matches) === 1) {
             return true;
         }
 
@@ -118,6 +124,7 @@ class Operator
 
     /**
      * @param string $operator
+     *
      * @return bool
      */
     public function isOperator($operator)
@@ -127,8 +134,10 @@ class Operator
 
     /**
      * @param $filter
-     * @return bool
+     *
      * @throws InvalidArgumentException
+     *
+     * @return bool
      */
     public function hasOperator($filter)
     {
@@ -138,7 +147,7 @@ class Operator
             );
         }
 
-        if (preg_match('/'.$this->operatorFormatRegex.'/', $filter, $matches) === 1) {
+        if (preg_match('/' . $this->operatorFormatRegex . '/', $filter, $matches) === 1) {
             return true;
         }
 
@@ -153,13 +162,15 @@ class Operator
         return 1;
     }
 
-
     /**
-     * General case
+     * General case.
+     *
      * @param array $operands
-     * @return string
+     *
      * @throws InvalidArgumentException
      * @throws BadRequestException
+     *
+     * @return string
      */
     public function toSqlOperands(array $operands)
     {
@@ -181,7 +192,7 @@ class Operator
             if (is_numeric($operand)) {
                 $operands[$i] = $db->quote($operand);
             } else {
-                $operands[$i] = '"'. $db->quote($operand) .'"';
+                $operands[$i] = '"' . $db->quote($operand) . '"';
             }
         }
 

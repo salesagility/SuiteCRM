@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,62 +40,70 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/Sugar_Smarty.php');
-require_once('include/utils/layout_utils.php');
+require_once 'include/Sugar_Smarty.php';
+require_once 'include/utils/layout_utils.php';
 
 /**
- * Basic Dashlet
+ * Basic Dashlet.
+ *
  * @api
  */
 class Dashlet
 {
     /**
-     * Id of the Dashlet
+     * Id of the Dashlet.
+     *
      * @var guid
      */
     public $id;
     /**
-     * Title of the Dashlet
+     * Title of the Dashlet.
+     *
      * @var string
      */
     public $title = 'Generic Dashlet';
     /**
      * true if the Dashlet has configuration options.
+     *
      * @var bool
      */
     public $isConfigurable = false;
     /**
-     * true if the Dashlet is refreshable (ie charts that provide their own refresh)
+     * true if the Dashlet is refreshable (ie charts that provide their own refresh).
+     *
      * @var bool
      */
     public $isRefreshable = true;
     /**
-     * true if the Dashlet configuration options panel has the clear button
+     * true if the Dashlet configuration options panel has the clear button.
+     *
      * @var bool
      */
     public $isConfigPanelClearShown = true;
     /**
-     * true if the Dashlet contains javascript
+     * true if the Dashlet contains javascript.
+     *
      * @var bool
      */
     public $hasScript = false;
     /**
-     * Language strings, must be loaded at the Dashlet level w/ loadLanguage
+     * Language strings, must be loaded at the Dashlet level w/ loadLanguage.
+     *
      * @var array
      */
     public $dashletStrings;
     /**
      * Time period in minutes to refresh the dashlet (0 for never)
-     * Do not refresh if $isRefreshable is set to false
+     * Do not refresh if $isRefreshable is set to false.
      *
      * To support auto refresh all refreshable dashlets that override process() must call processAutoRefresh()
+     *
      * @var int
      */
-    public $autoRefresh = "0";
+    public $autoRefresh = '0';
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param $id
      */
@@ -105,16 +113,16 @@ class Dashlet
     }
 
     /**
-     * Returns the HTML for the configure icon
+     * Returns the HTML for the configure icon.
      *
      * @return string HTML
      */
     public function setConfigureIcon()
     {
         if ($this->isConfigurable) {
-            $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)"  aria-label="'.translate('LBL_DASHLET_EDIT', 'Home').'" onclick="SUGAR.mySugar.configureDashlet(\''
+            $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)"  aria-label="' . translate('LBL_DASHLET_EDIT', 'Home') . '" onclick="SUGAR.mySugar.configureDashlet(\''
                 . $this->id . '\'); return false;">'
-                . SugarThemeRegistry::current()->getImage('dashlet-header-edit', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-edit', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')) . '</a>'
                 . '';
         } else {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet">';
@@ -124,7 +132,7 @@ class Dashlet
     }
 
     /**
-     * Returns the HTML for the refresh icon
+     * Returns the HTML for the refresh icon.
      *
      * @return string HTML
      */
@@ -132,7 +140,7 @@ class Dashlet
     {
         $additionalTitle = '';
         if ($this->isRefreshable) {
-            $additionalTitle .= '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_REFRESH', 'Home').'" onclick="SUGAR.mySugar.retrieveDashlet(\''
+            $additionalTitle .= '<a href="javascript:void(0)" aria-label="' . translate('LBL_DASHLET_REFRESH', 'Home') . '" onclick="SUGAR.mySugar.retrieveDashlet(\''
                 . $this->id . '\'); return false;">'
                 . SugarThemeRegistry::current()->getImage('dashlet-header-refresh', 'border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"', null, null, '.gif', translate('LBL_DASHLET_REFRESH', 'Home'))
                 . '</a>';
@@ -142,7 +150,7 @@ class Dashlet
     }
 
     /**
-     * Returns the HTML for the delete icon
+     * Returns the HTML for the delete icon.
      *
      * @return string HTML
      */
@@ -153,10 +161,11 @@ class Dashlet
         if (!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) {
             return '</div></td></tr></table>';
         }
-        $additionalTitle = '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_DELETE', 'Home').'" onclick="SUGAR.mySugar.deleteDashlet(\''
+        $additionalTitle = '<a href="javascript:void(0)" aria-label="' . translate('LBL_DASHLET_DELETE', 'Home') . '" onclick="SUGAR.mySugar.deleteDashlet(\''
             . $this->id . '\'); return false;">'
             . SugarThemeRegistry::current()->getImage('dashlet-header-close', 'border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"', null, null, '.gif', translate('LBL_DASHLET_DELETE', 'Home'))
             . '</a></div></td></tr></table>';
+
         return $additionalTitle;
     }
 
@@ -164,6 +173,7 @@ class Dashlet
      * @deprecated No longer needed, replaced with Dashlet::getHeader() and Dashlet::getFooter()
      *
      * @param string $text
+     *
      * @return string HTML
      */
     public function getTitle($text = '')
@@ -172,9 +182,10 @@ class Dashlet
     }
 
     /**
-     * Called when Dashlet is displayed
+     * Called when Dashlet is displayed.
      *
      * @param string $text text after the title
+     *
      * @return string Header html
      */
     public function getHeader($text = '')
@@ -192,12 +203,11 @@ class Dashlet
         }
         $str .= 'id="dashlet_header_' . $this->id . '" class="hd"><div class="tl"></div><div class="hd-center">' . get_form_header($this->title, $title, false) . '</div><div class="tr"></div></div><div class="bd"><div class="ml"></div><div class="bd-center">';
 
-
         $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
-        $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
-        $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
+        $printImageURL = SugarThemeRegistry::current()->getImageURL('print.gif');
+        $helpImageURL = SugarThemeRegistry::current()->getImageURL('help.gif');
 
-        $keywords = array("/class=\"button\"/","/class='button'/","/class=button/","/<\/form>/");
+        $keywords = ['/class="button"/', "/class='button'/", '/class=button/', '/<\\/form>/'];
         $match = false;
         foreach ($keywords as $left) {
             if (preg_match($left, $title)) {
@@ -245,7 +255,6 @@ class Dashlet
         $template->assign('DASHLET_BUTTON_ARIA_REFRESH', translate('LBL_DASHLET_REFRESH', 'Home'));
         $template->assign('DASHLET_BUTTON_ARIA_DELETE', translate('LBL_DASHLET_DELETE', 'Home'));
 
-
         $template->assign('GET_FORM_HEADER', get_form_header($this->title, $title, false));
         $template->assign('HEADER', $str);
 
@@ -253,7 +262,7 @@ class Dashlet
     }
 
     /**
-     * Called when Dashlet is displayed
+     * Called when Dashlet is displayed.
      *
      * @return string footer HTML
      */
@@ -262,8 +271,8 @@ class Dashlet
         global $sugar_config, $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $current_module, $current_action, $app_strings;
 
         $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
-        $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
-        $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
+        $printImageURL = SugarThemeRegistry::current()->getImageURL('print.gif');
+        $helpImageURL = SugarThemeRegistry::current()->getImageURL('help.gif');
 
         $template = new Sugar_Smarty();
 
@@ -290,7 +299,7 @@ class Dashlet
     }
 
     /**
-     * Called when Dashlet is displayed, override this
+     * Called when Dashlet is displayed, override this.
      *
      * @return string title HTML
      */
@@ -300,23 +309,110 @@ class Dashlet
     }
 
     /**
-     * Called when Dashlets configuration options are called
+     * Called when Dashlets configuration options are called.
      */
     public function displayOptions()
     {
     }
 
     /**
-     * Override if you need to do pre-processing before display is called
+     * Override if you need to do pre-processing before display is called.
      */
     public function process()
     {
     }
 
     /**
-     * Processes and displays the auto refresh code for the dashlet
+     * Override this if your dashlet is configurable (this is called when the configureDashlet form is shown)
+     * Filters the array for only the parameters it needs to save.
+     *
+     * @param array $req the array to pull options from
+     *
+     * @return array options array
+     */
+    public function saveOptions($req)
+    {
+    }
+
+    /**
+     * Sets the language strings.
+     *
+     * @param string $dashletClassname classname of the dashlet
+     * @param string $dashletDirectory directory path of the dashlet
+     */
+    public function loadLanguage($dashletClassname, $dashletDirectory = 'modules/Home/Dashlets/')
+    {
+        global $current_language, $dashletStrings;
+
+        if (!isset($dashletStrings[$dashletClassname])) {
+            // load current language strings for current language, else default to english
+            if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
+                || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
+                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
+                    require $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php';
+                }
+                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
+                    require 'custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php';
+                }
+            } else {
+                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
+                    require $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php';
+                }
+                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
+                    require 'custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php';
+                }
+            }
+        }
+
+        $this->dashletStrings = $dashletStrings[$dashletClassname];
+    }
+
+    /**
+     * Generic way to store an options array into UserPreferences.
+     *
+     * @param array $optionsArray the array to save
+     */
+    public function storeOptions($optionsArray)
+    {
+        global $current_user;
+
+        $dashletDefs = $current_user->getPreference('dashlets', 'Home'); // load user's dashlets config
+        $dashletDefs[$this->id]['options'] = $optionsArray;
+        $current_user->setPreference('dashlets', $dashletDefs, 0, 'Home');
+    }
+
+    /**
+     * Generic way to retrieve options array from UserPreferences.
+     *
+     * @return array options array stored in UserPreferences
+     */
+    public function loadOptions()
+    {
+        global $current_user;
+
+        $dashletDefs = $current_user->getPreference('dashlets', 'Home'); // load user's dashlets config
+        if (isset($dashletDefs[$this->id]['options'])) {
+            return $dashletDefs[$this->id]['options'];
+        }
+
+        return [];
+    }
+
+    /**
+     * Override this in the subclass. It is used to determine whether the dashlet can be displayed.
+     *
+     * @return bool indicating whether or not the current user has access to display this Dashlet
+     */
+    public function hasAccess()
+    {
+        return true;
+    }
+
+    /**
+     * Processes and displays the auto refresh code for the dashlet.
      *
      * @param int $dashletOffset
+     *
      * @return string HTML code
      */
     protected function processAutoRefresh($dashletOffset = 0)
@@ -326,8 +422,8 @@ class Dashlet
         if (empty($dashletOffset)) {
             $dashletOffset = 0;
             $module = $_REQUEST['module'];
-            if (isset($_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'])) {
-                $dashletOffset = $_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'];
+            if (isset($_REQUEST[$module . '2_' . strtoupper($this->seedBean->object_name) . '_offset'])) {
+                $dashletOffset = $_REQUEST[$module . '2_' . strtoupper($this->seedBean->object_name) . '_offset'];
             }
         }
 
@@ -340,10 +436,10 @@ class Dashlet
         $autoRefreshSS = new Sugar_Smarty();
         $autoRefreshSS->assign('dashletOffset', $dashletOffset);
         $autoRefreshSS->assign('dashletId', $this->id);
-        $autoRefreshSS->assign('strippedDashletId', str_replace("-", "", $this->id)); //javascript doesn't like "-" in function names
+        $autoRefreshSS->assign('strippedDashletId', str_replace('-', '', $this->id)); //javascript doesn't like "-" in function names
         $autoRefreshSS->assign('dashletRefreshInterval', $this->getAutoRefresh());
         $tpl = 'include/Dashlets/DashletGenericAutoRefresh.tpl';
-        if ($_REQUEST['action'] == "DynamicAction") {
+        if ($_REQUEST['action'] == 'DynamicAction') {
             $tpl = 'include/Dashlets/DashletGenericAutoRefreshDynamic.tpl';
         }
 
@@ -366,7 +462,7 @@ class Dashlet
 
         $ret = $autoRefresh * 1000;
 
-        /**
+        /*
            This number is used by setInterval() function in JS
            We should consider a limit of 2**31 -1
            https://stackoverflow.com/questions/12633405/what-is-the-maximum-delay-for-setinterval/12633556#comment78208539_12633488
@@ -375,7 +471,7 @@ class Dashlet
             $ret = pow(2, 31) - 1;
             LoggerManager::getLogger()->warn(
                 "The value of autoRefresh key in Dashlet: {$this->title} must be less than 2.147.483 seconds."
-                ."{$autoRefresh} was configured. Using 2.147.483 seconds instead."
+                . "{$autoRefresh} was configured. Using 2.147.483 seconds instead."
             );
         }
 
@@ -383,92 +479,7 @@ class Dashlet
     }
 
     /**
-     * Override this if your dashlet is configurable (this is called when the configureDashlet form is shown)
-     * Filters the array for only the parameters it needs to save
-     *
-     * @param array $req the array to pull options from
-     * @return array options array
-     */
-    public function saveOptions($req)
-    {
-    }
-
-    /**
-     * Sets the language strings
-     *
-     * @param string $dashletClassname classname of the dashlet
-     * @param string $dashletDirectory directory path of the dashlet
-     */
-    public function loadLanguage($dashletClassname, $dashletDirectory = 'modules/Home/Dashlets/')
-    {
-        global $current_language, $dashletStrings;
-
-        if (!isset($dashletStrings[$dashletClassname])) {
-            // load current language strings for current language, else default to english
-            if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
-                || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
-                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
-                    require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
-                }
-                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
-                    require('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
-                }
-            } else {
-                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
-                    require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php');
-                }
-                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
-                    require('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php');
-                }
-            }
-        }
-
-        $this->dashletStrings = $dashletStrings[$dashletClassname];
-    }
-
-    /**
-     * Generic way to store an options array into UserPreferences
-     *
-     * @param array $optionsArray the array to save
-     */
-    public function storeOptions($optionsArray)
-    {
-        global $current_user;
-
-        $dashletDefs = $current_user->getPreference('dashlets', 'Home'); // load user's dashlets config
-        $dashletDefs[$this->id]['options'] = $optionsArray;
-        $current_user->setPreference('dashlets', $dashletDefs, 0, 'Home');
-    }
-
-    /**
-     * Generic way to retrieve options array from UserPreferences
-     *
-     * @return array options array stored in UserPreferences
-     */
-    public function loadOptions()
-    {
-        global $current_user;
-
-        $dashletDefs = $current_user->getPreference('dashlets', 'Home'); // load user's dashlets config
-        if (isset($dashletDefs[$this->id]['options'])) {
-            return $dashletDefs[$this->id]['options'];
-        } else {
-            return array();
-        }
-    }
-
-    /**
-     * Override this in the subclass. It is used to determine whether the dashlet can be displayed.
-     *
-     * @return bool indicating whether or not the current user has access to display this Dashlet.
-     */
-    public function hasAccess()
-    {
-        return true;
-    }
-
-    /**
-     * Returns the available auto refresh settings you can set a dashlet to
+     * Returns the available auto refresh settings you can set a dashlet to.
      *
      * @return array options available
      */
@@ -488,7 +499,7 @@ class Dashlet
     }
 
     /**
-     * Returns true if the dashlet is auto refreshable
+     * Returns true if the dashlet is auto refreshable.
      *
      * @return bool
      */

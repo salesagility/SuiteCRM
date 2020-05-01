@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,18 +41,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * Filter factory
+ * Filter factory.
+ *
  * @api
  */
 class FilterFactory
 {
-    public static $filter_map = array();
+    public static $filter_map = [];
 
-    public static function getInstance($source_name, $filter_name='')
+    public static function getInstance($source_name, $filter_name = '')
     {
-        require_once('include/connectors/filters/default/filter.php');
+        require_once 'include/connectors/filters/default/filter.php';
         $key = $source_name . $filter_name;
         if (empty(self::$filter_map[$key])) {
             if (empty($filter_name)) {
@@ -61,14 +61,15 @@ class FilterFactory
 
             //split the wrapper name to find the path to the file.
             $dir = str_replace('_', '/', $filter_name);
-            $parts = explode("/", $dir);
-            $file = $parts[count($parts)-1];
+            $parts = explode('/', $dir);
+            $file = $parts[count($parts) - 1];
 
             //check if this override wrapper file exists.
-            require_once('include/connectors/ConnectorFactory.php');
+            require_once 'include/connectors/ConnectorFactory.php';
             if (file_exists("modules/Connectors/connectors/filters/{$dir}/{$file}.php") ||
                file_exists("custom/modules/Connectors/connectors/filters/{$dir}/{$file}.php")) {
                 ConnectorFactory::load($filter_name, 'filters');
+
                 try {
                     $filter_name .= '_filter';
                 } catch (Exception $ex) {

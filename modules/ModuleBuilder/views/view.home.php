@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,23 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
+require_once 'modules/ModuleBuilder/MB/AjaxCompose.php';
 class ViewHome extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-        
-        return array(
-           translate('LBL_MODULE_NAME', 'Administration'),
-           ModuleBuilderController::getModuleTitle(),
-           );
-    }
-
     public function display()
     {
         global $current_user;
@@ -64,12 +49,12 @@ class ViewHome extends SugarView
         $smarty->assign('defaultHelp', 'mainHelp');
         $this->generateHomeButtons();
         $smarty->assign('buttons', $this->buttons);
-        $assistant=array('group'=>'main', 'key'=>'welcome');
+        $assistant = ['group' => 'main', 'key' => 'welcome'];
         $smarty->assign('assistant', $assistant);
         //initialize Assistant's display property.
         $userPref = $current_user->getPreference('mb_assist', 'Assistant');
         if (!$userPref) {
-            $userPref="na";
+            $userPref = 'na';
         }
         $smarty->assign('userPref', $userPref);
         $ajax = new AjaxCompose();
@@ -77,17 +62,31 @@ class ViewHome extends SugarView
         echo $ajax->getJavascript();
     }
 
-
     public function generateHomeButtons()
     {
         global $current_user;
         if (displayStudioForCurrentUser() == true) {
             //$this->buttons['Application'] = array ('action' => '', 'imageTitle' => 'Application', 'size' => '128', 'help'=>'appBtn');
-            $this->buttons[$GLOBALS['mod_strings']['LBL_STUDIO']] = array('action' => 'javascript:ModuleBuilder.main("studio")', 'imageTitle' => 'Studio', 'size' => '128', 'help'=>'studioBtn');
+            $this->buttons[$GLOBALS['mod_strings']['LBL_STUDIO']] = ['action' => 'javascript:ModuleBuilder.main("studio")', 'imageTitle' => 'Studio', 'size' => '128', 'help' => 'studioBtn'];
         }
         if (is_admin($current_user)) {
-            $this->buttons[$GLOBALS['mod_strings']['LBL_MODULEBUILDER']] = array('action' => 'javascript:ModuleBuilder.main("mb")', 'imageTitle' => 'ModuleBuilder', 'size' => '128', 'help'=>'mbBtn');
+            $this->buttons[$GLOBALS['mod_strings']['LBL_MODULEBUILDER']] = ['action' => 'javascript:ModuleBuilder.main("mb")', 'imageTitle' => 'ModuleBuilder', 'size' => '128', 'help' => 'mbBtn'];
         }
-        $this->buttons[$GLOBALS['mod_strings']['LBL_DROPDOWNEDITOR']] = array('action' => 'javascript:ModuleBuilder.main("dropdowns")', 'imageTitle' => $GLOBALS['mod_strings']['LBL_HOME_EDIT_DROPDOWNS'], 'imageName' => 'DropDownEditor', 'size' => '128', 'help'=>'dropDownEditorBtn');
+        $this->buttons[$GLOBALS['mod_strings']['LBL_DROPDOWNEDITOR']] = ['action' => 'javascript:ModuleBuilder.main("dropdowns")', 'imageTitle' => $GLOBALS['mod_strings']['LBL_HOME_EDIT_DROPDOWNS'], 'imageName' => 'DropDownEditor', 'size' => '128', 'help' => 'dropDownEditorBtn'];
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            translate('LBL_MODULE_NAME', 'Administration'),
+            ModuleBuilderController::getModuleTitle(),
+        ];
     }
 }

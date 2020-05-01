@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/formbase.php');
+require_once 'include/formbase.php';
 
 global $mod_strings;
 
@@ -62,24 +60,25 @@ global $mod_strings;
     $campaign_focus = populateFromPost('', $campaign_focus);
 
     foreach ($camp_steps as $step) {
-        $campaign_focus =  populate_wizard_bean_from_request($campaign_focus, $step);
+        $campaign_focus = populate_wizard_bean_from_request($campaign_focus, $step);
     }
 
     switch ($_REQUEST['currentstep']) {
         case 1:
             //save here so we can link relationships
             $campaign_focus->save();
-            $GLOBALS['log']->debug("Saved record with id of ".$campaign_focus->id);
-            echo json_encode(array('record'=>$campaign_focus->id));
+            $GLOBALS['log']->debug('Saved record with id of ' . $campaign_focus->id);
+            echo json_encode(['record' => $campaign_focus->id]);
+
             break;
         case 2:
             //process subscription lists if this is a newsletter
-            if ($campaign_focus->campaign_type =='NewsLetter') {
+            if ($campaign_focus->campaign_type == 'NewsLetter') {
                 $pl_list = process_subscriptions_from_request($campaign_focus->name);
 
                 $campaign_focus->load_relationship('prospectlists');
                 $existing_pls = $campaign_focus->prospectlists->get();
-                $ui_ids = array();
+                $ui_ids = [];
 
                 //for each list returned, add the list to the relationship
                 foreach ($pl_list as $pl) {
@@ -100,7 +99,7 @@ global $mod_strings;
                 //remove Target Lists if defined
 
                 if (isset($_REQUEST['wiz_remove_target_list'])) {
-                    $remove_target_strings = explode(",", $_REQUEST['wiz_remove_target_list']);
+                    $remove_target_strings = explode(',', $_REQUEST['wiz_remove_target_list']);
                     foreach ($remove_target_strings as $remove_trgt_string) {
                         if (!empty($remove_trgt_string)) {
                             //load relationship and add to the list
@@ -110,12 +109,11 @@ global $mod_strings;
                     }
                 }
 
-
                 //create new campaign tracker and save if defined
                 if (isset($_REQUEST['wiz_list_of_targets'])) {
-                    $target_strings = explode(",", $_REQUEST['wiz_list_of_targets']);
+                    $target_strings = explode(',', $_REQUEST['wiz_list_of_targets']);
                     foreach ($target_strings as $trgt_string) {
-                        $target_values = explode("@@", $trgt_string);
+                        $target_values = explode('@@', $trgt_string);
                         if (count($target_values) == 3) {
                             if (!empty($target_values[0])) {
                                 //this is a selected target, as the id is already populated, retrieve and link
@@ -126,7 +124,6 @@ global $mod_strings;
                                 $campaign_focus->load_relationship('prospectlists');
                                 $campaign_focus->prospectlists->add($trgt_focus->id);
                             } else {
-
                                 //this is a new target, as the id is not populated, need to create and link
                                 $trgt_focus = new ProspectList();
                                 $trgt_focus->name = $target_values[1];
@@ -142,11 +139,9 @@ global $mod_strings;
                 }
             }
 
-
-
             //remove campaign trackers if defined
             if (isset($_REQUEST['wiz_remove_tracker_list'])) {
-                $remove_tracker_strings = explode(",", $_REQUEST['wiz_remove_tracker_list']);
+                $remove_tracker_strings = explode(',', $_REQUEST['wiz_remove_tracker_list']);
                 foreach ($remove_tracker_strings as $remove_trkr_string) {
                     if (!empty($remove_trkr_string)) {
                         //load relationship and add to the list
@@ -156,12 +151,11 @@ global $mod_strings;
                 }
             }
 
-
             //save  campaign trackers and save if defined
             if (isset($_REQUEST['wiz_list_of_existing_trackers'])) {
-                $tracker_strings = explode(",", $_REQUEST['wiz_list_of_existing_trackers']);
+                $tracker_strings = explode(',', $_REQUEST['wiz_list_of_existing_trackers']);
                 foreach ($tracker_strings as $trkr_string) {
-                    $tracker_values = explode("@@", $trkr_string);
+                    $tracker_values = explode('@@', $trkr_string);
                     $ct_focus = new CampaignTracker();
                     $ct_focus->retrieve($tracker_values[0]);
                     if (!empty($ct_focus->tracker_name)) {
@@ -177,13 +171,12 @@ global $mod_strings;
                 }
             }
 
-
             //create new campaign tracker and save if defined
             if (isset($_REQUEST['wiz_list_of_trackers'])) {
-                $tracker_strings = explode(",", $_REQUEST['wiz_list_of_trackers']);
+                $tracker_strings = explode(',', $_REQUEST['wiz_list_of_trackers']);
                 foreach ($tracker_strings as $trkr_string) {
-                    $tracker_values = explode("@@", $trkr_string);
-                    if (count($tracker_values)==3) {
+                    $tracker_values = explode('@@', $trkr_string);
+                    if (count($tracker_values) == 3) {
                         $ct_focus = new CampaignTracker();
                         $ct_focus->tracker_name = $tracker_values[0];
                         $ct_focus->is_optout = $tracker_values[1];
@@ -202,8 +195,8 @@ global $mod_strings;
             //set navigation details
             $_REQUEST['return_id'] = $campaign_focus->id;
             $_REQUEST['return_module'] = $campaign_focus->module_dir;
-            $_REQUEST['return_action'] = "WizardNewsLetter";
-            $_REQUEST['action'] = "WizardMarketing";
+            $_REQUEST['return_action'] = 'WizardNewsLetter';
+            $_REQUEST['action'] = 'WizardMarketing';
             $_REQUEST['record'] = $campaign_focus->id;
 
             $action = '';
@@ -212,31 +205,35 @@ global $mod_strings;
                 switch ($_REQUEST['wiz_direction']) {
                     case 'continue':
                     $action = 'WizardMarketing';
+
                         break;
                     case 'continue_targetList':
                         $action = 'WizardMarketing';
                         $redirectToTargetList = '&redirectToTargetList=1';
+
                         break;
                      case 'exit':
                          $action = 'WizardMarketing';
+
                         break;
                 }
             } else {
-                $action = 'WizardHome&record='.$campaign_focus->id;
+                $action = 'WizardHome&record=' . $campaign_focus->id;
             }
             //require_once('modules/Campaigns/WizardMarketing.php');
-            $header_URL = "Location: index.php?return_module=Campaigns&module=Campaigns&action=".$action.$redirectToTargetList."&campaign_id=".$campaign_focus->id."&return_action=WizardNewsLetter&return_id=".$campaign_focus->id;
-            $GLOBALS['log']->debug("about to post header URL of: $header_URL");
+            $header_URL = 'Location: index.php?return_module=Campaigns&module=Campaigns&action=' . $action . $redirectToTargetList . '&campaign_id=' . $campaign_focus->id . '&return_action=WizardNewsLetter&return_id=' . $campaign_focus->id;
+            $GLOBALS['log']->debug("about to post header URL of: {$header_URL}");
             SugarApplication::headerRedirect($header_URL);
+
             break;
         case 3:
             //process subscription lists if this is a newsletter
-            if ($campaign_focus->campaign_type =='NewsLetter') {
+            if ($campaign_focus->campaign_type == 'NewsLetter') {
                 $pl_list = process_subscriptions_from_request($campaign_focus->name);
 
                 $campaign_focus->load_relationship('prospectlists');
                 $existing_pls = $campaign_focus->prospectlists->get();
-                $ui_ids = array();
+                $ui_ids = [];
 
                 //for each list returned, add the list to the relationship
                 foreach ($pl_list as $pl) {
@@ -257,7 +254,7 @@ global $mod_strings;
                 //remove Target Lists if defined
 
                 if (isset($_REQUEST['wiz_remove_target_list'])) {
-                    $remove_target_strings = explode(",", $_REQUEST['wiz_remove_target_list']);
+                    $remove_target_strings = explode(',', $_REQUEST['wiz_remove_target_list']);
                     foreach ($remove_target_strings as $remove_trgt_string) {
                         if (!empty($remove_trgt_string)) {
                             //load relationship and add to the list
@@ -267,12 +264,11 @@ global $mod_strings;
                     }
                 }
 
-
                 //create new campaign tracker and save if defined
                 if (isset($_REQUEST['wiz_list_of_targets'])) {
-                    $target_strings = explode(",", $_REQUEST['wiz_list_of_targets']);
+                    $target_strings = explode(',', $_REQUEST['wiz_list_of_targets']);
                     foreach ($target_strings as $trgt_string) {
-                        $target_values = explode("@@", $trgt_string);
+                        $target_values = explode('@@', $trgt_string);
                         if (count($target_values) == 3) {
                             if (!empty($target_values[0])) {
                                 //this is a selected target, as the id is already populated, retrieve and link
@@ -283,7 +279,6 @@ global $mod_strings;
                                 $campaign_focus->load_relationship('prospectlists');
                                 $campaign_focus->prospectlists->add($trgt_focus->id);
                             } else {
-
                                 //this is a new target, as the id is not populated, need to create and link
                                 $trgt_focus = new ProspectList();
                                 $trgt_focus->name = $target_values[1];
@@ -299,11 +294,9 @@ global $mod_strings;
                 }
             }
 
-
-
             //remove campaign trackers if defined
             if (isset($_REQUEST['wiz_remove_tracker_list'])) {
-                $remove_tracker_strings = explode(",", $_REQUEST['wiz_remove_tracker_list']);
+                $remove_tracker_strings = explode(',', $_REQUEST['wiz_remove_tracker_list']);
                 foreach ($remove_tracker_strings as $remove_trkr_string) {
                     if (!empty($remove_trkr_string)) {
                         //load relationship and add to the list
@@ -313,12 +306,11 @@ global $mod_strings;
                 }
             }
 
-
             //save  campaign trackers and save if defined
             if (isset($_REQUEST['wiz_list_of_existing_trackers'])) {
-                $tracker_strings = explode(",", $_REQUEST['wiz_list_of_existing_trackers']);
+                $tracker_strings = explode(',', $_REQUEST['wiz_list_of_existing_trackers']);
                 foreach ($tracker_strings as $trkr_string) {
-                    $tracker_values = explode("@@", $trkr_string);
+                    $tracker_values = explode('@@', $trkr_string);
                     $ct_focus = new CampaignTracker();
                     $ct_focus->retrieve($tracker_values[0]);
                     if (!empty($ct_focus->tracker_name)) {
@@ -334,13 +326,12 @@ global $mod_strings;
                 }
             }
 
-
             //create new campaign tracker and save if defined
             if (isset($_REQUEST['wiz_list_of_trackers'])) {
-                $tracker_strings = explode(",", $_REQUEST['wiz_list_of_trackers']);
+                $tracker_strings = explode(',', $_REQUEST['wiz_list_of_trackers']);
                 foreach ($tracker_strings as $trkr_string) {
-                    $tracker_values = explode("@@", $trkr_string);
-                    if (count($tracker_values)==3) {
+                    $tracker_values = explode('@@', $trkr_string);
+                    if (count($tracker_values) == 3) {
                         $ct_focus = new CampaignTracker();
                         $ct_focus->tracker_name = $tracker_values[0];
                         $ct_focus->is_optout = $tracker_values[1];
@@ -359,8 +350,8 @@ global $mod_strings;
             //set navigation details
             $_REQUEST['return_id'] = $campaign_focus->id;
             $_REQUEST['return_module'] = $campaign_focus->module_dir;
-            $_REQUEST['return_action'] = "WizardNewsLetter";
-            $_REQUEST['action'] = "WizardMarketing";
+            $_REQUEST['return_action'] = 'WizardNewsLetter';
+            $_REQUEST['action'] = 'WizardMarketing';
             $_REQUEST['record'] = $campaign_focus->id;
 
             $action = '';
@@ -369,25 +360,28 @@ global $mod_strings;
                 switch ($_REQUEST['wiz_direction']) {
                     case 'continue':
                         $action = 'WizardMarketing';
+
                         break;
                     case 'continue_targetList':
                         $action = 'WizardMarketing';
                         $redirectToTargetList = '&redirectToTargetList=1';
+
                         break;
                     case 'exit':
                         $action = 'WizardHome';
+
                         break;
                 }
             } else {
-                $action = 'WizardHome&record='.$campaign_focus->id;
+                $action = 'WizardHome&record=' . $campaign_focus->id;
             }
             //require_once('modules/Campaigns/WizardMarketing.php');
-            $header_URL = "Location: index.php?return_module=Campaigns&module=Campaigns&action=".$action.$redirectToTargetList."&campaign_id=".$campaign_focus->id."&record=".$campaign_focus->id;
-            $GLOBALS['log']->debug("about to post header URL of: $header_URL");
+            $header_URL = 'Location: index.php?return_module=Campaigns&module=Campaigns&action=' . $action . $redirectToTargetList . '&campaign_id=' . $campaign_focus->id . '&record=' . $campaign_focus->id;
+            $GLOBALS['log']->debug("about to post header URL of: {$header_URL}");
             SugarApplication::headerRedirect($header_URL);
+
             break;
     }
-
 
 /*
  * This function will populate the passed in bean with the post variables
@@ -395,21 +389,20 @@ global $mod_strings;
  */
 function populate_wizard_bean_from_request($bean, $prefix)
 {
-    foreach ($_REQUEST as $key=> $val) {
+    foreach ($_REQUEST as $key => $val) {
         $key = trim($key);
-        if ((strstr($key, $prefix)) && (strpos($key, $prefix)== 0)) {
-            $field  =substr($key, strlen($prefix)) ;
+        if ((strstr($key, $prefix)) && (strpos($key, $prefix) == 0)) {
+            $field = substr($key, strlen($prefix));
             if (isset($_REQUEST[$key]) && !empty($_REQUEST[$key])) {
                 //echo "prefix is $prefix, field is $field,    key is $key,   and value is $val<br>";
                 $value = $_REQUEST[$key];
-                $bean->$field = $value;
+                $bean->{$field} = $value;
             }
         }
     }
 
     return $bean;
 }
-
 
 /*
  * This function will process any specified prospect lists and attach them to current campaign
@@ -419,7 +412,7 @@ function populate_wizard_bean_from_request($bean, $prefix)
 function process_subscriptions_from_request($campaign_name)
 {
     global $mod_strings;
-    $pl_list = array();
+    $pl_list = [];
 
     //process default target list
     $create_new = true;
@@ -436,14 +429,14 @@ function process_subscriptions_from_request($campaign_name)
     //create new bio if one was not retrieved successfully
     if ($create_new) {
         //use default name if one has not been specified
-        $name = $campaign_name . " ".$mod_strings['LBL_SUBSCRIPTION_LIST'];
+        $name = $campaign_name . ' ' . $mod_strings['LBL_SUBSCRIPTION_LIST'];
         if (isset($_REQUEST['wiz_step3_subscription_name']) && !empty($_REQUEST['wiz_step3_subscription_name'])) {
             $name = $_REQUEST['wiz_step3_subscription_name'];
         }
         //if subscription list is not specified then create and attach default one
         $pl_subs->name = $name;
         $pl_subs->list_type = 'default';
-        $pl_subs->assigned_user_id= $GLOBALS['current_user']->id;
+        $pl_subs->assigned_user_id = $GLOBALS['current_user']->id;
         $pl_subs->save();
         $pl_list[] = $pl_subs;
     }
@@ -463,14 +456,14 @@ function process_subscriptions_from_request($campaign_name)
     //create new bean if one was not retrieved successfully
     if ($create_new) {
         //use default name if one has not been specified
-        $name = $campaign_name . " ".$mod_strings['LBL_UNSUBSCRIPTION_LIST'];
+        $name = $campaign_name . ' ' . $mod_strings['LBL_UNSUBSCRIPTION_LIST'];
         if (isset($_REQUEST['wiz_step3_unsubscription_name']) && !empty($_REQUEST['wiz_step3_unsubscription_name'])) {
             $name = $_REQUEST['wiz_step3_unsubscription_name'];
         }
         //if unsubscription list is not specified then create and attach default one
         $pl_un_subs->name = $name;
         $pl_un_subs->list_type = 'exempt';
-        $pl_un_subs->assigned_user_id= $GLOBALS['current_user']->id;
+        $pl_un_subs->assigned_user_id = $GLOBALS['current_user']->id;
         $pl_un_subs->save();
         $pl_list[] = $pl_un_subs;
     }
@@ -490,14 +483,14 @@ function process_subscriptions_from_request($campaign_name)
     //create new bio if one was not retrieved successfully
     if ($create_new) {
         //use default name if one has not been specified
-        $name = $campaign_name . " ".$mod_strings['LBL_TEST_LIST'];
+        $name = $campaign_name . ' ' . $mod_strings['LBL_TEST_LIST'];
         if (isset($_REQUEST['wiz_step3_test_name']) && !empty($_REQUEST['wiz_step3_test_name'])) {
             $name = $_REQUEST['wiz_step3_test_name'];
         }
         //if test list is not specified then create and attach default one
         $pl_test->name = $name;
         $pl_test->list_type = 'test';
-        $pl_test->assigned_user_id= $GLOBALS['current_user']->id;
+        $pl_test->assigned_user_id = $GLOBALS['current_user']->id;
         $pl_test->save();
         $pl_list[] = $pl_test;
     }

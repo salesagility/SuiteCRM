@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -45,16 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $module_name = 'OAuth2Clients';
 
 $searchFields[$module_name] = [
-    'id' =>
-        [
-            'query_type' => 'default',
-        ],
-    'name' =>
-        [
-            'query_type' => 'default',
-        ],
-    'allowed_grant_type' =>
-        [
-            'query_type' => 'default',
-        ],
+    'id' => [
+        'query_type' => 'default',
+    ],
+    'name' => [
+        'query_type' => 'default',
+    ],
+    'allowed_grant_type' => [
+        'query_type' => 'default',
+    ],
 ];

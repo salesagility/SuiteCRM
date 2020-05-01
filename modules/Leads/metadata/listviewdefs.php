@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,193 +42,160 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$listViewDefs ['Leads'] =
-array(
-  'NAME' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_LIST_NAME',
-    'link' => true,
-    'orderBy' => 'name',
-    'default' => true,
-    'related_fields' =>
-    array(
-      0 => 'first_name',
-      1 => 'last_name',
-      2 => 'salutation',
-    ),
-  ),
-  'STATUS' =>
-  array(
-    'width' => '7%',
-    'label' => 'LBL_LIST_STATUS',
-    'default' => true,
-  ),
-  'ACCOUNT_NAME' =>
-  array(
-    'width' => '15%',
-    'label' => 'LBL_LIST_ACCOUNT_NAME',
-    'default' => true,
-    'related_fields' =>
-    array(
-      0 => 'account_id',
-    ),
-  ),
-  'PHONE_WORK' =>
-  array(
-    'width' => '15%',
-    'label' => 'LBL_LIST_PHONE',
-    'default' => true,
-  ),
-  'EMAIL1' =>
-  array(
-    'width' => '16%',
-    'label' => 'LBL_LIST_EMAIL_ADDRESS',
-    'sortable' => false,
-    'customCode' => '{$EMAIL1_LINK}',
-    'default' => true,
-  ),
-  'ASSIGNED_USER_NAME' =>
-  array(
-    'width' => '5%',
-    'label' => 'LBL_LIST_ASSIGNED_USER',
-    'module' => 'Employees',
-    'id' => 'ASSIGNED_USER_ID',
-    'default' => true,
-  ),
-  'TITLE' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_TITLE',
-    'default' => false,
-  ),
-  'REFERED_BY' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_REFERED_BY',
-    'default' => false,
-  ),
-  'LEAD_SOURCE' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_LEAD_SOURCE',
-    'default' => false,
-  ),
-  'DEPARTMENT' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_DEPARTMENT',
-    'default' => false,
-  ),
-  'DO_NOT_CALL' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_DO_NOT_CALL',
-    'default' => false,
-  ),
-  'PHONE_HOME' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_HOME_PHONE',
-    'default' => false,
-  ),
-  'PHONE_MOBILE' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_MOBILE_PHONE',
-    'default' => false,
-  ),
-  'PHONE_OTHER' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_OTHER_PHONE',
-    'default' => false,
-  ),
-  'PHONE_FAX' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_FAX_PHONE',
-    'default' => false,
-  ),
-  'PRIMARY_ADDRESS_COUNTRY' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_PRIMARY_ADDRESS_COUNTRY',
-    'default' => false,
-  ),
-  'PRIMARY_ADDRESS_STREET' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_PRIMARY_ADDRESS_STREET',
-    'default' => false,
-  ),
-  'PRIMARY_ADDRESS_CITY' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_PRIMARY_ADDRESS_CITY',
-    'default' => false,
-  ),
-  'PRIMARY_ADDRESS_STATE' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_PRIMARY_ADDRESS_STATE',
-    'default' => false,
-  ),
-  'PRIMARY_ADDRESS_POSTALCODE' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_PRIMARY_ADDRESS_POSTALCODE',
-    'default' => false,
-  ),
-  'ALT_ADDRESS_COUNTRY' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_ALT_ADDRESS_COUNTRY',
-    'default' => false,
-  ),
-  'ALT_ADDRESS_STREET' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_ALT_ADDRESS_STREET',
-    'default' => false,
-  ),
-  'ALT_ADDRESS_CITY' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_ALT_ADDRESS_CITY',
-    'default' => false,
-  ),
-  'ALT_ADDRESS_STATE' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_ALT_ADDRESS_STATE',
-    'default' => false,
-  ),
-  'ALT_ADDRESS_POSTALCODE' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_ALT_ADDRESS_POSTALCODE',
-    'default' => false,
-  ),
-  'CREATED_BY' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_CREATED',
-    'default' => false,
-  ),
-  'MODIFIED_BY_NAME' =>
-  array(
-    'width' => '5%',
-    'label' => 'LBL_MODIFIED',
-    'default' => false,
-  ),
-  'DATE_ENTERED' =>
-  array(
-    'width' => '10%',
-    'label' => 'LBL_DATE_ENTERED',
-    'default' => true,
-  ),
-);
+$listViewDefs['Leads'] =
+[
+    'NAME' => [
+        'width' => '10%',
+        'label' => 'LBL_LIST_NAME',
+        'link' => true,
+        'orderBy' => 'name',
+        'default' => true,
+        'related_fields' => [
+            0 => 'first_name',
+            1 => 'last_name',
+            2 => 'salutation',
+        ],
+    ],
+    'STATUS' => [
+        'width' => '7%',
+        'label' => 'LBL_LIST_STATUS',
+        'default' => true,
+    ],
+    'ACCOUNT_NAME' => [
+        'width' => '15%',
+        'label' => 'LBL_LIST_ACCOUNT_NAME',
+        'default' => true,
+        'related_fields' => [
+            0 => 'account_id',
+        ],
+    ],
+    'PHONE_WORK' => [
+        'width' => '15%',
+        'label' => 'LBL_LIST_PHONE',
+        'default' => true,
+    ],
+    'EMAIL1' => [
+        'width' => '16%',
+        'label' => 'LBL_LIST_EMAIL_ADDRESS',
+        'sortable' => false,
+        'customCode' => '{$EMAIL1_LINK}',
+        'default' => true,
+    ],
+    'ASSIGNED_USER_NAME' => [
+        'width' => '5%',
+        'label' => 'LBL_LIST_ASSIGNED_USER',
+        'module' => 'Employees',
+        'id' => 'ASSIGNED_USER_ID',
+        'default' => true,
+    ],
+    'TITLE' => [
+        'width' => '10%',
+        'label' => 'LBL_TITLE',
+        'default' => false,
+    ],
+    'REFERED_BY' => [
+        'width' => '10%',
+        'label' => 'LBL_REFERED_BY',
+        'default' => false,
+    ],
+    'LEAD_SOURCE' => [
+        'width' => '10%',
+        'label' => 'LBL_LEAD_SOURCE',
+        'default' => false,
+    ],
+    'DEPARTMENT' => [
+        'width' => '10%',
+        'label' => 'LBL_DEPARTMENT',
+        'default' => false,
+    ],
+    'DO_NOT_CALL' => [
+        'width' => '10%',
+        'label' => 'LBL_DO_NOT_CALL',
+        'default' => false,
+    ],
+    'PHONE_HOME' => [
+        'width' => '10%',
+        'label' => 'LBL_HOME_PHONE',
+        'default' => false,
+    ],
+    'PHONE_MOBILE' => [
+        'width' => '10%',
+        'label' => 'LBL_MOBILE_PHONE',
+        'default' => false,
+    ],
+    'PHONE_OTHER' => [
+        'width' => '10%',
+        'label' => 'LBL_OTHER_PHONE',
+        'default' => false,
+    ],
+    'PHONE_FAX' => [
+        'width' => '10%',
+        'label' => 'LBL_FAX_PHONE',
+        'default' => false,
+    ],
+    'PRIMARY_ADDRESS_COUNTRY' => [
+        'width' => '10%',
+        'label' => 'LBL_PRIMARY_ADDRESS_COUNTRY',
+        'default' => false,
+    ],
+    'PRIMARY_ADDRESS_STREET' => [
+        'width' => '10%',
+        'label' => 'LBL_PRIMARY_ADDRESS_STREET',
+        'default' => false,
+    ],
+    'PRIMARY_ADDRESS_CITY' => [
+        'width' => '10%',
+        'label' => 'LBL_PRIMARY_ADDRESS_CITY',
+        'default' => false,
+    ],
+    'PRIMARY_ADDRESS_STATE' => [
+        'width' => '10%',
+        'label' => 'LBL_PRIMARY_ADDRESS_STATE',
+        'default' => false,
+    ],
+    'PRIMARY_ADDRESS_POSTALCODE' => [
+        'width' => '10%',
+        'label' => 'LBL_PRIMARY_ADDRESS_POSTALCODE',
+        'default' => false,
+    ],
+    'ALT_ADDRESS_COUNTRY' => [
+        'width' => '10%',
+        'label' => 'LBL_ALT_ADDRESS_COUNTRY',
+        'default' => false,
+    ],
+    'ALT_ADDRESS_STREET' => [
+        'width' => '10%',
+        'label' => 'LBL_ALT_ADDRESS_STREET',
+        'default' => false,
+    ],
+    'ALT_ADDRESS_CITY' => [
+        'width' => '10%',
+        'label' => 'LBL_ALT_ADDRESS_CITY',
+        'default' => false,
+    ],
+    'ALT_ADDRESS_STATE' => [
+        'width' => '10%',
+        'label' => 'LBL_ALT_ADDRESS_STATE',
+        'default' => false,
+    ],
+    'ALT_ADDRESS_POSTALCODE' => [
+        'width' => '10%',
+        'label' => 'LBL_ALT_ADDRESS_POSTALCODE',
+        'default' => false,
+    ],
+    'CREATED_BY' => [
+        'width' => '10%',
+        'label' => 'LBL_CREATED',
+        'default' => false,
+    ],
+    'MODIFIED_BY_NAME' => [
+        'width' => '5%',
+        'label' => 'LBL_MODIFIED',
+        'default' => false,
+    ],
+    'DATE_ENTERED' => [
+        'width' => '10%',
+        'label' => 'LBL_DATE_ENTERED',
+        'default' => true,
+    ],
+];

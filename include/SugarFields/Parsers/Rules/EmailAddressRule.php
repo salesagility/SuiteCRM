@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * EmailAddressRule.php
+ * EmailAddressRule.php.
  *
  * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.  We basically scan for email1 or
@@ -51,8 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author Collin Lee
  */
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class EmailAddressRule extends BaseRule
 {
@@ -60,35 +58,34 @@ class EmailAddressRule extends BaseRule
     {
     }
 
-    public function parsePanels(& $panels, $view)
+    public function parsePanels(&$panels, $view)
     {
         if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
+            foreach ($panels as $name => $panel) {
                 if (preg_match('/lbl_email_addresses/si', $name)) {
                     continue;
                 }
 
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         if ($this->isCustomField($column)) {
                             continue;
+                        }
+                        if (is_array($column) && !empty($column['name']) && preg_match('/^email(s|2)$/si', $column['name']) && !isset($column['type'])) {
+                            $panels[$name][$rowCount][$key] = '';
                         } else {
-                            if (is_array($column) && !empty($column['name']) && preg_match('/^email(s|2)$/si', $column['name']) && !isset($column['type'])) {
-                                $panels[$name][$rowCount][$key] = '';
+                            if ($this->matches($column, '/^email[1]_link$/si')) {
+                                $panels[$name][$rowCount][$key] = 'email1';
                             } else {
-                                if ($this->matches($column, '/^email[1]_link$/si')) {
-                                    $panels[$name][$rowCount][$key] = 'email1';
+                                if ($this->matches($column, '/^email[2]_link$/si')) {
+                                    $panels[$name][$rowCount][$key] = '';
                                 } else {
-                                    if ($this->matches($column, '/^email[2]_link$/si')) {
-                                        $panels[$name][$rowCount][$key] = '';
-                                    } else {
-                                        if (!is_array($column) && !empty($column)) {
-                                            if (preg_match('/^email(s|2)$/si', $column) ||
+                                    if (!is_array($column) && !empty($column)) {
+                                        if (preg_match('/^email(s|2)$/si', $column) ||
                       preg_match('/^invalid_email$/si', $column) ||
                       preg_match('/^email_opt_out$/si', $column) ||
                       preg_match('/^primary_email$/si', $column)) {
-                                                $panels[$name][$rowCount][$key] = '';
-                                            }
+                                            $panels[$name][$rowCount][$key] = '';
                                         }
                                     }
                                 }
@@ -99,13 +96,13 @@ class EmailAddressRule extends BaseRule
             } //foreach
         } else {
             if ($view == 'EditView') {
-                foreach ($panels as $name=>$panel) {
+                foreach ($panels as $name => $panel) {
                     if (preg_match('/lbl_email_addresses/si', $name)) {
                         continue;
                     }
 
-                    foreach ($panel as $rowCount=>$row) {
-                        foreach ($row as $key=>$column) {
+                    foreach ($panel as $rowCount => $row) {
+                        foreach ($row as $key => $column) {
                             if ($this->isCustomField($column)) {
                                 continue;
                             }
@@ -118,7 +115,6 @@ class EmailAddressRule extends BaseRule
                 } //foreach
             }
         }
-
 
         return $panels;
     }

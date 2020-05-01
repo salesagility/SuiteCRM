@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,18 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $sugar_config, $mod_strings;
 
-$search_dir=sugar_cached('');
+$search_dir = sugar_cached('');
 
 $src_file = $search_dir . 'modules/unified_search_modules.php';
 if (file_exists($src_file)) {
-    print($mod_strings['LBL_CLEAR_UNIFIED_SEARCH_CACHE_DELETING1'] . "<br>");
-    print($mod_strings['LBL_CLEAR_UNIFIED_SEARCH_CACHE_DELETING2'] . " $src_file<BR>") ;
-    unlink((string)$src_file);
+    echo $mod_strings['LBL_CLEAR_UNIFIED_SEARCH_CACHE_DELETING1'] . '<br>';
+    echo $mod_strings['LBL_CLEAR_UNIFIED_SEARCH_CACHE_DELETING2'] . " {$src_file}<BR>";
+    unlink((string) $src_file);
 }
 
 echo "\n--- " . $mod_strings['LBL_DONE'] . "---<br />\n";

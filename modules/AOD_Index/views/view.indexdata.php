@@ -1,8 +1,5 @@
 <?php
- /**
- *
- *
- * @package
+/**
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,20 +16,18 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/MVC/View/SugarView.php');
+require_once 'include/MVC/View/SugarView.php';
 
 class AOD_IndexViewIndexData extends SugarView
 {
-
     /**
-     * display the form
+     * display the form.
      */
     public function display()
     {
@@ -41,51 +36,46 @@ class AOD_IndexViewIndexData extends SugarView
 
         parent::display();
 
-        $index = BeanFactory::getBean("AOD_Index");
+        $index = BeanFactory::getBean('AOD_Index');
         $index = $index->getIndex();
-
 
         $beanList = $index->getIndexableModules();
 
-        $moduleCounts = array();
+        $moduleCounts = [];
 
         foreach ($beanList as $beanModule => $beanName) {
             $bean = BeanFactory::getBean($beanModule);
-            if (!$bean || !method_exists($bean, "getTableName") || !$bean->getTableName()) {
+            if (!$bean || !method_exists($bean, 'getTableName') || !$bean->getTableName()) {
                 continue;
             }
-            $query = "SELECT COUNT(DISTINCT b.id) FROM ".$bean->getTableName()." b WHERE b.deleted = 0";
+            $query = 'SELECT COUNT(DISTINCT b.id) FROM ' . $bean->getTableName() . ' b WHERE b.deleted = 0';
             $moduleCounts[$beanModule] = $db->getOne($query);
         }
 
-
         $revisionCount = array_sum($moduleCounts);
-        $indexedCount = $db->getOne("SELECT COUNT(*) FROM aod_indexevent WHERE deleted = 0 AND success = 1");
-        $failedCount = $db->getOne("SELECT COUNT(*) FROM aod_indexevent WHERE deleted = 0 AND success = 0");
+        $indexedCount = $db->getOne('SELECT COUNT(*) FROM aod_indexevent WHERE deleted = 0 AND success = 1');
+        $failedCount = $db->getOne('SELECT COUNT(*) FROM aod_indexevent WHERE deleted = 0 AND success = 0');
 
-        $indexFiles = count(glob($index->location."/*.cfs"));
+        $indexFiles = count(glob($index->location . '/*.cfs'));
 
-        $this->ss->assign("revisionCount", $revisionCount);
-        $this->ss->assign("indexedCount", $indexedCount);
-        $this->ss->assign("failedCount", $failedCount);
-        $this->ss->assign("index", $index);
-        $this->ss->assign("indexFiles", $indexFiles);
+        $this->ss->assign('revisionCount', $revisionCount);
+        $this->ss->assign('indexedCount', $indexedCount);
+        $this->ss->assign('failedCount', $failedCount);
+        $this->ss->assign('index', $index);
+        $this->ss->assign('indexFiles', $indexFiles);
         echo $this->ss->fetch('modules/AOD_Index/tpls/indexdata.tpl');
 
-
-
-
         if ($failedCount) {
-            $seed = BeanFactory::newBean("AOD_IndexEvent");
+            $seed = BeanFactory::newBean('AOD_IndexEvent');
 
             $lv = new ListViewSmarty();
             $lv->lvd->additionalDetails = false;
             $mod_strings = return_module_language($current_language, $seed->module_dir);
 
-            require('modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
+            require 'modules/' . $seed->module_dir . '/metadata/listviewdefs.php';
 
-            if (file_exists('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php')) {
-                require('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
+            if (file_exists('custom/modules/' . $seed->module_dir . '/metadata/listviewdefs.php')) {
+                require 'custom/modules/' . $seed->module_dir . '/metadata/listviewdefs.php';
             }
 
             $lv->displayColumns = $listViewDefs[$seed->module_dir];
@@ -103,7 +93,7 @@ class AOD_IndexViewIndexData extends SugarView
 
             echo '<br /><br />' . get_form_header($GLOBALS['mod_strings']['LBL_FAILED_RECORDS'] . ' (' . $lv->data['pageData']['offsets']['total'] . ')', '', false);
             if ($lv->data['pageData']['offsets']['total'] == 0) {
-                echo "No data";
+                echo 'No data';
             } else {
                 echo $lv->display();
             }

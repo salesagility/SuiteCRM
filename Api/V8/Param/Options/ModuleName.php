@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -9,7 +10,7 @@ class ModuleName extends BaseOption
     const REGEX_MODULE_NAME_PATTERN = '/^(\d|\W)|\W/';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add(OptionsResolver $resolver)
     {

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,22 +46,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 class SchedulersViewDetail extends ViewDetail
 {
-
     /**
-     * @see SugarView::_getModuleTitleListParam()
-     */
-    protected function _getModuleTitleListParam($browserTitle = false)
-    {
-        global $mod_strings;
-
-        return "<a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_MODULE_TITLE']."</a>";
-    }
-
-    /**
-     * display
+     * display.
      */
     public function display()
     {
@@ -71,5 +60,17 @@ class SchedulersViewDetail extends ViewDetail
         $this->bean->modified_by_name = get_assigned_user_name($this->bean->modified_user_id);
 
         parent::display();
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleListParam()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleListParam($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return "<a href='index.php?module=Schedulers&action=index'>" . $mod_strings['LBL_MODULE_TITLE'] . '</a>';
     }
 }

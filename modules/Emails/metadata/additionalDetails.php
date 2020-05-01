@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,16 +39,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $fields
  */
-
- 
-
 function additionalDetailsEmail($fields)
 {
     global $current_language;
     $mod_strings = return_module_language($current_language, 'Emails');
-    $newLines = array("\r", "\R", "\n", "\N");
-        
+    $newLines = ["\r", '\\R', "\n", '\\N'];
+
     $overlib_string = '';
     // From Name
     if (!empty($fields['FROM_NAME'])) {
@@ -61,7 +60,7 @@ function additionalDetailsEmail($fields)
         if (!empty($overlib_string)) {
             $overlib_string .= '<br>';
         }
-        $overlib_string .= '<b>'.$mod_strings['LBL_BODY'].'</b><br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_BODY'] . '</b><br>';
         $descH = strip_tags($fields['DESCRIPTION_HTML'], '<a>');
         $desc = str_replace($newLines, ' ', $descH);
         $overlib_string .= substr($desc, 0, 300);
@@ -72,7 +71,7 @@ function additionalDetailsEmail($fields)
         if (!empty($overlib_string)) {
             $overlib_string .= '<br>';
         }
-        $overlib_string .= '<b>'.$mod_strings['LBL_BODY'].'</b><br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_BODY'] . '</b><br>';
         $descH = strip_tags(nl2br($fields['DESCRIPTION']));
         $desc = str_replace($newLines, ' ', $descH);
         $overlib_string .= substr($desc, 0, 300);
@@ -81,7 +80,7 @@ function additionalDetailsEmail($fields)
             $overlib_string .= '...';
         }
     }
-    
+
     $editLink = "index.php?action=EditView&module=Emails&record={$fields['ID']}";
     $viewLink = "index.php?action=DetailView&module=Emails&record={$fields['ID']}";
 
@@ -89,14 +88,14 @@ function additionalDetailsEmail($fields)
     $return_action = empty($_REQUEST['action']) ? 'ListView' : $_REQUEST['action'];
     $type = empty($_REQUEST['type']) ? '' : $_REQUEST['type'];
     $user_id = empty($_REQUEST['assigned_user_id']) ? '' : $_REQUEST['assigned_user_id'];
-    
-    $additional_params = "&return_module=$return_module&return_action=$return_action&type=$type&assigned_user_id=$user_id";
-    
+
+    $additional_params = "&return_module={$return_module}&return_action={$return_action}&type={$type}&assigned_user_id={$user_id}";
+
     $editLink .= $additional_params;
     $viewLink .= $additional_params;
-    
-    return array('fieldToAddTo' => 'NAME',
-                 'string' => $overlib_string,
-                 'editLink' => $editLink,
-                 'viewLink' => $viewLink);
+
+    return ['fieldToAddTo' => 'NAME',
+        'string' => $overlib_string,
+        'editLink' => $editLink,
+        'viewLink' => $viewLink];
 }

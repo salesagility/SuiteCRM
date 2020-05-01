@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,12 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
- 
-
-
-
-
 class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopButtonQuickCreate
 {
     public function getWidgetId($buttonSuffix = true)
@@ -62,13 +56,14 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
         //$accesskey = $app_strings['LBL_NEW_BUTTON_KEY'];
         $value = $app_strings['LBL_NEW_BUTTON_LABEL'];
         $this->module = 'Leads';
-        if (ACLController::moduleSupportsACL($defines['module'])  && !ACLController::checkAccess($defines['module'], 'edit', true)) {
-            $button = "<input title='$title'class='button' type='button' name='button' value='  $value  ' disabled/>\n";
+        if (ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true)) {
+            $button = "<input title='{$title}'class='button' type='button' name='button' value='  {$value}  ' disabled/>\n";
+
             return $button;
         }
-        
-        $additionalFormFields = array();
-        
+
+        $additionalFormFields = [];
+
         //from accounts
         if ($defines['focus']->object_name == 'Account') {
             if (isset($defines['focus']->billing_address_street)) {
@@ -126,7 +121,7 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
                 $additionalFormFields['contact_id'] = $defines['focus']->id;
             }
         }
-        
+
         //from opportunities
         if ($defines['focus']->object_name == 'Opportunity') {
             if (isset($defines['focus']->id)) {
@@ -139,10 +134,11 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
                 $additionalFormFields['account_id'] = $defines['focus']->account_id;
             }
         }
-        
+
         $button = $this->_get_form($defines, $additionalFormFields);
-        $button .= "<input title='$title' class='button' type='submit' name='{$this->getWidgetId()}_button' id='{$this->getWidgetId()}' value='  $value  '/>\n";
-        $button .= "</form>";
+        $button .= "<input title='{$title}' class='button' type='submit' name='{$this->getWidgetId()}_button' id='{$this->getWidgetId()}' value='  {$value}  '/>\n";
+        $button .= '</form>';
+
         return $button;
     }
 }

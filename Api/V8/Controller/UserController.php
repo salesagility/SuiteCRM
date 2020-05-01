@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -50,18 +49,17 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * UserController
+ * UserController.
  *
  * @author gyula
  */
 class UserController extends BaseController
 {
-    
     /**
      * @var UserService
      */
     protected $userService;
-    
+
     /**
      * @param UserService $userService
      */
@@ -69,18 +67,19 @@ class UserController extends BaseController
     {
         $this->userService = $userService;
     }
-    
+
     /**
-     *
      * @param Request $request
      * @param Response $response
      * @param array $args
+     *
      * @return Response
      */
     public function getCurrentUser(Request $request, Response $response, array $args)
     {
         try {
             $jsonResponse = $this->userService->getCurrentUser($request);
+
             return $this->generateResponse($response, $jsonResponse, 200);
         } catch (Exception $exception) {
             return $this->generateErrorResponse($response, $exception, 400);

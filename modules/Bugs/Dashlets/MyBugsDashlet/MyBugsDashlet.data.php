@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,50 +42,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $current_user;
 
-$dashletData['MyBugsDashlet']['searchFields'] = array('date_entered'          => array('default' => ''),
-                                                      ''                      => array('default' => ''),
-                                                      'priority'              => array('default' => ''),
-                                                      'status'                => array('default' => array('Assigned', 'New', 'Pending')),
-                                                      'type'                  => array('default' => ''),
-                                                      'name'                  => array('default' => ''),
-                                                      'assigned_user_id'      => array('type'    => 'assigned_user_name',
-                                                                                     'label' => 'LBL_ASSIGNED_TO',
-                                                                                     'default' => $current_user->name));
-$dashletData['MyBugsDashlet']['columns'] = array('bug_number' => array('width'   => '5',
-                                                                       'label'   => 'LBL_NUMBER',
-                                                                       'default' => true),
-                                                 'name' => array('width'   => '40',
-                                                                 'label'   => 'LBL_LIST_SUBJECT',
-                                                                 'link'    => true,
-                                                                 'default' => true),
-                                                 'priority' => array('width'  => '10',
-                                                                     'label'   => 'LBL_PRIORITY',
-                                                                     'default' => true),
-                                                 'status' => array('width'   => '10',
-                                                                   'label'   => 'LBL_STATUS',
-                                                                   'default' => true),
-                                                 'resolution' => array('width'   => '15',
-                                                                       'label'   => 'LBL_RESOLUTION'),
-                                                 'release_name' => array('width'   => '15',
-                                                                         'label'   => 'LBL_FOUND_IN_RELEASE',
-                                                                         'related_fields' => array('found_in_release')),
-                                                 'type' => array('width'   => '15',
-                                                                 'label'   => 'LBL_TYPE'),
-                                                 'fixed_in_release_name' => array('width'   => '15',
-                                                                                  'label'   => 'LBL_FIXED_IN_RELEASE'),
-                                                 'source' => array('width'   => '15',
-                                                                   'label'   => 'LBL_SOURCE'),
-                                                 'date_entered' => array('width'   => '15',
-                                                                         'label'   => 'LBL_DATE_ENTERED'),
-                                                 'date_modified' => array('width'   => '15',
-                                                                         'label'   => 'LBL_DATE_MODIFIED'),
-                                                 'created_by' => array('width'   => '8',
-                                                                       'label'   => 'LBL_CREATED'),
-                                                 'assigned_user_name' => array('width'   => '8',
-                                                                               'label'   => 'LBL_LIST_ASSIGNED_USER'),
-                                                     );
+$dashletData['MyBugsDashlet']['searchFields'] = ['date_entered' => ['default' => ''],
+    '' => ['default' => ''],
+    'priority' => ['default' => ''],
+    'status' => ['default' => ['Assigned', 'New', 'Pending']],
+    'type' => ['default' => ''],
+    'name' => ['default' => ''],
+    'assigned_user_id' => ['type' => 'assigned_user_name',
+        'label' => 'LBL_ASSIGNED_TO',
+        'default' => $current_user->name]];
+$dashletData['MyBugsDashlet']['columns'] = ['bug_number' => ['width' => '5',
+    'label' => 'LBL_NUMBER',
+    'default' => true],
+    'name' => ['width' => '40',
+        'label' => 'LBL_LIST_SUBJECT',
+        'link' => true,
+        'default' => true],
+    'priority' => ['width' => '10',
+        'label' => 'LBL_PRIORITY',
+        'default' => true],
+    'status' => ['width' => '10',
+        'label' => 'LBL_STATUS',
+        'default' => true],
+    'resolution' => ['width' => '15',
+        'label' => 'LBL_RESOLUTION'],
+    'release_name' => ['width' => '15',
+        'label' => 'LBL_FOUND_IN_RELEASE',
+        'related_fields' => ['found_in_release']],
+    'type' => ['width' => '15',
+        'label' => 'LBL_TYPE'],
+    'fixed_in_release_name' => ['width' => '15',
+        'label' => 'LBL_FIXED_IN_RELEASE'],
+    'source' => ['width' => '15',
+        'label' => 'LBL_SOURCE'],
+    'date_entered' => ['width' => '15',
+        'label' => 'LBL_DATE_ENTERED'],
+    'date_modified' => ['width' => '15',
+        'label' => 'LBL_DATE_MODIFIED'],
+    'created_by' => ['width' => '8',
+        'label' => 'LBL_CREATED'],
+    'assigned_user_name' => ['width' => '8',
+        'label' => 'LBL_LIST_ASSIGNED_USER'],
+];

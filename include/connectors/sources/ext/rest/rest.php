@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,27 +40,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/connectors/sources/default/source.php');
+require_once 'include/connectors/sources/default/source.php';
 
 /**
- * REST generic connector
+ * REST generic connector.
+ *
  * @api
  */
 abstract class ext_rest extends source
 {
     protected $_url;
-
-    protected function fetchUrl($url)
-    {
-        $data = '';
-        $data = @file_get_contents($url);
-        if (empty($data)) {
-            $GLOBALS['log']->error("Unable to retrieve contents from url:[{$url}]");
-        }
-        return $data;
-    }
 
     public function getUrl()
     {
@@ -70,5 +59,16 @@ abstract class ext_rest extends source
     public function setUrl($url)
     {
         $this->_url = $url;
+    }
+
+    protected function fetchUrl($url)
+    {
+        $data = '';
+        $data = @file_get_contents($url);
+        if (empty($data)) {
+            $GLOBALS['log']->error("Unable to retrieve contents from url:[{$url}]");
+        }
+
+        return $data;
     }
 }

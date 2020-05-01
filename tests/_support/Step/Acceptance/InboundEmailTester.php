@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class InboundEmailTester extends \AcceptanceTester
 {
     /**
-     * Go to inbound email
+     * Go to inbound email.
      */
     public function gotoEmailSettings()
     {
@@ -15,7 +15,7 @@ class InboundEmailTester extends \AcceptanceTester
     }
 
     /**
-     * Populate bounce email account
+     * Populate bounce email account.
      */
     public function createBounceEmail()
     {

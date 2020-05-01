@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description: Handles the User Preferences and stores them in a separate table.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 class UserPreference extends SugarBean
 {
@@ -70,8 +70,8 @@ class UserPreference extends SugarBean
 
     public $disable_row_level_security = true;
     public $module_dir = 'UserPreferences';
-    public $field_defs = array();
-    public $field_defs_map = array();
+    public $field_defs = [];
+    public $field_defs_map = [];
     public $new_schema = true;
 
     protected $_userFocus;
@@ -79,7 +79,7 @@ class UserPreference extends SugarBean
     // Do not actually declare, use the functions statically
     public function __construct(
         User $user = null
-        ) {
+    ) {
         parent::__construct();
 
         $this->_userFocus = $user;
@@ -87,26 +87,27 @@ class UserPreference extends SugarBean
     }
 
     /**
-     * Get preference by name and category. Lazy loads preferences from the database per category
+     * Get preference by name and category. Lazy loads preferences from the database per category.
      *
      * @param string $name name of the preference to retreive
      * @param string $category name of the category to retreive, defaults to global scope
+     *
      * @return mixed the value of the preference (string, array, int etc)
      */
     public function getPreference(
         $name,
         $category = 'global'
-        ) {
+    ) {
         global $sugar_config;
 
         $user = $this->_userFocus;
 
         // if the unique key in session doesn't match the app or prefereces are empty
-        if (!isset($_SESSION[$user->user_name.'_PREFERENCES'][$category]) || (!empty($_SESSION['unique_key']) && $_SESSION['unique_key'] != $sugar_config['unique_key'])) {
+        if (!isset($_SESSION[$user->user_name . '_PREFERENCES'][$category]) || (!empty($_SESSION['unique_key']) && $_SESSION['unique_key'] != $sugar_config['unique_key'])) {
             $this->loadPreferences($category);
         }
-        if (isset($_SESSION[$user->user_name.'_PREFERENCES'][$category][$name])) {
-            return $_SESSION[$user->user_name.'_PREFERENCES'][$category][$name];
+        if (isset($_SESSION[$user->user_name . '_PREFERENCES'][$category][$name])) {
+            return $_SESSION[$user->user_name . '_PREFERENCES'][$category][$name];
         }
 
         // check to see if a default preference ( i.e. $sugar_config setting ) exists for this value )
@@ -115,6 +116,7 @@ class UserPreference extends SugarBean
         if (!is_null($value)) {
             return $value;
         }
+
         return null;
     }
 
@@ -123,12 +125,13 @@ class UserPreference extends SugarBean
      *
      * @param string $name name of the preference to retreive
      * @param string $category name of the category to retreive, defaults to global scope
+     *
      * @return mixed the value of the preference (string, array, int etc)
      */
     public function getDefaultPreference(
         $name,
         $category = 'global'
-        ) {
+    ) {
         global $sugar_config;
 
         // Doesn't support any prefs but global ones
@@ -142,8 +145,8 @@ class UserPreference extends SugarBean
         }
 
         // Next, check to see if it's one of the common problem ones
-        if (isset($sugar_config['default_'.$name])) {
-            return $sugar_config['default_'.$name];
+        if (isset($sugar_config['default_' . $name])) {
+            return $sugar_config['default_' . $name];
         }
         if ($name == 'datef') {
             return $sugar_config['default_date_format'];
@@ -157,7 +160,7 @@ class UserPreference extends SugarBean
     }
 
     /**
-     * Set preference by name and category. Saving will be done in utils.php -> sugar_cleanup
+     * Set preference by name and category. Saving will be done in utils.php -> sugar_cleanup.
      *
      * @param string $name name of the preference to retreive
      * @param mixed $value value of the preference to set
@@ -167,41 +170,42 @@ class UserPreference extends SugarBean
         $name,
         $value,
         $category = 'global'
-        ) {
+    ) {
         $user = $this->_userFocus;
 
         if (empty($user->user_name)) {
             return;
         }
 
-        if (!isset($_SESSION[$user->user_name.'_PREFERENCES'][$category])) {
+        if (!isset($_SESSION[$user->user_name . '_PREFERENCES'][$category])) {
             if (!$user->loadPreferences($category)) {
-                $_SESSION[$user->user_name.'_PREFERENCES'][$category] = array();
+                $_SESSION[$user->user_name . '_PREFERENCES'][$category] = [];
             }
         }
 
         // preferences changed or a new preference, save it to DB
-        if (!isset($_SESSION[$user->user_name.'_PREFERENCES'][$category][$name])
-            || (isset($_SESSION[$user->user_name.'_PREFERENCES'][$category][$name]) && $_SESSION[$user->user_name.'_PREFERENCES'][$category][$name] != $value)) {
+        if (!isset($_SESSION[$user->user_name . '_PREFERENCES'][$category][$name])
+            || (isset($_SESSION[$user->user_name . '_PREFERENCES'][$category][$name]) && $_SESSION[$user->user_name . '_PREFERENCES'][$category][$name] != $value)) {
             $GLOBALS['savePreferencesToDB'] = true;
             if (!isset($GLOBALS['savePreferencesToDBCats'])) {
-                $GLOBALS['savePreferencesToDBCats'] = array();
+                $GLOBALS['savePreferencesToDBCats'] = [];
             }
             $GLOBALS['savePreferencesToDBCats'][$category] = true;
         }
 
-        $_SESSION[$user->user_name.'_PREFERENCES'][$category][$name] = $value;
+        $_SESSION[$user->user_name . '_PREFERENCES'][$category][$name] = $value;
     }
 
     /**
-     * Loads preference by category from database. Saving will be done in utils.php -> sugar_cleanup
+     * Loads preference by category from database. Saving will be done in utils.php -> sugar_cleanup.
      *
      * @param string $category name of the category to retreive, defaults to global scope
+     *
      * @return bool successful?
      */
     public function loadPreferences(
         $category = 'global'
-        ) {
+    ) {
         global $sugar_config;
 
         $user = $this->_userFocus;
@@ -213,12 +217,15 @@ class UserPreference extends SugarBean
             // cn: moving this to only log when valid - throwing errors on install
             return $this->reloadPreferences($category);
         }
+
         return false;
     }
 
     /**
-     * Unconditionally reloads user preferences from the DB and updates the session
+     * Unconditionally reloads user preferences from the DB and updates the session.
+     *
      * @param string $category name of the category to retreive, defaults to global scope
+     *
      * @return bool successful?
      */
     public function reloadPreferences($category = 'global')
@@ -230,27 +237,28 @@ class UserPreference extends SugarBean
         }
         $GLOBALS['log']->debug('Loading Preferences DB ' . $user->user_name);
         if (!isset($_SESSION[$user->user_name . '_PREFERENCES'])) {
-            $_SESSION[$user->user_name . '_PREFERENCES'] = array();
+            $_SESSION[$user->user_name . '_PREFERENCES'] = [];
         }
         if (!isset($user->user_preferences) || !is_array($user->user_preferences)) {
-            $user->user_preferences = array();
+            $user->user_preferences = [];
         }
         $db = DBManagerFactory::getInstance();
-        $result = $db->query("SELECT contents FROM user_preferences WHERE assigned_user_id='$user->id' AND category = '" . $category . "' AND deleted = 0", false, 'Failed to load user preferences');
+        $result = $db->query("SELECT contents FROM user_preferences WHERE assigned_user_id='{$user->id}' AND category = '" . $category . "' AND deleted = 0", false, 'Failed to load user preferences');
         $row = $db->fetchByAssoc($result);
         if ($row) {
             $_SESSION[$user->user_name . '_PREFERENCES'][$category] = unserialize(base64_decode($row['contents']));
             $user->user_preferences[$category] = unserialize(base64_decode($row['contents']));
+
             return true;
-        } else {
-            $_SESSION[$user->user_name . '_PREFERENCES'][$category] = array();
-            $user->user_preferences[$category] = array();
         }
+        $_SESSION[$user->user_name . '_PREFERENCES'][$category] = [];
+        $user->user_preferences[$category] = [];
+
         return false;
     }
 
     /**
-     * Loads users timedate preferences
+     * Loads users timedate preferences.
      *
      * @return array 'date' - date format for user ; 'time' - time format for user
      */
@@ -260,13 +268,13 @@ class UserPreference extends SugarBean
 
         $user = $this->_userFocus;
 
-        $prefDate = array();
+        $prefDate = [];
 
         if (!empty($user) && $this->loadPreferences('global')) {
             // forced to set this to a variable to compare b/c empty() wasn't working
             $timeZone = TimeDate::userTimezone($user);
-            $timeFormat = $user->getPreference("timef");
-            $dateFormat = $user->getPreference("datef");
+            $timeFormat = $user->getPreference('timef');
+            $dateFormat = $user->getPreference('datef');
 
             // cn: bug xxxx cron.php fails because of missing preference when admin hasn't logged in yet
             $timeZone = empty($timeZone) ? 'America/Los_Angeles' : $timeZone;
@@ -284,27 +292,26 @@ class UserPreference extends SugarBean
             $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
 
             return $prefDate;
-        } else {
-            $prefDate['date'] = $timedate->get_date_format();
-            $prefDate['time'] = $timedate->get_time_format();
-
-            if (!empty($user) && $user->object_name == 'User') {
-                $timeZone = TimeDate::userTimezone($user);
-                // cn: bug 9171 - if user has no time zone, cron.php fails for InboundEmail
-                if (!empty($timeZone)) {
-                    $prefDate['userGmt'] = TimeDate::tzName($timeZone);
-                    $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
-                }
-            } else {
-                $timeZone = TimeDate::userTimezone($current_user);
-                if (!empty($timeZone)) {
-                    $prefDate['userGmt'] = TimeDate::tzName($timeZone);
-                    $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($current_user);
-                }
-            }
-
-            return $prefDate;
         }
+        $prefDate['date'] = $timedate->get_date_format();
+        $prefDate['time'] = $timedate->get_time_format();
+
+        if (!empty($user) && $user->object_name == 'User') {
+            $timeZone = TimeDate::userTimezone($user);
+            // cn: bug 9171 - if user has no time zone, cron.php fails for InboundEmail
+            if (!empty($timeZone)) {
+                $prefDate['userGmt'] = TimeDate::tzName($timeZone);
+                $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
+            }
+        } else {
+            $timeZone = TimeDate::userTimezone($current_user);
+            if (!empty($timeZone)) {
+                $prefDate['userGmt'] = TimeDate::tzName($timeZone);
+                $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($current_user);
+            }
+        }
+
+        return $prefDate;
     }
 
     /**
@@ -312,13 +319,13 @@ class UserPreference extends SugarBean
      * sugar_cleanup if a setPreference has been called during one round trip.
      *
      * @global user will use current_user if no user specificed in $user param
+     *
      * @param user $user User object to retrieve, otherwise user current_user
      * @param bool $all save all of the preferences? (Dangerous)
-     *
      */
     public function savePreferencesToDB(
         $all = false
-        ) {
+    ) {
         global $sugar_config;
         $GLOBALS['savePreferencesToDB'] = false;
 
@@ -330,26 +337,26 @@ class UserPreference extends SugarBean
         }
 
         $GLOBALS['log']->debug('Saving Preferences to DB ' . $user->user_name);
-        if (isset($_SESSION[$user->user_name. '_PREFERENCES']) && is_array($_SESSION[$user->user_name. '_PREFERENCES'])) {
+        if (isset($_SESSION[$user->user_name . '_PREFERENCES']) && is_array($_SESSION[$user->user_name . '_PREFERENCES'])) {
             $GLOBALS['log']->debug("Saving Preferences to DB: {$user->user_name}");
             // only save the categories that have been modified or all?
             if (!$all && isset($GLOBALS['savePreferencesToDBCats']) && is_array($GLOBALS['savePreferencesToDBCats'])) {
-                $catsToSave = array();
+                $catsToSave = [];
                 foreach ($GLOBALS['savePreferencesToDBCats'] as $category => $value) {
-                    if (isset($_SESSION[$user->user_name. '_PREFERENCES'][$category])) {
-                        $catsToSave[$category] = $_SESSION[$user->user_name. '_PREFERENCES'][$category];
+                    if (isset($_SESSION[$user->user_name . '_PREFERENCES'][$category])) {
+                        $catsToSave[$category] = $_SESSION[$user->user_name . '_PREFERENCES'][$category];
                     }
                 }
             } else {
-                $catsToSave = $_SESSION[$user->user_name. '_PREFERENCES'];
+                $catsToSave = $_SESSION[$user->user_name . '_PREFERENCES'];
             }
 
             foreach ($catsToSave as $category => $contents) {
                 $focus = new UserPreference($this->_userFocus);
-                $result = $focus->retrieve_by_string_fields(array(
+                $result = $focus->retrieve_by_string_fields([
                     'assigned_user_id' => $user->id,
                     'category' => $category,
-                    ));
+                ]);
                 $focus->assigned_user_id = $user->id; // MFH Bug #13862
                 $focus->deleted = 0;
                 $focus->contents = base64_encode(serialize($contents));
@@ -360,13 +367,13 @@ class UserPreference extends SugarBean
     }
 
     /**
-     * Resets preferences for a particular user. If $category is null all user preferences will be reset
+     * Resets preferences for a particular user. If $category is null all user preferences will be reset.
      *
      * @param string $category category to reset
      */
     public function resetPreferences(
         $category = null
-        ) {
+    ) {
         $user = $this->_userFocus;
 
         $GLOBALS['log']->debug('Reseting Preferences for user ' . $user->user_name);
@@ -384,14 +391,13 @@ class UserPreference extends SugarBean
         }
         $this->db->query($query);
 
-
         if ($category) {
-            unset($_SESSION[$user->user_name."_PREFERENCES"][$category]);
+            unset($_SESSION[$user->user_name . '_PREFERENCES'][$category]);
         } else {
             if (!empty($_COOKIE['sugar_user_theme']) && !headers_sent()) {
                 setcookie('sugar_user_theme', '', time() - 3600, null, null, isSSL(), true); // expire the sugar_user_theme cookie
             }
-            unset($_SESSION[$user->user_name."_PREFERENCES"]);
+            unset($_SESSION[$user->user_name . '_PREFERENCES']);
             if ($user->id == $GLOBALS['current_user']->id) {
                 session_destroy();
             }
@@ -407,7 +413,13 @@ class UserPreference extends SugarBean
 
     /**
      * Updates every user pref with a new key value supports 2 levels deep, use append to
-     * array if you want to append the value to an array
+     * array if you want to append the value to an array.
+     *
+     * @param mixed $key
+     * @param mixed $new_value
+     * @param mixed $sub_key
+     * @param mixed $is_value_array
+     * @param mixed $unset_value
      */
     public static function updateAllUserPrefs(
         $key,
@@ -428,10 +440,10 @@ class UserPreference extends SugarBean
             return;
         }
 
-        $result = $db->query("SELECT id, user_preferences, user_name FROM users");
+        $result = $db->query('SELECT id, user_preferences, user_name FROM users');
         while ($row = $db->fetchByAssoc($result)) {
-            $prefs = array();
-            $newprefs = array();
+            $prefs = [];
+            $newprefs = [];
 
             $prefs = unserialize(base64_decode($row['user_preferences']));
 
@@ -442,10 +454,10 @@ class UserPreference extends SugarBean
                     }
 
                     if (empty($prefs[$key][$sub_key])) {
-                        $prefs[$key][$sub_key] = array();
+                        $prefs[$key][$sub_key] = [];
                     }
                     $already_exists = false;
-                    foreach ($prefs[$key][$sub_key] as $k=>$value) {
+                    foreach ($prefs[$key][$sub_key] as $k => $value) {
                         if ($value == $new_value) {
                             $already_exists = true;
                             if ($unset_value) {
@@ -468,10 +480,10 @@ class UserPreference extends SugarBean
                     }
 
                     if (empty($prefs[$key])) {
-                        $prefs[$key] = array();
+                        $prefs[$key] = [];
                     }
                     $already_exists = false;
-                    foreach ($prefs[$key] as $k=>$value) {
+                    foreach ($prefs[$key] as $k => $value) {
                         if ($value == $new_value) {
                             $already_exists = true;
 
@@ -494,8 +506,6 @@ class UserPreference extends SugarBean
             $db->query("UPDATE users SET user_preferences = '{$newstr}' WHERE id = '{$row['id']}'");
         }
 
-        unset($prefs);
-        unset($newprefs);
-        unset($newstr);
+        unset($prefs, $newprefs, $newstr);
     }
 }

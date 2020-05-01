@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,32 +40,36 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Interfaces;
 
 /**
- * Interface OperatorInterface
- * @package SuiteCRM\API\JsonApi\v1\Filters\Interfaces
+ * Interface OperatorInterface.
  */
 interface OperatorInterface
 {
     /**
-     * Return filter format of the operator
+     * Return filter format of the operator.
+     *
      * @return string
      */
     public function toFilterOperator();
 
     /**
-     * Return Sql format of the operator
+     * Return Sql format of the operator.
+     *
      * @return string
      */
     public function toSqlOperator();
 
     /**
      * @param string $operator
+     *
      * @return bool
      */
     public function isOperator($operator);
 
     /**
-     * Converts to SQL Operands
+     * Converts to SQL Operands.
+     *
      * @param array $operands
+     *
      * @return string
      */
     public function toSqlOperands(array $operands);

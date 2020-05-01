@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\OAuth2\Repository;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -7,14 +8,14 @@ use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 class ScopeRepository implements ScopeRepositoryInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getScopeEntityByIdentifier($identifier)
     {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function finalizeScopes(
         array $scopes,

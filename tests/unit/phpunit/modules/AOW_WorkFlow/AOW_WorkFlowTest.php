@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOW_WorkFlow()
+    public function testAOWWorkFlow()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowWorkFlow = new AOW_WorkFlow();
@@ -29,7 +32,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(false, 'importable', $aowWorkFlow);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value
@@ -37,7 +40,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
     }
 
-    public function testmark_delete_related()
+    public function testmarkDeleteRelated()
     {
         // Create a workflow and a related condition
         $aowWorkFlow = new AOW_WorkFlow();
@@ -82,7 +85,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testload_flow_beans()
+    public function testloadFlowBeans()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
@@ -95,7 +98,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testrun_flows()
+    public function testrunFlows()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
@@ -103,7 +106,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue($result);
     }
 
-    public function testrun_flow()
+    public function testrunFlow()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
@@ -116,7 +119,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testrun_bean_flows()
+    public function testrunBeanFlows()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
@@ -129,65 +132,65 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue($result);
     }
 
-    public function testget_flow_beans()
+    public function testgetFlowBeans()
     {
         $aowWorkFlow = new AOW_WorkFlow();
-        
+
         //test for AOS_Quotes. it will return null as no test data is available
         $aowWorkFlow->flow_module = 'AOS_Quotes';
         $result = $aowWorkFlow->get_flow_beans();
-        $this->assertGreaterThanOrEqual(0, count((array)$result));
+        $this->assertGreaterThanOrEqual(0, count((array) $result));
     }
 
-    public function testbuild_flow_query_join()
+    public function testbuildFlowQueryJoin()
     {
         $aowWorkFlow = new AOW_WorkFlow();
-        $query = array();
+        $query = [];
 
         //test with type custom
-        $expected = array('join' => array('c' => 'LEFT JOIN calls_cstm c ON calls.id = c.id_c '));
-        $result = $aowWorkFlow->build_flow_custom_query_join('calls', 'c', new Call(), array());
+        $expected = ['join' => ['c' => 'LEFT JOIN calls_cstm c ON calls.id = c.id_c ']];
+        $result = $aowWorkFlow->build_flow_custom_query_join('calls', 'c', new Call(), []);
         $this->assertSame($expected, $result);
 
         //test with type relationship
-        $expected = array(
-                'join' => array('aos_products_quotes' => "LEFT JOIN aos_products_quotes aos_products_quotes ON aos_quotes.id=aos_products_quotes.parent_id AND aos_products_quotes.deleted=0\n\n"),
-                'select' => array("aos_products_quotes.id AS 'aos_products_quotes_id'"),
-        );
-        $result = $aowWorkFlow->build_flow_relationship_query_join('aos_products_quotes', new AOS_Quotes(), array());
+        $expected = [
+            'join' => ['aos_products_quotes' => "LEFT JOIN aos_products_quotes aos_products_quotes ON aos_quotes.id=aos_products_quotes.parent_id AND aos_products_quotes.deleted=0\n\n"],
+            'select' => ["aos_products_quotes.id AS 'aos_products_quotes_id'"],
+        ];
+        $result = $aowWorkFlow->build_flow_relationship_query_join('aos_products_quotes', new AOS_Quotes(), []);
         $this->assertSame($expected, $result);
     }
 
-    public function testbuild_flow_query_where()
+    public function testbuildFlowQueryWhere()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
         //test without presetting required object attributes
-        $expected = array();
+        $expected = [];
         $query = $aowWorkFlow->build_flow_query_where();
         $this->assertSame($expected, $query);
 
         //test with module required attributes set
         $aowWorkFlow->id = '1';
         $aowWorkFlow->flow_module = 'Calls';
-        $expected = array(
-                'where' => array('NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id=\'1\' AND aow_processed.parent_id=calls.id AND aow_processed.status = \'Complete\' AND aow_processed.deleted = 0)',
-                'calls.deleted = 0 ', ),
-                );
+        $expected = [
+            'where' => ['NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id=\'1\' AND aow_processed.parent_id=calls.id AND aow_processed.status = \'Complete\' AND aow_processed.deleted = 0)',
+                'calls.deleted = 0 ', ],
+        ];
         $query = $aowWorkFlow->build_flow_query_where();
         $this->assertSame($expected, $query);
 
         //test with flow_run_on and multiple_runs attributes set
-        $expected = array(
-                        'where' => array('calls.date_entered > \'\'', 'calls.deleted = 0 '),
-                    );
+        $expected = [
+            'where' => ['calls.date_entered > \'\'', 'calls.deleted = 0 '],
+        ];
         $aowWorkFlow->flow_run_on = 'New_Records';
         $aowWorkFlow->multiple_runs = 1;
         $query = $aowWorkFlow->build_flow_query_where();
         $this->assertSame($expected, $query);
     }
 
-    public function testbuild_query_where()
+    public function testbuildQueryWhere()
     {
         self::markTestIncomplete('[PHPUnit_Framework_Exception] unserialize(): Error at offset 0 of 5 bytes');
         $aowWorkFlow = new AOW_WorkFlow();
@@ -196,16 +199,16 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $call = new Call();
         $aowCondition = new AOW_Condition();
         $aowCondition->name = 'test';
-        $aowCondition->module_path = base64_encode(serialize(array('')));
+        $aowCondition->module_path = base64_encode(serialize(['']));
         $aowCondition->field = 'name';
         $aowCondition->value = 'testval';
 
         //test with contains operator
         $aowCondition->operator = 'Contains';
         $aowCondition->value_type = 'Value';
-        $expected = array(
-                'where' => array(".name LIKE CONCAT('%', 'testval' ,'%')"),
-        );
+        $expected = [
+            'where' => [".name LIKE CONCAT('%', 'testval' ,'%')"],
+        ];
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
         $this->assertEquals($expected, $query);
 
@@ -213,9 +216,9 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $aowCondition->operator = 'Starts_With';
         $aowCondition->value_type = 'Value';
 
-        $expected = array(
-            'where' => array(".name LIKE CONCAT('testval' ,'%')"),
-        );
+        $expected = [
+            'where' => [".name LIKE CONCAT('testval' ,'%')"],
+        ];
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
         $this->assertEquals($expected, $query);
 
@@ -223,9 +226,9 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $aowCondition->operator = 'Equal_To';
         $aowCondition->value_type = 'Value';
 
-        $expected = array(
-                'where' => array(".name = 'testval'"),
-        );
+        $expected = [
+            'where' => [".name = 'testval'"],
+        ];
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
         $this->assertEquals($expected, $query);
 
@@ -233,27 +236,27 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $aowCondition->operator = 'Equal_To';
         $aowCondition->value_type = 'Date';
 
-        $expected = array(
-                'where' => array('.name = DATE_ADD(calls., INTERVAL   )'),
-        );
+        $expected = [
+            'where' => ['.name = DATE_ADD(calls., INTERVAL   )'],
+        ];
 
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-        
+
         $this->assertEquals($expected, $query);
 
         //test with value type Field
         $aowCondition->operator = 'Equal_To';
         $aowCondition->value_type = 'Field';
 
-        $expected = array(
-                'where' => array('.name = calls.testval'),
-        );
+        $expected = [
+            'where' => ['.name = calls.testval'],
+        ];
 
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
         $this->assertEquals($expected, $query);
     }
 
-    public function testcheck_valid_bean()
+    public function testcheckValidBean()
     {
         $aowWorkFlow = new AOW_WorkFlow();
         $aowWorkFlow->flow_run_on = 'New_Records';
@@ -264,7 +267,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue($result);
     }
 
-    public function testcompare_condition()
+    public function testcompareCondition()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
@@ -277,8 +280,8 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue($aowWorkFlow->compare_condition(5, 4, 'Greater_Than_or_Equal_To'));
         $this->assertTrue($aowWorkFlow->compare_condition(2, 3, 'Less_Than_or_Equal_To'));
         $this->assertTrue($aowWorkFlow->compare_condition('', '', 'is_null'));
-        $this->assertTrue($aowWorkFlow->compare_condition('test2', array('test1', 'test2'), 'One_of'));
-        $this->assertTrue($aowWorkFlow->compare_condition('test', array('test1', 'test2'), 'Not_One_of'));
+        $this->assertTrue($aowWorkFlow->compare_condition('test2', ['test1', 'test2'], 'One_of'));
+        $this->assertTrue($aowWorkFlow->compare_condition('test', ['test1', 'test2'], 'Not_One_of'));
 
         //These do not return bool but 'strpos' result
         //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
@@ -291,7 +294,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(4, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
     }
 
-    public function testcheck_in_group()
+    public function testcheckInGroup()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
@@ -300,7 +303,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $this->assertFalse($aowWorkFlow->check_in_group(1, 'Calls', 1));
     }
 
-    public function testrun_actions()
+    public function testrunActions()
     {
         $aowWorkFlow = new AOW_WorkFlow();
 
@@ -315,7 +318,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
         //test for a entry in AOW_Processed table.
         $processed = new AOW_Processed();
-        $processed->retrieve_by_string_fields(array('aow_workflow_id' => 1, 'parent_id' => 1));
+        $processed->retrieve_by_string_fields(['aow_workflow_id' => 1, 'parent_id' => 1]);
 
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($processed->id));

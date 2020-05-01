@@ -109,7 +109,7 @@ EOQ;
     }
 
     /**
-     * Returns an associative array with their class name and translated label
+     * Returns an associative array with their class name and translated label.
      *
      * @return array
      */

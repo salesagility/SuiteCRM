@@ -5,12 +5,12 @@ use Faker\Generator;
 class ProjectsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class ProjectsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an administrator I want to view the projects module.
+     * As an administrator I want to view the projects module
      */
     public function testScenarioViewProjectsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the projects module for testing');
 
@@ -54,13 +54,13 @@ class ProjectsCest
      * @param \Step\Acceptance\Projects $project
      *
      * As administrative user I want to create a project so that I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateProject(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Projects $project
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Projects $project
     ) {
         $I->wantTo('Create a Project');
 
@@ -71,7 +71,7 @@ class ProjectsCest
 
         // Create project
         $this->fakeData->seed($this->fakeDataSeed);
-        $project->createProject('Test_'. $this->fakeData->company());
+        $project->createProject('Test_' . $this->fakeData->company());
 
         // Delete project
         $detailView->clickActionMenuItem('Delete');

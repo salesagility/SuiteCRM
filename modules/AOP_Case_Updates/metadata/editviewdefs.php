@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @package Advanced OpenPortal
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,56 +16,43 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 $module_name = 'AOP_Case_Updates';
-$viewdefs [$module_name] =
-    array(
-        'EditView' =>
-        array(
-            'templateMeta' =>
-            array(
+$viewdefs[$module_name] =
+    [
+        'EditView' => [
+            'templateMeta' => [
                 'maxColumns' => '2',
-                'widths' =>
-                array(
-                    0 =>
-                    array(
+                'widths' => [
+                    0 => [
                         'label' => '10',
                         'field' => '30',
-                    ),
-                    1 =>
-                    array(
+                    ],
+                    1 => [
                         'label' => '10',
                         'field' => '30',
-                    ),
-                ),
-            ),
-            'panels' =>
-            array(
-                'default' =>
-                array(
-                    0 =>
-                    array(
+                    ],
+                ],
+            ],
+            'panels' => [
+                'default' => [
+                    0 => [
                         0 => 'name',
                         1 => 'assigned_user_name',
-                    ),
-                    1 =>
-                    array(
+                    ],
+                    1 => [
                         0 => 'description',
-                        1 =>
-                        array(
+                        1 => [
                             'name' => 'aop_case_updates_contacts_1_name',
-                        ),
-                    ),
-                    2 =>
-                    array(
-                        0 =>
-                        array(
+                        ],
+                    ],
+                    2 => [
+                        0 => [
                             'name' => 'cases_aop_case_updates_1_name',
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    );
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ];

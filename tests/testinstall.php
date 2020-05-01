@@ -1,10 +1,11 @@
 <?php
+
 $sapi_type = php_sapi_name();
 if (substr($sapi_type, 0, 3) != 'cli') {
     die('testinstall.php is CLI only.');
 }
 
-/* DEFINE SOME VARIABLES FOR INSTALLER */
+// DEFINE SOME VARIABLES FOR INSTALLER
 $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REQUEST_URI'] = 'install.php';
 $_SERVER['SERVER_SOFTWARE'] = 'Apache';
@@ -16,7 +17,6 @@ $_REQUEST['cli'] = true;
 
 // this will fix warning in modules/Users/Save.php:295 during installation
 $_POST['email_reminder_checked'] = false;
-
 
 try {
     ob_start();

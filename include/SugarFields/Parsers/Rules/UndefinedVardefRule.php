@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,17 +41,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * UndefinedVardefRule.php
+ * UndefinedVardefRule.php.
  *
  * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.
  *
  * @author Collin Lee
  */
-
-require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/BaseRule.php';
 
 class UndefinedVardefRule extends BaseRule
 {
@@ -59,12 +57,11 @@ class UndefinedVardefRule extends BaseRule
     {
     }
 
-
     public function parsePanels($panels, $view)
     {
-        foreach ($panels as $name=>$panel) {
-            foreach ($panel as $rowCount=>$row) {
-                foreach ($row as $key=>$column) {
+        foreach ($panels as $name => $panel) {
+            foreach ($panel as $rowCount => $row) {
+                foreach ($row as $key => $column) {
                     if (is_array($column) && isset($column['name']) && empty($column['name'])) {
                         $panels[$name][$rowCount][$key] = '';
                     } else {

@@ -1,9 +1,10 @@
 <?php
+
 namespace Test\Api\V8;
 
 use ApiTester;
-use \Exception;
-use \Codeception\Exception\ModuleException;
+use Codeception\Exception\ModuleException;
+use Exception;
 
 require_once __DIR__ . '/../../../include/utils.php';
 

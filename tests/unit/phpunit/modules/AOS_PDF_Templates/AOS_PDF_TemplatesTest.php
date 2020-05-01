@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOS_PDF_TemplatesTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -13,7 +16,7 @@ class AOS_PDF_TemplatesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = new User();
     }
 
-    public function testAOS_PDF_Templates()
+    public function testAOSPDFTemplates()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosPdfTemplates = new AOS_PDF_Templates();

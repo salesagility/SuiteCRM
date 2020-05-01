@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -55,19 +53,22 @@ class NonDBLocalization extends Localization
     }
 
     /**
-     * Creates dropdown items that have localized example names while filtering out invalid formats
+     * Creates dropdown items that have localized example names while filtering out invalid formats.
      *
      * @override
+     *
      * @param array un-prettied dropdown list
+     * @param mixed $options
+     *
      * @return array array of dropdown options
      */
     public function getUsableLocaleNameOptions($options)
     {
         global $mod_strings;
-        $examples = array('s' => $mod_strings['LBL_LOCALE_NAME_FIRST'],
+        $examples = ['s' => $mod_strings['LBL_LOCALE_NAME_FIRST'],
             'f' => $mod_strings['LBL_LOCALE_NAME_LAST'],
-            'l' => $mod_strings['LBL_LOCALE_NAME_SALUTATION']);
-        $newOpts = array();
+            'l' => $mod_strings['LBL_LOCALE_NAME_SALUTATION']];
+        $newOpts = [];
         foreach ($options as $key => $val) {
             if ($this->isAllowedNameFormat($key) && $this->isAllowedNameFormat($val)) {
                 $newVal = '';
@@ -82,6 +83,7 @@ class NonDBLocalization extends Localization
                 $newOpts[$key] = $newVal;
             }
         }
+
         return $newOpts;
     }
 }
@@ -90,60 +92,110 @@ class InstallLayout
 {
     public static function getSelect($name, $options, $default)
     {
-        $out = "<select name=\"$name\">";
+        $out = "<select name=\"{$name}\">";
         foreach ($options as $key => $value) {
             $selected = '';
-            if ($key==$default) {
+            if ($key == $default) {
                 $selected = ' selected="selected"';
             }
-            $out .= "<option label=\"$value\" value=\"$key\"$selected>$value</option>";
+            $out .= "<option label=\"{$value}\" value=\"{$key}\"{$selected}>{$value}</option>";
         }
-        $out .= "</select>";
+        $out .= '</select>';
+
+        return $out;
+    }
+
+    /**
+     * @param $data   form data
+     *
+     * @return string   output
+     */
+    public function show($data = null)
+    {
+        foreach ($data as $__key => $__val) {
+            ${$__key} = $__val;
+        }
+        $formId = 'installForm';
+        $out = $this->getOutput(
+            $this->getHeader(
+                $mod_strings,
+                $this->getHeaderStyles(),
+                $this->getHeaderScripts($sugar_version, $js_custom_version)
+            ),
+            $this->getForm(
+                $mod_strings,
+                $formId,
+                $formId,
+                $errs,
+                $this->getFormItems(
+                    $mod_strings,
+                    $app_list_strings,
+                    $sugarConfigDefaults,
+                    $drivers,
+                    $checked,
+                    $db,
+                    $errors,
+                    $supportedLanguages,
+                    $current_language,
+                    $customSession,
+                    $customLog,
+                    $customId,
+                    $customSessionHidden,
+                    $customLogHidden,
+                    $customIdHidden
+                ),
+                $this->getFormControlls($mod_strings, $formId),
+                $this->getFormScripts($mod_strings, $next_step),
+                $next_step
+            ),
+            $sugar_md,
+            $mod_strings
+        );
+        echo $out;
+
         return $out;
     }
 
     private function getHeaderStyles()
     {
-        $out = <<<EOQ
+        return <<<'EOQ'
        <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
        <link rel="stylesheet" href="install/install2.css" type="text/css">
        <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
        <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
        <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
 EOQ;
-        return $out;
     }
 
     private function getHeaderScripts($sugar_version, $js_custom_version)
     {
-        $out = <<<EOQ
+        return <<<EOQ
             <script src="include/javascript/jquery/jquery-min.js"></script>
             <script src="cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
 EOQ;
-        return $out;
     }
 
     /**
      * @param $title page title
      * @param $styles linked css files (string)
      * @param $scripts linked javascript files (string)
+     * @param mixed $mod_strings
+     *
      * @return string Install page layout header
      */
     private function getHeader($mod_strings, $styles, $scripts)
     {
-        $out = <<<EOQ
+        return <<<EOQ
     <head>
        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
        <meta http-equiv="Content-Style-Type" content="text/css">
        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
        <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_SYSOPTS_DB_TITLE']}</title>
-       $styles
-       $scripts
+       {$styles}
+       {$scripts}
     </head>
 EOQ;
-        return $out;
     }
-
 
     /**
      * @param $name form tag name
@@ -152,27 +204,31 @@ EOQ;
      * @param $title form header line
      * @param $items form items (string)
      * @param $controlls form controll buttons (string)
+     * @param mixed $mod_strings
+     * @param mixed $scripts
+     * @param mixed $next_step
+     *
      * @return string
      */
     private function getForm($mod_strings, $name, $id, $errs, $items, $controlls, $scripts, $next_step)
     {
-        $out = <<<EOQ
+        return <<<EOQ
             <iframe id="upload_target" name="upload_target" src="install.php?sugar_body_only=1&uploadLogoFrame=1" style="width:0;height:0;border:0px solid #fff;"></iframe>
-            <form action="install.php" method="post" name="$name" id="$id" enctype="multipart/form-data">
+            <form action="install.php" method="post" name="{$name}" id="{$id}" enctype="multipart/form-data">
                 <input type="hidden" name="current_step" value="{$next_step}">
                 <div id="install_content">
                     <div id="installoptions">
                         {$errs}
-                        $items
+                        {$items}
                     </div>
                 </div>
                 <div class="clear"></div>
                 <hr>
                 <div id="installcontrols">
-                    $controlls
+                    {$controlls}
                 </div>
                 <script type="text/javascript">
-                    $scripts;
+                    {$scripts};
                 </script>
             </form>
             <div id="installStatus" style="display: none;">
@@ -180,23 +236,24 @@ EOQ;
                 <p><img alt="Status" src="install/processing.gif"><br><span class="preloader-status"></span></p>
             </div>
 EOQ;
-
-        return $out;
     }
-
 
     /**
      * @param $header install page head
      * @param $form install page form step
+     * @param mixed $sugar_md
+     * @param mixed $mod_strings
+     *
      * @return string install page
      */
     private function getOutput($header, $form, $sugar_md, $mod_strings)
     {
         $langHeader = get_language_header();
-        $out = <<<EOQ
+
+        return <<<EOQ
     <!DOCTYPE HTML>
     <html {$langHeader}>
-    $header
+    {$header}
     <body onload="//document.getElementById('button_next2').focus();">
         <!--SuiteCRM installer-->
         <div id="install_container">
@@ -215,7 +272,7 @@ EOQ;
                         <i class="icon-progress-2"></i>
                     </div>
                 </header>
-                $form
+                {$form}
             </div>
 
             <footer id="install_footer">
@@ -225,7 +282,6 @@ EOQ;
     </body>
     </html>
 EOQ;
-        return $out;
     }
 
     private function getFormItems(
@@ -245,13 +301,9 @@ EOQ;
         $customLogHidden,
         $customIdHidden
     ) {
-
-
-
         // ------------------------------
         //  DB Type and DB configuration
         // ---------------------------------->
-
 
         // database selection
         $out_dbtypesel = "
@@ -262,22 +314,20 @@ EOQ;
           <h3>{$mod_strings['LBL_SYSOPTS_DB']}</h3>";
 
         foreach ($drivers as $type => $driver) {
-            $oci = ($type == "oci8")?"":'none'; // hack for special oracle message
-            $out_dbtypesel.=<<<EOQ
-                <input type="radio" class="checkbox" name="setup_db_type" id="setup_db_type" value="$type" {$checked[$type]} onclick="onDBTypeClick(this);//document.getElementById('ociMsg').style.display='$oci'"/>{$mod_strings[$driver->label]}<br>
+            $oci = ($type == 'oci8') ? '' : 'none'; // hack for special oracle message
+            $out_dbtypesel .= <<<EOQ
+                <input type="radio" class="checkbox" name="setup_db_type" id="setup_db_type" value="{$type}" {$checked[$type]} onclick="onDBTypeClick(this);//document.getElementById('ociMsg').style.display='{$oci}'"/>{$mod_strings[$driver->label]}<br>
 EOQ;
         }
-        $out_dbtypesel.=<<<EOQ
+        $out_dbtypesel .= <<<'EOQ'
         </div>
             <div name="ociMsg" id="ociMsg" style="display:none"></div>
     <!-- </div> -->
 EOQ;
 
-
         $out2 = $out_dbtypesel;
 
-
-        $out2.=<<<EOQ2
+        $out2 .= <<<EOQ2
 
         <!-- <div class="floatbox"> -->
 
@@ -289,57 +339,52 @@ EOQ2;
         $config_params = $db->installConfig();
         $form = '';
         foreach ($config_params as $group => $gdata) {
-            $form.= "<div class='install_block'>";
+            $form .= "<div class='install_block'>";
             if ($mod_strings[$group . '_LABEL']) {
                 $form .= "<label>{$mod_strings[$group . '_LABEL']}" . "<i> i <div class=\"tooltip\">{$mod_strings[$group]}</div></i></label>\n";
             }
             foreach ($gdata as $name => $value) {
                 if (!empty($value)) {
                     if (!empty($value['required'])) {
-                        $form .= "<span class=\"required\">*</span>";
-                    } else {
+                        $form .= '<span class="required">*</span>';
                     }
+
                     if (!empty($_SESSION[$name])) {
                         $sessval = $_SESSION[$name];
                     } else {
                         $sessval = '';
                     }
-                    if (!empty($value["type"])) {
-                        $type = $value["type"];
+                    if (!empty($value['type'])) {
+                        $type = $value['type'];
                     } else {
                         $type = '';
                     }
 
-                    $form .= <<<FORM
+                    $form .= <<<'FORM'
 
 FORM;
                     //if the type is password, set a hidden field to capture the value.  This is so that we can properly encode special characters, which is a limitation with password fields
-                    if ($type=='password') {
-                        $form .= "</div><div class=\"install_block\"><label>{$mod_strings['LBL_DBCONF_TITLE_PSWD_INFO_LABEL']}</label><span>&nbsp;</span><input type='$type' name='{$name}_entry' id='{$name}_entry' value='".urldecode($sessval)."'><input type='hidden' name='$name' id='$name' value='".urldecode($sessval)."'></div><div class=\"install_block\">";
+                    if ($type == 'password') {
+                        $form .= "</div><div class=\"install_block\"><label>{$mod_strings['LBL_DBCONF_TITLE_PSWD_INFO_LABEL']}</label><span>&nbsp;</span><input type='{$type}' name='{$name}_entry' id='{$name}_entry' value='" . urldecode($sessval) . "'><input type='hidden' name='{$name}' id='{$name}' value='" . urldecode($sessval) . "'></div><div class=\"install_block\">";
                     } else {
-                        $form .= "<input type='$type' name='$name' id='$name' value='$sessval'>";
+                        $form .= "<input type='{$type}' name='{$name}' id='{$name}' value='{$sessval}'>";
                     }
 
-
-
-                    $form .= <<<FORM
+                    $form .= <<<'FORM'
 FORM;
                 } else {
-                    $form .= "<input name=\"$name\" id=\"$name\" value=\"\" type=\"hidden\">\n";
+                    $form .= "<input name=\"{$name}\" id=\"{$name}\" value=\"\" type=\"hidden\">\n";
                 }
             }
-            $form .= "</div>";
+            $form .= '</div>';
         }
 
         $out2 .= $form;
 
-
-
         // ---------- user data set (dbConfig_a.php)
 
-
         //if we are installing in custom mode, include the following html
-        if ($db->supports("create_user")) {
+        if ($db->supports('create_user')) {
             // create / set db user dropdown
             $auto_select = '';
             $provide_select = '';
@@ -362,16 +407,14 @@ FORM;
                 $same_select = 'selected';
             }
             $dbUSRDD = "<select name='dbUSRData' id='dbUSRData' onchange='toggleDBUser();'>";
-            $dbUSRDD .= "<option value='provide' $provide_select>" . $mod_strings['LBL_DBCONFIG_PROVIDE_DD'] . "</option>";
-            $dbUSRDD .= "<option value='create' $create_select>" . $mod_strings['LBL_DBCONFIG_CREATE_DD'] . "</option>";
-            $dbUSRDD .= "<option value='same' $same_select>" . $mod_strings['LBL_DBCONFIG_SAME_DD'] . "</option>";
-            $dbUSRDD .= "</select><br>&nbsp;";
-
+            $dbUSRDD .= "<option value='provide' {$provide_select}>" . $mod_strings['LBL_DBCONFIG_PROVIDE_DD'] . '</option>';
+            $dbUSRDD .= "<option value='create' {$create_select}>" . $mod_strings['LBL_DBCONFIG_CREATE_DD'] . '</option>';
+            $dbUSRDD .= "<option value='same' {$same_select}>" . $mod_strings['LBL_DBCONFIG_SAME_DD'] . '</option>';
+            $dbUSRDD .= '</select><br>&nbsp;';
 
             $setup_db_sugarsales_password = urldecode($_SESSION['setup_db_sugarsales_password']);
             $setup_db_sugarsales_user = urldecode($_SESSION['setup_db_sugarsales_user']);
             $setup_db_sugarsales_password_retype = urldecode($_SESSION['setup_db_sugarsales_password_retype']);
-
 
             $out2 .= <<<EOQ2
 <br>
@@ -383,7 +426,7 @@ FORM;
 <div class='install_block'>
     <div class="formrow">
         <label>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}<i> i <div class="tooltip">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div></i></label>
-        $dbUSRDD
+        {$dbUSRDD}
     </div>
     <div class="clear"></div>
     <span id='connection_user_div' style="display:none">
@@ -408,12 +451,10 @@ FORM;
 
 EOQ2;
         }
-        $out =$out2;
-
-
+        $out = $out2;
 
         // ------ siteConfig_a.php
-        $out .=<<<EOQ
+        $out .= <<<EOQ
         </div>
     </div>
     <div class="floatbox" id="fb6">
@@ -425,8 +466,8 @@ EOQ2;
                     <h3>{$mod_strings['LBL_SITECFG_TITLE2']}<div class="tooltip-toggle"><em> i </em><div class="tooltip">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</div></div></h3>
 EOQ;
         //hide this in typical mode
-        if (!empty($_SESSION['install_type']) && strtolower($_SESSION['install_type'])=='custom') {
-            $out .=<<<EOQ
+        if (!empty($_SESSION['install_type']) && strtolower($_SESSION['install_type']) == 'custom') {
+            $out .= <<<EOQ
 <div class='install_block'>
     {$mod_strings['LBL_SITECFG_URL_MSG']}
     <span class="required">*</span>
@@ -439,7 +480,7 @@ EOQ;
 </div>
 EOQ;
             $db = getDbConnection();
-            if ($db->supports("collation")) {
+            if ($db->supports('collation')) {
                 $collationOptions = $db->getCollationList();
             }
             if (!empty($collationOptions)) {
@@ -449,12 +490,12 @@ EOQ;
                     $default = $db->getDefaultCollation();
                 }
                 $options = get_select_options_with_id(array_combine($collationOptions, $collationOptions), $default);
-                $out .=<<<EOQ
+                $out .= <<<EOQ
      <div class='install_block'>
         <br>{$mod_strings['LBL_SITECFG_COLLATION_MSG']}
         <span class="required">*</span>
         <label><b>{$mod_strings['LBL_COLLATION']}</b></label>
-        <select name="setup_db_collation" id="setup_db_collation">$options</select><br>
+        <select name="setup_db_collation" id="setup_db_collation">{$options}</select><br>
      </div>
 EOQ;
             }
@@ -469,7 +510,7 @@ EOQ;
             $_SESSION['setup_site_admin_user_name'] = null;
         }
 
-        $out .=<<<EOQ
+        $out .= <<<EOQ
 <div class='install_block'>
     <!--
     <p class="ibmsg">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
@@ -517,8 +558,7 @@ EOQ;
 -->
 EOQ;
 
-
-        $out.=<<<EOQ
+        $out .= <<<'EOQ'
 </div>
 EOQ;
 
@@ -526,12 +566,11 @@ EOQ;
         //  Choose Demo Data
         // ------------------------->
 
-
         //demo data select
-        $demoDD = "<select name='demoData' id='demoData' class='select'><option value='no' >".$mod_strings['LBL_NO']."</option><option value='yes'>".$mod_strings['LBL_YES']."</option>";
-        $demoDD .= "</select>";
+        $demoDD = "<select name='demoData' id='demoData' class='select'><option value='no' >" . $mod_strings['LBL_NO'] . "</option><option value='yes'>" . $mod_strings['LBL_YES'] . '</option>';
+        $demoDD .= '</select>';
 
-        $out .=<<<EOQ3
+        $out .= <<<EOQ3
         </div>
         </div>
 
@@ -559,17 +598,16 @@ EOQ3;
         // ------------------------->
         $scenarioSelection = "<p class='ibmsg'>{$mod_strings['LBL_WIZARD_SCENARIO_EMPTY']}</p>";
         if (isset($_SESSION['installation_scenarios']) && !empty($_SESSION['installation_scenarios'])) {
-            $scenarioSelection = "";
+            $scenarioSelection = '';
             foreach ($_SESSION['installation_scenarios'] as $scenario) {
                 $key = $scenario['key'];
                 $description = $scenario['description'];
                 $scenarioModuleList = implode(',', $scenario['modulesScenarioDisplayName']);
                 $title = $scenario['title'];
 
-                $scenarioSelection.= "<input type='checkbox' name='scenarios[]' value='$key' checked><b>$title</b>.  $description ($scenarioModuleList).<br>";
+                $scenarioSelection .= "<input type='checkbox' name='scenarios[]' value='{$key}' checked><b>{$title}</b>.  {$description} ({$scenarioModuleList}).<br>";
             }
         }
-
 
         $out .= <<<EOQ
 
@@ -578,7 +616,7 @@ EOQ3;
             <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_WIZARD_SCENARIO_TITLE']}</h3>
             <div class="form_section" style="display: none;">
                 <p class="ibmsg">{$mod_strings['LBL_WIZARD_SCENARIO_DESC']}</p>
-                <div class="formrow">$scenarioSelection</div>
+                <div class="formrow">{$scenarioSelection}</div>
                 <div class="clear"></div>
             </div>
         </div>
@@ -605,7 +643,7 @@ EOQ;
         if (empty($_SESSION['smtp_tab_selected'])) {
             $_SESSION['smtp_tab_selected'] = 'smtp_tab_other';
         }
-        
+
         if (!isset($_SESSION['smtp_from_name']) || !$_SESSION['smtp_from_name']) {
             $_SESSION['smtp_from_name'] = 'SuiteCRM';
         }
@@ -923,18 +961,11 @@ EOQ;
             </div> <!-- toggle hidden box end -->
 EOQ;
 
-
         // db setup (dbConfig_a.php)
-        $out2 =<<<EOQ2
+        $out2 = <<<'EOQ2'
             <input type='hidden' name='setup_db_drop_tables' id='setup_db_drop_tables' value=''>
         </div>
 EOQ2;
-
-
-
-
-
-
 
         // ----------
         //  Branding
@@ -947,7 +978,6 @@ EOQ2;
         if (!file_exists($currentLogoLink)) {
             $hiddenLogo = 'display:none;';
         }
-
 
         // TODO--low: check the tooltip text at the logo image!
 
@@ -990,18 +1020,13 @@ EOQ2;
 
                 <div class="formrow" id="current_logo_row">
                     <label>{$mod_strings['CURRENT_LOGO']} <i>i<div class="tooltip">{$mod_strings['CURRENT_LOGO_HELP']}</div></i> </label>
-                    <img height="100" src="$currentLogoLink" alt="Company Logo" style="max-height: 100px; max-width: 230px; float:left; $hiddenLogo" />
+                    <img height="100" src="{$currentLogoLink}" alt="Company Logo" style="max-height: 100px; max-width: 230px; float:left; {$hiddenLogo}" />
                 </div>
 
                 <div class="clear"></div>
             </div>
 
 EOQ;
-
-
-
-
-
 
         // System location defaults
 
@@ -1010,7 +1035,7 @@ EOQ;
         $defaultDateFormatSelect = self::getSelect('default_date_format', $sugarConfigDefaults['date_formats'], empty($_SESSION['default_date_format']) ? $sugarConfigDefaults['default_date_format'] : $_SESSION['default_date_format']);
         $defaultTimeFormatSelect = self::getSelect('default_time_format', $sugarConfigDefaults['time_formats'], empty($_SESSION['default_time_format']) ? 'h:ia' : $_SESSION['default_time_format'] /* $sugarConfigDefaults['timef'] */);
 
-        $timezoneSelect = self::getSelect('timezone', array_merge(array(TimeDate::guessTimezone() => TimeDate::guessTimezone()), TimeDate::getTimezoneList()), TimeDate::guessTimezone());
+        $timezoneSelect = self::getSelect('timezone', array_merge([TimeDate::guessTimezone() => TimeDate::guessTimezone()], TimeDate::getTimezoneList()), TimeDate::guessTimezone());
 
         //$defaultLanguageSelect = get_select_options_with_id($supportedLanguages, $current_language);
         $defaultLanguageSelect = self::getSelect('default_language', $supportedLanguages, $current_language);
@@ -1033,26 +1058,26 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_DATE_FORMAT']}</label>
-                    $defaultDateFormatSelect
+                    {$defaultDateFormatSelect}
                 </div>
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_TIME_FORMAT']}</label>
-                    $defaultTimeFormatSelect
+                    {$defaultTimeFormatSelect}
                 </div>
 
                 <div class="clear"></div>
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_TIMEZONE']}</label>
-                    $timezoneSelect
+                    {$timezoneSelect}
                 </div>
 
                 <div class="clear"></div>
 
                 <div class="formrow" style="display: none;">
                     <label>{$mod_strings['LBL_LANGUAGE']}</label>
-                    $defaultLanguageSelect
+                    {$defaultLanguageSelect}
                 </div>
 
                 <div class="clear"></div>
@@ -1090,7 +1115,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_NAME_FORMAT']}</label>
-                    $defaultLocalNameFormatSelect
+                    {$defaultLocalNameFormatSelect}
                 </div>
                 -->
 
@@ -1100,11 +1125,10 @@ EOQ;
 
 EOQ;
 
+        $out .= '<div class="floatbox full">';
+        $out .= "    <h3 onclick=\"$(this).next().toggle();\" class=\"toggler\">&raquo; {$mod_strings['LBL_SITECFG_SECURITY_TITLE']}</h3>";
 
-        $out.= "<div class=\"floatbox full\">";
-        $out.= "    <h3 onclick=\"$(this).next().toggle();\" class=\"toggler\">&raquo; {$mod_strings['LBL_SITECFG_SECURITY_TITLE']}</h3>";
-
-        $out.=<<<EOQ
+        $out .= <<<EOQ
 
 <div class="security-block" style="display:none;">
 <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
@@ -1126,7 +1150,7 @@ EOQ;
         //if(!empty($_SESSION['setup_site_sugarbeet_anonymous_stats'])) $checked = 'checked=""';
         $out .= "
    <tr style='display:none'><td></td>
-       <td><input type='checkbox' class='checkbox' name='setup_site_sugarbeet_anonymous_stats' value='yes' $checked /></td>
+       <td><input type='checkbox' class='checkbox' name='setup_site_sugarbeet_anonymous_stats' value='yes' {$checked} /></td>
        <td><b>{$mod_strings['LBL_SITECFG_ANONSTATS']}</b><br><i>{$mod_strings['LBL_SITECFG_ANONSTATS_DIRECTIONS']}</i></td></tr>
 
 ";
@@ -1192,22 +1216,22 @@ EOQ;
 </table>
 </div>
 EOQ;
-        $out .= "</div>";
+        $out .= '</div>';
 
         // --------------------------
         //  Advanced Database Configuration
         // --------------------------------->
 
-        require_once(__DIR__ . '/suite_install/collations.php');
+        require_once __DIR__ . '/suite_install/collations.php';
 
         $collationCB = "<select name='setup_db_collation' id='setup_db_collation' class='select' onChange='document.getElementById(\"setup_db_charset\").value = document.getElementById(\"setup_db_collation\").value.split(\"_\")[0];'>";
         $charset = "<select name='setup_db_charset' id='setup_db_charset' class='select'>";
 
-        if (isset($collations) && isset($_SESSION['setup_db_type']) && $_SESSION['setup_db_type'] == "mysql") {
-                foreach ($collations['mysql'] as $collation) {
-                    $collationCB .= "<option value='" . $collation['name'] . "' >" . $collation['name'] . "</option>";
-                    $charset .= "<option value='" . $collation['charset'] . "' >" . $collation['charset'] . "</option>";
-                }
+        if (isset($collations, $_SESSION['setup_db_type']) && $_SESSION['setup_db_type'] == 'mysql') {
+            foreach ($collations['mysql'] as $collation) {
+                $collationCB .= "<option value='" . $collation['name'] . "' >" . $collation['name'] . '</option>';
+                $charset .= "<option value='" . $collation['charset'] . "' >" . $collation['charset'] . '</option>';
+            }
         }
 
         $collationCB .= '</select>';
@@ -1248,7 +1272,7 @@ EOQ3;
 
     private function getFormControlls($mod_strings, $formId)
     {
-        $out =<<<EOQ
+        return <<<EOQ
         <div id="checkingDiv" style="display:none">
                     <p><img alt="{$mod_strings['LBL_LICENSE_CHKDB_HEADER']}" src='install/processing.gif'> <br>{$mod_strings['LBL_LICENSE_CHKDB_HEADER']}</p>
            </div>
@@ -1271,9 +1295,9 @@ EOQ3;
                 <input type="hidden" name="goto" id="goto">
                 <input type="hidden" id="hidden_goto" name="goto" value="{$mod_strings['LBL_BACK']}" />
 
-                <input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_settings" onclick="onBackClick(this); //document.getElementById('goto').value='{$mod_strings['LBL_BACK']}';document.getElementById('$formId').submit();" />
+                <input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_settings" onclick="onBackClick(this); //document.getElementById('goto').value='{$mod_strings['LBL_BACK']}';document.getElementById('{$formId}').submit();" />
                 <!--
-                <input class="button" type="button" value="{$mod_strings['LBL_LANG_BUTTON_COMMIT']}" onclick="document.getElementById('goto').value='{$mod_strings['LBL_NEXT']}';document.getElementById('$formId').submit();" id="button_next2"/>
+                <input class="button" type="button" value="{$mod_strings['LBL_LANG_BUTTON_COMMIT']}" onclick="document.getElementById('goto').value='{$mod_strings['LBL_NEXT']}';document.getElementById('{$formId}').submit();" id="button_next2"/>
                 -->
                 <input class="button" type="button" name="goto" id="button_next2" value="{$mod_strings['LBL_NEXT']}" onClick="onNextClick(this); //callDBCheck();"/>
                 <script>
@@ -1287,7 +1311,7 @@ EOQ3;
                             removeSMTPSettings();
                             // original back-submit
                             document.getElementById('goto').value='{$mod_strings['LBL_BACK']}';
-                            document.getElementById('$formId').submit();
+                            document.getElementById('{$formId}').submit();
                         });
                     };
 
@@ -1528,7 +1552,7 @@ EOQ3;
                             });
                         }
                         else {
-                            $('#errorMsgs').html("<p><b>Please fix the following errors before proceeding:</b></p><ul><li class=\"error\">" + errors.join('</li><li>') + "</li></ul>");
+                            $('#errorMsgs').html("<p><b>Please fix the following errors before proceeding:</b></p><ul><li class=\\"error\\">" + errors.join('</li><li>') + "</li></ul>");
                             $('#errorMsgs').show();
                             //alert(errors.join('</li><li>'));
                         }
@@ -1537,12 +1561,11 @@ EOQ3;
                 </script>
             </div>
 EOQ;
-        return $out;
     }
 
     private function getFormScripts($mod_strings, $next_step)
     {
-        $out =<<<EOQ
+        return <<<EOQ
             /**
              * Submit form without step.
              */
@@ -1749,69 +1772,19 @@ EOQ;
                             formRefreshSubmit(e);
                         };
 EOQ;
-        return $out;
-    }
-
-    /**
-     * @param $data   form data
-     * @return string   output
-     */
-    public function show($data = null)
-    {
-        foreach ($data as $__key => $__val) {
-            $$__key = $__val;
-        }
-        $formId = 'installForm';
-        $out = $this->getOutput(
-            $this->getHeader(
-                $mod_strings,
-                $this->getHeaderStyles(),
-                $this->getHeaderScripts($sugar_version, $js_custom_version)
-            ),
-            $this->getForm(
-                $mod_strings,
-                $formId,
-                $formId,
-                $errs,
-                $this->getFormItems(
-                    $mod_strings,
-                    $app_list_strings,
-                    $sugarConfigDefaults,
-                    $drivers,
-                    $checked,
-                    $db,
-                    $errors,
-                    $supportedLanguages,
-                    $current_language,
-                    $customSession,
-                    $customLog,
-                    $customId,
-                    $customSessionHidden,
-                    $customLogHidden,
-                    $customIdHidden
-                ),
-                $this->getFormControlls($mod_strings, $formId),
-                $this->getFormScripts($mod_strings, $next_step),
-                $next_step
-            ),
-            $sugar_md,
-            $mod_strings
-        );
-        echo $out;
-        return $out;
     }
 }
 
 class DisplayErrors
 {
-    private static $settingsStack = array();
+    private static $settingsStack = [];
 
     public static function show()
     {
-        array_push(self::$settingsStack, array(
+        array_push(self::$settingsStack, [
             'level' => error_reporting(),
             'display_errors' => ini_get('display_errors'),
-        ));
+        ]);
 
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
@@ -1825,22 +1798,17 @@ class DisplayErrors
     }
 }
 
-
 //-------------------------------------- InstallLayout
 
 global $sugar_version, $js_custom_version;
-
-
 
 if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-
-
 //---------------- systemOption: db driver select
 
-if (!isset($_SESSION['setup_db_type']) || $_SESSION['setup_db_type'] =='') {
+if (!isset($_SESSION['setup_db_type']) || $_SESSION['setup_db_type'] == '') {
     $_SESSION['setup_db_type'] = 'mysql';
 }
 $setup_db_type = $_SESSION['setup_db_type'];
@@ -1848,7 +1816,7 @@ $setup_db_type = $_SESSION['setup_db_type'];
 $errs = '';
 if (isset($validation_errors)) {
     if (count($validation_errors) > 0) {
-        $errs  = '<div id="errorMsgs">';
+        $errs = '<div id="errorMsgs">';
         $errs .= "<p>{$mod_strings['LBL_SYSOPTS_ERRS_TITLE']}</p>";
         $errs .= '<ul>';
 
@@ -1867,14 +1835,11 @@ foreach (array_keys($drivers) as $dname) {
 }
 $checked[$setup_db_type] = 'checked="checked"';
 
-
-
 //----------------- dbConfig_a: db name user pass...
 
 if (empty($_SESSION['setup_db_host_name'])) {
-    $_SESSION['setup_db_host_name'] = (isset($sugar_config['db_host_name']))  ? $sugar_config['db_host_name'] :  $_SERVER['SERVER_NAME'];
+    $_SESSION['setup_db_host_name'] = (isset($sugar_config['db_host_name'])) ? $sugar_config['db_host_name'] : $_SERVER['SERVER_NAME'];
 }
-
 
 // DB split
 $createDbCheckbox = '';
@@ -1885,7 +1850,7 @@ if (isset($_SESSION['setup_db_host_instance']) && !empty($_SESSION['setup_db_hos
     $instanceName = $_SESSION['setup_db_host_instance'];
 }
 
-$setupDbPortNum ='';
+$setupDbPortNum = '';
 if (isset($_SESSION['setup_db_port_num']) && !empty($_SESSION['setup_db_port_num'])) {
     $setupDbPortNum = $_SESSION['setup_db_port_num'];
 }
@@ -1896,19 +1861,17 @@ if (!isset($_SESSION['setup_db_manager'])) {
 
 $db = getInstallDbInstance();
 
-if(!isset($_SESSION['setup_db_collation']) || $_SESSION['setup_db_collation'] ==''){
+if (!isset($_SESSION['setup_db_collation']) || $_SESSION['setup_db_collation'] == '') {
     $_SESSION['setup_db_collation'] = 'utf8_general_ci';
 }
 
-if(!isset($_SESSION['setup_db_charset']) || $_SESSION['setup_db_charset'] ==''){
+if (!isset($_SESSION['setup_db_charset']) || $_SESSION['setup_db_charset'] == '') {
     $_SESSION['setup_db_charset'] = 'utf8';
 }
 
-
 //----------------- siteConfig_a.php Site Config & admin user
 
-
-if (is_file("config.php")) {
+if (is_file('config.php')) {
     if (!empty($sugar_config['default_theme'])) {
         $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
     }
@@ -1942,21 +1905,21 @@ if (is_file("config.php")) {
     }
     if (!empty($sugar_config['languages'])) {
         // We need to encode the languages in a way that can be retrieved later.
-        $language_keys = array();
-        $language_values = array();
+        $language_keys = [];
+        $language_values = [];
 
-        foreach ($sugar_config['languages'] as $key=>$value) {
+        foreach ($sugar_config['languages'] as $key => $value) {
             $language_keys[] = $key;
             $language_values[] = $value;
         }
 
-        $_SESSION['language_keys'] = urlencode(implode(",", $language_keys));
-        $_SESSION['language_values'] = urlencode(implode(",", $language_values));
+        $_SESSION['language_keys'] = urlencode(implode(',', $language_keys));
+        $_SESSION['language_values'] = urlencode(implode(',', $language_values));
     }
 }
 
 //Load in the array for the site scenarios
-require_once('install/suite_install/scenarios.php');
+require_once 'install/suite_install/scenarios.php';
 if (isset($installation_scenarios)) {
     $_SESSION['installation_scenarios'] = $installation_scenarios;
 }
@@ -1965,15 +1928,14 @@ if (isset($installation_scenarios)) {
 $errors = '';
 if (isset($validation_errors) && is_array($validation_errors)) {
     if (count($validation_errors) > 0) {
-        $errors  = '<div id="errorMsgs">';
-        $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
+        $errors = '<div id="errorMsgs">';
+        $errors .= '<p>' . $mod_strings['LBL_SITECFG_FIX_ERRORS'] . '</p><ul>';
         foreach ($validation_errors as $error) {
             $errors .= '<li>' . $error . '</li>';
         }
         $errors .= '</ul></div>';
     }
 }
-
 
 ////	ternaries
 $sugarUpdates = (isset($_SESSION['setup_site_sugarbeet']) && !empty($_SESSION['setup_site_sugarbeet'])) ? 'checked="checked"' : '';
@@ -1986,7 +1948,6 @@ $customId = (isset($_SESSION['setup_site_specify_guid']) && !empty($_SESSION['se
 $customSessionHidden = (isset($_SESSION['setup_site_custom_session_path']) && !empty($_SESSION['setup_site_custom_session_path'])) ? '' : ' style="display:none;" ';
 $customLogHidden = (isset($_SESSION['setup_site_custom_log_dir']) && !empty($_SESSION['setup_site_custom_log_dir'])) ? '' : ' style="display:none;" ';
 $customIdHidden = (isset($_SESSION['setup_site_specify_guid']) && !empty($_SESSION['setup_site_specify_guid'])) ? '' : ' style="display:none;" ';
-
 
 // defaults or user sets
 // warn: may the system bring it up

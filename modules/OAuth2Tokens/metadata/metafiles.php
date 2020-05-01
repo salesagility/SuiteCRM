@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 $module_name = 'OAuth2Tokens';
-$metafiles[$module_name] = array(
+$metafiles[$module_name] = [
     'detailviewdefs' => 'modules/' . $module_name . '/metadata/detailviewdefs.php',
     'editviewdefs' => 'modules/' . $module_name . '/metadata/editviewdefs.php',
     'listviewdefs' => 'modules/' . $module_name . '/metadata/listviewdefs.php',
     'searchdefs' => 'modules/' . $module_name . '/metadata/searchdefs.php',
     'popupdefs' => 'modules/' . $module_name . '/metadata/popupdefs.php',
     'searchfields' => 'modules/' . $module_name . '/metadata/SearchFields.php',
-);
+];

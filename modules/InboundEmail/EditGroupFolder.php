@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$_REQUEST['edit']='true';
+$_REQUEST['edit'] = 'true';
 
-require_once('include/SugarFolders/SugarFolders.php');
+require_once 'include/SugarFolders/SugarFolders.php';
 
 // GLOBALS
 global $mod_strings;
@@ -55,18 +56,18 @@ global $sugar_config;
 $ie = new InboundEmail();
 $focus = new SugarFolder();
 $javascript = new Javascript();
-/* Start standard EditView setup logic */
+// Start standard EditView setup logic
 
 if (isset($_REQUEST['record'])) {
-    $GLOBALS['log']->debug("In EditGroupFolder view, about to retrieve record: ".$_REQUEST['record']);
+    $GLOBALS['log']->debug('In EditGroupFolder view, about to retrieve record: ' . $_REQUEST['record']);
     $result = $focus->retrieve($_REQUEST['record']);
     if ($result == null) {
         sugar_die($app_strings['ERROR_NO_RECORD']);
     }
 }
 
-$GLOBALS['log']->info("SugarFolder Edit View");
-/* End standard EditView setup logic */
+$GLOBALS['log']->info('SugarFolder Edit View');
+// End standard EditView setup logic
 
 // TEMPLATE ASSIGNMENTS
 $smarty = new Sugar_Smarty();
@@ -79,13 +80,13 @@ $smarty->assign('GRIDLINE', $gridline);
 $smarty->assign('MODULE', 'InboundEmail');
 $smarty->assign('RETURN_MODULE', 'InboundEmail');
 $smarty->assign('RETURN_ID', $focus->id);
-$smarty->assign('RETURN_ACTION', "");
+$smarty->assign('RETURN_ACTION', '');
 $smarty->assign('ID', $focus->id);
 // module specific
 
 $ret = $focus->getFoldersForSettings($current_user);
-$groupFolders = array();
-$groupFoldersOrig = array();
+$groupFolders = [];
+$groupFoldersOrig = [];
 foreach ($ret['groupFolders'] as $key => $value) {
     if (!empty($focus->id)) {
         if ($value['id'] == $focus->id) {
@@ -95,20 +96,20 @@ foreach ($ret['groupFolders'] as $key => $value) {
     $groupFolders[$value['id']] = $value['name'];
     $groupFoldersOrig[] = $value['origName'];
 } // foreach
-$groupFolderName = "";
-$addToGroupFolder = "";
+$groupFolderName = '';
+$addToGroupFolder = '';
 $createGroupFolderStyle = "display:''";
 $editGroupFolderStyle = "display:''";
 if (!empty($focus->id)) {
-    $groupFolderName = 	$focus->name;
+    $groupFolderName = $focus->name;
 }
 if (!empty($focus->id)) {
     $addToGroupFolder = $focus->parent_folder;
 }
 if (!empty($focus->id)) {
-    $createGroupFolderStyle = "display:none;";
+    $createGroupFolderStyle = 'display:none;';
 } else {
-    $editGroupFolderStyle = "display:none;";
+    $editGroupFolderStyle = 'display:none;';
 } // else
 $smarty->assign('createGroupFolderStyle', $createGroupFolderStyle);
 $smarty->assign('editGroupFolderStyle', $editGroupFolderStyle);
@@ -118,9 +119,7 @@ $json = getJSONobj();
 $smarty->assign('group_folder_array', $json->encode($groupFoldersOrig));
 $smarty->assign('group_folder_options', get_select_options_with_id($groupFolders, $addToGroupFolder));
 
-
 $smarty->assign('CSS', SugarThemeRegistry::current()->getCSS());
 
-
 $smarty->assign('languageStrings', getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js", $GLOBALS['sugar_config']['js_lang_version']));
-echo $smarty->fetch("modules/Emails/templates/_createGroupFolder.tpl");
+echo $smarty->fetch('modules/Emails/templates/_createGroupFolder.tpl');

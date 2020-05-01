@@ -5,12 +5,12 @@ use Faker\Generator;
 class ProductsCest
 {
     /**
-     * @var Generator $fakeData
+     * @var Generator
      */
     protected $fakeData;
 
     /**
-     * @var integer $fakeDataSeed
+     * @var int
      */
     protected $fakeDataSeed;
 
@@ -31,11 +31,11 @@ class ProductsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      *
-     * As an admin user, I want to view the products module.
+     * As an admin user, I want to view the products module
      */
     public function testScenarioViewProductsModule(
-        \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView
+        AcceptanceTester $I,
+        Step\Acceptance\ListView $listView
     ) {
         $I->wantTo('View the products module for testing');
 
@@ -54,13 +54,13 @@ class ProductsCest
      * @param \Step\Acceptance\Products $product
      *
      * As an admin user, I want to create a product so I can test
-     * the standard fields.
+     * the standard fields
      */
     public function testScenarioCreateAccount(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Products $product
+        AcceptanceTester $I,
+        Step\Acceptance\DetailView $detailView,
+        Step\Acceptance\ListView $listView,
+        Step\Acceptance\Products $product
     ) {
         $I->wantTo('Create a product');
 
@@ -71,7 +71,7 @@ class ProductsCest
 
         // Create product
         $this->fakeData->seed($this->fakeDataSeed);
-        $product->createProduct('Test_'. $this->fakeData->company());
+        $product->createProduct('Test_' . $this->fakeData->company());
 
         // Delete product
         $detailView->clickActionMenuItem('Delete');

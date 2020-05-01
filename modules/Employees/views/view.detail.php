@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class EmployeesViewDetail extends ViewDetail
 {
     public function __construct()
@@ -51,13 +48,11 @@ class EmployeesViewDetail extends ViewDetail
         parent::__construct();
     }
 
-
-
-
     /**
-     * Return the "breadcrumbs" to display at the top of the page
+     * Return the "breadcrumbs" to display at the top of the page.
      *
      * @param  bool $show_help optional, true if we show the help links
+     *
      * @return HTML string containing breadcrumb title
      */
     public function getModuleTitle($show_help = true)
@@ -66,13 +61,13 @@ class EmployeesViewDetail extends ViewDetail
 
         $theTitle = "<div class='moduleTitle'>\n";
 
-        $module = preg_replace("/ /", "", $this->module);
+        $module = preg_replace('/ /', '', $this->module);
 
         $params = $this->_getModuleTitleParams();
         $count = count($params);
         $index = 0;
 
-        if (SugarThemeRegistry::current()->directionality == "rtl") {
+        if (SugarThemeRegistry::current()->directionality == 'rtl') {
             $params = array_reverse($params);
         }
 
@@ -86,7 +81,7 @@ class EmployeesViewDetail extends ViewDetail
         }
 
         if (!empty($paramString)) {
-            $theTitle .= "<h2> $paramString </h2>\n";
+            $theTitle .= "<h2> {$paramString} </h2>\n";
         }
 
         if ($show_help) {
@@ -105,6 +100,7 @@ EOHTML;
         }
 
         $theTitle .= "</span></div>\n";
+
         return $theTitle;
     }
 

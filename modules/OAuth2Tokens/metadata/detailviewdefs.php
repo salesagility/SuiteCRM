@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -51,57 +49,50 @@ $viewdefs[$module_name]['DetailView'] = [
             ['label' => '30', 'field' => '70'],
         ],
         'form' => [
-            'buttons' => array(
-            )
+            'buttons' => [
+            ]
         ]
     ],
     'panels' => [
-        'default' =>
+        'default' => [
             [
-                [
-                    'name' => 'id',
+                'name' => 'id',
+            ],
+            [
+                'name' => 'oauth2client_name',
+            ],
+            [
+                'name' => 'assigned_user_name',
+            ],
+            [
+                'name' => 'token_is_revoked',
+            ],
+            [
+                'name' => 'token_type',
+            ],
+            [
+                'name' => 'access_token_expires',
+            ],
+            [
+                'name' => 'refresh_token_expires',
+            ],
+            [
+                'name' => 'state',
+            ],
+        ],
+        'LBL_PANEL_ASSIGNMENT' => [
+            0 => [
+                0 => [
+                    'name' => 'date_entered',
+                    'label' => 'LBL_DATE_ENTERED',
+                    'customCode' => '{$fields.date_entered.value}',
                 ],
-                [
-                    'name' => 'oauth2client_name',
-                ],
-                [
-                    'name' => 'assigned_user_name',
-                ],
-                [
-                    'name' => 'token_is_revoked',
-                ],
-                [
-                    'name' => 'token_type',
-                ],
-                [
-                    'name' => 'access_token_expires',
-                ],
-                [
-                    'name' => 'refresh_token_expires',
-                ],
-                [
-                    'name' => 'state',
+                1 => [
+                    'name' => 'date_modified',
+                    'label' => 'LBL_DATE_MODIFIED',
+                    'customCode' => '{$fields.date_modified.value}',
                 ],
             ],
-        'LBL_PANEL_ASSIGNMENT' =>
-            [
-                0 =>
-                    [
-                        0 =>
-                            [
-                                'name' => 'date_entered',
-                                'label' => 'LBL_DATE_ENTERED',
-                                'customCode' =>
-                                    '{$fields.date_entered.value}',
-                            ],
-                        1 =>
-                            [
-                                'name' => 'date_modified',
-                                'label' => 'LBL_DATE_MODIFIED',
-                                'customCode' =>
-                                    '{$fields.date_modified.value}',
-                            ],
-                    ],
-            ],
+        ],
     ],
 ];

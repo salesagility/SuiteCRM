@@ -2,7 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,7 +51,6 @@ if (isset($_REQUEST['user'])) {
     $userName = $locale->getLocaleFormattedName($user->first_name, $user->last_name);
 }
 
-
 // NEXT FREE
 if (isset($_REQUEST['next_free']) && $_REQUEST['next_free'] == true) {
     $next = new Email();
@@ -65,26 +64,26 @@ if (isset($_REQUEST['next_free']) && $_REQUEST['next_free'] == true) {
         }
         $in = ' IN (';
         foreach ($ids as $k => $id) {
-            $in .= '"'.$id.'", ';
+            $in .= '"' . $id . '", ';
         }
         $in = substr($in, 0, (strlen($in) - 2));
         $in .= ') ';
-        
+
         $team = '';
-        
-        $qE = 'SELECT count(id) AS c FROM emails WHERE deleted = 0 AND assigned_user_id'.$in.$team.'LIMIT 1';
+
+        $qE = 'SELECT count(id) AS c FROM emails WHERE deleted = 0 AND assigned_user_id' . $in . $team . 'LIMIT 1';
         $rE = $next->db->query($qE);
         $aE = $next->db->fetchByAssoc($rE);
 
         if ($aE['c'] > 0) {
-            $qE = 'SELECT id FROM emails WHERE deleted = 0 AND assigned_user_id'.$in.$team.'LIMIT 1';
+            $qE = 'SELECT id FROM emails WHERE deleted = 0 AND assigned_user_id' . $in . $team . 'LIMIT 1';
             $rE = $next->db->query($qE);
             $aE = $next->db->fetchByAssoc($rE);
             $next->retrieve($aE['id']);
             $next->assigned_user_id = $current_user->id;
             $next->save();
-            
-            header('Location: index.php?module=Emails&action=DetailView&record='.$next->id);
+
+            header('Location: index.php?module=Emails&action=DetailView&record=' . $next->id);
         } else {
             // no free items
             header('Location: index.php?module=Emails&action=ListView&type=inbound&group=true');
@@ -100,7 +99,7 @@ if (isset($_REQUEST['next_free']) && $_REQUEST['next_free'] == true) {
 		<td valign="middle" align="center" colspan="2">
 			<?php echo $mod_strings['LBL_LOCK_FAIL_DESC']; ?>
 			<br>
-			<?php echo $userName.$mod_strings['LBL_LOCK_FAIL_USER']; ?>
+			<?php echo $userName . $mod_strings['LBL_LOCK_FAIL_USER']; ?>
 		</td>
 	</tr>
 	<tr>

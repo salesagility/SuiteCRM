@@ -3,7 +3,7 @@
 namespace Cron;
 
 /**
- * Day of week field.  Allows: * / , - ? L #
+ * Day of week field.  Allows: * / , - ? L #.
  *
  * Days of the week can be represented as a number 0-7 (0|7 = Sunday)
  * or as a three letter string: SUN, MON, TUE, WED, THU, FRI, SAT.
@@ -126,7 +126,7 @@ class DayOfWeekField extends AbstractField
     private function convertLiterals($string)
     {
         return str_ireplace(
-            array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'),
+            ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
             range(0, 6),
             $string
         );

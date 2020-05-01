@@ -2,7 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-echo getClassicModuleTitle('Administration', array($mod_strings['LBL_REBUILD_SCHEDULERS_TITLE']), false);
+echo getClassicModuleTitle('Administration', [$mod_strings['LBL_REBUILD_SCHEDULERS_TITLE']], false);
 
 if (isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true') {
-    require_once('install/install_utils.php');
+    require_once 'install/install_utils.php';
     $focus = new Scheduler();
     $focus->rebuildDefaultSchedulers();
-    
+
     $admin_mod_strings = return_module_language($current_language, 'Administration'); ?>
 <table cellspacing="{CELLSPACING}" class="otherview">
 	<tr> 

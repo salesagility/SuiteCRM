@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,37 +40,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-require_once("include/entryPoint.php");
+require_once 'include/entryPoint.php';
 
 if (!is_admin($GLOBALS['current_user'])) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 
 $json = getJSONObj();
-$out = "";
+$out = '';
 
 switch ($_REQUEST['adminAction']) {
     ///////////////////////////////////////////////////////////////////////////
     ////	REPAIRXSS
-    case "refreshEstimate":
-        include("include/modules.php"); // provide $moduleList
+    case 'refreshEstimate':
+        include 'include/modules.php'; // provide $moduleList
         $target = '';
         if (!empty($_REQUEST['bean'])) {
             $target = $_REQUEST['bean'];
         }
 
         $count = 0;
-        $toRepair = array();
-        
+        $toRepair = [];
+
         if ($target == 'all') {
-            $hide = array('Activities', 'Home', 'iFrames', 'Calendar', 'Dashboard');
-        
+            $hide = ['Activities', 'Home', 'iFrames', 'Calendar', 'Dashboard'];
+
             sort($moduleList);
-            $options = array();
-            
+            $options = [];
+
             foreach ($moduleList as $module) {
                 if (!in_array($module, $hide)) {
                     $options[$module] = $module;
@@ -81,22 +78,22 @@ switch ($_REQUEST['adminAction']) {
                 if (!isset($beanFiles[$beanList[$module]])) {
                     continue;
                 }
-                
+
                 $file = $beanFiles[$beanList[$module]];
-                
+
                 if (!file_exists($file)) {
                     continue;
                 }
-                    
-                require_once($file);
+
+                require_once $file;
                 $bean = new $beanList[$module]();
-                
+
                 $q = "SELECT count(*) as count FROM {$bean->table_name}";
                 $r = $bean->db->query($q);
                 $a = $bean->db->fetchByAssoc($r);
-                
+
                 $count += $a['count'];
-                
+
                 // populate to_repair array
                 $q2 = "SELECT id FROM {$bean->table_name}";
                 $r2 = $bean->db->query($q2);
@@ -107,14 +104,14 @@ switch ($_REQUEST['adminAction']) {
                 $toRepair[$module] = $ids;
             }
         } elseif (in_array($target, $moduleList)) {
-            require_once($beanFiles[$beanList[$target]]);
+            require_once $beanFiles[$beanList[$target]];
             $bean = new $beanList[$target]();
             $q = "SELECT count(*) as count FROM {$bean->table_name}";
             $r = $bean->db->query($q);
             $a = $bean->db->fetchByAssoc($r);
-            
+
             $count += $a['count'];
-            
+
             // populate to_repair array
             $q2 = "SELECT id FROM {$bean->table_name}";
             $r2 = $bean->db->query($q2);
@@ -124,16 +121,16 @@ switch ($_REQUEST['adminAction']) {
             }
             $toRepair[$target] = $ids;
         }
-        
-        $out = array('count' => $count, 'target' => $target, 'toRepair' => $toRepair);
+
+        $out = ['count' => $count, 'target' => $target, 'toRepair' => $toRepair];
+
     break;
-    
-    case "repairXssExecute":
+    case 'repairXssExecute':
         if (isset($_REQUEST['bean']) && !empty($_REQUEST['bean']) && isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
-            include("include/modules.php"); // provide $moduleList
+            include 'include/modules.php'; // provide $moduleList
             $target = $_REQUEST['bean'];
-            require_once($beanFiles[$beanList[$target]]);
-            
+            require_once $beanFiles[$beanList[$target]];
+
             $ids = $json->decode(from_html($_REQUEST['id']));
             $count = 0;
             foreach ($ids as $id) {
@@ -145,17 +142,19 @@ switch ($_REQUEST['adminAction']) {
                     $count++;
                 }
             }
-            
-            $out = array('msg' => "success", 'count' => $count);
+
+            $out = ['msg' => 'success', 'count' => $count];
         } else {
-            $out = array('msg' => "failure: bean or ID not defined");
+            $out = ['msg' => 'failure: bean or ID not defined'];
         }
+
     break;
     ////	END REPAIRXSS
     ///////////////////////////////////////////////////////////////////////////
-    
+
     default:
         die();
+
     break;
 }
 

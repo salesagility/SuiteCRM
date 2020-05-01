@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,15 +36,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$viewdefs['ProspectLists']['EditView'] = array(
-    'templateMeta' => array('form'=>array('hidden'=>array('<input type="hidden" name="campaign_id" value="{$smarty.request.campaign_id}">')),
-                            'maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
- 'javascript' => '<script type="text/javascript">
+$viewdefs['ProspectLists']['EditView'] = [
+    'templateMeta' => ['form' => ['hidden' => ['<input type="hidden" name="campaign_id" value="{$smarty.request.campaign_id}">']],
+        'maxColumns' => '2',
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+        'javascript' => '<script type="text/javascript">
 function toggle_domain_name(list_type)  {ldelim} 
     domain_name = document.getElementById(\'domain_name_div\');
     domain_label = document.getElementById(\'domain_label_div\');
@@ -65,33 +63,27 @@ function toggle_domain_name(list_type)  {ldelim}
     toggle_domain_name(list_type_ele);
  {rdelim})
 </script>',
-),
- 'panels' =>array(
-  'default' =>
-  array(
-    
-    array(
-      array('name'=>'name', 'displayParams'=>array('required'=>true)),
-      array('name'=>'list_type', 'displayParams'=>array('required'=>true, 'javascript'=>'onchange="toggle_domain_name(this);"')),
-    ),
-    array(
-      array('name'=>'description'),
-      array('name' => 'domain_name',
-            'customLabel' => '<div id="domain_label_div">{$MOD.LBL_DOMAIN}</div>',
-            'customCode' =>  '<div id="domain_name_div"><input name="domain_name" id="domain_name" maxlength="255" type="text" value="{$fields.domain_name.value}"></div>',),
-    ),
-    
-  ),
-  'LBL_PANEL_ASSIGNMENT' =>
-      array(
-        array(
-          array(
-            'name' => 'assigned_user_name',
-            'label' => 'LBL_ASSIGNED_TO_NAME',
-          ),
-        ),
-      ),
-)
-
-
-);
+    ],
+    'panels' => [
+        'default' => [
+            [
+                ['name' => 'name', 'displayParams' => ['required' => true]],
+                ['name' => 'list_type', 'displayParams' => ['required' => true, 'javascript' => 'onchange="toggle_domain_name(this);"']],
+            ],
+            [
+                ['name' => 'description'],
+                ['name' => 'domain_name',
+                    'customLabel' => '<div id="domain_label_div">{$MOD.LBL_DOMAIN}</div>',
+                    'customCode' => '<div id="domain_name_div"><input name="domain_name" id="domain_name" maxlength="255" type="text" value="{$fields.domain_name.value}"></div>', ],
+            ],
+        ],
+        'LBL_PANEL_ASSIGNMENT' => [
+            [
+                [
+                    'name' => 'assigned_user_name',
+                    'label' => 'LBL_ASSIGNED_TO_NAME',
+                ],
+            ],
+        ],
+    ]
+];

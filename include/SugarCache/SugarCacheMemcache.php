@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarCache/SugarCacheAbstract.php');
+require_once 'include/SugarCache/SugarCacheAbstract.php';
 
 class SugarCacheMemcache extends SugarCacheAbstract
 {
@@ -64,10 +61,20 @@ class SugarCacheMemcache extends SugarCacheAbstract
     protected $_priority = 900;
 
     /**
-     * Minimal data size to be compressed
+     * Minimal data size to be compressed.
+     *
      * @var int
      */
     protected $min_compress = 512;
+
+    /**
+     * @see SugarCacheAbstract::__construct()
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * @see SugarCacheAbstract::useBackend()
      */
@@ -83,15 +90,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
     }
 
     /**
-     * @see SugarCacheAbstract::__construct()
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Get the memcache object; initialize if needed
+     * Get the memcache object; initialize if needed.
      */
     protected function _getMemcacheObject()
     {
@@ -115,20 +114,25 @@ class SugarCacheMemcache extends SugarCacheAbstract
 
     /**
      * @see SugarCacheAbstract::_setExternal()
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function _setExternal(
         $key,
         $value
-        ) {
+    ) {
         $this->_getMemcacheObject()->set($key, $value, 0, $this->_expireTimeout);
     }
 
     /**
      * @see SugarCacheAbstract::_getExternal()
+     *
+     * @param mixed $key
      */
     protected function _getExternal(
         $key
-        ) {
+    ) {
         $returnValue = $this->_getMemcacheObject()->get($key);
         if ($returnValue === false) {
             return null;
@@ -139,10 +143,12 @@ class SugarCacheMemcache extends SugarCacheAbstract
 
     /**
      * @see SugarCacheAbstract::_clearExternal()
+     *
+     * @param mixed $key
      */
     protected function _clearExternal(
         $key
-        ) {
+    ) {
         $this->_getMemcacheObject()->delete($key);
     }
 

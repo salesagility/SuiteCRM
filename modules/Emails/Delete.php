@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 $focus = new Email();
 
 if (!isset($_REQUEST['record'])) {
-    sugar_die("A record number must be specified to delete the email.");
+    sugar_die('A record number must be specified to delete the email.');
 }
 $focus->retrieve($_REQUEST['record']);
 $email_type = $focus->type;
@@ -66,7 +62,7 @@ if ($email_type == 'archived') {
     global $current_user;
     $loc = 'Location: index.php?module=Emails';
 } else {
-    $loc = 'Location: index.php?module='.$_REQUEST['return_module'].'&action='.$_REQUEST['return_action'].'&record='.$_REQUEST['return_id'].'&type='.$_REQUEST['type'].'&assigned_user_id='.$_REQUEST['assigned_user_id'];
+    $loc = 'Location: index.php?module=' . $_REQUEST['return_module'] . '&action=' . $_REQUEST['return_action'] . '&record=' . $_REQUEST['return_id'] . '&type=' . $_REQUEST['type'] . '&assigned_user_id=' . $_REQUEST['assigned_user_id'];
 }
 
 header($loc);

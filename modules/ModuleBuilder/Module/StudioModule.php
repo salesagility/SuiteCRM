@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,89 +36,88 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 require_once 'data/BeanFactory.php';
 require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php';
 require_once 'modules/ModuleBuilder/parsers/constants.php';
 require_once 'IconRepository.php';
 
-
 class StudioModule
 {
     /**
-     * @var array $sources - list of source files
+     * @var array - list of source files
      */
-    public $sources = array();
+    public $sources = [];
 
     /**
-     * @var string $name name of module
+     * @var string name of module
      */
     public $name;
 
     /**
-     * @var string $module Name of the module
+     * @var string Name of the module
      */
     public $module;
     /**
-     * @var array $fields - field definitions of module
+     * @var array - field definitions of module
      */
     public $fields;
     /**
-     * @var SugarBean|bool $seed - an instance of the SugarBean
+     * @var bool|SugarBean - an instance of the SugarBean
      */
     public $seed;
 
     /**
      * StudioModule constructor.
+     *
      * @param $module
      */
     public function __construct($module)
     {
         //Sources can be used to override the file name mapping for a specific view or the parser for a view.
         //The
-        $this->sources = array(
-            'editviewdefs.php' => array(
+        $this->sources = [
+            'editviewdefs.php' => [
                 'name' => translate('LBL_EDITVIEW'),
                 'type' => MB_EDITVIEW,
                 'image' => 'EditView'
-            ),
-            'detailviewdefs.php' => array(
+            ],
+            'detailviewdefs.php' => [
                 'name' => translate('LBL_DETAILVIEW'),
                 'type' => MB_DETAILVIEW,
                 'image' => 'DetailView'
-            ),
-            'listviewdefs.php' => array(
+            ],
+            'listviewdefs.php' => [
                 'name' => translate('LBL_LISTVIEW'),
                 'type' => MB_LISTVIEW,
                 'image' => 'ListView'
-            )
-        );
+            ]
+        ];
 
-        $moduleNames = array_change_key_case($GLOBALS ['app_list_strings'] ['moduleList']);
-        $this->name = isset($moduleNames [strtolower($module)]) ? $moduleNames [strtolower($module)] : strtolower($module);
+        $moduleNames = array_change_key_case($GLOBALS['app_list_strings']['moduleList']);
+        $this->name = isset($moduleNames[strtolower($module)]) ? $moduleNames[strtolower($module)] : strtolower($module);
         $this->module = $module;
         $this->seed = BeanFactory::getBean($this->module);
         if ($this->seed) {
             $this->fields = $this->seed->field_defs;
         }
-        $GLOBALS['log']->debug(get_class($this) . "->__construct($module): " . print_r($this->fields, true));
+        $GLOBALS['log']->debug(get_class($this) . "->__construct({$module}): " . print_r($this->fields, true));
     }
 
     /**
      * Gets the name of this module.
+     *
      * @return string
      */
     public function getModuleName()
     {
         /**
-         * Some modules have naming inconsistencies such as Bugs and Bugs which causes warnings in Relationships
+         * Some modules have naming inconsistencies such as Bugs and Bugs which causes warnings in Relationships.
          */
-        $modules_with_odd_names = array(
+        $modules_with_odd_names = [
             'Bugs' => 'Bugs'
-        );
-        if (isset($modules_with_odd_names [$this->name])) {
-            return ($modules_with_odd_names [$this->name]);
+        ];
+        if (isset($modules_with_odd_names[$this->name])) {
+            return $modules_with_odd_names[$this->name];
         }
 
         return $this->name;
@@ -131,22 +129,23 @@ class StudioModule
      * Custom modules extend one of these standard SugarObject types, so the type can be determined from their parent
      * Standard module types can be determined simply from the module name - 'bugs' for example is of type 'issue'
      * If all else fails, fall back on type 'basic'...
+     *
      * @return string Module's type
      */
     public function getType()
     {
         // first, get a list of a possible parent types
-        $templates = array();
+        $templates = [];
         $d = dir('include/SugarObjects/templates');
         while ($filename = $d->read()) {
             if (substr($filename, 0, 1) !== '.') {
-                $templates [strtolower($filename)] = strtolower($filename);
+                $templates[strtolower($filename)] = strtolower($filename);
             }
         }
 
         // If a custom module, then its type is determined by the parent SugarObject that it extends
-        $type = $GLOBALS ['beanList'] [$this->module];
-        require_once $GLOBALS ['beanFiles'] [$type];
+        $type = $GLOBALS['beanList'][$this->module];
+        require_once $GLOBALS['beanFiles'][$type];
 
         do {
             $seed = new $type();
@@ -158,7 +157,7 @@ class StudioModule
         }
 
         // If a standard module then just look up its type - type is implicit for standard modules. Perhaps one day we will make it explicit, just as we have done for custom modules...
-        $types = array(
+        $types = [
             'Accounts' => 'company',
             'Bugs' => 'issue',
             'Cases' => 'issue',
@@ -166,16 +165,17 @@ class StudioModule
             'Documents' => 'file',
             'Leads' => 'person',
             'Opportunities' => 'sale'
-        );
-        if (isset($types [$this->module])) {
-            return $types [$this->module];
+        ];
+        if (isset($types[$this->module])) {
+            return $types[$this->module];
         }
 
-        return "basic";
+        return 'basic';
     }
 
     /**
-     * Return the fields for this module as sourced from the SugarBean
+     * Return the fields for this module as sourced from the SugarBean.
+     *
      * @return array - field definitions of the SugarBean
      */
     public function getFields()
@@ -188,14 +188,14 @@ class StudioModule
      */
     public function getNodes()
     {
-        return array(
+        return [
             'name' => $this->name,
             'module' => $this->module,
             'type' => 'StudioModule',
             'action' => "module=ModuleBuilder&action=wizard&view_module={$this->module}",
             'children' => $this->getModule(),
             'icon' => IconRepository::getIconName($this->module)
-        );
+        ];
     }
 
     /**
@@ -203,48 +203,48 @@ class StudioModule
      */
     public function getModule()
     {
-        $sources = array(
-            translate('LBL_LABELS') => array(
+        $sources = [
+            translate('LBL_LABELS') => [
                 'action' => "module=ModuleBuilder&action=editLabels&view_module={$this->module}",
                 'help' => 'labelsBtn',
                 'icon' => IconRepository::ICON_LABELS,
-            ),
-            translate('LBL_FIELDS') => array(
+            ],
+            translate('LBL_FIELDS') => [
                 'action' => "module=ModuleBuilder&action=modulefields&view_package=studio&view_module={$this->module}",
                 'help' => 'fieldsBtn',
                 'icon' => IconRepository::ICON_FIELDS,
-            ),
-            translate('LBL_RELATIONSHIPS') => array(
+            ],
+            translate('LBL_RELATIONSHIPS') => [
                 'action' => "get_tpl=true&module=ModuleBuilder&action=relationships&view_module={$this->module}",
                 'help' => 'relationshipsBtn',
                 'icon' => IconRepository::ICON_RELATIONSHIPS,
-            ),
-            translate('LBL_LAYOUTS') => array(
+            ],
+            translate('LBL_LAYOUTS') => [
                 'children' => 'getLayouts',
                 'action' => "module=ModuleBuilder&action=wizard&view=layouts&view_module={$this->module}",
                 'help' => 'layoutsBtn',
                 'icon' => IconRepository::ICON_LAYOUTS,
-            ),
-            translate('LBL_SUBPANELS') => array(
+            ],
+            translate('LBL_SUBPANELS') => [
                 'children' => 'getSubpanels',
                 'action' => "module=ModuleBuilder&action=wizard&view=subpanels&view_module={$this->module}",
                 'help' => 'subpanelsBtn',
                 'icon' => IconRepository::ICON_SUBPANELS,
-            )
-        );
+            ]
+        ];
 
-        $nodes = array();
+        $nodes = [];
         foreach ($sources as $source => $def) {
-            $nodes [$source] = $def;
-            $nodes [$source] ['name'] = translate($source);
-            if (isset($def ['children'])) {
-                $defChildren = $def ['children'];
-                $childNodes = $this->$defChildren();
+            $nodes[$source] = $def;
+            $nodes[$source]['name'] = translate($source);
+            if (isset($def['children'])) {
+                $defChildren = $def['children'];
+                $childNodes = $this->{$defChildren}();
                 if (!empty($childNodes)) {
-                    $nodes [$source] ['type'] = 'Folder';
-                    $nodes [$source] ['children'] = $childNodes;
+                    $nodes[$source]['type'] = 'Folder';
+                    $nodes[$source]['children'] = $childNodes;
                 } else {
-                    unset($nodes [$source]);
+                    unset($nodes[$source]);
                 }
             }
         }
@@ -257,12 +257,12 @@ class StudioModule
      */
     public function getViews()
     {
-        $views = array();
+        $views = [];
         foreach ($this->sources as $file => $def) {
-            if (file_exists("modules/{$this->module}/metadata/$file")
-                || file_exists("custom/modules/{$this->module}/metadata/$file")
+            if (file_exists("modules/{$this->module}/metadata/{$file}")
+                || file_exists("custom/modules/{$this->module}/metadata/{$file}")
             ) {
-                $views [str_replace('.php', '', $file)] = $def;
+                $views[str_replace('.php', '', $file)] = $def;
             }
         }
 
@@ -278,80 +278,80 @@ class StudioModule
 
         /**
          * Now add in the QuickCreates - quickcreatedefs can be created by Studio from editviewdefs if they are absent,
-         * so just add them in regardless of whether the quickcreatedefs file exists
+         * so just add them in regardless of whether the quickcreatedefs file exists.
          */
-        $hideQuickCreateForModules = array(
+        $hideQuickCreateForModules = [
             'kbdocuments',
             'projecttask',
             'campaigns'
-        );
+        ];
         // Some modules should not have a QuickCreate form at all, so do not add them to the list
         if (!in_array(strtolower($this->module), $hideQuickCreateForModules)) {
-            $views ['quickcreatedefs'] = array(
+            $views['quickcreatedefs'] = [
                 'name' => translate('LBL_QUICKCREATE'),
                 'type' => MB_QUICKCREATE,
                 'image' => 'QuickCreate'
-            );
+            ];
         }
 
-        $layouts = array();
+        $layouts = [];
         foreach ($views as $def) {
             $view = !empty($def['view']) ? $def['view'] : $def['type'];
-            $layouts [$def['name']] = array(
+            $layouts[$def['name']] = [
                 'name' => $def['name'],
                 'action' => "module=ModuleBuilder&action=editLayout&view={$view}&view_module={$this->module}",
                 'help' => "viewBtn{$def['type']}",
                 'icon' => $view
-            );
+            ];
         }
 
         if ($this->isValidDashletModule($this->module)) {
-            $dashlets = array();
-            $dashlets [] = array(
+            $dashlets = [];
+            $dashlets[] = [
                 'name' => translate('LBL_DASHLETLISTVIEW'),
                 'type' => 'dashlet',
                 'action' => 'module=ModuleBuilder&action=editLayout&view=dashlet&view_module=' . $this->module
-            );
-            $dashlets [] = array(
+            ];
+            $dashlets[] = [
                 'name' => translate('LBL_DASHLETSEARCHVIEW'),
                 'type' => 'dashletsearch',
                 'action' => 'module=ModuleBuilder&action=editLayout&view=dashletsearch&view_module=' . $this->module
-            );
-            $layouts [translate('LBL_DASHLET')] = array(
+            ];
+            $layouts[translate('LBL_DASHLET')] = [
                 'name' => translate('LBL_DASHLET'),
                 'type' => 'Folder',
                 'children' => $dashlets,
                 'imageTitle' => 'Dashlet',
                 'action' => 'module=ModuleBuilder&action=wizard&view=dashlet&view_module=' . $this->module
-            );
+            ];
         }
 
         //For popup tree node
-        $popups = array();
-        $popups [] = array(
+        $popups = [];
+        $popups[] = [
             'name' => translate('LBL_POPUPLISTVIEW'),
             'type' => 'popuplistview',
             'action' => 'module=ModuleBuilder&action=editLayout&view=popuplist&view_module=' . $this->module,
             'icon' => 'popupview'
-        );
-        $popups [] = array(
+        ];
+        $popups[] = [
             'name' => translate('LBL_POPUPSEARCH'),
             'type' => 'popupsearch',
             'action' => 'module=ModuleBuilder&action=editLayout&view=popupsearch&view_module=' . $this->module,
             'icon' => 'popupview'
-        );
-        $layouts [translate('LBL_POPUP')] = array(
+        ];
+        $layouts[translate('LBL_POPUP')] = [
             'name' => translate('LBL_POPUP'),
             'type' => 'Folder',
             'children' => $popups,
             'imageTitle' => 'Popup',
             'action' => 'module=ModuleBuilder&action=wizard&view=popup&view_module=' . $this->module,
             'icon' => 'popupview'
-        );
+        ];
 
         $nodes = $this->getSearch();
         if (!empty($nodes)) {
-            $layouts [translate('LBL_FILTER')] = array(
+            $layouts[translate('LBL_FILTER')] = [
                 'name' => translate('LBL_FILTER'),
                 'type' => 'Folder',
                 'children' => $nodes,
@@ -360,7 +360,7 @@ class StudioModule
                 'help' => 'searchBtn',
                 'size' => '48',
                 'icon' => 'filter'
-            );
+            ];
         }
 
         return $layouts;
@@ -368,6 +368,7 @@ class StudioModule
 
     /**
      * @param string $moduleName
+     *
      * @return bool
      */
     public function isValidDashletModule($moduleName)
@@ -385,19 +386,18 @@ class StudioModule
         return false;
     }
 
-
     /**
      * @return array
      */
     public function getSearch()
     {
-        require_once('modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php');
+        require_once 'modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php';
 
-        $nodes = array();
-        foreach (array(
-                     MB_BASICSEARCH => 'LBL_BASIC_SEARCH',
-                     MB_ADVANCEDSEARCH => 'LBL_ADVANCED_SEARCH'
-                 ) as $view => $label) {
+        $nodes = [];
+        foreach ([
+            MB_BASICSEARCH => 'LBL_BASIC_SEARCH',
+            MB_ADVANCEDSEARCH => 'LBL_ADVANCED_SEARCH'
+        ] as $view => $label) {
             try {
                 $title = translate($label);
                 if ($label == 'LBL_BASIC_SEARCH') {
@@ -407,16 +407,16 @@ class StudioModule
                 } else {
                     $name = str_replace(' ', '', $title);
                 }
-                $nodes [$title] = array(
+                $nodes[$title] = [
                     'name' => $title,
                     'action' => "module=ModuleBuilder&action=editLayout&view={$view}&view_module={$this->module}",
                     'imageTitle' => $title,
                     'imageName' => $name,
                     'help' => "{$name}Btn",
                     'size' => '48'
-                );
+                ];
             } catch (Exception $e) {
-                $GLOBALS ['log']->info('No search layout : ' . $e->getMessage());
+                $GLOBALS['log']->info('No search layout : ' . $e->getMessage());
             }
         }
 
@@ -424,7 +424,8 @@ class StudioModule
     }
 
     /**
-     * Return an object containing all the relationships participated in by this module
+     * Return an object containing all the relationships participated in by this module.
+     *
      * @return AbstractRelationships Set of relationships
      */
     public function getRelationships()
@@ -433,7 +434,8 @@ class StudioModule
     }
 
     /**
-     * Gets a list of subpanels used by the current module
+     * Gets a list of subpanels used by the current module.
+     *
      * @return array
      */
     public function getSubpanels()
@@ -442,11 +444,11 @@ class StudioModule
             $GLOBALS['modListHeader'] = query_module_access_list($GLOBALS['current_user']);
         }
 
-        require_once('include/SubPanel/SubPanel.php');
+        require_once 'include/SubPanel/SubPanel.php';
 
-        $nodes = array();
+        $nodes = [];
 
-        $GLOBALS ['log']->debug("StudioModule->getSubpanels(): getting subpanels for " . $this->module);
+        $GLOBALS['log']->debug('StudioModule->getSubpanels(): getting subpanels for ' . $this->module);
 
         // counter to add a unique key to assoc array below
         $ct = 0;
@@ -459,7 +461,7 @@ class StudioModule
 
             //  bug47452 - adding a unique number to the $nodes[ key ] so if you have 2+ panels
             //  with the same subname they will not cancel each other out
-            $nodes [$subname . $ct++] = array(
+            $nodes[$subname . $ct++] = [
                 'name' => $name,
                 'label' => $subname,
                 'action' => $action,
@@ -467,30 +469,31 @@ class StudioModule
                 'imageName' => 'icon_' . ucfirst($name) . '_32',
                 'altImageName' => 'Subpanels',
                 'size' => '48'
-            );
+            ];
         }
 
         return $nodes;
     }
 
     /**
-     *  gets a list of subpanels provided to other modules
+     *  gets a list of subpanels provided to other modules.
+     *
      * @return array
      */
     public function getProvidedSubpanels()
     {
         require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationships.php';
-        $this->providedSubpanels = array();
+        $this->providedSubpanels = [];
         $subpanelDir = 'modules/' . $this->module . '/metadata/subpanels/';
-        foreach (array($subpanelDir, "custom/$subpanelDir") as $dir) {
+        foreach ([$subpanelDir, "custom/{$subpanelDir}"] as $dir) {
             if (is_dir($dir)) {
                 foreach (scandir($dir) as $fileName) {
                     // sanity check to confirm that this is a usable subpanel...
-                    if (substr($fileName, 0, 1) !== '.' && substr(strtolower($fileName), -4) == ".php"
-                        && AbstractRelationships::validSubpanel("$dir/$fileName")
+                    if (substr($fileName, 0, 1) !== '.' && substr(strtolower($fileName), -4) == '.php'
+                        && AbstractRelationships::validSubpanel("{$dir}/{$fileName}")
                     ) {
                         $subname = str_replace('.php', '', $fileName);
-                        $this->providedSubpanels [$subname] = $subname;
+                        $this->providedSubpanels[$subname] = $subname;
                     }
                 }
             }
@@ -501,6 +504,7 @@ class StudioModule
 
     /**
      * @param string $subpanel
+     *
      * @return array
      */
     public function getParentModulesOfSubpanel($subpanel)
@@ -508,27 +512,24 @@ class StudioModule
         global $moduleList, $beanFiles, $beanList, $module;
 
         //use tab controller function to get module list with named keys
-        require_once("modules/MySettings/TabController.php");
-        require_once("include/SubPanel/SubPanelDefinitions.php");
+        require_once 'modules/MySettings/TabController.php';
+        require_once 'include/SubPanel/SubPanelDefinitions.php';
         $modules_to_check = TabController::get_key_array($moduleList);
 
         //change case to match subpanel processing later on
         $modules_to_check = array_change_key_case($modules_to_check);
 
         $spd = '';
-        $spd_arr = array();
+        $spd_arr = [];
         //iterate through modules and build subpanel array
         foreach ($modules_to_check as $mod_name) {
-
-           /**
-            * skip if module name is not in bean list, otherwise get the bean class name
-            */
+            // skip if module name is not in bean list, otherwise get the bean class name
             if (!isset($beanList[$mod_name])) {
                 continue;
             }
             $class = $beanList[$mod_name];
 
-            /**
+            /*
              * skip if class name is not in file list, otherwise require the bean file
              * and create new class
              */
@@ -537,7 +538,7 @@ class StudioModule
             }
 
             //retrieve subpanels for this bean
-            require_once($beanFiles[$class]);
+            require_once $beanFiles[$class];
             $bean_class = new $class();
 
             //create new subpanel definition instance and get list of tabs
@@ -555,23 +556,23 @@ class StudioModule
      */
     public function removeFieldFromLayouts($fieldName)
     {
-        require_once("modules/ModuleBuilder/parsers/ParserFactory.php");
-        $GLOBALS ['log']->info(get_class($this) . "->removeFieldFromLayouts($fieldName)");
+        require_once 'modules/ModuleBuilder/parsers/ParserFactory.php';
+        $GLOBALS['log']->info(get_class($this) . "->removeFieldFromLayouts({$fieldName})");
         $sources = $this->getViewMetadataSources();
-        $sources[] = array('type' => MB_BASICSEARCH);
-        $sources[] = array('type' => MB_ADVANCEDSEARCH);
-        $sources[] = array('type' => MB_POPUPSEARCH);
+        $sources[] = ['type' => MB_BASICSEARCH];
+        $sources[] = ['type' => MB_ADVANCEDSEARCH];
+        $sources[] = ['type' => MB_POPUPSEARCH];
 
-        $GLOBALS ['log']->debug(print_r($sources, true));
+        $GLOBALS['log']->debug(print_r($sources, true));
         foreach ($sources as $name => $defs) {
             //If this module type doesn't support a given metadata type, we will get an exception from getParser()
             try {
-                $parser = ParserFactory::getParser($defs ['type'], $this->module);
+                $parser = ParserFactory::getParser($defs['type'], $this->module);
                 if ($parser->removeField($fieldName)) {
                     $parser->handleSave(false);
                 } // don't populate from $_REQUEST, just save as is...
             } catch (Exception $e) {
-                $GLOBALS ['log']->fatal($e->getMessage());
+                $GLOBALS['log']->fatal($e->getMessage());
             }
         }
 
@@ -585,7 +586,7 @@ class StudioModule
                     $parser->handleSave(false);
                 }
             } catch (Exception $e) {
-                $GLOBALS ['log']->fatal($e->getMessage());
+                $GLOBALS['log']->fatal($e->getMessage());
             }
         }
     }
@@ -593,22 +594,22 @@ class StudioModule
     /**
      * @return array
      */
-
     public function getViewMetadataSources()
     {
         $sources = $this->getViews();
-        $sources[] = array('type' => MB_BASICSEARCH);
-        $sources[] = array('type' => MB_ADVANCEDSEARCH);
-        $sources[] = array('type' => MB_DASHLET);
-        $sources[] = array('type' => MB_DASHLETSEARCH);
-        $sources[] = array('type' => MB_POPUPLIST);
-        $sources[] = array('type' => MB_QUICKCREATE);
+        $sources[] = ['type' => MB_BASICSEARCH];
+        $sources[] = ['type' => MB_ADVANCEDSEARCH];
+        $sources[] = ['type' => MB_DASHLET];
+        $sources[] = ['type' => MB_DASHLETSEARCH];
+        $sources[] = ['type' => MB_POPUPLIST];
+        $sources[] = ['type' => MB_QUICKCREATE];
 
         return $sources;
     }
 
     /**
      * @param $view
+     *
      * @return mixed
      */
     public function getViewType($view)

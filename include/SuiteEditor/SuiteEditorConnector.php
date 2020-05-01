@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -52,7 +50,7 @@ include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsF
 include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorMozaik.php');
 
 /**
- * Class SuiteEditor
+ * Class SuiteEditor.
  *
  * User Preference Editor connector class for different kind of editors
  * typically for Email Templates but any HTML or text editing..
@@ -61,14 +59,14 @@ class SuiteEditorConnector
 {
     public static function getSuiteSettings($html, $width)
     {
-        return array(
+        return [
             'contents' => $html,
             'textareaId' => 'body_text',
             'elementId' => 'email_template_editor',
             'width' => $width,
-            'clickHandler' => "function(e){
+            'clickHandler' => 'function(e){
                 onClickTemplateBody();
-            }",
+            }',
             'tinyMCESetup' => "{
                 setup: function(editor) {
                     editor.on('focus', function(e){
@@ -76,15 +74,17 @@ class SuiteEditorConnector
                     });
                 },
                 plugins: ['code', 'table', 'link', 'image'],
-            }");
+            }"];
     }
 
     /**
      * return an output HTML of user selected editor for templates
-     * based on current user preferences
+     * based on current user preferences.
      *
      * @param null $settings (optional) extends of selected editor default settings
+     *
      * @throws Exception unknown or incorrect editor
+     *
      * @return string HTML output of editor
      */
     public static function getHtml($settings = null)
@@ -92,22 +92,21 @@ class SuiteEditorConnector
         global $current_user;
 
         switch ($current_user->getEditorType()) {
-
             case 'none':
                 $editor = new SuiteEditorDirectHTML();
                 $settings = new SuiteEditorSettingsForDirectHTML($settings);
-                break;
 
+                break;
             case 'tinymce':
                 $editor = new SuiteEditorTinyMCE();
                 $settings = new SuiteEditorSettingsForTinyMCE($settings);
-                break;
 
+                break;
             case 'mozaik':
                 $editor = new SuiteEditorMozaik();
                 $settings = new SuiteEditorSettingsForMozaik($settings);
-                break;
 
+                break;
             // new editor type should be possible to store in
             // user preferences but in this file for
             // add more type use the syntax bellow... for e.g:
@@ -117,13 +116,13 @@ class SuiteEditorConnector
             //    break;
 
             default:
-                throw new Exception('unknown editor type: '.$current_user->getEditorType());
+                throw new Exception('unknown editor type: ' . $current_user->getEditorType());
         }
 
         // just make sure the type of editor implements a SuiteEditorInterface..
 
         if (!($editor instanceof SuiteEditorInterface)) {
-            throw new Exception("class $editor is not a SuiteEditorInterface");
+            throw new Exception("class {$editor} is not a SuiteEditorInterface");
         }
 
         // rendering the editor output HTML
@@ -132,6 +131,7 @@ class SuiteEditorConnector
 
         $smarty = new Sugar_Smarty();
         $smarty->assign('editor', $editor->getHtml());
+
         return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorConnector.tpl'));
     }
 }

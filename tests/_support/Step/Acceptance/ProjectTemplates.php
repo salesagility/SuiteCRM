@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class ProjectTemplates extends \AcceptanceTester
 {
     /**
-     * Create a project template
+     * Create a project template.
      *
      * @param $name
      */

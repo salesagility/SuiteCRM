@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class Alert extends Basic
 {
     public $new_schema = true;
@@ -45,7 +43,7 @@ class Alert extends Basic
     public $object_name = 'Alert';
     public $table_name = 'alerts';
     public $importable = false;
-    public $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    public $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
     public $id;
     public $name;
     public $date_entered;
@@ -73,14 +71,12 @@ class Alert extends Basic
         parent::__construct();
     }
 
-
-
-
     public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL': return true;
         }
+
         return false;
     }
 }

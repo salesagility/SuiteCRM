@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,7 +38,8 @@
  */
 
 /**
- * Handle Sugar fields
+ * Handle Sugar fields.
+ *
  * @api
  */
 class SugarFieldHandler
@@ -48,15 +48,13 @@ class SugarFieldHandler
     {
     }
 
-
-
-
     public static function fixupFieldType($field)
     {
         switch ($field) {
                case 'double':
                case 'decimal':
                     $field = 'float';
+
                     break;
                case 'uint':
                case 'ulong':
@@ -64,15 +62,19 @@ class SugarFieldHandler
                case 'short':
                case 'tinyint':
                     $field = 'int';
+
                     break;
                case 'date':
                     $field = 'datetime';
+
                     break;
                case 'url':
                        $field = 'link';
+
                        break;
                case 'varchar':
                     $field = 'base';
+
                     break;
             }
 
@@ -80,40 +82,42 @@ class SugarFieldHandler
     }
 
     /**
-     * return the singleton of the SugarField
+     * return the singleton of the SugarField.
+     *
      * @param $field
      * @param bool $returnNullIfBase
+     *
      * @return mixed
      */
-    public static function getSugarField($field, $returnNullIfBase=false)
+    public static function getSugarField($field, $returnNullIfBase = false)
     {
-        static $sugarFieldObjects = array();
+        static $sugarFieldObjects = [];
 
         $field = self::fixupFieldType($field);
         $field = ucfirst($field);
 
         if (!isset($sugarFieldObjects[$field])) {
             //check custom directory
-            if (file_exists('custom/include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')) {
-                $file = 'custom/include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
+            if (file_exists('custom/include/SugarFields/Fields/' . $field . '/SugarField' . $field . '.php')) {
+                $file = 'custom/include/SugarFields/Fields/' . $field . '/SugarField' . $field . '.php';
                 $type = $field;
             //else check the fields directory
             } else {
-                if (file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')) {
-                    $file = 'include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
+                if (file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field . '.php')) {
+                    $file = 'include/SugarFields/Fields/' . $field . '/SugarField' . $field . '.php';
                     $type = $field;
                 } else {
                     // No direct class, check the directories to see if they are defined
                     if ($returnNullIfBase &&
-                    !is_dir('custom/include/SugarFields/Fields/'.$field) &&
-                    !is_dir('include/SugarFields/Fields/'.$field)) {
+                    !is_dir('custom/include/SugarFields/Fields/' . $field) &&
+                    !is_dir('include/SugarFields/Fields/' . $field)) {
                         return null;
                     }
                     $file = 'include/SugarFields/Fields/Base/SugarFieldBase.php';
                     $type = 'Base';
                 }
             }
-            require_once($file);
+            require_once $file;
 
             $class = 'SugarField' . $type;
             //could be a custom class check it
@@ -124,6 +128,7 @@ class SugarFieldHandler
                 $sugarFieldObjects[$field] = new $class($field);
             }
         }
+
         return $sugarFieldObjects[$field];
     }
 
@@ -138,8 +143,13 @@ class SugarFieldHandler
      *      available paramters are:
      *      * labelSpan - column span for the label
      *      * fieldSpan - column span for the field
+     * @param mixed $parentFieldArray
+     * @param mixed $vardef
+     * @param mixed $displayType
+     * @param mixed $displayParams
+     * @param mixed $tabindex
      */
-    public static function displaySmarty($parentFieldArray, $vardef, $displayType, $displayParams = array(), $tabindex = 1)
+    public static function displaySmarty($parentFieldArray, $vardef, $displayType, $displayParams = [], $tabindex = 1)
     {
         $string = '';
         $displayTypeFunc = 'get' . $displayType . 'Smarty'; // getDetailViewSmarty, getEditViewSmarty, etc...
@@ -158,7 +168,7 @@ class SugarFieldHandler
         if (!empty($vardef['function'])) {
             $string = $field->displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex);
         } else {
-            $string = $field->$displayTypeFunc($parentFieldArray, $vardef, $displayParams, $tabindex);
+            $string = $field->{$displayTypeFunc}($parentFieldArray, $vardef, $displayParams, $tabindex);
         }
 
         return $string;

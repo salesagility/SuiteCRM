@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,7 +44,7 @@ use LoggerManager;
 use Slim\App;
 
 /**
- * CustomLoader
+ * CustomLoader.
  *
  * @author gyula
  */
@@ -55,50 +54,49 @@ class CustomLoader
     const ERR_FILE_NOT_FOUND = 1;
     const ERR_ROUTE_FILE_NOT_FOUND = 2;
     const ERR_WRONG_CUSTOM_FORMAT = 3;
-    
+
     /**
-     *
      * @var int
      */
     protected static $lastError = self::ERR_NO_ERROR;
-    
+
     /**
-     *
      * @var string
      */
     protected static $customPath = 'custom/application/Ext/Api/V8/';
-    
+
     public static function setCustomPath($customPath = 'custom/application/Ext/Api/V8/')
     {
         self::$customPath = $customPath;
     }
-    
+
     public static function getCustomPath()
     {
         return self::$customPath;
     }
-    
+
     /**
-     *
      * @return int
      */
     public static function getLastError()
     {
         $ret = self::$lastError;
         self::$lastError = self::ERR_NO_ERROR;
+
         return $ret;
     }
-    
+
     /**
-     * merge multidimensional arrays
+     * merge multidimensional arrays.
      *
      * @param array $arrays
+     *
      * @return array
      */
     public static function arrayMerge($arrays)
     {
         $result = [];
-        foreach ((array)$arrays as $array) {
+        foreach ((array) $arrays as $array) {
             foreach ($array as $key => $value) {
                 if (is_int($key)) {
                     // is indexed?
@@ -111,16 +109,19 @@ class CustomLoader
                 }
             }
         }
+
         return $result;
     }
-    
+
     /**
-     * include and merge custom arrays (custom file should return an array)
+     * include and merge custom arrays (custom file should return an array).
      *
      * @param array $array
      * @param string $customFile
-     * @return array
+     *
      * @throws Exception
+     *
+     * @return array
      */
     public static function mergeCustomArray($array, $customFile)
     {
@@ -136,14 +137,14 @@ class CustomLoader
             }
             $array = self::arrayMerge([$array, $customs]);
         }
-        
+
         return $array;
     }
-    
 
     /**
-     *
      * @param App $app
+     * @param mixed $customRoutesFile
+     *
      * @return App
      */
     public static function loadCustomRoutes(App $app, $customRoutesFile = 'Config/routes.php')
@@ -156,6 +157,7 @@ class CustomLoader
         } else {
             include $customRoutesFile;
         }
+
         return $app;
     }
 }

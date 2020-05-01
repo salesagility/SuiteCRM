@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM\API\v8\Controller;
 
 use Psr\Http\Message\ResponseInterface;
@@ -56,11 +54,13 @@ class SchemaController extends ApiController
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @return ResponseInterface
+     *
      * @throws InvalidJsonApiResponseException
      * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
+     *
+     * @return ResponseInterface
      */
     public function getJsonApiSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -68,7 +68,7 @@ class SchemaController extends ApiController
             $jsonApi = new JsonApi();
             if (file_exists($jsonApi->getSchemaPath()) === false) {
                 throw new NotFoundException(
-                    '[SchemaController] unable to find JSON Api Schema file:  '. $jsonApi->getSchemaPath()
+                    '[SchemaController] unable to find JSON Api Schema file:  ' . $jsonApi->getSchemaPath()
                 );
             }
 
@@ -76,7 +76,7 @@ class SchemaController extends ApiController
 
             if ($schemaFile === false) {
                 throw new ApiException(
-                    '[SchemaController] unable to read JSON Api Schema file: '.  $jsonApi->getSchemaPath()
+                    '[SchemaController] unable to read JSON Api Schema file: ' . $jsonApi->getSchemaPath()
                 );
             }
 
@@ -84,26 +84,28 @@ class SchemaController extends ApiController
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
-        
+
         return $this->generateJsonApiResponse($request, $response, $payload);
     }
 
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @return ResponseInterface|static
+     *
      * @throws InvalidJsonApiResponseException
      * @throws InvalidArgumentException
      * @throws NotAcceptableException
      * @throws UnsupportedMediaTypeException
+     *
+     * @return ResponseInterface|static
      */
     public function getSwaggerSchema(ServerRequestInterface $request, ResponseInterface $response)
     {
         try {
-            $path = dirname(__DIR__).'/swagger.json';
+            $path = dirname(__DIR__) . '/swagger.json';
             if (file_exists($path) === false) {
                 throw new NotFoundException(
-                    '[SchemaController] unable to find JSON Api Schema file:  '. $path
+                    '[SchemaController] unable to find JSON Api Schema file:  ' . $path
                 );
             }
 
@@ -111,7 +113,7 @@ class SchemaController extends ApiController
 
             if ($schemaFile === false) {
                 throw new ApiException(
-                    '[SchemaController] unable to read JSON Api Schema file: '.  $path
+                    '[SchemaController] unable to read JSON Api Schema file: ' . $path
                 );
             }
 
@@ -119,7 +121,7 @@ class SchemaController extends ApiController
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }
-        
+
         return $this->generateJsonApiResponse($request, $response, $payload);
     }
 }

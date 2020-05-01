@@ -59,15 +59,12 @@ use ViewList;
  */
 class SearchResultsController extends Controller
 {
-
     /**
-     *
      * @var SearchQuery
      */
     private $query;
 
     /**
-     *
      * @var SearchResults
      */
     private $results;
@@ -88,7 +85,7 @@ class SearchResultsController extends Controller
     public function display()
     {
         $headers = $this->getListViewHeaders();
-        
+
         $total = $this->results->getTotal();
         if ($total > 1) {
             $size = $this->query->getSize();
@@ -96,10 +93,10 @@ class SearchResultsController extends Controller
                 $from = $this->query->getFrom();
                 $string = $this->query->getSearchString();
 
-                $page = (int)($from / $size) + 1;
+                $page = (int) ($from / $size) + 1;
                 $prev = $page > 1;
                 $next = $total - $from > $size;
-                $last = (int)($total / $size) + ($total%$size === 0 ? 0 : 1);
+                $last = (int) ($total / $size) + ($total % $size === 0 ? 0 : 1);
 
                 $this->view->getTemplate()->assign('pagination', [
                     'prev' => $prev,
@@ -116,7 +113,7 @@ class SearchResultsController extends Controller
             }
         }
         $this->view->getTemplate()->assign('total', $total);
-        
+
         $this->view->getTemplate()->assign('headers', $headers);
         $this->view->getTemplate()->assign('results', $this->results);
         $this->view->getTemplate()->assign('resultsAsBean', $this->results->getHitsAsBeans());
@@ -125,9 +122,9 @@ class SearchResultsController extends Controller
     }
 
     /**
+     * @throws Exception
      *
      * @return array of header info
-     * @throws Exception
      */
     protected function getListViewHeaders()
     {
@@ -146,11 +143,11 @@ class SearchResultsController extends Controller
                 }
             }
         }
+
         return $headers;
     }
 
     /**
-     *
      * @return array of list view definitions
      */
     protected function getListViewDefs()
@@ -164,35 +161,36 @@ class SearchResultsController extends Controller
                 $viewList->module = $module;
 
                 $metaDataFile = $viewList->getMetaDataFile();
-                require($metaDataFile);
+                require $metaDataFile;
             }
         }
+
         return $listViewDefs;
     }
 
     /**
-     *
      * @param SugarBean $bean
      * @param string $fieldKey
      * @param string $fieldValue
+     *
      * @return array of header
      */
     protected function getListViewHeader(SugarBean $bean, $fieldKey, $fieldValue)
     {
         $fieldDef = $bean->getFieldDefinition(strtolower($fieldKey));
-        $header = [
+
+        return [
             'label' => $this->getListViewHeaderLabel($bean, $fieldValue, $fieldDef),
             'comment' => isset($fieldDef['comment']) ? $fieldDef['comment'] : null,
             'field' => $fieldDef['name'],
         ];
-        return $header;
     }
-    
+
     /**
-     *
      * @param SugarBean $bean
      * @param array $fieldValue
      * @param array $fieldDef
+     *
      * @return array of label
      */
     protected function getListViewHeaderLabel(SugarBean $bean, $fieldValue, $fieldDef)
@@ -212,6 +210,7 @@ class SearchResultsController extends Controller
                 LangText::get($fieldDef['vname'], null, LangText::USING_ALL_STRINGS, true, false, $bean->module_name) :
                 null;
         }
+
         return $label;
     }
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,17 +40,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-require_once('include/Dashlets/DashletGenericChart.php');
+require_once 'include/Dashlets/DashletGenericChart.php';
 
 class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 {
-    public $pbls_lead_sources = array();
-    public $pbls_ids          = array();
+    public $pbls_lead_sources = [];
+    public $pbls_ids = [];
 
     /**
      * @see DashletGenericChart::$_seedName
@@ -64,7 +59,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
     {
         global $app_list_strings;
 
-        $selected_datax = array();
+        $selected_datax = [];
         if (!empty($this->pbls_lead_sources) && count($this->pbls_lead_sources) > 0) {
             foreach ($this->pbls_lead_sources as $key) {
                 $selected_datax[] = $key;
@@ -99,9 +94,9 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
         $data = $this->getChartData($this->constructQuery());
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
-        $canvasId = 'rGraphLeadSource'.uniqid();
-        $chartWidth     = 900;
-        $chartHeight    = 500;
+        $canvasId = 'rGraphLeadSource' . uniqid();
+        $chartWidth = 900;
+        $chartHeight = 500;
 
         $jsonData = json_encode($chartReadyData['data']);
         $jsonKeys = json_encode($chartReadyData['keys']);
@@ -112,52 +107,52 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 
         $module = 'Opportunities';
         $action = 'index';
-        $query  ='true';
-        $searchFormTab ='advanced_search';
+        $query = 'true';
+        $searchFormTab = 'advanced_search';
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#8080ff','#c03f80']";
 
-        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
-            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
+        if (!is_array($chartReadyData['data']) || count($chartReadyData['data']) < 1) {
+            return "<h3 class='noGraphDataPoints'>{$this->noDataMessage}</h3>";
         }
 
         //<canvas id='$canvasId' width='$chartWidth' height='$chartHeight' class='resizableCanvas' style='width: 100%;'>[No canvas support]</canvas>
         //<canvas id='$canvasId' width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
         $chart = <<<EOD
 
-<canvas id='$canvasId' width='$chartWidth' height='$chartHeight'  class='resizableCanvas' >[No canvas support]</canvas>
+<canvas id='{$canvasId}' width='{$chartWidth}' height='{$chartHeight}'  class='resizableCanvas' >[No canvas support]</canvas>
 
-        <input type='hidden' class='module' value='$module' />
-        <input type='hidden' class='action' value='$action' />
-        <input type='hidden' class='query' value='$query' />
-        <input type='hidden' class='searchFormTab' value='$searchFormTab' />
-        $autoRefresh
+        <input type='hidden' class='module' value='{$module}' />
+        <input type='hidden' class='action' value='{$action}' />
+        <input type='hidden' class='query' value='{$query}' />
+        <input type='hidden' class='searchFormTab' value='{$searchFormTab}' />
+        {$autoRefresh}
         <script>
-           window["chartHBarKeys$canvasId"] = $jsonKeys;
+           window["chartHBarKeys{$canvasId}"] = {$jsonKeys};
            var pie = new RGraph.Pie({
-                id: '$canvasId',
-                data: $jsonData,
+                id: '{$canvasId}',
+                data: {$jsonData},
                 options: {
                 strokestyle: '#e8e8e8',
                 linewidth: 2,
                 eventsMousemove:rgraphMouseMove,
                 eventsClick:opportunitiesByLeadSourceDashletClick,
                 shadowBlur: 5,
-                tooltips:$jsonLabels,
+                tooltips:{$jsonLabels},
                 tooltipsEvent:'mousemove',
                 shadowOffsetx: 5,
                 shadowOffsety: 5,
                 shadowColor: '#aaa',
                 centerx:true,
-                key: $jsonLabelsAndValues,
-                labels:$jsonLabels,
+                key: {$jsonLabelsAndValues},
+                labels:{$jsonLabels},
                 keyPosition:'graph',
                 keyPositionX:0,
                 keyBackground:'rgba(255,255,255,0.7)',
-                colors:$colours,
+                colors:{$colours},
                 textSize:10,
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
-                keyColors:$colours
+                keyColors:{$colours}
                 //keyInteractive: true
                 }
             }).draw();
@@ -221,6 +216,7 @@ EOD;
             $dataSet[] = $row;
             $row = $db->fetchByAssoc($result);
         }
+
         return $dataSet;
     }
 
@@ -232,14 +228,15 @@ EOD;
         $chart['keys'] = [];
         $total = 0;
         foreach ($data as $i) {
-            $chart['labelsAndValues'][] = $i['lead_source'] . ' (' . $currency_symbol . (int)$i['total'] . $thousands_symbol . ')';
+            $chart['labelsAndValues'][] = $i['lead_source'] . ' (' . $currency_symbol . (int) $i['total'] . $thousands_symbol . ')';
             //$chart['labelsAndValues'][]=$currency_symbol.(int)$i['total'].$thousands_symbol;
             $chart['labels'][] = $i['lead_source'];
             $chart['keys'][] = $i['lead_source_key'];
-            $chart['data'][] = (int)$i['total'];
-            $total += (int)$i['total'];
+            $chart['data'][] = (int) $i['total'];
+            $total += (int) $i['total'];
         }
         $chart['total'] = $total;
+
         return $chart;
     }
 
@@ -248,18 +245,18 @@ EOD;
      */
     protected function constructQuery()
     {
-        $query = "SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count ".
-            "FROM opportunities ";
-        $query .= "WHERE opportunities.deleted=0 ";
+        $query = 'SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count ' .
+            'FROM opportunities ';
+        $query .= 'WHERE opportunities.deleted=0 ';
         if (count($this->pbls_ids) > 0) {
-            $query .= "AND opportunities.assigned_user_id IN ('".implode("','", $this->pbls_ids)."') ";
+            $query .= "AND opportunities.assigned_user_id IN ('" . implode("','", $this->pbls_ids) . "') ";
         }
         if (count($this->pbls_lead_sources) > 0) {
-            $query .= "AND opportunities.lead_source IN ('".implode("','", $this->pbls_lead_sources)."') ";
+            $query .= "AND opportunities.lead_source IN ('" . implode("','", $this->pbls_lead_sources) . "') ";
         } else {
-            $query .= "AND opportunities.lead_source IN ('".implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+            $query .= "AND opportunities.lead_source IN ('" . implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom'])) . "') ";
         }
-        $query .= "GROUP BY lead_source ORDER BY total DESC";
+        $query .= 'GROUP BY lead_source ORDER BY total DESC';
 
         return $query;
     }

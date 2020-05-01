@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,21 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 // array elements are regexp patterns, and must not contain '#' signs
-$disc_client_ignore = array(
+$disc_client_ignore = [
     // dirs
-    "\\./cache/.*",
-    "\\./examples/.*",
+    '\\./cache/.*',
+    '\\./examples/.*',
     // files
-    "\\.*config\\.php\$",
-    "\\.*sugarcrm\\.log\\.*",
-    
-     "\\.*sync\\.log\\.*",
-    "\\.htaccess\$",
-    "\\.*\\.tmp\$",
-    "\\.*\\.bak\$",
-    "\\.*\\.zip\$",
-    
-);
+    '\\.*config\\.php$',
+    '\\.*sugarcrm\\.log\\.*',
 
-$disc_client_no_sync = array(
-);
+    '\\.*sync\\.log\\.*',
+    '\\.htaccess$',
+    '\\.*\\.tmp$',
+    '\\.*\\.bak$',
+    '\\.*\\.zip$',
+];
+
+$disc_client_no_sync = [
+];

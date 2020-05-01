@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,17 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
 /**
  * Retrieves an array of all the layout_defs defined in the app.
  */
-
 function get_layout_defs()
 {
     //TODO add global memory cache support here.  If there is an in memory cache, leverage it.
     global $layout_defs;
+
     return $layout_defs;
 }

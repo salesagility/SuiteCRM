@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,17 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
 global $mod_strings;
 
 // the initial settings for the template variables to fill
-$config_check           = '';
-$config_file_ready      = false;
-$lbl_rebuild_config     = $mod_strings['LBL_REBUILD_CONFIG'];
-$btn_rebuild_config     = $mod_strings['BTN_REBUILD_CONFIG'];
+$config_check = '';
+$config_file_ready = false;
+$lbl_rebuild_config = $mod_strings['LBL_REBUILD_CONFIG'];
+$btn_rebuild_config = $mod_strings['BTN_REBUILD_CONFIG'];
 $disable_config_rebuild = 'disabled="disabled"';
 
 // check the status of the config file
@@ -65,7 +62,6 @@ if (is_writable('config.php')) {
 
 // only do the rebuild if config file checks out and user has posted back
 if (!empty($_POST['perform_rebuild']) && $config_file_ready) {
-
     // retrieve configuration from file so that contents of config_override.php
     // is not merged (bug #54403)
     $clean_config = loadCleanConfig();

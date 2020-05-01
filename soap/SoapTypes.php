@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,18 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 $server->wsdl->addComplexType(
     'note_attachment',
     'complexType',
     'struct',
     'all',
     '',
-    array(
-        "id" => array('name'=>"id",'type'=>'xsd:string'),
-        "filename" => array('name'=>"filename",'type'=>'xsd:string'),
-        "file" => array('name'=>"file",'type'=>'xsd:string'),
-    )
+    [
+        'id' => ['name' => 'id', 'type' => 'xsd:string'],
+        'filename' => ['name' => 'filename', 'type' => 'xsd:string'],
+        'file' => ['name' => 'file', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -61,13 +61,13 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        "id" => array('name'=>"id",'type'=>'xsd:string'),
-        "filename" => array('name'=>"filename",'type'=>'xsd:string'),
-        "file" => array('name'=>"file",'type'=>'xsd:string'),
-        "related_module_id" => array('name'=>"related_module_id",'type'=>'xsd:string'),
-        "related_module_name" => array('name'=>"related_module_name",'type'=>'xsd:string'),
-    )
+    [
+        'id' => ['name' => 'id', 'type' => 'xsd:string'],
+        'filename' => ['name' => 'filename', 'type' => 'xsd:string'],
+        'file' => ['name' => 'file', 'type' => 'xsd:string'],
+        'related_module_id' => ['name' => 'related_module_id', 'type' => 'xsd:string'],
+        'related_module_name' => ['name' => 'related_module_name', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -76,9 +76,9 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        "note_attachment"=>array('name'=>'note_attachment', 'type'=>'tns:new_note_attachment'),
-    )
+    [
+        'note_attachment' => ['name' => 'note_attachment', 'type' => 'tns:new_note_attachment'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -87,10 +87,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        "note_attachment"=>array('name'=>'note_attachment', 'type'=>'tns:note_attachment'),
-        "error"=> array('name'=>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'note_attachment' => ['name' => 'note_attachment', 'type' => 'tns:note_attachment'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -99,12 +99,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'user_name'=>array('name'=>'user_name', 'type'=>'xsd:string'),
-        'password' => array('name'=>'password', 'type'=>'xsd:string'),
-        'version'=>array('name'=>'version', 'type'=>'xsd:string'),
-    )
-
+    [
+        'user_name' => ['name' => 'user_name', 'type' => 'xsd:string'],
+        'password' => ['name' => 'password', 'type' => 'xsd:string'],
+        'version' => ['name' => 'version', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -113,14 +112,14 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-            'type'=>array('name'=>'type', 'type'=>'xsd:string'),
-            'label'=>array('name'=>'label', 'type'=>'xsd:string'),
-            'required'=>array('name'=>'required', 'type'=>'xsd:int'),
-            'options'=>array('name'=>'options', 'type'=>'tns:name_value_list'),
-            'default_value'=>array('name'=>'name', 'type'=>'xsd:string'),
-        )
+    [
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'type' => ['name' => 'type', 'type' => 'xsd:string'],
+        'label' => ['name' => 'label', 'type' => 'xsd:string'],
+        'required' => ['name' => 'required', 'type' => 'xsd:int'],
+        'options' => ['name' => 'options', 'type' => 'tns:name_value_list'],
+        'default_value' => ['name' => 'name', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -129,15 +128,14 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-            'type'=>array('name'=>'type', 'type'=>'xsd:string'),
-            'relationship'=>array('name'=>'relationship', 'type'=>'xsd:string'),
-            'module'=>array('name'=>'module', 'type'=>'xsd:string'),
-            'bean_name'=>array('name'=>'bean_name', 'type'=>'xsd:string'),
-        )
+    [
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'type' => ['name' => 'type', 'type' => 'xsd:string'],
+        'relationship' => ['name' => 'relationship', 'type' => 'xsd:string'],
+        'module' => ['name' => 'module', 'type' => 'xsd:string'],
+        'bean_name' => ['name' => 'bean_name', 'type' => 'xsd:string'],
+    ]
 );
-
 
 $server->wsdl->addComplexType(
     'field_list',
@@ -145,10 +143,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'tns:field[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:field[]']
+    ],
     'tns:field'
 );
 
@@ -158,14 +156,12 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'tns:link_field[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:link_field[]']
+    ],
     'tns:link_field'
 );
-
-
 
 $server->wsdl->addComplexType(
     'name_value',
@@ -173,10 +169,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-            'value'=>array('name'=>'value', 'type'=>'xsd:string'),
-        )
+    [
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'value' => ['name' => 'value', 'type' => 'xsd:string'],
+    ]
 );
 $server->wsdl->addComplexType(
     'name_value_list',
@@ -184,10 +180,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:name_value[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:name_value[]']
+    ],
     'tns:name_value'
 );
 
@@ -197,13 +193,12 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:name_value_list[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:name_value_list[]']
+    ],
     'tns:name_value_list'
 );
-
 
 //these are just a list of fields we want to get
 $server->wsdl->addComplexType(
@@ -212,14 +207,12 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'xsd:string[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'xsd:string[]']
+    ],
     'xsd:string'
 );
-
-
 
 //these are just a list of fields we want to get
 $server->wsdl->addComplexType(
@@ -228,11 +221,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
-            'module_fields'=>array('name'=>'module_fields', 'type'=>'tns:field_list'),
-            'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-        )
+    [
+        'module_name' => ['name' => 'module_name', 'type' => 'xsd:string'],
+        'module_fields' => ['name' => 'module_fields', 'type' => 'tns:field_list'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 //these are just a list of fields we want to get
@@ -242,11 +235,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
-            'module_fields'=>array('name'=>'module_fields', 'type'=>'tns:field_list'),
-            'link_fields'=>array('name'=>'link_fields', 'type'=>'tns:link_field_list'),
-        )
+    [
+        'module_name' => ['name' => 'module_name', 'type' => 'xsd:string'],
+        'module_fields' => ['name' => 'module_fields', 'type' => 'tns:field_list'],
+        'link_fields' => ['name' => 'link_fields', 'type' => 'tns:link_field_list'],
+    ]
 );
 
 // a listing of available modules
@@ -256,10 +249,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'modules'=>array('name'=>'modules', 'type'=>'tns:select_fields'),
-            'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-        )
+    [
+        'modules' => ['name' => 'modules', 'type' => 'tns:select_fields'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -268,14 +261,12 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'number'=>array('name'=>'number', 'type'=>'xsd:string'),
-            'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-            'description'=>array('name'=>'description', 'type'=>'xsd:string'),
-        )
+    [
+        'number' => ['name' => 'number', 'type' => 'xsd:string'],
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'description' => ['name' => 'description', 'type' => 'xsd:string'],
+    ]
 );
-
-
 
 $server->wsdl->addComplexType(
     'entry_value',
@@ -283,11 +274,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'id'=>array('name'=>'id', 'type'=>'xsd:string'),
-            'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
-            'name_value_list'=>array('name'=>'name_value_list', 'type'=>'tns:name_value_list'),
-        )
+    [
+        'id' => ['name' => 'id', 'type' => 'xsd:string'],
+        'module_name' => ['name' => 'module_name', 'type' => 'xsd:string'],
+        'name_value_list' => ['name' => 'name_value_list', 'type' => 'tns:name_value_list'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -296,13 +287,12 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:entry_value[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:entry_value[]']
+    ],
     'tns:entry_value'
 );
-
 
 $server->wsdl->addComplexType(
     'get_mailmerge_document_result',
@@ -310,11 +300,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'html' => array('name'=>'html', 'type'=>'xsd:string'),
-        'name_value_list'=>array('name'=>'name_value_list', 'type'=>'tns:name_value_list'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'html' => ['name' => 'html', 'type' => 'xsd:string'],
+        'name_value_list' => ['name' => 'name_value_list', 'type' => 'tns:name_value_list'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -323,10 +313,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-                'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-                'value'=>array('name'=>'value', 'type'=>'tns:select_fields'),
-        )
+    [
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'value' => ['name' => 'value', 'type' => 'tns:select_fields'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -335,10 +325,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:name_value_list[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:name_value_list[]']
+    ],
     'tns:name_value'
 );
 
@@ -348,10 +338,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_value[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:link_value[]']
+    ],
     'tns:link_value'
 );
 
@@ -361,10 +351,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-            'records'=>array('name'=>'records', 'type'=>'tns:link_array_list'),
-        )
+    [
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'records' => ['name' => 'records', 'type' => 'tns:link_array_list'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -373,10 +363,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_name_value[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:link_name_value[]']
+    ],
     'tns:link_name_value'
 );
 
@@ -386,10 +376,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:link_list[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:link_list[]']
+    ],
     'tns:link_list'
 );
 
@@ -399,10 +389,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'entry_list' => array('name' =>'entry_list', 'type'=>'tns:entry_list'),
-        'relationship_list' => array('name' =>'relationship_list', 'type'=>'tns:link_lists'),
-    )
+    [
+        'entry_list' => ['name' => 'entry_list', 'type' => 'tns:entry_list'],
+        'relationship_list' => ['name' => 'relationship_list', 'type' => 'tns:link_lists'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -411,9 +401,9 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'entry_list' => array('name' =>'entry_list', 'type'=>'tns:link_list'),
-    )
+    [
+        'entry_list' => ['name' => 'entry_list', 'type' => 'tns:link_list'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -422,13 +412,13 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'result_count' => array('name'=>'result_count', 'type'=>'xsd:int'),
-        'next_offset' => array('name'=>'next_offset', 'type'=>'xsd:int'),
-        'field_list'=>array('name'=>'field_list', 'type'=>'tns:field_list'),
-        'entry_list' => array('name' =>'entry_list', 'type'=>'tns:entry_list'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'result_count' => ['name' => 'result_count', 'type' => 'xsd:int'],
+        'next_offset' => ['name' => 'next_offset', 'type' => 'xsd:int'],
+        'field_list' => ['name' => 'field_list', 'type' => 'tns:field_list'],
+        'entry_list' => ['name' => 'entry_list', 'type' => 'tns:entry_list'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -437,12 +427,12 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'result_count' => array('name'=>'result_count', 'type'=>'xsd:int'),
-        'next_offset' => array('name'=>'next_offset', 'type'=>'xsd:int'),
-        'entry_list' => array('name' =>'entry_list', 'type'=>'tns:entry_list'),
-        'relationship_list' => array('name' =>'relationship_list', 'type'=>'tns:link_lists'),
-    )
+    [
+        'result_count' => ['name' => 'result_count', 'type' => 'xsd:int'],
+        'next_offset' => ['name' => 'next_offset', 'type' => 'xsd:int'],
+        'entry_list' => ['name' => 'entry_list', 'type' => 'tns:entry_list'],
+        'relationship_list' => ['name' => 'relationship_list', 'type' => 'tns:link_lists'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -451,11 +441,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'field_list'=>array('name'=>'field_list', 'type'=>'tns:field_list'),
-        'entry_list' => array('name' =>'entry_list', 'type'=>'tns:entry_list'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'field_list' => ['name' => 'field_list', 'type' => 'tns:field_list'],
+        'entry_list' => ['name' => 'entry_list', 'type' => 'tns:entry_list'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -464,13 +454,12 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'flavor' => array('name'=>'id', 'type'=>'xsd:string'),
-        'version' => array('name'=>'id', 'type'=>'xsd:string'),
-        'gmt_time' => array('name'=>'id', 'type'=>'xsd:string'),
-    )
+    [
+        'flavor' => ['name' => 'id', 'type' => 'xsd:string'],
+        'version' => ['name' => 'id', 'type' => 'xsd:string'],
+        'gmt_time' => ['name' => 'id', 'type' => 'xsd:string'],
+    ]
 );
-
 
 $server->wsdl->addComplexType(
     'set_entry_result',
@@ -478,10 +467,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'id' => array('name'=>'id', 'type'=>'xsd:string'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'id' => ['name' => 'id', 'type' => 'xsd:string'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -490,9 +479,9 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'id' => array('name'=>'id', 'type'=>'xsd:string'),
-    )
+    [
+        'id' => ['name' => 'id', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -501,9 +490,9 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'ids' => array('name'=>'ids', 'type'=>'tns:select_fields'),
-    )
+    [
+        'ids' => ['name' => 'ids', 'type' => 'tns:select_fields'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -512,10 +501,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'ids' => array('name'=>'ids', 'type'=>'tns:select_fields'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'ids' => ['name' => 'ids', 'type' => 'tns:select_fields'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -524,11 +513,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'id' => array('name'=>'id', 'type'=>'xsd:string'),
-        'date_modified' => array('name' =>'date_modified', 'type'=>'xsd:string'),
-        'deleted' => array('name' =>'deleted', 'type'=>'xsd:int'),
-    )
+    [
+        'id' => ['name' => 'id', 'type' => 'xsd:string'],
+        'date_modified' => ['name' => 'date_modified', 'type' => 'xsd:string'],
+        'deleted' => ['name' => 'deleted', 'type' => 'xsd:int'],
+    ]
 );
 
 //these are just a list of fields we want to get
@@ -538,10 +527,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:id_mod[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:id_mod[]']
+    ],
     'tns:id_mod'
 );
 
@@ -551,14 +540,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'ids' => array('name'=>'ids', 'type'=>'tns:ids_mods'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'ids' => ['name' => 'ids', 'type' => 'tns:ids_mods'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
-
-
-
 
 $server->wsdl->addComplexType(
     'set_relationship_value',
@@ -566,13 +552,12 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'module1'=>array('name'=>'module1', 'type'=>'xsd:string'),
-            'module1_id'=>array('name'=>'module1_id', 'type'=>'xsd:string'),
-            'module2'=>array('name'=>'module2', 'type'=>'xsd:string'),
-            'module2_id'=>array('name'=>'module_2_id', 'type'=>'xsd:string'),
-
-        )
+    [
+        'module1' => ['name' => 'module1', 'type' => 'xsd:string'],
+        'module1_id' => ['name' => 'module1_id', 'type' => 'xsd:string'],
+        'module2' => ['name' => 'module2', 'type' => 'xsd:string'],
+        'module2_id' => ['name' => 'module_2_id', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -581,10 +566,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:set_relationship_value[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:set_relationship_value[]']
+    ],
     'tns:set_relationship_value'
 );
 
@@ -594,10 +579,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:select_fields[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:select_fields[]']
+    ],
     'tns:select_fields'
 );
 
@@ -607,10 +592,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'created' => array('name'=>'created', 'type'=>'xsd:int'),
-        'failed' => array('name'=>'failed', 'type'=>'xsd:int'),
-    )
+    [
+        'created' => ['name' => 'created', 'type' => 'xsd:int'],
+        'failed' => ['name' => 'failed', 'type' => 'xsd:int'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -619,11 +604,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'created' => array('name'=>'created', 'type'=>'xsd:int'),
-        'failed' => array('name'=>'failed', 'type'=>'xsd:int'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'created' => ['name' => 'created', 'type' => 'xsd:int'],
+        'failed' => ['name' => 'failed', 'type' => 'xsd:int'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -632,13 +617,13 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        "id" => array('name'=>"id",'type'=>'xsd:string'),
-        "document_name" => array('name'=>"document_name",'type'=>'xsd:string'),
-        "revision" => array('name' => "revision", 'type'=>'xsd:string'),
-        "filename" => array('name' => "filename", 'type'=>'xsd:string'),
-        "file" => array('name'=>"file",'type'=>'xsd:string'),
-    )
+    [
+        'id' => ['name' => 'id', 'type' => 'xsd:string'],
+        'document_name' => ['name' => 'document_name', 'type' => 'xsd:string'],
+        'revision' => ['name' => 'revision', 'type' => 'xsd:string'],
+        'filename' => ['name' => 'filename', 'type' => 'xsd:string'],
+        'file' => ['name' => 'file', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -647,14 +632,14 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'result_count' => array('name'=>'result_count', 'type'=>'xsd:int'),
-        'next_offset' => array('name'=>'next_offset', 'type'=>'xsd:int'),
-        'total_count' => array('name'=>'total_count', 'type'=>'xsd:int'),
-        'field_list' => array('name'=>'field_list', 'type'=>'tns:select_fields'),
-        'entry_list' => array('name'=>'entry_list', 'type'=>'xsd:string'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'result_count' => ['name' => 'result_count', 'type' => 'xsd:int'],
+        'next_offset' => ['name' => 'next_offset', 'type' => 'xsd:int'],
+        'total_count' => ['name' => 'total_count', 'type' => 'xsd:int'],
+        'field_list' => ['name' => 'field_list', 'type' => 'tns:select_fields'],
+        'entry_list' => ['name' => 'entry_list', 'type' => 'xsd:string'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -663,10 +648,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'result' => array('name'=>'result', 'type'=>'xsd:string'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'result' => ['name' => 'result', 'type' => 'xsd:string'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -675,13 +660,13 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'result' => array('name'=>'result', 'type'=>'xsd:string'),
-        'result_count' => array('name'=>'result_count', 'type'=>'xsd:int'),
-        'next_offset' => array('name'=>'next_offset', 'type'=>'xsd:int'),
-        'total_count' => array('name'=>'total_count', 'type'=>'xsd:int'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'result' => ['name' => 'result', 'type' => 'xsd:string'],
+        'result_count' => ['name' => 'result_count', 'type' => 'xsd:int'],
+        'next_offset' => ['name' => 'next_offset', 'type' => 'xsd:int'],
+        'total_count' => ['name' => 'total_count', 'type' => 'xsd:int'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -690,10 +675,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        "document_revision"=>array('name'=>'document_revision', 'type'=>'tns:document_revision'),
-        "error"=> array('name'=>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'document_revision' => ['name' => 'document_revision', 'type' => 'tns:document_revision'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -702,9 +687,9 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        "document_revision"=>array('name'=>'document_revision', 'type'=>'tns:document_revision'),
-    )
+    [
+        'document_revision' => ['name' => 'document_revision', 'type' => 'tns:document_revision'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -713,12 +698,12 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-            'value'=>array('name'=>'value', 'type'=>'xsd:string'),
-            'operator'=>array('name'=>'operator', 'type'=>'xsd:string'),
-            'value_array'=>array('name'=>'value_array', 'type'=>'tns:select_fields')
-        )
+    [
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'value' => ['name' => 'value', 'type' => 'xsd:string'],
+        'operator' => ['name' => 'operator', 'type' => 'xsd:string'],
+        'value_array' => ['name' => 'value_array', 'type' => 'tns:select_fields']
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -727,10 +712,10 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:name_value_operator[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:name_value_operator[]']
+    ],
     'tns:name_value_operator'
 );
 $server->wsdl->addComplexType(
@@ -739,13 +724,13 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-            'name'=>array('name'=>'name', 'type'=>'xsd:string'),
-            'prospect_list_id'=>array('name'=>'prospect_list_id', 'type'=>'xsd:string'),
-            'campaign_id'=>array('name'=>'campaign_id', 'type'=>'xsd:string'),
-            'description'=>array('name'=>'description', 'type'=>'xsd:string'),
-            'frequency'=>array('name'=>'frequency', 'type'=>'xsd:string'),
-        )
+    [
+        'name' => ['name' => 'name', 'type' => 'xsd:string'],
+        'prospect_list_id' => ['name' => 'prospect_list_id', 'type' => 'xsd:string'],
+        'campaign_id' => ['name' => 'campaign_id', 'type' => 'xsd:string'],
+        'description' => ['name' => 'description', 'type' => 'xsd:string'],
+        'frequency' => ['name' => 'frequency', 'type' => 'xsd:string'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -754,13 +739,12 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array('ref'=>'SOAP-ENC:arrayType', 'wsdl:arrayType'=>'tns:newsletter[]')
-    ),
+    [],
+    [
+        ['ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'tns:newsletter[]']
+    ],
     'tns:newsletter'
 );
-
 
 $server->wsdl->addComplexType(
     'get_subscription_lists_result',
@@ -768,11 +752,11 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'unsubscribed' => array('name'=>'unsubscribed', 'type'=>'tns:newsletter_list'),
-        'subscribed' => array('name'=>'subscribed', 'type'=>'tns:newsletter_list'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'unsubscribed' => ['name' => 'unsubscribed', 'type' => 'tns:newsletter_list'],
+        'subscribed' => ['name' => 'subscribed', 'type' => 'tns:newsletter_list'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 // generic type for an array of strings
 $server->wsdl->addComplexType(
@@ -781,13 +765,13 @@ $server->wsdl->addComplexType(
     'array',
     '',
     'SOAP-ENC:Array',
-    array(),
-    array(
-        array(
+    [],
+    [
+        [
             'ref' => 'SOAP-ENC:arrayType',
             'wsdl:arrayType' => 'xsd:string[]'
-        )
-    ),
+        ]
+    ],
     'xsd:string'
 );
 
@@ -797,16 +781,16 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'name_value_lists' => array(
+    [
+        'name_value_lists' => [
             'name' => 'panels',
             'type' => 'tns:name_value_lists'
-        ),
-        'error' => array(
+        ],
+        'error' => [
             'name' => 'error',
             'type' => 'tns:error_value'
-        )
-    )
+        ]
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -815,10 +799,10 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'result_count'=>array('name'=>'result_count', 'type'=>'xsd:int'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'result_count' => ['name' => 'result_count', 'type' => 'xsd:int'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );
 
 $server->wsdl->addComplexType(
@@ -827,8 +811,8 @@ $server->wsdl->addComplexType(
     'struct',
     'all',
     '',
-    array(
-        'name_value_lists' => array('name'=>'name_value_lists', 'type'=>'tns:name_value_lists'),
-        'error' => array('name' =>'error', 'type'=>'tns:error_value'),
-    )
+    [
+        'name_value_lists' => ['name' => 'name_value_lists', 'type' => 'tns:name_value_lists'],
+        'error' => ['name' => 'error', 'type' => 'tns:error_value'],
+    ]
 );

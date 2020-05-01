@@ -1,12 +1,12 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
  * Products, Quotations & Invoices modules.
- * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
- * @subpackage Products
+ * Extensions to SugarCRM.
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,18 +23,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
-
 $module_name = 'AOS_PDF_Templates';
 $_module_name = 'aos_pdf_templates';
-$popupMeta = array('moduleMain' => $module_name,
-                        'varName' => $module_name,
-                        'orderBy' => $_module_name.'.name',
-                        'whereClauses' =>
-                            array('name' => $_module_name . '.name',
-                                ),
-                            'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
-                            
-                        );
+$popupMeta = ['moduleMain' => $module_name,
+    'varName' => $module_name,
+    'orderBy' => $_module_name . '.name',
+    'whereClauses' => ['name' => $_module_name . '.name',
+    ],
+    'searchInputs' => [$_module_name . '_number', 'name', 'priority', 'status'],
+];

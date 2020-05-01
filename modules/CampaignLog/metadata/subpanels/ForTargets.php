@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,53 +40,49 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(
-    ),
+$subpanel_layout = [
+    'top_buttons' => [
+    ],
 
     'where' => '',
 
-
-    'list_fields' => array(
-        'campaign_name1'=>array(
+    'list_fields' => [
+        'campaign_name1' => [
             'vname' => 'LBL_LIST_CAMPAIGN_NAME',
             'width' => '20%',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'campaign_id',
             'target_module' => 'Campaigns',
-        ),
-        'activity_type' => array(
+        ],
+        'activity_type' => [
             'vname' => 'LBL_ACTIVITY_TYPE',
             'width' => '10%',
-        ),
-        'activity_date' => array(
+        ],
+        'activity_date' => [
             'vname' => 'LBL_ACTIVITY_DATE',
             'width' => '10%',
-        ),
-        'related_name' => array(
+        ],
+        'related_name' => [
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'related_id',
             'target_module_key' => 'related_type',
-            'parent_id' =>'target_id',
-            'parent_module'=>'target_type',
+            'parent_id' => 'target_id',
+            'parent_module' => 'target_type',
             'vname' => 'LBL_RELATED',
             'width' => '60%',
-            'sortable'=>false,
-        ),
-        'related_id'=>array(
-            'usage' =>'query_only',
-        ),
-        'related_type'=>array(
-            'usage' =>'query_only',
-        ),
-        'target_id'=>array(
-            'usage' =>'query_only',
-        ),
-        'target_type'=>array(
-            'usage' =>'query_only',
-        ),
-    ),
-);
+            'sortable' => false,
+        ],
+        'related_id' => [
+            'usage' => 'query_only',
+        ],
+        'related_type' => [
+            'usage' => 'query_only',
+        ],
+        'target_id' => [
+            'usage' => 'query_only',
+        ],
+        'target_type' => [
+            'usage' => 'query_only',
+        ],
+    ],
+];

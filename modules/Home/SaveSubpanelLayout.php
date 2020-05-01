@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,8 +49,8 @@ if (!empty($_REQUEST['layout']) && !empty($_REQUEST['layoutModule'])) {
 
     $layoutParam = $_REQUEST['layoutModule'];
 
-    if (!empty($_REQUEST['layoutGroup']) && $_REQUEST['layoutGroup']!= translate('LBL_TABGROUP_ALL')) {
-        $layoutParam .= ':'.$_REQUEST['layoutGroup'];
+    if (!empty($_REQUEST['layoutGroup']) && $_REQUEST['layoutGroup'] != translate('LBL_TABGROUP_ALL')) {
+        $layoutParam .= ':' . $_REQUEST['layoutGroup'];
     }
 
     $current_user->setPreference('subpanelLayout', $subpanels, 0, $layoutParam);

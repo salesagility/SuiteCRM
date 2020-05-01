@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,56 +42,53 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$listViewDefs['Users'] = array(
-    'NAME' => array(
+$listViewDefs['Users'] = [
+    'NAME' => [
         'width' => '30',
         'label' => 'LBL_LIST_NAME',
         'link' => true,
-        'related_fields' => array('last_name', 'first_name'),
+        'related_fields' => ['last_name', 'first_name'],
         'orderBy' => 'last_name',
-        'default' => true),
-    'USER_NAME' => array(
+        'default' => true],
+    'USER_NAME' => [
         'width' => '5',
         'label' => 'LBL_USER_NAME',
         'link' => true,
-        'default' => true),
-    'TITLE' => array(
+        'default' => true],
+    'TITLE' => [
         'width' => '15',
         'label' => 'LBL_TITLE',
         'link' => true,
-        'default' => true),
-    'DEPARTMENT' => array(
+        'default' => true],
+    'DEPARTMENT' => [
         'width' => '15',
         'label' => 'LBL_DEPARTMENT',
         'link' => true,
-        'default' => true),
-    'EMAIL1' => array(
+        'default' => true],
+    'EMAIL1' => [
         'width' => '30',
         'sortable' => false,
         'label' => 'LBL_LIST_EMAIL',
         'link' => true,
-        'default' => true),
-    'PHONE_WORK' => array(
+        'default' => true],
+    'PHONE_WORK' => [
         'width' => '25',
         'label' => 'LBL_LIST_PHONE',
         'link' => true,
-        'default' => true),
-    'STATUS' => array(
+        'default' => true],
+    'STATUS' => [
         'width' => '10',
         'label' => 'LBL_STATUS',
         'link' => false,
-        'default' => true),
-    'IS_ADMIN' => array(
+        'default' => true],
+    'IS_ADMIN' => [
         'width' => '10',
         'label' => 'LBL_ADMIN',
         'link' => false,
-        'default' => true),
-    'IS_GROUP' => array(
+        'default' => true],
+    'IS_GROUP' => [
         'width' => '10',
         'label' => 'LBL_LIST_GROUP',
         'link' => true,
-        'default' => false),
-);
+        'default' => false],
+];

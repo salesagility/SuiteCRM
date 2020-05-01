@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\JsonApi\Repository;
 
 class Sort
@@ -12,8 +13,9 @@ class Sort
      * @param \SugarBean $bean
      * @param string $value
      *
+     * @throws \InvalidArgumentException when sort field is not found in the bean
+     *
      * @return string
-     * @throws \InvalidArgumentException When sort field is not found in the bean.
      */
     public function parseOrderBy(\SugarBean $bean, $value)
     {

@@ -4,7 +4,6 @@ use JShrink\Minifier;
 
 class SugarMin
 {
-
     /**
      * jsParser will take javascript source code and minify it.
      *
@@ -18,7 +17,8 @@ class SugarMin
      *
      * @param string $js
      * @param string $currentOptions
-     * @return void
+     * @param mixed $text
+     * @param mixed $compression
      */
     private function __construct($text, $compression)
     {
@@ -29,17 +29,17 @@ class SugarMin
     /**
      * Entry point function to minify javascript.
      *
-     * @param string $js Javascript source code as a string.
+     * @param string $js javascript source code as a string
      * @param string $compression Compression option. {light, deep}.
-     * @return string $output Output javascript code as a string.
+     *
+     * @return string $output output javascript code as a string
      */
     public static function minify($js, $compression = 'light')
     {
         try {
             $me = new SugarMin($js, $compression);
-            $output = $me->jsParser();
 
-            return $output;
+            return $me->jsParser();
         } catch (Exception $e) {
             // Exception handling is left up to the implementer.
             throw $e;
@@ -47,12 +47,13 @@ class SugarMin
     }
 
     /**
-     * @return bool|string
      * @throws Exception
+     *
+     * @return bool|string
      */
     protected function jsParser()
     {
-        $jshrink = new Minifier;
+        $jshrink = new Minifier();
 
         return $jshrink::minify($this->text);
     }

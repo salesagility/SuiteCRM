@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,40 +40,38 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateRange.php';
 
 class TemplateFloat extends TemplateRange
 {
     public $type = 'float';
-    public $default = null;
-    public $default_value = null;
+    public $default;
+    public $default_value;
     public $len = '18';
     public $precision = '8';
 
     public function __construct()
     {
         parent::__construct();
-        $this->vardef_map['precision']='ext1';
+        $this->vardef_map['precision'] = 'ext1';
         //$this->vardef_map['precision']='precision';
     }
-
-
-
 
     public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['precision'] = isset($this->ext1) && $this->ext1 != '' ? $this->ext1 : $this->precision;
+
         return $def;
     }
 
     public function get_db_type()
     {
-        $precision = (!empty($this->precision))? $this->precision: 6;
+        $precision = (!empty($this->precision)) ? $this->precision : 6;
         if (empty($this->len)) {
             return parent::get_db_type();
         }
-        return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $this->len, $precision);
+
+        return ' ' . sprintf(DBManagerFactory::getInstance()->getColumnType('decimal_tpl'), $this->len, $precision);
     }
 }

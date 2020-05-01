@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,22 +41,40 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
  * Provide application specific logic to the session object.
+ *
  * @api
  */
 class SugarSession
 {
-    private static $_instance;
     public static $sessionId;
+    private static $_instance;
 
     /**
-     * When constructing the session object, be sure to check if the session_id() already exists as is the case of session.auto_start = 1
-     *
+     * When constructing the session object, be sure to check if the session_id() already exists as is the case of session.auto_start = 1.
      */
     public function __construct()
     {
+    }
+
+    public function __destruct()
+    {
+        session_write_close();
+    }
+
+    public function __clone()
+    {
+    }
+
+    public function __get($var)
+    {
+        return !empty($_SESSION[$var]) ? $_SESSION[$var] : '';
+    }
+
+    public function __set($var, $val)
+    {
+        return $_SESSION[$var] = $val;
     }
 
     public function setSessionId($sessionId)
@@ -91,24 +109,5 @@ class SugarSession
             $_SESSION[$var] = null;
         }
         session_destroy();
-    }
-
-    public function __clone()
-    {
-    }
-
-    public function __get($var)
-    {
-        return (!empty($_SESSION[$var]) ? $_SESSION[$var] : '');
-    }
-
-    public function __set($var, $val)
-    {
-        return ($_SESSION[$var] = $val);
-    }
-
-    public function __destruct()
-    {
-        session_write_close();
     }
 }

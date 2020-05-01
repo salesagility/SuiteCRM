@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class UsersTester extends \AcceptanceTester
 {
     /**
-     * Navigate to users profile module
+     * Navigate to users profile module.
      */
     public function gotoProfile()
     {
@@ -14,7 +14,7 @@ class UsersTester extends \AcceptanceTester
     }
 
     /**
-     * Logout a user
+     * Logout a user.
      */
     public function logoutUser()
     {

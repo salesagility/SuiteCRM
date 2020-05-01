@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,32 +42,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-$listViewDefs['ProspectLists'] = array(
-    'NAME' => array(
+$listViewDefs['ProspectLists'] = [
+    'NAME' => [
         'width' => '25',
         'label' => 'LBL_LIST_PROSPECT_LIST_NAME',
         'link' => true,
-        'default' => true),
-    'LIST_TYPE' => array(
+        'default' => true],
+    'LIST_TYPE' => [
         'width' => '15',
         'label' => 'LBL_LIST_TYPE_LIST_NAME',
-        'default' => true),
-    'DESCRIPTION' => array(
+        'default' => true],
+    'DESCRIPTION' => [
         'width' => '40',
         'label' => 'LBL_LIST_DESCRIPTION',
-        'default' => true),
-    'ASSIGNED_USER_NAME' => array(
+        'default' => true],
+    'ASSIGNED_USER_NAME' => [
         'width' => '10',
         'label' => 'LBL_LIST_ASSIGNED_USER',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-    'DATE_ENTERED' => array(
+        'default' => true],
+    'DATE_ENTERED' => [
         'type' => 'datetime',
         'label' => 'LBL_DATE_ENTERED',
         'width' => '10',
-        'default' => true),
-);
+        'default' => true],
+];

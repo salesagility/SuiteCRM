@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,44 +36,41 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$viewdefs['DocumentRevisions']['DetailView'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'form' => array(
-                                'buttons' => array(),
-                                'hidden'=>array('<input type="hidden" name="old_id" value="{$fields.document_revision_id.value}">')),
-                            'widths' => array(
-                                array('label' => '10', 'field' => '30'),
-                                array('label' => '10', 'field' => '30')
-                                ),
-        ),
-    'panels' =>
-    array(
-        '' =>
-        array(
-            array(
+$viewdefs['DocumentRevisions']['DetailView'] = [
+    'templateMeta' => ['maxColumns' => '2',
+        'form' => [
+            'buttons' => [],
+            'hidden' => ['<input type="hidden" name="old_id" value="{$fields.document_revision_id.value}">']],
+        'widths' => [
+            ['label' => '10', 'field' => '30'],
+            ['label' => '10', 'field' => '30']
+        ],
+    ],
+    'panels' => [
+        '' => [
+            [
                 'document_name',
                 'latest_revision',
-            ),
-            
-            array(
+            ],
+
+            [
                 'revision',
-            ),
-            
-            array(
+            ],
+
+            [
                 'filename',
-            ),
-            
-            array(
-                array(
+            ],
+
+            [
+                [
                     'name' => 'date_entered',
                     'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                ),
-            ),
+                ],
+            ],
 
-            array(
+            [
                 'change_log',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];

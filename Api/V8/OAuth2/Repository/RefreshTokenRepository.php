@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\OAuth2\Repository;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -22,7 +23,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getNewRefreshToken()
     {
@@ -30,9 +31,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @throws \InvalidArgumentException When access token is not found.
+     * @throws \InvalidArgumentException when access token is not found
      */
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
     {
@@ -52,9 +53,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @throws \InvalidArgumentException When refresh token is not found.
+     * @throws \InvalidArgumentException when refresh token is not found
      */
     public function revokeRefreshToken($tokenId)
     {
@@ -73,7 +74,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isRefreshTokenRevoked($tokenId)
     {

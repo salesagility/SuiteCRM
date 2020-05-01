@@ -64,7 +64,9 @@ class Acceptance extends Module
     /**
      * Deletes module files and directories created by the module builder.
      * This allows the acceptance tests to be re-run.
+     *
      * @param string $module
+     *
      * @throws ModuleException
      */
     private function deleteModuleFiles($module)
@@ -76,7 +78,7 @@ class Acceptance extends Module
         ];
 
         $files = [
-            "custom/application/Ext/Include/modules.ext.php",
+            'custom/application/Ext/Include/modules.ext.php',
             "custom/Extension/application/Ext/Include/{$module}.php"
         ];
 

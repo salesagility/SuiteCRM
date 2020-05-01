@@ -1,5 +1,5 @@
 <?php
 
 // ADDITIONAL LANGUAGES
-$config['languages'] = array(
-);
+$config['languages'] = [
+];

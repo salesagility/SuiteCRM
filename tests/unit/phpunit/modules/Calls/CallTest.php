@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class CallTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -30,7 +33,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'importable', $call);
         $this->assertAttributeEquals(false, 'syncing', $call);
         $this->assertAttributeEquals(true, 'update_vcal', $call);
-        $this->assertAttributeEquals(array(0 => '00', 15 => '15', 30 => '30', 45 => '45'), 'minutes_values', $call);
+        $this->assertAttributeEquals([0 => '00', 15 => '15', 30 => '30', 45 => '45'], 'minutes_values', $call);
     }
 
     public function testACLAccess()
@@ -63,7 +66,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_contacts()
+    public function testgetContacts()
     {
         $call = new Call();
         $call->id = 1;
@@ -73,7 +76,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $call = new Call();
 
@@ -85,10 +88,10 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $call->get_summary_text());
     }
 
-    public function testcreate_list_query()
+    public function testcreateListQuery()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $call = new Call();
 
         //test with empty string params
@@ -102,7 +105,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $call = new Call();
 
@@ -110,7 +113,6 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where calls.deleted=0 ORDER BY calls.name';
         $actual = $call->create_export_query('', '');
         $this->assertSame($expected, $actual);
-        
 
         //test with empty string params
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where users.user_name="" AND calls.deleted=0 ORDER BY calls.name';
@@ -118,7 +120,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $call = new Call();
 
@@ -134,7 +136,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Accounts', $call->parent_type);
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         self::markTestIncomplete('environment dependency (php5/php7)');
 
@@ -145,7 +147,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $call->modified_user_id = 1;
 
         //execute the method and verify that it retunrs expected results
-        $expected = array(
+        $expected = [
             'MODIFIED_USER_ID' => 1,
             'CREATED_BY' => 1,
             'DELETED' => 0,
@@ -162,7 +164,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
             'PARENT_NAME' => '',
             'REMINDER_CHECKED' => false,
             'EMAIL_REMINDER_CHECKED' => false,
-        );
+        ];
 
         $actual = $call->get_list_view_data();
         $this->assertSame($expected, $actual);
@@ -172,7 +174,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $call->modified_by_name);
     }
 
-    public function testset_notification_body()
+    public function testsetNotificationBody()
     {
         $call = new Call();
 
@@ -198,7 +200,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals($call->description, $result->_tpl_vars['CALL_DESCRIPTION']);
     }
 
-    public function testget_call_users()
+    public function testgetCallUsers()
     {
         $call = new Call();
         $call->id = 1;
@@ -208,7 +210,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testget_invite_calls()
+    public function testgetInviteCalls()
     {
         $call = new Call();
         $user = new User(1);
@@ -218,7 +220,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
     }
 
-    public function testset_accept_status()
+    public function testsetAcceptStatus()
     {
         $call = new Call();
         $call->id = 1;
@@ -235,7 +237,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $call->delete_linked($call->id);
     }
 
-    public function testget_notification_recipients()
+    public function testgetNotificationRecipients()
     {
         $call = new Call();
 
@@ -244,13 +246,13 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $this->assertTrue(is_array($result));
 
         //test with a user in notofication list set
-        $call->users_arr = array(1);
+        $call->users_arr = [1];
         $result = $call->get_notification_recipients();
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $call = new Call();
         $this->assertEquals(false, $call->bean_implements('')); //test with blank value
@@ -262,12 +264,12 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency');
         $call = new Call();
-        $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
+        $expected = ['MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a'];
         $actual = $call->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
 
-    public function testsave_relationship_changes()
+    public function testsaveRelationshipChanges()
     {
         $call = new Call();
 

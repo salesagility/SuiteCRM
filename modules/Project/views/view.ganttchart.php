@@ -14,11 +14,12 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
+ *
  * @Package Gantt chart
+ *
  * @copyright Andrew Mclaughlan 2014
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -39,31 +40,30 @@ class ProjectViewGanttChart extends ViewDetail
 
         $project = new Project();
 
-        if (!isset($_REQUEST["project_id"]) || trim($_REQUEST["project_id"]) == "") {
-            $_REQUEST["project_id"] = $_REQUEST["record"];
+        if (!isset($_REQUEST['project_id']) || trim($_REQUEST['project_id']) == '') {
+            $_REQUEST['project_id'] = $_REQUEST['record'];
         }
 
-        $project->retrieve($_REQUEST["project_id"]);
+        $project->retrieve($_REQUEST['project_id']);
         //Get project resources (users & contacts)
         $resources1 = $project->get_linked_beans('project_users_1', 'User');
         $resources2 = $project->get_linked_beans('project_contacts_1', 'Contact');
         //Combine resources into array of objects
-        $resource_array = array();
+        $resource_array = [];
         foreach ($resources1 as $user) {
-            $resource = new stdClass;
+            $resource = new stdClass();
             $resource->id = $user->id;
             $resource->name = $user->name;
             $resource->type = 'user';
             $resource_array[] = $resource;
         }
         foreach ($resources2 as $contact) {
-            $resource = new stdClass;
+            $resource = new stdClass();
             $resource->id = $contact->id;
             $resource->name = $contact->name;
             $resource->type = 'contact';
             $resource_array[] = $resource;
         }
-
 
         //Get the start and end date of the project in database format
         $query = "SELECT estimated_start_date FROM project WHERE id = '{$project->id}'";
@@ -106,7 +106,7 @@ class ProjectViewGanttChart extends ViewDetail
 							<label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE']; ?></label>
 							<?php
                             echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
-									'.get_select_options_with_id($app_list_strings['relationship_type_list'], '').'
+									' . get_select_options_with_id($app_list_strings['relationship_type_list'], '') . '
 							</select>'; ?>
 							<label for="Lag"><?php echo $mod_strings['LBL_LAG']; ?></label>
 							<input type="text" name="Lag" value="0" id="Lag" class="text ui-widget-content ui-corner-all" />
@@ -143,9 +143,9 @@ class ProjectViewGanttChart extends ViewDetail
 							<label for="Resources"><?php echo $mod_strings['LBL_ASSIGNED_USER_ID']; ?></label>
 							<?php
                             echo '<select id="Resources" name="Resources" class="text ui-widget-content ui-corner-all" />';
-        echo '<option value="0">'.$mod_strings['LBL_UNASSIGNED'].'</option>';
+        echo '<option value="0">' . $mod_strings['LBL_UNASSIGNED'] . '</option>';
         foreach ($resource_array as $resource) {
-            echo '<option rel="'.$resource->type.'" value="'.$resource->id.'">'.$resource->name.'</opion>';
+            echo '<option rel="' . $resource->type . '" value="' . $resource->id . '">' . $resource->name . '</opion>';
         }
         echo '</select>'; ?>
 							<label for="%Complete"><?php echo $mod_strings['LBL_PERCENT_COMPLETE']; ?></label>
@@ -175,7 +175,7 @@ class ProjectViewGanttChart extends ViewDetail
 			<!-- div class="moduleTitle">
 				<h2> <?php echo $project->name; ?> </h2>
 				<div class="clear"></div>
-				<br><a class="utilsLink" href="index.php?module=Project&action=DetailView&record=<?php echo $_REQUEST["project_id"]; ?>&return_module=Project&return_action=view_GanttChart" id="create_link"><?php echo $mod_strings['LBL_VIEW_DETAIL']; ?></a>
+				<br><a class="utilsLink" href="index.php?module=Project&action=DetailView&record=<?php echo $_REQUEST['project_id']; ?>&return_module=Project&return_action=view_GanttChart" id="create_link"><?php echo $mod_strings['LBL_VIEW_DETAIL']; ?></a>
 				<span class="utils">&nbsp; 
 				</span>
 				<div class="clear"></div>
@@ -208,8 +208,8 @@ class ProjectViewGanttChart extends ViewDetail
 							<tr>
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_AM_PROJECTTEMPLATES_TITLE']; ?></td>
 							<td class="inlineEdit" width="37.5%"><?php echo $project->am_projecttemplates_project_1_name; ?></td>
-							<td scope="col" width="12.5%"><?php echo ""; ?></td>
-							<td class="inlineEdit" width="37.5%"><?php echo ""; ?></td>
+							<td scope="col" width="12.5%"><?php echo ''; ?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo ''; ?></td>
 							</tr>
 							< !--tr >
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_DESCRIPTION']; ?></td>
@@ -233,7 +233,7 @@ class ProjectViewGanttChart extends ViewDetail
                         echo '<div style="clear:both;padding:10px;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
                         echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
                     } ?>
-            <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST["record"]; ?>" />
+            <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST['record']; ?>" />
             <div id="project_wrapper">
 
 
@@ -252,6 +252,7 @@ class ProjectViewGanttChart extends ViewDetail
         $datetime2 = new DateTime($end_date);
         $datetime2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $interval = $datetime1->diff($datetime2);
-        return $interval->format('%m '.$mod_strings['LBL_MONTHS'].', %d '.$mod_strings['LBL_DAYS']);
+
+        return $interval->format('%m ' . $mod_strings['LBL_MONTHS'] . ', %d ' . $mod_strings['LBL_DAYS']);
     }
 }

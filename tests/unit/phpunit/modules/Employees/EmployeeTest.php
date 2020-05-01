@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -27,7 +30,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $employee);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $employee = new Employee();
 
@@ -39,7 +42,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $employee->get_summary_text());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $employee = new Employee();
 
@@ -52,22 +55,21 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $employee = new Employee();
 
         //test with a empty employee bean
         $employee->fill_in_additional_detail_fields();
-        $this->assertEquals("", $employee->reports_to_name);
-
+        $this->assertEquals('', $employee->reports_to_name);
 
         //test with a valid employee bean
         $employee->retrieve(1);
         $employee->fill_in_additional_detail_fields();
-        $this->assertEquals("", $employee->reports_to_name);
+        $this->assertEquals('', $employee->reports_to_name);
     }
 
-    public function testretrieve_employee_id()
+    public function testretrieveEmployeeId()
     {
         $employee = new Employee();
         //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
@@ -75,17 +77,17 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
 
-    public function testverify_data()
+    public function testverifyData()
     {
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $employee = new Employee();
 
-        $expected = array(
+        $expected = [
             'SUGAR_LOGIN' => '1',
             'FULL_NAME' => ' ',
             'NAME' => ' ',
@@ -104,13 +106,13 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
                 ></a>',
             'MESSENGER_TYPE' => '',
             'REPORTS_TO_NAME' => null,
-        );
+        ];
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlistViewParseAdditionalSections()
     {
         $employee = new Employee();
 
@@ -124,22 +126,22 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $employee = new Employee();
 
         //test with empty string params
-        $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name";
+        $expected = 'SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name';
         $actual = $employee->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE users.user_name=\"\" AND  users.deleted = 0 ORDER BY users.id";
+        $expected = 'SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE users.user_name="" AND  users.deleted = 0 ORDER BY users.id';
         $actual = $employee->create_export_query('users.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
     }
 
-    public function testpreprocess_fields_on_save()
+    public function testpreprocessFieldsOnSave()
     {
         $employee = new Employee();
 
@@ -155,7 +157,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_new_list_query()
+    public function testcreateNewListQuery()
     {
         /*
     	$employee = new Employee();
@@ -180,25 +182,25 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
     }
-    
+
     public function testError()
     {
         global $app_strings;
-        
+
         // setup
         $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
-        
+
         // test if there is no error
-        
+
         ob_start();
         include __DIR__ . '/../../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
-        
+
         // test if there is an error
-        
+
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
         $request['error_string'] = 'TEST_ERROR_MESSAGE';
         $this->assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');

@@ -10,12 +10,10 @@ use SuiteCRM\Exception\Exception;
 use SuiteCRM\TestCaseAbstract;
 
 /**
- * Class SuitePHPUnitFrameworkTestCase
- * @package SuiteCRM\Test
+ * Class SuitePHPUnitFrameworkTestCase.
  */
 abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
 {
-
     /**
      * @var array
      */
@@ -53,6 +51,7 @@ abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
+     *
      * @throws Exception
      */
     protected function setUp()
@@ -68,7 +67,6 @@ abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
 
         $this->dbManagerFactoryInstances = DBManagerFactory::$instances;
         $this->db = DBManagerFactory::getInstance();
-
 
         if (isset($GLOBALS['reload_vardefs'])) {
             $this->env['$GLOBALS']['reload_vardefs'] = $GLOBALS['reload_vardefs'];

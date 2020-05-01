@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,15 +36,14 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
-    'LBL_OAUTH_REQUEST' => "Request Token",
-    'LBL_OAUTH_AUTHORIZE' => "Authorize Token",
-    'LBL_OAUTH_CONSUMERREQ' => "Authorize token from consumer <b>%s</b>?",
+$mod_strings = [
+    'LBL_OAUTH_REQUEST' => 'Request Token',
+    'LBL_OAUTH_AUTHORIZE' => 'Authorize Token',
+    'LBL_OAUTH_CONSUMERREQ' => 'Authorize token from consumer <b>%s</b>?',
     'LBL_ASSIGNED_TO_NAME' => 'User',
     'LBL_ID' => 'ID',
     'LBL_STATUS' => 'Status',
@@ -59,4 +57,4 @@ $mod_strings = array(
     'LBL_SECRET' => 'Secret',
     'LBL_TSTATE' => 'TState',
     'LBL_VERIFY' => 'Verify',
-);
+];

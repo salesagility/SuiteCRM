@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php' ;
+require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php';
 
 /*
  * Class to manage the metadata for a Many-To-Many Relationship
@@ -55,20 +53,17 @@ require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.p
 
 class ManyToManyRelationship extends AbstractRelationship
 {
-
     /*
      * Constructor
      * @param array $definition Parameters passed in as array with keys defined in parent::keys
      */
     public function __construct($definition)
     {
-        parent::__construct($definition) ;
+        parent::__construct($definition);
     }
-  
-    /*
-     * BUILD methods called during the build
-     */
-    
+
+    // BUILD methods called during the build
+
     /*
      * Construct subpanel definitions
      * The format is that of TO_MODULE => relationship, FROM_MODULE, FROM_MODULES_SUBPANEL, mimicking the format in the layoutdefs.php
@@ -76,41 +71,38 @@ class ManyToManyRelationship extends AbstractRelationship
      */
     public function buildSubpanelDefinitions()
     {
-        $subpanelDefinitions = array( ) ;
+        $subpanelDefinitions = [];
         if (!$this->relationship_only) {
-            $subpanelDefinitions [ $this->rhs_module ] = $this->getSubpanelDefinition($this->relationship_name, $this->lhs_module, $this->lhs_subpanel, $this->getLeftModuleSystemLabel()) ;
-            $subpanelDefinitions [ $this->lhs_module ] = $this->getSubpanelDefinition($this->relationship_name, $this->rhs_module, $this->rhs_subpanel, $this->getRightModuleSystemLabel()) ;
+            $subpanelDefinitions[$this->rhs_module] = $this->getSubpanelDefinition($this->relationship_name, $this->lhs_module, $this->lhs_subpanel, $this->getLeftModuleSystemLabel());
+            $subpanelDefinitions[$this->lhs_module] = $this->getSubpanelDefinition($this->relationship_name, $this->rhs_module, $this->rhs_subpanel, $this->getRightModuleSystemLabel());
         }
-        return $subpanelDefinitions ;
+
+        return $subpanelDefinitions;
     }
 
-
-    /*
-     * @return array    An array of field definitions, ready for the vardefs, keyed by module
-     */
+    // @return array    An array of field definitions, ready for the vardefs, keyed by module
     public function buildVardefs()
     {
-        $vardefs = array( ) ;
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition(
+        $vardefs = [];
+        $vardefs[$this->rhs_module][] = $this->getLinkFieldDefinition(
             $this->lhs_module,
             $this->relationship_name,
             false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE'
-        ) ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition(
+        );
+        $vardefs[$this->lhs_module][] = $this->getLinkFieldDefinition(
             $this->rhs_module,
             $this->relationship_name,
             false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
-        ) ;
-        return $vardefs ;
+        );
+
+        return $vardefs;
     }
-    
-    /*
-     * @return array    An array of relationship metadata definitions
-     */
+
+    // @return array    An array of relationship metadata definitions
     public function buildRelationshipMetaData()
     {
-        return array( $this->lhs_module => $this->getRelationshipMetaData(MB_MANYTOMANY) ) ;
+        return [$this->lhs_module => $this->getRelationshipMetaData(MB_MANYTOMANY)];
     }
 }

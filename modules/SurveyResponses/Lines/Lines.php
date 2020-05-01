@@ -9,16 +9,16 @@ function question_responses_display(SurveyResponses $focus, $field, $value, $vie
     $smarty = new Sugar_Smarty();
     $questionResponseBeans =
         $focus->get_linked_beans('surveyresponses_surveyquestionresponses', 'SurveyQuestionResponses');
-    $questionResponseMap = array();
+    $questionResponseMap = [];
     foreach ($questionResponseBeans as $questionResponseBean) {
         if (empty($questionResponseMap[$questionResponseBean->surveyquestion_id])) {
-            $questionResponseMap[$questionResponseBean->surveyquestion_id] = array();
+            $questionResponseMap[$questionResponseBean->surveyquestion_id] = [];
         }
         $questionResponseMap[$questionResponseBean->surveyquestion_id][] = $questionResponseBean;
     }
-    $questionResponses = array();
+    $questionResponses = [];
     foreach ($questionResponseMap as $questionId => $questionResponseArr) {
-        $data = array();
+        $data = [];
         $question = BeanFactory::getBean('SurveyQuestions', $questionId);
         $data['sort_order'] = $question->sort_order;
         $data['questionName'] = $question->name;
@@ -45,12 +45,12 @@ function convertQuestionResponseForDisplay($responseArr, $type)
         return '';
     }
     switch ($type) {
-        case "Checkbox":
+        case 'Checkbox':
             return $responseArr[0]->answer_bool ? '<img width=20 src="modules/Surveys/imgs/checked.png"/>' : '';
-        case "Radio":
-        case "Dropdown":
-        case "Multiselect":
-            $bits = array();
+        case 'Radio':
+        case 'Dropdown':
+        case 'Multiselect':
+            $bits = [];
             foreach ($responseArr as $response) {
                 $options =
                     $response->get_linked_beans(
@@ -63,9 +63,9 @@ function convertQuestionResponseForDisplay($responseArr, $type)
             }
 
             return implode(',', $bits);
-        case "Matrix":
+        case 'Matrix':
             $str = '<dl>';
-            $strArr = array();
+            $strArr = [];
             foreach ($responseArr as $response) {
                 $options =
                     $response->get_linked_beans(
@@ -82,7 +82,7 @@ function convertQuestionResponseForDisplay($responseArr, $type)
                 } else {
                     $tmpStr .= '<dd>' . $response->answer . '</dd>';
                 }
-                $strArr[] = array('str' => $tmpStr, 'sort_order' => $sortOrder);
+                $strArr[] = ['str' => $tmpStr, 'sort_order' => $sortOrder];
             }
             usort(
                 $strArr,
@@ -96,24 +96,22 @@ function convertQuestionResponseForDisplay($responseArr, $type)
             $str .= '</dl>';
 
             return $str;
-        case "DateTime":
+        case 'DateTime':
             return $responseArr[0]->answer_datetime;
-        case "Date":
+        case 'Date':
             $date = $timedate->fromUser($responseArr[0]->answer_datetime);
             if (!$date) {
                 return $responseArr[0]->answer_datetime;
-            } else {
+            }
                 $date = $timedate->tzGMT($date);
 
                 return $timedate->asUserDate($date);
-            }
-            // no break
-        case "Rating":
+        case 'Rating':
             return str_repeat('<img width=20 src="modules/Surveys/imgs/star.png"/>', $responseArr[0]->answer);
-        case "Scale":
+        case 'Scale':
             return $responseArr[0]->answer . '/10';
-        case "Textbox":
-        case "Text":
+        case 'Textbox':
+        case 'Text':
         default:
             return $responseArr[0]->answer;
     }

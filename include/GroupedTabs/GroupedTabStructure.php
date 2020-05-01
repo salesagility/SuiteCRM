@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class GroupedTabStructure
 {
     /**
@@ -51,42 +49,46 @@ class GroupedTabStructure
      *
      * @param   array   optional list of modules considered valid
      * @param   array   optional array to temporarily union into the root of the tab structure
-    * @param bool  if  we set this param true, the other group tab will be returned no matter  $sugar_config['other_group_tab_displayed'] is true or false
+     * @param bool  if  we set this param true, the other group tab will be returned no matter  $sugar_config['other_group_tab_displayed'] is true or false
      * @param bool  We use label value as return array key by default. But we can set this param true, that we can use the label name as return array key.
+     * @param mixed $modList
+     * @param mixed $patch
+     * @param mixed $ignoreSugarConfig
+     * @param mixed $labelAsKey
      *
      * @return  array   the complete tab-group structure
      */
-    public function get_tab_structure($modList = '', $patch = '', $ignoreSugarConfig=false, $labelAsKey=false)
+    public function get_tab_structure($modList = '', $patch = '', $ignoreSugarConfig = false, $labelAsKey = false)
     {
         global $modListHeader, $app_strings, $app_list_strings, $modInvisListActivities;
-        
-        /* Use default if not provided */
+
+        // Use default if not provided
         if (!$modList) {
-            $modList =& $modListHeader;
+            $modList = &$modListHeader;
         }
 
         require 'include/tabConfig.php';
 
-        /* Apply patch, use a reference if we can */
+        // Apply patch, use a reference if we can
         if ($patch) {
             $tabStructure = $GLOBALS['tabStructure'];
-            
+
             foreach ($patch as $mainTab => $subModules) {
                 $tabStructure[$mainTab]['modules'] = array_merge($tabStructure[$mainTab]['modules'], $subModules);
             }
         } else {
-            $tabStructure =& $GLOBALS['tabStructure'];
+            $tabStructure = &$GLOBALS['tabStructure'];
         }
-        
-        $retStruct = array();
-        $mlhUsed = array();
+
+        $retStruct = [];
+        $mlhUsed = [];
         //the invisible list should be merged if activities is set to be hidden
         if (in_array('Activities', $modList)) {
             $modList = array_merge($modList, $modInvisListActivities);
         }
-        
+
         //Add any iFrame tabs to the 'other' group.
-        $moduleExtraMenu = array();
+        $moduleExtraMenu = [];
         if (!should_hide_iframes()) {
             $iFrame = new iFrame();
             $frames = $iFrame->lookup_frames('tab');
@@ -98,16 +100,16 @@ class GroupedTabStructure
                 unset($modList['iFrames']);
             }
         }
-                
+
         $modList = array_merge($modList, $moduleExtraMenu);
-                
-        /* Only return modules which exists in the modList */
+
+        // Only return modules which exists in the modList
         foreach ($tabStructure as $mainTab => $subModules) {
             //Ensure even empty groups are returned
             if ($labelAsKey) {
-                $retStruct[$subModules['label']]['modules'] = array();
+                $retStruct[$subModules['label']]['modules'] = [];
             } else {
-                $retStruct[$app_strings[$subModules['label']]]['modules']= array();
+                $retStruct[$app_strings[$subModules['label']]]['modules'] = [];
             }
 
             foreach ($subModules['modules'] as $key => $subModule) {
@@ -122,6 +124,7 @@ class GroupedTabStructure
                             $retStruct[$app_strings[$subModules['label']]]['modules'][$module] = $app_list_strings['moduleList'][$module];
                         }
                         $mlhUsed[$module] = true;
+
                         break;
                     }
                 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -47,10 +45,10 @@ class Configurator
     /** @var array */
     public $config = '';
     public $override = '';
-    public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
-    public $errors = array('main' => '');
-    public $logger = null;
-    public $previous_sugar_override_config_array = array();
+    public $allow_undefined = ['stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu', 'enable_line_editing_list', 'enable_line_editing_detail', 'hide_subpanels'];
+    public $errors = ['main' => ''];
+    public $logger;
+    public $previous_sugar_override_config_array = [];
     public $useAuthenticationClass = false;
 
     /**
@@ -58,7 +56,7 @@ class Configurator
      */
     protected $keysToIgnoreLoadedOverrideFile = [];
 
-    protected $error = null;
+    protected $error;
 
     public function __construct()
     {
@@ -76,18 +74,19 @@ class Configurator
     {
         $sugarConfig = SugarConfig::getInstance();
         foreach ($_POST as $key => $value) {
-            if ($key == "logger_file_ext") {
+            if ($key == 'logger_file_ext') {
                 $trim_value = preg_replace('/.*\.([^\.]+)$/', '\1', $value);
                 if (in_array($trim_value, $this->config['upload_badext'])) {
-                    $GLOBALS['log']->security("Invalid log file extension: trying to use invalid file extension '$value'.");
+                    $GLOBALS['log']->security("Invalid log file extension: trying to use invalid file extension '{$value}'.");
+
                     continue;
                 }
             }
             if (isset($this->config[$key]) || in_array($key, $this->allow_undefined)) {
-                if (strcmp((string)$value, 'true') == 0) {
+                if (strcmp((string) $value, 'true') == 0) {
                     $value = true;
                 }
-                if (strcmp((string)$value, 'false') == 0) {
+                if (strcmp((string) $value, 'false') == 0) {
                     $value = false;
                 }
                 $this->config[$key] = $value;
@@ -132,9 +131,9 @@ class Configurator
                 (!isset($this->previous_sugar_override_config_array['enable_action_menu']) ||
                 $overrideArray['enable_action_menu'] != $this->previous_sugar_override_config_array['enable_action_menu'])
         ) {
-            require_once('modules/Administration/QuickRepairAndRebuild.php');
-            $repair = new RepairAndClear;
-            $repair->module_list = array();
+            require_once 'modules/Administration/QuickRepairAndRebuild.php';
+            $repair = new RepairAndClear();
+            $repair->module_list = [];
             $repair->clearTpls();
         }
 
@@ -177,8 +176,9 @@ class Configurator
             if (in_array($key, $this->allow_undefined) || isset($sugar_config[$key])) {
                 if (empty($val)) {
                     if (!empty($this->previous_sugar_override_config_array['stack_trace_errors']) && $key == 'stack_trace_errors') {
-                        require_once('include/TemplateHandler/TemplateHandler.php');
+                        require_once 'include/TemplateHandler/TemplateHandler.php';
                         TemplateHandler::clearAll();
+
                         return;
                     }
                 }
@@ -199,25 +199,27 @@ class Configurator
 
     public function readOverride()
     {
-        $sugar_config = array();
+        $sugar_config = [];
         if (file_exists('config_override.php')) {
             if (!is_readable('config_override.php')) {
-                $GLOBALS['log']->fatal("Unable to read the config_override.php file. Check the file permissions");
+                $GLOBALS['log']->fatal('Unable to read the config_override.php file. Check the file permissions');
             } else {
-                include('config_override.php');
+                include 'config_override.php';
             }
         }
+
         return $sugar_config;
     }
 
     public function saveOverride($override)
     {
-        require_once('install/install_utils.php');
+        require_once 'install/install_utils.php';
         if (!file_exists('config_override.php')) {
             touch('config_override.php');
         }
         if (!(make_writable('config_override.php')) || !(is_writable('config_override.php'))) {
-            $GLOBALS['log']->fatal("Unable to write to the config_override.php file. Check the file permissions");
+            $GLOBALS['log']->fatal('Unable to write to the config_override.php file. Check the file permissions');
+
             return;
         }
         $fp = sugar_fopen('config_override.php', 'w');
@@ -240,7 +242,7 @@ class Configurator
         $GLOBALS[$array_name][$key] = $value;
         $this->overrideClearDuplicates($array_name, $key);
         $new_entry = '/***CONFIGURATOR***/' . override_value_to_string($array_name, $key, $value);
-        $this->override = str_replace('?>', "$new_entry\n?>", $this->override);
+        $this->override = str_replace('?>', "{$new_entry}\n?>", $this->override);
     }
 
     public function restoreConfig()
@@ -255,7 +257,7 @@ class Configurator
     public function saveImages()
     {
         if (!empty($_POST['company_logo'])) {
-            if ($this->saveCompanyLogo("upload://" . $_POST['company_logo']) === false) {
+            if ($this->saveCompanyLogo('upload://' . $_POST['company_logo']) === false) {
                 return false;
             }
         }
@@ -267,8 +269,10 @@ class Configurator
             $error = translate('LBL_ALERT_TYPE_IMAGE');
             $GLOBALS['log']->fatal("A user ({$GLOBALS['current_user']->id}) attempted to use an invalid file for the logo - {$path}");
             $this->error = $error;
+
             return false;
         }
+
         return $path;
     }
 
@@ -276,11 +280,12 @@ class Configurator
     {
         $e = $this->error;
         $this->error = null;
+
         return $e;
     }
 
     /**
-     * Saves the company logo to the custom directory for the default theme, so all themes can use it
+     * Saves the company logo to the custom directory for the default theme, so all themes can use it.
      *
      * @param string $path path to the image to set as the company logo image
      */
@@ -299,62 +304,62 @@ class Configurator
 
     /**
      * @params : none
+     *
      * @return : An array of logger configuration properties including log size, file extensions etc. See SugarLogger for more details.
      * Parses the old logger settings from the log4php.properties files.
-     *
      */
     public function parseLoggerSettings()
     {
         if (!function_exists('setDeepArrayValue')) {
-            require('include/utils/array_utils.php');
+            require 'include/utils/array_utils.php';
         }
         if (file_exists('log4php.properties')) {
             $fileContent = file_get_contents('log4php.properties');
             $old_props = explode('\n', $fileContent);
-            $new_props = array();
-            $key_names = array();
+            $new_props = [];
+            $key_names = [];
             foreach ($old_props as $value) {
-                if (!empty($value) && !preg_match("/^\/\//", $value)) {
-                    $temp = explode("=", $value);
-                    $property = isset($temp[1]) ? $temp[1] : array();
-                    if (preg_match("/log4php.appender.A2.MaxFileSize=/", $value)) {
+                if (!empty($value) && !preg_match('/^\\/\\//', $value)) {
+                    $temp = explode('=', $value);
+                    $property = isset($temp[1]) ? $temp[1] : [];
+                    if (preg_match('/log4php.appender.A2.MaxFileSize=/', $value)) {
                         setDeepArrayValue($this->config, 'logger_file_maxSize', rtrim($property));
-                    } elseif (preg_match("/log4php.appender.A2.File=/", $value)) {
-                        $ext = preg_split("/\./", $property);
-                        if (preg_match("/^\./", $property)) { //begins with .
+                    } elseif (preg_match('/log4php.appender.A2.File=/', $value)) {
+                        $ext = preg_split('/\\./', $property);
+                        if (preg_match('/^\\./', $property)) { //begins with .
                             setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[2]) ? '.' . rtrim($ext[2]) : '.log');
-                            setDeepArrayValue($this->config, 'logger_file_name', rtrim("." . $ext[1]));
+                            setDeepArrayValue($this->config, 'logger_file_name', rtrim('.' . $ext[1]));
                         } else {
                             setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[1]) ? '.' . rtrim($ext[1]) : '.log');
                             setDeepArrayValue($this->config, 'logger_file_name', rtrim($ext[0]));
                         }
-                    } elseif (preg_match("/log4php.appender.A2.layout.DateFormat=/", $value)) {
+                    } elseif (preg_match('/log4php.appender.A2.layout.DateFormat=/', $value)) {
                         setDeepArrayValue($this->config, 'logger_file_dateFormat', trim(rtrim($property), '""'));
-                    } elseif (preg_match("/log4php.rootLogger=/", $value)) {
-                        $property = explode(",", $property);
+                    } elseif (preg_match('/log4php.rootLogger=/', $value)) {
+                        $property = explode(',', $property);
                         setDeepArrayValue($this->config, 'logger_level', rtrim($property[0]));
                     }
                 }
             }
             setDeepArrayValue($this->config, 'logger_file_maxLogs', 10);
-            setDeepArrayValue($this->config, 'logger_file_suffix', "%m_%Y");
+            setDeepArrayValue($this->config, 'logger_file_suffix', '%m_%Y');
             $this->handleOverride();
             unlink('log4php.properties');
             $GLOBALS['sugar_config'] = $this->config; //load the rest of the sugar_config settings.
-            require_once('include/SugarLogger/SugarLogger.php');
+            require_once 'include/SugarLogger/SugarLogger.php';
             //$logger = new SugarLogger(); //this will create the log file.
         }
 
         if (!isset($this->config['logger']) || empty($this->config['logger'])) {
-            $this->config['logger'] = array(
-                'file' => array(
+            $this->config['logger'] = [
+                'file' => [
                     'ext' => '.log',
                     'name' => 'sugarcrm',
                     'dateFormat' => '%c',
                     'maxSize' => '10MB',
                     'maxLogs' => 10,
-                    'suffix' => ''), // bug51583, change default suffix to blank for backwards comptability
-                'level' => 'fatal');
+                    'suffix' => ''], // bug51583, change default suffix to blank for backwards comptability
+                'level' => 'fatal'];
         }
         $this->handleOverride(true);
     }
@@ -410,14 +415,13 @@ class Configurator
     }
 
     /**
-     * returns Confirm Opt In Enum Value from configuration
+     * returns Confirm Opt In Enum Value from configuration.
      *
      * @return string
      */
     public function getConfirmOptInEnumValue()
     {
         // TODO: use this function everywhere to make the code more clear also this variable 'email_enable_confirm_opt_in' is enum but assuming a bool -> should change this config variable name
-        $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
-        return $ret;
+        return isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
     }
 }

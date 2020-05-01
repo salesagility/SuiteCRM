@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,19 +42,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
- * Generic logger
+ * Generic logger.
+ *
  * @api
  */
 interface LoggerTemplate
 {
     /**
-     * Main method for handling logging a message to the logger
+     * Main method for handling logging a message to the logger.
      *
      * @param string $level logging level for the message
      * @param string $message
+     * @param mixed $method
      */
     public function log(
         $method,
         $message
-        );
+    );
 }

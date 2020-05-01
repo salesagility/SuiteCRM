@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -78,12 +77,9 @@ class AOR_Field extends Basic
         parent::__construct();
     }
 
-
-
-
     public function save_lines($post_data, $parent, $key = '')
     {
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
+        require_once 'modules/AOW_WorkFlow/aow_utils.php';
 
         if (!isset($post_data[$key . 'field'])) {
             $line_count = 0;
@@ -91,7 +87,7 @@ class AOR_Field extends Basic
         } else {
             $line_count = count($post_data[$key . 'field']);
         }
-        for ($i = 0; $i < $line_count; ++$i) {
+        for ($i = 0; $i < $line_count; $i++) {
             if (!isset($post_data[$key . 'deleted'][$i])) {
                 LoggerManager::getLogger()->warn('AOR field save line error: Post data deleted key not found at index. Key and index were: [' . $key . '], [' . $i . ']');
                 $postDataKeyDeleted = null;
@@ -109,6 +105,7 @@ class AOR_Field extends Basic
                     foreach ($post_data['aor_fields_group_display'] as $gdKey => $gdValue) {
                         if ($gdValue == $i) {
                             $field->group_display = $gdKey + 1;
+
                             break;
                         }
                     }
@@ -127,9 +124,9 @@ class AOR_Field extends Basic
                                 }
                             }
                             if ($field_name == 'module_path') {
-                                $postField[$i] = base64_encode(serialize(explode(":", $postField[$i])));
+                                $postField[$i] = base64_encode(serialize(explode(':', $postField[$i])));
                             }
-                            $field->$field_name = $postField[$i];
+                            $field->{$field_name} = $postField[$i];
                         }
                     } else {
                         if (is_null($postField)) {

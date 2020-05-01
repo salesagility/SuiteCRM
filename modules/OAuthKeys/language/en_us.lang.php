@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_CONSKEY' => 'Consumer Key',
     'LBL_CONSSECRET' => 'Consumer Secret',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
@@ -67,4 +65,4 @@ $mod_strings = array(
     'LNK_NEW_RECORD' => 'Create OAuth Key',
     'LNK_LIST' => 'View OAuth Keys',
     'LBL_TOKENS' => 'Tokens',
-);
+];

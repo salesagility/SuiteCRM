@@ -4,6 +4,9 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/EmailTemplates/EmailTemplateParser.php';
 
+/**
+ * @internal
+ */
 class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -27,7 +30,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         foreach ($related as $bean) {
             $bean->name = 'foobar';
 
-            $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
+            $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, '', '');
             $result = $parser->parseVariables();
             $this->assertEquals('<h1>Hello foobar</h1>', from_html($result['body_html']));
             $this->assertEquals('Hello foobar', $result['body']);
@@ -46,7 +49,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $bean->last_name = 'bar';
         $bean->fill_in_additional_detail_fields();
 
-        $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
+        $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, '', '');
         $result = $parser->parseVariables();
         $this->assertEquals('Hello foo bar', $result['body']);
     }
@@ -63,7 +66,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $_POST['name'] = 'Name';
         $_POST['subject'] = 'Subject';
         $_POST['body_html'] = 'BodyHTML';
-        require('modules/EmailTemplates/EmailTemplateData.php');
+        require 'modules/EmailTemplates/EmailTemplateData.php';
 
         $output = json_decode($this->getActualOutput(), true);
         $this->assertNotEmpty($output['data']);
@@ -147,7 +150,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0, strlen($actual));
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $emailTemplate = new EmailTemplate();
 
@@ -159,7 +162,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $emailTemplate->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreateExportQuery()
     {
         $emailTemplate = new EmailTemplate();
 
@@ -174,7 +177,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $emailTemplate = new EmailTemplate();
 
@@ -187,7 +190,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $emailTemplate = new EmailTemplate();
 
@@ -205,7 +208,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('some html text', $emailTemplate->body);
     }
 
-    public function testfill_in_additional_detail_fields_body_to_text()
+    public function testfillInAdditionalDetailFieldsBodyToText()
     {
         // simple examples
         $emailTemplate = new EmailTemplate();
@@ -217,13 +220,13 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $emailTemplate = new EmailTemplate();
         $emailTemplate->body_html = htmlentities('&#60;a&#62;<b>');
         $emailTemplate->fill_in_additional_detail_fields();
-        $this->assertEquals("<a>", $emailTemplate->body);
+        $this->assertEquals('<a>', $emailTemplate->body);
 
         // invalid html
         $emailTemplate = new EmailTemplate();
         $emailTemplate->body_html = htmlentities('foo<bar');
         $emailTemplate->fill_in_additional_detail_fields();
-        $this->assertEquals("foo", $emailTemplate->body);
+        $this->assertEquals('foo', $emailTemplate->body);
 
         // variables
         $emailTemplate = new EmailTemplate();
@@ -239,12 +242,12 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 
         // decoding latin-1 html
         $emailTemplate = new EmailTemplate();
-        $emailTemplate->body_html = htmlentities('<meta charset="ISO-8859-1">' . "\xe4", ENT_QUOTES, "ISO-8859-1");
+        $emailTemplate->body_html = htmlentities('<meta charset="ISO-8859-1">' . "\xe4", ENT_QUOTES, 'ISO-8859-1');
         $emailTemplate->fill_in_additional_detail_fields();
         $this->assertEquals("\xc3\xa4", $emailTemplate->body);
     }
 
-    public function testfill_in_additional_parent_fields()
+    public function testfillInAdditionalParentFields()
     {
         $emailTemplate = new EmailTemplate();
 
@@ -257,43 +260,43 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $emailTemplate = new EmailTemplate();
 
         // execute the method and verify that it retunrs expected results
-        $expected = array(
-                'DELETED' => 0,
-        );
+        $expected = [
+            'DELETED' => 0,
+        ];
 
         $actual = $emailTemplate->get_list_view_data();
         $this->assertSame($expected, $actual);
     }
 
-    public function testparse_email_templateAndParse_tracker_urls()
+    public function testparseEmailTemplateAndParseTrackerUrls()
     {
         $emailTemplate = new EmailTemplate();
 
         //test parse_email_template
         $account = new Account();
-        $macro_nv = array();
+        $macro_nv = [];
 
-        $expected = array(
-                    'subject' => 'test subject', 'body_html' => 'test html', 'body' => 'test body text',
-                    );
-        $actual = $emailTemplate->parse_email_template(array('subject' => 'test subject', 'body_html' => 'test html', 'body' => 'test body text'), 'Accounts', $account, $macro_nv);
+        $expected = [
+            'subject' => 'test subject', 'body_html' => 'test html', 'body' => 'test body text',
+        ];
+        $actual = $emailTemplate->parse_email_template(['subject' => 'test subject', 'body_html' => 'test html', 'body' => 'test body text'], 'Accounts', $account, $macro_nv);
         $this->assertSame($expected, $actual);
 
         // test parse_tracker_urls
         $tracker_url_template = 'localhost/index.php?entryPoint=campaign_trackerv2&track=%s&identifier=tracker_key';
         $removeme_url_template = 'localhost/index.php?entryPoint=removeme&identifier=tracker_key';
-        $tracker_urls = array();
+        $tracker_urls = [];
 
         $result = $emailTemplate->parse_tracker_urls($actual, $tracker_url_template, $tracker_urls, $removeme_url_template);
         $this->assertSame($expected, $result);
     }
 
-    public function test_convertToType()
+    public function testConvertToType()
     {
         $emailTemplate = new EmailTemplate();
 
@@ -308,9 +311,8 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
      *  contact_user_sugar_login, contact_user_is_admin, contact_user_external_auth_only,
      *  contact_user_receive_notifications, contact_user_modified_by_name, contact_user_created_by_name,
      *  contact_user_deleted, contact_user_portal_only, contact_user_show_on_employees
-     *
      */
-    public function test_parseUserValues()
+    public function testParseUserValues()
     {
         /*
         $emailTemplate = new EmailTemplate();
@@ -388,10 +390,10 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $actual = $emailTemplate->_parseUserValues($repl_arr, $user);
         $this->assertSame($expected, $actual);
         */
-        $this->markTestIncomplete("Different values for php5 and php7");
+        $this->markTestIncomplete('Different values for php5 and php7');
     }
 
-    public function testparse_template_bean()
+    public function testparseTemplateBean()
     {
         $emailTemplate = new EmailTemplate();
         $contact = new Contact();
@@ -414,10 +416,10 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('', $actual);
     }
 
-    public function testparse_template()
+    public function testparseTemplate()
     {
         $emailTemplate = new EmailTemplate();
-        $bean_arr = array('Users' => 1, 'Leads' => 1);
+        $bean_arr = ['Users' => 1, 'Leads' => 1];
 
         // test with empty string
         $result = $emailTemplate->parse_template('', $bean_arr);
@@ -428,7 +430,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('some value', $result);
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $emailTemplate = new EmailTemplate();
 
@@ -453,7 +455,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testis_used_by_email_marketing()
+    public function testisUsedByEmailMarketing()
     {
         $emailTemplate = new EmailTemplate();
 

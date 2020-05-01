@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,59 +36,54 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$vardefs = array(
-'fields'=> array(
-    'assigned_user_id' =>
-        array(
+$vardefs = [
+    'fields' => [
+        'assigned_user_id' => [
             'name' => 'assigned_user_id',
             'rname' => 'user_name',
             'id_name' => 'assigned_user_id',
             'vname' => 'LBL_ASSIGNED_TO_ID',
-            'group'=>'assigned_user_name',
+            'group' => 'assigned_user_name',
             'type' => 'relate',
             'table' => 'users',
             'module' => 'Users',
-            'reportable'=>true,
+            'reportable' => true,
             'isnull' => 'false',
             'dbType' => 'id',
-            'audited'=>true,
+            'audited' => true,
             'comment' => 'User ID assigned to record',
-            'duplicate_merge'=>'disabled'
-        ),
-     'assigned_user_name' =>
-     array(
+            'duplicate_merge' => 'disabled'
+        ],
+        'assigned_user_name' => [
             'name' => 'assigned_user_name',
-            'link'=>'assigned_user_link' ,
+            'link' => 'assigned_user_link',
             'vname' => 'LBL_ASSIGNED_TO_NAME',
             'rname' => 'user_name',
             'type' => 'relate',
-            'reportable'=>false,
-            'source'=>'non-db',
+            'reportable' => false,
+            'source' => 'non-db',
             'table' => 'users',
             'id_name' => 'assigned_user_id',
-            'module'=>'Users',
-            'duplicate_merge'=>'disabled'
-     ),
-              'assigned_user_link' =>
-  array(
-        'name' => 'assigned_user_link',
-    'type' => 'link',
-    'relationship' => strtolower($module).'_assigned_user',
-    'vname' => 'LBL_ASSIGNED_TO_USER',
-    'link_type' => 'one',
-    'module'=>'Users',
-    'bean_name'=>'User',
-    'source'=>'non-db',
-    'duplicate_merge'=>'enabled',
-    'rname' => 'user_name',
-    'id_name' => 'assigned_user_id',
-    'table' => 'users',
-  ),
-),
-'relationships'=>array(
-      strtolower($module).'_assigned_user' =>
-   array('lhs_module'=> 'Users', 'lhs_table'=> 'users', 'lhs_key' => 'id',
-   'rhs_module'=> $module , 'rhs_table'=> $table_name, 'rhs_key' => 'assigned_user_id',
-   'relationship_type'=>'one-to-many')
-));
+            'module' => 'Users',
+            'duplicate_merge' => 'disabled'
+        ],
+        'assigned_user_link' => [
+            'name' => 'assigned_user_link',
+            'type' => 'link',
+            'relationship' => strtolower($module) . '_assigned_user',
+            'vname' => 'LBL_ASSIGNED_TO_USER',
+            'link_type' => 'one',
+            'module' => 'Users',
+            'bean_name' => 'User',
+            'source' => 'non-db',
+            'duplicate_merge' => 'enabled',
+            'rname' => 'user_name',
+            'id_name' => 'assigned_user_id',
+            'table' => 'users',
+        ],
+    ],
+    'relationships' => [
+        strtolower($module) . '_assigned_user' => ['lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
+            'rhs_module' => $module, 'rhs_table' => $table_name, 'rhs_key' => 'assigned_user_id',
+            'relationship_type' => 'one-to-many']
+    ]];

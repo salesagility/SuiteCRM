@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dashletStrings['SpotsDashlet'] = array(
+$dashletStrings['SpotsDashlet'] = [
     'LBL_TITLE' => 'Spots',
     'LBL_DESCRIPTION' => 'Spots report of your data',
     'LBL_SAVING' => 'Saving Spots...',
@@ -53,4 +51,4 @@ $dashletStrings['SpotsDashlet'] = array(
     'LBL_SPOTS_POINTED_DELETED' => 'This spot has been deleted',
     'LBL_SHOW_UI' => 'Show UI',
     'LBL_NAME' => 'Name',
-);
+];

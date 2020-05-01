@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -50,70 +48,64 @@ if (!isset($install_script) || !$install_script) {
 }
 // $mod_strings come from calling page.
 
-
 // System Environment
 $envString = '
 
-	   <h3>'.$mod_strings['LBL_SYSTEM_ENV'].'</h3>';
+	   <h3>' . $mod_strings['LBL_SYSTEM_ENV'] . '</h3>';
 
 // PHP VERSION
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</b> '.constant('PHP_VERSION').'</p>';
-
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_PHPVER'] . '</b> ' . constant('PHP_VERSION') . '</p>';
 
 //Begin List of already known good variables.  These were checked during the initial sys check
 // XML Parsing
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_XML'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
-
-
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_XML'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 
 // mbstrings
 
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MBSTRING'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_MBSTRING'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 
 // config.php
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CONFIG'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_CONFIG'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 
 // custom dir
 
-
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
-
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_CUSTOM'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 
 // modules dir
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_MODULE'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 
 // upload dir
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_UPLOAD'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 
 // data dir
 
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_DATA'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_DATA'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 
 // cache dir
 $error_found = true;
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CACHE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_CACHE'] . '</b> ' . $mod_strings['LBL_CHECKSYS_OK'] . '</p>';
 // End already known to be good
 
 // memory limit
-$memory_msg     = "";
+$memory_msg = '';
 // CL - fix for 9183 (if memory_limit is enabled we will honor it and check it; otherwise use unlimited)
 $memory_limit = ini_get('memory_limit');
 if (empty($memory_limit)) {
-    $memory_limit = "-1";
+    $memory_limit = '-1';
 }
 if (!defined('SUGARCRM_MIN_MEM')) {
-    define('SUGARCRM_MIN_MEM', 64*1024*1024);
+    define('SUGARCRM_MIN_MEM', 64 * 1024 * 1024);
 }
 $sugarMinMem = constant('SUGARCRM_MIN_MEM');
 // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
-if ($memory_limit == "") {          // memory_limit disabled at compile time, no memory limit
+if ($memory_limit == '') {          // memory_limit disabled at compile time, no memory limit
     $memory_msg = "<b>{$mod_strings['LBL_CHECKSYS_MEM_OK']}</b>";
-} elseif ($memory_limit == "-1") {   // memory_limit enabled, but set to unlimited
-    $memory_msg = (string)($mod_strings['LBL_CHECKSYS_MEM_UNLIMITED']);
+} elseif ($memory_limit == '-1') {   // memory_limit enabled, but set to unlimited
+    $memory_msg = (string) ($mod_strings['LBL_CHECKSYS_MEM_UNLIMITED']);
 } else {
     $mem_display = $memory_limit;
     preg_match('/^\s*([0-9.]+)\s*([KMGTPE])B?\s*$/i', $memory_limit, $matches);
-    $num = (float)$matches[1];
+    $num = (float) $matches[1];
     // Don't break so that it falls through to the next case.
     switch (strtoupper($matches[2])) {
         case 'G':
@@ -125,70 +117,68 @@ if ($memory_limit == "") {          // memory_limit disabled at compile time, no
         case 'K':
             $num = $num * 1024;
     }
-    $memory_limit_int = (int)$num;
+    $memory_limit_int = (int) $num;
     $SUGARCRM_MIN_MEM = (int) constant('SUGARCRM_MIN_MEM');
     if ($memory_limit_int < constant('SUGARCRM_MIN_MEM')) {
         // Bug59667: The string ERR_CHECKSYS_MEM_LIMIT_2 already has 'M' in it,
         // so we divide the constant by 1024*1024.
-        $min_mem_in_megs = constant('SUGARCRM_MIN_MEM')/(1024*1024);
-        $memory_msg = "<span class='stop'><b>$memory_limit{$mod_strings['ERR_CHECKSYS_MEM_LIMIT_1']}" . $min_mem_in_megs . "{$mod_strings['ERR_CHECKSYS_MEM_LIMIT_2']}</b></span>";
+        $min_mem_in_megs = constant('SUGARCRM_MIN_MEM') / (1024 * 1024);
+        $memory_msg = "<span class='stop'><b>{$memory_limit}{$mod_strings['ERR_CHECKSYS_MEM_LIMIT_1']}" . $min_mem_in_megs . "{$mod_strings['ERR_CHECKSYS_MEM_LIMIT_2']}</b></span>";
         $memory_msg = str_replace('$memory_limit', $mem_display, $memory_msg);
     } else {
         $memory_msg = "{$mod_strings['LBL_CHECKSYS_OK']} ({$memory_limit})";
     }
 }
 
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MEM'].'</strong></b> '.$memory_msg.'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_MEM'] . '</strong></b> ' . $memory_msg . '</p>';
 
 // zlib
 if (function_exists('gzclose')) {
-    $zlibStatus = (string)($mod_strings['LBL_CHECKSYS_OK']);
+    $zlibStatus = (string) ($mod_strings['LBL_CHECKSYS_OK']);
 } else {
     $zlibStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZLIB']}</b></span>";
 }
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_ZLIB'].'</b> '.$zlibStatus.'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_ZLIB'] . '</b> ' . $zlibStatus . '</p>';
 
 // zip
-if (class_exists("ZipArchive")) {
-    $zipStatus = (string)($mod_strings['LBL_CHECKSYS_OK']);
+if (class_exists('ZipArchive')) {
+    $zipStatus = (string) ($mod_strings['LBL_CHECKSYS_OK']);
 } else {
     $zipStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZIP']}</b></span>";
 }
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_ZIP'].'</b> '.$zipStatus.'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_ZIP'] . '</b> ' . $zipStatus . '</p>';
 
 // PCRE
 if (defined('PCRE_VERSION')) {
     if (version_compare(PCRE_VERSION, '7.0') < 0) {
         $pcreStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_PCRE_VER']}</b></span>";
     } else {
-        $pcreStatus = (string)($mod_strings['LBL_CHECKSYS_OK']);
+        $pcreStatus = (string) ($mod_strings['LBL_CHECKSYS_OK']);
     }
 } else {
     $pcreStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_PCRE']}</b></span>";
 }
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</b> '.$pcreStatus.'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_PCRE'] . '</b> ' . $pcreStatus . '</p>';
 
 // imap
 $imapFactory = new ImapHandlerFactory();
 $imap = $imapFactory->getImapHandler();
 if ($imap->isAvailable()) {
-    $imapStatus = (string)($mod_strings['LBL_CHECKSYS_OK']);
+    $imapStatus = (string) ($mod_strings['LBL_CHECKSYS_OK']);
 } else {
     $imapStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_IMAP']}</b></span>";
 }
 
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_IMAP'].'</b> '.$imapStatus.'</p>';
-
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_IMAP'] . '</b> ' . $imapStatus . '</p>';
 
 // cURL
 if (function_exists('curl_init')) {
-    $curlStatus = (string)($mod_strings['LBL_CHECKSYS_OK']);
+    $curlStatus = (string) ($mod_strings['LBL_CHECKSYS_OK']);
 } else {
     $curlStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_CURL']}</b></span>";
 }
 
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CURL'].'</b> '.$curlStatus.'</p>';
-
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_CURL'] . '</b> ' . $curlStatus . '</p>';
 
 //CHECK UPLOAD FILE SIZE
 $upload_max_filesize = ini_get('upload_max_filesize');
@@ -203,7 +193,7 @@ if ($upload_max_filesize_bytes > constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTE
     $fileMaxStatus = "<span class='stop'><b>{$mod_strings['ERR_UPLOAD_MAX_FILESIZE']}</font></b></span>";
 }
 
-$envString .='<p><b>'.$mod_strings['LBL_UPLOAD_MAX_FILESIZE_TITLE'].'</b> '.$fileMaxStatus.'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_UPLOAD_MAX_FILESIZE_TITLE'] . '</b> ' . $fileMaxStatus . '</p>';
 
 //CHECK Sprite support
 if (function_exists('imagecreatetruecolor')) {
@@ -211,21 +201,21 @@ if (function_exists('imagecreatetruecolor')) {
 } else {
     $spriteSupportStatus = "<span class='stop'><b>{$mod_strings['ERROR_SPRITE_SUPPORT']}</b></span>";
 }
-$envString .='<p><b>'.$mod_strings['LBL_SPRITE_SUPPORT'].'</b> '.$spriteSupportStatus.'</p>';
+$envString .= '<p><b>' . $mod_strings['LBL_SPRITE_SUPPORT'] . '</b> ' . $spriteSupportStatus . '</p>';
 
 // Suhosin allow to use upload://
-if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER["SERVER_SOFTWARE"], 'Microsoft-IIS') === false)) {
-    $suhosinStatus = (string)($mod_strings['LBL_CHECKSYS_OK']);
+if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') === false)) {
+    $suhosinStatus = (string) ($mod_strings['LBL_CHECKSYS_OK']);
 } else {
     $suhosinStatus = "<span class='stop'><b>{$app_strings['ERR_SUHOSIN']}</b></span>";
 }
-$envString .= "<p><b>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</b> " . $suhosinStatus . "</p>";
+$envString .= "<p><b>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . '://)</b> ' . $suhosinStatus . '</p>';
 
 // PHP.ini
-$phpIniLocation = get_cfg_var("cfg_file_path");
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PHP_INI'].'</b> '.$phpIniLocation.'</p>';
+$phpIniLocation = get_cfg_var('cfg_file_path');
+$envString .= '<p><b>' . $mod_strings['LBL_CHECKSYS_PHP_INI'] . '</b> ' . $phpIniLocation . '</p>';
 
-$out =<<<EOQ
+$out = <<<'EOQ'
 
 <div id="syscred">
 
@@ -233,7 +223,7 @@ EOQ;
 
 $out .= $envString;
 
-$out .=<<<EOQ
+$out .= <<<'EOQ'
 
 </div>
 <div class="clear"></div>
@@ -266,10 +256,10 @@ if (is_windows()) {
 //        $error = '<em>'.$mod_strings_scheduler['LBL_NO_PHP_CLI'].'</em>';
         }
     }
-    $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'</b><br>
-						cd /D '.realpath('./').'<br>
+    $cronString = '<p><b>' . $mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'] . '</b><br>
+						cd /D ' . realpath('./') . '<br>
 						php.exe -f cron.php
-						<br>'.$error.'</p>
+						<br>' . $error . '</p>
 			   ';
 } else {
     if (isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // some Linux servers do not make this available
@@ -282,12 +272,12 @@ if (is_windows()) {
     if ($webServerUser == '') {
         $webServerUser = '<web_server_user>';
     }
-    $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'</b><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC1'].'<br>
-                        <span style=\'background-color:#dfdfdf\'>sudo crontab -e -u '.$webServerUser.'</span><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC2'].'<br>
+    $cronString = '<p><b>' . $mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'] . '</b><br> ' . $mod_strings_scheduler['LBL_CRON_LINUX_DESC1'] . '<br>
+                        <span style=\'background-color:#dfdfdf\'>sudo crontab -e -u ' . $webServerUser . '</span><br> ' . $mod_strings_scheduler['LBL_CRON_LINUX_DESC2'] . '<br>
 						<span style=\'background-color:#dfdfdf\'>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
-						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1
-						</span><br>'.$mod_strings_scheduler['LBL_CRON_LINUX_DESC3'].'
-                        <br><br><hr><br>'.$error.'</p>
+						cd ' . realpath('./') . '; php -f cron.php > /dev/null 2>&1
+						</span><br>' . $mod_strings_scheduler['LBL_CRON_LINUX_DESC3'] . '
+                        <br><br><hr><br>' . $error . '</p>
               ';
 }
 

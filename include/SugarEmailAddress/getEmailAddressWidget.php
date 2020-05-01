@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,14 +35,22 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
+ * @param mixed $focus
+ * @param mixed $field
+ * @param mixed $value
+ * @param mixed $view
+ * @param mixed $tabindex
  */
 
 /**
- * Convenience function for MVC (Mystique)
+ * Convenience function for MVC (Mystique).
+ *
  * @param SugarBean $focus
  * @param string $field unused
  * @param string $value unused
  * @param string $view DetailView or EditView
+ *
  * @return string
  */
 function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
@@ -53,8 +60,8 @@ function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
 
     if ($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
         $module = $focus->module_dir;
-        if ($view == 'ConvertLead' && $module == "Contacts") {
-            $module = "Leads";
+        if ($view == 'ConvertLead' && $module == 'Contacts') {
+            $module = 'Leads';
         }
 
         return $sea->getEmailAddressWidgetEditView($focus->id, $module, false, '', $tabindex);

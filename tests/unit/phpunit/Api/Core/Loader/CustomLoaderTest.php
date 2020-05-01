@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,9 +42,11 @@ use Slim\App;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
- * CustomLoaderTest
+ * CustomLoaderTest.
  *
  * @author gyula
+ *
+ * @internal
  */
 class CustomLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
@@ -62,40 +63,40 @@ class CustomLoaderTest extends SuitePHPUnitFrameworkTestCase
             'foo' => ['bar', 'bazz'],
         ], $result);
     }
-    
+
     public function testMergeCustomArray()
     {
         $result = CustomLoader::mergeCustomArray(['one', 'two', 'three'], 'testCustom.php');
         $this->assertEquals(CustomLoader::ERR_FILE_NOT_FOUND, CustomLoader::getLastError());
         $this->assertEquals(['one', 'two', 'three'], $result);
-        
+
         CustomLoader::setCustomPath(__DIR__ . DIRECTORY_SEPARATOR);
         $result = CustomLoader::mergeCustomArray(['foo', 'bar'], 'testArray.php');
         $this->assertEquals(CustomLoader::ERR_NO_ERROR, CustomLoader::getLastError());
         $this->assertEquals(['foo', 'bar', 'bazz', 1, 2, 3], $result);
-        
+
         try {
             $result = CustomLoader::mergeCustomArray(['foo', 'bar'], 'testArrayWrong.php');
             $this->assertTrue(false, 'It should throws an exception because the customization is not an array.');
         } catch (Exception $e) {
             $this->assertEquals(CustomLoader::ERR_WRONG_CUSTOM_FORMAT, $e->getCode());
         }
-        
+
         // restore custom route
         CustomLoader::setCustomPath();
     }
-    
+
     public function testLoadCustomRoutes()
     {
         $app = new App();
-        
+
         CustomLoader::loadCustomRoutes($app, 'testRoutes.php');
         $this->assertEquals(CustomLoader::ERR_ROUTE_FILE_NOT_FOUND, CustomLoader::getLastError());
-        
+
         CustomLoader::setCustomPath(__DIR__ . DIRECTORY_SEPARATOR);
         CustomLoader::loadCustomRoutes($app, 'testRoutes.php');
         $this->assertEquals(CustomLoader::ERR_NO_ERROR, CustomLoader::getLastError());
-                
+
         // restore custom route
         CustomLoader::setCustomPath();
     }

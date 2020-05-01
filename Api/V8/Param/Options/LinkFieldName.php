@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Symfony\Component\OptionsResolver\Options;
@@ -10,7 +11,8 @@ class LinkFieldName extends BaseOption
     /**
      * Has a dependency of bean field.
      *
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @throws \RuntimeException If relationship cannot loaded
      */
     public function add(OptionsResolver $resolver)

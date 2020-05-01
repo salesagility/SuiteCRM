@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Service;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -7,13 +8,12 @@ use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\LinksResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
-use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\CreateRelationshipByLinkParams;
+use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetRelationshipParams;
-
-use \SugarBean;
-use \DomainException;
+use DomainException;
+use SugarBean;
 
 class RelationshipService
 {
@@ -155,8 +155,9 @@ class RelationshipService
     /**
      * @param DeleteRelationshipParams $params
      *
+     * @throws DomainException when the source module is not related to the target module
+     *
      * @return DocumentResponse
-     * @throws DomainException When the source module is not related to the target module.
      */
     public function deleteRelationship(DeleteRelationshipParams $params)
     {

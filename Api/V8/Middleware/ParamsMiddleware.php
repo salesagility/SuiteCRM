@@ -1,13 +1,14 @@
 <?php
+
 namespace Api\V8\Middleware;
 
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\JsonApi\Response\ErrorResponse;
 use Api\V8\Param\BaseParam;
 use Exception;
 use LoggerManager;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Api\V8\BeanDecorator\BeanManager;
 
 class ParamsMiddleware
 {
@@ -23,6 +24,7 @@ class ParamsMiddleware
 
     /**
      * ParamsMiddleware constructor.
+     *
      * @param BaseParam $params
      * @param BeanManager $beanManager
      */
@@ -54,7 +56,7 @@ class ParamsMiddleware
                 "\n" . $exception->getFile() . ':' . $exception->getLine() .
                 "\nTrace:\n" . $exception->getTraceAsString() .
                 "\n";
-            LoggerManager::getLogger()->fatal("API Exception detected:\nMessage was: $msg\nException details:\n$dbg");
+            LoggerManager::getLogger()->fatal("API Exception detected:\nMessage was: {$msg}\nException details:\n{$dbg}");
             $response->setDetail($msg);
 
             return $httpResponse->withJson(

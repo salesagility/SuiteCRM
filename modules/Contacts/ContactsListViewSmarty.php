@@ -1,7 +1,7 @@
 <?php
-require_once('include/ListView/ListViewSmarty.php');
-require_once('modules/AOS_PDF_Templates/formLetter.php');
 
+require_once 'include/ListView/ListViewSmarty.php';
+require_once 'modules/AOS_PDF_Templates/formLetter.php';
 
 class ContactsListViewSmarty extends ListViewSmarty
 {
@@ -11,14 +11,11 @@ class ContactsListViewSmarty extends ListViewSmarty
         $this->targetList = true;
     }
 
-
-
-
     /**
-     *
      * @param file $file Template file to use
      * @param array $data from ListViewData
      * @param string $htmlVar the corresponding html public in xtpl per row
+     *
      * @return bool|void
      */
     public function process($file, $data, $htmlVar)
@@ -42,7 +39,7 @@ class ContactsListViewSmarty extends ListViewSmarty
         global $app_strings;
         global $sugar_config;
 
-        $script = "";
+        $script = '';
         if (ACLController::checkAccess($this->seed->module_dir, 'export', true)) {
             if ($this->export) {
                 $script = parent::buildExportLink($id);
@@ -54,6 +51,6 @@ class ContactsListViewSmarty extends ListViewSmarty
                     "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
                     "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
 
-        return formLetter::LVSmarty().$script;
+        return formLetter::LVSmarty() . $script;
     }
 }

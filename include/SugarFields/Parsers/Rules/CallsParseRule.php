@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,9 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarFields/Parsers/Rules/ActivitiesParseRule.php');
+require_once 'include/SugarFields/Parsers/Rules/ActivitiesParseRule.php';
 
 class CallsParseRule extends ActivitiesParseRule
 {
@@ -50,16 +48,13 @@ class CallsParseRule extends ActivitiesParseRule
     {
     }
 
-
-
-
     public function preParse($panels, $view)
     {
         $panels = parent::preParse($panels, $view);
         if ($view == 'EditView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
+            foreach ($panels as $name => $panel) {
+                foreach ($panel as $rowCount => $row) {
+                    foreach ($row as $key => $column) {
                         if ($this->matches($column, '/^direction$/si')) {
                             $panels[$name][$rowCount][$key] = 'status';
                         }
@@ -72,7 +67,6 @@ class CallsParseRule extends ActivitiesParseRule
 
     public function parsePanels($panels, $view)
     {
-        $panels = parent::parsePanels($panels, $view);
-        return $panels;
+        return parent::parsePanels($panels, $view);
     }
 }

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,15 +41,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
  * source is the parent class of any source object.
+ *
  * @api
  */
 abstract class source
 {
     /**
-     * The name of an wrapper to use if the class wants to provide an override
+     * The name of an wrapper to use if the class wants to provide an override.
      */
     public $wrapperName;
     protected $_config;
@@ -91,21 +91,34 @@ abstract class source
      */
     protected $_has_testing_enabled = false;
 
-    protected $_required_config_fields = array();
-    protected $_required_config_fields_for_button = array();
+    protected $_required_config_fields = [];
+    protected $_required_config_fields_for_button = [];
     protected $config_decrypted = false;
 
     /**
      * The ExternalAPI Base that instantiated this connector.
+     *
      * @var _eapm
      */
-    protected $_eapm = null;
+    protected $_eapm;
 
     public function __construct()
     {
         $this->loadConfig();
         $this->loadMapping();
         $this->loadVardefs();
+    }
+
+    /**
+     * Default destructor.
+     */
+    public function __destruct()
+    {
+        // Bug # 47233 - This desctructor was originally removed by bug # 44533.
+         // We have to add this destructor back in
+         // because there are customers who upgrade from 61x to 623
+         // who have the Jigsaw connector enabled, and the jigsaw connector
+         // makes a call to this destructor.
     }
 
     public function init()
@@ -115,13 +128,13 @@ abstract class source
     //////// CALLED FROM component.php ///////
     public function loadMapping()
     {
-        $mapping = array();
+        $mapping = [];
         $dir = str_replace('_', '/', get_class($this));
         if (file_exists("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
-            require("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php");
+            require "custom/modules/Connectors/connectors/sources/{$dir}/mapping.php";
         } else {
             if (file_exists("modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
-                require("modules/Connectors/connectors/sources/{$dir}/mapping.php");
+                require "modules/Connectors/connectors/sources/{$dir}/mapping.php";
             }
         }
         $this->_mapping = $mapping;
@@ -130,32 +143,32 @@ abstract class source
     public function saveMappingHook($mapping)
     {
         // Most classes don't care that the mapping has changed, but this is here if they do.
-        return;
     }
 
     /**
-     * Load source's vardef file
+     * Load source's vardef file.
      */
     public function loadVardefs()
     {
         $class = get_class($this);
         $dir = str_replace('_', '/', $class);
         if (file_exists("custom/modules/Connectors/connectors/sources/{$dir}/vardefs.php")) {
-            require("custom/modules/Connectors/connectors/sources/{$dir}/vardefs.php");
+            require "custom/modules/Connectors/connectors/sources/{$dir}/vardefs.php";
         } else {
             if (file_exists("modules/Connectors/connectors/sources/{$dir}/vardefs.php")) {
-                require("modules/Connectors/connectors/sources/{$dir}/vardefs.php");
+                require "modules/Connectors/connectors/sources/{$dir}/vardefs.php";
             }
         }
 
-        $this->_field_defs = !empty($dictionary[$class]['fields']) ? $dictionary[$class]['fields'] : array();
+        $this->_field_defs = !empty($dictionary[$class]['fields']) ? $dictionary[$class]['fields'] : [];
     }
 
     /**
-     * Given a parameter in a vardef field, return the list of fields that match the param and value
+     * Given a parameter in a vardef field, return the list of fields that match the param and value.
      *
      * @param string $param_name
      * @param string $param_value
+     *
      * @return array
      */
     public function getFieldsWithParams($param_name, $param_value)
@@ -163,17 +176,18 @@ abstract class source
         if (empty($this->_field_defs)) {
             $this->loadVardefs();
         }
-        $fields_with_param = array();
+        $fields_with_param = [];
         foreach ($this->_field_defs as $key => $def) {
             if (!empty($def[$param_name]) && ($def[$param_name] == $param_value)) {
                 $fields_with_param[$key] = $def;
             }
         }
+
         return $fields_with_param;
     }
 
     /**
-     * Save source's config to custom directory
+     * Save source's config to custom directory.
      */
     public function saveConfig()
     {
@@ -181,14 +195,13 @@ abstract class source
 
         // Handle encryption
         if (!empty($this->_config['encrypt_properties']) && is_array($this->_config['encrypt_properties']) && !empty($this->_config['properties'])) {
-            require_once('include/utils/encryption_utils.php');
+            require_once 'include/utils/encryption_utils.php';
             foreach ($this->_config['encrypt_properties'] as $name) {
                 if (!empty($this->_config['properties'][$name])) {
                     $this->_config['properties'][$name] = blowfishEncode(blowfishGetKey('encrypt_field'), $this->_config['properties'][$name]);
                 }
             }
         }
-
 
         foreach ($this->_config as $key => $val) {
             if (!empty($val)) {
@@ -204,7 +217,7 @@ abstract class source
     }
 
     /**
-     * Initialize config - decrypt encrypted fields
+     * Initialize config - decrypt encrypted fields.
      */
     public function initConfig()
     {
@@ -212,7 +225,7 @@ abstract class source
             return;
         }
         // Handle decryption
-        require_once('include/utils/encryption_utils.php');
+        require_once 'include/utils/encryption_utils.php';
         if (!empty($this->_config['encrypt_properties']) && is_array($this->_config['encrypt_properties']) && !empty($this->_config['properties'])) {
             foreach ($this->_config['encrypt_properties'] as $name) {
                 if (!empty($this->_config['properties'][$name])) {
@@ -224,32 +237,35 @@ abstract class source
     }
 
     /**
-     * Load config.php for this source
+     * Load config.php for this source.
      */
     public function loadConfig()
     {
-        $config = array();
+        $config = [];
         $dir = str_replace('_', '/', get_class($this));
         if (file_exists("modules/Connectors/connectors/sources/{$dir}/config.php")) {
-            require("modules/Connectors/connectors/sources/{$dir}/config.php");
+            require "modules/Connectors/connectors/sources/{$dir}/config.php";
         }
         if (file_exists("custom/modules/Connectors/connectors/sources/{$dir}/config.php")) {
-            require("custom/modules/Connectors/connectors/sources/{$dir}/config.php");
+            require "custom/modules/Connectors/connectors/sources/{$dir}/config.php";
         }
         $this->_config = $config;
 
         //If there are no required config fields specified, we will default them to all be required
         if (empty($this->_required_config_fields)) {
-            foreach ($this->_config['properties'] as $id=>$value) {
+            foreach ($this->_config['properties'] as $id => $value) {
                 $this->_required_config_fields[] = $id;
             }
         }
     }
 
     // Helper function for the settings panels
+
     /**
-     * Filter which modules are allowed to connect
+     * Filter which modules are allowed to connect.
+     *
      * @param array $moduleList
+     *
      * @return array Allowed modules
      */
     public function filterAllowedModules($moduleList)
@@ -266,15 +282,16 @@ abstract class source
 
     public function getOriginalMapping()
     {
-        $mapping = array();
+        $mapping = [];
         $dir = str_replace('_', '/', get_class($this));
         if (file_exists("modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
-            require("modules/Connectors/connectors/sources/{$dir}/mapping.php");
+            require "modules/Connectors/connectors/sources/{$dir}/mapping.php";
         } else {
             if (file_exists("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
-                require("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php");
+                require "custom/modules/Connectors/connectors/sources/{$dir}/mapping.php";
             }
         }
+
         return $mapping;
     }
 
@@ -293,6 +310,7 @@ abstract class source
         if (!$this->config_decrypted) {
             $this->initConfig();
         }
+
         return $this->_config;
     }
 
@@ -312,7 +330,7 @@ abstract class source
         return $this->_eapm;
     }
 
-    public function setProperties($properties=array())
+    public function setProperties($properties = [])
     {
         if (!empty($this->_config) && isset($this->_config['properties'])) {
             $this->_config['properties'] = $properties;
@@ -326,14 +344,18 @@ abstract class source
             if (!$this->config_decrypted) {
                 $this->initConfig();
             }
+
             return $this->_config['properties'];
         }
-        return array();
+
+        return [];
     }
 
     /**
-     * Check if certain property contains non-empty value
+     * Check if certain property contains non-empty value.
+     *
      * @param string $name
+     *
      * @return bool
      */
     public function propertyExists($name)
@@ -348,16 +370,17 @@ abstract class source
             if (!$this->config_decrypted && !empty($this->_config['encrypt_properties']) && in_array($name, $this->_config['encrypt_properties']) && !empty($this->_config['properties'][$name])) {
                 $this->initConfig();
             }
+
             return $this->_config['properties'][$name];
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
      * hasTestingEnabled
      * This method is used to indicate whether or not a data source has testing enabled so that
-     * the administration interface may call the test method on the data source instance
+     * the administration interface may call the test method on the data source instance.
      *
      * @return enabled boolean value indicating whether or not testing is enabled
      */
@@ -370,7 +393,7 @@ abstract class source
      * test
      * This method is called from the administration interface to run a test of the service
      * It is up to subclasses to implement a test and set _has_testing_enabled to true so that
-     * a test button is rendered in the administration interface
+     * a test button is rendered in the administration interface.
      *
      * @return result boolean result of the test function
      */
@@ -378,7 +401,6 @@ abstract class source
     {
         return false;
     }
-
 
     /**
      * isEnabledInWizard
@@ -393,7 +415,6 @@ abstract class source
         return $this->_enable_in_wizard;
     }
 
-
     /**
      * isEnabledInHover
      * This method indicates whether or not the connector should be enabled for the hover links
@@ -401,7 +422,6 @@ abstract class source
      * set the protected class variable _enable_in_hover to true.
      *
      * @return $enabled boolean variable indicating whether or not the connector is enabled for the hover links
-     *
      */
     public function isEnabledInHover()
     {
@@ -415,7 +435,7 @@ abstract class source
      * displayed.  Connectors that do not have any administrative properties should set the protected class variable
      * _enable_in_admin_properties to false.
      *
-     * @return boolean value indicating whether or not the connector is enabled for admin views
+     * @return bool value indicating whether or not the connector is enabled for admin views
      */
     public function isEnabledInAdminProperties()
     {
@@ -429,7 +449,7 @@ abstract class source
      * displayed.  Connectors that do not have any administrative mapping properties should set the protected class variable
      * _enable_in_admin_mapping to false.
      *
-     * @return boolean value indicating whether or not the connector is enabled for admin views
+     * @return bool value indicating whether or not the connector is enabled for admin views
      */
     public function isEnabledInAdminMapping()
     {
@@ -443,7 +463,7 @@ abstract class source
      * displayed.  Connectors that do not have any administrative display settings should set the protected class variable
      * _enable_in_admin_display to false.
      *
-     * @return boolean value indicating whether or not the connector is enabled for admin views
+     * @return bool value indicating whether or not the connector is enabled for admin views
      */
     public function isEnabledInAdminDisplay()
     {
@@ -457,7 +477,7 @@ abstract class source
      * displayed.  Connectors that do not have any administrative search settings should set the protected class variable
      * _enable_in_admin_search to false.
      *
-     * @return boolean value indicating whether or not the connector is enabled for admin views
+     * @return bool value indicating whether or not the connector is enabled for admin views
      */
     public function isEnabledInAdminSearch()
     {
@@ -477,11 +497,10 @@ abstract class source
         return $this->_required_config_fields;
     }
 
-
     /**
      * isRequiredConfigFieldsSet
      * This method checks the configuration parameters against the required config fields
-     * to see if they are set
+     * to see if they are set.
      *
      * @return $set boolean value indicating whether or not the required config fields are set
      */
@@ -493,9 +512,9 @@ abstract class source
                 return false;
             }
         }
+
         return true;
     }
-
 
     /**
      * getRequiredConfigFieldsForButton
@@ -510,11 +529,10 @@ abstract class source
         return $this->_required_config_fields_for_button;
     }
 
-
     /**
      * isRequiredConfigFieldsForButtonSet
      * This method checks the configuration parameters against the required config fields
-     * for the "Get Button" to see if they are set
+     * for the "Get Button" to see if they are set.
      *
      * @return $set boolean value indicating whether or not the required config fields are set
      */
@@ -526,12 +544,36 @@ abstract class source
                 return false;
             }
         }
+
         return true;
     }
 
+    /**
+     * getItem
+     * Returns an array containing a key/value pair(s) of a connector record. To be overridden by the implementation
+     * source.
+     *
+     * @param $args Array of arguments to search/filter by
+     * @param $module String optional value of the module that the connector framework is attempting to map to
+     *
+     * @return array of key/value pair(s) of connector record; empty Array if no results are found
+     */
+    abstract public function getItem($args = [], $module = null);
 
     /**
-     * Allow data sources to log information
+     * getList
+     * Returns a nested array containing a key/value pair(s) of a connector record. To be overridden by the
+     * implementation source.
+     *
+     * @param $args Array of arguments to search/filter by
+     * @param $module String optional value of the module that the connector framework is attempting to map to
+     *
+     * @return array of key/value pair(s) of connector record; empty Array if no results are found
+     */
+    abstract public function getList($args = [], $module = null);
+
+    /**
+     * Allow data sources to log information.
      *
      * @param string $log_data
      */
@@ -542,42 +584,6 @@ abstract class source
         if (!empty($property_name)) {
             $name = $property_name;
         }
-        $GLOBALS['log']->info($name. ': '.$log_data);
-    }
-
-    /**
-     * getItem
-     * Returns an array containing a key/value pair(s) of a connector record. To be overridden by the implementation
-     * source.
-     *
-     * @param $args Array of arguments to search/filter by
-     * @param $module String optional value of the module that the connector framework is attempting to map to
-     * @return Array of key/value pair(s) of connector record; empty Array if no results are found
-     */
-    abstract public function getItem($args=array(), $module=null);
-
-
-    /**
-     * getList
-     * Returns a nested array containing a key/value pair(s) of a connector record. To be overridden by the
-     * implementation source.
-     *
-     * @param $args Array of arguments to search/filter by
-     * @param $module String optional value of the module that the connector framework is attempting to map to
-     * @return Array of key/value pair(s) of connector record; empty Array if no results are found
-     */
-    abstract public function getList($args=array(), $module=null);
-
-    /**
-     * Default destructor
-     *
-     */
-    public function __destruct()
-    {
-        // Bug # 47233 - This desctructor was originally removed by bug # 44533.
-         // We have to add this destructor back in
-         // because there are customers who upgrade from 61x to 623
-         // who have the Jigsaw connector enabled, and the jigsaw connector
-         // makes a call to this destructor.
+        $GLOBALS['log']->info($name . ': ' . $log_data);
     }
 }

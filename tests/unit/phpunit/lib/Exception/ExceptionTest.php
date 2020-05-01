@@ -5,9 +5,12 @@ namespace SuiteCRM\Exception;
 use Psr\Log\LogLevel;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class ExceptionTest extends SuitePHPUnitFrameworkTestCase
 {
-    /**#
+    /*#
      * @var Exception $exception
      */
     private static $exception;

@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,15 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-
 global $app_strings, $current_language;
 
-$dashletMeta['CampaignROIChartDashlet'] = array('title'       => 'LBL_TITLE',
-                                                    'description' => 'LBL_TITLE',
-                                                    'icon'		  => 'icon_Charts_GroupBy_32.gif',
-                                                    'category'    => 'Charts',
-                                                    'module'	  => 'Campaigns',);
+$dashletMeta['CampaignROIChartDashlet'] = ['title' => 'LBL_TITLE',
+    'description' => 'LBL_TITLE',
+    'icon' => 'icon_Charts_GroupBy_32.gif',
+    'category' => 'Charts',
+    'module' => 'Campaigns', ];

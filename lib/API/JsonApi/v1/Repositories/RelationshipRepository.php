@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -43,13 +42,13 @@ namespace SuiteCRM\API\JsonApi\v1\Repositories;
 use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 
 /**
- * Class RelationshipRepository
- * @package SuiteCRM\API\JsonApi\v1\Repositories
+ * Class RelationshipRepository.
  */
 class RelationshipRepository
 {
     /**
      * @param array $jsonApiRequest
+     *
      * @return string
      */
     public function getRelationshipTypeFromDataArray(array $jsonApiRequest)

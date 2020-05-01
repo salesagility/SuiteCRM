@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,11 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-/**
- */
-
-
 class ViewNewsLetterList extends ViewList
 {
     public function processSearchForm()
@@ -59,14 +54,13 @@ class ViewNewsLetterList extends ViewList
         $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
         $where_clauses[] = "campaigns.campaign_type in ('NewsLetter')";
         if (count($where_clauses) > 0) {
-            $this->where = '('. implode(' ) AND ( ', $where_clauses) . ')';
+            $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
         }
-        $GLOBALS['log']->info("List View Where Clause: $this->where");
-
+        $GLOBALS['log']->info("List View Where Clause: {$this->where}");
 
         echo $this->searchForm->display($this->headers);
     }
-    
+
     /**
      * @see SugarView::preDisplay()
      */

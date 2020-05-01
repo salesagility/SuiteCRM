@@ -2,6 +2,9 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
@@ -56,7 +59,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testgetSummaryText()
     {
         $documentRevision = new DocumentRevision();
 
@@ -68,7 +71,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('test', $documentRevision->get_summary_text());
     }
 
-    public function testis_authenticated()
+    public function testisAuthenticated()
     {
         $documentRevision = new DocumentRevision();
 
@@ -80,7 +83,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals(true, $documentRevision->is_authenticated());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfillInAdditionalListFields()
     {
         $documentRevision = new DocumentRevision();
 
@@ -93,7 +96,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfillInAdditionalDetailFields()
     {
         $documentRevision = new DocumentRevision();
 
@@ -121,7 +124,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('-Revision_1.ext', $result);
     }
 
-    public function testfill_document_name_revision()
+    public function testfillDocumentNameRevision()
     {
         $documentRevision = new DocumentRevision();
 
@@ -134,10 +137,10 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlistViewParseAdditionalSections()
     {
         $documentRevision = new DocumentRevision();
-        
+
         $xTemplateSection = null;
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -150,28 +153,28 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testgetListViewData()
     {
         $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_list_view_data();
-        $this->assertEquals(array('DELETED' => 0), $result);
+        $this->assertEquals(['DELETED' => 0], $result);
     }
 
-    public function testget_document_revision_name()
+    public function testgetDocumentRevisionName()
     {
         $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_document_revision_name(1);
         $this->assertEquals(null, $result);
     }
 
-    public function testget_document_revisions()
+    public function testgetDocumentRevisions()
     {
         $documentRevision = new DocumentRevision();
         $results = $documentRevision->get_document_revisions(1);
         $this->assertTrue(is_array($results));
     }
 
-    public function testbean_implements()
+    public function testbeanImplements()
     {
         $documentRevision = new DocumentRevision();
         $this->assertEquals(false, $documentRevision->bean_implements('')); //test with blank value

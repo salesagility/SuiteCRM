@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,11 +36,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 /* * *******************************************************************************
 
@@ -57,14 +54,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // additionally, another script using fopen will be used to call this
 // script externally
 
-require_once('modules/Campaigns/utils.php');
+require_once 'modules/Campaigns/utils.php';
 
 $GLOBALS['log'] = LoggerManager::getLogger('Campaign Tracker v2');
 
 $db = DBManagerFactory::getInstance();
 
 if (empty($_REQUEST['track'])) {
-    $track = "";
+    $track = '';
 } else {
     $track = $_REQUEST['track'];
 }
@@ -76,18 +73,16 @@ if (!empty($_REQUEST['identifier'])) {
     $keys = log_campaign_activity('BANNER', 'link', true, $track);
 }
 
-
-
 if (preg_match('/^[0-9A-Za-z\-]*$/', $track)) {
     $track = $db->quote($track);
-    $query = "SELECT tracker_url FROM campaign_trkrs WHERE id='$track'";
+    $query = "SELECT tracker_url FROM campaign_trkrs WHERE id='{$track}'";
     $res = $db->query($query);
 
     $row = $db->fetchByAssoc($res);
 
     $redirect_URL = $row['tracker_url'];
     sugar_cleanup();
-    $header_URL = "Location: $redirect_URL";
+    $header_URL = "Location: {$redirect_URL}";
     SugarApplication::headerRedirect($header_URL);
 } else {
     sugar_cleanup();

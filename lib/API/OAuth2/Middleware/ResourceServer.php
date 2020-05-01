@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -86,20 +85,22 @@ class ResourceServer
         } catch (OAuthServerException $exception) {
             $log = new Logger();
             $log->error(
-                '[ResourceServer] '.
-                ' Code: ' . $exception->getCode().
-                ' Message: ' . $exception->getMessage().
-                ' ErrorType: ' . $exception->getErrorType().
+                '[ResourceServer] ' .
+                ' Code: ' . $exception->getCode() .
+                ' Message: ' . $exception->getMessage() .
+                ' ErrorType: ' . $exception->getErrorType() .
                 ' Hint: ' . $exception->getHint()
             );
+
             return $exception->generateHttpResponse($response);
             // @codeCoverageIgnoreStart
         } catch (\Exception $exception) {
             $log = new Logger();
             $log->error(
-                '[ResourceServer] '.
-                $exception->getCode().' '.$exception->getMessage()
+                '[ResourceServer] ' .
+                $exception->getCode() . ' ' . $exception->getMessage()
             );
+
             return (new OAuthServerException($exception->getMessage(), 0, 'unknown_error', 500))
                 ->generateHttpResponse($response);
             // @codeCoverageIgnoreEnd
@@ -113,6 +114,7 @@ class ResourceServer
      * Suite needs a current_user global for roles, security groups etc.
      *
      * @param ServerRequestInterface $request
+     *
      * @throws NotAllowedException
      */
     private function setCurrentUserGlobal(ServerRequestInterface $request)
@@ -131,9 +133,10 @@ class ResourceServer
 
     /**
      * @param ServerRequestInterface $request
-     * @return \User
      *
      * @throws NotAllowedException
+     *
+     * @return \User
      */
     private function getUserFromRequest(ServerRequestInterface $request)
     {

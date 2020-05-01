@@ -5,9 +5,10 @@ namespace Step\Acceptance;
 class Events extends \AcceptanceTester
 {
     /**
-     * Create an event
+     * Create an event.
      *
      * @param $name
+     * @param mixed $location
      */
     public function createEvent($name, $location)
     {

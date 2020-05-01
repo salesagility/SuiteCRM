@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,89 +36,85 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-$dictionary['Calls_Reschedule'] = array(
-    'table'=>'calls_reschedule',
-    'audited'=>true,
-        'duplicate_merge'=>true,
-        'fields'=>array(
-  'reason' =>
-  array(
-    'required' => false,
-    'name' => 'reason',
-    'vname' => 'LBL_REASON',
-    'type' => 'enum',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
-    'audited' => false,
-    'reportable' => true,
-    'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'len' => 100,
-    'size' => '20',
-    'options' => 'call_reschedule_dom',
-    'studio' => 'visible',
-    'dependency' => false,
-  ),
-  'call_id' =>
-  array(
-    'required' => false,
-    'name' => 'call_id',
-    'vname' => '',
-    'type' => 'id',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => 0,
-    'audited' => false,
-    'reportable' => false,
-    'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'len' => 36,
-    'size' => '20',
-  ),
-  'call_name' =>
-  array(
-    'required' => false,
-    'source' => 'non-db',
-    'name' => 'call_name',
-    'vname' => 'LBL_CALLS',
-    'type' => 'relate',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
-    'audited' => false,
-    'reportable' => true,
-    'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'len' => '255',
-    'size' => '20',
-    'id_name' => 'call_id',
-    'ext2' => 'Calls',
-    'module' => 'Calls',
-    'rname' => 'name',
-    'quicksearch' => 'enabled',
-    'studio' => 'visible',
-  ),
-),
-    'relationships'=>array(
-),
-    'optimistic_locking'=>true,
-        'unified_search'=>true,
-    );
+$dictionary['Calls_Reschedule'] = [
+    'table' => 'calls_reschedule',
+    'audited' => true,
+    'duplicate_merge' => true,
+    'fields' => [
+        'reason' => [
+            'required' => false,
+            'name' => 'reason',
+            'vname' => 'LBL_REASON',
+            'type' => 'enum',
+            'massupdate' => 0,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'len' => 100,
+            'size' => '20',
+            'options' => 'call_reschedule_dom',
+            'studio' => 'visible',
+            'dependency' => false,
+        ],
+        'call_id' => [
+            'required' => false,
+            'name' => 'call_id',
+            'vname' => '',
+            'type' => 'id',
+            'massupdate' => 0,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => 0,
+            'audited' => false,
+            'reportable' => false,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'len' => 36,
+            'size' => '20',
+        ],
+        'call_name' => [
+            'required' => false,
+            'source' => 'non-db',
+            'name' => 'call_name',
+            'vname' => 'LBL_CALLS',
+            'type' => 'relate',
+            'massupdate' => 0,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'len' => '255',
+            'size' => '20',
+            'id_name' => 'call_id',
+            'ext2' => 'Calls',
+            'module' => 'Calls',
+            'rname' => 'name',
+            'quicksearch' => 'enabled',
+            'studio' => 'visible',
+        ],
+    ],
+    'relationships' => [
+    ],
+    'optimistic_locking' => true,
+    'unified_search' => true,
+];
 if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+    require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Calls_Reschedule', 'Calls_Reschedule', array('basic','assignable'));
+VardefManager::createVardef('Calls_Reschedule', 'Calls_Reschedule', ['basic', 'assignable']);

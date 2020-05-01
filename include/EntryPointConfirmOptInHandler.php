@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,24 +37,21 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Class EntryPointConfirmOptInHandler
+ * Class EntryPointConfirmOptInHandler.
  */
 class EntryPointConfirmOptInHandler
 {
-
     /**
-     * @var EmailAddress $emailAddress
+     * @var EmailAddress
      */
     private $emailAddress;
 
     /**
-     *
      * @param array $request
      * @param array $post
      */
@@ -78,10 +74,10 @@ class EntryPointConfirmOptInHandler
     }
 
     /**
-     *
      * @param string $method
      * @param array $post
      * @param array $request
+     *
      * @return string
      */
     protected function callMethod($method, $post, $request)
@@ -89,18 +85,23 @@ class EntryPointConfirmOptInHandler
         switch ($method) {
             case 'confirmOptInSelected':
                 $output = $this->methodConfirmOptInSelected($post);
+
                 break;
             default:
                 $output = $this->methodConfirmOptInUser($request);
+
                 break;
         }
+
         return $output;
     }
 
     /**
      * @global array $app_strings
+     *
      * @param array $post
-     * @return string|boolean
+     *
+     * @return bool|string
      */
     private function methodConfirmOptInSelected($post)
     {
@@ -134,21 +135,21 @@ class EntryPointConfirmOptInHandler
         }
 
         if ($warnings > 0) {
-            $msg .=  sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'], $warnings);
+            $msg .= sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_NOT_OPT_IN'], $warnings);
         }
 
         if ($errors > 0) {
-            $msg .=  sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'], $errors);
+            $msg .= sprintf($app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'], $errors);
         }
-
 
         return $msg;
     }
 
     /**
-     * Confirm Opt In User
+     * Confirm Opt In User.
      *
      * @param array $request
+     *
      * @return string
      */
     private function methodConfirmOptInUser($request)
@@ -183,19 +184,19 @@ class EntryPointConfirmOptInHandler
     }
 
     /**
-     * @param String $email
-     * @param String $module
+     * @param string $email
+     * @param string $module
      *
      * @return array|bool
      */
     private function getIDs($email, $module)
     {
-        $people = $this->emailAddress->getRelatedId($email, $module);
-        return $people;
+        return $this->emailAddress->getRelatedId($email, $module);
     }
 
     /**
      * @param array $people
+     * @param mixed $module
      */
     private function setLawfulBasisForEachPerson(array $people, $module)
     {

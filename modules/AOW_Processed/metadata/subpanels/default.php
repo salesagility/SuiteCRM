@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,42 +22,39 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
-$subpanel_layout = array(
-    'top_buttons' => array(),
+$subpanel_layout = [
+    'top_buttons' => [],
 
     'where' => '',
 
-    'list_fields' => array(
-        'parent_name'=>array(
+    'list_fields' => [
+        'parent_name' => [
             'vname' => 'LBL_BEAN',
             'target_record_key' => 'parent_id',
-            'target_module_key'=>'parent_type',
+            'target_module_key' => 'parent_type',
             'widget_class' => 'SubPanelDetailViewLink',
-            'sortable'=>false,
+            'sortable' => false,
             'width' => '15%',
-        ),
-        'status'=>array(
+        ],
+        'status' => [
             'vname' => 'LBL_STATUS',
             'width' => '15%',
-        ),
-        'date_entered'=>array(
+        ],
+        'date_entered' => [
             'vname' => 'LBL_DATE_ENTERED',
             'width' => '15%',
-        ),
-        'date_modified'=>array(
+        ],
+        'date_modified' => [
             'vname' => 'LBL_DATE_MODIFIED',
             'width' => '15%',
-        ),
-        'parent_id'=>array(
-            'usage'=>'query_only',
-        ),
-        'parent_type'=>array(
-            'usage'=>'query_only',
-        ),
-    ),
-);
+        ],
+        'parent_id' => [
+            'usage' => 'query_only',
+        ],
+        'parent_type' => [
+            'usage' => 'query_only',
+        ],
+    ],
+];

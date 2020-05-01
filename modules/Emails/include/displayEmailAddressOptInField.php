@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,18 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 /**
  * @global array $app_strings
+ *
  * @param \Email $focus
  * @param string $field
  * @param mixed $value
  * @param string $view
+ *
  * @return string
  */
 function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
@@ -60,9 +59,10 @@ function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
     if (empty($focus->id)) {
         $log = LoggerManager::getLogger();
         $log->warn('Email ID is Empty');
+
         return '';
     }
-    
+
     if (
         filter_var($focus->from_name, FILTER_VALIDATE_EMAIL) &&
         !filter_var($focus->from_addr, FILTER_VALIDATE_EMAIL)
@@ -76,12 +76,12 @@ function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
 
     $emailAddress = $focus->getEmailAddressFromEmailField($addressField);
     $tick = '';
-    
+
     if ($emailAddress instanceof SugarEmailAddress) {
         $tick = $emailAddress->getOptInStatusTickHTML();
     } else {
         $log->warn('Trying to get an email field of non-Basic object');
     }
-    
+
     return $tick;
 }

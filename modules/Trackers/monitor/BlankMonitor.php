@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,30 +40,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Trackers/monitor/Monitor.php');
-require_once('modules/Trackers/Metric.php');
-require_once('modules/Trackers/Trackable.php');
+require_once 'modules/Trackers/monitor/Monitor.php';
+require_once 'modules/Trackers/Metric.php';
+require_once 'modules/Trackers/Trackable.php';
 
 class BlankMonitor extends Monitor implements Trackable
 {
-
     /**
-     * BlankMonitor constructor
+     * BlankMonitor constructor.
      */
     public function __construct()
     {
     }
 
-
-
-
     /**
      * setValue
-     * Sets the value defined in the monitor's metrics for the given name
+     * Sets the value defined in the monitor's metrics for the given name.
+     *
      * @param $name String value of metric name
      * @param $value Mixed value
+     *
      * @throws Exception Thrown if metric name is not configured for monitor instance
      */
     public function setValue($name, $value)
@@ -72,8 +68,9 @@ class BlankMonitor extends Monitor implements Trackable
 
     /**
      * getStores
-     * Returns Array of store names defined for monitor instance
-     * @return Array of store names defined for monitor instance
+     * Returns Array of store names defined for monitor instance.
+     *
+     * @return array of store names defined for monitor instance
      */
     public function getStores()
     {
@@ -82,8 +79,9 @@ class BlankMonitor extends Monitor implements Trackable
 
     /**
      * getMetrics
-     * Returns Array of metric instances defined for monitor instance
-     * @return Array of metric instances defined for monitor instance
+     * Returns Array of metric instances defined for monitor instance.
+     *
+     * @return array of metric instances defined for monitor instance
      */
     public function getMetrics()
     {
@@ -94,33 +92,33 @@ class BlankMonitor extends Monitor implements Trackable
      * save
      * This method retrieves the Store instances associated with monitor and calls
      * the flush method passing with the montior ($this) instance.
-     *
      */
     public function save()
     {
     }
 
+    /**
+     * clear
+     * This function clears the metrics data in the monitor instance.
+     */
+    public function clear()
+    {
+    }
 
     /**
      * getStore
      * This method checks if the Store implementation has already been instantiated and
      * will return the one stored; otherwise it will create the Store implementation and
      * save it to the Array of Stores.
+     *
      * @param $store The name of the store as defined in the 'modules/Trackers/config.php' settings
-     * @return An instance of a Store implementation
+     *
      * @throws Exception Thrown if $store class cannot be loaded
+     *
+     * @return An instance of a Store implementation
      */
     protected function getStore($store)
     {
         return null;
-    }
-
-
-    /**
-     * clear
-     * This function clears the metrics data in the monitor instance
-     */
-    public function clear()
-    {
     }
 }

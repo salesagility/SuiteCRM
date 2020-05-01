@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,28 +41,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+/*
 
  * Description:  Saves an Account record and then redirects the browser to the
  * defined return URL.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 $focus = new EmailTemplate();
-require_once('include/formbase.php');
+require_once 'include/formbase.php';
 $focus = populateFromPost('', $focus);
 
-require_once('modules/EmailTemplates/EmailTemplateFormBase.php');
+require_once 'modules/EmailTemplates/EmailTemplateFormBase.php';
 $form = new EmailTemplateFormBase();
-sugar_cache_clear('select_array:'.$focus->object_name.'namebase_module=\''. (isset($focus->base_module) ? $focus->base_module : null).'\'name');
+sugar_cache_clear('select_array:' . $focus->object_name . 'namebase_module=\'' . (isset($focus->base_module) ? $focus->base_module : null) . '\'name');
 if (isset($_REQUEST['inpopupwindow']) and $_REQUEST['inpopupwindow'] == true) {
-    $focus=$form->handleSave('', false, false, true, 'download', true); //do not redirect.
+    $focus = $form->handleSave('', false, false, true, 'download', true); //do not redirect.
     $body1 = "
 		<script type='text/javascript'>
 			function refreshTemplates() {
-				window.opener.refresh_email_template_list('$focus->id','$focus->name')
+				window.opener.refresh_email_template_list('{$focus->id}','{$focus->name}')
 				window.close();
 			}
 

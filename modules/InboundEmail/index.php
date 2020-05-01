@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 global $mod_strings;
-echo getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_MODULE_TITLE'], $mod_strings['LBL_HOME']), true);
+echo getClassicModuleTitle('InboundEmail', [$mod_strings['LBL_MODULE_TITLE'], $mod_strings['LBL_HOME']], true);
 
 //echo getClassicModuleTitle($mod_strings['LBL_MODULE_TITLE'], array($mod_strings['LBL_MODULE_TITLE'],$mod_strings['LBL_HOME']), true);
-require_once('modules/InboundEmail/ListView.php');
+require_once 'modules/InboundEmail/ListView.php';

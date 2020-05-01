@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,34 +40,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateURL.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateURL.php';
 class TemplateIFrame extends TemplateURL
 {
-    public $type='iframe';
-    
+    public $type = 'iframe';
+
     public function get_html_edit()
     {
         $this->prepare();
-        return "<input type='text' name='". $this->name. "' id='".$this->name."' size='".$this->size."' title='{" . strtoupper($this->name) ."_HELP}' value='{". strtoupper($this->name). "}'>";
+
+        return "<input type='text' name='" . $this->name . "' id='" . $this->name . "' size='" . $this->size . "' title='{" . strtoupper($this->name) . "_HELP}' value='{" . strtoupper($this->name) . "}'>";
     }
-    
+
     public function get_html_label()
     {
-        return "LALALALA";
+        return 'LALALALA';
     }
-    
+
     public function get_xtpl_detail()
     {
         $value = parent::get_xtpl_detail();
-        $value .= "BLAH BLAH";
+        $value .= 'BLAH BLAH';
+
         return $value;
     }
-    
+
     public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['height'] = !empty($this->height) ? $this->height : $this->ext4;
+
         return $def;
     }
 }

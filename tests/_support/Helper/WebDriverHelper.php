@@ -11,9 +11,7 @@ use SuiteCRM\Enumerator\DatabaseDriver;
 use SuiteCRM\Test\Driver\WebDriver;
 
 /**
- * Class WebDriverHelper
- * @package Helper
- * Helps to get configuration / environment variables for the WebDriver
+ * Class WebDriverHelper.
  */
 class WebDriverHelper extends Module
 {
@@ -28,8 +26,10 @@ class WebDriverHelper extends Module
 
     /**
      * Gets the 'INSTANCE_URL' environment variable or 'url' in a yaml file.
-     * @return string the test instance url.
+     *
      * @throws ModuleException
+     *
+     * @return string the test instance url
      */
     public function getInstanceURL()
     {
@@ -49,8 +49,11 @@ class WebDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_DRIVER' environment variable or 'database_driver' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
+     *
      * @see DatabaseDriver
      */
     public function getDatabaseDriver()
@@ -71,8 +74,10 @@ class WebDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_NAME' environment variable or 'database_name' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getDatabaseName()
     {
@@ -90,11 +95,12 @@ class WebDriverHelper extends Module
         return $envDatabaseName;
     }
 
-
     /**
      * Gets the 'DATABASE_HOST' environment variable or 'database_host' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getDatabaseHost()
     {
@@ -114,8 +120,10 @@ class WebDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_USER' environment variable or 'database_user' in a yaml file.
-     * @return string the test instance url.
+     *
      * @throws ModuleException
+     *
+     * @return string the test instance url
      */
     public function getDatabaseUser()
     {
@@ -135,8 +143,10 @@ class WebDriverHelper extends Module
 
     /**
      * Gets the 'DATABASE_PASSWORD' environment variable or 'database_password' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getDatabasePassword()
     {
@@ -154,11 +164,12 @@ class WebDriverHelper extends Module
         return $envDatabasePassword;
     }
 
-
     /**
      * Gets the 'INSTANCE_ADMIN_USER' environment variable or 'instance_admin_user' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getAdminUser()
     {
@@ -178,8 +189,10 @@ class WebDriverHelper extends Module
 
     /**
      * Gets the 'INSTANCE_ADMIN_PASSWORD' environment variable or 'instance_admin_password' in a yaml file.
-     * @return string
+     *
      * @throws ModuleException
+     *
+     * @return string
      */
     public function getAdminPassword()
     {
@@ -200,6 +213,7 @@ class WebDriverHelper extends Module
 
     /**
      * Gets the 'INSTANCE_ELASTIC_SEARCH_HOST' environment variable or 'instance_elastic_search_host' in a yaml file.
+     *
      * @return string
      */
     public function getElasticSearchHost()
@@ -211,18 +225,20 @@ class WebDriverHelper extends Module
             if (empty($config['INSTANCE_ELASTIC_SEARCH_HOST'])) {
                 // return default
                 return 'localhost';
-            } else {
-                return $config['instance_elastic_search_host'];
             }
-        } else {
-            return $envElasticSearchHost;
+
+            return $config['instance_elastic_search_host'];
         }
+
+        return $envElasticSearchHost;
     }
 
     /**
      * Gets the 'BROWSERSTACK_USERNAME' environment variable or 'browserstack.user' in a yaml file.
+     *
      * @url https://www.browserstack.com/automate/codeception
-     * @return string.
+     *
+     * @return string
      */
     public function getBrowserStackUsername()
     {
@@ -230,20 +246,22 @@ class WebDriverHelper extends Module
         if ($envBrowserStackUsername === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if (empty($config["capabilities"]["browserstack.user"])) {
+            if (empty($config['capabilities']['browserstack.user'])) {
                 // return default
                 return '';
-            } else {
-                return $config["capabilities"]["browserstack.user"];
             }
-        } else {
-            return $envBrowserStackUsername;
+
+            return $config['capabilities']['browserstack.user'];
         }
+
+        return $envBrowserStackUsername;
     }
 
     /**
      * Gets the 'BROWSERSTACK_ACCESS_KEY' environment variable or 'browserstack.key' in a yaml file.
+     *
      * @url https://www.browserstack.com/automate/codeception
+     *
      * @return string
      */
     public function getBrowserStackAccessKey()
@@ -252,20 +270,22 @@ class WebDriverHelper extends Module
         if ($envBrowserStackAccessKey === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if (empty($config["capabilities"]["browserstack.key"])) {
+            if (empty($config['capabilities']['browserstack.key'])) {
                 // return default
                 return '';
-            } else {
-                return $config["capabilities"]["browserstack.key"];
             }
-        } else {
-            return $envBrowserStackAccessKey;
+
+            return $config['capabilities']['browserstack.key'];
         }
+
+        return $envBrowserStackAccessKey;
     }
 
     /**
      * Gets the 'BROWSERSTACK_LOCAL_FOLDER_URL' environment variable or 'browserstack.localfolderurl' in a yaml file.
+     *
      * @url https://www.browserstack.com/automate/codeception
+     *
      * @return string
      */
     public function getBrowserStackLocalFolderURL()
@@ -274,15 +294,15 @@ class WebDriverHelper extends Module
         if ($envBrowserStackAccessKey === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if (empty($config["capabilities"]["browserstack.localfolderurl"])) {
+            if (empty($config['capabilities']['browserstack.localfolderurl'])) {
                 // return default
                 return '';
-            } else {
-                return $config["capabilities"]["browserstack.localfolderurl"];
             }
-        } else {
-            return $envBrowserStackAccessKey;
+
+            return $config['capabilities']['browserstack.localfolderurl'];
         }
+
+        return $envBrowserStackAccessKey;
     }
 
     // Add other methods to get environmental variables here...

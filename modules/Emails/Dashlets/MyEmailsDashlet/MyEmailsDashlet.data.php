@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,48 +42,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 global $current_user, $app_strings;
 
-$dashletData['MyEmailsDashlet']['searchFields'] = array(
-                                                       'date_sent_received'  => array('default' => ''),
-                                                       'name'  => array('default' => ''),
-                                                       //'from_addr_name' => array('default' => ''),
-                                                       'assigned_user_id'   => array('default' => ''),
-    'category_id'      => array('default' => ''),
-                                                       );
-$dashletData['MyEmailsDashlet']['columns'] = array(
-                                                   'from_addr' => array('width'   => '15',
-                                                                       'label'   => 'LBL_FROM',
-                                                                       'default' => true),
-                                                   'name' => array('width'   => '40',
-                                                                   'label'   => 'LBL_SUBJECT',
-                                                                   'link'    => true,
-                                                                   'default' => true),
-                                                   'to_addrs_names' => array('width'   => '15',
-                                                                         'label'   => 'LBL_TO_ADDRS',
-                                                                         'default' => false),
-                                                   'assigned_user_name' => array('width'   => '15',
-                                                                         'label'   => 'LBL_LIST_ASSIGNED',
-                                                                         'default' => false),
+$dashletData['MyEmailsDashlet']['searchFields'] = [
+    'date_sent_received' => ['default' => ''],
+    'name' => ['default' => ''],
+    //'from_addr_name' => array('default' => ''),
+    'assigned_user_id' => ['default' => ''],
+    'category_id' => ['default' => ''],
+];
+$dashletData['MyEmailsDashlet']['columns'] = [
+    'from_addr' => ['width' => '15',
+        'label' => 'LBL_FROM',
+        'default' => true],
+    'name' => ['width' => '40',
+        'label' => 'LBL_SUBJECT',
+        'link' => true,
+        'default' => true],
+    'to_addrs_names' => ['width' => '15',
+        'label' => 'LBL_TO_ADDRS',
+        'default' => false],
+    'assigned_user_name' => ['width' => '15',
+        'label' => 'LBL_LIST_ASSIGNED',
+        'default' => false],
 
-                                                   'date_sent_received' => array('width'   => '15',
-                                                                         'label'   => 'LBL_DATE_SENT_RECEIVED',
-                                                                         'default' => true,
-                                                                         'defaultOrderColumn' => array('sortOrder' => 'ASC')
-                                                                         ),
-                                                  'date_entered' => array('width'   => '15',
-                                                                          'label'   => 'LBL_DATE_ENTERED'),
-                                                  'date_modified' => array('width'   => '15',
-                                                                           'label'   => 'LBL_DATE_MODIFIED'),
-                                                  'quick_reply' => array('width'   => '15',
-                                                                        'label'   => 'LNK_QUICK_REPLY',
-                                                                        'sortable' => false,
-                                                                        'default' => true),
+    'date_sent_received' => ['width' => '15',
+        'label' => 'LBL_DATE_SENT_RECEIVED',
+        'default' => true,
+        'defaultOrderColumn' => ['sortOrder' => 'ASC']
+    ],
+    'date_entered' => ['width' => '15',
+        'label' => 'LBL_DATE_ENTERED'],
+    'date_modified' => ['width' => '15',
+        'label' => 'LBL_DATE_MODIFIED'],
+    'quick_reply' => ['width' => '15',
+        'label' => 'LNK_QUICK_REPLY',
+        'sortable' => false,
+        'default' => true],
 
-    'category_id' => array('width' => '8',
+    'category_id' => ['width' => '8',
         'label' => 'LBL_CATEGORY',
-        'default' => true),
-);
+        'default' => true],
+];

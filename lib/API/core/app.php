@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 include_once __DIR__ . '/../../../vendor/autoload.php';
 
 // Prevent errors from being echoed out to the client
@@ -45,9 +43,7 @@ include_once __DIR__ . '/../../../vendor/autoload.php';
 // back to the client
 ini_set('error_reporting', ~E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
-chdir(__DIR__.'/../../../');
-
-
+chdir(__DIR__ . '/../../../');
 
 include_once __DIR__ . '/../../../include/utils/array_utils.php';
 include_once __DIR__ . '/../../../include/SugarObjects/SugarConfig.php';
@@ -56,12 +52,12 @@ include_once __DIR__ . '/../../../include/SugarLogger/LoggerManager.php';
 
 SuiteCRM\ErrorMessage::log('Calling this area of API is depricated. Use http://[SuiteCRM_instance]/Api/V8... ', 'deprecated');
 
-require_once __DIR__.'/../../../include/entryPoint.php';
+require_once __DIR__ . '/../../../include/entryPoint.php';
 global $sugar_config;
 global $version;
 global $container;
 
-preg_match("/\/api\/(.*?)\//", $_SERVER['REQUEST_URI'], $matches);
+preg_match('/\\/api\\/(.*?)\\//', $_SERVER['REQUEST_URI'], $matches);
 
 $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
 
@@ -69,11 +65,10 @@ $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
 $version = 8;
 
-require_once __DIR__.'/containers.php';
+require_once __DIR__ . '/containers.php';
 
 $app = new \Slim\App($container);
 $paths = new \SuiteCRM\Utility\Paths();
-
 
 // Load Core Routes
 $routeFiles = (array) glob($paths->getLibraryPath() . '/API/v8/route/*.php');
@@ -88,12 +83,12 @@ foreach ($customRouteFiles as $routeFile) {
 }
 
 // Load callables
-$callableFiles = (array) glob($paths->getLibraryPath().'/API/v8/callable/*.php');
+$callableFiles = (array) glob($paths->getLibraryPath() . '/API/v8/callable/*.php');
 foreach ($callableFiles as $callableFile) {
     require $callableFile;
 }
 
-$customCallableFiles = (array) glob($paths->getCustomLibraryPath().'/API/v8/callable/*.php');
+$customCallableFiles = (array) glob($paths->getCustomLibraryPath() . '/API/v8/callable/*.php');
 foreach ($customCallableFiles as $callableFile) {
     require $callableFile;
 }

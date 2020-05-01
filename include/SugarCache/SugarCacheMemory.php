@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarCache/SugarCacheAbstract.php');
+require_once 'include/SugarCache/SugarCacheAbstract.php';
 
 class SugarCacheMemory extends SugarCacheAbstract
 {
@@ -47,7 +44,7 @@ class SugarCacheMemory extends SugarCacheAbstract
      * @see SugarCacheAbstract::$_priority
      */
     protected $_priority = 999;
-    
+
     /**
      * @see SugarCacheAbstract::useBackend()
      */
@@ -56,34 +53,41 @@ class SugarCacheMemory extends SugarCacheAbstract
         // we'll always have this backend available
         return true;
     }
-    
+
     /**
      * @see SugarCacheAbstract::_setExternal()
      *
      * Does nothing; cache is gone after request is done.
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function _setExternal($key, $value)
     {
     }
-    
+
     /**
      * @see SugarCacheAbstract::_getExternal()
      *
      * Does nothing; cache is gone after request is done.
+     *
+     * @param mixed $key
      */
     protected function _getExternal($key)
     {
     }
-    
+
     /**
      * @see SugarCacheAbstract::_clearExternal()
      *
      * Does nothing; cache is gone after request is done.
+     *
+     * @param mixed $key
      */
     protected function _clearExternal($key)
     {
     }
-    
+
     /**
      * @see SugarCacheAbstract::_resetExternal()
      *

@@ -2,18 +2,17 @@
 
 namespace Step\Acceptance;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 
 class DetailView extends Tester
 {
-
     /**
-     * Click on the action menu and select a menu item
+     * Click on the action menu and select a menu item.
+     *
      * @param string $link
      * <?php
      * $detailView = new \Page\DetailView($i);
      * $detailView->clickActionMenuItem('Edit');
-     *
      */
     public function clickActionMenuItem($link)
     {
@@ -27,7 +26,7 @@ class DetailView extends Tester
     }
 
     /**
-     * Wait for for the detail view to become visible
+     * Wait for for the detail view to become visible.
      */
     public function waitForDetailViewVisible()
     {

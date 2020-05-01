@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,29 +37,27 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/Emails/include/DetailView/EmailsDetailView.php');
+require_once 'modules/Emails/include/DetailView/EmailsDetailView.php';
 
 class EmailsDraftDetailView extends EmailsDetailView
 {
     /**
-     * @var Email $focus
+     * @var Email
      */
     public $focus;
 
     /**
-     * @var string $formName
+     * @var string
      */
     public $formName = 'DraftDetailView';
 
     public function setup(
         $module,
-        $focus  = null,
+        $focus = null,
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,

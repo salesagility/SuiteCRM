@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class updateDependencies
 {
     public function update_dependency(&$bean, $event, $arguments)
     {
         //Get all tasks that are dependant on the current task being saved.
         $Task = BeanFactory::getBean('ProjectTask');
-        $tasks = $Task->get_full_list("", "project_task.project_id = '".$bean->project_id."' AND project_task.predecessors = '".$bean->project_task_id."'");
+        $tasks = $Task->get_full_list('', "project_task.project_id = '" . $bean->project_id . "' AND project_task.predecessors = '" . $bean->project_task_id . "'");
 
         // Make sure the fetched row exists.
         if ($bean->fetched_row === false) {
@@ -57,13 +56,11 @@ class updateDependencies
         }
 
         if ($bean->date_finish != $fetchedDateFinish) { //if the end date of a current task is changed
-
             $diff = $this->count_days($bean->date_finish, $bean->fetched_row['date_finish']); //Gets the difference in days
 
             if ($tasks) {
                 foreach ($tasks as $task) { //loop through all dependant tasks
-
-                    $rel_type = $task->relationship_type;//Determine their dependency type
+                    $rel_type = $task->relationship_type; //Determine their dependency type
 
                     if ($rel_type == 'FS') {//if its a Finish to start
                         //Modify the task's start and end date dependant on the difference in days
@@ -71,7 +68,7 @@ class updateDependencies
                         $start = $start->modify($diff);
                         $startdate = $start->format('Y-m-d');
 
-                        $duration = $task->duration - 1;//take one off to maintain correct gantt bar length
+                        $duration = $task->duration - 1; //take one off to maintain correct gantt bar length
 
                         $enddate = $start->modify('+' . $duration . ' days');
                         $enddate = $enddate->format('Y-m-d');
@@ -110,9 +107,9 @@ class updateDependencies
         $d2 = new DateTime($end_date);
         $difference = $d1->diff($d2);
         if ($difference->invert == 1) {
-            return '+'.$difference->d.' days'; //returns positive days
-        } else {
-            return -$difference->d.' days';//returns negative days
+            return '+' . $difference->d . ' days'; //returns positive days
         }
+
+        return -$difference->d . ' days'; //returns negative days
     }
 }

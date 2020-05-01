@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
+require_once 'modules/DynamicFields/templates/Fields/TemplateEnum.php';
 
 class TemplateDynamicenum extends TemplateEnum
 {
@@ -54,14 +53,12 @@ class TemplateDynamicenum extends TemplateEnum
         $this->vardef_map['parentenum'] = 'ext2';
     }
 
-
-
-
     public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['dbType'] = 'enum';
         $def['parentenum'] = isset($this->ext2) && $this->ext2 != '' ? $this->ext2 : $this->parentenum;
+
         return $def;
     }
 
@@ -69,8 +66,8 @@ class TemplateDynamicenum extends TemplateEnum
     {
         $name = $this->name;
         $value = '';
-        if (isset($this->bean->$name)) {
-            $value = $this->bean->$name;
+        if (isset($this->bean->{$name})) {
+            $value = $this->bean->{$name};
         } else {
             if (empty($this->bean->id)) {
                 $value = $this->default_value;
@@ -81,7 +78,7 @@ class TemplateDynamicenum extends TemplateEnum
         }
 
         global $app_list_strings;
-        $returnXTPL = array();
+        $returnXTPL = [];
         $returnXTPL[strtoupper($this->name)] = $value;
         if (empty($this->ext1)) {
             $this->ext1 = $this->options;

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -49,9 +48,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * JsonApiErrorObjectTest
+ * JsonApiErrorObjectTest.
  *
  * @author gyula
+ *
+ * @internal
  */
 class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
 {
@@ -144,7 +145,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
             'code' => 123,
         ];
         $actual = $error->export();
-        
+
         if (inDeveloperMode()) {
             unset($actual['meta']['debug']);
         }

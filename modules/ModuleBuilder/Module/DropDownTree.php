@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,10 +36,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/ModuleBuilder/MB/MBPackageTree.php');
-require_once('modules/ModuleBuilder/Module/DropDownBrowser.php');
+require_once 'modules/ModuleBuilder/MB/MBPackageTree.php';
+require_once 'modules/ModuleBuilder/Module/DropDownBrowser.php';
 
 class DropDownTree extends MBPackageTree
 {
@@ -51,9 +48,6 @@ class DropDownTree extends MBPackageTree
         $this->mb = new DropDownBrowser();
         $this->populateTree($this->mb->getNodes(), $this->tree);
     }
-
-
-
 
     public function getName()
     {

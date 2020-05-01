@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-
-
 $focus = new Role();
 
 $focus->retrieve($_REQUEST['record']);
@@ -55,6 +47,6 @@ $focus->retrieve($_REQUEST['record']);
 $focus->clear_user_relationship($focus->id, $_REQUEST['user_id']);
 
 $header_URL = "Location: index.php?action={$_REQUEST['return_action']}&module={$_REQUEST['return_module']}&record={$_REQUEST['return_id']}";
-$GLOBALS['log']->debug("about to post header URL of: $header_URL");
+$GLOBALS['log']->debug("about to post header URL of: {$header_URL}");
 
 header($header_URL);

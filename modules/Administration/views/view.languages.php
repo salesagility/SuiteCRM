@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,24 +40,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 class ViewLanguages extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-
-        return array(
-           "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
-           $mod_strings['LBL_MANAGE_LANGUAGES']
-           );
-    }
-
     /**
      * @see SugarView::preDisplay()
      */
@@ -66,7 +50,7 @@ class ViewLanguages extends SugarView
         global $current_user;
 
         if (!is_admin($current_user)) {
-            sugar_die("Unauthorized access to administration.");
+            sugar_die('Unauthorized access to administration.');
         }
     }
 
@@ -79,9 +63,9 @@ class ViewLanguages extends SugarView
         global $app_list_strings;
         global $app_strings;
         global $sugar_config;
-        
-        $disabled = array();
-        $disabled_list = array();
+
+        $disabled = [];
+        $disabled_list = [];
         if (isset($sugar_config['disabled_languages'])) {
             if (!is_array($sugar_config['disabled_languages'])) {
                 $disabled_list = array_flip(explode(',', $sugar_config['disabled_languages']));
@@ -89,11 +73,11 @@ class ViewLanguages extends SugarView
                 $disabled_list = array_flip($sugar_config['disabled_languages']);
             }
         }
-        foreach ($sugar_config['languages'] as $key=>$value) {
+        foreach ($sugar_config['languages'] as $key => $value) {
             if (isset($disabled_list[$key])) {
-                $disabled[] = array("module" => $key, 'label' => $value);
+                $disabled[] = ['module' => $key, 'label' => $value];
             } else {
-                $enabled[] = array("module" => $key, 'label' => $value);
+                $enabled[] = ['module' => $key, 'label' => $value];
             }
         }
 
@@ -104,5 +88,20 @@ class ViewLanguages extends SugarView
         $this->ss->assign('title', $this->getModuleTitle(false));
 
         echo $this->ss->fetch('modules/Administration/templates/Languages.tpl');
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return [
+            "<a href='index.php?module=Administration&action=index'>" . $mod_strings['LBL_MODULE_NAME'] . '</a>',
+            $mod_strings['LBL_MANAGE_LANGUAGES']
+        ];
     }
 }

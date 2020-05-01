@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,26 +40,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 require_once 'modules/Calendar/Calendar.php';
 require_once 'modules/iCals/iCal.php';
 require_once 'include/HTTP_WebDAV_Server/Server.php';
 
-
 /**
- * Calendar access using WebDAV
- *
- * @access public
+ * Calendar access using WebDAV.
  */
 class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
 {
-    public $cal_encoding = "";
-    public $cal_charset = "";
-    public $http_spec = "";
+    public $cal_encoding = '';
+    public $cal_charset = '';
+    public $http_spec = '';
 
     /**
-     * Constructor for the WebDAV srver
+     * Constructor for the WebDAV srver.
      */
     public function __construct()
     {
@@ -68,10 +63,10 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     }
 
     /**
-     * Serve a webdav request
+     * Serve a webdav request.
      *
-     * @access public
      * @param  string
+     * @param mixed $base
      */
     public function ServeICalRequest($base = false)
     {
@@ -113,27 +108,26 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
 
         session_start();
 
-        $query_arr = array();
+        $query_arr = [];
         // set path
-        if (empty($_SERVER["PATH_INFO"])) {
-            $this->path = "/";
-            if (strtolower($_SERVER["REQUEST_METHOD"]) == 'get') {
+        if (empty($_SERVER['PATH_INFO'])) {
+            $this->path = '/';
+            if (strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
                 $query_arr = $_REQUEST;
             } else {
                 parse_str($_REQUEST['parms'], $query_arr);
             }
         } else {
-            $this->path = $this->_urldecode($_SERVER["PATH_INFO"]);
+            $this->path = $this->_urldecode($_SERVER['PATH_INFO']);
 
-            if (ini_get("magic_quotes_gpc")) {
+            if (ini_get('magic_quotes_gpc')) {
                 $this->path = stripslashes($this->path);
             }
 
             $query_str = preg_replace('/^\//', '', $this->path);
-            $query_arr = array();
+            $query_arr = [];
             parse_str($query_str, $query_arr);
         }
-
 
         if (!empty($query_arr['type'])) {
             $this->vcal_type = $query_arr['type'];
@@ -151,7 +145,6 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
             $this->publish_key = $query_arr['key'];
         }
 
-
         // select user by email
         if (!empty($query_arr['user_id'])) {
             $this->user_focus->retrieve(clean_string($query_arr['user_id']));
@@ -163,8 +156,9 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
                 if ($user->id === null
                     && !$user::findUserPassword($user->user_name, md5($query_arr['password']))
                 ) {
-                    $this->http_status("401 not authorized");
+                    $this->http_status('401 not authorized');
                     echo 'Invalid username or password';
+
                     return;
                 }
 
@@ -180,12 +174,12 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
                     $query_arr['user_name'] = clean_string($query_arr['user_name']);
 
                     //get user info
-                    $arr = array('user_name' => $query_arr['user_name']);
+                    $arr = ['user_name' => $query_arr['user_name']];
                     $this->user_focus->retrieve_by_string_fields($arr);
                 } else {
                     $errorMessage = 'iCal Server - Invalid request.';
                     $log->warning($errorMessage);
-                    print $errorMessage;
+                    echo $errorMessage;
                 }
             }
         }
@@ -193,14 +187,13 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         parent::ServeRequest();
     }
 
-
     public function GET()
     {
         return true;
     }
 
     /**
-     * GET method handler
+     * GET method handler.
      *
      * @param void
      * @returns void
@@ -208,7 +201,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     public function http_GET()
     {
         if ($this->vcal_type == 'vfb') {
-            $this->http_status("200 OK");
+            $this->http_status('200 OK');
             ob_end_clean();
             echo $this->vcal_focus->get_vcal_freebusy($this->user_focus);
         } else {
@@ -218,7 +211,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
                     && $this->publish_key === $this->user_focus->getPreference('calendar_publish_key')
                     || $this->user_focus->is_authenticated()
                 ) {
-                    $this->http_status("200 OK");
+                    $this->http_status('200 OK');
                     header('Content-Type: text/calendar; charset="' . $this->cal_charset . '"');
                     $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal(
                         $this->user_focus,
@@ -230,34 +223,34 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
                     return;
                 }
 
-                $this->http_status("401 not authorized");
+                $this->http_status('401 not authorized');
                 header('WWW-Authenticate: Basic realm="SugarCRM iCal"');
                 echo 'Authorization required';
             } else {
-                $this->http_status("404 Not Found");
+                $this->http_status('404 Not Found');
                 ob_end_clean();
             }
         }
     }
 
     /**
-     * set HTTP return status and mirror it in a private header
+     * set HTTP return status and mirror it in a private header.
      *
      * @param  string  status code and message
-     * @return void
+     * @param mixed $status
      */
     public function http_status($status)
     {
         // simplified success case
         if ($status === true) {
-            $status = "200 OK";
+            $status = '200 OK';
         }
 
         // remember status
         $this->_http_status = $status;
 
         // generate HTTP status response
-        header("HTTP/$this->http_spec $status");
-        header("X-WebDAV-Status: $status", true);
+        header("HTTP/{$this->http_spec} {$status}");
+        header("X-WebDAV-Status: {$status}", true);
     }
 }

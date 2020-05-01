@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-require_once('include/ListView/ListViewSmarty.php');
-require_once('include/MVC/View/views/view.list.php');
+require_once 'include/ListView/ListViewSmarty.php';
+require_once 'include/MVC/View/views/view.list.php';
 global $app_strings;
 global $app_list_strings;
 global $current_language;
@@ -57,35 +51,34 @@ global $theme;
 
 $current_module_strings = return_module_language($current_language, 'MergeRecords');
 
-
 $focus = new MergeRecord();
 $focus->load_merge_bean($_REQUEST['merge_module'], true, $_REQUEST['record']);
 
 $this->bean = $focus->merge_bean;
 
-$params = array();
+$params = [];
 $params[] = "<a href='index.php?module={$focus->merge_bean->module_dir}&action=index'>{$GLOBALS['app_list_strings']['moduleList'][$focus->merge_bean->module_dir]}</a>";
 $params[] = $mod_strings['LBL_STEP2_FORM_TITLE'];
 $params[] = $focus->merge_bean->name;
 echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 
-       $order_by_name = $focus->merge_module.'2_'.strtoupper($focus->merge_bean->object_name).'_ORDER_BY' ;
-       $lvso = isset($_REQUEST['lvso'])?$_REQUEST['lvso']:"";
-       $request_order_by_name = isset($_REQUEST[$order_by_name])?$_REQUEST[$order_by_name]:"";
+       $order_by_name = $focus->merge_module . '2_' . strtoupper($focus->merge_bean->object_name) . '_ORDER_BY';
+       $lvso = isset($_REQUEST['lvso']) ? $_REQUEST['lvso'] : '';
+       $request_order_by_name = isset($_REQUEST[$order_by_name]) ? $_REQUEST[$order_by_name] : '';
 
 echo '<form onsubmit="return check_form(\'MassUpdate\');" id="MassUpdate" name="MassUpdate" method="post" action="index.php">'
-    .'<input type="hidden" value="Step2" name="action"/>'
-    .'<input type="hidden" value="true" name="massupdate"/>'
-    .'<input type="hidden" value="false" name="delete"/>'
-    .'<input type="hidden" value="false" name="merge"/>'
-    .'<input type="hidden" value="MergeRecords" name="module"/>'
-    ."<input type='hidden' name='lvso' value='{$lvso}' />"
-    ."<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />";
+    . '<input type="hidden" value="Step2" name="action"/>'
+    . '<input type="hidden" value="true" name="massupdate"/>'
+    . '<input type="hidden" value="false" name="delete"/>'
+    . '<input type="hidden" value="false" name="merge"/>'
+    . '<input type="hidden" value="MergeRecords" name="module"/>'
+    . "<input type='hidden' name='lvso' value='{$lvso}' />"
+    . "<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />";
 
 $focus->populate_search_params($_REQUEST);
 echo $focus->get_inputs_for_search_params($_REQUEST);
 
-$where_clauses = array();
+$where_clauses = [];
 $where_clauses = $focus->create_where_statement();
 $where = $focus->generate_where_statement($where_clauses);
 
@@ -97,29 +90,29 @@ $ListView->delete = false;
 $module = $_REQUEST['merge_module'];
 $metadataFile = null;
 $foundViewDefs = false;
-if (file_exists('custom/modules/' . $module. '/metadata/listviewdefs.php')) {
+if (file_exists('custom/modules/' . $module . '/metadata/listviewdefs.php')) {
     $metadataFile = 'custom/modules/' . $module . '/metadata/listviewdefs.php';
     $foundViewDefs = true;
 } else {
-    if (file_exists('custom/modules/'.$module.'/metadata/metafiles.php')) {
-        require_once('custom/modules/'.$module.'/metadata/metafiles.php');
+    if (file_exists('custom/modules/' . $module . '/metadata/metafiles.php')) {
+        require_once 'custom/modules/' . $module . '/metadata/metafiles.php';
         if (!empty($metafiles[$module]['listviewdefs'])) {
             $metadataFile = $metafiles[$module]['listviewdefs'];
             $foundViewDefs = true;
         }
-    } elseif (file_exists('modules/'.$module.'/metadata/metafiles.php')) {
-        require_once('modules/'.$module.'/metadata/metafiles.php');
+    } elseif (file_exists('modules/' . $module . '/metadata/metafiles.php')) {
+        require_once 'modules/' . $module . '/metadata/metafiles.php';
         if (!empty($metafiles[$module]['listviewdefs'])) {
             $metadataFile = $metafiles[$module]['listviewdefs'];
             $foundViewDefs = true;
         }
     }
 }
-if (!$foundViewDefs && file_exists('modules/'.$module.'/metadata/listviewdefs.php')) {
-    $metadataFile = 'modules/'.$module.'/metadata/listviewdefs.php';
+if (!$foundViewDefs && file_exists('modules/' . $module . '/metadata/listviewdefs.php')) {
+    $metadataFile = 'modules/' . $module . '/metadata/listviewdefs.php';
 }
-require_once($metadataFile);
-$displayColumns = array();
+require_once $metadataFile;
+$displayColumns = [];
 if (!empty($_REQUEST['displayColumns'])) {
     foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
         if (!empty($listViewDefs[$module][$col])) {
@@ -133,17 +126,17 @@ if (!empty($_REQUEST['displayColumns'])) {
         }
     }
 }
-$params = array('massupdate' => true, 'export' => false, 'handleMassupdate' => false );
+$params = ['massupdate' => true, 'export' => false, 'handleMassupdate' => false];
 $ListView->displayColumns = $displayColumns;
 $ListView->lvd->listviewName = $focus->merge_module; //27633, this will make the $module to be merge_module instead of 'MergeRecords'. Then the key of  offset and orderby will be correct.
 $where = $focus->generate_where_statement($focus->create_where_statement());
-$ListView->showMassupdateFields=false;
-$ListView->email=false;
+$ListView->showMassupdateFields = false;
+$ListView->email = false;
 $ListView->setup($this->bean, 'include/ListView/ListViewGeneric.tpl', $where, $params);
-$ListView->force_mass_update=true;
-$ListView->show_mass_update_form=false;
-$ListView->show_export_button=false;
-$ListView->keep_mass_update_form_open=true;
+$ListView->force_mass_update = true;
+$ListView->show_mass_update_form = false;
+$ListView->show_export_button = false;
+$ListView->keep_mass_update_form_open = true;
 
 $return_id = $_REQUEST['record'];
 $merge_module = $focus->merge_module;
@@ -152,23 +145,23 @@ $button_title = $current_module_strings['LBL_PERFORM_MERGE_BUTTON_TITLE'];
 $button_key = $current_module_strings['LBL_PERFORM_MERGE_BUTTON_KEY'];
 $button_label = $current_module_strings['LBL_PERFORM_MERGE_BUTTON_LABEL'];
 
-$cancel_title=$app_strings['LBL_CANCEL_BUTTON_TITLE'];
-$cancel_key=$app_strings['LBL_CANCEL_BUTTON_KEY'];
-$cancel_label=$app_strings['LBL_CANCEL_BUTTON_LABEL'];
+$cancel_title = $app_strings['LBL_CANCEL_BUTTON_TITLE'];
+$cancel_key = $app_strings['LBL_CANCEL_BUTTON_KEY'];
+$cancel_label = $app_strings['LBL_CANCEL_BUTTON_LABEL'];
 
-echo($ListView->display());
+echo $ListView->display();
 
-$error_select=$current_module_strings['LBL_SELECT_ERROR'];
+$error_select = $current_module_strings['LBL_SELECT_ERROR'];
 $form_top = <<<EOQ
 
             <input type="hidden" id="selectCount" name="selectCount[]" value=0>
-			<input type="hidden" name="merge_module" value="$merge_module">
-			<input type="hidden" name="record" value="$return_id">
-			<input type="hidden" name="return_module" value="$focus->merge_module">
-			<input type="hidden" name="return_id" value="$return_id">
+			<input type="hidden" name="merge_module" value="{$merge_module}">
+			<input type="hidden" name="record" value="{$return_id}">
+			<input type="hidden" name="return_module" value="{$focus->merge_module}">
+			<input type="hidden" name="return_id" value="{$return_id}">
 			<input type="hidden" name="return_action" value="DetailView">
-			<input title="$button_title" class="button" onclick="return verify_selection(this);" type="submit" name="button" value="  $button_label  " id="perform_merge_button">
-            <input title="$cancel_title" accessKey="$cancel_key" class="button" onclick="this.form.action.value='DetailView';this.form.module.value='$focus->merge_module';this.form.module.record='$return_id'" type="submit" name="button" value=" $cancel_label   " id="cancel_merge_button" >
+			<input title="{$button_title}" class="button" onclick="return verify_selection(this);" type="submit" name="button" value="  {$button_label}  " id="perform_merge_button">
+            <input title="{$cancel_title}" accessKey="{$cancel_key}" class="button" onclick="this.form.action.value='DetailView';this.form.module.value='{$focus->merge_module}';this.form.module.record='{$return_id}'" type="submit" name="button" value=" {$cancel_label}   " id="cancel_merge_button" >
 		</form>
         <script>
            function verify_selection(theElement) {
@@ -177,7 +170,7 @@ $form_top = <<<EOQ
                 if (parseInt(selcount.value) >0 ) {
                     return true;
                 } else {
-                    alert("$error_select");
+                    alert("{$error_select}");
                     return false;
                 }
            }

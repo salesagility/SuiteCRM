@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,18 +36,37 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
+require_once 'include/SugarFields/Fields/Base/SugarFieldBase.php';
 require_once 'include/clean.php';
 class SugarFieldText extends SugarFieldBase
 {
+    public function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true)
+    {
+        parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
+        $editor = '';
+
+        if (isset($vardef['editor']) && $vardef['editor'] == 'html') {
+            if (!isset($displayParams['htmlescape'])) {
+                $displayParams['htmlescape'] = false;
+            }
+
+            if ($_REQUEST['action'] == 'EditView') {
+                require_once __DIR__ . '/../../../../include/SugarTinyMCE.php';
+                $tiny = new SugarTinyMCE();
+                $editor = $tiny->getInstance($vardef['name'], 'email_compose_light');
+            }
+        }
+
+        $this->ss->assign('tinymce', $editor);
+    }
+
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if (!isset($displayParams['nl2br'])) {
             $displayParams['nl2br'] = true;
         }
 
-        if (!isset($displayParams['htmlescape']) && $vardef['editor'] != "html") {
+        if (!isset($displayParams['htmlescape']) && $vardef['editor'] != 'html') {
             $displayParams['htmlescape'] = true;
         }
 
@@ -59,14 +77,14 @@ class SugarFieldText extends SugarFieldBase
         return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
 
-    public function getClassicEditView($field_id='description', $value='', $prefix='', $rich_text=false, $maxlength='', $tabindex=1, $cols=80, $rows=4)
+    public function getClassicEditView($field_id = 'description', $value = '', $prefix = '', $rich_text = false, $maxlength = '', $tabindex = 1, $cols = 80, $rows = 4)
     {
         $this->ss->assign('prefix', $prefix);
         $this->ss->assign('field_id', $field_id);
         $this->ss->assign('value', $value);
         $this->ss->assign('tabindex', $tabindex);
 
-        $displayParams = array();
+        $displayParams = [];
         $displayParams['textonly'] = $rich_text ? false : true;
         $displayParams['maxlength'] = $maxlength;
         $displayParams['rows'] = $rows;
@@ -87,25 +105,5 @@ class SugarFieldText extends SugarFieldBase
         }
 
         return $this->ss->fetch($this->findTemplate('ClassicEditView'));
-    }
-
-    public function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true)
-    {
-        parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
-        $editor = "";
-
-        if (isset($vardef['editor']) && $vardef['editor'] == "html") {
-            if (!isset($displayParams['htmlescape'])) {
-                $displayParams['htmlescape'] = false;
-            }
-
-            if ($_REQUEST['action'] == "EditView") {
-                require_once(__DIR__ . "/../../../../include/SugarTinyMCE.php");
-                $tiny = new SugarTinyMCE();
-                $editor = $tiny->getInstance($vardef['name'], 'email_compose_light');
-            }
-        }
-
-        $this->ss->assign("tinymce", $editor);
     }
 }

@@ -66,7 +66,7 @@ trait IndexingLockFileTrait
     {
         $filename = $this->getLockFile();
 
-        $this->logger->debug("Reading lock file $filename");
+        $this->logger->debug("Reading lock file {$filename}");
 
         if (!$this->checkFile($filename)) {
             return false;
@@ -77,12 +77,13 @@ trait IndexingLockFileTrait
 
         if (empty($data)) {
             $this->logger->warn('Failed to read lock file. Returning \'false\'.');
+
             return false;
         }
 
         $carbon = Carbon::createFromTimestamp($data);
 
-        $this->logger->debug(sprintf("Last logged indexing performed on %s (%s)", $carbon->toDateTimeString(), $carbon->diffForHumans()));
+        $this->logger->debug(sprintf('Last logged indexing performed on %s (%s)', $carbon->toDateTimeString(), $carbon->diffForHumans()));
 
         return $carbon;
     }
@@ -102,9 +103,7 @@ trait IndexingLockFileTrait
             $name = str_replace('\\', '.', get_class($this));
         }
 
-        $file = sprintf('%s/%s.lock', $cacheFolder, $name);
-
-        return $file;
+        return sprintf('%s/%s.lock', $cacheFolder, $name);
     }
 
     /**
@@ -118,11 +117,13 @@ trait IndexingLockFileTrait
     {
         if (!file_exists($filename)) {
             $this->logger->debug('Lock file not found');
+
             return false;
         }
 
         if (!is_readable($filename)) {
             $this->logger->error('Lock file not readable');
+
             return false;
         }
 
@@ -138,6 +139,7 @@ trait IndexingLockFileTrait
 
         if (file_exists($filename) && !is_writable($filename)) {
             $this->logger->error('Lock file not writable');
+
             return;
         }
 

@@ -1,10 +1,10 @@
 <?php
 
+use Api\Core\Loader\CustomLoader;
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Factory\ValidatorFactory;
 use Api\V8\Param;
 use Psr\Container\ContainerInterface as Container;
-use Api\Core\Loader\CustomLoader;
 
 return CustomLoader::mergeCustomArray([
     Param\ListViewSearchParams::class => function (Container $container) {

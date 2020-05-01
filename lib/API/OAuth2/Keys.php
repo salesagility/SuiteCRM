@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,30 +44,33 @@ use SuiteCRM\API\v8\Exception\ApiException;
 
 class Keys
 {
-
     /**
-     * @return bool|string
      * @throws ApiException
+     *
+     * @return bool|string
      */
     public function getPublicKey()
     {
-        $path = __DIR__.'/public.key';
+        $path = __DIR__ . '/public.key';
         if (!file_exists($path)) {
             $this->setUpKeys();
         }
+
         return file_get_contents($path);
     }
 
     /**
-     * @return bool|string
      * @throws ApiException
+     *
+     * @return bool|string
      */
     public function getPrivateKey()
     {
-        $path = __DIR__.'/private.key';
+        $path = __DIR__ . '/private.key';
         if (!file_exists($path)) {
             $this->setUpKeys();
         }
+
         return file_get_contents($path);
     }
 
@@ -77,11 +79,11 @@ class Keys
      */
     private function setUpKeys()
     {
-        $config = array(
-                'digest_alg' => 'sha512',
-                'private_key_bits' => '2048',
-                'private_key_type' => OPENSSL_KEYTYPE_RSA,
-            );
+        $config = [
+            'digest_alg' => 'sha512',
+            'private_key_bits' => '2048',
+            'private_key_type' => OPENSSL_KEYTYPE_RSA,
+        ];
 
         // Create the private and public key
         $resource = openssl_pkey_new($config);
@@ -92,13 +94,13 @@ class Keys
 
         // Extract the private key from $res to $privKey
         openssl_pkey_export($resource, $privateKey);
-        openssl_pkey_export_to_file($privateKey, __DIR__.'/private.key');
+        openssl_pkey_export_to_file($privateKey, __DIR__ . '/private.key');
 
         // Extract the public key from $res to $pubKey
         $publicKey = openssl_pkey_get_details($resource);
         if (!isset($publicKey['key'])) {
             throw new ApiException('[OAuth] Unable to generate public key');
         }
-        file_put_contents(__DIR__.'/public.key', $publicKey['key']);
+        file_put_contents(__DIR__ . '/public.key', $publicKey['key']);
     }
 }

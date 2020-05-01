@@ -9,17 +9,25 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
 {
+    /** {@inheritdoc} */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        Mockery::close();
+    }
+
     /**
      * Call protected/private method of a class.
      *
-     * @param object &$object Instantiated object that we will run method on.
+     * @param object &$object Instantiated object that we will run method on
      * @param string $methodName Method name to call
-     * @param array $parameters Array of parameters to pass into method.
+     * @param array $parameters array of parameters to pass into method
      *
-     * @return mixed Method return.
      * @throws ReflectionException
+     *
+     * @return mixed method return
      */
-    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    public function invokeMethod(&$object, $methodName, array $parameters = [])
     {
         $reflection = new ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
@@ -31,9 +39,10 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
     /**
      * Sets the value of a private property.
      *
-     * @param object $object Instantiated object to set the value of.
-     * @param string $property name of the property.
-     * @param mixed $value value of the property.
+     * @param object $object instantiated object to set the value of
+     * @param string $property name of the property
+     * @param mixed $value value of the property
+     *
      * @throws ReflectionException
      */
     public function setValue(&$object, $property, $value)
@@ -42,12 +51,5 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
         $property = $reflection->getProperty($property);
         $property->setAccessible(true);
         $property->setValue($object, $value);
-    }
-
-    /** @inheritdoc */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        Mockery::close();
     }
 }

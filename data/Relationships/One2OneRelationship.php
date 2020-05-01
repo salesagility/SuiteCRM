@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,13 +40,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once("data/Relationships/SugarRelationship.php");
-require_once("data/Relationships/One2MRelationship.php");
+require_once 'data/Relationships/SugarRelationship.php';
+require_once 'data/Relationships/One2MRelationship.php';
 
 /**
- * Represents 1-1 relationship
+ * Represents 1-1 relationship.
+ *
  * @api
  */
 class One2OneRelationship extends M2MRelationship
@@ -55,13 +54,15 @@ class One2OneRelationship extends M2MRelationship
     {
         parent::__construct($def);
     }
+
     /**
-     * @param  $lhs SugarBean left side bean to add to the relationship.
-     * @param  $rhs SugarBean right side bean to add to the relationship.
+     * @param  $lhs sugarBean left side bean to add to the relationship
+     * @param  $rhs sugarBean right side bean to add to the relationship
      * @param  $additionalFields key=>value pairs of fields to save on the relationship
-     * @return boolean true if successful
+     *
+     * @return bool true if successful
      */
-    public function add($lhs, $rhs, $additionalFields = array())
+    public function add($lhs, $rhs, $additionalFields = [])
     {
         $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
         //If the current data matches the existing data, don't do anything
@@ -71,9 +72,9 @@ class One2OneRelationship extends M2MRelationship
             //In a one to one, any existing links from both sides must be removed first.
             //one2Many will take care of the right side, so we'll do the left.
             $lhs->load_relationship($lhsLinkName);
-            $this->removeAll($lhs->$lhsLinkName);
+            $this->removeAll($lhs->{$lhsLinkName});
             $rhs->load_relationship($rhsLinkName);
-            $this->removeAll($rhs->$rhsLinkName);
+            $this->removeAll($rhs->{$rhsLinkName});
 
             return parent::add($lhs, $rhs, $additionalFields);
         }

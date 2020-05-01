@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param\Options;
 
 use Api\V8\BeanDecorator\BeanManager;
@@ -29,13 +30,12 @@ abstract class BaseOption
 
     /**
      * @param OptionsResolver $resolver
-     *
-     * @return void
      */
     abstract public function add(OptionsResolver $resolver);
 
     /**
      * @param string $class
+     *
      * @see https://github.com/rappasoft/laravel-helpers#class_basename
      *
      * @return string

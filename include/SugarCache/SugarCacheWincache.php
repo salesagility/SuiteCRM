@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,9 +36,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/SugarCache/SugarCacheAbstract.php');
+require_once 'include/SugarCache/SugarCacheAbstract.php';
 
 class SugarCacheWincache extends SugarCacheAbstract
 {
@@ -47,7 +44,7 @@ class SugarCacheWincache extends SugarCacheAbstract
      * @see SugarCacheAbstract::$_priority
      */
     protected $_priority = 930;
-    
+
     /**
      * @see SugarCacheAbstract::useBackend()
      */
@@ -56,47 +53,54 @@ class SugarCacheWincache extends SugarCacheAbstract
         if (!parent::useBackend()) {
             return false;
         }
-        
-        if (function_exists("wincache_ucache_get")
+
+        if (function_exists('wincache_ucache_get')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_wincache'])) {
             return true;
         }
-            
+
         return false;
     }
-    
+
     /**
      * @see SugarCacheAbstract::_setExternal()
+     *
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function _setExternal(
         $key,
         $value
-        ) {
+    ) {
         wincache_ucache_set($key, $value, $this->_expireTimeout);
     }
-    
+
     /**
      * @see SugarCacheAbstract::_getExternal()
+     *
+     * @param mixed $key
      */
     protected function _getExternal(
         $key
-        ) {
+    ) {
         if (!wincache_ucache_exists($key)) {
             return null;
         }
-        
+
         return wincache_ucache_get($key);
     }
-    
+
     /**
      * @see SugarCacheAbstract::_clearExternal()
+     *
+     * @param mixed $key
      */
     protected function _clearExternal(
         $key
-        ) {
+    ) {
         wincache_ucache_delete($key);
     }
-    
+
     /**
      * @see SugarCacheAbstract::_resetExternal()
      */

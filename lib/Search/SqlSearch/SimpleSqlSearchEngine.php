@@ -36,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -122,7 +121,7 @@ class SimpleSqlSearchEngine extends SearchEngine
         return $fields;
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     protected function validateQuery(SearchQuery &$query)
     {
         parent::validateQuery($query);
@@ -153,7 +152,7 @@ class SimpleSqlSearchEngine extends SearchEngine
         $result = $db->query($sql);
 
         while ($row = $db->fetchRow($result)) {
-            $hits [] = $row['id'];
+            $hits[] = $row['id'];
         }
 
         return $hits;
@@ -182,7 +181,6 @@ class SimpleSqlSearchEngine extends SearchEngine
             $wheres[] = sprintf("%s LIKE '%s'", $name, $slashedString);
         }
 
-        $sql = sprintf($sql, $table, implode(' OR ', $wheres));
-        return $sql;
+        return sprintf($sql, $table, implode(' OR ', $wheres));
     }
 }

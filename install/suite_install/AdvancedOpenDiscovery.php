@@ -1,7 +1,8 @@
 <?php
+
 function install_aod()
 {
-    require_once('modules/Administration/Administration.php');
+    require_once 'modules/Administration/Administration.php';
 
     global $sugar_config;
 
@@ -15,10 +16,10 @@ function install_aod()
 
 function installAODHooks()
 {
-    require_once('ModuleInstall/ModuleInstaller.php');
+    require_once 'ModuleInstall/ModuleInstaller.php';
 
-    $hooks = array(
-        array(
+    $hooks = [
+        [
             'module' => '',
             'hook' => 'after_save',
             'order' => 1,
@@ -26,8 +27,8 @@ function installAODHooks()
             'file' => 'modules/AOD_Index/AOD_LogicHooks.php',
             'class' => 'AOD_LogicHooks',
             'function' => 'saveModuleChanges',
-        ),
-        array(
+        ],
+        [
             'module' => '',
             'hook' => 'after_delete',
             'order' => 1,
@@ -35,8 +36,8 @@ function installAODHooks()
             'file' => 'modules/AOD_Index/AOD_LogicHooks.php',
             'class' => 'AOD_LogicHooks',
             'function' => 'saveModuleDelete',
-        ),
-        array(
+        ],
+        [
             'module' => '',
             'hook' => 'after_restore',
             'order' => 1,
@@ -44,10 +45,10 @@ function installAODHooks()
             'file' => 'modules/AOD_Index/AOD_LogicHooks.php',
             'class' => 'AOD_LogicHooks',
             'function' => 'saveModuleRestore',
-        ),
-    );
+        ],
+    ];
 
     foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
+        check_logic_hook_file($hook['module'], $hook['hook'], [$hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']]);
     }
 }

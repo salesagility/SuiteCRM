@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,30 +36,29 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array(
+$mod_strings = [
     'LBL_MODULE_NAME' => 'OAuth2 Tokens',
     'LBL_MODULE_TITLE' => 'OAuth2 Tokens',
-    'LBL_MODULE_ID'=> 'OAuth2 Tokens',
-    'LBL_TOKEN_ID'=> 'Token ID',
-    'LBL_CLIENT'=> 'Client',
-    'LBL_TOKEN_IS_REVOKED'=> 'Revoked',
-    'LBL_ACCESS_TOKEN_TYPE'=> 'Token type',
-    'LBL_ACCESS_TOKEN_EXPIRES'=> 'Access token expires',
-    'LBL_REFRESH_TOKEN_EXPIRES'=> 'Refresh token expires',
-    'LBL_GRANT_TYPE'=> 'Grant type',
-    'LBL_SCOPES'=> 'Scopes',
-    'LBL_REVOKE_TOKEN'=> 'Revoke token',
-    'LBL_REVOKE_TOKENS'=> 'Revoke tokens',
-    'LBL_CLIENT_NAME'=> 'Client name',
+    'LBL_MODULE_ID' => 'OAuth2 Tokens',
+    'LBL_TOKEN_ID' => 'Token ID',
+    'LBL_CLIENT' => 'Client',
+    'LBL_TOKEN_IS_REVOKED' => 'Revoked',
+    'LBL_ACCESS_TOKEN_TYPE' => 'Token type',
+    'LBL_ACCESS_TOKEN_EXPIRES' => 'Access token expires',
+    'LBL_REFRESH_TOKEN_EXPIRES' => 'Refresh token expires',
+    'LBL_GRANT_TYPE' => 'Grant type',
+    'LBL_SCOPES' => 'Scopes',
+    'LBL_REVOKE_TOKEN' => 'Revoke token',
+    'LBL_REVOKE_TOKENS' => 'Revoke tokens',
+    'LBL_CLIENT_NAME' => 'Client name',
     'LBL_USER' => 'Associated user',
     'LBL_IS_ACTIVE' => 'Active tokens only',
 
-    'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
+    'LNK_OAUTH2_TOKEN_LIST' => 'List OAuth2 Tokens',
     'LNK_OAUTH2_CLIENT_LIST' => 'List OAuth2 Clients',
 
     'LNK_NEW_OAUTH2_CLIENT' => 'Create OAuth2 Client',
@@ -68,4 +66,4 @@ $mod_strings = array(
     'LNK_NEW_OAUTH2_CREDENTIALS_CLIENT' => 'New Client Credentials Client',
     'LNK_NEW_OAUTH2_IMPLICIT_CLIENT' => 'New Implicit Client',
     'LNK_NEW_OAUTH2_AUTHORIZATION_CLIENT' => 'New Authorization Client',
-);
+];

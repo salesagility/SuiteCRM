@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,9 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 if (is_admin($current_user)) {
     global $mod_strings;
 
-    
     //echo out warning message and msgDiv
-    echo '<br>'.$mod_strings['LBL_REPAIR_JS_FILES_PROCESSING'];
+    echo '<br>' . $mod_strings['LBL_REPAIR_JS_FILES_PROCESSING'];
     echo'<div id="msgDiv"></div>';
 
     //echo out script that will make an ajax call to process the files via callJSRepair.php
@@ -70,7 +70,7 @@ if (is_admin($current_user)) {
                         
                 //set loading message and create url
                 ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_PROCESSING_REQUEST'));
-                postData = \"module=Administration&action=callJSRepair&js_admin_repair=".$_REQUEST['type']."&root_directory=".urlencode(getcwd())."\";
+                postData = \"module=Administration&action=callJSRepair&js_admin_repair=" . $_REQUEST['type'] . '&root_directory=' . urlencode(getcwd()) . "\";
                  
     
                         

@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -42,27 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 /**
-
  * Description: Class defining queries of predefined charts.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________.
  */
-
-
-
 class PredefinedChart
 {
-    public $params = array();
+    public $params = [];
 
     public function __construct()
     {
     }
 
-
-
-
-    public function predefinedChartQuery($chart, $params=array())
+    public function predefinedChartQuery($chart, $params = [])
     {
         switch ($chart) {
             case 'pipeline_by_sales_stage':
@@ -79,7 +72,6 @@ class PredefinedChart
             default:
                 return $this->customChartQuery($chart);
         }
-        return;
     }
 
     public function pipelineBySalesStageQuery()
@@ -121,17 +113,17 @@ class PredefinedChart
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] is:");
             $GLOBALS['log']->debug($current_user->getPreference('pbss_date_end'));
         } else {
-            $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
-            $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: ".$date_end);
+            $date_end = $timedate->asUserDate($timedate->fromString('2010-01-01'));
+            $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: " . $date_end);
         }
 
-        $tempx = array();
-        $datax = array();
-        $datax_selected= array();
+        $tempx = [];
+        $datax = [];
+        $datax_selected = [];
         $user_tempx = $current_user->getPreference('pbss_sales_stages');
         //get list of sales stage keys to display
         if (!empty($user_tempx) && count($user_tempx) > 0 && !isset($_REQUEST['pbss_sales_stages'])) {
-            $tempx = $user_tempx ;
+            $tempx = $user_tempx;
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_sales_stages'] is:");
             $GLOBALS['log']->debug($user_tempx);
         } elseif (isset($_REQUEST['pbss_sales_stages']) && count($_REQUEST['pbss_sales_stages']) > 0) {
@@ -153,11 +145,11 @@ class PredefinedChart
             $datax = $app_list_strings['sales_stage_dom'];
             $datax_selected = array_keys($app_list_strings['sales_stage_dom']);
         }
-        $GLOBALS['log']->debug("datax is:");
+        $GLOBALS['log']->debug('datax is:');
         $GLOBALS['log']->debug($datax);
 
-        $ids = array();
-        $new_ids = array();
+        $ids = [];
+        $new_ids = [];
         $user_ids = $current_user->getPreference('pbss_ids');
         //get list of user ids for which to display data
         if (!empty($user_ids) && count($user_ids) != 0 && !isset($_REQUEST['pbss_ids'])) {
@@ -178,52 +170,52 @@ class PredefinedChart
         }
 
         $user_id = $ids;
-        $opp = new Opportunity;
-        $where="";
+        $opp = new Opportunity();
+        $where = '';
         //build the where clause for the query that matches $user
         $count = count($user_id);
-        $id = array();
+        $id = [];
         $user_list = get_user_array(false);
         foreach ($user_id as $key) {
             $new_ids[$key] = $user_list[$key];
         }
-        if ($count>0) {
-            foreach ($new_ids as $the_id=>$the_name) {
-                $id[] = "'".$the_id."'";
+        if ($count > 0) {
+            foreach ($new_ids as $the_id => $the_name) {
+                $id[] = "'" . $the_id . "'";
             }
-            $ids = implode(",", $id);
-            $where .= "opportunities.assigned_user_id IN ($ids) ";
+            $ids = implode(',', $id);
+            $where .= "opportunities.assigned_user_id IN ({$ids}) ";
         }
         //build the where clause for the query that matches $datax
         $count = count($datax);
-        $dataxArr = array();
-        if ($count>0) {
-            foreach ($datax as $key=>$value) {
-                $dataxArr[] = "'".$key."'";
+        $dataxArr = [];
+        if ($count > 0) {
+            foreach ($datax as $key => $value) {
+                $dataxArr[] = "'" . $key . "'";
             }
-            $dataxArr = implode(",", $dataxArr);
-            $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
+            $dataxArr = implode(',', $dataxArr);
+            $where .= "AND opportunities.sales_stage IN	({$dataxArr}) ";
         }
 
         $date_start = $timedate->swap_formats($date_start, $timedate->get_date_format(), $timedate->dbDayFormat);
         $date_end = $timedate->swap_formats($date_end, $timedate->get_date_format(), $timedate->dbDayFormat);
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". DBManager::convert("'".$date_start."'", 'date'). "
-					AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date') ;
-        $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
+        $where .= '	AND opportunities.date_closed >= ' . DBManager::convert("'" . $date_start . "'", 'date') . '
+					AND opportunities.date_closed <= ' . DBManager::convert("'" . $date_end . "'", 'date');
+        $where .= '	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ';
 
         //Now do the db queries
         //query for opportunity data that matches $datax and $user
-        $query = "	SELECT opportunities.sales_stage,
+        $query = '	SELECT opportunities.sales_stage,
 						users.user_name,
 						opportunities.assigned_user_id,
 						count( * ) AS opp_count,
 						sum(amount_usdollar/1000) AS total
-					FROM users,opportunities  ";
-        $query .= "WHERE " .$where;
-        $query .= " GROUP BY opportunities.sales_stage";
+					FROM users,opportunities  ';
+        $query .= 'WHERE ' . $where;
+        $query .= ' GROUP BY opportunities.sales_stage';
 
-        $additional_params = array( 'date_start' => $date_start, 'date_closed' => $date_end, );
+        $additional_params = ['date_start' => $date_start, 'date_closed' => $date_end];
 
         $this->params = $additional_params;
 
@@ -235,9 +227,9 @@ class PredefinedChart
         global $current_user;
         global $app_list_strings;
 
-        $tempx = array();
-        $datax = array();
-        $selected_datax = array();
+        $tempx = [];
+        $datax = [];
+        $selected_datax = [];
         //get list of sales stage keys to display
 
         $tempx = $filters['lsbo_lead_sources'];
@@ -285,31 +277,31 @@ class PredefinedChart
         $user_id = $ids;
 
         $opp = new Opportunity();
-        $where="";
+        $where = '';
         //build the where clause for the query that matches $user
         $count = count($user_id);
-        $id = array();
-        if ($count>0) {
+        $id = [];
+        if ($count > 0) {
             foreach ($user_id as $the_id) {
-                $id[] = "'".$the_id."'";
+                $id[] = "'" . $the_id . "'";
             }
-            $ids = implode(",", $id);
-            $where .= "opportunities.assigned_user_id IN ($ids) ";
+            $ids = implode(',', $id);
+            $where .= "opportunities.assigned_user_id IN ({$ids}) ";
         }
 
         //build the where clause for the query that matches $datay
         $count = count($datay);
-        $datayArr = array();
-        if ($count>0) {
-            foreach ($datay as $key=>$value) {
-                $datayArr[] = "'".$key."'";
+        $datayArr = [];
+        if ($count > 0) {
+            foreach ($datay as $key => $value) {
+                $datayArr[] = "'" . $key . "'";
             }
-            $datayArr = implode(",", $datayArr);
-            $where .= "AND opportunities.lead_source IN	($datayArr) ";
+            $datayArr = implode(',', $datayArr);
+            $where .= "AND opportunities.lead_source IN	({$datayArr}) ";
         }
-        $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";
-        $query .= "WHERE " .$where." AND opportunities.deleted=0 ";
-        $query .= " GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage";
+        $query = 'SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ';
+        $query .= 'WHERE ' . $where . ' AND opportunities.deleted=0 ';
+        $query .= ' GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage';
 
         return $query;
     }
@@ -320,37 +312,37 @@ class PredefinedChart
         global $timedate;
 
         $user_date_start = $current_user->getPreference('obm_date_start');
-        if (!empty($user_date_start)  && !isset($_REQUEST['obm_date_start'])) {
-            $date_start =$user_date_start;
+        if (!empty($user_date_start) && !isset($_REQUEST['obm_date_start'])) {
+            $date_start = $user_date_start;
             $GLOBALS['log']->debug("USER PREFERENCES['obm_date_start'] is:");
             $GLOBALS['log']->debug($user_date_start);
         } elseif (isset($_REQUEST['obm_year']) && $_REQUEST['obm_year'] != '') {
-            $date_start = $_REQUEST['obm_year'].'-01-01';
+            $date_start = $_REQUEST['obm_year'] . '-01-01';
             $current_user->setPreference('obm_date_start', $date_start);
             $GLOBALS['log']->debug("_REQUEST['obm_date_start'] is:");
             $GLOBALS['log']->debug($_REQUEST['obm_date_start']);
             $GLOBALS['log']->debug("_SESSION['obm_date_start'] is:");
             $GLOBALS['log']->debug($current_user->getPreference('obm_date_start'));
         } else {
-            $date_start = date('Y').'-01-01';
+            $date_start = date('Y') . '-01-01';
         }
         $user_date_end = $current_user->getPreference('obm_date_end');
         if (!empty($user_date_end) && !isset($_REQUEST['obm_date_end'])) {
-            $date_end =$user_date_end;
+            $date_end = $user_date_end;
             $GLOBALS['log']->debug("USER PREFERENCES['obm_date_end'] is:");
             $GLOBALS['log']->debug($date_end);
         } elseif (isset($_REQUEST['obm_year']) && $_REQUEST['obm_year'] != '') {
-            $date_end = $_REQUEST['obm_year'].'-12-31';
+            $date_end = $_REQUEST['obm_year'] . '-12-31';
             $current_user->setPreference('obm_date_end', $date_end);
             $GLOBALS['log']->debug("_REQUEST['obm_date_end'] is:");
             $GLOBALS['log']->debug($_REQUEST['obm_date_end']);
             $GLOBALS['log']->debug("USER PREFERENCES['obm_date_end'] is:");
             $GLOBALS['log']->debug($current_user->getPreference('obm_date_end'));
         } else {
-            $date_end = date('Y').'-12-31';
+            $date_end = date('Y') . '-12-31';
         }
 
-        $ids = array();
+        $ids = [];
         //get list of user ids for which to display data
         $user_ids = $current_user->getPreference('obm_ids');
         if (!empty($user_ids) && count($user_ids) != 0 && !isset($_REQUEST['obm_ids'])) {
@@ -371,16 +363,16 @@ class PredefinedChart
 
         $user_id = $ids;
 
-        $where = "";
+        $where = '';
         //build the where clause for the query that matches $user
         $count = count($user_id);
-        $id = array();
-        if ($count>0) {
+        $id = [];
+        if ($count > 0) {
             foreach ($user_id as $the_id) {
-                $id[] = "'".$the_id."'";
+                $id[] = "'" . $the_id . "'";
             }
-            $ids = implode(",", $id);
-            $where .= "opportunities.assigned_user_id IN ($ids) ";
+            $ids = implode(',', $id);
+            $where .= "opportunities.assigned_user_id IN ({$ids}) ";
         }
 
         // cn: adding user-pref date handling
@@ -389,10 +381,11 @@ class PredefinedChart
 
         $opp = new Opportunity();
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "AND opportunities.date_closed >= ".DBManager::convert("'".$date_start."'", 'date')." AND opportunities.date_closed <= ".DBManager::convert("'".$date_end."'", 'date')." AND opportunities.deleted=0";
-        $query = "SELECT sales_stage,".DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
-        $query .= "WHERE ".$where;
-        $query .= " GROUP BY sales_stage,".DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))."ORDER BY m";
+        $where .= 'AND opportunities.date_closed >= ' . DBManager::convert("'" . $date_start . "'", 'date') . ' AND opportunities.date_closed <= ' . DBManager::convert("'" . $date_end . "'", 'date') . ' AND opportunities.deleted=0';
+        $query = 'SELECT sales_stage,' . DBManager::convert('opportunities.date_closed', 'date_format', ["'%Y-%m'"], ["'YYYY-MM'"]) . ' as m, sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ';
+        $query .= 'WHERE ' . $where;
+        $query .= ' GROUP BY sales_stage,' . DBManager::convert('opportunities.date_closed', 'date_format', ["'%Y-%m'"], ["'YYYY-MM'"]) . 'ORDER BY m';
+
         return $query;
     }
 
@@ -401,9 +394,9 @@ class PredefinedChart
         global $current_user;
         global $app_list_strings;
 
-        $tempx = array();
-        $datax = array();
-        $selected_datax = array();
+        $tempx = [];
+        $datax = [];
+        $selected_datax = [];
 
         //get list of sales stage keys to display
         $user_tempx = $filters['pbls_lead_sources'];
@@ -433,7 +426,7 @@ class PredefinedChart
 
         $legends = $datax;
 
-        $ids = array();
+        $ids = [];
         $user_ids = $filters['pbls_ids'];
         //get list of user ids for which to display data
         if (!empty($user_ids) && count($user_ids) > 0) {
@@ -444,37 +437,37 @@ class PredefinedChart
         }
 
         $user_id = $ids;
-        $opp = new Opportunity;
+        $opp = new Opportunity();
         //Now do the db queries
         //query for opportunity data that matches $legends and $user
-        $where="";
+        $where = '';
         //build the where clause for the query that matches $user
 
         $count = count($user_id);
-        $id = array();
+        $id = [];
         if ($count > 0 && !empty($user_id)) {
             foreach ($user_id as $the_id) {
-                $id[] = "'".$the_id."'";
+                $id[] = "'" . $the_id . "'";
             }
-            $ids = implode(",", $id);
-            $where .= "opportunities.assigned_user_id IN ($ids) ";
+            $ids = implode(',', $id);
+            $where .= "opportunities.assigned_user_id IN ({$ids}) ";
         }
         if (!empty($where)) {
             $where .= 'AND';
         }
         //build the where clause for the query that matches $datax
         $count = count($legends);
-        $legendItem = array();
+        $legendItem = [];
         if ($count > 0 && !empty($legends)) {
-            foreach ($legends as $key=>$value) {
-                $legendItem[] = "'".$key."'";
+            foreach ($legends as $key => $value) {
+                $legendItem[] = "'" . $key . "'";
             }
-            $legendItems = implode(",", $legendItem);
-            $where .= " opportunities.lead_source IN	($legendItems) ";
+            $legendItems = implode(',', $legendItem);
+            $where .= " opportunities.lead_source IN	({$legendItems}) ";
         }
-        $query = "SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ";
-        $query .= "WHERE ".$where." AND opportunities.deleted=0 ";
-        $query .= "GROUP BY lead_source ORDER BY total DESC";
+        $query = 'SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count FROM opportunities ';
+        $query .= 'WHERE ' . $where . ' AND opportunities.deleted=0 ';
+        $query .= 'GROUP BY lead_source ORDER BY total DESC';
 
         return $query;
     }
@@ -482,25 +475,25 @@ class PredefinedChart
     public function myModuleUsageLast30Days()
     {
         global $current_user;
-        $dateValue = DBManager::convert("'".$timedate->getNow()->modify("-30 days")->asDb()."'", "datetime");
+        $dateValue = DBManager::convert("'" . $timedate->getNow()->modify('-30 days')->asDb() . "'", 'datetime');
 
-        $query  = "SELECT tracker.module_name as module_name ";
-        $query .= ",COUNT(*) count FROM tracker ";
-        $query .= "WHERE tracker.user_id = '$current_user->id' AND tracker.module_name != 'UserPreferences' AND tracker.date_modified > $dateValue ";
-        $query .= "GROUP BY tracker.module_name ORDER BY count DESC";
+        $query = 'SELECT tracker.module_name as module_name ';
+        $query .= ',COUNT(*) count FROM tracker ';
+        $query .= "WHERE tracker.user_id = '{$current_user->id}' AND tracker.module_name != 'UserPreferences' AND tracker.date_modified > {$dateValue} ";
+        $query .= 'GROUP BY tracker.module_name ORDER BY count DESC';
 
         return $query;
     }
-
 
     // This function will grab a query from the custom directory to be used for charting
     public function customChartQuery($chart)
     {
         if (file_exists('custom/Charts/' . $chart . '.php')) {
-            require_once('custom/Charts/' . $chart . '.php');
+            require_once 'custom/Charts/' . $chart . '.php';
+
             return customChartQuery();
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

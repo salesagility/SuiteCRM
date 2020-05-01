@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,12 +36,11 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dashletStrings['CalendarDashlet'] = array(
+$dashletStrings['CalendarDashlet'] = [
     'LBL_TITLE' => 'My Calendar',
     'LBL_DESCRIPTION' => 'Calendar dashlet',
     'LBL_CONFIGURE_TITLE' => 'Title',
@@ -52,5 +50,4 @@ $dashletStrings['CalendarDashlet'] = array(
     'LBL_VIEW_DAY' => 'Day',
     'LBL_VIEW_WEEK' => 'Week',
     'LBL_VIEW_MONTH' => 'Month',
-
-);
+];

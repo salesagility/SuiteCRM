@@ -1,5 +1,7 @@
 <?php
+
 namespace Api\V8\Helper;
+
 class VarDefHelper
 {
     /**
@@ -16,6 +18,7 @@ class VarDefHelper
                 $relations[$relation] = $varDef['module'];
             }
         }
+
         return $relations;
     }
 }

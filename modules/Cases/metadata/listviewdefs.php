@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,21 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-$listViewDefs['Cases'] = array(
-    'CASE_NUMBER' => array(
+$listViewDefs['Cases'] = [
+    'CASE_NUMBER' => [
         'width' => '5',
         'label' => 'LBL_LIST_NUMBER',
-        'default' => true),
-    'NAME' => array(
+        'default' => true],
+    'NAME' => [
         'width' => '25',
         'label' => 'LBL_LIST_SUBJECT',
         'link' => true,
-        'default' => true),
-    'ACCOUNT_NAME' => array(
+        'default' => true],
+    'ACCOUNT_NAME' => [
         'width' => '20',
         'label' => 'LBL_LIST_ACCOUNT_NAME',
         'module' => 'Accounts',
@@ -63,23 +60,23 @@ $listViewDefs['Cases'] = array(
         'link' => true,
         'default' => true,
         'ACLTag' => 'ACCOUNT',
-        'related_fields' => array('account_id')),
-    'PRIORITY' => array(
+        'related_fields' => ['account_id']],
+    'PRIORITY' => [
         'width' => '10',
         'label' => 'LBL_LIST_PRIORITY',
-        'default' => true),
-    'STATUS' => array(
+        'default' => true],
+    'STATUS' => [
         'width' => '10',
         'label' => 'LBL_LIST_STATUS',
-        'default' => true),
-    'ASSIGNED_USER_NAME' => array(
+        'default' => true],
+    'ASSIGNED_USER_NAME' => [
         'width' => '10',
         'label' => 'LBL_ASSIGNED_TO_NAME',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-    'DATE_ENTERED' => array(
+        'default' => true],
+    'DATE_ENTERED' => [
         'width' => '10',
         'label' => 'LBL_DATE_ENTERED',
-        'default' => true),
-);
+        'default' => true],
+];

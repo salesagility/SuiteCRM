@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*
  * @param \Psr\Container\ContainerInterface $container
  * @return \Slim\Http\Cookies
  */
@@ -46,6 +45,6 @@ $container['cookie'] = function ($container) {
     /** @noinspection PhpUndefinedMethodInspection */
     $request = $container->get('request');
 
-    /** @noinspection PhpUndefinedMethodInspection */
+    // @noinspection PhpUndefinedMethodInspection
     return new \Slim\Http\Cookies($request->getCookieParams());
 };

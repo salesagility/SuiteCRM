@@ -1,8 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/**
+/*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,7 +52,7 @@ if (is_admin($current_user)) {
     if (is_file($cachedfile = sugar_cached('dashlets/dashlets.php'))) {
         unlink($cachedfile);
     }
-    require_once('include/Dashlets/DashletCacheBuilder.php');
+    require_once 'include/Dashlets/DashletCacheBuilder.php';
 
     $dc = new DashletCacheBuilder();
     $dc->buildCache();

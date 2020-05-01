@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -62,7 +60,7 @@ if (isset($_SESSION['authenticated_user_id'])) {
         $GLOBALS['module'] = 'Users';
         $GLOBALS['action'] = 'ChangePassword';
         ob_clean();
-        header("Location: index.php?module=Users&action=ChangePassword");
+        header('Location: index.php?module=Users&action=ChangePassword');
         sugar_cleanup(true);
     }
     global $record;
@@ -71,7 +69,7 @@ if (isset($_SESSION['authenticated_user_id'])) {
 
     global $current_user;
 
-    if (isset($current_user)  && empty($login_vars)) {
+    if (isset($current_user) && empty($login_vars)) {
         if (!empty($GLOBALS['sugar_config']['default_module']) && !empty($GLOBALS['sugar_config']['default_action'])) {
             $url = "index.php?module={$GLOBALS['sugar_config']['default_module']}&action={$GLOBALS['sugar_config']['default_action']}";
         } else {
@@ -89,9 +87,9 @@ if (isset($_SESSION['authenticated_user_id'])) {
 } else {
     // Login has failed
     if (isset($_POST['login_language']) && !empty($_POST['login_language'])) {
-        $url ="index.php?module=Users&action=Login&login_language=". $_POST['login_language'];
+        $url = 'index.php?module=Users&action=Login&login_language=' . $_POST['login_language'];
     } else {
-        $url ="index.php?module=Users&action=Login";
+        $url = 'index.php?module=Users&action=Login';
     }
 
     if (!empty($login_vars)) {
@@ -100,7 +98,7 @@ if (isset($_SESSION['authenticated_user_id'])) {
 }
 
 // construct redirect url
-$url = 'Location: '.$url;
+$url = 'Location: ' . $url;
 
 //adding this for bug: 21712.
 if (!empty($GLOBALS['app'])) {

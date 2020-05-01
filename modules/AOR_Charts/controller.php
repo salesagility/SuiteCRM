@@ -1,7 +1,7 @@
 <?php
 /**
  * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
+ *
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,11 +18,8 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility <info@salesagility.com>
  */
-
-
 class AOR_ChartsController extends SugarController
 {
     protected function action_getImageMap()
@@ -34,8 +31,8 @@ class AOR_ChartsController extends SugarController
         }
         require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
         $img = new pImage(100, 100);
-        $imageMapDir = create_cache_directory('modules/AOR_Charts/ImageMap/'.$current_user->id.'/');
-        $id = $current_user->id."-".(int)$_REQUEST['imageMapId'];
+        $imageMapDir = create_cache_directory('modules/AOR_Charts/ImageMap/' . $current_user->id . '/');
+        $id = $current_user->id . '-' . (int) $_REQUEST['imageMapId'];
         ob_clean();
         $img->dumpImageMap($id, IMAGE_MAP_STORAGE_FILE, $id, $imageMapDir);
     }

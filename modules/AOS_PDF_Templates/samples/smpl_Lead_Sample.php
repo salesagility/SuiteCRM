@@ -8,17 +8,18 @@ class smpl_Lead_Sample
     {
         return 'Leads';
     }
-        
+
     public function getBody()
     {
         global $locale;
+
         return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
 <tbody style="text-align: left;">
 <tr>
 <td valign="top">
-<p><img src="'. TemplateSampleService::getAbsoluteLogoUrl() .'" style="float: left;"/>&nbsp;</p>
+<p><img src="' . TemplateSampleService::getAbsoluteLogoUrl() . '" style="float: left;"/>&nbsp;</p>
 </td>
-<td style="font-weight: bold; text-align: right;"><div>'.translate('LBL_BROWSER_TITLE').' Ltd<br />'.translate('LBL_ANY_STREET', 'AOS_PDF_Templates').'<br />'.translate('LBL_ANY_TOWN', 'AOS_PDF_Templates').'</span><br />'.translate('LBL_ANY_WHERE', 'AOS_PDF_Templates').'</div></td>
+<td style="font-weight: bold; text-align: right;"><div>' . translate('LBL_BROWSER_TITLE') . ' Ltd<br />' . translate('LBL_ANY_STREET', 'AOS_PDF_Templates') . '<br />' . translate('LBL_ANY_TOWN', 'AOS_PDF_Templates') . '</span><br />' . translate('LBL_ANY_WHERE', 'AOS_PDF_Templates') . '</div></td>
 </tr>
 </tbody>
 </table>
@@ -30,7 +31,7 @@ class smpl_Lead_Sample
 <div>$leads_name<br /></div>
 <div>$leads_account_name<br /> $leads_primary_address_street<br /> $leads_primary_address_city<br /> $leads_primary_address_state<br /> $leads_primary_address_postalcode</div>
 <div><br /></div>
-<div>{DATE '.$locale->getPrecedentPreference('default_date_format').'}</div>
+<div>{DATE ' . $locale->getPrecedentPreference('default_date_format') . '}</div>
 <div><br /></div>
 <p>Dear $leads_first_name</p>
 <p>OpenSales was originally designed and conceived by Rustin Phares. In  2009, when Rustin could no longer devote time to the project, which is  an important one for the Community Edition of SugarCRM, SalesAgility approached him to seek permission to pick up where he had left off.</p>

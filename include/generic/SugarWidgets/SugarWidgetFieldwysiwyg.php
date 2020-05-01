@@ -39,7 +39,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *
  * This file was contributed by Urdhva tech private limited <contact@urdhva-tech.com>
- **/
+ */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');

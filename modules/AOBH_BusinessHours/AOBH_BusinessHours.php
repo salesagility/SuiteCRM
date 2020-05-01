@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -39,7 +38,7 @@
  */
 
 /**
- * Class AOBH_BusinessHours
+ * Class AOBH_BusinessHours.
  */
 class AOBH_BusinessHours extends Basic
 {
@@ -69,8 +68,8 @@ class AOBH_BusinessHours extends Basic
     public $day;
     public $open_status;
 
-    private $cached = array();
-    private $businessHoursSet = null;
+    private $cached = [];
+    private $businessHoursSet;
 
     /**
      * @param $interface
@@ -102,7 +101,7 @@ class AOBH_BusinessHours extends Basic
     public function getBusinessHoursForDay($day)
     {
         if (!array_key_exists($day, $this->cached)) {
-            $this->cached[$day] = $this->get_full_list('', "day = '".$day."'");
+            $this->cached[$day] = $this->get_full_list('', "day = '" . $day . "'");
         }
 
         return $this->cached[$day];
@@ -118,24 +117,9 @@ class AOBH_BusinessHours extends Basic
         $bhList = $this->getBusinessHoursForDay($day);
         if ($bhList) {
             return $bhList[0];
-        } else {
-            return BeanFactory::newBean('AOBH_BusinessHours');
         }
-    }
 
-    /**
-     * @param DateTime $datetime
-     *
-     * @return bool
-     */
-    private function insideThisBusinessHour(DateTime $datetime)
-    {
-        if (!$this->open_status) {
-            return false;
-        }
-        $hour = $datetime->format('G');
-
-        return $hour >= $this->opening_hours && $hour < $this->closing_hours;
+        return BeanFactory::newBean('AOBH_BusinessHours');
     }
 
     /**
@@ -147,7 +131,7 @@ class AOBH_BusinessHours extends Basic
     public function diffBusinessHours(DateTime $startTime, DateTime $endTime)
     {
         $hours = ($endTime->getTimestamp() - $startTime->getTimestamp()) / (60 * 60);
-        $GLOBALS['log']->fatal('-------Hours------->'.$hours);
+        $GLOBALS['log']->fatal('-------Hours------->' . $hours);
         $GLOBALS['log']->fatal($startTime->getTimestamp());
         $GLOBALS['log']->fatal($endTime->getTimestamp());
 
@@ -161,23 +145,23 @@ class AOBH_BusinessHours extends Basic
         while ($hours > 0) {
             if ($this->insideAnyBusinessHours($startTime)) {
                 $startTime->add($interval);
-                ++$businessHours;
+                $businessHours++;
             } else {
                 $startTime->add($interval);
             }
-            --$hours;
+            $hours--;
         }
         if ($sub) {
             $businessHours = 0 - $businessHours;
         }
-        $GLOBALS['log']->fatal('-------businessHours-------'.$businessHours);
+        $GLOBALS['log']->fatal('-------businessHours-------' . $businessHours);
 
         return $businessHours;
     }
 
     /**
      * @param $hours
-     * @param DateTime|null $date
+     * @param null|DateTime $date
      *
      * @return DateTime
      */
@@ -195,7 +179,7 @@ class AOBH_BusinessHours extends Basic
         while ($hours > 0) {
             if ($this->insideAnyBusinessHours($date)) {
                 $date->add($interval);
-                --$hours;
+                $hours--;
             } else {
                 $date->add($interval);
             }
@@ -206,6 +190,21 @@ class AOBH_BusinessHours extends Basic
         }
 
         return $date;
+    }
+
+    /**
+     * @param DateTime $datetime
+     *
+     * @return bool
+     */
+    private function insideThisBusinessHour(DateTime $datetime)
+    {
+        if (!$this->open_status) {
+            return false;
+        }
+        $hour = $datetime->format('G');
+
+        return $hour >= $this->opening_hours && $hour < $this->closing_hours;
     }
 
     /**

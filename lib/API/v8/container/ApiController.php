@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,14 +35,15 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ *
  * @param $container
+ *
  * @return \SuiteCRM\API\v8\Controller\ApiController
  */
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Slim\Exception\ContainerValueNotFoundException;
 
-/**
+/*
  * @param ContainerInterface $container
  * @throws ContainerException
  * @throws ContainerValueNotFoundException
@@ -52,5 +52,6 @@ use Slim\Exception\ContainerValueNotFoundException;
 $container['ApiController'] = function ($container) {
     $controller = new \SuiteCRM\API\v8\Controller\ApiController($container);
     $controller->setLogger($container->get(\Psr\Log\LoggerInterface::class));
+
     return $controller;
 };

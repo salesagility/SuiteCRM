@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param;
 
 use Symfony\Component\OptionsResolver\Options;
@@ -16,7 +17,7 @@ class UpdateModuleParams extends BaseParam
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configureParameters(OptionsResolver $resolver)
     {

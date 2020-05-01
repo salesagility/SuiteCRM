@@ -1,10 +1,10 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,56 +41,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Import/ImportCacheFiles.php');
-
-
+require_once 'modules/Import/ImportCacheFiles.php';
 
 abstract class ImportDataSource implements Iterator
 {
     /**
-     * The current offset the data set should start at
+     * The current offset the data set should start at.
      */
     protected $_offset = 0;
 
     /**
-     * Count of rows processed
+     * Count of rows processed.
      */
     protected $_rowsCount = 0;
 
     /**
-     * True if the current row has already had an error it in, so we don't increase the $_errorCount
+     * True if the current row has already had an error it in, so we don't increase the $_errorCount.
      */
     protected $_rowCountedForErrors = false;
 
     /**
-     * Count of rows with errors
-     */
-    private $_errorCount = 0;
-
-    /**
-     * Count of duplicate rows
-     */
-    private $_dupeCount = 0;
-
-    /**
-     * Count of newly created rows
-     */
-    private $_createdCount = 0;
-
-    /**
-     * Count of updated rows
-     */
-    private $_updatedCount = 0;
-
-    /**
-     * Sourcename used as an identifier for this import
+     * Sourcename used as an identifier for this import.
      */
     protected $_sourcename;
 
     /**
-     * Array of the values in the current array we are in
+     * Array of the values in the current array we are in.
      */
     protected $_currentRow = false;
 
@@ -98,21 +74,56 @@ abstract class ImportDataSource implements Iterator
      * Holds any locale settings needed for import.  These can be provided by the user
      * or explicitly set by the user.
      */
-    protected $_localeSettings = array();
+    protected $_localeSettings = [];
 
     /**
      * Stores a subset or entire portion of the data set requested.
      */
-    protected $_dataSet = array();
+    protected $_dataSet = [];
+
+    /**
+     * Count of rows with errors.
+     */
+    private $_errorCount = 0;
+
+    /**
+     * Count of duplicate rows.
+     */
+    private $_dupeCount = 0;
+
+    /**
+     * Count of newly created rows.
+     */
+    private $_createdCount = 0;
+
+    /**
+     * Count of updated rows.
+     */
+    private $_updatedCount = 0;
+
+    public function __get($var)
+    {
+        if (isset($_REQUEST[$var])) {
+            return $_REQUEST[$var];
+        }
+        if (isset($this->_localeSettings[$var])) {
+            return $this->_localeSettings[$var];
+        }
+        if (isset($this->{$var})) {
+            return $this->{$var};
+        }
+
+        return null;
+    }
 
     /**
      * Return a result set from the external source as an associative array with the key value equal to the
      * external field name and the rvalue equal to the actual value.
      *
      * @abstract
+     *
      * @param  int $startIndex
      * @param  int $maxResults
-     * @return void
      */
     abstract public function loadDataSet($maxResults = 0);
 
@@ -120,33 +131,30 @@ abstract class ImportDataSource implements Iterator
      * Return the total count of records that will be imported.
      *
      * @abstract
+     *
      * @return int
      */
     abstract public function getTotalRecordCount();
 
     /**
      * @abstract
-     * @return void
      */
     abstract public function getHeaderColumns();
-    
+
     /**
      * Set the source name.
      *
      * @param  $sourceName
-     * @return void
      */
     public function setSourceName($sourceName = '')
     {
         $this->_sourcename = $sourceName;
     }
 
-
     /**
      * Set the current offset.
      *
      * @param $offset
-     * @return void
      */
     public function setCurrentOffset($offset)
     {
@@ -154,7 +162,7 @@ abstract class ImportDataSource implements Iterator
     }
 
     /**
-     * Return the current offset
+     * Return the current offset.
      *
      * @return int
      */
@@ -174,7 +182,7 @@ abstract class ImportDataSource implements Iterator
     }
 
     /**
-     * Add this row to the UsersLastImport table
+     * Add this row to the UsersLastImport table.
      *
      * @param string $import_module name of the module we are doing the import into
      * @param string $module        name of the bean we are creating for this import
@@ -196,15 +204,15 @@ abstract class ImportDataSource implements Iterator
         if ($module == 'Case') {
             $module = 'aCase';
         }
-        
+
         $last_import->bean_type = $module;
         $last_import->bean_id = $id;
+
         return $last_import->save();
     }
 
-
     /**
-     * Writes the row out to the ImportCacheFiles::getErrorFileName() file
+     * Writes the row out to the ImportCacheFiles::getErrorFileName() file.
      *
      * @param $error string
      * @param $fieldName string
@@ -213,7 +221,7 @@ abstract class ImportDataSource implements Iterator
     public function writeError($error, $fieldName, $fieldValue)
     {
         $fp = sugar_fopen(ImportCacheFiles::getErrorFileName(), 'a');
-        fputcsv($fp, array($error,$fieldName,$fieldValue,$this->_rowsCount));
+        fputcsv($fp, [$error, $fieldName, $fieldValue, $this->_rowsCount]);
         fclose($fp);
 
         if (!$this->_rowCountedForErrors) {
@@ -223,35 +231,29 @@ abstract class ImportDataSource implements Iterator
         }
     }
 
-    protected function formatErrorMessage($error, $fieldName, $fieldValue)
-    {
-        global $current_language;
-        $mod_strings = return_module_language($current_language, 'Import');
-        return "<b>{$mod_strings['LBL_ERROR']}</b> $error <br/>".
-               "<b>{$mod_strings['LBL_FIELD_NAME']}</b> $fieldName <br/>" .
-               "<b>{$mod_strings['LBL_VALUE']}</b> $fieldValue <br/>";
-    }
     public function resetRowErrorCounter()
     {
         $this->_rowCountedForErrors = false;
     }
 
     /**
-     * Writes the totals and filename out to the ImportCacheFiles::getStatusFileName() file
+     * Writes the totals and filename out to the ImportCacheFiles::getStatusFileName() file.
      */
     public function writeStatus()
     {
         $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(), 'a');
-        $statusData = array($this->_rowsCount,$this->_errorCount,$this->_dupeCount,
-                            $this->_createdCount,$this->_updatedCount,$this->_sourcename);
+        $statusData = [$this->_rowsCount, $this->_errorCount, $this->_dupeCount,
+            $this->_createdCount, $this->_updatedCount, $this->_sourcename];
         fputcsv($fp, $statusData);
         fclose($fp);
     }
 
     /**
-     * Writes the row out to the ImportCacheFiles::getDuplicateFileName() file
+     * Writes the row out to the ImportCacheFiles::getDuplicateFileName() file.
+     *
+     * @param mixed $field_names
      */
-    public function markRowAsDuplicate($field_names=array())
+    public function markRowAsDuplicate($field_names = [])
     {
         $fp = sugar_fopen(ImportCacheFiles::getDuplicateFileName(), 'a');
         fputcsv($fp, $this->_currentRow);
@@ -260,7 +262,7 @@ abstract class ImportDataSource implements Iterator
         //if available, grab the column number based on passed in field_name
         if (!empty($field_names)) {
             $colkey = '';
-            $colnums = array();
+            $colnums = [];
 
             //REQUEST should have the field names in order as they appear in the row to be written, get the key values
             //of passed in fields into an array
@@ -273,7 +275,6 @@ abstract class ImportDataSource implements Iterator
                 $colnums = array_merge($colnums, $new_keys);
             }
 
-
             //if values were found, process for number position
             if (!empty($colnums)) {
                 //foreach column, strip the 'colnum_' prefix to the get the column key value
@@ -285,7 +286,7 @@ abstract class ImportDataSource implements Iterator
                     //if we have the column key, then lets add a span tag with styling reference to the original value
                     if (!empty($colkey)) {
                         $hilited_val = $this->_currentRow[$colkey];
-                        $this->_currentRow[$colkey]= '<span class=warn>'.$hilited_val.'</span>';
+                        $this->_currentRow[$colkey] = '<span class=warn>' . $hilited_val . '</span>';
                     }
                 }
             }
@@ -301,25 +302,27 @@ abstract class ImportDataSource implements Iterator
     }
 
     /**
-     * Marks whether this row created a new record or not
+     * Marks whether this row created a new record or not.
      *
      * @param $createdRecord bool true if record is created, false if it is just updated
      */
     public function markRowAsImported($createdRecord = true)
     {
         if ($createdRecord) {
-            ++$this->_createdCount;
+            $this->_createdCount++;
         } else {
-            ++$this->_updatedCount;
+            $this->_updatedCount++;
         }
     }
 
     /**
-     * Writes the row out to the ImportCacheFiles::getErrorRecordsFileName() file
+     * Writes the row out to the ImportCacheFiles::getErrorRecordsFileName() file.
+     *
+     * @param mixed $errorMessage
      */
     public function writeErrorRecord($errorMessage = '')
     {
-        $rowData = !$this->_currentRow ? array() : $this->_currentRow;
+        $rowData = !$this->_currentRow ? [] : $this->_currentRow;
         $fp = sugar_fopen(ImportCacheFiles::getErrorRecordsFileName(), 'a');
         $fpNoErrors = sugar_fopen(ImportCacheFiles::getErrorRecordsWithoutErrorFileName(), 'a');
 
@@ -329,20 +332,18 @@ abstract class ImportDataSource implements Iterator
         //Add the error message to the first column
         array_unshift($rowData, $errorMessage);
         fputcsv($fp, $rowData);
-        
+
         fclose($fp);
         fclose($fpNoErrors);
     }
 
-    public function __get($var)
+    protected function formatErrorMessage($error, $fieldName, $fieldValue)
     {
-        if (isset($_REQUEST[$var])) {
-            return $_REQUEST[$var];
-        } elseif (isset($this->_localeSettings[$var])) {
-            return $this->_localeSettings[$var];
-        } elseif (isset($this->$var)) {
-            return $this->$var;
-        }
-        return null;
+        global $current_language;
+        $mod_strings = return_module_language($current_language, 'Import');
+
+        return "<b>{$mod_strings['LBL_ERROR']}</b> {$error} <br/>" .
+               "<b>{$mod_strings['LBL_FIELD_NAME']}</b> {$fieldName} <br/>" .
+               "<b>{$mod_strings['LBL_VALUE']}</b> {$fieldValue} <br/>";
     }
 }

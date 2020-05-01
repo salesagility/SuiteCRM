@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,8 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class ContactsController extends SugarController
 {
     public function action_Popup()
@@ -49,7 +46,7 @@ class ContactsController extends SugarController
             $this->view = 'popup';
         }
     }
-    
+
     public function action_ValidPortalUsername()
     {
         $this->view = 'validportalusername';
@@ -64,7 +61,7 @@ class ContactsController extends SugarController
     {
         $this->view = 'contactaddresspopup';
     }
-  
+
     public function action_CloseContactAddressPopup()
     {
         $this->view = 'closecontactaddresspopup';

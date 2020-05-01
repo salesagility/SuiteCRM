@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\V8\Param;
 
 use Api\V8\Param\Options as ParamOption;
@@ -49,7 +50,7 @@ class DeleteRelationshipParams extends BaseParam
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configureParameters(OptionsResolver $resolver)
     {

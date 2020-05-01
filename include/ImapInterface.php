@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,15 +44,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * ImapInterface
+ * ImapInterface.
  *
  * @author gyula
  */
 interface ImapInterface
 {
-        
     /**
-     * see more at imap_open()
+     * see more at imap_open().
      *
      * @param string $mailbox
      * @param string $username
@@ -62,7 +60,7 @@ interface ImapInterface
      * @param int $n_retries
      * @param array $params
      *
-     * @return resource or <b>FALSE</b> on error.
+     * @return resource or <b>FALSE</b> on error
      */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, array $params = null);
 }

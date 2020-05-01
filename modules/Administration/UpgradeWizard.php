@@ -3,7 +3,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,11 +39,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('modules/Administration/UpgradeWizardCommon.php');
-require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
-require_once('ModuleInstall/ModuleScanner.php');
+require_once 'modules/Administration/UpgradeWizardCommon.php';
+require_once 'ModuleInstall/PackageManager/PackageManagerDisplay.php';
+require_once 'ModuleInstall/ModuleScanner.php';
 global $mod_strings;
 $uh = new UpgradeHistory();
 
@@ -52,21 +49,21 @@ function unlinkTempFiles()
 {
     global $sugar_config;
     @unlink($_FILES['upgrade_zip']['tmp_name']);
-    @unlink("upload://".$_FILES['upgrade_zip']['name']);
+    @unlink('upload://' . $_FILES['upgrade_zip']['name']);
 }
 
-$base_upgrade_dir       = "upload://upgrades";
-$base_tmp_upgrade_dir   = sugar_cached('upgrades/temp');
+$base_upgrade_dir = 'upload://upgrades';
+$base_tmp_upgrade_dir = sugar_cached('upgrades/temp');
 
 // make sure dirs exist
 foreach ($GLOBALS['subdirs'] as $subdir) {
-    if (!file_exists("$base_upgrade_dir/$subdir")) {
-        sugar_mkdir("$base_upgrade_dir/$subdir", 0770, true);
+    if (!file_exists("{$base_upgrade_dir}/{$subdir}")) {
+        sugar_mkdir("{$base_upgrade_dir}/{$subdir}", 0770, true);
     }
 }
 
 // get labels and text that are specific to either Module Loader or Upgrade Wizard
-if ($view == "module") {
+if ($view == 'module') {
     $uploaddLabel = $mod_strings['LBL_UW_UPLOAD_MODULE'];
     $descItemsQueued = $mod_strings['LBL_UW_DESC_MODULES_QUEUED'];
     $descItemsInstalled = $mod_strings['LBL_UW_DESC_MODULES_INSTALLED'];
@@ -85,22 +82,22 @@ define('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES', 6 * 1024 * 1024);  // 6 Megabyt
 $upload_max_filesize = ini_get('upload_max_filesize');
 $upload_max_filesize_bytes = return_bytes($upload_max_filesize);
 if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
-    $GLOBALS['log']->debug("detected upload_max_filesize: $upload_max_filesize");
-    print('<p class="error">' . $mod_strings['MSG_INCREASE_UPLOAD_MAX_FILESIZE'] . ' '
-        . get_cfg_var('cfg_file_path') . "</p>\n");
+    $GLOBALS['log']->debug("detected upload_max_filesize: {$upload_max_filesize}");
+    echo '<p class="error">' . $mod_strings['MSG_INCREASE_UPLOAD_MAX_FILESIZE'] . ' '
+        . get_cfg_var('cfg_file_path') . "</p>\n";
 }
 
 //
 // process "run" commands
 //
 
-if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
+if (isset($_REQUEST['run']) && ($_REQUEST['run'] != '')) {
     $run = $_REQUEST['run'];
 
     if ($run === 'upload') {
         $perform = false;
-        if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
-            require_once('ModuleInstall/PackageManager.php');
+        if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != '') {
+            require_once 'ModuleInstall/PackageManager.php';
             $pm = new PackageManager();
             $tempFile = $pm->download('', '', $_REQUEST['release_id']);
             $perform = true;
@@ -111,7 +108,7 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
                 die();
             }
             //copy file to proper location then call performSetup
-            copy($moduleDir . '/' . $_REQUEST['upgrade_zip_escaped'], "upload://" . $_REQUEST['upgrade_zip_escaped']);
+            copy($moduleDir . '/' . $_REQUEST['upgrade_zip_escaped'], 'upload://' . $_REQUEST['upgrade_zip_escaped']);
 
             $perform = true;
             $base_filename = urldecode($_REQUEST['upgrade_zip_escaped']);
@@ -125,9 +122,9 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
                     !$upload->final_move($upload->get_stored_file_name())
                     ) {
                     unlinkTempFiles();
-                    sugar_die("Invalid Package");
+                    sugar_die('Invalid Package');
                 } else {
-                    $tempFile = "upload://".$upload->get_stored_file_name();
+                    $tempFile = 'upload://' . $upload->get_stored_file_name();
                     $perform = true;
                     $base_filename = urldecode($_REQUEST['upgrade_zip_escaped']);
                 }
@@ -156,13 +153,13 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
                 $upgrade_zip_type = $manifest['type'];
 
                 // exclude the bad permutations
-                if ($view == "module") {
-                    if ($upgrade_zip_type != "module" && $upgrade_zip_type != "theme" && $upgrade_zip_type != "langpack") {
+                if ($view == 'module') {
+                    if ($upgrade_zip_type != 'module' && $upgrade_zip_type != 'theme' && $upgrade_zip_type != 'langpack') {
                         unlinkTempFiles();
                         die($mod_strings['ERR_UW_NOT_ACCEPTIBLE_TYPE']);
                     }
-                } elseif ($view == "default") {
-                    if ($upgrade_zip_type != "patch") {
+                } elseif ($view == 'default') {
+                    if ($upgrade_zip_type != 'patch') {
                         unlinkTempFiles();
                         die($mod_strings['ERR_UW_ONLY_PATCHES']);
                     }
@@ -170,18 +167,18 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
 
                 $base_filename = pathinfo($tempFile, PATHINFO_BASENAME);
 
-                mkdir_recursive("$base_upgrade_dir/$upgrade_zip_type");
-                $target_path = "$base_upgrade_dir/$upgrade_zip_type/$base_filename";
-                $target_manifest = remove_file_extension($target_path) . "-manifest.php";
+                mkdir_recursive("{$base_upgrade_dir}/{$upgrade_zip_type}");
+                $target_path = "{$base_upgrade_dir}/{$upgrade_zip_type}/{$base_filename}";
+                $target_manifest = remove_file_extension($target_path) . '-manifest.php';
 
-                if (isset($manifest['icon']) && $manifest['icon'] != "") {
+                if (isset($manifest['icon']) && $manifest['icon'] != '') {
                     $icon_location = extractFile($tempFile, $manifest['icon']);
-                    copy($icon_location, remove_file_extension($target_path)."-icon.".pathinfo($icon_location, PATHINFO_EXTENSION));
+                    copy($icon_location, remove_file_extension($target_path) . '-icon.' . pathinfo($icon_location, PATHINFO_EXTENSION));
                 }
 
                 if (rename($tempFile, $target_path)) {
                     copy($manifest_file, $target_manifest);
-                    $GLOBALS['ML_STATUS_MESSAGE'] = $base_filename.$mod_strings['LBL_UW_UPLOAD_SUCCESS'];
+                    $GLOBALS['ML_STATUS_MESSAGE'] = $base_filename . $mod_strings['LBL_UW_UPLOAD_SUCCESS'];
                 } else {
                     $GLOBALS['ML_STATUS_MESSAGE'] = $mod_strings['ERR_UW_UPLOAD_ERROR'];
                 }
@@ -200,43 +197,43 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
 
             $checkFile = strtolower($delete_me);
 
-            if (substr($delete_me, -4) != ".zip" || substr($delete_me, 0, 9) != "upload://" ||
-        strpos($checkFile, "..") !== false || !file_exists($checkFile)) {
+            if (substr($delete_me, -4) != '.zip' || substr($delete_me, 0, 9) != 'upload://' ||
+        strpos($checkFile, '..') !== false || !file_exists($checkFile)) {
                 die("<span class='error'>File is not a zipped archive.</span>");
             }
             if (unlink($delete_me)) { // successful deletion?
-                echo "Package $delete_me has been removed.<br>";
+                echo "Package {$delete_me} has been removed.<br>";
             } else {
-                die("Problem removing package $delete_me.");
+                die("Problem removing package {$delete_me}.");
             }
         }
     }
 }
 
-if ($view == "module") {
-    print(getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_LOADER_TITLE']), false));
+if ($view == 'module') {
+    echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_MODULE_LOADER_TITLE']], false);
 } else {
-    print(getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_UPGRADE_WIZARD_TITLE']), false));
+    echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], [$mod_strings['LBL_MODULE_NAME'], $mod_strings['LBL_UPGRADE_WIZARD_TITLE']], false);
 }
 
 // upload link
 if (!empty($GLOBALS['sugar_config']['use_common_ml_dir']) && $GLOBALS['sugar_config']['use_common_ml_dir'] && !empty($GLOBALS['sugar_config']['common_ml_dir'])) {
     //rrs
-    $form = '<form name="move_form" action="index.php?module=Administration&view=module&action=UpgradeWizard" method="post"  ><input type=hidden name="run" value="upload" /><input type=hidden name="load_module_from_dir" id="load_module_from_dir" value="'.$GLOBALS['sugar_config']['common_ml_dir'].'" /><input type=hidden name="upgrade_zip_escaped" value="" />';
-    $form .= '<br>'.$mod_strings['LBL_MODULE_UPLOAD_DISABLE_HELP_TEXT'].'</br>';
-    $form .='<table width="100%" class="edit view"><tr><th align="left">'.$mod_strings['LBL_ML_NAME'].'</th><th align="left">'.$mod_strings['LBL_ML_ACTION'].'</th></tr>';
+    $form = '<form name="move_form" action="index.php?module=Administration&view=module&action=UpgradeWizard" method="post"  ><input type=hidden name="run" value="upload" /><input type=hidden name="load_module_from_dir" id="load_module_from_dir" value="' . $GLOBALS['sugar_config']['common_ml_dir'] . '" /><input type=hidden name="upgrade_zip_escaped" value="" />';
+    $form .= '<br>' . $mod_strings['LBL_MODULE_UPLOAD_DISABLE_HELP_TEXT'] . '</br>';
+    $form .= '<table width="100%" class="edit view"><tr><th align="left">' . $mod_strings['LBL_ML_NAME'] . '</th><th align="left">' . $mod_strings['LBL_ML_ACTION'] . '</th></tr>';
     if ($handle = opendir($GLOBALS['sugar_config']['common_ml_dir'])) {
         while (false !== ($filename = readdir($handle))) {
-            if ($filename == '.' || $filename == '..' || !preg_match("#.*\.zip\$#", $filename)) {
+            if ($filename == '.' || $filename == '..' || !preg_match('#.*\\.zip$#', $filename)) {
                 continue;
             }
-            $form .= '<tr><td>'.$filename.'</td><td><input type=button class="button" value="'.$mod_strings['LBL_UW_BTN_UPLOAD'].'" onClick="document.move_form.upgrade_zip_escaped.value = escape( \''.$filename.'\');document.move_form.submit();" /></td></tr>';
+            $form .= '<tr><td>' . $filename . '</td><td><input type=button class="button" value="' . $mod_strings['LBL_UW_BTN_UPLOAD'] . '" onClick="document.move_form.upgrade_zip_escaped.value = escape( \'' . $filename . '\');document.move_form.submit();" /></td></tr>';
         }
     }
     $form .= '</table></form>';
 //rrs
 } else {
-    $form =<<<eoq
+    $form = <<<eoq
 <form name="the_form" enctype="multipart/form-data" action="{$form_action}" method="post"  >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
 <tr><td>
@@ -256,16 +253,16 @@ if (!empty($GLOBALS['sugar_config']['use_common_ml_dir']) && $GLOBALS['sugar_con
 eoq;
 }
 
-$hidden_fields = "<input type=hidden name=\"run\" value=\"upload\" />";
-$hidden_fields .= "<input type=hidden name=\"mode\"/>";
+$hidden_fields = '<input type=hidden name="run" value="upload" />';
+$hidden_fields .= '<input type=hidden name="mode"/>';
 
-$form2 = PackageManagerDisplay::buildPackageDisplay($form, $hidden_fields, $form_action, array('module'));
-$form3 =<<<eoq3
+$form2 = PackageManagerDisplay::buildPackageDisplay($form, $hidden_fields, $form_action, ['module']);
+$form3 = <<<'eoq3'
 
 
 eoq3;
 
-echo $form2.$form3;
+echo $form2 . $form3;
 
 // scan for new files (that are not installed)
 /*print( "$descItemsQueued<br>\n");
@@ -353,7 +350,7 @@ print( "</ul>\n" );
 ?>
 */
 
-$GLOBALS['log']->info("Upgrade Wizard view");
+$GLOBALS['log']->info('Upgrade Wizard view');
 ?>
 </td>
 </tr>

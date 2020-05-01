@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,22 +36,20 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 class SchedulersViewEdit extends ViewEdit
 {
-    protected static $xtDays = array(
-                1 => 'MON',
-                2 => 'TUE',
-                3 => 'WED',
-                4 => 'THU',
-                5 => 'FRI',
-                6 => 'SAT',
-                0 => 'SUN');
+    protected static $xtDays = [
+        1 => 'MON',
+        2 => 'TUE',
+        3 => 'WED',
+        4 => 'THU',
+        5 => 'FRI',
+        6 => 'SAT',
+        0 => 'SUN'];
 
     public function __construct()
     {
@@ -60,17 +57,6 @@ class SchedulersViewEdit extends ViewEdit
         $this->useForSubpanel = true;
         //$this->useModuleQuickCreateTemplate = true;
     }
-
-    /**
-     * @see SugarView::_getModuleTitleListParam()
-     */
-    protected function _getModuleTitleListParam($browserTitle = false)
-    {
-        global $mod_strings;
-
-        return "<a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_MODULE_TITLE']."</a>";
-    }
-
 
     public function display()
     {
@@ -80,15 +66,15 @@ class SchedulersViewEdit extends ViewEdit
         // job functions
         $this->bean->job_function = $this->bean->job;
         $this->ss->assign('JOB', $this->bean->job);
-        if (substr($this->bean->job, 0, 5) == "url::") {
+        if (substr($this->bean->job, 0, 5) == 'url::') {
             $this->bean->job_url = substr($this->bean->job, 5);
             $this->ss->assign('JOB', 'url::');
         }
         // interval
         if (!empty($this->bean->job_interval)) {
-            $exInterval = explode("::", $this->bean->job_interval);
+            $exInterval = explode('::', $this->bean->job_interval);
         } else {
-            $exInterval = array('*','*','*','*','*');
+            $exInterval = ['*', '*', '*', '*', '*'];
         }
         $this->ss->assign('mins', $exInterval[0]);
         $this->ss->assign('hours', $exInterval[1]);
@@ -98,9 +84,9 @@ class SchedulersViewEdit extends ViewEdit
 
         // Handle cron weekdays
         if ($exInterval[4] == '*') {
-            $this->ss->assign('ALL', "CHECKED");
+            $this->ss->assign('ALL', 'CHECKED');
             foreach (self::$xtDays as $day) {
-                $this->ss->assign($day, "CHECKED");
+                $this->ss->assign($day, 'CHECKED');
             }
         } elseif (strpos($exInterval[4], ',')) {
             // 1,2,4
@@ -108,24 +94,24 @@ class SchedulersViewEdit extends ViewEdit
             foreach ($exDays as $days) {
                 if (strpos($days, '-')) {
                     $exDaysRange = explode('-', $days);
-                    for ($i=$exDaysRange[0]; $i<=$exDaysRange[1]; $i++) {
-                        $this->ss->assign(self::$xtDays[$days], "CHECKED");
+                    for ($i = $exDaysRange[0]; $i <= $exDaysRange[1]; $i++) {
+                        $this->ss->assign(self::$xtDays[$days], 'CHECKED');
                     }
                 } else {
-                    $this->ss->assign(self::$xtDays[$days], "CHECKED");
+                    $this->ss->assign(self::$xtDays[$days], 'CHECKED');
                 }
             }
         } elseif (strpos($exInterval[4], '-')) {
             $exDaysRange = explode('-', $exInterval[4]);
-            for ($i=$exDaysRange[0]; $i<=$exDaysRange[1]; $i++) {
-                $this->ss->assign(self::$xtDays[$i], "CHECKED");
+            for ($i = $exDaysRange[0]; $i <= $exDaysRange[1]; $i++) {
+                $this->ss->assign(self::$xtDays[$i], 'CHECKED');
             }
         } else {
-            $this->ss->assign(self::$xtDays[$exInterval[4]], "CHECKED");
+            $this->ss->assign(self::$xtDays[$exInterval[4]], 'CHECKED');
         }
 
         // Hours
-        for ($i=1; $i<=30; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
             $ints[$i] = $i;
         }
         $this->bean->adv_interval = false;
@@ -154,10 +140,22 @@ class SchedulersViewEdit extends ViewEdit
             $this->bean->adv_interval = true;
         }
 
-        $this->ss->assign("adv_interval", $this->bean->adv_interval?"true":"false");
-        $this->ss->assign("adv_visibility", $this->bean->adv_interval?"":"display: none");
-        $this->ss->assign("basic_visibility", $this->bean->adv_interval?"display: none":"");
+        $this->ss->assign('adv_interval', $this->bean->adv_interval ? 'true' : 'false');
+        $this->ss->assign('adv_visibility', $this->bean->adv_interval ? '' : 'display: none');
+        $this->ss->assign('basic_visibility', $this->bean->adv_interval ? 'display: none' : '');
 
         parent::display();
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleListParam()
+     *
+     * @param mixed $browserTitle
+     */
+    protected function _getModuleTitleListParam($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return "<a href='index.php?module=Schedulers&action=index'>" . $mod_strings['LBL_MODULE_TITLE'] . '</a>';
     }
 }

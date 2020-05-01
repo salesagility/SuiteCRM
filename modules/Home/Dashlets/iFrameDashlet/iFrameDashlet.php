@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,10 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-require_once('include/Dashlets/Dashlet.php');
-
+require_once 'include/Dashlets/Dashlet.php';
 
 class iFrameDashlet extends Dashlet
 {
@@ -51,7 +48,7 @@ class iFrameDashlet extends Dashlet
     public $configureTpl = 'modules/Home/Dashlets/iFrameDashlet/configure.tpl';
     public $defaultURL = 'http://apps.sugarcrm.com/dashlet/sugarcrm-news-dashlet.html?lang=@@LANG@@&edition=@@EDITION@@&ver=@@VER@@';
     public $url;
-    protected $allowed_schemes = array("http", "https");
+    protected $allowed_schemes = ['http', 'https'];
 
     public function __construct($id, $options = null)
     {
@@ -76,25 +73,15 @@ class iFrameDashlet extends Dashlet
             $this->url = $options['url'];
         }
 
-        if (empty($options['height']) || (int)$options['height'] < 1) {
+        if (empty($options['height']) || (int) $options['height'] < 1) {
             $this->height = 315;
         } else {
-            $this->height = (int)$options['height'];
+            $this->height = (int) $options['height'];
         }
 
         if (isset($options['autoRefresh'])) {
             $this->autoRefresh = $options['autoRefresh'];
         }
-    }
-
-    protected function checkURL()
-    {
-        $scheme = parse_url($this->url, PHP_URL_SCHEME);
-        if (!in_array($scheme, $this->allowed_schemes)) {
-            $this->url = 'about:blank';
-            return false;
-        }
-        return true;
     }
 
     public function displayOptions()
@@ -122,7 +109,7 @@ class iFrameDashlet extends Dashlet
 
     public function saveOptions($req)
     {
-        $options = array();
+        $options = [];
 
         if (isset($req['title'])) {
             $options['title'] = $req['title'];
@@ -131,7 +118,7 @@ class iFrameDashlet extends Dashlet
             $options['url'] = $req['url'];
         }
         if (isset($req['height'])) {
-            $options['height'] = (int)$req['height'];
+            $options['height'] = (int) $req['height'];
         }
         $options['autoRefresh'] = empty($req['autoRefresh']) ? '0' : $req['autoRefresh'];
 
@@ -142,10 +129,9 @@ class iFrameDashlet extends Dashlet
     {
         $sugar_edition = 'COM';
 
-
         $out_url = str_replace(
-            array('@@LANG@@','@@VER@@','@@EDITION@@'),
-            array($GLOBALS['current_language'],$GLOBALS['sugar_config']['sugar_version'],$sugar_edition),
+            ['@@LANG@@', '@@VER@@', '@@EDITION@@'],
+            [$GLOBALS['current_language'], $GLOBALS['sugar_config']['sugar_version'], $sugar_edition],
             $this->url
         );
         $title = $this->title;
@@ -159,6 +145,19 @@ class iFrameDashlet extends Dashlet
         } else {
             $result .= '<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view"><tr height="20"><td colspan="11"><em>' . translate('LBL_DASHLET_INCORRECT_URL', 'Home') . '</em></td></tr></table>';
         }
+
         return $result;
+    }
+
+    protected function checkURL()
+    {
+        $scheme = parse_url($this->url, PHP_URL_SCHEME);
+        if (!in_array($scheme, $this->allowed_schemes)) {
+            $this->url = 'about:blank';
+
+            return false;
+        }
+
+        return true;
     }
 }

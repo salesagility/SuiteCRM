@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -41,9 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 /**
- * FormBase.php
+ * FormBase.php.
  *
  * @author Collin Lee
  *
@@ -51,27 +50,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @see LeadFormBase.php, ContactFormBase.php, MeetingFormBase, CallFormBase.php
  */
-
 abstract class FormBase
 {
-
-
-/**
- * isSaveFromDCMenu
- *
- * This is a function to help assist in determining if a save operation has been performed from the DCMenu (the shortcut bar
- * up top available for most themes).
- *
- * @return bool Boolean value indicating whether or not the save operation was triggered from DCMenu
- */
+    /**
+     * isSaveFromDCMenu.
+     *
+     * This is a function to help assist in determining if a save operation has been performed from the DCMenu (the shortcut bar
+     * up top available for most themes).
+     *
+     * @return bool Boolean value indicating whether or not the save operation was triggered from DCMenu
+     */
     protected function isSaveFromDCMenu()
     {
-        return (isset($_POST['from_dcmenu']) && $_POST['from_dcmenu']);
+        return isset($_POST['from_dcmenu']) && $_POST['from_dcmenu'];
     }
 
-
     /**
-     * isEmptyReturnModuleAndAction
+     * isEmptyReturnModuleAndAction.
      *
      * This is a function to help assist in determining if a save operation has been performed without a return module and action specified.
      * This will likely be the case where we use AJAX to change the state of a record, but wish to keep the user remaining on the same view.

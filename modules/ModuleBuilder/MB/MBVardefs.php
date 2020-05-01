@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,16 +36,15 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class MBVardefs
 {
-    public $templates = array();
-    public $iTemplates = array();
-    public $vardefs = array();
-    public $vardef = array();
+    public $templates = [];
+    public $iTemplates = [];
+    public $vardefs = [];
+    public $vardef = [];
     public $path = '';
     public $name = '';
-    public $errors = array();
+    public $errors = [];
 
     public function __construct($name, $path, $key_name)
     {
@@ -67,40 +65,39 @@ class MBVardefs
         $table_name = strtolower($module);
 
         if (file_exists($file)) {
-            include($file);
+            include $file;
             if (isset($vardefs)) {
                 if ($by_group) {
-                    $this->vardefs['fields'] [$template]= $vardefs['fields'];
+                    $this->vardefs['fields'][$template] = $vardefs['fields'];
                 } else {
-                    $this->vardefs['fields']= array_merge($this->vardefs['fields'], $vardefs['fields']);
+                    $this->vardefs['fields'] = array_merge($this->vardefs['fields'], $vardefs['fields']);
                     if (!empty($vardefs['relationships'])) {
-                        $this->vardefs['relationships']= array_merge($this->vardefs['relationships'], $vardefs['relationships']);
+                        $this->vardefs['relationships'] = array_merge($this->vardefs['relationships'], $vardefs['relationships']);
                     }
                 }
             }
         }
         //Bug40450 - Extra 'Name' field in a File type module in module builder
         if (array_key_exists('file', $this->templates)) {
-            unset($this->vardefs['fields']['name']);
-            unset($this->vardefs['fields']['file']['name']);
+            unset($this->vardefs['fields']['name'], $this->vardefs['fields']['file']['name']);
         }
     }
 
-    public function mergeVardefs($by_group=false)
+    public function mergeVardefs($by_group = false)
     {
-        $this->vardefs = array(
-                    'fields'=>array(),
-                    'relationships'=>array(),
-        );
+        $this->vardefs = [
+            'fields' => [],
+            'relationships' => [],
+        ];
         //		$object_name = $this->key_name;
         //		$_object_name = strtolower($this->name);
         $module_name = $this->name;
         $this->loadTemplate($by_group, 'basic', MB_TEMPLATES . '/basic/vardefs.php');
-        foreach ($this->iTemplates as $template=>$val) {
+        foreach ($this->iTemplates as $template => $val) {
             $file = MB_IMPLEMENTS . '/' . $template . '/vardefs.php';
             $this->loadTemplate($by_group, $template, $file);
         }
-        foreach ($this->templates as $template=>$val) {
+        foreach ($this->templates as $template => $val) {
             if ($template == 'basic') {
                 continue;
             }
@@ -115,11 +112,10 @@ class MBVardefs
         }
     }
 
-    public function updateVardefs($by_group=false)
+    public function updateVardefs($by_group = false)
     {
         $this->mergeVardefs($by_group);
     }
-
 
     public function getVardefs()
     {
@@ -130,7 +126,6 @@ class MBVardefs
     {
         return $this->vardef;
     }
-
 
     public function addFieldVardef($vardef)
     {
@@ -156,11 +151,12 @@ class MBVardefs
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
         write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $path . '/vardefs.php', 'w', $header);
     }
+
     public function load()
     {
-        $this->vardef = array('fields'=>array(), 'relationships'=>array());
+        $this->vardef = ['fields' => [], 'relationships' => []];
         if (file_exists($this->path . '/vardefs.php')) {
-            include($this->path. '/vardefs.php');
+            include $this->path . '/vardefs.php';
             $this->vardef = $vardefs;
         }
     }

@@ -2,9 +2,12 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * @internal
+ */
 class AOD_IndexEventTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOD_IndexEvent()
+    public function testAODIndexEvent()
     {
         // Execute the constructor and check for the Object type and type attribute
         $aod_indexEvent = new AOD_IndexEvent();

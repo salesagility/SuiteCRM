@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,14 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
-
-
-
-
 $sugarbean = new ProjectTask();
 
 // perform the delete if given a record to delete
@@ -61,7 +53,7 @@ if (empty($_REQUEST['record'])) {
         ACLController::displayNoAccess(true);
         sugar_cleanup(true);
     }
-    $GLOBALS['log']->info("deleting record: $record");
+    $GLOBALS['log']->info("deleting record: {$record}");
     $sugarbean->mark_deleted($record);
 }
 
@@ -76,14 +68,14 @@ $return_action = empty($_REQUEST['return_action']) ? 'index'
 $return_id = empty($_REQUEST['return_id']) ? ''
     : $_REQUEST['return_id'];
 
-$return_location = "index.php?module=$return_module&action=$return_action";
+$return_location = "index.php?module={$return_module}&action={$return_action}";
 
 // append the return_id if given
 
 if (!empty($return_id)) {
-    $return_location .= "&record=$return_id";
+    $return_location .= "&record={$return_id}";
 }
 
 // now that the delete has been performed, return to given location
 
-header("Location: $return_location");
+header("Location: {$return_location}");

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,13 +36,13 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-$dictionary['Spots'] = array(
+$dictionary['Spots'] = [
     'table' => 'spots',
     'audited' => false,
     'inline_edit' => true,
     'duplicate_merge' => true,
-    'fields' => array(
-        'config' => array(
+    'fields' => [
+        'config' => [
             'required' => true,
             'name' => 'config',
             'vname' => 'LBL_CONFIG',
@@ -61,8 +60,8 @@ $dictionary['Spots'] = array(
             'reportable' => true,
             'unified_search' => false,
             'merge_filter' => 'disabled',
-        ),
-        'type' => array(
+        ],
+        'type' => [
             'required' => true,
             'name' => 'type',
             'vname' => 'LBL_TYPE',
@@ -82,8 +81,8 @@ $dictionary['Spots'] = array(
             'merge_filter' => 'disabled',
             'len' => '255',
             'size' => '20',
-        ),
-        'configurationGUI' => array(
+        ],
+        'configurationGUI' => [
             'required' => false,
             'name' => 'configurationGUI',
             'vname' => 'LBL_AN_CONFIGURATION',
@@ -96,23 +95,23 @@ $dictionary['Spots'] = array(
             'duplicate_merge_dom_value' => 0,
             'audited' => false,
             'reportable' => false,
-            'studio' => array(
+            'studio' => [
                 'editview' => true,
                 'listview' => false,
                 'detailview' => false,
-            ),
-            'function' => array(
+            ],
+            'function' => [
                 'name' => 'displaySpots',
                 'returns' => 'html',
                 'include' => 'modules/Spots/ShowSpots.php',
-            ),
-        ),
-    ),
-    'relationships' => array(),
+            ],
+        ],
+    ],
+    'relationships' => [],
     'optimistic_locking' => true,
     'unified_search' => false,
-);
+];
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Spots', 'Spots', array('basic', 'assignable', 'security_groups'));
+VardefManager::createVardef('Spots', 'Spots', ['basic', 'assignable', 'security_groups']);

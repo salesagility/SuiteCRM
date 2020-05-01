@@ -1,9 +1,9 @@
 <?php
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -40,8 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 class CampaignLog extends SugarBean
 {
     public $table_name = 'campaign_log';
@@ -71,44 +69,42 @@ class CampaignLog extends SugarBean
         parent::__construct();
     }
 
-
-
-
     public function get_list_view_data()
     {
         global $locale;
         $temp_array = $this->get_list_view_array();
         //make sure that both items in array are set to some value, else return null
-        if (!(isset($temp_array['TARGET_TYPE']) && $temp_array['TARGET_TYPE']!= '') || !(isset($temp_array['TARGET_ID']) && $temp_array['TARGET_ID']!= '')) {   //needed values to construct query are empty/null, so return null
+        if (!(isset($temp_array['TARGET_TYPE']) && $temp_array['TARGET_TYPE'] != '') || !(isset($temp_array['TARGET_ID']) && $temp_array['TARGET_ID'] != '')) {   //needed values to construct query are empty/null, so return null
             $GLOBALS['log']->debug("CampaignLog.php:get_list_view_data: temp_array['TARGET_TYPE'] and/or temp_array['TARGET_ID'] are empty, return null");
-            $emptyArr = array();
+            $emptyArr = [];
+
             return $emptyArr;
         }
 
         $table = strtolower($temp_array['TARGET_TYPE']);
 
-        if ($temp_array['TARGET_TYPE']=='Accounts') {
-            $query = "select name from $table where id = ".$this->db->quoted($temp_array['TARGET_ID']);
+        if ($temp_array['TARGET_TYPE'] == 'Accounts') {
+            $query = "select name from {$table} where id = " . $this->db->quoted($temp_array['TARGET_ID']);
         } else {
-            $query = "select first_name, last_name, ".$this->db->concat($table, array('first_name', 'last_name'))." name from $table" .
-                " where id = ".$this->db->quoted($temp_array['TARGET_ID']);
+            $query = 'select first_name, last_name, ' . $this->db->concat($table, ['first_name', 'last_name']) . " name from {$table}" .
+                ' where id = ' . $this->db->quoted($temp_array['TARGET_ID']);
         }
-        $result=$this->db->query($query);
-        $row=$this->db->fetchByAssoc($result);
+        $result = $this->db->query($query);
+        $row = $this->db->fetchByAssoc($result);
 
         if ($row) {
-            if ($temp_array['TARGET_TYPE']=='Accounts') {
-                $temp_array['RECIPIENT_NAME']=$row['name'];
+            if ($temp_array['TARGET_TYPE'] == 'Accounts') {
+                $temp_array['RECIPIENT_NAME'] = $row['name'];
             } else {
                 $full_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name'], '');
-                $temp_array['RECIPIENT_NAME']=$full_name;
+                $temp_array['RECIPIENT_NAME'] = $full_name;
             }
         }
-        $temp_array['RECIPIENT_EMAIL']=$this->retrieve_email_address($temp_array['TARGET_ID']);
+        $temp_array['RECIPIENT_EMAIL'] = $this->retrieve_email_address($temp_array['TARGET_ID']);
 
         $query = 'select name from email_marketing where id = \'' . $temp_array['MARKETING_ID'] . '\'';
-        $result=$this->db->query($query);
-        $row=$this->db->fetchByAssoc($result);
+        $result = $this->db->query($query);
+        $row = $this->db->fetchByAssoc($result);
 
         if ($row) {
             $temp_array['MARKETING_NAME'] = $row['name'];
@@ -121,80 +117,79 @@ class CampaignLog extends SugarBean
     {
         $return_str = '';
         if (!empty($trgt_id)) {
-            $qry  = " select eabr.primary_address, ea.email_address";
-            $qry .= " from email_addresses ea ";
-            $qry .= " Left Join email_addr_bean_rel eabr on eabr.email_address_id = ea.id ";
+            $qry = ' select eabr.primary_address, ea.email_address';
+            $qry .= ' from email_addresses ea ';
+            $qry .= ' Left Join email_addr_bean_rel eabr on eabr.email_address_id = ea.id ';
             $qry .= " where eabr.bean_id = '{$trgt_id}' ";
-            $qry .= " and ea.deleted = 0 ";
-            $qry .= " and eabr.deleted = 0" ;
-            $qry .= " order by primary_address desc ";
+            $qry .= ' and ea.deleted = 0 ';
+            $qry .= ' and eabr.deleted = 0';
+            $qry .= ' order by primary_address desc ';
 
-            $result=$this->db->query($qry);
-            $row=$this->db->fetchByAssoc($result);
+            $result = $this->db->query($qry);
+            $row = $this->db->fetchByAssoc($result);
 
             if (!empty($row['email_address'])) {
                 $return_str = $row['email_address'];
             }
         }
+
         return $return_str;
     }
-
-
-
 
     //this function is called statically by the campaign_log subpanel.
     public static function get_related_name($related_id, $related_type)
     {
         global $locale;
-        $db= DBManagerFactory::getInstance();
+        $db = DBManagerFactory::getInstance();
         if ($related_type == 'Emails') {
-            $query="SELECT name from emails where id='$related_id'";
-            $result=$db->query($query);
-            $row=$db->fetchByAssoc($result);
+            $query = "SELECT name from emails where id='{$related_id}'";
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             if ($row != null) {
                 return $row['name'];
             }
         }
         if ($related_type == 'Contacts') {
-            $query="SELECT first_name, last_name from contacts where id='$related_id'";
-            $result=$db->query($query);
-            $row=$db->fetchByAssoc($result);
+            $query = "SELECT first_name, last_name from contacts where id='{$related_id}'";
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             if ($row != null) {
                 return $full_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
             }
         }
         if ($related_type == 'Leads') {
-            $query="SELECT first_name, last_name from leads where id='$related_id'";
-            $result=$db->query($query);
-            $row=$db->fetchByAssoc($result);
+            $query = "SELECT first_name, last_name from leads where id='{$related_id}'";
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             if ($row != null) {
                 return $full_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
             }
         }
         if ($related_type == 'Prospects') {
-            $query="SELECT first_name, last_name from prospects where id='$related_id'";
-            $result=$db->query($query);
-            $row=$db->fetchByAssoc($result);
+            $query = "SELECT first_name, last_name from prospects where id='{$related_id}'";
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             if ($row != null) {
                 return $full_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
             }
         }
         if ($related_type == 'CampaignTrackers') {
-            $query="SELECT tracker_url from campaign_trkrs where id='$related_id'";
-            $result=$db->query($query);
-            $row=$db->fetchByAssoc($result);
+            $query = "SELECT tracker_url from campaign_trkrs where id='{$related_id}'";
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             if ($row != null) {
-                return $row['tracker_url'] ;
+                return $row['tracker_url'];
             }
         }
         if ($related_type == 'Accounts') {
-            $query="SELECT name from accounts where id='$related_id'";
-            $result=$db->query($query);
-            $row=$db->fetchByAssoc($result);
+            $query = "SELECT name from accounts where id='{$related_id}'";
+            $result = $db->query($query);
+            $row = $db->fetchByAssoc($result);
             if ($row != null) {
                 return $row['name'];
             }
         }
-        return $related_id.$related_type;
+
+        return $related_id . $related_type;
     }
 }

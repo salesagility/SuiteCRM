@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class MapsMarkers extends \AcceptanceTester
 {
     /**
-     * Create a map marker
+     * Create a map marker.
      *
      * @param $name
      */

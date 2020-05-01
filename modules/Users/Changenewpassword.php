@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,7 +36,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -51,24 +49,23 @@ global $current_language;
 /** @var DBManager $db */
 $db = DBManagerFactory::getInstance();
 
-require_once('modules/Users/language/en_us.lang.php');
+require_once 'modules/Users/language/en_us.lang.php';
 $mod_strings = return_module_language('', 'Users');
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	RECAPTCHA CHECK ONLY
-require_once __DIR__.'/../../include/utils/recaptcha_utils.php';
+require_once __DIR__ . '/../../include/utils/recaptcha_utils.php';
 if (getRecaptchaChallengeField() !== false) {
-    $response =  displayRecaptchaValidation();
+    $response = displayRecaptchaValidation();
     if ($response === 'Success') {
         echo $response;
+
         return;
-    } else {
-        die($response);
     }
+    die($response);
 }
 ////	RECAPTCHA CHECK ONLY
 ///////////////////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	PASSWORD GENERATED LINK CHECK USING
@@ -88,7 +85,7 @@ if (isset($_REQUEST['guid'])) {
         if ($pwd_settings['linkexpiration']) {
             $delay = $pwd_settings['linkexpirationtime'] * $pwd_settings['linkexpirationtype'];
             $stim = strtotime($row['date_generated']) + date('Z');
-            $expiretime = TimeDate::getInstance()->fromTimestamp($stim)->get("+$delay  minutes")->asDb();
+            $expiretime = TimeDate::getInstance()->fromTimestamp($stim)->get("+{$delay}  minutes")->asDb();
             $timenow = TimeDate::getInstance()->nowDb();
             if ($timenow > $expiretime) {
                 $expired = '1';
@@ -107,7 +104,7 @@ if (isset($_REQUEST['guid'])) {
                         $usr->retrieve($usr_id);
                         $usr->setNewPassword($password);
                         $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
-                        DBManagerFactory::getInstance()->query($query2, true, "Error setting link for $usr->user_name: ");
+                        DBManagerFactory::getInstance()->query($query2, true, "Error setting link for {$usr->user_name}: ");
                         $_POST['user_name'] = $_REQUEST['user_name'];
                         $_POST['username_password'] = $_REQUEST['new_password'];
                         $_POST['module'] = 'Users';
@@ -119,8 +116,8 @@ if (isset($_REQUEST['guid'])) {
                             $_REQUEST[$k] = $v;
                             $_GET[$k] = $v;
                         }
-                        unset($_REQUEST['entryPoint']);
-                        unset($_GET['entryPoint']);
+                        unset($_REQUEST['entryPoint'], $_GET['entryPoint']);
+
                         $GLOBALS['app']->execute();
                         die();
                     }
@@ -131,7 +128,7 @@ if (isset($_REQUEST['guid'])) {
             }
         } else {
             $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
-            DBManagerFactory::getInstance()->query($query2, true, "Error setting link");
+            DBManagerFactory::getInstance()->query($query2, true, 'Error setting link');
         }
     }
 }
@@ -144,7 +141,7 @@ if ($redirect != '0') {
 ////	PASSWORD GENERATED LINK CHECK USING
 ///////////////////////////////////////////////////////////////////////////////
 
-require_once('include/MVC/View/SugarView.php');
+require_once 'include/MVC/View/SugarView.php';
 $view = new SugarView();
 $view->init();
 $view->displayHeader();
@@ -154,20 +151,19 @@ $sugar_smarty = new Sugar_Smarty();
 $pwd_settings = $GLOBALS['sugar_config']['passwordsetting'];
 
 $sugar_smarty->assign('sugar_md', getWebPath('include/images/sugar_md_open.png'));
-$sugar_smarty->assign("MOD", $mod_strings);
-$sugar_smarty->assign("CAPTCHA", displayRecaptcha());
-$sugar_smarty->assign("IS_ADMIN", '1');
-$sugar_smarty->assign("ENTRY_POINT", 'Changenewpassword');
+$sugar_smarty->assign('MOD', $mod_strings);
+$sugar_smarty->assign('CAPTCHA', displayRecaptcha());
+$sugar_smarty->assign('IS_ADMIN', '1');
+$sugar_smarty->assign('ENTRY_POINT', 'Changenewpassword');
 $sugar_smarty->assign('return_action', 'login');
-$sugar_smarty->assign("APP", $app_strings);
-$sugar_smarty->assign("INSTRUCTION", $app_strings['NTC_LOGIN_MESSAGE']);
-$sugar_smarty->assign("ERRORS", $errors);
+$sugar_smarty->assign('APP', $app_strings);
+$sugar_smarty->assign('INSTRUCTION', $app_strings['NTC_LOGIN_MESSAGE']);
+$sugar_smarty->assign('ERRORS', $errors);
 $sugar_smarty->assign(
-    "USERNAME_FIELD",
+    'USERNAME_FIELD',
     '<td scope="row" width="30%">' . $mod_strings['LBL_USER_NAME'] . ':</td><td width="70%"><input type="text" size="20" tabindex="1" id="user_name" name="user_name"  value=""></td>'
 );
 $sugar_smarty->assign('PWDSETTINGS', $GLOBALS['sugar_config']['passwordsetting']);
-
 
 $rules = "'','',''";
 
@@ -177,7 +173,7 @@ $sugar_smarty->assign('SUBMIT_BUTTON', '<input title="' . $mod_strings['LBL_LOGI
     . 'type="button" tabindex="3" id="login_button" name="Login" value="' . $mod_strings['LBL_LOGIN_BUTTON_LABEL'] . '" /><br>&nbsp');
 
 if (!empty($_REQUEST['guid'])) {
-    $sugar_smarty->assign("GUID", $_REQUEST['guid']);
+    $sugar_smarty->assign('GUID', $_REQUEST['guid']);
 }
 $sugar_smarty->display('modules/Users/Changenewpassword.tpl');
 $view->displayFooter();

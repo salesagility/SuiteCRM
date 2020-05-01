@@ -11,9 +11,6 @@ class Jjwg_MapsViewQuick_Radius extends SugarView
         parent::__construct();
     }
 
-
-
-
     public function display()
     {
         if (!isset($_REQUEST['quick_address'])) {
@@ -30,7 +27,7 @@ class Jjwg_MapsViewQuick_Radius extends SugarView
 <table border="0">
     <tr>
         <td>
-            <strong><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS'].': '; ?> </strong>
+            <strong><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS'] . ': '; ?> </strong>
         </td>
         <td>
             <input type="text" name="quick_address" id="quick_address"
@@ -39,7 +36,7 @@ class Jjwg_MapsViewQuick_Radius extends SugarView
     </tr>
     <tr>
         <td>
-            <strong><?php echo $GLOBALS['mod_strings']['LBL_MODULE_TYPE'].' '; ?> </strong>
+            <strong><?php echo $GLOBALS['mod_strings']['LBL_MODULE_TYPE'] . ' '; ?> </strong>
         </td>
         <td>
             <select id="display_module" tabindex="111" title="<?php echo $GLOBALS['mod_strings']['LBL_MODULE_TYPE']; ?>" name="display_module">
@@ -56,13 +53,13 @@ class Jjwg_MapsViewQuick_Radius extends SugarView
     </tr>
     <tr>
         <td>
-            <strong><?php echo $GLOBALS['mod_strings']['LBL_DISTANCE'].' '; ?> </strong>
+            <strong><?php echo $GLOBALS['mod_strings']['LBL_DISTANCE'] . ' '; ?> </strong>
         </td>
         <td>
             <input type="text" name="distance" id="distance"
             value="<?php echo htmlspecialchars($_REQUEST['distance']); ?>" title='' tabindex='121' size="10" maxlength="10">
             <select id="unit_type" tabindex="131" title="<?php echo $GLOBALS['mod_strings']['LBL_DISTANCE']; ?>" name="unit_type">
-                <?php foreach ($GLOBALS['app_list_strings']['map_unit_type_list'] as $key=>$value) {
+                <?php foreach ($GLOBALS['app_list_strings']['map_unit_type_list'] as $key => $value) {
             ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php
                     if ($key == $_REQUEST['unit_type']) {

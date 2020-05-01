@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -44,8 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
 use Api\V8\Param\GetUserPreferencesParams;
 use Api\V8\Service\UserPreferencesService;
 use Exception;
@@ -53,13 +50,12 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * UserPreferencesController
+ * UserPreferencesController.
  *
  * @author gyula
  */
 class UserPreferencesController extends BaseController
 {
-    
     /**
      * @var UserPreferencesService
      */
@@ -72,13 +68,13 @@ class UserPreferencesController extends BaseController
     {
         $this->userPreferencesService = $userPreferencesService;
     }
-    
+
     /**
-     *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @param GetUserPreferencesParams $params
+     *
      * @return Response
      */
     public function getUserPreferences(Request $request, Response $response, array $args, GetUserPreferencesParams $params)

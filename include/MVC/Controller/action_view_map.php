@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -45,21 +44,21 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  //format '<action_name>' => '<view_name>'
-$action_view_map['multieditview']= 'multiedit';
-$action_view_map['detailview']= 'detail';
-$action_view_map['editview']= 'edit';
-$action_view_map['listview']= 'list';
-$action_view_map['popup']= 'popup';
-$action_view_map['vcard']= 'vcard';
-$action_view_map['importvcard']= 'importvcard';
-$action_view_map['importvcardsave']= 'importvcardsave';
-$action_view_map['modulelistmenu']= 'modulelistmenu';
-$action_view_map['favorites']= 'favorites';
-$action_view_map['ajaxui']= 'ajaxui';
-$action_view_map['noaccess']= 'noaccess';
+$action_view_map['multieditview'] = 'multiedit';
+$action_view_map['detailview'] = 'detail';
+$action_view_map['editview'] = 'edit';
+$action_view_map['listview'] = 'list';
+$action_view_map['popup'] = 'popup';
+$action_view_map['vcard'] = 'vcard';
+$action_view_map['importvcard'] = 'importvcard';
+$action_view_map['importvcardsave'] = 'importvcardsave';
+$action_view_map['modulelistmenu'] = 'modulelistmenu';
+$action_view_map['favorites'] = 'favorites';
+$action_view_map['ajaxui'] = 'ajaxui';
+$action_view_map['noaccess'] = 'noaccess';
 
 // SugarPDF
-$action_view_map['sugarpdf']= 'sugarpdf';
+$action_view_map['sugarpdf'] = 'sugarpdf';
 $action_view_map['dc'] = 'dc';
 $action_view_map['dcajax'] = 'dcajax';
 $action_view_map['quick'] = 'quick';

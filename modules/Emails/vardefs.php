@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,16 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['Email'] = array(
+$dictionary['Email'] = [
     'table' => 'emails',
     'acl_fields' => false,
     'comment' => 'Contains a record of emails sent to and from the Sugar application',
-    'fields' => array(
-        'orphaned' => array(
+    'fields' => [
+        'orphaned' => [
             'name' => 'orphaned',
             'vname' => 'LBL_ORPHANED',
             'type' => 'bool',
@@ -55,8 +53,8 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'comment' => 'Emails which exists in the SuiteCRM but have been deleted from the email server',
             'inline_edit' => false,
-        ),
-        'last_synced' => array(
+        ],
+        'last_synced' => [
             'name' => 'last_synced',
             'vname' => 'LBL_LAST_SYNCED',
             'type' => 'datetime',
@@ -64,90 +62,88 @@ $dictionary['Email'] = array(
             'inline_edit' => false,
             'required' => false,
             'reportable' => false,
-        ),
-        'from_addr_name' => array(
+        ],
+        'from_addr_name' => [
             'name' => 'from_addr_name',
             'type' => 'varchar',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
+        ],
 
-        'reply_to_addr' => array(
+        'reply_to_addr' => [
             'name' => 'reply_to_addr',
             'type' => 'varchar',
             'vname' => 'reply_to_addr',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
+        ],
 
-        'to_addrs_names' => array(
+        'to_addrs_names' => [
             'name' => 'to_addrs_names',
             'type' => 'varchar',
             'vname' => 'to_addrs_names',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
-        'cc_addrs_names' => array(
+        ],
+        'cc_addrs_names' => [
             'name' => 'cc_addrs_names',
             'type' => 'varchar',
             'vname' => 'cc_addrs_names',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
-        'bcc_addrs_names' => array(
+        ],
+        'bcc_addrs_names' => [
             'name' => 'bcc_addrs_names',
             'type' => 'varchar',
             'vname' => 'bcc_addrs_names',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
-        'imap_keywords' => array(
+        ],
+        'imap_keywords' => [
             'name' => 'imap_keywords',
             'type' => 'varchar',
             'vname' => 'LBL_IMAP_KEYWORDS',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
+        ],
 
-        'raw_source' => array(
+        'raw_source' => [
             'name' => 'raw_source',
             'type' => 'varchar',
             'vname' => 'raw_source',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
-        'description_html' => array(
+        ],
+        'description_html' => [
             'name' => 'description_html',
             'type' => 'emailbody',
             'vname' => 'description_html',
             'source' => 'non-db',
             'inline_edit' => false,
-        ),
-        'description' => array(
+        ],
+        'description' => [
             'name' => 'description',
             'type' => 'text',
             'vname' => 'description',
             'source' => 'non-db',
             'inline_edit' => false,
-
-        ),
-        'date_sent_received' => array(
+        ],
+        'date_sent_received' => [
             'name' => 'date_sent_received',
             'vname' => 'LBL_DATE_SENT_RECEIVED',
             'type' => 'datetime',
             'inline_edit' => false,
-        ),
-        'message_id' => array(
+        ],
+        'message_id' => [
             'name' => 'message_id',
             'vname' => 'LBL_MESSAGE_ID',
             'type' => 'varchar',
             'len' => 255,
             'comment' => 'ID of the email item obtained from the email transport system',
             'inline_edit' => false,
+        ],
 
-        ),
-
-        'name' => array(
+        'name' => [
             'name' => 'name',
             'vname' => 'LBL_SUBJECT',
             'type' => 'name',
@@ -156,9 +152,8 @@ $dictionary['Email'] = array(
             'len' => '255',
             'comment' => 'The subject of the email',
             'inline_edit' => false,
-
-        ),
-        'type' => array(
+        ],
+        'type' => [
             'name' => 'type',
             'vname' => 'LBL_LIST_TYPE',
             'type' => 'enum',
@@ -167,18 +162,16 @@ $dictionary['Email'] = array(
             'massupdate' => false,
             'comment' => 'Type of email (ex: draft)',
             'inline_edit' => false,
-
-        ),
-        'status' => array(
+        ],
+        'status' => [
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'enum',
             'len' => 100,
             'options' => 'dom_email_status',
             'inline_edit' => false,
-
-        ),
-        'flagged' => array(
+        ],
+        'flagged' => [
             'name' => 'flagged',
             'vname' => 'LBL_EMAIL_FLAGGED',
             'type' => 'bool',
@@ -186,9 +179,8 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'comment' => 'flagged status',
             'inline_edit' => false,
-
-        ),
-        'reply_to_status' => array(
+        ],
+        'reply_to_status' => [
             'name' => 'reply_to_status',
             'vname' => 'LBL_EMAIL_REPLY_TO_STATUS',
             'type' => 'bool',
@@ -196,9 +188,8 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'comment' => 'I you reply to an email then reply to status of original email is set',
             'inline_edit' => false,
-
-        ),
-        'intent' => array(
+        ],
+        'intent' => [
             'name' => 'intent',
             'vname' => 'LBL_INTENT',
             'type' => 'varchar',
@@ -206,18 +197,16 @@ $dictionary['Email'] = array(
             'default' => 'pick',
             'comment' => 'Target of action used in Inbound Email assignment',
             'inline_edit' => false,
-
-        ),
-        'mailbox_id' => array(
+        ],
+        'mailbox_id' => [
             'name' => 'mailbox_id',
             'vname' => 'LBL_MAILBOX_ID',
             'type' => 'id',
             'len' => '36',
             'reportable' => false,
             'inline_edit' => false,
-
-        ),
-        'created_by_link' => array(
+        ],
+        'created_by_link' => [
             'name' => 'created_by_link',
             'type' => 'link',
             'relationship' => 'emails_created_by',
@@ -227,9 +216,8 @@ $dictionary['Email'] = array(
             'bean_name' => 'User',
             'source' => 'non-db',
             'inline_edit' => false,
-
-        ),
-        'modified_user_link' => array(
+        ],
+        'modified_user_link' => [
             'name' => 'modified_user_link',
             'type' => 'link',
             'relationship' => 'emails_modified_user',
@@ -239,9 +227,8 @@ $dictionary['Email'] = array(
             'bean_name' => 'User',
             'source' => 'non-db',
             'inline_edit' => false,
-
-        ),
-        'assigned_user_link' => array(
+        ],
+        'assigned_user_link' => [
             'name' => 'assigned_user_link',
             'type' => 'link',
             'relationship' => 'emails_assigned_user',
@@ -251,21 +238,20 @@ $dictionary['Email'] = array(
             'bean_name' => 'User',
             'source' => 'non-db',
             'inline_edit' => false,
+        ],
 
-        ),
-
-        'parent_name' => array(
-            'name'=> 'parent_name',
-            'parent_type'=>'record_type_display' ,
-            'type_name'=>'parent_type',
-            'id_name'=>'parent_id',
-            'vname'=>'LBL_EMAIL_RELATE',
-            'type'=>'parent',
-            'source'=>'non-db',
-            'options'=> 'record_type_display',
+        'parent_name' => [
+            'name' => 'parent_name',
+            'parent_type' => 'record_type_display',
+            'type_name' => 'parent_type',
+            'id_name' => 'parent_id',
+            'vname' => 'LBL_EMAIL_RELATE',
+            'type' => 'parent',
+            'source' => 'non-db',
+            'options' => 'record_type_display',
             'inline_edit' => false,
-        ),
-        'parent_type' => array(
+        ],
+        'parent_type' => [
             'name' => 'parent_type',
             'vname' => 'LBL_PARENT_TYPE',
             'type' => 'varchar',
@@ -273,9 +259,8 @@ $dictionary['Email'] = array(
             'len' => 100,
             'comment' => 'Identifier of Sugar module to which this email is associated (deprecated as of 4.2)',
             'inline_edit' => false,
-
-        ),
-        'parent_id' => array(
+        ],
+        'parent_id' => [
             'name' => 'parent_id',
             'vname' => 'LBL_PARENT_ID',
             'type' => 'id',
@@ -283,10 +268,9 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'comment' => 'ID of Sugar object referenced by parent_type (deprecated as of 4.2)',
             'inline_edit' => false,
+        ],
 
-        ),
-
-        'indicator' => array(
+        'indicator' => [
             'name' => 'indicator',
             'vname' => 'LBL_INDICATOR',
             'type' => 'function',
@@ -296,15 +280,15 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'studio' => 'visible',
             'inline_edit' => false,
-            'function' => array(
+            'function' => [
                 'name' => 'displayIndicatorField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displayIndicatorField.php',
-                'onListView' =>  true
-            ),
-        ),
+                'onListView' => true
+            ],
+        ],
 
-        'subject' => array(
+        'subject' => [
             'name' => 'subject',
             'vname' => 'LBL_SUBJECT',
             'type' => 'function',
@@ -314,15 +298,15 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'studio' => 'visible',
             'inline_edit' => false,
-            'function' => array(
+            'function' => [
                 'name' => 'displaySubjectField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displaySubjectField.php',
-                'onListView' =>  true
-            ),
-        ),
+                'onListView' => true
+            ],
+        ],
 
-        'attachment' => array(
+        'attachment' => [
             'name' => 'attachment',
             'vname' => 'LBL_ATTACHMENTS',
             'type' => 'function',
@@ -332,25 +316,24 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'studio' => 'visible',
             'inline_edit' => false,
-            'function' => array(
+            'function' => [
                 'name' => 'displayAttachmentField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displayAttachmentField.php',
-                'onListView' =>  true
-            ),
-        ),
+                'onListView' => true
+            ],
+        ],
 
-        'uid' => array(
+        'uid' => [
             'name' => 'uid',
             'type' => 'varchar',
             'massupdate' => 0,
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
-        ),
+        ],
 
-
-        'msgno' => array(
+        'msgno' => [
             'name' => 'msgno',
             'type' => 'varchar',
             'source' => 'non-db',
@@ -358,10 +341,9 @@ $dictionary['Email'] = array(
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
-        ),
+        ],
 
-
-        'folder' => array(
+        'folder' => [
             'name' => 'folder',
             'type' => 'varchar',
             'source' => 'non-db',
@@ -369,9 +351,9 @@ $dictionary['Email'] = array(
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
-        ),
+        ],
 
-        'folder_type' => array(
+        'folder_type' => [
             'name' => 'folder_type',
             'type' => 'varchar',
             'source' => 'non-db',
@@ -379,8 +361,8 @@ $dictionary['Email'] = array(
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
-        ),
-        'inbound_email_record' => array(
+        ],
+        'inbound_email_record' => [
             'name' => 'inbound_email_record',
             'type' => 'varchar',
             'source' => 'non-db',
@@ -388,9 +370,9 @@ $dictionary['Email'] = array(
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
-        ),
+        ],
 
-        'is_imported' => array(
+        'is_imported' => [
             'name' => 'is_imported',
             'type' => 'varchar',
             'source' => 'non-db',
@@ -398,10 +380,9 @@ $dictionary['Email'] = array(
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
-        ),
+        ],
 
-
-        'has_attachment' => array(
+        'has_attachment' => [
             'name' => 'has_attachment',
             'vname' => 'LBL_HAS_ATTACHMENT_INDICATOR',
             'type' => 'function',
@@ -411,15 +392,15 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'studio' => 'visible',
             'inline_edit' => false,
-            'function' => array(
+            'function' => [
                 'name' => 'displayHasAttachmentField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displayHasAttachmentField.php',
-                'onListView' =>  true
-            ),
-        ),
+                'onListView' => true
+            ],
+        ],
 
-        'is_only_plain_text' => array(
+        'is_only_plain_text' => [
             'name' => 'is_only_plain_text',
             'type' => 'bool',
             'default' => false,
@@ -428,10 +409,10 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
             'source' => 'non-db',
-        ),
-        /* relationship collection attributes */
-        /* added to support InboundEmail */
-        'accounts' => array(
+        ],
+        // relationship collection attributes
+        // added to support InboundEmail
+        'accounts' => [
             'name' => 'accounts',
             'vname' => 'LBL_EMAILS_ACCOUNTS_REL',
             'type' => 'link',
@@ -439,8 +420,8 @@ $dictionary['Email'] = array(
             'module' => 'Accounts',
             'bean_name' => 'Account',
             'source' => 'non-db',
-        ),
-        'bugs' => array(
+        ],
+        'bugs' => [
             'name' => 'bugs',
             'vname' => 'LBL_EMAILS_BUGS_REL',
             'type' => 'link',
@@ -448,8 +429,8 @@ $dictionary['Email'] = array(
             'module' => 'Bugs',
             'bean_name' => 'Bug',
             'source' => 'non-db',
-        ),
-        'cases' => array(
+        ],
+        'cases' => [
             'name' => 'cases',
             'vname' => 'LBL_EMAILS_CASES_REL',
             'type' => 'link',
@@ -457,8 +438,8 @@ $dictionary['Email'] = array(
             'module' => 'Cases',
             'bean_name' => 'Case',
             'source' => 'non-db',
-        ),
-        'contacts' => array(
+        ],
+        'contacts' => [
             'name' => 'contacts',
             'vname' => 'LBL_EMAILS_CONTACTS_REL',
             'type' => 'link',
@@ -466,8 +447,8 @@ $dictionary['Email'] = array(
             'module' => 'Contacts',
             'bean_name' => 'Contact',
             'source' => 'non-db',
-        ),
-        'leads' => array(
+        ],
+        'leads' => [
             'name' => 'leads',
             'vname' => 'LBL_EMAILS_LEADS_REL',
             'type' => 'link',
@@ -475,8 +456,8 @@ $dictionary['Email'] = array(
             'module' => 'Leads',
             'bean_name' => 'Lead',
             'source' => 'non-db',
-        ),
-        'opportunities' => array(
+        ],
+        'opportunities' => [
             'name' => 'opportunities',
             'vname' => 'LBL_EMAILS_OPPORTUNITIES_REL',
             'type' => 'link',
@@ -484,8 +465,8 @@ $dictionary['Email'] = array(
             'module' => 'Opportunities',
             'bean_name' => 'Opportunity',
             'source' => 'non-db',
-        ),
-        'project' => array(
+        ],
+        'project' => [
             'name' => 'project',
             'vname' => 'LBL_EMAILS_PROJECT_REL',
             'type' => 'link',
@@ -493,8 +474,8 @@ $dictionary['Email'] = array(
             'module' => 'Project',
             'bean_name' => 'Project',
             'source' => 'non-db',
-        ),
-        'projecttask' => array(
+        ],
+        'projecttask' => [
             'name' => 'projecttask',
             'vname' => 'LBL_EMAILS_PROJECT_TASK_REL',
             'type' => 'link',
@@ -502,8 +483,8 @@ $dictionary['Email'] = array(
             'module' => 'ProjectTask',
             'bean_name' => 'ProjectTask',
             'source' => 'non-db',
-        ),
-        'prospects' => array(
+        ],
+        'prospects' => [
             'name' => 'prospects',
             'vname' => 'LBL_EMAILS_PROSPECT_REL',
             'type' => 'link',
@@ -511,8 +492,8 @@ $dictionary['Email'] = array(
             'module' => 'Prospects',
             'bean_name' => 'Prospect',
             'source' => 'non-db',
-        ),
-        'aos_contracts' => array(
+        ],
+        'aos_contracts' => [
             'name' => 'aos_contracts',
             'vname' => 'LBL_EMAILS_CONTRACTS_REL',
             'type' => 'link',
@@ -520,9 +501,9 @@ $dictionary['Email'] = array(
             'module' => 'AOS_Contracts',
             'bean_name' => 'AOS_Contracts',
             'source' => 'non-db',
-        ),
+        ],
 
-        'tasks' => array(
+        'tasks' => [
             'name' => 'tasks',
             'vname' => 'LBL_EMAILS_TASKS_REL',
             'type' => 'link',
@@ -530,8 +511,8 @@ $dictionary['Email'] = array(
             'module' => 'Tasks',
             'bean_name' => 'Task',
             'source' => 'non-db',
-        ),
-        'users' => array(
+        ],
+        'users' => [
             'name' => 'users',
             'vname' => 'LBL_EMAILS_USERS_REL',
             'type' => 'link',
@@ -539,8 +520,8 @@ $dictionary['Email'] = array(
             'module' => 'Users',
             'bean_name' => 'User',
             'source' => 'non-db',
-        ),
-        'notes' => array(
+        ],
+        'notes' => [
             'name' => 'notes',
             'vname' => 'LBL_EMAILS_NOTES_REL',
             'type' => 'link',
@@ -548,9 +529,9 @@ $dictionary['Email'] = array(
             'module' => 'Notes',
             'bean_name' => 'Note',
             'source' => 'non-db',
-        ),
+        ],
         // SNIP
-        'meetings' => array(
+        'meetings' => [
             'name' => 'meetings',
             'vname' => 'LBL_EMAILS_MEETINGS_REL',
             'type' => 'link',
@@ -558,19 +539,19 @@ $dictionary['Email'] = array(
             'module' => 'Meetings',
             'bean_name' => 'Meeting',
             'source' => 'non-db',
-        ),
-        /* end relationship collections */
+        ],
+        // end relationship collections
 
-        'category_id' => array(
+        'category_id' => [
             'name' => 'category_id',
             'vname' => 'LBL_CATEGORY',
             'type' => 'enum',
             'len' => 100,
             'options' => 'email_category_dom',
             'reportable' => true,
-        ),
+        ],
 
-        "emails_email_templates" => array(
+        'emails_email_templates' => [
             'name' => 'emails_email_templates',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -579,8 +560,8 @@ $dictionary['Email'] = array(
             'bean_name' => 'EmailTemplate',
             'vname' => 'LBL_EMAIL_TEMPLATE',
             'id_name' => 'emails_email_templates_idb',
-        ),
-        "emails_email_templates_name" => array(
+        ],
+        'emails_email_templates_name' => [
             'name' => 'emails_email_templates_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -591,8 +572,8 @@ $dictionary['Email'] = array(
             'table' => 'email_templates',
             'module' => 'EmailTemplates',
             'rname' => 'name',
-        ),
-        "emails_email_templates_idb" => array(
+        ],
+        'emails_email_templates_idb' => [
             'name' => 'emails_email_templates_idb',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -600,8 +581,8 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'side' => 'left',
             'vname' => 'LBL_EMAIL_TEMPLATE',
-        ),
-        'opt_in' => array(
+        ],
+        'opt_in' => [
             'name' => 'opt_in',
             'vname' => 'LBL_OPT_IN',
             'type' => 'function',
@@ -611,16 +592,16 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'studio' => 'visible',
             'inline_edit' => false,
-            'function' => array(
+            'function' => [
                 'name' => 'displayEmailAddressOptInField',
                 'returns' => 'html',
                 'include' => 'modules/Emails/include/displayEmailAddressOptInField.php',
-                'onListView' =>  true
-            ),
-        ),
-    ), /* end fields() array */
-    'relationships' => array(
-        'emails_assigned_user' => array(
+                'onListView' => true
+            ],
+        ],
+    ], // end fields() array
+    'relationships' => [
+        'emails_assigned_user' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -628,8 +609,8 @@ $dictionary['Email'] = array(
             'rhs_table' => 'emails',
             'rhs_key' => 'assigned_user_id',
             'relationship_type' => 'one-to-many',
-        ),
-        'emails_modified_user' => array(
+        ],
+        'emails_modified_user' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -637,8 +618,8 @@ $dictionary['Email'] = array(
             'rhs_table' => 'emails',
             'rhs_key' => 'modified_user_id',
             'relationship_type' => 'one-to-many',
-        ),
-        'emails_created_by' => array(
+        ],
+        'emails_created_by' => [
             'lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',
@@ -646,8 +627,8 @@ $dictionary['Email'] = array(
             'rhs_table' => 'emails',
             'rhs_key' => 'created_by',
             'relationship_type' => 'one-to-many',
-        ),
-        'emails_notes_rel' => array(
+        ],
+        'emails_notes_rel' => [
             'lhs_module' => 'Emails',
             'lhs_table' => 'emails',
             'lhs_key' => 'id',
@@ -655,8 +636,8 @@ $dictionary['Email'] = array(
             'rhs_table' => 'notes',
             'rhs_key' => 'parent_id',
             'relationship_type' => 'one-to-many',
-        ),
-        'emails_contacts_rel' => array(
+        ],
+        'emails_contacts_rel' => [
             'lhs_module' => 'Emails',
             'lhs_table' => 'emails',
             'lhs_key' => 'id',
@@ -669,8 +650,8 @@ $dictionary['Email'] = array(
             'join_key_rhs' => 'bean_id',
             'relationship_role_column' => 'bean_module',
             'relationship_role_column_value' => 'Contacts',
-        ),
-        'emails_accounts_rel' => array(
+        ],
+        'emails_accounts_rel' => [
             'lhs_module' => 'Emails',
             'lhs_table' => 'emails',
             'lhs_key' => 'id',
@@ -683,8 +664,8 @@ $dictionary['Email'] = array(
             'join_key_rhs' => 'bean_id',
             'relationship_role_column' => 'bean_module',
             'relationship_role_column_value' => 'Accounts',
-        ),
-        'emails_leads_rel' => array(
+        ],
+        'emails_leads_rel' => [
             'lhs_module' => 'Emails',
             'lhs_table' => 'emails',
             'lhs_key' => 'id',
@@ -697,8 +678,8 @@ $dictionary['Email'] = array(
             'join_key_rhs' => 'bean_id',
             'relationship_role_column' => 'bean_module',
             'relationship_role_column_value' => 'Leads',
-        ),
-        'emails_aos_contracts_rel' => array(
+        ],
+        'emails_aos_contracts_rel' => [
             'lhs_module' => 'Emails',
             'lhs_table' => 'emails',
             'lhs_key' => 'id',
@@ -711,9 +692,9 @@ $dictionary['Email'] = array(
             'join_key_rhs' => 'bean_id',
             'relationship_role_column' => 'bean_module',
             'relationship_role_column_value' => 'AOS_Contracts',
-        ),
+        ],
         // SNIP
-        'emails_meetings_rel' => array(
+        'emails_meetings_rel' => [
             'lhs_module' => 'Emails',
             'lhs_table' => 'emails',
             'lhs_key' => 'id',
@@ -726,38 +707,38 @@ $dictionary['Email'] = array(
             'join_key_rhs' => 'bean_id',
             'relationship_role_column' => 'bean_module',
             'relationship_role_column_value' => 'Meetings',
-        ),
-    ), // end relationships
-    'indices' => array(
-        array(
+        ],
+    ], // end relationships
+    'indices' => [
+        [
             'name' => 'idx_email_name',
             'type' => 'index',
-            'fields' => array('name'),
-        ),
-        array(
+            'fields' => ['name'],
+        ],
+        [
             'name' => 'idx_message_id',
             'type' => 'index',
-            'fields' => array('message_id'),
-        ),
-        array(
+            'fields' => ['message_id'],
+        ],
+        [
             'name' => 'idx_email_parent_id',
             'type' => 'index',
-            'fields' => array('parent_id'),
-        ),
-        array(
+            'fields' => ['parent_id'],
+        ],
+        [
             'name' => 'idx_email_assigned',
             'type' => 'index',
-            'fields' => array('assigned_user_id', 'type', 'status'),
-        ),
-        array(
+            'fields' => ['assigned_user_id', 'type', 'status'],
+        ],
+        [
             'name' => 'idx_email_cat',
             'type' => 'index',
-            'fields' => array('category_id')
-        ),
-    ) // end indices
-);
+            'fields' => ['category_id']
+        ],
+    ] // end indices
+];
 
-VardefManager::createVardef('Emails', 'Email', array('default',
-        'basic',
-        'assignable','security_groups',
-));
+VardefManager::createVardef('Emails', 'Email', ['default',
+    'basic',
+    'assignable', 'security_groups',
+]);

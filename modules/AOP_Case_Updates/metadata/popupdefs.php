@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @package Advanced OpenPortal
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +16,6 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -28,12 +25,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $module_name = 'AOP_Case_Updates';
 $object_name = 'AOP_Case_Updates';
 $_module_name = 'aop_case_updates';
-$popupMeta = array('moduleMain' => $module_name,
-                        'varName' => $object_name,
-                        'orderBy' => $_module_name.'.name',
-                        'whereClauses' =>
-                            array('name' => $_module_name . '.name',
-                                ),
-                            'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
-                            
-                        );
+$popupMeta = ['moduleMain' => $module_name,
+    'varName' => $object_name,
+    'orderBy' => $_module_name . '.name',
+    'whereClauses' => ['name' => $_module_name . '.name',
+    ],
+    'searchInputs' => [$_module_name . '_number', 'name', 'priority', 'status'],
+];

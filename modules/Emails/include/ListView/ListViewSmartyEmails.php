@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,29 +36,29 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/ListView/ListViewSmarty.php');
-require_once('modules/Emails/include/ListView/ListViewDataEmails.php');
+require_once 'include/ListView/ListViewSmarty.php';
+require_once 'modules/Emails/include/ListView/ListViewDataEmails.php';
 
 class ListViewSmartyEmails extends ListViewSmarty
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         parent::__construct();
         $this->ss = new Sugar_Smarty();
         $this->lvd = new ListViewDataEmails();
-        $this->searchColumns = array();
+        $this->searchColumns = [];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @param SugarBean $seed
      * @param File $file
      * @param string $where
@@ -69,17 +68,17 @@ class ListViewSmartyEmails extends ListViewSmarty
      * @param array $filter_fields
      * @param string $id_field
      * @param null $id
-     * @return bool
      *
+     * @return bool
      */
     public function setup(
         $seed,
         $file,
         $where,
-        $params = array(),
+        $params = [],
         $offset = 0,
         $limit = -1,
-        $filter_fields = array(),
+        $filter_fields = [],
         $id_field = 'id',
         $id = null
     ) {

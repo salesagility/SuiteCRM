@@ -1,10 +1,10 @@
 <?php
+
 // created: 2013-04-25 14:25:35
 global $app_strings;
-$subpanel_layout['list_fields'] = array(
-  'checkbox' =>
-  array(
-    'vname' =>  "<ul id='selectLinkTop' class='clickMenu selectmenu SugarActionMenu' name=''>
+$subpanel_layout['list_fields'] = [
+    'checkbox' => [
+        'vname' => "<ul id='selectLinkTop' class='clickMenu selectmenu SugarActionMenu' name=''>
                     <li class='sugar_action_button'>
                       <input class='checkallContacts' class='checkbox massall' type='checkbox' name='checkallContacts' style='float: left;margin: 2px 0 0 2px;' onclick=''>
                       <ul class='cust_list' style='background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #CCCCCC;box-shadow: 0 5px 10px #999999;float: left;left: 0;list-style: none outside none;margin: 0;overflow: hidden;padding: 8px 0;position: absolute;top: 18px;width: auto;z-index: 10;display: none;'>
@@ -15,115 +15,99 @@ $subpanel_layout['list_fields'] = array(
                       <span class='cust_select' class='subhover dropDownHandle.addClass(\"subhover\");'><span class=\"suitepicon suitepicon-action-caret\"></span></span>
                     </li>
                     </ul>",
-    'widget_type' => 'checkbox',
-    'widget_class' => 'SubPanelCheck',
-    'checkbox_value' => true,
-    'width' => '5%',
-    'sortable' => false,
-    'default' => true,
-  ),
-  'name' =>
-  array(
-    'name' => 'name',
-    'vname' => 'LBL_LIST_NAME',
-    'sort_by' => 'last_name',
-    'sort_order' => 'asc',
-    'widget_class' => 'SubPanelDetailViewLink',
-    'module' => 'Contacts',
-    'width' => '23%',
-    'default' => true,
-  ),
-  'account_name' =>
-  array(
-    'name' => 'account_name',
-    'module' => 'Accounts',
-    'target_record_key' => 'account_id',
-    'target_module' => 'Accounts',
-    'widget_class' => 'SubPanelDetailViewLink',
-    'vname' => 'LBL_LIST_ACCOUNT_NAME',
-    'width' => '22%',
-    'sortable' => false,
-    'default' => true,
-  ),
-  'phone_work' =>
-  array(
-    'name' => 'phone_work',
-    'vname' => 'LBL_LIST_PHONE',
-    'width' => '15%',
-    'default' => true,
-  ),
-  'email1' =>
-  array(
-    'name' => 'email1',
-    'vname' => 'LBL_LIST_EMAIL',
-    'widget_class' => 'SubPanelEmailLink',
-    'width' => '20%',
-    'sortable' => false,
-    'default' => true,
-  ),
-  'event_status_name' =>
-  array(
-    'vname' => 'LBL_STATUS',
-    'width' => '10%',
-    'sortable' => false,
-    'default' => true,
-  ),
-  'event_accept_status' =>
-  array(
-    'width' => '10%',
-    'sortable' => false,
-    'default' => true,
-    'vname' => 'LBL_ACCEPT_STATUS',
-  ),
-   'edit_button' =>
-  array(
-    'vname' => 'LBL_EDIT_BUTTON',
-    'widget_class' => 'SubPanelEditButton',
-    'module' => 'Contacts',
-    'width' => '5%',
-    'default' => true,
-  ),
-  'remove_button' =>
-  array(
-    'vname' => 'LBL_REMOVE',
-    'widget_class' => 'SubPanelRemoveButton',
-    'module' => 'Contacts',
-    'width' => '5%',
-    'default' => true,
-  ),
-  'e_accept_status_fields' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'event_status_id' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'e_invite_status_fields' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'event_invite_id' =>
-  array(
-    'usage' => 'query_only',
-  ),
-  'first_name' =>
-  array(
-    'name' => 'first_name',
-    'usage' => 'query_only',
-  ),
-  'last_name' =>
-  array(
-    'name' => 'last_name',
-    'usage' => 'query_only',
-  ),
-  'salutation' =>
-  array(
-    'name' => 'salutation',
-    'usage' => 'query_only',
-  ),
-  'account_id' =>
-  array(
-    'usage' => 'query_only',
-  ),
-);
+        'widget_type' => 'checkbox',
+        'widget_class' => 'SubPanelCheck',
+        'checkbox_value' => true,
+        'width' => '5%',
+        'sortable' => false,
+        'default' => true,
+    ],
+    'name' => [
+        'name' => 'name',
+        'vname' => 'LBL_LIST_NAME',
+        'sort_by' => 'last_name',
+        'sort_order' => 'asc',
+        'widget_class' => 'SubPanelDetailViewLink',
+        'module' => 'Contacts',
+        'width' => '23%',
+        'default' => true,
+    ],
+    'account_name' => [
+        'name' => 'account_name',
+        'module' => 'Accounts',
+        'target_record_key' => 'account_id',
+        'target_module' => 'Accounts',
+        'widget_class' => 'SubPanelDetailViewLink',
+        'vname' => 'LBL_LIST_ACCOUNT_NAME',
+        'width' => '22%',
+        'sortable' => false,
+        'default' => true,
+    ],
+    'phone_work' => [
+        'name' => 'phone_work',
+        'vname' => 'LBL_LIST_PHONE',
+        'width' => '15%',
+        'default' => true,
+    ],
+    'email1' => [
+        'name' => 'email1',
+        'vname' => 'LBL_LIST_EMAIL',
+        'widget_class' => 'SubPanelEmailLink',
+        'width' => '20%',
+        'sortable' => false,
+        'default' => true,
+    ],
+    'event_status_name' => [
+        'vname' => 'LBL_STATUS',
+        'width' => '10%',
+        'sortable' => false,
+        'default' => true,
+    ],
+    'event_accept_status' => [
+        'width' => '10%',
+        'sortable' => false,
+        'default' => true,
+        'vname' => 'LBL_ACCEPT_STATUS',
+    ],
+    'edit_button' => [
+        'vname' => 'LBL_EDIT_BUTTON',
+        'widget_class' => 'SubPanelEditButton',
+        'module' => 'Contacts',
+        'width' => '5%',
+        'default' => true,
+    ],
+    'remove_button' => [
+        'vname' => 'LBL_REMOVE',
+        'widget_class' => 'SubPanelRemoveButton',
+        'module' => 'Contacts',
+        'width' => '5%',
+        'default' => true,
+    ],
+    'e_accept_status_fields' => [
+        'usage' => 'query_only',
+    ],
+    'event_status_id' => [
+        'usage' => 'query_only',
+    ],
+    'e_invite_status_fields' => [
+        'usage' => 'query_only',
+    ],
+    'event_invite_id' => [
+        'usage' => 'query_only',
+    ],
+    'first_name' => [
+        'name' => 'first_name',
+        'usage' => 'query_only',
+    ],
+    'last_name' => [
+        'name' => 'last_name',
+        'usage' => 'query_only',
+    ],
+    'salutation' => [
+        'name' => 'salutation',
+        'usage' => 'query_only',
+    ],
+    'account_id' => [
+        'usage' => 'query_only',
+    ],
+];

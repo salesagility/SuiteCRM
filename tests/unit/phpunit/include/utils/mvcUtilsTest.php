@@ -3,6 +3,9 @@
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/mvc_utils.php';
+/**
+ * @internal
+ */
 class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testloadParentView()
@@ -44,7 +47,7 @@ class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         if (!$ajaxUIDisabled) {
             $this->assertSame('?action=ajaxui#ajaxUILoc=', ajaxLink(''));
-            $testModules = array(
+            $testModules = [
                 'Calendar',
                 'Emails',
                 'Campaigns',
@@ -58,8 +61,8 @@ class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
                 'Releases',
                 'Groups',
                 'EmailMan',
-                "Administration",
-                "ModuleBuilder",
+                'Administration',
+                'ModuleBuilder',
                 'Schedulers',
                 'SchedulersJobs',
                 'DynamicFields',
@@ -84,12 +87,12 @@ class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
                 'Employees',
                 'Import',
                 'OAuthKeys'
-            );
+            ];
             $bannedModules = ajaxBannedModules();
             foreach ($testModules as $module) {
-                $uri = "index.php?module=$module&action=detail&record=1";
+                $uri = "index.php?module={$module}&action=detail&record=1";
                 if (!in_array($module, $bannedModules)) {
-                    $this->assertSame("?action=ajaxui#ajaxUILoc=" . urlencode($uri), ajaxLink($uri));
+                    $this->assertSame('?action=ajaxui#ajaxUILoc=' . urlencode($uri), ajaxLink($uri));
                 } else {
                     $this->assertSame($uri, ajaxLink($uri));
                 }

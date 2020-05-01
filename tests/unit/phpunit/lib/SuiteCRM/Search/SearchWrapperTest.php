@@ -8,11 +8,12 @@ use Mockery;
 use ReflectionException;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
 
-
 /**
- * Class SearchWrapperTest
+ * Class SearchWrapperTest.
  *
  * @see SearchWrapper
+ *
+ * @internal
  */
 class SearchWrapperTest extends SearchTestAbstract
 {
@@ -24,7 +25,7 @@ class SearchWrapperTest extends SearchTestAbstract
             $searchEngine = $this->invokeMethod($search, 'fetchEngine', ['ElasticSearchEngine']);
             $this->assertInstanceOf('ElasticSearchEngine', $searchEngine);
         } catch (ReflectionException $exception) {
-            $this->fail("Failed to use reflection!");
+            $this->fail('Failed to use reflection!');
         }
     }
 
@@ -35,9 +36,9 @@ class SearchWrapperTest extends SearchTestAbstract
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['VeryFakeEngine']);
-            $this->fail("Exception should be thrown here!");
+            $this->fail('Exception should be thrown here!');
         } catch (ReflectionException $exception) {
-            $this->fail("Failed to use reflection!");
+            $this->fail('Failed to use reflection!');
         } catch (SearchEngineNotFoundException $exception) {
             // All good!
         }
@@ -60,7 +61,7 @@ class SearchWrapperTest extends SearchTestAbstract
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['BadMockSearch']);
-            $this->fail("Exception should be thrown here!");
+            $this->fail('Exception should be thrown here!');
         } catch (SearchEngineNotFoundException $exception) {
             echo $exception->getMessage();
         }
@@ -111,18 +112,18 @@ class SearchWrapperTest extends SearchTestAbstract
 
         $result = SearchWrapper::search('SearchEngineMock', SearchQuery::fromString('foo'));
 
-        self::assertEquals('bar', $result, "Wrong mocked search result!");
+        self::assertEquals('bar', $result, 'Wrong mocked search result!');
 
         $result = SearchWrapper::search('SearchEngineMock', SearchQuery::fromString('fooz'));
 
-        self::assertEquals('barz', $result, "Wrong mocked search result!");
+        self::assertEquals('barz', $result, 'Wrong mocked search result!');
     }
 
     public function testSearch2()
     {
         // this time try passing a custom engine
         $mockEngine = Mockery::mock(SearchEngine::class);
-        $query = SearchQuery::fromString("Test");
+        $query = SearchQuery::fromString('Test');
 
         $mockEngine
             ->shouldReceive('search')
@@ -139,11 +140,11 @@ class SearchWrapperTest extends SearchTestAbstract
         // this time check if the validation works
 
         $mockEngine = Mockery::mock(SearchWrapper::class); // just an object that shouldn't be passed
-        $query = SearchQuery::fromString("Test");
+        $query = SearchQuery::fromString('Test');
 
         try {
             SearchWrapper::search($mockEngine, $query);
-            self::fail("Exception should have been thrown!");
+            self::fail('Exception should have been thrown!');
         } catch (SearchEngineNotFoundException $exception) {
             // All good!
         }
