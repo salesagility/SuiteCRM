@@ -40,7 +40,7 @@
 
 *}
 {* BEGIN - SECURITY GROUPS *}
-<script type="text/javascript" src='{sugar_getjspath file ='include/javascript/yui/build/selector/selector-min.js'}'></script>
+<script type="text/javascript" src='{sugar_getjspath file='include/javascript/yui/build/selector/selector-min.js'}'></script>
 <script language="Javascript" type="text/javascript">
 {literal}
 function cascadeAccessOption(action,selectEle) {
