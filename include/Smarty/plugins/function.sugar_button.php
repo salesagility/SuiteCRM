@@ -345,15 +345,67 @@ function smarty_function_sugar_button($params, &$smarty)
             break;
 
             case "DUPLICATE":
-                $output = '{if $bean->aclAccess("edit")}<input title="{$APP.LBL_DUPLICATE_BUTTON_TITLE}" accessKey="{$APP.LBL_DUPLICATE_BUTTON_KEY}" class="button" onclick="'.$js_form.' _form.return_module.value=\''. $module . '\'; _form.return_action.value=\'DetailView\'; _form.isDuplicate.value=true; _form.action.value=\'' . $view . '\'; _form.return_id.value=\'{$id}\';SUGAR.ajaxUI.submitForm(_form);" type="button" name="Duplicate" value="{$APP.LBL_DUPLICATE_BUTTON_LABEL}" id="duplicate_button">{/if} ';
+                $hrefParts = ['index.php?'];
+                $hrefParts[] = "module=$module";
+                $hrefParts[] = "&action=$view";
+                $hrefParts[] = '&record={$id}';
+                $hrefParts[] = "&return_module=$module";
+                $hrefParts[] = '&return_action=DetailView';
+                $hrefParts[] = '&return_id={$id}';
+                $hrefParts[] = '&isDuplicate=true';
+                $href = implode('', $hrefParts);
+
+                $output ='{if $bean->aclAccess("edit")}
+                            <input title="{$APP.LBL_DUPLICATE_BUTTON_TITLE}"
+                               accessKey="{$APP.LBL_DUPLICATE_BUTTON_KEY}"
+                               name="Duplicate"
+                               id="duplicate_button"
+                               class="button"
+                               type="button"
+                               value="{$APP.LBL_DUPLICATE_BUTTON_LABEL}"
+                               onclick="window.location.href=\''.$href.'\'"/>
+                           {/if}';
             break;
 
             case "EDIT":
-                $output = '{if $bean->aclAccess("edit")}<input title="{$APP.LBL_EDIT_BUTTON_TITLE}" accessKey="{$APP.LBL_EDIT_BUTTON_KEY}" class="button primary" onclick="'.$js_form.' _form.return_module.value=\'' . $module . '\'; _form.return_action.value=\'DetailView\'; _form.return_id.value=\'{$id}\'; _form.action.value=\'EditView\';SUGAR.ajaxUI.submitForm(_form);" type="button" name="Edit" id="edit_button" value="{$APP.LBL_EDIT_BUTTON_LABEL}">{/if} ';
+                $hrefParts = ['index.php?'];
+                $hrefParts[] = "module=$module";
+                $hrefParts[] = '&action=EditView';
+                $hrefParts[] = '&record={$id}';
+                $hrefParts[] = "&return_module=$module";
+                $hrefParts[] = '&return_action=DetailView';
+                $hrefParts[] = '&return_id={$id}';
+                $href = implode('', $hrefParts);
+                $output ='{if $bean->aclAccess("edit")}
+                            <input title="{$APP.LBL_EDIT_BUTTON_TITLE}"
+                               accessKey="{$APP.LBL_EDIT_BUTTON_KEY}"
+                               name="Edit"
+                               id="edit_button"
+                               class="button primary"
+                               type="button"
+                               value="{$APP.LBL_EDIT_BUTTON_LABEL}"
+                               onclick="window.location.href=\''.$href.'\'"/>
+                           {/if}';
             break;
 
             case "FIND_DUPLICATES":
-                $output = '{if $bean->aclAccess("edit") && $bean->aclAccess("delete")}<input title="{$APP.LBL_DUP_MERGE}" class="button" onclick="'.$js_form.' _form.return_module.value=\'' . $module . '\'; _form.return_action.value=\'DetailView\'; _form.return_id.value=\'{$id}\'; _form.action.value=\'Step1\'; _form.module.value=\'MergeRecords\';SUGAR.ajaxUI.submitForm(_form);" type="button" name="Merge" value="{$APP.LBL_DUP_MERGE}" id="merge_duplicate_button">{/if} ';
+                $hrefParts = ['index.php?'];
+                $hrefParts[] = 'module=MergeRecords';
+                $hrefParts[] = '&action=Step1';
+                $hrefParts[] = '&record={$id}';
+                $hrefParts[] = "&return_module=$module";
+                $hrefParts[] = '&return_action=DetailView';
+                $hrefParts[] = '&return_id={$id}';
+                $href = implode('', $hrefParts);
+                $output ='{if $bean->aclAccess("edit") && $bean->aclAccess("delete")}
+                            <input title="{$APP.LBL_DUP_MERGE}"
+                               name="Merge"
+                               id="merge_duplicate_button"
+                               class="button primary"
+                               type="button"
+                               value="{$APP.LBL_DUP_MERGE}"
+                               onclick="window.location.href=\''.$href.'\'"/>
+                           {/if}';
             break;
 
             case "SAVE":
