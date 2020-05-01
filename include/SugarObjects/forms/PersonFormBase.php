@@ -222,16 +222,16 @@ abstract class PersonFormBase extends FormBase
 
         if (!empty($emailStr)) {
             $emailStr = substr($emailStr, 1);
-            $query = 'SELECT DISTINCT er.bean_id AS id FROM email_addr_bean_rel er, ' .
-                 'email_addresses ea WHERE ea.id = er.email_address_id ' .
-                 'AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = \'' . $this->moduleName . '\' ' .
-                 'AND email_address_caps IN (' . $emailStr . ')';
+            $query = "SELECT DISTINCT er.bean_id AS id FROM email_addr_bean_rel er,
+                email_addresses ea WHERE ea.id = er.email_address_id 
+                AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = '?'
+                AND email_address_caps IN (?)";
 
-            $result = $db->query($query);
+            $result = $db->pQuery($query, [$this->moduleName, $emailStr]);
             while (($row = $db->fetchByAssoc($result)) != null) {
                 if (!isset($rows[$row['id']])) {
-                    $query2 = "SELECT id, first_name, last_name, title FROM {$focus->table_name} WHERE deleted=0 AND id = '" . $row['id'] . "'";
-                    $result2 = $db->query($query2);
+                    $query2 = "SELECT id, first_name, last_name, title FROM ? WHERE deleted = 0 AND id = '?'";
+                    $result2 = $db->pQuery($query2, [$focus->table_name, $row['id']]);
                     $r = $db->fetchByAssoc($result2);
                     if (isset($r['id'])) {
                         $rows[]=$r;
