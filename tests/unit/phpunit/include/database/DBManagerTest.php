@@ -74,4 +74,21 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
             "SELECT foo FROM bar WHERE baz = 'foo?';"
         );
     }
+    
+    // Make sure createPreparedQuery returns the correct SQL query when
+    // using ? without quotes.
+    public function testcreatePreparedQueryWithNoQuotes()
+    {
+        $db = DBManagerFactory::getInstance();
+
+        // Match baz to the input variable with a question mark appended... for some reason.
+        $sql = "SELECT ? FROM bar WHERE baz = 'qux';";
+
+        $stmt = $db->prepareQuery($sql);
+
+        $this->assertEquals(
+            $db->createPreparedQuery($stmt, ["foo"]),
+            "SELECT foo FROM bar WHERE baz = 'qux';"
+        );
+    }
 }
