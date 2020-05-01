@@ -70,7 +70,7 @@
     "codeception/codeception": "^3.0",
     "filp/whoops": "^2.3",
     "flow/jsonpath": "^0.4",
-    "friendsofphp/php-cs-fixer": "^2.15",
+    "friendsofphp/php-cs-fixer": "^2.16",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "leafo/scssphp": "^0.7.7",

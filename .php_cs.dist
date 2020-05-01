@@ -38,5 +38,14 @@ $finder = PhpCsFixer\Finder::create()
 return PhpCsFixer\Config::create()
     ->setRules([
         '@PSR2' => true,
+        '@PhpCsFixer' => true,
+        'concat_space' => ['spacing' => 'one'],
+        'no_superfluous_phpdoc_tags' => false,
+        'increment_style' => ['style' => 'post'],
+        'php_unit_test_class_requires_covers' => false,
+        'trailing_comma_in_multiline_array' => false,
+        'phpdoc_align' => false,
+        'yoda_style' => false,
+        'multiline_whitespace_before_semicolons' => false
     ])
     ->setFinder($finder);
