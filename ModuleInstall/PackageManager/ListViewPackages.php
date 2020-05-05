@@ -69,8 +69,15 @@ class ListViewPackages extends ListViewSmarty
     /**
      * Override the setup method in ListViewSmarty since we are not passing in a bean
      *
-     * @param data  the data to display on the page
-     * @param file  the template file to parse
+     * @param mixed $data the data to display on the page
+     * @param mixed $file the template file to parse
+     * @param mixed $where
+     * @param mixed $params
+     * @param mixed $offset
+     * @param mixed $limit
+     * @param mixed $filter_fields
+     * @param mixed $id_field
+     * @param null|mixed $id
      */
     public function setup($data, $file, $where, $params = array(), $offset = 0, $limit = -1, $filter_fields = array(), $id_field = 'id', $id=null)
     {
@@ -80,6 +87,8 @@ class ListViewPackages extends ListViewSmarty
 
     /**
      * Override the display method
+     * 
+     * @param boolean $end
      */
     public function display($end = true)
     {
