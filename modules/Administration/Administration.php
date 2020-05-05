@@ -205,9 +205,9 @@ class Administration extends SugarBean
     }
 
     /**
-     * @param $category string
-     * @param $key string
-     * @param $value string
+     * @param string $category
+     * @param string $key
+     * @param string $value
      * @return int
      */
     public function saveSetting($category, $key, $value)
