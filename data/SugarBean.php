@@ -6040,7 +6040,7 @@ class SugarBean
 
     /**
      * Check whether the user has access to a particular view for the current bean/module
-     * @param $view string required, the view to determine access for i.e. DetailView, ListView...
+     * @param string $view required, the view to determine access for i.e. DetailView, ListView...
      * @param bool|string $is_owner bool optional, this is part of the ACL check if the current user
      * is an owner they will receive different access
      * @param bool|string $in_group

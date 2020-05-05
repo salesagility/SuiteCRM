@@ -87,8 +87,8 @@ abstract class SugarRelationship
     /**
      * @abstract
      *
-     * @param  $lhs SugarBean
-     * @param  $rhs SugarBean
+     * @param SugarBean $lhs
+     * @param SugarBean $rhs
      *
      * @return bool
      */
@@ -97,7 +97,7 @@ abstract class SugarRelationship
     /**
      * @abstract
      *
-     * @param $link Link2 loads the rows for this relationship that match the given link
+     * @param Link2 $link loads the rows for this relationship that match the given link
      * @param array $params
      */
     abstract public function load($link, $params = array());
@@ -109,7 +109,7 @@ abstract class SugarRelationship
      *
      * @abstract
      *
-     * @param  $link Link2 Object to get query for.
+     * @param Link2 $link Object to get query for.
      * @param array $params
      *
      * @return array|string query used to load this relationship
@@ -145,7 +145,7 @@ abstract class SugarRelationship
     abstract public function getRelationshipTable();
 
     /**
-     * @param  $link Link2 removes all the beans associated with this link from the relationship
+     * @param Link2 $link removes all the beans associated with this link from the relationship
      *
      * @return bool true if all beans were successfully removed or there
      *              were not related beans, false otherwise
@@ -173,7 +173,7 @@ abstract class SugarRelationship
     }
 
     /**
-     * @param $rowID string id of SugarBean to remove from the relationship
+     * @param string $rowID id of SugarBean to remove from the relationship
      */
     public function removeById($rowID)
     {
@@ -250,8 +250,8 @@ abstract class SugarRelationship
     }
 
     /**
-     * @param $id string id of row to update
-     * @param $values array values to insert into row
+     * @param string $id id of row to update
+     * @param array $values values to insert into row
      *
      * @return resource result of update statement
      */
@@ -276,7 +276,7 @@ abstract class SugarRelationship
     /**
      * Removes one or more rows from the relationship table.
      *
-     * @param $where array of field=>value pairs to match
+     * @param array $where array of field=>value pairs to match
      *
      * @return bool|resource
      */
@@ -301,7 +301,7 @@ abstract class SugarRelationship
     /**
      * Checks for an existing row who's keys match the one passed in.
      *
-     * @param  $row
+     * @param $row
      *
      * @return array|bool returns false if now row is found, otherwise the row is returned
      */
