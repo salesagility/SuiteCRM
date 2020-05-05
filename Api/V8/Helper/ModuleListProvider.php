@@ -120,7 +120,8 @@ class ModuleListProvider
     }
 
     /**
-     * @param $actions
+     * @param mixed $moduleName
+     * @param mixed $actions
      * @return array
      */
     private function buildAccessArray($moduleName, $actions)
@@ -136,8 +137,8 @@ class ModuleListProvider
     }
 
     /**
-     * @param $level
-     * @param $module
+     * @param mixed $level
+     * @param mixed $module
      * @return bool
      */
     private function hasACL($level, $module)
