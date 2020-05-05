@@ -76,9 +76,9 @@ class Link2
     protected $tempBeans = array();
 
     /**
-     * @param $linkName String name of a link field in the module's vardefs
-     * @param $bean SugarBean focus bean for this link (one half of a relationship)
-     * @param $linkDef array Optional vardef for the link in case it can't be found in the passed in bean
+     * @param string $linkName name of a link field in the module's vardefs
+     * @param SugarBean $bean focus bean for this link (one half of a relationship)
+     * @param array $linkDef Optional vardef for the link in case it can't be found in the passed in bean
      * for the global dictionary
      */
     public function __construct($linkName, $bean, $linkDef = array())
