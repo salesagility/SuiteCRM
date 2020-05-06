@@ -231,8 +231,9 @@
 				{else}
 					<td>
                         {if $pageData.rowAccess[$id].edit && !empty($quickViewLinks)}
+							{capture assign='originalUrl'}index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}{/capture}
 							<a class="edit-link" title='{$editLinkString}' id="edit-{$rowData.ID}"
-							   href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+							   href="{convert_link link=$originalUrl}"
 							>
                                 {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
 								<span class="suitepicon suitepicon-action-edit"></span></a>

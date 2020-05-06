@@ -125,26 +125,8 @@ function ajaxBannedModules()
 
 function ajaxLink($url)
 {
-    global $sugar_config;
-    $match = array();
-    $javascriptMatch = array();
+    require_once 'include/portability/RouteConverter.php';
+    $routeConverter = new RouteConverter();
 
-    preg_match('/module=([^&]*)/i', $url, $match);
-    preg_match('/^javascript/i', $url, $javascriptMatch);
-
-    if (!empty($sugar_config['disableAjaxUI'])) {
-        return $url;
-    } else {
-        if (isset($match[1]) && in_array($match[1], ajaxBannedModules())) {
-            return $url;
-        }
-        //Don't modify javascript calls.
-        else {
-            if (isset($javascriptMatch[0])) {
-                return $url;
-            } else {
-                return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
-            }
-        }
-    }
+    return $routeConverter->generateUiLink($url);
 }

@@ -163,7 +163,8 @@
 				<td scope='row' align='{$params.align|default:'left'}' valign="top" {if ($params.type == 'teamset')}class="nowrap"{/if}>
 					{if $col == 'NAME' || $params.bold}<b>{/if}
 				    {if $params.link && !$params.customCode}
-						<{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href='index.php?action={$params.action|default:'DetailView'}&module={if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}&record={$rowData[$params.id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}'>
+						{capture assign='recordUrl'}index.php?action={$params.action|default:'DetailView'}&module={if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}&record={$rowData[$params.id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}{/capture}
+						<{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href='{convert_link link=$recordUrl}'>
 					{/if}
 					{if $params.customCode}
 						{sugar_evalcolumn_old var=$params.customCode rowData=$rowData}
@@ -184,10 +185,12 @@
 				{if $pageData.rowAccess[$id].edit}
                     {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
                     {capture name='tmp1' assign='alt_view'}{sugar_translate label="LBL_VIEWINLINE"}{/capture}
-                    <a title='{$editLinkString}' class="list-view-data-icon" href='index.php?action=EditView&module={$pageData.bean.moduleDir}&record={$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index'> <span class="suitepicon suitepicon-action-edit"></span></a>
+					{capture assign='editUrl'}index.php?action=EditView&module={$pageData.bean.moduleDir}&record={$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index{/capture}
+                    <a title='{$editLinkString}' class="list-view-data-icon" href='{convert_link link=$editUrl}'> <span class="suitepicon suitepicon-action-edit"></span></a>
 				{/if}
 				{if $pageData.access.view}
-                <a title='{$viewLinkString}' class="list-view-data-icon" href='index.php?action=DetailView&module={$pageData.bean.moduleDir}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index' title="{sugar_translate label="LBL_VIEW_INLINE"}"> <span class="suitepicon suitepicon-action-view-record"></span></a>
+					{capture assign='viewUrl'}index.php?action=DetailView&module={$pageData.bean.moduleDir}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index{/capture}
+                <a title='{$viewLinkString}' class="list-view-data-icon" href='{convert_link link=$viewUrl}' title="{sugar_translate label="LBL_VIEW_INLINE"}"> <span class="suitepicon suitepicon-action-view-record"></span></a>
 				{/if}
 			</td>
 			{/if}
