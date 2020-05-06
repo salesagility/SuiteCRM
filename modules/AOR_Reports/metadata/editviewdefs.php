@@ -65,7 +65,7 @@ array(
             'studio' => 'visible',
             'label' => 'LBL_REPORT_MODULE',
           ),
-          1 => '',
+          1 => 'description',
         ),
           2 =>
               array(
