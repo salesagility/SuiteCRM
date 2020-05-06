@@ -741,7 +741,7 @@ class SugarFolder
         $secureReturn = [];
 
         foreach ($return as $item) {
-            if ($item->isgroup === 1 || $item['created_by'] === $user->id || is_admin($user)) {
+            if ($item['is_group'] == 1 || $item['created_by'] === $user->id || is_admin($user)) {
                 $secureReturn[] = $item;
             }
         }
