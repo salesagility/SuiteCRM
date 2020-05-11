@@ -1387,7 +1387,7 @@ class SugarFolder
                 $this->$k = $v;
             }
 
-            $new_with_id  = false;
+            $this->new_with_id  = false;
             return true;
         }
 
