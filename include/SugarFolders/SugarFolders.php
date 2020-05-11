@@ -1375,6 +1375,8 @@ class SugarFolder
      */
     public function retrieve($id)
     {
+        if (empty($id)) return false;
+        
         $query = "SELECT * FROM folders WHERE id = " . $this->db->quoted($id) . " AND deleted = 0";
         $r = $this->db->query($query);
         $a = $this->db->fetchByAssoc($r);
