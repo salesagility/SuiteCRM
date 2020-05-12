@@ -219,7 +219,7 @@ $focus->save();
 
 
 // Folders
-$foldersFound = $focus->db->query('SELECT id FROM folders WHERE folders.id LIKE "'.$focus->id.'"');
+$foldersFound = $focus->db->query('SELECT id FROM folders WHERE folders.id = "'.$focus->id.'"');
 $foldersFoundRow = $focus->db->fetchRow($foldersFound);
 $sf = new SugarFolder();
 if (empty($foldersFoundRow)) {
@@ -300,10 +300,10 @@ if (empty($foldersFoundRow)) {
 } else {
     // Update folders
     require_once("include/SugarFolders/SugarFolders.php");
-    $foldersFound = $focus->db->query('SELECT * FROM folders WHERE folders.id LIKE "'.$focus->id.'" OR '.
-        'folders.parent_folder LIKE "'.$focus->id.'"');
+    $foldersFound = $focus->db->query('SELECT * FROM folders WHERE folders.id = "'.$focus->id.'" OR '.
+        'folders.parent_folder = "'.$focus->id.'"');
     while ($row = $focus->db->fetchRow($foldersFound)) {
-        $name = '';
+        $name = $row['name'];
         switch ($row['folder_type']) {
             case 'inbound':
                 $name = $focus->mailbox . ' ('.$focus->name.')';
