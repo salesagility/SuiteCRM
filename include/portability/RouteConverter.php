@@ -46,7 +46,7 @@ class RouteConverter
 
         $route = $this->buildRoute($module, $action, $record);
 
-        $queryString = $this->buildQueryString($queryParams, ['module', 'action', 'record']);;
+        $queryString = $this->buildQueryString($queryParams, ['module', 'action', 'record']);
 
         if (!empty($queryString)) {
             $queryString = '?' . $queryString;
