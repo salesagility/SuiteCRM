@@ -355,21 +355,19 @@ class SugarFolder
 
         $cleanSubscriptions = array();
 
-        // Remove the duplications
-        $subs = array_unique($subs);
+        // Remove the duplications/empty and trims all entries
+        $subs = array_unique(array_filter($subs));
+        $subs = array_map('trim', $subs);
 
         // Ensure parent folders are selected, regardless.
         foreach ($subs as $id) {
-            $id = trim($id);
-            if (!empty($id)) {
-                $cleanSubscriptions[] = $id;
-                $queryChk = "SELECT parent_folder FROM folders WHERE id = " . $this->db->quoted($id);
-                $rChk = $this->db->query($queryChk);
-                $aChk = $this->db->fetchByAssoc($rChk);
+            $cleanSubscriptions[] = $id;
+            $queryChk = "SELECT parent_folder FROM folders WHERE id = " . $this->db->quoted($id);
+            $rChk = $this->db->query($queryChk);
+            $aChk = $this->db->fetchByAssoc($rChk);
 
-                if (!empty($aChk['parent_folder'])) {
-                    $cleanSubscriptions = $this->getParentIDRecursive($aChk['parent_folder'], $cleanSubscriptions);
-                }
+            if (!empty($aChk['parent_folder'])) {
+                $cleanSubscriptions = $this->getParentIDRecursive($aChk['parent_folder'], $cleanSubscriptions);
             }
         }
 
