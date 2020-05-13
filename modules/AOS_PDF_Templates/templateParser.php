@@ -65,6 +65,33 @@ class templateParser
         foreach ($focus->field_defs as $field_def) {
             if (isset($field_def['name']) && $field_def['name'] != '') {
                 $fieldName = $field_def['name'];
+                if (isset($field_def['source']) && $field_def['source'] == 'function' && empty($focus->$fieldName))
+                {
+                    $can_execute = true;
+                    $execute_params = array();
+                    $execute_function = array();
+                    if (!empty($field_def['function_class'])) {
+                        $execute_function[] = $field_def['function_class'];
+                        $execute_function[] = $field_def['function_name'];
+                    } else {
+                        $execute_function = $field_def['function_name'];
+                    }
+                    foreach ($field_def['function_params'] as $param) {
+                        if (empty($focus->$param)) {
+                            $can_execute = false;
+                        } elseif ($param == '$this') {
+                            $execute_params[] = $focus;
+                        } else {
+                            $execute_params[] = $focus->$param;
+                        }
+                    }
+                    if ($can_execute) {
+                        if (!empty($field_def['function_require'])) {
+                            require_once($field_def['function_require']);
+                        }
+                        $focus->$fieldName = strval(call_user_func_array($execute_function, $execute_params));
+                    }
+                }
                 if ($field_def['type'] == 'currency') {
                     $params = array(
                         'currency_symbol' => false
