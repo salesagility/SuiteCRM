@@ -90,7 +90,6 @@ function handleSubs($subs, $email, $json, $user = null)
 
 //increate timeout for phpo script execution
 ini_set('max_execution_time', 300);
-//ajaxInit();
 
 
 require_once("include/OutboundEmail/OutboundEmail.php");
