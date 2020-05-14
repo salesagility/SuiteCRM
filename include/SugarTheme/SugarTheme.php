@@ -1000,11 +1000,21 @@ EOHTML;
      * @param  bool   $returnURL if true, returns URL with unique image mark, otherwise returns path to the file
      * @return string path of css file to include
      */
-    public function getCSSURL($cssFileName, $returnURL = true)
+    public function getCSSURL($cssFileName, $returnURL = true, $skipSubTheme = FALSE)
     {
-        if (preg_match('/.css$/', $cssFileName)) {
+        $cssFileContents = '';
+        if (preg_match('/.css$/', $cssFileName) && !$skipSubTheme) {
             global $current_user;
             if (method_exists($current_user, 'getSubTheme')) {
+                // load all CSS for the primary theme
+                if (
+                    SugarThemeRegistry::get($this->dirName) instanceOf SugarTheme
+                    && ($filename = SugarThemeRegistry::get($this->dirName)->getCSSURL($cssFileName,false,true)) != ''
+                ) {
+                    $cssFileContents .= file_get_contents($filename);
+                }
+
+                // load all CSS for the found subTheme
                 $subTheme = $current_user->getSubTheme();
                 $cssFileName = $subTheme . '/' . $cssFileName;
             }
@@ -1018,7 +1028,6 @@ EOHTML;
             }
         }
 
-        $cssFileContents = '';
         $defaultFileName = $this->getDefaultCSSPath().'/'.$cssFileName;
         $fullFileName = $this->getCSSPath().'/'.$cssFileName;
         if (isset($this->parentTheme)
