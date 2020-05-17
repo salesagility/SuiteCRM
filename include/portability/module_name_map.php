@@ -73,10 +73,6 @@ $module_name_map = [
         'frontend' => 'mail-merge',
         'core' => 'MailMerge'
     ],
-    'Schedulers' => [
-        'frontend' => 'schedulers',
-        'core' => 'Schedulers'
-    ],
     'Campaigns' => [
         'frontend' => 'campaigns',
         'core' => 'Campaigns'
@@ -136,6 +132,10 @@ $module_name_map = [
     'ACLRoles' => [
         'frontend' => 'acl-roles',
         'core' => 'ACLRoles'
+    ],
+    'ACLActions' => [
+        'frontend' => 'acl-actions',
+        'core' => 'ACLActions'
     ],
     'Roles' => [
         'frontend' => 'roles',
@@ -356,9 +356,130 @@ $module_name_map = [
     'Help' => [
         'frontend' => 'help',
         'core' => 'Help'
-    ]
+    ],
+    'Currencies' => [
+        'frontend' => 'currencies',
+        'core' => 'Currencies'
+    ],
+    'EditCustomFields' => [
+        'frontend' => 'edit-custom-fields',
+        'core' => 'EditCustomFields'
+    ],
+    'Trackers' => [
+        'frontend' => 'trackers',
+        'core' => 'Trackers'
+    ],
+    'Releases' => [
+        'frontend' => 'releases',
+        'core' => 'Releases'
+    ],
+    'EmailMarketing' => [
+        'frontend' => 'email-marketing',
+        'core' => 'EmailMarketing'
+    ],
+    'EmailAddresses' => [
+        'frontend' => 'email-addresses',
+        'core' => 'EmailAddresses'
+    ],
+    'EmailText' => [
+        'frontend' => 'email-text',
+        'core' => 'EmailText'
+    ],
+    'Schedulers' => [
+        'frontend' => 'schedulers',
+        'core' => 'Schedulers'
+    ],
+    'Schedulers_jobs' => [
+        'frontend' => 'schedulers-jobs',
+        'core' => 'SchedulersJobs'
+    ],
+    'CampaignTrackers' => [
+        'frontend' => 'campaign-trackers',
+        'core' => 'CampaignTrackers'
+    ],
+    'CampaignLog' => [
+        'frontend' => 'campaign-log',
+        'core' => 'CampaignLog'
+    ],
+    'EmailMan' => [
+        'frontend' => 'emailman',
+        'core' => 'EmailMan'
+    ],
+    'Groups' => [
+        'frontend' => 'groups',
+        'core' => 'Groups'
+    ],
+    'DocumentRevisions' => [
+        'frontend' => 'document-revisions',
+        'core' => 'DocumentRevisions'
+    ],
+    'Alerts' => [
+        'frontend' => 'alerts',
+        'core' => 'Alerts'
+    ],
+    'CustomFields' => [
+        'frontend' => 'custom-fields',
+        'core' => 'CustomFields'
+    ],
+    'Dropdown' => [
+        'frontend' => 'dropdown',
+        'core' => 'Dropdown'
+    ],
+    'Dynamic' => [
+        'frontend' => 'dynamic',
+        'core' => 'Dynamic'
+    ],
+    'DynamicFields' => [
+        'frontend' => 'dynamic-fields',
+        'core' => 'DynamicFields'
+    ],
+    'DynamicLayout' => [
+        'frontend' => 'dynamic-layout',
+        'core' => 'DynamicLayout'
+    ],
+    'MySettings' => [
+        'frontend' => 'my-settings',
+        'core' => 'MySettings'
+    ],
+    'FieldsMetaData' => [
+        'frontend' => 'fields-metaData',
+        'core' => 'FieldsMetaData'
+    ],
+    'UpgradeWizard' => [
+        'frontend' => 'upgrade-wizard',
+        'core' => 'UpgradeWizard'
+    ],
+    'Versions' => [
+        'frontend' => 'versions',
+        'core' => 'Versions'
+    ],
+    'LabelEditor' => [
+        'frontend' => 'label-editor',
+        'core' => 'LabelEditor'
+    ],
+    'OptimisticLock' => [
+        'frontend' => 'optimistic-lock',
+        'core' => 'OptimisticLock'
+    ],
+    'Audit' => [
+        'frontend' => 'audit',
+        'core' => 'Audit'
+    ],
+    'ModuleBuilder' => [
+        'frontend' => 'module-builder',
+        'core' => 'ModuleBuilder'
+    ],
+    'Sync' => [
+        'frontend' => 'sync',
+        'core' => 'Sync'
+    ],
+    'Alert' => [
+        'frontend' => 'alert',
+        'core' => 'Alert'
+    ],
 ];
 
 if (file_exists('custom/application/Ext/ModuleNameMap/module_name_map.ext.php')) {
+    /* @noinspection PhpIncludeInspection */
     include('custom/application/Ext/ModuleNameMap/module_name_map.ext.php');
 }
