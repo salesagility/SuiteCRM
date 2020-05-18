@@ -190,6 +190,8 @@ class SubPanelTiles
         $tabs_properties = array();
         $tab_names = array();
 
+        $module_sub_panels = [];
+
         $default_div_display = 'inline';
         if (!empty($sugar_config['hide_subpanels_on_login'])) {
             if (!isset($_SESSION['visited_details'][$this->focus->module_dir])) {
@@ -373,7 +375,7 @@ class SubPanelTiles
                     $countStr = '...';
                     $extraClass = ' incomplete';
                 }
-                
+
                 $tabs_properties[$t]['title'] .= ' (<span class="subPanelCountHint' . $extraClass . '" data-subpanel="' . $tab . '" data-module="' . $layout_def_key . '" data-record="' . $_REQUEST['record'] . '">' . $countStr . '</span>)';
             }
 
