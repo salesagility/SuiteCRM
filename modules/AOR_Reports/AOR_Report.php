@@ -698,8 +698,8 @@ class AOR_Report extends Basic
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
-
             $fields[$label]['format'] = $field->format;
+            $fields[$label]['params'] = [];
 
 
             if ($fields[$label]['display']) {
@@ -851,6 +851,8 @@ class AOR_Report extends Basic
 
         $html .= '</div>';
 
+        $currentTheme = SugarThemeRegistry::current();
+
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
 
@@ -860,11 +862,11 @@ class AOR_Report extends Basic
                                             $(e).toggle();
                                         }
                                     });
-                                    if($(elem).find('img').first().attr('src') == '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."') {
-                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('advanced_search.gif')."');
+                                    if($(elem).find('img').first().attr('src') == '".$currentTheme->getImagePath('basic_search.gif')."') {
+                                        $(elem).find('img').first().attr('src', '".$currentTheme->getImagePath('advanced_search.gif')."');
                                     }
                                     else {
-                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."');
+                                        $(elem).find('img').first().attr('src', '".$currentTheme->getImagePath('basic_search.gif')."');
                                     }
                                 }
 
@@ -965,6 +967,7 @@ class AOR_Report extends Basic
             if ($field['total'] && isset($totals[$label])) {
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
+                $params = isset($field['params']) ? $field['params'] : [];
                 switch ($type) {
                     case 'SUM':
                     case 'AVG':
@@ -976,7 +979,7 @@ class AOR_Report extends Basic
                             $total,
                             '',
                             $currency->id,
-                            $field['params']
+                            $params
                         );
                         break;
                     case 'COUNT':
