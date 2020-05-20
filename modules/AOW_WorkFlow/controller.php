@@ -109,7 +109,15 @@ class AOW_WorkFlowController extends SugarController
                 case 'decimal':
                 case 'float':
                 case 'currency':
-                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null');
+                    $valid_opp = array(
+                        'Equal_To',
+                        'Not_Equal_To',
+                        'Greater_Than',
+                        'Less_Than',
+                        'Greater_Than_or_Equal_To',
+                        'Less_Than_or_Equal_To',
+                        'is_null'
+                    );
                     break;
                 case 'uint':
                 case 'ulong':
@@ -117,19 +125,44 @@ class AOW_WorkFlowController extends SugarController
                 case 'short':
                 case 'tinyint':
                 case 'int':
-                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null');
+                    $valid_opp = array(
+                        'Equal_To',
+                        'Not_Equal_To',
+                        'Greater_Than',
+                        'Less_Than',
+                        'Greater_Than_or_Equal_To',
+                        'Less_Than_or_Equal_To',
+                        'is_null'
+                    );
                     break;
                 case 'date':
                 case 'datetime':
                 case 'datetimecombo':
-                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null');
+                    $valid_opp = array(
+                        'Equal_To',
+                        'Not_Equal_To',
+                        'Greater_Than',
+                        'Less_Than',
+                        'Greater_Than_or_Equal_To',
+                        'Less_Than_or_Equal_To',
+                        'is_null'
+                    );
                     break;
                 case 'enum':
                 case 'multienum':
-                $valid_opp = array('Equal_To','Not_Equal_To','is_null');
+                    $valid_opp = array('Equal_To','Not_Equal_To','is_null');
                     break;
                 default:
-                $valid_opp = array('Equal_To','Not_Equal_To','Contains', 'Starts_With', 'Ends_With','is_null');
+                    $valid_opp = array(
+                        'Equal_To',
+                        'Not_Equal_To',
+                        'Contains',
+                        'Not_Contains',
+                        'Starts_With',
+                        'Ends_With',
+                        'is_null',
+                        'is_not_null'
+                    );
                     break;
             }
 

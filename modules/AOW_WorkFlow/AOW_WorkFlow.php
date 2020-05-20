@@ -85,6 +85,7 @@ class AOW_WorkFlow extends Basic
         $sqlOperatorList['Starts_With'] = 'LIKE';
         $sqlOperatorList['Ends_With'] = 'LIKE';
         $sqlOperatorList['is_null'] = 'IS NULL';
+        $sqlOperatorList['is_not_null'] = 'IS NOT NULL';
         if (!isset($sqlOperatorList[$key])) {
             return false;
         }
@@ -418,6 +419,11 @@ class AOW_WorkFlow extends Basic
                 return $query;
             }
 
+            if($condition->operator == 'is_not_null'){
+                $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Not_Equal_To')." '')";
+                return $query;
+            }
+
             switch ($condition->value_type) {
                 case 'Field':
 
@@ -597,6 +603,7 @@ class AOW_WorkFlow extends Basic
             //handle like conditions
             switch ($condition->operator) {
                 case 'Contains':
+                case 'Not_Contains':
                     $value = "CONCAT('%', ".$value." ,'%')";
                     break;
                 case 'Starts_With':
@@ -863,10 +870,16 @@ class AOW_WorkFlow extends Basic
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
+            case "Contains" : return strpos($var1,$var2);
+            case "Not_Contains" : return strpos($var1,$var2) === FALSE;
+            case "Starts_With" : return strrpos($var1,$var2, -strlen($var1));
+            case "Ends_With" : return strpos($var1,$var2,strlen($var1) - strlen($var2));
             case "Contains": return strpos($var1, $var2);
+            case "Not_Contains" : return strpos($var1,$var2) === FALSE;
             case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
             case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
+            case "is_not_null": return $var1 != '';
             case "One_of":
                 if (is_array($var1)) {
                     foreach ($var1 as $var) {
