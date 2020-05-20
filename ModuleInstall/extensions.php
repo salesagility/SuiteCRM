@@ -65,6 +65,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         "aow" =>     		 array("section" => "aow_actions",	  "extdir" => "Actions",		"file" => 'actions.ext.php', "module" => "AOW_Actions"),
         "actionnamemap" =>   array("section" => "action_name_map","extdir" => "ActionNameMap",	"file" => 'action_name_map.ext.php'),
         "modulenamemap" =>   array("section" => "module_name_map","extdir" => "ModuleNameMap",	"file" => 'module_name_map.ext.php'),
+        "classicviewroutingexclusions" =>   array("section" => "classicview_routing_exclusions","extdir" => "ClassicViewRoutingExclusions",	"file" => 'classicview_routing_exclusions.ext.php'),
 );
 if (file_exists("custom/application/Ext/Extensions/extensions.ext.php")) {
     include("custom/application/Ext/Extensions/extensions.ext.php");
