@@ -4,7 +4,7 @@ require_once('sugar_version.php');
 require_once('suitecrm_version.php');
 
 global $sugar_config;
-$sugar_config['default_max_tabs'] = 10;
+$sugar_config['default_max_tabs'] = 8;
 $sugar_config['suitecrm_version'] = $suitecrm_version;
 $sugar_config['sugar_version'] = $sugar_version;
 $sugar_config['sugarbeet'] = false;

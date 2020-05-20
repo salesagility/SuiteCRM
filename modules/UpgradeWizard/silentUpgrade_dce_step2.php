@@ -599,8 +599,8 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         checkLoggerSettings();
         logThis('end check logger settings .', $path);
 
-        logThis('Set default_max_tabs to 10', $path);
-        $sugar_config['default_max_tabs'] = 10;
+        logThis('Set default_max_tabs to 8', $path);
+        $sugar_config['default_max_tabs'] = 8;
 
         if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
             logThis('*** ERROR: could not write config.php! - upgrade will fail!', $path);
