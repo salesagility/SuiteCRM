@@ -82,17 +82,7 @@ class AuthenticationController
         if ($type == 'SugarAuthenticate' && !empty($GLOBALS['system_config']->settings['system_ldap_enabled']) && empty($_SESSION['sugar_user'])) {
             $type = 'LDAPAuthenticate';
         }
-
-        // check in custom dir first, in case someone want's to override an auth controller
-        if (file_exists('custom/modules/Users/authentication/'.$type.'/' . $type . '.php')) {
-            require_once('custom/modules/Users/authentication/'.$type.'/' . $type . '.php');
-        } elseif (file_exists('modules/Users/authentication/'.$type.'/' . $type . '.php')) {
-            require_once('modules/Users/authentication/'.$type.'/' . $type . '.php');
-        } else {
-            require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
-            $type = 'SugarAuthenticate';
-        }
-
+        
         if (!empty($_REQUEST['no_saml'])
             && (
                 (is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
@@ -101,6 +91,16 @@ class AuthenticationController
             $type = 'SugarAuthenticate';
         }
 
+        // check if authentication type exists, fall back to SugarAuthenticate
+        $authenticateFile = get_custom_file_if_exists('modules/Users/authentication/'.$type.'/' . $type . '.php');
+        
+        if (!file_exists($authenticateFile) {
+            $type = 'SugarAuthenticate';
+            $authenticateFile = get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
+        }
+        
+        require_once($authenticateFile);
+        
         return new $type();
     }
 
