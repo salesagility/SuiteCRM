@@ -126,10 +126,19 @@ class AOW_WorkFlowController extends SugarController
                     break;
                 case 'enum':
                 case 'multienum':
-                $valid_opp = array('Equal_To','Not_Equal_To','is_null');
+                    $valid_opp = array('Equal_To','Not_Equal_To','is_null');
                     break;
                 default:
-                $valid_opp = array('Equal_To','Not_Equal_To','Contains', 'Not_Contains', 'Starts_With', 'Ends_With','is_null','is_not_null');
+                    $valid_opp = array(
+                        'Equal_To',
+                        'Not_Equal_To',
+                        'Contains',
+                        'Not_Contains',
+                        'Starts_With',
+                        'Ends_With',
+                        'is_null',
+                        'is_not_null'
+                    );
                     break;
             }
 
