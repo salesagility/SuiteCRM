@@ -941,9 +941,8 @@ span.yui-carousel-first-button-disabled {
 }
 
 .mask {
-  background-color: $mask-bg;
-  filter: alpha(opacity = 25);
-  opacity: .25;
+  background-color: $modal-backdrop-bg;
+  opacity: $modal-backdrop-opacity;
 }
 
 .yui-panel-container {
