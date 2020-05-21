@@ -42,7 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once get_custom_file_if_exists("{${AuthenticationController::MODULE_FOLDER}}/{${SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY}}/FactorAuthFactory.php");
+include_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY . '/FactorAuthFactory.php'
+);
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.

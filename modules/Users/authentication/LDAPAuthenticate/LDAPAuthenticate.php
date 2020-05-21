@@ -50,7 +50,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * based on the users validation
  *
  */
-require_once get_custom_file_if_exists("{${AuthenticationController::MODULE_FOLDER}}/{${AuthenticationController::DEFAULT_TYPE}}/{${AuthenticationController::DEFAULT_TYPE}}.php");
+require_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . AuthenticationController::DEFAULT_TYPE . DIRECTORY_SEPARATOR . AuthenticationController::DEFAULT_TYPE . '.php'
+);
 
 class LDAPAuthenticate extends SugarAuthenticate
 {

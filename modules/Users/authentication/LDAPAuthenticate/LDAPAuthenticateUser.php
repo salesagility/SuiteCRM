@@ -46,8 +46,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * This file is where the user authentication occurs. No redirection should happen in this file.
  *
  */
-require_once(get_custom_file_if_exists("{${AuthenticationController::MODULE_FOLDER}}/{${LDAPAuthenticate::LDAP_AUTHENTICATE_DIRECTORY}}/LDAPConfigs/default.php"));
-require_once get_custom_file_if_exists("{${AuthenticationController::MODULE_FOLDER}}/{${SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY}}/SugarAuthenticateUser.php");
+require_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . LDAPAuthenticate::LDAP_AUTHENTICATE_DIRECTORY . '/LDAPConfigs/default..php'
+);
+require_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY . '/SugarAuthenticateUser.php'
+);
 
 define('DEFAULT_PORT', 389);
 class LDAPAuthenticateUser extends SugarAuthenticateUser
