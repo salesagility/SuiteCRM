@@ -5889,3 +5889,14 @@ function getAppString($key)
 
     return $app_strings[$key];
 }
+
+function set_session_name(){
+    $sessionName = 'LEGACYSESSID';
+    if (!empty($GLOBALS['sugar_config']['session_name'])) {
+        $sessionName = $GLOBALS['sugar_config']['session_name'];
+    }
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_name($sessionName);
+    }
+}

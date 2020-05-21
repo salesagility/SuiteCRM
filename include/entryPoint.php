@@ -97,6 +97,8 @@ clean_incoming_data();
 // cn: set php.ini settings at entry points
 setPhpIniSettings();
 
+set_session_name();
+
 require_once 'sugar_version.php'; // provides $sugar_version, $sugar_db_version, $sugar_flavor
 require_once 'include/database/DBManagerFactory.php';
 require_once 'include/dir_inc.php';
