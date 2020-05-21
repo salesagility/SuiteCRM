@@ -95,11 +95,11 @@ class AuthenticationController
         }
 
         // check if authentication type exists, fall back to SugarAuthenticate
-        $authenticateFile = get_custom_file_if_exists("{self::MODULE_FOLDER}/{$type}/{$type}.php");
+        $authenticateFile = get_custom_file_if_exists("{${self::MODULE_FOLDER}}/{$type}/{$type}.php");
         
         if (!file_exists($authenticateFile)) {
             $type = self::DEFAULT_TYPE;
-            $authenticateFile = get_custom_file_if_exists("{self::MODULE_FOLDER}/{$type}/{$type}.php");
+            $authenticateFile = get_custom_file_if_exists("{${self::MODULE_FOLDER}}/{$type}/{$type}.php");
         }
         
         require_once($authenticateFile);

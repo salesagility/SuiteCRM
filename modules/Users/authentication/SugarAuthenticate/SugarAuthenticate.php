@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SugarAuthenticate
 {
     const SUGAR_AUTHENTICATE_DIRECTORY = 'SugarAuthenticate';
-    
+
     public $userAuthenticateClass = 'SugarAuthenticateUser';
     public $authenticationDir = self::SUGAR_AUTHENTICATE_DIRECTORY;
 
@@ -69,7 +69,7 @@ class SugarAuthenticate
      */
     public function __construct()
     {
-        require_once(get_custom_file_if_exists("{AuthentcationController::MODULE_FOLDER}/${$this->authenticationDir}/{$this->userAuthenticateClass}.php"));
+        require_once(get_custom_file_if_exists("{${AuthenticationController::MODULE_FOLDER}}/${$this->authenticationDir}/{$this->userAuthenticateClass}.php"));
 
         $this->userAuthenticate = new $this->userAuthenticateClass();
     }

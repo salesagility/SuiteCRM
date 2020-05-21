@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * based on the users validation
  *
  */
-require_once get_custom_file_if_exists("{AuthenticationController::MODULE_FOLDER}/{AuthenticationController::DEFAULT_TYPE}/{AuthenticationController::DEFAULT_TYPE}.php");
+require_once get_custom_file_if_exists("{${AuthenticationController::MODULE_FOLDER}}/{${AuthenticationController::DEFAULT_TYPE}}/{${AuthenticationController::DEFAULT_TYPE}}.php");
 class EmailAuthenticate extends SugarAuthenticate
 {
     const EMAIL_AUTHENTICATE_DIRECTORY = 'EmailAuthenticate';
