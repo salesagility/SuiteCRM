@@ -42,9 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
-include_once get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/FactorAuthFactory.php');
+include_once get_custom_file_if_exists("{AuthenticationController::MODULE_FOLDER}/{SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY}/FactorAuthFactory.php");
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -249,7 +247,7 @@ class SugarAuthenticateUser
         $emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
         $emailTemplate->retrieve($emailTemplateId);
 
-        include_once __DIR__ . '/../../../../include/SugarPHPMailer.php';
+        include_once get_custom_file_if_exists('include/SugarPHPMailer.php');
         $mailer = new SugarPHPMailer();
         $mailer->setMailerForSystem();
 

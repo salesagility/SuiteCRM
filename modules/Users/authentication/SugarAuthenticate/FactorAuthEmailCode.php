@@ -42,9 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-include_once get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/FactorAuthInterface.php');
-include_once __DIR__ . '/../../../../include/SugarPHPMailer.php';
+include_once get_custom_file_if_exists("{AuthenticationController::MODULE_FOLDER}/{SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY}/FactorAuthInterface.php");
+include_once get_custom_file_if_exists('include/SugarPHPMailer.php');
 
 class FactorAuthEmailCode implements FactorAuthInterface
 {
@@ -74,7 +73,7 @@ class FactorAuthEmailCode implements FactorAuthInterface
         $factorMessage = SugarAuthenticate::getFactorMessages();
         $ss->assign('factor_message', $factorMessage);
 
-        $ss->display(__DIR__ . '/FactorAuthEmailCode.tpl');
+        $ss->display(get_custom_file_if_exists("{AuthenticationController::MODULE_FOLDER}/{SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY}/FactorAuthEmailCode.tpl"));
     }
 
     /**

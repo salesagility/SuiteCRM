@@ -49,6 +49,9 @@ class AuthenticationController
     public $authenticated = false;
     public $loginSuccess = false;// if a user has successfully logged in
 
+    const MODULE_FOLDER = 'modules/Users/authentication';
+    const DEFAULT_TYPE = 'SugarAuthenticate';
+
     protected static $authcontrollerinstance = null;
 
     /**
@@ -76,10 +79,10 @@ class AuthenticationController
     {
         if (!$type) {
             $type = !empty($GLOBALS['sugar_config']['authenticationClass'])
-                ? $GLOBALS['sugar_config']['authenticationClass'] : 'SugarAuthenticate';
+                ? $GLOBALS['sugar_config']['authenticationClass'] : self::DEFAULT_TYPE;
         }
 
-        if ($type == 'SugarAuthenticate' && !empty($GLOBALS['system_config']->settings['system_ldap_enabled']) && empty($_SESSION['sugar_user'])) {
+        if ($type == self::DEFAULT_TYPE && !empty($GLOBALS['system_config']->settings['system_ldap_enabled']) && empty($_SESSION['sugar_user'])) {
             $type = 'LDAPAuthenticate';
         }
         
@@ -88,15 +91,15 @@ class AuthenticationController
                 (is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
                 (is_subclass_of($type, 'SAML2Authenticate') || 'SAML2Authenticate' == $type)
             )) {
-            $type = 'SugarAuthenticate';
+            $type = self::DEFAULT_TYPE;
         }
 
         // check if authentication type exists, fall back to SugarAuthenticate
-        $authenticateFile = get_custom_file_if_exists('modules/Users/authentication/'.$type.'/' . $type . '.php');
+        $authenticateFile = get_custom_file_if_exists("{self::MODULE_FOLDER}/{$type}/{$type}.php");
         
-        if (!file_exists($authenticateFile) {
-            $type = 'SugarAuthenticate';
-            $authenticateFile = get_custom_file_if_exists('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
+        if (!file_exists($authenticateFile)) {
+            $type = self::DEFAULT_TYPE;
+            $authenticateFile = get_custom_file_if_exists("{self::MODULE_FOLDER}/{$type}/{$type}.php");
         }
         
         require_once($authenticateFile);

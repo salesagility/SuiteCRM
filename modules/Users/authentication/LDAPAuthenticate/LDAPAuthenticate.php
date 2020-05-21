@@ -50,11 +50,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * based on the users validation
  *
  */
-require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
+require_once get_custom_file_if_exists("{AuthenticationController::MODULE_FOLDER}/{AuthenticationController::DEFAULT_TYPE}/{AuthenticationController::DEFAULT_TYPE}.php");
+
 class LDAPAuthenticate extends SugarAuthenticate
 {
+    const LDAP_AUTHENTICATE_DIRECTORY = 'LDAPAuthenticate';
+
     public $userAuthenticateClass = 'LDAPAuthenticateUser';
-    public $authenticationDir = 'LDAPAuthenticate';
+    public $authenticationDir = self::LDAP_AUTHENTICATE_DIRECTORY;
     /**
      * Constructs LDAPAuthenticate
      * This will load the user authentication class
