@@ -258,6 +258,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
             }
         }).draw();
 */
+resizeGraph(document.getElementById('$canvasId'));
 </script>
 EOD;
 
