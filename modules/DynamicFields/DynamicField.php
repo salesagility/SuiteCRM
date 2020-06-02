@@ -466,7 +466,7 @@ class DynamicField
                     if (in_array($field['type'], array('int', 'float', 'double', 'uint', 'ulong', 'long', 'short', 'tinyint', 'currency', 'decimal'))) {
                         $quote = '';
                         if (!isset($this->bean->$name) || !is_numeric($this->bean->$name)) {
-                            if ($field['required']) {
+                            if (!empty($field['required'])) {
                                 $this->bean->$name = 0;
                             } else {
                                 $this->bean->$name = 'NULL';
