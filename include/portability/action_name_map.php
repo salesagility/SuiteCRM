@@ -41,7 +41,8 @@ $action_name_map = [
     'RepairActivities' => 'repair-activities',
     'RepairSeedUsers' => 'repair-seed-users',
     'RepairUploadFolder' => 'repair-upload-folder',
-    'About' => 'about'
+    'About' => 'about',
+    'UnifiedSearch' => 'unified-search',
 ];
 
 if (file_exists('custom/application/Ext/ActionNameMap/action_name_map.ext.php')) {
