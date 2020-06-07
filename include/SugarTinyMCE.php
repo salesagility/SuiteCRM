@@ -133,8 +133,10 @@ class SugarTinyMCE
         $jsConfig = $json->encode($config);
 
         $instantiateCall = '';
+        $unique = 'default';
         if (!empty($targets)) {
             $exTargets = explode(",", $targets);
+            $unique = $exTargets[0];
             foreach ($exTargets as $instance) {
                 $instantiateCall .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('{$instance}'));\n";
             }
@@ -145,12 +147,12 @@ class SugarTinyMCE
 <script type="text/javascript" language="Javascript">
 <!--
 $(document).ready(function(){
-	load_mce();
+	load_mce_{$unique}();
 });
 if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded){
-    load_mce();
+    load_mce_{$unique}();
 }
-function load_mce() {
+function load_mce_{$unique}() {
     if (!SUGAR.util.isTouchScreen()) {
         if(tinyMCE.editors.length == 0 ){
             tinyMCE.init({$jsConfig});
