@@ -77,7 +77,10 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "rm -R -f vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests"
+      "rm -Rf vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests",
+      "mv vendor/google/apiclient-services/src/Google/Service/Calendar* vendor/google/apiclient-services/src/Google/",
+      "rm -Rf vendor/google/apiclient-services/src/Google/Service/*",
+      "mv vendor/google/apiclient-services/src/Google/Calendar* vendor/google/apiclient-services/src/Google/Service/"
     ]
   },
   "prefer-stable": true,
