@@ -4568,25 +4568,6 @@ function whetherNeedToSkipDir($dir, $skipDirs)
     return false;
 }
 
-/**
- * Whether directory exists within list of directories, matching only beginning of path
- * @param string $dir dir to be checked
- * @param array $dirsArray the list of directories to check
- * @return boolean
- */
-function dirInArray($dir, $dirsArray)
-{
-    $dir = clean_path($dir);
-    foreach ($dirsArray as $aDir) {
-        // Match the substring only at the beginning of the path:
-        if (strpos($dir, getcwd() . '/' . $aDir) === 0) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 /*
  * rebuildSprites
  * @param silentUpgrade boolean flag indicating whether or not we should treat running the SugarSpriteBuilder as an upgrade operation
