@@ -963,6 +963,10 @@ function getValidPatchName($returnFull = true)
          * Edge-case: manual upgrade with a FTP of a patch; UH table has no entry for it.  Assume nothing. :( */
         if (0 == count($md5_matches)) {
             $target_manifest = remove_file_extension($upgrade_content) . '-manifest.php';
+            if(!file_exists($target_manifest) || !is_readable($target_manifest)){
+                logThis("*** Error, Cannot read manifest [ {$upgrade_content} ]");
+                continue;
+            }
             require_once($target_manifest);
 
             if (empty($manifest['version'])) {
