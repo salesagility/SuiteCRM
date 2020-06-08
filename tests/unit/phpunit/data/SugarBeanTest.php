@@ -3089,6 +3089,64 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->db->query($query);
     }
 
+
+    public function test_create_list_count_query()
+    {
+        // Create a lead and cache it
+        $bean = new SugarBean();
+        $bean->table_name = 'table_name';
+
+        $query = "SELECT
+                     DISTINCT table_name.id,
+                              table_name.created_by,
+                              table_name.assigned_user_id,
+                              table_name.name
+                  FROM table_name
+                  LEFT JOIN related_table_name gi ON gi.id = (
+                      select id
+                      from related_table_name
+                      where related_table_name.table_name_id = table_name.id
+                      order by parent_type asc limit 1 )
+                  where table_name.deleted=0 ORDER BY table_name.date_entered DESC";
+
+        $result = $bean->create_list_count_query($query);
+
+        $pattern0 = "/(\sORDER\s*BY\s)/is";
+        preg_match_all($pattern0, $query, $matches0);
+        self::assertEquals(2, count($matches0[0]));
+
+        $pattern1 = "/where table_name\.deleted=0\s*$/si";
+        preg_match_all($pattern1, $result, $matches1);
+        self::assertEquals(1, count($matches1[0]));
+
+        $pattern2 = "/ORDER BY parent_type asc/si";
+        preg_match_all($pattern2, $result, $matches2);
+        self::assertEquals(1, count($matches2[0]));
+
+
+        $query1 = "SELECT
+                     DISTINCT table_name.id,
+                              table_name.created_by,
+                              table_name.assigned_user_id,
+                              table_name.name
+                  FROM table_name
+                  where table_name.deleted=0 ORDER BY table_name.date_entered DESC";
+
+        $result1 = $bean->create_list_count_query($query1);
+
+        $pattern3 = "/\sORDER\s*BY/is";
+        preg_match_all($pattern3, $query1, $matches3);
+        self::assertEquals(1, count($matches3[0]));
+
+        $pattern4 = "/where table_name\.deleted=0$/si";
+        preg_match_all($pattern4, $result1, $matches4);
+        self::assertEquals(1, count($matches4[0]));
+
+        $pattern5 = "/ORDER BY parent_type asc/si";
+        preg_match($pattern5, $result1, $matches5);
+        self::assertEquals(0, count($matches5));
+    }
+
     /**
      * TODO: Tests that need to be written.
      * @see SugarBean::load_relationships()
@@ -3116,7 +3174,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      * @see SugarBean::is_relate_field()
      * @see SugarBean::process_order_by()
      * @see SugarBean::process_list_query()
-     * @see SugarBean::create_list_count_query()
      * @see SugarBean::fill_in_additional_list_fields()
      * @see SugarBean::get_detail()
      * @see SugarBean::process_detail_query()
