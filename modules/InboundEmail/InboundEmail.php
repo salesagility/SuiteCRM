@@ -3618,8 +3618,7 @@ class InboundEmail extends SugarBean
             $c->description = $email->description;
             $c->assigned_user_id = $userId;
             $c->name = $email->name;
-            $c->status = 'New';
-            $c->priority = 'P1';
+            $c->status = 'Open_New';
 
             if (!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;

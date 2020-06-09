@@ -861,42 +861,33 @@ function systemCheckJsonCheckFiles($persistence)
 
     $isWindows = is_windows();
     foreach ($persistence['files_to_check'] as $file) {
-        //	while($file = array_pop($persistence['files_to_check'])) {
 
         // admin deletes a bad file mid-check:
         if (!file_exists($file)) {
             continue;
         }
-
-        if ($isWindows) {
-            if (!is_writable_windows($file)) {
-                logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
-                // don't warn yet - we're going to use this to check against replacement files
-                $filesNotWritable[$i] = $file;
-                $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-                $filesOut .= "<tr>".
-                                "<td valign='top'><span class='error'>{$file}</span></td>".
-                                "<td valign='top'>{$filesNWPerms[$i]}</td>".
-                                "<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
-                                "<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
-                              "</tr>";
+        if (!is_writable($file)) {
+            logThis('File ['.$file.'] not writable - saving for display');
+            $filesNotWritable[$i] = $file;
+            $perms = substr(sprintf('%o', fileperms($file)), -4);
+            $owner = fileowner($file);
+            $group = filegroup($file);
+            if (!$isWindows && function_exists('posix_getpwuid')) {
+                $ownerData = posix_getpwuid($owner);
+                $owner = !empty($ownerData) ? $ownerData['name'] : $owner;
             }
-        } else {
-            if (!is_writable($file)) {
-                logThis('File ['.$file.'] not writable - saving for display');
-                // don't warn yet - we're going to use this to check against replacement files
-                $filesNotWritable[$i] = $file;
-                $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-                $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
-                $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
-                $filesOut .= "<tr>".
-                                "<td valign='top'><span class='error'>{$file}</span></td>".
-                                "<td valign='top'>{$filesNWPerms[$i]}</td>".
-                                "<td valign='top'>".$owner['name']."</td>".
-                                "<td valign='top'>".$group['name']."</td>".
-                              "</tr>";
+            if (!$isWindows && function_exists('posix_getgrgid')) {
+                $groupData = posix_getgrgid($group);
+                $group = !empty($groupData) ? $groupData['name'] : $group;
             }
+            $filesOut .= "<tr>" .
+                "<td><span class='error'>{$file}</span></td>" .
+                "<td>{$perms}</td>" .
+                "<td>{$owner}</td>" .
+                "<td>{$group}</td>" .
+                "</tr>";
         }
+
         $i++;
     }
 
