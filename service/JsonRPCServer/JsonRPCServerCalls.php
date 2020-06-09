@@ -89,8 +89,7 @@ class JsonRPCServerCalls
      */
     public function query($request_id, $params)
     {
-        global $response;
-        global $sugar_config;
+        global $response, $sugar_config, $db;
 
         $jsonParser = getJSONobj();
         $jsonConfig = new json_config();
@@ -108,9 +107,8 @@ class JsonRPCServerCalls
             foreach ($args['conditions'] as $key => $condition) {
                 if (!empty($condition['value'])) {
                     $where = $jsonParser::decode(utf8_encode($condition['value']));
-                    // cn: bug 12693 - API change due to CSRF security changes.
                     $where = empty($where) ? $condition['value'] : $where;
-                    $args['conditions'][$key]['value'] = $where;
+                    $args['conditions'][$key]['value'] = $db->quote($where);
                 }
             }
         }
