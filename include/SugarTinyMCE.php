@@ -143,18 +143,20 @@ class SugarTinyMCE
         }
         $path = getJSPath('include/javascript/tiny_mce/tiny_mce.js');
         $ret =<<<eoq
-<script type="text/javascript" language="Javascript" src="$path"></script>
-<script type="text/javascript" language="Javascript">
+<script type="text/javascript"  src="$path"></script>
+<script type="text/javascript">
 <!--
 $(document).ready(function(){
+  if (!SUGAR.ajaxUI.hist_loaded){
 	load_mce_{$unique}();
+	}
 });
 if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded){
-    load_mce_{$unique}();
+    setTimeout(function(){ load_mce_{$unique}();},40);
 }
-function load_mce_{$unique}() {
+function load_mce_{$unique}(){
     if (!SUGAR.util.isTouchScreen()) {
-        if(tinyMCE.editors.length == 0 ){
+        if(tinyMCE.editors.length === 0 ){
             tinyMCE.init({$jsConfig});
         }else{
            {$instantiateCall}
