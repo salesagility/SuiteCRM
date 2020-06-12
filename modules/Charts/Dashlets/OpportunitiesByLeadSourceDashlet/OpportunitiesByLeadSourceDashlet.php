@@ -169,6 +169,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         ['Cancel', function () {}]
     ]
 });
+resizeGraph(document.getElementById('$canvasId'));
         </script>
 EOD;
 

@@ -216,6 +216,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
             }
         }).draw();
 */
+resizeGraph(document.getElementById('$canvasId'));
 </script>
 EOD;
         return $chart;

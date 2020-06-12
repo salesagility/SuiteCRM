@@ -241,7 +241,7 @@ new RGraph.HBar({
         }).draw();
 */
 
-
+resizeGraph(document.getElementById('$canvasId'));
         </script>
 EOD;
 
