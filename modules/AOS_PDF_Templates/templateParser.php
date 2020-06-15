@@ -33,7 +33,7 @@ class templateParser
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
             $focus = BeanFactory::getBean($bean_name, $bean_id);
-            $string = templateParser::parse_template_bean($string, $focus->table_name, $focus);
+            $string = self::parse_template_bean($string, $focus->table_name, $focus);
 
             foreach ($focus->field_defs as $focus_name => $focus_arr) {
                 if ($focus_arr['type'] == 'relate') {
@@ -41,7 +41,7 @@ class templateParser
                         $idName = $focus_arr['id_name'];
                         $relate_focus = BeanFactory::getBean($focus_arr['module'], $focus->$idName);
 
-                        $string = templateParser::parse_template_bean($string, $focus_arr['name'], $relate_focus);
+                        $string = self::parse_template_bean($string, $focus_arr['name'], $relate_focus);
                     }
                 }
             }
@@ -49,7 +49,7 @@ class templateParser
         return $string;
     }
 
-    public function parse_template_bean($string, $key, &$focus)
+    public static function parse_template_bean($string, $key, &$focus)
     {
         global $app_strings, $sugar_config;
         $repl_arr = array();
