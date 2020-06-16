@@ -600,9 +600,8 @@ class EmailTemplate extends SugarBean
         return $data;
     }
     
-    public static function parse_template($string, &$bean_arr)
+    public static function parse_template($string, $bean_arr)
     {
-      
         foreach ($bean_arr as $bean_name => $bean_id) {
             if($bean_id instanceof SugarBean){
               $focus = $bean_id;
@@ -610,7 +609,7 @@ class EmailTemplate extends SugarBean
               $focus = BeanFactory::getBean($bean_name, $bean_id);
               if(!$focus) continue;
             }
-            $string = self::parse_template_bean($string, $focus->table_name, $focus);
+            $string = self::parse_template_bean($string, $focus->module_name, $focus);
 
             foreach ($focus->field_defs as $focus_name => $focus_arr) {
                 if ($focus_arr['type'] == 'relate') {
@@ -624,17 +623,6 @@ class EmailTemplate extends SugarBean
             }
         }
         
-        return $string;
-        
-        foreach ($bean_arr as $bean_name => $bean_id) {
-            $focus = BeanFactory::getBean($bean_name, $bean_id);
-
-            if ($bean_name == 'Leads' || $bean_name == 'Prospects') {
-                $bean_name = 'Contacts';
-            }
-            
-            $string = self::parse_template_bean($string, $bean_name, $focus);
-        }
         return $string;
     }
 
