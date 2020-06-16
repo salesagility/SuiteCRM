@@ -70,38 +70,6 @@ class EmailTemplate extends SugarBean
     public $new_schema = true;
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array();
-    // add fields here that would not make sense in an email template
-    public $badFields = array(
-        'account_description',
-        'contact_id',
-        'lead_id',
-        'opportunity_amount',
-        'opportunity_id',
-        'opportunity_name',
-        'opportunity_role_id',
-        'opportunity_role_fields',
-        'opportunity_role',
-        'campaign_id',
-        // User objects
-        'id',
-        'date_entered',
-        'date_modified',
-        'user_preferences',
-        'accept_status',
-        'user_hash',
-        'authenticate_id',
-        'sugar_login',
-        'reports_to_id',
-        'reports_to_name',
-        'is_admin',
-        'receive_notifications',
-        'modified_user_id',
-        'modified_by_name',
-        'created_by',
-        'created_by_name',
-        'accept_status_id',
-        'accept_status_name',
-    );
 
     /**
      * @var array temp storage for template variables while cleanBean
@@ -127,158 +95,6 @@ class EmailTemplate extends SugarBean
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
-    }
-
-
-    /**
-     * Generates the extended field_defs for creating macros
-     * @return array
-     */
-    public function generateFieldDefsJS()
-    {
-        global $current_user;
-
-
-        $contact = BeanFactory::newBean('Contacts');
-        $account = BeanFactory::newBean('Accounts');
-        $lead = BeanFactory::newBean('Leads');
-        $prospect = BeanFactory::newBean('Prospects');
-
-
-        $loopControl = array(
-            'Contacts' => array(
-                'Contacts' => $contact,
-                'Leads' => $lead,
-                'Prospects' => $prospect,
-            ),
-            'Accounts' => array(
-                'Accounts' => $account,
-            ),
-            'Users' => array(
-                'Users' => $current_user,
-            ),
-        );
-
-        $prefixes = array(
-            'Contacts' => 'contact_',
-            'Accounts' => 'account_',
-            'Users' => 'contact_user_',
-        );
-
-        $collection = array();
-        foreach ($loopControl as $collectionKey => $beans) {
-            $collection[$collectionKey] = array();
-            foreach ($beans as $beankey => $bean) {
-                foreach ($bean->field_defs as $key => $field_def) {
-                    if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
-                        ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
-                        ($field_def['type'] == 'bool') ||
-                        (isset($field_def['name']) && in_array((array)$field_def['name'], $this->badFields))
-                    ) {
-                        continue;
-                    }
-                    if (!isset($field_def['vname'])) {
-                        //echo $key;
-                    }
-                    // valid def found, process
-                    $optionKey = strtolower("{$prefixes[$collectionKey]}{$key}");
-                    if (!isset($field_def['vname'])) {
-                        LoggerManager::getLogger()->warn('Filed def has not translatable name.');
-                    }
-                    $optionLabel = preg_replace('/:$/', "", translate(isset($field_def['vname']) ? $field_def['vname'] : null, $beankey));
-                    $dup = 1;
-                    foreach ($collection[$collectionKey] as $value) {
-                        if ($value['name'] == $optionKey) {
-                            $dup = 0;
-                            break;
-                        }
-                    }
-                    if ($dup) {
-                        $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
-                    }
-                }
-            }
-        }
-
-        $json = getJSONobj();
-        $ret = "var field_defs = ";
-        $ret .= $json->encode($collection, false);
-        $ret .= ";";
-        return $ret;
-    }
-
-    public function generateFieldDefsJS2()
-    {
-        global $current_user;
-
-        $contact = BeanFactory::newBean('Contacts');
-        $account = BeanFactory::newBean('Accounts');
-        $lead = BeanFactory::newBean('Leads');
-        $prospect = BeanFactory::newBean('Prospects');
-        $event = BeanFactory::newBean('FP_events');
-
-
-        $loopControl = array(
-            'Contacts' => array(
-                'Contacts' => $contact,
-                'Leads' => $lead,
-                'Prospects' => $prospect,
-            ),
-            'Accounts' => array(
-                'Accounts' => $account,
-            ),
-            'Users' => array(
-                'Users' => $current_user,
-            ),
-            'Events' => array(
-                'Events' => $event,
-            ),
-        );
-
-        $prefixes = array(
-            'Contacts' => 'contact_',
-            'Accounts' => 'account_',
-            'Users' => 'contact_user_',
-            'Events' => 'event_',
-        );
-
-        $collection = array();
-        foreach ($loopControl as $collectionKey => $beans) {
-            $collection[$collectionKey] = array();
-            foreach ($beans as $beankey => $bean) {
-                foreach ($bean->field_defs as $key => $field_def) {
-                    if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) ||
-                        ($field_def['type'] == 'assigned_user_name' || $field_def['type'] == 'link') ||
-                        ($field_def['type'] == 'bool') ||
-                        (in_array($field_def['name'], $this->badFields))
-                    ) {
-                        continue;
-                    }
-                    if (!isset($field_def['vname'])) {
-                        //echo $key;
-                    }
-                    // valid def found, process
-                    $optionKey = strtolower("{$prefixes[$collectionKey]}{$key}");
-                    $optionLabel = preg_replace('/:$/', "", translate($field_def['vname'], $beankey));
-                    $dup = 1;
-                    foreach ($collection[$collectionKey] as $value) {
-                        if ($value['name'] == $optionKey) {
-                            $dup = 0;
-                            break;
-                        }
-                    }
-                    if ($dup) {
-                        $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
-                    }
-                }
-            }
-        }
-
-        $json = getJSONobj();
-        $ret = "var field_defs = ";
-        $ret .= $json->encode($collection, false);
-        $ret .= ";";
-        return $ret;
     }
 
     public function get_summary_text()
@@ -556,8 +372,7 @@ class EmailTemplate extends SugarBean
 
         return $repl_arr;
     }
-
-
+    
     public static function parse_template_bean($string, $bean_name, &$focus)
     {
         global $current_user;
@@ -565,46 +380,19 @@ class EmailTemplate extends SugarBean
         $repl_arr = array();
 
         // cn: bug 9277 - create a replace array with empty strings to blank-out invalid vars
-        $acct = BeanFactory::newBean('Accounts');
-        $contact = BeanFactory::newBean('Contacts');
-        $lead = BeanFactory::newBean('Leads');
-        $prospect = BeanFactory::newBean('Prospects');
-
-        foreach ($lead->field_defs as $field_def) {
-            if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
-                continue;
+        $emptyStrBeans = ['Accounts','Contacts','Leads','Prospects'];
+        
+        foreach($emptyStrBeans as $beanKey){
+            $bean = BeanFactory::newBean($beanKey);
+            foreach ($bean->field_defs as $field_def) {
+                if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
+                    continue;
+                }
+                $repl_arr = self::add_replacement($repl_arr, $field_def, array(
+                    'contact_' . $field_def['name'] => '',
+                    'contact_account_' . $field_def['name'] => '',
+                ));
             }
-            $repl_arr = self::add_replacement($repl_arr, $field_def, array(
-                'contact_' . $field_def['name'] => '',
-                'contact_account_' . $field_def['name'] => '',
-            ));
-        }
-        foreach ($prospect->field_defs as $field_def) {
-            if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
-                continue;
-            }
-            $repl_arr = self::add_replacement($repl_arr, $field_def, array(
-                'contact_' . $field_def['name'] => '',
-                'contact_account_' . $field_def['name'] => '',
-            ));
-        }
-        foreach ($contact->field_defs as $field_def) {
-            if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
-                continue;
-            }
-            $repl_arr = self::add_replacement($repl_arr, $field_def, array(
-                'contact_' . $field_def['name'] => '',
-                'contact_account_' . $field_def['name'] => '',
-            ));
-        }
-        foreach ($acct->field_defs as $field_def) {
-            if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
-                continue;
-            }
-            $repl_arr = self::add_replacement($repl_arr, $field_def, array(
-                'account_' . $field_def['name'] => '',
-                'account_contact_' . $field_def['name'] => '',
-            ));
         }
         // cn: end bug 9277 fix
 
@@ -751,12 +539,15 @@ class EmailTemplate extends SugarBean
 
         krsort($repl_arr);
         reset($repl_arr);
+        
+        $nl2brFields = [
+          'contact_primary_address_street',
+          'contact_alt_address_street'
+        ];
+        
         //20595 add nl2br() to respect the multi-lines formatting
-        if (isset($repl_arr['contact_primary_address_street'])) {
-            $repl_arr['contact_primary_address_street'] = nl2br($repl_arr['contact_primary_address_street']);
-        }
-        if (isset($repl_arr['contact_alt_address_street'])) {
-            $repl_arr['contact_alt_address_street'] = nl2br($repl_arr['contact_alt_address_street']);
+        foreach($nl2brFields as $key){
+            $repl_arr[$key] = nl2br($repl_arr[$key]);
         }
 
         foreach ($repl_arr as $name => $value) {
@@ -799,7 +590,7 @@ class EmailTemplate extends SugarBean
 
         return $data;
     }
-
+    
     public static function parse_template($string, &$bean_arr)
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
