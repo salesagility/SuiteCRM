@@ -1044,6 +1044,10 @@ class AOR_Report extends Basic
 
     private function encloseForCSV($field)
     {
+    	global $sugar_config;
+    	if(isset($sugar_config['export_excel_compatible']) && $sugar_config['export_excel_compatible']){
+	        return '"' . str_replace('"', '""', $field) . '"';
+    	}
         return '"' . $field . '"';
     }
 
