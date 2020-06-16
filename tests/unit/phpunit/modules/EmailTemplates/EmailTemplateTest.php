@@ -406,10 +406,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
         $user->save();
         
-        $lead = BeanFactory::newBean('Leads');
-        $lead->save();
-        
-        $bean_arr = array('Users' => $user->id, 'Leads' => $lead->id);
+        $bean_arr = array('Users' => $user->id);
 
         // test with empty string
         $result = EmailTemplate::parse_template('', $bean_arr);
@@ -420,8 +417,8 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('some value', $result);
         
         // test with valid string
-        $result = EmailTemplate::parse_template('$user_id $lead_id', $bean_arr);
-        $this->assertEquals($user->id . " " .$lead->id, $result);
+        $result = EmailTemplate::parse_template('$user_id', $bean_arr);
+        $this->assertEquals($user->id, $result);
     }
 
     public function testbean_implements()
