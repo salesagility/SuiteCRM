@@ -174,6 +174,18 @@ function runCheck($install_script, $mod_strings = array())
         installLog("XML Parsing Support Found");
     }
 
+    // JSON Parsing
+    if (!function_exists('json_decode')) {
+        $jsonStatus = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_JSON_NOT_AVAILABLE']}</span></b>";
+        installLog("ERROR:: {$mod_strings['ERR_CHECKSYS_JSON_NOT_AVAILABLE']}");
+        $error_found = true;
+        $error_txt .= '
+        <p><strong>'.$mod_strings['LBL_CHECKSYS_JSON'].'</strong></p>
+        <p class="error">'.$jsonStatus.'</p>
+    ';
+    } else {
+        installLog("JSON Parsing Support Found");
+    }
 
     // mbstrings
     if (!function_exists('mb_strlen')) {
