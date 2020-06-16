@@ -381,7 +381,6 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
 
     public function testparse_template_bean()
     {
-        $emailTemplate = BeanFactory::newBean('EmailTemplates');
         $contact = BeanFactory::newBean('Contacts');
         $user = new User(1);
         $account = BeanFactory::newBean('Accounts');
@@ -390,30 +389,39 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $account->name = 'test';
 
         // test with empty string
-        $actual = $emailTemplate->parse_template_bean('', 'Contacts', $contact);
+        $actual = EmailTemplate::parse_template_bean('', 'Contacts', $contact);
         $this->assertEquals('', $actual);
 
         // test with valid string
-        $actual = $emailTemplate->parse_template_bean('test', 'Users', $user);
+        $actual = EmailTemplate::parse_template_bean('test', 'Users', $user);
         $this->assertEquals('test', $actual);
 
         // test with empty string and different module
-        $actual = $emailTemplate->parse_template_bean('', 'Accounts', $account);
+        $actual = EmailTemplate::parse_template_bean('', 'Accounts', $account);
         $this->assertEquals('', $actual);
     }
 
     public function testparse_template()
     {
-        $emailTemplate = BeanFactory::newBean('EmailTemplates');
-        $bean_arr = array('Users' => 1, 'Leads' => 1);
+        $user = BeanFactory::newBean('Users');
+        $user->save();
+        
+        $lead = BeanFactory::newBean('Leads');
+        $lead->save();
+        
+        $bean_arr = array('Users' => $user->id, 'Leads' => $lead->id);
 
         // test with empty string
-        $result = $emailTemplate->parse_template('', $bean_arr);
+        $result = EmailTemplate::parse_template('', $bean_arr);
         $this->assertEquals('', $result);
 
         // test with valid string
-        $result = $emailTemplate->parse_template('some value', $bean_arr);
+        $result = EmailTemplate::parse_template('some value', $bean_arr);
         $this->assertEquals('some value', $result);
+        
+        // test with valid string
+        $result = EmailTemplate::parse_template('$user_id $lead_id', $bean_arr);
+        $this->assertEquals($user->id . " " .$lead->id, $result);
     }
 
     public function testbean_implements()

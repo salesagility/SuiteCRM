@@ -604,7 +604,12 @@ class EmailTemplate extends SugarBean
     {
       
         foreach ($bean_arr as $bean_name => $bean_id) {
-            $focus = BeanFactory::getBean($bean_name, $bean_id);
+            if($bean_id instanceof SugarBean){
+              $focus = $bean_id;
+            }else{
+              $focus = BeanFactory::getBean($bean_name, $bean_id);
+              if(!$focus) continue;
+            }
             $string = self::parse_template_bean($string, $focus->table_name, $focus);
 
             foreach ($focus->field_defs as $focus_name => $focus_arr) {
@@ -612,6 +617,7 @@ class EmailTemplate extends SugarBean
                     if (isset($focus_arr['module']) && $focus_arr['module'] != '' && $focus_arr['module'] != 'EmailAddress') {
                         $idName = $focus_arr['id_name'];
                         $relate_focus = BeanFactory::getBean($focus_arr['module'], $focus->$idName);
+                        if(!$relate_focus) continue;
                         $string = self::parse_template_bean($string, $focus_arr['name'], $relate_focus);
                     }
                 }
