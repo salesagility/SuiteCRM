@@ -508,7 +508,7 @@ class EmailTemplate extends SugarBean
                 if (!isset($field_def['name'])) {
                     LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs [name] is undefined.');
                 }
-                $fieldPrefix = strtolower($beanList[$bean_name] ?? $bean_name);
+                $fieldPrefix = strtolower(isset($beanList[$bean_name])?$beanList[$bean_name]:$bean_name);
                 $fieldName = isset($field_def['name']) ? $field_def['name'] : null;
                 if (isset($focus->$fieldName)) {
                     if ($field_def['type'] == 'enum' && isset($field_def['options'])) {
