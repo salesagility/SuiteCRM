@@ -56,7 +56,6 @@ if (!defined('PHP_VERSION_ID')) {
 
 if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
     header('Location: install.php');
-    throw new Exception('SuiteCRM is not installed. Entry point needs an installed SuiteCRM, please install first.');
 }
 
 $BASE_DIR = realpath(dirname(__DIR__));
