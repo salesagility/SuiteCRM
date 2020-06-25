@@ -200,11 +200,11 @@
       });
       if (targetCount > 0) {
         $(self.emailComposeView).find('#to_addrs_names').val(targetList);
-        if (targetCount < 2) {
-          $(self.emailComposeView).find('#parent_type').val(populateModule);
-          $(self.emailComposeView).find('#parent_name').val(populateModuleName);
-          $(self.emailComposeView).find('#parent_id').val(populateModuleRecord);
-        }
+      }
+      if (targetCount < 2) {
+        $(self.emailComposeView).find('#parent_type').val(populateModule);
+        $(self.emailComposeView).find('#parent_name').val(populateModuleName);
+        $(self.emailComposeView).find('#parent_id').val(populateModuleRecord);
       }
 
       $(self.emailComposeView).on('sentEmail', function (event, composeView) {
