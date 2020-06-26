@@ -54,12 +54,6 @@ $themedef = array(
     'classic' => true,
     'configurable' => true,
     'config_options' => array(
-
-        'display_sidebar' => array(
-            'vname' => 'LBL_DISPLAY_SIDEBAR',
-            'type' => 'bool',
-            'default' => true,
-        ),
         'sub_themes' => array(
             'vname' => 'LBL_SUBTHEME_OPTIONS',
             'type' => 'select',

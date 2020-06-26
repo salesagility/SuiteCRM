@@ -8,12 +8,12 @@
 
   #vcard_file {
     margin-top: 10px;
-    margin-buttom: 10px;
+    margin-bottom: 10px;
   }
 
   .button {
     margin-top: 10px;
-    margin-buttom: 10px;
+    margin-bottom: 10px;
   }
 }
 
@@ -357,6 +357,14 @@ th {
 td {
   padding: 0;
   border: none;
+}
+
+#case_updates textarea {
+  resize:both;
+}
+
+textarea {
+  resize: vertical; /* user can resize vertically, but width is fixed */
 }
 
 #header ul li {
@@ -3184,7 +3192,7 @@ table#lineItems tr td table tfoot tr td span {
 
 .hr {
   background: $main-alternate-bg;
-  color: $navbar-menu-seperator;
+  color: $navbar-menu-separator;
   height: 1px;
 }
 
@@ -4421,7 +4429,8 @@ td.inlineEditActive {
   font-weight: 600;
   height: 28px;
   line-height: 18px;
-  padding: 0 10px 0 10px;
+  padding: 5px 10px 0 10px;
+  display: inline-block;
 }
 
 .edit-view-pagination .btn-pagination:hover {
