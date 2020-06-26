@@ -20,6 +20,13 @@ install/status.json
 /config.php
 /config_override.php
 /config_si.php
+
+#Ignore Sass Generated files in SuiteP
+themes/suite8/css/*.map
+themes/suite8/css/*/*.map
+themes/suite8/css/*/*.css
+
+tests/_output/*
 tests/config.test.php
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php

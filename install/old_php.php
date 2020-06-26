@@ -80,7 +80,7 @@ $out = <<<EOQ
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}, {$mod_strings['LBL_LICENSE_ACCEPTANCE']}</title>
    <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
    <link rel="stylesheet" href="install/install2.css" type="text/css">
-   <link rel="stylesheet" href="themes/SuiteP/css/themes.css" type="text/css">
+   <link rel="stylesheet" href="themes/suite8/css/themes.css" type="text/css">
    <script src="include/javascript/jquery/jquery-min.js"></script>
     $jsSrc
    <script type="text/javascript">
@@ -91,8 +91,8 @@ $out = <<<EOQ
     </script>
     <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
     <script type="text/javascript" src="install/old_php.js"></script>
-    <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
-    <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+    <link rel="stylesheet" href="themes/suite8/css/fontello.css">
+    <link rel="stylesheet" href="themes/suite8/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
     <!--SuiteCRM installer-->

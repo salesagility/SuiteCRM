@@ -23,7 +23,7 @@ class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
         $this->assertContains('<!DOCTYPE HTML>', $output);
         $this->assertContains('<html lang=\'en_us\'>', $output);
         $this->assertContains('<title>SuiteCRM - Open Source CRM</title>', $output);
-        $this->assertContains('<link rel="stylesheet" type="text/css" href="cache/themes/SuiteP/css/Dawn/style.css', $output);
+        $this->assertContains('<link rel="stylesheet" type="text/css" href="cache/themes/suite8/css/Dawn/style.css', $output);
         $this->assertContains('<meta http-equiv="Content-Type" content="text/html; charset="{$charset}">', $output);
         $this->assertContains('<body class="popupBody">', $output);
         $this->assertContains('<div class=\'moduleTitle\'>', $output);

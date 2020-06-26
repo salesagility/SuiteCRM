@@ -88,7 +88,7 @@ EOF;
 
         <title><?= $survey->name ?></title>
 
-        <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
+        <link href="themes/suite8/css/bootstrap.min.css" rel="stylesheet">
         <link href="modules/Surveys/javascript/rating/rating.min.css" rel="stylesheet">
         <link href="modules/Surveys/javascript/datetimepicker/jquery-ui-timepicker-addon.css" rel="stylesheet">
         <link href="include/javascript/jquery/themes/base/jquery.ui.all.css" rel="stylesheet">
@@ -372,7 +372,7 @@ function displayClosedPage($survey)
 
         <title><?= $survey->name ?></title>
 
-        <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
+        <link href="themes/suite8/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
     <div class="container">

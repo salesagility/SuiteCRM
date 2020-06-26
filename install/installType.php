@@ -79,10 +79,10 @@ $out = <<<EOQ
     <meta http-equiv="Content-Style-Type" content="text/css">
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_INSTALL_TYPE_TITLE']}</title>   <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
     <link rel="stylesheet" href="install/install.css" type="text/css">
-    <link rel="stylesheet" href="themes/SuiteP/css/responsiveslides.css" type="text/css">
-    <link rel="stylesheet" href="themes/SuiteP/css/themes.css" type="text/css">
-    <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
-    <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+    <link rel="stylesheet" href="themes/suite8/css/responsiveslides.css" type="text/css">
+    <link rel="stylesheet" href="themes/suite8/css/themes.css" type="text/css">
+    <link rel="stylesheet" href="themes/suite8/css/fontello.css">
+    <link rel="stylesheet" href="themes/suite8/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
     <script src="include/javascript/jquery/jquery-min.js"></script>
 </head>
 <body onload="javascript:document.getElementById('button_next').focus();">
