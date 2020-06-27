@@ -67,6 +67,7 @@ class RelationshipService
                 $linkResponse->setSelf(sprintf('V8/module/%s/%s', $relatedBean->getObjectName(), $relatedBean->id));
 
                 $dataResponse = new DataResponse($relatedBean->getObjectName(), $relatedBean->id);
+                $dataResponse->setAttributes($this->attributeHelper->getAttributes($relatedBean, null));
                 $dataResponse->setLinks($linkResponse);
                 $data[] = $dataResponse;
             }
