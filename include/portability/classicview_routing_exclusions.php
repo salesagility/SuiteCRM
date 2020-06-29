@@ -3,6 +3,10 @@
 $classicview_routing_exclusions = [
     'any' => [
         'ShowDuplicates'
+    ],
+    'Administration' => [
+        'UpgradeWizard_prepare',
+        'UpgradeWizard_commit'
     ]
 ];
 
