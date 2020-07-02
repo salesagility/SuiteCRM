@@ -271,7 +271,7 @@ class ListViewData
         // still empty? try to use settings passed in $param
         if (empty($order['orderBy']) && !empty($params['orderBy'])) {
             $order['orderBy'] = $params['orderBy'];
-            $order['sortOrder'] =  (empty($params['sortOrder']) ? '' : $params['sortOrder']);
+            $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
         }
 
         //rrs - bug: 21788. Do not use Order by stmts with fields that are not in the query.
@@ -279,9 +279,10 @@ class ListViewData
         // Samir Gandhi : Do not remove the report_cache.date_modified condition as the report list view is broken
         $orderby = $order['orderBy'];
         if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
-            $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.')+1);
+            $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
         }
-        if ($orderby != 'date_entered' && !in_array($orderby, array_keys($filter_fields))) {
+        if ($orderby != 'date_entered' && empty($params['custom_order']) && !in_array($orderby,
+                array_keys($filter_fields))) {
             $order['orderBy'] = '';
             $order['sortOrder'] = '';
         }
