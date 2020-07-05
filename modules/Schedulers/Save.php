@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/formbase.php');
 
-$focus = new Scheduler();
+$focus = BeanFactory::newBean('Schedulers');
 $focus = populateFromPost('', $focus);
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -262,7 +262,7 @@ class aCase extends Basic
         }
         $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'case_role', 'case_rel_id');
 
-        return $this->build_related_list2($query, new Contact(), $temp);
+        return $this->build_related_list2($query, BeanFactory::newBean('Contacts'), $temp);
     }
 
     /**
@@ -407,7 +407,7 @@ class aCase extends Basic
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
 
-        if ($row !== null) {
+        if ($row !== null && $row !== false) {
             $ret_array['account_name'] = stripslashes($row['name']);
             $ret_array['account_id'] = $row['id'];
         } else {

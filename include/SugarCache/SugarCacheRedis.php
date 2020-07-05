@@ -152,7 +152,7 @@ class SugarCacheRedis extends SugarCacheAbstract
         $key
         ) {
         $key = $this->_fixKeyName($key);
-        $this->_getRedisObject()->delete($key);
+        $this->_getRedisObject()->del($key);
     }
     
     /**

@@ -226,23 +226,18 @@ function insertConditionHeader(){
     //a.style.color="rgb(68,68,68)";
 
     var b=x.insertCell(1);
-    b.style.color="rgb(0,0,0)";
     b.innerHTML=SUGAR.language.get('AOW_Conditions', 'LBL_MODULE_PATH');
 
     var c=x.insertCell(2);
-    c.style.color="rgb(0,0,0)";
     c.innerHTML=SUGAR.language.get('AOW_Conditions', 'LBL_FIELD');
 
     var d=x.insertCell(3);
-    d.style.color="rgb(0,0,0)";
     d.innerHTML=SUGAR.language.get('AOW_Conditions', 'LBL_OPERATOR');
 
     var e=x.insertCell(4);
-    e.style.color="rgb(0,0,0)";
     e.innerHTML=SUGAR.language.get('AOW_Conditions', 'LBL_VALUE_TYPE');
 
     var f=x.insertCell(5);
-    f.style.color="rgb(0,0,0)";
     f.innerHTML=SUGAR.language.get('AOW_Conditions', 'LBL_VALUE');
 }
 
@@ -261,14 +256,14 @@ function insertConditionLine(){
 
 
     var x = tablebody.insertRow(-1);
-    x.id = 'product_line' + condln;
+    x.id = 'condition_line' + condln;
 
     var a = x.insertCell(0);
     if(action_sugar_grp1 == 'EditView'){
         a.innerHTML = "<button type='button' id='aow_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><span class='suitepicon suitepicon-action-minus'></span></button><br>";
         a.innerHTML += "<input type='hidden' name='aow_conditions_deleted[" + condln + "]' id='aow_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aow_conditions_id[" + condln + "]' id='aow_conditions_id" + condln + "' value=''>";
     } else{
-        a.innerHTML = condln +1;
+        a.innerHTML = '';
     }
 
     var b = x.insertCell(1);

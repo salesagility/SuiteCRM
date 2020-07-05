@@ -36,7 +36,7 @@ function perform_aos_save($focus)
         if (isset($focus->field_defs[$fieldNameDollar])) {
             $focus->$fieldNameDollar = '';
             if (!number_empty($focus->field_defs[$field['name']])) {
-                $currency = new Currency();
+                $currency = BeanFactory::newBean('Currencies');
                 if (!isset($focus->currency_id)) {
                     LoggerManager::getLogger()->warn('Currency is not set for perform AOS save.');
                     $currency->retrieve();

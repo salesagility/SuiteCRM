@@ -119,7 +119,7 @@
             $ical_array = array();
             // First, get the list of IDs.
             $query = "SELECT id from vcals where user_id='{$user_bean->id}' AND type='vfb' AND deleted=0";
-            $vCal = new vCal();
+            $vCal = BeanFactory::newBean('vCals');
             $vcal_arr = $this->build_related_list($query, $vCal);
 
             foreach ($vcal_arr as $focus) {
@@ -251,7 +251,7 @@
         // caches vcal for Activities in Sugar database
         public static function cache_sugar_vcal_freebusy(&$user_focus)
         {
-            $focus = new vCal();
+            $focus = BeanFactory::newBean('vCals');
             // set freebusy members and save
             $arr = array('user_id' => $user_focus->id, 'type' => 'vfb', 'source' => 'sugar');
             $focus->retrieve_by_string_fields($arr);

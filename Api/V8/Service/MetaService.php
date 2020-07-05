@@ -47,7 +47,9 @@ use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\Param\GetFieldListParams;
 use Slim\Http\Request;
-use SuiteCRM\API\v8\Exception\NotAllowedException;
+use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\NotAllowedException;
+use SuiteCRM\Exception\NotFoundException;
 
 /**
  * Class MetaService
@@ -66,15 +68,15 @@ class MetaService
     private $moduleListProvider;
 
     private static $allowedVardefFields = [
-          'type',
-          'dbType',
-          'source',
-          'relationship',
-          'default',
-          'len',
-          'precision',
-          'comments',
-          'required',
+        'type',
+        'dbType',
+        'source',
+        'relationship',
+        'default',
+        'len',
+        'precision',
+        'comments',
+        'required',
     ];
 
     /**
@@ -98,13 +100,14 @@ class MetaService
     public function getModuleList(Request $request)
     {
         $modules = $this->moduleListProvider->getModuleList();
-        
+
         $dataResponse = new DataResponse('modules', '');
         $attributeResponse = new AttributeResponse($modules);
         $dataResponse->setAttributes($attributeResponse);
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
+
         return $response;
     }
 
@@ -112,6 +115,7 @@ class MetaService
      * Build the response with a list of fields to return.
      *
      * @param Request $request
+     * @param GetFieldListParams $fieldListParams
      * @return DocumentResponse
      * @throws NotAllowedException
      */
@@ -125,6 +129,7 @@ class MetaService
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
+
         return $response;
     }
 
@@ -139,7 +144,7 @@ class MetaService
         $modules = query_module_access_list($current_user);
         \ACLController::filterModuleList($modules, false);
 
-        if (!in_array($module, $modules)) {
+        if (!in_array($module, $modules, true)) {
             throw new NotAllowedException('The API user does not have access to this module.');
         }
     }
@@ -159,6 +164,7 @@ class MetaService
         foreach ($bean->field_defs as $fieldName => $fieldDef) {
             $fieldList[$fieldName] = $this->pruneVardef($fieldDef);
         }
+
         return $fieldList;
     }
 
@@ -182,6 +188,34 @@ class MetaService
         if (!isset($def['dbType'])) {
             $pruned['dbType'] = $def['type'];
         }
+
         return $pruned;
+    }
+
+    /**
+     * Build the response with the swagger schema.
+     *
+     * @return DocumentResponse
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function getSwaggerSchema()
+    {
+        $path = __DIR__ . '/../../docs/swagger/swagger.json';
+        if (!file_exists($path)) {
+            throw new NotFoundException(
+                'Unable to find JSON Api Schema file: ' . $path
+            );
+        }
+
+        $swaggerFile = file_get_contents($path);
+
+        if (!$swaggerFile) {
+            throw new Exception(
+                'Unable to read JSON Api Schema file: ' . $path
+            );
+        }
+
+        return json_decode($swaggerFile, true);
     }
 }

@@ -71,7 +71,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      */
     public function configuration()
     {
-        $this->jjwg_Maps = new jjwg_Maps();
+        $this->jjwg_Maps = BeanFactory::newBean('jjwg_Maps');
         $this->settings = $GLOBALS['jjwg_config'];
     }
 
@@ -242,8 +242,13 @@ class jjwg_Areas extends jjwg_Areas_sugar
             $loc['lng'] = $marker['lng'];
         } else {
             $loc['name'] = '';
-            $loc['lat'] = $this->centroid['lat'];
-            $loc['lng'] = $this->centroid['lng'];
+            if (is_null($this->centroid)) {
+                $loc['lat'] = null;
+                $loc['lng'] = null;
+            } else {
+                $loc['lat'] = $this->centroid['lat'];
+                $loc['lng'] = $this->centroid['lng'];
+            }
         }
 
         if (empty($loc['name'])) {

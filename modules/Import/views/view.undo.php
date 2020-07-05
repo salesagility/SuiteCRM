@@ -71,7 +71,7 @@ class ImportViewUndo extends ImportView
         // reset old ones afterwards
         $mod_strings = $old_mod_strings;
         
-        $last_import = new UsersLastImport();
+        $last_import = BeanFactory::newBean('Import_2');
         $this->ss->assign('UNDO_SUCCESS', $last_import->undo($_REQUEST['import_module']));
         $this->ss->assign("JAVASCRIPT", $this->_getJS());
         $content = $this->ss->fetch('modules/Import/tpls/undo.tpl');

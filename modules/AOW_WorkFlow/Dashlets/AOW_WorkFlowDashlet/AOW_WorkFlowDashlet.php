@@ -45,7 +45,7 @@ class AOW_WorkFlowDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOW_WorkFlowDashlet']['searchFields'];
         $this->columns = $dashletData['AOW_WorkFlowDashlet']['columns'];
 
-        $this->seedBean = new AOW_WorkFlow();
+        $this->seedBean = BeanFactory::newBean('AOW_WorkFlow');
     }
 
     /**
