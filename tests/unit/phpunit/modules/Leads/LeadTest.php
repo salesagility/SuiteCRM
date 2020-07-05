@@ -10,7 +10,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testLead()
@@ -145,8 +145,6 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals("1", $lead->opportunity_id);
         */
 
-
-
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $lead->mark_deleted($lead->id);
         $result = $lead->retrieve($lead->id);
@@ -155,7 +153,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::newBean('Leads');
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -305,7 +303,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
         $form = "";
         $prefix = "";
-        $tempBean = new Contact();
+        $tempBean = BeanFactory::newBean('Contacts');
 
         $result = $lead->convertCustomFieldsForm($form, $tempBean, $prefix);
 

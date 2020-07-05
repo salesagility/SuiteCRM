@@ -58,7 +58,7 @@ if (!empty($_REQUEST['identifier'])) {
 
     //user is most likely not defined, retrieve admin user so that team queries are bypassed
     if (empty($current_user) || empty($current_user->id)) {
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         $current_user->retrieve('1');
     }
     

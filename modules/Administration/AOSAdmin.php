@@ -114,7 +114,6 @@ $javascript->setFormName('ConfigureSettings');
 echo $javascript->getScript();
 ?>
 <script language="Javascript" type="text/javascript">
-    addToValidate('ConfigureSettings', 'aos_contracts_renewalReminderPeriod', 'int', false, "Days must be a number");
     addToValidateLessThan('ConfigureSettings', 'aos_invoices_initialNumber', 'int', false, "", 9999999999,"Initial Invoice number cannot be bigger than 9999999999");
 </script>
 

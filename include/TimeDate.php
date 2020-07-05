@@ -383,7 +383,7 @@ class TimeDate
         $timef = $user->getPreference('timef');
         if (empty($timef) && isset($GLOBALS['current_user']) && $GLOBALS['current_user'] !== $user) {
             // if we got another user and it has no time format, try current user
-            $timef = $GLOBALS['current_user']->getPreference('$timef');
+            $timef = $GLOBALS['current_user']->getPreference('timef');
         }
         if (empty($timef)) {
             $timef = $GLOBALS['sugar_config']['default_time_format'];
@@ -493,7 +493,6 @@ class TimeDate
     {
         return explode(' ', $datetime, 2);
     }
-
 
     /**
      * Get user date format in Javascript form

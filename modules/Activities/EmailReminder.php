@@ -91,7 +91,7 @@ class EmailReminder
      */
     public function process()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         Reminder::sendEmailReminders($this, $admin);
@@ -99,7 +99,7 @@ class EmailReminder
         $meetings = $this->getMeetingsForRemind();
         foreach ($meetings as $id) {
             $recipients = $this->getRecipients($id, 'Meetings');
-            $bean = new Meeting();
+            $bean = BeanFactory::newBean('Meetings');
             $bean->retrieve($id);
             if ($this->sendReminders($bean, $admin, $recipients)) {
                 $bean->email_reminder_sent = 1;
@@ -110,7 +110,7 @@ class EmailReminder
         $calls = $this->getCallsForRemind();
         foreach ($calls as $id) {
             $recipients = $this->getRecipients($id, 'Calls');
-            $bean = new Call();
+            $bean = BeanFactory::newBean('Calls');
             $bean->retrieve($id);
             if ($this->sendReminders($bean, $admin, $recipients)) {
                 $bean->email_reminder_sent = 1;
@@ -134,25 +134,23 @@ class EmailReminder
 
         if (!empty($bean->created_by)) {
             $user_id = $bean->created_by;
+        } elseif (!empty($bean->assigned_user_id)) {
+            $user_id = $bean->assigned_user_id;
         } else {
-            if (!empty($bean->assigned_user_id)) {
-                $user_id = $bean->assigned_user_id;
-            } else {
-                $user_id = $GLOBALS['current_user']->id;
-            }
+            $user_id = $GLOBALS['current_user']->id;
         }
         $user = BeanFactory::getBean('Users', $user_id);
 
         $OBCharset = $GLOBALS['locale']->getPrecedentPreference('default_email_charset');
-        require_once("include/SugarPHPMailer.php");
+        require_once __DIR__ . '/../../include/SugarPHPMailer.php';
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
 
         if (empty($admin->settings['notify_send_from_assigning_user'])) {
             $from_address = $admin->settings['notify_fromaddress'];
-            $from_name = $admin->settings['notify_fromname'] ? "" : $admin->settings['notify_fromname'];
+            $from_name = $admin->settings['notify_fromname'] ? '' : $admin->settings['notify_fromname'];
         } else {
-            $from_address = $user->emailAddress->getReplyToAddress($user);
+            $from_address = (new SugarEmailAddress())->getReplyToAddress($user);
             $from_name = $user->full_name;
         }
 
@@ -301,7 +299,7 @@ class EmailReminder
         ";
         $re = $db->query($query);
         while ($row = $db->fetchByAssoc($re)) {
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($row['user_id']);
             if (!empty($user->email1)) {
                 $arr = array(
@@ -316,7 +314,7 @@ class EmailReminder
         $query = "SELECT contact_id FROM {$field_part}s_contacts WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
         while ($row = $db->fetchByAssoc($re)) {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($row['contact_id']);
             if (!empty($contact->email1)) {
                 $arr = array(
@@ -331,7 +329,7 @@ class EmailReminder
         $query = "SELECT lead_id FROM {$field_part}s_leads WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
         while ($row = $db->fetchByAssoc($re)) {
-            $lead = new Lead();
+            $lead = BeanFactory::newBean('Leads');
             $lead->retrieve($row['lead_id']);
             if (!empty($lead->email1)) {
                 $arr = array(

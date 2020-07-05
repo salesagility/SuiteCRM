@@ -1,6 +1,5 @@
 <?php
 
-
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class DocumentTest extends SuitePHPUnitFrameworkTestCase
@@ -11,13 +10,13 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testDocument()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         $this->assertInstanceOf('Document', $document);
         $this->assertInstanceOf('File', $document);
         $this->assertInstanceOf('SugarBean', $document);
@@ -31,7 +30,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndGet_document_name()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         $document->filename = 'test';
         $document->file_url = 'test_url';
@@ -59,7 +58,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //test without setting name
         $this->assertEquals(null, $document->get_summary_text());
@@ -71,7 +70,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testis_authenticated()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //test without presetting attributes
         $this->assertEquals(null, $document->is_authenticated());
@@ -83,7 +82,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -98,7 +97,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency (random generated token in url)');
 
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         $document->id = 'abcde-12345';
 
         //execute the method with attributes preset and verify attributes are set accordingly
@@ -112,7 +111,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlist_view_parse_additional_sections()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         $xTemplateSection = null;
         
@@ -130,7 +129,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         //test with empty string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE  documents.deleted = 0 ORDER BY documents.document_name";
@@ -147,7 +146,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete();
         
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         // Execute the method and verify that it returns expected results
 
         $document->filename = 'test';
@@ -190,7 +189,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmark_relationships_deleted()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -203,7 +202,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
         $this->assertEquals(false, $document->bean_implements('')); //test with blank value
         $this->assertEquals(false, $document->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $document->bean_implements('ACL')); //test with valid value

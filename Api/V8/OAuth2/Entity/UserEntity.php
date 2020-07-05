@@ -10,12 +10,16 @@ use League\OAuth2\Server\Entities\UserEntityInterface;
 class UserEntity implements UserEntityInterface
 {
     /**
-     * UserEntity constructor.
-     * @param string $id
+     * @var $userId
      */
-    public function __construct($id)
+    private $userId;
+
+    /**
+     * @param string $userId
+     */
+    public function __construct($userId)
     {
-        $this->id = $id;
+        $this->userId = $userId;
     }
 
     /**
@@ -25,6 +29,6 @@ class UserEntity implements UserEntityInterface
      */
 	public function getIdentifier()
 	{
-	    return $this->id;
+	    return $this->userId;
 	}
 }

@@ -10,7 +10,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testViewPopup()
@@ -40,8 +40,6 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             self::assertTrue(true);
         }
-
-
 
         if (isset($session)) {
             $_SESSION = $session;

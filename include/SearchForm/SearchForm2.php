@@ -271,8 +271,13 @@ class SearchForm
                     $this->searchdefs['templateMeta']['widths']['field'] * $resize;
             }
         }
-        $this->th->ss->assign('templateMeta', $this->searchdefs['templateMeta']);
-        $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']));
+        if (is_null($this->searchdefs)) {
+            $this->th->ss->assign('templateMeta', null);
+            $this->th->ss->assign('HAS_ADVANCED_SEARCH', false);
+        } else {
+            $this->th->ss->assign('templateMeta', $this->searchdefs['templateMeta']);
+            $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']));
+        }
         $this->th->ss->assign('displayType', $this->displayType);
         // return the form of the shown tab only
         if ($this->showSavedSearchesOptions) {
@@ -615,17 +620,19 @@ class SearchForm
     {
         $this->formData = array();
         $this->fieldDefs = array();
-        foreach ((array)$this->searchdefs['layout'][$this->displayView] as $data) {
-            if (is_array($data)) {
-                //Fields may be listed but disabled so that when they are enabled, they have the correct custom display data.
-                if (isset($data['enabled']) && $data['enabled'] == false) {
-                    continue;
+        if (!is_null($this->searchdefs) && !is_null($this->searchdefs['layout']) && !is_null($this->searchdefs['layout'][$this->displayView])) {
+            foreach ((array)$this->searchdefs['layout'][$this->displayView] as $data) {
+                if (is_array($data)) {
+                    //Fields may be listed but disabled so that when they are enabled, they have the correct custom display data.
+                    if (isset($data['enabled']) && $data['enabled'] == false) {
+                        continue;
+                    }
+                    $data['name'] = $data['name'] . '_' . $this->parsedView;
+                    $this->formData[] = array('field' => $data);
+                    $this->fieldDefs[$data['name']] = $data;
+                } else {
+                    $this->formData[] = array('field' => array('name' => $data . '_' . $this->parsedView));
                 }
-                $data['name'] = $data['name'] . '_' . $this->parsedView;
-                $this->formData[] = array('field' => $data);
-                $this->fieldDefs[$data['name']] = $data;
-            } else {
-                $this->formData[] = array('field' => array('name' => $data . '_' . $this->parsedView));
             }
         }
 
@@ -1189,7 +1196,7 @@ class SearchForm
                                         $currency_id = -99;
                                     }
                                     if ($currency_id != -99) {
-                                        $currency = new Currency();
+                                        $currency = BeanFactory::newBean('Currencies');
                                         $currency->retrieve($currency_id);
                                         $tmpfield_value = $currency->convertToDollar($tmpfield_value);
                                     }

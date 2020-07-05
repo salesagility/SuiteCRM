@@ -54,7 +54,7 @@ if (isset($_SESSION['EMAILTEMPLATE_FROM_LIST_VIEW'])) {
 global $app_strings;
 global $mod_strings;
 
-$focus = new EmailTemplate();
+$focus = BeanFactory::newBean('EmailTemplates');
 
 $detailView = new DetailView();
 $offset=0;
@@ -173,7 +173,7 @@ if ($focus->published == 'on') {
 ///////////////////////////////////////////////////////////////////////////////
 ////	NOTES (attachements, etc.)
 ///////////////////////////////////////////////////////////////////////////////
-$note = new Note();
+$note = BeanFactory::newBean('Notes');
 $where = "notes.parent_id='{$focus->id}'";
 $notes_list = $note->get_full_list("notes.name", $where, true);
 

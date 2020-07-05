@@ -45,7 +45,7 @@ class AOW_ProcessedDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOW_ProcessedDashlet']['searchFields'];
         $this->columns = $dashletData['AOW_ProcessedDashlet']['columns'];
 
-        $this->seedBean = new AOW_Processed();
+        $this->seedBean = BeanFactory::newBean('AOW_Processed');
     }
 
     /**

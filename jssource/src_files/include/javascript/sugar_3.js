@@ -2310,9 +2310,8 @@ sugarListView.prototype.order_checks = function (order, orderBy, moduleString) {
   document.MassUpdate.return_module.value = '';
   document.MassUpdate.return_action.value = '';
   document.MassUpdate.submit();
-
-  return !checks;
 }
+
 sugarListView.prototype.save_checks = function (offset, moduleString) {
   checks = sugarListView.get_checks();
   if (typeof document.MassUpdate != 'undefined') {

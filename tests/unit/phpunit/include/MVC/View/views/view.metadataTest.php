@@ -124,7 +124,6 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfindFieldsWithAttributes()
     {
-
         //check with emptty attributes array
         $attributes = array();
         $fields1 = VardefBrowser::findFieldsWithAttributes($attributes);
@@ -148,7 +147,6 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfindVardefs()
     {
-
         //check with empty modules array
         $modules = array();
         $defs1 = VardefBrowser::findVardefs($modules);
@@ -165,7 +163,6 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfindFieldAttributes()
     {
-
         //check with emptty attributes array
         $attributes = array();
         $fields1 = VardefBrowser::findFieldAttributes();

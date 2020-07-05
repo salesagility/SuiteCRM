@@ -66,22 +66,12 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         /** @var \OAuth2Client $client */
         $client = $this->beanManager->getBeanSafe('OAuth2Clients', $clientId);
 
-        /** @var User $user */
-        $user = $this->beanManager->newBeanSafe('Users');
-
         switch ($client->allowed_grant_type) {
             case 'authorization_code':
                 $userId = $accessTokenEntity->getUserIdentifier();
                 break;
             case 'password':
-                if (!empty($_POST['username'])) {
-                    /** @var User $user */
-                    $user = $this->beanManager->newBeanSafe('Users');
-                    $user->retrieve_by_string_fields(
-                        ['user_name' => $_POST['username']]
-                    );
-                    $userId = $user->id;
-                }
+                $userId = $accessTokenEntity->getUserIdentifier();
                 break;
             case 'client_credentials':
                 $userId = $client->assigned_user_id;

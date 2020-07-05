@@ -10,7 +10,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testinit()
@@ -194,7 +194,6 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMenu()
     {
-
         ////error_reporting(E_ALL);
 
         $SugarView = new SugarView();

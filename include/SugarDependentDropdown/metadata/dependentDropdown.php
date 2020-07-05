@@ -48,7 +48,7 @@ global $current_user;
 
 require_once("include/SugarRouting/SugarRouting.php");
 
-$ie = new InboundEmail();
+$ie = BeanFactory::newBean('InboundEmail');
 $rules = new SugarRouting($ie, $current_user);
 $actions = $rules->getActionsDOM();
 

@@ -302,9 +302,7 @@ class Reminder extends Basic
         $dateTimeMax = $timedate->getNow(true)->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb(false);
 
         $dateTimeNow = $timedate->getNow(true)->asDb(false);
-
-        $dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
-        $dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');
+        
 
         // Original jsAlert used to a meeting integration.
 
@@ -607,7 +605,7 @@ class Reminder extends Basic
     {
         $users = User::getActiveUsers();
         foreach ($users as $user_id => $user_name) {
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($user_id);
 
             $preferencePopupReminderTime = $user->getPreference('reminder_time');

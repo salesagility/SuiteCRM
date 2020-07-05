@@ -103,7 +103,6 @@ class ParserModifyListView extends ModuleBuilderParser
         );
         $this->originalListViewDefs = $loaded['viewdefs'] [$this->module_name];
         $this->_variables = $loaded['variables'];
-        //		_pp($loaded);
         $this->customFile = 'custom/modules/' . $this->module_name . '/metadata/listviewdefs.php';
         if (file_exists($this->customFile)) {
             $loaded = $this->_loadFromFile('ListView', $this->customFile, $this->module_name);

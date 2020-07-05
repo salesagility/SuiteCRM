@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	EMAIL SEND/SAVE SETUP
-$focus = new Email();
+$focus = BeanFactory::newBean('Emails');
 
 if (!isset($prefix)) {
     $prefix = '';
