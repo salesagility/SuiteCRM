@@ -48,7 +48,7 @@ class Filter
         $where = [];
         foreach ($params as $field => $expr) {
             $tableName = "";
-            if ($bean->field_name_map[$field] != NULL)
+            if (array_key_exists($field, $bean->field_name_map) && !empty($bean->field_name_map[$field]))
             {
               if (array_key_exists("source", $bean->field_name_map[$field]) && $bean->field_name_map[$field]["source"] == "custom_fields") $tableName = $bean->getTableName() . "_cstm";
               else if (!empty($bean->field_defs[$field])) $tableName = $bean->getTableName();
