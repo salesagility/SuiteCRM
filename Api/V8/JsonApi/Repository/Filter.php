@@ -51,7 +51,7 @@ class Filter
             if ($bean->field_name_map[$field] != NULL)
             {
               if ($bean->field_name_map[$field]["source"] == "custom_fields") $tableName = $bean->getTableName() . "_cstm";
-              elseif !(empty($bean->field_defs[$field])) $tableName = $bean->getTableName();
+              else if (!empty($bean->field_defs[$field])) $tableName = $bean->getTableName();
               else {
                 throw new \InvalidArgumentException(sprintf(
                     'Filter field %s in %s module is not found',
