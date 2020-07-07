@@ -227,7 +227,7 @@ class BeanManager
                     strtok($where, '.'),
                     $this->newBeanSafe($module)->getTableName(),
                     $where === '' ? '' : 'WHERE ' .  $where
-                   );         
+                   );
         }
         $rowCount = $this->db->fetchRow($this->db->query($query))["cnt"];
 
