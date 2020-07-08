@@ -275,7 +275,7 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
 
                         $where .=  "$sugar->table_name$cstm.$name $operator ";
                         if ($sugar->field_defs['name']['type'] == 'datetime') {
-                            $where .= DBManager::convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
+                            $where .= DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
                         } else {
                             if (empty($value)) {
                                 $tmp = array();

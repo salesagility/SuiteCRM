@@ -373,6 +373,8 @@ class SugarFolder
             }
         }
 
+        $this->clearSubscriptions($user);
+
         foreach ($cleanSubscriptions as $id) {
             $this->insertFolderSubscription($id, $user->id);
         }
@@ -729,8 +731,6 @@ class SugarFolder
             }
         }
 
-
-
         if (empty($found)) {
             LoggerManager::getLogger()->error(
                 ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
@@ -738,7 +738,15 @@ class SugarFolder
             );
         }
 
-        return $return;
+        $secureReturn = [];
+
+        foreach ($return as $item) {
+            if ($item->isgroup === 1 || $item['created_by'] === $user->id || is_admin($user)) {
+                $secureReturn[] = $item;
+            }
+        }
+
+        return $secureReturn;
     }
 
     /**
