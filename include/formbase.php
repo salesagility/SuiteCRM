@@ -414,7 +414,12 @@ function add_to_prospect_list($query_panel, $parent_module, $parent_type, $paren
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$link_type);
     require_once __DIR__ . '/../include/SubPanel/SubPanelTiles.php';
 
-    $allowed_module = ACLController::checkModuleAllowed($parent_module, 'list');
+    $allowed_module = true;
+
+	if (!is_admin($GLOBALS['current_user'])) {
+        $allowed_module = ACLController::checkModuleAllowed($parent_module, ACLAction::getUserActions($GLOBALS['current_user']->id, false));
+	}
+
     $parent_types = explode(' ', $parent_type);
     $disabled_types = ACLController::disabledModuleList($parent_types, false, 'list');
     foreach ($disabled_types as $disabled_type) {
