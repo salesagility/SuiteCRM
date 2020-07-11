@@ -59,7 +59,13 @@
 	<table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td align="left" style="padding-bottom: 2px;"><input title="{MOD.LBL_SAVE_MERGED_RECORD_BUTTON_TITLE}" class="button" onclick="return merge_verify();" type="submit" name="button" value="  {MOD.LBL_SAVE_MERGED_RECORD_BUTTON_LABEL}  " id="save_merged_record_button" >&nbsp;
-		<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  " id="cancel_merge_button"></td>
+		<input title="{APP.LBL_CANCEL_BUTTON_TITLE}"
+			   accessKey="{APP.LBL_CANCEL_BUTTON_KEY}"
+			   class="button" onclick="window.location.href='index.php?module={RETURN_MODULE}&action={RETURN_ACTION}&record={RETURN_ID}';"
+			   type="button"
+			   name="button"
+			   value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "
+			   id="cancel_merge_button">
 		<td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
 	</tr>
 	</table>

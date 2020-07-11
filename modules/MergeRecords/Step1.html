@@ -65,7 +65,15 @@
 
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<tr>
-			<td><input title="{MOD.LBL_NEXT_STEP_TITLE}" class="button" onclick="this.form.action.value='Step2';" type="submit" name="button" value="  {MOD.LBL_NEXT_STEP_BUTTON_LABEL}  " id="next_step_button"> <input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}';" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  " id="cancel_merge_button"></td>
+			<td><input title="{MOD.LBL_NEXT_STEP_TITLE}" class="button" onclick="this.form.action.value='Step2';" type="submit" name="button" value="  {MOD.LBL_NEXT_STEP_BUTTON_LABEL}  " id="next_step_button">
+				<input title="{APP.LBL_CANCEL_BUTTON_TITLE}"
+					   accessKey="{APP.LBL_CANCEL_BUTTON_KEY}"
+					   class="button" onclick="window.location.href='index.php?module={RETURN_MODULE}&action={RETURN_ACTION}&record={RETURN_ID}';"
+					   type="button"
+					   name="button"
+					   value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "
+					   id="cancel_merge_button">
+			</td>
 			<td align='right'>{ADMIN_EDIT}</td>
 		</tr>
 	</table>

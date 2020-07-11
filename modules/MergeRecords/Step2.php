@@ -168,7 +168,13 @@ $form_top = <<<EOQ
 			<input type="hidden" name="return_id" value="$return_id">
 			<input type="hidden" name="return_action" value="DetailView">
 			<input title="$button_title" class="button" onclick="return verify_selection(this);" type="submit" name="button" value="  $button_label  " id="perform_merge_button">
-            <input title="$cancel_title" accessKey="$cancel_key" class="button" onclick="this.form.action.value='DetailView';this.form.module.value='$focus->merge_module';this.form.module.record='$return_id'" type="submit" name="button" value=" $cancel_label   " id="cancel_merge_button" >
+            <input title="$cancel_title"
+                   accessKey="$cancel_key"
+                   class="button" onclick="window.location.href='index.php?module=' . $focus->merge_module . '&action=DetailView&record='.$return_id;"
+                   type="button"
+                   name="button"
+                   value="  $cancel_label  "
+                   id="cancel_merge_button">
 		</form>
         <script>
            function verify_selection(theElement) {
