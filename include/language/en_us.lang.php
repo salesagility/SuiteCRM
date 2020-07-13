@@ -492,11 +492,11 @@ $app_list_strings = array(
         'ProjectTask' => 'Project Task',
 
         'Prospects' => 'Target',
-        
+
         'AOS_Contracts' => 'Contract',
         'AOS_Invoices' => 'Invoice',
         'AOS_Quotes' => 'Quote',
-        'AOS_Products' => 'Product',        
+        'AOS_Products' => 'Product',
 
     ),
     'parent_line_items' => array(
@@ -2098,6 +2098,10 @@ $app_strings = array(
     'LBL_FIRST_INPUT_EDIT_VIEW_KEY' => '7',
     'LBL_ADV_SEARCH_LNK_KEY' => '8',
     'LBL_FIRST_INPUT_SEARCH_KEY' => '9',
+
+    'ANNUAL_REVENUE_BY_ACCOUNTS' => 'Annual Revenue By Accounts',
+    'PIPELINE_BY_SALES_STAGE' => 'Pipeline By Sales Stage',
+    'LEADS_BY_SOURCE' => 'Leads By Source',
 
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
     'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See suitecrm.log for more information)',
