@@ -46,7 +46,7 @@ function perform_save(&$focus)
 {
     //US DOLLAR
     if (isset($focus->amount) && !number_empty($focus->amount)) {
-        $currency = new Currency();
+        $currency = BeanFactory::newBean('Currencies');
         $currency->retrieve($focus->currency_id);
         $focus->amount_usdollar = $currency->convertToDollar(unformat_number($focus->amount));
     }

@@ -144,7 +144,7 @@ if (isset($_SESSION['MAILMERGE_RECORD'])) {
         $selected_objects = '';
         foreach ($_SESSION['MAILMERGE_RECORD'] as $record_id) {
             if ($rModule == 'Campaigns') {
-                $prospect = new Prospect();
+                $prospect = BeanFactory::newBean('Prospects');
                 $prospect_module_list = array('leads', 'contacts', 'prospects', 'users');
                 foreach ($prospect_module_list as $mname) {
                     $pList = $prospect->retrieveTargetList("campaigns.id = '$record_id' AND related_type = #$mname#", array('id', 'first_name', 'last_name'));
@@ -198,7 +198,7 @@ if ($_SESSION['MAILMERGE_MODULE'] == 'Campaigns') {
     $_SESSION['MAILMERGE_MODULE'] = 'CampaignProspects';
 }
 
-$admin = new Administration();
+$admin = BeanFactory::newBean('Administration');
 $admin->retrieveSettings();
 $user_merge = $current_user->getPreference('mailmerge_on');
 if ($user_merge != 'on' || !isset($admin->settings['system_mailmerge_on']) || !$admin->settings['system_mailmerge_on']) {
@@ -221,7 +221,7 @@ $xtpl->out("main");
 
 function getDocumentRevisions()
 {
-    $document = new Document();
+    $document = BeanFactory::newBean('Documents');
 
     $currentDate = $document->db->now();
     $empty_date = $document->db->emptyValue("date");

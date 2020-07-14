@@ -7,7 +7,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     public function testAOR_Report()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $this->assertInstanceOf('AOR_Report', $aor_Report);
         $this->assertInstanceOf('Basic', $aor_Report);
         $this->assertInstanceOf('SugarBean', $aor_Report);
@@ -22,7 +22,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         $this->assertEquals(false, $aor_Report->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aor_Report->bean_implements('test')); //test with invalid value
@@ -31,7 +31,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         //populate value for aor_fields related/child object
         $_POST['aor_fields_field'][] = 'last_name';
@@ -71,7 +71,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testload_report_beans()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -85,14 +85,14 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     public function testgetReportFields()
     {
         //execute the method and verify that it returns an array
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $result = $aor_Report->getReportFields();
         $this->assertTrue(is_array($result));
     }
 
     public function testbuild_report_chart()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         $chartBean = BeanFactory::getBean('AOR_Charts');
@@ -117,7 +117,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_group_report()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
         $aor_Report->id = '1';
 
@@ -141,7 +141,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_report_html()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //execute the method without any parameters and verify it returns html string
@@ -176,7 +176,9 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             ]
         ];
         $totals = ['label' => [10, 20, 30]];
-        $actual = (new AOR_Report())->getTotalHTML($fields, $totals);
+        /** @noinspection OneTimeUseVariablesInspection */
+        $reportBean = BeanFactory::newBean('AOR_Reports');
+        $actual = $reportBean->getTotalHTML($fields, $totals);
 
         $this->assertContains('sugar_field', $actual);
         $this->assertContains('duration_hours', $actual);
@@ -187,7 +189,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         //execute the method with data preset and verify it returns expected result
         $totals = array(10, 20, 30);
 
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         $this->assertEquals('', $aor_Report->calculateTotal('', $totals));
         $this->assertEquals(60, $aor_Report->calculateTotal('SUM', $totals));
@@ -199,7 +201,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     {
         //this method uses exit so it cannot be tested
 
-        /*$aor_Report = new AOR_Report();
+        /*$aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = "Accounts";
         $aor_Report->build_report_csv();
         */
@@ -209,7 +211,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_report_query()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //execute the method without any parameters and verify that it returns a non empty string
@@ -223,7 +225,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_report_query_select()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
         $query_array = array();
 
@@ -234,7 +236,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_report_query_join()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //test with type custom and verify that it retunrs expected results
@@ -243,7 +245,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             'contacts',
             'accounts_contacts',
             'accounts',
-            new Account(),
+            BeanFactory::newBean('Accounts'),
             'custom',
             array()
         );
@@ -259,7 +261,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             'contacts',
             'accounts_contacts',
             'accounts',
-            new Account(),
+            BeanFactory::newBean('Accounts'),
             'relationship',
             array()
         );
@@ -268,20 +270,20 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_report_access_query()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
 
         //test without alias and verify that it retunrs expected results
-        $result = $aor_Report->build_report_access_query(new AOR_Report(), '');
+        $result = $aor_Report->build_report_access_query(BeanFactory::newBean('AOR_Reports'), '');
         $this->assertEquals('', $result);
 
         //test with alias and verify that it retunrs expected results
-        $result = $aor_Report->build_report_access_query(new AOR_Report(), 'rep');
+        $result = $aor_Report->build_report_access_query(BeanFactory::newBean('AOR_Reports'), 'rep');
         $this->assertEquals('', $result);
     }
 
     public function testbuild_report_query_where()
     {
-        $aor_Report = new AOR_Report();
+        $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
 
         //execute the method and verify that it retunrs expected results

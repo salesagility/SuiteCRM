@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
-    $focus = new Group();
+    $focus = BeanFactory::newBean('Groups');
     $focus->retrieve($_REQUEST['record']);
     $focus->mark_deleted($focus->id);
 }

@@ -304,7 +304,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
             $GLOBALS['sugar_config']['resource_management']['default_limit'] = 20000;
         }
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings('jjwg', true);
         $settings = $admin->settings;
 
@@ -410,7 +410,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
      */
     public function saveConfiguration($data = array())
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         //$admin->retrieveSettings('jjwg', true);
         //$settings = $admin->settings;
         $category = 'jjwg';
@@ -936,7 +936,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         // Add proxy option if user enabled proxy
-        $admin_config = new Administration();
+        $admin_config = BeanFactory::newBean('Administration');
         $admin_config->retrieveSettings('proxy');
         if (!empty($admin_config->settings['proxy_on'])) {
             $proxy_host = $admin_config->settings['proxy_host'];
@@ -1112,13 +1112,18 @@ class jjwg_Maps extends jjwg_Maps_sugar
                 $GLOBALS['log']->debug(__METHOD__.' Project to Opportunity');
                 $result = $this->db->limitQuery($query, 0, 1);
                 $opportunity = $this->db->fetchByAssoc($result);
-                // Find Account - Assume only one related Account for the Opportunity
-                $query = "SELECT accounts.*, accounts_cstm.* FROM accounts LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c " .
-                        " LEFT JOIN accounts_opportunities ON accounts.id = accounts_opportunities.account_id AND accounts_opportunities.deleted = 0 " .
-                        " WHERE accounts.deleted = 0 AND accounts_opportunities.opportunity_id = '" . $opportunity['id'] . "'";
-                $GLOBALS['log']->debug(__METHOD__.' Opportunity to Account');
-                $result = $this->db->limitQuery($query, 0, 1);
-                $fields = $this->db->fetchByAssoc($result);
+                if ($opportunity === false) {
+                    $result = null;
+                    $fields = null;
+                } else {
+                    // Find Account - Assume only one related Account for the Opportunity
+                    $query = "SELECT accounts.*, accounts_cstm.* FROM accounts LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c " .
+                            " LEFT JOIN accounts_opportunities ON accounts.id = accounts_opportunities.account_id AND accounts_opportunities.deleted = 0 " .
+                            " WHERE accounts.deleted = 0 AND accounts_opportunities.opportunity_id = '" . $opportunity['id'] . "'";
+                    $GLOBALS['log']->debug(__METHOD__.' Opportunity to Account');
+                    $result = $this->db->limitQuery($query, 0, 1);
+                    $fields = $this->db->fetchByAssoc($result);
+                }
             }
 
             if (!empty($fields)) {
@@ -1133,8 +1138,13 @@ class jjwg_Maps extends jjwg_Maps_sugar
             $result = $this->db->limitQuery($query, 0, 1);
             $meeting = $this->db->fetchByAssoc($result);
 
-            $parent_type = $meeting['parent_type'];
-            $parent_id = $meeting['parent_id'];
+            if ($meeting === false) {
+                $parent_type = null;
+                $parent_id = null;
+            } else {
+                $parent_type = $meeting['parent_type'];
+                $parent_id = $meeting['parent_id'];
+            }
             $GLOBALS['log']->debug(__METHOD__.' Meeting $parent_type: '.$parent_type);
             $GLOBALS['log']->debug(__METHOD__.' Meeting $parent_id: '.$parent_id);
 

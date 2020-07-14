@@ -48,7 +48,7 @@ class jjwg_Markers extends jjwg_Markers_sugar
      */
     public function configuration()
     {
-        $this->jjwg_Maps = new jjwg_Maps();
+        $this->jjwg_Maps = BeanFactory::newBean('jjwg_Maps');
         $this->settings = $GLOBALS['jjwg_config'];
     }
 

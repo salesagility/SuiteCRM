@@ -1179,9 +1179,9 @@ class MysqlManager extends DBManager
         $collation = $this->getOption('collation');
         if (empty($collation)) {
             $collation = $this->getDefaultCollation();
-	}
+        }
 
-	return $this->quote($collation);
+        return $this->quote($collation);
     }
 
     /**
@@ -1191,11 +1191,11 @@ class MysqlManager extends DBManager
     public function getCharset()
     {
         $charset = $this->getOption('charset');
-        if(empty($charset)) {
+        if (empty($charset)) {
             $charset = $this->getDefaultCharset();
-	}
+        }
 
-	return $this->quote($charset);
+        return $this->quote($charset);
     }
 
     /**
@@ -1204,7 +1204,7 @@ class MysqlManager extends DBManager
      */
     public function getDefaultCollation()
     {
-        return "utf8_general_ci";
+        return 'utf8_general_ci';
     }
 
     /**
@@ -1213,7 +1213,7 @@ class MysqlManager extends DBManager
      */
     public function getDefaultCharset()
     {
-        return "utf8";
+        return 'utf8';
     }
 
     /**

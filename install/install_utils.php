@@ -254,7 +254,7 @@ function commitPatch($unlink = false, $type = 'patch')
     $errors = array();
     $files = array();
     global $current_user;
-    $current_user = new User();
+    $current_user = BeanFactory::newBean('Users');
     $current_user->is_admin = '1';
     $old_mod_strings = $mod_strings;
     if (is_dir($base_upgrade_dir)) {
@@ -324,7 +324,7 @@ function commitModules($unlink = false, $type = 'module')
     $errors = array();
     $files = array();
     global $current_user;
-    $current_user = new User();
+    $current_user = BeanFactory::newBean('Users');
     $current_user->is_admin = '1';
     $old_mod_strings = $mod_strings;
     if (is_dir(sugar_cached("upload/upgrades"))) {
@@ -972,7 +972,10 @@ function handleHtaccess()
 {
     global $mod_strings;
     global $sugar_config;
-    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
+    $ignoreCase = '';
+    if (!empty($_SERVER['SERVER_SOFTWARE']) && (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)) {
+        $ignoreCase = '(?i)';
+    }
     $htaccess_file = '.htaccess';
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
@@ -1288,7 +1291,7 @@ function create_default_users()
     require_once('install/UserDemoData.php');
 
     //Create default admin user
-    $user = new User();
+    $user = BeanFactory::newBean('Users');
     $user->id = 1;
     $user->new_with_id = true;
     $user->last_name = 'Administrator';
@@ -1305,7 +1308,7 @@ function create_default_users()
 
 
     if ($create_default_user) {
-        $default_user = new User();
+        $default_user = BeanFactory::newBean('Users');
         $default_user->last_name = $sugar_config['default_user_name'];
         $default_user->user_name = $sugar_config['default_user_name'];
         $default_user->status = 'Active';
@@ -1656,8 +1659,8 @@ function pullSilentInstallVarsIntoSession()
     $needles = array('demoData','setup_db_create_database','setup_db_create_sugarsales_user','setup_license_key_users',
         'setup_license_key_expire_date','setup_license_key', 'setup_num_lic_oc',
         'default_currency_iso4217', 'default_currency_name', 'default_currency_significant_digits',
-        'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_separator',
-        'default_export_charset', 'default_language', 'default_locale_name_format', 'default_number_grouping_separator',
+        'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_seperator',
+        'default_export_charset', 'default_language', 'default_locale_name_format', 'default_number_grouping_seperator',
         'export_delimiter', 'cache_dir', 'setup_db_options',
         'setup_fts_type', 'setup_fts_host', 'setup_fts_port', 'setup_fts_index_settings'. 'setup_fts_transport');
     copyFromArray($sugar_config_si, $needles, $derived);
@@ -2181,7 +2184,7 @@ function post_install_modules()
 {
     if (is_file('modules_post_install.php')) {
         global $current_user, $mod_strings;
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         $current_user->is_admin = '1';
         require_once('ModuleInstall/PackageManager/PackageManager.php');
         require_once('modules_post_install.php');
@@ -2229,7 +2232,7 @@ function addDefaultRoles($defaultRoles = array())
 
     foreach ($defaultRoles as $roleName=>$role) {
         $ACLField = new ACLField();
-        $role1= new ACLRole();
+        $role1= BeanFactory::newBean('ACLRoles');
         $role1->name = $roleName;
         $role1->description = $roleName." Role";
         $role1_id=$role1->save();
@@ -2257,7 +2260,7 @@ function addDefaultRoles($defaultRoles = array())
  */
 function enableSugarFeeds()
 {
-    $admin = new Administration();
+    $admin = BeanFactory::newBean('Administration');
     $admin->saveSetting('sugarfeed', 'enabled', '1');
 
     foreach (SugarFeed::getAllFeedModules() as $module) {
@@ -2275,26 +2278,6 @@ function create_writable_dir($dirname)
     if (empty($ok)) {
         installLog("ERROR: Cannot create writable dir $dirname");
     }
-}
-
-/**
- * Create default OAuth2 encryption key
- * @throws Exception
- */
-function createEncryptionKey()
-{
-    $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
-    $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
-    $configFileContents = str_replace(
-        "OAUTH2_ENCRYPTION_KEY = '",
-        $key,
-        $apiConfig
-    );
-    file_put_contents(
-        'Api/Core/Config/ApiConfig.php',
-        $configFileContents,
-        LOCK_EX
-    );
 }
 
 /**

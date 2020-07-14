@@ -10,13 +10,13 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOS_Invoices()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aosInvoices = new AOS_Invoices();
+        $aosInvoices = BeanFactory::newBean('AOS_Invoices');
         $this->assertInstanceOf('AOS_Invoices', $aosInvoices);
         $this->assertInstanceOf('Basic', $aosInvoices);
         $this->assertInstanceOf('SugarBean', $aosInvoices);
@@ -31,7 +31,7 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndMark_deleted()
     {
-        $aosInvoices = new AOS_Invoices();
+        $aosInvoices = BeanFactory::newBean('AOS_Invoices');
         $aosInvoices->name = 'test';
 
         $aosInvoices->save();

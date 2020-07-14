@@ -157,7 +157,6 @@ class ListViewXTPL extends ListViewDisplay
     public function processPagination()
     {
         global $app_strings;
-        //_pp($this->data['pageData']);
         if (empty($this->data['pageData']['urls']['prevPage'])) {
             $startLink = SugarThemeRegistry::current()->getImage("start_off", "border='0' align='absmiddle'", null, null, '.gif', $app_strings['LNK_LIST_START'])."&nbsp;".$app_strings['LNK_LIST_START'];
             $prevLink = SugarThemeRegistry::current()->getImage("previous_off", "border='0' align='absmiddle'", null, null, '.gif', $app_strings['LNK_LIST_PREVIOUS'])."&nbsp;".$app_strings['LNK_LIST_PREVIOUS'];

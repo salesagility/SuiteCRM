@@ -343,10 +343,10 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->login');
         global $sugar_config, $system_config;
         $error = new SoapError();
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $success = false;
         //rrs
-        $system_config = new Administration();
+        $system_config = BeanFactory::newBean('Administration');
         $system_config->retrieveSettings('system');
         $authController = new AuthenticationController();
         //rrs
@@ -449,11 +449,11 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             $dec_sep = $current_user->getPreference('dec_sep');
             $nameValueArray['user_number_separator'] = self::$helperObject->get_name_value(
                 'user_number_separator',
-                empty($num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $num_grp_sep
+                empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep
             );
             $nameValueArray['user_decimal_separator'] = self::$helperObject->get_name_value(
                 'user_decimal_separator',
-                empty($dec_sep) ? $sugar_config['default_decimal_separator'] : $dec_sep
+                empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep
             );
 
             $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value(
@@ -466,7 +466,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             );
 
 
-            $currencyObject = new Currency();
+            $currencyObject = BeanFactory::newBean('Currencies');
             $currencyObject->retrieve($cur_id);
             $nameValueArray['user_currency_name'] = self::$helperObject->get_name_value(
                 'user_currency_name',

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2019 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,16 +38,46 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 require_once("include/SugarCharts/JsChart.php");
 
 class Jit extends JsChart
 {
-    /**
-     * This class is kept for backwards compatibility only.
-     * Jit constructor.
-     */
+    public $supports_image_export = true;
+    public $print_html_legend_pdf = true;
+    
     public function __construct()
     {
         parent::__construct();
+    }
+    
+    public function getChartResources()
+    {
+        return '
+		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/Jit/jit.js').'"></script>
+		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/sugarCharts.js').'"></script>
+		';
+    }
+    
+    public function getMySugarChartResources()
+    {
+        return '
+		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/mySugarCharts.js').'"></script>
+		';
+    }
+    
+
+    public function display($name, $xmlFile, $width='320', $height='480', $resize=false)
+    {
+        parent::display($name, $xmlFile, $width, $height, $resize);
+
+        return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');
+    }
+    
+
+    public function getDashletScript($id, $xmlFile="")
+    {
+        parent::getDashletScript($id, $xmlFile);
+        return $this->ss->fetch('include/SugarCharts/Jit/tpls/DashletGenericChartScript.tpl');
     }
 }
