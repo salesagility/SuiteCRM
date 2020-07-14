@@ -2065,13 +2065,14 @@ class SugarBean
                 ));
             }
             // Link2 style
-            if ($end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by)) {
+            if ($begin_index != 0 || $end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by)) {
                 return array_values($this->$field_name->getBeans(array(
-                        'where' => $optional_where,
-                        'deleted' => $deleted,
-                        'limit' => ($end_index - $begin_index),
-                        'order_by' => $order_by
-                    )));
+                    'where' => $optional_where,
+                    'deleted' => $deleted,
+                    'offset' => $begin_index,
+                    'limit' => ($end_index - $begin_index),
+                    'order_by' => $order_by
+                )));
             }
             return array_values($this->$field_name->getBeans());
         }
@@ -2570,9 +2571,8 @@ class SugarBean
                         //do nothing
                 }
                 if ($reformatted) {
-                    $GLOBALS['log']->deprecated('Formatting correction: ' . $this->module_dir . '->' . $field .
-                        ' had formatting automatically corrected. This will be removed in the future, ' .
-                        'please upgrade your external code');
+                    $GLOBALS['log']->info('Formatting correction: ' . $this->module_dir . '->' . $field .
+                        ' had formatting automatically corrected.');
                 }
             }
         }

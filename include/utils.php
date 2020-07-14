@@ -161,10 +161,11 @@ function make_sugar_config(&$sugar_config)
     's f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
     'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s',
         ) : $nameFormats,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
-            'special_query_modules' => array('Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
             'default_limit' => 1000,
         ),
         'require_accounts' => empty($requireAccounts) ? true : $requireAccounts,
@@ -340,10 +341,11 @@ function get_sugar_config_defaults()
         'list_max_entries_per_subpanel' => 10,
         'lock_default_user_name' => false,
         'log_memory_usage' => false,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
-            'special_query_modules' => array('Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
             'default_limit' => 1000,
         ),
         'require_accounts' => true,
@@ -4050,9 +4052,14 @@ function string_format($format, $args, $escape = true)
                 }
             }
             $args[$i] = implode("','", $values);
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+       }
+        else if ($escape){       
+            $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
         }
-
-        $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
+        else{       
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+        }
     }
 
     return $result;

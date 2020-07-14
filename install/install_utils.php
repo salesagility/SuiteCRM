@@ -972,7 +972,10 @@ function handleHtaccess()
 {
     global $mod_strings;
     global $sugar_config;
-    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
+    $ignoreCase = '';
+    if (!empty($_SERVER['SERVER_SOFTWARE']) && (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)) {
+        $ignoreCase = '(?i)';
+    }
     $htaccess_file = '.htaccess';
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
@@ -2275,26 +2278,6 @@ function create_writable_dir($dirname)
     if (empty($ok)) {
         installLog("ERROR: Cannot create writable dir $dirname");
     }
-}
-
-/**
- * Create default OAuth2 encryption key
- * @throws Exception
- */
-function createEncryptionKey()
-{
-    $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
-    $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
-    $configFileContents = str_replace(
-        "OAUTH2_ENCRYPTION_KEY = '",
-        $key,
-        $apiConfig
-    );
-    file_put_contents(
-        'Api/Core/Config/ApiConfig.php',
-        $configFileContents,
-        LOCK_EX
-    );
 }
 
 /**

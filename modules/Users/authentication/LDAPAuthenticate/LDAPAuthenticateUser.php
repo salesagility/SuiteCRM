@@ -119,10 +119,10 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
             //add the group user attribute that we will compare to the group attribute for membership validation if group membership is turned on
             if (!empty($GLOBALS['ldap_config']->settings['ldap_group'])
                 && !empty($GLOBALS['ldap_config']->settings['ldap_group_user_attr'])
-                && !empty($GLOBALS['ldap_config']->settings['ldap_group_attr'])) {
-                if (!in_array($attrs, $GLOBALS['ldap_config']->settings['ldap_group_user_attr'])) {
-                    $attrs[] = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
-                }
+                && !empty($GLOBALS['ldap_config']->settings['ldap_group_attr'])
+                && !in_array($GLOBALS['ldap_config']->settings['ldap_group_user_attr'], $attrs, false)
+            ) {
+                $attrs[] = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
             }
 
             $GLOBALS['log']->debug(

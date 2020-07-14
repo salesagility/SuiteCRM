@@ -395,7 +395,7 @@ function getDisplayValue($bean, $field, $method = "save")
 
 function formatDisplayValue($bean, $value, $vardef, $method = "save")
 {
-    global $app_list_strings, $timedate;
+    global $app_list_strings, $timedate, $current_user;
 
     //Fake the params so we can pass the values through the sugarwidgets to get the correct display html.
 
@@ -422,18 +422,17 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     if ($method !== 'close' && ($vardef['type'] === 'datetimecombo' || $vardef['type'] === 'datetime' || $vardef['type'] === 'date')) {
-        if ($method !== 'save') {
+        if ($method != 'save') {
             $value = convertDateUserToDB($value);
         }
-        $datetime_format = $timedate->get_date_time_format();
-
-        if ($vardef['type'] === 'date') {
-            $value = date('Y-m-d', strtotime($value));
-            $value .= ' 00:00:00';
-            $datetime = DateTime::createFromFormat('Y-m-d H:i:s', $value, new DateTimeZone('UTC'));
-        } else {
-            $datetime = DateTime::createFromFormat($datetime_format, $value, new DateTimeZone('UTC'));
+        if ($vardef['type'] == 'datetime' || $vardef['type'] == 'datetimecombo') {
+            $datetime_format = $timedate->get_date_time_format($current_user);
+        } elseif ($vardef['type'] == 'date') {
+            $datetime_format = $timedate->get_date_format($current_user);
         }
+        // create utc date (as it's utc in db)
+        // use the calculated datetime_format
+        $datetime = DateTime::createFromFormat($datetime_format, $value, new DateTimeZone('UTC'));
 
         $value = $datetime->format($datetime_format);
     }
@@ -519,11 +518,6 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value = format_number($value);
         }
     }
-    if ($method === 'save' && $vardef['type'] === 'date') {
-        $value = explode(' ', $value);
-        $value = $value[0];
-    }
-
     return $value;
 }
 

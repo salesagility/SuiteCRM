@@ -389,7 +389,7 @@ FORM;
     <span id='connection_user_div' style="display:none">
         <div class="formrow">
             <label>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']} <span class="required">*</span></label>
-            <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
+            <input type="text" name="setup_db_sugarsales_user" value="{$_SESSION['setup_db_sugarsales_user']}" />
         </div>
         <div class="clear"></div>
         <div class="formrow">
