@@ -33,7 +33,7 @@ class AttributeObjectHelper
         $attributes = array_map(function ($value) {
             return is_string($value)
                 ? (\DateTime::createFromFormat('Y-m-d H:i:s', $value)
-                    ? date(\DateTime::ATOM, strtotime($value))
+                    ? date(\DateTime::ATOM, strtotime($value." UTC"))
                     : $value)
                 : $value;
         }, $bean->toArray());
