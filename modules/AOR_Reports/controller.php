@@ -363,8 +363,10 @@ class AOR_ReportsController extends SugarController
                 );
                 break;
             case 'enum':
-            case 'multienum':
                 $valid_opp = array('Equal_To', 'Not_Equal_To');
+                break;
+            case 'multienum':
+                $valid_opp = array('Equal_To', 'Not_Equal_To', 'Contains');
                 break;
             default:
                 $valid_opp = array('Equal_To', 'Not_Equal_To', 'Contains', 'Starts_With', 'Ends_With',);
