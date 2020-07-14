@@ -197,30 +197,30 @@ class SugarEmailAddress extends SugarBean
         $this->index = self::$count;
         self::$count++;
 
-	// Setup custom options
-	global $dictionary;
-	static $loaded_definitions;
+        // Setup custom options
+        global $dictionary;
+        static $loaded_definitions;
 
-	if ((!$this->disable_vardefs && empty($loaded_definitions[$this->object_name]['custom_options']))
-             || !empty($GLOBALS['reload_vardefs'])) {
+        if ((!$this->disable_vardefs && empty($loaded_definitions[$this->object_name]['custom_options']))
+            || !empty($GLOBALS['reload_vardefs'])) {
 
             // build $this->custom_options from the field_defs if they exist
-	    if (!empty($dictionary[$this->object_name]['fields'])) {
+	        if (!empty($dictionary[$this->object_name]['fields'])) {
 	    
                 $custom_options = array();
 
-		foreach ($dictionary[$this->object_name]['fields'] as $key => $value_array) {
+		        foreach ($dictionary[$this->object_name]['fields'] as $key => $value_array) {
                     if (!empty($value_array['custom_option']) && !empty($value_array['name'])) {
-		        $custom_options[] = $key;
+                        $custom_options[] = $key;
                     }
-		}
+                }
                 $this->custom_options = $custom_options;
-	    }
-	    $loaded_definitions[$this->object_name]['custom_options'] =& $this->custom_options;
-	    return;
-	}
+            }
+            $loaded_definitions[$this->object_name]['custom_options'] =& $this->custom_options;
+            return;
+        }
 
-	$this->custom_options =& $loaded_definitions[$this->object_name]['custom_options'];
+	    $this->custom_options =& $loaded_definitions[$this->object_name]['custom_options'];
     }
 
     /**
@@ -674,9 +674,6 @@ class SugarEmailAddress extends SugarBean
             foreach ($this->addresses as $address) {
                 if (!empty($address['email_address'])) {
                     $guid = create_guid();
-                    $emailId = isset($address['email_address_id'])
-                    && isset($current_links[$address['email_address_id']])
-                        ? $address['email_address_id'] : null;
                     $emailId = $this->saveEmailAddress($address, $optIn);// this will save the email address if not found
 
                     //verify linkage and flags.
@@ -705,7 +702,7 @@ class SugarEmailAddress extends SugarBean
                     }
 
                     if (!empty($upd_eabr)) {
-			$r2 = $this->db->query($upd_eabr);
+			            $r2 = $this->db->query($upd_eabr);
                     }
                 }
             }
@@ -716,13 +713,13 @@ class SugarEmailAddress extends SugarBean
         if (!empty($current_links) && !$isConversion) {
             $delete = "";
             foreach ($current_links as $eabr) {
-		$delete .= empty($delete) ? "'" . $this->db->quote($eabr['id']) . "' " : ",'" . $this->db->quote($eabr['id']) . "'";
+		        $delete .= empty($delete) ? "'" . $this->db->quote($eabr['id']) . "' " : ",'" . $this->db->quote($eabr['id']) . "'";
             }
 
             $eabr_unlink = "update email_addr_bean_rel set deleted=1 where id in ({$delete})";
-	    $this->db->query($eabr_unlink);
+	        $this->db->query($eabr_unlink);
         }
-	$this->stateBeforeWorkflow = null;
+	    $this->stateBeforeWorkflow = null;
     }
 
     /**
@@ -936,16 +933,16 @@ class SugarEmailAddress extends SugarBean
                     $optInValues = $_REQUEST[$module . 'emailAddressOptInFlag'];
                 }
 
-		foreach($this->custom_options as $option) {
-		    $key = implode(explode(' ', ucwords(str_replace('_', ' ', $option))));
+                foreach($this->custom_options as $option) {
+                    $key = implode(explode(' ', ucwords(str_replace('_', ' ', $option))));
 
-		    $customOptionsValue[$option] = array();
-		    if (isset($_REQUEST[$eId . 'emailAddress' . $key . 'Flag'])) {
-		        $customOptionsValue[$option] = $_REQUEST[$eId . 'emailAddress' . $key .'Flag'];
-		    } elseif (isset($_REQUEST[$module . 'emailAddress' . $key . 'Flag'])) {
-		        $customOptionsValue[$option] = $_REQUEST[$module . 'emailAddress' . $key . 'Flag'];
-		    }
-		}
+                    $customOptionsValue[$option] = array();
+                    if (isset($_REQUEST[$eId . 'emailAddress' . $key . 'Flag'])) {
+                        $customOptionsValue[$option] = $_REQUEST[$eId . 'emailAddress' . $key .'Flag'];
+                    } elseif (isset($_REQUEST[$module . 'emailAddress' . $key . 'Flag'])) {
+                        $customOptionsValue[$option] = $_REQUEST[$module . 'emailAddress' . $key . 'Flag'];
+                    }
+                }
 
                 $deleteValues = array();
                 if (isset($_REQUEST[$eId . 'emailAddressDeleteFlag'])) {
@@ -1010,11 +1007,11 @@ class SugarEmailAddress extends SugarBean
                         preg_match('/emailAddress([0-9])+$/', $k, $matches);
                         $count = $matches[1];
 
-			$query = "SELECT opt_out, invalid_email, confirm_opt_in";
-			foreach($this->custom_options as $option) {
-			    $query .= ", $option";
-			}
-			$query .= " FROM email_addresses WHERE email_address_caps = '" . $this->db->quote(strtoupper($email)) . "'";
+                        $query = "SELECT opt_out, invalid_email, confirm_opt_in";
+                        foreach($this->custom_options as $option) {
+                            $query .= ", $option";
+                        }
+                        $query .= " FROM email_addresses WHERE email_address_caps = '" . $this->db->quote(strtoupper($email)) . "'";
 
                         $result = $this->db->query($query);
                         if (!empty($result)) {
@@ -1031,11 +1028,11 @@ class SugarEmailAddress extends SugarBean
                                 $optInValues[$k] = "emailAddress$count";
                             }
 
-			    foreach($this->custom_options as $option) {
-				if (!empty($row[$option])) {
+                            foreach($this->custom_options as $option) {
+                                if (!empty($row[$option])) {
                                     $customOptionsValue[$option][$k] = "emailAddress$count";
-				}
-			    }
+                                }
+                            }
                         }
                     }
                 }
@@ -1056,10 +1053,10 @@ class SugarEmailAddress extends SugarBean
                                     $optOut = (in_array($k, (array)$optOutValues)) ? true : false;
                                     $optIn = (in_array($k, $optInValues)) ? true : false;
 
-				    $options = array();
-				    foreach($this->custom_options as $option) {
-				        $options[$option] = (in_array($k, $customOptionsValue[$option])) ? true : false;
-				    }
+                                    $options = array();
+                                    foreach($this->custom_options as $option) {
+                                        $options[$option] = (in_array($k, $customOptionsValue[$option])) ? true : false;
+                                    }
 
                                     $this->addAddress(
                                         trim($new_addrs[$k]),
@@ -1141,9 +1138,9 @@ class SugarEmailAddress extends SugarBean
                 'confirm_opt_in_flag' => null,
             );
 
-	    foreach($options as $key => $value) {
-	        $addr[$key] = ($value) ? '1' : '0'; 
-	    }
+            foreach($options as $key => $value) {
+                $addr[$key] = ($value) ? '1' : '0'; 
+            }
 
             if (!is_null($optIn)) {
                 $addr['confirm_opt_in_flag'] = $optInFlag;
@@ -1267,7 +1264,7 @@ class SugarEmailAddress extends SugarBean
      *        in case a "email has changed" WorkFlow has triggered - hack to allow workflow-induced changes
      *        to propagate to the new SugarEmailAddress - see bug 39188
      * @param int|null $optInFlag
-     * @params array $options additional custom options
+     * @param array $options additional custom options
      * @return string GUID of Email Address or '' if cleaned address was empty.
      */
     public function AddUpdateEmailAddress($addr, $invalid = 0, $opt_out = 0, $id = null, $optInFlag = null, $options = array())
@@ -1297,10 +1294,10 @@ class SugarEmailAddress extends SugarBean
         $new_opt_out = $opt_out;
         $new_invalid = $invalid;
 
-	$new_options = array();
-	foreach($options as $key => $value) {
-	    $new_options[$key] = $value;
-	}
+        $new_options = array();
+        foreach($options as $key => $value) {
+            $new_options[$key] = $value;
+        }
 
         if (!empty($current_email['id']) && isset($this->stateBeforeWorkflow[$current_email['id']])) {
             if ($current_email['invalid_email'] != $invalid ||
@@ -1337,7 +1334,7 @@ class SugarEmailAddress extends SugarBean
         } elseif (
             $isValidEmailAddress
             && (int)$optInFlag === 1
-	) {
+	    ) {
             // In case optInFlag is set and there is a duplicate,
             // copy the opt-in state from it if it has some kind of opt-in set.
             // This prevents losing the confirmed opt-in state in case we
@@ -1366,16 +1363,16 @@ class SugarEmailAddress extends SugarBean
             ) {
                 $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                     'SET email_address=\'' . $address . '\', ' .
-		    'invalid_email=' . $new_invalid . ', ';
+                    'invalid_email=' . $new_invalid . ', ' .
+                    'opt_out=' . $new_opt_out . ', ';
 
-  		foreach($new_options as $key => $value) {
-		    $upd_q .= "$key=$value, ";
-		}
+                foreach($new_options as $key => $value) {
+                    $upd_q .= "$key=$value, ";
+                }
 		    
-		$upd_q .= 'opt_out=' . $new_opt_out . ', ' .
-                    (!is_null($optInFlag) ? ('confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ') : '') .
-                    'date_modified=' . $this->db->now() . ' ' .
-		    'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
+                $upd_q .= (!is_null($optInFlag) ? ('confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ') : '') .
+                          'date_modified=' . $this->db->now() . ' ' .
+                          'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
 
                 // set for audit table detection
                 $duplicate->invalid_email = $new_invalid;
@@ -1414,20 +1411,20 @@ class SugarEmailAddress extends SugarBean
         if (!empty($address)) {
             $guid = create_guid();
             $now = TimeDate::getInstance()->nowDb();
-	    $qa  = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : ''); 
+            $qa  = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : ''); 
 
-	    foreach($new_options as $key => $value) {
-	        $qa .= ", $key";
-	    }
+            foreach($new_options as $key => $value) {
+                $qa .= ", $key";
+            }
 
-	    $qa .= ") VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) . "'" : ''); 
+            $qa .= ") VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) . "'" : ''); 
 
-	    foreach($new_options as $key => $value) {
-		$qa .= ", $value";
-	    }
-	    $qa .= ")";
+            foreach($new_options as $key => $value) {
+                $qa .= ", $value";
+            }
+            $qa .= ")";
 
-	    $this->db->query($qa);
+            $this->db->query($qa);
             $isUpdate = false;
         }
 
@@ -1537,11 +1534,11 @@ class SugarEmailAddress extends SugarBean
                     ear.bean_module,
                     ear.primary_address,
                     ear.reply_to_address,
-		    ear.deleted";
+		            ear.deleted";
 
-	foreach($this->custom_options as $option) {
-	    $q .= ", ea.$option";
-	}
+        foreach($this->custom_options as $option) {
+            $q .= ", ea.$option";
+        }
 
         $q .= " FROM email_addresses ea LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
                 WHERE 
@@ -1627,23 +1624,23 @@ class SugarEmailAddress extends SugarBean
                     'primary_address' => isset($_REQUEST['emailAddressPrimaryFlag']) && $_REQUEST['emailAddressPrimaryFlag'] == $key,
                     'invalid_email' => isset($_REQUEST['emailAddressInvalidFlag']) && in_array(
                         $key,
-                            $_REQUEST['emailAddressInvalidFlag']
+                        $_REQUEST['emailAddressInvalidFlag']
                     ),
                     'opt_out' => isset($_REQUEST['emailAddressOptOutFlag']) && in_array(
                         $key,
-                            $_REQUEST['emailAddressOptOutFlag']
+                        $_REQUEST['emailAddressOptOutFlag']
                     ),
                     'reply_to_address' => false
                 );
 
                 foreach($this->custom_options as $option) {
-		    $id = implode(explode(' ', ucwords(str_replace('_', ' ', $option))));
+                    $id = implode(explode(' ', ucwords(str_replace('_', ' ', $option))));
 
-		    $prefillDataArr[$option] = isset($_REQUEST['emailAddress' . $id . 'Flag']) && in_array(
-		        $key,
+                    $prefillDataArr[$option] = isset($_REQUEST['emailAddress' . $id . 'Flag']) && in_array(
+                        $key,
                         $_REQUEST['emailAddress' . $id . 'Flag']
                     );
-		}
+                }
                 $key = $module . $widget_id . 'emailAddress' . ++$count;
             } //while
         }
@@ -1654,20 +1651,20 @@ class SugarEmailAddress extends SugarBean
             $prefill = !empty($prefillDataArr) ? 'true' : 'false';
         }
 
-	$customOptionsArr = array();
-	foreach($this->custom_options as $option) {
+        $customOptionsArr = array();
+        foreach($this->custom_options as $option) {
 
-	    // this_is_option, this-is-id, ThisIsVname
+            // this_is_option, this-is-id, ThisIsVname
             $id = str_replace('_', '-', $option); 
             $vname = implode(explode(' ', ucwords(str_replace('_', ' ', $option))));
 
-	    $customOptionsArr[] = array(
-		'name'  => $option,
-		'vname' => $vname,
-		'id'    => "email-address-$id-flag",
-		'label' => $this->field_defs[$option]['label'],
-	    );
-	}
+            $customOptionsArr[] = array(
+                'name'  => $option,
+                'vname' => $vname,
+                'id'    => "email-address-$id-flag",
+                'label' => $this->field_defs[$option]['label'],
+            );
+        }
 
         $customOptions = '[]';
         if (!empty($customOptionsArr)) {
@@ -1700,8 +1697,8 @@ class SugarEmailAddress extends SugarBean
         $this->smarty->assign('prefillEmailAddresses', $prefill);
         $this->smarty->assign('prefillData', $prefillData);
         $this->smarty->assign('tabindex', $tabindex);
-	$this->smarty->assign('customOptions', $customOptions);
-	$this->smarty->assign('customOptionsArr', $customOptionsArr);
+        $this->smarty->assign('customOptions', $customOptions);
+        $this->smarty->assign('customOptionsArr', $customOptionsArr);
 
         //Set addDefaultAddress flag (do not add if it's from the Email module)
         $this->smarty->assign(
@@ -2003,9 +2000,9 @@ class SugarEmailAddress extends SugarBean
         );
 
         foreach($this->custom_options as $opt) {
-	    $id = implode(explode(' ', ucwords(str_replace('_', ' ', $opt))));
+            $id = implode(explode(' ', ucwords(str_replace('_', ' ', $opt))));
             $options[] = 'emailAddress' . $id . 'Flag';
-	}
+        }
 
         foreach ($options as $option) {
             $count = 0;
@@ -2236,26 +2233,28 @@ class SugarEmailAddress extends SugarBean
      */
     private function saveEmailAddress($address, $optIn)
     {
-	$options = array();
-	if(isset($this->custom_options) && is_array($this->custom_options)) {
-	    foreach($this->custom_options as $option) {
+        $options = array();
+        if(isset($this->custom_options) && is_array($this->custom_options)) {
+            foreach($this->custom_options as $option) {
 
-		if(array_key_exists($option, $address)) {
-		    $options[$option] = $address[$option];
-		}
-	    }
-	}
+                if(array_key_exists($option, $address)) {
+                    $options[$option] = $address[$option];
+                }
+            }
+        }
 
-	$emailId = $this->AddUpdateEmailAddress(
-                        $address['email_address'],
-                        $address['invalid_email'],
-                        $address['opt_out'],
-                        $address['email_address_id'],
-			!is_null($optIn) ? $address['confirm_opt_in_flag'] : null,
-			$options
-		);// this will save the email address if not found
+        $emailId = isset($address['email_address_id']) && isset($current_links[$address['email_address_id']])? $address['email_address_id'] : null;
 
-	return $emailId;
+        $emailId = $this->AddUpdateEmailAddress(
+            $address['email_address'],
+            $address['invalid_email'],
+            $address['opt_out'],
+            $emailId,
+            !is_null($optIn) ? $address['confirm_opt_in_flag'] : null,
+            $options
+        ); // this will save the email address if not found
+
+        return $emailId;
     }
 
     /**
@@ -2263,15 +2262,15 @@ class SugarEmailAddress extends SugarBean
      */
     private function isDirtyRecord($record, $valuation) {
 
-	if(is_array($valuation)) {
-	    foreach($valuation as $key => $value) {
-		if(array_key_exists($key, $record) && $record[$key] !== $value) {
-		    return true;
-		}
-	    }
-	}
+        if(is_array($valuation)) {
+            foreach($valuation as $key => $value) {
+                if(array_key_exists($key, $record) && $record[$key] !== $value) {
+                    return true;
+                }
+            }
+        }
 
-	return false;
+        return false;
     }
 
     /**

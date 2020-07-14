@@ -130,12 +130,12 @@ var emailAddressWidgetLoaded = false;
 					</div>
                 {/if}
 
-                                {foreach from=$customOptionsArr item=option}
-                                    <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
-                                        <label class="text-sm col-xs-12">{$app_strings[$option.label]}</label>
-                                        <div><input type="checkbox" name="" title="{$app_strings[$option.label]}" id={$option.id} class={$option.id} value="" enabled="true"></div>
-                                </div>
-                                {/foreach}
+				{foreach from=$customOptionsArr item=option}
+					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+						<label class="text-sm col-xs-12">{$app_strings[$option.label]}</label>
+						<div><input type="checkbox" name="" title="{$app_strings[$option.label]}" id={$option.id} class={$option.id} value="" enabled="true"></div>
+					</div>
+				{/foreach}
 			</div>
 		</div>
 
