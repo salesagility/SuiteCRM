@@ -123,7 +123,7 @@ $output_html .= $form->text('main.SearchHeader');
 $form->reset('main.SearchHeader');
 
 // create the listview
-$seed_bean = new Document();
+$seed_bean = BeanFactory::newBean('Documents');
 $ListView = new ListView();
 $ListView->show_export_button = false;
 $ListView->process_for_popups = true;

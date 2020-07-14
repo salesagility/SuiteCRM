@@ -7,7 +7,7 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
     public function testAOR_Field()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aor_Field = new AOR_Field();
+        $aor_Field = BeanFactory::newBean('AOR_Fields');
         $this->assertInstanceOf('AOR_Field', $aor_Field);
         $this->assertInstanceOf('Basic', $aor_Field);
         $this->assertInstanceOf('SugarBean', $aor_Field);
@@ -23,7 +23,7 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave_lines()
     {
-        $aor_Field = new AOR_Field();
+        $aor_Field = BeanFactory::newBean('AOR_Fields');
 
         //preset the required data
         $post_data = array();
@@ -41,7 +41,7 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
-            $aor_Field->save_lines($post_data, new AOR_Report());
+            $aor_Field->save_lines($post_data, BeanFactory::newBean('AOR_Reports'));
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());

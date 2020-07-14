@@ -46,7 +46,7 @@ global $app_list_strings, $app_strings, $current_user;
 
 $mod_strings = return_module_language($GLOBALS['current_language'], 'Users');
 
-$focus = new User();
+$focus = BeanFactory::newBean('Users');
 $focus->retrieve($_REQUEST['record']);
 if (!is_admin($focus)) {
     $sugar_smarty = new Sugar_Smarty();

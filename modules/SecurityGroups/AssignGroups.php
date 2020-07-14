@@ -155,7 +155,7 @@ EOQ;
             global $current_user;
             if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, "SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
                 require_once('modules/SecurityGroups/SecurityGroup.php');
-                $groupFocus = new SecurityGroup();
+                $groupFocus = BeanFactory::newBean('SecurityGroups');
                 $security_modules = SecurityGroup::getSecurityModules();
                 //if(in_array($module,$security_modules)) {
                 if (in_array($module, array_keys($security_modules))) {

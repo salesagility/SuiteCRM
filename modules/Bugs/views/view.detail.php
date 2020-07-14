@@ -68,7 +68,7 @@ class BugsViewDetail extends ViewDetail
 
     public function display()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
         if (isset($admin->settings['portal_on']) && $admin->settings['portal_on']) {
             $this->ss->assign("PORTAL_ENABLED", true);

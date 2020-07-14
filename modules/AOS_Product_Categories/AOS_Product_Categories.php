@@ -83,7 +83,7 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar
                     $this->clearParent();
                     break;
                 }
-                $tmp = new AOS_Product_Categories();
+                $tmp = BeanFactory::newBean('AOS_Product_Categories');
                 $tmp->retrieve($tmp->parent_category_id);
             }
         }

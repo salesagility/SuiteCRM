@@ -101,6 +101,15 @@ if (file_exists($file_name) && is_file($file_name)) {
         if (($test>20 || $test<3)&& $returnArray['forQuotes'] == 'quotes') {
             $returnArray['data']='size';
         }
+
+        if (!is_dir(sugar_cached('images'))) {
+            try {
+                sugar_mkdir(sugar_cached('images'));
+            } catch (Exception $exception) {
+                $GLOBALS['log']->fatal('Unable to create cache directory \'images\'');
+            }
+        }
+
         copy($file_name, sugar_cached('images/' . str_replace(' ', '_', $upload->get_stored_file_name())));
     }
     if (!empty($returnArray['data'])) {

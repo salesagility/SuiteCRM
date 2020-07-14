@@ -10,7 +10,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         parent::setUp();
 
         global $current_user;
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         get_sugar_config_defaults();
         if (!isset($GLOBALS['app']) || !$GLOBALS['app']) {
             $GLOBALS['app'] = new SugarApplication();

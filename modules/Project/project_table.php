@@ -58,7 +58,7 @@ class ProjectTable
         if (!is_null($tasks)) {
             foreach ($tasks as $task) {
                 //Get resources
-                $project = new Project();
+                $project = BeanFactory::newBean('Project');
                 $project->retrieve($task->project_id);
                 //Get project resources (users & contacts)
                 $resources1 = $project->get_linked_beans('project_users_1', 'User');

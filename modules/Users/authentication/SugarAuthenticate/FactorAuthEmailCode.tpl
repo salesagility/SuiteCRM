@@ -68,15 +68,15 @@
     {$css}
 </head>
 <body>
-    <div class="p_login">
-        <div class="p_login_top">
-            <a title="SuiteCRM" href="http://www.suitecrm.com">SuiteCRM</a>
-        </div>
+<div class="p_login">
+    <div class="p_login_top">
+        <a title="SuiteCRM" href="http://www.suitecrm.com">SuiteCRM</a>
+    </div>
 
     <div class="p_login_middle">
         <div id="loginform">
             <div class="error message">{$factor_message}</div>
-            <form method="post" action="index.php?module=Users&action=index">
+            <form method="post">
                 {$APP.LBL_EMAIL_CODE} <input type="text" name="factor_token">
                 <input type="submit" value="{$APP.LBL_VERIFY}">
             </form>

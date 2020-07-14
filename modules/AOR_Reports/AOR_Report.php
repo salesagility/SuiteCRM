@@ -114,15 +114,15 @@ class AOR_Report extends Basic
         $return_id = parent::save($check_notify);
 
         require_once('modules/AOR_Fields/AOR_Field.php');
-        $field = new AOR_Field();
+        $field = BeanFactory::newBean('AOR_Fields');
         $field->save_lines($_POST, $this, 'aor_fields_');
 
         require_once('modules/AOR_Conditions/AOR_Condition.php');
-        $condition = new AOR_Condition();
+        $condition = BeanFactory::newBean('AOR_Conditions');
         $condition->save_lines($_POST, $this, 'aor_conditions_');
 
         require_once('modules/AOR_Charts/AOR_Chart.php');
-        $chart = new AOR_Chart();
+        $chart = BeanFactory::newBean('AOR_Charts');
         $chart->save_lines($_POST, $this, 'aor_chart_');
 
         return $return_id;
@@ -211,7 +211,7 @@ class AOR_Report extends Basic
         $mainGroupField = null;
 
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             $path = unserialize(base64_decode($field->module_path));
@@ -442,7 +442,7 @@ class AOR_Report extends Basic
         }
 
         if ($field_id != '' && empty($subgroup)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($field_id);
 
             $field_label = str_replace(' ', '_', $field->label);
@@ -522,9 +522,7 @@ class AOR_Report extends Basic
                 $select_field = $field->field_function . '(' . $select_field . ')';
             }
 
-            if ($field->group_by == 1) {
-                $query_array['group_by'][] = $select_field;
-            }
+            $query_array['group_by'][] = $select_field;
 
             $query_array['select'][] = $select_field . " AS '" . $field_label . "'";
             if (isset($extra['select']) && $extra['select']) {
@@ -685,7 +683,7 @@ class AOR_Report extends Basic
         $fields = array();
         $i = 0;
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             $path = unserialize(base64_decode($field->module_path));
@@ -756,17 +754,17 @@ class AOR_Report extends Basic
 
             $html .= '<td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%">';
             if ($offset == 0) {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' disabled='disabled'>
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' disabled='disabled'>
                     <span class='suitepicon suitepicon-action-first'></span>
                 </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' disabled='disabled'>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' disabled='disabled'>
                     <span class='suitepicon suitepicon-action-left'></span>
                 </button>";
             } else {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(\"" . $this->id . "\",0,\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",0,"' . $group_value . '","' . $tableIdentifier . "\")'>
                     <span class='suitepicon suitepicon-action-first'></span>
                 </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(\"" . $this->id . "\"," . $previous_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' onclick='changeReportPage(\"" . $this->id . '",' . $previous_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
                     <span class='suitepicon suitepicon-action-left'></span>
                 </button>";
             }
@@ -774,17 +772,17 @@ class AOR_Report extends Basic
             $html .= ' <div class="pageNumbers">(' . $start . ' - ' . $end . ' of ' . $total_rows . ')</div>';
             $html .= '</td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%">';
             if ($next_offset < $total_rows) {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $next_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",' . $next_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
                        <span class='suitepicon suitepicon-action-right'></span>
                     </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $last_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",' . $last_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
                         <span class='suitepicon suitepicon-action-last'></span>
                     </button>";
             } else {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
-                        <span class='suitepicon suitepicon-action-next'></span>
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='list-view-pagination-button'  disabled='disabled'>
+                        <span class='suitepicon suitepicon-action-right'></span>
                     </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='list-view-pagination-button'  disabled='disabled'>
                        <span class='suitepicon suitepicon-action-last'></span>
                     </button>";
             }
@@ -857,9 +855,11 @@ class AOR_Report extends Basic
 
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
-        $html .= "</tbody></table>";
+        $html .= "</tbody>";
 
         $html .= $this->getTotalHTML($fields, $totals);
+
+        $html .= '</table>';
 
         $html .= '</div>';
 
@@ -894,7 +894,7 @@ class AOR_Report extends Basic
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->limitQuery($sql, 0, 1);
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             if ($field->field_function != 'COUNT' || $field->format != '') {
@@ -951,12 +951,11 @@ class AOR_Report extends Basic
     {
         global $app_list_strings;
 
-        $currency = new Currency();
+        $currency = BeanFactory::newBean('Currencies');
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = "<table width='100%' class='list view table-responsive aor_reports'>";
-        $html .= "<thead class='fc-head'>";
+        $html = "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
@@ -1024,7 +1023,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</tbody></table>';
+        $html .= '</tbody>';
 
         return $html;
     }
@@ -1066,7 +1065,7 @@ class AOR_Report extends Basic
         $fields = array();
         $i = 0;
         while ($row = $this->db->fetchByAssoc($result)) {
-            $field = new AOR_Field();
+            $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
             $path = unserialize(base64_decode($field->module_path));
@@ -1126,15 +1125,7 @@ class AOR_Report extends Basic
                         if (false !== strpos($t, 'checkbox')) {
                             $csv .= $row[$name];
                         } else {
-                            $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField(
-                                $att['module'],
-                                $att['field'],
-                                $att['field'],
-                                'DetailView',
-                                $row[$name],
-                                '',
-                                $currency_id
-                            ))));
+                            $csv .= $this->encloseForCSV(trim(strip_tags($t)));
                         }
                     }
                     $csv .= $delimiter;
@@ -1265,7 +1256,7 @@ class AOR_Report extends Basic
             $result = $this->db->query($sql);
             $i = 0;
             while ($row = $this->db->fetchByAssoc($result)) {
-                $field = new AOR_Field();
+                $field = BeanFactory::newBean('AOR_Fields');
                 $field->retrieve($row['id']);
 
                 $field->label = str_replace(' ', '_', $field->label) . $i;
@@ -1465,6 +1456,7 @@ class AOR_Report extends Basic
 
     public function build_report_access_query(SugarBean $module, $alias)
     {
+        $tempTableName = $module->table_name;
         $module->table_name = $alias;
         $where = '';
         if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
@@ -1489,6 +1481,8 @@ class AOR_Report extends Basic
             /* END - SECURITY GROUPS */
         }
 
+        $module->table_name = $tempTableName;
+
         return $where;
     }
 
@@ -1498,7 +1492,7 @@ class AOR_Report extends Basic
      */
     public function build_report_query_where($query = array())
     {
-        global $beanList, $app_list_strings, $sugar_config, $current_user;
+        global $beanList, $app_list_strings, $sugar_config, $timedate;
 
         $aor_sql_operator_list['Equal_To'] = '=';
         $aor_sql_operator_list['Not_Equal_To'] = '!=';
@@ -1525,7 +1519,7 @@ class AOR_Report extends Basic
             $tiltLogicOp = true;
 
             while ($row = $this->db->fetchByAssoc($result)) {
-                $condition = new AOR_Condition();
+                $condition = BeanFactory::newBean('AOR_Conditions');
                 $condition->retrieve($row['id']);
 
                 $path = unserialize(base64_decode($condition->module_path));
@@ -1705,14 +1699,23 @@ class AOR_Report extends Basic
                                 }
                             }
 
-                            if ($params[1] != 'now') {
+                            if ($params[1] !== 'now') {
                                 switch ($params[3]) {
-                                    case 'business_hours':
-                                        //business hours not implemented for query, default to hours
-                                        $params[3] = 'hours';
-                                        // no break
+                                    case 'business_hours';
+                                        if ($params[0] === 'now') {
+                                            $businessHours = BeanFactory::getBean('AOBH_BusinessHours');
+                                            $amount = $params[2];
+
+                                            if ($params[1] !== 'plus') {
+                                                $amount = 0 - $amount;
+                                            }
+                                            $value = $businessHours->addBusinessHours($amount);
+                                            $value = "'" . $timedate->asDb($value) . "'";
+                                            break;
+                                        }
+                                        $params[3] = 'hour';
                                     default:
-                                        if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                                        if ($sugar_config['dbconfig']['db_type'] === 'mssql') {
                                             $value = "DATEADD(" . $params[3] . ",  " . $app_list_strings['aor_date_operator'][$params[1]] . " $params[2], $value)";
                                         } else {
                                             $value = "DATE_ADD($value, INTERVAL " . $app_list_strings['aor_date_operator'][$params[1]] . " $params[2] " . $params[3] . ")";

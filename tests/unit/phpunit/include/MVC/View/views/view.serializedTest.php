@@ -17,7 +17,7 @@ class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
     {
         /* //this method call uses exit() so it cannot be tested as it forces the PHP unit to quite as well
         $view = new ViewSerialized();
-        $view->bean = new User();
+        $view->bean = BeanFactory::newBean('Users');
 
         ob_start();
 
