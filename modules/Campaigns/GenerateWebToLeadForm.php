@@ -68,7 +68,6 @@ $web_assigned_user = '';
 $web_team_user = '';
 $web_form_footer = '';
 $regex = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
-//_ppd($web_required_symbol);
 
 $moduleDir = '';
 if (!empty($_REQUEST['moduleDir'])) {
@@ -105,7 +104,7 @@ if (!empty($_REQUEST['assigned_user_id'])) {
 
 $typeOfPerson = !empty($_REQUEST['typeOfPerson']) ? $_REQUEST['typeOfPerson'] : 'Lead';
  $person = new $typeOfPerson();
- $fieldsMetaData = new FieldsMetaData();
+ $fieldsMetaData = BeanFactory::newBean('EditCustomFields');
  $xtpl=new XTemplate('modules/Campaigns/WebToLeadForm.html');
  $xtpl->assign("MOD", $mod_strings);
  $xtpl->assign("APP", $app_strings);

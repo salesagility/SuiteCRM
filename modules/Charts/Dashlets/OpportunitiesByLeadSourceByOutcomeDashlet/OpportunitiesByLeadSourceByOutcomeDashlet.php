@@ -99,7 +99,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if ($current_user->getPreference('currency')){
 
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
@@ -121,7 +121,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if ($current_user->getPreference('currency')) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }

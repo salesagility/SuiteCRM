@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$sugarbean = new ProjectTask();
+$sugarbean = BeanFactory::newBean('ProjectTask');
 
 // perform the delete if given a record to delete
 

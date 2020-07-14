@@ -114,7 +114,7 @@ class AOR_Scheduled_Reports extends basic
                         $emails[] = $params['email'][$key];
                         break;
                     case 'Specify User':
-                        $user = new User();
+                        $user = BeanFactory::newBean('Users');
                         $user->retrieve($params['email'][$key]);
                         $emails[] = $user->emailAddress->getPrimaryAddress($user);
                         break;
@@ -124,13 +124,13 @@ class AOR_Scheduled_Reports extends basic
                             case 'security_group':
                                 if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
-                                    $security_group = new SecurityGroup();
+                                    $security_group = BeanFactory::newBean('SecurityGroups');
                                     $security_group->retrieve($params['email'][$key][1]);
                                     $users = $security_group->get_linked_beans('users', 'User');
                                     $r_users = array();
                                     if ($params['email'][$key][2] != '') {
                                         require_once('modules/ACLRoles/ACLRole.php');
-                                        $role = new ACLRole();
+                                        $role = BeanFactory::newBean('ACLRoles');
                                         $role->retrieve($params['email'][$key][2]);
                                         $role_users = $role->get_linked_beans('users', 'User');
                                         foreach ($role_users as $role_user) {
@@ -148,7 +148,7 @@ class AOR_Scheduled_Reports extends basic
                             // no break
                             case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
-                                $role = new ACLRole();
+                                $role = BeanFactory::newBean('ACLRoles');
                                 $role->retrieve($params['email'][$key][2]);
                                 $users = $role->get_linked_beans('users', 'User');
                                 break;
@@ -158,7 +158,7 @@ class AOR_Scheduled_Reports extends basic
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
                                 $result = $db->query($sql);
                                 while ($row = $db->fetchByAssoc($result)) {
-                                    $user = new User();
+                                    $user = BeanFactory::newBean('Users');
                                     $user->retrieve($row['id']);
                                     $users[$user->id] = $user;
                                 }

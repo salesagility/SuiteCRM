@@ -36,7 +36,7 @@ $theme_path = "themes/".$theme."/";
 $image_path = $theme_path."images/";
 
 
-$focus = new Administration();
+$focus = BeanFactory::newBean('Administration');
 $focus->retrieveSettings(); //retrieve all admin settings.
 $GLOBALS['log']->info("SecuritySuite Configure Settings view");
 
@@ -121,7 +121,7 @@ $xtpl->assign('securitysuite_inbound_email', $securitysuite_inbound_email);
 
 
 //default security groups
-$groupFocus = new SecurityGroup();
+$groupFocus = BeanFactory::newBean('SecurityGroups');
 $defaultGroups = SecurityGroup::retrieveDefaultGroups();
 $defaultGroup_string = "";
 foreach ($defaultGroups as $default_id => $defaultGroup) {

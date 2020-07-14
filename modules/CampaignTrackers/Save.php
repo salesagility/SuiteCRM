@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/formbase.php');
 
-$focus = new CampaignTracker();
+$focus = BeanFactory::newBean('CampaignTrackers');
 
 $focus->retrieve($_POST['record']);
 if (!$focus->ACLAccess('Save')) {

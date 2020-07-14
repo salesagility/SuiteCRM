@@ -1129,12 +1129,12 @@ class SugarController
             } else {
                 $emailAddressStringCaps = strtoupper($this->bean->email1);
                 if ($emailAddressStringCaps) {
-                    $emailAddress = new EmailAddress();
+                    $emailAddress = BeanFactory::newBean('EmailAddresses');
                     $emailAddress->retrieve_by_string_fields(array(
                         'email_address_caps' => $emailAddressStringCaps,
                     ));
 
-                    $emailMan = new EmailMan();
+                    $emailMan = BeanFactory::newBean('EmailMan');
 
                     $success = $emailMan->sendOptInEmail($emailAddress, $this->bean->module_name, $this->bean->id);
 

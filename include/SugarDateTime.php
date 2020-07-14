@@ -134,7 +134,9 @@ class SugarDateTime extends DateTime
 
     /**
      * Internal _createFromFormat implementation for 5.2
+     *
      * @internal
+     * @deprecated No longer necessary since PHP 5.2 is no longer supported.
      * @param string $format Format like in date()
      * @param string $time Time string to parse
      * @param DateTimeZone $timezone TZ
@@ -276,7 +278,9 @@ class SugarDateTime extends DateTime
     }
 
     /**
-     * Get specific hour of today
+     * Get specific hour of today.
+     *
+     * @deprecated This function is unused and will be removed in a future release.
      * @param int $hour_index
      * @return SugarDateTime
      */
@@ -293,6 +297,8 @@ class SugarDateTime extends DateTime
 
     /**
      * Get the last second of current hour
+     *
+     * @deprecated This function is unused and will be removed in a future release.
      * @return SugarDateTime
      */
     public function get_hour_end_time()
@@ -304,6 +310,8 @@ class SugarDateTime extends DateTime
 
     /**
      * Get the last second of the current day
+     *
+     * @deprecated This function is unused and will be removed in a future release.
      * @return SugarDateTime
      */
     public function get_day_end_time()
@@ -327,8 +335,8 @@ class SugarDateTime extends DateTime
 
     /**
      * Get the beginning of the last day of i's the month
-     * @deprecated
-     * FIXME: no idea why this function exists and what's the use of it
+     *
+     * @deprecated This function is unused and will be removed in a future release.
      * @param int $month_index Month, January is 0
      * @return SugarDateTime
      */
@@ -343,6 +351,7 @@ class SugarDateTime extends DateTime
 
     /**
      * Get the beginning of i's day of the month
+     *
      * @param int $day_index 0 is the first day of the month (sic!)
      * @return SugarDateTime
      */
@@ -380,6 +389,8 @@ class SugarDateTime extends DateTime
     /**
      * Create a list of time slots for calendar view
      * Times must be in user TZ
+     *
+     * @deprecated This function is unused and will be removed in a future release.
      * @param string $view Which view we are using - day, week, month
      * @param SugarDateTime $start_time Start time
      * @param SugarDateTime $end_time End time
@@ -416,6 +427,7 @@ class SugarDateTime extends DateTime
 
     /**
      * Get the beginning of the given day
+     *
      * @param int $day  Day, starting with 1, default is current
      * @param int $month Month, starting with 1, default is current
      * @param int $year Year, default is current
@@ -435,6 +447,7 @@ class SugarDateTime extends DateTime
 
     /**
      * Get the last second of the given day
+     *
      * @param int $day  Day, starting with 1, default is current
      * @param int $month Month, starting with 1, default is current
      * @param int $year Year, default is current
@@ -454,6 +467,8 @@ class SugarDateTime extends DateTime
 
     /**
      * Get the beginning of the first day of the year
+     *
+     * @deprecated This function is unused and will be removed in a future release.
      * @param int $year
      * @return SugarDateTime
      */
@@ -505,6 +520,7 @@ class SugarDateTime extends DateTime
 
     /**
      * Get query string for the date, year=%d&month=%d&day=%d&hour=%d
+     *
      * @return string
      */
     public function get_date_str()
@@ -544,11 +560,14 @@ class SugarDateTime extends DateTime
 
     protected static $strptime_short_mon;
     protected static $strptime_long_mon;
+
     /**
      * DateTime homebrew parser
      *
      * Since some OSes and PHP versions (please upgrade to 5.3!) do not support built-in parsing functions,
      * we have to restort to this ugliness.
+     *
+     * @deprecated This function is unnecessary since we no longer support PHP 5.2, and will be removed in a future release.
      * @internal
      * @param string $time  Time formatted string
      * @param string $format Format, as accepted by strptime()
