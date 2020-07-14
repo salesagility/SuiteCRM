@@ -91,7 +91,7 @@ class EmailReminder
      */
     public function process()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         Reminder::sendEmailReminders($this, $admin);
@@ -99,7 +99,7 @@ class EmailReminder
         $meetings = $this->getMeetingsForRemind();
         foreach ($meetings as $id) {
             $recipients = $this->getRecipients($id, 'Meetings');
-            $bean = new Meeting();
+            $bean = BeanFactory::newBean('Meetings');
             $bean->retrieve($id);
             if ($this->sendReminders($bean, $admin, $recipients)) {
                 $bean->email_reminder_sent = 1;
@@ -110,7 +110,7 @@ class EmailReminder
         $calls = $this->getCallsForRemind();
         foreach ($calls as $id) {
             $recipients = $this->getRecipients($id, 'Calls');
-            $bean = new Call();
+            $bean = BeanFactory::newBean('Calls');
             $bean->retrieve($id);
             if ($this->sendReminders($bean, $admin, $recipients)) {
                 $bean->email_reminder_sent = 1;
@@ -299,7 +299,7 @@ class EmailReminder
         ";
         $re = $db->query($query);
         while ($row = $db->fetchByAssoc($re)) {
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($row['user_id']);
             if (!empty($user->email1)) {
                 $arr = array(
@@ -314,7 +314,7 @@ class EmailReminder
         $query = "SELECT contact_id FROM {$field_part}s_contacts WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
         while ($row = $db->fetchByAssoc($re)) {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($row['contact_id']);
             if (!empty($contact->email1)) {
                 $arr = array(
@@ -329,7 +329,7 @@ class EmailReminder
         $query = "SELECT lead_id FROM {$field_part}s_leads WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
         while ($row = $db->fetchByAssoc($re)) {
-            $lead = new Lead();
+            $lead = BeanFactory::newBean('Leads');
             $lead->retrieve($row['lead_id']);
             if (!empty($lead->email1)) {
                 $arr = array(

@@ -106,7 +106,7 @@ function getPortalEmailSettings()
     }
 
     //Fallback to sugar settings
-    $admin = new Administration();
+    $admin = BeanFactory::newBean('Administration');
     $admin->retrieveSettings();
     if (!$settings['from_name']) {
         $settings['from_name'] = $admin->settings['notify_fromname'];
@@ -145,7 +145,7 @@ function aop_parse_template($string, $bean_arr)
         if (isset($this) && isset($this->module_dir) && $this->module_dir === 'EmailTemplates') {
             $string = $this->parse_template_bean($string, $bean_name, $focus);
         } else {
-            $emailTemplate = new EmailTemplate();
+            $emailTemplate = BeanFactory::newBean('EmailTemplates');
             $string = $emailTemplate->parse_template_bean($string, $bean_name, $focus);
         }
     }

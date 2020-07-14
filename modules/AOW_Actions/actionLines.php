@@ -78,7 +78,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
                 $result = $focus->db->query($sql);
 
                 while ($row = $focus->db->fetchByAssoc($result)) {
-                    $action_name = new AOW_Action();
+                    $action_name = BeanFactory::newBean('AOW_Actions');
                     $action_name->retrieve($row['id']);
                     $action_item = json_encode($action_name->toArray());
 
@@ -95,7 +95,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
         $result = $focus->db->query($sql);
 
         while ($row = $focus->db->fetchByAssoc($result)) {
-            $action_name = new AOW_Action();
+            $action_name = BeanFactory::newBean('AOW_Actions');
             $action_name->retrieve($row['id']);
 
             $html .= "<tr><td>". $action_name->action_order ."</td><td>".$action_name->name."</td><td>". translate('LBL_'.strtoupper($action_name->action), 'AOW_Actions')."</td></tr>";

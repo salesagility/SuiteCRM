@@ -74,7 +74,7 @@ if (
 );
 }
 $global_control_links['training'] = array(
-'linkinfo' => array($app_strings['LBL_TRAINING'] => 'javascript:void(window.open(\'https://community.suitecrm.com\'))'),
+'linkinfo' => array($app_strings['LBL_TRAINING'] => 'https://community.suitecrm.com', 'target' => '_blank'),
 'submenu' => ''
  );
 

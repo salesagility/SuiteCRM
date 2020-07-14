@@ -48,7 +48,7 @@ global $mod_strings;
 
 
 
-$focus = new Prospect();
+$focus = BeanFactory::newBean('Prospects');
 
 if (!isset($_REQUEST['record'])) {
     sugar_die($mod_strings['ERR_DELETE_RECORD']);

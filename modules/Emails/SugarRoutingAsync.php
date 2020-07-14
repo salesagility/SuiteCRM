@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once("include/SugarRouting/SugarRouting.php");
 
-$ie = new InboundEmail();
+$ie = BeanFactory::newBean('InboundEmail');
 $json = getJSONobj();
 $rules = new SugarRouting($ie, $current_user);
 

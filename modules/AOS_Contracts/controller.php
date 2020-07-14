@@ -23,7 +23,7 @@
  *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
- 
+
 require_once('include/MVC/Controller/SugarController.php');
 
 class AOS_ContractsController extends SugarController
@@ -36,12 +36,12 @@ class AOS_ContractsController extends SugarController
         $GLOBALS['view'] = $this->view;
 
         if (isset($_REQUEST['aos_quotes_id'])) {
-            $query = "SELECT * FROM aos_quotes WHERE id = '{$_REQUEST['aos_quotes_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT * FROM aos_quotes WHERE id = '?'";
+            $result = $this->bean->db->pquery($query, [$_REQUEST['aos_quotes_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->name = $row['name'];
             $this->bean->total_contract_value = $row['total_amount'];
-            
+
             if (isset($row['billing_account_id'])) {
                 $_REQUEST['account_id'] = $row['billing_account_id'];
             }
@@ -49,30 +49,30 @@ class AOS_ContractsController extends SugarController
             if (isset($row['billing_contact_id'])) {
                 $_REQUEST['contact_id'] = $row['billing_contact_id'];
             }
-                
+
             if (isset($row['opportunity_id'])) {
                 $_REQUEST['opportunity_id'] = $row['opportunity_id'];
             }
         }
-            
+
         if (isset($_REQUEST['account_id'])) {
-            $query = "SELECT id,name FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT id,name FROM accounts WHERE id = '?'";
+            $result = $this->bean->db->pquery($query, [$_REQUEST['account_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->contract_account = $row['name'];
             $this->bean->contract_account_id = $row['id'];
         }
 
         if (isset($_REQUEST['contact_id'])) {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($_REQUEST['contact_id']);
             $this->bean->contact = $contact->name;
             $this->bean->contact_id = $contact->id;
         }
-        
+
         if (isset($_REQUEST['opportunity_id'])) {
-            $query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT id,name FROM opportunities WHERE id = '?'";
+            $result = $this->bean->db->pquery($query, [$_REQUEST['opportunity_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->opportunity = $row['name'];
             $this->bean->opportunity_id = $row['id'];
