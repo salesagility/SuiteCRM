@@ -97,10 +97,10 @@ function login($user_auth, $application)
     global $sugar_config, $system_config;
 
     $error = new SoapError();
-    $user = new User();
+    $user = BeanFactory::newBean('Users');
     $success = false;
     //rrs
-    $system_config = new Administration();
+    $system_config = BeanFactory::newBean('Administration');
     $system_config->retrieveSettings('system');
     $authController = new AuthenticationController();
     //rrs
@@ -216,7 +216,7 @@ function validate_authenticated($session_id)
         if (!empty($_SESSION['is_valid_session']) && is_valid_ip_address('ip_address') && $_SESSION['type'] == 'user') {
             global $current_user;
 
-            $current_user = new User();
+            $current_user = BeanFactory::newBean('Users');
             $current_user->retrieve($_SESSION['user_id']);
             login_success();
 
@@ -776,7 +776,7 @@ function get_note_attachment($session, $id)
         return array('result_count' => -1, 'entry_list' => array(), 'error' => $error->get_soap_array());
     }
 
-    $note = new Note();
+    $note = BeanFactory::newBean('Notes');
 
     $note->retrieve($id);
     if (!$note->ACLAccess('DetailView')) {
@@ -1085,7 +1085,7 @@ function update_portal_user($session, $portal_name, $name_value_list)
 
         return $error->get_soap_array();
     }
-    $contact = new Contact();
+    $contact = BeanFactory::newBean('Contacts');
 
     $searchBy = array('deleted' => 0);
     foreach ($name_value_list as $name_value) {
@@ -1253,7 +1253,7 @@ $server->register(
  */
 function get_server_version()
 {
-    $admin = new Administration();
+    $admin = BeanFactory::newBean('Administration');
     $admin->retrieveSettings('info');
     if (isset($admin->settings['info_sugar_version'])) {
         return $admin->settings['info_sugar_version'];
@@ -2215,7 +2215,7 @@ function get_document_revision($session, $id)
     }
 
 
-    $dr = new DocumentRevision();
+    $dr = BeanFactory::newBean('DocumentRevisions');
     $dr->retrieve($id);
     if (!empty($dr->filename)) {
         $filename = "upload://{$dr->id}";

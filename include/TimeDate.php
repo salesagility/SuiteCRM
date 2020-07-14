@@ -383,7 +383,7 @@ class TimeDate
         $timef = $user->getPreference('timef');
         if (empty($timef) && isset($GLOBALS['current_user']) && $GLOBALS['current_user'] !== $user) {
             // if we got another user and it has no time format, try current user
-            $timef = $GLOBALS['current_user']->getPreference('$timef');
+            $timef = $GLOBALS['current_user']->getPreference('timef');
         }
         if (empty($timef)) {
             $timef = $GLOBALS['sugar_config']['default_time_format'];
@@ -420,11 +420,12 @@ class TimeDate
 
         if (!empty($cachedValue)) {
             return $cachedValue;
-        }
-        $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
-        sugar_cache_put($cacheKey, $value, 0);
+        } else {
+            $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
+            sugar_cache_put($cacheKey, $value, 0);
 
-        return $value;
+            return $value;
+        }
     }
 
     /**
@@ -1576,8 +1577,9 @@ class TimeDate
     {
         if ($a[0] == $b[0]) {
             return strcmp($a[1], $b[1]);
+        } else {
+            return $a[0] < $b[0] ? -1 : 1;
         }
-        return $a[0] < $b[0] ? -1 : 1;
     }
 
     /**
@@ -1755,8 +1757,9 @@ class TimeDate
         }
         if ($daystart) {
             return $now->get_day_begin();
+        } else {
+            return $now->get_day_end();
         }
-        return $now->get_day_end();
     }
 
     /**

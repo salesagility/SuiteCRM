@@ -308,9 +308,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $fields = $aItem->get_list_view_data();
                 if (isset($processed_ids[$aItem->id])) {
                     continue;
+                } else {
+                    $processed_ids[$aItem->id] = 1;
                 }
-                $processed_ids[$aItem->id] = 1;
-                
 
 
                 //ADD OFFSET TO ARRAY
@@ -714,7 +714,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                     $delete_link = '&nbsp;';
                 }
 
-                $admin = new Administration();
+                $admin = BeanFactory::newBean('Administration');
                 $admin->retrieveSettings('system');
 
                 $user_merge = $current_user->getPreference('mailmerge_on');
@@ -857,7 +857,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $this->smartyTemplate->assign("ORDER_BY", $sort_URL_base);
 
                 return $sort_URL_base;
+            } else {
+                return '';
             }
-            return '';
         }
     }

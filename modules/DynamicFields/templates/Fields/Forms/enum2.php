@@ -55,8 +55,10 @@
      $selected_options = "";
      if ($multi && !empty($vardef['default'])) {
          $selected_options = unencodeMultienum($vardef['default']);
-     } elseif (isset($vardef['default'])) {
-         $selected_options = $vardef['default'];
+     } else {
+         if (isset($vardef['default'])) {
+             $selected_options = $vardef['default'];
+         }
      }
 
      $edit_mod_strings = return_module_language($GLOBALS['current_language'], 'EditCustomFields');

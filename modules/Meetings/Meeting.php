@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class Meeting extends SugarBean
 {
@@ -113,6 +114,8 @@ class Meeting extends SugarBean
     public $cached_get_users = null;
     public $new_schema = true;
     public $date_changed = false;
+    
+    protected static $remindersInSaving = false;
 
     /**
      * sole constructor
@@ -205,7 +208,7 @@ class Meeting extends SugarBean
         $check_notify =(!empty($_REQUEST['send_invites']) && $_REQUEST['send_invites'] == '1') ? true : false;
         if (empty($_REQUEST['send_invites'])) {
             if (!empty($this->id)) {
-                $old_record = new Meeting();
+                $old_record = BeanFactory::newBean('Meetings');
                 $old_record->retrieve($this->id);
                 $old_assigned_user_id = $old_record->assigned_user_id;
             }
@@ -281,12 +284,18 @@ class Meeting extends SugarBean
             vCal::cache_sugar_vcal($current_user);
         }
 
-        if (isset($_REQUEST['reminders_data']) && empty($this->saving_reminders_data)) {
+
+        if (isset($_REQUEST['reminders_data']) && !self::$remindersInSaving || isset($_REQUEST['reminders_data']) && empty($this->saving_reminders_data)) {
+            self::$remindersInSaving = true;
             $this->saving_reminders_data = true;
+
             $reminderData = json_encode(
                 $this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
             );
             Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
+
+            self::$remindersInSaving = false;
+
             $this->saving_reminders_data = false;
         }
 
@@ -573,13 +582,13 @@ class Meeting extends SugarBean
 
         $mergeTime = $meetingFieldsDateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
-        if ($date_db	< $today) {
+        if ($date_db    < $today) {
             if ($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held') {
                 $meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
             } else {
                 $meeting_fields['DATE_START']= "<font class='overdueTask'>".$meetingFieldsDateStart."</font>";
             }
-        } elseif ($date_db	< $nextday) {
+        } elseif ($date_db    < $nextday) {
             $meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meetingFieldsDateStart."</font>";
         } else {
             $meeting_fields['DATE_START'] = "<font class='futureTask'>".$meetingFieldsDateStart."</font>";
@@ -745,7 +754,7 @@ class Meeting extends SugarBean
 
     public function get_meeting_users()
     {
-        $template = new User();
+        $template = BeanFactory::newBean('Users');
         // First, get the list of IDs.
         $query = "SELECT meetings_users.required, meetings_users.accept_status, meetings_users.user_id from meetings_users where meetings_users.meeting_id='$this->id' AND meetings_users.deleted=0";
         $GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
@@ -753,7 +762,7 @@ class Meeting extends SugarBean
         $list = array();
 
         while ($row = $this->db->fetchByAssoc($result)) {
-            $template = new User(); // PHP 5 will retrieve by reference, always over-writing the "old" one
+            $template = BeanFactory::newBean('Users'); // PHP 5 will retrieve by reference, always over-writing the "old" one
             $record = $template->retrieve($row['user_id']);
             $template->required = $row['required'];
             $template->accept_status = $row['accept_status'];
@@ -821,19 +830,19 @@ class Meeting extends SugarBean
 
         $list = array();
         if (!is_array($this->contacts_arr)) {
-            $this->contacts_arr =	array();
+            $this->contacts_arr =    array();
         }
 
         if (!is_array($this->users_arr)) {
-            $this->users_arr =	array();
+            $this->users_arr =    array();
         }
 
         if (!isset($this->leads_arr) || !is_array($this->leads_arr)) {
-            $this->leads_arr =	array();
+            $this->leads_arr =    array();
         }
 
         foreach ($this->users_arr as $user_id) {
-            $notify_user = new User();
+            $notify_user = BeanFactory::newBean('Users');
             $notify_user->retrieve($user_id);
             $notify_user->new_assigned_user_name = $notify_user->full_name;
             $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
@@ -841,7 +850,7 @@ class Meeting extends SugarBean
         }
 
         foreach ($this->contacts_arr as $contact_id) {
-            $notify_user = new Contact();
+            $notify_user = BeanFactory::newBean('Contacts');
             $notify_user->retrieve($contact_id);
             $notify_user->new_assigned_user_name = $notify_user->full_name;
             $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
@@ -849,7 +858,7 @@ class Meeting extends SugarBean
         }
 
         foreach ($this->leads_arr as $lead_id) {
-            $notify_user = new Lead();
+            $notify_user = BeanFactory::newBean('Leads');
             $notify_user->retrieve($lead_id);
             $notify_user->new_assigned_user_name = $notify_user->full_name;
             $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");

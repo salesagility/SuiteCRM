@@ -73,33 +73,39 @@ class AddressRule extends BaseRule
                     if ($this->matches($column, '/_address_(city|state|country|postalcode)$/si')) {
                         if ($view == 'DetailView' && !is_array($column)) {
                             $panels[$name][$rowCount][$key] = '';
-                        } elseif ($view == 'DetailView' && $this->matches($column, '/_address_country$/') && is_array($column)) {
-                            $match = $this->getMatch($column, '/(.*?)_address_country$/');
-                            $panels[$name][$rowCount][$key]['name'] = $match[1] . '_address_street';
-                            $panels[$name][$rowCount][$key]['label'] = 'LBL_' . strtoupper($match[1]) . '_ADDRESS';
-                        } elseif ($view == 'EditView' && $isAddressPanel) {
-                            $field = is_array($column) ? $column['name'] : $column;
-                            preg_match('/^(.*?)_address_/si', $field, $matches);
+                        } else {
+                            if ($view == 'DetailView' && $this->matches($column, '/_address_country$/') && is_array($column)) {
+                                $match = $this->getMatch($column, '/(.*?)_address_country$/');
+                                $panels[$name][$rowCount][$key]['name'] = $match[1] . '_address_street';
+                                $panels[$name][$rowCount][$key]['label'] = 'LBL_' . strtoupper($match[1]) . '_ADDRESS';
+                            } else {
+                                if ($view == 'EditView' && $isAddressPanel) {
+                                    $field = is_array($column) ? $column['name'] : $column;
+                                    preg_match('/^(.*?)_address_/si', $field, $matches);
 
-                            if (empty($searchedAddressPanel[$matches[1]])) {
-                                $intact = $this->hasAddressFieldsIntact($panel, $matches[1]);
+                                    if (empty($searchedAddressPanel[$matches[1]])) {
+                                        $intact = $this->hasAddressFieldsIntact($panel, $matches[1]);
 
-                                //now we actually have to go back in and replace the street field
-                                if (!$intact) {
-                                    $panels = $this->removeStreetFieldOverride($panels, $matches[1]);
+                                        //now we actually have to go back in and replace the street field
+                                        if (!$intact) {
+                                            $panels = $this->removeStreetFieldOverride($panels, $matches[1]);
+                                        }
+
+                                        $addressFieldsIntact[$matches[1]] = $intact;
+                                        $searchedAddressPanel[$matches[1]] = true;
+                                    }
+
+                                    //Only remove in address panel if the street field is in there by itself
+                                    if ($addressFieldsIntact[$matches[1]]) {
+                                        $panels[$name][$rowCount][$key] = '';
+                                    }
                                 }
-
-                                $addressFieldsIntact[$matches[1]] = $intact;
-                                $searchedAddressPanel[$matches[1]] = true;
-                            }
-
-                            //Only remove in address panel if the street field is in there by itself
-                            if ($addressFieldsIntact[$matches[1]]) {
-                                $panels[$name][$rowCount][$key] = '';
                             }
                         }
-                    } elseif ($this->matches($column, '/^push_.*?_(shipping|billing)$/si')) {
-                        $panels[$name][$rowCount][$key] = '';
+                    } else {
+                        if ($this->matches($column, '/^push_.*?_(shipping|billing)$/si')) {
+                            $panels[$name][$rowCount][$key] = '';
+                        }
                     }
                 } //foreach
             } //foreach

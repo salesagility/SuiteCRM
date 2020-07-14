@@ -7,7 +7,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
     public function testjjwg_Maps()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         $this->assertInstanceOf('jjwg_Maps', $jjwgMaps);
         $this->assertInstanceOf('Basic', $jjwgMaps);
@@ -24,7 +24,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testconfiguration()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -39,7 +39,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         //test with empty array/default
         $result = $jjwgMaps->saveConfiguration();
@@ -52,8 +52,8 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testupdateGeocodeInfo()
     {
-        $jjwgMaps = new jjwg_Maps();
-        $bean = new Meeting();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
+        $bean = BeanFactory::newBean('Meetings');
 
         //test without bean attributes set
         $result = $jjwgMaps->updateGeocodeInfo($bean);
@@ -91,8 +91,8 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testupdateRelatedMeetingsGeocodeInfo()
     {
-        $jjwgMaps = new jjwg_Maps();
-        $bean = new Account();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
+        $bean = BeanFactory::newBean('Accounts');
 
         //test without setting bean attributes
         $result = $jjwgMaps->updateRelatedMeetingsGeocodeInfo($bean);
@@ -110,10 +110,10 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testupdateMeetingGeocodeInfo()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         //test with required attributes set
-        $bean = new Meeting();
+        $bean = BeanFactory::newBean('Meetings');
         $bean->id = 1;
         $bean->jjwg_maps_lat_c = '100';
         $bean->jjwg_maps_lng_c = '40';
@@ -124,7 +124,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testupdateGeocodeInfoByAssocQuery()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         //test with empty parameters
         $result = $jjwgMaps->updateGeocodeInfoByAssocQuery('', array(), array());
@@ -141,8 +141,8 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testupdateGeocodeInfoByBeanQuery()
     {
-        $jjwgMaps = new jjwg_Maps();
-        $bean = new Account();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
+        $bean = BeanFactory::newBean('Accounts');
 
         //test without setting bean attributes
         $result = $jjwgMaps->updateGeocodeInfoByBeanQuery($bean);
@@ -156,22 +156,22 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteAllGeocodeInfoByBeanQuery()
     {
-        $jjwgMaps = new jjwg_Maps();
-        $bean = new Call();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
+        $bean = BeanFactory::newBean('Calls');
 
         //test with invalid geocode bean
         $result = $jjwgMaps->deleteAllGeocodeInfoByBeanQuery($bean);
         $this->assertSame(false, $result);
 
         //test with invalid geocode bean
-        $bean = new Account();
+        $bean = BeanFactory::newBean('Accounts');
         $result = $jjwgMaps->deleteAllGeocodeInfoByBeanQuery($bean);
         $this->assertSame(null, $result);
     }
 
     public function testgetGeocodeAddressesResult()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         //test with invalid geocode bean
         $result = $jjwgMaps->getGeocodeAddressesResult('calls');
@@ -184,7 +184,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdefineMapsAddress()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         //test for Account Object type
         $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
@@ -225,7 +225,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdefineMapsFormattedAddress()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         $result = $jjwgMaps->defineMapsFormattedAddress(array());
         $this->assertEquals(false, $result);
@@ -258,7 +258,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testis_valid_lng()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         //test with invalid values
         $this->assertEquals(false, $jjwgMaps->is_valid_lng(''));
@@ -272,7 +272,7 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testis_valid_lat()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
         //test with invalid values
         $this->assertEquals(false, $jjwgMaps->is_valid_lat(''));
@@ -286,9 +286,9 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlogGeocodeInfo()
     {
-        $jjwgMaps = new jjwg_Maps();
+        $jjwgMaps = BeanFactory::newBean('jjwg_Maps');
 
-        $bean = new Meeting();
+        $bean = BeanFactory::newBean('Meetings');
         $bean->jjwg_maps_lat_c = '100';
         $bean->jjwg_maps_lng_c = '40';
 

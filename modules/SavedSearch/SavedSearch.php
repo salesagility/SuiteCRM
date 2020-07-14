@@ -362,7 +362,7 @@ class SavedSearch extends SugarBean
     {
         global $current_user, $timedate;
 
-        $focus = new SavedSearch();
+        $focus = BeanFactory::newBean('SavedSearch');
         if ($id) {
             $focus->retrieve($id);
         }
@@ -400,24 +400,26 @@ class SavedSearch extends SugarBean
                     if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
                         $db_format = $timedate->to_db_date($value, false);
                         $contents[$input] = $db_format;
-                    } elseif ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
-                        if (preg_match('/[^\d]/', $value)) {
-                            require_once('modules/Currencies/Currency.php');
-                            $contents[$input] = unformat_number($value);
-                            //Flag this value as having been unformatted
-                            $contents[$input . '_unformatted_number'] = true;
-                            //If the type is of currency and there was a currency symbol (non-digit), save the symbol
-                            if ($type == 'currency' && preg_match('/^([^\d])/', $value, $match)) {
-                                $contents[$input . '_currency_symbol'] = $match[1];
-                            }
-                        } else {
-                            //unset any flags
-                            if (isset($contents[$input . '_unformatted_number'])) {
-                                unset($contents[$input . '_unformatted_number']);
-                            }
+                    } else {
+                        if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
+                            if (preg_match('/[^\d]/', $value)) {
+                                require_once('modules/Currencies/Currency.php');
+                                $contents[$input] = unformat_number($value);
+                                //Flag this value as having been unformatted
+                                $contents[$input . '_unformatted_number'] = true;
+                                //If the type is of currency and there was a currency symbol (non-digit), save the symbol
+                                if ($type == 'currency' && preg_match('/^([^\d])/', $value, $match)) {
+                                    $contents[$input . '_currency_symbol'] = $match[1];
+                                }
+                            } else {
+                                //unset any flags
+                                if (isset($contents[$input . '_unformatted_number'])) {
+                                    unset($contents[$input . '_unformatted_number']);
+                                }
 
-                            if (isset($contents[$input . '_currency_symbol'])) {
-                                unset($contents[$input . '_currency_symbol']);
+                                if (isset($contents[$input . '_currency_symbol'])) {
+                                    unset($contents[$input . '_currency_symbol']);
+                                }
                             }
                         }
                     }
@@ -521,11 +523,13 @@ class SavedSearch extends SugarBean
                         //Avoid macro values for the date types
                         if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $val) && !preg_match('/^\[.*?\]$/', $val)) {
                             $val = $timedate->to_display_date($val, false);
-                        } elseif (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->contents[$key . '_unformatted_number']) && preg_match('/^\d+$/', $val)) {
-                            require_once('modules/Currencies/Currency.php');
-                            $val = format_number($val);
-                            if ($type == 'currency' && isset($this->contents[$key . '_currency_symbol'])) {
-                                $val = $this->contents[$key . '_currency_symbol'] . $val;
+                        } else {
+                            if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->contents[$key . '_unformatted_number']) && preg_match('/^\d+$/', $val)) {
+                                require_once('modules/Currencies/Currency.php');
+                                $val = format_number($val);
+                                if ($type == 'currency' && isset($this->contents[$key . '_currency_symbol'])) {
+                                    $val = $this->contents[$key . '_currency_symbol'] . $val;
+                                }
                             }
                         }
                     }

@@ -137,7 +137,7 @@ class SugarFeedDashlet extends DashletGeneric
                 unset($this->selectedCategories[0]);
             }
         }
-        $this->seedBean = new SugarFeed();
+        $this->seedBean = BeanFactory::newBean('SugarFeed');
     }
 
     /**
@@ -248,15 +248,17 @@ class SugarFeedDashlet extends DashletGeneric
             if (is_admin($GLOBALS['current_user'])) {
                 $all_modules = array_merge($regular_modules, $owner_modules, $admin_modules);
                 $module_limiter = " sugarfeed.related_module in ('" . implode("','", $all_modules) . "')";
-            } elseif (count($owner_modules) > 0
+            } else {
+                if (count($owner_modules) > 0
                 ) {
-                $module_limiter = " ((sugarfeed.related_module IN ('".implode("','", $regular_modules)."') "
+                    $module_limiter = " ((sugarfeed.related_module IN ('".implode("','", $regular_modules)."') "
                     .") ";
-                if (count($owner_modules) > 0) {
-                    $module_limiter .= "OR (sugarfeed.related_module IN('".implode("','", $owner_modules)."') AND sugarfeed.assigned_user_id = '".$current_user->id."' "
+                    if (count($owner_modules) > 0) {
+                        $module_limiter .= "OR (sugarfeed.related_module IN('".implode("','", $owner_modules)."') AND sugarfeed.assigned_user_id = '".$current_user->id."' "
                         .") ";
+                    }
+                    $module_limiter .= ")";
                 }
-                $module_limiter .= ")";
             }
             if (!empty($where)) {
                 $where .= ' AND ';
@@ -398,8 +400,10 @@ class SugarFeedDashlet extends DashletGeneric
                 $reply = $api->getLatestUpdates(0, $fetchRecordCount);
                 if ($reply['success'] && count($reply['messages']) > 0) {
                     array_splice($resortQueue, count($resortQueue), 0, $reply['messages']);
-                } elseif (!$reply['success']) {
-                    $feedErrors[] = $reply['errorMessage'];
+                } else {
+                    if (!$reply['success']) {
+                        $feedErrors[] = $reply['errorMessage'];
+                    }
                 }
             }
         }
@@ -438,7 +442,7 @@ class SugarFeedDashlet extends DashletGeneric
     public function deleteUserFeed()
     {
         if (!empty($_REQUEST['record'])) {
-            $feed = new SugarFeed();
+            $feed = BeanFactory::newBean('SugarFeed');
             $feed->retrieve($_REQUEST['record']);
             if (is_admin($GLOBALS['current_user']) || $feed->created_by == $GLOBALS['current_user']->id) {
                 $feed->mark_deleted($_REQUEST['record']);
@@ -587,8 +591,9 @@ enableQS(false);
             if ($matches[1] == "this") {
                 $var = $matches[2];
                 return $class->$var;
+            } else {
+                return translate($matches[2], $matches[1]);
             }
-            return translate($matches[2], $matches[1]);
         };
 
         $listview = preg_replace_callback('/\{([^\^ }]+)\.([^\}]+)\}/', $function, $listview);
@@ -649,8 +654,9 @@ enableQS(false);
         if (! $this->shouldDisplay()) {
             // The Sugar Feeds are disabled, populate the warning message
             return translate('LBL_DASHLET_DISABLED', 'SugarFeed');
+        } else {
+            return '';
         }
-        return '';
     }
 
     /**
@@ -701,13 +707,14 @@ enableQS(false);
     // This is called from the include/MySugar/DashletsDialog/DashletsDialog.php and determines if we should display the SugarFeed dashlet as an option or not
     public static function shouldDisplay()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         if (!isset($admin->settings['sugarfeed_enabled']) || $admin->settings['sugarfeed_enabled'] != '1') {
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
     public function check_enabled($type)

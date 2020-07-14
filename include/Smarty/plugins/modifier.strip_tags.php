@@ -21,10 +21,12 @@
  */
 function smarty_modifier_strip_tags($string, $replace_with_space = true)
 {
-    if ($replace_with_space) {
+    if ($replace_with_space)
         return preg_replace('!<[^>]*?>!', ' ', $string);
-    }
-    return strip_tags($string);
+    else
+        return strip_tags($string);
 }
 
 /* vim: set expandtab: */
+
+?>

@@ -97,10 +97,12 @@ abstract class PersonFormBase extends FormBase
             }
 
             //Bug 1074, if the action is detailview and the id is empty, then do not show detailview
-            elseif (!empty($_POST['return_module']) && !empty($_POST['return_action'])    &&(($_POST['return_action'] == "DetailView" && !empty($_REQUEST['return_id'])) || $_POST['return_action'] != "DetailView")) {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
-            } else {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+            else {
+                if (!empty($_POST['return_module']) && !empty($_POST['return_action'])    &&(($_POST['return_action'] == "DetailView" && !empty($_REQUEST['return_id'])) || $_POST['return_action'] != "DetailView")) {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                } else {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                }
             }
         } else {
             $form .= "<input type='submit' class='button' name='Continue{$this->objectName}' value='{$mod_strings[$newLinkLabel]}'>";
@@ -145,11 +147,13 @@ abstract class PersonFormBase extends FormBase
                 if ($key != 'id') {
                     if (isset($_POST['popup']) && $_POST['popup']==true) {
                         $form .= "<td scope='row'><a  href='#' onclick=\"window.opener.location='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'\">$value</a></td>\n";
-                    } elseif (!$wasSet) {
-                        $form .= "<td scope='row'><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
-                        $wasSet = true;
                     } else {
-                        $form .= "<td><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                        if (!$wasSet) {
+                            $form .= "<td scope='row'><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                            $wasSet = true;
+                        } else {
+                            $form .= "<td><a target='_blank' href='index.php?module={$this->moduleName}&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                        }
                     }
                 }
             }
@@ -166,10 +170,12 @@ abstract class PersonFormBase extends FormBase
             $form .= "<input title='${app_strings['LBL_SAVE_BUTTON_TITLE']}' accessKey='${app_strings['LBL_SAVE_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='Save';\" type='submit' name='button' value='  ${app_strings['LBL_SAVE_BUTTON_LABEL']}  '>\n";
             if (!empty($_REQUEST['return_module']) && !empty($_REQUEST['return_action']) && !empty($_REQUEST['return_id'])) {
                 $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_REQUEST['return_module']."';this.form.action.value='".$_REQUEST['return_action']."';this.form.record.value='".$_REQUEST['return_id']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
-            } elseif (!empty($_POST['return_module']) && !empty($_POST['return_action'])) {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
             } else {
-                $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                if (!empty($_POST['return_module']) && !empty($_POST['return_action'])) {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                } else {
+                    $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
+                }
             }
         } else {
             $form .= "<input type='submit' class='button' name='Continue{$this->objectName}' value='{$mod_strings[$newLinkLabel]}'></form>";

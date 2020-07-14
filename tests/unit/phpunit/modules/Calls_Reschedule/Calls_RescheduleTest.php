@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class Calls_RescheduleTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testCalls_Reschedule()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $callsReschedule = new Calls_Reschedule();
+        $callsReschedule = BeanFactory::newBean('Calls_Reschedule');
         $this->assertInstanceOf('Calls_Reschedule', $callsReschedule);
         $this->assertInstanceOf('Basic', $callsReschedule);
         $this->assertInstanceOf('SugarBean', $callsReschedule);

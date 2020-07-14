@@ -44,6 +44,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * Log management
+ *
+ * @method LoggerManager debug(string $message)
+ * @method LoggerManager info(string $message)
+ * @method LoggerManager warn(string $message)
+ * @method LoggerManager deprecated(string $message)
+ * @method LoggerManager error(string $message)
+ * @method LoggerManager fatal(string $message)
+ * @method LoggerManager security(string $message)
+ *
  * @api
  * @method debug(string $string)
  * @method info(string $string)

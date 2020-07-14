@@ -190,7 +190,6 @@ $dictionary['FP_events'] = array(
                 'options' => 'emailTemplates_type_list',
                 'studio' => 'visible',
                 'dependency' => false,
-                'inline_edit' => false,
             ),
         'accept_redirect' =>
             array(

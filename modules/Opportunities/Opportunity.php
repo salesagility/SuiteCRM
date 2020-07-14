@@ -156,8 +156,10 @@ class Opportunity extends SugarBean
 			($this->rel_account_table.deleted is null OR $this->rel_account_table.deleted=0)
 			AND (accounts.deleted is null OR accounts.deleted=0)
 			AND opportunities.deleted=0";
-        } elseif ($show_deleted == 1) {
-            $where_auto = " opportunities.deleted=1";
+        } else {
+            if ($show_deleted == 1) {
+                $where_auto = " opportunities.deleted=1";
+            }
         }
 
         if ($where != "") {
@@ -224,7 +226,7 @@ class Opportunity extends SugarBean
         parent::fill_in_additional_detail_fields();
 
         if (!empty($this->currency_id)) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($this->currency_id);
             if ($currency->id != $this->currency_id || $currency->deleted == 1) {
                 $this->amount = $this->amount_usdollar;
@@ -233,7 +235,7 @@ class Opportunity extends SugarBean
         }
         //get campaign name
         if (!empty($this->campaign_id)) {
-            $camp = new Campaign();
+            $camp = BeanFactory::newBean('Campaigns');
             $camp->retrieve($this->campaign_id);
             $this->campaign_name = $camp->name;
         }
@@ -271,15 +273,17 @@ class Opportunity extends SugarBean
             $query.=' '.$qstring;
         }
         $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-        $contact = new Contact();
+        $contact = BeanFactory::newBean('Contacts');
         return $this->build_related_list2($query, $contact, $temp);
     }
+
+        
 
     public function update_currency_id($fromid, $toid)
     {
         $idequals = '';
 
-        $currency = new Currency();
+        $currency = BeanFactory::newBean('Currencies');
         $currency->retrieve($toid);
         foreach ($fromid as $f) {
             if (!empty($idequals)) {
@@ -331,8 +335,8 @@ class Opportunity extends SugarBean
 
 
     /**
-        builds a generic search based on the query string using or
-        do not include any $this-> because this is called on without having the class instantiated
+    	builds a generic search based on the query string using or
+    	do not include any $this-> because this is called on without having the class instantiated
     */
     public function build_generic_where_clause($the_query_string)
     {

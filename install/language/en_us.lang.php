@@ -232,7 +232,6 @@ $mod_strings = array(
     'LBL_LICENSE_CHKDB_HEADER' => 'Verifying DB Credentials.',
     'LBL_LICENSE_CHECK_PASSED' => 'System passed check for compatibility.',
     'LBL_CREATE_CACHE' => 'Preparing to Install...',
-    'LBL_CREATE_DEFAULT_ENC_KEY' => 'Creating default encryption key...',
     'LBL_LICENSE_REDIRECT' => 'Redirecting in ',
     'LBL_LICENSE_I_ACCEPT' => 'I Accept',
     'LBL_LICENSE_PRINTABLE' => ' Printable View ',

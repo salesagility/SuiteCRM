@@ -70,7 +70,7 @@ $server->register(
 function portal_login($portal_auth, $user_name, $application_name)
 {
     $error = new SoapError();
-    $contact = new Contact();
+    $contact = BeanFactory::newBean('Contacts');
     $result = login_user($portal_auth);
 
     if ($result == 'fail' || $result == 'sessions_exceeded') {
@@ -135,7 +135,7 @@ function portal_validate_authenticated($session_id)
 
         if (!empty($_SESSION['is_valid_session']) && $_SESSION['ip_address'] == query_client_ip() && $valid_session != null && ($_SESSION['type'] == 'contact' || $_SESSION['type'] == 'lead' || $_SESSION['type'] == 'portal')) {
             global $current_user;
-            $current_user = new User();
+            $current_user = BeanFactory::newBean('Users');
             $current_user->retrieve($_SESSION['portal_id']);
             login_success();
             return true;
@@ -242,13 +242,13 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
 
     $sugar = null;
     if ($module_name == 'Cases') {
-        $sugar = new aCase();
+        $sugar = BeanFactory::newBean('Cases');
     } elseif ($module_name == 'Contacts') {
-        $sugar = new Contact();
+        $sugar = BeanFactory::newBean('Contacts');
     } elseif ($module_name == 'Accounts') {
-        $sugar = new Account();
+        $sugar = BeanFactory::newBean('Accounts');
     } elseif ($module_name == 'Bugs') {
-        $sugar = new Bug();
+        $sugar = BeanFactory::newBean('Bugs');
     } elseif ($module_name == 'KBDocuments' || $module_name == 'FAQ') {
         $sugar = new KBDocument();
     } else {
@@ -275,7 +275,7 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
 
                         $where .=  "$sugar->table_name$cstm.$name $operator ";
                         if ($sugar->field_defs['name']['type'] == 'datetime') {
-                            $where .= DBManager::convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
+                            $where .= DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
                         } else {
                             if (empty($value)) {
                                 $tmp = array();
@@ -437,7 +437,7 @@ function portal_set_entry($session, $module_name, $name_value_list)
             }
             $id = $seed->save();
         } else {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
             $contact->disable_row_level_security = true;
             $contact->retrieve($_SESSION['user_id']);
             $seed->contact_id = $contact;
@@ -500,7 +500,7 @@ function portal_remove_note_attachment($session, $id)
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
 
-    $focus = new Note();
+    $focus = BeanFactory::newBean('Notes');
     $focus->retrieve($id);
     $result = $focus->deleteAttachment();
 
@@ -527,7 +527,7 @@ function portal_get_note_attachment($session, $id)
     }
     $current_user = $seed_user;
 
-    $note = new Note();
+    $note = BeanFactory::newBean('Notes');
     $note->retrieve($id);
     require_once('modules/Notes/NoteSoap.php');
     $ns = new NoteSoap();
@@ -745,7 +745,7 @@ function portal_get_subscription_lists($session)
 
     require_once('modules/Campaigns/utils.php');
 
-    $contact = new Contact();
+    $contact = BeanFactory::newBean('Contacts');
     $contact->retrieve($_SESSION['user_id']);
 
     if (!empty($contact->id)) {
@@ -788,7 +788,7 @@ function portal_set_newsletters($session, $subscribe_ids, $unsubscribe_ids)
 
     require_once('modules/Campaigns/utils.php');
 
-    $contact = new Contact();
+    $contact = BeanFactory::newBean('Contacts');
     $contact->retrieve($_SESSION['user_id']);
 
     if (!empty($contact->id)) {

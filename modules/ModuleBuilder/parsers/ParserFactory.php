@@ -93,10 +93,11 @@ class ParserFactory
                 if ($subpanelName == null) {
                     require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' ;
                     return new ListLayoutMetaDataParser(MB_LISTVIEW, $moduleName, $packageName) ;
-                }
+                } else {
                     require_once 'modules/ModuleBuilder/parsers/views/SubpanelMetaDataParser.php' ;
                     return new SubpanelMetaDataParser($subpanelName, $moduleName, $packageName) ;
-                
+                }
+                // no break
             case MB_DASHLET:
             case MB_DASHLETSEARCH:
                 require_once 'modules/ModuleBuilder/parsers/views/DashletMetaDataParser.php' ;
@@ -164,8 +165,10 @@ class ParserFactory
                 $path = "modules/ModuleBuilder/parsers/views/{$pName}.php";
                 if (file_exists("custom/$path")) {
                     require_once("custom/$path");
-                } elseif (file_exists($path)) {
-                    require_once($path);
+                } else {
+                    if (file_exists($path)) {
+                        require_once($path);
+                    }
                 }
                 if (class_exists($pName)) {
                     return new $pName($view, $moduleName, $packageName);

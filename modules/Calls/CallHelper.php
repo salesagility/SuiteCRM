@@ -101,10 +101,14 @@ function getReminderTime($focus, $field, $value, $view)
     
     if (!empty($_REQUEST['full_form']) && !empty($_REQUEST['reminder_time'])) {
         $reminder_t = $_REQUEST['reminder_time'];
-    } elseif (isset($focus->reminder_time)) {
-        $reminder_t = $focus->reminder_time;
-    } elseif (isset($value)) {
-        $reminder_t = $value;
+    } else {
+        if (isset($focus->reminder_time)) {
+            $reminder_t = $focus->reminder_time;
+        } else {
+            if (isset($value)) {
+                $reminder_t = $value;
+            }
+        }
     }
 
     if ($view == 'EditView' || $view == 'MassUpdate' || $view == "SubpanelCreates" || $view == "QuickCreate"

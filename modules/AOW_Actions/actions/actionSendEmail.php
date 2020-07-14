@@ -195,7 +195,7 @@ class actionSendEmail extends actionBase
                         }
                         break;
                     case 'Specify User':
-                        $user = new User();
+                        $user = BeanFactory::newBean('Users');
                         $user->retrieve($params['email'][$key]);
                         $user_email = $user->emailAddress->getPrimaryAddress($user);
                         if (trim($user_email) != '') {
@@ -210,13 +210,13 @@ class actionSendEmail extends actionBase
                             case 'security_group':
                                 if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
-                                    $security_group = new SecurityGroup();
+                                    $security_group = BeanFactory::newBean('SecurityGroups');
                                     $security_group->retrieve($params['email'][$key][1]);
                                     $users = $security_group->get_linked_beans('users', 'User');
                                     $r_users = array();
                                     if ($params['email'][$key][2] != '') {
                                         require_once('modules/ACLRoles/ACLRole.php');
-                                        $role = new ACLRole();
+                                        $role = BeanFactory::newBean('ACLRoles');
                                         $role->retrieve($params['email'][$key][2]);
                                         $role_users = $role->get_linked_beans('users', 'User');
                                         foreach ($role_users as $role_user) {
@@ -234,7 +234,7 @@ class actionSendEmail extends actionBase
                             // no break
                             case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
-                                $role = new ACLRole();
+                                $role = BeanFactory::newBean('ACLRoles');
                                 $role->retrieve($params['email'][$key][2]);
                                 $users = $role->get_linked_beans('users', 'User');
                                 break;
@@ -244,7 +244,7 @@ class actionSendEmail extends actionBase
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
                                 $result = $db->query($sql);
                                 while ($row = $db->fetchByAssoc($result)) {
-                                    $user = new User();
+                                    $user = BeanFactory::newBean('Users');
                                     $user->retrieve($row['id']);
                                     $users[$user->id] = $user;
                                 }
@@ -267,16 +267,20 @@ class actionSendEmail extends actionBase
                             $idName = $field['id_name'];
                             $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
-                        } elseif ($field['type'] == 'link') {
-                            $relField = $field['name'];
-                            if (isset($field['module']) && $field['module'] != '') {
-                                $rel_module = $field['module'];
-                            } elseif ($bean->load_relationship($relField)) {
-                                $rel_module = $bean->$relField->getRelatedModuleName();
-                            }
-                            $linkedBeans = $bean->get_linked_beans($relField, $rel_module);
                         } else {
-                            $linkedBeans = $bean->get_linked_beans($field['link'], $field['module']);
+                            if ($field['type'] == 'link') {
+                                $relField = $field['name'];
+                                if (isset($field['module']) && $field['module'] != '') {
+                                    $rel_module = $field['module'];
+                                } else {
+                                    if ($bean->load_relationship($relField)) {
+                                        $rel_module = $bean->$relField->getRelatedModuleName();
+                                    }
+                                }
+                                $linkedBeans = $bean->get_linked_beans($relField, $rel_module);
+                            } else {
+                                $linkedBeans = $bean->get_linked_beans($field['link'], $field['module']);
+                            }
                         }
                         if ($linkedBeans) {
                             foreach ($linkedBeans as $linkedBean) {
@@ -321,7 +325,7 @@ class actionSendEmail extends actionBase
 
         $this->clearLastEmailsStatus();
 
-        $emailTemp = new EmailTemplate();
+        $emailTemp = BeanFactory::newBean('EmailTemplates');
         $emailTemp->retrieve($params['email_template']);
 
         if ($emailTemp->id == '') {
@@ -339,7 +343,7 @@ class actionSendEmail extends actionBase
         $ret = true;
         if (isset($params['individual_email']) && $params['individual_email']) {
             foreach ($emails['to'] as $email_to) {
-                $emailTemp = new EmailTemplate();
+                $emailTemp = BeanFactory::newBean('EmailTemplates');
                 $emailTemp->retrieve($params['email_template']);
                 $template_override = isset($emails['template_override'][$email_to]) ? $emails['template_override'][$email_to] : array();
                 $this->parse_template($bean, $emailTemp, $template_override);
@@ -413,16 +417,18 @@ class actionSendEmail extends actionBase
                         }
                     }
                 }
-            } elseif ($bean_arr['type'] == 'link') {
-                if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
-                    $bean_arr['module'] = getRelatedModule($bean->module_dir, $bean_arr['name']);
-                }
-                if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
-                    $linkedBeans = $bean->get_linked_beans($bean_arr['name'], $bean_arr['module'], array(), 0, 1);
-                    if ($linkedBeans) {
-                        $linkedBean = $linkedBeans[0];
-                        if (!isset($object_arr[$linkedBean->module_dir])) {
-                            $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+            } else {
+                if ($bean_arr['type'] == 'link') {
+                    if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
+                        $bean_arr['module'] = getRelatedModule($bean->module_dir, $bean_arr['name']);
+                    }
+                    if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
+                        $linkedBeans = $bean->get_linked_beans($bean_arr['name'], $bean_arr['module'], array(), 0, 1);
+                        if ($linkedBeans) {
+                            $linkedBean = $linkedBeans[0];
+                            if (!isset($object_arr[$linkedBean->module_dir])) {
+                                $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+                            }
                         }
                     }
                 }
@@ -461,7 +467,7 @@ class actionSendEmail extends actionBase
     {
         $attachments = array();
         if ($template->id != '') {
-            $note_bean = new Note();
+            $note_bean = BeanFactory::newBean('Notes');
             $notes = $note_bean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$template->id."'");
 
             if ($notes != null) {
@@ -478,7 +484,7 @@ class actionSendEmail extends actionBase
         require_once('modules/Emails/Email.php');
         require_once('include/SugarPHPMailer.php');
 
-        $emailObj = new Email();
+        $emailObj = BeanFactory::newBean('Emails');
         $defaults = $emailObj->getSystemDefaultEmail();
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
@@ -534,7 +540,7 @@ class actionSendEmail extends actionBase
 
             // Fix for issue 1561 - Email Attachments Sent By Workflow Do Not Show In Related Activity.
             foreach ($attachments as $attachment) {
-                $note = new Note();
+                $note = BeanFactory::newBean('Notes');
                 $note->id = create_guid();
                 $note->date_entered = $attachment->date_entered;
                 $note->date_modified = $attachment->date_modified;

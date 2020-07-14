@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_PDF_TemplatesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOS_PDF_Templates()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aosPdfTemplates = new AOS_PDF_Templates();
+        $aosPdfTemplates = BeanFactory::newBean('AOS_PDF_Templates');
         $this->assertInstanceOf('AOS_PDF_Templates', $aosPdfTemplates);
         $this->assertInstanceOf('Basic', $aosPdfTemplates);
         $this->assertInstanceOf('SugarBean', $aosPdfTemplates);

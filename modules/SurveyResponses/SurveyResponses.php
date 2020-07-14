@@ -141,13 +141,13 @@ class SurveyResponses extends Basic
     {
         require_once("include/SugarPHPMailer.php");
         $mailer = new SugarPHPMailer();
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         $mailer->prepForOutbound();
         $mailer->setMailerForSystem();
 
-        $email_template = new EmailTemplate();
+        $email_template = BeanFactory::newBean('EmailTemplates');
         $email_template = $email_template->retrieve($emailTemplateId);
 
         if (!$email_template) {
@@ -170,10 +170,11 @@ class SurveyResponses extends Basic
             $GLOBALS['log']->info("SurveyResponse: Could not send email:  " . $mailer->ErrorInfo);
 
             return false;
-        }
-        $this->logEmail($email, $mailer, $contact->id);
+        } else {
+            $this->logEmail($email, $mailer, $contact->id);
 
-        return true;
+            return true;
+        }
     }
 
     private function populateTemplate(EmailTemplate $template, $contact, $case)
@@ -204,7 +205,7 @@ class SurveyResponses extends Basic
     private function logEmail($email, $mailer, $contactId = null)
     {
         require_once('modules/Emails/Email.php');
-        $emailObj = new Email();
+        $emailObj = BeanFactory::newBean('Emails');
         $emailObj->to_addrs = $email;
         $emailObj->type = 'out';
         $emailObj->deleted = '0';

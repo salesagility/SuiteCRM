@@ -81,7 +81,7 @@ class ImportViewConfirm extends ImportView
         $importSource = isset($_REQUEST['source']) ? $_REQUEST['source'] : 'csv' ;
 
         // Clear out this user's last import
-        $seedUsersLastImport = new UsersLastImport();
+        $seedUsersLastImport = BeanFactory::newBean('Import_2');
         $seedUsersLastImport->mark_deleted_by_user_id($current_user->id);
         ImportCacheFiles::clearCacheFiles();
 
@@ -162,8 +162,10 @@ class ImportViewConfirm extends ImportView
             $hasHeader = !empty($_REQUEST['has_header']) ? $_REQUEST['has_header'] : $hasHeader;
             if ($hasHeader == 'on') {
                 $hasHeader = true;
-            } elseif ($hasHeader == 'off') {
-                $hasHeader = false;
+            } else {
+                if ($hasHeader == 'off') {
+                    $hasHeader = false;
+                }
             }
         }
 
@@ -246,15 +248,16 @@ class ImportViewConfirm extends ImportView
     {
         if (empty($importSource) || $importSource == 'csv') {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     private function getImportMap($importSource)
     {
         if (strncasecmp("custom:", $importSource, 7) == 0) {
             $id = substr($importSource, 7);
-            $import_map_seed = new ImportMap();
+            $import_map_seed = BeanFactory::newBean('Import_1');
             $import_map_seed->retrieve($id, false);
 
             $this->ss->assign("SOURCE_ID", $import_map_seed->id);
@@ -296,8 +299,8 @@ class ImportViewConfirm extends ImportView
         $num_grp_sep = isset($field_map['importlocale_num_grp_sep'])? $field_map['importlocale_num_grp_sep'] : $current_user->getPreference('num_grp_sep');
         $dec_sep = isset($field_map['importlocale_dec_sep'])? $field_map['importlocale_dec_sep'] : $current_user->getPreference('dec_sep');
 
-        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $num_grp_sep));
-        $this->ss->assign("DEC_SEP", (empty($dec_sep)? $sugar_config['default_decimal_separator'] : $dec_sep));
+        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep));
+        $this->ss->assign("DEC_SEP", (empty($dec_sep)? $sugar_config['default_decimal_seperator'] : $dec_sep));
 
 
         $significantDigits = isset($field_map['importlocale_default_currency_significant_digits']) ? $field_map['importlocale_default_currency_significant_digits']

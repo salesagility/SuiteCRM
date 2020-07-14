@@ -384,8 +384,9 @@ class SugarFieldRelate extends SugarFieldBase
             $returnValue = $settings->$fieldtype($value, $rvardef);
             if (!$returnValue) {
                 return false;
+            } else {
+                $value = $returnValue;
             }
-            $value = $returnValue;
         }
 
         if (isset($vardef['id_name'])) {

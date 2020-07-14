@@ -263,17 +263,19 @@ class ViewLayoutView extends SugarView
         $translatedViewType = '' ;
         if (isset($labels [ strtolower($this->editLayout) ])) {
             $translatedViewType = translate($labels [ strtolower($this->editLayout) ], 'ModuleBuilder') ;
-        } elseif (isset($this->sm)) {
-            foreach ($this->sm->sources as $file => $def) {
-                if (!empty($def['view']) && $def['view'] == $this->editLayout && !empty($def['name'])) {
-                    $translatedViewType = $def['name'];
+        } else {
+            if (isset($this->sm)) {
+                foreach ($this->sm->sources as $file => $def) {
+                    if (!empty($def['view']) && $def['view'] == $this->editLayout && !empty($def['name'])) {
+                        $translatedViewType = $def['name'];
+                    }
                 }
-            }
-            if (empty($translatedViewType)) {
-                $label = "LBL_" . strtoupper($this->editLayout);
-                $translated = translate($label, $this->editModule);
-                if ($translated != $label) {
-                    $translatedViewType =  $translated;
+                if (empty($translatedViewType)) {
+                    $label = "LBL_" . strtoupper($this->editLayout);
+                    $translated = translate($label, $this->editModule);
+                    if ($translated != $label) {
+                        $translatedViewType =  $translated;
+                    }
                 }
             }
         }

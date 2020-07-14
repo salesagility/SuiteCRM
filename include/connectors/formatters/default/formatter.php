@@ -72,16 +72,25 @@ class default_formatter
 
         if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
             return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-        } elseif (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-        } elseif (preg_match('/_soap_/', $class)) {
-            return $this->_ss->fetch("include/connectors/formatters/ext/soap/tpls/default.tpl");
+        } else {
+            if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+                return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+            } else {
+                if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+                    return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+                } else {
+                    if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+                        return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+                    } else {
+                        if (preg_match('/_soap_/', $class)) {
+                            return $this->_ss->fetch("include/connectors/formatters/ext/soap/tpls/default.tpl");
+                        } else {
+                            return $this->_ss->fetch("include/connectors/formatters/ext/rest/tpls/default.tpl");
+                        }
+                    }
+                }
+            }
         }
-        return $this->_ss->fetch("include/connectors/formatters/ext/rest/tpls/default.tpl");
     }
 
     public function getEditViewFormat()
@@ -110,12 +119,17 @@ class default_formatter
         $this->_ss->assign('module', $this->_module);
         if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
             return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+        } else {
+            if (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+                return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+            } else {
+                if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+                    return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+                } else {
+                    return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+                }
+            }
         }
-        return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
     }
 
     public function getSourceMapping()

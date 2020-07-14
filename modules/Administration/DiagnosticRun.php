@@ -592,14 +592,10 @@ function executemd5($filesmd5, $md5calculated)
     global $skip_md5_diff;
     global $sod_guid;
 
-    $md5_string_calculated = [];
     $md5_string = [];
 
     if (file_exists('files.md5')) {
         include 'files.md5';
-        if (isset($md5_string_calculated)) {
-            $md5_string = $md5_string_calculated;
-        }
     }
     //create dir for md5s
     $md5_directory = create_cache_directory('diagnostic/' . $sod_guid . '/diagnostic' . $curdatetime . '/md5/');
@@ -762,9 +758,12 @@ function finishDiag()
     chdir(RETURN_FROM_DIAG_DIR);
 
     deleteDir($cacheDir);
-
-
+    
+    
     print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
+
+    deleteDir($cacheDir);
+
 
     print "<a href=\"index.php?module=Administration&action=DiagnosticDelete&file=diagnostic".$curdatetime."&guid=".$sod_guid."\">".$mod_strings['LBL_DIAGNOSTIC_DELETELINK']."</a><br>";
 }

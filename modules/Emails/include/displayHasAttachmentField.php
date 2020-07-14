@@ -64,8 +64,10 @@ function displayHasAttachmentField($focus, $field, $value, $view)
 
     if (is_object($focus)) {
         $focus = get_object_vars($focus);
-    } elseif (is_array($focus)) {
-        $focus = array_change_key_case($focus, CASE_LOWER);
+    } else {
+        if (is_array($focus)) {
+            $focus = array_change_key_case($focus, CASE_LOWER);
+        }
     }
 
     if (!empty($focus['id'])) {

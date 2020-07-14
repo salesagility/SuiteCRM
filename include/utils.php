@@ -47,6 +47,9 @@ require_once 'include/SugarObjects/SugarConfig.php';
 require_once 'include/utils/security_utils.php';
 
 
+/**
+ * @param $sugar_config
+ */
 function make_sugar_config(&$sugar_config)
 {
     /* used to convert non-array config.php file to array format */
@@ -74,6 +77,7 @@ function make_sugar_config(&$sugar_config)
     global $disable_persistent_connections;
     global $display_email_template_variable_chooser;
     global $display_inbound_email_buttons;
+    global $google_auth_json;
     global $history_max_viewed;
     global $host_name;
     global $import_dir;
@@ -110,15 +114,15 @@ function make_sugar_config(&$sugar_config)
         'create_default_user' => empty($create_default_user) ? false : $create_default_user,
         'chartEngine' => 'Jit',
         'date_formats' => empty($dateFormats) ? array(
-    'Y-m-d' => '2010-12-23',
-    'd-m-Y' => '23-12-2010',
-    'm-d-Y' => '12-23-2010',
-    'Y/m/d' => '2010/12/23',
-    'd/m/Y' => '23/12/2010',
-    'm/d/Y' => '12/23/2010',
-    'Y.m.d' => '2010.12.23',
-    'd.m.Y' => '23.12.2010',
-    'm.d.Y' => '12.23.2010',
+            'Y-m-d' => '2010-12-23',
+            'd-m-Y' => '23-12-2010',
+            'm-d-Y' => '12-23-2010',
+            'Y/m/d' => '2010/12/23',
+            'd/m/Y' => '23/12/2010',
+            'm/d/Y' => '12/23/2010',
+            'Y.m.d' => '2010.12.23',
+            'd.m.Y' => '23.12.2010',
+            'm.d.Y' => '12.23.2010',
         ) : $dateFormats,
         'dbconfig' => $dbconfig, // this must be set!!
         'dbconfigoption' => $dbconfigoption, // this must be set!!
@@ -147,6 +151,7 @@ function make_sugar_config(&$sugar_config)
         'disable_persistent_connections' => empty($disable_persistent_connections) ? false : $disable_persistent_connections,
         'display_email_template_variable_chooser' => empty($display_email_template_variable_chooser) ? false : $display_email_template_variable_chooser,
         'display_inbound_email_buttons' => empty($display_inbound_email_buttons) ? false : $display_inbound_email_buttons,
+        'google_auth_json' => empty($google_auth_json) ? '' : $google_auth_json,
         'history_max_viewed' => empty($history_max_viewed) ? 50 : $history_max_viewed,
         'host_name' => empty($host_name) ? 'localhost' : $host_name,
         'import_dir' => $import_dir, // this must be set!!
@@ -158,13 +163,20 @@ function make_sugar_config(&$sugar_config)
         'lock_default_user_name' => empty($lock_default_user_name) ? false : $lock_default_user_name,
         'log_memory_usage' => empty($log_memory_usage) ? false : $log_memory_usage,
         'name_formats' => empty($nameFormats) ? array(
-    's f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
-    'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s',
+            's f l' => 's f l',
+            'f l' => 'f l',
+            's l' => 's l',
+            'l, s f' => 'l, s f',
+            'l, f' => 'l, f',
+            's l, f' => 's l, f',
+            'l s f' => 'l s f',
+            'l f s' => 'l f s',
         ) : $nameFormats,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
-            'special_query_modules' => array('Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
             'default_limit' => 1000,
         ),
         'require_accounts' => empty($requireAccounts) ? true : $requireAccounts,
@@ -175,14 +187,31 @@ function make_sugar_config(&$sugar_config)
         'showThemePicker' => true,
         'sugar_version' => empty($sugar_version) ? 'unknown' : $sugar_version,
         'time_formats' => empty($timeFormats) ? array(
-    'H:i' => '23:00', 'h:ia' => '11:00 pm', 'h:iA' => '11:00PM',
-    'H.i' => '23.00', 'h.ia' => '11.00 pm', 'h.iA' => '11.00PM',) : $timeFormats,
+            'H:i' => '23:00',
+            'h:ia' => '11:00 pm',
+            'h:iA' => '11:00PM',
+            'H.i' => '23.00',
+            'h.ia' => '11.00 pm',
+            'h.iA' => '11.00PM',
+        ) : $timeFormats,
         'tmp_dir' => $tmp_dir, // this must be set!!
         'translation_string_prefix' => empty($translation_string_prefix) ? false : $translation_string_prefix,
         'unique_key' => empty($unique_key) ? md5(create_guid()) : $unique_key,
         'upload_badext' => empty($upload_badext) ? array(
-    'php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py',
-    'asp', 'cfm', 'js', 'vbs', 'html', 'htm',) : $upload_badext,
+            'php',
+            'php3',
+            'php4',
+            'php5',
+            'pl',
+            'cgi',
+            'py',
+            'asp',
+            'cfm',
+            'js',
+            'vbs',
+            'html',
+            'htm',
+        ) : $upload_badext,
         'upload_dir' => $upload_dir, // this must be set!!
         'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
         'import_max_execution_time' => empty($import_max_execution_time) ? 3600 : $import_max_execution_time,
@@ -199,18 +228,18 @@ function make_sugar_config(&$sugar_config)
         'default_call_status' => 'Planned',
         'js_lang_version' => 1,
         'passwordsetting' => empty($passwordsetting) ? array(
-    'SystemGeneratedPasswordON' => '',
-    'generatepasswordtmpl' => '',
-    'lostpasswordtmpl' => '',
-    'factoremailtmpl' => '',
-    'forgotpasswordON' => true,
-    'linkexpiration' => '1',
-    'linkexpirationtime' => '30',
-    'linkexpirationtype' => '1',
-    'systexpiration' => '0',
-    'systexpirationtime' => '',
-    'systexpirationtype' => '0',
-    'systexpirationlogin' => '',
+            'SystemGeneratedPasswordON' => '',
+            'generatepasswordtmpl' => '',
+            'lostpasswordtmpl' => '',
+            'factoremailtmpl' => '',
+            'forgotpasswordON' => true,
+            'linkexpiration' => '1',
+            'linkexpirationtime' => '30',
+            'linkexpirationtype' => '1',
+            'systexpiration' => '0',
+            'systexpirationtime' => '',
+            'systexpirationtype' => '0',
+            'systexpirationlogin' => '',
         ) : $passwordsetting,
         'use_sprites' => function_exists('imagecreatetruecolor'),
         'search_wildcard_infront' => false,
@@ -227,9 +256,13 @@ function make_sugar_config(&$sugar_config)
             'max_cron_runtime' => 60, // max runtime for cron jobs
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
+        'strict_id_validation' => false,
     );
 }
 
+/**
+ * @return array
+ */
 function get_sugar_config_defaults()
 {
     global $locale;
@@ -248,26 +281,40 @@ function get_sugar_config_defaults()
         'create_default_user' => false,
         'chartEngine' => 'Jit',
         'date_formats' => array(
-            'Y-m-d' => '2010-12-23', 'm-d-Y' => '12-23-2010', 'd-m-Y' => '23-12-2010',
-            'Y/m/d' => '2010/12/23', 'm/d/Y' => '12/23/2010', 'd/m/Y' => '23/12/2010',
-            'Y.m.d' => '2010.12.23', 'd.m.Y' => '23.12.2010', 'm.d.Y' => '12.23.2010',),
+            'Y-m-d' => '2010-12-23',
+            'm-d-Y' => '12-23-2010',
+            'd-m-Y' => '23-12-2010',
+            'Y/m/d' => '2010/12/23',
+            'm/d/Y' => '12/23/2010',
+            'd/m/Y' => '23/12/2010',
+            'Y.m.d' => '2010.12.23',
+            'd.m.Y' => '23.12.2010',
+            'm.d.Y' => '12.23.2010',
+        ),
         'name_formats' => array(
-            's f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
-            'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s',
+            's f l' => 's f l',
+            'f l' => 'f l',
+            's l' => 's l',
+            'l, s f' => 'l, s f',
+            'l, f' => 'l, f',
+            's l, f' => 's l, f',
+            'l s f' => 'l s f',
+            'l f s' => 'l f s',
         ),
         'dbconfigoption' => array(
             'persistent' => true,
             'autofree' => false,
             'debug' => 0,
-            'ssl' => false,),
+            'ssl' => false,
+        ),
         'default_action' => 'index',
         'default_charset' => return_session_value_or_default('default_charset', 'UTF-8'),
         'default_currency_name' => return_session_value_or_default('default_currency_name', 'US Dollar'),
         'default_currency_symbol' => return_session_value_or_default('default_currency_symbol', '$'),
         'default_currency_iso4217' => return_session_value_or_default('default_currency_iso4217', 'USD'),
         'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits', 2),
-        'default_number_grouping_separator' => return_session_value_or_default('default_number_grouping_separator', ','),
-        'default_decimal_separator' => return_session_value_or_default('default_decimal_separator', '.'),
+        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator', ','),
+        'default_decimal_seperator' => return_session_value_or_default('default_decimal_seperator', '.'),
         'default_date_format' => 'm/d/Y',
         'default_locale_name_format' => 's f l',
         'default_export_charset' => 'UTF-8',
@@ -330,6 +377,7 @@ function get_sugar_config_defaults()
                 'oauth_tokens',
             )
         ),
+        'google_auth_json' => '',
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,
@@ -340,10 +388,11 @@ function get_sugar_config_defaults()
         'list_max_entries_per_subpanel' => 10,
         'lock_default_user_name' => false,
         'log_memory_usage' => false,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
-            'special_query_modules' => array('Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
             'default_limit' => 1000,
         ),
         'require_accounts' => true,
@@ -354,13 +403,35 @@ function get_sugar_config_defaults()
         'slow_query_time_msec' => '100',
         'sugarbeet' => true,
         'time_formats' => array(
-            'H:i' => '23:00', 'h:ia' => '11:00pm', 'h:iA' => '11:00PM', 'h:i a' => '11:00 pm', 'h:i A' => '11:00 PM',
-            'H.i' => '23.00', 'h.ia' => '11.00pm', 'h.iA' => '11.00PM', 'h.i a' => '11.00 pm', 'h.i A' => '11.00 PM',),
+            'H:i' => '23:00',
+            'h:ia' => '11:00pm',
+            'h:iA' => '11:00PM',
+            'h:i a' => '11:00 pm',
+            'h:i A' => '11:00 PM',
+            'H.i' => '23.00',
+            'h.ia' => '11.00pm',
+            'h.iA' => '11.00PM',
+            'h.i a' => '11.00 pm',
+            'h.i A' => '11.00 PM',
+        ),
         'tracker_max_display_length' => 15,
         'translation_string_prefix' => return_session_value_or_default('translation_string_prefix', false),
         'upload_badext' => array(
-            'php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py',
-            'asp', 'cfm', 'js', 'vbs', 'html', 'htm', 'phtml',),
+            'php',
+            'php3',
+            'php4',
+            'php5',
+            'pl',
+            'cgi',
+            'py',
+            'asp',
+            'cfm',
+            'js',
+            'vbs',
+            'html',
+            'htm',
+            'phtml',
+        ),
         'upload_maxsize' => 30000000,
         'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
@@ -397,18 +468,18 @@ function get_sugar_config_defaults()
             'max_repeat_count' => 1000,
         ),
         'passwordsetting' => empty($passwordsetting) ? array(
-    'SystemGeneratedPasswordON' => '',
-    'generatepasswordtmpl' => '',
-    'lostpasswordtmpl' => '',
-    'factoremailtmpl' => '',
-    'forgotpasswordON' => false,
-    'linkexpiration' => '1',
-    'linkexpirationtime' => '30',
-    'linkexpirationtype' => '1',
-    'systexpiration' => '1',
-    'systexpirationtime' => '7',
-    'systexpirationtype' => '1',
-    'systexpirationlogin' => '',
+            'SystemGeneratedPasswordON' => '',
+            'generatepasswordtmpl' => '',
+            'lostpasswordtmpl' => '',
+            'factoremailtmpl' => '',
+            'forgotpasswordON' => false,
+            'linkexpiration' => '1',
+            'linkexpirationtime' => '30',
+            'linkexpirationtype' => '1',
+            'systexpiration' => '1',
+            'systexpirationtime' => '7',
+            'systexpirationtype' => '1',
+            'systexpirationlogin' => '',
         ) : $passwordsetting,
         'use_real_names' => true,
         'search_wildcard_infront' => false,
@@ -423,6 +494,7 @@ function get_sugar_config_defaults()
             'max_cron_runtime' => 30, // max runtime for cron jobs
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
+        'strict_id_validation' => false,
     );
 
     if (!is_object($locale)) {
@@ -1325,7 +1397,7 @@ function return_mod_list_strings_language($language, $module)
  * This function retrieves a theme's language file and returns the array of strings included.
  *
  * @deprecated This function is unused and will be removed in a future release.
- * 
+ *
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -1999,11 +2071,11 @@ function unTranslateNum($num)
 
     if ($dec_sep == null) {
         $user_dec_sep = $current_user->getPreference('dec_sep');
-        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_separator'] : $user_dec_sep);
+        $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep);
     }
     if ($num_grp_sep == null) {
         $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
-        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $user_num_grp_sep);
+        $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
     }
 
     $num = preg_replace("'" . preg_quote($num_grp_sep) . "'", '', $num);
@@ -3233,7 +3305,7 @@ function decodeJavascriptUTF8($str)
  * @param string $sys_php_version Version to check against, defaults to the current environment's.
  * @param string $min_php_version Minimum version to check against. Defaults to the SUITECRM_PHP_MIN_VERSION constant.
  * @param string $rec_php_version Recommended version. Defaults to the SUITECRM_PHP_REC_VERSION constant
- * 
+ *
  * @return integer 1 if version is greater than the recommended PHP version,
  *   0 if version is between minimun and recomended PHP versions,
  *   -1 otherwise (less than minimum or buggy version)
@@ -4050,9 +4122,14 @@ function string_format($format, $args, $escape = true)
                 }
             }
             $args[$i] = implode("','", $values);
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+       }
+        else if ($escape){       
+            $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
         }
-
-        $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
+        else{       
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+        }
     }
 
     return $result;
@@ -4065,7 +4142,7 @@ function string_format($format, $args, $escape = true)
  * have the number be unique (since it is modified by the system_id.
  *
  * @deprecated This function is unused and will be removed in a future release.
- * 
+ *
  * @param   $num       of bean
  * @param   $system_id from system
  *
@@ -4517,7 +4594,7 @@ function getJavascriptSiteURL()
 /**
  * Works nicely with array_map() -- can be used to wrap single quotes around
  * each element in an array.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function add_squotes($str)
@@ -4556,7 +4633,7 @@ function array_depth($array, $depth_count = -1, $depth_array = array())
  */
 function createGroupUser($name)
 {
-    $group = new User();
+    $group = BeanFactory::newBean('Users');
     $group->user_name = $name;
     $group->last_name = $name;
     $group->is_group = 1;
@@ -4748,7 +4825,7 @@ function chartColors()
 /**
  * This function is designed to set up the php enviroment
  * for AJAX requests.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function ajaxInit()
@@ -4914,7 +4991,7 @@ function sugar_ucfirst($string, $charset = 'UTF-8')
  * Given a multienum encoded as a string, convert it to an array of strings,
  * e.g. `"^Monday^,^Tuesday^,^Wednesday^,^Thursday^"` becomes
  * `["Monday", "Tuesday", "Wednesday", "Thursday"]`.
- * 
+ *
  * @param string|string[] $string The encoded multienum value. If this is already an array, the array will be returned unchanged.
  * @return string[] An array of strings representing the multienum's values.
  */
@@ -5343,7 +5420,7 @@ function getFTSBoostOptions($optionName)
  *
  * This function walks through an Array and recursively calls utf8_encode on the
  * values of each of the elements.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  *
  * @param $data Array of data to encode

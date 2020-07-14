@@ -242,8 +242,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     {
         if (!empty($this->_viewdefs) && isset($this->_viewdefs ['templateMeta'] ['maxColumns'])) {
             return $this->_viewdefs ['templateMeta'] ['maxColumns'];
+        } else {
+            return 2;
         }
-        return 2;
     }
 
     /**
@@ -327,8 +328,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
         // if a panelID was not provided, use the first available panel in the list
         if (!$panelID) {
-            $panels = array_keys($this->_viewdefs ['panels']);
-            $panelId = array_shift(array_keys($panels));
+            $panelIdList = array_keys($this->_viewdefs ['panels']);
+            $panelID = array_shift($panelIdList);
         }
 
         if (isset($this->_viewdefs ['panels'] [$panelID])) {
@@ -609,7 +610,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     if (!isset($fieldDefinitions[$fieldname]) && $fieldname != $this->FILLER['name']) {
                         continue;
                     }
-                    
 
                     //Replace (filler) with the empty string
                     if ($fieldname == $this->FILLER['name']) {
@@ -793,9 +793,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             if (is_array($fieldDefinitions['studio'])) {
                 if (!empty($fieldDefinitions['studio'][$this->_view]) && $fieldDefinitions['studio'][$this->_view] == "required") {
                     return true;
-                }
-                if (!empty($fieldDefinitions['studio']['required']) && $fieldDefinitions['studio']['required'] == true) {
-                    return true;
+                } else {
+                    if (!empty($fieldDefinitions['studio']['required']) && $fieldDefinitions['studio']['required'] == true) {
+                        return true;
+                    }
                 }
             } else {
                 if ($fieldDefinitions['studio'] == "required") {

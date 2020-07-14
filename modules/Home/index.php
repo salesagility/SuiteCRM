@@ -313,10 +313,12 @@ require_once('include/SuiteGraphs/RGraphIncludes.php');
 
 require_once('include/SugarCharts/SugarChartFactory.php');
 $sugarChart = SugarChartFactory::getInstance();
-$resources = $sugarChart->getChartResources();
-$mySugarResources = $sugarChart->getMySugarChartResources();
-$sugar_smarty->assign('chartResources', $resources);
-$sugar_smarty->assign('mySugarChartResources', $mySugarResources);
+if ($sugarChart) {
+    $resources = $sugarChart->getChartResources();
+    $mySugarResources = $sugarChart->getMySugarChartResources();
+    $sugar_smarty->assign('chartResources', $resources);
+    $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
+}
 
 if (file_exists('custom/themes/' . $theme . '/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('custom/themes/' . $theme . '/tpls/MySugar.tpl');

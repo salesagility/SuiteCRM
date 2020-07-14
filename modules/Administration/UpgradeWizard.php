@@ -97,7 +97,7 @@ if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTE
 if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
     $run = $_REQUEST['run'];
 
-    if ($run == "upload") {
+    if ($run === 'upload') {
         $perform = false;
         if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
             require_once('ModuleInstall/PackageManager.php');
@@ -106,8 +106,12 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
             $perform = true;
             $base_filename = urldecode($tempFile);
         } elseif (!empty($_REQUEST['load_module_from_dir'])) {
+            $moduleDir = $_REQUEST['load_module_from_dir'];
+            if (strpos($moduleDir, 'phar://') !== false) {
+                die();
+            }
             //copy file to proper location then call performSetup
-            copy($_REQUEST['load_module_from_dir'].'/'.$_REQUEST['upgrade_zip_escaped'], "upload://".$_REQUEST['upgrade_zip_escaped']);
+            copy($moduleDir . '/' . $_REQUEST['upgrade_zip_escaped'], "upload://" . $_REQUEST['upgrade_zip_escaped']);
 
             $perform = true;
             $base_filename = urldecode($_REQUEST['upgrade_zip_escaped']);
@@ -186,23 +190,25 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
                 die($mod_strings['ERR_UW_NO_MANIFEST']);
             }
         }
-    } elseif ($run == $mod_strings['LBL_UW_BTN_DELETE_PACKAGE']) {
-        if (!empty($_REQUEST['install_file'])) {
-            die($mod_strings['ERR_UW_NO_UPLOAD_FILE']);
-        }
+    } else {
+        if ($run == $mod_strings['LBL_UW_BTN_DELETE_PACKAGE']) {
+            if (!empty($_REQUEST['install_file'])) {
+                die($mod_strings['ERR_UW_NO_UPLOAD_FILE']);
+            }
 
-        $delete_me = hashToFile($delete_me);
+            $delete_me = hashToFile($delete_me);
 
-        $checkFile = strtolower($delete_me);
+            $checkFile = strtolower($delete_me);
 
-        if (substr($delete_me, -4) != ".zip" || substr($delete_me, 0, 9) != "upload://" ||
+            if (substr($delete_me, -4) != ".zip" || substr($delete_me, 0, 9) != "upload://" ||
         strpos($checkFile, "..") !== false || !file_exists($checkFile)) {
-            die("<span class='error'>File is not a zipped archive.</span>");
-        }
-        if (unlink($delete_me)) { // successful deletion?
-            echo "Package $delete_me has been removed.<br>";
-        } else {
-            die("Problem removing package $delete_me.");
+                die("<span class='error'>File is not a zipped archive.</span>");
+            }
+            if (unlink($delete_me)) { // successful deletion?
+                echo "Package $delete_me has been removed.<br>";
+            } else {
+                die("Problem removing package $delete_me.");
+            }
         }
     }
 }

@@ -50,13 +50,13 @@ global $import_file_name, $theme;
 $focus = 0;
 if (isset($_REQUEST['return_module'])) {
     if ($_REQUEST['return_module'] == 'Contacts') {
-        $focus = new Contact();
+        $focus = BeanFactory::newBean('Contacts');
     }
     if ($_REQUEST['return_module'] == 'Leads') {
-        $focus = new Lead();
+        $focus = BeanFactory::newBean('Leads');
     }
     if ($_REQUEST['return_module'] == 'Prospects') {
-        $focus = new Prospect();
+        $focus = BeanFactory::newBean('Prospects');
     }
 }
 
@@ -96,6 +96,7 @@ if (isset($_REQUEST['record'])) {
 //if subsaction has been set, then process subscriptions
 if (isset($_REQUEST['subs_action'])) {
     manageSubscriptions($focus);
+    SugarApplication::redirect("index.php?module=" . $_REQUEST['return_module'] . "&action=" . $_REQUEST['return_action'] . "&record=" . $_REQUEST['record']);
 }
 
 //$title = $GLOBALS['app_strings']['LBL_MANAGE_SUBSCRIPTIONS_FOR'].$focus->name;

@@ -1035,6 +1035,10 @@ $app_list_strings = array(
 );
 
 $app_strings = array(
+    'LBL_SEARCH_REAULTS_TITLE' => 'Results',
+    'ERR_SEARCH_INVALID_QUERY' => 'An error has occurred while performing the search. Your query syntax might not be valid.',
+    'ERR_SEARCH_NO_RESULTS' => 'No results matching your search criteria. Try broadening your search.',
+    'LBL_SEARCH_PERFORMED_IN' => 'Search performed in',
     'LBL_EMAIL_CODE' => 'Email Code:',
     'LBL_SEND' => 'Send',
     'LBL_LOGOUT' => 'Logout',
@@ -1836,7 +1840,6 @@ $app_strings = array(
     'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS' => 'You currently have no records saved. <item2> or <item3> one now.',
 
-    'LBL_CLICK_HERE' => 'Click here',
     // contextMenu strings
     'LBL_ADD_TO_FAVORITES' => 'Add to My Favorites',
     'LBL_CREATE_CONTACT' => 'Create Contact',
@@ -2967,9 +2970,16 @@ $app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
 $app_list_strings['aor_format_options'][''] = '';
 $app_list_strings['aor_format_options']['Y-m-d'] = 'Y-m-d';
+$app_list_strings['aor_format_options']['m-d-Y'] = 'm-d-Y';
+$app_list_strings['aor_format_options']['d-m-Y'] = 'd-m-Y';
+$app_list_strings['aor_format_options']['Y/m/d'] = 'Y/m/d';
+$app_list_strings['aor_format_options']['m/d/Y'] = 'm/d/Y';
+$app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
+$app_list_strings['aor_format_options']['Y.m.d'] = 'Y.m.d';
+$app_list_strings['aor_format_options']['m.d.Y'] = 'm.d.Y';
+$app_list_strings['aor_format_options']['d.m.Y'] = 'd.m.Y';
 $app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
 $app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
-$app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
 $app_list_strings['aor_format_options']['Y'] = 'Y';
 $app_list_strings['aor_condition_operator_list']['And'] = 'And';
 $app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
@@ -3657,6 +3667,10 @@ $app_list_strings['oauth2_duration_units'] = [
     'month' => 'months',
 ];
 
+$app_list_strings['search_controllers'] = [
+    'Search' => 'Search (new)',
+    'UnifiedSearch' => 'Global Unified Search (legacy)'
+];
 
 
 $app_strings['LBL_DEFAULT_API_ERROR_TITLE'] = 'JSON API Error';
@@ -3674,6 +3688,11 @@ $app_strings['MSG_BROWSER_NOTIFICATIONS_ENABLED'] = 'Desktop notifications are n
 $app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.';
 $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';
 
+$app_strings['LBL_GOOGLE_SYNC_ERR'] = 'SuiteCRM Google Sync - ERROR';
+$app_strings['LBL_THERE_WAS_AN_ERR'] = 'There was an error: ';
+$app_strings['LBL_CLICK_HERE'] = 'Click here';
+$app_strings['LBL_TO_CONTINUE'] = ' to continue.';
+
 $app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; key was: "{key}".';
 $app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"';
 $app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Invalid request, use "{var}" value.';
@@ -3682,3 +3701,15 @@ $app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Test settings does not exists.
 $app_strings['IMAP_HANDLER_ERROR_NO_KEY'] = 'Key not found.';
 $app_strings['IMAP_HANDLER_ERROR_KEY_SAVE'] = 'Key saving error.';
 $app_strings['IMAP_HANDLER_ERROR_UNKNOWN'] = 'Unknown error';
+$app_strings['LBL_SEARCH_TITLE']                   = 'Search';
+$app_strings['LBL_SEARCH_TEXT_FIELD_TITLE_ATTR']   = 'Input Search Criteria';
+$app_strings['LBL_SEARCH_SUBMIT_FIELD_TITLE_ATTR'] = 'Search';
+$app_strings['LBL_SEARCH_SUBMIT_FIELD_VALUE']      = 'Search';
+$app_strings['LBL_SEARCH_QUERY']                   = 'Search query: ';
+$app_strings['LBL_SEARCH_RESULTS_PER_PAGE']        = 'Results per page: ';
+$app_strings['LBL_SEARCH_ENGINE']                  = 'Engine: ';
+$app_strings['LBL_SEARCH_TOTAL'] = 'Total result(s): ';
+$app_strings['LBL_SEARCH_PREV'] = 'Previous';
+$app_strings['LBL_SEARCH_NEXT'] = 'Next';
+$app_strings['LBL_SEARCH_PAGE'] = 'Page ';
+$app_strings['LBL_SEARCH_OF'] = ' of ';

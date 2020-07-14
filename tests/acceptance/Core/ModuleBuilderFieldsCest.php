@@ -224,6 +224,84 @@ class ModuleBuilderFieldsCest
     /**
      * @param AcceptanceTester $I
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
+     * As an administrator I want to add a html field to the basic module so that I can test relating records to the
+     * accounts module
+     */
+    public function testScenarioAddIntField(
+        \AcceptanceTester $I,
+        \Step\Acceptance\ModuleBuilder $moduleBuilder
+    ) {
+        $I->wantTo('Add int field');
+
+        $I->loginAsAdmin();
+
+        $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
+
+        // View Fields button
+        $I->waitForElementVisible(['name' => 'viewfieldsbtn']);
+        $I->click(['name' => 'viewfieldsbtn']);
+
+        // Close popup
+        $I->waitForElementVisible('#sugarMsgWindow_mask', 30);
+        $I->waitForText('This operation is completed successfully', 30, '#sugarMsgWindow_c');
+        $I->click('.container-close');
+
+        // Add field button
+        $I->waitForElementVisible(['name' => 'addfieldbtn'], 30);
+        $I->click(['name' => 'addfieldbtn']);
+
+        // Fill in edit field tab
+        $I->waitForElementVisible('#type', 30);
+        $I->selectOption('#type', 'Integer');
+
+        $I->wait(1);
+        $I->waitForElementVisible('#field_name_id', 30);
+        $I->fillField('#field_name_id', 'test_int_field');
+
+        // Module Builder auto writes the label fields when you click of the name field
+        // So we need to fill in the help field to register the blur event
+        // creates error http://seleniumhq.org/exceptions/stale_element_reference.html
+        $I->click('#mblayout');
+        $I->wait(1);
+
+        // Click save
+        $I->click(['name' => 'fsavebtn']);
+
+        $moduleBuilder->closePopupSuccess();
+
+        // Add to layout viewlayoutsbtn
+        $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
+        // View Layouts button
+        $I->waitForElementVisible(['name' => 'viewlayoutsbtn']);
+        $I->click(['name' => 'viewlayoutsbtn']);
+
+        $moduleBuilder->closePopupSuccess();
+
+        // Click Edit View
+        $I->waitForElementVisible('.bodywrapper', 30);
+        $I->click('Edit View', '.bodywrapper');
+        $I->waitForElementVisible('#layoutEditor', 30);
+
+        // Drag a new row into the last panel
+        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type');
+        $I->makeScreenshot('DnD.Row');
+
+        // Drag field to
+        $this->fakeData->seed($this->fakeDataSeed);
+        $field = \Codeception\Util\Locator::contains('.le_field', 'test_int_field');
+        $slot = \Codeception\Util\Locator::contains('.le_field.special', '(filler)');
+        $slot = \Codeception\Util\Locator::lastElement($slot);
+        $I->dragAndDrop($field, $slot);
+        $I->makeScreenshot('DnD.Field');
+
+        $I->checkOption('#syncCheckbox');
+        $I->click('Save');
+        $moduleBuilder->closePopupSuccess();
+    }
+
+    /**
+     * @param AcceptanceTester $I
+     * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
      * @param \Step\Acceptance\Repair $repair
      *
      * As an administrator I want to test deploying a module
@@ -245,7 +323,7 @@ class ModuleBuilderFieldsCest
 
     /**
      * @param AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
@@ -255,7 +333,7 @@ class ModuleBuilderFieldsCest
      */
     public function testScenarioRelateToAccounts(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\DetailView $detailView

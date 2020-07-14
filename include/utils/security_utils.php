@@ -79,14 +79,14 @@ function query_module_access_list(&$user)
 
 function query_user_has_roles($user_id)
 {
-    $role = new Role();
+    $role = BeanFactory::newBean('Roles');
 
     return $role->check_user_role_count($user_id);
 }
 
 function get_user_allowed_modules($user_id)
 {
-    $role = new Role();
+    $role = BeanFactory::newBean('Roles');
 
     $allowed = $role->query_user_allowed_modules($user_id);
     return $allowed;
@@ -94,7 +94,7 @@ function get_user_allowed_modules($user_id)
 
 function get_user_disallowed_modules($user_id, &$allowed)
 {
-    $role = new Role();
+    $role = BeanFactory::newBean('Roles');
     $disallowed = $role->query_user_disallowed_modules($user_id, $allowed);
     return $disallowed;
 }
@@ -117,9 +117,10 @@ function query_client_ip()
         return $_SERVER['HTTP_FROM'];
     } elseif (isset($_SERVER['REMOTE_ADDR'])) {
         return $_SERVER['REMOTE_ADDR'];
+    } else {
+        $GLOBALS['log']->warn('query_client_ip(): Unable to detect the IP address of the client.');
+        return null;
     }
-    $GLOBALS['log']->warn('query_client_ip(): Unable to detect the IP address of the client.');
-    return null;
 }
 
 // sets value to key value

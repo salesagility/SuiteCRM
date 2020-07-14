@@ -88,7 +88,7 @@ function retrieveErrorReportAttachment(Email $email)
 function createBouncedCampaignLogEntry($row, $email, $email_description)
 {
     $GLOBALS['log']->debug("Creating bounced email campaign log");
-    $bounce = new CampaignLog();
+    $bounce = BeanFactory::newBean('CampaignLog');
     $bounce->campaign_id=$row['campaign_id'];
     $bounce->target_tracker_key=$row['target_tracker_key'];
     $bounce->target_id= $row['target_id'];
@@ -106,7 +106,7 @@ function createBouncedCampaignLogEntry($row, $email, $email_description)
     } else {
         $bounce->activity_type='send error';
     }
-
+        
     $return_id=$bounce->save();
     return $return_id;
 }
@@ -192,7 +192,7 @@ function markEmailAddressInvalid($email_address)
 function getExistingCampaignLogEntry($identifier)
 {
     $row = false;
-    $targeted = new CampaignLog();
+    $targeted = BeanFactory::newBean('CampaignLog');
     $where="campaign_log.activity_type='targeted' and campaign_log.target_tracker_key='{$identifier}'";
     $query=$targeted->create_new_list_query('', $where);
     $result=$targeted->db->query($query);
@@ -217,10 +217,12 @@ function checkBouncedEmailForIdentifier($email_description)
         $identifiers = preg_split('/X-CampTrackID: /i', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
         $found = true;
         $GLOBALS['log']->debug("Found campaign identifier in header of email");
-    } elseif (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
-        $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
-        $found = true;
-        $GLOBALS['log']->debug("Found campaign identifier in body of email");
+    } else {
+        if (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
+            $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
+            $found = true;
+            $GLOBALS['log']->debug("Found campaign identifier in body of email");
+        }
     }
     
     return array('found' => $found, 'matches' => $matches, 'identifiers' => $identifiers);
@@ -255,26 +257,31 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                     //invalid email or send error entry for this tracker key.
                     $query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'";
                     $query_log .=" and (activity_type='invalid email' or activity_type='send error')";
-                    $targeted = new CampaignLog();
+                    $targeted = BeanFactory::newBean('CampaignLog');
                     $result_log=$targeted->db->query($query_log);
                     $row_log=$targeted->db->fetchByAssoc($result_log);
 
                     if (empty($row_log)) {
                         $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);
                         return true;
+                    } else {
+                        $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
+                        return false;
                     }
-                    $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
+                } else {
+                    $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
                     return false;
                 }
-                $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
+            } else {
+                $GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
                 return false;
             }
-            $GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
+        } else {
+            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
             return false;
         }
-        $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
+    } else {
+        $GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
         return false;
     }
-    $GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
-    return false;
 }

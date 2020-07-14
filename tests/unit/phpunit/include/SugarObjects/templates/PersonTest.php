@@ -50,9 +50,25 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSetLawfulBasis()
     {
-        $person = new Contact();
+        $person = BeanFactory::newBean('Contacts');
         $person->last_name = 'Smith';
 
+        // Test when  basis is not a string
+        try {
+            $person->setLawfulBasis(1, '');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('basis must be a string', $ex->getMessage());
+        }
+
+        // test when basis does not exist
+        try {
+            $person->setLawfulBasis('Test Invalid Basis', '');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('invalid lawful basis', $ex->getMessage());
+        }
+        
         // test valid basis
         $this->assertEquals(1, $person->setLawfulBasis('', ''));
         $this->assertEquals(1, $person->setLawfulBasis('consent', ''));
@@ -66,6 +82,22 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
         $this->assertEquals($person->lawful_basis, '^consent^');
+        
+        // Test when source is not a string
+        try {
+            $person->setLawfulBasis('', 1);
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('source for lawful basis must be a string', $ex->getMessage());
+        }
+        
+        // test when source does not exist
+        try {
+            $person->setLawfulBasis('', 'Test Invalid Sources');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('invalid lawful basis source', $ex->getMessage());
+        }
 
         // test lawful sources
         $this->assertEquals(true, $person->setLawfulBasis('', ''));

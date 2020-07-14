@@ -6,12 +6,12 @@ require_once 'include/utils/activity_utils.php';
 
 class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         global $current_user;
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         get_sugar_config_defaults();
     }
 
@@ -20,13 +20,13 @@ class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it returns true
 
         //with rel_users_table manually set
-        $bean = new User();
+        $bean = BeanFactory::newBean('Users');
         $bean->rel_users_table = 'users_signatures';
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
 
         //with rel_users_table set by default
-        $bean = new Meeting();
+        $bean = BeanFactory::newBean('Meetings');
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
     }

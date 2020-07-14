@@ -76,7 +76,7 @@ class SugarJobQueue
     public function __construct()
     {
         $this->db = DBManagerFactory::getInstance();
-        $job = new SchedulersJob();
+        $job = BeanFactory::newBean('SchedulersJobs');
         $this->job_queue_table = $job->table_name;
         if (!empty($GLOBALS['sugar_config']['jobs']['max_retries'])) {
             $this->jobTries = $GLOBALS['sugar_config']['jobs']['max_retries'];
@@ -112,7 +112,7 @@ class SugarJobQueue
      */
     protected function getJob($jobId)
     {
-        $job = new SchedulersJob();
+        $job = BeanFactory::newBean('SchedulersJobs');
         $job->retrieve($jobId);
         if (empty($job->id)) {
             $GLOBALS['log']->info("Job $jobId not found!");
@@ -159,7 +159,7 @@ class SugarJobQueue
      */
     public function deleteJob($jobId)
     {
-        $job = new SchedulersJob();
+        $job = BeanFactory::newBean('SchedulersJobs');
         if (empty($job)) {
             return false;
         }
@@ -209,7 +209,7 @@ class SugarJobQueue
             if (empty($id)) {
                 return null;
             }
-            $job = new SchedulersJob();
+            $job = BeanFactory::newBean('SchedulersJobs');
             $job->retrieve($id);
             if (empty($job->id)) {
                 return null;
@@ -223,11 +223,11 @@ class SugarJobQueue
             if ($this->db->getAffectedRowCount($res) == 0) {
                 // somebody stole our job, try again
                 continue;
+            } else {
+                // to update dates & possible hooks
+                $job->save();
+                break;
             }
-            // to update dates & possible hooks
-            $job->save();
-            break;
-            
             // TODO: commit/check?
         }
         return $job;
@@ -238,7 +238,7 @@ class SugarJobQueue
      */
     public function runSchedulers()
     {
-        $sched = new Scheduler();
+        $sched = BeanFactory::newBean('Schedulers');
         $sched->checkPendingJobs($this);
     }
 }

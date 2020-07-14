@@ -262,6 +262,7 @@ function clickedawayclose(field, id, module, type) {
     // Fix for issue #373 get name from system field name.
     message_field = "LBL_" + field.toUpperCase();
     message_field = SUGAR.language.get(module, message_field);
+
     // Fix for issue #373 remove ':'
     var last_character = message_field.substring(
         message_field.length,

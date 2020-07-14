@@ -69,6 +69,9 @@ class campaign_charts
 
         if ($campaign_id) {
             $sugarChart = SugarChartFactory::getInstance('', 'Reports');
+            if (!$sugarChart) {
+                return false;
+            }
             $xmlFile = $sugarChart->getXMLFileName($campaign_id);
 
             if (!file_exists($xmlFile) || $refresh == true) {
@@ -77,7 +80,7 @@ class campaign_charts
                 $GLOBALS['log']->debug("user_id is: ");
                 $GLOBALS['log']->debug("cache_file_name is: $xmlFile");
 
-                $focus = new Campaign();
+                $focus = BeanFactory::newBean('Campaigns');
 
                 $query = "SELECT activity_type,target_type, count(*) hits ";
                 $query .= " FROM campaign_log ";
@@ -225,10 +228,10 @@ class campaign_charts
             $GLOBALS['log']->debug("user_id is: ");
             $GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
 
-            $focus = new Campaign();
+            $focus = BeanFactory::newBean('Campaigns');
             $focus->retrieve($campaign_id);
             $opp_count=0;
-            $opp_query  = "select count(*) opp_count,sum(" . DBManager::convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
+            $opp_query  = "select count(*) opp_count,sum(" . DBManagerFactory::getInstance()->convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
             $opp_query .= " from opportunities";
             $opp_query .= " where campaign_id='$campaign_id'";
             $opp_query .= " and sales_stage='Prospecting'";
@@ -325,13 +328,16 @@ class campaign_charts
         $currency_id = $focus->currency_id;
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if (!empty($currency_id)) {
-            $cur = new Currency();
+            $cur = BeanFactory::newBean('Currencies');
             $cur->retrieve($currency_id);
             $currency_symbol = $cur->symbol;
         }
 
 
         $sugarChart = SugarChartFactory::getInstance();
+        if (!$sugarChart) {
+            return false;
+        }
         $sugarChart->is_currency = true;
         $sugarChart->currency_symbol = $currency_symbol;
 
@@ -380,10 +386,10 @@ class campaign_charts
             $GLOBALS['log']->debug("user_id is: ");
             $GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
 
-            $focus = new Campaign();
+            $focus = BeanFactory::newBean('Campaigns');
             $focus->retrieve($campaign_id);
             $opp_count=0;
-            $opp_query  = "select count(*) opp_count,sum(" . DBManager::convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
+            $opp_query  = "select count(*) opp_count,sum(" . DBManagerFactory::getInstance()->convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
             $opp_query .= " from opportunities";
             $opp_query .= " where campaign_id='$campaign_id'";
             $opp_query .= " and sales_stage='Prospecting'";
@@ -478,13 +484,16 @@ class campaign_charts
         $currency_id = $focus->currency_id;
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if (!empty($currency_id)) {
-            $cur = new Currency();
+            $cur = BeanFactory::newBean('Currencies');
             $cur->retrieve($currency_id);
             $currency_symbol = $cur->symbol;
         }
 
 
         $sugarChart = SugarChartFactory::getInstance();
+        if (!$sugarChart) {
+            return false;
+        }
         $sugarChart->is_currency = true;
         $sugarChart->currency_symbol = $currency_symbol;
 

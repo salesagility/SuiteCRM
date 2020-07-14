@@ -37,7 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -98,17 +97,25 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
-            $button = '<div type="hidden" onclick="$(document).openComposeViewModal(this);" data-module="'
+            $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
             . $bean->module_name . '" data-record-id="'
             . $bean->id . '" data-module-name="'
             . $bean->name .'" data-email-address="'
-            . $bean->email1 .'">';
+            . $bean->email1 .'">'
+            . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
+            . '</a>';
         }
+
         return $button;
     }
 
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
+        $focus = new Meeting;
+        if (!$focus->ACLAccess('EditView')) {
+            return '';
+        }
+        
         $inputID = $this->getWidgetId();
 
         $button = $this->_get_form($defines, $additionalFormFields);

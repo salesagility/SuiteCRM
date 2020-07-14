@@ -106,24 +106,25 @@ class SpotsDashlet extends Dashlet
 
         if (is_null($this->spotId) || $this->spotId === '') {
             return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_NO_SPOTS_SELECTED'].'</span><br />'; // return parent::display for title and such
+        } else {
+            if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
+                return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
+            }
+
+            $ss = new Sugar_Smarty();
+            $ss->assign('id', $this->id);
+            $ss->assign('showUI', $this->showGui);
+            $ss->assign('spotToLoad', $this->spotId);
+
+            $spot = BeanFactory::getBean('Spots', $this->spotId);
+
+            $ss->assign('config', $spot->config);
+            $ss->assign('type', $spot->type);
+
+            $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
+
+            return parent::display().$str.'<br />'; // return parent::display for title and such
         }
-        if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
-            return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
-        }
-
-        $ss = new Sugar_Smarty();
-        $ss->assign('id', $this->id);
-        $ss->assign('showUI', $this->showGui);
-        $ss->assign('spotToLoad', $this->spotId);
-
-        $spot = BeanFactory::getBean('Spots', $this->spotId);
-
-        $ss->assign('config', $spot->config);
-        $ss->assign('type', $spot->type);
-
-        $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
-
-        return parent::display().$str.'<br />'; // return parent::display for title and such
     }
 
     /**

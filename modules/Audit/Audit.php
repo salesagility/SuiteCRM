@@ -77,6 +77,17 @@ class Audit extends SugarBean
 
     public $new_schema = true;
 
+    /**
+     * @param int $id
+     * @param bool $encode
+     * @param bool $deleted
+     * @return SugarBean|null
+     */
+    public function retrieve($id = -1, $encode = true, $deleted = true)
+    {
+        return null;
+    }
+
     public function get_summary_text()
     {
         return $this->name;

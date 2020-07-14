@@ -72,7 +72,7 @@ class CallsQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('callsQuickCreate');
 
-        $focus = new Call();
+        $focus = BeanFactory::newBean('Calls');
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
@@ -93,13 +93,19 @@ class CallsQuickCreate extends QuickCreate
 
         if ($time_start_minutes > 0 && $time_start_minutes < 15) {
             $time_start_minutes = "15";
-        } elseif ($time_start_minutes > 15 && $time_start_minutes < 30) {
-            $time_start_minutes = "30";
-        } elseif ($time_start_minutes > 30 && $time_start_minutes < 45) {
-            $time_start_minutes = "45";
-        } elseif ($time_start_minutes > 45) {
-            $time_start_hour += 1;
-            $time_start_minutes = "00";
+        } else {
+            if ($time_start_minutes > 15 && $time_start_minutes < 30) {
+                $time_start_minutes = "30";
+            } else {
+                if ($time_start_minutes > 30 && $time_start_minutes < 45) {
+                    $time_start_minutes = "45";
+                } else {
+                    if ($time_start_minutes > 45) {
+                        $time_start_hour += 1;
+                        $time_start_minutes = "00";
+                    }
+                }
+            }
         }
 
 

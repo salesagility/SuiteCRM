@@ -46,7 +46,7 @@ $db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
     die("Not a Valid Entry Point");
-}
+} else {
     require_once("data/BeanFactory.php");
     $file_type = ''; // bug 45896
     require_once("data/BeanFactory.php");
@@ -87,7 +87,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         // Pull up the document revision, if it's of type Document
         if (isset($focus->object_name) && $focus->object_name == 'Document') {
             // It's a document, get the revision that really stores this file
-            $focusRevision = new DocumentRevision();
+            $focusRevision = BeanFactory::newBean('DocumentRevisions');
             $focusRevision->retrieve($_REQUEST['id']);
 
             if (empty($focusRevision->id)) {
@@ -143,9 +143,10 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             set_time_limit(0);
             readfile('include/SugarFields/Fields/Image/no_image.png');
             die();
+        } else {
+            die($app_strings['ERR_INVALID_FILE_REFERENCE']);
         }
-        die($app_strings['ERR_INVALID_FILE_REFERENCE']);
-    }
+    } else {
         $doQuery = true;
 
         if ($file_type == 'documents' && !isset($image_field)) {
@@ -257,3 +258,5 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         readfile($download_location);
+    }
+}

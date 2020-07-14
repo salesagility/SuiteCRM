@@ -540,6 +540,31 @@ $dictionary['Meeting'] = array('table' => 'meetings',
                 'reportable' => false,
                 'importable' => false,
             ),
+        'gsync_id' =>
+            array(
+                'name' => 'gsync_id',
+                'vname' => 'LBL_GSYNC_ID',
+                'type' => 'varchar',
+                'len' => 1024,
+                'comment' => 'The internal Google ID of the event record',
+                'isnull' => 'true',
+                'massupdate' => false,
+                'reportable' => false,
+                'importable' => false,
+                'studio' => false,
+            ),
+        'gsync_lastsync' =>
+            array(
+                'name' => 'gsync_lastsync',
+                'vname' => 'LBL_GSYNC_LASTSYNC',
+                'type' => 'int',
+                'comment' => 'The last time this record was synced with Google Account as unix time',
+                'isnull' => 'true',
+                'massupdate' => false,
+                'reportable' => false,
+                'importable' => false,
+                'studio' => false,
+            ),
     ),
     'relationships' => array(
         'meetings_assigned_user' =>

@@ -115,7 +115,7 @@ EOF;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new Meeting());
+        $javascript->setSugarBean(BeanFactory::newBean('Meetings'));
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -181,7 +181,7 @@ EOQ;
         global $current_user;
         global $timedate;
 
-        $focus = new Meeting();
+        $focus = BeanFactory::newBean('Meetings');
 
         if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -233,7 +233,7 @@ EOQ;
 
         // if dates changed
         if (!empty($focus->id)) {
-            $oldBean = new Meeting();
+            $oldBean = BeanFactory::newBean('Meetings');
             $oldBean->retrieve($focus->id);
             if (($focus->date_start != $oldBean->date_start) || ($focus->date_end != $oldBean->date_end)) {
                 $focus->date_changed = true;
@@ -416,12 +416,14 @@ EOQ;
 
                     if (!isset($acceptStatusUsers[$user_id])) {
                         $focus->users->add($user_id);
-                    } elseif (!$focus->date_changed) {
-                        // update query to preserve accept_status
-                        $qU  = 'UPDATE meetings_users SET deleted = 0, accept_status = \''.$acceptStatusUsers[$user_id].'\' ';
-                        $qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
-                        $qU .= 'AND user_id = \''.$user_id.'\'';
-                        $focus->db->query($qU);
+                    } else {
+                        if (!$focus->date_changed) {
+                            // update query to preserve accept_status
+                            $qU  = 'UPDATE meetings_users SET deleted = 0, accept_status = \''.$acceptStatusUsers[$user_id].'\' ';
+                            $qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
+                            $qU .= 'AND user_id = \''.$user_id.'\'';
+                            $focus->db->query($qU);
+                        }
                     }
                 }
 
@@ -438,12 +440,14 @@ EOQ;
 
                     if (!isset($acceptStatusContacts[$contact_id])) {
                         $focus->contacts->add($contact_id);
-                    } elseif (!$focus->date_changed) {
-                        // update query to preserve accept_status
-                        $qU  = 'UPDATE meetings_contacts SET deleted = 0, accept_status = \''.$acceptStatusContacts[$contact_id].'\' ';
-                        $qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
-                        $qU .= 'AND contact_id = \''.$contact_id.'\'';
-                        $focus->db->query($qU);
+                    } else {
+                        if (!$focus->date_changed) {
+                            // update query to preserve accept_status
+                            $qU  = 'UPDATE meetings_contacts SET deleted = 0, accept_status = \''.$acceptStatusContacts[$contact_id].'\' ';
+                            $qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
+                            $qU .= 'AND contact_id = \''.$contact_id.'\'';
+                            $focus->db->query($qU);
+                        }
                     }
                 }
                 // Process leads
@@ -459,12 +463,14 @@ EOQ;
 
                     if (!isset($acceptStatusLeads[$lead_id])) {
                         $focus->leads->add($lead_id);
-                    } elseif (!$focus->date_changed) {
-                        // update query to preserve accept_status
-                        $qU  = 'UPDATE meetings_leads SET deleted = 0, accept_status = \''.$acceptStatusLeads[$lead_id].'\' ';
-                        $qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
-                        $qU .= 'AND lead_id = \''.$lead_id.'\'';
-                        $focus->db->query($qU);
+                    } else {
+                        if (!$focus->date_changed) {
+                            // update query to preserve accept_status
+                            $qU  = 'UPDATE meetings_leads SET deleted = 0, accept_status = \''.$acceptStatusLeads[$lead_id].'\' ';
+                            $qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
+                            $qU .= 'AND lead_id = \''.$lead_id.'\'';
+                            $focus->db->query($qU);
+                        }
                     }
                 }
 
@@ -490,10 +496,12 @@ EOQ;
 
         if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Home') {
             header("Location: index.php?module=Home&action=index");
-        } elseif ($redirect) {
-            handleRedirect($return_id, 'Meetings');
         } else {
-            return $focus;
+            if ($redirect) {
+                handleRedirect($return_id, 'Meetings');
+            } else {
+                return $focus;
+            }
         }
     } // end handleSave();
 } // end Class def

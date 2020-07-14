@@ -78,7 +78,8 @@ class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
         if ($layout_def['EditView']) {
             return '<a href="' . $href . '"' . "title ='". $app_strings['LNK_GET_LATEST_TOOLTIP']  ."'"
             . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_GET_LATEST'] .'</a>&nbsp;';
+        } else {
+            return '';
         }
-        return '';
     }
 }

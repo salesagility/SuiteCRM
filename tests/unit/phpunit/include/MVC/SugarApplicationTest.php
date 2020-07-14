@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testexecute()
@@ -211,7 +211,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         //testing with true will allow it to use die() which stops phpunit execution as well.
         include __DIR__ . '/../../../../sugar_version.php';
         self::assertTrue(isset($sugar_db_version) && $sugar_db_version);
-        
+
         $GLOBALS['sugar_db_version'] = $sugar_db_version;
         $result = $SugarApplication->checkDatabaseVersion(false);
         $this->assertTrue($result);

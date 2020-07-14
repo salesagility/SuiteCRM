@@ -50,7 +50,7 @@ require_once('include/formbase.php');
 
 global $current_user;
 
-$sugarbean = new Project();
+$sugarbean = BeanFactory::newBean('Project');
 $sugarbean = populateFromPost('', $sugarbean);
 
 $projectTasks = array();
@@ -65,7 +65,7 @@ if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQU
     $row = $sugarbean->db->fetchByAssoc($result);
 
     while ($row != null) {
-        $projectTaskBean = new ProjectTask();
+        $projectTaskBean = BeanFactory::newBean('ProjectTask');
         $projectTaskBean->id = $row['id'];
         $projectTaskBean->retrieve();
         $projectTaskBean->date_entered = '';
@@ -81,9 +81,11 @@ if (isset($_REQUEST['save_type'])) {
     if ($_REQUEST['save_type'] == 'TemplateToProject') {
         $sugarbean->name = $_REQUEST['project_name'];
         $sugarbean->is_template = 0;
-    } elseif ($_REQUEST['save_type'] == 'ProjectToTemplate') {
-        $sugarbean->name = $_REQUEST['template_name'];
-        $sugarbean->is_template = true;
+    } else {
+        if ($_REQUEST['save_type'] == 'ProjectToTemplate') {
+            $sugarbean->name = $_REQUEST['template_name'];
+            $sugarbean->is_template = true;
+        }
     }
 } else {
     if (isset($_REQUEST['is_template']) && $_REQUEST['is_template'] == '1') {

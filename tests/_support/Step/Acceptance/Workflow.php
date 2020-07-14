@@ -11,7 +11,7 @@ class Workflow extends Tester
      * @param \Step\Acceptance\ListView $listView
      */
     public function navigateToWorkflow(
-        NavigationBar $navigationBar,
+        NavigationBarTester $navigationBar,
         ListView $listView
     ) {
         $navigationBar->clickAllMenuItem('WorkFlow');

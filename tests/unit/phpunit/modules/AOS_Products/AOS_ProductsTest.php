@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testAOS_Products()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aosProducts = new AOS_Products();
+        $aosProducts = BeanFactory::newBean('AOS_Products');
         $this->assertInstanceOf('AOS_Products', $aosProducts);
         $this->assertInstanceOf('Basic', $aosProducts);
         $this->assertInstanceOf('SugarBean', $aosProducts);
@@ -31,7 +31,7 @@ class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        $aosProducts = new AOS_Products();
+        $aosProducts = BeanFactory::newBean('AOS_Products');
 
         $aosProducts->name = 'test';
         $aosProducts->category = 1;
@@ -55,7 +55,7 @@ class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency');
         
-        $aosProducts = new AOS_Products();
+        $aosProducts = BeanFactory::newBean('AOS_Products');
         $aosProducts->id = 1;
 
         //execute the method and verify that it returns expected results

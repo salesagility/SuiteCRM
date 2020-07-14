@@ -649,6 +649,7 @@ $mod_strings = array(
         'datetimecombo' => 'Datetime',
         'decimal' => 'Decimal',
         'image' => 'Image',
+        'wysiwyg' => 'WYSIWYG',
     ),
     'labelTypes' => array(
         "frequently_used" => "Frequently used labels",

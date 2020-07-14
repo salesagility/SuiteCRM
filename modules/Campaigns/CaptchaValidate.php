@@ -42,16 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
- /**Check captcha validation here.
- *
- */
-
 require_once __DIR__.'/../../include/utils/recaptcha_utils.php';
 if (getRecaptchaChallengeField() !== false) {
     $response =  displayRecaptchaValidation();
     if ($response === 'Success') {
         echo $response;
         return;
+    } else {
+        die($response);
     }
-    die($response);
 }

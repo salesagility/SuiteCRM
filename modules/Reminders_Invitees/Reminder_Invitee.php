@@ -100,7 +100,7 @@ class Reminder_Invitee extends Basic
     public static function loadRemindersInviteesData($reminderId, $isDuplicate = false)
     {
         $ret = array();
-        $reminderInviteeBeen = new Reminder_Invitee();
+        $reminderInviteeBeen = BeanFactory::newBean('Reminders_Invitees');
         $reminderInvitees = $reminderInviteeBeen->get_full_list("reminders_invitees.date_entered", "reminders_invitees.reminder_id = '$reminderId'");
         if ($reminderInvitees) {
             foreach ($reminderInvitees as $reminderInvitee) {
@@ -127,10 +127,14 @@ class Reminder_Invitee extends Basic
             default:
                 if (isset($bean->first_name) && isset($bean->last_name)) {
                     $retValue = "{$bean->first_name} {$bean->last_name}";
-                } elseif (isset($bean->name)) {
-                    $retValue = $bean->name;
-                } elseif (isset($bean->email)) {
-                    $retValue = $bean->email;
+                } else {
+                    if (isset($bean->name)) {
+                        $retValue = $bean->name;
+                    } else {
+                        if (isset($bean->email)) {
+                            $retValue = $bean->email;
+                        }
+                    }
                 }
                 if (!$retValue) {
                     $retValue = "$module ($moduleId)";

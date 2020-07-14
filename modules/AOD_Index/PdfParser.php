@@ -103,12 +103,13 @@ class PdfParser
          */
         if (trim($result_data) == '') {
             return null;
-        }
-        // Optimize hyphened words
-        $result_data = preg_replace('/\s*-[\r\n]+\s*/', '', $result_data);
-        $result_data = preg_replace('/\s+/', ' ', $result_data);
+        } else {
+            // Optimize hyphened words
+            $result_data = preg_replace('/\s*-[\r\n]+\s*/', '', $result_data);
+            $result_data = preg_replace('/\s+/', ' ', $result_data);
 
-        return $result_data;
+            return $result_data;
+        }
     }
 
     protected static function extractTextElements($content)

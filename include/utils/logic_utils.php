@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+
 function get_hook_array($module_name)
 {
     $hook_array = null;

@@ -16,9 +16,9 @@ if ($user) {
     $loginUrl = $facebook_helper->get_login_url($_REQUEST['url']);
 }
 
-if ($user) {
+if ($user){
     $log = '<a href="' . $logoutUrl . '">Logout</a>';
-} else {
+}else{
     $log = '<a href="' . $loginUrl .'">Login with Facebook</a>';
 }
 $html .= "<div style='height:400px;overflow:scroll'><table width='100%'>";
@@ -29,16 +29,20 @@ $html .= "</table>";
 
 
 
-foreach ($content['data'] as $story) {
-    if (!empty($results)) {
+foreach($content['data'] as $story){
+
+    if(!empty($results)){
         $html .= $results;
     }
 }
 
-foreach ($content['data'] as $story) {
-    $html .= "<div style='width:30%;float:left;padding:25px;height:160px;'>";
-    $results =  $facebook_helper->process_feed($story);
-    $html .=  "<p style='text-align:center;'>". $results."</p>";
-    $html .= "</div>";
+foreach($content['data'] as $story){
+
+        $html .= "<div style='width:30%;float:left;padding:25px;height:160px;'>";
+        $results =  $facebook_helper->process_feed($story);
+        $html .=  "<p style='text-align:center;'>". $results."</p>";
+        $html .= "</div>";
+
+
 }
 echo $html;

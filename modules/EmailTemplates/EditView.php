@@ -54,7 +54,7 @@ if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
 if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
     $inboundEmail = false;
 }
-$focus = new EmailTemplate();
+$focus = BeanFactory::newBean('EmailTemplates');
 
 if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
@@ -204,11 +204,13 @@ if (isset($focus->name)) {
  */
 if (isset($focus->assigned_user_id)) {
     $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
-} elseif (empty($focus->id) && empty($focus->assigned_user_id)) {
-    $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
-    $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
 } else {
-    $xtpl->assign("ASSIGNED_USER_ID", "");
+    if (empty($focus->id) && empty($focus->assigned_user_id)) {
+        $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
+        $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
+    } else {
+        $xtpl->assign("ASSIGNED_USER_ID", "");
+    }
 }
 /* END - SECURITY GROUPS */
 //Bug45632
@@ -358,7 +360,7 @@ if (true) {
         $etid = $old_id;
     }
     if (!empty($etid)) {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
         $where = "notes.parent_id='{$etid}' AND notes.filename IS NOT NULL";
         $notes_list = $note->get_full_list("", $where, true);
 

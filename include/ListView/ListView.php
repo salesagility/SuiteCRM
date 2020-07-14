@@ -313,9 +313,9 @@ class ListView
             $fields = $aItem->get_list_view_data();
             if (isset($processed_ids[$aItem->id])) {
                 continue;
+            } else {
+                $processed_ids[$aItem->id] = 1;
             }
-            $processed_ids[$aItem->id] = 1;
-            
 
 
             //ADD OFFSET TO ARRAY
@@ -418,104 +418,108 @@ class ListView
                     $this->xTemplate->assign('CELL_COUNT', $count);
                     $this->xTemplate->assign('CELL', $widget_contents);
                     $this->xTemplate->parse($xtemplateSection.".row.cell");
-                } elseif ($usage != 'query_only') {
-                    $list_field['name']=$field_name;
-
-                    $module_field = $field_name.'_mod';
-                    $owner_field = $field_name.'_owner';
-                    if (!empty($aItem->$module_field)) {
-                        $list_field['owner_id'] = $aItem->$owner_field;
-                        $list_field['owner_module'] = $aItem->$module_field;
-                    } else {
-                        $list_field['owner_id'] = false;
-                        $list_field['owner_module'] = false;
-                    }
-                    if (isset($list_field['alias'])) {
-                        $list_field['name'] = $list_field['alias'];
-                    } else {
+                } else {
+                    if ($usage != 'query_only') {
                         $list_field['name']=$field_name;
-                    }
-                    $list_field['fields'] = $fields;
-                    $list_field['module'] = $aItem->module_dir;
-                    $list_field['start_link_wrapper'] = $this->start_link_wrapper;
-                    $list_field['end_link_wrapper'] = $this->end_link_wrapper;
-                    $list_field['subpanel_id'] = $this->subpanel_id;
-                    $list_field += $field_acl;
-                    if (isset($aItem->field_defs[strtolower($list_field['name'])])) {
-                        require_once('include/SugarFields/SugarFieldHandler.php');
-                        // We need to see if a sugar field exists for this field type first,
-                        // if it doesn't, toss it at the old sugarWidgets. This is for
-                        // backwards compatibility and will be removed in a future release
-                        $vardef = $aItem->field_defs[strtolower($list_field['name'])];
-                        if (isset($vardef['type'])) {
-                            $fieldType = isset($vardef['custom_type'])?$vardef['custom_type']:$vardef['type'];
-                            $tmpField = SugarFieldHandler::getSugarField($fieldType, true);
+
+                        $module_field = $field_name.'_mod';
+                        $owner_field = $field_name.'_owner';
+                        if (!empty($aItem->$module_field)) {
+                            $list_field['owner_id'] = $aItem->$owner_field;
+                            $list_field['owner_module'] = $aItem->$module_field;
                         } else {
-                            $tmpField = null;
+                            $list_field['owner_id'] = false;
+                            $list_field['owner_module'] = false;
                         }
-
-                        if ($tmpField != null) {
-                            $widget_contents = SugarFieldHandler::displaySmarty($list_field['fields'], $vardef, 'ListView', $list_field);
+                        if (isset($list_field['alias'])) {
+                            $list_field['name'] = $list_field['alias'];
                         } else {
-                            // No SugarField for this particular type
-                            // Use the old, icky, SugarWidget for now
-                            $widget_contents = $layout_manager->widgetDisplay($list_field);
+                            $list_field['name']=$field_name;
                         }
-
-                        if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelDetailViewLink') {
-                            // We need to call into the old SugarWidgets for the time being, so it can generate a proper link with all the various corner-cases handled
-                            // So we'll populate the field data with the pre-rendered display for the field
-                            $list_field['fields'][$field_name] = $widget_contents;
-                            if ('full_name' == $field_name) {//bug #32465
-                                $list_field['fields'][strtoupper($field_name)] = $widget_contents;
-                            }
-
-                            //vardef source is non db, assign the field name to varname for processing of column.
-                            if (!empty($vardef['source']) && $vardef['source']=='non-db') {
-                                $list_field['varname'] = $field_name;
-                            }
-                            $widget_contents = $layout_manager->widgetDisplay($list_field);
-                        } elseif (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink') {
-                            $widget_contents = $layout_manager->widgetDisplay($list_field);
-                        }
-
-                        $count++;
-                        $this->xTemplate->assign('CELL_COUNT', $count);
-                        $this->xTemplate->assign('CLASS', "");
-                        if (empty($widget_contents)) {
-                            $widget_contents = '&nbsp;';
-                        }
-                        $this->xTemplate->assign('CELL', $widget_contents);
-                        $this->xTemplate->parse($xtemplateSection.".row.cell");
-                    } else {
-                        // This handles the edit and remove buttons and icon widget
-                        if (isset($list_field['widget_class']) && $list_field['widget_class'] == "SubPanelIcon") {
-                            $count++;
-                            $widget_contents = $layout_manager->widgetDisplay($list_field);
-                            $this->xTemplate->assign('CELL_COUNT', $count);
-                            $this->xTemplate->assign('CLASS', "");
-                            if (empty($widget_contents)) {
-                                $widget_contents = '&nbsp;';
-                            }
-                            $this->xTemplate->assign('CELL', $widget_contents);
-                            $this->xTemplate->parse($xtemplateSection.".row.cell");
-                        } elseif (preg_match("/button/i", $list_field['name'])) {
-                            if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
-                                $button_contents[] = $_content;
-                                unset($_content);
+                        $list_field['fields'] = $fields;
+                        $list_field['module'] = $aItem->module_dir;
+                        $list_field['start_link_wrapper'] = $this->start_link_wrapper;
+                        $list_field['end_link_wrapper'] = $this->end_link_wrapper;
+                        $list_field['subpanel_id'] = $this->subpanel_id;
+                        $list_field += $field_acl;
+                        if (isset($aItem->field_defs[strtolower($list_field['name'])])) {
+                            require_once('include/SugarFields/SugarFieldHandler.php');
+                            // We need to see if a sugar field exists for this field type first,
+                            // if it doesn't, toss it at the old sugarWidgets. This is for
+                            // backwards compatibility and will be removed in a future release
+                            $vardef = $aItem->field_defs[strtolower($list_field['name'])];
+                            if (isset($vardef['type'])) {
+                                $fieldType = isset($vardef['custom_type'])?$vardef['custom_type']:$vardef['type'];
+                                $tmpField = SugarFieldHandler::getSugarField($fieldType, true);
                             } else {
-                                $button_contents[] = '';
+                                $tmpField = null;
                             }
-                        } else {
+
+                            if ($tmpField != null) {
+                                $widget_contents = SugarFieldHandler::displaySmarty($list_field['fields'], $vardef, 'ListView', $list_field);
+                            } else {
+                                // No SugarField for this particular type
+                                // Use the old, icky, SugarWidget for now
+                                $widget_contents = $layout_manager->widgetDisplay($list_field);
+                            }
+
+                            if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelDetailViewLink') {
+                                // We need to call into the old SugarWidgets for the time being, so it can generate a proper link with all the various corner-cases handled
+                                // So we'll populate the field data with the pre-rendered display for the field
+                                $list_field['fields'][$field_name] = $widget_contents;
+                                if ('full_name' == $field_name) {//bug #32465
+                                    $list_field['fields'][strtoupper($field_name)] = $widget_contents;
+                                }
+
+                                //vardef source is non db, assign the field name to varname for processing of column.
+                                if (!empty($vardef['source']) && $vardef['source']=='non-db') {
+                                    $list_field['varname'] = $field_name;
+                                }
+                                $widget_contents = $layout_manager->widgetDisplay($list_field);
+                            } else {
+                                if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink') {
+                                    $widget_contents = $layout_manager->widgetDisplay($list_field);
+                                }
+                            }
+
                             $count++;
-                            $this->xTemplate->assign('CLASS', "");
-                            $widget_contents = $layout_manager->widgetDisplay($list_field);
                             $this->xTemplate->assign('CELL_COUNT', $count);
+                            $this->xTemplate->assign('CLASS', "");
                             if (empty($widget_contents)) {
                                 $widget_contents = '&nbsp;';
                             }
                             $this->xTemplate->assign('CELL', $widget_contents);
                             $this->xTemplate->parse($xtemplateSection.".row.cell");
+                        } else {
+                            // This handles the edit and remove buttons and icon widget
+                            if (isset($list_field['widget_class']) && $list_field['widget_class'] == "SubPanelIcon") {
+                                $count++;
+                                $widget_contents = $layout_manager->widgetDisplay($list_field);
+                                $this->xTemplate->assign('CELL_COUNT', $count);
+                                $this->xTemplate->assign('CLASS', "");
+                                if (empty($widget_contents)) {
+                                    $widget_contents = '&nbsp;';
+                                }
+                                $this->xTemplate->assign('CELL', $widget_contents);
+                                $this->xTemplate->parse($xtemplateSection.".row.cell");
+                            } elseif (preg_match("/button/i", $list_field['name'])) {
+                                if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
+                                    $button_contents[] = $_content;
+                                    unset($_content);
+                                } else {
+                                    $button_contents[] = '';
+                                }
+                            } else {
+                                $count++;
+                                $this->xTemplate->assign('CLASS', "");
+                                $widget_contents = $layout_manager->widgetDisplay($list_field);
+                                $this->xTemplate->assign('CELL_COUNT', $count);
+                                if (empty($widget_contents)) {
+                                    $widget_contents = '&nbsp;';
+                                }
+                                $this->xTemplate->assign('CELL', $widget_contents);
+                                $this->xTemplate->parse($xtemplateSection.".row.cell");
+                            }
                         }
                     }
                 }
@@ -1077,6 +1081,12 @@ class ListView
         }
         $this->setSessionVariable("detailview", "record", $sugarbean->id);
 
+        $last_detailview_record = $this->getSessionVariable("detailview", "record");
+        if (!empty($last_detailview_record) && $last_detailview_record != $sugarbean->id) {
+            $GLOBALS['record_has_changed'] = true;
+        }
+        $this->setSessionVariable("detailview", "record", $sugarbean->id);
+
         $current_offset = $this->getOffset($html_var);
         $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : '';
         $response = array();
@@ -1440,7 +1450,7 @@ class ListView
                 $delete_link = '&nbsp;';
             }
 
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->retrieveSettings('system');
 
             $user_merge = $current_user->getPreference('mailmerge_on');
@@ -1593,8 +1603,9 @@ class ListView
         if ($sort_URL_base !== "") {
             $this->xTemplate->assign("ORDER_BY", $sort_URL_base);
             return $sort_URL_base;
+        } else {
+            return '';
         }
-        return '';
     }
 
 
@@ -1952,8 +1963,9 @@ class ListView
             return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
         } elseif (($upDown === '_up')) {
             return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
+        } else {
+            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
         }
-        return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
     }
 
     /**
@@ -2040,10 +2052,12 @@ class ListView
          */
         if ($orderBy == 'amount') {
             $this->xTemplateAssign('amount_arrow', $imgArrow);
-        } elseif ($orderBy == 'amount_usdollar') {
-            $this->xTemplateAssign('amount_usdollar_arrow', $imgArrow);
         } else {
-            $this->xTemplateAssign($orderBy.'_arrow', $imgArrow);
+            if ($orderBy == 'amount_usdollar') {
+                $this->xTemplateAssign('amount_usdollar_arrow', $imgArrow);
+            } else {
+                $this->xTemplateAssign($orderBy.'_arrow', $imgArrow);
+            }
         }
 
         $this->xTemplateAssign('arrow_end', $this->getArrowEnd());
@@ -2060,9 +2074,11 @@ class ListView
             $key = '';
             if (!empty($list_field['vname'])) {
                 $key = $list_field['vname'];
-            } elseif (isset($list_field['name']) &&  isset($child_focus->field_defs[$list_field['name']])) {
-                $field_def = $child_focus->field_defs[$list_field['name']];
-                $key = $field_def['vname'];
+            } else {
+                if (isset($list_field['name']) &&  isset($child_focus->field_defs[$list_field['name']])) {
+                    $field_def = $child_focus->field_defs[$list_field['name']];
+                    $key = $field_def['vname'];
+                }
             }
             if (!empty($key)) {
                 $list_field['label'] = translate($key, $child_focus->module_dir);
@@ -2099,8 +2115,9 @@ class ListView
     {
         if (isset($_SESSION[$localVarName."_".$varName])) {
             return $_SESSION[$localVarName."_".$varName];
+        } else {
+            return "";
         }
-        return "";
     }
 
     /* Set to true if you want Additional Details to appear in the listview

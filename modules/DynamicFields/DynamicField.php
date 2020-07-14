@@ -466,7 +466,7 @@ class DynamicField
                     if (in_array($field['type'], array('int', 'float', 'double', 'uint', 'ulong', 'long', 'short', 'tinyint', 'currency', 'decimal'))) {
                         $quote = '';
                         if (!isset($this->bean->$name) || !is_numeric($this->bean->$name)) {
-                            if ($field['required']) {
+                            if (!empty($field['required'])) {
                                 $this->bean->$name = 0;
                             } else {
                                 $this->bean->$name = 'NULL';
@@ -582,10 +582,12 @@ class DynamicField
                 }
 
                 return false;
+            } else {
+                return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
             }
-            return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -601,7 +603,7 @@ class DynamicField
         $object_name = $this->module;
         $db_name = $field->name;
 
-        $fmd = new FieldsMetaData();
+        $fmd = BeanFactory::newBean('EditCustomFields');
         $id = $fmd->retrieve($object_name . $db_name, true, false);
         $is_update = false;
         $label = strtoupper($field->label);
@@ -766,8 +768,9 @@ class DynamicField
             fclose($fh);
 
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

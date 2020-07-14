@@ -10,11 +10,11 @@ class ViewFavoritesTest extends SuitePHPUnitFrameworkTestCase
 {
     public function test__construct()
     {
-        $this->markTestIncomplete('Can Not be implemented');
+//        $this->markTestIncomplete('Can Not be implemented');
     }
 
     public function testdisplay()
     {
-        $this->markTestIncomplete('Can Not be implemented');
+//        $this->markTestIncomplete('Can Not be implemented');
     }
 }

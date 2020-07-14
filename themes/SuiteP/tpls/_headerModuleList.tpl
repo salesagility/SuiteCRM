@@ -511,7 +511,7 @@
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
                               onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            {search_controller}
                             <input type="hidden" class="form-control" name="module" value="Home">
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
@@ -535,7 +535,7 @@
                 <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                        {search_controller}
                         <input type="hidden" class="form-control" name="module" value="Home">
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
@@ -562,7 +562,14 @@
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
-                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                                   href="{$GCL.URL}"
+                                   {if !empty($GCL.ONCLICK)} 
+                                   onclick="{$GCL.ONCLICK}"
+                                   {/if}
+                                   {if !empty($GCL.TARGET)} 
+                                   target="{$GCL.TARGET}"
+                                   {/if}
+                                   >{$GCL.LABEL}</a>
                             </li>
                         {/foreach}
                         <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
@@ -593,7 +600,7 @@
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
                               onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            {search_controller}
                             <input type="hidden" class="form-control" name="module" value="Home">
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
@@ -610,7 +617,7 @@
                 <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                        {search_controller}
                         <input type="hidden" class="form-control" name="module" value="Home">
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
@@ -645,7 +652,14 @@
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
-                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                                   href="{$GCL.URL}"
+                                   {if !empty($GCL.ONCLICK)} 
+                                   onclick="{$GCL.ONCLICK}"
+                                   {/if}
+                                   {if !empty($GCL.TARGET)} 
+                                   target="{$GCL.TARGET}"
+                                   {/if}
+                                   >{$GCL.LABEL}</a>
                             </li>
                         {/foreach}
                         <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
@@ -676,7 +690,7 @@
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                         <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
                               onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            {search_controller}
                             <input type="hidden" class="form-control" name="module" value="Home">
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
@@ -693,7 +707,7 @@
                 <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                        {search_controller}
                         <input type="hidden" class="form-control" name="module" value="Home">
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
@@ -728,7 +742,14 @@
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
-                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                                   href="{$GCL.URL}"
+                                   {if !empty($GCL.ONCLICK)} 
+                                   onclick="{$GCL.ONCLICK}"
+                                   {/if}
+                                   {if !empty($GCL.TARGET)}
+                                   target="{$GCL.TARGET}"
+                                   {/if}
+                                   >{$GCL.LABEL}</a>
                             </li>
                         {/foreach}
                         <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'

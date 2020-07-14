@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/EmailTemplates/EmailTemplate.php');
 
-$focus = new EmailTemplate();
+$focus = BeanFactory::newBean('EmailTemplates');
 if ($_REQUEST['from'] == 'DetailView') {
     if (!isset($_REQUEST['record'])) {
         sugar_die("A record number must be specified to delete the template.");
@@ -56,20 +56,22 @@ if ($_REQUEST['from'] == 'DetailView') {
         return;
     }
     echo 'false';
-} elseif ($_REQUEST['from'] == 'ListView') {
-    $returnString = '';
-    $idArray = explode(',', $_REQUEST['records']);
-    foreach ($idArray as $key => $value) {
-        if ($focus->retrieve($value)) {
-            if (check_email_template_in_use($focus)) {
-                $returnString .= $focus->name . ',';
+} else {
+    if ($_REQUEST['from'] == 'ListView') {
+        $returnString = '';
+        $idArray = explode(',', $_REQUEST['records']);
+        foreach ($idArray as $key => $value) {
+            if ($focus->retrieve($value)) {
+                if (check_email_template_in_use($focus)) {
+                    $returnString .= $focus->name . ',';
+                }
             }
         }
+        $returnString = substr($returnString, 0, -1);
+        echo $returnString;
+    } else {
+        echo '';
     }
-    $returnString = substr($returnString, 0, -1);
-    echo $returnString;
-} else {
-    echo '';
 }
 
 function check_email_template_in_use($focus)

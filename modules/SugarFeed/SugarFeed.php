@@ -102,7 +102,7 @@ class SugarFeed extends Basic
             }
         }
         if ($updateDB == true) {
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->saveSetting('sugarfeed', 'module_'.$admin->db->quote($module), '1');
         }
     }
@@ -124,7 +124,7 @@ class SugarFeed extends Basic
         }
 
         if ($updateDB == true) {
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->saveSetting('sugarfeed', 'module_'.$admin->db->quote($module), '0');
         }
     }
@@ -188,7 +188,7 @@ class SugarFeed extends Basic
 
         // Gotta go looking for it
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         $feedModules = array();
@@ -276,7 +276,7 @@ class SugarFeed extends Basic
         $link_type=false,
         $link_url=false
         ) {
-        $feed = new SugarFeed();
+        $feed = BeanFactory::newBean('SugarFeed');
         if ((empty($text) && empty($link_url)) || !$feed->ACLAccess('save', true)) {
             $GLOBALS['log']->error('Unable to save SugarFeed record (missing data or no ACL access)');
             return;
@@ -486,17 +486,13 @@ class SugarFeed extends Basic
     {
         global $timedate;
 
-        $nowTs = $timedate->getNow()->ts;
+        $timedate->getInstance()->userTimezone();
+        $currentTime = $timedate->now();
 
-        if (null !== ($userStartDate = $timedate->fromUser($startDate))) {
-            $userStartDateTs = $userStartDate->ts;
-        } else {
-            LoggerManager::getLogger()->warn('Invalid $startDate');
+        $first = strtotime($currentTime);
+        $second = strtotime($startDate);
 
-            return '';
-        }
-
-        $seconds = $nowTs - $userStartDateTs;
+        $seconds = $first - $second;
         $minutes = $seconds / 60;
         $seconds = $seconds % 60;
         $hours = floor($minutes / 60);
@@ -516,7 +512,7 @@ class SugarFeed extends Basic
             }
         } else {
             if ($days == 1) {
-                $result .= $days . ' ' . translate('LBL_TIME_DAY', 'SugarFeed') . ' ';
+                return translate('LBL_TIME_YESTERDAY', 'SugarFeed') . ' ';
             } elseif ($days > 1) {
                 $result .= $days . ' ' . translate('LBL_TIME_DAYS', 'SugarFeed') . ' ';
             } else {

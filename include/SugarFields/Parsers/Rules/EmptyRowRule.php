@@ -70,8 +70,10 @@ class EmptyRowRule extends BaseRule
                 foreach ($row as $key=>$column) {
                     if (is_array($column) && (!isset($column['name']) || empty($column['name']))) {
                         $emptyCount++;
-                    } elseif (!is_array($column) && (!isset($column) || empty($column))) {
-                        $emptyCount++;
+                    } else {
+                        if (!is_array($column) && (!isset($column) || empty($column))) {
+                            $emptyCount++;
+                        }
                     }
                 } //foreach
 
@@ -79,10 +81,12 @@ class EmptyRowRule extends BaseRule
                 if ($emptyCount == count($row)) {
                     unset($panels[$name][$rowCount]);
                     continue;
-                } elseif (count($row) > 2) {
-                    foreach ($row as $key=>$column) {
-                        if (empty($column) || $column == '') {
-                            unset($panels[$name][$rowCount][$key]);
+                } else {
+                    if (count($row) > 2) {
+                        foreach ($row as $key=>$column) {
+                            if (empty($column) || $column == '') {
+                                unset($panels[$name][$rowCount][$key]);
+                            }
                         }
                     }
                 }

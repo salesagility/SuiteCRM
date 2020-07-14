@@ -120,9 +120,11 @@ class SearchFormMetaParser extends MetaParser
             if (is_array($row) && !empty($row['name'])) {
                 $existingElements[$row['name']] = $row['name'];
                 $existingLocation[$row['name']] = array("row"=>$rowKey);
-            } elseif (!is_array($row) && !empty($row)) {
-                $existingElements[$row] = $row;
-                $existingLocation[$row] = array("row"=>$rowKey);
+            } else {
+                if (!is_array($row) && !empty($row)) {
+                    $existingElements[$row] = $row;
+                    $existingLocation[$row] = array("row"=>$rowKey);
+                }
             }
         } //foreach
 
@@ -207,9 +209,11 @@ class SearchFormMetaParser extends MetaParser
                 if (!empty($customField)) {
                     // If it's a custom field we just set the name
                     $name = $customField;
-                } elseif (is_array($formElementNames) && count($formElementNames) == 1
+                } else {
+                    if (is_array($formElementNames) && count($formElementNames) == 1
                        && (isset($vardefs[$formElementNames[0]]) || $formElementNames[0] == 'current_user_only')) {
-                    $name = $formElementNames[0];
+                        $name = $formElementNames[0];
+                    }
                 }
 
                 //Skip and continue if $name is empty
