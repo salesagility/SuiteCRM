@@ -7,7 +7,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
     public function testget_date_format()
     {
         // Validate that it gets the date format from the user's preferences.
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('datef', 'Y-m-d');
@@ -21,7 +21,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
     public function testget_time_format()
     {
         // Validate that it gets the time format from the user's preferences.
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('timef', 'H:i:s');
@@ -35,7 +35,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
     public function testget_date_time_format()
     {
         // Validate that it gets the date time format from the user's preferences.
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('datef', 'Y-m-d');
@@ -51,7 +51,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
     {
         // Validate that it gets the first day of the week from the user's
         // preferences.
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('fdow', 1);
@@ -105,7 +105,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
     {
         // Test that the function returns the time but not the date, even if
         // a date is provided.
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('datef', 'Y-m-d');
@@ -128,7 +128,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         // We create a user here, but it doesn't actually take the user's
         // preferences into account. This should probably be fixed at some
         // point.
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('datef', 'Y-m-d');

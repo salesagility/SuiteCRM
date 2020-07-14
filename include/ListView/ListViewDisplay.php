@@ -588,7 +588,7 @@ class ListViewDisplay
         }
         global $current_user, $app_strings;
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings('system');
         $user_merge = $current_user->getPreference('mailmerge_on');
         $module_dir = (!empty($this->seed->module_dir) ? $this->seed->module_dir : '');

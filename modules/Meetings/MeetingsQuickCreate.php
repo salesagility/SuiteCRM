@@ -75,7 +75,7 @@ class MeetingsQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('meetingsQuickCreate');
         
-        $focus = new Meeting();
+        $focus = BeanFactory::newBean('Meetings');
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 

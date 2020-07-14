@@ -121,7 +121,8 @@ class ModuleBuilder extends Administration
     public function closePopupSuccess()
     {
         $I = $this;
-        $I->waitForElementVisible('#sugarMsgWindow_mask');
+        $I->wait(1);
+        $I->executeJS('return typeof document.getElementById("sugarMsgWindow") !== "undefined";');
         $I->waitForText('This operation is completed successfully', null, '#sugarMsgWindow_c');
         $I->click('.container-close');
     }

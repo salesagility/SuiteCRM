@@ -9,7 +9,7 @@ use Api\V8\OAuth2\Repository\ClientRepository;
 use Api\V8\OAuth2\Repository\RefreshTokenRepository;
 use Api\V8\OAuth2\Repository\ScopeRepository;
 use Api\V8\OAuth2\Repository\UserRepository;
-use Interop\Container\ContainerInterface as Container;
+use Psr\Container\ContainerInterface as Container;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
@@ -35,24 +35,16 @@ return CustomLoader::mergeCustomArray([
             sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
         );
 
-        if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
-            $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
-            $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
-            $apiConfig = file_get_contents('Api/Core/Config/ApiConfig.php');
-
-            $configFileContents = str_replace(
-                $oldKey,
-                $key,
-                $apiConfig
-            );
-            file_put_contents(
-                'Api/Core/Config/ApiConfig.php',
-                $configFileContents,
-                LOCK_EX
-            );
+        $oauth2EncKey = isset($GLOBALS['sugar_config']['oauth2_encryption_key'])
+            ? $GLOBALS['sugar_config']['oauth2_encryption_key'] : '';
+        if (empty($oauth2EncKey)) {
+            $oauth2EncKey = 'SCRM-DEFK';
+            if (isset($GLOBALS['log'])) {
+                $GLOBALS['log']->fatal('WARNING: `oauth2_encryption_key` not set in config.php');
+            }
         }
 
-        $server->setEncryptionKey(ApiConfig::OAUTH2_ENCRYPTION_KEY);
+        $server->setEncryptionKey($oauth2EncKey);
 
         // Client credentials grant
         $server->enableGrantType(

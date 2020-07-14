@@ -745,7 +745,7 @@ function setODataTable() {
                 }
                 setODataTableShown();
             },
-            "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo strtolower($GLOBALS['current_language']); ?>.lang.js" },
+            "oLanguage": { "sUrl": "modules/jjwg_Maps/DataTables/media/language/<?php echo $GLOBALS['current_language']; ?>.lang.js" },
             "aaData": map_markers,
             "aoColumns": [
                 {

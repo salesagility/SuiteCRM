@@ -91,7 +91,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         $return_id = parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
-        $productQuoteGroup = new AOS_Line_Item_Groups();
+        $productQuoteGroup = BeanFactory::newBean('AOS_Line_Item_Groups');
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
         if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
@@ -102,7 +102,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
 
     public function mark_deleted($id)
     {
-        $productQuote = new AOS_Products_Quotes();
+        $productQuote = BeanFactory::newBean('AOS_Products_Quotes');
         $productQuote->mark_lines_deleted($this);
         $this->deleteCall();
         parent::mark_deleted($id);

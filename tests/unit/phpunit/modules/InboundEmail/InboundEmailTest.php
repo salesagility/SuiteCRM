@@ -345,7 +345,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testInboundEmail()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $this->assertInstanceOf('InboundEmail', $inboundEmail);
         $this->assertInstanceOf('SugarBean', $inboundEmail);
@@ -381,7 +381,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->name = 'test';
         $inboundEmail->group_id = 1;
@@ -440,7 +440,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->getSingularRelatedId('test', 'inbound_email');
         $this->assertEquals(false, $result);
@@ -451,7 +451,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function getCorrectMessageNoForPop3($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->retrieve($id);
 
@@ -464,7 +464,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieve($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->retrieve($id);
 
@@ -476,7 +476,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieveByGroupId($group_id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->retrieveByGroupId($group_id);
 
@@ -489,7 +489,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieveAllByGroupId($group_id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->retrieveAllByGroupId($group_id);
 
@@ -502,7 +502,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieveAllByGroupIdWithGroupAccounts($group_id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->retrieveAllByGroupIdWithGroupAccounts($group_id);
 
@@ -515,7 +515,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function renameFolder($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->retrieve($id);
         $this->assertFalse((bool)$inboundEmail->conn);
@@ -531,7 +531,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function search($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->retrieve($id);
 
@@ -544,7 +544,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function saveMailBoxFolders($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->retrieve($id);
 
@@ -559,7 +559,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function saveMailBoxValueOfInboundEmail($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->email_user = 'TEST';
 
@@ -572,7 +572,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function mark_deleted($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mark_deleted($id);
 
@@ -582,7 +582,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function hardDelete($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->hardDelete($id);
 
@@ -592,7 +592,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcustomGetMessageText()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->customGetMessageText('some message');
         $this->assertEquals('some message', $result);
@@ -600,7 +600,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetFormattedRawSource()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without ID
         $result = $inboundEmail->getFormattedRawSource('1');
@@ -619,7 +619,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with array having common element
         $result = $inboundEmail->filterMailBoxFromRaw(array('mailbox1', 'mailbox2', 'mailbox3'), array('mailbox1'));
@@ -632,14 +632,14 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testconvertToUtf8()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
         $result = $inboundEmail->convertToUtf8('some text with non UTF8 chars');
         $this->assertSame('some text with non UTF8 chars', $result);
     }
 
     public function testgetFormattedHeaders()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test for default/imap
         $result = $inboundEmail->getFormattedHeaders(1);
@@ -653,7 +653,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetAndgetCacheTimestamp()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
 
@@ -667,7 +667,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     private function setDummyCacheValue()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
 
@@ -704,7 +704,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCacheValueForUIDs()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test wih default protocol
         $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1, 2, 3, 4, 5));
@@ -724,7 +724,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCacheValue()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test wih default protocol
         $result = $inboundEmail->getCacheValue('INBOX');
@@ -744,7 +744,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testValidCacheExists()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without a valid id
         $result = $inboundEmail->validCacheExists('');
@@ -778,7 +778,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdisplayFetchedSortedListXML()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //get the cache values array first
         $inboundEmail->id = 1;
@@ -955,7 +955,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMsgnoForMessageID()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
 
@@ -1002,7 +1002,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 //        $this->markTestIncomplete("Different results for php5 and php7");
 //        /*
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $inboundEmail->id = 1;
 //        $inboundEmail->mailbox = 'INBOX';
@@ -1025,7 +1025,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 //        $this->markTestIncomplete("Unable to test until testsetStatuses is re-enabled");
 //        /*
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $inboundEmail->id = 1;
 //        $inboundEmail->mailbox = 'INBOX';
@@ -1043,7 +1043,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testemptyTrash()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
 
@@ -1072,7 +1072,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteCache()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
 
@@ -1101,7 +1101,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeletePop3Cache()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1116,7 +1116,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpop3_open()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1127,7 +1127,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpop3_cleanUp()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1142,7 +1142,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpop3_sendCommand()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1153,7 +1153,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetPop3NewMessagesToDownload()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1164,7 +1164,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetPop3NewMessagesToDownloadForCron()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1175,7 +1175,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpop3_getUIDL()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
         $inboundEmail->protocol = 'pop3';
@@ -1187,7 +1187,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpop3_checkPartialEmail()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
         $inboundEmail->protocol = 'pop3';
@@ -1205,7 +1205,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpop3_checkEmail()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
         $inboundEmail->protocol = 'pop3';
@@ -1223,7 +1223,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMessagesInEmailCache()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1251,7 +1251,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 //        $this->markTestIncomplete('this test failing only on php 7.2');
 //
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $inboundEmail->mailbox = 'INBOX,OUTBOX';
 //
@@ -1261,7 +1261,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckEmailOneMailboxPartial()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1272,7 +1272,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCachedIMAPSearch()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1283,7 +1283,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckEmailIMAPPartial()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1294,7 +1294,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckEmail2_meta()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1306,7 +1306,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMailboxProcessCount()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->getMailboxProcessCount('INBOX');
 
@@ -1315,7 +1315,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckEmail()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test for IMAP
         // Execute the method and test that it works and doesn't throw an exception.
@@ -1343,7 +1343,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         global $current_user;
         $current_user = new User('1');
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -1356,7 +1356,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteCachedMessages()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
 
@@ -1371,7 +1371,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetOverviewsFromCacheFile()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->getOverviewsFromCacheFile('1,2', 'INBOX');
 
@@ -1385,7 +1385,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 //        $this->markTestIncomplete("Different results for php5 and php7");
 //        /*
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $inboundEmail->id = 1;
 //        $inboundEmail->mailbox = 'INBOX';
@@ -1410,7 +1410,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 //        $this->markTestIncomplete('Undefined offset: 0');
 ////
-////        $inboundEmail = new InboundEmail();
+////        $inboundEmail = BeanFactory::newBean('InboundEmail');
 ////
 ////        $inboundEmail->id = 1;
 ////
@@ -1428,7 +1428,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
         $inboundEmail->mailbox = 'INBOX';
@@ -1457,7 +1457,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmarkEmails()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -1475,7 +1475,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteFolder()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX';
 
@@ -1487,7 +1487,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsaveNewFolder()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->saveNewFolder('TEST', 'INBOX');
 
@@ -1496,7 +1496,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetImapMboxFromSugarProprietary()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with invalid format string
         $result = $inboundEmail->getImapMboxFromSugarProprietary('INBOX.TRASH');
@@ -1513,7 +1513,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testrepairAccount()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->email_password = 'test_pass';
 
@@ -1531,7 +1531,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////        unset($db->database);
 ////        $db->checkConnection();
 ////
-////        $inboundEmail = new InboundEmail();
+////        $inboundEmail = BeanFactory::newBean('InboundEmail');
 ////
 ////        //$result = $inboundEmail->getTeamSetIdForTeams("1");
 ////
@@ -1542,7 +1542,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsavePersonalEmailAccountAndOthers()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $_REQUEST['ie_name'] = 'test';
         $_REQUEST['ie_status'] = 'Active';
@@ -1574,7 +1574,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function handleIsPersonal($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with a invalid group_id
         $inboundEmail->group_id = 2;
@@ -1589,10 +1589,10 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function getUserPersonalAccountCount()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with invalid user id
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $result = $inboundEmail->getUserPersonalAccountCount($user);
         $this->assertEquals(0, $result);
 
@@ -1604,7 +1604,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieveByGroupFolderId()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with invalid groupfolder id
         $result = $inboundEmail->retrieveByGroupFolderId('1');
@@ -1623,7 +1623,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function getUserNameFromGroupId($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with a invalid group_id
         $inboundEmail->group_id = 2;
@@ -1638,7 +1638,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function deletePersonalEmailAccount($id)
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with invalid username
         $result = $inboundEmail->deletePersonalEmailAccount($id, 'test');
@@ -1651,7 +1651,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetFoldersListForMailBox()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->getFoldersListForMailBox();
         $this->assertTrue(is_array($result));
@@ -1659,7 +1659,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfindOptimumSettings()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with different parameters, it will always return false because we do not have a mail server to connect.
 
@@ -1673,7 +1673,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetSessionConnectionString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without setting session key
         $result = $inboundEmail->getSessionConnectionString('mail.google.com', 'test', 22, 'IMAP');
@@ -1687,7 +1687,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetSessionConnectionString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->setSessionConnectionString('mail.google.com', 'test', 22, 'IMAP', 'test connection');
         $this->assertEquals('test connection', $_SESSION['mail.google.comtest22IMAP']);
@@ -1695,7 +1695,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetSessionInboundDelimiterString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without setting session key
         $result = $inboundEmail->getSessionInboundDelimiterString('mail.google.com', 'test', 22, 'IMAP');
@@ -1709,7 +1709,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetSessionInboundDelimiterString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->setSessionInboundDelimiterString('mail.google.com', 'test', 22, 'IMAP', 'test string');
         $this->assertEquals('test string', $_SESSION['mail.google.comtest22IMAPdelimiter']);
@@ -1717,7 +1717,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetSessionInboundFoldersString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without setting session key
         $result = $inboundEmail->getSessionInboundFoldersString('mail.google.com', 'test', 22, 'IMAP');
@@ -1731,7 +1731,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetSessionInboundFoldersString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->setSessionInboundFoldersString('mail.google.com', 'test', 22, 'IMAP', 'foldersList string');
         $this->assertEquals('foldersList string', $_SESSION['mail.google.comtest22IMAPfoldersList']);
@@ -1744,7 +1744,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without name i-e user_name in query
         $result = $inboundEmail->groupUserDupeCheck();
@@ -1763,7 +1763,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->group_id = 1;
 
@@ -1782,10 +1782,10 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->template_id = 1;
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->name = 'test';
         $email->from_addr = 'test@email.com';
         $contactAddr = 'test@email.com';
@@ -1806,9 +1806,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->name = 'test';
 
         $result = $inboundEmail->handleCaseAssignment($email);
@@ -1822,9 +1822,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->name = 'test';
 
         $inboundEmail->mailbox_type = 'support';
@@ -1845,7 +1845,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without setting attributes
         $result = $inboundEmail->isMailBoxTypeCreateCase();
@@ -1866,9 +1866,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->name = 'test';
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -1887,9 +1887,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->from_addr = 'test@from.com';
 
         $result = $inboundEmail->handleLinking($email);
@@ -1905,7 +1905,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////        unset($db->database);
 ////        $db->checkConnection();
 ////
-////        $inboundEmail = new InboundEmail();
+////        $inboundEmail = BeanFactory::newBean('InboundEmail');
 ////
 ////        $parts = array(
 ////                    (Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => 'dummy parts 2'))))),
@@ -1918,7 +1918,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCharsetFromBreadCrumb()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $parts = array(
                 (Object) array('ifparameters' => 1, 'attribute' => 'charset', 'value' => 'test', 'parts' => array((Object) array('ifparameters' => 1, 'attribute' => 'charset', 'value' => 'test', 'parts' => array((Object) array('ifparameters' => 1, 'attribute' => 'charset', 'value' => 'test', 'parts' => 'dummy parts 2'))))),
@@ -1938,7 +1938,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////        unset($db->database);
 ////        $db->checkConnection();
 ////
-////        $inboundEmail = new InboundEmail();
+////        $inboundEmail = BeanFactory::newBean('InboundEmail');
 ////
 ////        // Execute the method and test that it works and doesn't throw an exception.
 ////        try {
@@ -1956,7 +1956,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with empty offset string
         $result = $inboundEmail->addBreadCrumbOffset('1.1.1', '');
@@ -1981,7 +1981,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////        unset($db->database);
 ////        $db->checkConnection();
 ////
-////        $inboundEmail = new InboundEmail();
+////        $inboundEmail = BeanFactory::newBean('InboundEmail');
 ////
 ////        // Execute the method and test that it works and doesn't throw an exception.
 ////        try {
@@ -1999,7 +1999,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $expected = array(
                           'From' => 'Media Temple user (mt.kb.user@gmail.com)',
@@ -2023,7 +2023,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with default
         $result = $inboundEmail->handleCharsetTranslation('sample text', 'default');
@@ -2041,7 +2041,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2059,7 +2059,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2077,7 +2077,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX';
         $inboundEmail->host = 'mail.google.com';
@@ -2093,7 +2093,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->handleEncodedFilename('attachment1.pdf');
         $this->assertEquals('attachment1.pdf', $result);
@@ -2106,7 +2106,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $this->assertEquals('text/plain', $inboundEmail->getMimeType(0, 'plain'));
         $this->assertEquals('multipart/binary', $inboundEmail->getMimeType(1, 'binary'));
@@ -2120,7 +2120,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2133,7 +2133,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetNoteBeanForAttachment()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->getNoteBeanForAttachment('1');
 
@@ -2144,7 +2144,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieveAttachmentNameFromStructure()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with filename attribute
         $part = (Object) array('dparameters' => array((Object) array('attribute' => 'filename', 'value' => 'test1.txt'), (Object) array('attribute' => 'filename', 'value' => 'test2.txt')),
@@ -2171,13 +2171,13 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $part = (Object) array('disposition' => 'multipart', 'subtype' => 10);
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
-            $inboundEmail->saveAttachmentBinaries(new Note(), '1', '1.1', $part, 1);
+            $inboundEmail->saveAttachmentBinaries(BeanFactory::newBean('Notes'), '1', '1.1', $part, 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
@@ -2186,7 +2186,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleTranserEncoding()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $this->assertEquals('test', $inboundEmail->handleTranserEncoding('test'));
         $this->assertEquals('test', $inboundEmail->handleTranserEncoding('dGVzdA==', 3));
@@ -2195,7 +2195,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMessageId()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $header = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
 
@@ -2206,7 +2206,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testimportDupeCheck()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $textHeader = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
 
@@ -2216,7 +2216,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleMimeHeaderDecode()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->handleMimeHeaderDecode('Subject: article: How to Trace a Email');
 
@@ -2225,7 +2225,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetUnixHeaderDate()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->handleMimeHeaderDecode('Date: January 25, 2011 3:30:58 PM PDT');
 
@@ -2239,7 +2239,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2252,7 +2252,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testimportOneEmail()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX';
         $inboundEmail->id = 1;
@@ -2268,7 +2268,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testisUuencode()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $this->assertEquals(false, $inboundEmail->isUuencode('test'));
 
@@ -2277,7 +2277,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleUUEncodedEmailBody()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $raw = 'Message Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.';
 
@@ -2296,7 +2296,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 //        $db->checkConnection();
 //
 //
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $raw = "\nMessage Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.";
 //
@@ -2312,9 +2312,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->reply_to_email = 'reply@gmail.com';
         $email->from_addr = 'from@gmail.com';
 
@@ -2329,7 +2329,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $this->assertEquals(false, $inboundEmail->checkOutOfOffice('currently Out of Office, will reply later'));
         $this->assertEquals(true, $inboundEmail->checkOutOfOffice('test subject'));
@@ -2342,7 +2342,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
 
@@ -2362,7 +2362,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //execute the method to save the setting
         $inboundEmail->saveInboundEmailSystemSettings('test', 'test_macro');
@@ -2376,7 +2376,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 //        $this->markTestIncomplete("It should be an acceptance test");
 //
 //
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\">
 //    <input type=\"hidden\" name=\"module\" value=\"InboundEmail\">
@@ -2423,15 +2423,15 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCaseIdFromCaseNumber()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $result = $inboundEmail->getCaseIdFromCaseNumber('test', new aCase());
+        $result = $inboundEmail->getCaseIdFromCaseNumber('test', BeanFactory::newBean('Cases'));
         $this->assertEquals(false, $result);
     }
 
     public function testget_stored_options()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->get_stored_options('test', '');
         $this->assertEquals('', $result);
@@ -2442,7 +2442,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSetStoredOptions()
     {
-        $ie = new InboundEmail();
+        $ie = BeanFactory::newBean('InboundEmail');
         $so = $ie->getStoredOptions();
         $so['something'] = 'testinfo';
         $ie->setStoredOptions($so);
@@ -2459,7 +2459,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////        unset($db->database);
 ////        $db->checkConnection();
 ////
-////        $inboundEmail = new InboundEmail();
+////        $inboundEmail = BeanFactory::newBean('InboundEmail');
 ////
 ////        //test with Users module
 ////        $inboundEmail->getRelatedId('getRelatedId@email.com', 'Users');
@@ -2472,7 +2472,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetNewMessageIds()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->getNewMessageIds();
 
@@ -2481,7 +2481,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetConnectString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $this->assertEquals('{:/service=}', $inboundEmail->getConnectString()); //test with default options
         $this->assertEquals('{:/service=mail.google.com}INBOX', $inboundEmail->getConnectString('mail.google.com', 'INBOX'));//test with includeMbox true
@@ -2490,7 +2490,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdisconnectMailserver()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2503,7 +2503,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testconnectMailserver()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with default parameters
         $result = $inboundEmail->connectMailserver();
@@ -2516,7 +2516,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckImap()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2529,7 +2529,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without setting name
         $this->assertEquals(null, $inboundEmail->get_summary_text());
@@ -2541,7 +2541,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with empty string params
         $expected = " SELECT  inbound_email.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod FROM inbound_email   LEFT JOIN  users jt0 ON jt0.id=inbound_email.created_by AND jt0.deleted=0\n AND jt0.deleted=0 where inbound_email.deleted=0";
@@ -2556,7 +2556,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox_type = 'INBOX';
         $inboundEmail->status = 'Active';
@@ -2581,7 +2581,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->service = 'tls::ca::ssl::protocol';
 
@@ -2595,7 +2595,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->service = 'tls::ca::ssl::protocol';
 
@@ -2609,9 +2609,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testisAutoImport()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
 
         //test with invalid user
         $result = $inboundEmail->isAutoImport($user);
@@ -2625,7 +2625,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcleanOutCache()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2641,7 +2641,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 //        $this->markTestIncomplete('Propably an error level changed in the code?');
 //
 //
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $inboundEmail->id = 1;
 //
@@ -2659,7 +2659,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 //        $this->markTestIncomplete('Propably an error level changed in the code?');
 //
 //
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $inboundEmail->id = 1;
 //
@@ -2673,7 +2673,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetTempFilename()
     {
 //        $this->markTestIncomplete('Propably an error level changed in the code?');
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $inboundEmail->compoundMessageId = 'cmid';
 //
@@ -2690,7 +2690,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 //        $this->markTestIncomplete('Deprecated way to check imap');
 //
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $result = $inboundEmail->deleteMessageOnMailServer('1');
 //
@@ -2699,7 +2699,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteMessageOnMailServerForPop3()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -2712,7 +2712,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testisPop3Protocol()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test without setting protocol
         $this->assertEquals(false, $inboundEmail->isPop3Protocol());
@@ -2724,9 +2724,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSetAndGetUsersDefaultOutboundServerId()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve(1);
 
         //set a Outbound Server Id
@@ -2743,7 +2743,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
 //        $this->markTestIncomplete('Deprecated pop3 test');
 //
-//        $inboundEmail = new InboundEmail();
+//        $inboundEmail = BeanFactory::newBean('InboundEmail');
 //
 //        $result = $inboundEmail->setEmailForDisplay('');
 //        $this->assertEquals('NOOP', $result);
@@ -2760,11 +2760,11 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdisplayOneEmail()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
         $inboundEmail->mailbox = 'INBOX';
-        $inboundEmail->email = new Email();
+        $inboundEmail->email = BeanFactory::newBean('Emails');
 
         $inboundEmail->email->name = 'test';
         $inboundEmail->email->from_addr_name = 'from';
@@ -2782,7 +2782,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcollapseLongMailingList()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $emails = 'one@email.com,two@email.com,three@email.com,four@email.com,five@email.com,six@email.com';
 
@@ -2795,7 +2795,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsortFetchedOverview()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = 1;
         $inboundEmail->mailbox = 'INBOX';
@@ -2829,7 +2829,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdisplayFolderContents()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $expected = array('mbox' => 'INBOX', 'ieId' => 1, 'name' => 'test', 'fromCache' => 0, 'out' => array());
         $inboundEmail->id = 1;
@@ -2851,7 +2851,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 ////        unset($db->database);
 ////        $db->checkConnection();
 ////
-////        $inboundEmail = new InboundEmail();
+////        $inboundEmail = BeanFactory::newBean('InboundEmail');
 ////
 ////        //$inboundEmail->createUserSubscriptionsForGroupAccount();
 ////
@@ -2865,7 +2865,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->name = 'test';
 
@@ -2878,7 +2878,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMailboxes()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailboxarray = array('INBOX.TRASH', 'OUTBOX.TRASH');
         $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
@@ -2894,7 +2894,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMailBoxesForGroupAccount()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 1;
         $inboundEmail->mailbox = 'INBOX.TRASH,OUTBOX.TRASH';
@@ -2907,7 +2907,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieveMailBoxFolders()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->mailbox = 'INBOX,OUTBOX,TRASH';
 
@@ -2918,7 +2918,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testinsertMailBoxFolders()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->id = '101';
 
@@ -2933,7 +2933,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieveDelimiter()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->retrieveDelimiter();
 
@@ -2942,7 +2942,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgenerateFlatArrayFromMultiDimArray()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $arraymbox = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
 
@@ -2955,7 +2955,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgenerateMultiDimArrayFromFlatArray()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
 
@@ -2966,7 +2966,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgenerateArrayData()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = array();
         $arraymbox = array('INBOX' => array('TRASH' => 'TRASH'));
@@ -2979,7 +2979,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsortMailboxes()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $result = $inboundEmail->sortMailboxes('INBOX.TRASH', array());
 
@@ -2990,7 +2990,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetServiceString()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         $inboundEmail->service = 'tls::ca::ssl::protocol';
 
@@ -3001,7 +3001,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetNewEmailsForSyncedMailbox()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -3014,7 +3014,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testimportMessages()
     {
-        $inboundEmail = new InboundEmail();
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {

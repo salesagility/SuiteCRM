@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings;
 global $app_strings;
 
-$focus = new Email();
+$focus = BeanFactory::newBean('Emails');
 
 if (!empty($_REQUEST['record'])) {
     $result = $focus->retrieve($_REQUEST['record']);

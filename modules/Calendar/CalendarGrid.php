@@ -557,7 +557,7 @@ class CalendarGrid
         $str .= "<div id='cal-grid' style='visibility: hidden;'>";
         $user_number = 0;
 
-        $shared_user = new User();
+        $shared_user = BeanFactory::newBean('Users');
         foreach ($this->cal->shared_ids as $member_id) {
             $user_number_str = "_".$user_number;
 

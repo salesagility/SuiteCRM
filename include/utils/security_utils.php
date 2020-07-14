@@ -79,14 +79,14 @@ function query_module_access_list(&$user)
 
 function query_user_has_roles($user_id)
 {
-    $role = new Role();
+    $role = BeanFactory::newBean('Roles');
 
     return $role->check_user_role_count($user_id);
 }
 
 function get_user_allowed_modules($user_id)
 {
-    $role = new Role();
+    $role = BeanFactory::newBean('Roles');
 
     $allowed = $role->query_user_allowed_modules($user_id);
     return $allowed;
@@ -94,7 +94,7 @@ function get_user_allowed_modules($user_id)
 
 function get_user_disallowed_modules($user_id, &$allowed)
 {
-    $role = new Role();
+    $role = BeanFactory::newBean('Roles');
     $disallowed = $role->query_user_disallowed_modules($user_id, $allowed);
     return $disallowed;
 }

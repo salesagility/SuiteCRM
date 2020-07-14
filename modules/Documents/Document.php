@@ -141,7 +141,7 @@ class Document extends File
                 $isDuplicate = false;
             }
 
-            $Revision = new DocumentRevision();
+            $Revision = BeanFactory::newBean('DocumentRevisions');
             //save revision.
             $Revision->in_workflow = true;
             $Revision->not_use_rel_in_req = true;
@@ -179,7 +179,7 @@ class Document extends File
             } else {
                 if ($isDuplicate && (empty($this->doc_type) || $this->doc_type == 'Sugar')) {
                     // Looks like we need to duplicate a file, this is tricky
-                    $oldDocument = new Document();
+                    $oldDocument = BeanFactory::newBean('Documents');
                     $oldDocument->retrieve($_REQUEST['duplicateId']);
                     $old_name = "upload://{$oldDocument->document_revision_id}";
                     $new_name = "upload://{$Revision->id}";
@@ -329,7 +329,6 @@ class Document extends File
 
         global $app_list_strings;
         if (!empty($this->status_id)) {
-            //_pp($this->status_id);
             $this->status = $app_list_strings['document_status_dom'][$this->status_id];
         }
         if (!empty($this->related_doc_id)) {

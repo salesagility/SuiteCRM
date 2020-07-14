@@ -51,7 +51,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
      */
     public function configuration()
     {
-        $this->jjwg_Maps = new jjwg_Maps();
+        $this->jjwg_Maps = BeanFactory::newBean('jjwg_Maps');
         $this->settings = $GLOBALS['jjwg_config'];
     }
 
@@ -122,7 +122,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
 
                     // Note: The modules 'name' field is used for the 'address'
                     // 'status' is not saved in the cache table.
-                    $cache = new jjwg_Address_Cache();
+                    $cache = BeanFactory::newBean('jjwg_Address_Cache');
                     $cache->update_modified_by = true;
                     $cache->name = $aInfo['address'];
                     $cache->lat = $aInfo['lat'];

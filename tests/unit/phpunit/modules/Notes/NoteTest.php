@@ -10,13 +10,13 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testNote()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         $this->assertInstanceOf('Note', $note);
         $this->assertInstanceOf('SugarBean', $note);
@@ -31,7 +31,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsafeAttachmentName()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         //test with valid file name
         $note->filename = 'test.txt';
@@ -47,7 +47,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmark_deleted()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -60,7 +60,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteAttachment()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         $note->id = 1;
         $result = $note->deleteAttachment();
@@ -69,7 +69,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         //test without setting name
         $this->assertEquals('', $note->get_summary_text());
@@ -81,7 +81,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         //test with empty string params
         $expected = 'SELECT notes.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name  FROM notes 	LEFT JOIN contacts ON notes.contact_id=contacts.id   LEFT JOIN users ON notes.assigned_user_id=users.id where  notes.deleted=0 AND (contacts.deleted IS NULL OR contacts.deleted=0) ORDER BY notes.name';
@@ -96,7 +96,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -109,7 +109,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -122,7 +122,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
         $id = 'abcdef12345';
         $note->id = $id;
         $note->parent_type = 'Account';
@@ -147,7 +147,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistviewACLHelper()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $note->listviewACLHelper();
@@ -156,7 +156,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
 
         $this->assertEquals(false, $note->bean_implements('')); //test with blank value
         $this->assertEquals(false, $note->bean_implements('test')); //test with invalid value
