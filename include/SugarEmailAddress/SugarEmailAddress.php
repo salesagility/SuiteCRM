@@ -702,7 +702,7 @@ class SugarEmailAddress extends SugarBean
                     }
 
                     if (!empty($upd_eabr)) {
-			            $r2 = $this->db->query($upd_eabr);
+                        $r2 = $this->db->query($upd_eabr);
                     }
                 }
             }
@@ -713,13 +713,13 @@ class SugarEmailAddress extends SugarBean
         if (!empty($current_links) && !$isConversion) {
             $delete = "";
             foreach ($current_links as $eabr) {
-		        $delete .= empty($delete) ? "'" . $this->db->quote($eabr['id']) . "' " : ",'" . $this->db->quote($eabr['id']) . "'";
+                $delete .= empty($delete) ? "'" . $this->db->quote($eabr['id']) . "' " : ",'" . $this->db->quote($eabr['id']) . "'";
             }
 
             $eabr_unlink = "update email_addr_bean_rel set deleted=1 where id in ({$delete})";
-	        $this->db->query($eabr_unlink);
+            $this->db->query($eabr_unlink);
         }
-	    $this->stateBeforeWorkflow = null;
+        $this->stateBeforeWorkflow = null;
     }
 
     /**
@@ -1334,7 +1334,7 @@ class SugarEmailAddress extends SugarBean
         } elseif (
             $isValidEmailAddress
             && (int)$optInFlag === 1
-	    ) {
+        ) {
             // In case optInFlag is set and there is a duplicate,
             // copy the opt-in state from it if it has some kind of opt-in set.
             // This prevents losing the confirmed opt-in state in case we
