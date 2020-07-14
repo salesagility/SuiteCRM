@@ -54,7 +54,7 @@ class AOS_ContractsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AOS_ContractsDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_ContractsDashlet']['columns'];
 
-        $this->seedBean = new AOS_Contracts();
+        $this->seedBean = BeanFactory::newBean('AOS_Contracts');
     }
 
     /**

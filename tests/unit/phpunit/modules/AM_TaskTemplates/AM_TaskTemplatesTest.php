@@ -7,7 +7,7 @@ class AM_TaskTemplatesTest extends SuitePHPUnitFrameworkTestCase
     public function testAM_TaskTemplates()
     {
         // Execute the constructor and check for the Object type and type attribute
-        $am_taskTemplates = new AM_TaskTemplates();
+        $am_taskTemplates = BeanFactory::newBean('AM_TaskTemplates');
         $this->assertInstanceOf('AM_TaskTemplates', $am_taskTemplates);
         $this->assertInstanceOf('Basic', $am_taskTemplates);
         $this->assertInstanceOf('SugarBean', $am_taskTemplates);

@@ -116,7 +116,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $is_currency = true;
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
-        $this->currency = new Currency();
+        $this->currency = BeanFactory::newBean('Currencies');
         $currency = $this->currency;
         $currency_symbol = $currency->getDefaultCurrencySymbol();
         $currency->retrieve($currency->retrieveIDBySymbol($currency_symbol));
@@ -328,8 +328,8 @@ EOD;
                         count(*) AS opp_count,
                         sum((amount_usdollar*".$conversion_rate.")/1000) AS total
                     FROM users,opportunities  ";
-        $query .= " WHERE opportunities.date_closed >= ". DBManager::convert("'".$this->pbss_date_start."'", 'date').
-            " AND opportunities.date_closed <= ".DBManager::convert("'".$this->pbss_date_end."'", 'date') .
+        $query .= " WHERE opportunities.date_closed >= ". DBManagerFactory::getInstance()->convert("'".$this->pbss_date_start."'", 'date').
+            " AND opportunities.date_closed <= ".DBManagerFactory::getInstance()->convert("'".$this->pbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
         $query .= " GROUP BY opportunities.sales_stage";
         return $query;

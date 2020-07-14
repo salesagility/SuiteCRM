@@ -304,7 +304,7 @@ class Contact extends Person implements EmailInterface
         $custom_join = $this->getCustomJoin();
         // MFH - BUG #14208 creates alias name for select
         $select_query = "SELECT ";
-        $select_query .= DBManager::concat($this->table_name, array('first_name', 'last_name')) . " name, ";
+        $select_query .= $this->db->concat($this->table_name, array('first_name', 'last_name')) . " name, ";
         $select_query .= "
 				$this->table_name.*,
                 accounts.name as account_name,
@@ -485,7 +485,7 @@ class Contact extends Person implements EmailInterface
         }
         // Set campaign name if there is a campaign id
         if (!empty($this->campaign_id)) {
-            $camp = new Campaign();
+            $camp = BeanFactory::newBean('Campaigns');
             $where = "campaigns.id='{$this->campaign_id}'";
             $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
             if (!empty($campaign_list) && !empty($campaign_list[0]->name)) {
@@ -645,7 +645,7 @@ class Contact extends Person implements EmailInterface
 
         // cache this object since we'll be reusing it a bunch
         if (!($focus_user instanceof User)) {
-            $focus_user = new User();
+            $focus_user = BeanFactory::newBean('Users');
         }
 
 

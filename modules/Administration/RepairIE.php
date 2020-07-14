@@ -53,7 +53,7 @@ $q = "SELECT id, name, email_password FROM inbound_email WHERE deleted=0 AND sta
 $r = $db->query($q);
 
 while ($a = $db->fetchByAssoc($r)) {
-    $ieX = new InboundEmail();
+    $ieX = BeanFactory::newBean('InboundEmail');
     $ieX->retrieve($a['id']);
     if (!$ieX->repairAccount()) {
         // none of the iterations worked.  flag for display
