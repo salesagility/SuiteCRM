@@ -205,11 +205,11 @@ class SugarEmailAddress extends SugarBean
             || !empty($GLOBALS['reload_vardefs'])) {
 
             // build $this->custom_options from the field_defs if they exist
-	        if (!empty($dictionary[$this->object_name]['fields'])) {
-	    
+            if (!empty($dictionary[$this->object_name]['fields'])) {
+        
                 $custom_options = array();
 
-		        foreach ($dictionary[$this->object_name]['fields'] as $key => $value_array) {
+                foreach ($dictionary[$this->object_name]['fields'] as $key => $value_array) {
                     if (!empty($value_array['custom_option']) && !empty($value_array['name'])) {
                         $custom_options[] = $key;
                     }
@@ -220,7 +220,7 @@ class SugarEmailAddress extends SugarBean
             return;
         }
 
-	    $this->custom_options =& $loaded_definitions[$this->object_name]['custom_options'];
+        $this->custom_options =& $loaded_definitions[$this->object_name]['custom_options'];
     }
 
     /**
@@ -1369,7 +1369,7 @@ class SugarEmailAddress extends SugarBean
                 foreach($new_options as $key => $value) {
                     $upd_q .= "$key=$value, ";
                 }
-		    
+            
                 $upd_q .= (!is_null($optInFlag) ? ('confirm_opt_in=\'' . $this->db->quote($new_confirmed_opt_in) . '\', ') : '') .
                           'date_modified=' . $this->db->now() . ' ' .
                           'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
@@ -1534,7 +1534,7 @@ class SugarEmailAddress extends SugarBean
                     ear.bean_module,
                     ear.primary_address,
                     ear.reply_to_address,
-		            ear.deleted";
+                    ear.deleted";
 
         foreach($this->custom_options as $option) {
             $q .= ", ea.$option";
