@@ -116,7 +116,7 @@
               invalidEl.checked = email['invalid_email'] == 1 ? true : false;
             }
 
-	          _eaw.customOptions.forEach(function(option) {
+              _eaw.customOptions.forEach(function(option) {
                 var el = $('#' + this.module + this.id + 'emailAddress' + option.vname + 'Flag' + targetNumber);
                 if (el) {
                     el.checked = email[option.name] == 1 ? true : false;
