@@ -63,8 +63,6 @@ class MailMergeController extends SugarController
 
     public function action_search()
     {
-        global $beanList;
-        
         //set ajax view
         $this->view = 'ajax';
         //get the module
@@ -73,6 +71,8 @@ class MailMergeController extends SugarController
         $lmodule = strtolower($module);
         //get the search term
         $term = !empty($_REQUEST['term']) ? DBManagerFactory::getInstance()->quote($_REQUEST['term']) : '';
+        //in the case of Campaigns we need to use the related module
+        $relModule = !empty($_REQUEST['rel_module']) ? $_REQUEST['rel_module'] : null;
 
         $max = !empty($_REQUEST['max']) ? $_REQUEST['max'] : 10;
         $order_by = !empty($_REQUEST['order_by']) ? $_REQUEST['order_by'] : $lmodule.".name";
@@ -93,21 +93,16 @@ class MailMergeController extends SugarController
                 }
             }
 
-            if ($module === 'CampaignProspects') {
+            if ($module == 'CampaignProspects') {
                 $using_cp = true;
                 $module = 'Prospects';
-                //in the case of Campaigns we need to use the related module
-                $relModule = !empty($_REQUEST['rel_module']) ? $_REQUEST['rel_module'] : null;
                 $lmodule = strtolower($relModule);
-
-                if (isset($beanList[$relModule])) {
-                    $campaignWhere = $_SESSION['MAILMERGE_WHERE'];
-                    $where = $lmodule . ".first_name like '%" . $term . "%' OR " . $lmodule . ".last_name like '%" . $term . "%'";
-                    if ($campaignWhere) {
-                        $where .= ' AND ' . $campaignWhere;
-                    }
-                    $where .= ' AND related_type = #' . $lmodule . '#';
+                $campign_where = $_SESSION['MAILMERGE_WHERE'];
+                $where = $lmodule.".first_name like '%".$term."%' OR ".$lmodule.".last_name like '%".$term."%'";
+                if ($campign_where) {
+                    $where .= " AND ".$campign_where ;
                 }
+                $where .= " AND related_type = #".$lmodule."#";
             }
 
             $seed = SugarModule::get($module)->loadBean();

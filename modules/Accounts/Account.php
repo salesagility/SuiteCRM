@@ -252,7 +252,7 @@ class Account extends Company implements EmailInterface
 
         // Set campaign name if there is a campaign id
         if (!empty($this->campaign_id)) {
-            $camp = BeanFactory::newBean('Campaigns');
+            $camp = new Campaign();
 
             $campaignIdQuoted = $this->db->quoted($this->campaign_id);
 

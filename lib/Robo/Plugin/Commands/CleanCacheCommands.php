@@ -82,7 +82,6 @@ class CleanCacheCommands extends \Robo\Tasks
         }
 
         $cacheModules = 'cache/modules';
-
         foreach (scandir($cacheModules, SCANDIR_SORT_NONE) as $module) {
             if (file_exists($cacheModules . '/' . $module)
                 && is_dir($cacheModules . '/' . $module)

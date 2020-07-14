@@ -50,8 +50,8 @@ class SecurityGroup extends SecurityGroup_sugar
                     and secu.user_id = '$user_id'
                 where secg.deleted = 0
             )";
-        } else {
-            return " EXISTS (SELECT  1
+        }
+        return " EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -63,7 +63,6 @@ class SecurityGroup extends SecurityGroup_sugar
                                AND secr.module = '$module'
                        WHERE   secr.record_id = " . $table_name . '.id
                                AND secg.deleted = 0) ';
-        }
     }
 
     /**
@@ -106,15 +105,14 @@ class SecurityGroup extends SecurityGroup_sugar
             and secu.user_id = '" . $user_id . "'
     where secg.deleted = 0
 ) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
-        } else {
-            return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
+        }
+        return " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
     inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
             and secu.user_id = '" . $user_id . "'
     inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0
              and secr.module = '" . $module . "'
     where secg.deleted = 0
 ) securitygroup_join on securitygroup_join.id = " . $table_name . '.id ';
-        }
     }
 
     /**
@@ -363,7 +361,7 @@ class SecurityGroup extends SecurityGroup_sugar
                 if (!in_array($_REQUEST['relate_to'], array_keys($security_modules))) {
                     //check to see if relate_to is the relationship name
                     require_once 'modules/Relationships/Relationship.php';
-                    $relationship = BeanFactory::newBean('Relationships');
+                    $relationship = new Relationship();
                     $rel_module = $relationship->get_other_module(
                         $_REQUEST['relate_to'],
                         $focus_module_dir,
@@ -614,7 +612,7 @@ class SecurityGroup extends SecurityGroup_sugar
         $module_blacklist = array('SchedulersJobs', 'Schedulers', 'Trackers');
 
         require_once 'modules/Relationships/Relationship.php';
-        $rs = BeanFactory::newBean('Relationships');
+        $rs = new Relationship();
         $query = "SELECT lhs_module, rhs_module FROM $rs->table_name WHERE deleted=0 AND (lhs_module = 'SecurityGroups' OR rhs_module='SecurityGroups')";
         $GLOBALS['log']->debug("SecuritySuite: Get SecuritySuite Enabled Modules: $query");
         $result = $rs->db->query($query);

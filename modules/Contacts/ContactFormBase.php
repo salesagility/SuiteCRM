@@ -541,15 +541,13 @@ EOQ;
                     ob_clean();
                     $json = getJSONobj();
                     echo $json->encode(array('status' => 'dupe', 'get' => $location));
+                } elseif (!empty($_REQUEST['ajax_load'])) {
+                    echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
                 } else {
-                    if (!empty($_REQUEST['ajax_load'])) {
-                        echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
-                    } else {
-                        if (!empty($_POST['to_pdf'])) {
-                            $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
-                        }
-                        header("Location: index.php?$location");
+                    if (!empty($_POST['to_pdf'])) {
+                        $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
                     }
+                    header("Location: index.php?$location");
                 }
                 return null;
             }
@@ -573,7 +571,7 @@ EOQ;
             // fake this case like it's already saved.
             $focus->save($check_notify);
 
-            $email = BeanFactory::newBean('Emails');
+            $email = new Email();
             $email->retrieve($_REQUEST['inbound_email_id']);
             $email->parent_type = 'Contacts';
             $email->parent_id = $focus->id;
@@ -686,6 +684,6 @@ EOQ;
     */
     protected function getContact()
     {
-        return BeanFactory::newBean('Contacts');
+        return new Contact();
     }
 }

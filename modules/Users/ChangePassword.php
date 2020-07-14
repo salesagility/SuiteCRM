@@ -46,7 +46,7 @@ use SuiteCRM\Utility\SuiteValidator;
 
 if (isset($_POST['saveConfig'])) {
     require_once('modules/Users/User.php');
-    $focus = BeanFactory::newBean('Users');
+    $focus = new User();
     $isValidator = new SuiteValidator();
     if (!$isValidator->isValidId($_POST['record'])) {
         LoggerManager::getLogger()->warn('Invalid ID in post request');

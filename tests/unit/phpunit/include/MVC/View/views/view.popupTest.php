@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testViewPopup()

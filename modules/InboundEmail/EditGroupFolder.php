@@ -52,7 +52,7 @@ global $app_list_strings;
 global $current_user;
 global $sugar_config;
 
-$ie = BeanFactory::newBean('InboundEmail');
+$ie = new InboundEmail();
 $focus = new SugarFolder();
 $javascript = new Javascript();
 /* Start standard EditView setup logic */

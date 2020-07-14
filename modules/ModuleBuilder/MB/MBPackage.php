@@ -624,7 +624,7 @@ class MBPackage
      */
     public function getColumnsName()
     {
-        $meta = BeanFactory::newBean('EditCustomFields');
+        $meta = new FieldsMetaData();
         $arr = array();
         foreach ($meta->getFieldDefinitions() as $key => $value) {
             $arr[] = $key;

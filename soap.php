@@ -58,7 +58,7 @@ require_once('modules/Cases/Case.php');
 
 global $HTTP_RAW_POST_DATA;
 
-$administrator = BeanFactory::newBean('Administration');
+$administrator = new Administration();
 $administrator->retrieveSettings();
 
 // Sugarcrm namespace is necessary for backwards compatibility with existing SOAP clients

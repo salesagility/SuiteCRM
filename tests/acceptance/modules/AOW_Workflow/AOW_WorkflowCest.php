@@ -42,7 +42,7 @@ class AOW_WorkflowCest
     // tests
     public function testScenarioCreateWorkflow(
         AcceptanceTester $I,
-        \Step\Acceptance\NavigationBarTester $navigationBar,
+        \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\SideBar $sideBar,
         \Step\Acceptance\DetailView $detailView,

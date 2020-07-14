@@ -49,7 +49,7 @@ global $mod_strings;
 
 /* start standard DetailView layout process */
 $GLOBALS['log']->info("Groups DetailView");
-$focus = BeanFactory::newBean('Groups');
+$focus = new Group();
 $focus->retrieve($_REQUEST['record']);
 $detailView = new DetailView();
 $offset=0;

@@ -77,7 +77,7 @@ class OpportunitiesViewDetail extends ViewDetail
 
     public function display()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
             $currency->retrieve($this->bean->currency_id);
             if ($currency->deleted != 1) {

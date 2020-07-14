@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class vCalTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testvCal()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
 
         $this->assertInstanceOf('vCal', $vcal);
         $this->assertInstanceOf('SugarBean', $vcal);
@@ -32,7 +32,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
 
         //test without setting name
         $this->assertEquals(null, $vcal->get_summary_text());
@@ -44,7 +44,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -59,7 +59,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -74,7 +74,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -91,7 +91,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('Asserting String Start Width is imposible if expected is empty srting');
         
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
         $user_bean = new User('1');
 
         $expectedStart = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VFREEBUSY\r\nORGANIZER;CN= :VFREEBUSY\r\n";
@@ -107,7 +107,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
     {
         global $locale, $timedate;
 
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
         $user_bean = new User('1');
 
         $now_date_time = $timedate->getNow(true);
@@ -120,7 +120,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_vcal_freebusy()
     {
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
         $user_focus = new User('1');
 
         $expectedStart = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VFREEBUSY\r\nORGANIZER;CN= :VFREEBUSY\r\n";
@@ -134,7 +134,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcache_sugar_vcal()
     {
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
         $user_focus = new User('1');
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -148,7 +148,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcache_sugar_vcal_freebusy()
     {
-        $vcal = BeanFactory::newBean('vCals');
+        $vcal = new vCal();
         $user_focus = new User('1');
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -225,7 +225,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
     public function testget_ical_event()
     {
         $user = new User(1);
-        $meeting = BeanFactory::newBean('Meetings');
+        $meeting = new Meeting();
 
         $meeting->id = 1;
         $meeting->date_start = '2016-02-11 17:30:00';

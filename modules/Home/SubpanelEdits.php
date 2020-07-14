@@ -66,14 +66,12 @@ if (file_exists('modules/'. $_REQUEST['target_module'] . '/EditView.php')) {
         require_once('custom/' . $subpanelView);
         $subpanelClass =  'Custom' . $target_module . 'SubpanelQuickEdit';
         $sqc  = new $subpanelClass($target_module, $view);
+    } elseif (file_exists($subpanelView)) {
+        require_once($subpanelView);
+        $subpanelClass = $target_module . 'SubpanelQuickEdit';
+        $sqc  = new $subpanelClass($target_module, $view);
     } else {
-        if (file_exists($subpanelView)) {
-            require_once($subpanelView);
-            $subpanelClass = $target_module . 'SubpanelQuickEdit';
-            $sqc  = new $subpanelClass($target_module, $view);
-        } else {
-            require_once('include/EditView/SubpanelQuickEdit.php');
-            $sqc  = new SubpanelQuickEdit($target_module, $view);
-        }
+        require_once('include/EditView/SubpanelQuickEdit.php');
+        $sqc  = new SubpanelQuickEdit($target_module, $view);
     }
 }

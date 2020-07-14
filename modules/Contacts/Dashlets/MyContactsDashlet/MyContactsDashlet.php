@@ -64,7 +64,7 @@ class MyContactsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['MyContactsDashlet']['searchFields'];
         $this->columns = $dashletData['MyContactsDashlet']['columns'];
 
-        $this->seedBean = BeanFactory::newBean('Contacts');
+        $this->seedBean = new Contact();
     }
 
     /**

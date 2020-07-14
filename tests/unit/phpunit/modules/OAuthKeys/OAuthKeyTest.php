@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testOAuthKey()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $oauthKey = BeanFactory::newBean('OAuthKeys');
+        $oauthKey = new OAuthKey();
 
         $this->assertInstanceOf('OAuthKey', $oauthKey);
         $this->assertInstanceOf('Basic', $oauthKey);
@@ -32,7 +32,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
     public function testMain()
     {
         // test
-        $oauthKey = BeanFactory::newBean('OAuthKeys');
+        $oauthKey = new OAuthKey();
 
         //preset required attributes
         $oauthKey->name = 'test';
@@ -53,7 +53,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
     public function getByKey($key)
     {
-        $oauthKey = BeanFactory::newBean('OAuthKeys');
+        $oauthKey = new OAuthKey();
 
         //test with a invalid id
         $result = $oauthKey->getByKey('');
@@ -77,7 +77,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
     public function mark_deleted($id)
     {
-        $oauthKey = BeanFactory::newBean('OAuthKeys');
+        $oauthKey = new OAuthKey();
 
         $oauthKey->mark_deleted($id);
 

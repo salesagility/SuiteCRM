@@ -116,7 +116,7 @@ class AOW_Condition extends Basic
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
-                $condition = BeanFactory::newBean('AOW_Conditions');
+                $condition = new AOW_Condition();
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
@@ -132,10 +132,8 @@ class AOW_Condition extends Basic
                                         $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                                 }
                             }
-                        } else {
-                            if ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
-                                $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
-                            }
+                        } elseif ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
+                            $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
                         }
                         $condition->$field_name = $post_data[$key . $field_name][$i];
                     }

@@ -781,13 +781,14 @@ EOHTML;
                 if ((!is_null($width) && $sp['width'] == $width) || (is_null($width)) &&
                     (!is_null($height) && $sp['height'] == $height) || (is_null($height))) {
                     $other_attributes .= ' data-orig="'.$imageName.'"';
+
                     if ($sprite = $this->getSprite($sp['class'], $other_attributes, $alt)) {
-                        return $imageJSONEncode ? json_encode($sprite) : $sprite;
+                        return $sprite;
                     }
                 }
             }
         }
-      
+
         // img caching
         if (empty($cached_results[$imageName])) {
             $imageURL = $this->getImageURL($imageName, false);
@@ -931,9 +932,8 @@ EOHTML;
         if (isset($this->_imageCache[$imageName])) {
             if ($addJSPath) {
                 return getJSPath($this->_imageCache[$imageName]);
-            } else {
-                return $this->_imageCache[$imageName];
             }
+            return $this->_imageCache[$imageName];
         }
         $imagePath = '';
         if (($filename = $this->_getImageFileName('custom/'.$this->getImagePath().'/'.$imageName)) != '') {
@@ -1013,9 +1013,8 @@ EOHTML;
         if (isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName]))) {
             if ($returnURL) {
                 return getJSPath("cache/".$this->_cssCache[$cssFileName]);
-            } else {
-                return sugar_cached($this->_cssCache[$cssFileName]);
             }
+            return sugar_cached($this->_cssCache[$cssFileName]);
         }
 
         $cssFileContents = '';
@@ -1094,9 +1093,8 @@ EOHTML;
         if (isset($this->_jsCache[$jsFileName]) && is_file(sugar_cached($this->_jsCache[$jsFileName]))) {
             if ($returnURL) {
                 return getJSPath("cache/".$this->_jsCache[$jsFileName]);
-            } else {
-                return sugar_cached($this->_jsCache[$jsFileName]);
             }
+            return sugar_cached($this->_jsCache[$jsFileName]);
         }
 
         $jsFileContents = '';
@@ -1209,10 +1207,8 @@ EOHTML;
             $value = '';
             if (isset($sugar_config['theme_settings'][$this->dirName][$name])) {
                 $value = $sugar_config['theme_settings'][$this->dirName][$name];
-            } else {
-                if (isset($def['default'])) {
-                    $value = $def['default'];
-                }
+            } elseif (isset($def['default'])) {
+                $value = $def['default'];
             }
             $config[$name] = $value;
         }

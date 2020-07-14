@@ -52,7 +52,7 @@ function reschedule_history($focus, $field, $value, $view)
         
         $result = $focus->db->query($query);
         
-        $reschedule = BeanFactory::newBean('Calls_Reschedule');
+        $reschedule = new Calls_Reschedule();
 
         while ($row = $focus->db->fetchByAssoc($result)) {
             $reschedule->retrieve($row['id']);

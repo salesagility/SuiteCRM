@@ -51,7 +51,7 @@ global $mod_strings;
 global $theme;
 
 
-$focus = BeanFactory::newBean('Groups');
+$focus = new Group();
 
 if (!is_admin($current_user) && $_REQUEST['record'] != $current_user->id) {
     sugar_die("Unauthorized access to administration.");

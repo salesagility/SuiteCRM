@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testpreDisplay()
@@ -59,7 +59,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewQuickcreate();
 
         $_REQUEST['module'] = 'Accounts';
-        $view->bean = BeanFactory::newBean('Accounts');
+        $view->bean = new Account();
 
         ob_start();
 

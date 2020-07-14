@@ -158,7 +158,7 @@ class SugarApplication
             $authController->authController->redirectToLogin($this);
         }
 
-        $GLOBALS['current_user'] = BeanFactory::newBean('Users');
+        $GLOBALS['current_user'] = new User();
         if (isset($_SESSION['authenticated_user_id'])) {
             // set in modules/Users/Authenticate.php
             if (!$authController->sessionAuthenticate()) {
@@ -421,10 +421,8 @@ class SugarApplication
             $theme = $GLOBALS['sugar_config']['default_theme'];
             if (!empty($_SESSION['authenticated_user_theme'])) {
                 $theme = $_SESSION['authenticated_user_theme'];
-            } else {
-                if (!empty($_COOKIE['sugar_user_theme'])) {
-                    $theme = $_COOKIE['sugar_user_theme'];
-                }
+            } elseif (!empty($_COOKIE['sugar_user_theme'])) {
+                $theme = $_COOKIE['sugar_user_theme'];
             }
 
             if (isset($_SESSION['authenticated_user_theme']) && $_SESSION['authenticated_user_theme'] != '') {
@@ -575,26 +573,24 @@ class SugarApplication
                 sugar_cleanup(true);
             }
             return false;
-        } else {
-            if (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
-                $http_ref = parse_url($_SERVER['HTTP_REFERER']);
-                if ($http_ref['host'] !== $_SERVER['SERVER_NAME'] && !in_array($this->controller->action, $this->whiteListActions) &&
+        } elseif (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
+            $http_ref = parse_url($_SERVER['HTTP_REFERER']);
+            if ($http_ref['host'] !== $_SERVER['SERVER_NAME'] && !in_array($this->controller->action, $this->whiteListActions) &&
                     (empty($whiteListReferers) || !in_array($http_ref['host'], $whiteListReferers))) {
-                    if ($dieIfInvalid) {
-                        header("Cache-Control: no-cache, must-revalidate");
-                        $whiteListActions = $this->whiteListActions;
-                        $whiteListActions[] = $this->controller->action;
-                        $whiteListString = "'" . implode("', '", $whiteListActions) . "'";
+                if ($dieIfInvalid) {
+                    header("Cache-Control: no-cache, must-revalidate");
+                    $whiteListActions = $this->whiteListActions;
+                    $whiteListActions[] = $this->controller->action;
+                    $whiteListString = "'" . implode("', '", $whiteListActions) . "'";
 
-                        $ss = new Sugar_Smarty;
-                        $ss->assign('host', $http_ref['host']);
-                        $ss->assign('action', $this->controller->action);
-                        $ss->assign('whiteListString', $whiteListString);
-                        $ss->display('include/MVC/View/tpls/xsrf.tpl');
-                        sugar_cleanup(true);
-                    }
-                    return false;
+                    $ss = new Sugar_Smarty;
+                    $ss->assign('host', $http_ref['host']);
+                    $ss->assign('action', $this->controller->action);
+                    $ss->assign('whiteListString', $whiteListString);
+                    $ss->display('include/MVC/View/tpls/xsrf.tpl');
+                    sugar_cleanup(true);
                 }
+                return false;
             }
         }
         return true;
@@ -639,7 +635,7 @@ class SugarApplication
     {
         session_destroy();
     }
-    
+
     /**
      * Redirect to another URL
      *
@@ -675,9 +671,7 @@ class SugarApplication
                 header("Location: " . $url);
             }
         }
-        if (!defined('SUITE_PHPUNIT_RUNNER')) {
-            exit();
-        }
+        exit();
     }
 
     /**
@@ -764,9 +758,8 @@ class SugarApplication
             $msgs = $_SESSION[$type];
             unset($_SESSION[$type]);
             return $msgs;
-        } else {
-            return array();
         }
+        return array();
     }
 
     /**
@@ -886,8 +879,7 @@ class SugarApplication
         }
         if (empty($vars)) {
             return "index.php?module=Home&action=index";
-        } else {
-            return "index.php?" . http_build_query($vars);
         }
+        return "index.php?" . http_build_query($vars);
     }
 }

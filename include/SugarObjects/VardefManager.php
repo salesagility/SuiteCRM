@@ -90,10 +90,8 @@ class VardefManager
     {
         if ($enable && isset($custom_disabled_modules[$module])) {
             unset($custom_disabled_modules[$module]);
-        } else {
-            if (!$enable) {
-                $custom_disabled_modules[$module] = true;
-            }
+        } elseif (!$enable) {
+            $custom_disabled_modules[$module] = true;
         }
     }
 

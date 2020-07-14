@@ -75,14 +75,14 @@ class ImportViewStep3 extends ImportView
         $this->ss->assign("CURRENT_STEP", $this->currentStep);
         // attempt to lookup a preexisting field map
         // use the custom one if specfied to do so in step 1
-        $mapping_file = BeanFactory::newBean('Import_1');
+        $mapping_file = new ImportMap();
         $field_map = $mapping_file->set_get_import_wizard_fields();
         $default_values = array();
         $ignored_fields = array();
 
         if (!empty($_REQUEST['source_id'])) {
             $GLOBALS['log']->fatal("Loading import map properties.");
-            $mapping_file = BeanFactory::newBean('Import_1');
+            $mapping_file = new ImportMap();
             $mapping_file->retrieve($_REQUEST['source_id'], false);
             $_REQUEST['source'] = $mapping_file->source;
             $has_header = $mapping_file->has_header;
@@ -121,10 +121,6 @@ class ImportViewStep3 extends ImportView
         //populate import locale  values from import mapping if available, these values will be used througout the rest of the code path
 
         $uploadFileName = $_REQUEST['file_name'];
-
-        if (strpos($uploadFileName, 'phar://') !== false) {
-            return;
-        }
 
         // Now parse the file and look for errors
         $importFile = new ImportFile($uploadFileName, $delimiter, html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), false);
@@ -229,12 +225,10 @@ class ImportViewStep3 extends ImportView
                 // get field name
                 if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)])) {
                     $displayname = str_replace(":", "", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]);
+                } elseif (!empty($properties['vname'])) {
+                    $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                 } else {
-                    if (!empty($properties['vname'])) {
-                        $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
-                    } else {
-                        $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
-                    }
+                    $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
                 }
                 // see if this is required
                 $req_mark  = "";
@@ -456,19 +450,13 @@ class ImportViewStep3 extends ImportView
         if (file_exists("custom/modules/Import/maps/{$customName}.php")) {
             require_once("custom/modules/Import/maps/{$customName}.php");
             return $customName;
-        } else {
-            if (file_exists("custom/modules/Import/maps/{$name}.php")) {
-                require_once("custom/modules/Import/maps/{$name}.php");
-            } else {
-                if (file_exists("modules/Import/maps/{$name}.php")) {
-                    require_once("modules/Import/maps/{$name}.php");
-                } else {
-                    if (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
-                        require_once('custom/modules/Import/maps/ImportMapOther.php');
-                        return 'ImportMapOther';
-                    }
-                }
-            }
+        } elseif (file_exists("custom/modules/Import/maps/{$name}.php")) {
+            require_once("custom/modules/Import/maps/{$name}.php");
+        } elseif (file_exists("modules/Import/maps/{$name}.php")) {
+            require_once("modules/Import/maps/{$name}.php");
+        } elseif (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
+            require_once('custom/modules/Import/maps/ImportMapOther.php');
+            return 'ImportMapOther';
         }
 
         return $name;

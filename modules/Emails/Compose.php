@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $data = $_REQUEST;
 
 if (!empty($data['listViewExternalClient'])) {
-    $email = BeanFactory::newBean('Emails');
+    $email = new Email();
     echo $email->getNamePlusEmailAddressesForCompose($_REQUEST['action_module'], (explode(",", $_REQUEST['uid'])));
 }
 //For the full compose/email screen, the compose package is generated and script execution
@@ -128,7 +128,7 @@ function generateComposeDataPackage($data, $forFullCompose = true)
             $subject = str_replace('%1', $bean->case_number, $bean->getEmailSubjectMacro() . " " . from_html($bean->name));//bug 41928
             $bean->load_relationship("contacts");
             $contact_ids = $bean->contacts->get();
-            $contact = BeanFactory::newBean('Contacts');
+            $contact = new Contact();
             foreach ($contact_ids as $cid) {
                 $contact->retrieve($cid);
                 $namePlusEmail .= empty($namePlusEmail) ? "" : ", ";
@@ -182,7 +182,7 @@ function generateComposeDataPackage($data, $forFullCompose = true)
             'email_id' => $email_id,
         );
     } elseif (isset($_REQUEST['ListView'])) {
-        $email = BeanFactory::newBean('Emails');
+        $email = new Email();
         $namePlusEmail = $email->getNamePlusEmailAddressesForCompose($_REQUEST['action_module'], (explode(",", $_REQUEST['uid'])));
         $ret = array(
             'to_email_addrs' => $namePlusEmail,
@@ -191,8 +191,8 @@ function generateComposeDataPackage($data, $forFullCompose = true)
         require_once("modules/Emails/EmailUI.php");
 
         $ret = array();
-        $ie = BeanFactory::newBean('InboundEmail');
-        $ie->email = BeanFactory::newBean('Emails');
+        $ie = new InboundEmail();
+        $ie->email = new Email();
         $ie->email->email2init();
         $replyType = $data['reply'];
         $email_id = $data['record'];
@@ -299,7 +299,7 @@ function getQuotesRelatedData($data)
     $emailId = $data['recordId'];
 
     require_once("modules/Emails/EmailUI.php");
-    $email = BeanFactory::newBean('Emails');
+    $email = new Email();
     $email->retrieve($emailId);
     $return['subject'] = $email->name;
     $return['body'] = from_html($email->description_html);

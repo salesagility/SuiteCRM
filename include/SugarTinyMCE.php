@@ -133,30 +133,26 @@ class SugarTinyMCE
         $jsConfig = $json->encode($config);
 
         $instantiateCall = '';
-        $unique = 'default';
         if (!empty($targets)) {
             $exTargets = explode(",", $targets);
-            $unique = $exTargets[0];
             foreach ($exTargets as $instance) {
                 $instantiateCall .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('{$instance}'));\n";
             }
         }
         $path = getJSPath('include/javascript/tiny_mce/tiny_mce.js');
         $ret =<<<eoq
-<script type="text/javascript"  src="$path"></script>
-<script type="text/javascript">
+<script type="text/javascript" language="Javascript" src="$path"></script>
+<script type="text/javascript" language="Javascript">
 <!--
 $(document).ready(function(){
-  if (!SUGAR.ajaxUI.hist_loaded){
-	load_mce_{$unique}();
-	}
+	load_mce();
 });
 if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded){
-    setTimeout(function(){ load_mce_{$unique}();},40);
+    load_mce();
 }
-function load_mce_{$unique}(){
+function load_mce() {
     if (!SUGAR.util.isTouchScreen()) {
-        if(tinyMCE.editors.length === 0 ){
+        if(tinyMCE.editors.length == 0 ){
             tinyMCE.init({$jsConfig});
         }else{
            {$instantiateCall}

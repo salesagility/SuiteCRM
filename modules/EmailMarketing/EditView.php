@@ -54,14 +54,12 @@ global $current_user;
 // global $default_language;
 // global $cal_codes;
 
-$focus = BeanFactory::newBean('EmailMarketing');
+$focus = new EmailMarketing();
 if (isset($_REQUEST['record']) && $_REQUEST['record'] && isset($_REQUEST['parent_id']) && $_REQUEST['parent_id']) {
     SugarApplication::redirect('index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $_REQUEST['parent_id'] . '&campaign_id=' . $_REQUEST['parent_id'] . '&marketing_id=' . $_REQUEST['record'] . '&func=editEmailMarketing');
     return;
-} else {
-    if (isset($_REQUEST['record']) && $_REQUEST['record']) {
-        $focus->retrieve($_REQUEST['record']);
-    }
+} elseif (isset($_REQUEST['record']) && $_REQUEST['record']) {
+    $focus->retrieve($_REQUEST['record']);
 }
 
 if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
@@ -147,7 +145,7 @@ if ($focus->template_id) {
 //include campaign utils..
 require_once('modules/Campaigns/utils.php');
 if (empty($_REQUEST['campaign_name'])) {
-    $campaign = BeanFactory::newBean('Campaigns');
+    $campaign = new Campaign();
     $campaign->retrieve($campaign_id);
     $campaign_name=$campaign->name;
 } else {

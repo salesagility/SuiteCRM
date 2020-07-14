@@ -47,7 +47,7 @@ if (!isset($_REQUEST['record'])) {
     sugar_die("A record number must be specified to delete the campaign.");
 }
 
-$focus = BeanFactory::newBean('Campaigns');
+$focus = new Campaign();
 $focus->retrieve($_REQUEST['record']);
 
 if (isset($_REQUEST['mode']) and $_REQUEST['mode']=='Test') {

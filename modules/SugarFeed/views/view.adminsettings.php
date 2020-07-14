@@ -71,7 +71,7 @@ class ViewAdminsettings extends SugarView
     {
         global $mod_strings, $app_strings;
 
-        $admin = BeanFactory::newBean('Administration');
+        $admin = new Administration();
         $admin->retrieveSettings();
 
         // Handle posts
@@ -123,14 +123,12 @@ class ViewAdminsettings extends SugarView
 
                 $admin->retrieveSettings(false, true);
                 SugarFeed::flushBackendCache();
-            } else {
-                if ($_REQUEST['process'] == 'deleteRecords') {
-                    if (!isset($db)) {
-                        $db = DBManagerFactory::getInstance();
-                    }
-                    $db->query("UPDATE sugarfeed SET deleted = '1'");
-                    echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
+            } elseif ($_REQUEST['process'] == 'deleteRecords') {
+                if (!isset($db)) {
+                    $db = DBManagerFactory::getInstance();
                 }
+                $db->query("UPDATE sugarfeed SET deleted = '1'");
+                echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
             }
 
 

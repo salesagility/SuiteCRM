@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testdisplay()
@@ -18,7 +18,7 @@ class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
         //execute the method with required child objects preset and check for the Object type and type attribute
         $view = new ViewVcard();
         $view->module = 'Contacts';
-        $view->bean = BeanFactory::newBean('Contacts');
+        $view->bean = new Contact();
         $this->expectOutputRegex('/.*BEGIN:VCARD.*/');
         //execute the method and test if it works and does not throws an exception other than headers output exception.
         try {

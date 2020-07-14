@@ -5,19 +5,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'modules/Audit/Audit.php';
 class AuditTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testAudit()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
         $this->assertInstanceOf('Audit', $audit);
         $this->assertInstanceOf('SugarBean', $audit);
         $this->assertAttributeEquals('Audit', 'module_dir', $audit);
@@ -26,7 +26,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
 
         //test without setting name
         $this->assertEquals(null, $audit->get_summary_text());
@@ -38,7 +38,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -53,7 +53,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->fill_in_additional_list_fields();
@@ -67,7 +67,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->fill_in_additional_detail_fields();
@@ -81,7 +81,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_parent_fields()
     {
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->fill_in_additional_parent_fields();
@@ -95,7 +95,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->get_list_view_data();
@@ -109,7 +109,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_audit_link()
     {
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $audit->get_audit_link();
@@ -124,9 +124,9 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
     public function testget_audit_list()
     {
         global $focus;
-        $focus = BeanFactory::newBean('Accounts'); //use audit enabbled module object
+        $focus = new Account(); //use audit enabbled module object
 
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
 
         //execute the method and verify that it returns an array
         $result = $audit->get_audit_list();
@@ -136,9 +136,9 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
     public function testgetAssociatedFieldName()
     {
         global $focus;
-        $focus = BeanFactory::newBean('Accounts'); //use audit enabbled module object
+        $focus = new Account(); //use audit enabbled module object
 
-        $audit = BeanFactory::newBean('Audit');
+        $audit = new Audit();
 
         //test with name field
         $result = $audit->getAssociatedFieldName('name', '1');

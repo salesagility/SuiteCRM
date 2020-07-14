@@ -120,7 +120,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(BeanFactory::newBean('Leads'));
+        $javascript->setSugarBean(new Lead());
         $javascript->addField('email1', 'false', $prefix);
         $javascript->addField('email2', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
@@ -167,7 +167,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(BeanFactory::newBean('Leads'));
+        $javascript->setSugarBean(new Lead());
         $javascript->addField('email1', 'false', $prefix);
         $javascript->addField('email2', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
@@ -257,7 +257,7 @@ EOQ;
         require_once('include/formbase.php');
 
         if (empty($exist_lead)) {
-            $focus = BeanFactory::newBean('Leads');
+            $focus = new Lead();
         } else {
             $focus = $exist_lead;
         }
@@ -347,15 +347,13 @@ EOQ;
                     ob_clean();
                     $json = getJSONobj();
                     echo $json->encode(array('status' => 'dupe', 'get' => $location));
+                } elseif (!empty($_REQUEST['ajax_load'])) {
+                    echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
                 } else {
-                    if (!empty($_REQUEST['ajax_load'])) {
-                        echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
-                    } else {
-                        if (!empty($_POST['to_pdf'])) {
-                            $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
-                        }
-                        header("Location: index.php?$location");
+                    if (!empty($_POST['to_pdf'])) {
+                        $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
                     }
+                    header("Location: index.php?$location");
                 }
                 return null;
             }
@@ -381,7 +379,7 @@ EOQ;
         $return_id = $focus->id;
 
         if (isset($_POST[$prefix.'prospect_id']) &&  !empty($_POST[$prefix.'prospect_id'])) {
-            $prospect=BeanFactory::newBean('Prospects');
+            $prospect=new Prospect();
             $prospect->retrieve($_POST[$prefix.'prospect_id']);
             $prospect->lead_id=$focus->id;
             // Set to keep email in target
@@ -408,7 +406,7 @@ EOQ;
 
             // fake this case like it's already saved.
 
-            $email = BeanFactory::newBean('Emails');
+            $email = new Email();
             $email->retrieve($_REQUEST['inbound_email_id']);
             $email->parent_type = 'Leads';
             $email->parent_id = $focus->id;

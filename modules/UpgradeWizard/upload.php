@@ -235,12 +235,10 @@ if (!$stop) {
         $GLOBALS['top_message'] = '';
     }
     $GLOBALS['top_message'] .= "<b>{$mod_strings['LBL_UPLOAD_SUCCESS']}</b>";
+} elseif (!$frozen) {
+    $GLOBALS['top_message'] .= "<br />";
 } else {
-    if (!$frozen) {
-        $GLOBALS['top_message'] .= "<br />";
-    } else {
-        $GLOBALS['top_message'] = "<b>{$frozen}</b>";
-    }
+    $GLOBALS['top_message'] = "<b>{$frozen}</b>";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

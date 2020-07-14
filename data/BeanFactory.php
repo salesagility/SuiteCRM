@@ -3,7 +3,6 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 /*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -52,166 +51,79 @@ require_once 'data/SugarBean.php';
  */
 class BeanFactory
 {
-    /**
-     * @var array
-     */
-    protected static $loadedBeans = [];
-
-    /**
-     * @var int
-     */
+    protected static $loadedBeans = array();
     protected static $maxLoaded = 10;
-
-    /**
-     * @var int
-     */
     protected static $total = 0;
-
-    /**
-     * @var array
-     */
-    protected static $loadOrder = [];
-
-    /**
-     * @var array
-     */
-    protected static $touched = [];
-
-    /**
-     * @var int
-     */
+    protected static $loadOrder = array();
+    protected static $touched = array();
     public static $hits = 0;
 
     /**
-     * Returns a SugarBean object by id.
-     * The Last 10 loaded beans are cached in memory to prevent multiple retrieves per request.
+     * Returns a SugarBean object by id. The Last 10 loaded beans are cached in memory
+     * to prevent multiple retrieves per request.
      * If no id is passed, a new bean is created.
      *
      * @static
      *
      * @param string $module
      * @param string $id
-     * @param array $params
-     *        A name/value array of parameters. Names: encode, deleted.
-     *        If $params is boolean we revert to the old arguments (encode, deleted), and use $params as $encode.
-     *        This will be changed to using only $params in later versions.
-     * @param bool $deleted
-     *        @see SugarBean::retrieve
+     * @param array  $params  A name/value array of parameters. Names: encode, deleted,
+     *                        If $params is boolean we revert to the old arguments (encode, deleted),
+ *                            and use $params as $encode.
+     *                        This will be changed to using only $params in later versions.
+     * @param bool   $deleted @see SugarBean::retrieve
      *
      * @return SugarBean|bool
      */
-    public static function getBean($module, $id = null, $params = [], $deleted = true)
+    public static function getBean($module, $id = null, $params = array(), $deleted = true)
     {
-        $params = self::convertParams($params);
-        $encode = self::hasEncodeFlag($params);
-        $deleted = self::hasDeletedFlag($params, $deleted);
 
-        self::initBeanRegistry($module);
+        // Check if params is an array, if not use old arguments
+        if (isset($params) && !is_array($params)) {
+            $params = array('encode' => $params);
+        }
 
-        $beanClass = self::getBeanClass($module);
+        // Pull values from $params array
+        $encode = isset($params['encode']) ? $params['encode'] : true;
+        $deleted = isset($params['deleted']) ? $params['deleted'] : $deleted;
 
-        if (!self::loadBeanFile($module)) {
+        if (!isset(self::$loadedBeans[$module])) {
+            self::$loadedBeans[$module] = array();
+            self::$touched[$module] = array();
+        }
+
+        $beanClass = self::getBeanName($module);
+
+        if (empty($beanClass) || !class_exists($beanClass)) {
             return false;
         }
 
-        if (empty($id)) {
-            return new $beanClass();
-        }
-
-        if (empty(self::$loadedBeans[$module][$id])) {
-            /* @var SugarBean $bean */
-            $bean = new $beanClass();
-
-            $result = $bean->retrieve($id, $encode, $deleted);
-
-            if ($result === null) {
-                return false;
+        if (!empty($id)) {
+            if (empty(self::$loadedBeans[$module][$id])) {
+                $bean = new $beanClass();
+                $result = $bean->retrieve($id, $encode, $deleted);
+                if ($result == null) {
+                    return false;
+                }
+                self::registerBean($module, $bean, $id);
+            } else {
+                ++self::$hits;
+                ++self::$touched[$module][$id];
+                $bean = self::$loadedBeans[$module][$id];
+                if ($deleted && $bean->deleted) {
+                    return false;
+                }
             }
-
-            self::registerBean($module, $bean, $id);
-
-            return $bean;
-        }
-
-        ++self::$hits;
-
-        ++self::$touched[$module][$id];
-
-        $bean = self::$loadedBeans[$module][$id];
-
-        if ($deleted && $bean->deleted) {
-            return false;
+        } else {
+            $bean = new $beanClass();
         }
 
         return $bean;
     }
 
     /**
-     * @param array|bool $params
-     * @return array
-     */
-    protected static function convertParams($params)
-    {
-        if (!is_array($params)) {
-            $params = [
-                'encode' => $params,
-            ];
-        }
-
-        return $params;
-    }
-
-    /**
-     * initialises loadedBeans and touched registry arrays.
-     *
-     * @param string $module
-     *
-     * @return void
-     */
-    protected static function initBeanRegistry($module)
-    {
-        if (!isset(self::$loadedBeans[$module])) {
-            self::$loadedBeans[$module] = [];
-
-            self::$touched[$module] = [];
-        }
-    }
-
-    /**
-     * Pulls encoded flag from params array if set or true if not.
-     *
-     * @param array $params
-     *
-     * @return bool|mixed
-     */
-    protected static function hasEncodeFlag($params)
-    {
-        return isset($params['encode'])
-            ? $params['encode']
-            : true;
-    }
-
-    /**
-     * Pulls deleted flag from params array if set or the one given if not.
-     *
-     * @param array $params
-     * @param bool|mixed $deleted
-     *
-     * @return bool
-     */
-    protected static function hasDeletedFlag($params, $deleted)
-    {
-        return isset($params['deleted'])
-            ? $params['deleted']
-            : $deleted;
-    }
-
-    /**
-     * Gets a new bean for given module.
-     *
      * @param $module
-     *
-     * @return SugarBean|bool
+     * @return bool|SugarBean
      */
     public static function newBean($module)
     {
@@ -219,37 +131,12 @@ class BeanFactory
     }
 
     /**
-     * Gets the bean meta info for given module.
-     *
      * @param $module
-     *
-     * @return array
-     */
-    public static function getBeanMeta($module)
-    {
-        return [
-            'moduleName' => $module,
-            'beanName' => self::getBeanName($module),
-            'customBeanName' => self::getCustomBeanName($module),
-            'beanClass' => self::getBeanClass($module),
-            'objectName' => self::getObjectName($module),
-            'customObjectName' => self::getCustomObjectName($module),
-            'classFile' => self::getBeanFile($module),
-            'customClassFile' => self::getCustomBeanFile($module),
-        ];
-    }
-
-    /**
-     * Gets the core bean name/class for given module or false.
-     *
-     * @param $module
-     *
      * @return string|bool
      */
     public static function getBeanName($module)
     {
         global $beanList;
-
         if (empty($beanList[$module])) {
             return false;
         }
@@ -258,53 +145,18 @@ class BeanFactory
     }
 
     /**
-     * Gets custom bean name/class for given module or false.
+     * Returns the object name / dictionary key for a given module. This should normally
+     * be the same as the bean name, but may not for special case modules (ex. Case vs aCase).
      *
-     * @param $module
-     *
-     * @return string|bool
-     */
-    public static function getCustomBeanName($module)
-    {
-        global $customBeanList;
-
-        if (empty($customBeanList[$module])) {
-            return false;
-        }
-
-        return $customBeanList[$module];
-    }
-
-    /**
-     * Gets custom bean class if exists or core if not for given module.
-     *
-     * @param $module
-     *
-     * @return string|bool
-     */
-    public static function getBeanClass($module)
-    {
-        global $customBeanList;
-
-        if (empty($customBeanList[$module])) {
-            return self::getBeanName($module);
-        }
-
-        return $customBeanList[$module];
-    }
-
-    /**
-     * Returns the core object name / dictionary key for a given module.
-     * This should normally be the same as the bean name, but may not for special case modules (ex. Case vs aCase).
+     * @static
      *
      * @param string $module
      *
-     * @return string|bool
+     * @return bool
      */
     public static function getObjectName($module)
     {
         global $objectList;
-
         if (empty($objectList[$module])) {
             return self::getBeanName($module);
         }
@@ -313,132 +165,25 @@ class BeanFactory
     }
 
     /**
-     * Returns the custom object name / dictionary key for a given module.
-     * This should normally be the same as the bean name, but may not for special case modules (ex. Case vs aCase).
-     *
-     * @param string $module
-     *
-     * @return string|bool
-     */
-    public static function getCustomObjectName($module)
-    {
-        global $customObjectList;
-
-        if (empty($customObjectList[$module])) {
-            return self::getCustomBeanName($module);
-        }
-
-        return $customObjectList[$module];
-    }
-
-    /**
-     * Gets core bean file path as string for given module or false.
-     *
-     * @param string $module
-     *
-     * @return string|bool
-     */
-    public static function getBeanFile($module)
-    {
-        global $beanFiles;
-
-        $beanClass = self::getBeanName($module);
-
-        if (!empty($beanFiles[$beanClass])) {
-            return $beanFiles[$beanClass];
-        }
-
-        return false;
-    }
-
-    /**
-     * Gets custom bean file path as string for given module or false.
-     *
-     * @param string $module
-     *
-     * @return string|bool
-     */
-    public static function getCustomBeanFile($module)
-    {
-        global $customBeanFiles;
-
-        $beanClass = self::getBeanName($module);
-
-        $customBeanClass = self::getBeanClass($module);
-
-        if (!empty($customBeanFiles[$customBeanClass])) {
-            return $customBeanFiles[$customBeanClass];
-        }
-
-        if (!empty($customBeanFiles[$beanClass])) {
-            return $customBeanFiles[$beanClass];
-        }
-
-        return false;
-    }
-
-    /**
-     * Loads core bean class and then custom bean class if exists for given module.
-     *
-     * @param string $module
-     *
-     * @return bool
-     */
-    public static function loadBeanFile($module)
-    {
-        global $log;
-
-        $beanFile = self::getBeanFile($module);
-
-        if (empty($beanFile)) {
-            $log->fatal('Cannot find bean file for module: ' . $module);
-
-            return false;
-        }
-
-        if (!file_exists($beanFile)) {
-            $log->fatal('Bean file does not exist in path: ' . $beanFile);
-
-            return false;
-        }
-
-        $customBeanFile = self::getCustomBeanFile($module);
-
-        if (!empty($customBeanFile) && !file_exists($customBeanFile)) {
-            $log->fatal('Custom Bean file does not exist in path: ' . $customBeanFile);
-
-            return false;
-        }
-
-        require_once $beanFile;
-
-        if (!empty($customBeanFile)) {
-            require_once $customBeanFile;
-        }
-
-        return true;
-    }
-
-    /**
+     * @static
      * This function registers a bean with the bean factory so that it can be access from across the code without doing
      * multiple retrieves. Beans should be registered as soon as they have an id.
      *
-     * @param string $module
-     * @param SugarBean $bean
-     * @param string|bool $id
+     * @param string      $module
+     * @param SugarBean   $bean
+     * @param bool|string $id
      *
-     * @return bool
+     * @return bool true if the bean registered successfully.
      */
     public static function registerBean($module, $bean, $id = false)
     {
         global $beanList;
-
         if (empty($beanList[$module])) {
             return false;
         }
 
         if (!isset(self::$loadedBeans[$module])) {
-            self::$loadedBeans[$module] = [];
+            self::$loadedBeans[$module] = array();
         }
 
         //Do not double register a bean
@@ -446,47 +191,33 @@ class BeanFactory
             return true;
         }
 
-        $info = [];
-
         $index = 'i'.(self::$total % self::$maxLoaded);
-
         //We should only hold a limited number of beans in memory at a time.
         //Once we have the max, unload the oldest bean.
         if (count(self::$loadOrder) >= self::$maxLoaded - 1) {
             for ($i = 0; $i < self::$maxLoaded; ++$i) {
-                if (!isset(self::$loadOrder[$index])) {
+                if (isset(self::$loadOrder[$index])) {
+                    $info = self::$loadOrder[$index];
+                    //If a bean isn't in the database yet, we need to hold onto it.
+                    if (!empty(self::$loadedBeans[$info['module']][$info['id']]->in_save)) {
+                        ++self::$total;
+                    } elseif (!empty(self::$touched[$info['module']][$info['id']])
+                        && self::$touched[$info['module']][$info['id']] > 0) {
+                        //Beans that have been used recently should be held in memory if possible
+                        --self::$touched[$info['module']][$info['id']];
+                        ++self::$total;
+                    } else {
+                        break;
+                    }
+                } else {
                     break;
                 }
-                $info = self::$loadOrder[$index];
-
-                // If a bean isn't in the database yet, we need to hold onto it.
-                $beanInSave = !empty(self::$loadedBeans[$info['module']][$info['id']]->in_save);
-
-                // Beans that have been used recently should be held in memory if possible
-                $beanInMemory = (
-                    !empty(self::$touched[$info['module']][$info['id']])
-                    && self::$touched[$info['module']][$info['id']] > 0
-                );
-
-                if (!$beanInSave && !$beanInMemory) {
-                    break;
-                }
-
-                if ($beanInMemory) {
-                    --self::$touched[$info['module']][$info['id']];
-                }
-
-                ++self::$total;
-
                 $index = 'i'.(self::$total % self::$maxLoaded);
             }
-
             if (isset(self::$loadOrder[$index])) {
-                unset(
-                    self::$loadedBeans[$info['module']][$info['id']],
-                    self::$touched[$info['module']][$info['id']],
-                    self::$loadOrder[$index]
-                );
+                unset(self::$loadedBeans[$info['module']][$info['id']]);
+                unset(self::$touched[$info['module']][$info['id']]);
+                unset(self::$loadOrder[$index]);
             }
         }
 
@@ -496,44 +227,32 @@ class BeanFactory
 
         if ($id) {
             self::$loadedBeans[$module][$id] = $bean;
-
             ++self::$total;
-
-            self::$loadOrder[$index] = [
-                'module' => $module,
-                'id' => $id,
-            ];
-
+            self::$loadOrder[$index] = array('module' => $module, 'id' => $id);
             self::$touched[$module][$id] = 0;
-
-            return true;
+        } else {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
-    /**
+    /*
      * Clears a bean from cache so that it will be retrieved from DB next time
      *
-     * @param string $module
-     * @param string $id
-     *
-     * @return bool
+     * @param $beanId
      */
     public static function unregisterBean($module, $id)
     {
         if (empty($id)) {
             return false;
         }
-
         if (!isset(self::$loadedBeans[$module][$id])) {
             return false;
         }
 
-        unset(
-            self::$loadedBeans[$module][$id],
-            self::$touched[$module][$id]
-        );
+        unset(self::$loadedBeans[$module][$id]);
+        unset(self::$touched[$module][$id]);
 
         return true;
     }

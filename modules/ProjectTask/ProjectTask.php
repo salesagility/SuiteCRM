@@ -113,7 +113,7 @@ class ProjectTask extends SugarBean
             global $current_user;
             if (empty($current_user)) {
                 $this->assigned_user_id = 1;
-                $admin_user = BeanFactory::newBean('Users');
+                $admin_user = new User();
                 $admin_user->retrieve($this->assigned_user_id);
                 $this->assigned_user_name = $admin_user->user_name;
             } else {
@@ -333,13 +333,11 @@ class ProjectTask extends SugarBean
             }
             /* BEGIN - SECURITY GROUPS */
             //parent_name_owner not being set for whatever reason so we need to figure this out
-            else {
-                if (!empty($this->parent_type) && !empty($this->parent_id)) {
-                    global $current_user;
-                    $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
-                    if ($parent_bean !== false) {
-                        $is_owner = $current_user->id == $parent_bean->assigned_user_id;
-                    }
+            elseif (!empty($this->parent_type) && !empty($this->parent_id)) {
+                global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
+                if ($parent_bean !== false) {
+                    $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
             }
             require_once("modules/SecurityGroups/SecurityGroup.php");

@@ -357,14 +357,14 @@ function format_number($amount, $round = null, $decimals = null, $params = array
         if (!empty($params['currency_id'])) {
             if ($override_currency_id != $params['currency_id']) {
                 $override_currency_id = $params['currency_id'];
-                $currency = BeanFactory::newBean('Currencies');
+                $currency = new Currency();
                 $currency->retrieve($override_currency_id);
                 $last_override_currency = $currency;
             } else {
                 $currency = $last_override_currency;
             }
         } elseif (!isset($current_users_currency)) { // else use current user's
-            $current_users_currency = BeanFactory::newBean('Currencies');
+            $current_users_currency = new Currency();
             if ($current_user->getPreference('currency')) {
                 $current_users_currency->retrieve($current_user->getPreference('currency'));
             } else {
@@ -448,7 +448,7 @@ function unformat_number($string)
     static $currency = null;
     if (!isset($currency)) {
         global $current_user;
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         if (!empty($current_user->id)) {
             if ($current_user->getPreference('currency')) {
                 $currency->retrieve($current_user->getPreference('currency'));
@@ -498,6 +498,8 @@ function format_money($amount, $for_display = true)
  */
 function get_number_seperators($reset_sep = false)
 {
+    LoggerManager::getLogger()->deprecated('get_number_seperators will be removed in a future release, please
+    update your code to use get_number_separators');
     get_number_separators($reset_sep);
 }
 
@@ -520,19 +522,18 @@ function get_number_separators($reset_sep = false)
     }
 
     if ($dec_sep == null) {
-        $dec_sep = $sugar_config['default_decimal_seperator'];
+        $dec_sep = $sugar_config['default_decimal_separator'];
         if (!empty($current_user->id)) {
             $user_dec_sep = $current_user->getPreference('dec_sep');
-            $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep);
+            $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_separator'] : $user_dec_sep);
         }
     }
 
     if ($num_grp_sep == null) {
-        $num_grp_sep = $sugar_config['default_number_grouping_seperator'];
+        $num_grp_sep = $sugar_config['default_number_grouping_separator'];
         if (!empty($current_user->id)) {
             $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
-            $num_grp_sep = (empty($user_num_grp_sep)
-                ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
+            $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_separator'] : $user_num_grp_sep);
         }
     }
 
@@ -617,7 +618,7 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
         }
         return $html;
     }
-    $currency = BeanFactory::newBean('Currencies');
+    $currency = new Currency();
     $currency->retrieve($value);
     return $currency->name;
 }
@@ -657,7 +658,7 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
     }
-    $currency = BeanFactory::newBean('Currencies');
+    $currency = new Currency();
     if (isset($focus->currency_id)) {
         $currency_id = $focus->currency_id;
     } else {
@@ -702,7 +703,7 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
     }
-    $currency = BeanFactory::newBean('Currencies');
+    $currency = new Currency();
     if (isset($focus->currency_id)) {
         $currency_id = $focus->currency_id;
     } else {

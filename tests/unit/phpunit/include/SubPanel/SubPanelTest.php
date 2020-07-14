@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         if (!defined('sugarEntry')) {
@@ -57,7 +57,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testFaultySubpanelDef()
     {
-        $bean = BeanFactory::newBean('Contacts');
+        $bean = new Contact();
         $counter = new SubPanelRowCounter($bean);
         $subPanelDefs = [];
 
@@ -68,7 +68,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSelectQueryToCountQuery()
     {
-        $bean = BeanFactory::newBean('Contacts');
+        $bean = new Contact();
         $counter = new SubPanelRowCounter($bean);
 
         $select = 'SELECT id FROM table';
@@ -92,7 +92,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMakeFunctionCountQuery()
     {
-        $bean = BeanFactory::newBean('Accounts');
+        $bean = new Account();
         $counter = new SubPanelRowCounter($bean);
 
         $nonExistantQuery = $counter->makeFunctionCountQuery('');
@@ -105,7 +105,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMakeSubPanelRowCountQuery()
     {
-        $bean = BeanFactory::newBean('Contacts');
+        $bean = new Contact();
         $counter = new SubPanelRowCounter($bean);
         $subPanelDefs = ['get_subpanel_data' => 'accounts'];
         $counter->setSubPanelDefs($subPanelDefs);

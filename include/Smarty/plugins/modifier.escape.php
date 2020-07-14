@@ -35,7 +35,7 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-88
             return rawurlencode($string);
 
         case 'urlpathinfo':
-            return str_replace('%2F','/',rawurlencode($string));
+            return str_replace('%2F', '/', rawurlencode($string));
             
         case 'quotes':
             // escape unescaped single quotes
@@ -69,18 +69,17 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-88
             
         case 'mail':
             // safe way to display e-mail address on a web page
-            return str_replace(array('@', '.'),array(' [AT] ', ' [DOT] '), $string);
+            return str_replace(array('@', '.'), array(' [AT] ', ' [DOT] '), $string);
             
         case 'nonstd':
            // escape non-standard chars, such as ms document quotes
            $_res = '';
-           for($_i = 0, $_len = strlen($string); $_i < $_len; $_i++) {
+           for ($_i = 0, $_len = strlen($string); $_i < $_len; $_i++) {
                $_ord = ord(substr($string, $_i, 1));
                // non-standard char, escape it
-               if($_ord >= 126){
+               if ($_ord >= 126) {
                    $_res .= '&#' . $_ord . ';';
-               }
-               else {
+               } else {
                    $_res .= substr($string, $_i, 1);
                }
            }
@@ -92,5 +91,3 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-88
 }
 
 /* vim: set expandtab: */
-
-?>

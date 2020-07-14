@@ -7,7 +7,7 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
     public function testEmailAddress()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $email = BeanFactory::newBean('EmailAddresses');
+        $email = new EmailAddress();
         $this->assertInstanceOf('EmailAddress', $email);
         $this->assertInstanceOf('SugarEmailAddress', $email);
         $this->assertInstanceOf('SugarBean', $email);
@@ -22,7 +22,7 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        $email = BeanFactory::newBean('EmailAddresses');
+        $email = new EmailAddress();
 
         $email->email_address = 'test@test.com';
         $email->invaid_email = 0;

@@ -62,7 +62,7 @@ class MyProjectDashlet extends DashletGeneric
 
         $this->searchFields = $dashletData['MyProjectDashlet']['searchFields'];
         $this->columns = $dashletData['MyProjectDashlet']['columns'];
-        $this->seedBean = BeanFactory::newBean('Project');
+        $this->seedBean = new Project();
     }
 
     /**

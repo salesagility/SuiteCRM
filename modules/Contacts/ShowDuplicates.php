@@ -79,7 +79,7 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup'] == 'true') ||(isset($_POST[
 }
 
 
-$contact = BeanFactory::newBean('Contacts');
+$contact = new Contact();
 require_once('modules/Contacts/ContactFormBase.php');
 $contactForm = new ContactFormBase();
 $GLOBALS['check_notify'] = false;

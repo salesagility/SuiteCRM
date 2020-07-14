@@ -103,7 +103,7 @@ function get_field_list($value, $translate = true)
     } //if
 
     if (isset($value->module_dir) && $value->module_dir == 'Bugs') {
-        $seedRelease = BeanFactory::newBean('Releases');
+        $seedRelease = new Release();
         $options = $seedRelease->get_releases(true, "Active");
         $options_ret = array();
         foreach ($options as $name => $value) {
@@ -225,7 +225,7 @@ function new_get_field_list($value, $translate = true)
     } //if
 
     if ($value->module_dir == 'Bugs') {
-        $seedRelease = BeanFactory::newBean('Releases');
+        $seedRelease = new Release();
         $options = $seedRelease->get_releases(true, "Active");
         $options_ret = array();
         foreach ($options as $name => $value) {
@@ -961,7 +961,7 @@ function add_create_account($seed)
     $assigned_user_id = $current_user->id;
 
     // check if it already exists
-    $focus = BeanFactory::newBean('Accounts');
+    $focus = new Account();
     if ($focus->ACLAccess('Save')) {
         $class = get_class($seed);
         $temp = new $class();
@@ -1075,12 +1075,9 @@ function check_for_duplicate_contacts($seed)
     //This query is looking for the id of Contact records that do not have a primary email address based on the matching
     //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
     //that it is the duplicate record
-    $trimmed_first = DBManagerFactory::getInstance()->quoted($trimmed_first);
-    $trimmed_last = DBManagerFactory::getInstance()->quoted($trimmed_last);
-
     $query = "SELECT c.id as id FROM contacts c
 LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
-WHERE c.first_name = $trimmed_first AND c.last_name = $trimmed_last AND c.deleted = 0 AND eabr.id IS NULL";
+WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND c.deleted = 0 AND eabr.id IS NULL";
 
     //Apply the limit query filter to this since we only need the first record
     $result = DBManagerFactory::getInstance()->getOne($query);
@@ -1154,7 +1151,7 @@ if (!function_exists("get_encoded")) {
     function decrypt_string($string)
     {
         if (function_exists('openssl_decrypt')) {
-            $focus = BeanFactory::newBean('Administration');
+            $focus = new Administration();
             $focus->retrieveSettings();
             $key = '';
             if (!empty($focus->settings['ldap_enc_key'])) {

@@ -163,8 +163,4 @@ $mod_strings = array(
     'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
     'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
     'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
-
-    // for google sync
-    'LBL_GSYNC_ID' => 'Google Event ID',
-    'LBL_GSYNC_LASTSYNC' => 'Last Google Sync Timestamp',
 );

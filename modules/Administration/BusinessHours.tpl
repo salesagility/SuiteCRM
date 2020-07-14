@@ -20,6 +20,7 @@
 
 
 <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_BUSINESS_HOURS_SETTINGS}</h4></th>
+<tr><td colspan="4"><p>{$MOD.LBL_AOP_BUSINESS_HOURS_DESC}</p><p>&nbsp;</p></td></tr>
 </tr>
     {foreach from=$DAY_DROPDOWNS key=day item=hours}
 <tr>

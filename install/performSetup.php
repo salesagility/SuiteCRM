@@ -261,7 +261,7 @@ foreach ($beanFiles as $bean => $file) {
         }
         if (!in_array($bean, $nonStandardModules)) {
             require_once("modules/".$focus->module_dir."/vardefs.php"); // load up $dictionary
-            if (isset($dictionary[$focus->object_name]['table']) && $dictionary[$focus->object_name]['table'] == 'does_not_exist') {
+            if ($dictionary[$focus->object_name]['table'] == 'does_not_exist') {
                 continue; // support new vardef definitions
             }
         } else {
@@ -363,10 +363,14 @@ installStatus($mod_strings['STAT_CREATE_DEFAULT_SETTINGS']);
 
     echo $line_entry_format.$mod_strings['LBL_PERFORM_DEFAULT_SCHEDULER'].$line_exit_format;
     installLog($mod_strings['LBL_PERFORM_DEFAULT_SCHEDULER']);
-    $scheduler = BeanFactory::newBean('Schedulers');
+    $scheduler = new Scheduler();
     installerHook('pre_createDefaultSchedulers');
     $scheduler->rebuildDefaultSchedulers();
     installerHook('post_createDefaultSchedulers');
+
+
+installLog($mod_strings['LBL_CREATE_DEFAULT_ENC_KEY']);
+createEncryptionKey();
 
 
     echo $mod_strings['LBL_PERFORM_DONE'];
@@ -431,7 +435,7 @@ FP;
         set_CheckUpdates_config_setting('manual');
     }
     if (!empty($_SESSION['setup_system_name'])) {
-        $admin=BeanFactory::newBean('Administration');
+        $admin=new Administration();
         $admin->saveSetting('system', 'name', $_SESSION['setup_system_name']);
     }
 
@@ -583,7 +587,7 @@ if ($_SESSION['demoData'] != 'no') {
     print($render_table_open);
 
     global $current_user;
-    $current_user = BeanFactory::newBean('Users');
+    $current_user = new User();
     $current_user->retrieve(1);
     include("install/populateSeedData.php");
     installerHook('post_installDemoData');
@@ -615,7 +619,7 @@ installLog('save locale');
 
 //global $current_user;
 installLog('new Administration');
-$focus = BeanFactory::newBean('Administration');
+$focus = new Administration();
 installLog('retrieveSettings');
 //$focus->retrieveSettings();
 // switch off the adminwizard (mark that we have got past this point)
@@ -691,7 +695,7 @@ installLog('Save user settings..');
 // set all of these default parameters since the Users save action will undo the defaults otherwise
 
 // load admin
-$current_user = BeanFactory::newBean('Users');
+$current_user = new User();
 $current_user->retrieve(1);
 $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();

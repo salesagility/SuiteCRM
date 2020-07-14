@@ -37,7 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-use Psr\Container\ContainerExceptionInterface;
+use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
 use Slim\Exception\ContainerValueNotFoundException;
 

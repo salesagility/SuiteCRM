@@ -14,7 +14,7 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
     }
 
     /*
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

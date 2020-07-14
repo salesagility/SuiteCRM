@@ -160,10 +160,8 @@ class MySugar
             foreach ($_REQUEST as $k => $v) {
                 if ($k == 'lvso') {
                     $sortOrder = $v;
-                } else {
-                    if (preg_match('/Home2_.+_ORDER_BY/', $k)) {
-                        $orderBy = $v;
-                    }
+                } elseif (preg_match('/Home2_.+_ORDER_BY/', $k)) {
+                    $orderBy = $v;
                 }
             }
             if (!empty($sortOrder) && !empty($orderBy)) {
@@ -378,10 +376,8 @@ EOJS;
 
         if ($category == 'module' || $category == 'tools') {
             $html = $this->searchModuleToolsDashlets($searchStr, $category);
-        } else {
-            if ($category == 'chart') {
-                $html = $this->searchChartsDashlets($searchStr);
-            }
+        } elseif ($category == 'chart') {
+            $html = $this->searchChartsDashlets($searchStr);
         }
 
         $json = getJSONobj();
@@ -437,8 +433,7 @@ EOJS;
             $current_user->setPreference('pages', $pages, 0, $this->type);
 
             return '1';
-        } else {
-            return '0';
         }
+        return '0';
     }
 }

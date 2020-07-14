@@ -69,9 +69,9 @@ if (!empty($_POST['document_id'])) {
     $_SESSION['MAILMERGE_DOCUMENT_ID'] = $_POST['document_id'];
 }
 $document_id = $_SESSION['MAILMERGE_DOCUMENT_ID'];
-$revision = BeanFactory::newBean('DocumentRevisions');
+$revision = new DocumentRevision();
 $revision->retrieve($document_id);
-//$document = BeanFactory::newBean('Documents');
+//$document = new Document();
 //$document->retrieve($document_id);
 
 if (!empty($_POST['selected_objects'])) {

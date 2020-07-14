@@ -4,12 +4,12 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
     }
     
-    protected function tearDown()
+    public function tearDown()
     {
         parent::tearDown();
     }
@@ -36,7 +36,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it returns correct class instances
         $LogicHook = new LogicHook();
-        $result = $LogicHook->setBean(BeanFactory::newBean('Users'));
+        $result = $LogicHook->setBean(new User());
         $this->assertInstanceOf('LogicHook', $result);
         $this->assertInstanceOf('User', $result->bean);
     }
@@ -466,7 +466,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it doesn't throws an exception
         $LogicHook = new LogicHook();
-        $LogicHook->setBean(BeanFactory::newBean('Accounts'));
+        $LogicHook->setBean(new Account());
 
         try {
             $LogicHook->call_custom_logic('', 'after_ui_footer');
@@ -480,7 +480,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     {
         // execute the method and test if it doesn't throws an exception
         $LogicHook = new LogicHook();
-        $LogicHook->setBean(BeanFactory::newBean('Accounts'));
+        $LogicHook->setBean(new Account());
         $hooks = $LogicHook->loadHooks('');
 
         try {

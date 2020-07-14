@@ -62,7 +62,7 @@ class MyBugsDashlet extends DashletGeneric
         if (empty($def['title'])) {
             $this->title = translate('LBL_LIST_MY_BUGS', 'Bugs');
         }
-        $this->seedBean = BeanFactory::newBean('Bugs');
+        $this->seedBean = new Bug();
     }
 
     /**
@@ -84,7 +84,7 @@ class MyBugsDashlet extends DashletGeneric
     {
         $this->processDisplayOptions();
 
-        $seedRelease = BeanFactory::newBean('Releases');
+        $seedRelease = new Release();
 
         if (!empty($this->searchFields['fixed_in_release'])) {
             $this->currentSearchFields['fixed_in_release']['input'] = '<select multiple="true" size="3" name="fixed_in_release[]">'

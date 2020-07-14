@@ -67,7 +67,7 @@ class ProjectTaskQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('projectTaskQuickCreate');
         
-        $focus = BeanFactory::newBean('ProjectTask');
+        $focus = new ProjectTask();
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 

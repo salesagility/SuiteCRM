@@ -60,7 +60,7 @@ global $sugar_version, $sugar_config;
 
 /*************** GENERAL SETUP WORK **********/
 
-$focus = BeanFactory::newBean('Campaigns');
+$focus = new Campaign();
 if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 }
@@ -220,14 +220,12 @@ $currency = new ListCurrency();
 if (isset($focus->currency_id) && !empty($focus->currency_id)) {
     $selectCurrency = $currency->getSelectOptions($focus->currency_id);
     $ss->assign("CURRENCY", $selectCurrency);
+} elseif ($current_user->getPreference('currency') && !isset($focus->id)) {
+    $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
+    $ss->assign("CURRENCY", $selectCurrency);
 } else {
-    if ($current_user->getPreference('currency') && !isset($focus->id)) {
-        $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
-        $ss->assign("CURRENCY", $selectCurrency);
-    } else {
-        $selectCurrency = $currency->getSelectOptions();
-        $ss->assign("CURRENCY", $selectCurrency);
-    }
+    $selectCurrency = $currency->getSelectOptions();
+    $ss->assign("CURRENCY", $selectCurrency);
 }
 global $current_user;
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
@@ -252,7 +250,7 @@ if ($campaign_type == 'general') {
     $myTypeOptionsArr = array();
     $OptionsArr = $app_list_strings['campaign_type_dom'];
     foreach ($OptionsArr as $key=>$val) {
-        if ($key =='NewsLetter' || $key =='Email' || $key =='') {
+        if ($val =='Newsletter' || $val =='Email' || $val =='') {
             //do not add
         } else {
             $myTypeOptionsArr[$key] = $val;
@@ -323,7 +321,7 @@ if (count($trkr_lists)>0) {
     $trkr_count = 0;
     //create the html to create tracker table
     foreach ($trkr_lists as $trkr_id) {
-        $ct_focus = BeanFactory::newBean('CampaignTrackers');
+        $ct_focus = new CampaignTracker();
         $ct_focus->retrieve($trkr_id);
         if (isset($ct_focus->tracker_name) && !empty($ct_focus->tracker_name)) {
             if ($ct_focus->is_optout) {
@@ -473,7 +471,7 @@ if ((isset($_REQUEST['wizardtype']) && $_REQUEST['wizardtype'] ==1) || ($focus->
     if (count($prospect_lists)>0) {
         foreach ($prospect_lists as $pl_id) {
             //retrieve prospect list
-            $pl = BeanFactory::newBean('ProspectLists');
+            $pl = new ProspectList();
             $pl->retrieve($pl_id);
 
             if (isset($pl->list_type) && !empty($pl->list_type)) {
@@ -506,7 +504,7 @@ if ((isset($_REQUEST['wizardtype']) && $_REQUEST['wizardtype'] ==1) || ($focus->
     if (count($prospect_lists)>0) {
         foreach ($prospect_lists as $pl_id) {
             //retrieve prospect list
-            $pl = BeanFactory::newBean('ProspectLists');
+            $pl = new ProspectList();
             $pl_focus = $pl->retrieve($pl_id);
             $trgt_html .= "<div id='existing_trgt".$trgt_count."'> <table class='tabDetailViewDL2' width='100%'>" ;
             $trgt_html .= "<td width='100' style=\"width:25%\"> <input id='existing_target_name". $trgt_count ."' type='hidden' type='text' size='60' maxlength='255' name='existing_target_name". $trgt_count ."'  value='". ($pl_focus?$pl_focus->name:'-')."' ><a href=\"index.php?module=ProspectLists&action=DetailView&record=" . $pl_focus->id . "\" target=\"_blank\" title=\"" . $mod_strings['LBL_OPEN_IN_NEW_WINDOW'] . "\">". ($pl_focus?$pl_focus->name:'-')."</a></td>";

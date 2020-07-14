@@ -96,12 +96,10 @@ class FilterRepository
                 foreach ($filters as $filterKey => $filter) {
                     $response = array_merge($response, $this->filterParser->parseFilter($filterKey, $filter, $args));
                 }
+            } elseif (is_string($filters)) {
+                $response = array($filters);
             } else {
-                if (is_string($filters)) {
-                    $response = array($filters);
-                } else {
-                    throw new BadRequestException('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
-                }
+                throw new BadRequestException('[JsonApi][v1][Repositories][FilterRepository][filter type is invalid]');
             }
         }
 

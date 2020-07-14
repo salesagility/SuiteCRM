@@ -15,12 +15,12 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
 
         $this->ea = new SugarEmailAddress();
     }
@@ -29,7 +29,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    public function tearDown()
     {
         $db = DBManagerFactory::getInstance();
         $query = /** @lang sql */
@@ -125,7 +125,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $_request = $_REQUEST;
         }
 
-        $c = BeanFactory::newBean('Contacts');
+        $c = new Contact();
 
         // test
         if (!empty($_REQUEST)) {
@@ -173,7 +173,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testHandleLegacyRetrieve()
     {
-        $c = BeanFactory::newBean('Contacts');
+        $c = new Contact();
 
         // test
         $this->ea->handleLegacyRetrieve($c);
@@ -192,7 +192,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testPopulateLegacyFields()
     {
-        $c = BeanFactory::newBean('Contacts');
+        $c = new Contact();
 
         // test
         $this->ea->populateLegacyFields($c);
@@ -1318,7 +1318,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     {
         $db = DBManagerFactory::getInstance();
 
-        $c = BeanFactory::newBean('Contacts');
+        $c = new Contact();
 
         // test
         $result = $this->ea->getPrimaryAddress($c);
@@ -1950,7 +1950,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $env['$_REQUEST'] = $_REQUEST;
         }
 
-        $focus = BeanFactory::newBean('Contacts');
+        $focus = new Contact();
 
 
         // test
@@ -2073,7 +2073,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     {
         $db = DBManagerFactory::getInstance();
 
-        $c = BeanFactory::newBean('Contacts');
+        $c = new Contact();
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();

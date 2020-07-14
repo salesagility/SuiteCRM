@@ -133,10 +133,8 @@ class json_config
         global $json;
         if (empty($module)) {
             return '';
-        } else {
-            if (empty($record)) {
-                return "\n".$this->global_registry_var_name.'["focus"] = {"module":"'.$module.'",users_arr:[],fields:{"id":"-1"}}'."\n";
-            }
+        } elseif (empty($record)) {
+            return "\n".$this->global_registry_var_name.'["focus"] = {"module":"'.$module.'",users_arr:[],fields:{"id":"-1"}}'."\n";
         }
 
         $module_arr = $this->meeting_retrieve($module, $record);
@@ -160,20 +158,14 @@ class json_config
 
         if ($module == 'Meetings') {
             $users = $focus->get_meeting_users();
-        } else {
-            if ($module == 'Calls') {
-                $users = $focus->get_call_users();
-            } else {
-                if ($module == 'Project') {
-                    $focus->load_relationships('users');
-                    $users=$focus->get_linked_beans('project_users_1', 'User');
-                } else {
-                    if ($module == 'AM_ProjectTemplates') {
-                        $focus->load_relationships('users');
-                        $users=$focus->get_linked_beans('am_projecttemplates_users_1', 'User');
-                    }
-                }
-            }
+        } elseif ($module == 'Calls') {
+            $users = $focus->get_call_users();
+        } elseif ($module == 'Project') {
+            $focus->load_relationships('users');
+            $users=$focus->get_linked_beans('project_users_1', 'User');
+        } elseif ($module == 'AM_ProjectTemplates') {
+            $focus->load_relationships('users');
+            $users=$focus->get_linked_beans('am_projecttemplates_users_1', 'User');
         }
         
         
@@ -195,12 +187,10 @@ class json_config
 
         if ($module == 'Project') {
             $contacts=$focus->get_linked_beans('project_contacts_1', 'Contact');
+        } elseif ($module == 'AM_ProjectTemplates') {
+            $contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
         } else {
-            if ($module == 'AM_ProjectTemplates') {
-                $contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
-            } else {
-                $contacts=$focus->get_linked_beans('contacts', 'Contact');
-            }
+            $contacts=$focus->get_linked_beans('contacts', 'Contact');
         }
 
         foreach ($contacts as $contact) {

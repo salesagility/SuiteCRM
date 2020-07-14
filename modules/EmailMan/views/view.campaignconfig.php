@@ -87,7 +87,7 @@ class ViewCampaignconfig extends SugarView
         echo $this->getModuleTitle(false);
         global $currentModule, $sugar_config;
         
-        $focus = BeanFactory::newBean('Administration');
+        $focus = new Administration();
         $focus->retrieveSettings(); //retrieve all admin settings.
         $GLOBALS['log']->info("Mass Emailer(EmailMan) ConfigureSettings view");
         
@@ -124,7 +124,7 @@ class ViewCampaignconfig extends SugarView
             $this->ss->assign("no_checked", "checked='checked'");
         }
         
-        $email = BeanFactory::newBean('Emails');
+        $email = new Email();
         $this->ss->assign('ROLLOVER', $email->rolloverStyle);
         
         $this->ss->assign("JAVASCRIPT", get_validate_record_js());

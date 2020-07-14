@@ -50,10 +50,10 @@ require_once('include/formbase.php');
 
 global $current_user;
 
-$sugarbean = BeanFactory::newBean('AM_ProjectTemplates');
+$sugarbean = new AM_ProjectTemplates();
 $sugarbean = populateFromPost('', $sugarbean);
 
-$sugarbean->save(null);
+$sugarbean->save($check_notify);
 $return_id = $sugarbean->id;
 
 //customize default retrun view to make it to redirect to GanttChart view

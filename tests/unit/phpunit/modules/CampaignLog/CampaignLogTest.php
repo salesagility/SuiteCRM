@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testCampaignLog()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $campaignLog = BeanFactory::newBean('CampaignLog');
+        $campaignLog = new CampaignLog();
         $this->assertInstanceOf('CampaignLog', $campaignLog);
         $this->assertInstanceOf('SugarBean', $campaignLog);
 
@@ -28,7 +28,7 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $campaignLog = BeanFactory::newBean('CampaignLog');
+        $campaignLog = new CampaignLog();
 
         //execute the method and verify it returns an array
         $actual = $campaignLog->get_list_view_data();
@@ -38,14 +38,14 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieve_email_address()
     {
-        $campaignLog = BeanFactory::newBean('CampaignLog');
+        $campaignLog = new CampaignLog();
         $actual = $campaignLog->retrieve_email_address();
         $this->assertGreaterThanOrEqual('', $actual);
     }
 
     public function testget_related_name()
     {
-        $campaignLog = BeanFactory::newBean('CampaignLog');
+        $campaignLog = new CampaignLog();
 
         //execute the method and verify that it retunrs expected results for all type parameters
         $this->assertEquals('1Emails', $campaignLog->get_related_name(1, 'Emails'));

@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$focus = BeanFactory::newBean('EmailTemplates');
+$focus = new EmailTemplate();
 require_once('include/formbase.php');
 $focus = populateFromPost('', $focus);
 

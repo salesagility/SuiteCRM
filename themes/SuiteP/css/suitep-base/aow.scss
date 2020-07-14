@@ -1,8 +1,4 @@
 
-#condition_lines_span {
-  display: block;
-}
-
 #aow_conditionLines {
   display: block;
 }
@@ -13,36 +9,34 @@
 
 #aow_conditionLines > thead td {
   background-color: $default-tab-bg;
-  padding: 8px 3px 8px 2px;
-  color: $list-view-header-color;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: $main-font-color;
   font-weight: bold;
   font-size: $page-font-size;
 }
 
 .detail-view-field #aow_conditionLines thead td:first-of-type {
-  border-top-left-radius: 4px;
-  height: 32px;
+  height: 36px;
 }
 
 
-.edit-view-field #aow_conditionLines thead td:first-of-type {
+#aow_conditionLines thead td:first-of-type {
+  height: 32px;
   border-top-left-radius: 4px;
-  height: 34px;
-  width: 42px;
 }
 
 
 #aow_conditionLines thead td:last-of-type {
-  border-top-right-radius: 4px;
   padding-left: 8px;
+  border-top-right-radius: 4px;
   width: 26%;
 }
 
 
 #aow_conditionLines > thead > tr {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  background-color: $default-tab-bg;
   display: block;
 }
 
@@ -54,7 +48,7 @@
 #aow_conditionLines > tbody > tr {
   display: block;
   background-color: $main-bg;
-  border-bottom: 1px $main-alternate-bg solid;
+  border-bottom: 5px $main-alternate-bg solid;
 }
 
 #aow_conditionLines > tbody > tr > td {
@@ -68,14 +62,13 @@
 
 #aow_conditionLines td:not(:first-of-type) {
   display: inline-block;
-  width: 16.67%; // 100 / 6 columns
+  width: 16.667%; // 100 / 6 columns
 }
 
 #aow_conditionLines tbody td {
   background-color: $detail-view-field-bg;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  min-height: 32px;
+  margin-bottom: 4px;
+  min-height: 64px;
 }
 
 #aow_conditionLines tbody td:first-of-type {
@@ -95,7 +88,7 @@
 
 
 #aow_conditionLines td:first-of-type button {
-  margin-top: 6px;
+  margin-top: 8px;
   line-height: 30px;
 }
 
@@ -184,7 +177,7 @@
 
 #aow_conditionLines [type="button"] {
   background-color: $danger-btn-bg;
-  padding: 7px;
+  padding: 0;
   margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: $border-radius-base;

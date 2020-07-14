@@ -617,9 +617,8 @@ class SearchForm
         } else {
             if ($return) {
                 return $text;
-            } else {
-                echo $text;
             }
+            echo $text;
         }
     }
 
@@ -659,9 +658,8 @@ class SearchForm
         } else {
             if ($return) {
                 return $text;
-            } else {
-                echo $text;
             }
+            echo $text;
         }
     }
 
@@ -697,7 +695,7 @@ class SearchForm
         global $app_strings;
 
         $SAVED_SEARCHES_OPTIONS = '';
-        $savedSearch = BeanFactory::newBean('SavedSearch');
+        $savedSearch = new SavedSearch();
         $SAVED_SEARCHES_OPTIONS = $savedSearch->getSelect($this->module);
         $str = "<input tabindex='2' title='{$app_strings['LBL_SEARCH_BUTTON_TITLE']}' onclick='SUGAR.savedViews.setChooser()' class='button' type='submit' name='button' value='{$app_strings['LBL_SEARCH_BUTTON_LABEL']}' id='search_form_submit'/>&nbsp;";
         $str .= "<input tabindex='2' title='{$app_strings['LBL_CLEAR_BUTTON_TITLE']}' onclick='SUGAR.searchForm.clear_form(this.form); return false;' class='button' type='button' name='clear' value=' {$app_strings['LBL_CLEAR_BUTTON_LABEL']} ' id='search_form_clear'/>";

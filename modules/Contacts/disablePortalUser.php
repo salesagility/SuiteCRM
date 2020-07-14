@@ -32,7 +32,7 @@ global $sugar_config, $mod_strings;
 
 require_once('modules/Contacts/Contact.php');
 
-$bean = BeanFactory::newBean('Contacts');
+$bean = new Contact();
 $bean->retrieve($_REQUEST['record']);
 
 if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_url", $sugar_config['aop'])) {

@@ -87,7 +87,7 @@ if ($test) {
 $campaign_id = isset($_REQUEST['record']) ? $_REQUEST['record'] : false;
 
 if (!empty($campaign_id)) {
-    $campaign = BeanFactory::newBean('Campaigns');
+    $campaign = new Campaign();
     $campaign->retrieve($campaign_id);
 }
 
@@ -99,7 +99,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 
     $ss->display('modules/Campaigns/tpls/campaign-inactive.tpl');
 } else {
-    $focus = BeanFactory::newBean('EmailMarketing');
+    $focus = new EmailMarketing();
     if ($campaign_id) {
         $where_clauses = array();
 
@@ -163,7 +163,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 
         $result=$focus->db->query($query);
         while (($row=$focus->db->fetchByAssoc($result)) != null) {
-            $bean = BeanFactory::newBean('EmailMarketing');
+            $bean = new EmailMarketing();
             $bean->retrieve($row['email_marketing_id']);
             $bean->mode='test';
             $seed[]=$bean;
@@ -175,7 +175,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 
         $result=$focus->db->query($query);
         while (($row=$focus->db->fetchByAssoc($result)) != null) {
-            $bean = BeanFactory::newBean('EmailMarketing');
+            $bean = new EmailMarketing();
             $bean->retrieve($row['email_marketing_id']);
             $bean->mode='test';
             $seed[]=$bean;

@@ -153,7 +153,7 @@ class Popup_Picker
                     'type' => "Task",
                     'direction' => '',
                     'module' => "Tasks",
-                    'status' => $app_list_strings['task_status_dom'][$task->status],
+                    'status' => $task->status,
                     'parent_id' => $task->parent_id,
                     'parent_type' => $task->parent_type,
                     'parent_name' => $task->parent_name,
@@ -171,7 +171,7 @@ class Popup_Picker
                     'type' => "Task",
                     'direction' => '',
                     'module' => "Tasks",
-                    'status' => $app_list_strings['task_status_dom'][$task->status],
+                    'status' => $task->status,
                     'parent_id' => $task->parent_id,
                     'parent_type' => $task->parent_type,
                     'parent_name' => $task->parent_name,
@@ -341,7 +341,7 @@ class Popup_Picker
             }
             $query .= $queryArray['join'];
             $query .= $queryArray['where'];
-            $emails = BeanFactory::newBean('Emails');
+            $emails = new Email();
             $focus_unlinked_emails_list = $emails->process_list_query($query, 0);
             $focus_unlinked_emails_list = $focus_unlinked_emails_list['list'];
             foreach ($focus_unlinked_emails_list as $email) {

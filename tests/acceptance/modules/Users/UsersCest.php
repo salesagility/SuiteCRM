@@ -2,7 +2,7 @@
 
 use Faker\Factory;
 use Faker\Generator;
-use Step\Acceptance\AccountsTester;
+use Step\Acceptance\Accounts;
 use Step\Acceptance\DetailView;
 use Step\Acceptance\EditView;
 use Step\Acceptance\ListView;
@@ -57,7 +57,7 @@ class UsersCest
         UsersTester $Users,
         ListView $listView,
         EditView $EditView,
-        AccountsTester $accounts
+        Accounts $accounts
     ) {
         $I->wantTo('View the collapsed subpanel hints on Accounts');
 

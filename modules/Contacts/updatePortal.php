@@ -86,7 +86,7 @@ class updatePortal
         require_once 'modules/Emails/Email.php';
         require_once 'include/SugarPHPMailer.php';
 
-        $emailObj = BeanFactory::newBean('Emails');
+        $emailObj = new Email();
         $emailSettings = getPortalEmailSettings();
 
         $mail = new SugarPHPMailer();

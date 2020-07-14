@@ -70,9 +70,8 @@ class SugarAuthenticateUser
         //if it's falling back on Sugar Authentication after the login failed on an external authentication return empty if the user has external_auth_disabled for them
         if (empty($row) || !empty($row['external_auth_only'])) {
             return '';
-        } else {
-            return $row['id'];
         }
+        return $row['id'];
     }
 
     /**
@@ -135,7 +134,7 @@ class SugarAuthenticateUser
         }
 
         if (!empty($_SESSION['authenticated_user_id']) || !empty($user_id)) {
-            $GLOBALS['current_user'] = BeanFactory::newBean('Users');
+            $GLOBALS['current_user'] = new User();
             if ($GLOBALS['current_user']->retrieve($_SESSION['authenticated_user_id'])) {
                 return true;
             }
@@ -245,7 +244,7 @@ class SugarAuthenticateUser
             $token = mt_rand($min, $max);
         }
 
-        $emailTemplate = BeanFactory::newBean('EmailTemplates');
+        $emailTemplate = new EmailTemplate();
         $emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
         $emailTemplate->retrieve($emailTemplateId);
 
@@ -253,7 +252,7 @@ class SugarAuthenticateUser
         $mailer = new SugarPHPMailer();
         $mailer->setMailerForSystem();
 
-        $emailObj = BeanFactory::newBean('Emails');
+        $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();
 
         $mailer->From = $defaults['email'];

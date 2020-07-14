@@ -118,6 +118,9 @@ class RepairAndClear
                 $this->clearExternalAPICache();
                 $this->rebuildExtensions();
                 $this->rebuildAuditTables();
+                if (empty(ApiConfig::OAUTH2_ENCRYPTION_KEY)) {
+                    $this->rebuildEncryptionKey();
+                }
                 $this->repairDatabase();
                 break;
         }
@@ -202,10 +205,8 @@ class RepairAndClear
                         echo "<textarea name=\"sql\" rows=\"24\" cols=\"150\" id=\"repairsql\">$qry_str</textarea>";
                         echo "<br /><input type=\"submit\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXECUTE']."\" name=\"raction\" /> <input type=\"submit\" name=\"raction\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXPORT']."\" />";
                     }
-                } else {
-                    if ($this->show_output) {
-                        echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
-                    }
+                } elseif ($this->show_output) {
+                    echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
                 }
             }
         } else {
@@ -284,7 +285,7 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARTEMPLATE']}</h3>";
         }
-        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+        if (!in_array(translate('LBL_ALL_MODULES'), (array)$this->module_list) && !empty($this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.tpl');
             }
@@ -313,7 +314,7 @@ class RepairAndClear
             echo "<h3>{$mod_strings['LBL_QR_CLEARJS']}</h3>";
         }
 
-        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
@@ -327,7 +328,7 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARJSLANG']}</h3>";
         }
-        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('jsLanguage/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
@@ -402,20 +403,18 @@ class RepairAndClear
             echo "<h3> {$mod_strings['LBL_QR_REBUILDAUDIT']}</h3>";
         }
 
-        if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
             foreach ($this->module_list as $bean_name) {
                 if (isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
                     require_once($beanFiles[$bean_name]);
                     $this->_rebuildAuditTablesHelper(new $bean_name());
                 }
             }
-        } else {
-            if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
-                foreach ($beanFiles as $bean => $file) {
-                    if (file_exists($file)) {
-                        require_once($file);
-                        $this->_rebuildAuditTablesHelper(new $bean());
-                    }
+        } elseif (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+            foreach ($beanFiles as $bean => $file) {
+                if (file_exists($file)) {
+                    require_once($file);
+                    $this->_rebuildAuditTablesHelper(new $bean());
                 }
             }
         }
@@ -445,15 +444,46 @@ class RepairAndClear
                     echo $echo;
                 }
             }
-        } else {
-            if ($this->show_output) {
-                echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
-            }
+        } elseif ($this->show_output) {
+            echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
         }
     }
 
     ///////////////////////////////////////////////////////////////
     ////END REPAIR AUDIT TABLES
+
+    /**
+     * Rebuilds the OAuth2 encryption key
+     * @throws Exception
+     */
+    private function rebuildEncryptionKey()
+    {
+        $oldKey = "OAUTH2_ENCRYPTION_KEY = '" . ApiConfig::OAUTH2_ENCRYPTION_KEY;
+        $key = "OAUTH2_ENCRYPTION_KEY = '" . base64_encode(random_bytes(32));
+        $apiConfig = 'Api/Core/Config/ApiConfig.php';
+
+        if (is_writable($apiConfig)) {
+            $configContents = file_get_contents($apiConfig);
+
+            $configFileContents = str_replace(
+                $oldKey,
+                $key,
+                $configContents
+            );
+
+            $result = file_put_contents(
+                'Api/Core/Config/ApiConfig.php',
+                $configFileContents,
+                LOCK_EX
+            );
+
+            if ($result === false) {
+                LoggerManager::getLogger()->warn('QRR: Failed to update OAUTH2_ENCRYPTION_KEY');
+            }
+        } else {
+            LoggerManager::getLogger()->warn('QRR: API Config not writable: ' . $apiConfig);
+        }
+    }
 
     ///////////////////////////////////////////////////////////////
     //// Recursively unlink all files of the given $extension in the given $thedir.

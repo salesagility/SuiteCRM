@@ -1,7 +1,7 @@
 <?php
 
 use Api\V8\Factory;
-use Psr\Container\ContainerInterface as Container;
+use Interop\Container\ContainerInterface as Container;
 use Api\Core\Loader\CustomLoader;
 
 return CustomLoader::mergeCustomArray([

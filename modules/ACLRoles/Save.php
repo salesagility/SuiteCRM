@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$role = BeanFactory::newBean('ACLRoles');
+$role = new ACLRole();
 if (isset($_REQUEST['record'])) {
     $role->id = $_POST['record'];
 }

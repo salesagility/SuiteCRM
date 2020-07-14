@@ -73,15 +73,13 @@ if (preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/
 
         case 'createCopy':
             $bean = BeanFactory::getBean('EmailTemplates', $emailTemplateId);
-            $newBean = BeanFactory::newBean('EmailTemplates');
+            $newBean = new EmailTemplate();
             $fieldsForCopy = array('type', 'description');
             foreach ($bean as $key => $value) {
                 if (in_array($key, $fields)) {
                     $newBean->$key = $_POST[$key];
-                } else {
-                    if (in_array($key, $fieldsForCopy)) {
-                        $newBean->$key = $bean->$key;
-                    }
+                } elseif (in_array($key, $fieldsForCopy)) {
+                    $newBean->$key = $bean->$key;
                 }
             }
             $newBean->assigned_user_id = $GLOBALS['current_user']->id;

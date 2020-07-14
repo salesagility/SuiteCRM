@@ -62,7 +62,7 @@ class CasesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Cases $cases,
-        \Step\Acceptance\AccountsTester $account
+        \Step\Acceptance\Accounts $account
     ) {
         $I->wantTo('Create a Case');
 

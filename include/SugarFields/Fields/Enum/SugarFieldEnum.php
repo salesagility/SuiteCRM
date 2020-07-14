@@ -47,9 +47,8 @@ class SugarFieldEnum extends SugarFieldBase
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return "<span id='{$vardef['name']}'>" . $this->fetch($this->findTemplate('DetailViewFunction')) . "</span>";
-        } else {
-            return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
         }
+        return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -61,9 +60,8 @@ class SugarFieldEnum extends SugarFieldBase
         if (isset($vardef['function']) && !empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
-        } else {
-            return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
         }
+        return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
     
@@ -77,10 +75,9 @@ class SugarFieldEnum extends SugarFieldBase
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
-        } else {
-            $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
-            return $this->fetch($this->findTemplate('SearchView'));
         }
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+        return $this->fetch($this->findTemplate('SearchView'));
     }
     
 
@@ -146,11 +143,9 @@ class SugarFieldEnum extends SugarFieldBase
             
             if (!empty($app_list_strings[$option_array_name][$rawField])) {
                 return $app_list_strings[$option_array_name][$rawField];
-            } else {
-                return $rawField;
             }
-        } else {
             return $rawField;
         }
+        return $rawField;
     }
 }

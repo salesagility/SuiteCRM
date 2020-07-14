@@ -178,7 +178,7 @@ EOQ;
         $form->reset('main.SearchHeader');
 
         // create the listview
-        $seed_bean = BeanFactory::newBean('Contacts');
+        $seed_bean = new Contact();
         $ListView = new ListView();
         $ListView->show_export_button = false;
         $ListView->process_for_popups = true;
@@ -299,7 +299,7 @@ EOJS;
         $form->reset('main.SearchHeader');
 
         // create the listview
-        $seed_bean = BeanFactory::newBean('Contacts');
+        $seed_bean = new Contact();
         $ListView = new ListView();
         $ListView->display_header_and_footer=false;
         $ListView->show_export_button = false;
@@ -327,16 +327,14 @@ EOJS;
 
         $list = array();
         while (($row = $seed_bean->db->fetchByAssoc($result)) != null) {
-            $seed_bean = BeanFactory::newBean('Contacts');
+            $seed_bean = new Contact();
             foreach ($seed_bean->field_defs as $field=>$value) {
                 if (isset($row[$field])) {
                     $seed_bean->$field = $row[$field];
+                } elseif (isset($row[$seed_bean->table_name .'.'.$field])) {
+                    $seed_bean->$field = $row[$seed_bean->table_name .'.'.$field];
                 } else {
-                    if (isset($row[$seed_bean->table_name .'.'.$field])) {
-                        $seed_bean->$field = $row[$seed_bean->table_name .'.'.$field];
-                    } else {
-                        $seed_bean->$field = "";
-                    }
+                    $seed_bean->$field = "";
                 }
             }
             $seed_bean->fill_in_additional_list_fields();

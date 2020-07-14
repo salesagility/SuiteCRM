@@ -67,7 +67,7 @@ if (is_admin($current_user)) {
     }
 
     //No SMTP server is set up Error.
-    $admin = BeanFactory::newBean('Administration');
+    $admin = new Administration();
     $smtp_error = $admin->checkSmtpError();
 
     if (!isset($sugar_config['installer_locked']) || $sugar_config['installer_locked'] == false) {

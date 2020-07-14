@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testViewSugarpdf()
@@ -48,12 +48,12 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
     //Incomplete test. SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
     public function testpreDisplay()
     {
-//        $this->markTestIncomplete('Can Not be implemented');
+        $this->markTestIncomplete('Cannot be implemented due to throwing fatal error.');
     }
 
     //Incomplete test.  SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
     public function testdisplay()
     {
-//        $this->markTestIncomplete('Can Not be implemented');
+        $this->markTestIncomplete('Cannot be implemented due to throwing fatal error.');
     }
 }

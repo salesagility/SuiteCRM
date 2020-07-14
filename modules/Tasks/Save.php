@@ -52,7 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$focus = BeanFactory::newBean('Tasks');
+$focus = new Task();
 if (!isset($prefix)) {
     $prefix='';
 }
@@ -125,7 +125,7 @@ if (isset($_REQUEST['inbound_email_id']) && !empty($_REQUEST['inbound_email_id']
     // fake this case like it's already saved.
     $focus->save();
     
-    $email = BeanFactory::newBean('Emails');
+    $email = new Email();
     $email->retrieve($_REQUEST['inbound_email_id']);
     $email->parent_type = 'Tasks';
     $email->parent_id = $focus->id;

@@ -54,9 +54,9 @@ function generateFieldDefsJS2()
         }
     }
 
-    $contact = BeanFactory::newBean('Contacts');
-    $lead = BeanFactory::newBean('Leads');
-    $prospect = BeanFactory::newBean('Prospects');
+    $contact = new Contact();
+    $lead = new Lead();
+    $prospect = new Prospect();
 
     $loopControl['Contacts'] = array(
         'Contacts' => $contact,
@@ -130,16 +130,14 @@ function genDropDownJS2()
                 $dropdown .= "<option value='" . $key . "'>
 						" . $lblContactAndOthers . "
 		  	       </option>";
-            } else {
-                if (isset($app_list_strings['moduleListSingular'][$key])) {
-                    $dropdown .= "<option value='" . $key . "'>
+            } elseif (isset($app_list_strings['moduleListSingular'][$key])) {
+                $dropdown .= "<option value='" . $key . "'>
 						" . $app_list_strings['moduleListSingular'][$key] . "
 		  	       </option>";
-                } else {
-                    $dropdown .= "<option value='" . $key . "'>
+            } else {
+                $dropdown .= "<option value='" . $key . "'>
 						" . $app_list_strings['moduleList'][$key] . "
 		  	       </option>";
-                }
             }
         }
     }

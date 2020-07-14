@@ -290,7 +290,7 @@ class Lead extends Person implements EmailInterface
 
         //we must move the status out here in order to be able to capture workflow conditions
         $leadid = str_replace("'", "", $leadid);
-        $lead = BeanFactory::newBean('Leads');
+        $lead = new Lead();
         $lead->retrieve($leadid);
         $lead->status='Converted';
         $lead->save();
@@ -315,7 +315,7 @@ class Lead extends Person implements EmailInterface
         $this->get_account();
 
         if (!empty($this->campaign_id)) {
-            $camp = BeanFactory::newBean('Campaigns');
+            $camp = new Campaign();
             $where = "campaigns.id='$this->campaign_id'";
             $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
             if (!empty($campaign_list)) {

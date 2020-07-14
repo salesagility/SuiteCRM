@@ -58,7 +58,7 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
     public function save($check_notify = false)
     {
         if (!$this->mail_smtppass && $this->id) {
-            $bean = BeanFactory::newBean('OutboundEmailAccounts');
+            $bean = new OutboundEmailAccounts();
             $bean->retrieve($this->id);
             if (!$bean->mail_smtppass) {
                 $GLOBALS['log']->warn("Unable to send email via SMTP using an empty password.");
@@ -115,7 +115,7 @@ HTML;
         global $app_strings, $current_user;
         $APP = $app_strings;
         $CURRENT_USER_EMAIL = $current_user->email1;
-        $admin = BeanFactory::newBean('Administration');
+        $admin = new Administration();
         $admin->retrieveSettings();
         $adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
         isValidEmailAddress($adminNotifyFromAddress);

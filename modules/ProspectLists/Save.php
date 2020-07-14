@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$focus = BeanFactory::newBean('ProspectLists');
+$focus = new ProspectList();
 
 $focus->retrieve($_POST['record']);
 
@@ -67,7 +67,7 @@ $return_id = $focus->id;
 
 //Bug 33675 Duplicate target list
 if (!empty($_REQUEST['duplicateId'])) {
-    $copyFromProspectList = BeanFactory::newBean('ProspectLists');
+    $copyFromProspectList = new ProspectList();
     $copyFromProspectList->retrieve($_REQUEST['duplicateId']);
     $relations = $copyFromProspectList->retrieve_relationships('prospect_lists_prospects', array('prospect_list_id'=>$_REQUEST['duplicateId']), 'related_id, related_type');
     if (count($relations)>0) {

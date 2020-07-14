@@ -250,7 +250,7 @@ class Campaign extends SugarBean
 
             //US DOLLAR
         if (isset($this->amount) && !empty($this->amount)) {
-            $currency = BeanFactory::newBean('Currencies');
+            $currency = new Currency();
             $currency->retrieve($this->currency_id);
             $this->amount_usdollar = $currency->convertToDollar($this->amount);
         }
@@ -343,11 +343,9 @@ class Campaign extends SugarBean
 					on campaign_log.id = secondary.id	";
             }
             unset($query_array['group_by']);
-        } else {
-            if (isset($query_array['group_by'])) {
-                $query_array['where'] = $query_array['where'] . ' GROUP BY ' . $query_array['group_by'];
-                unset($query_array['group_by']);
-            }
+        } elseif (isset($query_array['group_by'])) {
+            $query_array['where'] = $query_array['where'] . ' GROUP BY ' . $query_array['group_by'];
+            unset($query_array['group_by']);
         }
 
         $query = (implode(" ", $query_array));
@@ -381,7 +379,7 @@ class Campaign extends SugarBean
         }
 
         //get select query from email man
-        $man = BeanFactory::newBean('EmailMan');
+        $man = new EmailMan();
         $listquery= $man->create_queue_items_query('', str_replace(array("WHERE","where"), "", $query_array['where']), null, $query_array);
         return $listquery;
     }

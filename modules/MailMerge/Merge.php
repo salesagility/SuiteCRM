@@ -107,7 +107,7 @@ if (empty($_SESSION['MAILMERGE_MODULE']) && !empty($_SESSION['mail_merge_file_lo
 
     $fields =  get_field_list($seed);
 
-    $document = BeanFactory::newBean('DocumentRevisions');//BeanFactory::newBean('Documents');
+    $document = new DocumentRevision();//new Document();
     $document->retrieve($document_id);
 
     if (!empty($relModule)) {

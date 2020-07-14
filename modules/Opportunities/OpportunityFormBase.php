@@ -50,7 +50,7 @@ class OpportunityFormBase
     {
         require_once('include/formbase.php');
 
-        $focus = BeanFactory::newBean('Opportunities');
+        $focus = new Opportunity();
         $query = '';
         $baseQuery = 'select id, name, sales_stage,amount, date_closed  from opportunities where deleted!=1 and (';
 
@@ -179,7 +179,7 @@ EOQ;
             return '';
         }
         if (empty($lead)) {
-            $lead = BeanFactory::newBean('Leads');
+            $lead = new Lead();
         }
         global $mod_strings, $sugar_config;
         $showaccount = $showaccount && $sugar_config['require_accounts'];
@@ -294,7 +294,7 @@ EOQ;
 </tr>
 EOQ;
         //carry forward custom lead fields to opportunities during Lead Conversion
-        $tempOpp = BeanFactory::newBean('Opportunities');
+        $tempOpp = new Opportunity();
         if (method_exists($lead, 'convertCustomFieldsForm')) {
             $lead->convertCustomFieldsForm($the_form, $tempOpp, $prefix);
         }
@@ -317,7 +317,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(BeanFactory::newBean('Opportunities'));
+        $javascript->setSugarBean(new Opportunity());
         $javascript->addRequiredFields($prefix);
         $the_form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -427,7 +427,7 @@ EOQ;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(BeanFactory::newBean('Opportunities'));
+        $javascript->setSugarBean(new Opportunity());
         $javascript->addRequiredFields($prefix);
         $the_form .=$javascript->getScript();
 
@@ -443,7 +443,7 @@ EOQ;
 
         require_once('include/formbase.php');
 
-        $focus = BeanFactory::newBean('Opportunities');
+        $focus = new Opportunity();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
         }

@@ -9,7 +9,7 @@ class Reports extends \AcceptanceTester
      */
     public function gotoProfile()
     {
-        $I = new NavigationBarTester($this->getScenario());
+        $I = new NavigationBar($this->getScenario());
         $I->clickUserMenuItem('Profile');
     }
 

@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function test__construct()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $oauthToken = BeanFactory::newBean('OAuthTokens');
+        $oauthToken = new OAuthToken();
 
         $this->assertInstanceOf('OAuthToken', $oauthToken);
         $this->assertInstanceOf('SugarBean', $oauthToken);
@@ -30,7 +30,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetState()
     {
-        $oauthToken = BeanFactory::newBean('OAuthTokens');
+        $oauthToken = new OAuthToken();
         $oauthToken->setState($oauthToken::REQUEST);
 
         $this->assertEquals($oauthToken::REQUEST, $oauthToken->tstate);
@@ -38,9 +38,9 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetConsumer()
     {
-        $oauthToken = BeanFactory::newBean('OAuthTokens');
+        $oauthToken = new OAuthToken();
 
-        $oauthKey = BeanFactory::newBean('OAuthKeys');
+        $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
 
         $oauthToken->setConsumer($oauthKey);
@@ -51,7 +51,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetCallbackURL()
     {
-        $oauthToken = BeanFactory::newBean('OAuthTokens');
+        $oauthToken = new OAuthToken();
 
         $url = 'test url';
         $oauthToken->setCallbackURL($url);
@@ -123,7 +123,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function mark_deleted($id)
     {
-        $oauthToken = BeanFactory::newBean('OAuthTokens');
+        $oauthToken = new OAuthToken();
 
         //execute the method
         $oauthToken->mark_deleted($id);
@@ -135,10 +135,10 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreateAuthorized()
     {
-        $oauthKey = BeanFactory::newBean('OAuthKeys');
+        $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
 
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->retrieve('1');
 
         $oauthToken = OAuthToken::createAuthorized($oauthKey, $user);
@@ -158,7 +158,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function copyAuthData($token)
     {
-        $oauthToken = BeanFactory::newBean('OAuthTokens');
+        $oauthToken = new OAuthToken();
 
         $oauthToken->copyAuthData($token);
         $this->assertEquals($token->authdata, $oauthToken->authdata);
@@ -167,7 +167,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testqueryString()
     {
-        $oauthToken = BeanFactory::newBean('OAuthTokens');
+        $oauthToken = new OAuthToken();
 
         $result = $oauthToken->queryString();
         $this->assertEquals('oauth_token=&oauth_token_secret=', $result);
@@ -192,9 +192,9 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckNonce()
     {
-//        self::markTestIncomplete('wrong test');
-//        $result = OAuthToken::checkNonce('test', 'test', 123);
-//        $this->assertEquals(1, $result);
+        self::markTestIncomplete('wrong test');
+        $result = OAuthToken::checkNonce('test', 'test', 123);
+        $this->assertEquals(1, $result);
     }
 
     public function testdeleteByConsumer()

@@ -102,16 +102,14 @@ function appendHiddenFields(_form, ln, id) {
     var fieldInput = '';
     if ($("#aor_conditions_value\\["+ln+"\\]\\[0\\]").length > 0) {
         fieldInput = $("#aor_conditions_value\\["+ln+"\\]\\[0\\]").val();
-    } else if ($("#aor_conditions_value\\["+ln+"\\]").length > 0) {
-        fieldInput = $("#aor_conditions_value\\["+ln+"\\]").val();
-    } else if ($("[name='aor_conditions_value\\[" + ln + "\\]']").length > 0) {
+        fieldInput = updateTimeDateFields(fieldInput, ln);
+    } else {
     	fieldInput = $("[name='aor_conditions_value\\[" + ln + "\\]']").val();
+    	fieldInput = updateTimeDateFields(fieldInput, ln);
     }
 
-    fieldInput = updateTimeDateFields(fieldInput, ln);
-    _form.append('<input type="hidden" name="parameter_value[' + ln + ']" value="' + fieldInput + '">');
-	
-    updateHiddenReportFields(ln, _form);
+  _form.append('<input type="hidden" name="parameter_value[' + ln + ']" value="' + fieldInput + '">');
+  updateHiddenReportFields(ln, _form);
 }
 
 function addParametersToForm(action) {

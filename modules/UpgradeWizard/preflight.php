@@ -89,6 +89,7 @@ if (version_compare(phpversion(), '5.2.0') >=0) {
 
     //Quickcreatedefs on the basis of editviewdefs
     updateQuickCreateDefs();
+    upgradeSugarCache($_SESSION['install_file']);
 
     if ((count($errors) == 1)) { // only diffs
         logThis('file preflight check passed successfully.');
@@ -201,9 +202,8 @@ eoq;
         foreach ($errors as $error) {
             if (is_array($error)) { // manual diff files
                 continue;
-            } else {
-                $out .= "{$error}<br />";
             }
+            $out .= "{$error}<br />";
         }
         $out .= "</span><br />";
     }

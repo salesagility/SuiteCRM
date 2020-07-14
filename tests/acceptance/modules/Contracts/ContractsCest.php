@@ -52,7 +52,7 @@ class ContractsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Contracts $contract
-     * @param \Step\Acceptance\AccountsTester $account
+     * @param \Step\Acceptance\Accounts $account
      *
      * As administrative user I want to create a contract so that I can test
      * the standard fields.
@@ -62,7 +62,7 @@ class ContractsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Contracts $contract,
-        \Step\Acceptance\AccountsTester $account
+        \Step\Acceptance\Accounts $account
     ) {
         $I->wantTo('Create a Contract');
 

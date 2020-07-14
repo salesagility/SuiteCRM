@@ -43,7 +43,7 @@ class HomeViewModulelistmenu extends ViewModulelistmenu
 {
     public function display()
     {
-        $tracker = BeanFactory::newBean('Trackers');
+        $tracker = new Tracker();
         $history = $tracker->get_recently_viewed($GLOBALS['current_user']->id);
 
         foreach ($history as $key => $row) {

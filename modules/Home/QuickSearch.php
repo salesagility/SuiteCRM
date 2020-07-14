@@ -300,12 +300,10 @@ class quicksearchQuery
 
                 if (isset($listData[$field])) {
                     $data['fields'][$i][$field] = $listData[$field];
+                } elseif (isset($results[$i]->$field)) {
+                    $data['fields'][$i][$field] = $results[$i]->$field;
                 } else {
-                    if (isset($results[$i]->$field)) {
-                        $data['fields'][$i][$field] = $results[$i]->$field;
-                    } else {
-                        $data['fields'][$i][$field] = '';
-                    }
+                    $data['fields'][$i][$field] = '';
                 }
             }
         }

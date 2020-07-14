@@ -75,7 +75,7 @@ class MeetingsQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('meetingsQuickCreate');
         
-        $focus = BeanFactory::newBean('Meetings');
+        $focus = new Meeting();
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
@@ -103,19 +103,13 @@ class MeetingsQuickCreate extends QuickCreate
         
         if ($time_start_minutes > 0 && $time_start_minutes < 15) {
             $time_start_minutes = "15";
-        } else {
-            if ($time_start_minutes > 15 && $time_start_minutes < 30) {
-                $time_start_minutes = "30";
-            } else {
-                if ($time_start_minutes > 30 && $time_start_minutes < 45) {
-                    $time_start_minutes = "45";
-                } else {
-                    if ($time_start_minutes > 45) {
-                        $time_start_hour += 1;
-                        $time_start_minutes = "00";
-                    }
-                }
-            }
+        } elseif ($time_start_minutes > 15 && $time_start_minutes < 30) {
+            $time_start_minutes = "30";
+        } elseif ($time_start_minutes > 30 && $time_start_minutes < 45) {
+            $time_start_minutes = "45";
+        } elseif ($time_start_minutes > 45) {
+            $time_start_hour += 1;
+            $time_start_minutes = "00";
         }
         
         

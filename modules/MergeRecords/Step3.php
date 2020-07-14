@@ -2,7 +2,8 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -107,7 +108,7 @@ if (isset($_REQUEST['change_parent']) && $_REQUEST['change_parent']=='1') {
         $merge_ids_array[] = $id;
     }
 }
-$focus = BeanFactory::newBean('MergeRecords');
+$focus = new MergeRecord();
 $focus->load_merge_bean($_REQUEST['merge_module'], true, $base_id);
 $params = array();
 $params[] = "<a href='index.php?module={$focus->merge_bean->module_dir}&action=index'>{$GLOBALS['app_list_strings']['moduleList'][$focus->merge_bean->module_dir]}</a>";
@@ -362,18 +363,14 @@ foreach ($temp_field_array as $field_array) {
                 $temp_array = array();
                 $tempId = $field_array['id_name'];
                 $json_data['popup_fields'] = array($tempName => $mergeBeanArray[$id]->$tempName,$tempId => $mergeBeanArray[$id]->$tempId,);
+            } elseif ($field_check == 'teamset') {
+                $json_data['field_value'] = TeamSetManager::getCommaDelimitedTeams($mergeBeanArray[$id]->team_set_id, $mergeBeanArray[$id]->team_id, true);
+                $json_data['field_value2'] = TeamSetManager::getTeamsFromSet($mergeBeanArray[$id]->team_set_id);
+                $json_data['field_value3'] =  $mergeBeanArray[$id]->team_set_id;
+            } elseif ($field_check == 'multienum') {
+                $json_data['field_value'] = unencodeMultienum($mergeBeanArray[$id]->$tempName);
             } else {
-                if ($field_check == 'teamset') {
-                    $json_data['field_value'] = TeamSetManager::getCommaDelimitedTeams($mergeBeanArray[$id]->team_set_id, $mergeBeanArray[$id]->team_id, true);
-                    $json_data['field_value2'] = TeamSetManager::getTeamsFromSet($mergeBeanArray[$id]->team_set_id);
-                    $json_data['field_value3'] =  $mergeBeanArray[$id]->team_set_id;
-                } else {
-                    if ($field_check == 'multienum') {
-                        $json_data['field_value'] = unencodeMultienum($mergeBeanArray[$id]->$tempName);
-                    } else {
-                        $json_data['field_value'] = $mergeBeanArray[$id]->$tempName;
-                    }
-                }
+                $json_data['field_value'] = $mergeBeanArray[$id]->$tempName;
             }
             $encoded_json_data = $json->encode($json_data);
             $xtpl->assign('ENCODED_JSON_DATA', $encoded_json_data);

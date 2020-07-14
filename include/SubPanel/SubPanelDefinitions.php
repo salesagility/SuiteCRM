@@ -374,12 +374,10 @@ class aSubPanel
 
                     if (isset($subpanel->panel_definition['list_fields'][$field])) {
                         $list_fields[$field] = $subpanel->panel_definition['list_fields'][$field];
+                    } elseif ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key])) {
+                        $list_fields[$list_key] = $subpanel->panel_definition['list_fields'][$list_key];
                     } else {
-                        if ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key])) {
-                            $list_fields[$list_key] = $subpanel->panel_definition['list_fields'][$list_key];
-                        } else {
-                            $list_fields[$field] = $display_fields[$vname];
-                        }
+                        $list_fields[$field] = $display_fields[$vname];
                     }
                 }
                 foreach ($query_fields as $field => $def) {
@@ -457,9 +455,8 @@ class aSubPanel
     {
         if (isset($this->panel_definition [ $name ])) {
             return $this->panel_definition [ $name ] ;
-        } else {
-            return null ;
         }
+        return null ;
     }
 
     //if datasource is of the type function then return the function name
@@ -481,14 +478,13 @@ class aSubPanel
         }
         if (! empty($prop_value)) {
             return $prop_value ;
-        } else {
-            //fall back to default behavior.
         }
+        //fall back to default behavior.
+        
         if ($this->isDatasourceFunction()) {
             return (substr_replace($this->get_inst_prop_value('get_subpanel_data'), '', 0, 9)) ;
-        } else {
-            return $this->get_inst_prop_value('get_subpanel_data') ;
         }
+        return $this->get_inst_prop_value('get_subpanel_data') ;
     }
 
     //returns the where clause for the query.
@@ -496,10 +492,8 @@ class aSubPanel
     {
         if ($this->get_def_prop_value('where') != '' && $this->search_query != '') {
             return $this->get_def_prop_value('where').' AND '.$this->search_query;
-        } else {
-            if ($this->search_query != '') {
-                return $this->search_query;
-            }
+        } elseif ($this->search_query != '') {
+            return $this->search_query;
         }
         return $this->get_def_prop_value('where') ;
     }
@@ -515,9 +509,8 @@ class aSubPanel
     {
         if (isset($this->panel_definition [ 'list_fields' ])) {
             return $this->panel_definition [ 'list_fields' ] ;
-        } else {
-            return array( ) ;
         }
+        return array( ) ;
     }
 
     public function get_module_name()
@@ -556,18 +549,17 @@ class aSubPanel
         if (! empty($this->sub_subpanels)) {
             if (! empty($this->_instance_properties [ 'header_definition_from_subpanel' ]) && ! empty($this->sub_subpanels [ $this->_instance_properties [ 'header_definition_from_subpanel' ] ])) {
                 return $this->sub_subpanels [ $this->_instance_properties [ 'header_definition_from_subpanel' ] ] ;
-            } else {
-                $display_fields = array();
-                //If we are not pulling from a specific subpanel, create a list of all list fields and use that.
-                foreach ($this->sub_subpanels as $subpanel) {
-                    $list_fields = $subpanel->get_list_fields();
-                    foreach ($list_fields as $field => $def) {
-                    }
-                }
-
-                reset($this->sub_subpanels) ;
-                return current($this->sub_subpanels) ;
             }
+            $display_fields = array();
+            //If we are not pulling from a specific subpanel, create a list of all list fields and use that.
+            foreach ($this->sub_subpanels as $subpanel) {
+                $list_fields = $subpanel->get_list_fields();
+                foreach ($list_fields as $field => $def) {
+                }
+            }
+
+            reset($this->sub_subpanels) ;
+            return current($this->sub_subpanels) ;
         }
         return null ;
     }
@@ -840,7 +832,7 @@ class SubPanelDefinitions
      */
     public function set_hidden_subpanels($panels)
     {
-        $administration = BeanFactory::newBean('Administration');
+        $administration = new Administration();
         $serialized = base64_encode(serialize($panels));
         $administration->saveSetting('MySettings', 'hide_subpanels', $serialized);
     }
@@ -859,7 +851,7 @@ class SubPanelDefinitions
         if (empty($hidden_subpanels)) {
 
             //create Administration object and retrieve any settings for panels
-            $administration = BeanFactory::newBean('Administration');
+            $administration = new Administration();
             $administration->retrieveSettings('MySettings');
 
             if (isset($administration->settings) && isset($administration->settings['MySettings_hide_subpanels'])) {

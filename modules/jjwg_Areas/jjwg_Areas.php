@@ -71,7 +71,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
      */
     public function configuration()
     {
-        $this->jjwg_Maps = BeanFactory::newBean('jjwg_Maps');
+        $this->jjwg_Maps = new jjwg_Maps();
         $this->settings = $GLOBALS['jjwg_config'];
     }
 
@@ -123,9 +123,8 @@ class jjwg_Areas extends jjwg_Areas_sugar
 
         if (count((array)$this->polygon) > 0) {
             return $this->polygon;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -376,9 +375,8 @@ class jjwg_Areas extends jjwg_Areas_sugar
         // If the number of edges we passed through is odd, then it's in the polygon.
         if ($intersections % 2 != 0) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function point_on_vertex($point, $vertices)

@@ -78,7 +78,7 @@ class NoteSoap
     {
         global $sugar_config;
 
-        $focus = BeanFactory::newBean('Notes');
+        $focus = new Note();
 
 
 
@@ -118,7 +118,7 @@ class NoteSoap
     {
         global $sugar_config;
 
-        $focus = BeanFactory::newBean('Notes');
+        $focus = new Note();
 
 
         if (!empty($note['id'])) {

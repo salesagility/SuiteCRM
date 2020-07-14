@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testAOS_Contracts()
     {
         // Execute the constructor and check for the Object type and attributes
-        $aosContracts = BeanFactory::newBean('AOS_Contracts');
+        $aosContracts = new AOS_Contracts();
         $this->assertInstanceOf('AOS_Contracts', $aosContracts);
         $this->assertInstanceOf('Basic', $aosContracts);
         $this->assertInstanceOf('SugarBean', $aosContracts);
@@ -33,7 +33,7 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsaveAndDelete()
     {
-        $aosContracts = BeanFactory::newBean('AOS_Contracts');
+        $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
 
         $aosContracts->save();
@@ -52,7 +52,7 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
     {
         $call = new call();
 
-        $aosContracts = BeanFactory::newBean('AOS_Contracts');
+        $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
 
         //test createReminder()

@@ -45,7 +45,7 @@ class ProjectViewGanttChart extends ViewDetail
         echo '<script type="text/javascript" src="modules/Project/js/jquery.blockUI.js"></script>';
         echo '<script type="text/javascript" src="modules/Project/js/jquery.validate.min.js"></script>';
 
-        $project = BeanFactory::newBean('Project');
+        $project = new Project();
 
         if (!isset($_REQUEST["project_id"]) || trim($_REQUEST["project_id"]) == "") {
             $_REQUEST["project_id"] = $_REQUEST["record"];

@@ -7,7 +7,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
     public function testRelease()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $release = BeanFactory::newBean('Releases');
+        $release = new Release();
 
         $this->assertInstanceOf('Release', $release);
         $this->assertInstanceOf('SugarBean', $release);
@@ -21,7 +21,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $release = BeanFactory::newBean('Releases');
+        $release = new Release();
 
         //test without setting name
         $this->assertEquals(null, $release->get_summary_text());
@@ -33,7 +33,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_releases()
     {
-        $release = BeanFactory::newBean('Releases');
+        $release = new Release();
 
         //test with default params
         $result = $release->get_releases();
@@ -46,7 +46,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $release = BeanFactory::newBean('Releases');
+        $release = new Release();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -59,7 +59,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $release = BeanFactory::newBean('Releases');
+        $release = new Release();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -72,7 +72,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $release = BeanFactory::newBean('Releases');
+        $release = new Release();
 
         $release->name = 'test';
         $release->status = 'Hidden';
@@ -91,7 +91,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbuild_generic_where_clause()
     {
-        $release = BeanFactory::newBean('Releases');
+        $release = new Release();
 
         //test with empty string params
         $expected = "name like '%'";

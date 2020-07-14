@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewListTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testlistViewProcess()
@@ -34,7 +34,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         
         //execute the method and call methods to get the required child objects set. it should return some html.
         $view = new ViewList();
-        $view->seed = BeanFactory::newBean('Users');
+        $view->seed = new User();
         $view->prepareSearchForm();
         $view->preDisplay();
 
@@ -95,7 +95,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['module'] = 'Users';
         $_REQUEST['Users2_USER_offset'] = 1;
         $_REQUEST['current_query_by_page'] = htmlentities(json_encode(array('key' => 'value')));
-        $view->bean = BeanFactory::newBean('Users');
+        $view->bean = new User();
 
         ob_start();
         $view->listViewPrepare();
@@ -175,8 +175,8 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0, strlen($renderedContent1));
 
         //test with bean, seed and other arrtibutes set. it shuold return html.
-        $view->bean = BeanFactory::newBean('Users');
-        $view->seed = BeanFactory::newBean('Users');
+        $view->bean = new User();
+        $view->seed = new User();
         $view->module = 'Users';
         $view->prepareSearchForm();
         $view->preDisplay();

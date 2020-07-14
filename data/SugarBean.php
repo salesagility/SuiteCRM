@@ -580,7 +580,7 @@ class SugarBean
                         if (isset($this->$field)) {
                             break;
                         }
-                    // no break
+                        // no break
                     default:
                         if (isset($value['default']) && $value['default'] !== '') {
                             $this->$field = htmlentities($value['default'], ENT_QUOTES, 'UTF-8');
@@ -633,7 +633,7 @@ class SugarBean
         }
         if (is_bool($results)) {
             $GLOBALS['log']->fatal('Type Error: Argument 1 passed to TimeDate::asUser() ' .
-                'must be an instance of DateTime, boolean given');
+                    'must be an instance of DateTime, boolean given');
             return false;
         }
         return $timedate->asUserDate($results);
@@ -1040,7 +1040,7 @@ class SugarBean
 
         foreach ($subpanel_list as $this_subpanel) {
             if (
-            method_exists($this_subpanel, 'isDatasourceFunction')
+                method_exists($this_subpanel, 'isDatasourceFunction')
             ) {
                 if (!$this_subpanel->isDatasourceFunction() || ($this_subpanel->isDatasourceFunction()
                         && isset($this_subpanel->_instance_properties['generate_select'])
@@ -2065,14 +2065,13 @@ class SugarBean
                 ));
             }
             // Link2 style
-            if ($begin_index != 0 || $end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by)) {
+            if ($end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by)) {
                 return array_values($this->$field_name->getBeans(array(
-                    'where' => $optional_where,
-                    'deleted' => $deleted,
-                    'offset' => $begin_index,
-                    'limit' => ($end_index - $begin_index),
-                    'order_by' => $order_by
-                )));
+                        'where' => $optional_where,
+                        'deleted' => $deleted,
+                        'limit' => ($end_index - $begin_index),
+                        'order_by' => $order_by
+                    )));
             }
             return array_values($this->$field_name->getBeans());
         }
@@ -2491,91 +2490,89 @@ class SugarBean
                     continue;
                 }
                 $reformatted = false;
-                if (isset($def['type']) && $def['type']) {
-                    switch ($def['type']) {
-                        case 'datetime':
-                        case 'datetimecombo':
-                            if (empty($this->$field) || $this->$field == 'NULL') {
-                                $this->$field = '';
-                                break;
-                            }
-                            if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',
-                                $this->$field)) {
-                                $this->$field = $timedate->to_db($this->$field);
+                switch ($def['type']) {
+                    case 'datetime':
+                    case 'datetimecombo':
+                        if (empty($this->$field) || $this->$field == 'NULL') {
+                            $this->$field = '';
+                            break;
+                        }
+                        if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $this->$field)) {
+                            $this->$field = $timedate->to_db($this->$field);
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'date':
+                        if (empty($this->$field) || $this->$field == 'NULL') {
+                            $this->$field = '';
+                            break;
+                        }
+                        if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $this->$field)) {
+                            $this->$field = $timedate->to_db_date($this->$field, false);
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'time':
+                        if (empty($this->$field) || $this->$field == 'NULL') {
+                            $this->$field = '';
+                            break;
+                        }
+                        if (preg_match('/(am|pm)/i', $this->$field)) {
+                            $fromUserTime = $timedate->fromUserTime($this->$field);
+                            if (is_object($fromUserTime) && method_exists($fromUserTime, 'format')) {
+                                $this->$field = $fromUserTime->format(TimeDate::DB_TIME_FORMAT);
                                 $reformatted = true;
-                            }
-                            break;
-                        case 'date':
-                            if (empty($this->$field) || $this->$field == 'NULL') {
-                                $this->$field = '';
-                                break;
-                            }
-                            if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $this->$field)) {
-                                $this->$field = $timedate->to_db_date($this->$field, false);
-                                $reformatted = true;
-                            }
-                            break;
-                        case 'time':
-                            if (empty($this->$field) || $this->$field == 'NULL') {
-                                $this->$field = '';
-                                break;
-                            }
-                            if (preg_match('/(am|pm)/i', $this->$field)) {
-                                $fromUserTime = $timedate->fromUserTime($this->$field);
-                                if (is_object($fromUserTime) && method_exists($fromUserTime, 'format')) {
-                                    $this->$field = $fromUserTime->format(TimeDate::DB_TIME_FORMAT);
-                                    $reformatted = true;
-                                } else {
-                                    $GLOBALS['log']->fatal('Get DateTime from user time string is failed.');
-                                }
-                            }
-                            break;
-                        case 'double':
-                        case 'decimal':
-                        case 'currency':
-                        case 'float':
-                            if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                                break;
-                            }
-                            if (is_string($this->$field)) {
-                                $this->$field = (float)unformat_number($this->$field);
-                                $reformatted = true;
-                            }
-                            break;
-                        case 'uint':
-                        case 'ulong':
-                        case 'long':
-                        case 'short':
-                        case 'tinyint':
-                        case 'int':
-                            if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                                break;
-                            }
-                            if (is_string($this->$field)) {
-                                $this->$field = (int)unformat_number($this->$field);
-                                $reformatted = true;
-                            }
-                            break;
-                        case 'bool':
-                            if (empty($this->$field) || in_array((string)$this->$field, $bool_false_values)) {
-                                $this->$field = false;
-                            } elseif (true === $this->$field || 1 == $this->$field) {
-                                $this->$field = true;
                             } else {
-                                $this->$field = true;
-                                $reformatted = true;
+                                $GLOBALS['log']->fatal('Get DateTime from user time string is failed.');
                             }
+                        }
+                        break;
+                    case 'double':
+                    case 'decimal':
+                    case 'currency':
+                    case 'float':
+                        if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
                             break;
-                        case 'encrypt':
-                            $this->$field = $this->encrpyt_before_save($this->$field);
+                        }
+                        if (is_string($this->$field)) {
+                            $this->$field = (float)unformat_number($this->$field);
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'uint':
+                    case 'ulong':
+                    case 'long':
+                    case 'short':
+                    case 'tinyint':
+                    case 'int':
+                        if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
                             break;
-                        default:
-                            //do nothing
-                    }
+                        }
+                        if (is_string($this->$field)) {
+                            $this->$field = (int)unformat_number($this->$field);
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'bool':
+                        if (empty($this->$field) || in_array((string)$this->$field, $bool_false_values)) {
+                            $this->$field = false;
+                        } elseif (true === $this->$field || 1 == $this->$field) {
+                            $this->$field = true;
+                        } else {
+                            $this->$field = true;
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'encrypt':
+                        $this->$field = $this->encrpyt_before_save($this->$field);
+                        break;
+                    default:
+                        //do nothing
                 }
                 if ($reformatted) {
-                    $GLOBALS['log']->info('Formatting correction: ' . $this->module_dir . '->' . $field .
-                        ' had formatting automatically corrected.');
+                    $GLOBALS['log']->deprecated('Formatting correction: ' . $this->module_dir . '->' . $field .
+                        ' had formatting automatically corrected. This will be removed in the future, ' .
+                        'please upgrade your external code');
                 }
             }
         }
@@ -3035,12 +3032,12 @@ class SugarBean
                 $this->module_dir,
                 $this->db,
                 'many-to-many'
-            );
+                    );
 
             if (!empty($rel)) {
                 foreach ($this->field_defs as $field => $def) {
                     if ($def['type'] == 'link' && !empty($def['relationship'])
-                        && $def['relationship'] == $rel) {
+                                && $def['relationship'] == $rel) {
                         $this->load_relationship($field);
                         return $this->$field->add($new_rel_id);
                     }
@@ -3149,7 +3146,7 @@ class SugarBean
         ) {
             // cn: bug 42727 no need to send email to owner (within workflow)
 
-            $admin = BeanFactory::newBean('Administration');
+            $admin = new Administration();
             $admin->retrieveSettings();
             $sendNotifications = false;
 
@@ -3181,7 +3178,7 @@ class SugarBean
      */
     public function get_notification_recipients()
     {
-        $notify_user = BeanFactory::newBean('Users');
+        $notify_user = new User();
         $notify_user->retrieve($this->assigned_user_id);
         $this->new_assigned_user_name = $notify_user->full_name;
 
@@ -3945,7 +3942,7 @@ class SugarBean
                                 $where = str_replace(
                                     $search_expression,
                                     '(' . $full_name_search . ' OR ' . $first_name_search
-                                    . ' OR ' . $last_name_search . ')',
+                                        . ' OR ' . $last_name_search . ')',
                                     $where
                                 );
                             }
@@ -4075,8 +4072,8 @@ class SugarBean
         $field_def = $this->field_defs[$field];
 
         return isset($field_def['type'])
-            && $field_def['type'] == 'relate'
-            && isset($field_def['link']);
+        && $field_def['type'] == 'relate'
+        && isset($field_def['link']);
     }
 
     /**
@@ -4652,8 +4649,8 @@ class SugarBean
     {
         if (!empty($fieldValue)
             && !(isset($fieldDef['source'])
-                && !in_array($fieldDef['source'], array('db', 'custom_fields', 'relate'))
-                && !isset($fieldDef['dbType']))
+            && !in_array($fieldDef['source'], array('db', 'custom_fields', 'relate'))
+            && !isset($fieldDef['dbType']))
         ) {
             // fromConvert other fields
             $fieldValue = $this->db->fromConvert($fieldValue, $this->db->getFieldType($fieldDef));
@@ -4858,10 +4855,10 @@ class SugarBean
                 $this->parent_type,
                 $this->parent_id,
                 array(
-                    'name' => 'parent_name',
-                    'document_name' => 'parent_document_name',
-                    'first_name' => 'parent_first_name',
-                    'last_name' => 'parent_last_name')
+                'name' => 'parent_name',
+                'document_name' => 'parent_document_name',
+                'first_name' => 'parent_first_name',
+                'last_name' => 'parent_last_name')
             );
             if (!empty($this->parent_first_name) || !empty($this->parent_last_name)) {
                 $this->parent_name = $GLOBALS['locale']->getLocaleFormattedName(
@@ -4970,7 +4967,7 @@ class SugarBean
                     }
                     if (!empty($this->$id_name) &&
                         ($this->object_name != $related_module ||
-                            ($this->object_name == $related_module && $this->$id_name != $this->id))
+                         ($this->object_name == $related_module && $this->$id_name != $this->id))
                     ) {
                         if (!empty($this->$id_name) && isset($this->$name)) {
                             $mod = BeanFactory::getBean($related_module, $this->$id_name);
@@ -5234,7 +5231,7 @@ class SugarBean
             SugarRelationship::resaveRelatedBeans();
 
             // Take the item off the recently viewed lists
-            $tracker = BeanFactory::newBean('Trackers');
+            $tracker = new Tracker();
             $tracker->makeInvisibleForAll($id);
 
 

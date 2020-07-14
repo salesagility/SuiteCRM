@@ -159,7 +159,7 @@ class ChartsDashlet extends Dashlet
             $reporter->saved_report_id = $chartReport->id;
             $xmlFile = get_cache_file_name($reporter);
 
-            $str = $sugarChart ? $sugarChart->getDashletScript($this->id, $xmlFile) : '';
+            $str = $sugarChart->getDashletScript($this->id, $xmlFile);
             return $str;
         }
     }

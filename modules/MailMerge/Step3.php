@@ -75,7 +75,7 @@ if (!isset($_SESSION["MAILMERGE_DOCUMENT_ID"])) {
     }
 }
 $document_id = $_SESSION["MAILMERGE_DOCUMENT_ID"];
-$document = BeanFactory::newBean('Documents');
+$document = new Document();
 $document->retrieve($document_id);
 $_SESSION["MAILMERGE_TEMPLATE"] = $document->document_name;
 

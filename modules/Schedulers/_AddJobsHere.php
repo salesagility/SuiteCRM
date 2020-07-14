@@ -80,8 +80,7 @@ $job_strings = array(
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
-    17 => 'syncGoogleCalendar',
-    18 => 'runElasticSearchIndexerScheduler',
+
 );
 
 /**
@@ -107,14 +106,14 @@ function pollMonitoredInboxes()
 
     require_once('modules/Emails/EmailUI.php');
 
-    $ie = BeanFactory::newBean('InboundEmail');
+    $ie = new InboundEmail();
     $emailUI = new EmailUI();
     $r = $ie->db->query('SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\' AND mailbox_type != \'bounce\'');
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
     while ($a = $ie->db->fetchByAssoc($r)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
-        $ieX = BeanFactory::newBean('InboundEmail');
+        $ieX = new InboundEmail();
         $ieX->retrieve($a['id']);
         $mailboxes = $ieX->mailboxarray;
         foreach ($mailboxes as $mbox) {
@@ -219,7 +218,7 @@ function pollMonitoredInboxes()
                                 /*If the group folder doesn't exist then download only those messages
                                  which has caseid in message*/
                                 $ieX->getMessagesInEmailCache($msgNo, $uid);
-                                $email = BeanFactory::newBean('Emails');
+                                $email = new Email();
                                 $header = $ieX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $ieX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $ieX->convertImapToSugarEmailAddress($header->from);
@@ -374,7 +373,7 @@ function trimTracker()
     $GLOBALS['log']->info('----->Scheduler fired job of type trimTracker()');
     $db = DBManagerFactory::getInstance();
 
-    $admin = BeanFactory::newBean('Administration');
+    $admin = new Administration();
     $admin->retrieveSettings('tracker');
     require('modules/Trackers/config.php');
     $trackerConfig = $tracker_config;
@@ -388,7 +387,7 @@ function trimTracker()
             continue;
         }
 
-        $timeStamp = DBManagerFactory::getInstance()->convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
+        $timeStamp = DBManager::convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
         if ($tableName == 'tracker_sessions') {
             $query = "DELETE FROM $tableName WHERE date_end < $timeStamp";
         } else {
@@ -410,11 +409,11 @@ function pollMonitoredInboxesForBouncedCampaignEmails()
     global $dictionary;
 
 
-    $ie = BeanFactory::newBean('InboundEmail');
+    $ie = new InboundEmail();
     $r = $ie->db->query('SELECT id FROM inbound_email WHERE deleted=0 AND status=\'Active\' AND mailbox_type=\'bounce\'');
 
     while ($a = $ie->db->fetchByAssoc($r)) {
-        $ieX = BeanFactory::newBean('InboundEmail');
+        $ieX = new InboundEmail();
         $ieX->retrieve($a['id']);
         $ieX->connectMailserver();
         $ieX->importMessages();
@@ -520,20 +519,6 @@ function trimSugarFeeds()
     return true;
 }
 
-
-/**
- * + * Job 17
- * + * this will sync the Google Calendars of users who are configured to do so
- * + */
-function syncGoogleCalendar()
-{
-    global $sugar_config;
-    require_once 'include/GoogleSync/GoogleSync.php';
-    $googleSync = new GoogleSync($sugar_config);
-    $googleSync->syncAllUsers();
-
-    return true;
-}
 
 function cleanJobQueue($job)
 {
@@ -652,7 +637,7 @@ function pollMonitoredInboxesAOP()
                                         !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) &&
                                         $validatior->isValidId($emailId)
                                     ) {
-                                        $aopInboundEmailX->email = BeanFactory::newBean('Emails');
+                                        $aopInboundEmailX->email = new Email();
                                         if (!$aopInboundEmailX->email->retrieve($emailId)) {
                                             throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
                                         }
@@ -668,7 +653,7 @@ function pollMonitoredInboxesAOP()
                                  which has caseid in message*/
 
                                 $aopInboundEmailX->getMessagesInEmailCache($msgNo, $uid);
-                                $email = BeanFactory::newBean('Emails');
+                                $email = new Email();
                                 $header = $aopInboundEmailX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $aopInboundEmailX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $aopInboundEmailX->convertImapToSugarEmailAddress($header->from);
@@ -777,7 +762,6 @@ function performLuceneIndexing()
 function aorRunScheduledReports()
 {
     require_once 'include/SugarQueue/SugarJobQueue.php';
-    $db = DBManagerFactory::getInstance();
     $date = new DateTime();//Ensure we check all schedules at the same instant
     foreach (BeanFactory::getBean('AOR_Scheduled_Reports')->get_full_list() as $scheduledReport) {
         if ($scheduledReport->status != 'active') {
@@ -793,12 +777,7 @@ function aorRunScheduledReports()
             if (empty($scheduledReport->aor_report_id)) {
                 continue;
             }
-            $queued = $db->fetchOne("SELECT count(*) cnt FROM job_queue WHERE data=".$db->quoted($scheduledReport->id)." and deleted=0 and status = 'running' and execute_time >= " . $db->quoted(date("Y-m-d H:i:s", strtotime("-2 hours"))));
-            if(!empty($queued) && $queued['cnt'] > 0) {
-                LoggerManager::getLogger()->warn('aorRunScheduledReports: id: ' . $scheduledReport->id . ' is already running. Postpone creating new job.');
-                continue;
-            }
-            $job = BeanFactory::newBean('SchedulersJobs');
+            $job = new SchedulersJob();
             $job->name = "Scheduled report - {$scheduledReport->name} on {$date->format('c')}";
             $job->data = $scheduledReport->id;
             $job->target = "class::AORScheduledReportJob";
@@ -813,7 +792,7 @@ function aorRunScheduledReports()
 function processAOW_Workflow()
 {
     require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
-    $workflow = BeanFactory::newBean('AOW_WorkFlow');
+    $workflow = new AOW_WorkFlow();
     return $workflow->run_flows();
 }
 
@@ -860,7 +839,7 @@ class AORScheduledReportJob implements RunnableSchedulerJob
         }
         </style>
 EOF;
-        $emailObj = BeanFactory::newBean('Emails');
+        $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();
         $mail = new SugarPHPMailer();
 
@@ -883,11 +862,6 @@ EOF;
         $bean->save();
         return true;
     }
-}
-
-function runElasticSearchIndexerScheduler($data)
-{
-    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

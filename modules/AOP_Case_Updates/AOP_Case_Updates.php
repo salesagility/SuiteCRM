@@ -277,7 +277,7 @@ class AOP_Case_Updates extends Basic
         $GLOBALS['log']->info('AOPCaseUpdates: sendEmail called');
         require_once 'include/SugarPHPMailer.php';
         $mailer = new SugarPHPMailer();
-        $admin = BeanFactory::newBean('Administration');
+        $admin = new Administration();
         $admin->retrieveSettings();
 
         $mailer->prepForOutbound();
@@ -306,7 +306,7 @@ class AOP_Case_Updates extends Basic
         try {
             if ($mailer->send()) {
                 require_once 'modules/Emails/Email.php';
-                $emailObj = BeanFactory::newBean('Emails');
+                $emailObj = new Email();
                 $emailObj->to_addrs_names = implode(',', $emails);
                 $emailObj->type = 'out';
                 $emailObj->deleted = '0';

@@ -92,7 +92,7 @@ class ACLAction extends SugarBean
 
         if (isset($ACLActions[$type])) {
             foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
-                $action = BeanFactory::newBean('ACLActions');
+                $action = new ACLAction();
 
                 $tableName = $action->table_name;
                 $actionNameQuoted = $db->quoted($action_name);
@@ -139,7 +139,7 @@ class ACLAction extends SugarBean
 
         if (isset($ACLActions[$type])) {
             foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
-                $action = BeanFactory::newBean('ACLActions');
+                $action = new ACLAction();
 
                 $tableName = $action->table_name;
                 $actionNameQuoted = $db->quoted($action_name);
@@ -264,7 +264,7 @@ class ACLAction extends SugarBean
         $result = $db->query($query);
         $default_actions = array();
         while ($row = $db->fetchByAssoc($result)) {
-            $acl = BeanFactory::newBean('ACLActions');
+            $acl = new ACLAction();
             $acl->populateFromRow($row);
             $default_actions[] = $acl;
         }
@@ -290,17 +290,11 @@ class ACLAction extends SugarBean
         if (!$refresh && !empty($_SESSION['ACL'][$user_id])) {
             if (empty($category) && empty($action)) {
                 return $_SESSION['ACL'][$user_id];
-            } else {
-                if (!empty($category) && isset($_SESSION['ACL'][$user_id][$category])) {
-                    if (empty($action)) {
-                        if (empty($type)) {
-                            return $_SESSION['ACL'][$user_id][$category];
-                        }
-                        return isset($_SESSION['ACL'][$user_id][$category][$type]) ? $_SESSION['ACL'][$user_id][$category][$type] : null;
-                    } else {
-                        if (!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])) {
-                            return $_SESSION['ACL'][$user_id][$category][$type][$action];
-                        }
+            }
+            if (!empty($category) && isset($_SESSION['ACL'][$user_id][$category])) {
+                if (empty($action)) {
+                    if (empty($type)) {
+                        return $_SESSION['ACL'][$user_id][$category];
                     }
 
                     $aclCatType = null;
@@ -385,7 +379,7 @@ class ACLAction extends SugarBean
                 break; //no need for default actions when a role is assigned to the user or user's group already
             }
             /* END - SECURITY GROUPS */
-            $acl = BeanFactory::newBean('ACLActions');
+            $acl = new ACLAction();
             $isOverride = false;
             $acl->populateFromRow($row);
             if (!empty($row['access_override'])) {

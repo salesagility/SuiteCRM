@@ -61,18 +61,14 @@ $username = '';
 $useremail = '';
 if (isset($_POST['user_name'])) {
     $username = $_POST['user_name'];
-} else {
-    if (isset($_POST['username'])) {
-        $username = $_POST['username'];
-    }
+} elseif (isset($_POST['username'])) {
+    $username = $_POST['username'];
 }
 
 if (isset($_POST['Users0emailAddress0'])) {
     $useremail = $_POST['Users0emailAddress0'];
-} else {
-    if (isset($_POST['user_email'])) {
-        $useremail = $_POST['user_email'];
-    }
+} elseif (isset($_POST['user_email'])) {
+    $useremail = $_POST['user_email'];
 }
 
     $usr= new user();

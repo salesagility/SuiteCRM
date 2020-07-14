@@ -37,18 +37,19 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
+use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
-use SuiteCRM\API\v8\Controller\OAuth2Controller;
+use Slim\Exception\ContainerValueNotFoundException;
 
 /**
  * @param ContainerInterface $container
- * @return OAuth2Controller
+ * @throws ContainerException
+ * @throws ContainerValueNotFoundException
+ * @return \SuiteCRM\API\v8\Controller\OAuth2Controller
  */
-$container['OAuth2Controller'] = static function ($container) {
-    $class = new OAuth2Controller($container);
-    $class->setLogger($container->get(LoggerInterface::class));
-
+$container['OAuth2Controller'] = function ($container) {
+    /** @var \Interop\Container\ContainerInterface $container */
+    $class = new \SuiteCRM\API\v8\Controller\OAuth2Controller($container);
+    $class->setLogger($container->get(\Psr\Log\LoggerInterface::class));
     return $class;
 };

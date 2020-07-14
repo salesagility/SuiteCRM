@@ -55,7 +55,7 @@ abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
      * This method is called before a test is executed.
      * @throws Exception
      */
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
@@ -84,7 +84,7 @@ abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    public function tearDown()
     {
         global $sugar_config;
 

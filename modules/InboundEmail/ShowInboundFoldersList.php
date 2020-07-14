@@ -112,7 +112,7 @@ if (!empty($searchField)) {
 } // else
 
 
-$ie                 = BeanFactory::newBean('InboundEmail');
+$ie                 = new InboundEmail();
 if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
 }

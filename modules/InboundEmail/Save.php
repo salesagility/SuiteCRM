@@ -45,7 +45,7 @@ require_once('include/SugarFolders/SugarFolders.php');
 
 global $current_user, $mod_strings;
 
-$focus = BeanFactory::newBean('InboundEmail');
+$focus = new InboundEmail();
 if (!empty($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 } elseif (!empty($_REQUEST['origin_id'])) {
@@ -415,10 +415,8 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
         case 'status':
             if ($focus->status == 'Inactive') {
                 $f->clearSubscriptionsForFolder($focus->groupfolder_id);
-            } else {
-                if ($focus->mailbox_type != 'bounce') {
-                    $f->addSubscriptionsToGroupFolder();
-                }
+            } elseif ($focus->mailbox_type != 'bounce') {
+                $f->addSubscriptionsToGroupFolder();
             }
             break;
     }

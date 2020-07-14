@@ -67,7 +67,7 @@ class NotesQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('notesQuickCreate');
         
-        $focus = BeanFactory::newBean('Notes');
+        $focus = new Note();
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 

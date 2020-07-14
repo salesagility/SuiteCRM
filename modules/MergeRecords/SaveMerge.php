@@ -45,7 +45,7 @@ if (empty($_REQUEST['record'])) {
     sugar_die('No record provided.');
 }
 
-$focus = BeanFactory::newBean('MergeRecords');
+$focus = new MergeRecord();
 $focus->load_merge_bean($_REQUEST['merge_module'], true, $_REQUEST['record']);
 if (empty($focus->merge_bean->id)) {
     sugar_die('No record provided.');

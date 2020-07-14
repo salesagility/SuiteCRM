@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testCurrency()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $this->assertInstanceOf('Currency', $currency);
         $this->assertInstanceOf('SugarBean', $currency);
 
@@ -29,7 +29,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testconvertToDollar()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
 
         //test without setting attributes
         $this->assertEquals(0, $currency->convertToDollar(100, 2));
@@ -41,7 +41,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testconvertFromDollar()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
 
         //test without setting attributes
         $this->assertEquals(0, $currency->convertFromDollar(100, 2));
@@ -53,25 +53,25 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetDefaultCurrencyName()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $this->assertEquals('US Dollars', $currency->getDefaultCurrencyName());
     }
 
     public function testgetDefaultCurrencySymbol()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $this->assertEquals('$', $currency->getDefaultCurrencySymbol());
     }
 
     public function testgetDefaultISO4217()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $this->assertEquals('USD', $currency->getDefaultISO4217());
     }
 
     public function testretrieveIDBySymbol()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $this->assertEquals('', $currency->retrieveIDBySymbol(''));
         $this->assertEquals('', $currency->retrieveIDBySymbol('\$'));
     }
@@ -80,7 +80,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
     {
         global $isMerge;
 
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
 
         //test without setting attributes
         $ss = new Sugar_Smarty();
@@ -96,14 +96,14 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieve_id_by_name()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $this->assertEquals('', $currency->retrieve_id_by_name(''));
         $this->assertEquals('', $currency->retrieve_id_by_name('US Dollars'));
     }
 
     public function testretrieve()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
 
         //execute the method and verify that it returns expected results
         $currency->retrieve();
@@ -121,7 +121,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetPdfCurrencySymbol()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
 
         //test without setting attributes
         $this->assertEquals('', $currency->getPdfCurrencySymbol());
@@ -133,7 +133,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
 
         //execute the method and verify that it retunrs expected results
         $expected = array(
@@ -148,7 +148,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $currency->name = 'Rand';
         $currency->iso4217 = 'R';
         $currency->symbol = 'SA Rand';

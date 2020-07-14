@@ -67,7 +67,7 @@ function get_bugs_in_contacts($in, $orderBy = '')
         $query .= ' ORDER BY ' . $orderBy;
     }
 
-    $sugar = BeanFactory::newBean('Contacts');
+    $sugar = new Contact();
     set_module_in($sugar->build_related_in($query), 'Bugs');
 }
 
@@ -84,7 +84,7 @@ function get_bugs_in_accounts($in, $orderBy = '')
         $query .= ' ORDER BY ' . $orderBy;
     }
 
-    $sugar = BeanFactory::newBean('Accounts');
+    $sugar = new Account();
 
     set_module_in($sugar->build_related_in($query), 'Bugs');
 }
@@ -106,7 +106,7 @@ function get_cases_in_contacts($in, $orderBy = '')
         $query .= ' ORDER BY ' . $orderBy;
     }
 
-    $sugar = BeanFactory::newBean('Contacts');
+    $sugar = new Contact();
     set_module_in($sugar->build_related_in($query), 'Cases');
 }
 
@@ -125,7 +125,7 @@ function get_cases_in_accounts($in, $orderBy = '')
         $query .= ' ORDER BY ' . $orderBy;
     }
 
-    $sugar = BeanFactory::newBean('Accounts');
+    $sugar = new Account();
     set_module_in($sugar->build_related_in($query), 'Cases');
 }
 
@@ -148,8 +148,8 @@ function get_notes_in_contacts($in, $orderBy = '')
         $query .= ' ORDER BY ' . $orderBy;
     }
 
-    $contact = BeanFactory::newBean('Contacts');
-    $note = BeanFactory::newBean('Notes');
+    $contact = new Contact();
+    $note = new Note();
     return $contact->build_related_list($query, $note);
 }
 
@@ -174,7 +174,7 @@ function get_notes_in_module($in, $module, $orderBy = '')
         return array();
     }
 
-    $note = BeanFactory::newBean('Notes');
+    $note = new Note();
     return $sugar->build_related_list($query, $note);
 }
 
@@ -244,7 +244,7 @@ function get_accounts_from_contact($contact_id, $orderBy = '')
     if (!empty($orderBy)) {
         $query .= ' ORDER BY ' . $orderBy;
     }
-    $sugar = BeanFactory::newBean('Contacts');
+    $sugar = new Contact();
     set_module_in($sugar->build_related_in($query), 'Accounts');
 }
 
@@ -255,7 +255,7 @@ function get_contacts_from_account($account_id, $orderBy = '')
     if (!empty($orderBy)) {
         $query .= ' ORDER BY ' . $orderBy;
     }
-    $sugar = BeanFactory::newBean('Accounts');
+    $sugar = new Account();
     set_module_in($sugar->build_related_in($query), 'Contacts');
 }
 
@@ -372,7 +372,7 @@ function login_user($portal_auth)
 
     if (!empty($user)) {
         global $current_user;
-        $bean = BeanFactory::newBean('Users');
+        $bean = new User();
         $bean->retrieve($user['id']);
         $current_user = $bean;
         return 'success';
@@ -414,20 +414,20 @@ function portal_get_entry_list_limited($session, $module_name, $where, $order_by
             }
         }
 
-        $sugar = BeanFactory::newBean('Cases');
+        $sugar = new aCase();
 
         $list = array();
         //if no Cases have been loaded into the session as viewable, then do not issue query, just return empty list
         //issuing a query with no cases loaded in session will return ALL the Cases, which is not a good thing
         if (!empty($_SESSION['viewable'][$module_name])) {
-            $list =  get_related_list(get_module_in($module_name), BeanFactory::newBean('Cases'), $where, $order_by, $row_offset, $limit);
+            $list =  get_related_list(get_module_in($module_name), new aCase(), $where, $order_by, $row_offset, $limit);
         }
     } elseif ($module_name == 'Contacts') {
-        $sugar = BeanFactory::newBean('Contacts');
-        $list =  get_related_list(get_module_in($module_name), BeanFactory::newBean('Contacts'), $where, $order_by);
+        $sugar = new Contact();
+        $list =  get_related_list(get_module_in($module_name), new Contact(), $where, $order_by);
     } elseif ($module_name == 'Accounts') {
-        $sugar = BeanFactory::newBean('Accounts');
-        $list =  get_related_list(get_module_in($module_name), BeanFactory::newBean('Accounts'), $where, $order_by);
+        $sugar = new Account();
+        $list =  get_related_list(get_module_in($module_name), new Account(), $where, $order_by);
     } elseif ($module_name == 'Bugs') {
 
         //if the related bugs have not yet been loaded into the session object,
@@ -448,7 +448,7 @@ function portal_get_entry_list_limited($session, $module_name, $where, $order_by
         //if no Bugs have been loaded into the session as viewable, then do not issue query, just return empty list
         //issuing a query with no bugs loaded in session will return ALL the Bugs, which is not a good thing
         if (!empty($_SESSION['viewable'][$module_name])) {
-            $list = get_related_list(get_module_in($module_name), BeanFactory::newBean('Bugs'), $where, $order_by, $row_offset, $limit);
+            $list = get_related_list(get_module_in($module_name), new Bug(), $where, $order_by, $row_offset, $limit);
         }
     } elseif ($module_name == 'KBDocuments') {
     } elseif ($module_name == 'FAQ') {

@@ -403,10 +403,8 @@ class SugarThemeRegistry
             $value = '';
             if (isset($sugar_config['theme_settings'][$themeName][$name])) {
                 $value = $sugar_config['theme_settings'][$themeName][$name];
-            } else {
-                if (isset($def['default'])) {
-                    $value = $def['default'];
-                }
+            } elseif (isset($def['default'])) {
+                $value = $def['default'];
             }
             $config[$name]['value'] = $value;
         }

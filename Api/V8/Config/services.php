@@ -2,7 +2,7 @@
 
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Controller\InvocationStrategy\SuiteInvocationStrategy;
-use Psr\Container\ContainerInterface as Container;
+use Interop\Container\ContainerInterface as Container;
 use Api\Core\Loader\CustomLoader;
 
 return CustomLoader::mergeCustomArray([

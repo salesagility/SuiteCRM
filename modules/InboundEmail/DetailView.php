@@ -55,7 +55,7 @@ global $theme;
 
 /* start standard DetailView layout process */
 $GLOBALS['log']->info("InboundEmails DetailView");
-$focus = BeanFactory::newBean('InboundEmail');
+$focus = new InboundEmail();
 $focus->retrieve($_REQUEST['record']);
 if (empty($focus->id)) {
     sugar_die($app_strings['ERROR_NO_RECORD']);
@@ -81,13 +81,13 @@ if ($focus->delete_seen == 1) {
 $groupName = '';
 if ($focus->group_id) {
     
-    //$group = BeanFactory::newBean('Groups');
+    //$group = new Group();
     //$group->retrieve($focus->group_id);
     //$groupName = $group->user_name;
 }
 
 if ($focus->template_id) {
-    $et = BeanFactory::newBean('EmailTemplates');
+    $et = new EmailTemplate();
     $et->retrieve($focus->template_id);
     $emailTemplate = $et->name;
 } else {
@@ -112,7 +112,7 @@ if (!empty($focus->service)) {
 }
 
 // FROM NAME FROM ADDRESS STRINGS
-$email = BeanFactory::newBean('Emails');
+$email = new Email();
 $from = $email->getSystemDefaultEmail();
 $default_from_name = $from['name'];
 $default_from_addr = $from['email'];
@@ -188,7 +188,7 @@ if (!empty($focus->stored_options)) {
 }
 
 if (!empty($create_case_email_template)) {
-    $et = BeanFactory::newBean('EmailTemplates');
+    $et = new EmailTemplate();
     $et->retrieve($create_case_email_template);
     $create_case_email_template_name = $et->name;
 }
@@ -299,10 +299,8 @@ if ($focus->handleIsPersonal()) {
 //Overrides for bounce mailbox accounts
 if ($focus->mailbox_type == 'bounce') {
     $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_BOUNCE_MODULE_NAME'],$focus->name), true));
-} else {
-    if ($focus->is_personal == '1') {
-        $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
-    }
+} elseif ($focus->is_personal == '1') {
+    $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
 }
 
 $xtpl->parse('main');

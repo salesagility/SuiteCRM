@@ -187,25 +187,19 @@ class MBModule
         if (! empty($vardefs)) {
             if (empty($type) && empty($name)) {
                 return false ;
-            } else {
-                if (empty($type)) {
-                    return ! empty($vardefs [ 'fields' ] [ $name ]) ;
-                } else {
-                    if (empty($name)) {
-                        foreach ($vardefs [ 'fields' ] as $def) {
-                            if ($def [ 'type' ] == $type) {
-                                return true ;
-                            }
-                        }
-                        return false ;
-                    } else {
-                        return (! empty($vardefs [ 'fields' ] [ $name ]) && ($vardefs [ 'fields' ] [ $name ] [ 'type' ] == $type)) ;
+            } elseif (empty($type)) {
+                return ! empty($vardefs [ 'fields' ] [ $name ]) ;
+            } elseif (empty($name)) {
+                foreach ($vardefs [ 'fields' ] as $def) {
+                    if ($def [ 'type' ] == $type) {
+                        return true ;
                     }
                 }
+                return false ;
             }
-        } else {
-            return false ;
+            return (! empty($vardefs [ 'fields' ] [ $name ]) && ($vardefs [ 'fields' ] [ $name ] [ 'type' ] == $type)) ;
         }
+        return false ;
     }
 
     public function getModStrings($language = 'en_us')

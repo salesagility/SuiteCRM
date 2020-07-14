@@ -49,7 +49,8 @@ require_once('include/utils/encryption_utils.php');
 function getSystemInfo($send_usage_info=true)
 {
     global $sugar_config;
-    global $db, $administration, $timedate;
+    global $administration, $timedate;
+    $db = DBManagerFactory::getInstance();
     $info=array();
     $info = getBaseSystemInfo($send_usage_info);
     if ($send_usage_info) {
@@ -68,7 +69,7 @@ function getSystemInfo($send_usage_info=true)
         }
 
         if (empty($administration)) {
-            $administration = BeanFactory::newBean('Administration');
+            $administration = new Administration();
         }
         $administration->retrieveSettings('system');
         $info['system_name'] = (!empty($administration->settings['system_name']))?substr($administration->settings['system_name'], 0, 255):'';
@@ -263,7 +264,7 @@ function compareVersions($ver1, $ver2)
 }
 function set_CheckUpdates_config_setting($value)
 {
-    $admin=BeanFactory::newBean('Administration');
+    $admin=new Administration();
     $admin->saveSetting('Update', 'CheckUpdates', $value);
 }
 /* return's value for the 'CheckUpdates' config setting
@@ -274,7 +275,7 @@ function get_CheckUpdates_config_setting()
     $checkupdates='automatic';
 
 
-    $admin=BeanFactory::newBean('Administration');
+    $admin=new Administration();
     $admin=$admin->retrieveSettings('Update', true);
     if (empty($admin->settings) or empty($admin->settings['Update_CheckUpdates'])) {
         $admin->saveSetting('Update', 'CheckUpdates', 'automatic');
@@ -286,35 +287,33 @@ function get_CheckUpdates_config_setting()
 
 function set_last_check_version_config_setting($value)
 {
-    $admin=BeanFactory::newBean('Administration');
+    $admin=new Administration();
     $admin->saveSetting('Update', 'last_check_version', $value);
 }
 function get_last_check_version_config_setting()
 {
-    $admin=BeanFactory::newBean('Administration');
+    $admin=new Administration();
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_version'])) {
         return null;
-    } else {
-        return $admin->settings['Update_last_check_version'];
     }
+    return $admin->settings['Update_last_check_version'];
 }
 
 
 function set_last_check_date_config_setting($value)
 {
-    $admin=BeanFactory::newBean('Administration');
+    $admin=new Administration();
     $admin->saveSetting('Update', 'last_check_date', $value);
 }
 function get_last_check_date_config_setting()
 {
-    $admin=BeanFactory::newBean('Administration');
+    $admin=new Administration();
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_date'])) {
         return 0;
-    } else {
-        return $admin->settings['Update_last_check_date'];
     }
+    return $admin->settings['Update_last_check_date'];
 }
 
 function set_sugarbeat($value)
@@ -353,7 +352,7 @@ function shouldCheckSugar()
 
 function loadLicense($firstLogin=false)
 {
-    $GLOBALS['license']=BeanFactory::newBean('Administration');
+    $GLOBALS['license']=new Administration();
     $GLOBALS['license']=$GLOBALS['license']->retrieveSettings('license', $firstLogin);
 }
 

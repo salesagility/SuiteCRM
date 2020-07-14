@@ -123,7 +123,7 @@ class UserDemoData
         $reports_to_name,
         $email
     ) {
-        $u = BeanFactory::newBean('Users');
+        $u = new User();
 
         $u->id=$id;
         $u->new_with_id = true;

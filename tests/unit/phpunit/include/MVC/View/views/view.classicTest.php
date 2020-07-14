@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function test__construct()
@@ -24,7 +24,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('', 'type', $view);
 
         //test with bean parameter;
-        $bean = BeanFactory::newBean('Users');
+        $bean = new User();
         $view = new ViewClassic($bean);
         $this->assertInstanceOf('ViewClassic', $view);
         $this->assertInstanceOf('SugarView', $view);
@@ -49,6 +49,15 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $view->module = 'Home';
         $view->action = 'About';
 
+        
+        // folowing code says: "Test code or tested code did not (only) close its own output buffers"
+//        ob_start();
+//        $ret = $view->display();
+//        $renderedContent = ob_get_contents();
+//        ob_end_clean();
+//        $this->assertEquals(0, strlen($renderedContent), 'Renderered Content was: ' . $renderedContent);
+//        $this->assertTrue($ret);
+        
         $this->markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
 
         //test with a valid module and customized action. it should return true
@@ -62,7 +71,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
-
+        
 
         if (isset($session)) {
             $_SESSION = $session;

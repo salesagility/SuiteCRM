@@ -12,7 +12,7 @@ class EmailManTester extends \AcceptanceTester
      */
     public function gotoEmailSettings()
     {
-        $I = new NavigationBarTester($this->getScenario());
+        $I = new NavigationBar($this->getScenario());
         $I->clickUserMenuItem('#admin_link');
         $I->click('#mass_Email_config');
     }
@@ -35,7 +35,7 @@ class EmailManTester extends \AcceptanceTester
 //        $I->seeCurrentURLEquals('/SuiteCRM/index.php');
 //        return ; // using different email settings in the future..
         
-        $I = new NavigationBarTester($this->getScenario());
+        $I = new NavigationBar($this->getScenario());
         $EditView = new EditView($this->getScenario());
         $faker = $this->getFaker();
 

@@ -1070,6 +1070,7 @@ $($.fullCalendar).ready(function () {
                 text: title,
                 button: true,
               },
+
               text: body,
             },
             events: {
@@ -1097,11 +1098,7 @@ $($.fullCalendar).ready(function () {
               at: 'top left'
             },
             show: {solo: true},
-            hide: {
-              event: 'mouseleave',
-              fixed: true,
-              delay: 500
-            },
+            hide: {event: false},
             style: {
               width: 224,
               padding: 5,

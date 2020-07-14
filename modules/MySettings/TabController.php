@@ -53,13 +53,12 @@ class TabController
 
     public function is_system_tabs_in_db()
     {
-        $administration = BeanFactory::newBean('Administration');
+        $administration = new Administration();
         $administration->retrieveSettings('MySettings');
         if (isset($administration->settings) && isset($administration->settings['MySettings_tab'])) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function get_system_tabs()
@@ -70,7 +69,7 @@ class TabController
     
         // if the value is not already cached, then retrieve it.
         if (empty($system_tabs_result) || !self::$isCacheValid) {
-            $administration = BeanFactory::newBean('Administration');
+            $administration = new Administration();
             $administration->retrieveSettings('MySettings');
             if (isset($administration->settings) && isset($administration->settings['MySettings_tab'])) {
                 $tabs= $administration->settings['MySettings_tab'];
@@ -113,10 +112,8 @@ class TabController
         if ($should_hide_iframes) {
             if (isset($unsetTabs['iFrames'])) {
                 unset($unsetTabs['iFrames']);
-            } else {
-                if (isset($tabs['iFrames'])) {
-                    unset($tabs['iFrames']);
-                }
+            } elseif (isset($tabs['iFrames'])) {
+                unset($tabs['iFrames']);
             }
         }
 
@@ -128,7 +125,7 @@ class TabController
 
     public function set_system_tabs($tabs)
     {
-        $administration = BeanFactory::newBean('Administration');
+        $administration = new Administration();
         $serialized = base64_encode(serialize($tabs));
         $administration->saveSetting('MySettings', 'tab', $serialized);
         self::$isCacheValid = false;
@@ -136,7 +133,7 @@ class TabController
 
     public function get_users_can_edit()
     {
-        $administration = BeanFactory::newBean('Administration');
+        $administration = new Administration();
         $administration->retrieveSettings('MySettings');
         if (isset($administration->settings) && isset($administration->settings['MySettings_disable_useredit'])) {
             if ($administration->settings['MySettings_disable_useredit'] == 'yes') {
@@ -150,7 +147,7 @@ class TabController
     {
         global $current_user;
         if (is_admin($current_user)) {
-            $administration = BeanFactory::newBean('Administration');
+            $administration = new Administration();
             if ($boolean) {
                 $administration->saveSetting('MySettings', 'disable_useredit', 'no');
             } else {
@@ -191,13 +188,11 @@ class TabController
                 $tabs['Home'] =  'Home';
             }
             return $tabs;
-        } else {
-            if ($type == 'display') {
-                return $system_tabs;
-            } else {
-                return array();
-            }
         }
+        if ($type == 'display') {
+            return $system_tabs;
+        }
+        return array();
     }
 
     public function get_unset_tabs($user)
@@ -226,9 +221,8 @@ class TabController
                 }
             }
             return $tabs;
-        } else {
-            return $system_tabs;
         }
+        return $system_tabs;
     }
 
     public function get_old_tabs($user)

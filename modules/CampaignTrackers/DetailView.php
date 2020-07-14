@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $app_strings;
 global $mod_strings;
 
-$focus = BeanFactory::newBean('CampaignTrackers');
+$focus = new CampaignTracker();
 $focus->retrieve($_REQUEST['record']);
 
 if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {

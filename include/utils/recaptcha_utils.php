@@ -51,7 +51,7 @@ use SuiteCRM\Utility\SuiteLogger as SuiteLogger;
  */
 function getRecaptchaSettings()
 {
-    $administration = BeanFactory::newBean('Administration');
+    $administration = new Administration();
     $administration->retrieveSettings('captcha');
 
     return $administration->settings;

@@ -988,7 +988,7 @@
 	line-height:37px;
 	padding-top:0;
 	padding-bottom:0;
-
+	
 }
 
 .quickcreatetop .dropdown-toggle:hover {
@@ -1098,7 +1098,6 @@
   line-height: 20px;
   width: 20px;
   height: 20px;
-  z-index: 200;
 }
 
 .desktop_notifications .alert {
@@ -1321,7 +1320,7 @@
     background-color: $navbar-quick-create-mobile-btn-bg;
     padding: 5px 5px 5px 12px;
     text-decoration: none;
-
+ 
   }
 
   .quickcreatetop .suitepicon-action-caret {
@@ -1334,7 +1333,7 @@
 	height:auto;
 	line-height:100%;
 	padding: 5px 32px 5px 12px;
-
+	
 }
 
   .quickcreatetop .dropdown-toggle:hover {
@@ -1760,13 +1759,13 @@
     width: 40px;
     height: 40px;
   }
-
+  
   .navbar-search .btn-default.searchbutton {
     width: 40px;
     height: 40px;
     color: $navbar-link-color;
   }
-
+    
 
   .navbar-search .btn-default.searchbutton:active {
     padding: 0;
@@ -1783,8 +1782,8 @@
     height: 40px;
     color: $navbar-link-color-hover;
   }
-
-
+  
+  
 
   .desktop-bar .navbar-search.open .dropdown-menu {
     top: -(($navbar-toolbar-height / 4) - 12px);
@@ -2063,13 +2062,12 @@
     width: 28%;
     float:right;
     padding-right: 0.5%;
-    margin-top: 6px;
   }
 
   .desktop-toolbar .navbar-brand-container {
     margin-left: 10px;
   }
-
+  
   .navbar-brand {
 	  height:30px;
 	  top:4px;
@@ -2194,6 +2192,7 @@
     display: inline-block;
     visibility: visible;
     text-align: right;
+    margin-top: 6px;
   }
 }
 
@@ -2370,7 +2369,7 @@
   }
   .desktop-bar {
     width: 39%;
-    padding-top: 4px;
+    padding-top: 10px;
   }
   .navbar-form.searchform .input-group-btn {
     background: $navbar-search-bg;

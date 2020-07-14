@@ -149,7 +149,7 @@ $isValidator = new SuiteValidator();
 
 
 if (isset($_REQUEST['campaign_id']) && $isValidator->isValidId($_REQUEST['campaign_id'])) {
-    $campaign = BeanFactory::newBean('Campaigns');
+    $campaign = new Campaign();
     if ($campaign) {
         $campaign->retrieve($_REQUEST['campaign_id']);
         $xtpl->assign('CAMPAIGN_ID', $campaign->id);

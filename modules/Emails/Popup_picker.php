@@ -153,7 +153,7 @@ class Popup_Picker
         $form->reset('main.SearchHeader');
 
         // create the listview
-        $seed_bean = BeanFactory::newBean('Emails');
+        $seed_bean = new Email();
         $ListView = new ListView();
         $ListView->show_export_button = false;
         $ListView->process_for_popups = true;

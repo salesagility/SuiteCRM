@@ -128,9 +128,8 @@ class OutboundEmail
             $oe->retrieve($row['id']);
 
             return $oe;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -282,7 +281,7 @@ class OutboundEmail
             $a = $this->db->fetchByAssoc($r);
 
             if (!empty($a)) {
-                $opts = sugar_unserialize(base64_decode($a['stored_options']));
+                $opts = unserialize(base64_decode($a['stored_options']));
 
                 if (isset($opts['outbound_email'])) {
                     $mailer = "AND id = '{$opts['outbound_email']}'";
@@ -318,7 +317,7 @@ class OutboundEmail
 
         $results = array();
         while ($row = $this->db->fetchByAssoc($rs)) {
-            $opts = sugar_unserialize(base64_decode($row['stored_options']));
+            $opts = unserialize(base64_decode($row['stored_options']));
             if (isset($opts['outbound_email']) && $opts['outbound_email'] == $this->id) {
                 $results[] = $row['id'];
             }
@@ -345,7 +344,7 @@ class OutboundEmail
             $a = $this->db->fetchByAssoc($r);
 
             if (!empty($a)) {
-                $opts = sugar_unserialize(base64_decode($a['stored_options']));
+                $opts = unserialize(base64_decode($a['stored_options']));
 
                 if (isset($opts['outbound_email'])) {
                     $mailer = "id = '{$opts['outbound_email']}'";
@@ -388,7 +387,7 @@ class OutboundEmail
         $a = $this->db->fetchByAssoc($r);
         if (!empty($a)) {
             // next see if the admin preference for using the system outbound is set
-            $admin = BeanFactory::newBean('Administration');
+            $admin = new Administration();
             $admin->retrieveSettings('', true);
             if (isset($admin->settings['notify_allow_default_outbound'])
                 && $admin->settings['notify_allow_default_outbound'] == 2
@@ -405,7 +404,7 @@ class OutboundEmail
      */
     public function getSystemMailerSettings()
     {
-        $q = "SELECT id FROM outbound_email WHERE type = 'system' AND deleted = 0";
+        $q = "SELECT id FROM outbound_email WHERE type = 'system'";
         $r = $this->db->query($q);
         $a = $this->db->fetchByAssoc($r);
 
@@ -657,9 +656,8 @@ class OutboundEmail
             $oe = $this->getUsersMailerForSystemOverride($user->id);
             if (!empty($oe) && !empty($oe->id)) {
                 return $oe;
-            } else {
-                return $this->getSystemMailerSettings();
             }
+            return $this->getSystemMailerSettings();
         }
         $res = $this->db->query("SELECT id FROM outbound_email WHERE user_id = '{$user->id}' AND name='" . $this->db->quote($name) . "'");
         $a = $this->db->fetchByAssoc($res);

@@ -60,7 +60,7 @@ class MyDocumentsDashlet extends DashletGeneric
         $this->searchFields = $dashletData['MyDocumentsDashlet']['searchFields'];
         $this->columns = $dashletData['MyDocumentsDashlet']['columns'];
 
-        $this->seedBean = BeanFactory::newBean('Documents');
+        $this->seedBean = new Document();
     }
 
     /**

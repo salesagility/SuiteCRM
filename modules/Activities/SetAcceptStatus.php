@@ -49,11 +49,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     
     
     if ($_REQUEST['object_type'] == "Meeting") {
-        $focus = BeanFactory::newBean('Meetings');
+        $focus = new Meeting();
         $focus->id = $_REQUEST['object_id'];
         $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
     } elseif ($_REQUEST['object_type'] == "Call") {
-        $focus = BeanFactory::newBean('Calls');
+        $focus = new Call();
         $focus->id = $_REQUEST['object_id'];
         $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
     }

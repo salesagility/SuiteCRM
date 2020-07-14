@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testViewQuick()
@@ -36,7 +36,7 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
         $view->dv = new DetailView2();
         $view->dv->ss = new Sugar_Smarty();
         $view->dv->module = 'Users';
-        $view->bean = BeanFactory::newBean('Users');
+        $view->bean = new User();
         $view->bean->id = 1;
         $view->dv->setup('Users', $view->bean);
 

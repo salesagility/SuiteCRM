@@ -57,10 +57,10 @@ global $app_strings;
 global $app_list_strings;
 global $current_user;
 
-$focus = BeanFactory::newBean('InboundEmail');
+$focus = new InboundEmail();
 $focus->checkImap();
 $javascript = new Javascript();
-$email = BeanFactory::newBean('Emails');
+$email = new Email();
 /* Start standard EditView setup logic */
 
 $domMailBoxType = $app_list_strings['dom_mailbox_type'];
@@ -417,10 +417,8 @@ if ($focus->mailbox_type == 'bounce') {
     $xtpl->assign('AUTO_IMPORT_STYLE', "display:none");
 } elseif ($focus->mailbox_type == 'createcase') {
     $xtpl->assign("IS_CREATE_CASE", 'checked');
-} else {
-    if ($focus->is_personal == '1') {
-        $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
-    }
+} elseif ($focus->is_personal == '1') {
+    $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
 }
 
 //else

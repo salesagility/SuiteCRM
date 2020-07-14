@@ -57,6 +57,7 @@ $installer_defaults = [
     'setup_db_sugarsales_user' => '',
     'setup_db_sugarsales_password' => '',
     'setup_db_sugarsales_password_retype' => '',
+    'demoData' => false,
     'setup_db_create_database' => true,
     'setup_db_drop_tables' => false,
     'setup_db_username_is_privileged' => true,
@@ -96,6 +97,5 @@ $installer_defaults = [
     'setup_site_sugarbeet_automatic_checks' => true,
     'setup_site_sugarbeet_anonymous_stats' => true,
     'siteConfig_submitted' => false,
-    'strict_id_validation' => false,
     'dbUSRData' => 'same',
 ];

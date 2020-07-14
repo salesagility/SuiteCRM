@@ -294,7 +294,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
-            $seedRelease = BeanFactory::newBean('Releases');
+            $seedRelease = new Release();
             $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name=>$value) {

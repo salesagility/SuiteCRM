@@ -60,7 +60,7 @@ if (isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS[
     sugar_die("Unauthorized access to user administration.");
 }
 
-$focus = BeanFactory::newBean('Employees');
+$focus = new Employee();
 
 $focus->retrieve($_POST['record']);
 

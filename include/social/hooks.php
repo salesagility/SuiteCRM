@@ -39,9 +39,10 @@
  */
 
 
-class hooks{
-
-    function load_js($event, $arguments){
+class hooks
+{
+    public function load_js($event, $arguments)
+    {
         $mapping = '';
 
         $action = null;
@@ -64,15 +65,13 @@ class hooks{
 
             $mapping = '';
             include('modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php');
-	    if (file_exists("custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php")) {
-	        include("custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php");
-	    }
-            if(array_key_exists($_REQUEST['module'], $mapping['beans'])){
-               echo '<script src="include/social/twitter/twitter_feed.js"></script>';
-               echo '<script src="include/social/twitter/twitter.js"></script>';
+            if (file_exists("custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php")) {
+                include("custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php");
+            }
+            if (array_key_exists($_REQUEST['module'], $mapping['beans'])) {
+                echo '<script src="include/social/twitter/twitter_feed.js"></script>';
+                echo '<script src="include/social/twitter/twitter.js"></script>';
             }
         }
     }
-
 }
-

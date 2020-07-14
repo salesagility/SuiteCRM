@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testDocumentRevision()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
         $this->assertInstanceOf('DocumentRevision', $documentRevision);
         $this->assertInstanceOf('SugarBean', $documentRevision);
 
@@ -28,7 +28,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndRetrieve()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
 
         $documentRevision->document_id = '1';
         $documentRevision->doc_id = '1';
@@ -58,7 +58,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
 
         //test without setting name
         $this->assertEquals(null, $documentRevision->get_summary_text());
@@ -70,7 +70,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testis_authenticated()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
 
         //test wihout setting attributes
         $this->assertEquals(null, $documentRevision->is_authenticated());
@@ -82,7 +82,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -95,7 +95,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -108,7 +108,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetDocumentRevisionNameForDisplay()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
 
         //test wihout setting attributes
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
@@ -123,7 +123,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_document_name_revision()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -136,7 +136,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlist_view_parse_additional_sections()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
         
         $xTemplateSection = null;
 
@@ -152,28 +152,28 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_list_view_data();
         $this->assertEquals(array('DELETED' => 0), $result);
     }
 
     public function testget_document_revision_name()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
         $result = $documentRevision->get_document_revision_name(1);
         $this->assertEquals(null, $result);
     }
 
     public function testget_document_revisions()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
         $results = $documentRevision->get_document_revisions(1);
         $this->assertTrue(is_array($results));
     }
 
     public function testbean_implements()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
+        $documentRevision = new DocumentRevision();
         $this->assertEquals(false, $documentRevision->bean_implements('')); //test with blank value
         $this->assertEquals(false, $documentRevision->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value

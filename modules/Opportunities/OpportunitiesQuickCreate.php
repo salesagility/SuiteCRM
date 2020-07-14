@@ -78,7 +78,7 @@ class OpportunitiesQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('opportunitiesQuickCreate');
         
-        $focus = BeanFactory::newBean('Opportunities');
+        $focus = new Opportunity();
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 

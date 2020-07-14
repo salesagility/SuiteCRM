@@ -62,7 +62,7 @@ class sendEmail
     {
         global $current_user, $mod_strings, $sugar_config;
         // First Create e-mail draft
-        $email = BeanFactory::newBean('Emails');
+        $email = new Email();
         // set the id for relationships
         $email->id = create_guid();
         $email->new_with_id = true;
@@ -112,7 +112,7 @@ class sendEmail
         $email_id = $email->id;
 
         if ($attach) {
-            $note = BeanFactory::newBean('Notes');
+            $note = new Note();
             $note->modified_user_id = $current_user->id;
             $note->created_by = $current_user->id;
             $note->name = $file_name;

@@ -79,24 +79,22 @@ class AjaxCompose
         foreach ($this->crumbs as $name=>$action) {
             if ($name == 'Home') {
                 $crumbs .= "<a onclick='$action' href='javascript:void(0)'>". getStudioIcon('home', 'home', 16, 16) . '</a>';
+            } elseif ($name=='Assistant') {
+                $crumbs .= "<a id='showassist' onclick='$action' href='javascript:void(0)'>". getStudioIcon('assistant', 'assistant', 16, 16) . '</a>';
             } else {
-                if ($name=='Assistant') {
-                    $crumbs .= "<a id='showassist' onclick='$action' href='javascript:void(0)'>". getStudioIcon('assistant', 'assistant', 16, 16) . '</a>';
+                if ($count > 0) {
+                    $crumbs .= '&nbsp;>&nbsp;';
                 } else {
-                    if ($count > 0) {
-                        $crumbs .= '&nbsp;>&nbsp;';
-                    } else {
-                        $crumbs .= '&nbsp;|&nbsp;';
-                    }
-                    if (empty($action)) {
-                        $crumbs .="<span class='crumbLink'>$name</span>";
-                        $actions[] = "";
-                    } else {
-                        $crumbs .="<a href='javascript:void(0);' onclick='$action' class='crumbLink'>$name</a>";
-                        $actions[] = $action;
-                    }
-                    $count++;
+                    $crumbs .= '&nbsp;|&nbsp;';
                 }
+                if (empty($action)) {
+                    $crumbs .="<span class='crumbLink'>$name</span>";
+                    $actions[] = "";
+                } else {
+                    $crumbs .="<a href='javascript:void(0);' onclick='$action' class='crumbLink'>$name</a>";
+                    $actions[] = $action;
+                }
+                $count++;
             }
         }
         if ($count > 1 && $actions[$count-2] != "") {

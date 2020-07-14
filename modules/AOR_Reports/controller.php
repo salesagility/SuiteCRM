@@ -132,7 +132,7 @@ class AOR_ReportsController extends SugarController
         require_once('modules/Relationships/Relationship.php');
         require_once('modules/ProspectLists/ProspectList.php');
 
-        $prospectList = BeanFactory::newBean('ProspectLists');
+        $prospectList = new ProspectList();
         $prospectList->retrieve($_REQUEST['prospect_id']);
 
         $module = new $beanList[$this->bean->report_module]();

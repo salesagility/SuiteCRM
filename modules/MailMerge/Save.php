@@ -60,7 +60,7 @@ $seed = new $class_name();
 
 $fields = get_field_list($seed);
 
-$document = BeanFactory::newBean('Documents');
+$document = new Document();
 $document->retrieve($document_id);
 
 $items = array();

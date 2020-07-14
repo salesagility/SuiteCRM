@@ -136,7 +136,7 @@ function checkResourceSettings()
             'special_query_limit' => 50000,
             'special_query_modules' =>
             array(
-              0 => 'AOR_Reports',
+              0 => 'Reports',
               1 => 'Export',
               2 => 'Import',
               3 => 'Administration',
@@ -238,9 +238,8 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function addDefaultModuleRoles($defaultRoles = array())
@@ -299,11 +298,10 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             echo "FAILURE\n";
             exit(1);
         }
-    } else {
-        if (is_file("{$cwd}/include/entryPoint.php")) {
-            //this should be a regular sugar install
-            $upgradeType = constant('SUGARCRM_INSTALL');
-            //check if this is a valid zip file
+    } elseif (is_file("{$cwd}/include/entryPoint.php")) {
+        //this should be a regular sugar install
+        $upgradeType = constant('SUGARCRM_INSTALL');
+        //check if this is a valid zip file
         if (!is_file($argv[1])) { // valid zip?
             echo "*******************************************************************************\n";
             echo "*** ERROR: First argument must be a full path to the patch file. Got [ {$argv[1]} ].\n";
@@ -311,19 +309,18 @@ function verifyArguments($argv, $usage_dce, $usage_regular)
             echo "FAILURE\n";
             exit(1);
         }
-            if (count($argv) < 5) {
-                echo "*******************************************************************************\n";
-                echo "*** ERROR: Missing required parameters.  Received ".count($argv)." argument(s), require 5.\n";
-                echo $usage_regular;
-                echo "FAILURE\n";
-                exit(1);
-            }
-        } else {
-            //this should be a regular sugar install
+        if (count($argv) < 5) {
             echo "*******************************************************************************\n";
-            echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
+            echo "*** ERROR: Missing required parameters.  Received ".count($argv)." argument(s), require 5.\n";
+            echo $usage_regular;
+            echo "FAILURE\n";
             exit(1);
         }
+    } else {
+        //this should be a regular sugar install
+        echo "*******************************************************************************\n";
+        echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
+        exit(1);
     }
 
     if (isset($argv[7]) && file_exists($argv[7].'SugarTemplateUtilties.php')) {
@@ -500,7 +497,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     require_once("{$argv[4]}/modules/Administration/UpgradeHistory.php");
     // We need to run the silent upgrade as the admin user,
     global $current_user;
-    $current_user = BeanFactory::newBean('Users');
+    $current_user = new User();
     $current_user->retrieve('1');
 
     //This is DCE instance
@@ -546,13 +543,12 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         if (!isset($manifest)) {
             fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
             exit(1);
-        } else {
-            $error = validate_manifest($manifest);
-            if (!empty($error)) {
-                $error = strip_tags(br2nl($error));
-                fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
-                exit(1);
-            }
+        }
+        $error = validate_manifest($manifest);
+        if (!empty($error)) {
+            $error = strip_tags(br2nl($error));
+            fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
+            exit(1);
         }
     } else {
         fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
@@ -606,9 +602,8 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 echo 'Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log';
                 logThis("Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log", $path);
                 exit(1);
-            } else {
-                upgradeDCEFiles($argv, $instanceUpgradePath);
             }
+            upgradeDCEFiles($argv, $instanceUpgradePath);
         } else {
             //copy and update following files from upgrade package
             upgradeDCEFiles($argv, $instanceUpgradePath);

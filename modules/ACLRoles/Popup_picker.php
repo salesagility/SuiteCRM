@@ -141,7 +141,7 @@ class Popup_Picker
         $form->reset('main.SearchHeader');
 
         // create the listview
-        $seed_bean = BeanFactory::newBean('ACLRoles');
+        $seed_bean = new ACLRole();
         $ListView = new ListView();
         $ListView->show_export_button = false;
         $ListView->process_for_popups = true;

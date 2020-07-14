@@ -61,7 +61,7 @@ class MyNotesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['MyNotesDashlet']['searchFields'];
         $this->columns = $dashletData['MyNotesDashlet']['columns'];
 
-        $this->seedBean = BeanFactory::newBean('Notes');
+        $this->seedBean = new Note();
     }
 
     /**

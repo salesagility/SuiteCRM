@@ -5,12 +5,12 @@ use SuiteCRM\Test\TestLogger;
 
 class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
         get_sugar_config_defaults();
         if (!isset($GLOBALS['app']) || !$GLOBALS['app']) {
             $GLOBALS['app'] = new SugarApplication();

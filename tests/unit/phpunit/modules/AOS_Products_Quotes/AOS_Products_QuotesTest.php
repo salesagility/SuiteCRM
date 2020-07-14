@@ -4,18 +4,18 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testsave()
     {
-        $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
+        $aosProductsQuotes = new AOS_Products_Quotes();
 
         $aosProductsQuotes->name = 'test';
         $aosProductsQuotes->product_id = 1;
@@ -37,7 +37,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
     {
         DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
 
-        $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
+        $aosProductsQuotes = new AOS_Products_Quotes();
 
         //populate required values
         $post_data = array();
@@ -47,7 +47,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $post_data['product_unit_price'] = array(100, 200);
 
         //create parent bean
-        $aosQuote = BeanFactory::newBean('AOS_Quotes');
+        $aosQuote = new AOS_Quotes();
         $aosQuote->id = 1;
 
         $aosProductsQuotes->save_lines($post_data, $aosQuote);
@@ -60,7 +60,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
     public function testAOS_Products_Quotes()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
+        $aosProductsQuotes = new AOS_Products_Quotes();
         $this->assertInstanceOf('AOS_Products_Quotes', $aosProductsQuotes);
         $this->assertInstanceOf('Basic', $aosProductsQuotes);
         $this->assertInstanceOf('SugarBean', $aosProductsQuotes);
@@ -75,10 +75,10 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmark_lines_deleted()
     {
-        $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
+        $aosProductsQuotes = new AOS_Products_Quotes();
 
         //create parent bean
-        $aosQuote = BeanFactory::newBean('AOS_Quotes');
+        $aosQuote = new AOS_Quotes();
         $aosQuote->id = 1;
 
         //get the linked beans and get record count before deletion
@@ -90,7 +90,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         unset($aosQuote);
 
         //get the linked beans and get record count after deletion
-        $aosQuote = BeanFactory::newBean('AOS_Quotes');
+        $aosQuote = new AOS_Quotes();
         $aosQuote->id = 1;
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
         $actual = count($product_quote_lines);

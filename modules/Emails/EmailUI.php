@@ -38,8 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Utility\SuiteValidator;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -115,7 +113,7 @@ class EmailUI
     ////	CORE
     /**
      * Renders the frame for emails
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl")
     {
@@ -134,7 +132,7 @@ class EmailUI
         global $server_unique_key;
 
         $this->preflightUserCache();
-        $ie = BeanFactory::newBean('InboundEmail');
+        $ie = new InboundEmail();
 
         // focus listView
         $list = array(
@@ -280,10 +278,10 @@ class EmailUI
             !empty($defaultSignatureId)
         );
         if (!empty($defaultSignatureId)) {
-            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
+            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
                     </span>';
         } else {
-            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:hidden;"><input class="button" onclick="SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
+            $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:hidden;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
                     </span>';
         }
         $this->smarty->assign('signatureButtons', $signatureButtons);
@@ -701,7 +699,7 @@ HTML;
      * returned is the minimum set needed by the quick compose UI.
      *
      * @param String $type Drives which tinyMCE options will be included.
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function _generateComposeConfigData($type = "email_compose_light")
     {
@@ -755,7 +753,7 @@ HTML;
         $this->smarty->assign('lang', $lang);
         $this->smarty->assign('app_strings', $app_strings);
         $this->smarty->assign('mod_strings', $email_mod_strings);
-        $ie1 = BeanFactory::newBean('InboundEmail');
+        $ie1 = new InboundEmail();
 
         //Signatures
         $defsigID = $current_user->getPreference('signature_default');
@@ -858,7 +856,6 @@ HTML;
     /**
      * Saves changes to a user's address book
      * @param array contacts
-     * @throws SuiteException
      */
     public function setContacts($contacts)
     {
@@ -867,13 +864,7 @@ HTML;
         $oldContacts = $this->getContacts();
 
         foreach ($contacts as $cid => $contact) {
-            if (!in_array($contact['id'], $oldContacts, true)) {
-                $contactId = $contact['id'];
-                $isValidator = new SuiteValidator();
-                if (!$isValidator->isValidId($contactId)) {
-                    throw new SuiteException('Invalid contact ID: ' . $contactId);
-                }
-
+            if (!in_array($contact['id'], $oldContacts)) {
                 $q = "INSERT INTO address_book (assigned_user_id, bean, bean_id) VALUES ('{$current_user->id}', '{$contact['module']}', '{$contact['id']}')";
                 $r = $this->db->query($q, true);
             }
@@ -883,23 +874,18 @@ HTML;
     /**
      * Removes contacts from the user's address book
      * @param array ids
-     * @throws SuiteException
      */
     public function removeContacts($ids)
     {
         global $current_user;
 
-        $concat = '';
+        $concat = "";
 
         foreach ($ids as $id) {
             if (!empty($concat)) {
-                $concat .= ', ';
+                $concat .= ", ";
             }
 
-            $isValidator = new SuiteValidator();
-            if (!$isValidator->isValidId($id)) {
-                throw new SuiteException('Invalid contact ID' . $id);
-            }
             $concat .= "'{$id}'";
         }
 
@@ -918,7 +904,7 @@ HTML;
         $str = from_html($str);
         $obj = $json->decode($str);
 
-        $contact = BeanFactory::newBean('Contacts');
+        $contact = new Contact();
         $contact->retrieve($obj['contact_id']);
         $contact->first_name = $obj['contact_first_name'];
         $contact->last_name = $obj['contact_last_name'];
@@ -953,7 +939,7 @@ HTML;
         if (!class_exists("Contact")) {
         }
 
-        $contact = BeanFactory::newBean('Contacts');
+        $contact = new Contact();
         $contact->retrieve($_REQUEST['id']);
         $ret = array();
 
@@ -1070,7 +1056,7 @@ HTML;
     /**
      * @param bool $useRequestedRecord
      * @return array
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function getUserPreferencesJS($useRequestedRecord = false)
     {
@@ -1316,7 +1302,7 @@ HTML;
         $tree->tree_style = 'include/ytree/TreeView/css/check/tree.css';
 
         $nodes = array();
-        $ie = BeanFactory::newBean('InboundEmail');
+        $ie = new InboundEmail();
         $refreshOffset = $this->cacheTimeouts['folders']; // 5 mins.  this will be set via user prefs
 
         $rootNode = new ExtNode($app_strings['LBL_EMAIL_HOME_FOLDER'], $app_strings['LBL_EMAIL_HOME_FOLDER']);
@@ -1831,7 +1817,7 @@ HTML;
         $smarty = new Sugar_Smarty();
 
         // SETTING DEFAULTS
-        $focus = BeanFactory::newBean('Emails');
+        $focus = new Email();
         $focus->retrieve($emailId);
         $detailView->ss = new Sugar_Smarty();
         $detailView = new DetailView();
@@ -1909,7 +1895,7 @@ HTML;
         ////	NOTES (attachements, etc.)
         ///////////////////////////////////////////////////////////////////////////////
 
-        $note = BeanFactory::newBean('Notes');
+        $note = new Note();
         $where = "notes.parent_id='{$focus->id}'";
         //take in account if this is from campaign and the template id is stored in the macros.
 
@@ -1970,7 +1956,7 @@ HTML;
         if (strpos($folder, 'sugar::') !== false) {
             // dealing with a sugar email object, uids are GUIDs
             foreach ($exUids as $id) {
-                $email = BeanFactory::newBean('Emails');
+                $email = new Email();
                 $email->retrieve($id);
 
                 // BUG FIX BEGIN
@@ -2018,7 +2004,7 @@ HTML;
             /* dealing with IMAP email, uids are IMAP uids */
             global $ie; // provided by EmailUIAjax.php
             if (empty($ie)) {
-                $ie = BeanFactory::newBean('InboundEmail');
+                $ie = new InboundEmail();
             }
             $ie->retrieve($ieId);
             $ie->mailbox = $folder;
@@ -2072,7 +2058,7 @@ HTML;
         if ($folder != 'sugar::Emails') {
             $emailIds = array();
             $uids = explode($app_strings['LBL_EMAIL_DELIMITER'], $uids);
-            $ie = BeanFactory::newBean('InboundEmail');
+            $ie = new InboundEmail();
             $ie->retrieve($ieid);
             $messageIndex = 1;
             // dealing with an inbound email data so we need to import an email and then
@@ -2156,7 +2142,7 @@ HTML;
                 $lastRobin = $userIds[0];
             }
 
-            $email = BeanFactory::newBean('Emails');
+            $email = new Email();
             $email->retrieve($mailId);
             $email->assigned_user_id = $thisRobin;
             $email->status = 'unread';
@@ -2175,7 +2161,7 @@ HTML;
     public function distLeastBusy($userIds, $mailIds)
     {
         foreach ($mailIds as $k => $mailId) {
-            $email = BeanFactory::newBean('Emails');
+            $email = new Email();
             $email->retrieve($mailId);
             foreach ($userIds as $k => $id) {
                 $r = $this->db->query("SELECT count(*) AS c FROM emails WHERE assigned_user_id = '.$id.' AND status = 'unread'");
@@ -2202,7 +2188,7 @@ HTML;
     public function distDirect($user, $mailIds)
     {
         foreach ($mailIds as $k => $mailId) {
-            $email = BeanFactory::newBean('Emails');
+            $email = new Email();
             $email->retrieve($mailId);
             $email->assigned_user_id = $user;
             $email->status = 'unread';
@@ -2365,7 +2351,7 @@ eoq;
     {
         global $sugar_config;
 
-        $ie = BeanFactory::newBean('InboundEmail');
+        $ie = new InboundEmail();
         $ie->retrieve($ieId);
         $list = $ie->displayFolderContents($mbox, $forceRefresh);
 
@@ -2499,7 +2485,7 @@ eoq;
                 $GLOBALS['log']->debug("EMAILUI: At reply case");
                 $header = $email->getReplyHeader();
 
-                $myCase = BeanFactory::newBean('Cases');
+                $myCase = new aCase();
                 $myCase->retrieve($email->parent_id);
                 $myCaseMacro = $myCase->getEmailSubjectMacro();
                 $email->parent_name = $myCase->name;
@@ -2970,7 +2956,7 @@ eoq;
             true
         )
         ) {
-            $et = BeanFactory::newBean('EmailTemplates');
+            $et = new EmailTemplate();
             $etResult = $et->db->query($et->create_new_list_query(
                 '',
                 "(email_templates.type IS NULL OR email_templates.type='' OR email_templates.type='email')",
@@ -3056,7 +3042,7 @@ eoq;
         }
 
         if (!empty($system->mail_smtpserver)) {
-            $admin = BeanFactory::newBean('Administration');
+            $admin = new Administration();
             $admin->retrieveSettings(); //retrieve all admin settings.
             $ieAccountsFrom[] = array(
                 "value" => $system->id,
@@ -3098,14 +3084,14 @@ eoq;
             $toArray = $ie->email->email2ParseAddressesForAddressesOnly($ret['to']);
         } // else
         foreach ($ieAccountsFull as $k => $v) {
-            $storedOptions = sugar_unserialize(base64_decode($v->stored_options));
+            $storedOptions = unserialize(base64_decode($v->stored_options));
             if (array_search_insensitive($storedOptions['from_addr'], $toArray)) {
                 if ($v->is_personal) {
                     $foundInPersonalAccounts = true;
                     break;
-                } else {
-                    $foundInGroupAccounts = true;
-                } // else
+                }
+                $foundInGroupAccounts = true;
+                // else
             } // if
         } // foreach
 
@@ -3129,7 +3115,7 @@ eoq;
         } // if
 
         if (!empty($system->id)) {
-            $admin = BeanFactory::newBean('Administration');
+            $admin = new Administration();
             $admin->retrieveSettings(); //retrieve all admin settings.
             if (in_array(trim($return['email']), $toArray)) {
                 $foundInSystemAccounts = true;
@@ -3144,7 +3130,7 @@ eoq;
 
         $ieAccountsFrom = array();
         foreach ($ieAccountsFull as $k => $v) {
-            $storedOptions = sugar_unserialize(base64_decode($v->stored_options));
+            $storedOptions = unserialize(base64_decode($v->stored_options));
             $storedOptionsName = from_html($storedOptions['from_name']);
 
             $selected = false;
@@ -3514,11 +3500,10 @@ eoq;
             fclose($fh);
 
             return true;
-        } else {
-            $GLOBALS['log']->debug("EMAILUI: Could not write cache file [ {$file} ]");
-
-            return false;
         }
+        $GLOBALS['log']->debug("EMAILUI: Could not write cache file [ {$file} ]");
+
+        return false;
     }
 
     /**
@@ -3616,7 +3601,7 @@ eoq;
             $hiddenCount = $totalCount - $defaultNum;
             $frontStr = substr($tempStr, 0, $position);
             $backStr = substr($tempStr, $position, -1);
-            $str = htmlentities($frontStr) . '<a class="utilsLink" onclick="SUGAR.email2.detailView.displayAllAddrs(this);">...[' . $mod_strings['LBL_EMAIL_DETAIL_VIEW_SHOW'] . $hiddenCount . $mod_strings['LBL_EMAIL_DETAIL_VIEW_MORE'] . ']</a><span style="display: none;">' . htmlentities($backStr) . '</span>';
+            $str = htmlentities($frontStr) . '<a class="utilsLink" onclick="javascript: SUGAR.email2.detailView.displayAllAddrs(this);">...[' . $mod_strings['LBL_EMAIL_DETAIL_VIEW_SHOW'] . $hiddenCount . $mod_strings['LBL_EMAIL_DETAIL_VIEW_MORE'] . ']</a><span style="display: none;">' . htmlentities($backStr) . '</span>';
         }
 
         return $str;

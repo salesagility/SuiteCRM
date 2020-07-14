@@ -172,11 +172,7 @@ abstract class DashletGenericChart extends Dashlet
     {
         require_once('include/SugarCharts/SugarChartFactory.php');
         $sugarChart = SugarChartFactory::getInstance();
-        if ($sugarChart) {
-            return $sugarChart->getDashletScript($this->id);
-        } else {
-            return null;
-        }
+        return $sugarChart->getDashletScript($this->id);
     }
 
     /**

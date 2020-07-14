@@ -225,9 +225,8 @@ class Spots extends Basic
                 $this->logSpotsErrorWithKeyMatching($type);
 
                 return array();
-            } else {
-                $keys[] = reset($key);
             }
+            $keys[] = reset($key);
         }
 
         return $keys;

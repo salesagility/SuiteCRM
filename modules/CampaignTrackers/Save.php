@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/formbase.php');
 
-$focus = BeanFactory::newBean('CampaignTrackers');
+$focus = new CampaignTracker();
 
 $focus->retrieve($_POST['record']);
 if (!$focus->ACLAccess('Save')) {
@@ -82,6 +82,5 @@ if (isset($_POST['response_json']) && $_POST['response_json']) {
     $results['data'] = array('id' => $focus->id);
     echo json_encode($results);
     die();
-} else {
-    handleRedirect('', '');
 }
+    handleRedirect('', '');

@@ -251,11 +251,10 @@ class SugarDependentDropdown
             }
 
             return $mergedElement;
-        } else {
-            if ($this->debugMode) {
-                $this->debugOutput("SugarRouting is trying to initialize a non-element:");
-                $this->debugOutput($element);
-            }
+        }
+        if ($this->debugMode) {
+            $this->debugOutput("SugarRouting is trying to initialize a non-element:");
+            $this->debugOutput($element);
         }
     }
 
@@ -339,12 +338,12 @@ class SugarDependentDropdown
                 $this->debugOutput((count($metadata) > 1) ? "SugarRouting: all checks passed, valid metadata confirmed" : "SugarRouting: 'handlers' checks passed, valid metadata confirmed.");
             }
             return true;
-        } else {
-            if ($this->debugMode) {
-                $this->debugOutput("SugarRouting: Your metadata does not contain a valid 'elements' array:");
-                $this->debugOutput($metadata);
-            }
         }
+        if ($this->debugMode) {
+            $this->debugOutput("SugarRouting: Your metadata does not contain a valid 'elements' array:");
+            $this->debugOutput($metadata);
+        }
+        
         return false;
     }
 

@@ -272,7 +272,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
-            $seedRelease = BeanFactory::newBean('Releases');
+            $seedRelease = new Release();
             $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name=>$value) {
@@ -498,7 +498,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             return false;
         }
 
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->retrieve($token->assigned_user_id);
         if (empty($user->id)) {
             return false;

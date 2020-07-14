@@ -61,14 +61,14 @@ class AOPInboundEmail extends InboundEmail
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
         $GLOBALS['log']->debug('In handleCreateCase in AOPInboundEmail');
-        $c = BeanFactory::newBean('Cases');
+        $c = new aCase();
         $this->getCaseIdFromCaseNumber($email->name, $c);
 
         if (!$this->handleCaseAssignment($email) && $this->isMailBoxTypeCreateCase()) {
             // create a case
             $GLOBALS['log']->debug('retrieveing email');
             $email->retrieve($email->id);
-            $c = BeanFactory::newBean('Cases');
+            $c = new aCase();
 
             $notes = $email->get_linked_beans('notes', 'Notes');
             $noteIds = array();
@@ -82,7 +82,8 @@ class AOPInboundEmail extends InboundEmail
             }
             $c->assigned_user_id = $userId;
             $c->name = $email->name;
-            $c->status = 'Open_New';
+            $c->status = 'New';
+            $c->priority = 'P1';
 
             if (!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
@@ -96,7 +97,7 @@ class AOPInboundEmail extends InboundEmail
                 if (count($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
 
-                    $acct = BeanFactory::newBean('Accounts');
+                    $acct = new Account();
                     $acct->retrieve($c->account_id);
                     $c->account_name = $acct->name;
                 } // if
@@ -172,7 +173,7 @@ class AOPInboundEmail extends InboundEmail
                     $to[0]['display'] = $email->from_name;
                 }
 
-                $et = BeanFactory::newBean('EmailTemplates');
+                $et = new EmailTemplate();
                 $et->retrieve($createCaseTemplateId);
                 if (empty($et->subject)) {
                     $et->subject = '';
@@ -201,7 +202,7 @@ class AOPInboundEmail extends InboundEmail
                 $ret = $email->et->displayComposeEmail($email);
                 $ret['description'] = empty($email->description_html) ?  str_replace("\n", "\n<BR/>", $email->description) : $email->description_html;
 
-                $reply = BeanFactory::newBean('Emails');
+                $reply = new Email();
                 $reply->type				= 'out';
                 $reply->to_addrs			= $to[0]['email'];
                 $reply->to_addrs_arr		= $to;

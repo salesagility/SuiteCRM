@@ -48,7 +48,7 @@ global $current_user;
 
 $default = 'index.php?module=Emails&action=ListView&assigned_user_id='.$current_user->id;
 
-$e = BeanFactory::newBean('Emails');
+$e = new Email();
 
 // my inbox
 if (ACLController::checkAccess('Emails', 'edit', true)) {

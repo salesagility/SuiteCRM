@@ -76,10 +76,8 @@ class BaseRule
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match('/.*?_c$/s', $mixed['name'])) {
             return true;
-        } else {
-            if (!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
-                return true;
-            }
+        } elseif (!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
+            return true;
         }
         return false;
     }
@@ -88,10 +86,8 @@ class BaseRule
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'])) {
             return true;
-        } else {
-            if (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
-                return true;
-            }
+        } elseif (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
+            return true;
         }
         return false;
     }
@@ -100,10 +96,8 @@ class BaseRule
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'], $matches)) {
             return $matches;
-        } else {
-            if (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
-                return $matches;
-            }
+        } elseif (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
+            return $matches;
         }
         return null;
     }

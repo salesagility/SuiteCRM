@@ -7,19 +7,19 @@ require_once 'install/install_utils.php';
 
 class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function test__construct()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         $this->assertInstanceOf('Scheduler', $scheduler);
         $this->assertInstanceOf('SugarBean', $scheduler);
@@ -40,7 +40,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfireQualified()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //test without setting any attributes
         $result = $scheduler->fireQualified();
@@ -57,7 +57,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreateJob()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
         $result = $scheduler->createJob();
 
         $this->assertInstanceOf('SchedulersJob', $result);
@@ -65,7 +65,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckPendingJobs()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -80,7 +80,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     {
         $this->markTestIncomplete('Need to implement!');
 
-//        $scheduler = BeanFactory::newBean('Schedulers');
+//        $scheduler = new Scheduler();
 //
 //        $scheduler->id = 1;
 //        $scheduler->date_time_start = '2016-01-01 10:30:01';
@@ -103,7 +103,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleIntervalType()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //execute the method with different job intervals
         $this->assertEquals('', $scheduler->handleIntervalType('0', '0', '2', '2'));
@@ -115,7 +115,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetIntervalHumanReadable()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //execute the method with different job intervals
         $scheduler->job_interval = '0::3::3::*::*';
@@ -131,7 +131,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetStandardArraysAttributes()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //execute the method and verify related attributes
 
@@ -146,7 +146,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testparseInterval()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         $scheduler->job_interval = '0::3::3::*::*';
 
@@ -165,7 +165,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcheckCurl()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -178,7 +178,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdisplayCronInstructions()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //execute the method and capture the echo output
         ob_start();
@@ -195,7 +195,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('enviroment dependency');
         
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -209,7 +209,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     public function testcreate_export_query()
     {
         self::markTestIncomplete('environment dependency');
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //test with empty string params
         $expected = " SELECT  schedulers.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt1.user_name modified_by_name , jt1.created_by modified_by_name_owner  , 'Users' modified_by_name_mod FROM schedulers   LEFT JOIN  users jt0 ON jt0.id=schedulers.created_by AND jt0.deleted=0\n AND jt0.deleted=0  LEFT JOIN  users jt1 ON schedulers.modified_user_id=jt1.id AND jt1.deleted=0\n\n AND jt1.deleted=0 where schedulers.deleted=0";
@@ -225,7 +225,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     public function testfill_in_additional_list_fields()
     {
         self::markTestIncomplete('environment dependency');
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -238,7 +238,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -254,7 +254,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     public function testget_list_view_data()
     {
         self::markTestIncomplete('environment dependency');
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //preset required attributes
         $scheduler->job_interval = '0::3::*::*::*';
@@ -282,7 +282,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     public function testget_summary_text()
     {
         self::markTestIncomplete('environment dependency');
-        $scheduler = BeanFactory::newBean('Schedulers');
+        $scheduler = new Scheduler();
 
         //test without setting name
         $this->assertEquals(null, $scheduler->get_summary_text());

@@ -52,7 +52,7 @@ $newDate = strtotime('+'.$mins.' minutes', $newDate);
 $newDate = date("Y-m-d H:i:s", $newDate);
 $call->date_end = $newDate;
 //save call and call attempt history
-$reschedule = BeanFactory::newBean('Calls_Reschedule');
+$reschedule = new Calls_Reschedule();
 
 $reschedule->reason = $reason;
 $reschedule->call_id = $id;

@@ -53,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class ErrorMessageTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         if (!defined('sugarEntry')) {
@@ -77,7 +77,7 @@ class ErrorMessageTest extends SuitePHPUnitFrameworkTestCase
         include_once __DIR__ . '/../../../../include/LangException.php';
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
         parent::tearDown();
     }

@@ -3,7 +3,7 @@ namespace Api\Core\Loader;
 
 use Api\Core\Config\ApiConfig;
 use Api\Core\Resolver\ConfigResolver;
-use Psr\Container\ContainerInterface;
+use Interop\Container\ContainerInterface;
 use Slim\Container;
 
 class ContainerLoader

@@ -59,7 +59,7 @@ if (!is_admin($current_user)) {
     sugar_die("Unauthorized access to administration.");
 }
 
-$focus = BeanFactory::newBean('Roles');
+$focus = new Role();
 
 $detailView = new DetailView();
 $offset=0;

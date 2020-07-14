@@ -57,7 +57,7 @@ global $current_user;
 // global $default_language;
 // global $cal_codes;
 
-$focus = BeanFactory::newBean('EmailMarketing');
+$focus = new EmailMarketing();
 
 if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
@@ -123,7 +123,7 @@ if ($focus->template_id) {
 //include campaign utils..
 require_once('modules/Campaigns/utils.php');
 if (empty($_REQUEST['campaign_name'])) {
-    $campaign = BeanFactory::newBean('Campaigns');
+    $campaign = new Campaign();
     $campaign->retrieve($campaign_id);
     $campaign_name=$campaign->name;
 } else {

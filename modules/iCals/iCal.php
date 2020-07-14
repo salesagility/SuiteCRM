@@ -176,21 +176,15 @@ class iCal extends vCal
             $ical_array[] = array("STATUS", "COMPLETED");
             $ical_array[] = array("PERCENT-COMPLETE", "100");
             $ical_array[] = array("COMPLETED", $this->getUtcDateTime($due_date_time));
-        } else {
-            if (!empty($task->percent_complete)) {
-                $ical_array[] = array("PERCENT-COMPLETE", $task->percent_complete);
-            }
+        } elseif (!empty($task->percent_complete)) {
+            $ical_array[] = array("PERCENT-COMPLETE", $task->percent_complete);
         }
         if ($task->priority == "Low") {
             $ical_array[] = array("PRIORITY", "9");
-        } else {
-            if ($task->priority == "Medium") {
-                $ical_array[] = array("PRIORITY", "5");
-            } else {
-                if ($task->priority == "High") {
-                    $ical_array[] = array("PRIORITY", "1");
-                }
-            }
+        } elseif ($task->priority == "Medium") {
+            $ical_array[] = array("PRIORITY", "5");
+        } elseif ($task->priority == "High") {
+            $ical_array[] = array("PRIORITY", "1");
         }
         $ical_array[] = array("END", "VTODO");
         return vCal::create_ical_string_from_array($ical_array, true);
@@ -284,7 +278,7 @@ class iCal extends vCal
                     $ical_array[] = array("LOCATION", $event->location);
                     $eventUsers = $event->get_meeting_users();
                     $query = "SELECT contact_id as id from meetings_contacts where meeting_id='$event->id' AND deleted=0";
-                    $eventContacts = $event->build_related_list($query, BeanFactory::newBean('Contacts'));
+                    $eventContacts = $event->build_related_list($query, new Contact());
                     $eventAttendees = array_merge($eventUsers, $eventContacts);
                     if (is_array($eventAttendees)) {
                         foreach ($eventAttendees as $attendee) {
@@ -364,7 +358,7 @@ class iCal extends vCal
         $where = "project_task.assigned_user_id='{$user_bean->id}' ".
             "AND (project_task.status IS NULL OR (project_task.status!='Deferred')) ".
             "AND (project_task.date_start IS NULL OR " . CalendarActivity::get_occurs_within_where_clause('project_task', '', $start_date_time, $end_date_time, 'date_start', 'month') . ")";
-        $seedProjectTask = BeanFactory::newBean('ProjectTask');
+        $seedProjectTask = new ProjectTask();
         $projectTaskList = $seedProjectTask->get_full_list("", $where);
         if (is_array($projectTaskList)) {
             foreach ($projectTaskList as $projectTask) {
@@ -377,7 +371,7 @@ class iCal extends vCal
             $where = "tasks.assigned_user_id='{$user_bean->id}' ".
                 "AND (tasks.status IS NULL OR (tasks.status!='Deferred')) ".
                 "AND (tasks.date_start IS NULL OR " . CalendarActivity::get_occurs_within_where_clause('tasks', '', $start_date_time, $end_date_time, 'date_start', 'month') . ")";
-            $seedTask = BeanFactory::newBean('Tasks');
+            $seedTask = new Task();
             $taskList = $seedTask->get_full_list("", $where);
             if (is_array($taskList)) {
                 foreach ($taskList as $task) {

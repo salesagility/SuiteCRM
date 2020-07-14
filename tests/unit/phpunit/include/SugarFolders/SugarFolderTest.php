@@ -44,7 +44,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 {
     protected $folderId = null;
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         include_once __DIR__ . '/../../../../../modules/Users/User.php';
@@ -65,7 +65,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGenerateArchiveFolderQuery()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -79,7 +79,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGenerateSugarsDynamicFolderQuery()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -111,7 +111,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testFolderSubscriptions()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -153,7 +153,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testClearSubscriptionsForFolder()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -174,7 +174,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetFoldersForSettings()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -214,7 +214,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCrudFolder()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $sugarfolder = new SugarFolder($user);
@@ -281,7 +281,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCopyBean()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -327,7 +327,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMoveFolder()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -376,7 +376,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetListItemsForEmailXML()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $sugarFolder = new SugarFolder($user);
@@ -420,7 +420,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCountOfItems()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -468,7 +468,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         // create with dynamic and group
 
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -500,7 +500,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testNonExistingRetrieve()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -514,7 +514,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testDeleteEmailsFromFolder()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolder = new SugarFolder($user);
@@ -543,7 +543,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testDeleteEmailsFromAllFolders()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -595,16 +595,12 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetUserFolders()
     {
-        $this->markTestIncomplete(
-            'This test requires a review'
-        );
-
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
 
-        $parentFolderOne->name = 'Parent Folder';
+        $parentFolderOne->name        = 'Parent Folder';
         $parentFolderOne->folder_type = 'inbound';
 
         $saved = $parentFolderOne->save();
@@ -623,38 +619,38 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $childFolder = new SugarFolder($user);
 
         $fields = array(
-            'name' => 'Child Folder',
-            'parent_folder' => $parentFolderOne->id,
+            'name'             => 'Child Folder',
+            'parent_folder'    => $parentFolderOne->id
         );
 
         $subChildFolderOne = new SugarFolder($user);
 
         $fields = array(
-            'name' => 'Sub Child Folder One',
-            'parent_folder' => $childFolder->id,
+            'name'             => 'Sub Child Folder One',
+            'parent_folder'    => $childFolder->id
         );
 
         $subChildFolderTwo = new SugarFolder($user);
 
         $fields = array(
-            'name' => 'Sub Child Folder Two',
-            'parent_folder' => $childFolder->id,
+            'name'             => 'Sub Child Folder Two',
+            'parent_folder'    => $childFolder->id
         );
 
         $anotherChildFolder = new SugarFolder($user);
 
         $fields = array(
-            'name' => 'Another Child Folder',
-            'parent_folder' => $parentFolderOne->id,
+            'name'             => 'Another Child Folder',
+            'parent_folder'    => $parentFolderOne->id
         );
 
         $subs = array($anotherChildFolder->id, $parentFolderOne->id, $childFolder->id, $subChildFolderOne->id, $subChildFolderTwo->id);
         $parentFolderOne->setSubscriptions($subs);
 
-        $email = BeanFactory::newBean('Emails');
+        $email = new Email();
         $email->email2init();
 
-        $ie = BeanFactory::newBean('InboundEmail');
+        $ie = new InboundEmail();
         $ie->email = $email;
 
         $rootNode = new ExtNode('', '');
@@ -669,7 +665,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSetSubscriptionWithNoUser()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);
@@ -692,7 +688,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testUpdateSave()
     {
-        $user = BeanFactory::newBean('Users');
+        $user = new User();
         $user->id = 1;
 
         $parentFolderOne = new SugarFolder($user);

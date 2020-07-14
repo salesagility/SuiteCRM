@@ -58,7 +58,7 @@ global $currentModule;
 
 
 $current_module_strings = return_module_language($current_language, 'Users');
-$seed_object = BeanFactory::newBean('Users');
+$seed_object = new User();
 
 $where = "";
 if (isset($_REQUEST['query'])) {

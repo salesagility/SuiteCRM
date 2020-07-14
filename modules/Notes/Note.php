@@ -273,7 +273,7 @@ class Note extends File
         }
 
         if (isset($this->contact_id) && $this->contact_id != '') {
-            $contact = BeanFactory::newBean('Contacts');
+            $contact = new Contact();
             $contact->retrieve($this->contact_id);
             if (isset($contact->id)) {
                 $this->contact_name = $contact->full_name;
@@ -298,7 +298,7 @@ class Note extends File
             }
         }
         if (isset($this->contact_id) && $this->contact_id != '') {
-            $contact = BeanFactory::newBean('Contacts');
+            $contact = new Contact();
             $contact->retrieve($this->contact_id);
             if (isset($contact->id)) {
                 $this->contact_name = $contact->full_name;

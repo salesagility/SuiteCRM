@@ -11,7 +11,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     $response = $_GET['response'];
 
     //get event
-    $event = BeanFactory::newBean('FP_events');
+    $event = new FP_events();
     $event->retrieve($even_id);
     
     if ($type == 'c') {
@@ -34,24 +34,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
             } else {
                 echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }
-        } else {
-            if ($response == 'decline') {
-                //check to see if they have already responded to the email
-                $check_q = 'SELECT email_responded FROM fp_events_contacts_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
-                $check = $db->getOne($check_q);
-                //update contact to accepted
-                $query = 'UPDATE fp_events_contacts_c SET accept_status="Declined", email_responded="1" WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'" AND email_responded="0"';
+        } elseif ($response == 'decline') {
+            //check to see if they have already responded to the email
+            $check_q = 'SELECT email_responded FROM fp_events_contacts_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
+            $check = $db->getOne($check_q);
+            //update contact to accepted
+            $query = 'UPDATE fp_events_contacts_c SET accept_status="Declined", email_responded="1" WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'" AND email_responded="0"';
 
-                if ($db->query($query) && $check != '1') {
-                    if (!IsNullOrEmptyString($event->decline_redirect)) {
-                        $url = $event->decline_redirect;
-                        header('Location: ' . $url);
-                    } else {
-                        echo 'Thank you for declining';
-                    }
+            if ($db->query($query) && $check != '1') {
+                if (!IsNullOrEmptyString($event->decline_redirect)) {
+                    $url = $event->decline_redirect;
+                    header('Location: ' . $url);
                 } else {
-                    echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
+                    echo 'Thank you for declining';
                 }
+            } else {
+                echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }
         }
     }
@@ -75,23 +73,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
             } else {
                 echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }
-        } else {
-            if ($response == 'decline') {
-                //check to see if they have already responded to the email
-                $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE fp_events_prospects_1fp_events_ida="'.$event->id.'" AND fp_events_prospects_1prospects_idb="'.$delegate_id.'"';
-                $check = $db->getOne($check_q);
-                //update contact to accepted
-                $query = 'UPDATE fp_events_prospects_1_c SET accept_status="Declined", email_responded="1" WHERE fp_events_prospects_1fp_events_ida="'.$event->id.'" AND fp_events_prospects_1prospects_idb="'.$delegate_id.'" AND email_responded="0"';
-                if ($db->query($query) && $check != '1') {
-                    if (!IsNullOrEmptyString($event->decline_redirect)) {
-                        $url = $event->decline_redirect;
-                        header('Location: ' . $url);
-                    } else {
-                        echo 'Thank you for declining';
-                    }
+        } elseif ($response == 'decline') {
+            //check to see if they have already responded to the email
+            $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE fp_events_prospects_1fp_events_ida="'.$event->id.'" AND fp_events_prospects_1prospects_idb="'.$delegate_id.'"';
+            $check = $db->getOne($check_q);
+            //update contact to accepted
+            $query = 'UPDATE fp_events_prospects_1_c SET accept_status="Declined", email_responded="1" WHERE fp_events_prospects_1fp_events_ida="'.$event->id.'" AND fp_events_prospects_1prospects_idb="'.$delegate_id.'" AND email_responded="0"';
+            if ($db->query($query) && $check != '1') {
+                if (!IsNullOrEmptyString($event->decline_redirect)) {
+                    $url = $event->decline_redirect;
+                    header('Location: ' . $url);
                 } else {
-                    echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
+                    echo 'Thank you for declining';
                 }
+            } else {
+                echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }
         }
     }
@@ -114,24 +110,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
             } else {
                 echo 'There was a problem with the link please contact the sender of the invite';
             }
-        } else {
-            if ($response == 'decline') {
-                //check to see if they have already responded to the email
-                $check_q = 'SELECT email_responded FROM fp_events_leads_1_c WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
-                $check = $db->getOne($check_q);
-                //update contact to accepted
-                $query = 'UPDATE fp_events_leads_1_c SET accept_status="Declined", email_responded="1" WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'" AND email_responded="0"';
+        } elseif ($response == 'decline') {
+            //check to see if they have already responded to the email
+            $check_q = 'SELECT email_responded FROM fp_events_leads_1_c WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
+            $check = $db->getOne($check_q);
+            //update contact to accepted
+            $query = 'UPDATE fp_events_leads_1_c SET accept_status="Declined", email_responded="1" WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'" AND email_responded="0"';
 
-                if ($db->query($query) && $check != '1') {
-                    if (!IsNullOrEmptyString($event->decline_redirect)) {
-                        $url = $event->decline_redirect;
-                        header('Location: ' . $url);
-                    } else {
-                        echo 'Thank you for declining';
-                    }
+            if ($db->query($query) && $check != '1') {
+                if (!IsNullOrEmptyString($event->decline_redirect)) {
+                    $url = $event->decline_redirect;
+                    header('Location: ' . $url);
                 } else {
-                    echo 'There was a problem with the link please contact the sender of the invite';
+                    echo 'Thank you for declining';
                 }
+            } else {
+                echo 'There was a problem with the link please contact the sender of the invite';
             }
         }
     }

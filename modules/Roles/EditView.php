@@ -53,7 +53,7 @@ global $app_list_strings;
 global $mod_strings;
 global $current_user;
 
-$focus = BeanFactory::newBean('Roles');
+$focus = new Role();
 
 if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);

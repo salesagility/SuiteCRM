@@ -72,7 +72,7 @@ class TopCampaignsDashlet extends Dashlet
             $this->autoRefresh = $def['autoRefresh'];
         }
         
-        $this->seedBean = BeanFactory::newBean('Opportunities');
+        $this->seedBean = new Opportunity();
 
         $qry = "SELECT C.name AS campaign_name, SUM(O.amount) AS revenue, C.id as campaign_id " .
                "FROM campaigns C, opportunities O " .

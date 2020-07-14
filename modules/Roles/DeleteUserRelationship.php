@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$focus = BeanFactory::newBean('Roles');
+$focus = new Role();
 
 $focus->retrieve($_REQUEST['record']);
 

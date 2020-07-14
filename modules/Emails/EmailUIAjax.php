@@ -97,9 +97,9 @@ require_once("include/OutboundEmail/OutboundEmail.php");
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 
-$email = BeanFactory::newBean('Emails');
+$email = new Email();
 $email->email2init();
-$ie = BeanFactory::newBean('InboundEmail');
+$ie = new InboundEmail();
 $ie->email = $email;
 $json = getJSONobj();
 
@@ -308,7 +308,7 @@ if (isset($_REQUEST['emailUIAction'])) {
 
             $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
             $order = '';
-            $seed = BeanFactory::newBean('Notes');
+            $seed = new Note();
             $fullList = $seed->get_full_list($order, $where, '');
             $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
 
@@ -510,7 +510,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $mod = strtolower($_REQUEST['parent_type']);
                 $modId = $_REQUEST['parent_id'];
                 foreach ($uids as $id) {
-                    $email = BeanFactory::newBean('Emails');
+                    $email = new Email();
                     $email->retrieve($id);
                     $email->parent_id = $modId;
                     $email->parent_type = $_REQUEST['parent_type'];
@@ -602,7 +602,6 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 $out = trim($json->encode($ret, false));
                 echo $out;
-            } else {
             }
 
             break;
@@ -901,7 +900,7 @@ eoq;
                 $out = array();
 
                 foreach ($exIds as $id) {
-                    $e = BeanFactory::newBean('Emails');
+                    $e = new Email();
                     $e->retrieve($id);
                     $e->description_html = from_html($e->description_html);
                     $ie->email = $e;
@@ -1312,9 +1311,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP";
             }
+                echo "NOOP";
+
             break;
 
         case "saveOutbound":
@@ -1348,7 +1347,7 @@ eoq;
             global $current_user;
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveDefaultOutbound");
             $outbound_id = empty($_REQUEST['id']) ? "" : $_REQUEST['id'];
-            $ie = BeanFactory::newBean('InboundEmail');
+            $ie = new InboundEmail();
             $ie->setUsersDefaultOutboundServerId($current_user, $outbound_id);
             break;
         case "testOutbound":
@@ -1442,7 +1441,7 @@ eoq;
 
                     if (isset($_REQUEST['account_signature_id'])) {
                         $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
-                        $email_signatures = sugar_unserialize(base64_decode($email_signatures));
+                        $email_signatures = unserialize(base64_decode($email_signatures));
                         if (empty($email_signatures)) {
                             $email_signatures = array();
                         }
@@ -1457,7 +1456,7 @@ eoq;
                             continue;
                         }
                         if ($k == 'stored_options') {
-                            $ie->$k = sugar_unserialize(base64_decode($ie->$k));
+                            $ie->$k = unserialize(base64_decode($ie->$k));
                             if (isset($ie->stored_options['from_name'])) {
                                 $ie->stored_options['from_name'] = from_html($ie->stored_options['from_name']);
                             }
@@ -1531,7 +1530,7 @@ eoq;
                 unset($ret['email_password']); // no need to send the password out
 
                 $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
-                $email_signatures = sugar_unserialize(base64_decode($email_signatures));
+                $email_signatures = unserialize(base64_decode($email_signatures));
 
                 if (!empty($email_signatures) && isset($email_signatures[$ieId])) {
                     $ret['email_signatures'] = $email_signatures[$ieId];
@@ -1574,9 +1573,8 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP: no search criteria found";
             }
+                echo "NOOP: no search criteria found";
 
             break;
 

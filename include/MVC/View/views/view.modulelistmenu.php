@@ -55,7 +55,7 @@ class ViewModulelistmenu extends SugarView
 
     public function display()
     {
-        $tracker = BeanFactory::newBean('Trackers');
+        $tracker = new Tracker();
         $history = $tracker->get_recently_viewed($GLOBALS['current_user']->id, $this->module);
         foreach ($history as $key => $row) {
             $history[$key]['item_summary_short'] = getTrackerSubstring($row['item_summary']);

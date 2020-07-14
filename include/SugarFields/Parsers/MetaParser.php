@@ -214,14 +214,12 @@ class MetaParser
                     $mark = $count;
                 }
                 $sarr[] = $count;
-            } else {
-                if ($etok == $etag) {
-                    array_shift($sarr);
-                    if (count($sarr) == 0) {
-                        $val = substr($contents, $mark, ($count - $mark) + $eincrement);
-                        $values[] = $val;
-                        $mark = $count;
-                    }
+            } elseif ($etok == $etag) {
+                array_shift($sarr);
+                if (count($sarr) == 0) {
+                    $val = substr($contents, $mark, ($count - $mark) + $eincrement);
+                    $values[] = $val;
+                    $mark = $count;
                 }
             }
             $count++;
@@ -399,16 +397,12 @@ class MetaParser
                 if ($char == "{" && $nextChar == "$") {
                     $inSmartyVariable = true;
                     $newJavascript .= $javascript[$count];
+                } elseif ($char == "{") {
+                    $newJavascript .=  " {ldelim} ";
+                } elseif ($char == "}") {
+                    $newJavascript .= " {rdelim} ";
                 } else {
-                    if ($char == "{") {
-                        $newJavascript .=  " {ldelim} ";
-                    } else {
-                        if ($char == "}") {
-                            $newJavascript .= " {rdelim} ";
-                        } else {
-                            $newJavascript .= $javascript[$count];
-                        }
-                    }
+                    $newJavascript .= $javascript[$count];
                 }
             }
             $count++;
@@ -438,10 +432,8 @@ class MetaParser
         if (!isset($this->mPHPFile)) {
             if (preg_match('/(.*?)(DetailView).html$/', $filePath, $matches)) {
                 $dir = $matches[1];
-            } else {
-                if (preg_match('/(.*?)(EditView).html$/', $filePath, $matches)) {
-                    $dir = $matches[1];
-                }
+            } elseif (preg_match('/(.*?)(EditView).html$/', $filePath, $matches)) {
+                $dir = $matches[1];
             }
 
             if (!isset($dir) || !is_dir($dir)) {
@@ -667,11 +659,9 @@ class MetaParser
                         if (is_array($column) && !empty($column['name'])) {
                             $existingElements[$column['name']] = $column['name'];
                             $existingLocation[$column['name']] = array("panel"=>$name, "row"=>$rowKey, "col"=>$colKey);
-                        } else {
-                            if (!is_array($column) && !empty($column)) {
-                                $existingElements[$column] = $column;
-                                $existingLocation[$column] = array("panel"=>$name, "row"=>$rowKey, "col"=>$colKey);
-                            }
+                        } elseif (!is_array($column) && !empty($column)) {
+                            $existingElements[$column] = $column;
+                            $existingLocation[$column] = array("panel"=>$name, "row"=>$rowKey, "col"=>$colKey);
                         }
                     } //foreach
                 } //foreach
@@ -683,12 +673,10 @@ class MetaParser
                     foreach ($row as $colKey=>$column) {
                         if (is_array($column) && isset($column['name'])) {
                             $id = $column['name'];
+                        } elseif (!is_array($column) && !empty($column)) {
+                            $id = $column;
                         } else {
-                            if (!is_array($column) && !empty($column)) {
-                                $id = $column;
-                            } else {
-                                continue;
-                            }
+                            continue;
                         }
                         if (empty($existingElements[$id])) {
                             //Only add if
@@ -768,13 +756,13 @@ class MetaParser
         foreach ($panels as $panel) {
             if (!empty($panel) && !is_array($panel)) {
                 return false;
-            } else {
-                foreach ($panel as $row) {
-                    if (!empty($row) && !is_array($row)) {
-                        return false;
-                    } //if
-                } //foreach
-            } //if-else
+            }
+            foreach ($panel as $row) {
+                if (!empty($row) && !is_array($row)) {
+                    return false;
+                } //if
+            } //foreach
+             //if-else
         } //foreach
 
    return true;
@@ -784,21 +772,17 @@ class MetaParser
     {
         if (!is_array($mixed)) {
             return '';
-        } else {
-            if (count($mixed) == 2) {
-                $id = '';
-                $name = '';
-                foreach ($mixed as $el) {
-                    if (preg_match('/_id$/', $el)) {
-                        $id = $el;
-                    } else {
-                        if (preg_match('/_name$/', $el)) {
-                            $name = $el;
-                        }
-                    }
+        } elseif (count($mixed) == 2) {
+            $id = '';
+            $name = '';
+            foreach ($mixed as $el) {
+                if (preg_match('/_id$/', $el)) {
+                    $id = $el;
+                } elseif (preg_match('/_name$/', $el)) {
+                    $name = $el;
                 }
-                return (!empty($id) && !empty($name)) ? $name : '';
             }
+            return (!empty($id) && !empty($name)) ? $name : '';
         }
         return '';
     }

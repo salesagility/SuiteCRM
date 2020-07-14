@@ -279,7 +279,7 @@ EOD
 
 
         require_once('modules/Emails/EmailUI.php');
-        $efocus = BeanFactory::newBean('Emails');
+        $efocus = new Email();
         $efocus->email2init();
         //$efocus->et->preflightUser($current_user);
         $out = $efocus->et->displayEmailFrame('modules/Users/_baseEmail.tpl');

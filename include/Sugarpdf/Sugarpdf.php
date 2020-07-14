@@ -398,11 +398,9 @@ class Sugarpdf extends TCPDF
                 if ($even && !empty($options['evencolor'])) {
                     $this->SetFillColorArray($this->convertHTMLColorToDec($options['evencolor']));
                     $cellOptions['fillstate']=1;
-                } else {
-                    if (!$even && !empty($options['oddcolor'])) {
-                        $this->SetFillColorArray($this->convertHTMLColorToDec($options['oddcolor']));
-                        $cellOptions['fillstate']=1;
-                    }
+                } elseif (!$even && !empty($options['oddcolor'])) {
+                    $this->SetFillColorArray($this->convertHTMLColorToDec($options['oddcolor']));
+                    $cellOptions['fillstate']=1;
                 }
 
                 if ($firstrow) {
@@ -493,9 +491,8 @@ class Sugarpdf extends TCPDF
         $html=$this->wrap("table", $html, $options);
         if ($returnHtml) {
             return $html;
-        } else {
-            $this->writeHTML($html);
         }
+        $this->writeHTML($html);
     }
 
     /**
@@ -662,53 +659,50 @@ class Sugarpdf extends TCPDF
             if (empty($block)) {
                 $lines++;
             // If the block is in more than one line
-            } else {
-                if (ceil($this->GetStringWidth($block) / $wmax)>1) {
-                    //divide into words
-                    $words = explode(" ", $block);
-                    //TODO explode with space is not the best things to do...
-                    $wordBlock = "";
-                    $first=true;
-                    $lastNum = 0;
-                    $run = false;
+            } elseif (ceil($this->GetStringWidth($block) / $wmax)>1) {
+                //divide into words
+                $words = explode(" ", $block);
+                //TODO explode with space is not the best things to do...
+                $wordBlock = "";
+                $first=true;
+                $lastNum = 0;
+                $run = false;
 
-                    for ($i=0; $i<count($words); $i++) {
-                        if ($first) {
-                            $wordBlock = $words[$i];
-                        } else {
-                            $wordBlock .= " ".$words[$i];
-                        }
-                        if (ceil($this->GetStringWidth($wordBlock) / $wmax)>1) {
-                            if ($first) {
-                                $lastNum = ceil($this->GetStringWidth($wordBlock) / $wmax);
-                                $run = true;
-                                $first = false;
-                            } else {
-                                if ($run && $lastNum == ceil($this->GetStringWidth($wordBlock) / $wmax)) {
-                                    // save the number of line if it is the last loop
-                                    if ($i+1 == count($words)) {
-                                        $lines += ceil($this->GetStringWidth($wordBlock) / $wmax);
-                                    }
-                                    continue;
-                                } else {
-                                    $first = true;
-                                    $lines += ceil($this->GetStringWidth(substr($wordBlock, 0, (strlen($wordBlock) - strlen(" ".$words[$i])))) / $wmax);
-                                    $i--;
-                                    $lastNum = 0;
-                                    $run = false;
-                                }
-                            }
-                        } else {
-                            $first = false;
-                        }
-                        // save the number of line if it is the last loop
-                        if ($i+1 == count($words)) {
-                            $lines += ceil($this->GetStringWidth($wordBlock) / $wmax);
-                        }
+                for ($i=0; $i<count($words); $i++) {
+                    if ($first) {
+                        $wordBlock = $words[$i];
+                    } else {
+                        $wordBlock .= " ".$words[$i];
                     }
-                } else {
-                    $lines++;
+                    if (ceil($this->GetStringWidth($wordBlock) / $wmax)>1) {
+                        if ($first) {
+                            $lastNum = ceil($this->GetStringWidth($wordBlock) / $wmax);
+                            $run = true;
+                            $first = false;
+                        } else {
+                            if ($run && $lastNum == ceil($this->GetStringWidth($wordBlock) / $wmax)) {
+                                // save the number of line if it is the last loop
+                                if ($i+1 == count($words)) {
+                                    $lines += ceil($this->GetStringWidth($wordBlock) / $wmax);
+                                }
+                                continue;
+                            }
+                            $first = true;
+                            $lines += ceil($this->GetStringWidth(substr($wordBlock, 0, (strlen($wordBlock) - strlen(" ".$words[$i])))) / $wmax);
+                            $i--;
+                            $lastNum = 0;
+                            $run = false;
+                        }
+                    } else {
+                        $first = false;
+                    }
+                    // save the number of line if it is the last loop
+                    if ($i+1 == count($words)) {
+                        $lines += ceil($this->GetStringWidth($wordBlock) / $wmax);
+                    }
                 }
+            } else {
+                $lines++;
             }
         }
         return $lines;

@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testAOW_Condition()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aowCondition = BeanFactory::newBean('AOW_Conditions');
+        $aowCondition = new AOW_Condition();
         $this->assertInstanceOf('AOW_Condition', $aowCondition);
         $this->assertInstanceOf('Basic', $aowCondition);
         $this->assertInstanceOf('SugarBean', $aowCondition);
@@ -32,7 +32,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $aowCondition = BeanFactory::newBean('AOW_Conditions');
+        $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowCondition->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
@@ -40,7 +40,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave_lines()
     {
-        $aowCondition = BeanFactory::newBean('AOW_Conditions');
+        $aowCondition = new AOW_Condition();
 
         //populate required values
         $post_data = array();
@@ -51,7 +51,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         $post_data['value'] = array('1', 'abc');
 
         //create parent bean
-        $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
+        $aowWorkFlow = new AOW_WorkFlow();
         $aowWorkFlow->id = 1;
 
         $aowCondition->save_lines($post_data, $aowWorkFlow);

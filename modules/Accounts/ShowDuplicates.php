@@ -80,7 +80,7 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup'] == 'true') ||(isset($_POST[
 }
 
 
-$account = BeanFactory::newBean('Accounts');
+$account = new Account();
 require_once('modules/Accounts/AccountFormBase.php');
 $accountForm = new AccountFormBase();
 $GLOBALS['check_notify'] = false;

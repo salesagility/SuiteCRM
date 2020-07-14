@@ -24,7 +24,7 @@ class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
         /*
         $view = new ViewJson();
         $GLOBALS['module'] = "Users" ;
-        $view->bean = BeanFactory::newBean('Users');
+        $view->bean = new User();
 
         ob_start();
         $view->display();

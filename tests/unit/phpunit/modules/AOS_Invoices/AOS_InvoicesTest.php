@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testAOS_Invoices()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aosInvoices = BeanFactory::newBean('AOS_Invoices');
+        $aosInvoices = new AOS_Invoices();
         $this->assertInstanceOf('AOS_Invoices', $aosInvoices);
         $this->assertInstanceOf('Basic', $aosInvoices);
         $this->assertInstanceOf('SugarBean', $aosInvoices);
@@ -31,7 +31,7 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSaveAndMark_deleted()
     {
-        $aosInvoices = BeanFactory::newBean('AOS_Invoices');
+        $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';
 
         $aosInvoices->save();

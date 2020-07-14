@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../../../modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php';
+require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
 
 /**
  * Returns the XML metadata which can be used to register the SP with the IDP
@@ -76,12 +76,12 @@ class SAML2Authenticate extends SugarAuthenticate
     /**
      * @var OneLogin_Saml2_Auth
      */
-    private $samlLogoutAuth;
+    private $samlLogoutAuth = null;
 
     /**
      * @var array
      */
-    private $samlLogoutArgs = [];
+    private $samlLogoutArgs = array();
 
     /**
      * pre login initialization - use SAML2 to authenticate a user login process
@@ -89,11 +89,13 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function pre_login()
     {
-        require_once __DIR__ . '/../SAML2Authenticate/lib/onelogin/settings.php';
+        parent::pre_login();
+
+        require_once dirname(dirname(__FILE__)) . '/SAML2Authenticate/lib/onelogin/settings.php';
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
-        if (!empty($_POST['SAMLResponse'])) {
-            if (isset($_SESSION['AuthNRequestID'])) {
+        if (isset($_REQUEST['SAMLResponse']) && $_REQUEST['SAMLResponse']) {
+            if (isset($_SESSION) && isset($_SESSION['AuthNRequestID'])) {
                 $requestID = $_SESSION['AuthNRequestID'];
             } else {
                 $requestID = null;
@@ -124,17 +126,6 @@ class SAML2Authenticate extends SugarAuthenticate
                     // Authenticate with suitecrm
                     $this->redirectToLogin($GLOBALS['app']);
                 }
-            } elseif (!empty($_GET['SAMLResponse']) || (!empty($_GET['SAMLRequest']))) {
-
-                $auth->processSLO();
-
-                $errors = $auth->getErrors();
-                if (!empty($errors)) {
-                    $GLOBALS['log']->warn('SLO errors: ' . implode(', ', $errors));
-                }
-
-                $auth->login();
-                exit;
             }
         } else {
             $auth->login();
@@ -154,7 +145,7 @@ class SAML2Authenticate extends SugarAuthenticate
                 global $authController;
                 $authController->login($_SESSION['samlNameId'], null);
             }
-            SugarApplication::redirect('index.php?module=Users&action=LoggedOut');
+            SugarApplication::redirect('index.php');
         } else {
             return false;
         }
@@ -166,7 +157,7 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function logout()
     {
-        if ($this->samlLogoutAuth && $this->samlLogoutAuth->getSLOurl()) {
+        if ($this->samlLogoutAuth && !empty($this->samlLogoutAuth->getSLOurl())) {
             $this->samlLogoutAuth->logout(
                 $this->samlLogoutArgs['returnTo'],
                 $this->samlLogoutArgs['parameters'],

@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testEmployee()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
         $this->assertInstanceOf('Employee', $employee);
         $this->assertInstanceOf('Person', $employee);
         $this->assertInstanceOf('SugarBean', $employee);
@@ -29,7 +29,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
 
         //test without setting name
         $this->assertEquals(' ', $employee->get_summary_text());
@@ -41,7 +41,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -54,7 +54,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
 
         //test with a empty employee bean
         $employee->fill_in_additional_detail_fields();
@@ -69,7 +69,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieve_employee_id()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
         //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
 
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
@@ -77,13 +77,13 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testverify_data()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
     }
 
     public function testget_list_view_data()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
 
         $expected = array(
             'SUGAR_LOGIN' => '1',
@@ -112,7 +112,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlist_view_parse_additional_sections()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -126,7 +126,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
 
         //test with empty string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name";
@@ -141,7 +141,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpreprocess_fields_on_save()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -158,7 +158,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     public function testcreate_new_list_query()
     {
         /*
-    	$employee = BeanFactory::newBean('Employees');
+    	$employee = new Employee();
 
     	//test with empty string params
     	$expected = " SELECT  users.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt2.last_name reports_to_name , jt2.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM users   LEFT JOIN  users jt2 ON users.reports_to_id=jt2.id AND jt2.deleted=0\n\n AND jt2.deleted=0 where ( users.portal_only = 0 ) AND users.deleted=0";
@@ -176,7 +176,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhasCustomFields()
     {
-        $employee = BeanFactory::newBean('Employees');
+        $employee = new Employee();
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
     }

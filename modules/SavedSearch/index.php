@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
     
 if (!empty($_REQUEST['saved_search_action'])) {
-    $ss = BeanFactory::newBean('SavedSearch');
+    $ss = new SavedSearch();
     
     switch ($_REQUEST['saved_search_action']) {
         case 'update': // save here
@@ -74,7 +74,7 @@ if (!empty($_REQUEST['saved_search_action'])) {
         header("Location: index.php?action=index&module={$_REQUEST['search_module']}&searchFormTab={$searchFormTab}&query=true&clear_query=true$ajaxLoad");
         die();
     }
-    $ss = BeanFactory::newBean('SavedSearch');
+    $ss = new SavedSearch();
     $show='no';
     if (isset($_REQUEST['showSSDIV'])) {
         $show = $_REQUEST['showSSDIV'];

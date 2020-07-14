@@ -53,7 +53,7 @@ function install_aop()
     $sugar_config['aop'] = array('distribution_method' => 'roundRobin');
     $templates = getTemplates();
     foreach ($templates as $configKey => $templateData) {
-        $template = BeanFactory::newBean('EmailTemplates');
+        $template = new EmailTemplate();
         foreach ($templateData as $field => $value) {
             $template->$field = $value;
         }

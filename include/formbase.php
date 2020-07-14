@@ -276,23 +276,21 @@ function buildRedirectURL($return_id='', $return_module='')
             // END Meeting Integration
         }
         // if we create a new record "Save", we want to redirect to the DetailView
-        else {
-            if (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save"
+        elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save"
             && $_REQUEST['return_module'] != 'Activities'
             && $_REQUEST['return_module'] != 'Home'
             && $_REQUEST['return_module'] != 'Forecasts'
             && $_REQUEST['return_module'] != 'Calendar'
             && $_REQUEST['return_module'] != 'MailMerge'
             ) {
-                $return_action = 'DetailView';
-            } elseif ($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
-                $return_module = $_REQUEST['module'];
-                $return_action = $_REQUEST['return_action'];
-            // wp: return action needs to be set for one-click close in task list
-            } else {
-                // if we "Cancel", we go back to the list view.
-                $return_action = $_REQUEST['return_action'];
-            }
+            $return_action = 'DetailView';
+        } elseif ($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
+            $return_module = $_REQUEST['module'];
+            $return_action = $_REQUEST['return_action'];
+        // wp: return action needs to be set for one-click close in task list
+        } else {
+            // if we "Cancel", we go back to the list view.
+            $return_action = $_REQUEST['return_action'];
         }
     } else {
         $return_action = "DetailView";
@@ -412,26 +410,12 @@ function add_to_prospect_list($query_panel, $parent_module, $parent_type, $paren
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$child_id);
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$link_attribute);
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$link_type);
-    require_once __DIR__ . '/../include/SubPanel/SubPanelTiles.php';
+    require_once('include/SubPanel/SubPanelTiles.php');
 
-    $allowed_module = ACLController::checkModuleAllowed($parent_module, 'list');
-    $parent_types = explode(' ', $parent_type);
-    $disabled_types = ACLController::disabledModuleList($parent_types, false, 'list');
-    foreach ($disabled_types as $disabled_type) {
-        unset($parent_types[$disabled_type]);
-    }
-
-    if ($allowed_module === false) {
-        return false;
-    }
 
     if (!class_exists($parent_type)) {
-        require_once __DIR__ . '/../modules/'
-            . cleanDirName($parent_module)
-            . '/' . cleanDirName((string)$parent_types)
-            . '.php';
+        require_once('modules/'.cleanDirName($parent_module).'/'.cleanDirName($parent_type).'.php');
     }
-
     $focus = new $parent_type();
     $focus->retrieve($parent_id);
     if (empty($focus->id)) {

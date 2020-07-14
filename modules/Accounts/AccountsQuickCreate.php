@@ -67,7 +67,7 @@ class AccountsQuickCreate extends QuickCreate
         $this->javascript = new javascript();
         $this->javascript->setFormName('accountsQuickCreate');
         
-        $focus = BeanFactory::newBean('Accounts');
+        $focus = new Account();
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 

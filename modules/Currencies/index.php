@@ -68,7 +68,7 @@ echo getClassicModuleTitle(
 if ($current_user->is_admin) {
     require_once('modules/Currencies/ListCurrency.php');
 
-    $focus = BeanFactory::newBean('Currencies');
+    $focus = new Currency();
     $lc = new ListCurrency();
     $lc->handleAdd();
 
@@ -79,7 +79,7 @@ if ($current_user->is_admin) {
         $currencies = $_REQUEST['mergecur'];
     
     
-        $opp = BeanFactory::newBean('Opportunities');
+        $opp = new Opportunity();
         $opp->update_currency_id($currencies, $_REQUEST['mergeTo']);
         foreach ($currencies as $cur) {
             if ($cur != $_REQUEST['mergeTo']) {

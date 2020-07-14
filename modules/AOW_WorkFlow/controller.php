@@ -527,13 +527,11 @@ class AOW_WorkFlowController extends SugarController
 
         if (file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')) {
             require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
+        } elseif (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
+            require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
         } else {
-            if (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
-                require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
-            } else {
-                echo '';
-                die;
-            }
+            echo '';
+            die;
         }
 
         $custom_action_name = "custom" . $action_name;
@@ -545,7 +543,7 @@ class AOW_WorkFlowController extends SugarController
         $params = array();
         if (isset($_REQUEST['id'])) {
             require_once('modules/AOW_Actions/AOW_Action.php');
-            $aow_action = BeanFactory::newBean('AOW_Actions');
+            $aow_action = new AOW_Action();
             $aow_action->retrieve($_REQUEST['id']);
             $id = $aow_action->id;
             $params = unserialize(base64_decode($aow_action->parameters));
@@ -611,7 +609,7 @@ class AOW_WorkFlowController extends SugarController
     {
         echo 'Started<br />';
         require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
-        $workflow = BeanFactory::newBean('AOW_WorkFlow');
+        $workflow = new AOW_WorkFlow();
 
         if ($workflow->run_flows()) {
             echo 'PASSED';

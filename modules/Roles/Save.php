@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$focus = BeanFactory::newBean('Roles');
+$focus = new Role();
 
 $tabs_def = urldecode($_REQUEST['display_tabs_def']);
 $tabs_hide = urldecode($_REQUEST['hide_tabs_def']);

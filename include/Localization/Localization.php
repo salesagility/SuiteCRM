@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -139,8 +140,8 @@ class Localization
                 'l s f'  => 'l s f',
                 'l f s'  => 'l f s'
             ),
-            'default_number_grouping_seperator'        => ',',
-            'default_decimal_seperator'                => '.',
+            'default_number_grouping_separator'        => ',',
+            'default_decimal_separator'                => '.',
             'export_delimiter'                         => ',',
             'default_email_charset'                    => $this->default_email_charset,
         );
@@ -522,13 +523,13 @@ class Localization
     public function getDecimalSeparator($user = null)
     {
         // Bug50887 this is purposefully misspelled as ..._separator to match the way it's defined throughout the app.
-        $dec = $this->getPrecedentPreference('default_decimal_seperator', $user);
+        $dec = $this->getPrecedentPreference('default_decimal_separator', $user);
         return $dec;
     }
 
     public function getNumberGroupingSeparator($user = null)
     {
-        $sep = $this->getPrecedentPreference('default_number_grouping_seperator', $user);
+        $sep = $this->getPrecedentPreference('default_number_grouping_separator', $user);
         return $sep;
     }
 
@@ -553,13 +554,13 @@ class Localization
      */
     public function getLocaleFormattedNumber($number, $currencySymbol = '', $is_currency = true, $user = null)
     {
-        $fnum = $number;
+        $fnum        = $number;
         $majorDigits = '';
         $minorDigits = '';
-        $dec = $this->getDecimalSeparator($user);
-        $thou = $this->getNumberGroupingSeparator($user);
-        $precision = $this->getPrecision($user);
-        $symbol = empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
+        $dec         = $this->getDecimalSeparator($user);
+        $thou        = $this->getNumberGroupingSeparator($user);
+        $precision   = $this->getPrecision($user);
+        $symbol      = empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
 
         $exNum = explode($dec, $number);
         // handle grouping
@@ -665,8 +666,8 @@ class Localization
 
             function setSigDigits() {
                 var sym = document.getElementById('symbol').value;
-                var thou = document.getElementById('default_number_grouping_seperator').value;
-                var dec = document.getElementById('default_decimal_seperator').value;
+                var thou = document.getElementById('default_number_grouping_separator').value;
+                var dec = document.getElementById('default_decimal_separator').value;
                 var precision = document.getElementById('sigDigits').value;
                 //umber(n, num_grp_sep, dec_sep, round, precision)
                 var newNumber = sym + formatNumber(exampleDigits, thou, dec, precision, precision);

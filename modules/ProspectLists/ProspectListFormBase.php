@@ -131,7 +131,7 @@ EOQ;
     
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(BeanFactory::newBean('ProspectLists'));
+        $javascript->setSugarBean(new ProspectList());
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -143,7 +143,7 @@ EOQ;
         require_once('include/formbase.php');
     
         
-        $focus = BeanFactory::newBean('ProspectLists');
+        $focus = new ProspectList();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
         }

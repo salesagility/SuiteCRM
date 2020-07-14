@@ -56,7 +56,7 @@ function installSystemEmailTemplates()
             continue;
         }
 
-        $template = BeanFactory::newBean('EmailTemplates');
+        $template = new EmailTemplate();
         foreach ($templateData as $field => $value) {
             $template->$field = $value;
         }

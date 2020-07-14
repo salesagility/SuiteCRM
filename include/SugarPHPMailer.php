@@ -38,13 +38,12 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use PHPMailer\PHPMailer\PHPMailer;
-
+require_once 'include/phpmailer/class.phpmailer.php';
+require_once 'include/phpmailer/class.smtp.php';
 require_once 'include/OutboundEmail/OutboundEmail.php';
 
 /**
@@ -86,7 +85,7 @@ class SugarPHPMailer extends PHPMailer
         global $current_user;
         global $sugar_config;
 
-        $admin = BeanFactory::newBean('Administration');
+        $admin = new Administration();
         $admin->retrieveSettings();
 
         if (isset($admin->settings['disclosure_enable']) && !empty($admin->settings['disclosure_enable'])) {
@@ -97,7 +96,8 @@ class SugarPHPMailer extends PHPMailer
         $this->oe = new OutboundEmail();
         $this->oe->getUserMailerSettings($current_user);
 
-        $this->setLanguage('en', 'vendor/phpmailer/phpmailer/language/');
+        $this->setLanguage('en', 'include/phpmailer/language/');
+        $this->PluginDir = 'include/phpmailer/';
         $this->Mailer = 'smtp';
         // cn: i18n
         $this->CharSet = $locale->getPrecedentPreference('default_email_charset');

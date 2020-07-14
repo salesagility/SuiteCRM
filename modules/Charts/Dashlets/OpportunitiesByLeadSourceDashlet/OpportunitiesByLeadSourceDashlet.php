@@ -92,7 +92,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if ($current_user->getPreference('currency')) {
-            $currency = BeanFactory::newBean('Currencies');
+            $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
@@ -183,7 +183,7 @@ EOD;
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if ($current_user->getPreference('currency')){
 
-            $currency = BeanFactory::newBean('Currencies');
+            $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }

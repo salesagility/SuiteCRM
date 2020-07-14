@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class TrackerTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testTracker()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $tracker = BeanFactory::newBean('Trackers');
+        $tracker = new Tracker();
 
         $this->assertInstanceOf('Tracker', $tracker);
         $this->assertInstanceOf('SugarBean', $tracker);
@@ -34,7 +34,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_recently_viewed()
     {
-        $tracker = BeanFactory::newBean('Trackers');
+        $tracker = new Tracker();
 
         $result = $tracker->get_recently_viewed(1);
 
@@ -44,7 +44,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmakeInvisibleForAll()
     {
-        $tracker = BeanFactory::newBean('Trackers');
+        $tracker = new Tracker();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -57,7 +57,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $tracker = BeanFactory::newBean('Trackers');
+        $tracker = new Tracker();
 
         $this->assertEquals(false, $tracker->bean_implements('')); //test with blank value
         $this->assertEquals(false, $tracker->bean_implements('test')); //test with invalid value

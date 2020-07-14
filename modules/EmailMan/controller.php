@@ -69,7 +69,7 @@ class EmailManController extends SugarController
 
 
 
-        $focus = BeanFactory::newBean('Administration');
+        $focus = new Administration();
 
         if (isset($_POST['tracking_entities_location_type'])) {
             if ($_POST['tracking_entities_location_type'] != '2') {

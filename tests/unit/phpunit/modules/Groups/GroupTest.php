@@ -4,19 +4,19 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class GroupTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
         get_sugar_config_defaults();
     }
 
     public function testGroup()
     {
         //execute the constructor and check for the Object type and attributes
-        $group = BeanFactory::newBean('Groups');
+        $group = new Group();
         $this->assertInstanceOf('Group', $group);
         $this->assertInstanceOf('User', $group);
         $this->assertInstanceOf('SugarBean', $group);
@@ -30,7 +30,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency (php7: Incorrect state hash: Hash doesn\'t match at key "database::users".)');
 
-        $group = BeanFactory::newBean('Groups');
+        $group = new Group();
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -43,7 +43,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $group = BeanFactory::newBean('Groups');
+        $group = new Group();
 
         //test with empty string params
         $expected = 'SELECT users.* FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name';

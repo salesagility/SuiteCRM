@@ -100,14 +100,14 @@ class FactorAuthEmailCode implements FactorAuthInterface
 
         $ret = true;
 
-        $emailTemplate = BeanFactory::newBean('EmailTemplates');
+        $emailTemplate = new EmailTemplate();
         $emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
         $emailTemplate->retrieve($emailTemplateId);
 
         $mailer = new SugarPHPMailer();
         $mailer->setMailerForSystem();
 
-        $emailObj = BeanFactory::newBean('Emails');
+        $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();
 
         $mailer->From = $defaults['email'];

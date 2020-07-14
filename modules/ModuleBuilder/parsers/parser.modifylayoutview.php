@@ -1,5 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
+if (! defined('sugarEntry') || ! sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
@@ -80,23 +80,19 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         if (is_file($this->_workingFile)) {
             $this->_sourceFile = $this->_workingFile;
             $this->usingWorkingFile = true;
-        } else {
-            if (is_file($this->_customFile)) {
-                $this->_sourceFile = $this->_customFile;
-            } else {
-                if (! is_file($this->_sourceFile)) {
-                    // if we don't have ANY defined metadata then improvise as best we can
-                    if (strtolower($this->_view) == 'quickcreate') {
-                        // special handling for quickcreates - base the quickcreate on the editview if no quickcreatedef exists
-                        $this->_sourceFile = $this->_baseDirectory."editviewdefs.php";
-                        if (is_file("custom/" . $this->_sourceFile)) {
-                            $this->_sourceFile = "custom/" . $this->_sourceFile;
-                        }
-                        $this->_sourceView = 'EditView';
-                    } else {
-                        $this->_fatalError('parser.modifylayout.php->init(): no metadata for '.$this->_module.' '.$this->_view);
-                    }
+        } elseif (is_file($this->_customFile)) {
+            $this->_sourceFile = $this->_customFile;
+        } elseif (! is_file($this->_sourceFile)) {
+            // if we don't have ANY defined metadata then improvise as best we can
+            if (strtolower($this->_view) == 'quickcreate') {
+                // special handling for quickcreates - base the quickcreate on the editview if no quickcreatedef exists
+                $this->_sourceFile = $this->_baseDirectory."editviewdefs.php";
+                if (is_file("custom/" . $this->_sourceFile)) {
+                    $this->_sourceFile = "custom/" . $this->_sourceFile;
                 }
+                $this->_sourceView = 'EditView';
+            } else {
+                $this->_fatalError('parser.modifylayout.php->init(): no metadata for '.$this->_module.' '.$this->_view);
             }
         }
 
@@ -382,10 +378,8 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                     if (! empty($col)) {
                         if (is_string($col)) {
                             $properties ['name'] = $col;
-                        } else {
-                            if (! empty($col ['name'])) {
-                                $properties = $col;
-                            }
+                        } elseif (! empty($col ['name'])) {
+                            $properties = $col;
                         }
                     } else {
                         $properties ['name'] = translate('LBL_FILLER');

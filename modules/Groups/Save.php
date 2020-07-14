@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$focus = BeanFactory::newBean('Groups');
+$focus = new Group();
 
 // New user
 

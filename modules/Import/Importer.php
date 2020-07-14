@@ -108,7 +108,7 @@ class Importer
         $this->ifs = $this->getFieldSanitizer();
 
         //Get the default user currency
-        $this->defaultUserCurrency = BeanFactory::newBean('Currencies');
+        $this->defaultUserCurrency = new Currency();
         $this->defaultUserCurrency->retrieve('-99');
 
         //Get our import column definitions
@@ -580,7 +580,7 @@ class Importer
 
         $firstrow    = json_decode(html_entity_decode($_REQUEST['firstrow']), true);
         $mappingValsArr = $this->importColumns;
-        $mapping_file = BeanFactory::newBean('Import_1');
+        $mapping_file = new ImportMap();
         if (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on') {
             $header_to_field = array();
             foreach ($this->importColumns as $pos => $field_name) {
@@ -723,7 +723,7 @@ class Importer
             $ifs->$field = $this->importSource->$fieldKey;
         }
 
-        $currency = BeanFactory::newBean('Currencies');
+        $currency = new Currency();
         $currency->retrieve($this->importSource->importlocale_currency);
         $ifs->currency_symbol = $currency->symbol;
 
@@ -749,7 +749,7 @@ class Importer
      */
     protected function _undoCreatedBeans(array $ids)
     {
-        $focus = BeanFactory::newBean('Import_2');
+        $focus = new UsersLastImport();
         foreach ($ids as $id) {
             $focus->undoById($id);
         }

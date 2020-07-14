@@ -60,6 +60,6 @@ class SurveyQuestionResponsesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['SurveyQuestionResponsesDashlet']['searchFields'];
         $this->columns = $dashletData['SurveyQuestionResponsesDashlet']['columns'];
 
-        $this->seedBean = BeanFactory::newBean('SurveyQuestionResponses');
+        $this->seedBean = new SurveyQuestionResponses();
     }
 }

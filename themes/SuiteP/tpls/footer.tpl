@@ -146,6 +146,12 @@
                 $('#content').css({
                     'min-height': height + 'px'
                 });
+
+                // uploader fix
+                $('#step1_uploader').css({
+                    position: 'relative',
+                    top: ($('#wizard').height() - 90) + 'px'
+                });
             }
         });
 

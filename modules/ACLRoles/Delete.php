@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-$role = BeanFactory::newBean('ACLRoles');
+$role = new ACLRole();
 if (isset($_REQUEST['record'])) {
     $role->mark_deleted($_REQUEST['record']);
 }

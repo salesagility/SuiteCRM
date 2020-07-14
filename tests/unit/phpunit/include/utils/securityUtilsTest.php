@@ -5,13 +5,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/security_utils.php';
 class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testquery_module_access_list()

@@ -67,10 +67,8 @@ class UndefinedVardefRule extends BaseRule
                 foreach ($row as $key=>$column) {
                     if (is_array($column) && isset($column['name']) && empty($column['name'])) {
                         $panels[$name][$rowCount][$key] = '';
-                    } else {
-                        if (!is_array($column) && isset($column['name']) && empty($column['name'])) {
-                            $panels[$name][$rowCount][$key] = '';
-                        }
+                    } elseif (!is_array($column) && isset($column['name']) && empty($column['name'])) {
+                        $panels[$name][$rowCount][$key] = '';
                     }
                 } //foreach
             } //foreach

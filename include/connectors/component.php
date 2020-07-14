@@ -77,12 +77,10 @@ class component
             $args = $this->mapInput($args, $module);
             $item = $this->_source->getItem($args, $module);
             $result = $this->mapOutput($bean, $item);
+        } elseif (!empty($module) && ($bean = loadBean($module))) {
+            return $this->fillBean($args, $module, $bean);
         } else {
-            if (!empty($module) && ($bean = loadBean($module))) {
-                return $this->fillBean($args, $module, $bean);
-            } else {
-                throw new Exception("Invalid bean");
-            }
+            throw new Exception("Invalid bean");
         }
         return $result;
     }
@@ -357,14 +355,12 @@ class component
                 return $field_defs[$source_field];
             } elseif (!empty($field_defs[$field])) {
                 return $field_defs[$field];
-            } else {
-                return $field;
             }
+            return $field;
         } elseif (!empty($field_defs[$field])) {
             return $field_defs[$field];
-        } else {
-            return $field;
         }
+        return $field;
     }
 
     public function getSource()

@@ -4,13 +4,13 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class LeadTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = BeanFactory::newBean('Users');
+        $current_user = new User();
     }
 
     public function testLead()
@@ -153,7 +153,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $lead = BeanFactory::newBean('Leads');
+        $lead = new Lead();
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -303,7 +303,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
         $form = "";
         $prefix = "";
-        $tempBean = BeanFactory::newBean('Contacts');
+        $tempBean = new Contact();
 
         $result = $lead->convertCustomFieldsForm($form, $tempBean, $prefix);
 

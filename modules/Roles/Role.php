@@ -199,7 +199,7 @@ class Role extends SugarBean
 
         $query = "SELECT user_id as id FROM roles_users WHERE role_id='$this->id' AND deleted=0";
 
-        $user =  BeanFactory::newBean('Users');
+        $user =  new User();
         return $this->build_related_list($query, $user);
     }
 
