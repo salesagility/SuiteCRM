@@ -101,6 +101,8 @@ function get_custom_dir_list()
     $modules = get_module_dir_list();
     $custom_modules = array();
 
+    $unwanted_modules = array('Projects');
+    
     $path = 'custom/modules';
     $d = dir($path);
     while ($entry = $d->read()) {
@@ -108,7 +110,6 @@ function get_custom_dir_list()
             continue;
         }
 
-        $unwanted_modules = array('Projects');
         if(in_array($entry, $unwanted_modules)) {
             continue;
         }

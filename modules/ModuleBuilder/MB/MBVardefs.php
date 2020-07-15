@@ -171,8 +171,9 @@ class MBVardefs
     public function build($path)
     {
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-	write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $this->path . '/vardefs.ext.php', 'w', $header);
+        write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $this->path . '/vardefs.ext.php', 'w', $header);
     }
+    
     public function load()
     {
         $this->vardef = array('fields'=>array(), 'relationships'=>array());

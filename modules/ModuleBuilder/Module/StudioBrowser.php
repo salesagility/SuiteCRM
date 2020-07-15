@@ -61,7 +61,7 @@ class StudioBrowser
             if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
                 $this->modules[$e] =  StudioModuleFactory::getStudioModule($e) ;
             }
-	}
+        }
 
         $d = dir('custom/modules');
         while ($e = $d->read()) {
@@ -89,7 +89,7 @@ class StudioBrowser
             if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) { // installed modules must also exist in the beanList
                 $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
             }
-	}
+        }
 
         $d = dir('custom/modules');
         while ($e = $d->read()) {

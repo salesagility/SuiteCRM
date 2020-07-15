@@ -491,7 +491,7 @@ class MBModule
         }
 
         //write vardefs
-        if (! file_exists($path . '/Ext/Vardefs')) {
+        if (!file_exists($path . '/Ext/Vardefs')) {
             mkdir_recursive($path . '/Ext/Vardefs') ;
         }
 
