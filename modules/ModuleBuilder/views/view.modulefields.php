@@ -106,6 +106,7 @@ class ViewModulefields extends SugarView
                     $customFieldsData[$def['name']] = $def['custom'];
                 }
             }
+            $studioClass->mbvardefs = new stdClass;
             $studioClass->mbvardefs->vardefs['fields'] = $f;
             $smarty->assign('module', $studioClass);
 
