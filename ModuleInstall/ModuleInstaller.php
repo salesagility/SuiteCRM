@@ -1885,16 +1885,12 @@ class ModuleInstaller
                     mkdir_recursive("custom/$extpath", true);
                 }
 
-                if($name === 'vardefs.ext.php') {
-                    $name = 'vardefs.custom.ext.php';
-                }
-
                 $out = sugar_fopen("custom/$extpath/$name", 'w');
                 fwrite($out, $extension);
                 fclose($out);
             }
         }
-
+ 
         $GLOBALS['log']->debug("Merging application files for $name in $path");
         //Now the application stuff
         $extension = "<?php \n //WARNING: The contents of this file are auto-generated\n";
