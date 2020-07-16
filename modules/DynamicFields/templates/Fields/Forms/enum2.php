@@ -59,7 +59,8 @@
          $selected_options = $vardef['default'];
      }
 
-     $edit_mod_strings = return_module_language($GLOBALS['current_language'], 'DynamicFields');
+     global $current_language;
+     $edit_mod_strings = return_module_language($current_language, 'DynamicFields');
 
      if (!empty($_REQUEST['type']) && $_REQUEST['type'] == 'radioenum') {
          $edit_mod_strings['LBL_DROP_DOWN_LIST'] = $edit_mod_strings['LBL_RADIO_FIELDS'];
