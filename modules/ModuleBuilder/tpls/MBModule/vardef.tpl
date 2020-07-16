@@ -53,8 +53,8 @@ $dictionary['{{$class.name}}'] = array(
 {{/if}}
 );
 
-if(file_exists('custom/modules/{{$class.name}}/Ext/Vardefs/vardefs.ext.php')) {
-    include('custom/modules/{{$class.name}}/Ext/Vardefs/vardefs.ext.php');
+if(file_exists('custom/modules/{{$class.name}}/Ext/Vardefs/vardefs.custom.ext.php')) {
+    include('custom/modules/{{$class.name}}/Ext/Vardefs/vardefs.custom.ext.php');
 }
 
 if (!class_exists('VardefManager')) {
