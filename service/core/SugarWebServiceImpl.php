@@ -266,7 +266,7 @@ class SugarWebServiceImpl
      * 				 - deleted - integer - How many relationships were deleted
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function set_relationship($session, $module_name, $module_id, $link_field_name, $related_ids, $name_value_list, $delete)
+    public function set_relationship($session, $module_name, $module_id, $link_field_name, $related_ids, $name_value_list=array(), $delete=false)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->set_relationship');
         $error = new SoapError();
