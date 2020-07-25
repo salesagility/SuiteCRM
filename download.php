@@ -112,10 +112,13 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             sugar_die("Remote file detected, location header sent.");
         }
     } // if
-    $temp = explode("_", $_REQUEST['id'], 2);
+
+    // split the id by the last underscore, isolating names like 'photo' or 'photo_c' for handling below:
+    $temp = explode('_', $_REQUEST['id']);
     if (is_array($temp)) {
-        $image_field = isset($temp[1]) ? $temp[1] : null;
-        $image_id = $temp[0];
+        $image_field = (count($temp) > 1) ? array_pop($temp) : null;
+        $image_field = ($image_field === 'c') ? array_pop($temp) . '_c' : $image_field;
+        $image_id = implode('_', $temp);
     }
     if (isset($_REQUEST['ieId']) && isset($_REQUEST['isTempFile'])) {
         $local_location = sugar_cached("modules/Emails/{$_REQUEST['ieId']}/attachments/{$_REQUEST['id']}");
@@ -164,7 +167,8 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
 
             // Fix for issue #1195: because the module was created using Module Builder and it does not create any _cstm table,
             // there is a need to check whether the field has _c extension.
-            $query = "SELECT " . $image_field . " FROM " . $file_type . " ";
+            $file_type = $db->quote($file_type);
+            $query = "SELECT " . $db->quote($image_field) . " FROM " . $file_type . " ";
             if (substr($image_field, -2) == "_c") {
                 $query .= "LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
             }
