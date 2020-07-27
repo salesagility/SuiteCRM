@@ -40,6 +40,13 @@
 
 class AOW_WorkFlow extends Basic
 {
+    const AOW_MULTIPLE_RUNS_OFF = 0;
+    const AOW_MULTIPLE_RUNS_ON = 1;
+    const AOW_MULTIPLE_RUNS_HOURLY = 2;
+    const AOW_MULTIPLE_RUNS_DAILY = 4;
+    const AOW_MULTIPLE_RUNS_WEEKLY = 8;
+    const AOW_MULTIPLE_RUNS_MONTHLY = 16;
+    const AOW_MULTIPLE_RUNS_ANNUALY = 32;
     public $new_schema = true;
     public $module_dir = 'AOW_WorkFlow';
     public $object_name = 'AOW_WorkFlow';
@@ -365,7 +372,7 @@ class AOW_WorkFlow extends Basic
                     $query['where'] = [];
                 }
 
-                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
+                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0" . $this->getMultipleRunWhere(true) .")";
             }
 
             $query['where'][] = $module->table_name.".deleted = 0 ";
@@ -630,6 +637,12 @@ class AOW_WorkFlow extends Basic
 
             if ($processed->status === 'Complete') {
                 //has already run so return false
+                return false;
+            }
+        } else if ($this->multiple_runs > 1) {
+            $query = "aow_workflow_id = '" . $this->id . "' AND parent_id = '" . $bean->id . "'" . $this->getMultipleRunWhere(true);
+            $list = $processed->get_full_list('', $query);
+            if (isset($list[0]->status) && $list[0]->status == 'Complete') {
                 return false;
             }
         }
@@ -921,6 +934,12 @@ class AOW_WorkFlow extends Basic
                 //should not have gotten this far, so return
                 return true;
             }
+        } else if ($this->multiple_runs > 1) {
+            $query = "aow_workflow_id = '" . $this->id . "' AND parent_id = '" . $bean->id . "'" . $this->getMultipleRunWhere(true);
+            $list = $processed->get_full_list('', $query);
+            if (isset($list[0]->status) && $list[0]->status == 'Complete') {
+                return false;
+            }
         }
         $processed->aow_workflow_id = $this->id;
         $processed->parent_id = $bean->id;
@@ -938,7 +957,7 @@ class AOW_WorkFlow extends Basic
             $action = BeanFactory::newBean('AOW_Actions');
             $action->retrieve($row['id']);
 
-            if ($this->multiple_runs || !$processed->db->getOne("select id from aow_processed_aow_actions where aow_processed_id = '".$processed->id."' AND aow_action_id = '".$action->id."' AND status = 'Complete'")) {
+            if ($this->multiple_runs == 1 || !$processed->db->getOne("select id from aow_processed_aow_actions where aow_processed_id = '".$processed->id."' AND aow_action_id = '".$action->id."' AND status = 'Complete'" . $this->getMultipleRunWhere(true, true, 'date_modified'))) {
                 $action_name = 'action'.$action->action;
 
                 if (file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')) {
@@ -978,4 +997,62 @@ class AOW_WorkFlow extends Basic
 
         return $pass;
     }
+    
+    
+    /**
+     * get multiple run where
+     * 
+     * @param boolean $addAnd add ' and ' prefix to clause query
+     * @param boolean $gte check gte or lt
+     * @param string $db_field the field that locate the date
+     * 
+     * @return string sql clause
+     */
+    protected function getMultipleRunWhere($addAnd = false, $gte = true, $db_field = 'date_entered') {
+        $min_time = $this->getMultipleRunsMinTime(true);
+        if ($min_time === FALSE) {
+            return '';
+        }
+        
+        $ret_query = $addAnd ? ' AND ' : '';
+        $ret_query .= $db_field . ($gte ? '>=' : '<') . $GLOBALS['db']->quoted(date('Y-m-d H:i:s', $min_time));
+        
+        return $ret_query;
+    }
+
+    /**
+     * get the minimum time for locating the last run on multiple run which is define in period of time
+     * 
+     * @param boolean $asDateFormat return as date time format and not unix timestamp
+     * 
+     * @return mixed datetime for multiple runs for periodically runs, else false
+     */
+    protected function getMultipleRunsMinTime($asDateFormat = false) {
+        switch ($this->multiple_runs) {
+            case self::AOW_MULTIPLE_RUNS_HOURLY:
+                $ret = strtotime('1 hour ago');
+                break;
+            case self::AOW_MULTIPLE_RUNS_DAILY: // daily
+                $ret = strtotime('1 day ago');
+                break;
+            case self::AOW_MULTIPLE_RUNS_WEEKLY: // weekly
+                $ret = strtotime('1 week ago');
+                break;
+            case self::AOW_MULTIPLE_RUNS_MONTHLY: // monthly
+                $ret = strtotime('1 month ago');
+                break;
+            case self::AOW_MULTIPLE_RUNS_ANNUALY: // annually
+                $ret = strtotime('1 year ago');
+                break;
+            case self::AOW_MULTIPLE_RUNS_OFF: // without multiple runs
+            case self::AOW_MULTIPLE_RUNS_ON: // always => minutely
+            default:
+                return false;
+        }
+        if ($asDateFormat) {
+            return date('Y-m-d H:i:s', $ret);
+        }
+        return $ret;
+    }
+
 }

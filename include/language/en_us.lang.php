@@ -3205,6 +3205,13 @@ $app_list_strings['aow_run_on_list']['Modified_Records'] = 'Modified Records';
 $app_list_strings['aow_run_when_list']['Always'] = 'Always';
 $app_list_strings['aow_run_when_list']['On_Save'] = 'Only On Save';
 $app_list_strings['aow_run_when_list']['In_Scheduler'] = 'Only In The Scheduler';
+$app_list_strings['aow_multiple_runs_list'][0]  = 'Off';
+$app_list_strings['aow_multiple_runs_list'][1]  = 'On';
+$app_list_strings['aow_multiple_runs_list'][2]  = 'Once a Hour';
+$app_list_strings['aow_multiple_runs_list'][4]  = 'Once a Day';
+$app_list_strings['aow_multiple_runs_list'][8]  = 'Once a Week';
+$app_list_strings['aow_multiple_runs_list'][16] = 'Once a Month';
+$app_list_strings['aow_multiple_runs_list'][32] = 'Once a Year';
 
 //gant
 $app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Projects - Templates';
