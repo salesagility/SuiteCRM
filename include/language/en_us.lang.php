@@ -1471,6 +1471,7 @@ $app_strings = array(
     'LBL_CASES' => 'Cases',
     'LBL_CHANGE_PASSWORD' => 'Change password',
     'LBL_CHARSET' => 'UTF-8',
+    'LBL_CHARTS' => 'Charts',
     'LBL_CHECKALL' => 'Check All',
     'LBL_CITY' => 'City',
     'LBL_CLEAR_BUTTON_LABEL' => 'Clear',
