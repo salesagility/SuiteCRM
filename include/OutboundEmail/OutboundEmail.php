@@ -544,7 +544,7 @@ class OutboundEmail
      */
     public function saveSystem()
     {
-        $q = "SELECT id FROM outbound_email WHERE type = 'system'";
+        $q = "SELECT id FROM outbound_email WHERE type = 'system' AND deleted = 0";
         $r = $this->db->query($q);
         $a = $this->db->fetchByAssoc($r);
 
