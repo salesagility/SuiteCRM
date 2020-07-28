@@ -3734,3 +3734,4 @@ $app_strings['LBL_SEARCH_PREV'] = 'Previous';
 $app_strings['LBL_SEARCH_NEXT'] = 'Next';
 $app_strings['LBL_SEARCH_PAGE'] = 'Page ';
 $app_strings['LBL_SEARCH_OF'] = ' of ';
+$app_strings['LBL_CHARTS'] = 'Charts';
