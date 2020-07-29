@@ -3743,4 +3743,5 @@ $app_strings['LBL_SEARCH_NEXT'] = 'Next';
 $app_strings['LBL_SEARCH_PAGE'] = 'Page ';
 $app_strings['LBL_SEARCH_OF'] = ' of ';
 $app_strings['LBL_CHARTS'] = 'Charts';
+$app_strings['LBL_ERROR_FETCHING_METADATA'] = 'Error occurred while fetching metadata';
 $app_strings['LBL_TOTAL'] = 'Total';
