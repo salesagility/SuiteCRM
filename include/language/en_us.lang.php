@@ -1752,6 +1752,7 @@ $app_strings = array(
     'LNK_BASIC_FILTER' => 'Quick Filter',
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
     'LBL_QUICK_FILTER' => 'Quick Filter',
+    'LBL_BASIC_FILTER' => 'Basic Filter',
     'LBL_QUICK' => 'Quick',
     'LNK_SEARCH_NONFTS_VIEW_ALL' => 'Show All',
     'LNK_CLOSE' => 'Close',
