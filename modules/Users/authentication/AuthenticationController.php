@@ -175,6 +175,9 @@ class AuthenticationController
             if (is_array($PARAMS) && !empty($PARAMS) && isset($PARAMS['passwordEncrypted'])) {
                 $checkTimeZone = false;
             } // if
+            if (!empty($PARAMS['ignoreTimeZoneRedirect'])) {
+                $checkTimeZone = false;
+            }
             if (empty($ut) && $checkTimeZone && $_REQUEST['action'] != 'SetTimezone' && $_REQUEST['action'] != 'SaveTimezone') {
                 $GLOBALS['module'] = 'Users';
                 $GLOBALS['action'] = 'Wizard';
