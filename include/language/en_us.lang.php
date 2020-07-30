@@ -2110,6 +2110,7 @@ $app_strings = array(
     'ANNUAL_REVENUE_BY_ACCOUNTS' => 'Annual Revenue By Accounts',
     'PIPELINE_BY_SALES_STAGE' => 'Pipeline By Sales Stage',
     'LEADS_BY_SOURCE' => 'Leads By Source',
+    'LEADS_BY_STATUS' => 'Leads By Status',
 
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
     'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See suitecrm.log for more information)',
@@ -3737,3 +3738,4 @@ $app_strings['LBL_SEARCH_NEXT'] = 'Next';
 $app_strings['LBL_SEARCH_PAGE'] = 'Page ';
 $app_strings['LBL_SEARCH_OF'] = ' of ';
 $app_strings['LBL_CHARTS'] = 'Charts';
+$app_strings['LBL_TOTAL'] = 'Total';
