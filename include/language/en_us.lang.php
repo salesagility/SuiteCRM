@@ -1567,6 +1567,7 @@ $app_strings = array(
     'LBL_CANCEL' => 'Cancel',
     'LBL_VERIFY' => 'Verify',
     'LBL_RESEND' => 'Resend',
+    'LBL_RECORD_DOES_NOT_EXIST' => 'Error retrieving record. This record may be deleted or you may not be authorized to view it.',
     'LBL_PROFILE' => 'Profile',
     'LBL_MAILMERGE' => 'Mail Merge',
     'LBL_MASS_UPDATE' => 'Mass Update',
