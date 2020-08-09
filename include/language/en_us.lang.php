@@ -1473,6 +1473,7 @@ $app_strings = array(
     'LBL_CHARSET' => 'UTF-8',
     'LBL_CHARTS' => 'Charts',
     'LBL_QUICK_CHARTS' => 'Quick Charts',
+    'LBL_QUICK_HISTORY' => 'History Timeline',
     'LBL_CHECKALL' => 'Check All',
     'LBL_CITY' => 'City',
     'LBL_CLEAR_BUTTON_LABEL' => 'Clear',
