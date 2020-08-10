@@ -214,50 +214,55 @@ class CalendarActivity
         $show_completed = true
     ) {
         global $current_user;
-        global $beanList;
         $act_list = array();
         $seen_ids = array();
 
-        $completedCalls = '';
-        $completedMeetings = '';
-        $completedTasks = '';
+        $complete = [];
         if (!$show_completed) {
-            $completedCalls = " AND calls.status = 'Planned' ";
-            $completedMeetings = " AND meetings.status = 'Planned' ";
-            $completedTasks = " AND tasks.status != 'Completed' ";
+            $complete['Calls'] = " AND calls.status = 'Planned' ";
+            $complete['Meetings'] = " AND meetings.status = 'Planned' ";
+            $complete['Tasks'] = " AND tasks.status != 'Completed' ";
         }
 
         foreach ($activities as $key => $activity) {
+            if ($key === 'Tasks' && !$show_tasks) {
+                continue;
+            }
+
             if (ACLController::checkAccess($key, 'list', true)) {
                 /* END - SECURITY GROUPS */
-                $class = $beanList[$key];
-                $bean = new $class();
+                $bean = BeanFactory::newBean($key);
 
                 if ($current_user->id === $user_id) {
                     $bean->disable_row_level_security = true;
                 }
 
-                $where = self::get_occurs_within_where_clause(
-                    $bean->table_name,
-                    isset($bean->rel_users_table) ? $bean->rel_users_table : null,
-                    $view_start_time,
-                    $view_end_time,
-                    $activity['start'],
-                    $activity['end']
-                );
+                switch ($key) {
+                    case 'Meetings':
+                    case 'Calls':
+                        $where = self::get_occurs_until_where_clause(
+                            $bean->table_name,
+                            isset($bean->rel_users_table) ? $bean->rel_users_table : null,
+                            $view_start_time,
+                            $view_end_time,
+                            $activity['start'],
+                            $activity['end']
+                        );
+                        break;
+                    default:
+                        $where = self::get_occurs_within_where_clause(
+                            $bean->table_name,
+                            isset($bean->rel_users_table) ? $bean->rel_users_table : null,
+                            $view_start_time,
+                            $view_end_time,
+                            $activity['start'],
+                            $activity['end']
+                        );
+                        break;
+                }
 
-                if ($key === 'Meetings') {
-                    $where .= $completedMeetings;
-                } elseif ($key === 'Calls') {
-                    $where .= $completedCalls;
-                    if (!$show_calls) {
-                        continue;
-                    }
-                } elseif ($key === 'Tasks') {
-                    $where .= $completedTasks;
-                    if (!$show_tasks) {
-                        continue;
-                    }
+                if (!empty($complete[$key])) {
+                    $where .= $complete[$key];
                 }
 
                 $focus_list = build_related_list_by_user_id($bean, $user_id, $where);
