@@ -70,6 +70,7 @@
             $sugar_grp_jquery = array(
                 //jquery
                 'include/javascript/jquery/jquery-min.js'             => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery-migrate.min.js'             => 'include/javascript/sugar_grp1_jquery.js',
                 //bootstrap
                 'include/javascript/jquery/bootstrap.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/html5shiv.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
