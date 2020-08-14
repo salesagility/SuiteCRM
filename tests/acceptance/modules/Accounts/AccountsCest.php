@@ -136,6 +136,7 @@ class AccountsCest
         // Inline edit
         $I->visitPage('Accounts', 'index');
         $listView->waitForListViewVisible();
+        $I->waitForElementVisible( '.inlineEditIcon');
         $I->doubleClick('.inlineEditIcon');
         $I->fillField('#name', 'InlineAccountNameEdit');
         $I->clickWithLeftButton('.suitepicon-action-confirm');
@@ -179,6 +180,7 @@ class AccountsCest
 
         // View child account in parent account subpanel
         $detailView->waitForDetailViewVisible();
+        $I->waitForElementVisible( '//*[@id="list_subpanel_accounts"]/table/tbody/tr/td[2]/a');
         $I->see($accountName, '//*[@id="list_subpanel_accounts"]/table/tbody/tr/td[2]/a');
 
         // Delete account
