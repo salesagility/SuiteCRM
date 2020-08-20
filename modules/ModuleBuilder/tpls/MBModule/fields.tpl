@@ -100,15 +100,11 @@ var fieldsTable = new YAHOO.widget.ScrollingDataTable("field_table", myColumnDef
 fieldsTable.doBeforeSortColumn = function(column, sortDirection)
 {
     var url = 'index.php?module=ModuleBuilder&action=savetablesort&column=' + column.getKey() + '&direction=' + sortDirection;
-    YUI().use('io', function (Y) {
-        Y.io(url, {
-            method: 'POST',
-            on: {
-                success: function(id, data) {},
-                failure: function(id, data) {}
-            }
-        });
-    });
+    
+    $.post(
+        url
+    );
+    
     return true;
 };
 
