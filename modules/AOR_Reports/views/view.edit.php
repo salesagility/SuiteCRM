@@ -50,7 +50,6 @@ class AOR_ReportsViewEdit extends ViewEdit
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
         echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
-        echo '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
 
         echo "<script>";
         echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";

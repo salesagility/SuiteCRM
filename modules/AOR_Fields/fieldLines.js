@@ -89,16 +89,6 @@ var FieldLineHandler = {
 
 };
 
-YUI().use('sortable', function(Y) {
-    var sortable = new Y.Sortable({
-        container: '#fieldLines',
-        nodes: 'tbody',
-        opacity: '.1'
-    });
-
-    Y.DD.DDM.on('drag:end', fieldSort);
-});
-
 function loadFieldLine(field){
 
     var prefix = 'aor_fields_';
@@ -273,6 +263,15 @@ function insertFieldHeader(){
 
     var h=x.insertCell(10);
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_TOTAL');
+
+    tablebody = document.createElement("tbody");
+    document.getElementById('fieldLines').appendChild(tablebody);
+
+    $('#fieldLines tbody').sortable({
+        stop: fieldSort,
+        axis: 'y',
+        containment: "#fieldLines"
+    });
 }
 
 function insertFieldLine(){
@@ -283,11 +282,7 @@ function insertFieldLine(){
         document.getElementById('fieldLines_head').style.display = '';
     }
 
-
-    tablebody = document.createElement("tbody");
-    tablebody.id = "aor_fields_body" + fieldln;
-    document.getElementById('fieldLines').appendChild(tablebody);
-
+    tablebody = document.getElementById('fieldLines').getElementsByTagName('tbody')[0];
 
     var x = tablebody.insertRow(-1);
     x.id = 'field_line' + fieldln;
