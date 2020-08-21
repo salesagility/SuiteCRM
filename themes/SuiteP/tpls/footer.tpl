@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -45,13 +45,8 @@
 {if $AUTHENTICATED}
     <!-- Start generic footer -->
     <footer>
-	{if $STATISTICS}
-		<div class="serverstats">
-            <span class="glyphicon glyphicon-globe"></span> {$STATISTICS}
-        </div>
-	{/if}
-        <div id="copyright_data">
-            <div id="dialog2" title="{$APP.LBL_SUITE_SUPERCHARGED}">
+        <div id="copyright_data" class="footer_left">
+            <div id="dialog2" title="{$APP.LBL_SUITE_SUPERCHARGED}" style="display: none">
                 <p>{$APP.LBL_SUITE_DESC1}</p>
                 <br>
                 <p>{$APP.LBL_SUITE_DESC2}</p>
@@ -59,14 +54,19 @@
                 <p>{$APP.LBL_SUITE_DESC3}</p>
                 <br>
             </div>
-            <div id="dialog" title="&copy; {$APP.LBL_SUITE_POWERED_BY}">
+            <div id="dialog" title="&copy; {$APP.LBL_SUITE_POWERED_BY}" style="display: none">
                 <p>{$COPYRIGHT}</p>
             </div>
-            <div id="copyrightbuttons" class="footer_left">
+            <div id="copyrightbuttons">
                 <a id="admin_options">&copy; {$APP.LBL_SUITE_SUPERCHARGED}</a>
                 <a id="powered_by">&copy; {$APP.LBL_SUITE_POWERED_BY}</a>
             </div>
         </div>
+        {if $STATISTICS}
+        <div class="serverstats">
+            <span class="glyphicon glyphicon-globe"></span> {$STATISTICS}
+        </div>
+        {/if}
     	<div class="footer_right">
     		
     		<a onclick="SUGAR.util.top();" href="javascript:void(0)">{$APP.LBL_SUITE_TOP}<span class="suitepicon suitepicon-action-above"></span> </a>

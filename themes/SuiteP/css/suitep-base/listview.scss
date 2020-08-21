@@ -1965,6 +1965,11 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     padding: 6px;
   }
 
+  ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-list-alt {
+    left: 2px;
+    height: 24px;
+  }
+
 }
 
 /* search form (and popup search form) */
@@ -2762,7 +2767,6 @@ listViewLinkButton {
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
   min-width: 32px;
-  height: 31px;
 }
 
 .action-link-top li.sugar_action_button,
