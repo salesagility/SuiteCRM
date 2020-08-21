@@ -1286,7 +1286,7 @@ EOHTML;
             number_format(round($deltaTime, 2), 2) .
             ' ' .
             $GLOBALS['app_strings']['LBL_SERVER_RESPONSE_TIME_SECONDS'];
-        $return = $response_time_string;
+        $return = $response_time_string. '<br />';
 
         if (!empty($GLOBALS['sugar_config']['show_page_resources'])) {
             // Print out the resources used in constructing the page.
