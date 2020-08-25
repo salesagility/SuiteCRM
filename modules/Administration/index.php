@@ -63,6 +63,8 @@ echo getClassicModuleTitle(
 require('modules/Administration/metadata/adminpaneldefs.php');
 global $admin_group_header;  ///variable defined in the file above.
 
+require_once __DIR__ . '/../../include/portability/RouteConverter.php';
+$routeConverter = new RouteConverter();
 
 $tab = array();
 $icons = array();
@@ -113,21 +115,28 @@ foreach ($admin_group_header as $key=>$values) {
             }
 
             foreach ($mod as $link_idx =>$admin_option) {
-                if (!empty($GLOBALS['admin_access_control_links']) && in_array($link_idx, $GLOBALS['admin_access_control_links'])) {
+                if (!empty($GLOBALS['admin_access_control_links']) && in_array($link_idx,
+                        $GLOBALS['admin_access_control_links'])) {
                     continue;
                 }
-                $colnum+=1;
+                $colnum += 1;
                 $icons[$j][$i] = isset($admin_option[4]) ? $admin_option[4] : 'default';
-                $url[$j][$i] = $admin_option[3];
-                $label = translate($admin_option[1], 'Administration');
-                if (!empty($admin_option['additional_label'])) {
-                    $label.= ' '. $admin_option['additional_label'];
+
+                $adminLink = $admin_option[3];
+                if ($routeConverter->isLegacyRoute($adminLink)) {
+                    $adminLink = $routeConverter->generateUiLink($adminLink);
                 }
 
-                $label_tab[$j][$i]= $label;
+                $url[$j][$i] = $adminLink;
+                $label = translate($admin_option[1], 'Administration');
+                if (!empty($admin_option['additional_label'])) {
+                    $label .= ' ' . $admin_option['additional_label'];
+                }
+
+                $label_tab[$j][$i] = $label;
                 $id_tab[$j][$i] = $link_idx;
-                
-                $description[$j][$i]= translate($admin_option[2], 'Administration');
+
+                $description[$j][$i] = translate($admin_option[2], 'Administration');
 
                 if (($colnum % 2) == 0) {
                     $tab[$j][$i]= ($colnum % 2);

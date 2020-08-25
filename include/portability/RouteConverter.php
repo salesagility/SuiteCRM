@@ -78,7 +78,7 @@ class RouteConverter
     {
         $query = parse_url($uri, PHP_URL_QUERY);
 
-        if (empty($query)){
+        if (empty($query)) {
             throw new InvalidArgumentException('No module defined');
         }
         parse_str($query, $data);
@@ -93,6 +93,34 @@ class RouteConverter
 
         return $this->convert($module, $action, $record, $data);
     }
+
+    /**
+     * Check if the given $request route is a Legacy route
+     *
+     * @param string $uri
+     * @return bool
+     */
+    public function isLegacyRoute(string $uri): bool
+    {
+
+        if (strpos($uri, './index.php') < 0) {
+            return false;
+        }
+
+        $query = parse_url($uri, PHP_URL_QUERY);
+
+        if (empty($query)) {
+            return false;
+        }
+        parse_str($query, $data);
+
+        if (empty($data['module'])) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     /**
      * Build Suite 8 route
@@ -149,7 +177,7 @@ class RouteConverter
     {
         $validParams = $this->excludeParams($queryParams, $exclude);
 
-        if (empty($exclude)){
+        if (empty($exclude)) {
             return '';
         }
 
