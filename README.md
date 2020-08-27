@@ -36,7 +36,7 @@ There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to 
 * [Contribute bug fixes](https://docs.suitecrm.com/community/contributing-code/bugs/)
 * Help [translate](https://docs.suitecrm.com/community/contributing-to-docs/contributing-to-translation/) language packs
 * [Write and improve](https://docs.suitecrm.com/community/contributing-to-docs/) SuiteCRM documentation
-* [Signing CLA](https://www.clahub.com/agreements/salesagility/SuiteCRM) - Only needs to be done once for all PRs and contributions.
+* Signing CLA - Only needs to be done once for all PRs and contributions.
 
 
 ### Code Contributors
