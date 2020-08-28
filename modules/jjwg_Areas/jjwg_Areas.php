@@ -104,6 +104,7 @@ class jjwg_Areas extends jjwg_Areas_sugar
 
         if (!is_array($this->polygon)) {
             LoggerManager::getLogger()->warn('Parameter must be an array or an object that implements Countable');
+            return false;
         }
 
         if (count((array)$this->polygon) > 0) {
@@ -149,6 +150,10 @@ class jjwg_Areas extends jjwg_Areas_sugar
             $this->polygon = $this->define_polygon();
         }
 
+        if (empty($this->polygon)){
+            return null;
+        }
+
         $n = count($this->polygon);
         $a = $this->define_area($this->polygon);
         if (empty($a)) {
@@ -190,6 +195,10 @@ class jjwg_Areas extends jjwg_Areas_sugar
 
         if (empty($this->polygon)) {
             $this->polygon = $this->define_polygon();
+        }
+
+        if (empty($this->polygon)){
+            return null;
         }
 
         // Based on: http://forums.devnetwork.net/viewtopic.php?f=1&t=44074
