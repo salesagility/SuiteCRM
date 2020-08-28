@@ -11,26 +11,30 @@
 *
 * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
 * along with this program; if not, see http://www.gnu.org/licenses
-* or write to the Free Software Foundation,Inc., 51 Franklin Street,
-* Fifth Floor, Boston, MA 02110-1301  USA
-* @Package Gantt chart
-* @copyright Andrew Mclaughlan 2014
-* @author Andrew Mclaughlan <andrew@mclaughlan.info>
-*/
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ * @Package Gantt chart
+ * @copyright Andrew Mclaughlan 2014
+ * @author Andrew Mclaughlan <andrew@mclaughlan.info>
+ */
 // unblock when ajax activity stops
 $(document).ajaxStop($.unblockUI);
 //Get the default sugar page loading message
-var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
+var loading = 'Loading page, please wait...';
 
-$(function() {
-   
-   //generate the chart on page load
-    gen_chart('0');
+if (SUGAR.language.languages.app_strings && SUGAR.language.languages.app_strings.LBL_LOADING_PAGE) {
+  loading = SUGAR.language.languages.app_strings.LBL_LOADING_PAGE;
+}
+
+$(function () {
+
+  //generate the chart on page load
+  gen_chart('0');
 
   //message for ajax loading screen
-    var msg = '<div><br />' +
-        '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
-    //on button click re-generate the chart
+  var msg = '<div><br />' +
+    '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
+  //on button click re-generate the chart
     $(document.body).on('click','#create_link', function(e) {
         $(".qtip").remove(); //Clear all tooltips before re-generating the chart
 
