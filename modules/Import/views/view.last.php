@@ -201,10 +201,11 @@ document.getElementById('importmore').onclick = function(){
 }
 
 document.getElementById('finished').onclick = function(){
-    document.getElementById('importlast').module.value = document.getElementById('importlast').import_module.value;
+    var importModule  = document.getElementById('importlast').import_module.value;
     document.getElementById('importlast').action.value = 'index';
-	return true;
+    window.location.href='index.php?module=' + importModule + '&action=index';
 
+	return true;
 }
 
 if ( typeof(SUGAR) == 'undefined' )

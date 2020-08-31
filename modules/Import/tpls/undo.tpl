@@ -60,7 +60,7 @@
        <input title="{$MOD.LBL_MODULE_NAME}&nbsp;{$MODULENAME}"  class="button" type="submit" name="button"
             value="{$MOD.LBL_MODULE_NAME}&nbsp;{$MODULENAME}">
 
-        <input title="{$MOD.LBL_FINISHED}{$MODULENAME}"  class="button" type="submit"
+        <input title="{$MOD.LBL_FINISHED}{$MODULENAME}"  class="button" type="button"
             name="finished" id="finished" value="{$MOD.LBL_IMPORT_COMPLETE}">
     </td>
 </tr>

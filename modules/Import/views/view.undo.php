@@ -87,8 +87,9 @@ class ImportViewUndo extends ImportView
         return <<<EOJAVASCRIPT
 
 document.getElementById('finished').onclick = function(){
-    document.getElementById('importundo').module.value = document.getElementById('importundo').import_module.value;
+    var importModule = document.getElementById('importundo').import_module.value;
     document.getElementById('importundo').action.value = 'index';
+    window.location.href='index.php?module=' + importModule + '&action=index';
 }
 EOJAVASCRIPT;
     }

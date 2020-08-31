@@ -90,7 +90,7 @@ div.resultsTable {
                 type="submit" name="undo" id="undo" value="  {$MOD.LBL_UNDO_LAST_IMPORT}  ">
         {/if}
         <input title="{$MOD.LBL_IMPORT_MORE}"  class="button" type="submit" name="importmore" id="importmore" value="  {$MOD.LBL_IMPORT_MORE}  ">
-        <input title="{$MOD.LBL_FINISHED}{$MODULENAME}"  class="button" type="submit" name="finished" id="finished" value="  {$MOD.LBL_IMPORT_COMPLETE}  ">
+        <input title="{$MOD.LBL_FINISHED}{$MODULENAME}"  class="button" type="button" name="finished" id="finished" value="  {$MOD.LBL_IMPORT_COMPLETE}  ">
             {$PROSPECTLISTBUTTON}
         </td>
     </tr>
