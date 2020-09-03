@@ -59,7 +59,7 @@ $sugar_smarty->assign('APP_LIST', $app_list_strings);
 /*foreach($modInvisList as $modinvisname){
     unset($app_list_strings['moduleList'][$modinvisname]);
 }*/
-$role = new ACLRole();
+$role = BeanFactory::newBean('ACLRoles');
 $role_name = '';
 $return= array('module'=>'ACLRoles', 'action'=>'index', 'record'=>'');
 if (!empty($_REQUEST['record'])) {

@@ -302,7 +302,7 @@ function defineFromConfig($value, $default)
 {
     $lowerValue = strtolower($value);
     require_once("modules/Administration/Administration.php");
-    $focus = new Administration();
+    $focus = BeanFactory::newBean('Administration');
     $focus->retrieveSettings();
     if (isset($focus->settings["sugarpdf_".$lowerValue])) {
         define($value, $focus->settings["sugarpdf_".$lowerValue]);

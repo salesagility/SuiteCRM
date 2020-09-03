@@ -10,13 +10,13 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function test__construct()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $oauthToken = new OAuthToken();
+        $oauthToken = BeanFactory::newBean('OAuthTokens');
 
         $this->assertInstanceOf('OAuthToken', $oauthToken);
         $this->assertInstanceOf('SugarBean', $oauthToken);
@@ -30,7 +30,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetState()
     {
-        $oauthToken = new OAuthToken();
+        $oauthToken = BeanFactory::newBean('OAuthTokens');
         $oauthToken->setState($oauthToken::REQUEST);
 
         $this->assertEquals($oauthToken::REQUEST, $oauthToken->tstate);
@@ -38,9 +38,9 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetConsumer()
     {
-        $oauthToken = new OAuthToken();
+        $oauthToken = BeanFactory::newBean('OAuthTokens');
 
-        $oauthKey = new OAuthKey();
+        $oauthKey = BeanFactory::newBean('OAuthKeys');
         $oauthKey->id = '1';
 
         $oauthToken->setConsumer($oauthKey);
@@ -51,7 +51,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetCallbackURL()
     {
-        $oauthToken = new OAuthToken();
+        $oauthToken = BeanFactory::newBean('OAuthTokens');
 
         $url = 'test url';
         $oauthToken->setCallbackURL($url);
@@ -123,7 +123,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function mark_deleted($id)
     {
-        $oauthToken = new OAuthToken();
+        $oauthToken = BeanFactory::newBean('OAuthTokens');
 
         //execute the method
         $oauthToken->mark_deleted($id);
@@ -135,10 +135,10 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreateAuthorized()
     {
-        $oauthKey = new OAuthKey();
+        $oauthKey = BeanFactory::newBean('OAuthKeys');
         $oauthKey->id = '1';
 
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
 
         $oauthToken = OAuthToken::createAuthorized($oauthKey, $user);
@@ -158,7 +158,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function copyAuthData($token)
     {
-        $oauthToken = new OAuthToken();
+        $oauthToken = BeanFactory::newBean('OAuthTokens');
 
         $oauthToken->copyAuthData($token);
         $this->assertEquals($token->authdata, $oauthToken->authdata);
@@ -167,7 +167,7 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
 
     public function testqueryString()
     {
-        $oauthToken = new OAuthToken();
+        $oauthToken = BeanFactory::newBean('OAuthTokens');
 
         $result = $oauthToken->queryString();
         $this->assertEquals('oauth_token=&oauth_token_secret=', $result);

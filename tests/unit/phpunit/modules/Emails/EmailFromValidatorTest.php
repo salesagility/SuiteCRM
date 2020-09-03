@@ -56,7 +56,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
     // TODO: !@# Needs more test...
     public function testValidateWrongFromAddr()
     {
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $validator = new EmailFromValidator();
         
         // from_addr is not set
@@ -109,7 +109,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
     
     public function testValidateWrongFrom()
     {
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $validator = new EmailFromValidator();
         
         // From is not set
@@ -162,7 +162,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
     
     public function testValidateOk()
     {
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $validator = new EmailFromValidator();
         
         $email->From = 'gusta@yammee.org';

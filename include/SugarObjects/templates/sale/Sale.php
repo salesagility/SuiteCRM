@@ -153,7 +153,7 @@ class Sale extends Basic
         //"amount_usdollar" is really amount_basecurrency. We need to save a copy of the amount in the base currency.
         if (isset($this->amount) && !number_empty($this->amount)) {
             if (!number_empty($this->currency_id)) {
-                $currency = new Currency();
+                $currency = BeanFactory::newBean('Currencies');
                 $currency->retrieve($this->currency_id);
                 $this->amount_usdollar = $currency->convertToDollar($this->amount);
             } else {

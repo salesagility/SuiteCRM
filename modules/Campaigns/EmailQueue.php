@@ -53,7 +53,7 @@ global $timedate;
 global $current_user;
 
 
-$campaign = new Campaign();
+$campaign = BeanFactory::newBean('Campaigns');
 $campaign->retrieve($_REQUEST['record']);
 
 $query = "SELECT prospect_list_id as id FROM prospect_list_campaigns WHERE campaign_id='$campaign->id' AND deleted=0";
@@ -71,7 +71,7 @@ $listresult = $campaign->db->query($query);
 
 while ($list = $campaign->db->fetchByAssoc($listresult)) {
     $prospect_list = $list['id'];
-    $focus = new ProspectList();
+    $focus = BeanFactory::newBean('ProspectLists');
     
     $focus->retrieve($prospect_list);
 
@@ -96,7 +96,7 @@ while ($list = $campaign->db->fetchByAssoc($listresult)) {
             $moduleID = $row['lead_id'];
         }
         
-        $mailer = new EmailMan();
+        $mailer = BeanFactory::newBean('EmailMan');
         $mailer->module = $moduleName;
         $mailer->module_id = $moduleID;
         $mailer->user_id = $current_user->id;

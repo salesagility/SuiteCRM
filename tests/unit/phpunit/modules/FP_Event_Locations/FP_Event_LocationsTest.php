@@ -7,7 +7,7 @@ class FP_Event_LocationsTest extends SuitePHPUnitFrameworkTestCase
     public function testFP_Event_Locations()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $fpEventLoc = new FP_Event_Locations();
+        $fpEventLoc = BeanFactory::newBean('FP_Event_Locations');
         $this->assertInstanceOf('FP_Event_Locations', $fpEventLoc);
         $this->assertInstanceOf('Basic', $fpEventLoc);
         $this->assertInstanceOf('SugarBean', $fpEventLoc);

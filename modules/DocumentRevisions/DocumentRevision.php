@@ -218,11 +218,11 @@ class DocumentRevision extends SugarBean
         $localLabels = return_module_language($current_language, 'DocumentRevisions');
 
         // prep - get source Document
-        $document = new Document();
+        $document = BeanFactory::newBean('Documents');
 
         // use passed revision ID
         if (!empty($revId)) {
-            $tempDoc = new DocumentRevision();
+            $tempDoc = BeanFactory::newBean('DocumentRevisions');
             $tempDoc->retrieve($revId);
         } else {
             $tempDoc = $this;

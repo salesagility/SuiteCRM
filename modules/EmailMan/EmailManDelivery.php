@@ -64,7 +64,7 @@ if (!isset($GLOBALS['log'])) {
 }
 
 $mail = new SugarPHPMailer();
-$admin = new Administration();
+$admin = BeanFactory::newBean('Administration');
 $admin->retrieveSettings();
 if (isset($admin->settings['massemailer_campaign_emails_per_run'])) {
     $max_emails_per_run = $admin->settings['massemailer_campaign_emails_per_run'];
@@ -92,7 +92,7 @@ if (isset($_REQUEST['campaign_id']) && !empty($_REQUEST['campaign_id'])) {
 
 $db = DBManagerFactory::getInstance();
 $timedate = TimeDate::getInstance();
-$emailman = new EmailMan();
+$emailman = BeanFactory::newBean('EmailMan');
 
 if ($test) {
     //if this is in test mode, then
@@ -139,7 +139,7 @@ do {
     if (isset($current_user)) {
         $temp_user = $current_user;
     }
-    $current_user = new User();
+    $current_user = BeanFactory::newBean('Users');
     $startTime = microtime(true);
 
 
@@ -171,10 +171,10 @@ do {
         //find the template associated with marketing message. make sure that template has a subject and
         //a non-empty body
         if (!isset($template_status[$row['marketing_id']])) {
-            $current_emailmarketing = new EmailMarketing();
+            $current_emailmarketing = BeanFactory::newBean('EmailMarketing');
             $current_emailmarketing->retrieve($row['marketing_id']);
 
-            $current_emailtemplate = new EmailTemplate();
+            $current_emailtemplate = BeanFactory::newBean('EmailTemplates');
             $current_emailtemplate->retrieve($current_emailmarketing->template_id);
         }
 
@@ -262,7 +262,7 @@ do {
             }
         } else {
             if ($confirmOptInEnabled) {
-                $emailAddress = new EmailAddress();
+                $emailAddress = BeanFactory::newBean('EmailAddresses');
                 $emailAddress->email_address = $emailAddress->getAddressesByGUID($row['related_id'], $row['related_type']);
                 
                 $now = TimeDate::getInstance()->nowDb();

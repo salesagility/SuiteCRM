@@ -10,7 +10,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function test__construct()
@@ -24,7 +24,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals('', 'type', $view);
 
         //test with bean parameter;
-        $bean = new User();
+        $bean = BeanFactory::newBean('Users');
         $view = new ViewClassic($bean);
         $this->assertInstanceOf('ViewClassic', $view);
         $this->assertInstanceOf('SugarView', $view);

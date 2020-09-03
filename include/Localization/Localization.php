@@ -140,8 +140,8 @@ class Localization
                 'l s f'  => 'l s f',
                 'l f s'  => 'l f s'
             ),
-            'default_number_grouping_separator'        => ',',
-            'default_decimal_separator'                => '.',
+            'default_number_grouping_seperator'        => ',',
+            'default_decimal_seperator'                => '.',
             'export_delimiter'                         => ',',
             'default_email_charset'                    => $this->default_email_charset,
         );
@@ -523,13 +523,13 @@ class Localization
     public function getDecimalSeparator($user = null)
     {
         // Bug50887 this is purposefully misspelled as ..._separator to match the way it's defined throughout the app.
-        $dec = $this->getPrecedentPreference('default_decimal_separator', $user);
+        $dec = $this->getPrecedentPreference('default_decimal_seperator', $user);
         return $dec;
     }
 
     public function getNumberGroupingSeparator($user = null)
     {
-        $sep = $this->getPrecedentPreference('default_number_grouping_separator', $user);
+        $sep = $this->getPrecedentPreference('default_number_grouping_seperator', $user);
         return $sep;
     }
 
@@ -666,8 +666,8 @@ class Localization
 
             function setSigDigits() {
                 var sym = document.getElementById('symbol').value;
-                var thou = document.getElementById('default_number_grouping_separator').value;
-                var dec = document.getElementById('default_decimal_separator').value;
+                var thou = document.getElementById('default_number_grouping_seperator').value;
+                var dec = document.getElementById('default_decimal_seperator').value;
                 var precision = document.getElementById('sigDigits').value;
                 //umber(n, num_grp_sep, dec_sep, round, precision)
                 var newNumber = sym + formatNumber(exampleDigits, thou, dec, precision, precision);

@@ -389,7 +389,7 @@ FORM;
     <span id='connection_user_div' style="display:none">
         <div class="formrow">
             <label>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']} <span class="required">*</span></label>
-            <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
+            <input type="text" name="setup_db_sugarsales_user" value="{$_SESSION['setup_db_sugarsales_user']}" />
         </div>
         <div class="clear"></div>
         <div class="formrow">
@@ -1077,13 +1077,13 @@ EOQ;
                 <!--
                 <div class="formrow">
                     <label>{$mod_strings['LBL_NUMBER_GROUPING_SEP']}</label>
-                    <input type="text" name="default_number_grouping_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_separator']}">
+                    <input type="text" name="default_number_grouping_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_seperator']}">
                 </div>
 
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_DECIMAL_SEP']}</label>
-                    <input type="text" name="default_decimal_separator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_separator']}">
+                    <input type="text" name="default_decimal_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_seperator']}">
                 </div>
 
                 <div class="clear"></div>

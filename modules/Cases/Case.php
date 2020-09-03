@@ -262,7 +262,7 @@ class aCase extends Basic
         }
         $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'case_role', 'case_rel_id');
 
-        return $this->build_related_list2($query, new Contact(), $temp);
+        return $this->build_related_list2($query, BeanFactory::newBean('Contacts'), $temp);
     }
 
     /**

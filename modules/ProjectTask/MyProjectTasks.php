@@ -60,7 +60,7 @@ $today = $timedate->nowDbDate();
 $today = $timedate->handle_offset($today, $timedate->dbDayFormat, false);
 
 $ListView = new ListView();
-$seedProjectTask = new ProjectTask();
+$seedProjectTask = BeanFactory::newBean('ProjectTask');
 $where = "project_task.assigned_user_id='{$current_user->id}'"
     . " AND (project_task.status IS NULL OR (project_task.status!='Completed' AND project_task.status!='Deferred'))"
     . " AND (project_task.date_start IS NULL OR project_task.date_start <= '$today')";

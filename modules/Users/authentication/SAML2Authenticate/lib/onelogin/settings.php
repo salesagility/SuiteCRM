@@ -64,4 +64,5 @@ $settingsInfo = array(
         ),
         'x509cert' => isset($GLOBALS['sugar_config']['SAML_X509Cert']) ? $GLOBALS['sugar_config']['SAML_X509Cert'] : '',
     ),
+    'strict' => false,
 );
