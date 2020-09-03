@@ -245,7 +245,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
         $license->saveSetting('license', 'latest_versions', '')	;
     }
 
-    if (sizeof($resultData) == 1 && !empty($resultData['versions'][0]['version'])
+    if (count($resultData) == 1 && !empty($resultData['versions'][0]['version'])
         && compareVersions($sugar_version, $resultData['versions'][0]['version'])) {
         $resultData['versions'][0]['version'] = $sugar_version;
         $resultData['versions'][0]['description'] = "You have the latest version.";

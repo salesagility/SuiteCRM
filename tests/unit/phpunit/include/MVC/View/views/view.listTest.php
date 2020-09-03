@@ -1,6 +1,8 @@
 <?php
 
-class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class ViewListTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,14 +15,6 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistViewProcess()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-        $state->pushTable('email_addresses');
-        $state->pushTable('aod_index');
-
-        // test
         $query = "SELECT * FROM aod_index";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
@@ -49,10 +43,8 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
-        
-        
-        
-        // clean up
+
+
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
             $query = "INSERT email_addresses INTO (";
@@ -74,47 +66,19 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('email_addresses');
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 
     public function testViewList()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-        $state->pushTable('email_addresses');
-        $state->pushTable('aod_index');
-
-        // test
-        //execute the contructor and check for the Object type and type attribute
+        // Execute the constructor and check for the Object type and type attribute
         $view = new ViewList();
         $this->assertInstanceOf('ViewList', $view);
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('list', 'type', $view);
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('email_addresses');
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 
     public function testlistViewPrepare()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-        $state->pushTable('email_addresses');
-        $state->pushTable('aod_index');
-
-        // test
         //test without setting parameters. it should return some html
         $view = new ViewList();
         $view->module = 'Users';
@@ -139,24 +103,10 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals('value', $_REQUEST['key']);
-
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('email_addresses');
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 
     public function testprepareSearchForm()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-        $state->pushTable('email_addresses');
-        $state->pushTable('aod_index');
-
-        // test
         //test without any REQUEST parameters set. it will set searchform attribute to a searchform object.
         $view1 = new ViewList();
         $view1->module = 'Users';
@@ -171,25 +121,10 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view2->prepareSearchForm();
 
         $this->assertInstanceOf('SearchForm', $view2->searchForm);
-
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('email_addresses');
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 
     public function testprocessSearchForm()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-        $state->pushTable('email_addresses');
-        $state->pushTable('aod_index');
-
-        // test
-        
         //test without use_old_search. it should return html.
         $view = new ViewList();
         $view->prepareSearchForm();
@@ -210,46 +145,18 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertEquals(0, strlen($renderedContent));
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('email_addresses');
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 
     public function testpreDisplay()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-        $state->pushTable('email_addresses');
-        $state->pushTable('aod_index');
-
-        // test
         //execute the method and test if it sets the lv attribute to ListViewSmarty object.
         $view = new ViewList();
         $view->preDisplay();
         $this->assertInstanceOf('ListViewSmarty', $view->lv);
-
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('email_addresses');
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 
     public function testdisplay()
     {
-        // save state
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        $state->pushTable('tracker');
-        $state->pushTable('email_addresses');
-        $state->pushTable('aod_index');
-
-        // test
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
@@ -281,7 +188,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent2));
         
-        // clean up
+
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
             $query = "INSERT email_addresses INTO (";
@@ -292,11 +199,5 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
-        
-        // clean up
-        $state->popTable('aod_index');
-        $state->popTable('email_addresses');
-        $state->popTable('tracker');
-        $state->popGlobals();
     }
 }

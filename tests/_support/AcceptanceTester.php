@@ -1,6 +1,8 @@
 <?php
 
+use Codeception\Actor;
 use Faker\Factory;
+use Codeception\Lib\Friend;
 
 /**
  * Inherited Methods
@@ -13,13 +15,31 @@ use Faker\Factory;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method Friend haveFriend($name, $actorClass = null)
+ * @method click(string $string)
+ * @method acceptPopup()
+ * @method seeInPopup(string $string)
+ * @method wait(int $int)
+ * @method fillField(string $string, string $string1)
+ * @method checkOption(string $string)
+ * @method waitForElementVisible($string, int $timeout = 3)
+ * @method waitForElementNotVisible($element, $timeout = 3)
+ * @method waitForText($text, $timeout = 3, $selector = null)
+ * @method selectOption(string $string, string $string1)
+ * @method see(string $string)
+ * @method amOnUrl($getInstanceURL)
+ * @method getInstanceURL()
+ * @method dontSee(string $string)
+ * @method getAdminPassword()
+ * @method getAdminUser()
+ * @method executeJS(string $string)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class AcceptanceTester extends \Codeception\Actor
+ */
+class AcceptanceTester extends Actor
 {
     use _generated\AcceptanceTesterActions;
+
     /**
      * Define custom actions here
      */

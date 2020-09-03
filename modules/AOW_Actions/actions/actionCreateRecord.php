@@ -394,7 +394,20 @@ class actionCreateRecord extends actionBase
         $record->process_save_dates =false;
         $record->new_with_id = false;
 
+        /* Since we only work on non-deleted records this means the delete field
+         * was set during this action.
+         * Complete the deletion process by calling mark_deleted() after save() */
+        $was_deleted = false;
+        if ($record->deleted) {
+            $record->deleted = 0;
+            $was_deleted = true;
+        }
+
         $record->save($check_notify);
+
+        if ($was_deleted) {
+            $record->mark_deleted($record->id);
+        }
 
         $record->processed = $bean_processed;
     }

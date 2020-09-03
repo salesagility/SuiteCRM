@@ -41,13 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
 /**************************** general UI Stuff *******************/
 
@@ -100,7 +94,7 @@ if (isset($_REQUEST['return_id'])) {
 // handle Create $module then Cancel
 $ss->assign('CAMPAIGN_ID', $campaign_focus->id);
 
-$seps = get_number_seperators();
+$seps = get_number_separators();
 $ss->assign("NUM_GRP_SEP", $seps[0]);
 $ss->assign("DEC_SEP", $seps[1]);
 

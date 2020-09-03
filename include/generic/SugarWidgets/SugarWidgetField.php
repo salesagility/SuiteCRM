@@ -41,11 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-
 class SugarWidgetField extends SugarWidget
 {
     public function __construct(&$layout_manager)
@@ -55,8 +50,7 @@ class SugarWidgetField extends SugarWidget
 
     public function display($layout_def)
     {
-        //print $layout_def['start_link_wrapper']."===";
-        $context = $this->layout_manager->getAttribute('context'); //_ppd($context);
+        $context = $this->layout_manager->getAttribute('context');
         $func_name = 'display'.$context;
 
         if (!empty($context) && method_exists($this, $func_name)) {
@@ -215,8 +209,10 @@ class SugarWidgetField extends SugarWidget
 
     public function getVardef($layout_def)
     {
-        $myName = $layout_def['column_key'];
-        $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
+        if (!empty($layout_def['column_key']) && !empty($this->layout_manager->defs['reporter'])) {
+            $myName = $layout_def['column_key'];
+            $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
+        }
 
         if (!isset($vardef)) {
             // No vardef, return an empty array

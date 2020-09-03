@@ -1,12 +1,12 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testjjwg_Markers()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $jjwgMarkers = new jjwg_Markers();
 
         $this->assertInstanceOf('jjwg_Markers', $jjwgMarkers);

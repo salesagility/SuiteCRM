@@ -1,6 +1,8 @@
 <?php
 
-class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -13,7 +15,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOS_Products()
     {
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aosProducts = new AOS_Products();
         $this->assertInstanceOf('AOS_Products', $aosProducts);
         $this->assertInstanceOf('Basic', $aosProducts);
@@ -29,14 +31,6 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aos_products');
-        $state->pushTable('aod_index');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
-        
-        
-
         $aosProducts = new AOS_Products();
 
         $aosProducts->name = 'test';
@@ -55,13 +49,6 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosProducts->mark_deleted($aosProducts->id);
         $result = $aosProducts->retrieve($aosProducts->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('aod_index');
-        $state->popTable('aos_products');
     }
 
     public function testgetCustomersPurchasedProductsQuery()

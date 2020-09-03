@@ -316,6 +316,8 @@ class GoogleSyncBase
      *
      *
      * @return bool|int Success/Failure calendar ID if success
+     * @throws GoogleSyncException if $this->workingUser is not a user bean
+     * @throws GoogleSyncException if $this->workingUser->id is invalid
      */
     protected function setUsersGoogleCalendar()
     {
@@ -325,15 +327,28 @@ class GoogleSyncBase
             return false;
         }
 
+        // Make sure the user bean is a User instance
+        if (!$this->workingUser instanceof User) {
+            throw new GoogleSyncException('GoogleSyncBase is trying to setUsersGoogleCalendar but workingUser type is incorrect, ' . gettype($this->workingUser) . ' given.', GoogleSyncException::INCORRECT_WORKING_USER_TYPE);
+        }
+
+        // Make sure the User bean ID is valid
+        $isValidator = new SuiteValidator();
+        if (!$isValidator->isValidId($this->db->quote($this->workingUser->id))) {
+            throw new GoogleSyncException('Invalid ID requested in setUsersGoogleCalendar', GoogleSyncException::INVALID_USER_ID);
+        }
+
         // get list of users calendars
         $calendarList = $this->gService->calendarList->listCalendarList();
 
         // find the id of the 'SuiteCRM' calendar ... in the future, this will set the calendar of the users choosing.
         $this->calendarId = $this->getSuiteCRMCalendar($calendarList);
 
-        // if the SuiteCRM calendar doesn't exist... Create it!
+        // if the SuiteCRM calendar doesn't exist... Wipe the users current sync data, and create it!
         if (!$this->isCalendarExists()) {
-            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, Creating it!');
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, wiping current sync data & creating it!');
+            $helper = new GoogleSyncHelper;
+            $helper->wipeLocalSyncData($this->workingUser->id);
             $calendar = new Google_Service_Calendar_Calendar();
             $calendar->setSummary('SuiteCRM');
             $calendar->setTimeZone($this->timezone);
@@ -687,9 +702,8 @@ class GoogleSyncBase
         }
 
         // Validate and quote the meetingID
-        $valMeetingId = $this->db->quote($meeting_id);
         $isValidator = new SuiteValidator();
-        if (!$isValidator->isValidId($valMeetingId)) {
+        if (!$isValidator->isValidId($this->db->quote($meeting_id))) {
             throw new GoogleSyncException('Meeting ID could not be validated', GoogleSyncException::RECORD_VALIDATION_FAILURE);
         }
 
@@ -703,10 +717,10 @@ class GoogleSyncBase
             $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Success Status Code: ' . $statusCode . ' on delete.');
 
             // This removes the gsync_id reference from the table.
-            $sql = "UPDATE meetings SET gsync_id = '' WHERE id = {$valMeetingId}";
+            $sql = "UPDATE meetings SET gsync_id = '' WHERE id = {$this->db->quoted($meeting_id)}";
             $res = $this->db->query($sql);
             if (!$res) {
-                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record' . $valMeetingId);
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record ' . $meeting_id);
             }
             return $meeting_id;
         }

@@ -222,14 +222,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
         //iterate through each directory and create if needed
 
         foreach ($bu_dir_arr as $bu_dir) {
-            if (!file_exists($prefix_process_path.'/'.$bu_dir)) {
+            if (!file_exists($prefix_process_path . '/' . $bu_dir)) {
                 if (function_exists('sugar_mkdir')) {
-                    sugar_mkdir($prefix_process_path.'/'.$bu_dir);
-                } else {
-                    mkdir($prefix_process_path.'/'.$bu_dir);
+                    sugar_mkdir($prefix_process_path . '/' . $bu_dir);
+                } elseif (!mkdir($concurrentDirectory = $prefix_process_path . '/' . $bu_dir) && !is_dir($concurrentDirectory)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
                 }
             }
-            $prefix_process_path = $prefix_process_path.'/'.$bu_dir;
+            $prefix_process_path = $prefix_process_path . '/' . $bu_dir;
         }
     }
 
@@ -304,7 +304,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                             //Check to see that ReadNextLine is true, if so then add the last line collected
                             //make sure the last line is either the end to a comment block, or starts with '//'
                             //else do not add as it is live code.
-                            if (!empty($newLine) && ((strpos($newLine, '*/')!== false) || ($newLine{0}.$newLine{1}== '//'))) {
+                            if (!empty($newLine) && ((strpos($newLine, '*/')!== false) || ($newLine[0].$newLine[1]== '//'))) {
                                 //add new line to license string
                                 $lic_str .=$newLine;
                             }
@@ -335,7 +335,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 }
 
                 if (function_exists('sugar_fopen') && $fh = @sugar_fopen($to_path, 'w')) {
-                    fputs($fh, $out);
+                    fwrite($fh, $out);
                     fclose($fh);
                 } else {
                     file_put_contents($to_path, $out);

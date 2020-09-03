@@ -208,7 +208,7 @@ abstract class OAuthSignatureMethod_RSA_SHA1 extends OAuthSignatureMethod
         $cert = $this->fetch_private_cert($request);
 
         // Pull the private key ID from the certificate
-        $privatekeyid = openssl_get_privatekey($cert);
+        $privatekeyid = openssl_pkey_get_private($cert);
 
         // Sign using the key
         $ok = openssl_sign($base_string, $signature, $privatekeyid);

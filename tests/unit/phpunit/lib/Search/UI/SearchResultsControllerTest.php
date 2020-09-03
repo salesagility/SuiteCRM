@@ -41,8 +41,8 @@
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\UI\SearchResultsController;
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
-use SuiteCRM\StateSaver;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -53,36 +53,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract
+class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
 {
-    
-    /**
-     *
-     * @var StateSaver
-     */
-    protected $state;
-    
-    protected function setUp()
-    {
-        parent::setUp();
-                
-        $this->state = new StateSaver();
-        $this->state->pushTable('accounts');
-        $this->state->pushTable('accounts_cstm');
-        $this->state->pushTable('aod_indexevent');
-        $this->state->pushGlobals();
-    }
-    
-    protected function tearDown()
-    {
-        $this->state->popGlobals();
-        $this->state->popTable('aod_indexevent');
-        $this->state->popTable('accounts_cstm');
-        $this->state->popTable('accounts');
-        
-        parent::tearDown();
-    }
-    
     public function testDisplayFoundOnePage()
     {
         $ids = [];

@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp()
     {
@@ -14,8 +15,7 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testAOW_Action()
     {
-
-        //execute the contructor and check for the Object type and  attributes
+        // Execute the constructor and check for the Object type and  attributes
         $aowAction = new AOW_Action();
         $this->assertInstanceOf('AOW_Action', $aowAction);
         $this->assertInstanceOf('Basic', $aowAction);
@@ -32,10 +32,6 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aow_actions');
-
-        // test
         $aowAction = new AOW_Action();
 
         //populate required values
@@ -58,9 +54,6 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         foreach ($aow_actions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
-        
-        // clean up
-        $state->popTable('aow_actions');
     }
 
     public function testbean_implements()
