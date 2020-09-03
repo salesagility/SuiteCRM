@@ -49,7 +49,7 @@ class SugarFeedFlush
 {
     public function flushStaleEntries($bean, $event, $arguments)
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         $timedate = TimeDate::getInstance();
@@ -62,7 +62,7 @@ class SugarFeedFlush
             }
 
             $tmpTime = time();
-            $tmpSF = new SugarFeed();
+            $tmpSF = BeanFactory::newBean('SugarFeed');
             $flushBefore = $timedate->asDbDate($timedate->getNow()->modify("-14 days")->setTime(0, 0));
             $db->query("DELETE FROM ".$tmpSF->table_name." WHERE date_entered < '".$db->quote($flushBefore)."'");
             $admin->saveSetting('sugarfeed', 'flushdate', $currDate);

@@ -117,7 +117,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
         if ($current_user->getPreference('currency')) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
@@ -376,8 +376,8 @@ EOD;
                         sum(amount_usdollar/1000) AS total
                     FROM users,opportunities  ";
         $query .= " WHERE opportunities.assigned_user_id IN ('{$GLOBALS['current_user']->id}') " .
-            " AND opportunities.date_closed >= ". DBManager::convert("'".$this->mypbss_date_start."'", 'date').
-            " AND opportunities.date_closed <= ". DBManager::convert("'".$this->mypbss_date_end."'", 'date') .
+            " AND opportunities.date_closed >= ". DBManagerFactory::getInstance()->convert("'".$this->mypbss_date_start."'", 'date').
+            " AND opportunities.date_closed <= ". DBManagerFactory::getInstance()->convert("'".$this->mypbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
         if (count($this->mypbss_sales_stages) > 0) {
             $query .= " AND opportunities.sales_stage IN ('" . implode("','", $this->mypbss_sales_stages) . "') ";

@@ -144,10 +144,10 @@ class EmailTemplate extends SugarBean
         global $current_user;
 
 
-        $contact = new Contact();
-        $account = new Account();
-        $lead = new Lead();
-        $prospect = new Prospect();
+        $contact = BeanFactory::newBean('Contacts');
+        $account = BeanFactory::newBean('Accounts');
+        $lead = BeanFactory::newBean('Leads');
+        $prospect = BeanFactory::newBean('Prospects');
 
 
         $loopControl = array(
@@ -216,11 +216,11 @@ class EmailTemplate extends SugarBean
     {
         global $current_user;
 
-        $contact = new Contact();
-        $account = new Account();
-        $lead = new Lead();
-        $prospect = new Prospect();
-        $event = new FP_events();
+        $contact = BeanFactory::newBean('Contacts');
+        $account = BeanFactory::newBean('Accounts');
+        $lead = BeanFactory::newBean('Leads');
+        $prospect = BeanFactory::newBean('Prospects');
+        $event = BeanFactory::newBean('FP_events');
 
 
         $loopControl = array(
@@ -415,7 +415,7 @@ class EmailTemplate extends SugarBean
         global $beanList, $app_list_strings;
 
         // generate User instance that owns this "Contact" for contact_user_* macros
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         if (isset($focus->assigned_user_id) && !empty($focus->assigned_user_id)) {
             $user->retrieve($focus->assigned_user_id);
         }
@@ -573,10 +573,10 @@ class EmailTemplate extends SugarBean
         $repl_arr = array();
 
         // cn: bug 9277 - create a replace array with empty strings to blank-out invalid vars
-        $acct = new Account();
-        $contact = new Contact();
-        $lead = new Lead();
-        $prospect = new Prospect();
+        $acct = BeanFactory::newBean('Accounts');
+        $contact = BeanFactory::newBean('Contacts');
+        $lead = BeanFactory::newBean('Leads');
+        $prospect = BeanFactory::newBean('Prospects');
 
         foreach ($lead->field_defs as $field_def) {
             if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
@@ -657,7 +657,7 @@ class EmailTemplate extends SugarBean
             }
 
             if (!empty($focus->assigned_user_id)) {
-                $user = new User();
+                $user = BeanFactory::newBean('Users');
                 $user->retrieve($focus->assigned_user_id);
                 $repl_arr = EmailTemplate::_parseUserValues($repl_arr, $user);
             }
@@ -812,6 +812,12 @@ class EmailTemplate extends SugarBean
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
             $focus = BeanFactory::getBean($bean_name, $bean_id);
+            if ($focus && $bean_id && !$focus->fetched_row) {
+                // We do not want the cached version for a newly created bean, as some data such as date fields and
+                // auto increment fields will only be correct after a retrieve operation
+                BeanFactory::unregisterBean($focus->module_dir, $focus->id);
+                $focus = BeanFactory::getBean($bean_name, $bean_id);
+            }
 
             if ($bean_name == 'Leads' || $bean_name == 'Prospects') {
                 $bean_name = 'Contacts';
@@ -837,7 +843,7 @@ class EmailTemplate extends SugarBean
 
     public static function getTypeOptionsForSearch()
     {
-        $template = new EmailTemplate();
+        $template = BeanFactory::newBean('EmailTemplates');
         $optionKey = $template->field_defs['type']['options'];
         $options = $GLOBALS['app_list_strings'][$optionKey];
         if (!is_admin($GLOBALS['current_user']) && isset($options['workflow'])) {

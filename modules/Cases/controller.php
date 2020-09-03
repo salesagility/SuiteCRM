@@ -89,7 +89,7 @@ class CasesController extends SugarController
         global $mod_strings;
 
         $article_id = $_POST['article'];
-        $article = new AOK_KnowledgeBase();
+        $article = BeanFactory::newBean('AOK_KnowledgeBase');
         $article->retrieve($article_id);
 
         echo '<span class="tool-tip-title"><strong>' . $mod_strings['LBL_TOOL_TIP_TITLE'] . '</strong>' . $article->name . '</span><br />';

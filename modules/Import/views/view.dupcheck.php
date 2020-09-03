@@ -88,7 +88,7 @@ class ImportViewDupcheck extends ImportView
     private function getImportMap()
     {
         if (!empty($_REQUEST['source_id'])) {
-            $import_map_seed = new ImportMap();
+            $import_map_seed = BeanFactory::newBean('Import_1');
             $import_map_seed->retrieve($_REQUEST['source_id'], false);
 
             return $import_map_seed->getMapping();

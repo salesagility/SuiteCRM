@@ -96,7 +96,7 @@ EOF;
 
         $javascript = new javascript();
         $javascript->setFormName($formname);
-        $javascript->setSugarBean(new EmailTemplate());
+        $javascript->setSugarBean(BeanFactory::newBean('EmailTemplates'));
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -149,7 +149,7 @@ EOQ;
         global $mod_strings;
         global $sugar_config;
 
-        $focus = new EmailTemplate();
+        $focus = BeanFactory::newBean('EmailTemplates');
         if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
         }
@@ -199,7 +199,7 @@ EOQ;
                 if (file_exists($file_location)) {
                     //$id = create_guid();
 
-                    $note = new Note();
+                    $note = BeanFactory::newBean('Notes');
                     $note->save();
                     $id = $note->id;
 
@@ -252,7 +252,7 @@ EOQ;
         $max_files_upload = count($_FILES);
 
         if (!empty($focus->id)) {
-            $note = new Note();
+            $note = BeanFactory::newBean('Notes');
             $where = "notes.parent_id='{$focus->id}'";
             if (!empty($_REQUEST['old_id'])) { // to support duplication of email templates
                 $where .= " OR notes.parent_id='".htmlspecialchars($_REQUEST['old_id'], ENT_QUOTES)."'";
@@ -274,7 +274,7 @@ EOQ;
         //for($i = 0; $i < $max_files_upload; $i++) {
 
         foreach ($_FILES as $key => $file) {
-            $note = new Note();
+            $note = BeanFactory::newBean('Notes');
 
             //Images are presaved above so we need to prevent duplicate files from being created.
             if (isset($preProcessedImages[$file['name']])) {
@@ -311,7 +311,7 @@ EOQ;
                 else {
                     // we're duplicating a template with attachments
                     // dupe the file, create a new note, assign the note to the new template
-                    $newNote = new Note();
+                    $newNote = BeanFactory::newBean('Notes');
                     $newNote->retrieve($note->id);
                     $newNote->id = create_guid();
                     $newNote->parent_id = $focus->id;
@@ -362,9 +362,9 @@ EOQ;
 
         for ($i=0; $i<$count; $i++) {
             if (isset($_REQUEST['documentId'.$i]) && !empty($_REQUEST['documentId'.$i])) {
-                $doc = new Document();
-                $docRev = new DocumentRevision();
-                $docNote = new Note();
+                $doc = BeanFactory::newBean('Documents');
+                $docRev = BeanFactory::newBean('DocumentRevisions');
+                $docNote = BeanFactory::newBean('Notes');
 
                 $doc->retrieve($_REQUEST['documentId'.$i]);
                 $docRev->retrieve($doc->document_revision_id);

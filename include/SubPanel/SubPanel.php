@@ -407,7 +407,7 @@ class SubPanel
         if ($module) {
             $seed = BeanFactory::getBean($module);
         } else {
-            $seed = new Meeting();
+            $seed = BeanFactory::newBean('Meetings');
         }
 
         $_REQUEST['searchFormTab'] = 'basic_search';

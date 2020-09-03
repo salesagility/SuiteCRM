@@ -57,7 +57,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testFaultySubpanelDef()
     {
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $counter = new SubPanelRowCounter($bean);
         $subPanelDefs = [];
 
@@ -68,7 +68,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testSelectQueryToCountQuery()
     {
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $counter = new SubPanelRowCounter($bean);
 
         $select = 'SELECT id FROM table';
@@ -92,7 +92,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMakeFunctionCountQuery()
     {
-        $bean = new Account();
+        $bean = BeanFactory::newBean('Accounts');
         $counter = new SubPanelRowCounter($bean);
 
         $nonExistantQuery = $counter->makeFunctionCountQuery('');
@@ -105,7 +105,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
     public function testMakeSubPanelRowCountQuery()
     {
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
         $counter = new SubPanelRowCounter($bean);
         $subPanelDefs = ['get_subpanel_data' => 'accounts'];
         $counter->setSubPanelDefs($subPanelDefs);

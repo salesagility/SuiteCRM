@@ -88,7 +88,7 @@ class EmailsControllerActionGetFromFields
         $ie->email = $email;
         $ieAccounts = $ie->retrieveAllByGroupIdWithGroupAccounts($this->currentUser->id);
         $accountSignatures = $this->currentUser->getPreference('account_signatures', 'Emails');
-        $showFolders = unserialize(base64_decode($this->currentUser->getPreference('showFolders', 'Emails')));
+        $showFolders = sugar_unserialize(base64_decode($this->currentUser->getPreference('showFolders', 'Emails')));
         $emailSignatures = $this->getEmailSignatures($accountSignatures);
         $defaultEmailSignature = $this->getDefaultSignatures();
         $prependSignature = $this->currentUser->getPreference('signature_prepend');
@@ -113,7 +113,7 @@ class EmailsControllerActionGetFromFields
     protected function getEmailSignatures($accountSignatures = null)
     {
         if ($accountSignatures != null) {
-            $emailSignatures = unserialize(base64_decode($accountSignatures));
+            $emailSignatures = sugar_unserialize(base64_decode($accountSignatures));
         } else {
             $GLOBALS['log']->warn('User ' . $this->currentUser->name . ' does not have a signature');
             $emailSignatures = null;

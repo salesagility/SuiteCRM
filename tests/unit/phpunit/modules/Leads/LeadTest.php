@@ -10,7 +10,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testLead()
@@ -153,7 +153,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::newBean('Leads');
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -303,7 +303,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
         $form = "";
         $prefix = "";
-        $tempBean = new Contact();
+        $tempBean = BeanFactory::newBean('Contacts');
 
         $result = $lead->convertCustomFieldsForm($form, $tempBean, $prefix);
 

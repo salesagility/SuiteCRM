@@ -504,7 +504,7 @@ class SugarView
                 $ss->assign("LOGOUT_LABEL", key($value['linkinfo']));//key value for first element.
                 continue;
             }
-
+            
             foreach ($value as $linkattribute => $attributevalue) {
                 // get the main link info
                 if ($linkattribute == 'linkinfo') {
@@ -513,9 +513,14 @@ class SugarView
                         "URL" => current($attributevalue),
                         "SUBMENU" => array(),
                     );
+                    
                     if (substr($gcls[$key]["URL"], 0, 11) == "javascript:") {
                         $gcls[$key]["ONCLICK"] = substr($gcls[$key]["URL"], 11);
                         $gcls[$key]["URL"] = "javascript:void(0)";
+                    }
+
+                    if (isset($attributevalue['target'])) {
+                        $gcls[$key]["TARGET"] = $attributevalue['target'];
                     }
                 }
                 // and now the sublinks

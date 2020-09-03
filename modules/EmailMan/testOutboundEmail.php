@@ -68,7 +68,7 @@ if (!empty($_REQUEST['mail_smtppass'])) {
         $pass = $oe->mail_smtppass;
     }
 }
-$email = new Email();
+$email = BeanFactory::newBean('Emails');
 $out = $email->sendEmailTest(
     $_REQUEST['mail_smtpserver'],
     $_REQUEST['mail_smtpport'],
