@@ -881,7 +881,10 @@ class ListView
         }
         $offset = $this->getSessionVariable($localVarName, 'offset');
         if (isset($offset)) {
-            return (int)$offset;
+            if (is_numeric($offset)) {
+                return (int) $offset;
+            }
+            return $offset;
         }
 
         return 0;
