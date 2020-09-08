@@ -1817,6 +1817,7 @@ $app_strings = array(
     'LBL_SAVING' => 'Saving',
     'LBL_DISPLAY_COLUMNS' => 'Display Columns',
     'LBL_HIDE_COLUMNS' => 'Hide Columns',
+    'LBL_COLUMNS' => 'Columns',
     'LBL_SEARCH_CRITERIA' => 'Search Criteria',
     'LBL_SAVED_VIEWS' => 'Saved Views',
     'LBL_PROCESSING_REQUEST' => 'Processing...',
