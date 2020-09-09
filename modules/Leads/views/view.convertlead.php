@@ -323,7 +323,7 @@ class ViewConvertLead extends SugarView
         foreach ($focus->field_defs as $field => $def) {
             if (isset($def['required']) && $def['required']) {
                 $jsOut .= "
-            SUGAR.convert.requiredFields.$module.$field = '". translate($def['vname'], $module) . "';\n";
+            SUGAR.convert.requiredFields.$module.$field = '". str_replace("'","&#39;",translate($def['vname'], $module)) . "';\n";
             }
         }
 
