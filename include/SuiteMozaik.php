@@ -63,7 +63,7 @@ class SuiteMozaik
 
     public function __construct()
     {
-        $this->vendorPath = $this->mozaikPath . '/vendor';
+        $this->vendorPath = 'vendor/';
         if ($this->autoInsertThumbnails) {
             if (count($this->getThumbs())==0 || self::$devMode) {
                 $ord = 0;
@@ -108,8 +108,8 @@ class SuiteMozaik
 <script src="{$this->vendorPath}/gymadarasz/imagesloaded/imagesloaded.pkgd.min.js"></script>
 
 <!-- for color picker plugin -->
-<link rel="stylesheet" media="screen" type="text/css" href="{$this->vendorPath}/../colorpicker/css/colorpicker.css" />
-<script type="text/javascript" src="{$this->vendorPath}/../colorpicker/js/colorpicker.js"></script>
+<link rel="stylesheet" media="screen" type="text/css" href="{$this->mozaikPath}/colorpicker/css/colorpicker.css" />
+<script type="text/javascript" src="{$this->mozaikPath}/colorpicker/js/colorpicker.js"></script>
 HTML;
         return $html;
     }
