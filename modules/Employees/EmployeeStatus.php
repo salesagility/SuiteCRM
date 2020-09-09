@@ -65,6 +65,9 @@ function getEmployeeStatusOptions($focus, $name = 'employee_status', $value = nu
         return $employee_status;
     }
         
+    if (!empty($value)){
+    	$focus->employee_status = $value;
+    }
     if (isset($app_list_strings['employee_status_dom'][$focus->employee_status])) {
         return $app_list_strings['employee_status_dom'][$focus->employee_status];
     }
