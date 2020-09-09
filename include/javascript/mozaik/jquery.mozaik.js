@@ -77,11 +77,6 @@ var mozaik = {
         return html;
     },
 
-    //getPreloaderHTML: function() {
-    //    var html = '<div class="mozaik-preloader"><img alt="loading.." src="img/725.gif"></div>';
-    //    return html;
-    //}
-
     refreshWidthSet: function() {
         $('.mozaik-width-set .handler').each(function(i,e){
             var width = parseInt($(e).attr('data-width'));
@@ -210,17 +205,10 @@ var plgBackground = {
                 "99CCFF", "Light sky blue",
                 "CC99FF", "Plum"
             ],
-            //setup: function(editor) {
-            //    var _editor = editor;
-            //    editor.on('focus', function(event){
-            //        mozaik.lastUsedEditor = _editor;
-            //    });
-            //}
 
             file_browser_callback: function(field_name, url, type, win, e) {
                 mozaik.uploadPathField = field_name;
                 if(type=='image') {
-                    // $('#mozaik_upload_form input').click();
                     $('form#upload_form input[type="file"]').each(function(i,e){
                         if($(e).css('display') != 'none') {
                             $(e).click();
