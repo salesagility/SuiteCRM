@@ -1013,9 +1013,9 @@ class AOW_WorkFlow extends Basic
         if ($min_time === FALSE) {
             return '';
         }
-        
+        global $db;
         $ret_query = $addAnd ? ' AND ' : '';
-        $ret_query .= $db_field . ($gte ? '>=' : '<') . $GLOBALS['db']->quoted(date('Y-m-d H:i:s', $min_time));
+        $ret_query .= $db_field . ($gte ? '>=' : '<') . $db->quoted(date('Y-m-d H:i:s', $min_time));
         
         return $ret_query;
     }
