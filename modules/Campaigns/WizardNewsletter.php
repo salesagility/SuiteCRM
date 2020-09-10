@@ -250,7 +250,7 @@ if ($campaign_type == 'general') {
     $myTypeOptionsArr = array();
     $OptionsArr = $app_list_strings['campaign_type_dom'];
     foreach ($OptionsArr as $key=>$val) {
-        if ($val =='Newsletter' || $val =='Email' || $val =='') {
+        if ($key =='NewsLetter' || $key =='Email' || $key =='') {
             //do not add
         } else {
             $myTypeOptionsArr[$key] = $val;

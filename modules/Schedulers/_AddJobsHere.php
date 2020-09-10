@@ -387,7 +387,7 @@ function trimTracker()
             continue;
         }
 
-        $timeStamp = DBManager::convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
+        $timeStamp = DBManagerFactory::getInstance()->convert("'" . $timedate->asDb($timedate->getNow()->get("-" . $prune_interval . " days")) . "'", "datetime");
         if ($tableName == 'tracker_sessions') {
             $query = "DELETE FROM $tableName WHERE date_end < $timeStamp";
         } else {
@@ -762,6 +762,7 @@ function performLuceneIndexing()
 function aorRunScheduledReports()
 {
     require_once 'include/SugarQueue/SugarJobQueue.php';
+    $db = DBManagerFactory::getInstance();
     $date = new DateTime();//Ensure we check all schedules at the same instant
     foreach (BeanFactory::getBean('AOR_Scheduled_Reports')->get_full_list() as $scheduledReport) {
         if ($scheduledReport->status != 'active') {
@@ -775,6 +776,11 @@ function aorRunScheduledReports()
         }
         if ($shouldRun) {
             if (empty($scheduledReport->aor_report_id)) {
+                continue;
+            }
+            $queued = $db->fetchOne("SELECT count(*) cnt FROM job_queue WHERE data=".$db->quoted($scheduledReport->id)." and deleted=0 and status = 'running' and execute_time >= " . $db->quoted(date("Y-m-d H:i:s", strtotime("-2 hours"))));
+            if(!empty($queued) && $queued['cnt'] > 0) {
+                LoggerManager::getLogger()->warn('aorRunScheduledReports: id: ' . $scheduledReport->id . ' is already running. Postpone creating new job.');
                 continue;
             }
             $job = BeanFactory::newBean('SchedulersJobs');

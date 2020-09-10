@@ -71,8 +71,8 @@
       {{sugar_button module="$module" id="$button" view="$view"}}
    {{/foreach}}
 {{else}}
-{{sugar_button module="$module" id="SAVE" view="$view"}}
-{{sugar_button module="$module" id="CANCEL" view="$view"}}
+{{sugar_button module="$module" id="SAVE" view="$view" form_id="$form_id"}}
+{{sugar_button module="$module" id="CANCEL" view="$view" form_id="$form_id"}}
 {{/if}}
 {{if empty($form.hideAudit) || !$form.hideAudit}}
 {{sugar_button module="$module" id="Audit" view="$view"}}

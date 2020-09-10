@@ -2,6 +2,7 @@
 
 namespace Api\V8\Service;
 
+use Api\V8\BeanDecorator\BeanListResponse;
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\JsonApi\Helper\AttributeObjectHelper;
 use Api\V8\JsonApi\Helper\PaginationObjectHelper;
@@ -91,6 +92,7 @@ class ModuleService
      */
     public function getRecords(GetModulesParams $params, Request $request)
     {
+        global $db;
         // this whole method should split into separated classes later
         $module = $params->getModuleName();
         $orderBy = $params->getSort();
@@ -118,16 +120,75 @@ class ModuleService
             $fields = $this->beanManager->getDefaultFields($bean);
         }
 
-        $beanListResponse = $this->beanManager->getList($module)
-            ->orderBy($orderBy)
-            ->where($where)
-            ->offset($offset)
-            ->limit($limit)
-            ->max($size)
-            ->deleted($deleted)
-            ->fields($this->beanManager->filterAcceptanceFields($bean, $fields))
-            ->fetch();
+        // Detect if bean has email field
+        if ((property_exists($bean, 'email1')
+                && strpos($where, 'email1') !== false)
+            || (property_exists($bean, 'email2')
+                && strpos($where, 'email2') !== false)
+        ) {
 
+            $selectedModule = strtolower($module);
+
+            // Selects Module or COUNT(*) and will add one to the query.
+            $idSelect = 'SELECT ' . $selectedModule . '.id ';
+            $countSelect = 'SELECT COUNT(*) AS cnt ';
+
+            $quotedCountSelect = $db->quote($countSelect);
+
+            // Email where clause
+            $fromQuery
+                = 'FROM email_addresses JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id JOIN '
+                . $selectedModule . ' ON ' . $selectedModule
+                . '.id = email_addr_bean_rel.bean_id ';
+            $modifiedWhere = str_replace('accounts.email1',
+                'email_addresses.email_address', $where);
+            $where = $modifiedWhere;
+
+            // Sets and adds deleted to the query
+            if ($deleted == 0) {
+                $whereAuto = '' . $bean->table_name . ' .deleted=0';
+            } elseif ($deleted == 1) {
+                $whereAuto = '' . $bean->table_name . ' .deleted=1';
+            }
+            if ($where != '') {
+                $where = ' where (' . $where . ') AND ' . $whereAuto . '';
+            } else {
+                $where = ' where ' . $whereAuto . '';
+            }
+
+            // Joins parts together to form query
+            $query = $idSelect . $fromQuery . $where;
+            $countQuery = $quotedCountSelect . $fromQuery . $where;
+            $realRowCount = (int)$db->fetchRow($db->query($countQuery, true, ''))['cnt'];
+
+            // Sets order by into the query
+            $order_by = $bean->process_order_by($orderBy);
+            if (!empty($orderBy)) {
+                $query .= ' ORDER BY ' . $order_by;
+            }
+
+            $result = $bean->process_list_query($query, $offset, $limit, -1, $where);
+            $beanResult['row_count'] = $result['row_count'];
+            $beanList = [];
+
+            foreach ($result['list'] as $resultBean) {
+                $queryModuleBean = \BeanFactory::newBean($module);
+                $queryModuleBean->id = $resultBean->id;
+                $beanList[] = $queryModuleBean;
+            }
+            $beanResult['list'] = $beanList;
+            $beanListResponse = new BeanListResponse($beanResult);
+        } else {
+            $beanListResponse = $this->beanManager->getList($module)
+                ->orderBy($orderBy)
+                ->where($where)
+                ->offset($offset)
+                ->limit($limit)
+                ->max($size)
+                ->deleted($deleted)
+                ->fields($this->beanManager->filterAcceptanceFields($bean, $fields))
+                ->fetch();
+        }
 
         $beanArray = [];
         foreach ($beanListResponse->getBeans() as $bean) {

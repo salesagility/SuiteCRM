@@ -391,7 +391,7 @@ class BeanFactory
         $beanFile = self::getBeanFile($module);
 
         if (empty($beanFile)) {
-            $log->fatal('Cannot find bean file for module: ' . $module);
+            $log->warn('Cannot find bean file for module: ' . $module);
 
             return false;
         }

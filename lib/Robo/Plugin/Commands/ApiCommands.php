@@ -97,7 +97,6 @@ class ApiCommands extends Tasks
         $this->taskComposerInstall()->noDev()->noInteraction()->run();
         $this->apiGenerateKeys();
         $this->apiSetKeyPermissions();
-        $this->apiUpdateEncryptionKey();
         $this->apiRebuildHtaccessFile();
         $this->apiExportPostmanENV();
         $this->apiCreateClient($name);
@@ -153,31 +152,6 @@ class ApiCommands extends Tasks
         chmod(
             $opts['publicKey'],
             0600
-        );
-    }
-
-    /**
-     * Update OAuth2 encryption keys
-     * @param array $opts
-     * @option string $privateKey set a custom path to the oauth2 encryption key.
-     * @option string $apiConfig set a custom path to ApiConfig file.
-     * @throws \Exception
-     */
-    public function apiUpdateEncryptionKey(
-        $opts = ['encryptionKey' => ApiConfig::OAUTH2_ENCRYPTION_KEY, 'apiConfig' => 'Api/Core/Config/ApiConfig.php']
-    ) {
-        $oldKey = $opts['encryptionKey'];
-        $key = base64_encode(random_bytes(32));
-        $apiConfig = file_get_contents($opts['apiConfig']);
-
-        $configFileContents = str_replace(
-            $oldKey,
-            $key,
-            $apiConfig
-        );
-
-        file_put_contents(
-            $opts['apiConfig'], $configFileContents, LOCK_EX
         );
     }
 
