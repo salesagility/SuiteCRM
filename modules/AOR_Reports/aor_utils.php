@@ -567,6 +567,7 @@ function convertToDateTime($value)
 
     $formattedValue .= ' 00:00:00';
     $userTimezone = $current_user->getPreference('timezone');
+    
     $utz = new DateTimeZone($userTimezone);
     $dateTime = DateTime::createFromFormat(
         'Y-m-d H:i:s',
