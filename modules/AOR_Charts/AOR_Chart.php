@@ -26,6 +26,8 @@ class AOR_Chart extends Basic
 {
     const COLOUR_DEFAULTS = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
     public $colours;
+    public $key_colours;
+
     public $new_schema = true;
     public $module_dir = 'AOR_Charts';
     public $object_name = 'AOR_Chart';
@@ -56,7 +58,9 @@ class AOR_Chart extends Basic
     public function __construct()
     {
         parent::__construct();
+
         $this->colours = self::COLOUR_DEFAULTS;
+        $this->key_colours = self::COLOUR_DEFAULTS;
     }
 
     /**
@@ -262,15 +266,27 @@ class AOR_Chart extends Basic
     {
         if (is_array($labels) && count($labels) > 1) {
             $colours = [];
+            $key_colours = [];
+
             foreach ($labels as $onelabel) {
                 $hash = md5($onelabel);
                 $colours[] = substr($hash, 0, 6);
+                $key_colours[] = substr($hash, 0, 6);
             }
+
+            $key_colours = array_unique($key_colours);
+            $key_colours = array_values($key_colours);
+
             $this->colours = "['#" . implode("','#", $colours) . "']";
+            $this->key_colours = "['#" . implode("','#", $key_colours) . "']";
+
             return true;
         }
+
+
         LoggerManager::getLogger()->warn('Incorrect labels given. Using default colours in charts.');
         $this->colours = self::COLOUR_DEFAULTS;
+        $this->key_colours = self::COLOUR_DEFAULTS;
         return false;
     }
 
@@ -332,16 +348,16 @@ class AOR_Chart extends Basic
             case 'grouped_bar':
                 $chartFunction = 'Grouped bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
-                $valid = $this->generateChartColoursFromLabels($data['labels']);
+                $valid = $this->generateChartColoursFromLabels($data['datalabels']);
                 $config = $this->getGroupedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, true);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), json_encode($data['keylabels']), $this->name, $this->id, $defaultHeight, $defaultWidth, true);
                 break;
             case 'stacked_bar':
                 $chartFunction = 'Stacked bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
-                $valid = $this->generateChartColoursFromLabels($data['labels']);
+                $valid = $this->generateChartColoursFromLabels($data['datalabels']);
                 $config = $this->getStackedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, false);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), json_encode($data['keylabels']), $this->name, $this->id, $defaultHeight, $defaultWidth, false);
                 break;
             case 'bar':
             default:
@@ -383,6 +399,7 @@ class AOR_Chart extends Basic
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 colors: $this->colours,
+                shadow:true,
                 colorsSequential:true
             },
             data: $chartDataValues
@@ -393,11 +410,10 @@ EOF;
     }
 
 
-
     //I have not used a parameter for getRGraphBarChart to say whether to group etc, as the future development could be quite different
     //for both, hence the separate methods.  However, the $grouped parameter allows us to specify whether the chart is grouped (true)
     //or stacked (false)
-    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
+    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartKeyLabels, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
     {
         $dataArray = json_decode($chartDataValues);
         $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
@@ -407,6 +423,7 @@ EOF;
         if (!is_array($dataArray)||count($dataArray) < 1) {
             return "<h3>$this->noDataMessage</h3>";
         }
+
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
@@ -416,8 +433,6 @@ EOF;
             data: $chartDataValues,
             options: {
                 grouping:'$grouping',
-                backgroundGrid:false,
-                backgroundGrid:false,
                 gutterBottom: 150,
                 gutterTop:25,
                 gutterLeft:128,
@@ -427,7 +442,20 @@ EOF;
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
-                shadow:false,
+                backgroundGrid: true,
+                backgroundGridVlines: false,
+                backgroundGridHlines: true,
+                backgroundGridColor: 'gray',
+
+                colorsSequential: true,
+                shadow:true,
+                labelsAbove:true,
+                labelsAboveSize: 10,
+                key: $chartKeyLabels,
+                keyColors: $this->key_colours,
+                keyInteractive: true,
+                keyHalign: 'left',
+
                 titleSize:10,
                 labels: $chartLabelValues,
                 textSize:10,
@@ -440,8 +468,6 @@ EOF;
 EOF;
         return $html;
     }
-
-
 
     private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
@@ -463,17 +489,25 @@ EOF;
                 gutterTop: 25,
                 //title: '$chartName',
                 labels: $chartLabelValues,
-                colorsSequential:true,
+                colorsSequential:false,
                 textAngle: 90,
                 textSize:10,
                 titleSize:10,
-                backgroundGrid:false,
+
+                labelsAbove:true,
+                labelsAboveSize: 10,
+
+                backgroundGrid: true,
+                backgroundGridVlines: false,
+                backgroundGridHlines: true,
+                backgroundGridColor: 'gray',
 
                 tooltips:$chartTooltips,
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 tooltipsEvent:'onmousemove',
 
                 colors: $this->colours,
+                shadow:true,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
@@ -506,6 +540,7 @@ EOF;
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
                 colors: $this->colours,
+                shadow:true,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
@@ -541,6 +576,7 @@ EOF;
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 labels: $chartLabelValues,
+                shadow:true,
                 colors: $this->colours
             }
         }).draw();
@@ -583,6 +619,7 @@ EOF;
                 //titleSize:10,
                 backgroundGrid:false,
                 colors: $this->colours,
+                shadow:true,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues),
             }
         }).draw();
@@ -692,54 +729,85 @@ EOF;
             }
         }
 
-
+        // gather unique key labels
+        $usedKeyLabels = array();
+        foreach ($reportData as $key => $row) {
+            $keyLabel = $row[$zName];
+            if (!in_array($keyLabel, $usedKeyLabels)) {
+                $usedKeyLabels[] = $keyLabel;
+            }
+        }
 
         // get grouped values
 
         $data = array();
-        $tooltips = array();
-
         $usedKeys = array();
+
+        // create data
         foreach ($reportData as $key => $row) {
             $filter = $row[$xName];
             foreach ($reportData as $key2 => $row2) {
                 if ($row2[$xName] == $filter && !in_array($key, $usedKeys)) {
-                    $data      [ $row[$xName]  ]   [] = (float) $row[$yName];
-                    $tooltips  [ $row[$xName]  ]   [] = isset($row[$zName]) ? $row[$zName] : null;
+                    $index = array_search($row[$zName], array_values($usedKeyLabels) );
+                    $data[ $row[$xName]  ][$index] = (float) $row[$yName];
                     $usedKeys[] = $key;
                 }
             }
         }
 
-        $_data = array();
-        foreach ($data as $label => $values) {
-            foreach ($values as $key => $value) {
-                $_data[$label][$tooltips[$label][$key]] = $value;
+        // add fill missing data value as zero and sort
+        foreach ($data as $key => $dataValue) {
+            // add zero values
+            foreach( $usedKeyLabels as $keyLabel => $value2) {
+                if( array_key_exists($keyLabel, $dataValue) == False ) {
+                    $data[$key][$keyLabel] = 0;
+                }
+            }
+
+            // sort by key
+            $rowdata = $data[$key];
+            ksort($rowdata);
+            $data[$key] = $rowdata; 
+        }
+
+        $_tooltips = array();
+        foreach ($data as $key => $value) {
+            // tooltips == $usedKeyLabels
+            foreach( $value as $key2 => $value2) {
+                $_tooltips[] = $usedKeyLabels[$key2] . " ($value2)";
             }
         }
-        $data = $_data;
-
 
         // make data format for charts
 
         $_data = array();
         $_labels = array();
-        $_tooltips = array();
+        $_datalabels = array();
+
         foreach ($data as $label => $values) {
             $_labels[] = $this->getShortenedLabel($label);
             $_values = array();
-            foreach ($values as $tooltip => $value) {
-                $_tooltips[] = $tooltip . " ($value)";
+            foreach ($values as $key => $value) {
+                $_datalabels[] = $usedKeyLabels[$key];
                 $_values[] = $value;
             }
             $_data[] = $_values;
         }
 
+        // if key is too much, hide it
+        if( count( $usedKeyLabels ) > 10 || count( $usedKeyLabels ) <= 1 ) {
+             $_keylabels = null;
+        } else {
+             $_keylabels = $usedKeyLabels;
+        }
 
         $chart = array(
             'data' => $_data,
             'labels' => $_labels,
             'tooltips' => $_tooltips,
+            'datalabels' => $_datalabels,
+            'keylabels' => $_keylabels,
+
         );
 
         return $chart;
@@ -751,7 +819,7 @@ EOF;
         $chart['data']=array();
         $chart['tooltips']=array();
         foreach ($reportData as $row) {
-            $chart['labels'][] = $this->getShortenedLabel($row[$xName]);
+            $chart['labels'][] = $row[$xName]; // $this->getShortenedLabel($row[$xName]);
             $chart['tooltips'][] = $row[$xName].': '.$row[$yName];
             $chart['data'][] = (float)$row[$yName];
         }
