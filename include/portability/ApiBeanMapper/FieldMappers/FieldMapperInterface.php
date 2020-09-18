@@ -10,7 +10,7 @@ interface FieldMapperInterface
 
 
     /**
-     * Map the field and add it to the containser
+     * Map the field and add it to the container
      * @param SugarBean $bean
      * @param array $container
      * @param string $alternativeName

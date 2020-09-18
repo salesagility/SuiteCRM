@@ -2,6 +2,8 @@
 
 /* @noinspection PhpIncludeInspection */
 require_once 'include/portability/ApiBeanMapper/FieldMappers/AssignedUserMapper.php';
+require_once 'include/portability/ApiBeanMapper/TypeMappers/DateMapper.php';
+require_once 'include/portability/ApiBeanMapper/TypeMappers/DateTimeMapper.php';
 
 class ApiBeanMapper
 {
@@ -11,9 +13,17 @@ class ApiBeanMapper
      */
     protected $fieldMappers = [];
 
+    /**
+     * @var TypeMapperInterface[]
+     */
+    protected $typeMappers = [];
+
     public function __construct()
     {
         $this->fieldMappers[AssignedUserMapper::getField()] = new AssignedUserMapper();
+
+        $this->typeMappers[DateMapper::getType()] = new DateMapper();
+        $this->typeMappers[DateTimeMapper::getType()] = new DateTimeMapper();
     }
 
     /**
@@ -43,7 +53,7 @@ class ApiBeanMapper
                 continue;
             }
 
-            $this->setValue($bean, $field, $arr);
+            $this->setValue($bean, $field, $arr, $definition);
         }
 
         return $arr;
@@ -165,11 +175,11 @@ class ApiBeanMapper
         }
 
         $arr[$groupingField] = $arr[$groupingField] ?? [];
-        $this->setValue($bean, $field, $arr[$groupingField], $fieldRName);
+        $this->setValue($bean, $field, $arr[$groupingField], $definition, $fieldRName);
 
         if (isset($bean->$idName)) {
             $idFieldRName = $idDefinition['rname'] ?? 'id';
-            $this->setValue($bean, $idName, $arr[$groupingField], $idFieldRName);
+            $this->setValue($bean, $idName, $arr[$groupingField], $definition, $idFieldRName);
         }
     }
 
@@ -177,19 +187,33 @@ class ApiBeanMapper
      * @param SugarBean $bean
      * @param $field
      * @param array $arr
+     * @param array $definition
      * @param string $alternativeName
      */
-    protected function setValue(SugarBean $bean, $field, array &$arr, string $alternativeName = ''): void
-    {
+    protected function setValue(
+        SugarBean $bean,
+        $field,
+        array &$arr,
+        array $definition,
+        string $alternativeName = ''
+    ): void {
         $name = $field;
 
         if (!empty($alternativeName)) {
             $name = $alternativeName;
         }
 
-        $mapper = $this->fieldMappers[$field] ?? null;
-        if ($mapper !== null) {
-            $mapper->run($bean, $arr, $name);
+        $fieldMapper = $this->fieldMappers[$field] ?? null;
+        if ($fieldMapper !== null) {
+            $fieldMapper->run($bean, $arr, $name);
+
+            return;
+        }
+
+        $type = $definition['type'] ?? '';
+        $typeMapper = $this->typeMappers[$type] ?? null;
+        if ($typeMapper !== null) {
+            $typeMapper->run($bean, $arr, $field, $name);
 
             return;
         }
