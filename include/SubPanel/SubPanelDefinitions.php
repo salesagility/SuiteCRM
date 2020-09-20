@@ -621,7 +621,7 @@ class SubPanelDefinitions
         global $modules_exempt_from_availability_check ;
 
         if (isset($this->_visible_tabs_array)) {
-            return $this->_visible_tabs_array ;
+            return $this->_visible_tabs_array;
         }
 
         if (empty($modListHeader)) {
@@ -633,6 +633,10 @@ class SubPanelDefinitions
         if (isset($this->layout_defs [ 'subpanel_setup' ])) { // bug 17434 - belts-and-braces - check that we have some subpanels first
             //retrieve list of hidden subpanels
             $hidden_panels = $this->get_hidden_subpanels();
+
+            if (empty($hidden_panels)) {
+                $hidden_panels = [];
+            }
 
             //activities is a special use case in that if it is hidden,
             //then the history tab should be hidden too.
@@ -674,8 +678,8 @@ class SubPanelDefinitions
             }
         }
 
-        ksort($this->_visible_tabs_array) ;
-        return $this->_visible_tabs_array ;
+        ksort($this->_visible_tabs_array);
+        return $this->_visible_tabs_array;
     }
 
     /**
