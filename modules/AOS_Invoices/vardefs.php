@@ -754,7 +754,7 @@ $dictionary['AOS_Invoices'] = array(
                 'relationship_type' => 'one-to-many',
             ),
     ),
-    'optimistic_lock' => true,
+    'optimistic_locking' => true,
 );
 require_once('include/SugarObjects/VardefManager.php');
 VardefManager::createVardef('AOS_Invoices', 'AOS_Invoices', array('basic', 'assignable', 'security_groups'));

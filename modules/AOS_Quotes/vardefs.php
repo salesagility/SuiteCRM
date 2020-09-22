@@ -860,7 +860,7 @@ $dictionary['AOS_Quotes'] = array(
             ),
 
     ),
-    'optimistic_lock' => true,
+    'optimistic_locking' => true,
 );
 require_once('include/SugarObjects/VardefManager.php');
 VardefManager::createVardef('AOS_Quotes', 'AOS_Quotes', array('basic', 'assignable', 'security_groups'));
