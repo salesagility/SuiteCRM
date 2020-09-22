@@ -530,7 +530,7 @@ $dictionary['AOS_Products_Quotes'] = array(
             'relationship_type' => 'one-to-many',
         ),
     ),
-    'optimistic_lock' => true,
+    'optimistic_locking' => false,
 );
 require_once('include/SugarObjects/VardefManager.php');
 VardefManager::createVardef('AOS_Products_Quotes', 'AOS_Products_Quotes', array('basic', 'assignable'));
