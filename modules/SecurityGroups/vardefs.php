@@ -63,7 +63,7 @@ $dictionary['SecurityGroup'] = array(
 ),
     'relationships'=>array(
 ),
-    'optimistic_lock'=>true,
+    'optimistic_locking'=>false,
 );
 require_once('include/SugarObjects/VardefManager.php');
 VardefManager::createVardef('SecurityGroups', 'SecurityGroup', array('basic','assignable'));

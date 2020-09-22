@@ -135,7 +135,7 @@ $dictionary['SugarFeed'] = array(
                   )),
     ),
 
-    'optimistic_lock'=>true,
+    'optimistic_locking'=>false,
 );
 
 VardefManager::createVardef('SugarFeed', 'SugarFeed', array('basic',
