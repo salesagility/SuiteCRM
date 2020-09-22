@@ -169,7 +169,13 @@ class ApiBeanMapper
         $groupingField = $field;
 
         if ($source !== 'non-db') {
-            $arr[$field] = $bean->$field ?? '';
+            $this->setValue($bean, $field, $arr, $definition);
+
+            return;
+        }
+
+        if ($idName === $field) {
+            $this->setValue($bean, $field, $arr, $definition);
 
             return;
         }
