@@ -80,8 +80,9 @@ class MySugar
             $bean = SugarModule::get($this->type)->loadBean();
             if (!ACLController::checkAccess($this->type, 'list', true, $bean->acltype)) {
                 $displayDashlet = false;
+            }else{
+                $displayDashlet = true;
             }
-            $displayDashlet = true;
         } else {
             $displayDashlet = true;
         }
