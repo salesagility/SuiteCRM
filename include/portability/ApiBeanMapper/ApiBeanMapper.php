@@ -2,6 +2,7 @@
 
 /* @noinspection PhpIncludeInspection */
 require_once 'include/portability/ApiBeanMapper/FieldMappers/AssignedUserMapper.php';
+require_once 'include/portability/ApiBeanMapper/TypeMappers/FullNameMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/DateMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/DateTimeMapper.php';
 
@@ -21,7 +22,7 @@ class ApiBeanMapper
     public function __construct()
     {
         $this->fieldMappers[AssignedUserMapper::getField()] = new AssignedUserMapper();
-
+        $this->typeMappers[FullNameMapper::getType()] = new FullNameMapper();
         $this->typeMappers[DateMapper::getType()] = new DateMapper();
         $this->typeMappers[DateTimeMapper::getType()] = new DateTimeMapper();
     }
@@ -202,7 +203,8 @@ class ApiBeanMapper
         array &$arr,
         array $definition,
         string $alternativeName = ''
-    ): void {
+    ): void
+    {
         $name = $field;
 
         if (!empty($alternativeName)) {
