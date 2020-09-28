@@ -59,14 +59,14 @@ function retrieveErrorReportAttachment(Email $email)
 
     $email->getNotes($email->id);
     foreach ($email->attachments as $note) {
-        if ($note->file_mime_type == 'message/rfc822') {
+        if (stripos($note->file_mime_type, 'rfc822') !== false) {
             $note_content = $note->getAttachmentContent();
             if ($note_content !== false) {
                 // XXX: we don't know the encoding of the attached email, but
                 // assume it's quoted-printable.
                 $contents .= quoted_printable_decode($note_content);
             }
-        } elseif ($note->file_mime_type == 'message/delivery-status') {
+        } elseif (stripos($note->file_mime_type, 'delivery-status') !== false) {
             $note_content = $note->getAttachmentContent();
             if ($note_content !== false) {
                 $contents .= $note_content;
