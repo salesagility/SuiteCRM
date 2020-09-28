@@ -2105,6 +2105,7 @@ $app_strings = array(
     'LBL_MISSING_HANDLER_DATA_ROUTE' => 'Unexpected error. Missing bulk action route',
     'LBL_BULK_ACTION_ERROR' => 'Unexpected error when calling Bulk Action',
     'LBL_BULK_ACTION_DELETE_SUCCESS' => 'Record(s) deleted successfully',
+    'LBL_ERROR_SAVING' => 'Error occurred while saving record',
     'LBL_SAVE_BUTTON_KEY' => 'a',
     'LBL_SAVE_BUTTON_LABEL' => 'Save',
     'LBL_SAVE_BUTTON_TITLE' => 'Save',
