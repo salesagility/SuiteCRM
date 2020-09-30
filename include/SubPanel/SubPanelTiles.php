@@ -417,6 +417,11 @@ class SubPanelTiles
         return $this->layout_manager;
     }
 
+    /**
+     * @param aSubPanel $thisPanel
+     * @param $panel_query
+     * @return string
+     */
     public function get_buttons($thisPanel, $panel_query=null)
     {
         $subpanel_def = $thisPanel->get_buttons();
@@ -451,5 +456,21 @@ class SubPanelTiles
             $this->xTemplate
         );
         return $widget_contents;
+    }
+
+    /**
+     * @param string $html_text
+     * @param aSubPanel $thisPanel
+     * @return string
+     */
+    public function getCheckbox($html_text, $thisPanel)
+    {
+        $template = new Sugar_Smarty();
+
+        if ($thisPanel->get_inst_prop_value('select_link_top')) {
+            $html_text .= $template->fetch('include/SubPanel/tpls/SubPanelCheckbox.tpl');
+        }
+
+        return $html_text;
     }
 }
