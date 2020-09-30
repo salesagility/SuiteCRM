@@ -772,6 +772,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         $subpanelTiles = new SubPanelTiles($sugarbean);
                         $html_text .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td align=\"left\"  >";
 
+                        $html_text = $subpanelTiles->getCheckbox($html_text, $subpanel_def);
+
                         //attempt to get the query to recreate this subpanel
                         if (!empty($this->response)) {
                             $response =& $this->response;
