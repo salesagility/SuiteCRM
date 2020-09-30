@@ -452,4 +452,21 @@ class SubPanelTiles
         );
         return $widget_contents;
     }
+
+    /**
+     * @param $html_text
+     * @return string
+     */
+    public function getCheckbox($html_text)
+    {
+        $template = new Sugar_Smarty();
+
+        if (isset($this->subpanel_definitions->layout_defs['subpanel_setup']['delegates']['select_link_top'])
+            && $this->subpanel_definitions->layout_defs['subpanel_setup']['delegates']['select_link_top'] === true
+        ) {
+            $html_text .= $template->fetch('include/SubPanel/tpls/SubPanelCheckbox.tpl');
+        }
+
+        return $html_text;
+    }
 }
