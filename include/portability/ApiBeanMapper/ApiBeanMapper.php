@@ -5,8 +5,6 @@ require_once 'include/portability/ApiBeanMapper/FieldMappers/AssignedUserMapper.
 require_once 'include/portability/ApiBeanMapper/TypeMappers/FullNameMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/DateMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/DateTimeMapper.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/TextMapper.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/VarcharMapper.php';
 
 class ApiBeanMapper
 {
@@ -27,8 +25,6 @@ class ApiBeanMapper
         $this->typeMappers[FullNameMapper::getType()] = new FullNameMapper();
         $this->typeMappers[DateMapper::getType()] = new DateMapper();
         $this->typeMappers[DateTimeMapper::getType()] = new DateTimeMapper();
-        $this->typeMappers[TextMapper::getType()] = new TextMapper();
-        $this->typeMappers[VarcharMapper::getType()] = new VarcharMapper();
     }
 
     /**
@@ -230,6 +226,6 @@ class ApiBeanMapper
             return;
         }
 
-        $arr[$name] = $bean->$field ?? '';
+        $arr[$name] = html_entity_decode($bean->$field ?? '');
     }
 }
