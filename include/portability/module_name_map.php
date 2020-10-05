@@ -9,6 +9,14 @@ $module_name_map = [
         'frontend' => 'administration',
         'core' => 'Administration'
     ],
+    'Activities' => [
+        'frontend' => 'activities',
+        'core' => 'Activities'
+    ],
+    'History' => [
+        'frontend' => 'history',
+        'core' => 'History'
+    ],
     'Calendar' => [
         'frontend' => 'calendar',
         'core' => 'Calendar'
