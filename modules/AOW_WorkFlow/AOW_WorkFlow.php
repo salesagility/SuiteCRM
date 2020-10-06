@@ -46,7 +46,7 @@ class AOW_WorkFlow extends Basic
     const AOW_MULTIPLE_RUNS_DAILY = 4;
     const AOW_MULTIPLE_RUNS_WEEKLY = 8;
     const AOW_MULTIPLE_RUNS_MONTHLY = 16;
-    const AOW_MULTIPLE_RUNS_ANNUALY = 32;
+    const AOW_MULTIPLE_RUNS_ANNUALLY = 32;
     public $new_schema = true;
     public $module_dir = 'AOW_WorkFlow';
     public $object_name = 'AOW_WorkFlow';
@@ -1041,7 +1041,7 @@ class AOW_WorkFlow extends Basic
             case self::AOW_MULTIPLE_RUNS_MONTHLY: // monthly
                 $ret = strtotime('1 month ago');
                 break;
-            case self::AOW_MULTIPLE_RUNS_ANNUALY: // annually
+            case self::AOW_MULTIPLE_RUNS_ANNUALLY: // annually
                 $ret = strtotime('1 year ago');
                 break;
             case self::AOW_MULTIPLE_RUNS_OFF: // without multiple runs
