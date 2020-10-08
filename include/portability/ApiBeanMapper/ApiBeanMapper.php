@@ -35,6 +35,9 @@ class ApiBeanMapper
     {
         $arr = [];
 
+        $arr['module_name'] = $bean->module_name ?? '';
+        $arr['object_name'] = $bean->object_name ?? '';
+
         foreach ($bean->field_defs as $field => $definition) {
 
             if ($this->isSensitiveField($definition)) {
