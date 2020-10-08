@@ -1325,7 +1325,7 @@ class ModuleInstaller
     {
         global $beanList, $beanFiles;
         require_once('modules/DynamicFields/DynamicField.php');
-        $dyField = BeanFactory::newBean('DynamicFields');
+        $dyField = new DynamicField();
 
         foreach ($fields as $field) {
             $class = $beanList[ $field['module']];
