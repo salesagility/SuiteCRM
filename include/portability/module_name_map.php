@@ -261,6 +261,10 @@ $module_name_map = [
         'frontend' => 'event-locations',
         'core' => 'EventLocations'
     ],
+    'Delegates' => [
+        'frontend' => 'delegates',
+        'core' => 'Delegates'
+    ],
     'AOS_Contracts' => [
         'frontend' => 'contracts',
         'core' => 'Contracts'
@@ -398,6 +402,10 @@ $module_name_map = [
         'core' => 'Schedulers'
     ],
     'Schedulers_jobs' => [
+        'frontend' => 'schedulers-jobs',
+        'core' => 'SchedulersJobs'
+    ],
+    'SchedulersJobs' => [
         'frontend' => 'schedulers-jobs',
         'core' => 'SchedulersJobs'
     ],
