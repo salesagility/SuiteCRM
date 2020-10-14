@@ -166,7 +166,7 @@ class ApiBeanMapper
      */
     protected function addRelateFieldToArray(SugarBean $bean, $definition, array &$arr, $field): void
     {
-        $fieldRName = $definition['rname'] ?? $field;
+        $fieldRName = $definition['rname'] ?? 'name';
         $idName = $definition['id_name'] ?? '';
         $source = $definition['source'] ?? '';
         $idDefinition = $definition[$idName] ?? [];
