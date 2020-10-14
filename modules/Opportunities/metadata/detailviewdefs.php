@@ -97,7 +97,6 @@ array(
           0 =>
           array(
             'name' => 'amount',
-            'label' => '{$MOD.LBL_AMOUNT} ({$CURRENCY})',
           ),
           1 => 'date_closed',
         ),

@@ -253,12 +253,10 @@ array(
           0 =>
           array(
             'name' => 'budget',
-            'label' => '{$MOD.LBL_CAMPAIGN_BUDGET} ({$CURRENCY})',
           ),
           1 =>
           array(
             'name' => 'expected_cost',
-            'label' => '{$MOD.LBL_CAMPAIGN_EXPECTED_COST} ({$CURRENCY})',
           ),
         ),
         2 =>
@@ -266,12 +264,10 @@ array(
           0 =>
           array(
             'name' => 'actual_cost',
-            'label' => '{$MOD.LBL_CAMPAIGN_ACTUAL_COST} ({$CURRENCY})',
           ),
           1 =>
           array(
             'name' => 'expected_revenue',
-            'label' => '{$MOD.LBL_CAMPAIGN_EXPECTED_REVENUE} ({$CURRENCY})',
           ),
         ),
         3 =>
