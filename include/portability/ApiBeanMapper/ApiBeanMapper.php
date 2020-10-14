@@ -229,6 +229,6 @@ class ApiBeanMapper
             return;
         }
 
-        $arr[$name] = html_entity_decode($bean->$field ?? '');
+        $arr[$name] = html_entity_decode($bean->$field ?? '', ENT_QUOTES);
     }
 }
