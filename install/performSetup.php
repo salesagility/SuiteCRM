@@ -377,6 +377,31 @@ installStatus($mod_strings['STAT_CREATE_DEFAULT_SETTINGS']);
 installLog("Enable SugarFeeds");
 enableSugarFeeds();
 
+// Install the logic hook for WorkFLow
+installLog("Creating WorkFlow logic hook");
+if (!function_exists('createWorkFlowLogicHook')) {
+    function createWorkFlowLogicHook($filePath = 'Extension/application/Ext/LogicHooks/AOW_WorkFlow_Hook.php')
+    {
+        $customFileLoc = create_custom_directory($filePath);
+        $fp = sugar_fopen($customFileLoc, 'wb');
+        $contents = <<<CIA
+<?php
+if (!isset(\$hook_array) || !is_array(\$hook_array)) {
+    \$hook_array = array();
+}
+if (!isset(\$hook_array['after_save']) || !is_array(\$hook_array['after_save'])) {
+    \$hook_array['after_save'] = array();
+}
+\$hook_array['after_save'][] = array(99, 'AOW_Workflow', 'modules/AOW_WorkFlow/AOW_WorkFlow.php','AOW_WorkFlow', 'run_bean_flows');
+CIA;
+
+        fwrite($fp,$contents);
+        fclose($fp);
+
+    }
+}
+createWorkFlowLogicHook();
+
 ///////////////////////////////////////////////////////////////////////////
 ////    FINALIZE LANG PACK INSTALL
     if (isset($_SESSION['INSTALLED_LANG_PACKS']) && is_array($_SESSION['INSTALLED_LANG_PACKS']) && !empty($_SESSION['INSTALLED_LANG_PACKS'])) {
