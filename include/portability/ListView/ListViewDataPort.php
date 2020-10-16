@@ -237,7 +237,7 @@ class ListViewDataPort extends ListViewData
             true,
             $seed,
             $singleSelect,
-            false
+            true
         );
         $ret_array['inner_join'] = '';
         if (!empty($this->seed->listview_inner_join)) {
