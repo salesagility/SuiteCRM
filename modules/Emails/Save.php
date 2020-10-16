@@ -200,14 +200,6 @@ $focus->bcc_addrs = $_REQUEST['bcc_addrs'];
 $focus->from_addr = $_REQUEST['from_addr'];
 isValidEmailAddress($focus->from_addr);
 
-
-// delete the existing relationship of all the email addresses with this email
-$query = "update emails_email_addr_rel set deleted = 1 WHERE email_id = '{$focus->id}'";
-$focus->db->query($query);
-
-// delete al the relationship of this email with all the beans
-//$query = "update emails_beans set deleted = 1, bean_id = '', bean_module = '' WHERE email_id = '{$focus->id}'";
-//$focus->db->query($query);
 if (!empty($_REQUEST['to_addrs_ids'])) {
     $exContactIds = explode(';', $_REQUEST['to_addrs_ids']);
 } else {
