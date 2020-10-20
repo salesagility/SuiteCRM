@@ -3752,3 +3752,4 @@ $app_strings['LBL_ERROR_FETCHING_METADATA'] = 'Error occurred while fetching met
 $app_strings['LBL_TOTAL'] = 'Total';
 $app_strings['LBL_ACTIONS'] = 'Actions';
 $app_strings['LBL_SELECT_SUBPANEL_BANNER'] = 'Select which subpanels to view';
+$app_strings['LBL_SELECT_ITEM'] = 'Select an item';
