@@ -52,26 +52,60 @@ class StudioBrowser
     public function loadModules()
     {
         global $current_user;
+        global $beanList;
+
         $access = $current_user->getDeveloperModules();
         $d = dir('modules');
         while ($e = $d->read()) {
             if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
                 continue;
             }
-            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
+            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($beanList[$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
                 $this->modules[$e] =  StudioModuleFactory::getStudioModule($e) ;
+            }
+        }
+
+        $d = dir('custom/modules');
+        while ($e = $d->read()) {
+            if (substr($e, 0, 1) == '.' || !is_dir('custom/modules/' . $e)) {
+                continue;
+            }
+
+            if(array_key_exists($e, $this->modules)) {
+                continue;
+            }
+
+            if (file_exists('custom/modules/' . $e . '/metadata/studio.php') && isset($beanList[$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
             }
         }
     }
     
     public function loadRelatableModules()
     {
+        global $beanList;
+        
         $d = dir('modules');
         while ($e = $d->read()) {
             if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
                 continue;
             }
-            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) { // installed modules must also exist in the beanList
+            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($beanList[$e])) { // installed modules must also exist in the beanList
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
+            }
+        }
+
+        $d = dir('custom/modules');
+        while ($e = $d->read()) {
+            if (substr($e, 0, 1) == '.' || !is_dir('custom/modules/' . $e)) {
+                continue;
+            }
+
+            if(array_key_exists($e, $this->modules)) {
+                continue;
+            }
+
+            if (file_exists('custom/modules/' . $e . '/metadata/studio.php') && isset($beanList[$e])) { // installed modules must also exist in the beanList
                 $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
             }
         }

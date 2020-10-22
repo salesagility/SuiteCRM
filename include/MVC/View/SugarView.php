@@ -1222,7 +1222,9 @@ EOHTML;
      */
     protected function _checkModule()
     {
-        if (!empty($this->module) && !file_exists('modules/' . $this->module)) {
+        global $beanFiles;
+
+        if (!empty($this->module) && !file_exists('modules/' . $this->module) && !file_exists($beanFiles[$this->module])) {
             $error = str_replace("[module]", (string)$this->module, $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
             $GLOBALS['log']->fatal($error);
             echo $error;

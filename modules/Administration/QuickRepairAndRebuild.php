@@ -167,10 +167,15 @@ class RepairAndClear
                         require_once($beanFiles[$bean_name]);
                         $GLOBALS['reload_vardefs'] = true;
                         $focus = new $bean_name();
+
                         #30273
                         if ($focus->disable_vardefs == false) {
-                            include('modules/' . $focus->module_dir . '/vardefs.php');
-
+                            if(file_exists('modules/' . $focus->module_dir . '/vardefs.php')) {
+                                include('modules/' . $focus->module_dir . '/vardefs.php');
+                            }
+                            else if(file_exists('custom/modules/' . $focus->module_dir . '/vardefs.ext.php')) {
+                                include('custom/modules/' . $focus->module_dir . '/vardefs.ext.php');
+                            }
 
                             if ($this->show_output) {
                                 print_r("<p>" .$mod_strings['LBL_REPAIR_DB_FOR'].' '. $bean_name . "</p>");

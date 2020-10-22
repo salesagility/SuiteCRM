@@ -52,6 +52,11 @@ $dictionary['{{$class.name}}'] = array(
     'unified_search' => true,
 {{/if}}
 );
+
+if(file_exists('custom/modules/{{$class.name}}/Ext/Vardefs/vardefs.custom.ext.php')) {
+    include('custom/modules/{{$class.name}}/Ext/Vardefs/vardefs.custom.ext.php');
+}
+
 if (!class_exists('VardefManager')) {
         require_once('include/SugarObjects/VardefManager.php');
 }
