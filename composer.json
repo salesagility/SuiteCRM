@@ -51,8 +51,6 @@
     "slim/slim": "^3.8",
     "smarty/smarty": "^2.6",
     "soundasleep/html2text": "~0.5",
-    "symfony/options-resolver": "^3.4",
-    "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
     "tinymce/tinymce": "^4.9.11",
     "tedivm/jshrink": "^1.3",
