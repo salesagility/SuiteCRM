@@ -44,7 +44,7 @@ before_install:
 
 install:
   - phpenv config-add travis.php.ini
-  - composer self-update && composer --version
+  - composer self-update --1 && composer --version
 
 before_script:
   # Set up MySQL
