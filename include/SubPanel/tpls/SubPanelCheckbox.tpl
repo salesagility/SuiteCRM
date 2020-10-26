@@ -1,11 +1,11 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,44 +37,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
 
-function install_projects()
-{
-    require_once('ModuleInstall/ModuleInstaller.php');
-
-    $hooks = array(
-        //Projects
-        array(
-            'module' => 'Project',
-            'hook' => 'before_delete',
-            'order' => 1,
-            'description' => 'Delete Project Tasks',
-            'file' => 'modules/Project/delete_project_tasks.php',
-            'class' => 'delete_project_tasks',
-            'function' => 'delete_tasks',
-        ),
-        // ProjectTasks
-        array(
-            'module' => 'ProjectTask',
-            'hook' => 'before_save',
-            'order' => 1,
-            'description' => 'update project end date',
-            'file' => 'modules/ProjectTask/updateDependencies.php',
-            'class' => 'updateDependencies',
-            'function' => 'update_dependency',
-        ),
-        array(
-            'module' => 'ProjectTask',
-            'hook' => 'after_save',
-            'order' => 1,
-            'description' => 'update project end date',
-            'file' => 'modules/ProjectTask/updateProject.php',
-            'class' => 'updateEndDate',
-            'function' => 'update',
-        ),
-    );
-
-    foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
-    }
-}
+<ul id="selectLinkTop" class="clickMenu selectmenu">
+    <li class="sugar_action_button">
+        <ul class="subnav" style="display: none;">
+            <li><input class="checkbox massall button_toggle_select_all" type="checkbox" name="checkallContacts"></li>
+            <li><a class="button_select_this_page_top" name="selectpage">{$APP.LBL_LISTVIEW_OPTION_CURRENT}</a></li>
+            <li><a class="button_select_all_top" name="selectall">{$APP.LBL_LISTVIEW_OPTION_ENTIRE}‎</a></li>
+            <li><a class="button_deselect_top" name="deselect">{$APP.LBL_LISTVIEW_NONE}</a></li>
+        </ul>
+        <span class="suitepicon suitepicon-action-caret"></span>
+    </li>
+</ul>
+<input type='hidden' name='select_entire_list' id="select_entire_list" value=''>
