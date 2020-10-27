@@ -6,7 +6,7 @@ require_once 'include/portability/ActionNameMapper.php';
 /**
  * Class RouteConverter
  *
- * @package SuiteCRM\Core\Legacy
+ * @package App\Legacy
  */
 class RouteConverter
 {

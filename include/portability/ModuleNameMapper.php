@@ -2,7 +2,7 @@
 
 /**
  * Class ModuleNameMapper
- * @package SuiteCRM\Core\Legacy
+ * @package App\Legacy
  */
 class ModuleNameMapper
 {
