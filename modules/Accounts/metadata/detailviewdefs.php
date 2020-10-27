@@ -90,26 +90,42 @@ array(
         ),
         'LBL_PANEL_ADVANCED' =>
         array(
-          'newTab' => true,
-          'panelDefault' => 'expanded',
+            'newTab' => true,
+            'panelDefault' => 'expanded',
         ),
-        'LBL_PANEL_ASSIGNMENT' =>
-        array(
-          'newTab' => true,
-          'panelDefault' => 'expanded',
-        ),
+          'LBL_PANEL_ASSIGNMENT' =>
+              array(
+                  'newTab' => true,
+                  'panelDefault' => 'expanded',
+              ),
       ),
     ),
-    'panels' =>
-    array(
-      'lbl_account_information' =>
-      array(
-        0 =>
-        array(
-          0 =>
+      'topWidget' => [
+          'type' => 'statistics',
+          'options' => [
+              'statistics' => [
+                  [
+                      'labelKey' => 'LBL_AVERAGE_SPEND_PER_YEAR',
+                      'type' => 'accounts-won-opportunity-amount-by-year'
+                  ],
+                  [
+                      'labelKey' => 'LBL_OPPORTUNITIES_TOTAL',
+                      'type' => 'opportunities'
+                  ],
+
+              ],
+          ]
+      ],
+      'panels' =>
           array(
-            'name' => 'name',
-            'comment' => 'Name of the Company',
+              'lbl_account_information' =>
+                  array(
+                      0 =>
+                          array(
+                              0 =>
+                                  array(
+                                      'name' => 'name',
+                                      'comment' => 'Name of the Company',
             'label' => 'LBL_NAME',
           ),
           1 =>

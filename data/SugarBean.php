@@ -1000,7 +1000,21 @@ class SugarBean
             );
         }
         $GLOBALS['log']->fatal('Parent bean should be a SugarBean');
+
         return null;
+    }
+
+    /**
+     * @param $subpanel_list
+     * @param $subpanel_def
+     * @param $parentbean
+     * @param $order_by
+     *
+     * @return array
+     */
+    public static function getUnionRelatedListQueries($subpanel_list, $subpanel_def, $parentbean, $order_by): array
+    {
+        return self::build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by);
     }
 
     /**
