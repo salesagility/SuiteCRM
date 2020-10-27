@@ -82,13 +82,6 @@ $out =<<<EOQ
     <tr>
       <td align="right" colspan="2" height="20">
         <hr>
-        <form action="install.php" method="post" name="form" id="form">
-        <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-          <tr>
-            <td><input class="button" type="submit" value="{$mod_strings['LBL_START']}" /></td>
-          </tr>
-        </table>
-        </form>
       </td>
     </tr>
   </table>

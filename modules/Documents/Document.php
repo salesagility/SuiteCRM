@@ -100,6 +100,7 @@ class Document extends File
     );
 
     public $authenticated = null;
+    public $show_preview = true;
 
     public function __construct()
     {
@@ -276,9 +277,14 @@ class Document extends File
             //if file is not found then default image file will be used.
             global $img_name;
             global $img_name_bare;
+
             if (!empty($row['file_ext'])) {
                 $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . "_image_inline.gif");
                 $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
+            
+                if ($row['file_ext'] == 'svg') {
+                    $this->show_preview = false;
+                }
             }
         }
 
