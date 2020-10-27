@@ -761,6 +761,7 @@ $app_list_strings = array(
         'none' => 'Direct HTML',
         'tinymce' => 'TinyMCE',
         'mozaik' => 'Mozaik',
+        'ckeditor' => 'CKEditor',
     ),
 
     'dom_email_editor_option' => array(

@@ -42,75 +42,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/**
- * Class SuiteEditorSettings
- *
- * store and extends an associative settings for editors
- */
-abstract class SuiteEditorSettings
+class SuiteEditorCKEditor implements SuiteEditorInterface
 {
     /**
-     * @var string
+     * @var SuiteEditorSettings $settings
      */
-    public $contents;
+    protected $settings;
 
     /**
-     * Target textarea element ID
+     * see more at SuiteEditorInterface
      *
-     * @var string
+     * @param SuiteEditorSettings $settings
      */
-    public $textareaId;
-
-    /**
-     * @var string
-     */
-    public $elementId;
-
-    /**
-     * @var int
-     */
-    public $width;
-
-    /**
-     * @var string
-     */
-    public $group;
-
-    /**
-     * Javascript for body click handling
-     *
-     * @var string
-     */
-    public $clickHandler;
-
-    /**
-     * Language string
-     *
-     * @var string
-     */
-    public $language;
-
-    /**
-     * SuiteEditorSettings constructor.
-     *
-     * @param $settings array or object
-     */
-    public function __construct($settings = null)
+    public function setup(SuiteEditorSettings $settings = null)
     {
-        if ($settings) {
-            $this->extend($settings);
-        }
+        $this->settings = $settings;
     }
 
     /**
-     * extends the settings
+     * see more at SuiteEditorInterface
      *
-     * @param $settings array or object
+     * @return mixed
      */
-    public function extend($settings)
+    public function getHtml()
     {
-        foreach ($settings as $key => $value) {
-            $this->$key = $value;
-        }
+        $smarty = new Sugar_Smarty();
+        $smarty->assign((array)$this->settings);
+        $smarty->assign('VERSION_MARK', getVersionedPath(''));
+        return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorCKEditor.tpl'));
     }
 }
