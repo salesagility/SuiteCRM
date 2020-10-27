@@ -46,7 +46,7 @@ $db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
     die("Not a Valid Entry Point");
-} else {
+}
     require_once("data/BeanFactory.php");
     $file_type = ''; // bug 45896
     require_once("data/BeanFactory.php");
@@ -146,10 +146,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             set_time_limit(0);
             readfile('include/SugarFields/Fields/Image/no_image.png');
             die();
-        } else {
-            die($app_strings['ERR_INVALID_FILE_REFERENCE']);
         }
-    } else {
+        die($app_strings['ERR_INVALID_FILE_REFERENCE']);
+    }
         $doQuery = true;
 
         if ($file_type == 'documents' && !isset($image_field)) {
@@ -185,10 +184,17 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
 
         // Fix for issue 1506 and issue 1304 : IE11 and Microsoft Edge cannot display generic 'application/octet-stream' (which is defined as "arbitrary binary data" in RFC 2046).
         $mime_type = mime_content_type($local_location);
-        if ($mime_type == null || $mime_type == '') {
-            $mime_type = 'application/octet-stream';
-        }
 
+        switch ($mime_type) {
+            case 'text/html':
+                $mime_type = 'text/plain';
+            break;
+            case null:
+            case '':
+                $mime_type = 'application/octet-stream';
+            break;
+        }
+        
         if ($doQuery && isset($query)) {
             $rs = DBManagerFactory::getInstance()->query($query);
             $row = DBManagerFactory::getInstance()->fetchByAssoc($rs);
@@ -243,7 +249,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            if (isset($_REQUEST['preview']) && $_REQUEST['preview'] === 'yes') {
+            if (isset($_REQUEST['preview']) && $_REQUEST['preview'] === 'yes' && $mime_type !== 'text/html') {
                 header('Content-Disposition: inline; filename="' . $name . '";');
             } else {
                 header('Content-Disposition: attachment; filename="' . $name . '";');
@@ -261,6 +267,10 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             ;
         }
 
-        readfile($download_location);
-    }
-}
+        ob_start();
+        echo clean_file_output(file_get_contents($download_location), $mime_type);
+        
+        $output = ob_get_contents();
+        ob_end_clean();
+        
+        echo $output;

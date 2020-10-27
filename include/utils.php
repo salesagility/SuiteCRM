@@ -2303,6 +2303,20 @@ function clean_string($str, $filter = 'STANDARD', $dieOnBadData = true)
     return $str;
 }
 
+function clean_file_output($string, $mine_type)
+{
+    $patterns = [];
+
+    if ($mine_type === 'image/svg+xml') {
+        $patterns[] = "/onload=\"window.location='(.*?)'\"/";
+    }
+
+    $string = preg_replace($patterns, '', $string);
+
+    return $string;
+}
+
+
 function clean_special_arguments()
 {
     if (isset($_SERVER['PHP_SELF'])) {
@@ -2499,7 +2513,10 @@ function securexss($value)
 
         return $new;
     }
+    
     static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
+    
+    $value = preg_replace('/^[=@+-]/', '', $value);
     $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
     $value = preg_replace('/javascript:/i', 'java script:', $value);
 

@@ -140,5 +140,11 @@ $vardefs = array(
             'source' => 'non-db',
             'Comment' => 'Document status for Meta-Data framework',
         ),
+        'show_preview' => array(
+            'name' => 'show_preview',
+            'type' => 'bool',
+            'source' => 'non-db',
+            'reportable' => false
+        ),
     )
 );

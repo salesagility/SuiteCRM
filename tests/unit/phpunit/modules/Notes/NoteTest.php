@@ -135,6 +135,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
                       'PARENT_TYPE' => 'Account',
                       'EMBED_FLAG' => '0',
                       'DELETED' => 0,
+                      'SHOW_PREVIEW' => true,
                       'CONTACT_NAME' => 'test contact',
                       'PARENT_MODULE' => 'Account',
                       'STATUS' => 'Note',
