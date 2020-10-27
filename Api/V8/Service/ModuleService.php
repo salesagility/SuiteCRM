@@ -11,6 +11,7 @@ use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
 use Api\V8\Param\CreateModuleParams;
+use DocumentRevision;
 use Api\V8\Param\DeleteModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
@@ -241,11 +242,13 @@ class ModuleService
         $attributes = $params->getData()->getAttributes();
 
         if ($id !== null && $this->beanManager->getBean($module, $id, [], false) instanceof \SugarBean) {
-            throw new \InvalidArgumentException(sprintf(
-                'Bean %s with id %s is already exist',
-                $module,
-                $id
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Bean %s with id %s is already exist',
+                    $module,
+                    $id
+                )
+            );
         }
 
         $bean = $this->beanManager->newBeanSafe($module);
@@ -263,8 +266,11 @@ class ModuleService
         $fileUpload = $this->processAttributes($bean, $attributes);
 
         $bean->save();
-        if ($fileUpload) {
+        if ($fileUpload && $bean->module_dir === 'Notes') {
             $this->addFileToNote($bean->id, $attributes);
+        }
+        if ($fileUpload && $bean->module_dir === 'Documents') {
+            $this->addFileToDocument($bean, $attributes);
         }
         $bean->retrieve($bean->id);
 
@@ -281,16 +287,40 @@ class ModuleService
     }
 
     /**
-     * @param $beanId
-     * @param $attributes
+     * @param \SugarBean $bean
+     * @param array $attributes
      * @throws \Exception
      */
-    private function addFileToNote($beanId, $attributes)
+    private function addFileToDocument(\SugarBean $bean, array $attributes): void
     {
-        global $sugar_config, $log;
-
-        \BeanFactory::unregisterBean('Notes', $beanId);
-        $bean = $this->beanManager->getBeanSafe('Notes', $beanId);
+        \BeanFactory::unregisterBean('Documents', $bean->id);
+        $bean = \BeanFactory::getBean('Documents', $bean->id);
+        $bean->filename = $attributes['filename'];
+        // Core code in this function
+        $Revision = new DocumentRevision();
+        $Revision->in_workflow = true;
+        $Revision->not_use_rel_in_req = true;
+        $Revision->new_rel_id = $bean->id;
+        $Revision->new_rel_relname = 'Documents';
+        $Revision->change_log = translate('DEF_CREATE_LOG', 'Documents');
+        $Revision->revision = '1';
+        $Revision->document_id = $bean->id;
+        $Revision->filename = $bean->filename;
+        if (isset($bean->file_ext)) {
+            $Revision->file_ext = $bean->file_ext;
+        }
+        if (isset($bean->file_mime_type)) {
+            $Revision->file_mime_type = $bean->file_mime_type;
+        }
+        $Revision->doc_type = $bean->doc_type;
+        if (isset($bean->doc_id)) {
+            $Revision->doc_id = $bean->doc_id;
+        }
+        if (isset($bean->doc_url)) {
+            $Revision->doc_url = $this->doc_url;
+        }
+        $Revision->id = create_guid();
+        $Revision->new_with_id = true;
 
         // Write file to upload dir
         try {
@@ -298,8 +328,59 @@ class ModuleService
             $extPos = strrpos($attributes['filename'], '.');
             $fileExtension = substr($attributes['filename'], $extPos + 1);
 
-            if ($extPos === false || empty($fileExtension) || in_array($fileExtension, $sugar_config['upload_badext'],
-                    true)) {
+            if ($extPos === false || empty($fileExtension) || in_array(
+                    $fileExtension,
+                    $sugar_config['upload_badext'],
+                    true
+                )) {
+                throw new \Exception('File upload failed: File extension is not included or is not valid.');
+            }
+
+            $fileName = $Revision->id;
+            $fileContents = $attributes['filecontents'];
+            $targetPath = 'upload/' . $fileName;
+            $content = base64_decode($fileContents);
+
+            $file = fopen($targetPath, 'wb');
+            fwrite($file, $content);
+            fclose($file);
+        } catch (\Exception $e) {
+            \LoggerManager::getLogger()->error('addFileToNote: ' . $e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+        $Revision->save();
+        $bean->document_revision_id = $Revision->id;
+        $bean->save();
+    }
+
+    /**
+     * @param $beanId
+     * @param $attributes
+     * @throws \Exception
+     */
+    protected function addFileToNote($beanId, $attributes)
+    {
+        global $sugar_config, $log;
+
+        $module = 'Notes';
+        if (!empty($attributes['moduleName'])) {
+            $module = $attributes['moduleName'];
+            unset($attributes['moduleName']);
+        }
+        \BeanFactory::unregisterBean($module, $beanId);
+        $bean = $this->beanManager->getBeanSafe($module, $beanId);
+
+        // Write file to upload dir
+        try {
+            // Checking file extension
+            $extPos = strrpos($attributes['filename'], '.');
+            $fileExtension = substr($attributes['filename'], $extPos + 1);
+
+            if ($extPos === false || empty($fileExtension) || in_array(
+                    $fileExtension,
+                    $sugar_config['upload_badext'],
+                    true
+                )) {
                 throw new \Exception('File upload failed: File extension is not included or is not valid.');
             }
 
