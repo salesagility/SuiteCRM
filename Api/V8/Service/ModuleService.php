@@ -11,12 +11,17 @@ use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
 use Api\V8\Param\CreateModuleParams;
+use BeanFactory;
 use DocumentRevision;
 use Api\V8\Param\DeleteModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\UpdateModuleParams;
+use Exception;
+use InvalidArgumentException;
+use LoggerManager;
 use Slim\Http\Request;
+use SugarBean;
 use SuiteCRM\Exception\AccessDeniedException;
 
 class ModuleService
@@ -146,12 +151,12 @@ class ModuleService
             $where = $modifiedWhere;
 
             // Sets and adds deleted to the query
-            if ($deleted == 0) {
+            if ($deleted === 0) {
                 $whereAuto = '' . $bean->table_name . ' .deleted=0';
-            } elseif ($deleted == 1) {
+            } else {
                 $whereAuto = '' . $bean->table_name . ' .deleted=1';
             }
-            if ($where != '') {
+            if ($where !== '') {
                 $where = ' where (' . $where . ') AND ' . $whereAuto . '';
             } else {
                 $where = ' where ' . $whereAuto . '';
@@ -173,7 +178,7 @@ class ModuleService
             $beanList = [];
 
             foreach ($result['list'] as $resultBean) {
-                $queryModuleBean = \BeanFactory::newBean($module);
+                $queryModuleBean = BeanFactory::newBean($module);
                 $queryModuleBean->id = $resultBean->id;
                 $beanList[] = $queryModuleBean;
             }
@@ -232,8 +237,9 @@ class ModuleService
      * @param Request $request
      *
      * @return DocumentResponse
-     * @throws \InvalidArgumentException When bean is already exist.
+     * @throws InvalidArgumentException When bean is already exist.
      * @throws AccessDeniedException
+     * @throws Exception
      */
     public function createRecord(CreateModuleParams $params, Request $request)
     {
@@ -241,8 +247,8 @@ class ModuleService
         $id = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
 
-        if ($id !== null && $this->beanManager->getBean($module, $id, [], false) instanceof \SugarBean) {
-            throw new \InvalidArgumentException(
+        if ($id !== null && $this->beanManager->getBean($module, $id, [], false) instanceof SugarBean) {
+            throw new InvalidArgumentException(
                 sprintf(
                     'Bean %s with id %s is already exist',
                     $module,
@@ -287,14 +293,15 @@ class ModuleService
     }
 
     /**
-     * @param \SugarBean $bean
+     * @param SugarBean $bean
      * @param array $attributes
-     * @throws \Exception
+     * @throws Exception
      */
-    private function addFileToDocument(\SugarBean $bean, array $attributes): void
+    private function addFileToDocument(SugarBean $bean, array $attributes)
     {
-        \BeanFactory::unregisterBean('Documents', $bean->id);
-        $bean = \BeanFactory::getBean('Documents', $bean->id);
+        global $sugar_config;
+        BeanFactory::unregisterBean('Documents', $bean->id);
+        $bean = BeanFactory::getBean('Documents', $bean->id);
         $bean->filename = $attributes['filename'];
         // Core code in this function
         $Revision = new DocumentRevision();
@@ -333,7 +340,7 @@ class ModuleService
                     $sugar_config['upload_badext'],
                     true
                 )) {
-                throw new \Exception('File upload failed: File extension is not included or is not valid.');
+                throw new Exception('File upload failed: File extension is not included or is not valid.');
             }
 
             $fileName = $Revision->id;
@@ -344,9 +351,9 @@ class ModuleService
             $file = fopen($targetPath, 'wb');
             fwrite($file, $content);
             fclose($file);
-        } catch (\Exception $e) {
-            \LoggerManager::getLogger()->error('addFileToNote: ' . $e->getMessage());
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            LoggerManager::getLogger()->error('addFileToNote: ' . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
         $Revision->save();
         $bean->document_revision_id = $Revision->id;
@@ -356,7 +363,7 @@ class ModuleService
     /**
      * @param $beanId
      * @param $attributes
-     * @throws \Exception
+     * @throws Exception
      */
     protected function addFileToNote($beanId, $attributes)
     {
@@ -367,7 +374,7 @@ class ModuleService
             $module = $attributes['moduleName'];
             unset($attributes['moduleName']);
         }
-        \BeanFactory::unregisterBean($module, $beanId);
+        BeanFactory::unregisterBean($module, $beanId);
         $bean = $this->beanManager->getBeanSafe($module, $beanId);
 
         // Write file to upload dir
@@ -381,7 +388,7 @@ class ModuleService
                     $sugar_config['upload_badext'],
                     true
                 )) {
-                throw new \Exception('File upload failed: File extension is not included or is not valid.');
+                throw new Exception('File upload failed: File extension is not included or is not valid.');
             }
 
             $fileName = $bean->id;
@@ -392,9 +399,9 @@ class ModuleService
             $file = fopen($targetPath, 'wb');
             fwrite($file, $content);
             fclose($file);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $log->error('addFileToNote: ' . $e->getMessage());
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
         // Fill in file details for use with upload checks
@@ -410,6 +417,7 @@ class ModuleService
      * @param Request $request
      * @return DocumentResponse
      * @throws AccessDeniedException
+     * @throws Exception
      */
     public function updateRecord(UpdateModuleParams $params, Request $request)
     {
@@ -468,10 +476,10 @@ class ModuleService
     }
 
     /**
-     * @param \SugarBean $bean
+     * @param SugarBean $bean
      * @param array $attributes
      */
-    protected function setRecordUpdateParams(\SugarBean $bean, array $attributes)
+    protected function setRecordUpdateParams(SugarBean $bean, array $attributes)
     {
         $bean->set_created_by = !(isset($attributes['created_by']) || isset($attributes['created_by_name']));
         $bean->update_modified_by = !(isset($attributes['modified_user_id']) || isset($attributes['modified_by_name']));
@@ -506,13 +514,13 @@ class ModuleService
     }
 
     /**
-     * @param \SugarBean $bean
+     * @param SugarBean $bean
      * @param array|null $fields
      * @param string|null $path
      *
      * @return DataResponse
      */
-    public function getDataResponse(\SugarBean $bean, $fields = null, $path = null)
+    public function getDataResponse(SugarBean $bean, $fields = null, $path = null)
     {
         // this will be split into separated classed later
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
