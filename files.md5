@@ -1,5 +1,5 @@
 <?php
-// created: 2020-10-28 12:00:00
+// created: 2020-10-29 12:00:00
 $md5_string = array (
   './Api/Core/Config/ApiConfig.php' => '69a1e7b3d7755a2a63499a16ddae81cf',
   './Api/Core/Config/slim.php' => 'b2827381c1aee4dce054128c77984c8f',
@@ -115,7 +115,7 @@ $md5_string = array (
   './ModuleInstall/PackageManager/tpls/PackageManagerLicense.tpl' => 'df5e267d1df5ce08fb9406e42d5b4816',
   './ModuleInstall/PackageManager/tpls/PackageManagerScripts.tpl' => '98e396c0aa57329731fda19c790fffb2',
   './ModuleInstall/extensions.php' => '87596ad3f28a39c996a5551cad3b5cab',
-  './README.md' => '26844ae1b1c687ab7b9e963739450acf',
+  './README.md' => '1c143772603459c8403fcef80e51a061',
   './RoboFile.php' => '045b82c1df69553824d0e4ffcce6e03c',
   './SugarSecurity.php' => '47e316b2d408e8c5192c8ea4a4f921b3',
   './TreeData.php' => '32873e20cb5fd33f9d1cdaf18c3cac5c',
@@ -1159,7 +1159,7 @@ $md5_string = array (
   './include/SugarFields/Fields/Wysiwyg/DetailView.tpl' => 'f410532d0d00513351d6cbb5b0b8cc04',
   './include/SugarFields/Fields/Wysiwyg/EditView.tpl' => 'fa97cb1c2a4f778be63c5f8e06c1826f',
   './include/SugarFields/Fields/Wysiwyg/ListView.tpl' => 'd356f7e610ea0e22486a19356c6494b7',
-  './include/SugarFields/Fields/Wysiwyg/SugarFieldWysiwyg.php' => '76fb39471c02aea3ded0655dae29f1f5',
+  './include/SugarFields/Fields/Wysiwyg/SugarFieldWysiwyg.php' => '898761d8efad034094375b9d1525720d',
   './include/SugarFields/Fields/Wysiwyg/css/wysiwyg-editview.css' => 'd4f3c4437fa79838866133185740531c',
   './include/SugarFields/Parsers/DetailViewMetaParser.php' => 'f6d9a05adb6683079c5095e8a78485f0',
   './include/SugarFields/Parsers/EditViewMetaParser.php' => '4cf27742487a0d5b3b6b61b43cd233ad',
@@ -6629,7 +6629,7 @@ $md5_string = array (
   './soap.php' => 'e28988c2e0b8e2c484587b537a710525',
   './sugar_version.json' => 'bdfbcefae2f9af559bef6a36367df7bb',
   './sugar_version.php' => 'db7b6c8d51f87879fce1e6172eedfbed',
-  './suitecrm_version.php' => '05fc7962acf9fd7f1af13dcdf1e91c41',
+  './suitecrm_version.php' => '8b55888a575f476a3af00c5b93c7d90e',
   './themes/SuiteP/css/Dawn/color-palette.scss' => 'f85621a6c8b0cd015a8c4703e83e519b',
   './themes/SuiteP/css/Dawn/icons.scss' => 'd59f8c5855e7a8df09542a663835a196',
   './themes/SuiteP/css/Dawn/style.css' => '35b4e765b716e89ed0814be10d8b04f6',
@@ -8090,7 +8090,7 @@ $md5_string = array (
   './themes/SuiteP/modules/Users/tpls/DetailView.tpl' => '6c83f2aead0405c152b2ff9936b65d33',
   './themes/SuiteP/themedef.php' => 'be3d75e399cc5409d069670100fcf65a',
   './themes/SuiteP/tpls/Home.tpl' => 'd81177ae701a517d7bb01b0b10a89920',
-  './themes/SuiteP/tpls/_head.tpl' => '8d74b753c0c9503007a03014f84986c1',
+  './themes/SuiteP/tpls/_head.tpl' => '59d9be36f45aba2777808c377a01641e',
   './themes/SuiteP/tpls/_headerModuleList.tpl' => '52d1f6c89e0c1e71d95037da66a4740d',
   './themes/SuiteP/tpls/footer.tpl' => '38c4fa89e7f7e7118f58f8a3f28fe231',
   './themes/SuiteP/tpls/header.tpl' => '273af9526ef61f369f6622d2794acd45',
