@@ -137,6 +137,17 @@ array(
         ),
       ),
     ),
+      'topWidget' => [
+          'type' => 'statistics',
+          'options' => [
+              'statistics' => [
+                  [
+                      'labelKey' => 'LBL_DAYS_OPEN',
+                      'type' => 'lead-days-open'
+                  ],
+              ],
+          ]
+      ],
     'panels' =>
     array(
       'LBL_CONTACT_INFORMATION' =>
