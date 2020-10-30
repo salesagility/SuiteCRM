@@ -381,7 +381,7 @@ $mod_strings = array(
 <table cellpadding=0 cellspacing=0>
 <tr><td><!--not_in_theme!-->Visit www.suitecrm.com
 <img src=include/images/suitecrm_login.png style="margin-right: 5px;">
-</td><td><a href="http://www.suitecrm.com/" target="_blank"><b>SuiteCRM</b></a></td></tr>
+</td><td><a href="https://www.suitecrm.com/" target="_blank"><b>SuiteCRM</b></a></td></tr>
 </table>',
     'LBL_WIZARD_FINISH1' => 'What would you like to do next?',
     'LBL_WIZARD_FINISH2' => 'Start Using SuiteCRM',
