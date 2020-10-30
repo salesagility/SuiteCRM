@@ -116,15 +116,15 @@ class SearchThrowableHandler
             case SearchUserFriendlyException::class:
                 return $this->throwable->getMessage();
             case SearchInvalidRequestException::class:
-                return $mod_strings['LBL_ELASTIC_SEARCH_SEARCH_INVALID_REQUEST'];
+                return $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH_INVALID_REQUEST'];
             case SearchEngineNotFoundException::class:
-                return $mod_strings['LBL_ELASTIC_SEARCH_SEARCH_ENGINE_NOT_FOUND'];
+                return $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH_ENGINE_NOT_FOUND'];
             case NoNodesAvailableException::class:
-                return $mod_strings['LBL_ELASTIC_SEARCH_NO_NODES_AVAILABLE'];
+                return $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_NO_NODES_AVAILABLE'];
             case SearchException::class:
-                return $mod_strings['LBL_ELASTIC_SEARCH_SEARCH'];
+                return $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH'];
             default:
-                return $mod_strings['LBL_ELASTIC_SEARCH_DEFAULT'];
+                return $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_DEFAULT'];
         }
     }
 
