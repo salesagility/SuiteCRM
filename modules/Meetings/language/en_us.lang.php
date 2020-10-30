@@ -136,12 +136,12 @@ $mod_strings = array(
 
     // create invitee functionallity
     'LBL_CREATE_INVITEE' => 'Create an invitee',
-    'LBL_CREATE_CONTACT' => 'As Contact',
-    'LBL_CREATE_LEAD' => 'As Lead',
-    'LBL_CREATE_AND_ADD' => 'Create & Add',
+    'LBL_CREATE_CONTACT' => 'As Contact',  // Create invitee functionallity
+    'LBL_CREATE_LEAD' => 'As Lead',  // Create invitee functionallity
+    'LBL_CREATE_AND_ADD' => 'Create & Add',  // Create invitee functionallity
     'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
     'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
-    'LBL_NO_ACCESS' => 'You have no access to create $module',
+    'LBL_NO_ACCESS' => 'You have no access to create $module',  // Create invitee functionallity
 
     'LBL_REPEAT_TYPE' => 'Repeat Type',
     'LBL_REPEAT_INTERVAL' => 'Repeat Interval',
