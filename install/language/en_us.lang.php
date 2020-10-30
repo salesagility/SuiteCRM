@@ -123,7 +123,7 @@ $mod_strings = array(
     'ERR_PERFORM_HTACCESS_1' => 'Cannot write to the ',
     'ERR_PERFORM_HTACCESS_2' => ' file.',
     'ERR_PERFORM_HTACCESS_3' => 'If you want to secure your log file from being accessible via browser, create an .htaccess file in your log directory with the line:',
-    'ERR_PERFORM_NO_TCPIP' => '<b>We could not detect an Internet connection.</b> When you do have a connection, please visit <a href="http://www.suitecrm.com/">http://www.suitecrm.com/</a> to register with SuiteCRM. By letting us know a little bit about how your company plans to use SuiteCRM, we can ensure we are always delivering the right application for your business needs.',
+    'ERR_PERFORM_NO_TCPIP' => '<b>We could not detect an Internet connection.</b> When you do have a connection, please visit <a href="https://www.suitecrm.com/">https://www.suitecrm.com/</a> to register with SuiteCRM. By letting us know a little bit about how your company plans to use SuiteCRM, we can ensure we are always delivering the right application for your business needs.',
     'ERR_SESSION_DIRECTORY_NOT_EXISTS' => 'Session directory provided is not a valid directory.',
     'ERR_SESSION_DIRECTORY' => 'Session directory provided is not a writable directory.',
     'ERR_SESSION_PATH' => 'Session path is required if you wish to specify your own.',
