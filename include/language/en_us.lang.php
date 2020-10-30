@@ -3758,3 +3758,6 @@ $app_strings['LBL_CONFIG_NO_CONFIG'] = 'Incorrect configuration: missing config'
 $app_strings['LBL_CONFIG_NO_STATISTICS_KEY'] = 'Incorrect configuration: missing statistics key';
 $app_strings['LBL_AVERAGE_SPEND_PER_YEAR'] = 'Average Spend Per Year';
 $app_strings['LBL_OPPORTUNITIES_TOTAL'] = 'Total Opportunity Value';
+$app_strings['LBL_CASE_TOTAL_DAYS_OPEN'] = 'Total Days Open';
+$app_strings['LBL_DAYS_OPEN'] = 'Days Open';
+$app_strings['LBL_DAYS_IN_SALE_STAGE'] = 'Days in Sales Stage';

@@ -83,6 +83,17 @@ array(
         ),
       ),
     ),
+      'topWidget' => [
+          'type' => 'statistics',
+          'options' => [
+              'statistics' => [
+                  [
+                      'labelKey' => 'LBL_DAYS_IN_SALE_STAGE',
+                      'type' => 'opportunity-sales-stage-time-span'
+                  ],
+              ],
+          ]
+      ],
     'panels' =>
     array(
       'default' =>
