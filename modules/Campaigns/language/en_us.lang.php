@@ -374,7 +374,7 @@ $mod_strings = array(
     'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'Opportunities',
 
     'LBL_LEAD_FORM_WIZARD' => 'Lead Form Wizard',
-    'LBL_CAMPAIGN_INFORMATION' => 'OVERVIEW',
+    'LBL_CAMPAIGN_INFORMATION' => 'OVERVIEW', //No need to be translated in all caps. Translation used just in menu action items when using the SuiteP template
     'LBL_EDIT_BUTTON' => 'Launch Wizard',
     'LBL_YEAR' => "Year",
     'LBL_DAY' => "Day",
