@@ -113,13 +113,25 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
     } // if
 
-    // split the id by the last underscore, isolating names like 'photo' or 'photo_c' for handling below:
-    $temp = explode('_', $_REQUEST['id']);
-    if (is_array($temp)) {
-        $image_field = (count($temp) > 1) ? array_pop($temp) : null;
-        $image_field = ($image_field === 'c') ? array_pop($temp) . '_c' : $image_field;
-        $image_id = implode('_', $temp);
+    // id here is really id_field. But since both "id" and "field" can also have underscores in them,
+    // we'll try out parts starting from the end, checking if we get a valid field name.
+    // Some edge cases might be impossible to untangle (ids that contain field names,
+    // and field names that partially contain others, e.g. name and first_name).
+    // TODO: drop this ugly scheme of passing ids together with field names - just pass them in separately...
+    $image_field = null;
+    $image_id = $_REQUEST['id'];
+    $parts = explode('_', $image_id);
+    $index = count($parts) - 1;
+    while ($index) {
+        $possible_field = implode('_', array_slice($parts, $index)); // final parts, from index to end
+        if (isset($focus->field_defs[$possible_field])) {
+            $image_field = $possible_field;
+            $image_id = implode('_', array_slice($parts, 0, $index)); // initial parts, up to index
+            break;
+        }
+        $index--;
     }
+
     if (isset($_REQUEST['ieId']) && isset($_REQUEST['isTempFile'])) {
         $local_location = sugar_cached("modules/Emails/{$_REQUEST['ieId']}/attachments/{$_REQUEST['id']}");
     } elseif (isset($_REQUEST['isTempFile']) && $file_type == "import") {
