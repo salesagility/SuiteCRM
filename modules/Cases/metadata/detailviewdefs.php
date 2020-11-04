@@ -83,6 +83,17 @@ array(
         ),
       ),
     ),
+      'topWidget' => [
+          'type' => 'statistics',
+          'options' => [
+              'statistics' => [
+                  [
+                      'labelKey' => 'LBL_DAYS_OPEN',
+                      'type' => 'case-days-open'
+                  ],
+              ],
+          ]
+      ],
     'panels' =>
     array(
       'lbl_case_information' =>
