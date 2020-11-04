@@ -313,9 +313,8 @@ function export($type, $records = null, $members = false, $sample=false)
                 }
                 }
 
-
                 // Keep as $key => $value for post-processing
-                $new_arr[$key] = preg_replace("/\"/", "\"\"", $value);
+                $new_arr[$key] = preg_replace("/\"/", "\"\"", cleanCSV($value));
             }
 
             // Use Bean ID as key for records

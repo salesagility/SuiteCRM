@@ -1000,6 +1000,20 @@ function clean($string, $maxLength)
 }
 
 /**
+ * @param $string
+ * @return string
+ */
+function cleanCSV($string)
+{
+    $check = '/^[=@]/';
+    if (!is_numeric($string)) {
+        $check = '/^[=@+-]/';
+    }
+
+    return preg_replace($check, "", $string);
+}
+
+/**
  * Copy the specified request variable to the member variable of the specified object.
  * Do no copy if the member variable is already set.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
@@ -2512,8 +2526,7 @@ function securexss($value)
     }
     
     static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
-    
-    $value = preg_replace('/^[=@+-]/', '', $value);
+
     $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
     $value = preg_replace('/javascript:/i', 'java script:', $value);
 
