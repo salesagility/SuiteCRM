@@ -357,7 +357,7 @@ function insertFieldLine(){
 function markFieldLineDeleted(ln)
 {
     // collapse line; update deleted value
-    document.getElementById('aor_fields_body' + ln).style.display = 'none';
+    document.getElementById('field_line' + ln).style.display = 'none';
     document.getElementById('aor_fields_deleted' + ln).value = '1';
     document.getElementById('aor_fields_delete_line' + ln).onclick = '';
 
