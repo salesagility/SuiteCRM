@@ -1044,7 +1044,7 @@ class AOR_Report extends Basic
 
     private function encloseForCSV($field)
     {
-        return '"' . $field . '"';
+        return '"' .  cleanCSV($field) . '"';
     }
 
     public function build_report_csv()
