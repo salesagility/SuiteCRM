@@ -171,6 +171,9 @@ array(
         ),
       ),
     ),
+    'sidebarWidgets' => [
+        ['type' => 'history-timeline']
+    ],
     'panels' =>
     array(
       'lbl_contact_information' =>

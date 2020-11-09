@@ -40,12 +40,30 @@ class SubpanelCustomQueryPort
      * @param string $query
      * @return array
      */
-    public function runQuery(string $query): array
+    public function fetchRow(string $query): array
     {
         $db = DBManagerFactory::getInstance('listviews');
         $result = $db->query($query, true, "SubpanelCustomQueryPort: Error executing custom query");
 
         return $db->fetchByAssoc($result);
+    }
+
+    /**
+     * @param string $query
+     * @return array
+     */
+    public function fetchAll(string $query): array
+    {
+        $db = DBManagerFactory::getInstance('listviews');
+        $result = $db->query($query, true, "SubpanelCustomQueryPort: Error executing custom query");
+
+        $rows = [];
+
+        while (($row = $db->fetchByAssoc($result))) {
+            $rows[] = $row;
+        }
+
+        return $rows;
     }
 
 }

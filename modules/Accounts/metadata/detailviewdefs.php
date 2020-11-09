@@ -116,6 +116,25 @@ array(
               ],
           ]
       ],
+      'sidebarWidgets' => [
+          ['type' => 'history-timeline'],
+          [
+              'type' => 'chart',
+              'options' => [
+                  'toggle' => false,
+                  'headerTitle' => true,
+                  'charts' => [
+                      [
+                          'chartKey' => 'accounts-past-years-closed-opportunity-amounts',
+                          'chartType' => 'line-chart',
+                          'statisticsType' => 'accounts-past-years-closed-opportunity-amounts',
+                          'labelKey' => 'LBL_SPEND_PER_YEAR',
+                          'chartOptions' => []
+                      ]
+                  ]
+              ]
+          ]
+      ],
       'panels' =>
           array(
               'lbl_account_information' =>

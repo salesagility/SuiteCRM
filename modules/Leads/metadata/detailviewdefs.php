@@ -148,6 +148,9 @@ array(
               ],
           ]
       ],
+      'sidebarWidgets' => [
+          ['type' => 'history-timeline']
+      ],
     'panels' =>
     array(
       'LBL_CONTACT_INFORMATION' =>

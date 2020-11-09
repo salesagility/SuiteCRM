@@ -94,6 +94,9 @@ array(
               ],
           ]
       ],
+      'sidebarWidgets' => [
+          ['type' => 'history-timeline']
+      ],
     'panels' =>
     array(
       'default' =>
