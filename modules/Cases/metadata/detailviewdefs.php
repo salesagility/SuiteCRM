@@ -95,7 +95,50 @@ array(
           ]
       ],
       'sidebarWidgets' => [
-          ['type' => 'history-timeline']
+          [
+              'type' => 'statistics',
+              'labelKey' => 'LBL_OPEN_CASES',
+              'options' => [
+                  'sidebarStatistic' => [
+                      'rows' => [
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'labelKey' => 'LBL_CASES_PER_ACCOUNT',
+                                      'size' => 'medium',
+                                  ],
+                              ]
+                          ],
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'statistic' => 'cases-per-account',
+                                      'size' => 'xx-large',
+                                      'bold' => true,
+                                      'color' => 'green'
+                                  ]
+                              ]
+                          ],
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'labelKey' => 'LBL_SINCE',
+                                      'size' => 'regular',
+                                  ],
+                                  [
+                                      'statistic' => 'get-account-date-entered',
+                                      'size' => 'regular',
+                                  ],
+                              ]
+                          ],
+                      ]
+                  ]
+              ]
+          ],
+          ['type' => 'history-timeline'],
       ],
     'panels' =>
     array(
