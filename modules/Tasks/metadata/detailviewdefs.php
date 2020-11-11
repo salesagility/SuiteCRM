@@ -124,6 +124,17 @@ array(
         ),
       ),
     ),
+      'topWidget' => [
+          'type' => 'statistics',
+          'options' => [
+              'statistics' => [
+                  [
+                      'labelKey' => 'LBL_DAYS_UNTIL_DUE_TASK',
+                      'type' => 'days-until-due-task'
+                  ],
+              ],
+          ]
+      ],
     'panels' =>
     array(
       'lbl_task_information' =>

@@ -3764,3 +3764,5 @@ $app_strings['LBL_CASE_TOTAL_DAYS_OPEN'] = 'Total Days Open';
 $app_strings['LBL_DAYS_OPEN'] = 'Days Open';
 $app_strings['LBL_DAYS_IN_SALE_STAGE'] = 'Days in Sales Stage';
 $app_strings['LBL_SPEND_PER_YEAR'] = 'Spend Per Year';
+$app_strings['LBL_DAYS_UNTIL_DUE_TASK'] = 'Days Until Task is Due: ';
+$app_strings['LBL_DAYS_OVERDUE'] = 'Days Task is Overdue: ';
