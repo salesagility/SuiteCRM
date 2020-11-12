@@ -176,7 +176,7 @@ array(
           'options' => [
               'statistics' => [
                   [
-                      'labelKey' => 'LBL_LAST_MEETING',
+                      'labelKey' => '',
                       'type' => 'contact-last-touchpoint'
                   ],
               ],
