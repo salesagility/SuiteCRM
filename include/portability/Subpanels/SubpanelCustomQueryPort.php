@@ -10,18 +10,17 @@ class SubpanelCustomQueryPort
      */
     public function getQueries(SugarBean $bean, string $subpanel = ''): array
     {
-
         /* @noinspection PhpIncludeInspection */
         require_once 'include/SubPanel/SubPanelDefinitions.php';
 
         $spd = new SubPanelDefinitions($bean);
         $subpanel_def = $spd->load_subpanel($subpanel);
 
-        $subpanel_list = array();
+        $subpanel_list = [];
         if (method_exists($subpanel_def, 'isCollection')) {
             if ($subpanel_def->isCollection()) {
                 if ($subpanel_def->load_sub_subpanels() === false) {
-                    $subpanel_list = array();
+                    $subpanel_list = [];
                 } else {
                     $subpanel_list = $subpanel_def->sub_subpanels;
                 }
@@ -44,8 +43,12 @@ class SubpanelCustomQueryPort
     {
         $db = DBManagerFactory::getInstance('listviews');
         $result = $db->query($query, true, "SubpanelCustomQueryPort: Error executing custom query");
+        $rows = $db->fetchByAssoc($result);
+        if (empty($rows)) {
+            return [];
+        }
 
-        return $db->fetchByAssoc($result);
+        return $rows;
     }
 
     /**

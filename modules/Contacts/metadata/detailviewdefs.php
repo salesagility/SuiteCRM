@@ -176,7 +176,7 @@ array(
           'options' => [
               'statistics' => [
                   [
-                      'labelKey' => 'LBL_DAYS_OPEN',
+                      'labelKey' => 'LBL_LAST_MEETING',
                       'type' => 'contact-last-touchpoint'
                   ],
               ],
