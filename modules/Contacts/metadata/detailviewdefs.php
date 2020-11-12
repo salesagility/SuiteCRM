@@ -171,6 +171,17 @@ array(
         ),
       ),
     ),
+      'topWidget' => [
+          'type' => 'statistics',
+          'options' => [
+              'statistics' => [
+                  [
+                      'labelKey' => 'LBL_DAYS_OPEN',
+                      'type' => 'contact-last-touchpoint'
+                  ],
+              ],
+          ]
+      ],
     'sidebarWidgets' => [
         ['type' => 'history-timeline']
     ],

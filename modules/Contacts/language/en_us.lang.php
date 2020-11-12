@@ -216,4 +216,8 @@ $mod_strings = array(
     'LBL_AOS_INVOICES' => 'Invoices',
     'LBL_AOS_QUOTES' => 'Quotes',
     'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project Contacts from Project Title',
+    'LBL_LAST_MEETING' => 'Your last interaction was a meeting on :',
+    'LBL_LAST_CALL' => 'Your last interaction was a call on :',
+    'LBL_LAST_EMAIL' => 'Your last interaction was a email on :',
+    'LBL_NO_INTERACTION' => 'You have yet to interact with this contact.',
 );
