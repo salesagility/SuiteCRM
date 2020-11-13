@@ -103,10 +103,15 @@ $mod_strings = array(
     'LBL_CAMPAIGN_OPPORTUNITY' => 'Campaigns',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LNK_IMPORT_OPPORTUNITIES' => 'Import Opportunities',
-    'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
+    'LBL_EDITLAYOUT' => 'Edit Layout'
+    /*for 508 compliance fix*/,
 
     // SNIP
 
     'LBL_AOS_CONTRACTS' => 'Contracts',
     'LBL_AOS_QUOTES' => 'Quotes',
+
+    'LBL_SIZE_ANALYSIS' => 'Size Analysis',
+    'LBL_POSITION' => 'Position',
+    'LBL_OUT_OF' => 'Out of',
 );

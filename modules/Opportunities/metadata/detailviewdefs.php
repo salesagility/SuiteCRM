@@ -95,7 +95,50 @@ array(
           ]
       ],
       'sidebarWidgets' => [
-          ['type' => 'history-timeline']
+          [
+              'type' => 'statistics',
+              'labelKey' => 'LBL_SIZE_ANALYSIS',
+              'options' => [
+                  'sidebarStatistic' => [
+                      'rows' => [
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'labelKey' => 'LBL_POSITION',
+                                      'size' => 'medium',
+                                  ],
+                              ]
+                          ],
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'statistic' => 'opportunity-sales-stage-time-span',
+                                      'size' => 'xx-large',
+                                      'bold' => true,
+                                      'color' => 'green'
+                                  ]
+                              ]
+                          ],
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'labelKey' => 'LBL_OUT_OF',
+                                      'size' => 'regular',
+                                  ],
+                                  [
+                                      'statistic' => 'opportunity-sales-stage-time-span',
+                                      'size' => 'regular',
+                                  ],
+                              ]
+                          ],
+                      ]
+                  ]
+              ]
+          ],
+          ['type' => 'history-timeline'],
       ],
     'panels' =>
     array(
