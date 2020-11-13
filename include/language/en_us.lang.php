@@ -946,7 +946,7 @@ $app_list_strings = array(
         'expandlegend' => 'Expand Legend',
         'collapselegend' => 'Collapse Legend',
         'clickfordrilldown' => 'Click for Drilldown',
-        'detailview' => 'More Details...',
+        'detailview' => 'More Details&hellip;',
         'piechart' => 'Pie Chart',
         'groupchart' => 'Group Chart',
         'stackedchart' => 'Stacked Chart',
@@ -1129,7 +1129,7 @@ $app_strings = array(
     'LBL_EMAIL_CHARSET' => 'Character Set',
     'LBL_EMAIL_CHECK' => 'Check Mail',
     'LBL_EMAIL_CHECKING_NEW' => 'Checking for New Email',
-    'LBL_EMAIL_CHECKING_DESC' => 'One moment please... <br><br>If this is the first check for the mail account, it may take some time.',
+    'LBL_EMAIL_CHECKING_DESC' => 'One moment please&hellip; <br><br>If this is the first check for the mail account, it may take some time.',
     'LBL_EMAIL_CLOSE' => 'Close',
     'LBL_EMAIL_COFFEE_BREAK' => 'Checking for New Email. <br><br>Large mail accounts may take a considerable amount of time.',
 
@@ -1235,7 +1235,7 @@ $app_strings = array(
     'LBL_EMAIL_IMPORT_EMAIL' => 'Import into SuiteCRM',
     'LBL_EMAIL_IMPORT_SETTINGS' => 'Import Settings',
     'LBL_EMAIL_INVALID' => 'Invalid',
-    'LBL_EMAIL_LOADING' => 'Loading...',
+    'LBL_EMAIL_LOADING' => 'Loading&hellip;',
     'LBL_EMAIL_MARK' => 'Mark',
     'LBL_EMAIL_MARK_FLAGGED' => 'As Flagged',
     'LBL_EMAIL_MARK_READ' => 'As Read',
@@ -1273,7 +1273,7 @@ $app_strings = array(
     'LBL_EMAIL_NOT_SENT' => 'System is unable to process your request. Please contact the system administrator.',
 
     'LBL_EMAIL_OK' => 'OK',
-    'LBL_EMAIL_ONE_MOMENT' => 'One moment please...',
+    'LBL_EMAIL_ONE_MOMENT' => 'One moment please&hellip;',
     'LBL_EMAIL_OPEN_ALL' => 'Open Multiple Messages',
     'LBL_EMAIL_OPTIONS' => 'Options',
     'LBL_EMAIL_QUICK_COMPOSE' => 'Quick Compose',
@@ -1733,8 +1733,8 @@ $app_strings = array(
     'LBL_UPDATE' => 'Update',
     'LBL_USER_LIST' => 'User List',
     'LBL_USERS' => 'Users',
-    'LBL_VERIFY_EMAIL_ADDRESS' => 'Checking for existing email entry...',
-    'LBL_VERIFY_PORTAL_NAME' => 'Checking for existing portal name...',
+    'LBL_VERIFY_EMAIL_ADDRESS' => 'Checking for existing email entry&hellip;',
+    'LBL_VERIFY_PORTAL_NAME' => 'Checking for existing portal name&hellip;',
     'LBL_VIEW_IMAGE' => 'view',
 
     'LNK_ABOUT' => 'About',
@@ -1791,9 +1791,9 @@ $app_strings = array(
     'LBL_MANAGE_SUBSCRIPTIONS' => 'Manage Subscriptions',
     'LBL_MANAGE_SUBSCRIPTIONS_FOR' => 'Manage Subscriptions for ',
     // Ajax status strings
-    'LBL_LOADING' => 'Loading...',
-    'LBL_SEARCHING' => 'Searching...',
-    'LBL_SAVING_LAYOUT' => 'Saving Layout...',
+    'LBL_LOADING' => 'Loading&hellip;',
+    'LBL_SEARCHING' => 'Searching&hellip;',
+    'LBL_SAVING_LAYOUT' => 'Saving Layout&hellip;',
     'LBL_SAVED_LAYOUT' => 'Layout has been saved.',
     'LBL_SAVED' => 'Saved',
     'LBL_SAVING' => 'Saving',
@@ -1801,7 +1801,7 @@ $app_strings = array(
     'LBL_HIDE_COLUMNS' => 'Hide Columns',
     'LBL_SEARCH_CRITERIA' => 'Search Criteria',
     'LBL_SAVED_VIEWS' => 'Saved Views',
-    'LBL_PROCESSING_REQUEST' => 'Processing...',
+    'LBL_PROCESSING_REQUEST' => 'Processing&hellip;',
     'LBL_REQUEST_PROCESSED' => 'Done',
     'LBL_AJAX_FAILURE' => 'Ajax failure',
     'LBL_MERGE_DUPLICATES' => 'Merge',
@@ -1834,7 +1834,7 @@ $app_strings = array(
     'MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION' => 'Location isn\'t set.',
     'MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE' => 'Start date isn\'t defined.',
     'MSG_LIST_VIEW_NO_RESULTS_BASIC' => 'No results found.',
-    'MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA' => 'No results found... Perhaps change your search criteria and try again?',
+    'MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA' => 'No results found&hellip; Perhaps change your search criteria and try again?',
     'MSG_LIST_VIEW_NO_RESULTS' => 'No results found for <item1>',
     'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => 'Create <item1> as a new <item2>',
     'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
@@ -1883,16 +1883,16 @@ $app_strings = array(
     'LBL_DASHLET_CONFIGURE_DISPLAY_ROWS' => 'Display Rows',
 
     // MySugar status strings
-    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
-    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
+    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your administrator has set. Please remove a SuiteCRM Dashlet to add more.',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet&hellip;',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet&hellip;',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
 
     // MySugar Menu Options
 
-    'LBL_LOADING_PAGE' => 'Loading page, please wait...',
+    'LBL_LOADING_PAGE' => 'Loading page, please wait&hellip;',
 
     'LBL_RELOAD_PAGE' => 'Please <a href="javascript: window.location.reload()">reload the window</a> to use this SuiteCRM Dashlet.',
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
