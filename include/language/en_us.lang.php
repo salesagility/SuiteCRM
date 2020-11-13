@@ -606,7 +606,7 @@ $app_list_strings = array(
         'Upgrade' => 'Upgrade',
         'Users' => 'Users',
     ),
-    /*Added entries 'Queued' and 'Sending' for 4.0 release..*/
+    /*Added entries 'Queued' and 'Sending' for 4.0 release…*/
     'campaign_status_dom' => array(
         '' => '',
         'Planning' => 'Planning',
