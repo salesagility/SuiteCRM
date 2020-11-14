@@ -6,7 +6,7 @@
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="action_create">
-            <text id="+" font-family="Lato-Black, Lato" font-size="28" font-weight="700" fill="#F5F5F5">
+            <text id="+" font-family="LatoLatin-Black, LatoLatin" font-size="28" font-weight="700" fill="#F5F5F5">
                 <tspan x="8" y="25">+</tspan>
             </text>
             <circle id="Oval-7" stroke="#F5F5F5" cx="16" cy="16" r="15"></circle>
