@@ -38,225 +38,225 @@
  */
 
 .chartTitle {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 14px;
-	font-weight: bold;
-	color: #444444;
-	padding: 5px;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  color: #444444;
+  padding: 5px;
 }
 
 .units {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 12px;
-	font-weight: normal;
-	color: #555555;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 12px;
+  font-weight: normal;
+  color: #555555;
 }
 
 .groupName {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 12px;
-	font-weight: bold;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
 }
 
 .noData {
-    font-family: "Lato",Arial;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333333;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
 }
 
 .data {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 12px;
-	font-weight: bold;
-	color: #000000;
-	line-height: 30px;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+  line-height: 30px;
 }
 
 .drillTip {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .toolTips {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 12px;
-	font-weight: bold;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
 }
 
 .flyOutTitle{
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 11px;
-	font-weight: normal;
-	color: #eeeeee;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 11px;
+  font-weight: normal;
+  color: #eeeeee;
 }
 
 .flyOutText{
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 12px;
-	font-weight: normal;
-	color: #444444;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 12px;
+  font-weight: normal;
+  color: #444444;
 }
 
 .flyOutSelected{
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 12px;
-	font-weight: bold;
-	color: #444444;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 12px;
+  font-weight: bold;
+  color: #444444;
 }
 
 .flyOutDisabled{
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 12px;
-	font-style: italic;
-	color: #666666;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 12px;
+  font-style: italic;
+  color: #666666;
 }
 
 .wedgeLabels {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .barValueLabels {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .barValueLabelsOver {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 10px;
-	font-weight: normal;
-	color: #0000FF;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: #0000FF;
 }
 
 .horizontalBarValueLabels {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .horizontalBarValueLabelsOver {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 10px;
-	font-weight: normal;
-	color: #0000FF;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 10px;
+  font-weight: normal;
+  color: #0000FF;
 }
 
 .horizontalBarGroupLabels {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .barGroupLabels {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .yAxisLabels {
-	font-family: "Lato",Arial;
-	text-align: center;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .funnelLeftLabels {
-	font-family: "Lato",Arial;
-	text-align: right;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: right;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .funnelRightLabels {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
 }
 
 .funnelLeftLabelsOver {
-	font-family: "Lato",Arial;
-	text-align: right;
-	font-size: 10px;
-	font-weight: bold;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: right;
+  font-size: 10px;
+  font-weight: bold;
+  color: #000000;
 }
 
 .funnelRightLabelsOver {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 10px;
-	font-weight: bold;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 10px;
+  font-weight: bold;
+  color: #000000;
 }
 .gaugeLabels {
-    font-family: "Lato",Arial;
-    text-align: center;
-    font-size: 10px;
-    font-weight: bold;
-    color: #333333;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: #333333;
 }
 
 .gaugeNumber {
-    font-family: "Lato",Arial;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
 }
 
 .legendEntry {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 11px;
-	font-weight: normal;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 11px;
+  font-weight: normal;
+  color: #000000;
 }
 .legendEntryOver {
-	font-family: "Lato",Arial;
-	text-align: left;
-	font-size: 11px;
-	font-weight: bold;
-	color: #000000;
+  font-family: "LatoLatin", Arial;
+  text-align: left;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
 }
 
 .squeezedWedgeLabels {
-    font-family: "Lato",Arial;
-    text-align: center;
-    font-size: 10px;
-    font-weight: normal;
-    color: #aaaaaa;
+  font-family: "LatoLatin", Arial;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+  color: #aaaaaa;
 }
