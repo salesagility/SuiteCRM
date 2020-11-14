@@ -1,140 +1,140 @@
 /*  latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 100;
-    src: local('LatoLatin Hairline'), local('LatoLatin-Hairline'), url('../fonts/LatoLatin-Hairline.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 100;
+  src: local('LatoLatin Hairline'), local('LatoLatin-Hairline'), url('../fonts/LatoLatin-Hairline.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 100;
-    src: local('LatoLatin Hairline'), local('LatoLatin-Hairline'), url('../fonts/LatoLatin-Hairline.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 100;
+  src: local('LatoLatin Hairline'), local('LatoLatin-Hairline'), url('../fonts/LatoLatin-Hairline.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 300;
-    src: local('LatoLatin Light'), local('LatoLatin-Light'), url('../fonts/LatoLatin-Light.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 300;
+  src: local('LatoLatin Light'), local('LatoLatin-Light'), url('../fonts/LatoLatin-Light.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 300;
-    src: local('LatoLatin Light'), local('LatoLatin-Light'), url('../fonts/LatoLatin-Light.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 300;
+  src: local('LatoLatin Light'), local('LatoLatin-Light'), url('../fonts/LatoLatin-Light.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 400;
-    src: local('LatoLatin Regular'), local('LatoLatin-Regular'), url('../fonts/LatoLatin-Regular.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 400;
+  src: local('LatoLatin Regular'), local('LatoLatin-Regular'), url('../fonts/LatoLatin-Regular.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 400;
-    src: local('LatoLatin Regular'), local('LatoLatin-Regular'), url('../fonts/LatoLatin-Regular.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 400;
+  src: local('LatoLatin Regular'), local('LatoLatin-Regular'), url('../fonts/LatoLatin-Regular.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 700;
-    src: local('LatoLatin Bold'), local('LatoLatin-Bold'), url('../fonts/LatoLatin-Bold.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 700;
+  src: local('LatoLatin Bold'), local('LatoLatin-Bold'), url('../fonts/LatoLatin-Bold.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 700;
-    src: local('LatoLatin Bold'), local('LatoLatin-Bold'), url('../fonts/LatoLatin-Bold.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 700;
+  src: local('LatoLatin Bold'), local('LatoLatin-Bold'), url('../fonts/LatoLatin-Bold.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 900;
-    src: local('LatoLatin Black'), local('LatoLatin-Black'), url('../fonts/LatoLatin-Black.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 900;
+  src: local('LatoLatin Black'), local('LatoLatin-Black'), url('../fonts/LatoLatin-Black.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: normal;
-    font-weight: 900;
-    src: local('LatoLatin Black'), local('LatoLatin-Black'), url('../fonts/LatoLatin-Black.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: normal;
+  font-weight: 900;
+  src: local('LatoLatin Black'), local('LatoLatin-Black'), url('../fonts/LatoLatin-Black.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 100;
-    src: local('LatoLatin Hairline Italic'), local('LatoLatin-HairlineItalic'), url('../fonts/LatoLatin-HairlineItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 100;
+  src: local('LatoLatin Hairline Italic'), local('LatoLatin-HairlineItalic'), url('../fonts/LatoLatin-HairlineItalic.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 100;
-    src: local('LatoLatin Hairline Italic'), local('LatoLatin-HairlineItalic'), url('../fonts/LatoLatin-HairlineItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 100;
+  src: local('LatoLatin Hairline Italic'), local('LatoLatin-HairlineItalic'), url('../fonts/LatoLatin-HairlineItalic.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 300;
-    src: local('LatoLatin Light Italic'), local('LatoLatin-LightItalic'), url('../fonts/LatoLatin-LightItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 300;
+  src: local('LatoLatin Light Italic'), local('LatoLatin-LightItalic'), url('../fonts/LatoLatin-LightItalic.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 300;
-    src: local('LatoLatin Light Italic'), local('LatoLatin-LightItalic'), url('../fonts/LatoLatin-LightItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 300;
+  src: local('LatoLatin Light Italic'), local('LatoLatin-LightItalic'), url('../fonts/LatoLatin-LightItalic.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 400;
-    src: local('LatoLatin Italic'), local('LatoLatin-Italic'), url('../fonts/LatoLatin-Italic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 400;
+  src: local('LatoLatin Italic'), local('LatoLatin-Italic'), url('../fonts/LatoLatin-Italic.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 400;
-    src: local('LatoLatin Italic'), local('LatoLatin-Italic'), url('../fonts/LatoLatin-Italic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 400;
+  src: local('LatoLatin Italic'), local('LatoLatin-Italic'), url('../fonts/LatoLatin-Italic.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 700;
-    src: local('LatoLatin Bold Italic'), local('LatoLatin-BoldItalic'), url('../fonts/LatoLatin-BoldItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 700;
+  src: local('LatoLatin Bold Italic'), local('LatoLatin-BoldItalic'), url('../fonts/LatoLatin-BoldItalic.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 700;
-    src: local('LatoLatin Bold Italic'), local('LatoLatin-BoldItalic'), url('../fonts/LatoLatin-BoldItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 700;
+  src: local('LatoLatin Bold Italic'), local('LatoLatin-BoldItalic'), url('../fonts/LatoLatin-BoldItalic.ttf') format('truetype');
 }
 /* latin-ext */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 900;
-    src: local('LatoLatin Black Italic'), local('LatoLatin-BlackItalic'), url('../fonts/LatoLatin-BlackItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 900;
+  src: local('LatoLatin Black Italic'), local('LatoLatin-BlackItalic'), url('../fonts/LatoLatin-BlackItalic.ttf') format('truetype');
 }
 /* latin */
 @font-face {
-    font-family: 'LatoLatin';
-    font-style: italic;
-    font-weight: 900;
-    src: local('LatoLatin Black Italic'), local('LatoLatin-BlackItalic'), url('../fonts/LatoLatin-BlackItalic.ttf') format('truetype');
+  font-family: 'LatoLatin';
+  font-style: italic;
+  font-weight: 900;
+  src: local('LatoLatin Black Italic'), local('LatoLatin-BlackItalic'), url('../fonts/LatoLatin-BlackItalic.ttf') format('truetype');
 }
