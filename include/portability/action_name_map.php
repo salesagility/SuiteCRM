@@ -5,6 +5,7 @@ $action_name_map = [
     'multieditview' => 'multieditview',
     'DetailView' => 'record',
     'EditView' => 'edit',
+    'editview' => 'duplicate',
     'ListView' => 'list',
     'Popup' => 'popup',
     'vcard' => 'vcard',
