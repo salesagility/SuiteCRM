@@ -50,15 +50,15 @@
                                 {{/if}}
                                 {{if isset($colData.field.popupHelp) || isset($fields[$colData.field.name]) && isset($fields[$colData.field.name].popupHelp) }}
                                     {{if isset($colData.field.popupHelp)}}
-                                        {{capture name="popupText" assign="popupText"}}
-                                            {sugar_translate label="{$colData.field.popupHelp}" module='{{$module}}'}
-                                        {{/capture}}
+                                        {capture name="popupText" assign="popupText"}
+                                            {sugar_translate label="{{$colData.field.popupHelp}}" module="{{$module}}"}
+                                        {/capture}
                                     {{elseif isset($fields[$colData.field.name].popupHelp)}}
                                         {capture name="popupText" assign="popupText"}
                                             {sugar_translate label="{{$fields[$colData.field.name].popupHelp}}" module='{{$module}}'}
                                         {/capture}
                                     {{/if}}
-                                    {sugar_help text=$popupText WIDTH=-1}
+                                    {sugar_help text=$popupText WIDTH=400}
                                 {{/if}}
                                 {/minify}
                             </div>
