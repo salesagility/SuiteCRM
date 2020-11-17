@@ -114,7 +114,7 @@ array(
                               'align' => 'start',
                               'cols' => [
                                   [
-                                      'statistic' => 'opportunity-sales-stage-time-span',
+                                      'statistic' => 'opportunity-size-analysis',
                                       'size' => 'xx-large',
                                       'bold' => true,
                                       'color' => 'green'
@@ -129,7 +129,7 @@ array(
                                       'size' => 'regular',
                                   ],
                                   [
-                                      'statistic' => 'opportunity-sales-stage-time-span',
+                                      'statistic' => 'assigned-user-opportunities-count',
                                       'size' => 'regular',
                                   ],
                               ]
