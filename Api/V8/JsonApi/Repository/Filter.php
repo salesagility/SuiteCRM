@@ -47,7 +47,19 @@ class Filter
 
         $where = [];
         foreach ($params as $field => $expr) {
-            if (empty($bean->field_defs[$field])) {
+            $tableName = "";
+            if (array_key_exists($field, $bean->field_name_map) && !empty($bean->field_name_map[$field]))
+            {
+              if (array_key_exists("source", $bean->field_name_map[$field]) && $bean->field_name_map[$field]["source"] == "custom_fields") $tableName = $bean->getTableName() . "_cstm";
+              else if (!empty($bean->field_defs[$field])) $tableName = $bean->getTableName();
+              else {
+                throw new \InvalidArgumentException(sprintf(
+                    'Filter field %s in %s module is not found',
+                    $field,
+                    $bean->getObjectName()
+                ));
+              }
+            } else {
                 throw new \InvalidArgumentException(sprintf(
                     'Filter field %s in %s module is not found',
                     $field,
@@ -63,7 +75,7 @@ class Filter
                 $this->checkOperator($op);
                 $where[] = sprintf(
                     '%s.%s %s %s',
-                    $bean->getTableName(),
+                    $tableName,
                     $field,
                     constant(sprintf('%s::OP_%s', self::class, strtoupper($op))),
                     $this->db->quoted($value)

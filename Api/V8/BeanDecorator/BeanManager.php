@@ -216,15 +216,20 @@ class BeanManager
      */
     public function countRecords($module, $where)
     {
-        $rowCount = $this->db->fetchRow(
-            $this->db->query(
-                sprintf(
-                    "SELECT COUNT(*) AS cnt FROM %s %s",
+        $query = sprintf(
+                  "SELECT COUNT(*) AS cnt FROM %s %s",
+                  $this->newBeanSafe($module)->getTableName(),
+                  $where === '' ? '' : 'WHERE ' .  $where
+                 );
+        if (strtok($where,".") != $this->newBeanSafe($module)->getTableName()) {
+          $query = sprintf(
+                    "SELECT COUNT(*) AS cnt FROM %s, %s %s",
+                    strtok($where, '.'),
                     $this->newBeanSafe($module)->getTableName(),
                     $where === '' ? '' : 'WHERE ' .  $where
-                )
-            )
-        )["cnt"];
+                   );
+        }
+        $rowCount = $this->db->fetchRow($this->db->query($query))["cnt"];
 
         return (int)$rowCount;
     }
