@@ -6,6 +6,7 @@ require_once 'include/portability/ApiBeanMapper/TypeMappers/FullNameMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/DateMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/DateTimeMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/MultiEnumMapper.php';
+require_once 'include/portability/ApiBeanMapper/TypeMappers/BooleanMapper.php';
 
 class ApiBeanMapper
 {
@@ -27,6 +28,8 @@ class ApiBeanMapper
         $this->typeMappers[DateMapper::getType()] = new DateMapper();
         $this->typeMappers[DateTimeMapper::getType()] = new DateTimeMapper();
         $this->typeMappers[MultiEnumMapper::getType()] = new MultiEnumMapper();
+        $this->typeMappers[BooleanMapper::getType()] = new BooleanMapper();
+        $this->typeMappers['boolean'] = $this->typeMappers[BooleanMapper::getType()];
     }
 
     /**
