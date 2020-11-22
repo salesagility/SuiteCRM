@@ -336,7 +336,7 @@ function format_number($amount, $round = null, $decimals = null, $params = array
     static $last_override_currency = null;
     static $override_currency_id = null;
     static $currency;
-
+    setlocale(LC_MONETARY, 'en_IN');        // set lacale for number format
     $seps = get_number_separators();
     $num_grp_sep = $seps[0];
     $dec_sep = $seps[1];
@@ -399,8 +399,9 @@ function format_number($amount, $round = null, $decimals = null, $params = array
         $symbol = $locale->translateCharset($symbol, 'UTF-8', $locale->getExportCharset());
     }
 
-    if (empty($params['human'])) {
-        $amount = number_format(round($amount, $round), $decimals, $dec_sep, $num_grp_sep);
+    if (empty($params['human'])) {        
+        //$amount = number_format(round($amount, $round), $decimals, $dec_sep, $num_grp_sep);
+        $amount = money_format('%!.'.$round.'i',$amount);
         $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
     } else {
         // If amount is more greater than a thousand(positive or negative)
