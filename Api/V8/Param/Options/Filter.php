@@ -25,7 +25,11 @@ class Filter extends BaseOption
             ]))
             ->setNormalizer('filter', function (Options $options, $values) {
                 // we don't support multiple level filtering. for now.
-                $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
+                if ($options->offsetExists('linkFieldName')) {
+                    $bean = $this->beanManager->getLinkedFieldBean($options->offsetGet('sourceBean'), $options->offsetGet('linkFieldName'));
+                } else {
+                    $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
+                }
                 $filter = new FilterRepository($bean->db);
 
                 return $filter->parseWhere($bean, $values);
