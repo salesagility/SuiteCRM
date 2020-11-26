@@ -117,7 +117,6 @@ array(
           ]
       ],
       'sidebarWidgets' => [
-          ['type' => 'history-timeline'],
           [
               'type' => 'chart',
               'options' => [
@@ -133,7 +132,8 @@ array(
                       ]
                   ]
               ]
-          ]
+          ],
+          ['type' => 'history-timeline'],
       ],
       'panels' =>
           array(
