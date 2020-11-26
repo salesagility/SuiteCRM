@@ -44,10 +44,11 @@ class RelationshipService
      */
     public function getRelationship(GetRelationshipParams $params)
     {
+        $response = new DocumentResponse();
         $sourceBean = $params->getSourceBean();
         $linkFieldName = $params->getLinkedFieldName();
-        $relatedBeans = $sourceBean->get_linked_beans($linkFieldName);
-        $response = new DocumentResponse();
+
+        $relatedBeans = $sourceBean->$linkFieldName->getBeans();
 
         if (!$relatedBeans) {
             $response->setMeta(new MetaResponse(
@@ -67,6 +68,7 @@ class RelationshipService
                 $linkResponse->setSelf(sprintf('V8/module/%s/%s', $relatedBean->getObjectName(), $relatedBean->id));
 
                 $dataResponse = new DataResponse($relatedBean->getObjectName(), $relatedBean->id);
+                $dataResponse->setAttributes($this->attributeHelper->getAttributes($relatedBean));
                 $dataResponse->setLinks($linkResponse);
                 $data[] = $dataResponse;
             }
