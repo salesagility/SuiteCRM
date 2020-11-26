@@ -209,6 +209,35 @@ class BeanManager
     }
 
     /**
+     * @param \SugarBean $sourceBean
+     * @param string $linkFieldName
+     * @return SugarBean
+     */
+    public function getLinkedFieldBean(\SugarBean $sourceBean, $linkFieldName)
+    {
+        if (!$sourceBean->load_relationship($linkFieldName)) {
+            throw new \RuntimeException(
+                sprintf('Cannot load relationship %s for %s module', $linkFieldName, $sourceBean->getObjectName())
+            );
+        }
+
+        $linkFieldModule = $sourceBean->$linkFieldName->getRelatedModuleName();
+        $linkFieldBean = $this->getBean($linkFieldModule);
+
+        if (!$linkFieldBean) {
+            throw new \DomainException(
+                sprintf(
+                    'Link field has not found in %s to determine relationship for %s',
+                    $sourceBean->getObjectName(),
+                    $linkFieldName
+                )
+            );
+        }
+
+        return $linkFieldBean;
+    }
+
+    /**
      * @param string $module
      * @param string $where
      *
