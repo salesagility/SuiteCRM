@@ -1053,7 +1053,7 @@
       }
 
       if (typeof opts.tinyMceOptions.selector === "undefined") {
-        opts.tinyMceOptions.selector = 'form[name="ComposeView"] textarea#description';
+        opts.tinyMceOptions.selector = 'form[name="ComposeView"] textarea[id=description]';
       }
 
       if ($(self).find('#from_addr_name').length !== 0) {
