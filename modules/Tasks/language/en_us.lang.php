@@ -68,6 +68,7 @@ $mod_strings = array(
     'DATE_FORMAT' => '(yyyy-mm-dd)',
     'LBL_DAYS_UNTIL_DUE_TASK' => 'Days Until Task is Due ',
     'LBL_DAYS_OVERDUE' => 'Days Task is Overdue ',
+    'LBL_TASK_COMPLETED' => 'This Task is Completed',
     'LBL_NONE' => 'None',
     'LBL_CONTACT' => 'Contact:',
     'LBL_EMAIL_ADDRESS' => 'Email Address:',
