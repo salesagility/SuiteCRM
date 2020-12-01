@@ -67,6 +67,8 @@ class AOW_WorkFlow extends Basic
     public $run_when;
     public $flow_run_on;
     public $multiple_runs;
+    public $limit_beans = 0;
+
 
     /**
      * return an SQL operator
@@ -274,6 +276,9 @@ class AOW_WorkFlow extends Basic
                         $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
                     }
                     $query .= ' '.$query_where;
+                }
+                if ($this->limit_beans > 0) {
+                    $query .= ' LIMIT ' . $this->limit_beans;
                 }
                 return $module->process_full_list_query($query);
             }

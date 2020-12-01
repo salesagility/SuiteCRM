@@ -76,5 +76,6 @@ $mod_strings = array(
     'LBL_ACTION_LINES' => 'Actions',
     'LBL_ADD_ACTION' => 'Add Action',
     'LBL_MULTIPLE_RUNS' => 'Repeated Runs',
+    'LBL_LIMIT_BEANS' => 'Limit Beans per Run (0 means no limit)',
     'LBL_RUN_WHEN' => 'Run'
 );
