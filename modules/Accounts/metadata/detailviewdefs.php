@@ -105,7 +105,7 @@ array(
           'options' => [
               'statistics' => [
                   [
-                      'labelKey' => 'LBL_AVERAGE_SPEND_PER_YEAR',
+                      'labelKey' => 'LBL_AVERAGE_CLOSED_WON_PER_YEAR',
                       'type' => 'accounts-won-opportunity-amount-by-year'
                   ],
                   [
@@ -127,7 +127,7 @@ array(
                           'chartKey' => 'accounts-past-years-closed-opportunity-amounts',
                           'chartType' => 'line-chart',
                           'statisticsType' => 'accounts-past-years-closed-opportunity-amounts',
-                          'labelKey' => 'LBL_SPEND_PER_YEAR',
+                          'labelKey' => 'LBL_CLOSED_PER_YEAR',
                           'chartOptions' => []
                       ]
                   ]
