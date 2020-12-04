@@ -75,7 +75,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         if ($bean_name == 'aCase') {
             $bean_name = 'Case';
         }
-        if (!file_exists('modules/' . $module . '/' . $bean_name . '.php')) {
+        if (!file_exists($beanFiles[$bean_name])) {
             die($app_strings['ERROR_TYPE_NOT_VALID']);
         }
 
