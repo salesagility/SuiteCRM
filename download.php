@@ -75,7 +75,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         if ($bean_name == 'aCase') {
             $bean_name = 'Case';
         }
-        if (!file_exists($beanFiles[$bean_name])) {
+        if (!file_exists('modules/' . $module . '/' . $bean_name . '.php')) {
             die($app_strings['ERROR_TYPE_NOT_VALID']);
         }
 
@@ -206,7 +206,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
                 $mime_type = 'application/octet-stream';
             break;
         }
-
+        
         if ($doQuery && isset($query)) {
             $rs = DBManagerFactory::getInstance()->query($query);
             $row = DBManagerFactory::getInstance()->fetchByAssoc($rs);
@@ -281,8 +281,8 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
 
         ob_start();
         echo clean_file_output(file_get_contents($download_location), $mime_type);
-
+        
         $output = ob_get_contents();
         ob_end_clean();
-
+        
         echo $output;
