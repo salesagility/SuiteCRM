@@ -46,12 +46,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $moduleList;
 global $beanList;
 global $beanFiles;
+global $objectList;
 global $customBeanList;
 global $customObjectList;
 global $customBeanFiles;
 global $modInvisList;
 global $adminOnlyList;
 global $report_include_modules;
+global $modules_exempt_from_availability_check;
 
 $customBeanList = [];
 $customObjectList = [];
