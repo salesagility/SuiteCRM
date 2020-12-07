@@ -175,16 +175,16 @@
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-									<span class="suitepicon suitepicon-action-sorting-ascending" title="{$alt_sort}"></span>
+									<span class="sort" title="{$alt_sort}">{sugar_getimage name="sort_ascend"}</span>
 								{else}
 									{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
 									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-									<span class="suitepicon suitepicon-action-sorting-descending" title="{$alt_sort}"></span>
+									<span class="sort "title="{$alt_sort}">{sugar_getimage name="sort_descend"}</span>
 								{/if}
 							{else}
 								{capture assign="imageName"}arrow.{$arrowExt}{/capture}
 								{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
-								<span class="suitepicon suitepicon-action-sorting-none" title="{$alt_sort}"></span>
+								<span class="sort" title="{$alt_sort}">{sugar_getimage name="sort"}</span>
 							{/if}
 							</a>
 						{else}

@@ -48,7 +48,6 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
     <!-- Bootstrap -->
     <link href="themes/suite8/css/normalize.css" rel="stylesheet" type="text/css"/>
-    <link href='themes/suite8/css/fonts.css' rel='stylesheet' type='text/css'>
     <link href="themes/suite8/css/grid.css" rel="stylesheet" type="text/css"/>
     <link href="themes/suite8/css/footable.core.css" rel="stylesheet" type="text/css"/>
     <title>{$APP.LBL_BROWSER_TITLE}</title>

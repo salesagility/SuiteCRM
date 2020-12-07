@@ -27,6 +27,20 @@ tr#pagination {
   border: 0;
 }
 
+/*Horziontal line */
+
+.hr-container {
+  font-size: 0.85em;
+  padding-top: 0.6em;
+  .list-view-hr {
+    height: 1px;
+    border-top: 1px solid rgba(0,0,0,.1);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+
 /* PAGINATION */
 
 .list #pagination td {
@@ -38,7 +52,7 @@ tr#pagination {
 }
 
 .list #pagination td .paginationTable tr td:first-of-type {
-  padding-left: 5px;
+  padding: 0.4em 0 0.2em 0.5em
 }
 
 .list #pagination td .paginationTable tr td:last-of-type {
@@ -47,19 +61,19 @@ tr#pagination {
 
 .list #pagination td .paginationTable .paginationActionButtons {
   background-color: $list-view-toolbar-bg;
-  padding: 5px 0 5px 0;
+  padding: 0.4em 0 0;
 }
 
 .list #pagination td .paginationTable .paginationChangeButtons {
   background-color: $list-view-toolbar-bg;
-  padding: 5px 5px 5px 0;
+  padding: 0.4em 0 0;
 }
 
 .list #pagination td .paginationTable .pageNumbers {
   position: static;
   font-weight: bold;
   color: $list-view-pagination-color;
-  padding: 0 8px 0 0;
+  padding: 0 8px 0 8px;
   margin: 0 0 0 0;
 }
 
@@ -72,43 +86,35 @@ tr#pagination {
 }
 
 #listViewStartButton_top[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewPrevButton_top[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewNextButton_top[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewEndButton_top[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewStartButton_bottom[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewPrevButton_bottom[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewNextButton_bottom[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewEndButton_bottom[disabled] {
-  cursor: default;
-  opacity: .5;
+  cursor: pointer;
 }
 
 #listViewStartButton_top img {
@@ -120,11 +126,11 @@ tr#pagination {
 }
 
 #listViewPrevButton_top {
-  width: 26px;
+  width: 24px;
 }
 
 #listViewPrevButton_bottom {
-  width: 26px;
+  width: 24px;
 }
 
 #listViewPrevButton_top img {
@@ -222,11 +228,17 @@ tr#pagination {
 
 .selectedRecords.label {
   color: $list-view-button-color;
-  padding-top: 5px;
+  font-weight: bold;
+  font-size: 1em;
+  line-height: 12px;
+  vertical-align: text-top;
 }
 
 .selectedRecords.value {
-  margin-right: 8px;
+  margin-left: 0.5em;
+  margin-top: 0;
+  bottom: 0.1em;
+  font-weight: bold;
 }
 
 @media (max-width: 480px) {
@@ -321,7 +333,7 @@ tr#pagination {
 }
 
 .list th a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .list td[scope=col] a:hover {
@@ -399,6 +411,12 @@ a.listViewTdToolsS1 {
 
 .list-view-rounded-corners {
   margin: 16px 0 16px 0;
+  .evenListRowS1 td {  
+    background: $table-alternate-row-bg; 
+  }  
+  .oddListRowS1 td {
+    background: $table-row-bg;
+  }
 }
 
 .list-view-rounded-corners > table {
@@ -488,7 +506,6 @@ a.listViewTdToolsS1 {
 
 .table-responsive.list > tbody > tr > td > a {
   font-weight: bold;
-  color: $list-view-link-color;
   border-bottom-color: $list-view-link-color;
   border-bottom-style: dashed;
   border-bottom-width: 1px;
@@ -522,15 +539,24 @@ a.listViewTdToolsS1 {
   border-radius: $border-radius-base;
   min-width: 32px;
   margin-left: 0;
+  .suitepicon {
+    vertical-align: sub;
+    padding-left: 1rem;
+    font-size:0.5em;
+  }
 }
 
 #selectLinkBottom {
-  margin-right: 5px;
   position: relative;
   line-height: 0;
   min-height: 16px;
   min-width: 32px;
   margin-left: 0;
+  .suitepicon {
+    vertical-align: sub;
+    padding-left: 1rem;
+    font-size: 0.5em;
+  }
 }
 
 #selectLinkBottom .sugar_action_button {
@@ -740,7 +766,6 @@ a.listViewTdToolsS1 {
 #selectLinkTop {
   min-height: 16px;
   position: relative;
-  margin-right: 5px;
   min-width: 32px;
   margin-left: 0;
 }
@@ -831,18 +856,16 @@ a.listViewTdToolsS1 {
   padding: 5px 20px;
 }
 
-#select_actions_disabled_top {
-  padding: 4px 6px 4px 10px;
+#select_actions_disabled_top, #select_actions_disabled_bottom {
   position: relative;
   height: 27px;
   margin-right: 5px;
-}
-
-#select_actions_disabled_bottom {
-  position: relative;
-  padding: 4px 6px 4px 10px;
-  height: 27px;
-  margin-right: 5px;
+  background-color: transparent;
+  border: 0.09em solid $base-border-light-color;
+  -webkit-border-radius: 0.15em;
+  -moz-border-radius:0.15em;
+  border-radius: 0.15em;
+  min-width: 11em;
 }
 
 #detail_header_action_menu > .sugar_action_button > .subnav {
@@ -928,7 +951,6 @@ a.listViewTdToolsS1 {
   color: $default-btn-color;
   line-height: 24px;
   width: 100%;
-
 }
 
 #selectLinkTop > .sugar_action_button > .subnav li {
@@ -944,7 +966,6 @@ a.listViewTdToolsS1 {
   color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
-
 }
 
 #actionLinkTop .clickMenu li .subnav {
@@ -952,7 +973,6 @@ a.listViewTdToolsS1 {
   color: $dropdown-link-active-color;
   line-height: 24px;
   width: 100%;
-
 }
 
 .action-link-top .clickMenu li .subnav {
@@ -960,7 +980,6 @@ a.listViewTdToolsS1 {
   color: $default-btn-color;
   line-height: 24px;
   width: 100%;
-
 }
 
 #actionLinkTop > .sugar_action_button > .subnav {
@@ -1243,7 +1262,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop .sugar_action_button .subnav.ddopen li a {
   margin: 0;
-  padding: 5px 15px;
+  padding: 0.25em 0.8em;
 }
 
 .action-link-top .sugar_action_button .subnav.ddopen li a {
@@ -1521,19 +1540,24 @@ div#search_form > .advanced input.button:hover {
 }
 
 .paginationTable .list-view-pagination-button {
-  border: none;
-  border-radius: $btn-border-radius-base;
-  background-color: $list-view-action-button-bg;
+  background-color: $transparent-color;
   color: $list-view-button-color;
   margin: 0 2px 0 2px;
   padding: 0;
   line-height: 26px;
   height: 26px;
-  width: 26px;
+  width: 24px;
 }
 
 .paginationTable .list-view-pagination-button .suitepicon {
   line-height: 26px;
+}
+
+div.list-view-rounded-corners {
+  .sort{
+    position: relative;
+    top: 0.3em;
+  }  
 }
 
 .paginationTable input[type=submit] {
@@ -1558,10 +1582,7 @@ div#search_form > .advanced input.button:hover {
   height: 26px;
 }
 
-.paginationTable button[disabled] {
-  background-color: $disabled-btn-bg;
-  color: $disabled-btn-color;
-  padding: 0 10px 0 10px;
+.paginationTable button[disabled] { 
   line-height: 26px;
   height: 26px;
 }
@@ -1609,9 +1630,16 @@ label.hidden-mobile.selected-actions-label {
 
 label.hidden-desktop.selected-actions-label {
   margin-bottom: initial;
-  font-size: 10.2px;
+  font-size: 0.85em;
   letter-spacing: 1.2px;
   line-height: 12px;
+}
+
+label.hidden-desktop.selected-actions-label {
+  .suitepicon-action-caret {  
+    font-size: 0.7em;
+    margin-left: 3.2rem;
+  }
 }
 
 label.selected-actions-label {
@@ -2721,7 +2749,9 @@ listViewLinkButton {
 }
 
 #actionLinkTop li.sugar_action_button a {
-  margin: 5px 10px 5px 9px;
+  margin: 0.4em;
+  position: relative;
+  top: 0.1em;
 }
 
 .action-link-top li.sugar_action_button a {
@@ -2729,7 +2759,7 @@ listViewLinkButton {
 }
 
 #actionLinkBottom li.sugar_action_button a {
-  margin: 5px 10px 5px 9px;
+  margin: 0.4em;
 }
 
 .action-link-bottom li.sugar_action_button a {
@@ -2743,7 +2773,6 @@ listViewLinkButton {
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
   min-width: 32px;
-  height: 31px;
 }
 
 .action-link-top li.sugar_action_button,
@@ -2810,7 +2839,7 @@ ul.clickMenu {
 ul.clickMenu li ul.subnav {
   list-style: none;
   position: absolute;
-  top: 20px;
+  top: 26px;
   margin: 0;
   display: none;
   float: left;
@@ -2820,6 +2849,7 @@ ul.clickMenu li ul.subnav {
   padding: 8px 0;
   z-index: 10;
   overflow: hidden;
+  min-width: 10em;
 }
 
 ul.clickMenu ul.subnav-sub {
@@ -2887,16 +2917,25 @@ ul#selectLink.clickMenu > li > a {
 }
 
 .selectActionsDisabled a.parent-dropdown-handler {
-  top: 2px;
-
+  top: 1px;
 }
 
 #select_actions_disabled_top > a.parent-dropdown-handler {
   font-size: 14px;
+  color: $outline-border-light;
+  opacity: .65;
 }
 
 #select_actions_disabled_bottom > a.parent-dropdown-handler {
   font-size: 14px;
+  color: $outline-border-light;
+  opacity: .65;
+}
+
+#select_actions_disabled_top > a.parent-dropdown-handler > span.suitepicon {
+  position: absolute;
+  right: 0.6em;
+  font-size: 0.6em;
 }
 
 .sugar_action_button > .parent-dropdown-action-handler {
@@ -2928,6 +2967,8 @@ ul#selectLink.clickMenu > li > a {
 div.list-view-rounded-corners > table {
   border-collapse: separate;
   border-spacing: 0;
+  border-radius: 0.3em;
+  overflow: hidden;
 }
 
 tr.pagination-unique:nth-of-type(2) {
@@ -2957,9 +2998,10 @@ table.subpanel-table ul.subpanel > a {
 
 #actionLinkTop li.sugar_action_button {
   padding: 0px;
-  background-color: $list-view-action-button-bg;
-  border: 1px solid $list-view-action-button-border-color;
+  background-color: $transparent-color;
+  border: 1px solid $base-border-light-color;
   border-radius: $border-radius-base;
+  min-width: 10em;
 }
 
 .action-link-top li.sugar_action_button {
@@ -2971,8 +3013,8 @@ table.subpanel-table ul.subpanel > a {
 
 #actionLinkBottom li.sugar_action_button {
   padding: 0px;
-  background-color: $list-view-action-button-bg;
-  border: 1px solid $list-view-action-button-border-color;
+  background-color: $transparent-color;
+  border: 1px solid $outline-border-light;
   border-radius: $border-radius-base;
 }
 
@@ -2999,9 +3041,9 @@ table.subpanel-table li.sugar_action_button {
 
 #selectLinkTop li.sugar_action_button {
   padding: 0px;
-  background-color: $list-view-action-button-bg;
-  border: 1px solid $list-view-action-button-border-color;
-  border-radius: $border-radius-base;
+  background-color: $transparent-color;
+  border: 0.09em solid $base-border-light-color;
+  @include border-radius (0.15em);
 }
 
 @-moz-document url-prefix() {
@@ -3012,9 +3054,9 @@ table.subpanel-table li.sugar_action_button {
 
 #selectLinkBottom li.sugar_action_button {
   padding: 0px;
-  background-color: $list-view-action-button-bg;
-  border: 1px solid $list-view-action-button-border-color;
-  border-radius: $border-radius-base;
+  background-color: $transparent-color;
+  border: 0.09em solid $base-border-light-color;
+  @include border-radius (0.15em);
 }
 
 @-moz-document url-prefix() {
@@ -3025,15 +3067,14 @@ table.subpanel-table li.sugar_action_button {
 
 table.subpanel-table .pagination .sugar_action_button {
   padding: 0px;
-  background-color: $list-view-action-button-bg;
-  border: 1px solid transparent;
+  border: 1px solid $outline-border-light;
   border-radius: $border-radius-base;
 }
 
 table.subpanel-table .pagination li.sugar_action_button > form > a {
   padding: 0;
   background-color: $list-view-action-button-bg;
-  border: 1px solid transparent;
+  border: 1px solid $transparent-color;
   border-radius: $border-radius-base;
 }
 
@@ -3223,7 +3264,6 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
 }
 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
-  font-weight: 700;
 }
 
 .list tr.oddListRowS1 td.inline-email-td {
@@ -3248,11 +3288,15 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
 #selectLinkTop > li > label {
   margin-bottom: initial;
   margin-right: 4px;
+  font-size:1.6rem;
+  padding-top: 0.19em;
 }
 
 #selectLinkBottom > li > label {
   margin-bottom: initial;
   margin-right: 4px;
+  font-size:1.6rem;
+  padding-top: 0.19em;
 }
 
 #selectLink > li > label.disabled {

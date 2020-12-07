@@ -62,5 +62,5 @@
 {if $AUTHENTICATED}
 <div id="bootstrap-container">
     <div id="content" class="content">
-        <div id="pagecontent" class=".pagecontent">
+        <div id="pagecontent" class="pagecontent">
 {/if}

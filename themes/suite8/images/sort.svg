@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="15px" viewBox="0 0 10 15" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>sort</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+        <g id="sort" fill="#FFFFFF">
+            <polygon id="Triangle-21" points="1 9 9 9 5 15"></polygon>
+            <polygon id="Triangle-21"
+                     transform="translate(5.000000, 3.000000) rotate(-180.000000) translate(-5.000000, -3.000000) "
+                     points="1 0 9 0 5 6"></polygon>
+        </g>
+    </g>
+</svg>
