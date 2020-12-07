@@ -4973,7 +4973,7 @@ class SugarBean
                             ($this->object_name == $related_module && $this->$id_name != $this->id))
                     ) {
                         if (!empty($this->$id_name) && isset($this->$name)) {
-                            $mod = BeanFactory::getBean($related_module, $this->$id_name);
+                            $mod = BeanFactory::getShallowBean($related_module, $this->$id_name);
                             if ($mod) {
                                 if (!empty($field['rname'])) {
                                     $rname = $field['rname'];
@@ -4983,8 +4983,6 @@ class SugarBean
                                         $this->$name = $mod->name;
                                     }
                                 }
-                                // The related bean is incomplete due to $fill_in_rel_depth, we don't want to cache it
-                                BeanFactory::unregisterBean($related_module, $this->$id_name);
                             }
                         }
                     }
