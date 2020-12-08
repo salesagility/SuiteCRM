@@ -31,7 +31,6 @@
     "ext-json": "*",
     "ext-openssl": "*",
     "ext-zip": "*",
-    "consolidation/robo": "^1.4",
     "elasticsearch/elasticsearch": "^5.3",
     "ezyang/htmlpurifier": "^4.10",
     "google/apiclient": "^2.0",
@@ -67,6 +66,7 @@
     "lcobucci/jwt": "3.3.3"
   },
   "require-dev": {
+    "consolidation/robo": "^1.4",
     "browserstack/browserstack-local": "^1.1",
     "codeception/codeception": "^3.0",
     "filp/whoops": "^2.3",
