@@ -88,8 +88,9 @@ array(
           'options' => [
               'statistics' => [
                   [
-                      'labelKey' => 'LBL_DAYS_OPEN',
-                      'type' => 'case-days-open'
+                      'labelKey' => '',
+                      'type' => 'case-days-open',
+                      'endLabelKey' => 'LBL_STAT_DAYS'
                   ],
               ],
           ]
@@ -97,7 +98,7 @@ array(
       'sidebarWidgets' => [
           [
               'type' => 'statistics',
-              'labelKey' => 'LBL_OPEN_CASES',
+              'labelKey' => 'LBL_NUMBER_OF_CASES_PER_ACCOUNT',
               'options' => [
                   'sidebarStatistic' => [
                       'rows' => [
@@ -105,7 +106,7 @@ array(
                               'align' => 'start',
                               'cols' => [
                                   [
-                                      'labelKey' => 'LBL_CASES_PER_ACCOUNT',
+                                      'labelKey' => 'LBL_TOTAL_CASES_FOR_THIS_ACCOUNT',
                                       'size' => 'medium',
                                   ],
                               ]

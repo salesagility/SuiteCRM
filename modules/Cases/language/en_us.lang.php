@@ -55,7 +55,8 @@ $mod_strings = array(
     'LBL_SUGGESTION_BOX_STATUS' => 'Status',
     'LBL_SUGGESTION_BOX_TITLE' => 'Title',
     'LBL_SUGGESTION_BOX_REL' => 'Relevance',
-    'LBL_CASES_PER_ACCOUNT' => 'Cases open per this Account: ',
+    'LBL_TOTAL_CASES_FOR_THIS_ACCOUNT' => ' Total Cases For This Account: ',
+
 
     'LBL_ACCOUNT_ID' => 'Account ID',
     'LBL_ACCOUNT_NAME' => 'Account Name:',

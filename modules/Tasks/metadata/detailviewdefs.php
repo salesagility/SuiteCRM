@@ -130,7 +130,8 @@ array(
               'statistics' => [
                   [
                       'labelKey' => 'LBL_DAYS_UNTIL_DUE_TASK',
-                      'type' => 'days-until-due-task'
+                      'type' => 'days-until-due-task',
+                      'endLabelKey' => 'LBL_STAT_DAYS'
                   ],
               ],
           ]
