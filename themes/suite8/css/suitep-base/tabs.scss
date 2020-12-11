@@ -7,7 +7,6 @@
   }
 
   .dropdown-menu {
-    padding: 4px 10px 4px 10px;
     overflow: visible;
     min-width: 200px;
   }
@@ -27,24 +26,58 @@
     line-height: $tab-height;
   }
 
+  .detail-view > .nav-tabs > #tab-actions {
+    position: absolute;
+    right: 1.7em;
+    top: 3rem;
+  }
+
+  .detail-view > .nav-tabs > #tab-actions > a {
+    background-color: $button-bg-color;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    height: 28px;
+    line-height: 16px;
+    padding: 5px 10px 0 10px;
+    display: inline-block;
+  }
+
+  .detail-view > .nav-tabs > #tab-actions > .dropdown-menu {
+    background-color: $button-bg-color;
+  }
+
+  .detail-view > .nav-tabs > #tab-actions > .dropdown-menu > li {
+    border-bottom: none;
+    background-color: $transparent;
+  }
+
+  .detail-view > .nav-tabs > #tab-actions > .dropdown-menu .button {
+    background-color: $transparent;
+  }
+
+  .detail-view > .nav-tabs > #tab-actions > .dropdown-menu > li:hover {
+    background-color: $action-btn-hover-bg-color;
+  }
+
   .nav-tabs > li > a,
   .nav-tabs > li > a:focus,
   .nav-tabs > li > a:hover {
-    font-size: $page-font-size;
+    font-size: $page-p-size;
     font-weight: 400;
     background-color: $default-tab-bg-hover;
     color: $default-tab-color-hover;
     cursor: pointer;
-    margin: 0 2px 0 2px;
+    margin: 0 0 0 1px;
     border-color: $active-tab-border;
-    letter-spacing: 2px;
-    line-height: $tab-height;
+    line-height: $tab-height + 3px;
+    text-transform: uppercase;
   }
 
   .nav-tabs > li.active > a,
   .nav-tabs > li.active > a:focus,
   .nav-tabs > li.active > a:hover {
-    font-size: $page-font-size;
+    font-size: $page-p-size;
     font-weight: 400;
     background-color: $active-tab-bg-hover;
     color: $active-tab-color-hover;
@@ -52,10 +85,9 @@
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 2px;
-    margin-right: 2px;
+    margin-right: 1px;
     border-color: $active-tab-border;
-    letter-spacing: 2px;
-    line-height: $tab-height;
+    line-height: $tab-height + 3px;
   }
 
   .nav-tabs > li.active:nth-of-type(1) > a,
@@ -136,23 +168,19 @@
     text-decoration: none;
   }
 
-  #tab-actions > a {
-    background-color: $action-tab-bg;
+  #tab-actions > a.dropdown-toggle {
     color: $action-tab-color;
     cursor: pointer;
-    border-color: $action-tab-bg;
-    border-bottom: $action-tab-separator;
+    background-color: $action-tab-bg ;
   }
 
   #tab-actions > a .suitepicon-action-caret {
-    line-height: 4px;
-    font-size: 10px;
+    font-size: 8px;
     margin-left: 8px;
+    line-height: 14px;
   }
 
   #tab-actions > a:hover {
-    background-color: $action-tab-bg-hover;
-    border-color: $action-tab-bg-hover;
     color: $action-tab-color-hover;
     cursor: pointer;
   }
@@ -166,7 +194,6 @@
     left: auto;
     right: 0;
     background-color: $action-tab-bg;
-    margin-right: 2px;
     border-top-left-radius: 4px;
     border-top-right-radius: 0;
     border-bottom-left-radius: 4px;
@@ -218,7 +245,7 @@
 
   #EditView_tabs .tab-content {
     background-color: $tab-bg;
-    padding: 24px;
+    padding: 10px;
     margin-bottom: $tab-margin-bottom;
     border: 1px solid transparent;
     border-top-right-radius: 4px;
@@ -228,12 +255,8 @@
 
   .detail-view .tab-content {
     background-color: $tab-bg;
-    padding: 24px;
-    margin-bottom: $tab-margin-bottom;
-    border: 1px solid transparent;
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
   }
 }
 

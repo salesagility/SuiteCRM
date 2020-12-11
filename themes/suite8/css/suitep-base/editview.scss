@@ -122,9 +122,6 @@ div#searchResults {
   background-color: $scheduler-free-color;
   border-color: $scheduler-free-border-color;
 }
-
-
-
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
   background-color: $scheduler-busy-color;
   border-color: $scheduler-free-border-color;
@@ -248,7 +245,7 @@ div.noBullet li,
 }
 
 .content {
-  padding: $page-content-spacing 3% 40px 3%;
+  padding: 1em 1.6em 0 1.6em;
   width: 100%;
 }
 
@@ -539,45 +536,23 @@ table.view {
   text-align: left;
 }
 
-.detail-view-row {
-  margin: 0 0 2px 0;
-  margin:0;
-  min-width: 48px;
-  /*min-height: 24px;*/
-}
-
-.detail-view-row-item {
-  /*margin: 0 0 2px 0;*/
-  margin:0;
-  min-width: 48px;
-  min-height: 30px;
-}
-
 .edit-view-row {
   margin: 0 0 8px 0;
   min-width: 48px;
   min-height: 30px;
+  .dotted-border {
+    height: auto;
+  }
 }
 
 .edit-view-row-item {
-  margin: 0 0 8px 0;
   min-width: 48px;
   min-height: 30px;
-}
-
-.detail-view-row .label {
-  display: inline;
-  font-size: 14px;
-  font-weight: 700;
-  color: $main-font-color;
-  padding: 0 0 10px 8px;
-  text-align: left;
-  vertical-align: baseline;
-  white-space: pre-wrap;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .edit-view-row .label {
-  display: inline;
   font-size: 14px;
   font-weight: 700;
   color: $main-font-color;
@@ -586,6 +561,8 @@ table.view {
   vertical-align: baseline;
   white-space: pre-wrap;
   line-height: 10px;
+  text-transform: uppercase;
+  margin-bottom: 0.8em;
 }
 
 #lineItems {
@@ -628,29 +605,15 @@ slot {
   min-height: 30px;
 }
 
-.detail-view-field {
-  display: inline;
-  font-size: 14px;
-  font-weight: 400;
-  background-color: $detail-view-field-bg;
-  color: $main-font-color;
-  padding: 10px 10px;
-  border: 1px solid transparent;
-  border-radius: $border-radius-base;
-  text-align: left;
-  min-height: 38px;
-  vertical-align: baseline;
-  white-space: inherit;
-}
-
-.detail-view-field span {
-  line-height: normal;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.detail-view-field a {
-  font-weight: 700;
+.dotted-border {
+  height: 0.0625rem;
+  color: $dark-grey-line;
+  background-image: linear-gradient(to right, grey 10%, rgba(255, 255, 255, 0) 0%);
+  background-position: top;
+  background-size: 0.875rem 1.1875px;
+  background-repeat: repeat-x;
+  margin-right: 1rem;
+  clear: both;
 }
 
 .edit-view-field textarea {
@@ -799,11 +762,6 @@ option[selected] {
 
 .edit tr th {
   padding: 5px 5px 5px 7px;
-}
-
-#EditView input[type="button"] {
-  padding: 0 10px;
-  margin: 4px;
 }
 
 fieldset {
@@ -1263,10 +1221,6 @@ div.content p.error {
   color: $link-color-hover;
 }
 
-.error a:hover {
-  color: $link-color-hover;
-}
-
 .success {
   color: $success;
 }
@@ -1650,14 +1604,10 @@ div.confirmTable {
 /*// MODULE TITLE */
 
 .moduleTitle {
-}
-
-.moduleTitle span.utils {
-  display: none;
-}
-
-.moduleTitle > h2 > img {
-  display: none;
+  color: $header-sub-title;
+  margin: 0;
+  display: flex;
+  border-bottom: 1px solid $header-bottom-border;
 }
 
 .moduleTitle h2 {
@@ -1669,6 +1619,14 @@ div.confirmTable {
   float: left;
   letter-spacing: 2px;
   text-transform: uppercase;
+}
+
+.moduleTitle span.utils {
+  display: none;
+}
+
+.moduleTitle > h2 > img {
+  display: none;
 }
 
 .moduleTitle > h2 > img {
@@ -1729,7 +1687,6 @@ ul.subTabs li a:visited {
 .subTabMore {
   padding-top: 3px;
   text-decoration: none;
-
 }
 
 #newRecord form {
@@ -1834,7 +1791,6 @@ a.tabFormAdvLink:hover {
 .evenListRowS1 td,
 .oddListRowS1 td {
   color: $main-font-color;
-
 }
 
 .evenListRowS1 td {
@@ -1843,14 +1799,6 @@ a.tabFormAdvLink:hover {
 
 .oddListRowS1 td {
   background: $table-alternate-row-bg;
-}
-
-.evenListRowS1:hover td {
-  background: $table-focus-bg;
-}
-
-.oddListRowS1:hover td {
-  background: $table-focus-bg;
 }
 
 .detail table {
@@ -2002,6 +1950,7 @@ ul.clickMenu {
   list-style: none;
 }
 
+
 ul.clickMenu form {
   display: block;
   float: left;
@@ -2040,7 +1989,6 @@ ul.clickMenu ul.subnav-sub li a:hover {
 }
 
 ul.clickMenu > li {
-  position: relative;
   color: $panel-button-color;
   cursor: pointer;
   padding: 5px;
@@ -2078,7 +2026,7 @@ ul.clickMenu li a {
 }
 
 .subpanel-table .clickMenu  > .sugar_action_button > .suitepicon {
-  font-size: inherit;
+  font-size: 0.7em;
   line-height: inherit;
   color: $panel-button-color;
   display:inline;
@@ -2103,6 +2051,11 @@ ul.clickMenu li a:hover {
 
 ul.clickMenu > li > span {
   cursor: pointer;
+}
+
+ul.fancymenu > li > span {
+  position: relative;
+  top: 0.6em;
 }
 
 @-moz-document url-prefix() {
@@ -3214,10 +3167,6 @@ table#lineItems tr td table tfoot tr td span {
   z-index: 1100;
 }
 
-.detail-view-row .label.col-2-label {
-  padding-left: 32px;
-}
-
 /**** Scrollbars ****/
 div::-webkit-scrollbar { /* 1 */
   width: 12px;
@@ -3534,10 +3483,6 @@ select#sales_stage_advanced {
     width: 100%;
   }
 
-  .detail-view-row .label.col-2-label {
-    padding-left: 8px;
-  }
-
   .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
     width: 100%;
   }
@@ -3808,7 +3753,7 @@ select#sales_stage_advanced {
   }
 
   .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
-    width: 62.75%;
+    width: 87%;
   }
 
   .col-sm-12 [type=varchar].col-sm-8.edit-view-field input[type="text"] {
@@ -3849,7 +3794,7 @@ select#sales_stage_advanced {
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea#description {
-    width: 120%;
+    width: 100%;
   }
 
   #EditView_tabs .edit [type="checkbox"][name=alt_checkbox] {
@@ -4349,6 +4294,8 @@ h3 span {
 
 .inlineEdit {
   cursor: pointer;
+  width: 100%;
+  padding-right: 1em;
 }
 
 .fix-inlineEdit-textarea {
@@ -4387,10 +4334,6 @@ td.inlineEditActive {
   float: right;
 }
 
-.inlineEdit .suitepicon-action-edit {
-  display: none;
-}
-
 .inlineEdit:hover  .suitepicon-action-edit {
   display: inline-block;
 }
@@ -4407,7 +4350,10 @@ td.inlineEditActive {
 #inline_edit_field {
   padding-right: 5px;
   float: left;
-  width: 80%;
+  width: 98%;
+  .dateTime {
+    display: flex;
+  }
 }
 
 #editAccountDialogue_c {
@@ -4487,7 +4433,7 @@ object {
 
 .favorite {
   margin-left: 5px;
-  float: left;
+  margin-top: 15px;
   color: $link-color;
 }
 
@@ -4884,7 +4830,6 @@ object {
     display: block;
     width: 100%;
   }
-
 
   .edit-view-mobile-pagination {
     display: inline-block;
@@ -5724,35 +5669,37 @@ table.subpanel-table .pagination .action_buttons a,
 table.subpanel-table .pagination .SugarActionMenu li.single a,
 table.subpanel-table .pagination .action_buttons .button {
   border: 1px solid;
-  border-color: $list-view-action-menu-bg;
-  background-color: $list-view-toolbar-bg;
-  border-radius: 3px;
+  background-color: $transparent-color;
   font-size: 13px;
-  padding: 2px 13px;
+  padding: 4px 15px;
   line-height: initial;
   height: initial;
   min-height: auto;
+  margin-top: 0.5em;
 }
-
-table.subpanel-table .pagination .action_buttons a:hover,
-table.subpanel-table .pagination .SugarActionMenu li.single a:hover,
-table.subpanel-table .pagination .action_buttons .button:hover {
-  background-color: $list-view-action-menu-bg;
-  color: $list-view-toolbar-bg;
-}
-
 
 table.subpanel-table .pagination li.sugar_action_button {
-  border: 1px solid;
-  border-color: $list-view-action-menu-bg;
-  border-radius: 3px;
   line-height: initial;
   height: initial;
+  position: absolute;
+  top: -33px;
+  right: 0;
 }
+
 table.subpanel-table .pagination li.sugar_action_button > form > a {
-  font-size: 13px;
-  padding: 2px 13px;
+  font-size: 12px;
+  padding: 5px 4px;
   line-height: initial;
   height: initial;
   min-height: auto;
+  vertical-align: bottom;
+  background-color: $transparent-color;
+}
+
+table.subpanel-table .pagination li.single > #formprojects_project_tasks {
+  line-height: initial;
+  height: initial;
+  position: absolute;
+  top: -39px;
+  right: 7px;
 }

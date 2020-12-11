@@ -1961,11 +1961,11 @@ class ListView
     public function getArrowUpDownStart($upDown)
     {
         if ($upDown === '_down') {
-            return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
+            return SugarThemeRegistry::current()->getImage('sort_ascend.svg');
         } elseif (($upDown === '_up')) {
-            return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
+            return SugarThemeRegistry::current()->getImage('sort_descend.svg');
         } else {
-            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
+            return SugarThemeRegistry::current()->getImage('sort.svg');
         }
     }
 

@@ -14,11 +14,10 @@
 }
 
 .panel-default > .panel-heading {
-  background: $panel-expanded-bg;
+  background: $panel-default-bg;
   color: $panel-expanded-color;
   padding: 0;
-  height:$panel-header-height;
-  border-color: $panel-bg;//
+  height: 4rem;
 }
 
 .panel-default > .panel-heading > div {
@@ -40,7 +39,6 @@
 
 .panel-default > .panel-heading {
   display: block;
-  text-transform: uppercase;
 }
 
 .panel-default > .panel-heading > a {
@@ -51,11 +49,16 @@
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-decoration: none;
+  div {
+    margin-left: 0.3em;
+  }
 }
 
 .sub-panel > .panel-heading {
+  background: $panel-expanded-bg;
   line-height: $panel-header-height;
   border-bottom-width: 0px;
+  padding-top: 0.3em;
 }
 
 .subpanel-icon {
@@ -73,7 +76,9 @@
   border-top-right-radius: 4px;
   height: $panel-header-height;
   text-decoration: none;
-  //background-color: $panel-expanded-bg;
+  div {
+    margin-left: 0;
+  }
 }
 
 .panel-default > .panel-heading  > a:not(.panel-heading a div) {
@@ -122,16 +127,21 @@ div.panel-heading a.collapsed-override {
 }
 
 .panel-heading a:before {
-  line-height: $panel-header-height;
+  float: left;
+  border: 1px solid $outline-border-light;
+  margin-top: 7px;
+  padding: 0.5em 0.3em 0.1em 0.5em;  
+  @include border-radius (0.3rem);
+  font-size: 11px;
 }
 
-.panel-heading a div {
-  line-height: $panel-header-height - 4px;
+.panel-heading a div.edit-panel {
+  line-height: $panel-header-height + 3px;
+  margin-left: 0.3em;
 }
 
 
 .sub-panel > .panel-body > .tab-content > div {
-  /*margin-bottom: 25px ;*/
   border: none;
 }
 
@@ -164,14 +174,12 @@ div.action_buttons .button:hover {
 }
 
 div.sub-panel {
-  margin-bottom: 4px;
+  margin-bottom: 1em;
 }
-
 
 .subpanel-table tr:last-of-type td {
   border-bottom: 0px solid transparent;
 }
-
 
 .subpanel-table {
   border-bottom-left-radius: 4px;
@@ -222,7 +230,7 @@ div.sub-panel {
 .subpanel-table .clickMenu > li, .SugarActionMenuIESub li {
   padding: 0;
   line-height: 24px;
-  white-space: nowrap;
+  white-space: nowrap;  
 }
 
 .subpanel-table ul.subpanel {
@@ -257,7 +265,7 @@ div.sub-panel {
 }
 
 .subpanel-table .pagination .sugar_action_button {
-  background-color: $panel-button-bg;
+  background-color: $transparent-color;
   padding: 0 ;
   padding-right: 4px ;
   border: 1px solid transparent;
@@ -293,13 +301,10 @@ div.sub-panel {
   background-color: $panel-bg;
 }
 
-
 /* pagination on list view subpanel-table */
 
 .subpanel-table.list tr.pagination span.pageNumbers {
   position: relative;
-  /*top: 5px;*/
-  top: -7px;
 }
 
 
@@ -307,7 +312,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"] img,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"] img,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"] img {
-  display: none;
+  cursor: pointer;
 }
 
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
@@ -317,13 +322,13 @@ div.sub-panel {
   padding: 0;
   margin: 0;
   width: 26px;
-  height: 26px;
+  height: auto;
 }
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"]:hover {
-  background-color: $panel-button-bg-hover;
+  background-color: transparent;
 }
 
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"][disabled],
@@ -331,7 +336,7 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled],
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled] {
   cursor: default;
-  background-color: $panel-button-bg-disabled;
+  background-color: transparent;
 }
 
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
@@ -342,12 +347,13 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
-  background-color: $panel-button-bg-disabled;
+  background-color: transparent;
 }
 
 .subpanel-table .pagination button .suitepicon {
   line-height: 26px;
 }
+
 
 #actionLinkTop li.sugar_action_button:hover,
 #actionLinkBottom li.sugar_action_button:hover,
@@ -382,7 +388,6 @@ div.sub-panel {
   margin-right: 5px;
   display: inline-block;
 }
-
 
 
 .subpanelTablist #addPageItem a, .subpanelTablist #addPageItem a:hover {
@@ -447,13 +452,15 @@ table.subpanelTabForm {
 
 @media (max-width: 767px) {
   .panel-heading a div {
-    width: 94.66%;
+    line-height: 35px;
+    width: 90% !important;
   }
 }
 
 @media (min-width: 768px) {
   .panel-heading a div {
-    width: 97.66%;
+    line-height: 35px;
+    width: 90% !important;
   }
 }
 
@@ -487,7 +494,7 @@ table.subpanelTabForm {
 }
 
 .clickMenu li .subnav {
-  right: auto;
+  right: 0;
   margin-top: 4px;
   min-width: 128px;
 }
@@ -526,6 +533,8 @@ table.subpanelTabForm {
 }
 
 .clickMenu li a.disabled {
-  color: $disabled-btn-color ;
+  color: $disabled-btn-color;
   cursor: default ;
 }
+
+

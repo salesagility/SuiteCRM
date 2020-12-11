@@ -65,9 +65,7 @@
                 {counter name="colCounter" print=false}
             {/foreach}
             <th data-type="html"><!-- extra th for the button --></th>
-        </tr>
-        {* TODO: Break $pagination so that it can be fully customisable *}
-        {$PAGINATION}
+        </tr>        
         <tr id="{$SUBPANEL_ID}_search" class="pagination" style="{$DISPLAY_SPS}">
             <td align="right" colspan="20">
                 {$SUBPANEL_SEARCH}
@@ -98,4 +96,8 @@
         {counter name="rowCounter" print=false}
     {/foreach}
     </tbody>
+        <tfoot>
+        {* TODO: Break $pagination so that it can be fully customisable *}
+        {$PAGINATION}
+    </tfoot>
 </table>

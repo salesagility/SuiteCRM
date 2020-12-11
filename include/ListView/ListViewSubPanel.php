@@ -597,8 +597,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $GLOBALS['log']->debug("Offsets: (start, previous, next, last)(0, $previous_offset, $next_offset, $last_offset)");
 
                 if (0 == $current_offset) {
-                    $start_link = "<button type='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' class='button' disabled><span class='suitepicon suitepicon-action-first'></span></button>";
-                    $previous_link = "<button type='button' name='listViewPrevButton' title='{$this->local_app_strings['LNK_LIST_PREVIOUS']}' class='button' disabled><span class='suitepicon suitepicon-action-left'></span></button>";
+                    $start_link = "<button type='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' class='button' disabled><img src='".SugarThemeRegistry::current()->getImageURL('paginate_first.svg')."'/></button>";
+                    $previous_link = "<button type='button' name='listViewPrevButton' title='{$this->local_app_strings['LNK_LIST_PREVIOUS']}' class='button' disabled><img src='".SugarThemeRegistry::current()->getImageURL('paginate_previous.svg')."'/></button>";
                 } else {
                     if ($this->multi_select_popup) {// nav links for multiselect popup, submit form to save checks.
                         $start_link = "<button type='button' class='button' name='listViewStartButton' title='{$this->local_app_strings['LNK_LIST_START']}' onClick='javascript:save_checks(0, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-first'></span></button>";
@@ -626,8 +626,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 }
 
                 if ($last_offset <= $current_offset) {
-                    $end_link = "<button type='button' name='listViewEndButton' title='{$this->local_app_strings['LNK_LIST_END']}' class='button' disabled><span class='suitepicon suitepicon-action-last'></span></button>";
-                    $next_link = "<button type='button' name='listViewNextButton' title='{$this->local_app_strings['LNK_LIST_NEXT']}' class='button' disabled><span class='suitepicon suitepicon-action-right'></span></button>";
+                    $end_link = "<button type='button' name='listViewEndButton' title='{$this->local_app_strings['LNK_LIST_END']}' class='button' disabled><img src='".SugarThemeRegistry::current()->getImageURL('paginate_last.svg')."'/></button>";
+                    $next_link = "<button type='button' name='listViewNextButton' title='{$this->local_app_strings['LNK_LIST_NEXT']}' class='button' disabled><img src='".SugarThemeRegistry::current()->getImageURL('paginate_next.svg')."'/></button>";
                 } else {
                     if ($this->multi_select_popup) { // nav links for multiselect popup, submit form to save checks.
                         $end_link = "<button type='button' name='listViewEndButton' class='button' title='{$this->local_app_strings['LNK_LIST_END']}' onClick='javascript:save_checks($last_offset, \"{$moduleString}\");'><span class='suitepicon suitepicon-action-last'></span></button>";

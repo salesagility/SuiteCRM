@@ -59,7 +59,7 @@
 
         {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
             {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
+            <div class="col-xs-12 col-sm-6 detail-view-row-item detail-view-bordered">
         {{else}}
             {*<!-- DIV column - colspan = 3 -->*}
             <div class="col-xs-12 col-sm-12 detail-view-row-item">
@@ -121,10 +121,10 @@
 
                     {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
                         {*<!-- phone (version 1) -->*}
-                        <div class="col-xs-12 col-sm-8 detail-view-field{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}} inlineEdit{{/if}}{{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}} phone{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}}>
+                        <div class="col-xs-12 col-sm-8 detail-view-field d-flex{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}} inlineEdit{{/if}}{{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}} phone{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}}>
                     {{else}}
                         {*<!-- phone (version 2) -->*}
-                        <div class="col-xs-12 col-sm-10 detail-view-field{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}} inlineEdit{{/if}}{{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}} phone{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}}>
+                        <div class="col-xs-12 col-sm-10 detail-view-field d-flex{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}} inlineEdit{{/if}}{{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}} phone{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}}>
                     {{/if}}
 
                     {{if !empty($colData.field.name)}}
@@ -181,11 +181,12 @@
 
                         {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
                         <div class="inlineEditIcon col-xs-hidden">
-                            <span class="suitepicon suitepicon-action-edit"></span>
-                        </div>
+                            {sugar_getimage name="pencil"}                            
+                        </div> 
                         {{/if}}
 
                     </div>
+                    <div class="dotted-border"></div>
                     {*<!-- /phone (version 1/2) -->*}
 
                 {{/if}}

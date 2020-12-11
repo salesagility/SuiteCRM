@@ -30,11 +30,15 @@ p.msg {
   height: auto;
   line-height: 36px;
   margin-bottom: $detail-view-module-title-space;
+  margin-top: $detail-view-module-title-top-space
 }
 
 .nav-tabs > li.tab-inline-pagination {
   float: right;
   line-height: $tab-height;
+  position: absolute;
+  right:0.9em;
+  top: 4.2em;
 }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
@@ -236,6 +240,43 @@ p.msg {
   line-height: 32px;
 }
 
+.subpanel-table {
+ .listViewThLinkS1{
+  svg {
+    position: relative;
+    top: 0.3em;
+    left: 0.4em;
+  }
+ }
+}
+
+#list_subpanel_projecttask {
+ .subpanel-table {
+  .sugar_action_button {
+    .suitepicon{
+      font-size: 0.7em;
+    }
+  }
+ }
+}
+
+table.footable > tbody > tr.footable-empty > td {
+  font-size: 1.3em;
+  color: $black;
+}
+
+.detail-view-row {
+  .inlineEditIcon {
+    svg {
+      display: block;
+      width: 0.9em;
+      height: 0.9em;
+      opacity: 0.2;
+      fill:$btn-color-black;
+    }
+  }
+}
+
 @media print {
   .bootstrap-container {
     margin: 0;
@@ -244,7 +285,6 @@ p.msg {
   .bootstrap-container.col-sm-offset-3 {
     margin-top: 0;
   }
-
 
   .btn {
     @include hideWhenPrinting();
@@ -346,7 +386,7 @@ p.msg {
   .tab-inline-pagination {
     @include hideWhenPrinting()
   }
-  
+
 
   .tab-content > .active.tab-pane-NOBOOTSTRAPTOGGLER {
     display: block !important;
@@ -442,3 +482,143 @@ p.msg {
   line-height: inherit;
 }
 
+div.detail-view-row {
+  margin: 0;
+  min-width: 48px;
+  display: flex;
+  @media only screen and (max-width: 750px) {
+    display: block;
+  }
+  .detail-view-field {
+    #EditView {
+      width: 100%;
+      margin-bottom: 0.6em;
+      input[type=text] {
+        background-color:$transparent-color;
+        border: 1px solid $base-border-light-color;
+        width: 100%;
+        margin-right: 3px;
+        &:focus {
+          border-color :$input-border-focus;
+          outline: 0;
+          box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+      }
+    }
+    .inlineEditIcon {
+      display: flex;
+      justify-content: flex-end;
+      flex-grow: 1;
+    }
+  }
+  .detail-view-bordered {
+    border-right: $base-border-color solid 0.0625rem;
+    &:last-child {
+      border-right: none;
+    }
+    @media only screen and (max-width: 750px) {
+      border-right: none;
+    }
+  }
+}
+
+.detail-view-row-item {
+  margin:0;
+  min-width: 48px;
+  min-height: 30px;
+  padding-left: 2rem;
+}
+
+.detail-view-row .label {
+  font-size: 14px;
+  font-weight: 700;
+  width: 98%;
+  text-align: left;
+  padding: 0;
+  margin-top: 1.8rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.detail-view-field {
+  font-size: 14px;
+  font-weight: 400;
+  color: $main-font-color;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  text-align: left;
+  vertical-align: baseline;
+  white-space: inherit;
+  width: 98%;
+  padding-bottom: 0.5em;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.detail-view-field span {
+  line-height: normal;
+  display: inline-block;
+  vertical-align: middle;
+  flex-grow: 1;
+}
+
+.detail-view-field a {
+  flex-grow: 1;
+}
+
+table.subpanel-table .pagination .sugar_action_button:hover {
+  background-color: $btn-color-hover-white;
+}
+
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a {
+  background-color: $btn-color-hover-white;
+  color: $btn-color-hover-textblack;
+}
+
+table.subpanel-table .pagination li.sugar_action_button:hover > span.suitepicon {
+  color: $btn-color-hover-textblack;
+}
+
+table.subpanel-table .pagination .SugarActionMenu li.single a:hover {
+  background-color: $btn-color-hover-white;
+  color: $btn-color-hover-textblack;
+}
+
+table.subpanel-table .pagination li.single > form {
+  position: absolute;
+  top: -39px;
+  right: 4px;
+}
+
+table.subpanel-table .pagination li.single > a {
+  position: absolute;
+  top: -39px;
+  right: 7px;
+}
+
+.header-detailtitle {
+  position: absolute;
+  top: 0;
+  color: #777777;
+  font-size: 1.2em;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0.6em 1.3em 1em 0;
+}
+
+.subpanel-table {
+  #selectLinkTop {
+    li.sugar_action_button {
+      position: relative;
+      top: -91px;
+      left: 0.5rem;
+    }
+    input[type=checkbox] {
+      margin: 3px 0 3px 3px;
+    }
+  }
+}
