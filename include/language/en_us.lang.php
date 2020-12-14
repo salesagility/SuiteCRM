@@ -3774,3 +3774,4 @@ $app_strings['LBL_WAS_OPEN'] = 'This Case was Open For';
 $app_strings['LBL_HAS_BEEN_OPEN'] = 'This Case has been Open For';
 $app_strings['LBL_NUMBER_OF_CASES_PER_ACCOUNT'] = 'Number of Cases Per Account';
 $app_strings['LBL_TOTAL_CASES_FOR_THIS_ACCOUNT'] = 'Total Cases For This Account: ';
+$app_strings['LBL_NONE_OUTSTANDING'] = 'None Outstanding';
