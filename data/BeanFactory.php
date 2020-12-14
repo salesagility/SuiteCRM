@@ -44,6 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 require_once 'data/SugarBean.php';
+require_once 'data/BeanDuplicateCheck.php';
+
 
 /**
  * Factory to create SugarBeans.

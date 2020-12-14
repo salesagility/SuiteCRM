@@ -720,7 +720,9 @@ class MBPackage
                     continue;
                 }
                 include("$langDir/$langFile");
-                $out = "<?php \n // created: " . date('Y-m-d H:i:s') . "\n";
+                //$out = "<?php \n // created: " . date('Y-m-d H:i:s') . "\n";
+                $out = "<?php \n".
+                    '// created: SuiteCRM - Careers Development Team'."\n";
                 foreach ($mod_strings as $lbl_key => $lbl_val) {
                     $out .= override_value_to_string('mod_strings', $lbl_key, $lbl_val) . "\n";
                 }

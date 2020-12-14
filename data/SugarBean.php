@@ -6255,4 +6255,33 @@ class SugarBean
             $this->fetched_row[$change['field_name']] = $change['after'];
         }
     }
+
+    /**
+     * Find possible duplicate records for this bean
+     * @return array
+     */
+    public function findDuplicates()
+    {
+        $dupeCheckManager = $this->loadDuplicateCheckManager();
+        return $dupeCheckManager->findDuplicates();
+    }
+
+    /**
+     * Create a duplicate check manager to handle loading the appropriate duplicate check strategy
+     *
+     * @return BeanDuplicateCheck
+     */
+    protected function loadDuplicateCheckManager()
+    {
+        if(empty($this->duplicate_check_manager)) {
+            if (isset($GLOBALS['dictionary'][$this->object_name]['duplicate_check']) &&
+                !empty($GLOBALS['dictionary'][$this->object_name]['duplicate_check']['enabled'])) {
+                $data = $GLOBALS['dictionary'][$this->object_name]['duplicate_check'];
+            } else {
+                $data = array();  // duplicate_check not defined  or  is not enabled
+            }
+            $this->duplicate_check_manager = new BeanDuplicateCheck($this, $data);
+        }
+        return $this->duplicate_check_manager;
+    }
 }

@@ -139,7 +139,7 @@ function make_sugar_config(&$sugar_config)
         'default_password' => empty($default_password) ? '' : $default_password,
         'default_permissions' => array(
             'dir_mode' => 02770,
-            'file_mode' => 0755,
+            'file_mode' => 0775,
             'chown' => '',
             'chgrp' => '',
         ),

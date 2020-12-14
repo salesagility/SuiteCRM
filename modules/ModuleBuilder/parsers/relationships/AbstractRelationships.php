@@ -469,7 +469,8 @@ class AbstractRelationships
                 $out .= override_value_to_string($subpanelVarname, strtolower($definition [ 'get_subpanel_data' ]), $definition) . "\n";
             }
             if (!empty($out)) {
-                $out = "<?php\n // created: " . date('Y-m-d H:i:s') . "\n" . $out;
+                //$out = "<?php\n // created: " . date('Y-m-d H:i:s') . "\n" . $out;
+                $out = "<?php\n".'// created: SuiteCRM - Careers Development Team'."\n". $out;
                 sugar_file_put_contents($filename, $out);
             }
 
@@ -513,8 +514,10 @@ class AbstractRelationships
             }
             
             $filename = "$basepath/vardefs/{$relName}_{$moduleName}.php" ;
-            
-            $out =  "<?php\n// created: " . date('Y-m-d H:i:s') . "\n";
+
+            // $out =  "<?php\n// created: " . date('Y-m-d H:i:s') . "\n";
+            $out =   "<?php\n" .
+                '// created: SuiteCRM - Careers Development Team'."\n";
             foreach ($definitions as $definition) {
                 $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveVardefs(): saving the following to {$filename}" . print_r($definition, true)) ;
                 $out .= '$dictionary["' . $object . '"]["fields"]["' . $definition [ 'name' ] . '"] = '
