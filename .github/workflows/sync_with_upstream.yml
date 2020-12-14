@@ -1,0 +1,21 @@
+name: Sync with master upstream
+on: 
+  schedule:
+    - cron: '0 0 * * 1'
+    # scheduled for 00:00 every Monday
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: upstream-master
+          fetch-depth: 0 
+      - name: Merge Upstream
+        uses: exions/merge-upstream@v1
+        with:
+          upstream: salesagility/SuiteCRM
+          upstream-branch: master
+          branch: upstream-master
