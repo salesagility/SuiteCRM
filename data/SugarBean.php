@@ -3503,7 +3503,7 @@ class SugarBean
      * @param object $parentbean creating a subquery for this bean.
      * @param bool $singleSelect Optional, default false.
      * @param bool $ifListForExport
-     * @return String select query string, optionally an array value will be returned if $return_array= true.
+     * @return String|array select query string, optionally an array value will be returned if $return_array= true.
      */
     public function create_new_list_query(
         $order_by,

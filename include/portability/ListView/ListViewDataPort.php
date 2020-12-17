@@ -45,28 +45,6 @@ class ListViewDataPort extends ListViewData
     }
 
     /**
-     * @inheritDoc
-     */
-    public function getOrderBy($orderBy = '', $direction = ''): array
-    {
-        return ['orderBy' => $orderBy, 'sortOrder' => $direction];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setVariableName($baseName, $where, $listviewName = null, $id = null): void
-    {
-        $module = (!empty($listviewName)) ? $listviewName : ($this->seed->module_name ?? null);
-        $this->var_name = $module . '2_' . strtoupper($baseName) . ($id ? '_' . $id : '');
-
-        $this->var_order_by = $this->var_name . '_ORDER_BY';
-        $this->var_offset = $this->var_name . '_offset';
-        $timestamp = sugar_microtime();
-        $this->stamp = $timestamp;
-    }
-
-    /**
      * @param $seed
      * @param $where
      * @param int $offset
@@ -156,6 +134,91 @@ class ListViewDataPort extends ListViewData
     }
 
     /**
+     * @param SugarBean $seed
+     * @param $where
+     * @param array $filter_fields
+     * @param array $params
+     * @param bool $singleSelect
+     * @param null $id
+     * @return array
+     */
+    public function getQueryParts(
+        SugarBean $seed,
+        $where,
+        $filter_fields = array(),
+        $params = array(),
+        $singleSelect = true,
+        $id = null
+    ): array {
+        global $current_user;
+
+        if (!$seed->ACLAccess('ListView')) {
+            throw new BadMethodCallException('No access to list');
+        }
+
+        $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
+
+        $seed->id = '[SELECT_ID_LIST]';
+
+        [$params, $order, $orderBy] = $this->buildOrderBy($filter_fields, $params, $current_user);
+
+        [$ret_array] = $this->buildFindQuery($seed, $where, $filter_fields, $params, $singleSelect,
+            $orderBy);
+
+        return $ret_array;
+    }
+
+    /**
+     * @param array $queryParts
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function runCustomQuery(
+        SugarBean $bean,
+        array $queryParts,
+        $offset = -1,
+        $limit = -1
+    ): array {
+
+        $this->seed = $bean;
+
+        $mainQuery = $this->joinQueryParts([], $queryParts);
+
+        [$result, $offset] = $this->runQuery($offset, $limit, $mainQuery);
+
+        $rows = [];
+
+        if (empty($result)) {
+            return [];
+        }
+
+        while (($row = $this->db->fetchByAssoc($result))) {
+            $rows[] = $row;
+        }
+
+        if (empty($rows)) {
+            return [];
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setVariableName($baseName, $where, $listviewName = null, $id = null): void
+    {
+        $module = (!empty($listviewName)) ? $listviewName : ($this->seed->module_name ?? null);
+        $this->var_name = $module . '2_' . strtoupper($baseName) . ($id ? '_' . $id : '');
+
+        $this->var_order_by = $this->var_name . '_ORDER_BY';
+        $this->var_offset = $this->var_name . '_offset';
+        $timestamp = sugar_microtime();
+        $this->stamp = $timestamp;
+    }
+
+    /**
      * @param $filter_fields
      * @param $params
      * @param $current_user
@@ -210,6 +273,14 @@ class ListViewDataPort extends ListViewData
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getOrderBy($orderBy = '', $direction = ''): array
+    {
+        return ['orderBy' => $orderBy, 'sortOrder' => $direction];
+    }
+
+    /**
      * @param $seed
      * @param $where
      * @param $filter_fields
@@ -259,13 +330,34 @@ class ListViewDataPort extends ListViewData
         if (!isset($params['custom_order_by'])) {
             $params['custom_order_by'] = '';
         }
-        $main_query = $ret_array['select'] . $params['custom_select'] . $ret_array['from'] . $params['custom_from'] . $ret_array['inner_join'] . $ret_array['where'] . $params['custom_where'] . $ret_array['order_by'] . $params['custom_order_by'];
+        $main_query = $this->joinQueryParts($params, $ret_array);
         //C.L. - Fix for 23461
         if (empty($_REQUEST['action']) || $_REQUEST['action'] !== 'Popup') {
             $_SESSION['export_where'] = $ret_array['where'];
         }
 
-        return array($ret_array, $main_query);
+        return [$ret_array, $main_query];
+    }
+
+    /**
+     * @param array $params
+     * @param array $ret_array
+     * @return string
+     */
+    protected function joinQueryParts(array $params, array $ret_array): string
+    {
+        $query = $ret_array['select'] ?? '';
+        $query .= $params['custom_select'] ?? '';
+        $query .= $ret_array['from'] ?? '';
+        $query .= $params['custom_from'] ?? '';
+        $query .= $ret_array['inner_join'] ?? '';
+        $query .= $ret_array['where'] ?? '';
+        $query .= $params['custom_where'] ?? '';
+        $query .= $ret_array['order_by'] ?? '';
+        $query .= $params['custom_order_by'] ?? '';
+        $query .= $ret_array['group_by'] ?? '';
+
+        return $query;
     }
 
     /**
@@ -385,18 +477,6 @@ class ListViewDataPort extends ListViewData
     }
 
     /**
-     * @param SugarBean $temp
-     * @param array $pageData
-     * @param int $dataIndex
-     */
-    protected function addACLInfo(SugarBean $temp, array &$pageData, int $dataIndex): void
-    {
-        $detailViewAccess = $temp->ACLAccess('DetailView');
-        $editViewAccess = $temp->ACLAccess('EditView');
-        $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
-    }
-
-    /**
      * @param $temp
      */
     protected function enforceAssignedUserId($temp): void
@@ -427,6 +507,18 @@ class ListViewDataPort extends ListViewData
         } else {
             $pageData['tag'][$dataIndex] = $pageData['tag'][$idIndex[$row[$id_field]][0]];
         }
+    }
+
+    /**
+     * @param SugarBean $temp
+     * @param array $pageData
+     * @param int $dataIndex
+     */
+    protected function addACLInfo(SugarBean $temp, array &$pageData, int $dataIndex): void
+    {
+        $detailViewAccess = $temp->ACLAccess('DetailView');
+        $editViewAccess = $temp->ACLAccess('EditView');
+        $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
     }
 
     /**
