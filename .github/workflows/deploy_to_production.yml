@@ -1,0 +1,25 @@
+name: Push changes to production
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  update-production:
+    name: Log into production server and pull changes
+    runs-on: ubuntu-latest
+    environment: production_environment
+    steps: 
+      
+      - name: Login and pull new master version
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOYMENT_PATH }}
+            git checkout master
+            git pull -s recursive -X theirs --no-edit
+            composer install 
+            php repair.php --instance $(pwd)
