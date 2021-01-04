@@ -1570,35 +1570,18 @@ EOQ;
     {
         include('modules/Users/field_arrays.php');
 
-        $cols = '';
-        foreach ($fields_array['User']['export_fields'] as $field) {
-            $cols .= (empty($cols)) ? '' : ', ';
-            $cols .= $field;
-        }
-
-        $query = "SELECT {$cols} FROM users ";
-
-        $where_auto = " users.deleted = 0";
-
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
-        } else {
-            $query .= " WHERE " . $where_auto;
-        }
-
-        // admin for module user is not be able to export a super-admin
-        global $current_user;
-        if (!$current_user->is_admin) {
-            $query .= " AND users.is_admin=0";
-        }
-
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
-        } else {
-            $query .= " ORDER BY users.user_name";
-        }
-
-        return $query;
+        return $this->create_new_list_query(
+            empty($order_by) ? 'user_name' : $order_by,
+            $where,
+            $fields_array['User']['export_fields'],
+            array(),
+            0,
+            '',
+            false,
+            $this,
+            true,
+            true
+        );
     }
 
     /** Returns a list of the associated users

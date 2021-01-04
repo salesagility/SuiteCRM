@@ -263,42 +263,6 @@ class Project extends SugarBean
         return false;
     }
 
-    public function create_export_query($order_by, $where, $relate_link_join='')
-    {
-        $custom_join = $this->getCustomJoin(true, true, $where);
-        $custom_join['join'] .= $relate_link_join;
-        $query = "SELECT
-				project.*,
-                users.user_name as assigned_user_name ";
-        $query .=  $custom_join['select'];
-        $query .= " FROM project ";
-
-        $query .=  $custom_join['join'];
-        $query .= " LEFT JOIN users
-                   	ON project.assigned_user_id=users.id ";
-
-        $where_auto = " project.deleted=0 ";
-
-        if ($where != "") {
-            $query .= "where ($where) AND ".$where_auto;
-        } else {
-            $query .= "where ".$where_auto;
-        }
-
-        if (!empty($order_by)) {
-            //check to see if order by variable already has table name by looking for dot "."
-            $table_defined_already = strpos($order_by, ".");
-
-            if ($table_defined_already === false) {
-                //table not defined yet, define accounts to avoid "ambigous column" SQL error
-                $query .= " ORDER BY $order_by";
-            } else {
-                //table already defined, just add it to end of query
-                $query .= " ORDER BY $order_by";
-            }
-        }
-        return $query;
-    }
     public function getAllProjectTasks()
     {
         $projectTasks = array();

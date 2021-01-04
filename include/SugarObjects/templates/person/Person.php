@@ -286,63 +286,6 @@ class Person extends Basic
     }
 
     /**
-     * Default export query for Person based modules
-     * used to pick all mails (primary and non-primary)
-     *
-     * @see SugarBean::create_export_query()
-     */
-    public function create_export_query($order_by, $where, $relate_link_join = '')
-    {
-        $custom_join = $this->custom_fields->getJOIN(true, true, $where);
-
-        // For easier code reading, reused plenty of time
-        $table = $this->table_name;
-
-        if ($custom_join) {
-            $custom_join['join'] .= $relate_link_join;
-        }
-        $query = "SELECT
-					$table.*,
-					email_addresses.email_address email_address,
-					'' email_addresses_non_primary, " .
-                 // email_addresses_non_primary needed for get_field_order_mapping()
-                 'users.user_name as assigned_user_name ';
-        if ($custom_join) {
-            $query .= $custom_join['select'];
-        }
-
-        $query .= " FROM $table ";
-
-        $query .= "LEFT JOIN users
-					ON $table.assigned_user_id=users.id ";
-
-        //Join email address table too.
-        $query .= " LEFT JOIN email_addr_bean_rel on $table.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module = '" .
-                  $this->module_dir .
-                  "' and email_addr_bean_rel.deleted = 0 and email_addr_bean_rel.primary_address = 1";
-        $query .= ' LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id ';
-
-        if ($custom_join) {
-            $query .= $custom_join['join'];
-        }
-
-        $where_auto = " $table.deleted=0 ";
-
-        if (!empty($where)) {
-            $query .= "WHERE ($where) AND " . $where_auto;
-        } else {
-            $query .= 'WHERE ' . $where_auto;
-        }
-
-        $order_by = $this->process_order_by($order_by);
-        if (!empty($order_by)) {
-            $query .= ' ORDER BY ' . $order_by;
-        }
-
-        return $query;
-    }
-
-    /**
      * Set Lawful Basis
      * @param string $basis
      * @param string $source
