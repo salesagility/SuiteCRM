@@ -162,6 +162,11 @@ class AbstractRelationships
             if (! empty($_REQUEST [ $key ])) {
                 $definition [ $key ] = ($key == 'relationship_type') ? AbstractRelationship::parseRelationshipType($_REQUEST [ $key ]) : $_REQUEST [ $key ] ;
             }
+
+            if($key=='extra_fields'){
+                $relationship = $this->get($_REQUEST [ 'relationship_name' ]);
+                $definition [ $key ] = $relationship->$key;
+            }
         }
         
         // if this is a change to an existing relationship, and it is not readonly, then delete the old one

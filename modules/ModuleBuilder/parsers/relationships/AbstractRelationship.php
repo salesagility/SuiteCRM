@@ -84,6 +84,7 @@ class AbstractRelationship
         'join_key_lhs' ,
         'join_key_rhs' ,
         'relationship_type' ,
+        'extra_fields',
         'relationship_role_column' ,
         'relationship_role_column_value' ,
         'reverse' ) ;
@@ -547,6 +548,14 @@ class AbstractRelationship
         $properties [ 'fields' ] [] = array( 'name' => 'deleted' , 'type' => 'bool' , 'len' => '1' , 'default' => '0' , 'required' => true ) ;
         $properties [ 'fields' ] [] = array( 'name' => $rel_properties [ 'join_key_lhs' ] , 'type' => 'varchar' , 'len' => 36 ) ;
         $properties [ 'fields' ] [] = array( 'name' => $rel_properties [ 'join_key_rhs' ] , 'type' => 'varchar' , 'len' => 36 ) ;
+
+        $extraFields = isset($this->definition['extra_fields'])?$this->definition[ 'extra_fields' ]:false;
+        if($extraFields){
+            foreach ($extraFields as $fieldItem){
+                $properties [ 'fields' ] [] =  $fieldItem;
+            }
+        }
+
         if (strtolower($lhs_module) == 'documents' || strtolower($rhs_module) == 'documents') {
             $properties [ 'fields' ] [] = array( 'name' => 'document_revision_id' , 'type' => 'varchar' , 'len' => '36' ) ;
         }
