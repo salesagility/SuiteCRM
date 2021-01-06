@@ -38,6 +38,11 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+// Allow search on employee skills
+if(file_exists('modules/CC_Skill/controller.php')){
+    require_once('modules/CC_Skill/controller.php');
+}
+
 $queryString = ! empty($_REQUEST['query_string']) ? $_REQUEST['query_string'] : '';
 
 $luceneSearch = !empty($sugar_config['aod']['enable_aod']);
@@ -264,6 +269,26 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
             $newHit->date_modified = $bean->date_modified;
             $hits[] = $newHit;
         }
+
+        // Add employees
+        if (class_exists('CC_SkillController')) {
+            $employees = (new CC_SkillController())->getEmployeesBySkill($queryString);
+            if (!empty($employees)) {
+                foreach ($employees as $employee) {
+                    $eHit = new stdClass;
+                    $eHit->record_module = $hit->record_module;
+                    $eHit->record_id = $hit->record_id;
+                    $eHit->score = $hit->score;
+                    $eHit->label = getModuleLabel('CC_Employee_Information');
+                    $eHit->name = $employee['name'];
+                    $eHit->summary = $employee['skills'];
+                    $eHit->date_entered = $employee['date_entered'];
+                    $eHit->date_modified = $employee['date_modified'];
+                    $hits[] = $eHit;
+                }
+            }
+        }
+
         //Cache results so pagination is nice and snappy.
         cacheQuery($queryString, $hits);
     }
