@@ -3102,7 +3102,7 @@ class Email extends Basic
         
         $validator = new EmailFromValidator();
         if (!$validator->isValid($this)) {
-            
+
             // if an email is invalid before sending,
             // maybe at this point sould "return false;" because the email having
             // invalid from address and/or name but we will trying to send it..
@@ -3519,10 +3519,38 @@ class Email extends Basic
      */
     public function create_export_query($order_by, $where)
     {
-        return parent::create_export_query(
-            empty($order_by) ? 'name' : $order_by,
-            $where
-        );
+        $contact_required = stristr($where, "contacts");
+        $custom_join = $this->getCustomJoin(true, true, $where);
+
+        if ($contact_required) {
+            $query = "SELECT emails.*, contacts.first_name, contacts.last_name";
+            $query .= $custom_join['select'];
+
+            $query .= " FROM contacts, emails, emails_contacts ";
+            $where_auto = "emails_contacts.contact_id = contacts.id AND emails_contacts.email_id = emails.id AND emails.deleted=0 AND contacts.deleted=0";
+        } else {
+            $query = 'SELECT emails.*';
+            $query .= $custom_join['select'];
+
+            $query .= ' FROM emails ';
+            $where_auto = "emails.deleted=0";
+        }
+
+        $query .= $custom_join['join'];
+
+        if ($where != "") {
+            $query .= "where $where AND " . $where_auto;
+        } else {
+            $query .= "where " . $where_auto;
+        }
+
+        if ($order_by != "") {
+            $query .= " ORDER BY $order_by";
+        } else {
+            $query .= " ORDER BY emails.name";
+        }
+
+        return $query;
     }
 
     /**

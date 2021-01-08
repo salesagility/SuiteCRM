@@ -163,27 +163,11 @@ class ProspectList extends SugarBean
 
     public function create_export_query($order_by, $where)
     {
-        $query = "SELECT
-                                prospect_lists.*,
-                                users.user_name as assigned_user_name ";
-        $query .= "FROM prospect_lists ";
-        $query .= 				"LEFT JOIN users
-                                ON prospect_lists.assigned_user_id=users.id ";
-
-        $where_auto = " prospect_lists.deleted=0";
-
-        if ($where != "") {
-            $query .= " WHERE $where AND ".$where_auto;
-        } else {
-            $query .= " WHERE ".$where_auto;
-        }
-
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
-        } else {
-            $query .= " ORDER BY prospect_lists.name";
-        }
-        return $query;
+        return parent::create_export_query(
+            empty($order_by) ? 'name' : $order_by,
+            $where,
+            $relate_link_join
+        );
     }
 
     public function create_export_members_query($record_id)
