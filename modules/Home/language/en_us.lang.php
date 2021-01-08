@@ -237,4 +237,6 @@ $mod_strings = array(
     'LBL_STATUS' => 'Status:',
     'LBL_DESCRIPTION' => 'Description: ',
     //End Events
+
+    'LNK_TASK_VIEW' => 'View Task',
 );
