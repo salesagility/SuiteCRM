@@ -66,13 +66,29 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task = BeanFactory::newBean('Tasks');
 
         //test with empty string params
-        $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where tasks.deleted=0 ORDER BY tasks.name';
+        $expected = " SELECT  tasks.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod , LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),' ',IFNULL(contacts.last_name,'')))) contact_name , contacts.assigned_user_id contact_name_owner  , 'Contacts' contact_name_mod FROM tasks   LEFT JOIN  users jt0 ON tasks.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON tasks.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON tasks.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0  LEFT JOIN  contacts contacts ON tasks.contact_id=contacts.id AND contacts.deleted=0
+
+ AND contacts.deleted=0 where tasks.deleted=0 ORDER BY tasks.name";
         $actual = $task->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where users.user_name = "" AND tasks.deleted=0 ORDER BY tasks.name';
-        $actual = $task->create_export_query('tasks.id', 'users.user_name = ""');
+        $expected = " SELECT  tasks.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod , LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),' ',IFNULL(contacts.last_name,'')))) contact_name , contacts.assigned_user_id contact_name_owner  , 'Contacts' contact_name_mod FROM tasks   LEFT JOIN  users jt0 ON tasks.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON tasks.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON tasks.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0  LEFT JOIN  contacts contacts ON tasks.contact_id=contacts.id AND contacts.deleted=0
+
+ AND contacts.deleted=0 where (jt2.user_name= "") AND tasks.deleted=0 ORDER BY tasks.id";
+        $actual = $task->create_export_query('id', 'assigned_user_name = ""');
         $this->assertSame($expected, $actual);
     }
 

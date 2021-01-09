@@ -18,19 +18,29 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test with empty string params
-        $expected = "SELECT
-				project_task.*,
-                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
-                   	ON project_task.assigned_user_id=users.id where  project_task.deleted=0 ";
+        $expected = " SELECT  project_task.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , project.name project_name , project.assigned_user_id project_name_owner  , 'Project' project_name_mod , jt3.user_name assigned_user_name , jt3.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM project_task   LEFT JOIN  users jt0 ON project_task.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON project_task.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  project project ON project_task.project_id=project.id AND project.deleted=0
+
+ AND project.deleted=0  LEFT JOIN  users jt3 ON project_task.assigned_user_id=jt3.id AND jt3.deleted=0
+
+ AND jt3.deleted=0 where project_task.deleted=0";
         $actual = $projectTask->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT
-				project_task.*,
-                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
-                   	ON project_task.assigned_user_id=users.id where (users.user_name= \"\") AND  project_task.deleted=0  ORDER BY project_task.id";
-        $actual = $projectTask->create_export_query('project_task.id', 'users.user_name= ""');
+        $expected = " SELECT  project_task.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , project.name project_name , project.assigned_user_id project_name_owner  , 'Project' project_name_mod , jt3.user_name assigned_user_name , jt3.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM project_task   LEFT JOIN  users jt0 ON project_task.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON project_task.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  project project ON project_task.project_id=project.id AND project.deleted=0
+
+ AND project.deleted=0  LEFT JOIN  users jt3 ON project_task.assigned_user_id=jt3.id AND jt3.deleted=0
+
+ AND jt3.deleted=0 where (jt3.user_name= "") AND project_task.deleted=0 ORDER BY project_task.id";
+        $actual = $projectTask->create_export_query('id', 'assigned_user_name= ""');
         $this->assertSame($expected, $actual);
     }
 
