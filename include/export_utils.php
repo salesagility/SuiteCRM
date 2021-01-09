@@ -203,6 +203,7 @@ function export($type, $records = null, $members = false, $sample=false)
     //insert field for non primary emails after field for primary email (email1)
     if (in_array('email1', $fields_array) && $focus->hasEmails()) {
         $email1_pos = array_search('email1', array_keys($fields_array));
+
         $fields_array = array_slice($fields_array, 0, $email1_pos + 1, true) +
             array('email_addresses_non_primary' => 'email_addresses_non_primary') +
             array_slice($fields_array, $email1_pos + 1, count($fields_array) - 1, true);
