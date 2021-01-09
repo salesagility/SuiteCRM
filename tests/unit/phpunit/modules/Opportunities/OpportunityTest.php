@@ -92,7 +92,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
  AND accounts.deleted=0  LEFT JOIN  campaigns jt4 ON opportunities.campaign_id=jt4.id AND jt4.deleted=0
 
  AND jt4.deleted=0 where (accounts.name= \"\") AND opportunities.deleted=0 ORDER BY account_id";
-        $actual = $opportunity->create_list_query('account_id', 'account_name= ""');
+        $actual = $opportunity->create_export_query('account_id', 'account_name= ""');
         $this->assertSame($expected, $actual);
     }
 
