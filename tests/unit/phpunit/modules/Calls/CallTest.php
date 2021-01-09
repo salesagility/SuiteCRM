@@ -131,7 +131,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
  AND jt2.deleted=0  LEFT JOIN  calls_contacts jtl3 ON calls.id=jtl3.call_id AND jtl3.deleted=0
 
  LEFT JOIN  contacts contacts ON contacts.id=jtl3.contact_id AND contacts.deleted=0
- AND contacts.deleted=0 where (jt2.user_name= "") AND calls.deleted=0 ORDER BY contact_name";
+ AND contacts.deleted=0 where (jt2.user_name= \"\") AND calls.deleted=0 ORDER BY contact_name";
         $actual = $call->create_export_query('contact_name', 'assigned_user_name= ""');
         $this->assertSame($expected, $actual);
     }

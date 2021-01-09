@@ -39,7 +39,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
  AND project.deleted=0  LEFT JOIN  users jt3 ON project_task.assigned_user_id=jt3.id AND jt3.deleted=0
 
- AND jt3.deleted=0 where (jt3.user_name= "") AND project_task.deleted=0 ORDER BY project_task.id";
+ AND jt3.deleted=0 where (jt3.user_name= \"\") AND project_task.deleted=0 ORDER BY project_task.id";
         $actual = $projectTask->create_export_query('id', 'assigned_user_name= ""');
         $this->assertSame($expected, $actual);
     }

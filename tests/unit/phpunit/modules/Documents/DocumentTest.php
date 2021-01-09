@@ -149,7 +149,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
 
  AND jt1.deleted=0  LEFT JOIN  users jt2 ON documents.assigned_user_id=jt2.id AND jt2.deleted=0
 
- AND jt2.deleted=0 where (document_name= "") AND documents.deleted=0 ORDER BY documents.id";
+ AND jt2.deleted=0 where (document_name= \"\") AND documents.deleted=0 ORDER BY documents.id";
         $actual = $document->create_export_query('id', 'document_name = ""');
         $this->assertSame($expected, $actual);
     }

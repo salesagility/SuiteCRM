@@ -105,7 +105,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
 
  AND jt2.deleted=0  LEFT JOIN  contacts contacts ON notes.contact_id=contacts.id AND contacts.deleted=0
 
- AND contacts.deleted=0 where (jt0.user_name= "") AND notes.deleted=0 ORDER BY notes.id";
+ AND contacts.deleted=0 where (jt0.user_name= \"\") AND notes.deleted=0 ORDER BY notes.id";
         $actual = $note->create_export_query('id', 'assigned_user_name= ""');
         $this->assertSame($expected, $actual);
     }

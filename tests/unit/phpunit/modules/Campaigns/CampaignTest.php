@@ -119,7 +119,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
 
  AND jt2.deleted=0  LEFT JOIN  surveys jt3 ON campaigns.survey_id=jt3.id AND jt3.deleted=0
 
- AND jt3.deleted=0 where (campaigns.name= "") AND campaigns.deleted=0 ORDER BY campaigns.id";
+ AND jt3.deleted=0 where (campaigns.name= \"\") AND campaigns.deleted=0 ORDER BY campaigns.id";
         $actual = $campaign->create_export_query('id', 'campaigns.name=""');
         $this->assertSame($expected, $actual);
     }

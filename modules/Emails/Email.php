@@ -3102,7 +3102,7 @@ class Email extends Basic
         
         $validator = new EmailFromValidator();
         if (!$validator->isValid($this)) {
-
+            
             // if an email is invalid before sending,
             // maybe at this point sould "return false;" because the email having
             // invalid from address and/or name but we will trying to send it..

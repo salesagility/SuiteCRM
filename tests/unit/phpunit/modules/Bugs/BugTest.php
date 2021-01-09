@@ -88,7 +88,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
 
  AND jt3.deleted=0  LEFT JOIN  releases jt4 ON bugs.fixed_in_release=jt4.id AND jt4.deleted=0
 
- AND jt4.deleted=0 where (bugs.name= "") AND bugs.deleted=0 ORDER BY bugs.found_in_release";
+ AND jt4.deleted=0 where (bugs.name= \"\") AND bugs.deleted=0 ORDER BY bugs.found_in_release";
         $actual = $bug->create_export_query('found_in_release', 'bugs.name= ""');
         $this->assertSame($expected, $actual);
     }
