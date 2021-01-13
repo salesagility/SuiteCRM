@@ -154,9 +154,40 @@ if (is_array($_POST['merged_ids'])) {
                 } else {
                     $data = $mergeSource->$name->get();
                     if (is_array($data) && $focus->merge_bean->load_relationship($name)) {
+                        $base_relation_fields = array("id","deleted","date_modified");
+                        $join_key_lhs = $focus->merge_bean->$name->getRelationshipObject()->__get("join_key_lhs");
+                        $join_key_rhs = $focus->merge_bean->$name->getRelationshipObject()->__get("join_key_rhs");
+                        $base_relation_fields[] = $join_key_lhs;
+                        $base_relation_fields[] = $join_key_rhs;
+                        $actual_fields = $focus->merge_bean->$name->getRelationshipObject()->getFields();
+                        $extra_fields = [];
+                        $result = [];
+                        if($actual_fields > $base_relation_fields){
+                            $extra_fields = array_filter($actual_fields, function ($value) use ($base_relation_fields) {
+                                return !in_array($value["name"],$base_relation_fields);
+                            });
+                            $mergeSource->load_relationship($name);
+                            $query_array = $mergeSource->$name->getRelationshipObject()->getQuery($mergeSource->$name, array('return_as_array'=>true));
+                            $sql = 'SELECT * '.$query_array['from'].$query_array['where'];
+
+                            $db = DBManagerFactory::getInstance();
+                            $rows = $db->query($sql);
+                            while ($row = $db->fetchRow($rows)) {
+                                $rowData = array();
+                                foreach ($extra_fields as $field){
+                                    $item = $field['name'];
+                                    $rowData[$item] = $row[$item];
+                                }
+                                $result[$row[$join_key_lhs]] = $rowData;
+                            }
+                        }
+
                         foreach ($data as $related_id) {
-                            //add to primary bean
-                            $focus->merge_bean->$name->add($related_id);
+                            //add to primary with extra fields
+                            if(key_exists($related_id,$result)){
+                                $focus->merge_bean->$name->add($related_id,$result[$related_id]);
+                            } else
+                                $focus->merge_bean->$name->add($related_id);
                         }
                     }
                 }
