@@ -48,6 +48,8 @@ require_once('modules/Users/UserViewHelper.php');
 class UsersViewEdit extends ViewEdit
 {
     public $useForSubpanel = true;
+    public $fieldHelper;
+
     public function __construct()
     {
         parent::__construct();
@@ -67,7 +69,7 @@ class UsersViewEdit extends ViewEdit
     public function getMetaDataFile()
     {
         $userType = 'Regular';
-        if ($this->fieldHelper->usertype == 'GROUP') {
+        if (isset($this->fieldHelper) && $this->fieldHelper->usertype == 'GROUP') {
             $userType = 'Group';
         }
 
