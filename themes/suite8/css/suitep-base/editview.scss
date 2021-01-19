@@ -555,14 +555,12 @@ table.view {
 .edit-view-row .label {
   font-size: 14px;
   font-weight: 700;
-  color: $main-font-color;
-  padding: 0;
+  width: 98%;
   text-align: left;
-  vertical-align: baseline;
-  white-space: pre-wrap;
-  line-height: 10px;
+  padding: 0;
+  margin-top: 1.8rem;
+  margin-bottom: 1rem;
   text-transform: uppercase;
-  margin-bottom: 0.8em;
 }
 
 #lineItems {
@@ -763,6 +761,96 @@ option[selected] {
 .edit tr th {
   padding: 5px 5px 5px 7px;
 }
+
+#EditView input[type="button"] {
+  padding: 0 10px;
+  margin: 4px;
+  margin: 0.2em;
+  font-weight: bold;
+  height: 2.2em;
+  line-height: 1.1em;
+  padding: 0.3em 0.9em;
+  background-color: $button-bg-color;
+  text-transform: capitalize;
+  &:hover {
+    background-color: $btn-hover-bg-color;
+  }
+}
+
+#EditView input[type="submit"] {
+  margin: 0.2em;
+  font-weight: bold;
+  height: 2.2em;
+  line-height: 1.1em;
+  padding: 0.3em 0.9em;
+  background-color: $button-bg-color;
+  text-transform: capitalize;
+  &:hover {
+    background-color: $btn-hover-bg-color;
+  }
+}
+
+#EditView .buttons {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 15px;
+  right: 9px;
+}
+
+.edit-view-row {
+  display:flex;
+  flex-wrap: wrap;
+  .edit-view-bordered {
+    border-right: $base-border-color solid 0.0625rem;
+    &:nth-child(2n+0) {
+      border-right: none;
+    }
+    @media only screen and (max-width: 750px) {
+      border-right: none;
+    }    
+  }
+  .edit-view-row-item {
+    .yui-ac {
+      bottom: 8px;
+    }
+    .edit-view-field {
+      width: 100%;
+      padding: 0;
+      margin-bottom: 0.6em;
+      input[type=text] {
+        background-color:$transparent-color;
+        border: 1px solid $form-border-color;
+        &:focus {
+          border-color :$input-border-focus;
+          outline: 0;
+          box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+      }
+      textarea {
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+        &:focus {
+          border-color :$input-border-focus;
+          outline: 0;
+          box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+      }
+    }
+    .edit-dotted-border {
+      height: 0.0625rem;
+      color: $dark-grey-line;
+      background-image: linear-gradient(to right, grey 10%, rgba(255, 255, 255, 0) 0%);
+      background-position: top;
+      background-size: 0.875rem 1.1875px;
+      background-repeat: repeat-x;
+      margin-right: 1rem;
+      clear: both;
+    }    
+  }
+}
+
+
 
 fieldset {
   margin-top: 32px;
@@ -1619,6 +1707,9 @@ div.confirmTable {
   float: left;
   letter-spacing: 2px;
   text-transform: uppercase;
+  .module-title-text-breadcrumbs {
+    display: none;
+  }
 }
 
 .moduleTitle span.utils {
@@ -1637,6 +1728,7 @@ div.confirmTable {
   font-size: 32px;
   padding: 0 8px;
   line-height: 36px;
+  display: none;
 }
 
 ul.subTabs {

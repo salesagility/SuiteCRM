@@ -7,7 +7,7 @@
                 {*column*}
                 {*<!-- COLUMN -->*}
                 {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-                    <div class="col-xs-12 col-sm-6 edit-view-row-item">
+                    <div class="col-xs-12 col-sm-6 edit-view-row-item edit-view-bordered">
                 {{else}}
                     <div class="col-xs-12 col-sm-12 edit-view-row-item">
                 {{/if}}
@@ -115,6 +115,7 @@
                                 {{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$colData.field.tabindex}}
                             {{/if}}
                             </div>
+                            <div class="edit-dotted-border"></div>
                     {{else}}
 
                     {{/if}}
