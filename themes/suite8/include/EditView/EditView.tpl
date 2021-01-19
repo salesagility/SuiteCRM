@@ -40,6 +40,7 @@
 
 
 *}
+<div class="header-module-title">{$MOD.LBL_MODULE_NAME}</div>
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 <div id="EditView_tabs">

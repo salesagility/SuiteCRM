@@ -1597,9 +1597,9 @@ EOHTML;
                             "<a href='index.php?module={$this->module}&action=DetailView&record={$this->bean->id}'>" .
                             $this->bean->get_summary_text() .
                             "</a>";
-                        $params[] = $GLOBALS['app_strings']['LBL_EDIT_BUTTON_LABEL'];
+                        $params[] = '<span class="module-title-text-breadcrumbs">' . $GLOBALS['app_strings']['LBL_EDIT_BUTTON_LABEL'] . '</span>';
                     } else {
-                        $params[] = $GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL'];
+                        $params[] = '<span class="module-title-text-breadcrumbs">' . $GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL'] . '</span>';
                     }
                     break;
                 case 'DetailView':

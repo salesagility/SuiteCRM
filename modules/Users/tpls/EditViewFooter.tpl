@@ -650,9 +650,9 @@
 {/literal}
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer footer">
     <tr>
-        <td>
+        <td class="actionbutton-footer">
             {sugar_action_menu id="userEditActions" class="clickMenu fancymenu" buttons=$ACTION_BUTTON_FOOTER flat=true}
-        </td>
+        </td>       
         <td align="right" nowrap>
             <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span> {$APP.NTC_REQUIRED}
         </td>

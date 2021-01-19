@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<div class="header-detailtitle">{$MOD.LBL_MODULE_NAME}</div>
+<div class="header-module-title">{$MOD.LBL_MODULE_NAME}</div>
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 <div class="detail-view">

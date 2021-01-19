@@ -790,12 +790,16 @@ option[selected] {
   }
 }
 
-#EditView .buttons {
+#EditView .buttons ,.action_buttons {
   display: flex;
   justify-content: flex-end;
   position: absolute;
   top: 15px;
   right: 9px;
+}
+
+.actionbutton-footer {
+  display: none;
 }
 
 .edit-view-row {
@@ -1706,9 +1710,13 @@ div.confirmTable {
   margin: 0 0 $detail-view-module-title-space 0;
   float: left;
   letter-spacing: 2px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   .module-title-text-breadcrumbs {
     display: none;
+  }
+  a {
+    color: $main-header-font-color;
+    text-transform: capitalize;
   }
 }
 
@@ -4306,10 +4314,6 @@ tr:hover img.info {
 .paginationWrapper span {
   padding: 0;
   margin: 0;
-}
-
-#EditView div.action_buttons .button {
-  background-color: $danger-btn-bg;
 }
 
 #save_and_continue.button {
