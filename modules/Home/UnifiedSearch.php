@@ -276,9 +276,9 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
             if (!empty($employees)) {
                 foreach ($employees as $employee) {
                     $eHit = new stdClass;
-                    $eHit->record_module = $hit->record_module;
-                    $eHit->record_id = $hit->record_id;
-                    $eHit->score = $hit->score;
+                    $eHit->record_module = 'CC_Employee_Information';
+                    $eHit->record_id = $employee['id'];
+                    $eHit->score = isset($employee['score'])?$employee['score']:0;
                     $eHit->label = getModuleLabel('CC_Employee_Information');
                     $eHit->name = $employee['name'];
                     $eHit->summary = $employee['skills'];
