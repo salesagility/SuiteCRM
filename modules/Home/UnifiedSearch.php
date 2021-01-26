@@ -93,73 +93,73 @@ if ($queryString) {
 
 
 ?>
-<form name='UnifiedSearchAdvancedMain' action='index.php' method='POST' class="search_form">
-    <input type='hidden' name='query_string' value='test'>
-    <input type='hidden' name='action' value='UnifiedSearch'>
-    <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER", "AOD_Index");?>' value='<?php echo $queryString;?>'>
-    <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON", "AOD_Index");?>">&nbsp;
-</form>
+    <form name='UnifiedSearchAdvancedMain' action='index.php' method='POST' class="search_form">
+        <input type='hidden' name='query_string' value='test'>
+        <input type='hidden' name='action' value='UnifiedSearch'>
+        <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER", "AOD_Index");?>' value='<?php echo $queryString;?>'>
+        <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON", "AOD_Index");?>">&nbsp;
+    </form>
 <?php if ($hits) { ?>
-<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
-    <?php getPaginateHTML($queryString, $start, $amount, $total); ?>
-    <thead>
-    <tr height='20'>
-        <th scope='col' width='10%'data-hide="phone">
+    <table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
+        <?php getPaginateHTML($queryString, $start, $amount, $total); ?>
+        <thead>
+        <tr height='20'>
+            <th scope='col' width='10%'data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
                         <?php echo translate("LBL_SEARCH_RESULT_MODULE", "AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
-        </th>
-        <th scope='col' width='30%' data-toggle="true">
+            </th>
+            <th scope='col' width='30%' data-toggle="true">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
                         <?php echo translate("LBL_SEARCH_RESULT_NAME", "AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
-        </th>
-        <th scope='col' width='30%' data-hide="phone">
+            </th>
+            <th scope='col' width='30%' data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
                         <?php echo translate("LBL_SEARCH_RESULT_SUMMARY", "AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
-        </th>
-        <th scope='col' width='25%' data-hide="phone,phonelandscape">
-            <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_DATE_CREATED", "AOD_Index"); ?>
-            </div>
-        </th>
-        <th scope='col' width='25%' data-hide="phone,phonelandscape">
-            <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_DATE_MODIFIED", "AOD_Index"); ?>
-            </div>
-        </th>
-        <th scope='col' width='10%'>
-            <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_SCORE", "AOD_Index"); ?>
-            </div>
-        </th>
-    </tr>
-    </thead>
-    <?php
-foreach ($hits as $hit) {
-    echo "<tr>"
-        ."<td>".$hit->label."</td>"
-        ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$hit->name."</a></td>"
-        ."<td>".$hit->summary."</td>"
-        ."<td>".$hit->date_entered."</td>"
-        ."<td>".$hit->date_modified."</td>"
-        ."<td>".getScoreDisplay($hit)."</td>"
-        ."</tr>";
-}
-?>
-</table>
-
-<?php
-        } else {
-            echo "<p>".translate("LBL_SEARCH_RESULT_EMPTY", "AOD_Index")."</p>";
+            </th>
+            <th scope='col' width='25%' data-hide="phone,phonelandscape">
+                <div style='white-space: nowrap; width:100%; text-align:left;'>
+                    <?php echo translate("LBL_SEARCH_RESULT_DATE_CREATED", "AOD_Index"); ?>
+                </div>
+            </th>
+            <th scope='col' width='25%' data-hide="phone,phonelandscape">
+                <div style='white-space: nowrap; width:100%; text-align:left;'>
+                    <?php echo translate("LBL_SEARCH_RESULT_DATE_MODIFIED", "AOD_Index"); ?>
+                </div>
+            </th>
+            <th scope='col' width='10%'>
+                <div style='white-space: nowrap; width:100%; text-align:left;'>
+                    <?php echo translate("LBL_SEARCH_RESULT_SCORE", "AOD_Index"); ?>
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <?php
+        foreach ($hits as $hit) {
+            echo "<tr>"
+                ."<td>".$hit->label."</td>"
+                ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$hit->name."</a></td>"
+                ."<td>".$hit->summary."</td>"
+                ."<td>".$hit->date_entered."</td>"
+                ."<td>".$hit->date_modified."</td>"
+                ."<td>".getScoreDisplay($hit)."</td>"
+                ."</tr>";
         }
+        ?>
+    </table>
+
+    <?php
+} else {
+    echo "<p>".translate("LBL_SEARCH_RESULT_EMPTY", "AOD_Index")."</p>";
+}
 ?>
 
 <?php
@@ -237,9 +237,15 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
     if (is_file($cachePath)) {
         $mTime = getCorrectMTime($cachePath);
         if ($mTime > (time() - 5*60)) {
-            $hits = unserialize(sugar_file_get_contents($cachePath));
+            //          $hits = unserialize(sugar_file_get_contents($cachePath));
         }
     }
+
+    $employees = [];
+    if (class_exists('CC_SkillController')) {
+        $employees = (new CC_SkillController())->getEmployeesBySkill($queryString);
+    }
+
     if (!isset($hits)) {
         $tmphits = $index->find($queryString);
         $hits = array();
@@ -258,36 +264,50 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
                     continue;
                 }
             }
-            $newHit = new stdClass;
-            $newHit->record_module = $hit->record_module;
-            $newHit->record_id = $hit->record_id;
-            $newHit->score = $hit->score;
-            $newHit->label = getModuleLabel($bean->module_name);
-            $newHit->name = $bean->get_summary_text();
-            $newHit->summary = getRecordSummary($bean);
-            $newHit->date_entered = $bean->date_entered;
-            $newHit->date_modified = $bean->date_modified;
+            if($hit->record_module=='CC_Employee_Information' && key_exists($hit->record_id,$employees)){
+                $employee = $employees[$hit->record_id];
+                $newHit = new stdClass;
+                $newHit->record_module = $hit->record_module;
+                $newHit->record_id = $hit->record_id;
+                $newHit->score = isset($employee['score'])?$employee['score']:0;
+                $newHit->label = getModuleLabel($bean->module_name);
+                $newHit->name = $bean->get_summary_text();
+                $newHit->summary = $employee['skills'];
+                $newHit->date_entered = $employee['date_entered'];
+                $newHit->date_modified = $employee['date_modified'];
+                unset($employees[$hit->record_id]);
+            } else {
+                $newHit = new stdClass;
+                $newHit->record_module = $hit->record_module;
+                $newHit->record_id = $hit->record_id;
+                $newHit->score = $hit->score;
+                $newHit->label = getModuleLabel($bean->module_name);
+                $newHit->name = $bean->get_summary_text();
+                $newHit->summary = getRecordSummary($bean);
+                $newHit->date_entered = $bean->date_entered;
+                $newHit->date_modified = $bean->date_modified;
+            }
             $hits[] = $newHit;
         }
 
         // Add employees
-        if (class_exists('CC_SkillController')) {
-            $employees = (new CC_SkillController())->getEmployeesBySkill($queryString);
-            if (!empty($employees)) {
-                foreach ($employees as $employee) {
-                    $eHit = new stdClass;
-                    $eHit->record_module = 'CC_Employee_Information';
-                    $eHit->record_id = $employee['id'];
-                    $eHit->score = isset($employee['score'])?$employee['score']:0;
-                    $eHit->label = getModuleLabel('CC_Employee_Information');
-                    $eHit->name = $employee['name'];
-                    $eHit->summary = $employee['skills'];
-                    $eHit->date_entered = $employee['date_entered'];
-                    $eHit->date_modified = $employee['date_modified'];
-                    $hits[] = $eHit;
-                }
+        if (!empty($employees)) {
+            foreach ($employees as $employee) {
+                $eHit = new stdClass;
+                $eHit->record_module = 'CC_Employee_Information';
+                $eHit->record_id = $employee['id'];
+                $eHit->score = isset($employee['score'])?$employee['score']:0;
+                $eHit->label = getModuleLabel('CC_Employee_Information');
+                $eHit->name = $employee['name'];
+                $eHit->summary = $employee['skills'];
+                $eHit->date_entered = $employee['date_entered'];
+                $eHit->date_modified = $employee['date_modified'];
+                $hits[] = $eHit;
             }
         }
+        usort($hits, function($a, $b) {
+            return ($a->score < $b->score);
+        });
 
         //Cache results so pagination is nice and snappy.
         cacheQuery($queryString, $hits);
@@ -339,5 +359,5 @@ function getPaginateHTML($queryString, $start, $amount, $total)
             </button>
         </form>
     </td>
-<?php
+    <?php
 }
