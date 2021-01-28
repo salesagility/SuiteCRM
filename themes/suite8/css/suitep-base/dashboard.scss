@@ -47,6 +47,7 @@
   width: auto;
   height: auto;
 }
+
 #pageContainer .dashletcontainer .pagination td button:disabled {
   background-color: $disabled-btn-bg;
   color: $disabled-btn-color;
@@ -119,9 +120,7 @@ ul.subpanelTablist li {
   font-size: 13px;
   border-bottom-color: $active-tab-bg;
   height: 28px;
-
 }
-
 
 #dashletCategories .suitepicon {
   margin: 0 4px 0 4px;
@@ -131,7 +130,6 @@ ul.subpanelTablist li {
   display: inline-block;
   font-size: 13px;
 }
-
 
 #dashletCategories > li a {
   font-weight: 400;
@@ -229,11 +227,9 @@ ul.subpanelTablist li {
   color: $add-dashlet-tab-color;
 }
 
-
 #dashletCtrls {
   float: right;
 }
-
 
 #moduleDashlets h3,
 #chartDashlets h3,
@@ -244,7 +240,6 @@ ul.subpanelTablist li {
 #dashletSearch table tr td input[type=button] {
   vertical-align: top;
 }
-
 
 .sugarFeedDashlet {
   overflow: auto;
@@ -293,7 +288,6 @@ ul.subpanelTablist li {
   float: right;
 }
 
-
 .dashletPanel .hd .hd-center .dashletToolSet a {
   font-size: $dashlet-header-toolset-icon-font-size;
   color: $dashlet-btn-color;
@@ -320,7 +314,6 @@ div#chartDashlets {
   overflow-y: auto;
 }
 
-
 .dashletPanel {
   padding: 0;
   margin: 15px 15px 15px 0;
@@ -339,7 +332,6 @@ div#chartDashlets {
   padding: 0;
   margin: 0;
 }
-
 
 #moduleDashletsList {
   height: auto;
@@ -420,11 +412,9 @@ td.dashlet-title > h3 > span {
   margin-left: 10px;
 }
 
-
 #moduleDashletsList {
   padding: 10px;
   max-height: 375px ;
-  /*background: #778591;*/
   border: 1px solid transparent;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -433,7 +423,6 @@ td.dashlet-title > h3 > span {
 #basicChartDashletsList {
   padding: 10px;
   max-height: 375px ;
-  /*background: #778591;*/
   border: 1px solid transparent;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -441,8 +430,7 @@ td.dashlet-title > h3 > span {
 
 #toolsDashletsList {
   padding: 10px;
-  max-height: 375px ;
-  /*background: #778591;*/
+  max-height: 375px;
   border: 1px solid transparent;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -451,12 +439,10 @@ td.dashlet-title > h3 > span {
 #webDashletsList {
   padding: 10px;
   max-height: 375px ;
-  /*background: #778591;*/
   border: 1px solid transparent;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-
 
 #dashletsDialog_mask {
   display: none ;
@@ -468,12 +454,10 @@ td.dashlet-title > h3 > span {
   visibility: collapse ;
 }
 
-
 @media (max-width: 980px) {
   .dashletNonTable {
     display: none;
   }
-
   .dashletcontainer {
     position: relative;
     padding: 0;
@@ -487,13 +471,11 @@ td.dashlet-title > h3 > span {
   padding-right: 0;
 }
 
-
 .dashletPanel .list tr th {
   padding-top: $dashlet-header-height/2;
   padding-bottom: $dashlet-header-height/2;
   padding-left: $dashlet-header-padding;
-  padding-right: $dashlet-header-padding;
-  
+  padding-right: $dashlet-header-padding;  
   padding-top: $dashlet-header-padding;
   padding-bottom: $dashlet-header-padding;
 }
@@ -548,20 +530,16 @@ td.dashlet-title > h3 > span {
 }
 
 @media (max-width: 750px) {
-
   .dashletcontainer {
     float: left;
   }
-
   .dashletPanel {
     overflow: auto;
   }
-
   .dashboardTabList {
     display: none;
   }
 }
-
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
   top: initial;
@@ -603,15 +581,10 @@ td.dashlet-title > h3 > span {
   max-height: 650px;
 }
 
-.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form {
-  /* form looking good. */
-}
-
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table td input[type="checkbox"] {
   margin-top: 10px;
   height: 30px;
 }
-
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr{
   display: flex; 
@@ -650,11 +623,6 @@ td.dashlet-title > h3 > span {
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table tr td[scope=row][colspan="4"] br {
   display: none;
-}
-
-
-.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table {
-
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody {
@@ -710,7 +678,6 @@ td.dashlet-title > h3 > span {
   display: none;
 }
 
-
 #dashletresponsive {
   float: left;
 }
@@ -723,6 +690,7 @@ td.dashlet-title > h3 > span {
 .dashboardTbList {
   max-width: 90% ;
 }
+
 @media (max-width: 999px) and (max-height: 1024px) {
   #dashletsDialog_c {
     margin-top: 25px;

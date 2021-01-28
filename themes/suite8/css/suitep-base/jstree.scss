@@ -311,8 +311,7 @@
   background: transparent;
   box-shadow: none;
 }
-.jstree-default .jstree-disabled.jstree-clicked {
-}
+
 .jstree-default .jstree-disabled > .jstree-icon {
   opacity: 0.8;
 }
@@ -385,9 +384,7 @@
 .jstree-default .jstree-wholerow {
   height: 24px;
 }
-.jstree-default .jstree-node,
-.jstree-default .jstree-icon {
-}
+
 .jstree-default .jstree-node {
   background-position: -292px -4px;
   background-repeat: repeat-y;
@@ -409,10 +406,7 @@
 .jstree-default > .jstree-container-ul .jstree-loading > .jstree-ocl {
   background: url("../../../../../themes/suite8/images/loading.gif") center center no-repeat;
 }
-.jstree-default .jstree-file {
-}
-.jstree-default .jstree-folder {
-}
+
 .jstree-default > .jstree-container-ul > .jstree-node {
   margin-left: 0;
   margin-right: 0;
@@ -438,8 +432,7 @@
 .jstree-default .jstree-ellipsis.jstree-no-icons .jstree-anchor {
   width: calc(100% - 5px);
 }
-.jstree-default.jstree-rtl .jstree-node {
-}
+
 .jstree-default.jstree-rtl .jstree-last {
   background: transparent;
 }
@@ -480,10 +473,7 @@
 .jstree-default-small > .jstree-container-ul .jstree-loading > .jstree-ocl {
   background: url("../../../../../themes/suite8/imges/loading.gif") center center no-repeat;
 }
-.jstree-default-small .jstree-file {
-}
-.jstree-default-small .jstree-folder {
-}
+
 .jstree-default-small > .jstree-container-ul > .jstree-node {
   margin-left: 0;
   margin-right: 0;
@@ -492,10 +482,7 @@
   line-height: 18px;
   padding: 0 4px;
 }
-#jstree-dnd.jstree-default-small .jstree-ok,
-#jstree-dnd.jstree-default-small .jstree-er {
 
-}
 #jstree-dnd.jstree-default-small i {
   background: transparent;
   width: 18px;
@@ -519,8 +506,7 @@
 .jstree-default-small .jstree-ellipsis.jstree-no-icons .jstree-anchor {
   width: calc(100% - 5px);
 }
-.jstree-default-small.jstree-rtl .jstree-node {
-}
+
 .jstree-default-small.jstree-rtl .jstree-last {
   background: transparent;
 }
@@ -550,10 +536,7 @@
 .jstree-default-large .jstree-wholerow {
   height: 32px;
 }
-.jstree-default-large .jstree-file {
-}
-.jstree-default-large .jstree-folder {
-}
+
 .jstree-default-large > .jstree-container-ul > .jstree-node {
   margin-left: 0;
   margin-right: 0;
@@ -562,10 +545,7 @@
   line-height: 32px;
   padding: 0 4px;
 }
-#jstree-dnd.jstree-default-large .jstree-ok,
-#jstree-dnd.jstree-default-large .jstree-er {
 
-}
 #jstree-dnd.jstree-default-large i {
   background: transparent;
   width: 32px;
@@ -589,5 +569,4 @@
 .jstree-default-large .jstree-ellipsis.jstree-no-icons .jstree-anchor {
   width: calc(100% - 5px);
 }
-.jstree-default-large.jstree-rtl .jstree-node {
-}
+

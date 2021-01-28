@@ -1,9 +1,4 @@
 /**** Studio ***/
-
-#layoutEditor img {
-
-}
-
 #delete img {
   width: 32px;
   height: 32px;
@@ -76,7 +71,6 @@
   border-radius: $border-radius-base;
   float: right;
   width: 100%;
-
 }
 
 .le_panel {
@@ -89,7 +83,6 @@
   background: $default-btn-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
-  //background: $main-bg;
 }
 
 
@@ -104,8 +97,6 @@
   overflow: hidden;
   width: 150px;
 }
-
-
 
 #toolbox .special:nth-of-type(3) {
   background: $default-tab-bg;
@@ -185,6 +176,7 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 #delete span {
   color: $default-btn-color;
 }
+
 #panels .le_row .le_field, #availablefields .le_field, #layoutPreview .le_row .le_field {
   display: block;
 }
@@ -228,7 +220,6 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 
 #popup_form_id > table > tbody > tr > .mbLBL
 
-
 .relform td {
   padding-bottom: 8px;
   padding-left: 8px;
@@ -238,10 +229,12 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
   padding-bottom: 8px;
   padding-left: 8px;
 }
+
 #exportcustom > table > tbody > tr > td {
   padding-bottom: 8px;
   padding-left: 8px;
 }
+
 #popup_form_id > table > tbody > tr > td {
   padding-bottom: 8px;
   padding-left: 8px;

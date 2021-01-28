@@ -90,7 +90,6 @@
   border: none;
 }
 
-
 .panel-default > .panel-heading > a img {
   margin-right: 15px;
 }
@@ -106,7 +105,6 @@
 div.panel-heading a.collapsed-override {
   background-color: $panel-expanded-bg ;
 }
-
 
 .panel-heading a.collapsed {
   @extend .suitepicon;
@@ -139,7 +137,6 @@ div.panel-heading a.collapsed-override {
   line-height: $panel-header-height + 3px;
   margin-left: 0.3em;
 }
-
 
 .sub-panel > .panel-body > .tab-content > div {
   border: none;
@@ -204,7 +201,6 @@ div.sub-panel {
   border-bottom: none;
   color: $list-view-button-color;
 }
-
 
 .sub-panel .table-responsive.list > tbody > tr > td ul.subnav a {
   color: $list-view-button-color;
@@ -354,7 +350,6 @@ div.sub-panel {
   line-height: 26px;
 }
 
-
 #actionLinkTop li.sugar_action_button:hover,
 #actionLinkBottom li.sugar_action_button:hover,
 .action-link-top li.sugar_action_button:hover,
@@ -388,7 +383,6 @@ div.sub-panel {
   margin-right: 5px;
   display: inline-block;
 }
-
 
 .subpanelTablist #addPageItem a, .subpanelTablist #addPageItem a:hover {
   background: transparent;
@@ -442,7 +436,6 @@ table.subpanelTabForm {
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
   display: none;
 }
-
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records li span,
 .evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
@@ -505,7 +498,6 @@ table.subpanelTabForm {
   clear: both;
   width: 100%;
   white-space: nowrap;
-
 }
 
 
@@ -517,7 +509,6 @@ table.subpanelTabForm {
 
 .clickMenu.button li span.ab:hover {
   background-position: 50% 0;
-
 }
 
 .clickMenu.button li > span a {
@@ -536,5 +527,3 @@ table.subpanelTabForm {
   color: $disabled-btn-color;
   cursor: default ;
 }
-
-

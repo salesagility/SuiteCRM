@@ -126,7 +126,6 @@ a.buttontoggle:hover {
   height: 30px;
   z-index: 1000;
   cursor: pointer;
-
 }
 
 .button-toggle-expanded {
@@ -183,8 +182,6 @@ a.buttontoggle:hover {
 .button-toggle-collapsed {
   left: 0;
 }
-
-
 
 .favoritesSidebar {
   float: left;
@@ -252,6 +249,7 @@ a.buttontoggle:hover {
   margin-right: 4px;
   position: relative;
 }
+
 .recentlyViewedSidebar .recent_h3{
   font-size: 16px;
   font-weight: bold;
@@ -309,7 +307,6 @@ footer.collapsedSidebar {
   .button-toggle-expanded {
     left: 20%;
   }
-
 
   .col-md-10 {
     width: 80%;
@@ -395,9 +392,7 @@ footer.collapsedSidebar {
 
   .button-toggle-expanded {
     left: 15.8%;
-  }
-
-  
+  }  
 
   .col-md-10 {
     width: 84.2%;
@@ -419,9 +414,7 @@ footer.collapsedSidebar {
 
   .button-toggle-expanded {
     left: 14.8%;
-  }
-
-  
+  }  
 
   .col-md-10 {
     width: 85.2%;
@@ -433,6 +426,7 @@ footer.collapsedSidebar {
 }
 
 @media (min-width: 1600px) {
+
   #search {
     visibility: collapse;
   }
@@ -446,9 +440,7 @@ footer.collapsedSidebar {
 
   .button-toggle-expanded {
     left: 13.8%;
-  }
-
-  
+  }  
 
   .col-md-10 {
     width: 86.2%;
@@ -470,9 +462,7 @@ footer.collapsedSidebar {
 
   .button-toggle-expanded {
     left: 12.8%;
-  }
-
-  
+  }  
 
   .col-md-10 {
     width: 87.2%;
@@ -494,9 +484,7 @@ footer.collapsedSidebar {
 
   .button-toggle-expanded {
     left: 11.8%;
-  }
-
-  
+  }  
 
   .col-md-10 {
     width: 88.2%;
@@ -519,9 +507,7 @@ footer.collapsedSidebar {
 
   .button-toggle-expanded {
     left: 10.8%;
-  }
-
-  
+  }  
 
   .col-md-10 {
     width: 89.2%;
@@ -544,9 +530,7 @@ footer.collapsedSidebar {
 
   .button-toggle-expanded {
     left: 10%;
-  }
-
-  
+  }  
 
   .col-md-10 {
     width: 90%;
@@ -567,7 +551,4 @@ footer.collapsedSidebar {
   }
 }
 
-.test {
-	
-	
-}
+

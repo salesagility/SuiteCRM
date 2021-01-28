@@ -238,7 +238,6 @@
 }
 
 .file-attachments {
-
   background: $main-alternate-bg;
   border: 1px solid $email-attachment-container-border;
   border-radius: $border-radius-base;
@@ -334,7 +333,6 @@
       cursor: pointer;
     }
   }
-
 }
 
 
@@ -343,7 +341,6 @@
 }
 
 .bean-attachments {
-
   background: $main-alternate-bg;
   border: 1px solid $email-attachment-container-border;
   border-radius: 4px;
@@ -418,7 +415,6 @@
     cursor: pointer;
     margin: 0 5px 0 0;
     padding: $email-attachment-padding;
-
     .glyphicon {
       cursor: pointer;
     }
@@ -432,7 +428,6 @@
     background-color: $email-attachment-bg;
     padding: $email-attachment-padding ($email-attachment-padding * 2);
     line-height: $email-attachment-height + ($email-attachment-padding * 2);
-
     .glyphicon {
       top: 0;
       bottom: 0;
@@ -448,7 +443,6 @@
 }
 
 .document-attachments {
-
   background: $main-alternate-bg;
   border: 1px solid $email-attachment-container-border;
   border-radius: $border-radius-base;
@@ -528,7 +522,6 @@
     cursor: pointer;
     margin: 0 5px 0 0;
     padding: $email-attachment-padding;
-
     .glyphicon {
       cursor: pointer;
     }
@@ -549,9 +542,7 @@
       cursor: pointer;
     }
   }
-
 }
-
 
 #settingsDialog #userFolders {
   width: 100%;
@@ -561,11 +552,6 @@
 .emails-list-view-toolbar-header {
   text-align: right;
 }
-
-.btn-emails-current-folder {
-
-}
-
 
 @media (max-width: $sm-breakpoint) {
   .compose-view {
@@ -578,7 +564,6 @@
       }
     }
   }
-
 }
 
 @media (min-width: $md-breakpoint) {
@@ -631,5 +616,3 @@
     }
   }
 }
-
-

@@ -3,13 +3,11 @@
 .favorite_icon_fill svg {
   height: 28px;
   width: 28px;
-
 }
 
 .favorite_icon_outline svg {
   height: 28px;
   width: 28px;
-
 }
 
 .vcard {
@@ -230,11 +228,6 @@ p.msg {
   border-bottom: none;
 }
 
-// Fix subpanel button
-.subpanel-table .SugarActionMenu .sugar_action_button {
-  /*min-height: 32px;*/
-}
-
 .subpanel-table .SugarActionMenu .single a {
   min-height: 32px;
   line-height: 32px;
@@ -366,7 +359,6 @@ table.footable > tbody > tr.footable-empty > td {
     @include hideWhenPrinting();
   }
 
-
   .module-title-text {
     @include hideWhenPrinting();
   }
@@ -386,7 +378,6 @@ table.footable > tbody > tr.footable-empty > td {
   .tab-inline-pagination {
     @include hideWhenPrinting()
   }
-
 
   .tab-content > .active.tab-pane-NOBOOTSTRAPTOGGLER {
     display: block !important;
@@ -419,21 +410,19 @@ table.footable > tbody > tr.footable-empty > td {
 
 
 .email-link {
-    display: block;
-    float: left;
+  display: block;
+  float: left;
 }
 
 .confirm-opt-in-tick {
-    float: right;
-    padding: 0 10px;
+  float: right;
+  padding: 0 10px;
 }
 
 
 .email-opt-in {
   font-size: 14px;
 }
-
-
 
 .email-opt-in-not-sent {
   color: $opt-in-tick-color-not-sent;

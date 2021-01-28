@@ -1,6 +1,6 @@
 /**** NAVBAR ****/
 
-// Mix ins:
+// Mixins:
 @mixin alertButton() {
   background-color: $navbar-bg;
   border: none;
@@ -154,8 +154,6 @@
         > a {
           display: inline-block;
           border-top: 3px solid transparent;
-          //padding-top: 36px;
-          //padding-bottom: 35px;
         }
 
         > a:hover {
@@ -168,8 +166,6 @@
         > a {
           display: inline-block;
           border-top: 3px solid $navbar-menu-current-separator;
-          //padding-top: 36px;
-          //padding-bottom: 35px;
         }
       }
 
@@ -246,6 +242,7 @@
       border-top-left-radius: 3px;
     }
   }
+
   /* fix default buttons */
   .btn-default {
     background-color: transparent;
@@ -277,7 +274,6 @@
     padding: 0;
     width: 100%;
   }
-
 
 }
 
@@ -377,7 +373,6 @@
 .mobileheader .dropdown-menu li.favorite-links-title a {
   padding: 12px 10px 5px 10px;
 }
-
 
 .topnav .dropdown-menu li.recentlinks:last-of-type {
   border-bottom: none;
@@ -663,7 +658,6 @@
 
 .globalLinks-desktop ul li a {
   color: $navbar-menu-link-color;
-
 }
 
 .globalLinks-desktop ul li a:hover {
@@ -708,7 +702,6 @@
   color: $navbar-user-color-hover;
 }
 
-
 .usermenucollapsed {
   margin: 0;
   padding: 0;
@@ -736,7 +729,6 @@
 }
 
 .searchform {
-  //margin-top: ($navbar-height/4);
   margin-right: -10px;
   margin-right: 15px;
 }
@@ -875,7 +867,6 @@
   .recentlinks_topedit, li.recentlinks_topedit > a {
     line-height: 32px;
     height: auto;
-
   }
 
   .recentlinks_topedit > a {
@@ -887,7 +878,6 @@
     line-height: 32px;
     width: auto;
     height: auto;
-
   }
   .recentlinks_topedit {
     float: right;
@@ -999,7 +989,7 @@
 }
 
 .create.quickcreatetop .dropdown-toggle {
-    background-color: $navbar-quick-create-btn-bg;
+  background-color: $navbar-quick-create-btn-bg;
 	height:40px;
 	line-height:37px;
 	padding-top:0;
@@ -1068,7 +1058,6 @@
 .quickcreatetop .dropdown-menu li a {
   opacity: 1;
   color: $navbar-quick-create-menu-color;
-
 }
 
 .quickcreatetop .dropdown-menu li a:hover {
@@ -1172,7 +1161,6 @@
   padding: 0;
   border: 1px solid $navbar-alert-separator;
   border-radius: 2px;
-
 }
 
 .desktop_notifications .has-alerts .text-info {
@@ -1223,7 +1211,6 @@
   display: inline-block;
 }
 
-
 .globalLinks-desktop {
   .btn-default.active,
   .btn-default:active,
@@ -1264,7 +1251,6 @@
     overflow: visible;
   }
 }
-
 
 @media (max-width: 750px) {
 
@@ -1415,6 +1401,7 @@
   .searchformdropdown .btn:hover {
     background-color: $navbar-search-btn-bg;
   }
+
   /* overridding bootstrap needs to be stacked */
   .globalLinks-mobile .btn-default.active.focus,
   .globalLinks-mobile .btn-default.active:focus,
@@ -1506,10 +1493,12 @@
   .navbar-search .query_string {
     width: 150px;
   }
+
   .tablet-bar {
     display: none;
     visibility: collapse;
   }
+
   .navbar .container-fluid {
     padding-left: 0;
     padding-right: 0;
@@ -1594,7 +1583,8 @@
 		height:60px;
         margin-top: 0;
         margin-bottom: 0;
-	}
+  }
+  
   .mobile-bar {
     visibility: collapse;
     display: none;
@@ -1764,6 +1754,7 @@
   .navbar-search {
     margin-right: 0px;
   }
+
   #Icon_5_ {
     fill: $navbar-menu-link-color;
   }
@@ -1799,8 +1790,6 @@
     height: 40px;
     color: $navbar-link-color-hover;
   }
-
-
 
   .desktop-bar .navbar-search.open .dropdown-menu {
     top: -(($navbar-toolbar-height / 4) - 12px);
@@ -2000,7 +1989,6 @@
     font-size: 14px;
     color: $navbar-menu-link-color;
     padding: 12px 15px;
-
   }
 
   .mobile_menu a:hover {
@@ -2126,6 +2114,7 @@
     display: none;
     visibility: collapse;
   }
+
   .navbar-form {
     display: inline-block;
   }
@@ -2171,6 +2160,7 @@
     display: inline-block;
     margin: 0 0 0 5px;
   }
+
   /* overridding bootstrap needs to be stacked */
   .globalLinks-desktop .btn-default.active.focus,
   .globalLinks-desktop .btn-default.active:focus,
@@ -2214,9 +2204,8 @@
   }
 }
 
-
-
 @media (max-width: 1399px) {
+
   .navbar-inverse .nav > .topnav {
     padding: 0 0 0 0;
   }
@@ -2252,8 +2241,6 @@
 
   .navbar-search .dropdown-menu {
     background-color: transparent;
-    /*top: 14px;*/
-    /*right: 6px;*/
   }
 
   .navbar-search .query_string {
@@ -2269,7 +2256,6 @@
 
 @media (max-width: 1560px) {
 
-
   .modulename {
     font-size: 14px;
     margin: 0 auto 0 15px;
@@ -2278,7 +2264,6 @@
     text-transform: uppercase;
     visibility: visible;
   }
-
 
   .navbar-fixed-top {
     height: $navbar-height;
@@ -2406,12 +2391,12 @@
 }
 
 @media (max-width: 1600px) {
-
   .globalLinks-desktop .with-label {
     display: none;
     visibility: collapse;
   }
 }
+
 @media (min-width: 1600px) {
 
   .globalLinks-desktop .with-label {
@@ -2441,8 +2426,6 @@
   height: 200px;
   max-height: 200px;
 }
-
-
 
 .mobile_menu {
   height: 200px;
@@ -2776,5 +2759,4 @@
     height: auto;
     max-height: inherit;
   }
-
 }

@@ -1,6 +1,5 @@
 
 /**** LOGIN **/
-
 .login {
   padding: 10px 6px 12px 10px ;
 }
@@ -8,7 +7,6 @@
 .login .login_more {
   text-align: right;
 }
-
 
 div.p_login {
   background-color: $main-bg;
@@ -42,6 +40,7 @@ div.p_login .p_login_middle {
   float: left;
   width: 100%;
 }
+
 div.p_login .p_login_bottom {
   bottom: 0;
   left: 0;
@@ -56,7 +55,6 @@ div.p_login .p_login_bottom {
 }
 
 @media (min-height: 400px) {
-
   div.p_login .p_login_bottom {
     position: absolute;
   }
@@ -156,7 +154,6 @@ div.p_login #loginform #bigbutton:hover {
   margin: 10px 0 0 0;
   padding: 10px;
   clear: both;
-
 }
 
 #generate_pwd_button {
@@ -206,5 +203,4 @@ div.p_login #loginform #bigbutton:hover {
   div.p_login .p_login_bottom a#admin_options {
     margin-bottom: 5px;
   }
-
 }

@@ -43,7 +43,6 @@ table#goto_date_trigger_div_t thead {
   background: $calendar-other-month-day-header-bg;
 }
 
-
 .yui-calendar .calweekdaycell {
   font-weight: normal;
 }
@@ -114,6 +113,7 @@ table#goto_date_trigger_div_t thead {
   right: 0;
   background-image: url("../../../../../themes/suite8/images/p_right.svg");
 }
+
 .yui-module .hd {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -123,9 +123,11 @@ table#goto_date_trigger_div_t thead {
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
 }
+
 .yui-module.yui-overlay.yui-panel.cal_panel {
   border-radius: $border-radius-base;
 }
+
 .yui-panel .bd {
   display: block;
   padding: 0 10px 0 10px;
@@ -222,7 +224,6 @@ a#callnav_today {
   padding: 0;
   text-align: center;
   clear:both;
-
 }
 
 h5.calSharedUser  {
@@ -230,14 +231,11 @@ h5.calSharedUser  {
   height: $calendar-user-height;
 }
 
-
 .fc-unthemed thead {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-
-
 
 .fc-view-container .monthCalBody * {
   box-sizing: border-box;
@@ -245,13 +243,11 @@ h5.calSharedUser  {
   -moz-box-sizing: border-box;
 }
 
-
 .fc-view-container .monthCalBody:before {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-
 
 .fc-view-container .monthCalBody:after {
   box-sizing: border-box;
@@ -259,13 +255,11 @@ h5.calSharedUser  {
   -moz-box-sizing: border-box;
 }
 
-
 .fc-view-container .monthCalBody {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-
 
 div.monthFooter {
   background-color: $calendar-header-bg;
@@ -310,7 +304,6 @@ h5.calSharedUser {
   color: $calendar-month-day-header-bg;
 }
 
-
 .olCgClass td {
   border-bottom-color: $calendar-header-bg;
 }
@@ -351,16 +344,13 @@ h5.calSharedUser {
   border-color: $calendar-header-bg;
 }
 
-
 .yui-navset .yui-nav a {
   border-color: $calendar-header-bg;
 }
 
-
 .yui-navset .yui-nav a em {
   border-color: $calendar-header-bg;
 }
-
 
 .yui-navset .yui-nav a {
   border-color: $calendar-header-bg;
@@ -390,7 +380,6 @@ ul.yui-nav li.selected {
   background: $selection-bg;
 }
 
-
 .qtip-content {
   overflow-y: auto;
   max-height: 450px;
@@ -407,7 +396,6 @@ ul.yui-nav li.selected {
   border-radius: $border-radius-base;
   -webkit-border-radius: $border-radius-base;
 }
-
 
 .qtip-titlebar {
   border-top-left-radius: 2px;
@@ -493,7 +481,6 @@ ul.yui-nav li.selected {
   color: $link-color-hover;
 }
 
-
 td.fc-widget-header {
   background-color: $calendar-header-bg;
   padding: 0;
@@ -511,7 +498,6 @@ td.fc-widget-header table > thead > tr > th {
   padding: 0;
   border: none;
 }
-
 
 td.fc-day-top.fc-other-month {
   background-color: $calendar-other-month-day-header-bg;
@@ -574,8 +560,6 @@ td.fc-day-top.fc-today {
   border-top: 1px solid;
   border-bottom: 2px solid;
 }
-
-
 
 .pagecontent > div.row.monthHeader > div > a {
   color: $default-btn-color;
@@ -837,7 +821,6 @@ a.fc-day-number:hover {
 }
 
 
-
 .fc-bg table > tbody > tr .fc-today {
   background-color: $calendar-today-bg;
 }
@@ -865,12 +848,10 @@ div.fc-basic-view .fc-body .fc-row {
   height: 200px;
 }
 
-
 iframe.teamNoticeBox {
   overflow: auto;
   width: 100%;
 }
-
 
 .modal-cal-edit .modal-content {
   width: 95%;
@@ -909,4 +890,3 @@ iframe.teamNoticeBox {
     width: 900px;
   }
 }
-

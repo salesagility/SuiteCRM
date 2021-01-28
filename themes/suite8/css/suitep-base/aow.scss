@@ -24,13 +24,11 @@
   height: 32px;
 }
 
-
 .edit-view-field #aow_conditionLines thead td:first-of-type {
   border-top-left-radius: 4px;
   height: 34px;
   width: 42px;
 }
-
 
 #aow_conditionLines thead td:last-of-type {
   border-top-right-radius: 4px;
@@ -38,14 +36,12 @@
   width: 26%;
 }
 
-
 #aow_conditionLines > thead > tr {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   background-color: $default-tab-bg;
   display: block;
 }
-
 
 #aow_conditionLines > tbody {
   display: block;
@@ -60,7 +56,6 @@
 #aow_conditionLines > tbody > tr > td {
   vertical-align: top;
 }
-
 
 #aow_conditionLines td:first-of-type {
   display: inline-block;
@@ -93,7 +88,6 @@
   width: 26%;
 }
 
-
 #aow_conditionLines td:first-of-type button {
   margin-top: 6px;
   line-height: 30px;
@@ -101,7 +95,6 @@
 
 #aow_conditionLines input {
   margin-top: 8px;
-
 }
 
 #aow_conditionLines input.sqsEnabled {
@@ -112,12 +105,10 @@
   margin-top: 24px;
 }
 
-
 #aow_conditionLines textarea {
   margin-top: 8px;
   width: 95%;
 }
-
 
 #aow_conditionLines select {
   width: 95%;
@@ -256,8 +247,6 @@
   margin-left: 0;
 }
 
-
-
 #actionLines .action-table td {
   display: inline-block;
 }
@@ -314,7 +303,6 @@
   width: 48px;
 }
 
-
 [data-workflow-action-line] td:nth-of-type(3) select {
   width: auto;
 }
@@ -328,7 +316,6 @@
   width: 45%;
   margin-bottom: 4px;
 }
-
 
 .col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"] {
   width: 45%;
@@ -431,8 +418,6 @@
   margin-right: 8px;
 }
 
-
-
 [data-workflow-action] .name_label {
   width: 70%;
 }
@@ -471,8 +456,6 @@
   margin-top: 8px;
   width: 95%;
 }
-
-
 
 [data-workflow-action-parameter] [colspan="4"] {
   display: block;

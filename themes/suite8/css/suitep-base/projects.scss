@@ -1,6 +1,4 @@
 /** Style **/
-
-
 select#Duration_unit {
   padding: 0 52px 0 5px;
 }
@@ -19,7 +17,6 @@ select#Lag_unit {
 .projects-gantt-chart-popup table > tbody > tr > td:nth-of-type(2) {
   padding-top: $input-line-height + 4px;
 }
-
 
 #dialog .projects-gantt-chart-popup input.text {
   width: auto;
@@ -67,7 +64,6 @@ label#Subtask_label {
   font-weight: bold;
 }
 
-
 a#create_link.utilsLink {
   font-size: $page-font-size;
   font-weight: 500;
@@ -87,5 +83,4 @@ a#create_link.utilsLink {
 
 a#create_link.utilsLink:hover {
   background-color: $danger-btn-bg-hover;
-
 }

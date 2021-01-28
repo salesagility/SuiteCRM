@@ -11,7 +11,6 @@ div.wizard-unique-elem td {
   }
 }
 
-
 /*sm-col-*/
 @media (min-width: 768px) and (max-width: 991px) {
   form[name="wizform"] div.wizard-unique-elem {
@@ -21,52 +20,44 @@ div.wizard-unique-elem td {
 
 /*md-col-*/
 @media (min-width: 992px) and (max-width: 1199px) {
-
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 900px;
   }
-
 }
+
 /*md-fixes*/
 @media (min-width: 1180px) and (max-width: 1199px) {
   form[name="wizform"] div.wizard-unique-elem {
     width: 1000px;
   }
 }
+
 /*lg-col-*/
-
 @media (min-width: 1200px) {
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 1100px;
   }
 }
 
 @media (min-width: 768px) {
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 700px;
   }
 }
 
 @media (min-width: 641px) and (max-width: 978px) {
-
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 600px;
   }
 }
 
 @media (min-width: 999px) and (max-width: 1279px) {
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 900px;
   }
 }
 
 @media (min-width: 0) and (max-height: 320px) {
-
   form[name="wizform"] div.wizard-unique-elem {
     min-width: 300px;
   }
@@ -78,7 +69,6 @@ div.wizard-unique-elem td {
   }
 }
 
-
 @media (min-width: 768px) and (min-height: 381px) {
   form[name="wizform"] div.wizard-unique-elem {
     width: 700px;
@@ -90,22 +80,18 @@ div.wizard-unique-elem td {
     width: 700px;
   }
 }
-
 
 @media (max-width: 767px) {
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 700px;
   }
 }
 
 @media (min-width: 768px) {
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 700px;
   }
 }
-
 
 .wizard-box {
   display: block;
@@ -221,7 +207,6 @@ div.step2 .target-list-table {
   float: none;
   width: 28px;
   height: 80px;
-
 }
 
 .wizard-summary-right {
@@ -350,7 +335,7 @@ div.target-list-table {
 }
 
 
-/*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
+/*//////// MEDIA QUERIES //////////*/
 
 @media (min-width: 750px) {
   form[name="wizform"] div.wizard-unique-elem {
@@ -365,10 +350,7 @@ div.target-list-table {
 }
 
 @media (min-width: 768px) and (max-width: 1000px) {
-
   /*help*/
-
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 700px;
   }
@@ -391,17 +373,17 @@ div.target-list-table {
     width: 900px;
   }
 }
-@media (min-width: 1024px) {
 
+@media (min-width: 1024px) {
   form[name="wizform"] div.wizard-unique-elem {
     width: 1000px;
   }
 }
+
 @media (min-width: 1280px) {
   #cal-edit {
     margin: 0 0 0 200px;
   }
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 1200px;
   }
@@ -448,7 +430,6 @@ form[name="wizform"] .other.view td {
 form[name="wizform"] fieldset legend {
   padding: 0;
 }
-
 
 .progression-container {
   margin: 0 0 8px 0;
@@ -500,8 +481,6 @@ ul.progression {
   cursor: pointer;
 }
 
-
-
 .progression li:last-child::after {
   border-left-color: transparent;
 }
@@ -511,7 +490,6 @@ ul.progression {
   padding-left: 8px;
   display: inline;
 }
-
 
 .wizard-summary-right .test, .wizard-summary-right .schedule {
   background-position: center center;
@@ -523,7 +501,6 @@ ul.progression {
 .wizard-step-info {
   margin-bottom: 12px;
 }
-
 
 form[name="wizform"] .icon-btn-lst .icon-btn a {
   margin: 0;
@@ -558,6 +535,7 @@ form[name="wizform"] .selected  {
 .progression .nav-steps:hover {
   background-color: $campaign-progression-bg-active;
 }
+
 form[name="wizform"] .progression-container .progression .nav-steps.selected {
   background-color: $campaign-progression-bg-active;
 }
@@ -622,7 +600,6 @@ form[name="wizform"] .template-container-full div.row {
 form[name="wizform"] .other.view img, .other.view svg {
   width: initial;
   height: initial;
-
 }
 
 form[name="wizform"] .input-sm {
@@ -636,7 +613,6 @@ form[name="wizform"] div.target-list-create input[type="button"] {
   margin-top: 16px;
 }
 
-
 /* Template editor */
 
 div.wizard-unique-elem .header-2 {
@@ -647,9 +623,11 @@ div.wizard-unique-elem .header-2 {
 #email_template_editor .mozaik-thumbnail.ui-draggable.ui-draggable-handle * {
   float: none;
 }
+
 #email_template_editor ul.mozaik-thumbs li.mozaik-thumbnail {
   padding: 0;
 }
+
 #email_template_editor .mozaik-thumbnail.ui-draggable.ui-draggable-handle * {
   margin: 5px;
 }
@@ -679,9 +657,11 @@ form[name="wizform"] .target_message br,
 form[name="wizform"] .alert_messages br {
   display: none;
 }
+
 form[name="wizform"] .diagnose_messages td {
   margin-bottom: 0;
 }
+
 form[name="wizform"] br.emptyRow {
   display: none;
 }
@@ -720,8 +700,6 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
   float: none;
   width: auto;
 }
-
-
 
 
 /* desktop / tablet / mobile fix */
@@ -774,15 +752,18 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
     form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table {
       background: none;
     }
+
     form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table.edit.view tr td {
       display: block;
       float: left;
     }
+
     form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table.edit.view tr td:nth-of-type(odd) {
       width: 300px;
       max-width: 300px;
       min-width: 300px;
     }
+
     form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table.edit.view tr td:nth-of-type(even) {
       width: 500px;
       max-width: 500px;
@@ -802,6 +783,7 @@ form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
     form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem div.step2 table.detail.view tr td table tr.detail.view th {
       float: left;
     }
+    
     form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem div.step2 .target-list-table {
       min-width: 335px;
     }
