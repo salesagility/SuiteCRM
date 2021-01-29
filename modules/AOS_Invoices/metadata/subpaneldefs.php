@@ -30,6 +30,38 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $layout_defs['AOS_Invoices'] = array(
     'subpanel_setup' => array(
+        //subpanel layout
+        'insightWidget' => [
+            'rows' => [
+                [
+                    'cols' => [
+                        [
+                            'icon' => 'AOS_Invoices',
+                        ],
+                    ]
+                ],
+                [
+                    'cols' => [
+                        [
+                            'labelKey' => 'AOS_Invoices',
+                        ]
+                    ]
+                ],
+                [
+                    'cols' => [
+                        [
+                            'statistic' => 'invoice'
+                        ],
+                        [
+                            'labelKey' => 'LBL_FORWARD_SLASH'
+                        ],
+                        [
+                            'statistic' => 'default'
+                        ]
+                    ]
+                ],
+            ]
+        ],
         'aos_quotes_aos_invoices' =>
         array(
             'order' => 100,
