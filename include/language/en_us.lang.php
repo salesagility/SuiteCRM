@@ -1201,12 +1201,12 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_NO_OUTBOUND' => 'No outgoing mail server specified.',
     'LBL_EMAIL_ERROR_SENDING' => 'Error Sending Email. Please contact your administrator for assistance.',
     'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage(
-        'icon_email_folder',
-        'align=absmiddle border=0',
-        null,
-        null,
-        '.gif',
-        ''
+            'icon_email_folder',
+            'align=absmiddle border=0',
+            null,
+            null,
+            '.gif',
+            ''
         ) . 'Folders',
     'LBL_EMAIL_FOLDERS_SHORT' => SugarThemeRegistry::current()->getImage(
         'icon_email_folder',
@@ -3790,3 +3790,15 @@ $app_strings['LBL_SEARCHING'] = 'searching...';
 $app_strings['LBL_NOT_FOUND'] = 'Not found.';
 $app_strings['LBL_SEARCH_ERROR'] = 'Search error.';
 $app_strings['LBL_FOUND'] = 'Found';
+$app_strings['LBL_NUMBER_OF_RECORDS'] = 'The Number of Records';
+$app_strings['LBL_FORWARD_SLASH'] = '/';
+$app_strings['LBL_CONTRACT_RENEWAL'] = 'Date of the next Contract Renewal';
+$app_strings['LBL_INVOICES_OVERDUE'] = 'Total number of Overdue Invoices/Total Number of Invoices';
+$app_strings['LBL_QUOTES_EXPIRATION'] = 'Date of the next Quote Expiration';
+$app_strings['LBL_ACTIVITIES_NEXT_DATE'] = 'Date of the next interaction';
+$app_strings['LBL_CAMPAIGN_LAST_RECEIVED'] = 'Date of the most recent Campaign received';
+$app_strings['LBL_OPEN_CASES_COUNT'] = 'Total number of Open Cases/Total number of Cases';
+$app_strings['LBL_EVENTS_LAST_DATE'] = 'Date of the most recent Event';
+$app_strings['LBL_HISTORY_LAST_DATE'] = 'Date of the most recent interaction';
+$app_strings['LBL_OPPORTUNITY_TOTAL_SUM'] = 'Total Sum of Opportunities';
+
