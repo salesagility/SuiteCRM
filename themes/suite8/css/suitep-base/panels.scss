@@ -106,18 +106,15 @@ div.panel-heading a.collapsed-override {
   background-color: $panel-expanded-bg ;
 }
 
-.panel-heading a.collapsed {
-  @extend .suitepicon;
-  @extend .suitepicon-action-plus;
+.panel-heading a.collapsed:before {
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   vertical-align: middle;
   margin: 0;
+  content: '\002B';
 }
 
 .panel-heading a {
-  @extend .suitepicon;
-  @extend .suitepicon-action-minus;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   vertical-align: middle;
@@ -127,10 +124,16 @@ div.panel-heading a.collapsed-override {
 .panel-heading a:before {
   float: left;
   border: 1px solid $outline-border-light;
-  margin-top: 7px;
-  padding: 0.5em 0.3em 0.1em 0.5em;  
+  padding: 0.3em;  
   @include border-radius (0.3rem);
-  font-size: 11px;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.2;
+  content: "\2212";  
+  width: 2em;
+  position: relative;
+  top: 0.3em;
+  font-weight: bold;
 }
 
 .panel-heading a div.edit-panel {
@@ -290,6 +293,19 @@ div.sub-panel {
   padding-right: 4px ;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
+}
+
+.subpanel-table {
+  .pagination {
+    td {
+      table 
+      {
+        tr:last-child {
+          border-bottom-left-radius: 10px;
+        }
+      }
+    }
+  }
 }
 
 /*calendar popup fix*/

@@ -169,6 +169,12 @@ tr#pagination {
 .list .pagination td table td {
   padding: 3px 7px 3px 5px;
   background: $list-view-toolbar-bg none repeat scroll 0 0;
+  &:first-child {
+    border-bottom-left-radius: 3px;
+  }
+  &:last-child {
+    border-bottom-right-radius: 3px;
+  }
 }
 
 .list .pagination td table td button {
