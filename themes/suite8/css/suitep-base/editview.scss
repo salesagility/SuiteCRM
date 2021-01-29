@@ -253,12 +253,8 @@ div.noBullet li,
 
 @media (max-width: 750px) {
   .content {
-    padding-top:50px;
+    padding-bottom: 0;
   }
-}
-
-
-.bootstrap-container.col-md-offset-2 {
 }
 
 .pagecontent:after {

@@ -1,0 +1,40 @@
+@media (max-width: 480px) {
+    label.hidden-desktop.selected-actions-label {
+      display: none;
+    }  
+    label.hidden-mobile.selected-actions-label {
+      display: block;    
+    }  
+    .selectActionsDisabled span {
+      margin-left: 7em;
+    }  
+    .selected-actions-label span {
+      margin-left : 7em;
+      line-height: 0.5;
+    }  
+    .list #pagination td .paginationTable .paginationActionButtons {
+      padding: 0;
+    }  
+}
+
+  //iPad & iPadPro 1024px
+@media (max-width: $md-breakpoint) {
+    .list-view-rounded-corners {
+        overflow-x: auto;
+    }
+    .list #pagination td .paginationTable tr td:first-of-type {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        display: flex;
+    }
+  }
+
+//750px 
+@media (max-width: $xs-breakpoint) {
+    .list #pagination td .paginationTable .paginationActionButtons {
+        padding: 0;
+    }
+    .list #pagination td .paginationTable .paginationChangeButtons {
+        padding: 0;
+    }
+}

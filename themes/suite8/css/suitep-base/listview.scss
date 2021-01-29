@@ -1659,18 +1659,6 @@ label.selected-actions-label {
 
 }
 
-@media (max-width: 480px) {
-
-  label.hidden-desktop.selected-actions-label {
-    display: none;
-  }
-
-  label.hidden-mobile.selected-actions-label {
-    display: block;
-  }
-
-}
-
 div.modal-content {
   margin: 0 auto;
   max-width: 100%;
@@ -2641,62 +2629,10 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     padding: 30px;
   }
 
-  #listViewStartButton_top {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewPrevButton_top {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewNextButton_top {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewEndButton_top {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewStartButton_bottom {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewPrevButton_bottom {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewNextButton_bottom {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewEndButton_bottom {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewStartButton_ {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewPrevButton_ {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewNextButton_ {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  #listViewEndButton_ {
+  #listViewStartButton_top,#listViewPrevButton_top,#listViewNextButton_top
+  ,#listViewEndButton_top, #listViewStartButton_bottom, #listViewPrevButton_bottom,
+  #listViewNextButton_bottom, #listViewEndButton_bottom
+  {
     padding: 2px 5px 2px 5px;
     margin: 0;
   }
