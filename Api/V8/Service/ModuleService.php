@@ -375,7 +375,7 @@ class ModuleService
 
             if ($property === 'filecontents') {
                 continue;
-            } elseif ($property === 'filename') {
+            } elseif ($property === 'filename' && !empty($value)) {
                 $createFile = true;
                 continue;
             }
