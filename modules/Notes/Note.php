@@ -223,34 +223,11 @@ class Note extends File
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
-        $custom_join = $this->getCustomJoin(true, true, $where);
-        $custom_join['join'] .= $relate_link_join;
-        $query = "SELECT notes.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name ";
-
-        $query .= $custom_join['select'];
-
-        $query .= " FROM notes ";
-
-        $query .= "	LEFT JOIN contacts ON notes.contact_id=contacts.id ";
-        $query .= "  LEFT JOIN users ON notes.assigned_user_id=users.id ";
-
-        $query .= $custom_join['join'];
-
-        $where_auto = " notes.deleted=0 AND (contacts.deleted IS NULL OR contacts.deleted=0)";
-
-        if ($where != "") {
-            $query .= "where $where AND " . $where_auto;
-        } else {
-            $query .= "where " . $where_auto;
-        }
-
-        $order_by = $this->process_order_by($order_by);
-        if (empty($order_by)) {
-            $order_by = 'notes.name';
-        }
-        $query .= ' ORDER BY ' . $order_by;
-
-        return $query;
+        return parent::create_export_query(
+            empty($order_by) ? 'name' : $order_by,
+            $where,
+            $relate_link_join
+        );
     }
 
     public function fill_in_additional_list_fields()

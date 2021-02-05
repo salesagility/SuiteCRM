@@ -137,31 +137,11 @@ class Campaign extends SugarBean
 
     public function create_export_query($order_by, $where, $relate_link_join='')
     {
-        $custom_join = $this->getCustomJoin(true, true, $where);
-        $custom_join['join'] .= $relate_link_join;
-        $query = "SELECT
-            campaigns.*,
-            users.user_name as assigned_user_name ";
-        $query .=  $custom_join['select'];
-        $query .= " FROM campaigns ";
-        $query .= "LEFT JOIN users
-                      ON campaigns.assigned_user_id=users.id";
-        $query .=  $custom_join['join'];
-
-        $where_auto = " campaigns.deleted=0";
-
-        if ($where != "") {
-            $query .= " where $where AND ".$where_auto;
-        } else {
-            $query .= " where ".$where_auto;
-        }
-
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
-        } else {
-            $query .= " ORDER BY campaigns.name";
-        }
-        return $query;
+        return parent::create_export_query (
+            empty($order_by) ? 'name' : $order_by,
+            $where,
+            $related_link_join
+        );
     }
 
 

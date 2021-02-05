@@ -178,38 +178,11 @@ class Opportunity extends SugarBean
 
     public function create_export_query($order_by, $where, $relate_link_join='')
     {
-        $custom_join = $this->getCustomJoin(true, true, $where);
-        $custom_join['join'] .= $relate_link_join;
-        $query = "SELECT
-                                opportunities.*,
-                                accounts.name as account_name,
-                                users.user_name as assigned_user_name ";
-        $query .= $custom_join['select'];
-        $query .= " FROM opportunities ";
-        $query .= 				"LEFT JOIN users
-                                ON opportunities.assigned_user_id=users.id";
-        $query .= " LEFT JOIN $this->rel_account_table
-                                ON opportunities.id=$this->rel_account_table.opportunity_id
-                                LEFT JOIN accounts
-                                ON $this->rel_account_table.account_id=accounts.id ";
-        $query .= $custom_join['join'];
-        $where_auto = "
-			($this->rel_account_table.deleted is null OR $this->rel_account_table.deleted=0)
-			AND (accounts.deleted is null OR accounts.deleted=0)
-			AND opportunities.deleted=0";
-
-        if ($where != "") {
-            $query .= "where $where AND ".$where_auto;
-        } else {
-            $query .= "where ".$where_auto;
-        }
-
-        if ($order_by != "") {
-            $query .= " ORDER BY opportunities.$order_by";
-        } else {
-            $query .= " ORDER BY opportunities.name";
-        }
-        return $query;
+        return parent::create_export_query(
+            empty($order_by) ? 'name' : $order_by,
+            $where,
+            $relate_link_join
+        );
     }
 
     public function fill_in_additional_list_fields()

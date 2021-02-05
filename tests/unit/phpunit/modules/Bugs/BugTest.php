@@ -63,13 +63,33 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $bug = BeanFactory::newBean('Bugs');
 
         //test with empty string params
-        $expected = "SELECT\n                                bugs.*,\n                                r1.name found_in_release_name,\n                                r2.name fixed_in_release_name,\n                                users.user_name assigned_user_name FROM bugs 				LEFT JOIN releases r1 ON bugs.found_in_release = r1.id\n								LEFT JOIN releases r2 ON bugs.fixed_in_release = r2.id\n								LEFT JOIN users\n                                ON bugs.assigned_user_id=users.id where   bugs.deleted=0\n                 ORDER BY bugs.bug_number";
+        $expected = " SELECT  bugs.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod , jt3.name release_name , jt3.created_by release_name_owner  , 'Releases' release_name_mod , jt4.name fixed_in_release_name , jt4.created_by fixed_in_release_name_owner  , 'Releases' fixed_in_release_name_mod FROM bugs   LEFT JOIN  users jt0 ON bugs.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON bugs.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON bugs.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0  LEFT JOIN  releases jt3 ON bugs.found_in_release=jt3.id AND jt3.deleted=0
+
+ AND jt3.deleted=0  LEFT JOIN  releases jt4 ON bugs.fixed_in_release=jt4.id AND jt4.deleted=0
+
+ AND jt4.deleted=0 where bugs.deleted=0 ORDER BY bugs.bug_number";
         $actual = $bug->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT\n                                bugs.*,\n                                r1.name found_in_release_name,\n                                r2.name fixed_in_release_name,\n                                users.user_name assigned_user_name FROM bugs 				LEFT JOIN releases r1 ON bugs.found_in_release = r1.id\n								LEFT JOIN releases r2 ON bugs.fixed_in_release = r2.id\n								LEFT JOIN users\n                                ON bugs.assigned_user_id=users.id where bugs.name=\"\" AND   bugs.deleted=0\n                 ORDER BY releases.id";
-        $actual = $bug->create_export_query('releases.id', 'bugs.name=""');
+        $expected = " SELECT  bugs.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod , jt3.name release_name , jt3.created_by release_name_owner  , 'Releases' release_name_mod , jt4.name fixed_in_release_name , jt4.created_by fixed_in_release_name_owner  , 'Releases' fixed_in_release_name_mod FROM bugs   LEFT JOIN  users jt0 ON bugs.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON bugs.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON bugs.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0  LEFT JOIN  releases jt3 ON bugs.found_in_release=jt3.id AND jt3.deleted=0
+
+ AND jt3.deleted=0  LEFT JOIN  releases jt4 ON bugs.fixed_in_release=jt4.id AND jt4.deleted=0
+
+ AND jt4.deleted=0 where (bugs.name= \"\") AND bugs.deleted=0 ORDER BY bugs.found_in_release";
+        $actual = $bug->create_export_query('found_in_release', 'bugs.name= ""');
         $this->assertSame($expected, $actual);
     }
 

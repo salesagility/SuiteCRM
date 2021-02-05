@@ -132,13 +132,25 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $document = BeanFactory::newBean('Documents');
 
         //test with empty string parameters
-        $expected = "SELECT\n						documents.* FROM documents  WHERE  documents.deleted = 0 ORDER BY documents.document_name";
+        $expected = " SELECT  documents.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM documents   LEFT JOIN  users jt0 ON documents.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON documents.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON documents.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0 where documents.deleted=0 ORDER BY documents.document_name";
         $actual = $document->create_export_query('', '');
         $this->assertSame($expected, $actual);
         
         //test with valid string parameters
-        $expected = "SELECT\n						documents.* FROM documents  WHERE documents.document_name = \"\" AND  documents.deleted = 0 ORDER BY documents.id";
-        $actual = $document->create_export_query('documents.id', 'documents.document_name = ""');
+        $expected = " SELECT  documents.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM documents   LEFT JOIN  users jt0 ON documents.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON documents.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON documents.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0 where (document_name= \"\") AND documents.deleted=0 ORDER BY documents.id";
+        $actual = $document->create_export_query('id', 'document_name = ""');
         $this->assertSame($expected, $actual);
     }
 

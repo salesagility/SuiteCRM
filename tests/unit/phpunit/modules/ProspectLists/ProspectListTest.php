@@ -18,20 +18,16 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $prospectList = BeanFactory::newBean('ProspectLists');
 
         //test with empty string params
-        $expected = "SELECT
-                                prospect_lists.*,
-                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
-                                ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
+        $expected = " SELECT  prospect_lists.*  , jt0.user_name assigned_user_name , jt0.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM prospect_lists   LEFT JOIN  users jt0 ON prospect_lists.assigned_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0 where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
         $actual = $prospectList->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
 
         //test with valid string params
-        $expected = "SELECT
-                                prospect_lists.*,
-                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
-                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
-        $actual = $prospectList->create_export_query('prospect_lists.id', 'users.user_name = ""');
+        $expected = " SELECT  prospect_lists.*  , jt0.user_name assigned_user_name , jt0.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM prospect_lists   LEFT JOIN  users jt0 ON prospect_lists.assigned_user_id=jt0.id AND jt0.deleted=0   AND jt0.deleted=0 where (jt0.user_name= \"\") AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
+        $actual = $prospectList->create_export_query('id', 'assigned_user_name = ""');
         $this->assertSame($expected, $actual);
     }
 

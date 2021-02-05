@@ -61,17 +61,38 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $this->markTestIncomplete('Breaks on php 7.1');
         $opportunity = BeanFactory::newBean('Opportunities');
 
         //test with empty string params
-        $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY opportunities.name";
-        $actual = $opportunity->create_list_query('', '');
+        $expected = " SELECT  opportunities.* ,opportunities_cstm.jjwg_maps_geocode_status_c,opportunities_cstm.jjwg_maps_lng_c,opportunities_cstm.jjwg_maps_lat_c,opportunities_cstm.jjwg_maps_address_c , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod , accounts.name account_name, jtl3.account_id account_id , jt4.name campaign_name , jt4.assigned_user_id campaign_name_owner  , 'Campaigns' campaign_name_mod FROM opportunities  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c   LEFT JOIN  users jt0 ON opportunities.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON opportunities.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON opportunities.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0  LEFT JOIN  accounts_opportunities jtl3 ON opportunities.id=jtl3.opportunity_id AND jtl3.deleted=0
+
+ LEFT JOIN  accounts accounts ON accounts.id=jtl3.account_id AND accounts.deleted=0
+ AND accounts.deleted=0  LEFT JOIN  campaigns jt4 ON opportunities.campaign_id=jt4.id AND jt4.deleted=0
+
+ AND jt4.deleted=0 where opportunities.deleted=0 ORDER BY opportunities.name";
+        $actual = $opportunity->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY accounts.id";
-        $actual = $opportunity->create_list_query('accounts.id', 'accounts.name=""');
+        $expected = " SELECT  opportunities.* ,opportunities_cstm.jjwg_maps_geocode_status_c,opportunities_cstm.jjwg_maps_lng_c,opportunities_cstm.jjwg_maps_lat_c,opportunities_cstm.jjwg_maps_address_c , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt2.user_name assigned_user_name , jt2.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod , accounts.name account_name, jtl3.account_id account_id , jt4.name campaign_name , jt4.assigned_user_id campaign_name_owner  , 'Campaigns' campaign_name_mod FROM opportunities  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c   LEFT JOIN  users jt0 ON opportunities.modified_user_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0  LEFT JOIN  users jt1 ON opportunities.created_by=jt1.id AND jt1.deleted=0
+
+ AND jt1.deleted=0  LEFT JOIN  users jt2 ON opportunities.assigned_user_id=jt2.id AND jt2.deleted=0
+
+ AND jt2.deleted=0  LEFT JOIN  accounts_opportunities jtl3 ON opportunities.id=jtl3.opportunity_id AND jtl3.deleted=0
+
+ LEFT JOIN  accounts accounts ON accounts.id=jtl3.account_id AND accounts.deleted=0
+ AND accounts.deleted=0  LEFT JOIN  campaigns jt4 ON opportunities.campaign_id=jt4.id AND jt4.deleted=0
+
+ AND jt4.deleted=0 where (accounts.name= \"\") AND opportunities.deleted=0 ORDER BY account_id";
+        $actual = $opportunity->create_export_query('account_id', 'account_name= ""');
         $this->assertSame($expected, $actual);
     }
 

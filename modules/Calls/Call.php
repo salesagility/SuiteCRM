@@ -372,39 +372,11 @@ class Call extends SugarBean
 
     public function create_export_query($order_by, $where, $relate_link_join='')
     {
-        $custom_join = $this->getCustomJoin(true, true, $where);
-        $custom_join['join'] .= $relate_link_join;
-        $contact_required = stristr($where, "contacts");
-        if ($contact_required) {
-            $query = "SELECT calls.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name ";
-            $query .= $custom_join['select'];
-            $query .= " FROM contacts, calls, calls_contacts ";
-            $where_auto = "calls_contacts.contact_id = contacts.id AND calls_contacts.call_id = calls.id AND calls.deleted=0 AND contacts.deleted=0";
-        } else {
-            $query = 'SELECT calls.*, users.user_name as assigned_user_name ';
-            $query .= $custom_join['select'];
-            $query .= ' FROM calls ';
-            $where_auto = "calls.deleted=0";
-        }
-
-
-        $query .= "  LEFT JOIN users ON calls.assigned_user_id=users.id ";
-
-        $query .= $custom_join['join'];
-
-        if ($where != "") {
-            $query .= "where $where AND ".$where_auto;
-        } else {
-            $query .= "where ".$where_auto;
-        }
-
-        $order_by = $this->process_order_by($order_by);
-        if (empty($order_by)) {
-            $order_by = 'calls.name';
-        }
-        $query .= ' ORDER BY ' . $order_by;
-
-        return $query;
+        return parent::create_export_query(
+            empty($order_by) ? 'name' : $order_by,
+            $where,
+            $relate_link_join
+        );
     }
 
 

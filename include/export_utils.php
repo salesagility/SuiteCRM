@@ -200,7 +200,14 @@ function export($type, $records = null, $members = false, $sample=false)
     //set up the order on the header row
     $fields_array = get_field_order_mapping($focus->module_dir, $fields_array);
 
+    //insert field for non primary emails after field for primary email (email1)
+    if (in_array('email1', $fields_array) && $focus->hasEmails()) {
+        $email1_pos = array_search('email1', array_keys($fields_array));
 
+        $fields_array = array_slice($fields_array, 0, $email1_pos + 1, true) +
+            array('email_addresses_non_primary' => 'email_addresses_non_primary') +
+            array_slice($fields_array, $email1_pos + 1, count($fields_array) - 1, true);
+    }
 
     //set up labels to be used for the header row
     $field_labels = array();
@@ -322,7 +329,7 @@ function export($type, $records = null, $members = false, $sample=false)
         }
 
         // Check if we're going to export non-primary emails
-        if ($focus->hasEmails() && in_array('email_addresses_non_primary', $fields_array)) {
+        if (in_array('email_addresses_non_primary', $fields_array)) {
             // $records keys are bean ids
             $keys = array_keys($records);
 

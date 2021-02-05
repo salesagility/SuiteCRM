@@ -214,29 +214,18 @@ class Employee extends Person
     {
         include('modules/Employees/field_arrays.php');
 
-        $cols = '';
-        foreach ($fields_array['Employee']['export_fields'] as $field) {
-            $cols .= (empty($cols)) ? '' : ', ';
-            $cols .= $field;
-        }
-
-        $query = "SELECT {$cols} FROM users ";
-
-        $where_auto = " users.deleted = 0";
-
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
-        } else {
-            $query .= " WHERE " . $where_auto;
-        }
-
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
-        } else {
-            $query .= " ORDER BY users.user_name";
-        }
-
-        return $query;
+        return $this->create_new_list_query(
+            empty($order_by) ? 'user_name' : $order_by,
+            $where,
+            $fields_array['Employee']['export_fields'],
+            array(),
+            0,
+            '',
+            false,
+            $this,
+            true,
+            true
+        );
     }
 
     //use parent class

@@ -350,29 +350,11 @@ class Document extends File
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
-        $custom_join = $this->getCustomJoin(true, true, $where);
-        $custom_join['join'] .= $relate_link_join;
-        $query = "SELECT
-						documents.*";
-        $query .= $custom_join['select'];
-        $query .= " FROM documents ";
-        $query .= $custom_join['join'];
-
-        $where_auto = " documents.deleted = 0";
-
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
-        } else {
-            $query .= " WHERE " . $where_auto;
-        }
-
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
-        } else {
-            $query .= " ORDER BY documents.document_name";
-        }
-
-        return $query;
+        return parent::create_export_query(
+            empty($order_by) ? 'document_name' : $order_by,
+            $where,
+            $relate_link_join
+        );
     }
 
     public function get_list_view_data()
