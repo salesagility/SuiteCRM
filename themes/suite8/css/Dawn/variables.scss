@@ -1172,6 +1172,11 @@ $table-row-bg: $main-alternate-bg;
 
 
 // Dashlets
+$dashboard-titlt-bg: $midnight-blue;
+$dashboard-toolbar-bg: $medium-grey;
+$dashboard-scrollbar-bg: $very-light-grey;
+$dashboard-scroll: $mid-light-grey;
+
 $dashlet-title-bg: $color-13;
 $dashlet-title-color: $color-80;
 $dashlet-toolbar-bg: $color-39;
@@ -1179,7 +1184,7 @@ $dashlet-pagination-bg: $color-28;
 $dashlet-header-bg: $color-20;
 $dashlet-btn-color: $color-80;
 
-$dashlet-title-height: 30px; // 48px normal 40px small
+$dashlet-title-height: 40px; // 48px normal 40px small
 $dashlet-header-height: 32px; // 32px normal 24px small
 $dashlet-header-padding: 5px; // 5 normal 0 small
 $dashlet-header-icon-font-size: 13px;
