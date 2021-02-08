@@ -127,10 +127,12 @@ array(
                               'cols' => [
                                   [
                                       'labelKey' => 'LBL_OUT_OF',
+                                      'class' => 'pl-1 pr-1',
                                       'size' => 'regular',
                                   ],
                                   [
                                       'statistic' => 'assigned-user-opportunities-count',
+                                      'class' => 'pl-1 pr-1',
                                       'size' => 'regular',
                                   ],
                               ]
