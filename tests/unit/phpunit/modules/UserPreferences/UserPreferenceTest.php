@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +55,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
     }
-    
+
     public function testgetDefaultPreference()
     {
         global $sugar_config;
@@ -98,7 +98,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $this->assertAttributeEquals(true, 'new_schema', $userPreference);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
     }
-    
+
     public function testSavePreferencesToDBAndResetPreferences()
     {
         self::markTestIncomplete('environment dependency');
@@ -117,7 +117,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
                 'assigned_user_id' => $user->id,
                 'category' => 'test_category',
         ));
-        
+
         //$this->assertFalse(isset($result->id));
 
         //reset the preferences and verify that it is deleted

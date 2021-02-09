@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $this->markTestIncomplete('Merge bean is broken at the moment');
         //$this->assertTrue(isset($mergeRecord->merge_bean->id));
-        
+
         $this->assertEquals(1, $mergeRecord->merge_bean->id);
     }
 

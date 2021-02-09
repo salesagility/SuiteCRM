@@ -5,7 +5,7 @@ use SuiteCRM\Test\TestLogger;
 
 class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -107,14 +107,14 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
+
         $testUserId = 1;
         $query = "SELECT date_modified FROM users WHERE id = '$testUserId' LIMIT 1";
         $resource = DBManagerFactory::getInstance()->query($query);
         $row = $resource->fetch_assoc();
         $testUserDateModified = $row['date_modified'];
-        
-        
+
+
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
         $SugarController->record = "1";
@@ -129,14 +129,14 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
+
         // cleanup
         if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
         }
-        
+
         $query = "UPDATE users SET date_modified = '$testUserDateModified' WHERE id = '$testUserId' LIMIT 1";
         DBManagerFactory::getInstance()->query($query);
     }
@@ -146,7 +146,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
+
         $testUserId = 1;
         $query = "SELECT date_modified FROM users WHERE id = '$testUserId' LIMIT 1";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -168,7 +168,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
+
         // cleanup
         if (isset($session)) {
             $_SESSION = $session;

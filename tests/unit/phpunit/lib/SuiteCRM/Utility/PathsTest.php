@@ -19,7 +19,7 @@ class PathsTest extends SuitePHPUnitFrameworkTestCase
      */
     private static $projectPath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         if (self::$paths === null) {

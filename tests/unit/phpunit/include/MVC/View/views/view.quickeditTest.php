@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewQuickeditTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -14,7 +14,7 @@ class ViewQuickeditTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
-        
+
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickedit();
         $view->preDisplay();

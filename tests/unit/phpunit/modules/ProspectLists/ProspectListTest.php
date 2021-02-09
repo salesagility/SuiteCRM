@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +35,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    
+
     public function testcreate_list_query()
     {
         $prospectList = BeanFactory::newBean('ProspectLists');

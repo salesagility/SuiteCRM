@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class BaseHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }

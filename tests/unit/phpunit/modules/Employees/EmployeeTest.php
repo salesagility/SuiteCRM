@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -180,25 +180,25 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
     }
-    
+
     public function testError()
     {
         global $app_strings;
-        
+
         // setup
         $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
-        
+
         // test if there is no error
-        
+
         ob_start();
         include __DIR__ . '/../../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
         $this->assertContains($expected, $contents);
-        
+
         // test if there is an error
-        
+
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
         $request['error_string'] = 'TEST_ERROR_MESSAGE';
         $this->assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');

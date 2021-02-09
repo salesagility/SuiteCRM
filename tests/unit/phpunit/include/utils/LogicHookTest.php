@@ -4,16 +4,16 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }
-    
-    protected function tearDown()
+
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
-    
+
     public function testinitialize()
     {
         //execute the method and test if it returns correct class instances

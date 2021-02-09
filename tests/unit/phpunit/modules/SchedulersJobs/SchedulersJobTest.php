@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -58,7 +58,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
     public function testfireUrl()
     {
         self::markTestIncomplete('environment dependency: curl_setopt(): CURLOPT_DNS_USE_GLOBAL_CACHE cannot be activated when thread safety is enabled ');
-        
+
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
         //test with invalid param

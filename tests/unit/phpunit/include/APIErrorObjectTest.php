@@ -55,7 +55,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         if (!defined('sugarEntry')) {
@@ -79,7 +79,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
         include_once __DIR__ . '/../../../../include/LangException.php';
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
@@ -144,7 +144,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
             'code' => 123,
         ];
         $actual = $error->export();
-        
+
         if (inDeveloperMode()) {
             unset($actual['meta']['debug']);
         }

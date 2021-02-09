@@ -15,13 +15,13 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     protected $fieldDefsStore;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fieldDefsStore();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->fieldDefsRestore();
         parent::tearDown();
@@ -774,7 +774,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     {
         $request = $_REQUEST;
         self::assertFalse(isset($_SESSION));
-        
+
         // test
         $GLOBALS['log']->reset();
         $results = SugarBean::get_union_related_list(null);
@@ -930,7 +930,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         // test
         global $sugar_config;
-        
+
         $query = "SELECT * FROM aod_index";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
@@ -1246,7 +1246,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // cleanup
         DBManagerFactory::getInstance()->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
         DBManagerFactory::getInstance()->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
-        
+
         DBManagerFactory::getInstance()->query("DELETE FROM aod_index");
         foreach ($tableAodIndex as $row) {
             $query = "INSERT aod_index INTO (";
@@ -2239,7 +2239,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $contactFieldDefs = BeanFactory::getBean('Contacts')->field_defs;
 
         // test
-        
+
         global $current_user;
 
         // test
@@ -2264,7 +2264,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        
+
 
 
         // test
@@ -2306,9 +2306,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($isValidator->isValidId($results));
 
         self::assertEquals(false, $bean->in_save);
-        
+
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        
+
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
         /** @noinspection UnSafeIsSetOverArrayInspection */
@@ -2316,7 +2316,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(true, $bean->new_with_id);
-        
+
 
         // test
         $GLOBALS['log']->reset();
@@ -2332,10 +2332,10 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         }
         self::assertFalse($isValidator->isValidId($results));
 
-        
-        
+
+
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        
+
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
@@ -2349,7 +2349,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        
+
 
 
         // test
@@ -2377,9 +2377,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($isValidator->isValidId($results));
 
         self::assertEquals(null, $bean->in_save);
-        
+
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        
+
         self::assertEquals($current_user->user_name, null);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
@@ -2389,47 +2389,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        
-
-        // test
-        $GLOBALS['log']->reset();
-        $bean = BeanFactory::getBean('Users');
-        $bean->id = 'testBean_1+!';
-        $bean->modified_by_name = 'testing';
-        $bean->field_defs = array(
-            'email_addresses' => array(
-                'type' => 'link',
-            ),
-            'email_addresses_non_primary' => array(
-                'type' => 'email',
-            ),
-        );
-        /** @noinspection PhpUndefinedFieldInspection */
-        $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
-        /** @noinspection PhpUndefinedFieldInspection */
-        $bean->email_addresses_non_primary = array(true);
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-        }
-        self::assertFalse($isValidator->isValidId($results));
-
-        self::assertEquals(false, $bean->in_save);
-        
-        self::assertEquals($current_user->id, $bean->modified_user_id);
-        
-        self::assertEquals($current_user->user_name, null);
-        self::assertEquals(0, $bean->deleted);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
-        self::assertFalse(isset($bean->date_entered));
-        /** @noinspection UnSafeIsSetOverArrayInspection */
-        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-        self::assertFalse($isValidator->isValidId($bean->id));
-        self::assertEquals($bean, $bean->custom_fields->bean);
-        self::assertEquals(false, $bean->new_with_id);
-        
 
 
         // test
@@ -2458,9 +2417,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($isValidator->isValidId($results));
 
         self::assertEquals(false, $bean->in_save);
-        
+
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        
+
         self::assertEquals($current_user->user_name, null);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
@@ -2470,7 +2429,48 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        
+
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $bean->id = 'testBean_1+!';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->email_addresses_non_primary = array(true);
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+        }
+        self::assertFalse($isValidator->isValidId($results));
+
+        self::assertEquals(false, $bean->in_save);
+
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+
+        self::assertEquals($current_user->user_name, null);
+        self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertFalse(isset($bean->date_entered));
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+
 
         // test
         $GLOBALS['log']->reset();
@@ -2520,7 +2520,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1+!'");
         $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1+!'");
         $this->db->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
-        
+
 
         BeanFactory::getBean('Users')->field_defs = $userFieldDefs;
         BeanFactory::getBean('Contacts')->field_defs = $contactFieldDefs;

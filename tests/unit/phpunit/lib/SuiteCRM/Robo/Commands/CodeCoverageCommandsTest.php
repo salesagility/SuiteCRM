@@ -13,7 +13,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
     /** @var \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands **/
     protected static $testClass;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

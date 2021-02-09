@@ -12,7 +12,7 @@ class ExceptionTest extends SuitePHPUnitFrameworkTestCase
      */
     private static $exception;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         if (self::$exception === null) {

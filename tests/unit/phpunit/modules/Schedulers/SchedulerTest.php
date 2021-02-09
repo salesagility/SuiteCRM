@@ -7,7 +7,7 @@ require_once 'install/install_utils.php';
 
 class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -194,7 +194,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
     public function testrebuildDefaultSchedulers()
     {
         self::markTestIncomplete('enviroment dependency');
-        
+
         $scheduler = BeanFactory::newBean('Schedulers');
 
         // Execute the method and test that it works and doesn't throw an exception.

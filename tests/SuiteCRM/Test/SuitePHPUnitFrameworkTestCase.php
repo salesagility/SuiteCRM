@@ -41,7 +41,7 @@ abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
      */
     protected $sugarConfig;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         $db = DBManagerFactory::getInstance();
@@ -50,12 +50,7 @@ abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
         $db->checkConnection();
     }
 
-    /**
-     * Sets up the fixture, for example, open a network connection.
-     * This method is called before a test is executed.
-     * @throws Exception
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -84,7 +79,7 @@ abstract class SuitePHPUnitFrameworkTestCase extends TestCaseAbstract
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         global $sugar_config;
 

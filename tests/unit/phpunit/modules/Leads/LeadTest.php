@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class LeadTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -118,7 +118,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
     public function testSaveAndConverted_lead()
     {
         $this->markTestSkipped("converted_lead: Error in query, id's not properly escaped ");
-        
+
         $lead = BeanFactory::getBean('Leads');
 
         $lead->first_name = "firstn";
@@ -243,7 +243,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
     public function testbuild_generic_where_clause()
     {
         self::markTestSkipped('State dependecy');
-        
+
         $lead = BeanFactory::getBean('Leads');
 
         //test with empty string params

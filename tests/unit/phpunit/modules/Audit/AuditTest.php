@@ -5,7 +5,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'modules/Audit/Audit.php';
 class AuditTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
