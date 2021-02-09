@@ -501,7 +501,7 @@ class Importer
         * Bug 34854: Added all conditions besides the empty check on date modified.
         */
         if ((!empty($focus->new_with_id) && !empty($focus->date_modified)) ||
-             (empty($focus->new_with_id) && $timedate->to_db($focus->date_modified) != $timedate->to_db($timedate->to_display_date_time($focus->fetched_row['date_modified'])))
+             (is_array($focus->fetched_row) && empty($focus->new_with_id) && $timedate->to_db($focus->date_modified) != $timedate->to_db($timedate->to_display_date_time($focus->fetched_row['date_modified'])))
         ) {
             $focus->update_date_modified = false;
         }
