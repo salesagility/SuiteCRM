@@ -92,10 +92,10 @@ class AbstractDocumentifierTest extends SearchTestAbstract
         self::assertEquals($expected, $document);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->documentifier = new AbstractDocumentifierMock();
 
-        return parent::setUp();
+        parent::setUp();
     }
 }

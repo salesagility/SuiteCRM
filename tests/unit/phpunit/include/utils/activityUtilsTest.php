@@ -6,7 +6,7 @@ require_once 'include/utils/activity_utils.php';
 
 class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

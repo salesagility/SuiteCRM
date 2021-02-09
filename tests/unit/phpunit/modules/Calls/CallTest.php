@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class CallTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -88,7 +88,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
     public function testcreate_list_query()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $call = BeanFactory::newBean('Calls');
 
         //test with empty string params
@@ -110,7 +110,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where calls.deleted=0 ORDER BY calls.name';
         $actual = $call->create_export_query('', '');
         $this->assertSame($expected, $actual);
-        
+
 
         //test with empty string params
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where users.user_name="" AND calls.deleted=0 ORDER BY calls.name';

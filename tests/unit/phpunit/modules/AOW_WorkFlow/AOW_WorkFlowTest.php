@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -132,7 +132,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
     public function testget_flow_beans()
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
-        
+
         //test for AOS_Quotes. it will return null as no test data is available
         $aowWorkFlow->flow_module = 'AOS_Quotes';
         $result = $aowWorkFlow->get_flow_beans();
@@ -238,7 +238,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-        
+
         $this->assertEquals($expected, $query);
 
         //test with value type Field

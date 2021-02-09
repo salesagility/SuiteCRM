@@ -4,15 +4,15 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         global $current_user;
         get_sugar_config_defaults();
         $current_user = BeanFactory::newBean('Users');
     }
-    
-    protected function tearDown()
+
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

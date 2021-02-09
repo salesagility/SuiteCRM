@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -137,7 +137,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
     public function testlist_view_parse_additional_sections()
     {
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
-        
+
         $xTemplateSection = null;
 
         // Execute the method and test that it works and doesn't throw an exception.

@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class TrackerTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -76,7 +76,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['app']->headerDisplayed = 1;
         Tracker::logPage();
         $this->assertEquals(time(), $_SESSION['lpage']);
-        
+
         //$this->assertEquals(time(), null);
     }
 }

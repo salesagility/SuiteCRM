@@ -581,15 +581,6 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testUpdateSuitecrmMeetingEvent()
-    {
-        // This is tested by testCreateSuitecrmMeetingEvent, Since that method calls it.
-    }
-
-    /**
-     *
-     *
-     */
     public function testCreateSuitecrmMeetingEvent()
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
@@ -654,11 +645,6 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('1', $return->duration_hours);
         $this->assertEquals('0', $return->duration_minutes);
         $this->assertEquals('FAKEUSER', $return->assigned_user_id);
-    }
-
-    public function testUpdateGoogleCalendarEvent()
-    {
-        // This is covered by testCreateGoogleCalendarEvent since is calls this
     }
 
     /**

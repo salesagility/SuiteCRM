@@ -21,7 +21,7 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
      * @return void
      * @throws Exception in TestCaseAbstract::setup
      */
-    public function setup()
+    public function setup(): void
     {
         $this->removeCoreModuleAllExtension();
 
@@ -31,7 +31,7 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->removeCoreModuleAllExtension();
 

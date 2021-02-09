@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class vCalTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -90,7 +90,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
     public function testget_freebusy_lines_cache()
     {
         self::markTestIncomplete('Asserting String Start Width is imposible if expected is empty srting');
-        
+
         $vcal = BeanFactory::newBean('vCals');
         $user_bean = new User('1');
 

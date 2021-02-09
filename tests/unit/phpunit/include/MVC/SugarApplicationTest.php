@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -16,7 +16,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     public function testexecute()
     {
         $this->markTestIncomplete('Cannot be implemented');
-        
+
         // execute the method and test if it works and does not throw an exception other than headers output exception.
         //    $SugarApplication = new SugarApplication();
         //    try {
@@ -54,7 +54,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
+
         $SugarApplication = new SugarApplication();
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -113,7 +113,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
+
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -250,7 +250,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $request = $_REQUEST;
         }
-        
+
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -262,7 +262,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
+
 
         if (isset($request)) {
             $_REQUEST = $request;
@@ -272,13 +272,13 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     }
 
     protected $sessionStartedOk = false;
-    
+
     public function teststartSession()
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
         }
-        
+
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -295,7 +295,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $this->assertTrue(true);
-        
+
         // cleanup
         if (isset($session)) {
             $_SESSION = $session;
@@ -382,7 +382,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and check that the method adds the key value pair to cookies array.
         SugarApplication::setCookie('key', 'value');
         $this->assertEquals('value', $_COOKIE['key']);
-        
+
         // cleanup
         if (isset($cookie)) {
             $_COOKIE = $cookie;

@@ -45,7 +45,7 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
     }
 
     /** @inheritdoc */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         Mockery::close();

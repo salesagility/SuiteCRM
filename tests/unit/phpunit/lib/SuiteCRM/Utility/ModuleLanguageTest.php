@@ -15,7 +15,7 @@ class ModuleLanguageTest extends SuitePHPUnitFrameworkTestCase
     private static $language;
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         if (self::$language === null) {
