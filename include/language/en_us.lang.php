@@ -3800,5 +3800,9 @@ $app_strings['LBL_CAMPAIGN_LAST_RECEIVED'] = 'Date of the most recent Campaign r
 $app_strings['LBL_OPEN_CASES_COUNT'] = 'Total number of Open Cases/Total number of Cases';
 $app_strings['LBL_EVENTS_LAST_DATE'] = 'Date of the most recent Event';
 $app_strings['LBL_HISTORY_LAST_DATE'] = 'Date of the most recent interaction';
-$app_strings['LBL_OPPORTUNITY_TOTAL_SUM'] = 'Total Sum of Opportunities';
-
+$app_strings['LBL_OPPORTUNITIES_TOTAL_SUM'] = 'Total Sum of Opportunities';
+$app_strings['LBL_QUOTES_EXPIRY'] = 'Date of the next Quote Expiration';
+$app_strings['LBL_DEFAULT_TOTAL'] = 'Total number of records';
+$app_strings['AOS_Contracts'] = 'Contracts';
+$app_strings['AOS_Quotes'] = 'Quotes';
+$app_strings['AOS_Invoices'] = 'Invoices';
