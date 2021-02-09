@@ -4,8 +4,8 @@ os: linux
 matrix:
   fast_finish: true
   include:
-    - name: "PHP 5.6 / MySQL 5.7"
-      php: "5.6"
+    - name: "PHP 7.2 / MySQL 5.7"
+      php: "7.2"
       dist: xenial
     - name: "PHP 7.3 / MySQL 5.7"
       php: "7.3"
