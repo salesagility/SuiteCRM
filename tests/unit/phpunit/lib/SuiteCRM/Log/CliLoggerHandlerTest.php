@@ -67,10 +67,10 @@ class CliLoggerHandlerTest extends SuitePHPUnitFrameworkTestCase
         $this->logger->emergency(new RuntimeException("Exception!"));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->logger = new Logger("Test");
         $this->logger->pushHandler(new CliLoggerHandler());
-        return parent::setUp();
+        parent::setUp();
     }
 }

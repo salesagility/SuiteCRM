@@ -15,7 +15,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         global $current_user;
@@ -29,7 +29,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $db = DBManagerFactory::getInstance();
         $query = /** @lang sql */

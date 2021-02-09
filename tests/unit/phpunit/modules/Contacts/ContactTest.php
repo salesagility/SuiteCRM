@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ContactTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +49,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $query = preg_replace('/\s+/', '', $query);
         $expected =preg_replace('/\s+/', '', $expected);
         $this->assertSame($expected, $query);
-        
+
         //test with valid string
         $query = "";
         $expected = "\n	            LEFT JOIN accounts_contacts\n	            ON contacts.id=accounts_contacts.contact_id\n	            LEFT JOIN accounts\n	            ON accounts_contacts.account_id=accounts.id\n	                 LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ";
@@ -181,7 +181,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
                     );
 
         $actual = $contact->get_list_view_data();
-        
+
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['FIRST_NAME'], $actual['FIRST_NAME']);
         $this->assertEquals($expected['LAST_NAME'], $actual['LAST_NAME']);

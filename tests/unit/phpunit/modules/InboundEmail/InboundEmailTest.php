@@ -30,7 +30,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
     // ------------------------------------------------->
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

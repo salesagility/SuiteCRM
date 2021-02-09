@@ -6,7 +6,7 @@ require_once 'modules/Campaigns/utils.php';
 
 class CampaignTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

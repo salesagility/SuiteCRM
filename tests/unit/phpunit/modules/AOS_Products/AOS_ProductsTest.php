@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -54,7 +54,7 @@ class AOS_ProductsTest extends SuitePHPUnitFrameworkTestCase
     public function testgetCustomersPurchasedProductsQuery()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $aosProducts = BeanFactory::newBean('AOS_Products');
         $aosProducts->id = 1;
 

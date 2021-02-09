@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -12,7 +12,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = BeanFactory::newBean('Users');
     }
-    
+
     public function testcreate_export_query()
     {
         $projectTask = BeanFactory::newBean('ProjectTask');

@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class DocumentTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -114,7 +114,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $document = BeanFactory::newBean('Documents');
 
         $xTemplateSection = null;
-        
+
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $ss = new Sugar_Smarty();
@@ -128,14 +128,14 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     public function testcreate_export_query()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $document = BeanFactory::newBean('Documents');
 
         //test with empty string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE  documents.deleted = 0 ORDER BY documents.document_name";
         $actual = $document->create_export_query('', '');
         $this->assertSame($expected, $actual);
-        
+
         //test with valid string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE documents.document_name = \"\" AND  documents.deleted = 0 ORDER BY documents.id";
         $actual = $document->create_export_query('documents.id', 'documents.document_name = ""');
@@ -145,7 +145,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     public function testget_list_view_data()
     {
         self::markTestIncomplete();
-        
+
         $document = BeanFactory::newBean('Documents');
         // Execute the method and verify that it returns expected results
 

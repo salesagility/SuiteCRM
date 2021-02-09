@@ -5,7 +5,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/security_utils.php';
 class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -88,7 +88,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
     public function testget_user_disallowed_modules()
     {
         self::markTestIncomplete('Test fails only in travis and php7, Test has environment specific issue.');
-        
+
         //execute the method and test it it returns expected contents
 
         $expected = array(

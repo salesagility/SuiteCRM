@@ -6,7 +6,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/file_utils.php';
 class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -434,7 +434,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
-        
+
         //execute the method and test if it returns expected values
 
         //test with empty filename string
@@ -461,7 +461,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
-        
+
         //execute the method and test if it returns expected values
 
         //test with invalid hash.
@@ -486,13 +486,13 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $file = ''; // Only variables should be passed by reference in php7
         $this->assertSame('', get_file_extension($file));
-        
+
         $file = 'test.txt'; // Only variables should be passed by reference in php7
         $this->assertSame('txt', get_file_extension($file));
-        
+
         $file = 'test.ext.Txt'; // Only variables should be passed by reference in php7
         $this->assertSame('Txt', get_file_extension($file, false));
-        
+
         $file = 'test.ext.TXT'; // Only variables should be passed by reference in php7
         $this->assertSame('txt', get_file_extension($file, true));
     }

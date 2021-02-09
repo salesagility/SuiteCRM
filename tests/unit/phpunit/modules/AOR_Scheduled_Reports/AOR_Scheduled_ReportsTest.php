@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $aorScheduledReports->mark_deleted($aorScheduledReports->id);
         unset($aorScheduledReports);
     }
-    
+
     public function testAOR_Scheduled_Reports()
     {
         // Execute the constructor and check for the Object type and  attributes

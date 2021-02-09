@@ -4,7 +4,7 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class UserTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Users');
