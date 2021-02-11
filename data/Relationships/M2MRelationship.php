@@ -97,7 +97,7 @@ class M2MRelationship extends SugarRelationship
         //Multiple links with same relationship name
         else {
             if (is_array($results)) {
-                $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
+                $GLOBALS['log']->warn("Multiple links found for relationship {$this->name} within module {$module}");
                 return $this->getMostAppropriateLinkedDefinition($results);
             } else {
                 return false;
