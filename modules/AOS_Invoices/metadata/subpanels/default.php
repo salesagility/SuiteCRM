@@ -13,6 +13,45 @@ $subpanel_layout = array(
       'popup_module' => 'AOS_Invoices',
     ),
   ),
+
+    'insightWidget' => [
+        'rows' => [
+            [
+                'cols' => [
+                    [
+                        'icon' => 'AOS_Invoices',
+                    ],
+                ]
+            ],
+            [
+                'cols' => [
+                    [
+                        'labelKey' => '{{title_key}}',
+                        'class' => 'sub-panel-banner-button-title',
+                        'bold' => true,
+                    ]
+                ]
+            ],
+            [
+                'cols' => [
+                    [
+                        'display' => 'hidden',
+                        'statistic' => 'invoices'
+                    ],
+                    [
+                        'dynamicLabel' => 'LBL_INVOICES_INSIGHT',
+                        'class' => 'sub-panel-banner-button-stats',
+                        'bold' => true,
+                    ],
+                    [
+                        'display' => 'hidden',
+                        'statistic' => 'default'
+                    ]
+                ]
+            ],
+        ]
+    ],
+
   'where' => '',
   'list_fields' =>
   array(

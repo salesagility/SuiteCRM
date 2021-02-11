@@ -49,8 +49,47 @@ $subpanel_layout = array(
         array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Cases'),
     ),
 
+    'insightWidget' => [
+        'rows' => [
+            [
+                'cols' => [
+                    [
+                        'icon' => 'Cases',
+                    ],
+                ]
+            ],
+            [
+                'cols' => [
+                    [
+                        'labelKey' => '{{title_key}}',
+                        'class' => 'sub-panel-banner-button-title',
+                        'bold' => true,
+                    ]
+                ]
+            ],
+            [
+                'center' => 'center',
+                'cols' => [
+                    [
+                        'display' => 'hidden',
+                        'statistic' => 'cases'
+                    ],
+                    [
+                        'dynamicLabel' => 'LBL_CASES_INSIGHT',
+                        'class' => 'sub-panel-banner-button-stats',
+                        'bold' => true,
+                    ],
+                    [
+                        'display' => 'hidden',
+                        'statistic' => 'default'
+                    ]
+                ]
+            ],
+        ]
+    ],
+
     'where' => '',
-    
+
     'fill_in_additional_fields'=>true,
 
     'list_fields' => array(
@@ -58,7 +97,7 @@ $subpanel_layout = array(
             'vname' => 'LBL_LIST_NUMBER',
             'width' => '6%',
         ),
-        
+
         'name'=>array(
             'vname' => 'LBL_LIST_SUBJECT',
             'widget_class' => 'SubPanelDetailViewLink',

@@ -45,38 +45,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $layout_defs['Cases'] = array(
     // list of what Subpanels to show in the DetailView
     'subpanel_setup' => array(
-        //subpanel layout
-        'insightWidget' => [
-            'rows' => [
-                [
-                    'cols' => [
-                        [
-                            'icon' => 'Cases',
-                        ],
-                    ]
-                ],
-                [
-                    'cols' => [
-                        [
-                            'labelKey' => 'Cases',
-                        ]
-                    ]
-                ],
-                [
-                    'cols' => [
-                        [
-                            'statistic' => 'cases'
-                        ],
-                        [
-                            'labelKey' => 'LBL_FORWARD_SLASH'
-                        ],
-                        [
-                            'statistic' => 'default'
-                        ]
-                    ]
-                ],
-            ]
-        ],
         'contacts' => array(
             'order' => 30,
             'module' => 'Contacts',
