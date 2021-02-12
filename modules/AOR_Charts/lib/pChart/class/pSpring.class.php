@@ -43,11 +43,11 @@
      public $Labels;
 
      /* Class creator */
-     public function pSpring()
+     public function __construct()
      {
-         /* Initialise data arrays */
-         $this->Data = "";
-         $this->Links = "";
+     /* Initialise data arrays */
+     $this->Data = "";
+     $this->Links = "";
 
          /* Set nodes defaults */
          $this->Default["R"]		= 255;

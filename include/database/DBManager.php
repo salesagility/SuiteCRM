@@ -294,7 +294,7 @@ abstract class DBManager
     }
 
     /**
-     * Returns this instance's DBHelper
+     * Returns this instance's DBManager
      * Actually now returns $this
      * @deprecated
      * @return DBManager
@@ -1061,50 +1061,6 @@ abstract class DBManager
     }
 
     /**
-     * Compare a field in two tables
-     * @deprecated
-     * @param  string $name field name
-     * @param  string $table1
-     * @param  string $table2
-     * @return array  array with keys 'msg','table1','table2'
-     */
-    public function compareFieldInTables($name, $table1, $table2)
-    {
-        $row1 = $this->describeField($name, $table1);
-        $row2 = $this->describeField($name, $table2);
-        $returnArray = array(
-            'table1' => $row1,
-            'table2' => $row2,
-            'msg' => 'error',
-        );
-
-        $ignore_filter = array('Key' => 1);
-        if ($row1) {
-            if (!$row2) {
-                // Exists on table1 but not table2
-                $returnArray['msg'] = 'not_exists_table2';
-            } else {
-                if (count($row1) != count($row2)) {
-                    $returnArray['msg'] = 'no_match';
-                } else {
-                    $returnArray['msg'] = 'match';
-                    foreach ($row1 as $key => $value) {
-                        //ignore keys when checking we will check them when we do the index check
-                        if (!isset($ignore_filter[$key]) && (!isset($row2[$key]) || $row1[$key] !== $row2[$key])) {
-                            $returnArray['msg'] = 'no_match';
-                        }
-                    }
-                }
-            }
-        } else {
-            $returnArray['msg'] = 'not_exists_table1';
-        }
-
-        return $returnArray;
-    }
-
-
-    /**
      * Creates an index identified by name on the given fields.
      *
      * @param SugarBean $bean SugarBean instance
@@ -1312,190 +1268,6 @@ abstract class DBManager
         $msg = "Error deleting column(s) on table: $tablename:";
 
         return $this->query($sql, true, $msg);
-    }
-
-    /**
-     * Generate a set of Insert statements based on the bean given
-     *
-     * @deprecated
-     *
-     * @param  SugarBean $bean the bean from which table we will generate insert stmts
-     * @param  string $select_query the query which will give us the set of objects that
-     * we want to place into our insert statement
-     * @param  int $start the first row to query
-     * @param  int $count the number of rows to query
-     * @param  string $table the table to query from
-     * @param bool $is_related_query
-     * @return string SQL insert statement
-     */
-    public function generateInsertSQL(
-        SugarBean $bean,
-        $select_query,
-        $start,
-        $count = -1,
-        $table = '',
-        $is_related_query = false
-    ) {
-        $this->log->info('call to DBManager::generateInsertSQL() is deprecated');
-
-        if (!$table) {
-            $GLOBALS['log']->fatal('empty table name');
-        }
-
-        global $sugar_config;
-
-        $rows_found = 0;
-        $count_query = $bean->create_list_count_query($select_query);
-        if (!empty($count_query)) {
-            // We have a count query.  Run it and get the results.
-            $result = $this->query($count_query, true, "Error running count query for $this->object_name List: ");
-            $assoc = $this->fetchByAssoc($result);
-            if (!empty($assoc['c'])) {
-                $rows_found = $assoc['c'];
-            }
-        }
-        if ($count == -1) {
-            $count = $sugar_config['list_max_entries_per_page'];
-        }
-        $next_offset = $start + $count;
-
-        $result = $this->limitQuery($select_query, $start, $count);
-        // get basic insert
-        $sql = "INSERT INTO " . $table;
-        $custom_sql = "INSERT INTO " . $table . "_cstm";
-
-        // get field definitions
-        $fields = $bean->getFieldDefinitions();
-        $custom_fields = array();
-
-        if ($bean->hasCustomFields()) {
-            foreach ($fields as $fieldDef) {
-                if ($fieldDef['source'] == 'custom_fields') {
-                    $custom_fields[$fieldDef['name']] = $fieldDef['name'];
-                }
-            }
-            if (!empty($custom_fields)) {
-                $custom_fields['id_c'] = 'id_c';
-                $id_field = array('name' => 'id_c', 'custom_type' => 'id',);
-                $fields[] = $id_field;
-            }
-        }
-
-        // get column names and values
-        $row_array = array();
-        $columns = array();
-        $cstm_row_array = array();
-        $cstm_columns = array();
-        $built_columns = false;
-        while (($row = $this->fetchByAssoc($result)) != null) {
-            $values = array();
-            $cstm_values = array();
-            if (!$is_related_query) {
-                foreach ($fields as $fieldDef) {
-                    if (isset($fieldDef['source']) && $fieldDef['source'] != 'db' && $fieldDef['source'] != 'custom_fields') {
-                        continue;
-                    }
-                    $val = $row[$fieldDef['name']];
-
-                    //handle auto increment values here only need to do this on insert not create
-                    if ($fieldDef['name'] == 'deleted') {
-                        $values['deleted'] = $val;
-                        if (!$built_columns) {
-                            $columns[] = 'deleted';
-                        }
-                    } else {
-                        $type = $fieldDef['type'];
-                        if (!empty($fieldDef['custom_type'])) {
-                            $type = $fieldDef['custom_type'];
-                        }
-                        // need to do some thing about types of values
-                        if ($this->dbType == 'mysql' && $val == '' && ($type == 'datetime' || $type == 'date' || $type == 'int' || $type == 'currency' || $type == 'decimal')) {
-                            if (!empty($custom_fields[$fieldDef['name']])) {
-                                $cstm_values[$fieldDef['name']] = 'null';
-                            } else {
-                                $values[$fieldDef['name']] = 'null';
-                            }
-                        } else {
-                            if (isset($type) && $type == 'int') {
-                                if (!empty($custom_fields[$fieldDef['name']])) {
-                                    $cstm_values[$fieldDef['name']] = DBManagerFactory::getInstance()->quote(from_html($val));
-                                } else {
-                                    $values[$fieldDef['name']] = DBManagerFactory::getInstance()->quote(from_html($val));
-                                }
-                            } else {
-                                if (!empty($custom_fields[$fieldDef['name']])) {
-                                    $cstm_values[$fieldDef['name']] = "'" . DBManagerFactory::getInstance()->quote(from_html($val)) . "'";
-                                } else {
-                                    $values[$fieldDef['name']] = "'" . DBManagerFactory::getInstance()->quote(from_html($val)) . "'";
-                                }
-                            }
-                        }
-                        if (!$built_columns) {
-                            if (!empty($custom_fields[$fieldDef['name']])) {
-                                $cstm_columns[] = $fieldDef['name'];
-                            } else {
-                                $columns[] = $fieldDef['name'];
-                            }
-                        }
-                    }
-                }
-            } else {
-                foreach ($row as $key => $val) {
-                    if ($key != 'orc_row') {
-                        $values[$key] = "'$val'";
-                        if (!$built_columns) {
-                            $columns[] = $key;
-                        }
-                    }
-                }
-            }
-            $built_columns = true;
-            if (!empty($values)) {
-                $row_array[] = $values;
-            }
-            if (!empty($cstm_values) && !empty($cstm_values['id_c']) && (strlen($cstm_values['id_c']) > 7)) {
-                $cstm_row_array[] = $cstm_values;
-            }
-        }
-
-        //if (sizeof ($values) == 0) return ""; // no columns set
-
-        // get the entire sql
-        $sql .= "(" . implode(",", $columns) . ") ";
-        $sql .= "VALUES";
-        for ($i = 0; $i < count($row_array); $i++) {
-            $sql .= " (" . implode(",", $row_array[$i]) . ")";
-            if ($i < (count($row_array) - 1)) {
-                $sql .= ", ";
-            }
-        }
-        //custom
-        // get the entire sql
-        $custom_sql .= "(" . implode(",", $cstm_columns) . ") ";
-        $custom_sql .= "VALUES";
-
-        for ($i = 0; $i < count($cstm_row_array); $i++) {
-            $custom_sql .= " (" . implode(",", $cstm_row_array[$i]) . ")";
-            if ($i < (count($cstm_row_array) - 1)) {
-                $custom_sql .= ", ";
-            }
-        }
-
-        return array(
-            'data' => $sql,
-            'cstm_sql' => $custom_sql, /*'result_count' => $row_count, */
-            'total_count' => $rows_found,
-            'next_offset' => $next_offset
-        );
-    }
-
-    /**
-     * @deprecated
-     * Disconnects all instances
-     */
-    public function disconnectAll()
-    {
-        DBManagerFactory::disconnectAll();
     }
 
     /**
@@ -1876,7 +1648,7 @@ abstract class DBManager
      * Takes a prepared stmt index and the data to replace and creates the query and runs it.
      *
      * @deprecated This is no longer used and will be removed in a future release. See createPreparedQuery() for an alternative.
-     * 
+     *
      * @param  int $stmt The index of the prepared statement from preparedTokens
      * @param  array $data The array of data to replace the tokens with.
      * @return resource result set or false on error
@@ -3135,32 +2907,6 @@ abstract class DBManager
     public function full_text_indexing_setup()
     {
         // Most DBs have nothing to setup, so provide default empty function
-    }
-
-    /**
-     * Quotes a string for storing in the database
-     * @deprecated
-     * Return value will be not surrounded by quotes
-     *
-     * @param  string $string
-     * @return string
-     */
-    public function escape_quote($string)
-    {
-        return $this->quote($string);
-    }
-
-    /**
-     * Quotes a string for storing in the database
-     * @deprecated
-     * Return value will be not surrounded by quotes
-     *
-     * @param  string $string
-     * @return string
-     */
-    public function quoteFormEmail($string)
-    {
-        return $this->quote($string);
     }
 
     /**

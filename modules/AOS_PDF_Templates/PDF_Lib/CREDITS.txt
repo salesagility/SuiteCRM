@@ -21,9 +21,9 @@ CREDITS From HTML2FPDF:
 
 -Olivier Plathey for the fpdf.php class [http://www.fpdf.org]
 -Damon Kohler for the Flowing Block script [mailto:damonkohler@yahoo.com]
--Clément Lavoillotte for HTML-oriented FPDF idea
+-Clï¿½ment Lavoillotte for HTML-oriented FPDF idea
 -Yamasoft for the gif.php class [http://www.yamasoft.com/]
--Jérôme Fenal for the _parsegif() function
+-Jï¿½rï¿½me Fenal for the _parsegif() function
 -"VIETCOM" for the PDFTable code [http://www.freepgs.com/vietcom/tool/pdftable/] [mailto:vncommando@yahoo.com]
 -Yukihiro O. for the SetDash() function [mailto:yukihiro_o@infoseek.jp]
 -Ron Korving for the WordWrap() function
@@ -69,14 +69,14 @@ CREDITS From HTML2FPDF:
    * @link http://www.ar-php.org
    * @author Khaled Al-Shamaa <khaled@ar-php.org>
    * @desc   Set of PHP5 / UTF-8 Classes developed to enhance Arabic web
-   *         applications by providing set of tools includes stem-based searching, 
+   *         applications by providing set of tools includes stem-based searching,
    *         translitiration, soundex, Hijri calendar, charset detection and
-   *         converter, spell numbers, keyboard language, Muslim prayer time, 
+   *         converter, spell numbers, keyboard language, Muslim prayer time,
    *         auto-summarization, and more...
    * @package Arabic
-   *    
+   *
    * @version 1.8 released in Feb 15, 2009
-   * 
+   *
    * @license LGPL
 ****************************************************************************/
 

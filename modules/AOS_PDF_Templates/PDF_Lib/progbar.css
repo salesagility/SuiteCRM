@@ -51,16 +51,16 @@ td {
 	color:#006600;
 	font-weight:bold;
 }
-.progressBar { 
+.progressBar {
 	border: 1px solid #000000;
 	background-color: #EEEEEE;
 	width: 200px;
-	font-size: 6px; 
+	font-size: 6px;
 }
-.innerBar { 
-	background-color:#00CC00; 
-	width: 0%; 
+.innerBar {
+	background-color:#00CC00;
+	width: 0%;
 }
-#box3 { 
-	font-weight: bold; 
+#box3 {
+	font-weight: bold;
 }

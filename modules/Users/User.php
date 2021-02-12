@@ -152,19 +152,7 @@ class User extends Person implements EmailInterface
         }
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function User()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     protected function _loadUserPreferencesFocus()
     {
@@ -1049,22 +1037,6 @@ class User extends Person implements EmailInterface
     {
         //$this->_create_proper_name_field();
         return $this->name;
-    }
-
-    /**
-     * @deprecated
-     * @param string $user_name - Must be non null and at least 2 characters
-     * @param string $username_password - Must be non null and at least 1 character.
-     * @desc Take an unencrypted username and password and return the encrypted password
-     * @return string encrypted password for storage in DB and comparison against DB password.
-     */
-    public function encrypt_password($username_password)
-    {
-        // encrypt the password.
-        $salt = substr($this->user_name, 0, 2);
-        $encrypted_password = crypt($username_password, $salt);
-
-        return $encrypted_password;
     }
 
     /**

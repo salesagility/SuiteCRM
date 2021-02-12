@@ -66,19 +66,7 @@ class SugarApplication
     {
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function SugarApplication()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * Perform execution of the application. This method is called from index2.php
@@ -197,6 +185,9 @@ class SugarApplication
             self::setCookie('ck_login_language_20', $_SESSION['authenticated_user_language'], time() + 86400 * 90);
         }
         //check if user can access
+
+        // call after load user custom hook, with the user
+        LogicHook::initialize()->call_custom_logic('', 'after_user_load');
     }
 
     public function ACLFilter()

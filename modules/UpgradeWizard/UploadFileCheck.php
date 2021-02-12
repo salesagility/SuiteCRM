@@ -61,6 +61,10 @@ if (strpos($file_name, 'phar://') !== false) {
     return;
 }
 
+if (strpos($file_name, 'phar://') === 0) {
+    return;
+}
+
 $filesize = '';
 if (file_exists($file_name)) {
     $filesize =filesize($file_name);

@@ -98,12 +98,12 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $campaign = BeanFactory::newBean('Campaigns');
 
         //test with empty string params
-        $expected = "SELECT\n            campaigns.*,\n            users.user_name as assigned_user_name  FROM campaigns LEFT JOIN users\n                      ON campaigns.assigned_user_id=users.id where  campaigns.deleted=0 ORDER BY campaigns.name";
+        $expected = "SELECT\n        campaigns.*,\n        users.user_name as assigned_user_name  FROM campaigns LEFT JOIN users\n                  ON campaigns.assigned_user_id=users.id where  campaigns.deleted=0 ORDER BY campaigns.name";
         $actual = $campaign->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT\n            campaigns.*,\n            users.user_name as assigned_user_name  FROM campaigns LEFT JOIN users\n                      ON campaigns.assigned_user_id=users.id where campaigns.name=\"\" AND  campaigns.deleted=0 ORDER BY campaigns.id";
+        $expected = "SELECT\n        campaigns.*,\n        users.user_name as assigned_user_name  FROM campaigns LEFT JOIN users\n                  ON campaigns.assigned_user_id=users.id where campaigns.name=\"\" AND  campaigns.deleted=0 ORDER BY campaigns.id";
         $actual = $campaign->create_export_query('campaigns.id', 'campaigns.name=""');
         $this->assertSame($expected, $actual);
     }

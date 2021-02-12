@@ -1,5 +1,5 @@
 Mostly-free OCR B
- 
+
 This font is used in UPC bar code symbols, including the ISBN symbols on
 most published books.
 
@@ -8,7 +8,7 @@ been very difficult to find the font in computer-usable format except by
 paying a high fee to a commercial font vendor.  Even many serious commercial
 publishers have so much trouble getting it right that they just go ahead and
 use Helvetica instead, or even (shudder) Arial.  Since the OCR B font is
-required by an international standard, it seems like it ought to be free. 
+required by an international standard, it seems like it ought to be free.
 So here it is.  The font in this package is not a "ripped", pirated, or
 shadily reverse engineered version; every effort has been made to ensure
 that it genuinely derives from free sources and all the creators involved
