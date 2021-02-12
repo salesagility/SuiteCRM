@@ -61,7 +61,7 @@ class EmployeesController extends SugarController
     protected function action_delete()
     {
         if ($_REQUEST['record'] != $GLOBALS['current_user']->id && $GLOBALS['current_user']->isAdminForModule('Users')) {
-            $u = new User();
+            $u = BeanFactory::newBean('Users');
             $u->retrieve($_REQUEST['record']);
             $u->status = 'Inactive';
             $u->employee_status = 'Terminated';

@@ -55,7 +55,7 @@ class BugsViewEdit extends ViewEdit
 
     public function display()
     {
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
         if (isset($admin->settings['portal_on']) && $admin->settings['portal_on']) {
             $this->ev->ss->assign("PORTAL_ENABLED", true);

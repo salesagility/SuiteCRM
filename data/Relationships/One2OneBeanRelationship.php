@@ -86,7 +86,10 @@ class One2OneBeanRelationship extends One2MBeanRelationship
     public function getJoin($link, $params = array(), $return_array = false)
     {
         $linkIsLHS = $link->getSide() == REL_LHS;
-        $startingTable = $link->getFocus()->table_name;
+        $startingTable = (empty($params['left_join_table_alias']) ? $link->getFocus()->table_name : $params['left_join_table_alias']);
+        if (!$linkIsLHS) {
+            $startingTable = (empty($params['right_join_table_alias']) ? $link->getFocus()->table_name : $params['right_join_table_alias']);
+        }
         $startingKey = $linkIsLHS ? $this->def['lhs_key'] : $this->def['rhs_key'];
         $targetTable = $linkIsLHS ? $this->def['rhs_table'] : $this->def['lhs_table'];
         $targetTableWithAlias = $targetTable;

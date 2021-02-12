@@ -73,9 +73,8 @@ class CalendarController extends SugarController
             foreach ($repeat_fields as $suffix) {
                 unset($_POST['repeat_' . $suffix]);
             }
-        } else {
-            if (!empty($_REQUEST['repeat_type']) && !empty($_REQUEST['date_start'])) {
-                $params = array(
+        } elseif (!empty($_REQUEST['repeat_type']) && !empty($_REQUEST['date_start'])) {
+            $params = array(
                     'type' => $_REQUEST['repeat_type'],
                     'interval' => $_REQUEST['repeat_interval'],
                     'count' => $_REQUEST['repeat_count'],
@@ -83,19 +82,18 @@ class CalendarController extends SugarController
                     'dow' => $_REQUEST['repeat_dow'],
             );
                 
-                $repeatArr = CalendarUtils::build_repeat_sequence($_REQUEST['date_start'], $params);
-                $limit = SugarConfig::getInstance()->get('calendar.max_repeat_count', 1000);
+            $repeatArr = CalendarUtils::build_repeat_sequence($_REQUEST['date_start'], $params);
+            $limit = SugarConfig::getInstance()->get('calendar.max_repeat_count', 1000);
             
-                if (count($repeatArr) > ($limit - 1)) {
-                    ob_clean();
-                    $jsonData = array(
+            if (count($repeatArr) > ($limit - 1)) {
+                ob_clean();
+                $jsonData = array(
                     'access' => 'yes',
                     'limit_error' => 'true',
                     'limit' => $limit,
                 );
-                    $this->view_object_map['jsonData'] = $jsonData;
-                    return;
-                }
+                $this->view_object_map['jsonData'] = $jsonData;
+                return;
             }
         }
         
@@ -319,14 +317,12 @@ class CalendarController extends SugarController
         
         if (in_array($cal->view, array('day', 'week', 'month'))) {
             $cal->add_activities($GLOBALS['current_user']);
-        } else {
-            if ($cal->view == 'shared') {
-                $cal->init_shared();
-                $sharedUser = new User();
-                foreach ($cal->shared_ids as $member) {
-                    $sharedUser->retrieve($member);
-                    $cal->add_activities($sharedUser);
-                }
+        } elseif ($cal->view == 'shared') {
+            $cal->init_shared();
+            $sharedUser = BeanFactory::newBean('Users');
+            foreach ($cal->shared_ids as $member) {
+                $sharedUser->retrieve($member);
+                $cal->add_activities($sharedUser);
             }
         }
         $cal->load_activities();

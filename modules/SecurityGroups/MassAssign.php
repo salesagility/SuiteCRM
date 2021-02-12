@@ -26,7 +26,7 @@ if (!empty($GLOBALS['beanList'][$module])) {
     }
 }
 
-$groupFocus = new SecurityGroup();
+$groupFocus = BeanFactory::newBean('SecurityGroups');
 $groupFocus->retrieve($securitygroup);
 
 

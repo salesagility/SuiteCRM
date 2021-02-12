@@ -82,7 +82,7 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         $return_id = $_REQUEST['record'];
 
 
-        $focus = new Project();
+        $focus = BeanFactory::newBean('Project');
 
         $focus->retrieve($return_id);
 

@@ -37,6 +37,73 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/**
+ *
+ * @param element
+ * @returns {boolean}
+ */
+function selectPageTop(element) {
+
+  var table = $(element).parents("div:eq(0)").children(".list");
+
+  table.find("input:checkbox").prop("checked", true);
+
+  $(element).parents(".subnav").hide().removeClass("ddopen");
+
+  Populate();
+
+  return false; //Prevent page from jumping back to the top on click
+}
+
+/**
+ *
+ * @param element
+ * @returns {boolean}
+ */
+function selectAllTop(element) {
+  var table = $(element).parents("div:eq(0)").children(".list");
+
+  table.find("input:checkbox").prop({
+    checked: true,
+    disabled: true
+  });
+
+  $("#select_entire_list").val(1);
+  window.select_entire_list = 1;
+
+  $(element).parents(".subnav").hide().removeClass("ddopen");
+
+  Populate();
+
+  return false;
+}
+
+/**
+ *
+ * @param element
+ * @returns {boolean}
+ */
+function deselectTop(element) {
+  var table = $(element).parents("div:eq(0)").children(".list");
+
+  table.find("input:checkbox").prop({
+    checked: false,
+    disabled: false
+  });
+
+  $("#select_entire_list").val(0);
+  window.select_entire_list = 0;
+
+  $(element).parents(".subnav").hide().removeClass("ddopen");
+
+  //clear id's on deselect
+  var vals = '';
+
+  $("#custom_hidden_1").val(vals);
+
+  return false;
+}
+
 $(function () {
   //set variable to global window scope to compensate for lost value during subpanel pagination
   if (window.select_entire_list == 1) {
@@ -67,82 +134,45 @@ $(function () {
     }
   });
 
-  //select this page only button
   $('.button_select_this_page_top').click(function (e) {
-
-    var table = $(this).parents('div:eq(0)').children(".list");
-
-    table.find('input:checkbox').prop('checked', true);
-
-    $(this).parents('.cust_list').hide();
-
-    Populate();
-
-    return false; //Prevent page from jumping back to the top on click
+    selectPageTop(this);
   });
 
-  //select all (selects all related contacts)
   $('.button_select_all_top').click(function (e) {
-
-    var table = $(this).parents('div:eq(0)').children(".list");
-
-    table.find('input:checkbox').prop({
-      checked: true,
-      disabled: true
-    });
-
-    $('#select_entire_list').val(1);
-    window.select_entire_list = 1;
-
-    $(this).parents('.cust_list').hide();
-
-    Populate();
-
-    return false;
-
+    selectAllTop(this);
   });
 
-  //unselects all
   $('.button_deselect_top').click(function (e) {
-
-    var table = $(this).parents('div:eq(0)').children(".list");
-
-    table.find('input:checkbox').prop({
-      checked: false,
-      disabled: false
-    });
-
-    $('#select_entire_list').val(0);
-    window.select_entire_list = 0;
-
-    $(this).parents('.cust_list').hide();
-
-    //clear id's on deselect
-    var vals = '';
-
-    $('#custom_hidden_1').val(vals);
-
-
-    return false;
-
+    return deselectTop(this);
   });
 
-  function Populate() {
-    vals = $('input[type="checkbox"]:checked').map(function () {
-
-      if (this.value != 'on') {
-
-        return this.value;
-      }
-    }).get().join(',');
-
-    $('#custom_hidden_1').val(vals);
-  }
+  $(".button_toggle_select_all").click(function (e) {
+    if ($(this).is(":checked")) {
+      deselectTop(this);
+      return;
+    }
+    selectPageTop(this);
+  });
 
   $('input[type="checkbox"]').on('change', function () {
-    Populate()
+    Populate();
   }).change();
 });
+
+/**
+ *
+ */
+function Populate() {
+  vals = $('input[type="checkbox"]:checked').map(function () {
+
+    if (this.value != 'on') {
+
+      return this.value;
+    }
+  }).get().join(',');
+
+  $('#custom_hidden_1').val(vals);
+}
 
 function set_return_and_save_background2(popup_reply_data) {
   var form_name = popup_reply_data.form_name;

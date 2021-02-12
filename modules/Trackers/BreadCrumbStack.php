@@ -77,7 +77,7 @@ class BreadCrumbStack
         $this->stack = array();
         $this->stackMap = array();
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings('tracker');
 
         $this->deleteInvisible = !empty($admin->settings['tracker_Tracker']);

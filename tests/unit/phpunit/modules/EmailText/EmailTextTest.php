@@ -7,7 +7,7 @@ class EmailTextTest extends SuitePHPUnitFrameworkTestCase
     public function testEmailText()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $emailText = new EmailText();
+        $emailText = BeanFactory::newBean('EmailText');
 
         $this->assertInstanceOf('EmailText', $emailText);
         $this->assertInstanceOf('SugarBean', $emailText);

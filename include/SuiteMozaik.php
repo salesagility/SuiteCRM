@@ -63,12 +63,12 @@ class SuiteMozaik
 
     public function __construct()
     {
-        $this->vendorPath = $this->mozaikPath . '/vendor';
+        $this->vendorPath = 'vendor/';
         if ($this->autoInsertThumbnails) {
             if (count($this->getThumbs())==0 || self::$devMode) {
                 $ord = 0;
                 foreach (self::$defaultThumbnails as $thumbName => $thumbData) {
-                    $templateSectionLine = new TemplateSectionLine();
+                    $templateSectionLine = BeanFactory::newBean('TemplateSectionLine');
                     $templateSectionLine->name = $thumbData['label'];
                     $templateSectionLine->description = preg_replace('/^string:/', '', $thumbData['tpl']);
                     $templateSectionLine->description = str_replace('{lipsum}', $this->getContentLipsum(), $templateSectionLine->description);
@@ -108,8 +108,8 @@ class SuiteMozaik
 <script src="{$this->vendorPath}/gymadarasz/imagesloaded/imagesloaded.pkgd.min.js"></script>
 
 <!-- for color picker plugin -->
-<link rel="stylesheet" media="screen" type="text/css" href="{$this->vendorPath}/../colorpicker/css/colorpicker.css" />
-<script type="text/javascript" src="{$this->vendorPath}/../colorpicker/js/colorpicker.js"></script>
+<link rel="stylesheet" media="screen" type="text/css" href="{$this->mozaikPath}/colorpicker/css/colorpicker.css" />
+<script type="text/javascript" src="{$this->mozaikPath}/colorpicker/js/colorpicker.js"></script>
 HTML;
         return $html;
     }

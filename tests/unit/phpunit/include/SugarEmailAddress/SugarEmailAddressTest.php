@@ -20,7 +20,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         parent::setUp();
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
 
         $this->ea = new SugarEmailAddress();
     }
@@ -125,7 +125,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $_request = $_REQUEST;
         }
 
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         if (!empty($_REQUEST)) {
@@ -173,7 +173,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testHandleLegacyRetrieve()
     {
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         $this->ea->handleLegacyRetrieve($c);
@@ -192,7 +192,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testPopulateLegacyFields()
     {
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         $this->ea->populateLegacyFields($c);
@@ -1318,7 +1318,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     {
         $db = DBManagerFactory::getInstance();
 
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         // test
         $result = $this->ea->getPrimaryAddress($c);
@@ -1950,7 +1950,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             $env['$_REQUEST'] = $_REQUEST;
         }
 
-        $focus = new Contact();
+        $focus = BeanFactory::newBean('Contacts');
 
 
         // test
@@ -2073,7 +2073,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     {
         $db = DBManagerFactory::getInstance();
 
-        $c = new Contact();
+        $c = BeanFactory::newBean('Contacts');
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();

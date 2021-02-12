@@ -135,7 +135,7 @@ class SugarAuthenticateUser
         }
 
         if (!empty($_SESSION['authenticated_user_id']) || !empty($user_id)) {
-            $GLOBALS['current_user'] = new User();
+            $GLOBALS['current_user'] = BeanFactory::newBean('Users');
             if ($GLOBALS['current_user']->retrieve($_SESSION['authenticated_user_id'])) {
                 return true;
             }
@@ -245,7 +245,7 @@ class SugarAuthenticateUser
             $token = mt_rand($min, $max);
         }
 
-        $emailTemplate = new EmailTemplate();
+        $emailTemplate = BeanFactory::newBean('EmailTemplates');
         $emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
         $emailTemplate->retrieve($emailTemplateId);
 
@@ -253,7 +253,7 @@ class SugarAuthenticateUser
         $mailer = new SugarPHPMailer();
         $mailer->setMailerForSystem();
 
-        $emailObj = new Email();
+        $emailObj = BeanFactory::newBean('Emails');
         $defaults = $emailObj->getSystemDefaultEmail();
 
         $mailer->From = $defaults['email'];

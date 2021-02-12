@@ -50,7 +50,7 @@ if (!is_admin($current_user)) {
     sugar_die("Unauthorized access to administration.");
 }
 
-$focus = new Administration();
+$focus = BeanFactory::newBean('Administration');
 
 // filter for relevant POST data and update config table
 foreach ($_POST as $key => $val) {

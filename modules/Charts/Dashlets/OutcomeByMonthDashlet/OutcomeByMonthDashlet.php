@@ -98,7 +98,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
     {
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
         if ($GLOBALS['current_user']->getPreference('currency')) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
@@ -244,16 +244,16 @@ EOD;
     protected function constructQuery()
     {
         $query = "SELECT sales_stage,".
-            DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
+            DBManagerFactory::getInstance()->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
             "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
-        $query .= " WHERE opportunities.date_closed >= ".DBManager::convert("'".$this->obm_date_start."'", 'date') .
-            " AND opportunities.date_closed <= ".DBManager::convert("'".$this->obm_date_end."'", 'date') .
+        $query .= " WHERE opportunities.date_closed >= ".DBManagerFactory::getInstance()->convert("'".$this->obm_date_start."'", 'date') .
+            " AND opportunities.date_closed <= ".DBManagerFactory::getInstance()->convert("'".$this->obm_date_end."'", 'date') .
             " AND opportunities.deleted=0";
         if (count($this->obm_ids) > 0) {
             $query .= " AND opportunities.assigned_user_id IN ('" . implode("','", $this->obm_ids) . "')";
         }
         $query .= " GROUP BY sales_stage,".
-            DBManager::convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
+            DBManagerFactory::getInstance()->convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
             " ORDER BY m";
 
         return $query;

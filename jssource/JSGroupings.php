@@ -70,6 +70,7 @@
             $sugar_grp_jquery = array(
                 //jquery
                 'include/javascript/jquery/jquery-min.js'             => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery-migrate.min.js'             => 'include/javascript/sugar_grp1_jquery.js',
                 //bootstrap
                 'include/javascript/jquery/bootstrap.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/html5shiv.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
@@ -101,29 +102,6 @@
 
            $sugar_grp1_yui = array(
                //YUI scripts loaded on first page
-               'include/javascript/yui3/build/yui/yui-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/loader/loader-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/oop/oop-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/event-custom/event-custom-base-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/io/io-base-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/dom/dom-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/event/event-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/attribute/attribute-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/pluginhost/pluginhost-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/classnamemanager/classnamemanager-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/base/base-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/node/node-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/widget/widget-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/widget/widget-stdmod-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/widget/widget-position-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/widget/widget-position-align-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/widget/widget-stack-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/widget/widget-position-constrain-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/overlay/overlay-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/plugin/plugin-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/anim/anim-base-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/widget-anim/widget-anim-min.js' => 'include/javascript/sugar_grp1_yui.js',
-               'include/javascript/yui3/build/event-custom/event-custom-min.js' => 'include/javascript/sugar_grp1_yui.js',
                'include/javascript/yui/build/yahoo/yahoo-min.js' => 'include/javascript/sugar_grp1_yui.js',
                'include/javascript/yui/build/dom/dom-min.js' => 'include/javascript/sugar_grp1_yui.js',
                'include/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js' => 'include/javascript/sugar_grp1_yui.js',

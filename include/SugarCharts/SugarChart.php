@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Generic chart
@@ -79,7 +79,7 @@ class SugarChart
 
 
         if ($GLOBALS['current_user']->getPreference('currency')) {
-            $currency = new Currency();
+            $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
             $this->div = $currency->conversion_rate;
             $this->currency_symbol = $currency->symbol;
@@ -312,8 +312,8 @@ class SugarChart
      * returns text with tabs appended before it
      *
      * @param 	string $str xml tag
-     			int $tagFormat 2 = open and close tag, 1 = close, 0 = open
-     			sting $value input string
+     *			int $tagFormat 2 = open and close tag, 1 = close, 0 = open
+     *			sting $value input string
      *			int $depth number of times to tab
      * @return	string with tabs appended before it
      */
@@ -830,14 +830,14 @@ class SugarChart
 
 
     /**
-           This function is used for localize all the characters in the Chart. And it can also sort all the dom_values by the sequence defined in the dom, but this may produce a lot of extra empty data in the xml file, when the chart is sorted by two key cols.
-           If the data quantity is large, it maybe a little slow.
+      *     This function is used for localize all the characters in the Chart. And it can also sort all the dom_values by the sequence defined in the dom, but this may produce a lot of extra empty data in the xml file, when the chart is sorted by two key cols.
+      *     If the data quantity is large, it maybe a little slow.
       * @param         array $data_set           The data get from database
-                             string $keycolname1      We will sort by this key first
-                             bool $translate1            Whether to trabslate the first column
-                             string $keycolname1      We will sort by this key secondly, and  it can be null, then it will only sort by the first column.
-                             bool $translate1            Whether to trabslate the second column
-                             bool $ifsort2                 Whether to sort by the second column or just translate the second column.
+      *                      string $keycolname1      We will sort by this key first
+      *                      bool $translate1            Whether to trabslate the first column
+      *                      string $keycolname1      We will sort by this key secondly, and  it can be null, then it will only sort by the first column.
+      *                      bool $translate1            Whether to trabslate the second column
+      *                      bool $ifsort2                 Whether to sort by the second column or just translate the second column.
       * @return        The sorted and translated data.
      */
     public function sortData($data_set, $keycolname1=null, $translate1=false, $keycolname2=null, $translate2=false, $ifsort2=false)

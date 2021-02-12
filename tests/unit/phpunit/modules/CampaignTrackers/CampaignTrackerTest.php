@@ -10,13 +10,13 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testCampaignTracker()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $campaignTracker = new CampaignTracker();
+        $campaignTracker = BeanFactory::newBean('CampaignTrackers');
         $this->assertInstanceOf('CampaignTracker', $campaignTracker);
         $this->assertInstanceOf('SugarBean', $campaignTracker);
 
@@ -28,7 +28,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsave()
     {
-        $campaignTracker = new CampaignTracker();
+        $campaignTracker = BeanFactory::newBean('CampaignTrackers');
 
         $campaignTracker->tracker_name = 'test';
         $campaignTracker->is_optout = 1;
@@ -47,7 +47,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_summary_text()
     {
-        $campaignTracker = new CampaignTracker();
+        $campaignTracker = BeanFactory::newBean('CampaignTrackers');
 
         //test without setting name
         $this->assertEquals(null, $campaignTracker->get_summary_text());
@@ -59,7 +59,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_detail_fields()
     {
-        $campaignTracker = new CampaignTracker();
+        $campaignTracker = BeanFactory::newBean('CampaignTrackers');
 
         //test without is_optout set
         $campaignTracker->fill_in_additional_detail_fields();

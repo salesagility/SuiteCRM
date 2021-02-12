@@ -541,7 +541,7 @@ class Email extends Basic
      */
     protected function createTempEmailAtSend(Email $email = null)
     {
-        $this->tempEmailAtSend = $email ? $email : new Email();
+        $this->tempEmailAtSend = $email ? $email : BeanFactory::newBean('Emails');
         if (!$this->tempEmailAtSend->date_sent_received) {
             $this->tempEmailAtSend->date_sent_received = TimeDate::getInstance()->nowDb();
         }
@@ -1063,7 +1063,7 @@ class Email extends Basic
         //$replyToAddress = $current_user->emailAddress->getReplyToAddress($current_user);
         } else {
             // passed -> user -> system default
-            $ie = new InboundEmail();
+            $ie = BeanFactory::newBean('InboundEmail');
             $ie->retrieve($request['fromAccount']);
             $storedOptions = sugar_unserialize(base64_decode($ie->stored_options));
             $fromName = "";
@@ -1192,7 +1192,7 @@ class Email extends Basic
 
                     // only save attachments if we're archiving or drafting
                     if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
-                        $note = new Note();
+                        $note = BeanFactory::newBean('Notes');
                         $note->id = create_guid();
                         $note->new_with_id = true; // duplicating the note with files
                         $note->parent_id = $this->id;
@@ -1218,8 +1218,8 @@ class Email extends Basic
             foreach ($exDocs as $docId) {
                 $docId = trim($docId);
                 if (!empty($docId)) {
-                    $doc = new Document();
-                    $docRev = new DocumentRevision();
+                    $doc = BeanFactory::newBean('Documents');
+                    $docRev = BeanFactory::newBean('DocumentRevisions');
                     $doc->retrieve($docId);
                     $docRev->retrieve($doc->document_revision_id);
 
@@ -1236,7 +1236,7 @@ class Email extends Basic
 
                     // only save attachments if we're archiving or drafting
                     if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
-                        $note = new Note();
+                        $note = BeanFactory::newBean('Notes');
                         $note->id = create_guid();
                         $note->new_with_id = true; // duplicating the note with files
                         $note->parent_id = $this->id;
@@ -1261,7 +1261,7 @@ class Email extends Basic
             foreach ($exNotes as $noteId) {
                 $noteId = trim($noteId);
                 if (!empty($noteId)) {
-                    $note = new Note();
+                    $note = BeanFactory::newBean('Notes');
                     $note->retrieve($noteId);
                     if (!empty($note->id)) {
                         $filename = $note->filename;
@@ -1344,7 +1344,7 @@ class Email extends Basic
 
         if ((!(empty($orignialId) || isset($request['saveDraft']) || ($this->type == 'draft' && $this->status == 'draft'))) &&
             (($request['composeType'] == 'reply') || ($request['composeType'] == 'replyAll') || ($request['composeType'] == 'replyCase')) && ($orignialId != $this->id)) {
-            $originalEmail = new Email();
+            $originalEmail = BeanFactory::newBean('Emails');
             $originalEmail->retrieve($orignialId);
             $originalEmail->reply_to_status = 1;
             $originalEmail->save();
@@ -1353,7 +1353,7 @@ class Email extends Basic
 
         if ($request['composeType'] == 'reply' || $request['composeType'] == 'replyCase') {
             if (isset($request['ieId']) && isset($request['mbox'])) {
-                $emailFromIe = new InboundEmail();
+                $emailFromIe = BeanFactory::newBean('InboundEmail');
                 $emailFromIe->retrieve($request['ieId']);
                 $emailFromIe->mailbox = $request['mbox'];
                 if (isset($emailFromIe->id) && $emailFromIe->is_personal) {
@@ -1414,7 +1414,7 @@ class Email extends Basic
             } else {
                 if (!class_exists('aCase')) {
                 } else {
-                    $c = new aCase();
+                    $c = BeanFactory::newBean('Cases');
                     if ($caseId = InboundEmail::getCaseIdFromCaseNumber($mail->Subject, $c)) {
                         $c->retrieve($caseId);
                         $c->load_relationship('emails');
@@ -1651,7 +1651,7 @@ class Email extends Basic
      */
     public function saveTempNoteAttachments($filename, $fileLocation, $mimeType)
     {
-        $tmpNote = new Note();
+        $tmpNote = BeanFactory::newBean('Notes');
         $tmpNote->id = create_guid();
         $tmpNote->new_with_id = true;
         $tmpNote->parent_id = $this->id;
@@ -1952,7 +1952,7 @@ class Email extends Basic
 
         while ($a = $this->db->fetchByAssoc($r)) {
             if (!in_array($a['id'], $exRemoved)) {
-                $note = new Note();
+                $note = BeanFactory::newBean('Notes');
                 $note->retrieve($a['id']);
 
                 // duplicate actual file when creating forwards
@@ -2358,7 +2358,7 @@ class Email extends Basic
                 if (in_array($noteId, $removeArr)) {
                     continue;
                 }
-                $noteTemplate = new Note();
+                $noteTemplate = BeanFactory::newBean('Notes');
                 $noteTemplate->retrieve($noteId);
                 $noteTemplate->id = create_guid();
                 $noteTemplate->new_with_id = true; // duplicating the note with files
@@ -2384,7 +2384,7 @@ class Email extends Basic
         if ($this->status != "draft") {
             $notes_list = array();
             if (!empty($this->id) && !$this->new_with_id) {
-                $note = new Note();
+                $note = BeanFactory::newBean('Notes');
                 $where = "notes.parent_id='{$this->id}'";
                 $notes_list = $note->get_full_list("", $where, true);
             }
@@ -2413,7 +2413,7 @@ class Email extends Basic
                 continue;
             }
 
-            $note = new Note();
+            $note = BeanFactory::newBean('Notes');
             $note->parent_id = $this->id;
             $note->parent_type = $this->module_dir;
             $upload_file = new UploadFile('email_attachment' . $i);
@@ -2454,9 +2454,9 @@ class Email extends Basic
         ////	ATTACHMENTS FROM DOCUMENTS
         for ($i = 0; $i < 10; $i++) {
             if (isset($_REQUEST['documentId' . $i]) && !empty($_REQUEST['documentId' . $i])) {
-                $doc = new Document();
-                $docRev = new DocumentRevision();
-                $docNote = new Note();
+                $doc = BeanFactory::newBean('Documents');
+                $docRev = BeanFactory::newBean('DocumentRevisions');
+                $docNote = BeanFactory::newBean('Notes');
                 $noteFile = new UploadFile();
 
                 $doc->retrieve($_REQUEST['documentId' . $i]);
@@ -2558,7 +2558,7 @@ class Email extends Basic
                 if (in_array($noteId, $removeArr)) {
                     continue;
                 }
-                $noteTemplate = new Note();
+                $noteTemplate = BeanFactory::newBean('Notes');
                 $noteTemplate->retrieve($noteId);
                 $noteTemplate->id = create_guid();
                 $noteTemplate->new_with_id = true; // duplicating the note with files
@@ -2584,7 +2584,7 @@ class Email extends Basic
         if ($this->status != "draft") {
             $notes_list = array();
             if (!empty($this->id) && !$this->new_with_id) {
-                $note = new Note();
+                $note = BeanFactory::newBean('Notes');
                 $where = "notes.parent_id='{$this->id}'";
                 $notes_list = (array)$note->get_full_list("", $where, true);
             }
@@ -2613,7 +2613,7 @@ class Email extends Basic
                 continue;
             }
 
-            $note = new Note();
+            $note = BeanFactory::newBean('Notes');
             $note->parent_id = $this->id;
             $note->parent_type = $this->module_dir;
             $upload_file = new UploadMultipleFiles('email_attachment', $i);
@@ -2654,9 +2654,9 @@ class Email extends Basic
         ////	ATTACHMENTS FROM DOCUMENTS
         for ($i = 0; $i < $max_files_upload; $i++) {
             if (isset($_REQUEST['documentId' . $i]) && !empty($_REQUEST['documentId' . $i])) {
-                $doc = new Document();
-                $docRev = new DocumentRevision();
-                $docNote = new Note();
+                $doc = BeanFactory::newBean('Documents');
+                $docRev = BeanFactory::newBean('DocumentRevisions');
+                $docNote = BeanFactory::newBean('Notes');
                 $noteFile = new UploadFile();
 
                 $doc->retrieve($_REQUEST['documentId' . $i]);
@@ -3111,7 +3111,7 @@ class Email extends Basic
                 $ieId = $_REQUEST['inbound_email_id'];
                 $this->createTempEmailAtSend($tempEmail);
                 $this->getTempEmailAtSend()->status = 'replied';
-                $ie = $ie ? $ie : new InboundEmail();
+                $ie = $ie ? $ie : BeanFactory::newBean('InboundEmail');
                 $nonGmailSentFolder = $nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler();
                 if (!$ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options)) {
                     LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');
@@ -3148,7 +3148,7 @@ class Email extends Basic
     ) {
         $ieMailId = null;
         if (!$ie) {
-            $ie = new InboundEmail();
+            $ie = BeanFactory::newBean('InboundEmail');
         }
         if (!$ie->id) {
             if (!$ie->retrieve($ieId)) {
@@ -3446,7 +3446,7 @@ class Email extends Basic
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($row['id']);
             $this->contact_name = $contact->full_name;
             $this->contact_phone = $row['phone_work'];
@@ -3784,7 +3784,7 @@ class Email extends Basic
             isValidEmailAddress($temp['from']);
             if (empty($temp['from']) || empty($temp['to_addrs'])) {
                 //Retrieve email addresses seperatly.
-                $tmpEmail = new Email();
+                $tmpEmail = BeanFactory::newBean('Emails');
                 $tmpEmail->id = $a['id'];
                 $tmpEmail->retrieveEmailAddresses();
                 $temp['from'] = $tmpEmail->from_addr;

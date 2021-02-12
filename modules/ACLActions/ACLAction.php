@@ -79,7 +79,7 @@ class ACLAction extends SugarBean
 
         if (isset($ACLActions[$type])) {
             foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
-                $action = new ACLAction();
+                $action = BeanFactory::newBean('ACLActions');
 
                 $tableName = $action->table_name;
                 $actionNameQuoted = $db->quoted($action_name);
@@ -126,7 +126,7 @@ class ACLAction extends SugarBean
 
         if (isset($ACLActions[$type])) {
             foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
-                $action = new ACLAction();
+                $action = BeanFactory::newBean('ACLActions');
 
                 $tableName = $action->table_name;
                 $actionNameQuoted = $db->quoted($action_name);
@@ -251,7 +251,7 @@ class ACLAction extends SugarBean
         $result = $db->query($query);
         $default_actions = array();
         while ($row = $db->fetchByAssoc($result)) {
-            $acl = new ACLAction();
+            $acl = BeanFactory::newBean('ACLActions');
             $acl->populateFromRow($row);
             $default_actions[] = $acl;
         }
@@ -372,7 +372,7 @@ class ACLAction extends SugarBean
                 break; //no need for default actions when a role is assigned to the user or user's group already
             }
             /* END - SECURITY GROUPS */
-            $acl = new ACLAction();
+            $acl = BeanFactory::newBean('ACLActions');
             $isOverride = false;
             $acl->populateFromRow($row);
             if (!empty($row['access_override'])) {

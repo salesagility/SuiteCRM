@@ -428,6 +428,12 @@ $dictionary['Document'] = array('table' => 'documents',
             'source' => 'non-db',
             'module' => 'AOS_Contracts',
         ),
+        'show_preview' => array(
+            'name' => 'show_preview',
+            'type' => 'bool',
+            'source' => 'non-db',
+            'reportable' => false
+        ),
 
     ),
     'indices' => array(

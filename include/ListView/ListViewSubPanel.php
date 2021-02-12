@@ -714,7 +714,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                     $delete_link = '&nbsp;';
                 }
 
-                $admin = new Administration();
+                $admin = BeanFactory::newBean('Administration');
                 $admin->retrieveSettings('system');
 
                 $user_merge = $current_user->getPreference('mailmerge_on');
@@ -771,6 +771,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         include_once('include/SubPanel/SubPanelTiles.php');
                         $subpanelTiles = new SubPanelTiles($sugarbean);
                         $html_text .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td align=\"left\"  >";
+
+                        $html_text = $subpanelTiles->getCheckbox($html_text, $subpanel_def);
 
                         //attempt to get the query to recreate this subpanel
                         if (!empty($this->response)) {

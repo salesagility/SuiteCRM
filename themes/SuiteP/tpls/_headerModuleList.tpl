@@ -562,7 +562,14 @@
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
-                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                                   href="{$GCL.URL}"
+                                   {if !empty($GCL.ONCLICK)} 
+                                   onclick="{$GCL.ONCLICK}"
+                                   {/if}
+                                   {if !empty($GCL.TARGET)} 
+                                   target="{$GCL.TARGET}"
+                                   {/if}
+                                   >{$GCL.LABEL}</a>
                             </li>
                         {/foreach}
                         <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
@@ -645,7 +652,14 @@
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
-                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                                   href="{$GCL.URL}"
+                                   {if !empty($GCL.ONCLICK)} 
+                                   onclick="{$GCL.ONCLICK}"
+                                   {/if}
+                                   {if !empty($GCL.TARGET)} 
+                                   target="{$GCL.TARGET}"
+                                   {/if}
+                                   >{$GCL.LABEL}</a>
                             </li>
                         {/foreach}
                         <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
@@ -728,7 +742,14 @@
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
-                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                                   href="{$GCL.URL}"
+                                   {if !empty($GCL.ONCLICK)} 
+                                   onclick="{$GCL.ONCLICK}"
+                                   {/if}
+                                   {if !empty($GCL.TARGET)}
+                                   target="{$GCL.TARGET}"
+                                   {/if}
+                                   >{$GCL.LABEL}</a>
                             </li>
                         {/foreach}
                         <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'

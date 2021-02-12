@@ -121,7 +121,7 @@ class HtmlSanitizer
         // Re-encode html
         if ($removeHtml === true) {
             // remove all HTML tags
-            $sugarCleaner = new HtmlSanitizer();
+            $sugarCleaner = self::getInstance();
             $purifier = $sugarCleaner->purifier;
             $clean_html = $purifier->purify($dirty_html_decoded);
         } else {

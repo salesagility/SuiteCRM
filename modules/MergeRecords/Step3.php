@@ -107,7 +107,7 @@ if (isset($_REQUEST['change_parent']) && $_REQUEST['change_parent']=='1') {
         $merge_ids_array[] = $id;
     }
 }
-$focus = new MergeRecord();
+$focus = BeanFactory::newBean('MergeRecords');
 $focus->load_merge_bean($_REQUEST['merge_module'], true, $base_id);
 $params = array();
 $params[] = "<a href='index.php?module={$focus->merge_bean->module_dir}&action=index'>{$GLOBALS['app_list_strings']['moduleList'][$focus->merge_bean->module_dir]}</a>";

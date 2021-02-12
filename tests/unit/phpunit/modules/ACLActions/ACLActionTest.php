@@ -10,7 +10,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     protected function tearDown()
@@ -24,7 +24,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 
         $_POST['foo'] = 'bar123ase';
         // Execute the constructor and check for the Object type and type attribute
-        $aclAction = new ACLAction();
+        $aclAction = BeanFactory::newBean('ACLActions');
         $this->assertInstanceOf('ACLAction', $aclAction);
         $this->assertInstanceOf('SugarBean', $aclAction);
 
@@ -203,7 +203,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testtoArray()
     {
-        $aclAction = new ACLAction();
+        $aclAction = BeanFactory::newBean('ACLActions');
 
         //wihout any fields set
         $expected = array('id' => null, 'aclaccess' => null);
@@ -219,7 +219,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfromArray()
     {
-        $aclAction = new ACLAction();
+        $aclAction = BeanFactory::newBean('ACLActions');
         $arr = array('id' => '1234', 'name' => 'test');
 
         //execute the method and verify that it retunrs expected results
@@ -230,7 +230,7 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testclearSessionCache()
     {
-        $aclAction = new ACLAction();
+        $aclAction = BeanFactory::newBean('ACLActions');
 
         //execute the method and verify that it unsets the session cache
         $aclAction->clearSessionCache();

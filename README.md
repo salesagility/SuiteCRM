@@ -2,7 +2,7 @@
   <img width="180px" height="41px" src="https://suitecrm.com/wp-content/uploads/2017/12/logo.png" align="right" />
 </a>
 
-# SuiteCRM 7.11.12
+# SuiteCRM 7.11.18
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
@@ -36,7 +36,7 @@ There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to 
 * [Contribute bug fixes](https://docs.suitecrm.com/community/contributing-code/bugs/)
 * Help [translate](https://docs.suitecrm.com/community/contributing-to-docs/contributing-to-translation/) language packs
 * [Write and improve](https://docs.suitecrm.com/community/contributing-to-docs/) SuiteCRM documentation
-* [Signing CLA](https://www.clahub.com/agreements/salesagility/SuiteCRM) - Only needs to be done once for all PRs and contributions.
+* Signing CLA - Only needs to be done once for all PRs and contributions.
 
 
 ### Code Contributors
@@ -46,8 +46,6 @@ This project exists thanks to all the people who [contribute](https://github.com
 
 You wanna buy the **core team** a coffee :coffee: or beer :beer:?
 Then consider a small [donation](https://opencollective.com/SuiteCRM/contribute) to help fuel our activities :heart:
-
-<img src="https://github.com/samus-aran.png" width="50"> <img src="https://github.com/dillon-brown.png" width="50"> <img src="https://github.com/cameronblaikie.png" width="50"> <img src="https://github.com/code-ph0y.png" width="50"> <img src="https://github.com/gymad.png" width="50"> <img src="https://github.com/willrennie.png" width="50"> <img src="https://github.com/Mac-Rae.png" width="50">
 
 ### Security ###
 

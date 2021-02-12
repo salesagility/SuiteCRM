@@ -10,12 +10,12 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
     public function testSecurityGroup()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $this->assertInstanceOf('SecurityGroup', $securityGroup);
         $this->assertInstanceOf('Basic', $securityGroup);
@@ -28,7 +28,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetGroupWhere()
     {
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         //test with securitygroups module
         $expected = " securitygroups.id in (
@@ -62,7 +62,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetGroupUsersWhere()
     {
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $expected = " users.id in (
             select sec.user_id from securitygroups_users sec
@@ -77,7 +77,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetGroupJoin()
     {
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         //test with securitygroups module
         $expected = " LEFT JOIN (select distinct secg.id from securitygroups secg
@@ -102,7 +102,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetGroupUsersJoin()
     {
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $expected = " LEFT JOIN (
             select distinct sec.user_id as id from securitygroups_users sec
@@ -131,7 +131,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testinherit()
     {
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
 
         $_REQUEST['subpanel_field_name'] = 'id';
@@ -147,7 +147,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testassign_default_groups()
     {
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -161,7 +161,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testinherit_creator()
     {
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -175,7 +175,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testinherit_assigned()
     {
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
         $account->assigned_user_id = 1;
 
@@ -190,7 +190,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testinherit_parent()
     {
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -204,7 +204,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testinherit_parentQuery()
     {
-        $account = new Account();
+        $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -218,7 +218,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testinheritOne()
     {
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $result = $securityGroup->inheritOne(1, 1, 'Accounts');
         $this->assertEquals(false, $result);
@@ -226,7 +226,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMembershipCount()
     {
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $result = $securityGroup->getMembershipCount('1');
         $this->assertEquals(0, $result);
@@ -240,7 +240,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         //create a security group first
         $securityGroup->name = 'test';
@@ -271,7 +271,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetSecurityModules()
     {
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $expected = array(
             'Meetings',
@@ -333,7 +333,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $result = $securityGroup->getLinkName('Accounts', 'Contacts');
         $this->assertEquals('contacts', $result);
@@ -350,7 +350,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -369,7 +369,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -388,7 +388,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $result = $securityGroup->getUserSecurityGroups('1');
 
@@ -403,7 +403,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $result = $securityGroup->getAllSecurityGroups();
 
@@ -418,7 +418,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $result = $securityGroup->getMembers();
 
@@ -433,7 +433,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = new SecurityGroup();
+        $securityGroup = BeanFactory::newBean('SecurityGroups');
 
         $result = $securityGroup->getPrimaryGroupID();
 

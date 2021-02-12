@@ -92,7 +92,7 @@ class Scheduler extends SugarBean
     public function __construct($init = true)
     {
         parent::__construct();
-        $job = new SchedulersJob();
+        $job = BeanFactory::newBean('SchedulersJobs');
         $this->job_queue_table = $job->table_name;
     }
 
@@ -110,7 +110,7 @@ class Scheduler extends SugarBean
      */
     public static function initUser()
     {
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         $db = DBManagerFactory::getInstance();
 
         //Check is default admin exists
@@ -169,7 +169,7 @@ class Scheduler extends SugarBean
      */
     public function createJob()
     {
-        $job = new SchedulersJob();
+        $job = BeanFactory::newBean('SchedulersJobs');
         $job->scheduler_id = $this->id;
         $job->name = $this->name;
         $job->execute_time = $GLOBALS['timedate']->nowDb();
@@ -820,7 +820,7 @@ class Scheduler extends SugarBean
         // truncate scheduler-related tables
         $this->db->query('DELETE FROM schedulers');
 
-        $sched1 = new Scheduler();
+        $sched1 = BeanFactory::newBean('Schedulers');
         $sched1->name               = $mod_strings['LBL_OOTB_WORKFLOW'];
         $sched1->job                = 'function::processAOW_Workflow';
         $sched1->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -832,7 +832,7 @@ class Scheduler extends SugarBean
         $sched1->catch_up           = '1';
         $sched1->save();
 
-        $sched2 = new Scheduler();
+        $sched2 = BeanFactory::newBean('Schedulers');
         $sched2->name               = $mod_strings['LBL_OOTB_REPORTS'];
         $sched2->job                = 'function::aorRunScheduledReports';
         $sched2->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -844,7 +844,7 @@ class Scheduler extends SugarBean
         $sched2->catch_up           = '1';
         $sched2->save();
 
-        $sched3 = new Scheduler();
+        $sched3 = BeanFactory::newBean('Schedulers');
         $sched3->name               = $mod_strings['LBL_OOTB_TRACKER'];
         $sched3->job                = 'function::trimTracker';
         $sched3->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -856,7 +856,7 @@ class Scheduler extends SugarBean
         $sched3->catch_up           = '1';
         $sched3->save();
 
-        $sched4 = new Scheduler();
+        $sched4 = BeanFactory::newBean('Schedulers');
         $sched4->name                = $mod_strings['LBL_OOTB_IE'];
         $sched4->job                = 'function::pollMonitoredInboxesAOP';
         $sched4->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -868,7 +868,7 @@ class Scheduler extends SugarBean
         $sched4->catch_up            = '0';
         $sched4->save();
 
-        $sched5 = new Scheduler();
+        $sched5 = BeanFactory::newBean('Schedulers');
         $sched5->name              = $mod_strings['LBL_OOTB_BOUNCE'];
         $sched5->job               = 'function::pollMonitoredInboxesForBouncedCampaignEmails';
         $sched5->date_time_start   = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -880,7 +880,7 @@ class Scheduler extends SugarBean
         $sched5->catch_up          = '1';
         $sched5->save();
 
-        $sched6 = new Scheduler();
+        $sched6 = BeanFactory::newBean('Schedulers');
         $sched6->name             = $mod_strings['LBL_OOTB_CAMPAIGN'];
         $sched6->job              = 'function::runMassEmailCampaign';
         $sched6->date_time_start  = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -892,7 +892,7 @@ class Scheduler extends SugarBean
         $sched6->catch_up         = '1';
         $sched6->save();
 
-        $sched7 = new Scheduler();
+        $sched7 = BeanFactory::newBean('Schedulers');
         $sched7->name               = $mod_strings['LBL_OOTB_PRUNE'];
         $sched7->job                = 'function::pruneDatabase';
         $sched7->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -904,7 +904,7 @@ class Scheduler extends SugarBean
         $sched7->catch_up           = '0';
         $sched7->save();
 
-        $sched8 = new Scheduler();
+        $sched8 = BeanFactory::newBean('Schedulers');
         $sched8->name               = $mod_strings['LBL_OOTB_LUCENE_INDEX'];
         $sched8->job                = 'function::aodIndexUnindexed';
         $sched8->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -916,7 +916,7 @@ class Scheduler extends SugarBean
         $sched8->catch_up           = '0';
         $sched8->save();
 
-        $sched9 = new Scheduler();
+        $sched9 = BeanFactory::newBean('Schedulers');
         $sched9->name               = $mod_strings['LBL_OOTB_OPTIMISE_INDEX'];
         $sched9->job                = 'function::aodOptimiseIndex';
         $sched9->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -928,7 +928,7 @@ class Scheduler extends SugarBean
         $sched9->catch_up           = '0';
         $sched9->save();
 
-        $sched12 = new Scheduler();
+        $sched12 = BeanFactory::newBean('Schedulers');
         $sched12->name               = $mod_strings['LBL_OOTB_SEND_EMAIL_REMINDERS'];
         $sched12->job                = 'function::sendEmailReminders';
         $sched12->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -940,7 +940,7 @@ class Scheduler extends SugarBean
         $sched12->catch_up           = '0';
         $sched12->save();
 
-        $sched13 = new Scheduler();
+        $sched13 = BeanFactory::newBean('Schedulers');
         $sched13->name               = $mod_strings['LBL_OOTB_CLEANUP_QUEUE'];
         $sched13->job                = 'function::cleanJobQueue';
         $sched13->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -952,7 +952,7 @@ class Scheduler extends SugarBean
         $sched13->catch_up           = '0';
         $sched13->save();
 
-        $sched14 = new Scheduler();
+        $sched14 = BeanFactory::newBean('Schedulers');
         $sched14->name              = $mod_strings['LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS'];
         $sched14->job               = 'function::removeDocumentsFromFS';
         $sched14->date_time_start   = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
@@ -964,7 +964,7 @@ class Scheduler extends SugarBean
         $sched14->catch_up          = '0';
         $sched14->save();
 
-        $sched15 = new Scheduler();
+        $sched15 = BeanFactory::newBean('Schedulers');
         $sched15->name               = $mod_strings['LBL_OOTB_SUITEFEEDS'];
         $sched15->job                = 'function::trimSugarFeeds';
         $sched15->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);

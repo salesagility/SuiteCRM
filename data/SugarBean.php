@@ -2048,10 +2048,11 @@ class SugarBean
                 ));
             }
             // Link2 style
-            if ($end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by)) {
+            if ($begin_index != 0 || $end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by)) {
                 return array_values($this->$field_name->getBeans(array(
                     'where' => $optional_where,
                     'deleted' => $deleted,
+                    'offset' => $begin_index,
                     'limit' => ($end_index - $begin_index),
                     'order_by' => $order_by
                 )));
@@ -2556,9 +2557,8 @@ class SugarBean
                     }
                 }
                 if ($reformatted) {
-                    $GLOBALS['log']->deprecated('Formatting correction: ' . $this->module_dir . '->' . $field .
-                        ' had formatting automatically corrected. This will be removed in the future, ' .
-                        'please upgrade your external code');
+                    $GLOBALS['log']->info('Formatting correction: ' . $this->module_dir . '->' . $field .
+                        ' had formatting automatically corrected.');
                 }
             }
         }
@@ -3132,7 +3132,7 @@ class SugarBean
         ) {
             // cn: bug 42727 no need to send email to owner (within workflow)
 
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->retrieveSettings();
             $sendNotifications = false;
 
@@ -3164,7 +3164,7 @@ class SugarBean
      */
     public function get_notification_recipients()
     {
-        $notify_user = new User();
+        $notify_user = BeanFactory::newBean('Users');
         $notify_user->retrieve($this->assigned_user_id);
         $this->new_assigned_user_name = $notify_user->full_name;
 
@@ -5217,7 +5217,7 @@ class SugarBean
             SugarRelationship::resaveRelatedBeans();
 
             // Take the item off the recently viewed lists
-            $tracker = new Tracker();
+            $tracker = BeanFactory::newBean('Trackers');
             $tracker->makeInvisibleForAll($id);
 
 

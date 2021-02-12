@@ -611,7 +611,7 @@ class Reminder extends Basic
     {
         $users = User::getActiveUsers();
         foreach ($users as $user_id => $user_name) {
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($user_id);
 
             $preferencePopupReminderTime = $user->getPreference('reminder_time');

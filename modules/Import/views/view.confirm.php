@@ -81,7 +81,7 @@ class ImportViewConfirm extends ImportView
         $importSource = isset($_REQUEST['source']) ? $_REQUEST['source'] : 'csv' ;
 
         // Clear out this user's last import
-        $seedUsersLastImport = new UsersLastImport();
+        $seedUsersLastImport = BeanFactory::newBean('Import_2');
         $seedUsersLastImport->mark_deleted_by_user_id($current_user->id);
         ImportCacheFiles::clearCacheFiles();
 
@@ -257,7 +257,7 @@ class ImportViewConfirm extends ImportView
     {
         if (strncasecmp("custom:", $importSource, 7) == 0) {
             $id = substr($importSource, 7);
-            $import_map_seed = new ImportMap();
+            $import_map_seed = BeanFactory::newBean('Import_1');
             $import_map_seed->retrieve($id, false);
 
             $this->ss->assign("SOURCE_ID", $import_map_seed->id);

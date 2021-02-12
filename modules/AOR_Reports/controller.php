@@ -132,7 +132,7 @@ class AOR_ReportsController extends SugarController
         require_once('modules/Relationships/Relationship.php');
         require_once('modules/ProspectLists/ProspectList.php');
 
-        $prospectList = new ProspectList();
+        $prospectList = BeanFactory::newBean('ProspectLists');
         $prospectList->retrieve($_REQUEST['prospect_id']);
 
         $module = new $beanList[$this->bean->report_module]();
@@ -255,15 +255,15 @@ class AOR_ReportsController extends SugarController
         ob_clean();
         try {
             $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
-            $pdf->autoLangToFont = true;
+            $pdf->SetAutoFont();
+            $pdf->setFooter('{PAGENO}');
             $pdf->WriteHTML($stylesheet, 1);
             $pdf->SetDefaultBodyCSS('background-color', '#FFFFFF');
             unset($pdf->cssmgr->CSS['INPUT']['FONT-SIZE']);
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
-            $pdf->setFooter('{PAGENO}');
             $pdf->Output($this->bean->name . '.pdf', "D");
-        } catch (MpdfException $e) {
+        } catch (mPDF_exception $e) {
             echo $e;
         }
 
@@ -363,8 +363,10 @@ class AOR_ReportsController extends SugarController
                 );
                 break;
             case 'enum':
-            case 'multienum':
                 $valid_opp = array('Equal_To', 'Not_Equal_To');
+                break;
+            case 'multienum':
+                $valid_opp = array('Equal_To', 'Not_Equal_To', 'Contains');
                 break;
             default:
                 $valid_opp = array('Equal_To', 'Not_Equal_To', 'Contains', 'Starts_With', 'Ends_With',);

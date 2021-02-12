@@ -59,7 +59,7 @@ class SecurityGroupMessage extends Basic
             $securitygroup_name = "All";
         } else {
             require_once('modules/SecurityGroups/SecurityGroup.php');
-            $securitygroup = new SecurityGroup();
+            $securitygroup = BeanFactory::newBean('SecurityGroups');
             $securitygroup->retrieve($data['SECURITYGROUP_ID']);
             $securitygroup_name = $securitygroup->name;
 
@@ -77,7 +77,7 @@ class SecurityGroupMessage extends Basic
             $username = "Unknown";
         } else {
             require_once('modules/Users/User.php');
-            $user = new User();
+            $user = BeanFactory::newBean('Users');
             $user->retrieve($data['CREATED_BY']);
             $username = $user->user_name;
         }

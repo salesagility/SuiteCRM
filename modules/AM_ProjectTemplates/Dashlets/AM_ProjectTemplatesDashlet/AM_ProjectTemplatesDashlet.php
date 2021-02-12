@@ -68,6 +68,6 @@ class AM_ProjectTemplatesDashlet extends DashletGeneric
         $this->searchFields = $dashletData['AM_ProjectTemplatesDashlet']['searchFields'];
         $this->columns = $dashletData['AM_ProjectTemplatesDashlet']['columns'];
 
-        $this->seedBean = new AM_ProjectTemplates();
+        $this->seedBean = BeanFactory::newBean('AM_ProjectTemplates');
     }
 }

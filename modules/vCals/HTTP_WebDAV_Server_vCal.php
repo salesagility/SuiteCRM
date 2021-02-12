@@ -74,8 +74,8 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
 
         public function __construct()
         {
-            $this->vcal_focus = new vCal();
-            $this->user_focus = new User();
+            $this->vcal_focus = BeanFactory::newBean('vCals');
+            $this->user_focus = BeanFactory::newBean('Users');
         }
 
         /**

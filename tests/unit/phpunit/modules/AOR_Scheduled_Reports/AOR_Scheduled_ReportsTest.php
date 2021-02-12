@@ -10,12 +10,12 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testSaveAndGet_email_recipients()
     {
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
         $_POST['email_recipients']= array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
@@ -44,7 +44,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
     public function testAOR_Scheduled_Reports()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $this->assertInstanceOf('AOR_Scheduled_Reports', $aorScheduledReports);
         $this->assertInstanceOf('Basic', $aorScheduledReports);
         $this->assertInstanceOf('SugarBean', $aorScheduledReports);
@@ -59,11 +59,11 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 
     public function test_ReportRelation() {
         $_POST['aor_fields_field'] = [];
-        $report = new AOR_Report();
+        $report = BeanFactory::newBean('AOR_Reports');
         $report->name = "Foobar";
         $report->save();
 
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $aorScheduledReports->save();
         $aorScheduledReports->load_relationships();
         $aorScheduledReports->aor_report->add($report);
@@ -74,7 +74,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testbean_implements()
     {
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aorScheduledReports->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
@@ -82,7 +82,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testshouldRun()
     {
-        $aorScheduledReports = new AOR_Scheduled_Reports();
+        $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $aorScheduledReports->schedule = " 8 * * * *";
 
         //test without a last_run date

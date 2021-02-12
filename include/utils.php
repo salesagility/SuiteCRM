@@ -172,10 +172,11 @@ function make_sugar_config(&$sugar_config)
             'l s f' => 'l s f',
             'l f s' => 'l f s',
         ) : $nameFormats,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
-            'special_query_modules' => array('Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
             'default_limit' => 1000,
         ),
         'require_accounts' => empty($requireAccounts) ? true : $requireAccounts,
@@ -387,10 +388,11 @@ function get_sugar_config_defaults()
         'list_max_entries_per_subpanel' => 10,
         'lock_default_user_name' => false,
         'log_memory_usage' => false,
+        'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
         'resource_management' => array(
             'special_query_limit' => 50000,
-            'special_query_modules' => array('Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
             'default_limit' => 1000,
         ),
         'require_accounts' => true,
@@ -978,6 +980,20 @@ function clean($string, $maxLength)
     $string = substr($string, 0, $maxLength);
 
     return escapeshellcmd($string);
+}
+
+/**
+ * @param $string
+ * @return string
+ */
+function cleanCSV($string)
+{
+    $check = '/^[=@]/';
+    if (!is_numeric($string)) {
+        $check = '/^[=@+-]/';
+    }
+
+    return preg_replace($check, "", $string);
 }
 
 /**
@@ -2241,6 +2257,20 @@ function clean_string($str, $filter = 'STANDARD', $dieOnBadData = true)
     return $str;
 }
 
+function clean_file_output($string, $mine_type)
+{
+    $patterns = [];
+
+    if ($mine_type === 'image/svg+xml') {
+        $patterns[] = "/onload=\"window.location='(.*?)'\"/";
+    }
+
+    $string = preg_replace($patterns, '', $string);
+
+    return $string;
+}
+
+
 function clean_special_arguments()
 {
     if (isset($_SERVER['PHP_SELF'])) {
@@ -2437,7 +2467,9 @@ function securexss($value)
 
         return $new;
     }
+    
     static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
+
     $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
     $value = preg_replace('/javascript:/i', 'java script:', $value);
 
@@ -4060,9 +4092,14 @@ function string_format($format, $args, $escape = true)
                 }
             }
             $args[$i] = implode("','", $values);
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+       }
+        else if ($escape){       
+            $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
         }
-
-        $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
+        else{       
+            $result = str_replace('{'.$i.'}', $args[$i], $result);
+        }
     }
 
     return $result;
@@ -4566,7 +4603,7 @@ function array_depth($array, $depth_count = -1, $depth_array = array())
  */
 function createGroupUser($name)
 {
-    $group = new User();
+    $group = BeanFactory::newBean('Users');
     $group->user_name = $name;
     $group->last_name = $name;
     $group->is_group = 1;

@@ -10,7 +10,7 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testViewQuick()
@@ -36,7 +36,7 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
         $view->dv = new DetailView2();
         $view->dv->ss = new Sugar_Smarty();
         $view->dv->module = 'Users';
-        $view->bean = new User();
+        $view->bean = BeanFactory::newBean('Users');
         $view->bean->id = 1;
         $view->dv->setup('Users', $view->bean);
 

@@ -49,7 +49,7 @@ $current_module_strings = return_module_language($current_language, 'Tasks');
 $tomorrow = $timedate->getNow()->get("+1 day")->asDb();
 
 $ListView = new ListView();
-$seedTasks = new Task();
+$seedTasks = BeanFactory::newBean('Tasks');
 $where = "tasks.assigned_user_id='". $current_user->id ."' and (tasks.status is NULL or (tasks.status!='Completed' and tasks.status!='Deferred')) ";
 $where .= "and (tasks.date_start is NULL or ";
 $where .= $seedTasks->db->convert(
