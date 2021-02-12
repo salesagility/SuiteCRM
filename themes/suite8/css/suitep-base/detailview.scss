@@ -611,3 +611,9 @@ table.subpanel-table .pagination li.single > a {
     }
   }
 }
+
+.detail-border-bottom {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-top: 1px solid $header-bottom-border;
+}

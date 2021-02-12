@@ -1694,8 +1694,7 @@ div.confirmTable {
 .moduleTitle {
   color: $header-sub-title;
   margin: 0;
-  display: flex;
-  border-bottom: 1px solid $header-bottom-border;
+  display: flex;  
 }
 
 .moduleTitle h2 {
@@ -5794,4 +5793,9 @@ table.subpanel-table .pagination li.single > #formprojects_project_tasks {
   position: absolute;
   top: -39px;
   right: 7px;
+}
+
+.edit-border-bottom {
+  margin-top: 2.5em;
+  border-top: 1px solid $header-bottom-border;
 }
