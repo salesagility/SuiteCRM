@@ -97,9 +97,9 @@ require_once("include/OutboundEmail/OutboundEmail.php");
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 
-$email = new Email();
+$email = BeanFactory::newBean('Emails');
 $email->email2init();
-$ie = new InboundEmail();
+$ie = BeanFactory::newBean('InboundEmail');
 $ie->email = $email;
 $json = getJSONobj();
 
@@ -308,7 +308,7 @@ if (isset($_REQUEST['emailUIAction'])) {
 
             $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
             $order = '';
-            $seed = new Note();
+            $seed = BeanFactory::newBean('Notes');
             $fullList = $seed->get_full_list($order, $where, '');
             $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
 
@@ -510,7 +510,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $mod = strtolower($_REQUEST['parent_type']);
                 $modId = $_REQUEST['parent_id'];
                 foreach ($uids as $id) {
-                    $email = new Email();
+                    $email = BeanFactory::newBean('Emails');
                     $email->retrieve($id);
                     $email->parent_id = $modId;
                     $email->parent_type = $_REQUEST['parent_type'];
@@ -901,7 +901,7 @@ eoq;
                 $out = array();
 
                 foreach ($exIds as $id) {
-                    $e = new Email();
+                    $e = BeanFactory::newBean('Emails');
                     $e->retrieve($id);
                     $e->description_html = from_html($e->description_html);
                     $ie->email = $e;
@@ -1348,7 +1348,7 @@ eoq;
             global $current_user;
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveDefaultOutbound");
             $outbound_id = empty($_REQUEST['id']) ? "" : $_REQUEST['id'];
-            $ie = new InboundEmail();
+            $ie = BeanFactory::newBean('InboundEmail');
             $ie->setUsersDefaultOutboundServerId($current_user, $outbound_id);
             break;
         case "testOutbound":

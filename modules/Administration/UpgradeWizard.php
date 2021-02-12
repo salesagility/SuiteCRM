@@ -107,7 +107,7 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
             $base_filename = urldecode($tempFile);
         } elseif (!empty($_REQUEST['load_module_from_dir'])) {
             $moduleDir = $_REQUEST['load_module_from_dir'];
-            if (strpos($moduleDir, 'phar://') === 0) {
+            if (strpos($moduleDir, 'phar://') !== false) {
                 die();
             }
             //copy file to proper location then call performSetup

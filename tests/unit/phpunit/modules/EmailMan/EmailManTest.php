@@ -10,12 +10,12 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testtoString()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         //execute the method without setting attributes and verify that it retunrs expected results
         $expected = "EmailMan:\nid =  ,user_id=  module =  , related_id =  , related_type =  ,list_id = , send_date_time= \n";
@@ -39,7 +39,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
     public function testEmailMan()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
         $this->assertInstanceOf('EmailMan', $emailMan);
         $this->assertInstanceOf('SugarBean', $emailMan);
 
@@ -52,7 +52,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_new_list_query()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         //test with empty string params
         $expected = 'SELECT emailman.* , campaigns.name as campaign_name, email_marketing.name as message_name, (CASE related_type WHEN \'Contacts\' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,\'\'),\' \',IFNULL(contacts.last_name,\'\')))) WHEN \'Leads\' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,\'\'),\' \',IFNULL(leads.last_name,\'\')))) WHEN \'Accounts\' THEN accounts.name WHEN \'Users\' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,\'\'),\' \',IFNULL(users.last_name,\'\')))) WHEN \'Prospects\' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,\'\'),\' \',IFNULL(prospects.last_name,\'\')))) END) recipient_name FROM emailman LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type =\'Users\' LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type =\'Contacts\' LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type =\'Leads\' LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type =\'Accounts\' LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type =\'Prospects\' LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0 LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id WHERE  emailman.deleted=0';
@@ -67,7 +67,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_queue_items_query()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         //without parameters
         $expected = 'SELECT emailman.* , campaigns.name as campaign_name, email_marketing.name as message_name, (CASE related_type WHEN \'Contacts\' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,\'\'),\' \',IFNULL(contacts.last_name,\'\')))) WHEN \'Leads\' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,\'\'),\' \',IFNULL(leads.last_name,\'\')))) WHEN \'Accounts\' THEN accounts.name WHEN \'Users\' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,\'\'),\' \',IFNULL(users.last_name,\'\')))) WHEN \'Prospects\' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,\'\'),\' \',IFNULL(prospects.last_name,\'\')))) END) recipient_name FROM emailman LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type =\'Users\' LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type =\'Contacts\' LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type =\'Leads\' LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type =\'Accounts\' LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type =\'Prospects\' LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0 LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id WHERE  emailman.deleted=0';
@@ -87,7 +87,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_list_query()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         //test with empty string params
         $expected = 'SELECT emailman.* ,campaigns.name as campaign_name,email_marketing.name as message_name,(CASE related_type WHEN \'Contacts\' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,\'\'),\' \',IFNULL(contacts.last_name,\'\'))))WHEN \'Leads\' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,\'\'),\' \',IFNULL(leads.last_name,\'\'))))WHEN \'Accounts\' THEN accounts.name WHEN \'Users\' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,\'\'),\' \',IFNULL(users.last_name,\'\'))))WHEN \'Prospects\' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,\'\'),\' \',IFNULL(prospects.last_name,\'\'))))END) recipient_name    FROM emailman LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type =\'Users\' LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type =\'Contacts\' LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type =\'Leads\' LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type =\'Accounts\' LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type =\'Prospects\' LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0 LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_idwhere  emailman.deleted=0';
@@ -102,7 +102,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         $expected = array(
             'IN_QUEUE' => '0',
@@ -122,7 +122,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_as_sent()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         // Execute the method and test that it works and doesn't throw an exception.
         //test with delete true/default
@@ -145,28 +145,28 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_indiv_email()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
-        $result = $emailMan->create_indiv_email(new Contact(), new Email());
+        $result = $emailMan->create_indiv_email(BeanFactory::newBean('Contacts'), BeanFactory::newBean('Emails'));
 
         //test for record ID to verify that record is saved
         $this->assertEquals(36, strlen($result));
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->mark_deleted($result);
     }
 
     public function testverify_campaign()
     {
         // test
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
         $result = $emailMan->verify_campaign('');
         $this->assertEquals(false, $result);
     }
 
     public function testsendEmail()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         //test without setting any attributes
         $result = $emailMan->sendEmail(new SugarPHPMailer(), 1, true);
@@ -181,7 +181,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testvalid_email_address()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         $this->assertEquals(false, $emailMan->valid_email_address(''));
         $this->assertEquals(false, $emailMan->valid_email_address('test'));
@@ -190,9 +190,9 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testis_primary_email_address()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
-        $bean = new Contact();
+        $bean = BeanFactory::newBean('Contacts');
 
         //test without setting any email
         $this->assertEquals(false, $emailMan->is_primary_email_address($bean));
@@ -200,7 +200,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         //test with empty string params
         $expected = 'SELECT emailman.* FROM emailman where ( emailman.deleted IS NULL OR emailman.deleted=0 )';
@@ -215,7 +215,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testmark_deleted()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -228,7 +228,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_ref_email()
     {
-        $emailMan = new EmailMan();
+        $emailMan = BeanFactory::newBean('EmailMan');
         $emailMan->test = true;
 
         $result = $emailMan->create_ref_email(
@@ -247,7 +247,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
         //test for email id returned and mark delete for cleanup
         $this->assertEquals(36, strlen($result));
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->mark_deleted($result);
     }
 }

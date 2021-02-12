@@ -348,7 +348,7 @@ class SavedSearch extends SugarBean
     {
         global $current_user, $timedate;
 
-        $focus = new SavedSearch();
+        $focus = BeanFactory::newBean('SavedSearch');
         if ($id) {
             $focus->retrieve($id);
         }

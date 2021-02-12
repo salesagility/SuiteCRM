@@ -765,7 +765,7 @@ function finishDiag()
     deleteDir($cacheDir);
 
 
-    print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
+    print "<a href=\"index.php?module=Administration&action=DiagnosticDelete&file=diagnostic".$curdatetime."&guid=".$sod_guid."\">".$mod_strings['LBL_DIAGNOSTIC_DELETELINK']."</a><br>";
 }
 
 //BEGIN check for what we are executing

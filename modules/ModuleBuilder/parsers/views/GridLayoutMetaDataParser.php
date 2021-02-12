@@ -328,8 +328,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
         // if a panelID was not provided, use the first available panel in the list
         if (!$panelID) {
-            $panels = array_keys($this->_viewdefs ['panels']);
-            $panelId = array_shift(array_keys($panels));
+            $panelIdList = array_keys($this->_viewdefs ['panels']);
+            $panelID = array_shift($panelIdList);
         }
 
         if (isset($this->_viewdefs ['panels'] [$panelID])) {

@@ -54,9 +54,9 @@ function generateFieldDefsJS2()
         }
     }
 
-    $contact = new Contact();
-    $lead = new Lead();
-    $prospect = new Prospect();
+    $contact = BeanFactory::newBean('Contacts');
+    $lead = BeanFactory::newBean('Leads');
+    $prospect = BeanFactory::newBean('Prospects');
 
     $loopControl['Contacts'] = array(
         'Contacts' => $contact,

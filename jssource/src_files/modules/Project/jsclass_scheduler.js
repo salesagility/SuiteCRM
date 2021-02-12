@@ -594,6 +594,7 @@ SugarWidgetScheduler.update_time = function() {
 }
 
 SugarWidgetScheduler.prototype.display = function() {
+
     this.parentNode.innerHTML = '';
 
 	var attendees = new SugarWidgetSchedulerAttendees();
@@ -604,16 +605,6 @@ SugarWidgetScheduler.prototype.display = function() {
 
     // Create div so that popup can be generated below it
     $('div#scheduler').append('<div id="SugarWidgetSchedulerPopup"></div>');
-
-    YUI().use('overlay', 'event', 'widget-anim', function (Y) {
-        SugarWidgetScheduler.popupControl = new Y.Overlay({
-            srcNode: "#SugarWidgetSchedulerPopup",
-            visible: false,
-            width: "50em"
-        }).plug(Y.Plugin.WidgetAnim);
-        SugarWidgetScheduler.popupControl.render();
-
-    });
 
     // Hold off hiding the tool tip overlay if the mouse is over the tool tip
     // hide the tool tip if the mouse is not over the tool tip

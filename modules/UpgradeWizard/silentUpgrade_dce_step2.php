@@ -122,7 +122,7 @@ function checkResourceSettings()
             'special_query_limit' => 50000,
             'special_query_modules' =>
             array(
-              0 => 'Reports',
+              0 => 'AOR_Reports',
               1 => 'Export',
               2 => 'Import',
               3 => 'Administration',
@@ -494,7 +494,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     // We need to run the silent upgrade as the admin user
     require_once("{$newtemplate_path}/modules/Users/User.php");
     global $current_user;
-    $current_user = new User();
+    $current_user = BeanFactory::newBean('Users');
     $current_user->retrieve('1');
 
 
@@ -790,7 +790,7 @@ if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version
         $db =& DBManagerFactory::getInstance();
         if ($ce_to_pro_ent) {
             //Also set license information
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $category = 'license';
             $value = 0;
             $admin->saveSetting($category, 'users', $value);

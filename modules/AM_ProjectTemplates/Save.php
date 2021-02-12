@@ -50,7 +50,7 @@ require_once('include/formbase.php');
 
 global $current_user;
 
-$sugarbean = new AM_ProjectTemplates();
+$sugarbean = BeanFactory::newBean('AM_ProjectTemplates');
 $sugarbean = populateFromPost('', $sugarbean);
 
 $sugarbean->save(null);

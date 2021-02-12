@@ -205,6 +205,7 @@ if (empty($pages)) {
 $sugar_smarty = new Sugar_Smarty();
 
 $activePage = isset($_REQUEST['page_id']) && $_REQUEST['page_id'] ? $_REQUEST['page_id'] : 0;
+$activePage = (int)$activePage;
 
 $divPages[] = $activePage;
 

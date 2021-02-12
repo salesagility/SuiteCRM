@@ -10,13 +10,13 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testSavedSearch()
     {
         // Execute the constructor and check for the Object type and  attributes
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $this->assertInstanceOf('SavedSearch', $savedSearch);
         $this->assertInstanceOf('SugarBean', $savedSearch);
@@ -51,7 +51,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
 //    public function testMain()
 //    {
-//        $savedSearch = new SavedSearch();
+//        $savedSearch = BeanFactory::newBean('SavedSearch');
 //
 //        $savedSearch->name = 'test';
 //        $savedSearch->search_module = 'Leads';
@@ -82,8 +82,8 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function handleSaveAndRetrieveSavedSearch($id)
     {
-        $savedSearch = new SavedSearch();
-        $searchModuleBean = new Lead();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
+        $searchModuleBean = BeanFactory::newBean('Leads');
 
         $_REQUEST['search_module'] = 'Leads';
         $_REQUEST['description'] = 'test description';
@@ -99,7 +99,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function handleDelete($id)
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $savedSearch->handleDelete($id);
 
@@ -109,7 +109,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function returnSavedSearch($id)
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -122,7 +122,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function returnSavedSearchContents($id)
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -135,7 +135,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleRedirect()
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $search_query = '&orderBy=&sortOrder=&query=&searchFormTab=&showSSDIV=';
 
@@ -145,7 +145,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testfill_in_additional_list_fields()
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $savedSearch->assigned_user_id = 1;
         $savedSearch->contents = array('search_module' => 'Leads');
@@ -158,7 +158,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testpopulateRequest()
     {
-        $savedSearch = new SavedSearch();
+        $savedSearch = BeanFactory::newBean('SavedSearch');
 
         $savedSearch->contents = array('search_module' => 'Accounts',
                                         'description' => 'test text',

@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-$project = new ProjectTask();
+$project = BeanFactory::newBean('ProjectTask');
 if (!empty($_POST['record'])) {
     $project->retrieve($_POST['record']);
 }

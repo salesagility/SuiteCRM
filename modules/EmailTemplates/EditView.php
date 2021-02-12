@@ -54,7 +54,7 @@ if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
 if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
     $inboundEmail = false;
 }
-$focus = new EmailTemplate();
+$focus = BeanFactory::newBean('EmailTemplates');
 
 if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
@@ -360,7 +360,7 @@ if (true) {
         $etid = $old_id;
     }
     if (!empty($etid)) {
-        $note = new Note();
+        $note = BeanFactory::newBean('Notes');
         $where = "notes.parent_id='{$etid}' AND notes.filename IS NOT NULL";
         $notes_list = $note->get_full_list("", $where, true);
 

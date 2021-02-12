@@ -95,7 +95,7 @@ if (isset($_REQUEST['inline']) && $_REQUEST['inline'] == 'inline') {
 
 /************  EMAIL COMPONENTS *************/
 //monitored mailbox section
-$focus = new Administration();
+$focus = BeanFactory::newBean('Administration');
 $focus->retrieveSettings(); //retrieve all admin settings.
 
 

@@ -113,7 +113,7 @@ class ProjectTask extends SugarBean
             global $current_user;
             if (empty($current_user)) {
                 $this->assigned_user_id = 1;
-                $admin_user = new User();
+                $admin_user = BeanFactory::newBean('Users');
                 $admin_user->retrieve($this->assigned_user_id);
                 $this->assigned_user_name = $admin_user->user_name;
             } else {

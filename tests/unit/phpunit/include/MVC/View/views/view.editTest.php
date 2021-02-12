@@ -10,7 +10,7 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
 
         global $current_user;
         get_sugar_config_defaults();
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
     }
 
     public function testViewEdit()
@@ -35,14 +35,14 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
         //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
         $view = new ViewEdit();
         $view->module = 'Users';
-        $view->bean = new User();
+        $view->bean = BeanFactory::newBean('Users');
         $view->preDisplay();
         $this->assertInstanceOf('EditView', $view->ev);
 
         //execute the method again for a different module with required attributes preset, it will initialize the ev(edit view) attribute.
         $view = new ViewEdit();
         $view->module = 'Meetings';
-        $view->bean = new Meeting();
+        $view->bean = BeanFactory::newBean('Meetings');
         $view->preDisplay();
         $this->assertInstanceOf('EditView', $view->ev);
 
@@ -59,7 +59,7 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewEdit();
         $view->module = 'Users';
-        $view->bean = new User();
+        $view->bean = BeanFactory::newBean('Users');
         $view->preDisplay();
         $view->ev->ss = new Sugar_Smarty();
 

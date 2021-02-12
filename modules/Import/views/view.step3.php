@@ -75,14 +75,14 @@ class ImportViewStep3 extends ImportView
         $this->ss->assign("CURRENT_STEP", $this->currentStep);
         // attempt to lookup a preexisting field map
         // use the custom one if specfied to do so in step 1
-        $mapping_file = new ImportMap();
+        $mapping_file = BeanFactory::newBean('Import_1');
         $field_map = $mapping_file->set_get_import_wizard_fields();
         $default_values = array();
         $ignored_fields = array();
 
         if (!empty($_REQUEST['source_id'])) {
             $GLOBALS['log']->fatal("Loading import map properties.");
-            $mapping_file = new ImportMap();
+            $mapping_file = BeanFactory::newBean('Import_1');
             $mapping_file->retrieve($_REQUEST['source_id'], false);
             $_REQUEST['source'] = $mapping_file->source;
             $has_header = $mapping_file->has_header;
@@ -122,7 +122,7 @@ class ImportViewStep3 extends ImportView
 
         $uploadFileName = $_REQUEST['file_name'];
 
-        if (strpos($uploadFileName, 'phar://') === 0) {
+        if (strpos($uploadFileName, 'phar://') !== false) {
             return;
         }
 

@@ -34,7 +34,6 @@ function display_field_lines($focus, $field, $value, $view)
         jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
     }
 
-    $html .= '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
     $html .= '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
 
     if ($view == 'EditView') {
@@ -60,7 +59,7 @@ function display_field_lines($focus, $field, $value, $view)
                 $result = $focus->db->query($sql);
 
                 while ($row = $focus->db->fetchByAssoc($result)) {
-                    $field_name = new AOR_Field();
+                    $field_name = BeanFactory::newBean('AOR_Fields');
                     $field_name->retrieve($row['id']);
                     $field_name->module_path = unserialize(base64_decode($field_name->module_path));
                     $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module, $field_name->module_path[0]))))."\";";

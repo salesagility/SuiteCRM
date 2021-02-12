@@ -2090,7 +2090,7 @@ class InboundEmail extends SugarBean
             $showFolders = array();
         }
 
-        $email = new Email();
+        $email = BeanFactory::newBean('Emails');
         $email->email2init();
 
         // personal accounts
@@ -2154,7 +2154,7 @@ class InboundEmail extends SugarBean
         global $sugar_config;
 
         if (!isset($this->email) && !isset($this->email->et)) {
-            $this->email = new Email();
+            $this->email = BeanFactory::newBean('Emails');
             $this->email->email2init();
         }
 
@@ -2183,7 +2183,7 @@ class InboundEmail extends SugarBean
     {
         global $app_strings;
         if (!isset($this->email) && !isset($this->email->et)) {
-            $this->email = new Email();
+            $this->email = BeanFactory::newBean('Emails');
             $this->email->email2init();
         }
 
@@ -2539,7 +2539,7 @@ class InboundEmail extends SugarBean
         global $timedate;
 
         $beans = array();
-        $bean = new InboundEmail();
+        $bean = BeanFactory::newBean('InboundEmail');
         $bean->retrieve($ieId);
         $beans[] = $bean;
         //$beans = $this->retrieveAllByGroupId($current_user->id, true);
@@ -2832,7 +2832,7 @@ class InboundEmail extends SugarBean
                 $onlySince = false;
             }
 
-            $focusUser = new User();
+            $focusUser = BeanFactory::newBean('Users');
             $focusUser->retrieve($groupId);
             $mailerId = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : "";
 
@@ -3497,7 +3497,7 @@ class InboundEmail extends SugarBean
                     $to[0]['display'] = $email->from_name;
                 }
 
-                $et = new EmailTemplate();
+                $et = BeanFactory::newBean('EmailTemplates');
                 $et->retrieve($this->template_id);
                 if (empty($et->subject)) {
                     $et->subject = '';
@@ -3509,7 +3509,7 @@ class InboundEmail extends SugarBean
                     $et->body_html = '';
                 }
 
-                $reply = new Email();
+                $reply = BeanFactory::newBean('Emails');
                 $reply->type = 'out';
                 $reply->to_addrs = $to[0]['email'];
                 $reply->to_addrs_arr = $to;
@@ -3542,7 +3542,7 @@ class InboundEmail extends SugarBean
 
     public function handleCaseAssignment($email)
     {
-        $c = new aCase();
+        $c = BeanFactory::newBean('Cases');
         if ($caseId = $this->getCaseIdFromCaseNumber($email->name, $c)) {
             $c->retrieve($caseId);
             $email->retrieve($email->id);
@@ -3607,19 +3607,18 @@ class InboundEmail extends SugarBean
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
         $GLOBALS['log']->debug('In handleCreateCase');
-        $c = new aCase();
+        $c = BeanFactory::newBean('Cases');
         $this->getCaseIdFromCaseNumber($email->name, $c);
 
         if (!$this->handleCaseAssignment($email) && $this->isMailBoxTypeCreateCase()) {
             // create a case
             $GLOBALS['log']->debug('retrieveing email');
             $email->retrieve($email->id);
-            $c = new aCase();
+            $c = BeanFactory::newBean('Cases');
             $c->description = $email->description;
             $c->assigned_user_id = $userId;
             $c->name = $email->name;
-            $c->status = 'New';
-            $c->priority = 'P1';
+            $c->status = 'Open_New';
 
             if (!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
@@ -3633,7 +3632,7 @@ class InboundEmail extends SugarBean
                 if (count($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
 
-                    $acct = new Account();
+                    $acct = BeanFactory::newBean('Accounts');
                     $acct->retrieve($c->account_id);
                     $c->account_name = $acct->name;
                 } // if
@@ -3691,7 +3690,7 @@ class InboundEmail extends SugarBean
                     $to[0]['display'] = $email->from_name;
                 }
 
-                $et = new EmailTemplate();
+                $et = BeanFactory::newBean('EmailTemplates');
                 $et->retrieve($createCaseTemplateId);
                 if (empty($et->subject)) {
                     $et->subject = '';
@@ -3728,7 +3727,7 @@ class InboundEmail extends SugarBean
                     $email->description
                 ) : $email->description_html;
 
-                $reply = new Email();
+                $reply = BeanFactory::newBean('Emails');
                 $reply->type = 'out';
                 $reply->to_addrs = $to[0]['email'];
                 $reply->to_addrs_arr = $to;
@@ -3801,7 +3800,7 @@ class InboundEmail extends SugarBean
             $email->leads->add($leadIds);
 
             foreach ($leadIds as $leadId) {
-                $lead = new Lead();
+                $lead = BeanFactory::newBean('Leads');
                 $lead->retrieve($leadId);
                 $lead->load_relationship('emails');
                 $lead->emails->add($email->id);
@@ -4516,7 +4515,7 @@ class InboundEmail extends SugarBean
      */
     public function getNoteBeanForAttachment($emailId)
     {
-        $attach = new Note();
+        $attach = BeanFactory::newBean('Notes');
         $attach->parent_id = $emailId;
         $attach->parent_type = 'Emails';
 
@@ -4898,7 +4897,7 @@ class InboundEmail extends SugarBean
         // handle messages deleted on server
         if (empty($header)) {
             if (!isset($this->email) || empty($this->email)) {
-                $this->email = new Email();
+                $this->email = BeanFactory::newBean('Emails');
             } // if
 
             return "";
@@ -4910,7 +4909,7 @@ class InboundEmail extends SugarBean
             $results = $this->db->query($query, true);
             $row = $this->db->fetchByAssoc($results);
 
-            $this->email = new Email();
+            $this->email = BeanFactory::newBean('Emails');
             $this->email->id = $row['id'];
 
             return $row['id'];
@@ -4963,7 +4962,7 @@ class InboundEmail extends SugarBean
         // handle messages deleted on server
         if (empty($header)) {
             if (!isset($this->email) || empty($this->email)) {
-                $this->email = new Email();
+                $this->email = BeanFactory::newBean('Emails');
             }
 
             $q = "";
@@ -4995,7 +4994,7 @@ class InboundEmail extends SugarBean
 
             ///////////////////////////////////////////////////////////////////
             ////	CREATE SEED EMAIL OBJECT
-            $email = new Email();
+            $email = BeanFactory::newBean('Emails');
             $email->isDuplicate = ($dupeCheckResult) ? false : true;
             $email->mailbox_id = $this->id;
             $message = array();
@@ -5009,7 +5008,7 @@ class InboundEmail extends SugarBean
             if (empty($current_user)) {
                 // I-E runs as admin, get admin prefs
 
-                $current_user = new User();
+                $current_user = BeanFactory::newBean('Users');
                 $current_user->getSystemUser();
             }
             $tPref = $current_user->getUserDateTimePreferences();
@@ -5274,7 +5273,7 @@ class InboundEmail extends SugarBean
 
             ///////////////////////////////////////////////////////////////////
             ////	CREATE SEED EMAIL OBJECT
-            $email = new Email();
+            $email = BeanFactory::newBean('Emails');
             $email->isDuplicate = $dupeCheckResult ? false : true;
             $email->mailbox_id = $this->id;
             $email->uid = $uid;
@@ -5289,7 +5288,7 @@ class InboundEmail extends SugarBean
             if (empty($current_user)) {
                 // I-E runs as admin, get admin prefs
 
-                $current_user = new User();
+                $current_user = BeanFactory::newBean('Users');
                 $current_user->getSystemUser();
             }
             $current_user->getUserDateTimePreferences();
@@ -5545,7 +5544,7 @@ class InboundEmail extends SugarBean
         $uid = $request['uid'];
 
         if (empty($header)) {
-            $email = new Email();
+            $email = BeanFactory::newBean('Emails');
 
 
             $this->connectMailserver();
@@ -5785,7 +5784,7 @@ class InboundEmail extends SugarBean
         /* include PHP_Compat library; it auto-feels for PHP5's compiled convert_uuencode() function */
         require_once('include/PHP_Compat/convert_uudecode.php');
 
-        $attach = new Note();
+        $attach = BeanFactory::newBean('Notes');
         $attach->parent_id = $id;
         $attach->parent_type = 'Emails';
 
@@ -5993,7 +5992,7 @@ class InboundEmail extends SugarBean
         global $app_strings;
         global $app_list_strings;
 
-        $c = new aCase();
+        $c = BeanFactory::newBean('Cases');
         $template = new Sugar_Smarty();
         $template->assign('APP', $app_strings);
         $template->assign('MOD', $mod_strings);
@@ -6423,7 +6422,7 @@ class InboundEmail extends SugarBean
 
         $beans = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            $ie = new InboundEmail();
+            $ie = BeanFactory::newBean('InboundEmail');
             $ie->retrieve($a['id']);
             $beans[$a['id']] = $ie;
         }
@@ -6463,7 +6462,7 @@ class InboundEmail extends SugarBean
 
         $beans = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            $ie = new InboundEmail();
+            $ie = BeanFactory::newBean('InboundEmail');
             $ie->retrieve($a['id']);
             $beans[] = $ie;
         }
@@ -6500,7 +6499,7 @@ class InboundEmail extends SugarBean
             }
 
             if (!$found) {
-                $ie = new InboundEmail();
+                $ie = BeanFactory::newBean('InboundEmail');
                 $ie->retrieve($a['id']);
                 $beans[$a['id']] = $ie;
             }
@@ -6539,7 +6538,7 @@ class InboundEmail extends SugarBean
             }
 
             if (!$found) {
-                $ie = new InboundEmail();
+                $ie = BeanFactory::newBean('InboundEmail');
                 $ie->retrieve($a['id']);
                 $beans[$a['id']] = $ie;
             }
@@ -6744,7 +6743,7 @@ class InboundEmail extends SugarBean
                     $toSugarFolder = new SugarFolder();
                     $toSugarFolder->retrieve($toFolder);
 
-                    $email = new Email();
+                    $email = BeanFactory::newBean('Emails');
                     $email->retrieve($id);
                     $email->status = 'unread';
 
@@ -7095,7 +7094,7 @@ class InboundEmail extends SugarBean
 
             $metaOut = unserialize($cacheFile['out']);
             $meta = $metaOut['meta']['email'];
-            $email = new Email();
+            $email = BeanFactory::newBean('Emails');
 
             foreach ($meta as $k => $v) {
                 $email->$k = $v;
@@ -7120,7 +7119,7 @@ class InboundEmail extends SugarBean
             if (empty($this->conn)) {
                 $status = $this->connectMailserver();
                 if ($status == "false") {
-                    $this->email = new Email();
+                    $this->email = BeanFactory::newBean('Emails');
                     $this->email->name = $app_strings['LBL_EMAIL_ERROR_MAILSERVERCONNECTION'];
                     $ret = 'error';
 

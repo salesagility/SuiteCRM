@@ -50,7 +50,6 @@ class AOR_ReportsViewEdit extends ViewEdit
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
         echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
-        echo '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
 
         echo "<script>";
         echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
@@ -79,7 +78,7 @@ class AOR_ReportsViewEdit extends ViewEdit
         $result = $this->bean->db->query($sql);
         $conditions = array();
         while ($row = $this->bean->db->fetchByAssoc($result)) {
-            $condition_name = new AOR_Condition();
+            $condition_name = BeanFactory::newBean('AOR_Conditions');
             $condition_name->retrieve($row['id']);
             if (!$condition_name->parenthesis) {
                 $condition_name->module_path = implode(":", unserialize(base64_decode($condition_name->module_path)));
@@ -113,7 +112,7 @@ class AOR_ReportsViewEdit extends ViewEdit
 
         $fields = array();
         while ($row = $this->bean->db->fetchByAssoc($result)) {
-            $field_name = new AOR_Field();
+            $field_name = BeanFactory::newBean('AOR_Fields');
             $field_name->retrieve($row['id']);
             $field_name->module_path = implode(":", unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();

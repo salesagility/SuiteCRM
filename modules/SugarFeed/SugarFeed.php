@@ -90,7 +90,7 @@ class SugarFeed extends Basic
             }
         }
         if ($updateDB == true) {
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->saveSetting('sugarfeed', 'module_'.$admin->db->quote($module), '1');
         }
     }
@@ -112,7 +112,7 @@ class SugarFeed extends Basic
         }
 
         if ($updateDB == true) {
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $admin->saveSetting('sugarfeed', 'module_'.$admin->db->quote($module), '0');
         }
     }
@@ -176,7 +176,7 @@ class SugarFeed extends Basic
 
         // Gotta go looking for it
 
-        $admin = new Administration();
+        $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
 
         $feedModules = array();
@@ -264,7 +264,7 @@ class SugarFeed extends Basic
         $link_type=false,
         $link_url=false
         ) {
-        $feed = new SugarFeed();
+        $feed = BeanFactory::newBean('SugarFeed');
         if ((empty($text) && empty($link_url)) || !$feed->ACLAccess('save', true)) {
             $GLOBALS['log']->error('Unable to save SugarFeed record (missing data or no ACL access)');
             return;

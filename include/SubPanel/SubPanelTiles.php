@@ -239,7 +239,7 @@ class SubPanelTiles
             if (!class_exists('Relationship')) {
                 require('modules/Relationships/Relationship.php');
             }
-            $rel= new Relationship();
+            $rel= BeanFactory::newBean('Relationships');
             $rel->load_relationship_meta();
         }
 
@@ -383,6 +383,9 @@ class SubPanelTiles
 
         $tab_names = '["' . implode('","', $tab_names) . '"]';
 
+        if (!isset($module_sub_panels)) {
+            $module_sub_panels = [];
+        }
         $module_sub_panels = array_map('array_keys', $module_sub_panels);
         $module_sub_panels = json_encode($module_sub_panels);
 
@@ -414,6 +417,11 @@ class SubPanelTiles
         return $this->layout_manager;
     }
 
+    /**
+     * @param aSubPanel $thisPanel
+     * @param $panel_query
+     * @return string
+     */
     public function get_buttons($thisPanel, $panel_query=null)
     {
         $subpanel_def = $thisPanel->get_buttons();
@@ -448,5 +456,21 @@ class SubPanelTiles
             $this->xTemplate
         );
         return $widget_contents;
+    }
+
+    /**
+     * @param string $html_text
+     * @param aSubPanel $thisPanel
+     * @return string
+     */
+    public function getCheckbox($html_text, $thisPanel)
+    {
+        $template = new Sugar_Smarty();
+
+        if ($thisPanel->get_inst_prop_value('select_link_top')) {
+            $html_text .= $template->fetch('include/SubPanel/tpls/SubPanelCheckbox.tpl');
+        }
+
+        return $html_text;
     }
 }

@@ -97,8 +97,10 @@ class JsonRPCServer
             $log->debug('JSON_SERVER:session_save_path:' . $sugar_config['session_dir']);
         }
 
-        session_start();
-        $log->debug('JSON_SERVER:session started');
+        if(session_status() === PHP_SESSION_NONE){
+            session_start();
+            $log->debug('JSON_SERVER:session started');
+        }
 
         $current_language = get_current_language();
 

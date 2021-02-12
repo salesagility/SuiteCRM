@@ -50,7 +50,7 @@ require_once('modules/Campaigns/utils.php');
 
 
 
-$focus = new Campaign();
+$focus = BeanFactory::newBean('Campaigns');
 if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 
@@ -337,7 +337,7 @@ function create_marketing_summary($focus)
     $mrkt_tbl .= "<tr  class='listViewHRS1'><td scope='col' width='15%'><b>".$mod_strings['LBL_MRKT_NAME']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_FROM_MAILBOX_NAME']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_STATUS_TEXT']."</b></td><td scope='col' colspan=2>&nbsp;</td></tr>";
     
     if (count($mrkt_lists)>0) {
-        $mrkt_focus = new EmailMarketing();
+        $mrkt_focus = BeanFactory::newBean('EmailMarketing');
         foreach ($mrkt_lists as $mrkt_id) {
             $mrkt_focus->retrieve($mrkt_id);
     
@@ -422,7 +422,7 @@ function create_target_summary($focus)
     $pl_tbl .= "<td width='15%' scope='col'><b>".$mod_strings['LBL_TOTAL_ENTRIES']."</b></td><td width='5%' scope='col'>&nbsp;</td></tr>";
    
     if (count($pl_lists)>0) {
-        $pl_focus = new ProspectList();
+        $pl_focus = BeanFactory::newBean('ProspectLists');
         foreach ($pl_lists as $pl_id) {
             if ($colorclass== "class='evenListRowS1'") {
                 $colorclass= "class='oddListRowS1'";
@@ -490,7 +490,7 @@ function create_tracker_summary($focus)
             }
             
             
-            $ct_focus = new CampaignTracker();
+            $ct_focus = BeanFactory::newBean('CampaignTrackers');
             $ct_focus->retrieve($trkr_id);
             if (isset($ct_focus->tracker_name) && !empty($ct_focus->tracker_name)) {
                 if ($ct_focus->is_optout) {

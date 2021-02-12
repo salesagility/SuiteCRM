@@ -691,11 +691,32 @@ class SubPanelDefinitions
      */
     public function load_subpanel($name, $reload = false, $original_only = false, $search_query = '', $collections = array())
     {
-        if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower($name) ] [ 'module' ])) {
+        $panelName = strtolower($name);
+
+        if (!array_key_exists($panelName, $this->layout_defs ['subpanel_setup'])) {
+            LoggerManager::getLogger()->error(
+                sprintf(
+                    "Trying to load subpanel without definition: %s in module %s",
+                    $panelName,
+                    $this->_focus->module_dir
+                )
+            );
             return false;
         }
 
-        $subpanel = new aSubPanel($name, $this->layout_defs [ 'subpanel_setup' ] [ strtolower($name) ], $this->_focus, $reload, $original_only, $search_query, $collections) ;
+        if (!is_dir('modules/' . $this->layout_defs ['subpanel_setup'][$panelName] ['module'])) {
+            return false;
+        }
+
+        $subpanel = new aSubPanel(
+            $name,
+            $this->layout_defs ['subpanel_setup'] [$panelName],
+            $this->_focus,
+            $reload,
+            $original_only,
+            $search_query,
+            $collections
+        );
 
         // only return the subpanel object if we can display it.
         if ($subpanel->canDisplay == true) {
@@ -826,7 +847,7 @@ class SubPanelDefinitions
      */
     public function set_hidden_subpanels($panels)
     {
-        $administration = new Administration();
+        $administration = BeanFactory::newBean('Administration');
         $serialized = base64_encode(serialize($panels));
         $administration->saveSetting('MySettings', 'hide_subpanels', $serialized);
     }
@@ -845,7 +866,7 @@ class SubPanelDefinitions
         if (empty($hidden_subpanels)) {
 
             //create Administration object and retrieve any settings for panels
-            $administration = new Administration();
+            $administration = BeanFactory::newBean('Administration');
             $administration->retrieveSettings('MySettings');
 
             if (isset($administration->settings) && isset($administration->settings['MySettings_hide_subpanels'])) {

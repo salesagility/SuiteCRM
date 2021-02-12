@@ -1844,7 +1844,7 @@ i.mce-i-resize {
 @font-face {
     font-family: 'tinymce';
     src: url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.eot');
-    src: url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.eot?#iefix') format('embedded-opentype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.woff') format('woff'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.ttf') format('truetype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.svg#tinymce') format('svg');
+    src: url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.eot?#iefix') format('embedded-opentype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.woff') format('woff'), url('../../../tinymce/tinymce/skins/lightgray/fonts/tinymce.ttf') format('truetype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.svg#tinymce') format('svg');
     font-weight: normal;
     font-style: normal
 }
@@ -1852,7 +1852,7 @@ i.mce-i-resize {
 @font-face {
     font-family: 'tinymce-small';
     src: url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.eot');
-    src: url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.eot?#iefix') format('embedded-opentype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce.woff') format('woff'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.ttf') format('truetype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.svg#tinymce') format('svg');
+    src: url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.eot?#iefix') format('embedded-opentype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.woff') format('woff'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.ttf') format('truetype'), url('../../../vendor/tinymce/tinymce/skins/lightgray/fonts/tinymce-small.svg#tinymce') format('svg');
     font-weight: normal;
     font-style: normal
 }

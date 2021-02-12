@@ -359,6 +359,7 @@ function getModuleField(
     $displayParams = array();
 
     if (!is_file($file)
+        || $view === 'EditView'
         || inDeveloperMode()
         || !empty($_SESSION['developerMode'])) {
         if (!isset($vardef)) {
@@ -641,7 +642,7 @@ function getModuleField(
         if ($currency_id != '' && !stripos($fieldname, '_USD')) {
             $userCurrencyId = $current_user->getPreference('currency');
             if ($currency_id != $userCurrencyId) {
-                $currency = new Currency();
+                $currency = BeanFactory::newBean('Currencies');
                 $currency->retrieve($currency_id);
                 $value = $currency->convertToDollar($value);
                 $currency->retrieve($userCurrencyId);

@@ -167,7 +167,7 @@ if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version
         $db = &DBManagerFactory::getInstance();
         if ($ce_to_pro_ent) {
             //Also set license information
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $category = 'license';
             $value = '0';
             $admin->saveSetting($category, 'users', $value);
@@ -181,7 +181,7 @@ if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version
 }
 
 // Mark the instance as having gone thru the admin wizard
-$admin = new Administration();
+$admin = BeanFactory::newBean('Administration');
 $admin->saveSetting('system', 'adminwizard', 1);
 
 //Upgrade connectors

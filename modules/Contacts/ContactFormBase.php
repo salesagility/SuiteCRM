@@ -573,7 +573,7 @@ EOQ;
             // fake this case like it's already saved.
             $focus->save($check_notify);
 
-            $email = new Email();
+            $email = BeanFactory::newBean('Emails');
             $email->retrieve($_REQUEST['inbound_email_id']);
             $email->parent_type = 'Contacts';
             $email->parent_id = $focus->id;
@@ -686,6 +686,6 @@ EOQ;
     */
     protected function getContact()
     {
-        return new Contact();
+        return BeanFactory::newBean('Contacts');
     }
 }

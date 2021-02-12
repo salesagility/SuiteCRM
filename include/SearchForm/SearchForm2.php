@@ -1222,7 +1222,7 @@ class SearchForm
                                         $currency_id = -99;
                                     }
                                     if ($currency_id != -99) {
-                                        $currency = new Currency();
+                                        $currency = BeanFactory::newBean('Currencies');
                                         $currency->retrieve($currency_id);
                                         $tmpfield_value = $currency->convertToDollar($tmpfield_value);
                                     }

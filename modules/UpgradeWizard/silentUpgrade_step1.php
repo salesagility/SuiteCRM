@@ -156,7 +156,7 @@ function checkResourceSettings()
                 'special_query_limit' => 50000,
                 'special_query_modules' =>
                     [
-                        0 => 'Reports',
+                        0 => 'AOR_Reports',
                         1 => 'Export',
                         2 => 'Import',
                         3 => 'Administration',
@@ -506,7 +506,7 @@ if ($upgradeType !== constant('DCE_INSTANCE')) {
 
     // Adding admin user to the silent upgrade
 
-    $current_user = new User();
+    $current_user = BeanFactory::newBean('Users');
     if (isset($argv[4])) {
         //if being used for internal upgrades avoid admin user verification
         $user_name = $argv[4];
@@ -928,7 +928,7 @@ if ($upgradeType !== constant('DCE_INSTANCE')) {
     }
 
     require_once 'modules/Administration/Administration.php';
-    $admin = new Administration();
+    $admin = BeanFactory::newBean('Administration');
     $admin->saveSetting('system', 'adminwizard', 1);
 
     if (isset($_SESSION['current_db_version'], $_SESSION['target_db_version']) && version_compare($_SESSION['current_db_version'],

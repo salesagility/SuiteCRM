@@ -99,9 +99,9 @@ function sync_get_modified_relationships($session, $module_name, $related_module
         $sugar_config['list_max_entries_per_page'] = $max_results;
     }
 
-    $date_query = "(m1.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
+    $date_query = "(m1.date_modified > " . DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
     if (isset($deletion_date) && !empty($deletion_date)) {
-        $date_query .= " OR ({0}.date_modified > " . DBManager::convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". DBManager::convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
+        $date_query .= " OR ({0}.date_modified > " . DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". DBManagerFactory::getInstance()->convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
     }
 
     $in = '';
@@ -307,7 +307,7 @@ function get_attendee_list($session, $module_name, $id)
         }
         $xml .= '<attendees>';
         $result = $seed->db->query("SELECT users.id, $table_name.date_modified, first_name, last_name FROM users INNER JOIN $table_name ON $table_name.user_id = users.id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND $table_name.deleted = 0");
-        $user = new User();
+        $user = BeanFactory::newBean('Users');
         while ($row = $seed->db->fetchByAssoc($result)) {
             $user->id = $row['id'];
             $email = $user->emailAddress->getPrimaryAddress($user);
@@ -321,7 +321,7 @@ function get_attendee_list($session, $module_name, $id)
         //now get contacts
         $table_name = $l_module_name."_contacts";
         $result = $seed->db->query("SELECT contacts.id, $table_name.date_modified, first_name, last_name FROM contacts INNER JOIN $table_name ON $table_name.contact_id = contacts.id INNER JOIN $seed->table_name ON ".$seed->table_name.".id = ".$table_name.".".$join_field."_id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND ".$table_name.".deleted = 0 AND (contacts.id != ".$seed->table_name.".parent_id OR ".$seed->table_name.".parent_id IS NULL)");
-        $contact = new Contact();
+        $contact = BeanFactory::newBean('Contacts');
         while ($row = $seed->db->fetchByAssoc($result)) {
             $contact->id = $row['id'];
             $email = $contact->emailAddress->getPrimaryAddress($contact);

@@ -97,7 +97,7 @@ class Link
         $this->_relationship_name=$_rel_name;
         $this->relationship_fields = (!empty($fieldDef['rel_fields']))?$fieldDef['rel_fields']: array();
         $this->_bean=&$_bean;
-        $this->_relationship=new Relationship();
+        $this->_relationship=BeanFactory::newBean('Relationships');
         //$this->_relationship->retrieve_by_string_fields(array('relationship_name'=>$this->_relationship_name));
         $this->_relationship->retrieve_by_name($this->_relationship_name);
 

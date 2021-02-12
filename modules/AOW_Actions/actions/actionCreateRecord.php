@@ -256,7 +256,7 @@ class actionCreateRecord extends actionBase
                             case 'business_hours':
                                 require_once 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
 
-                                $businessHours = new AOBH_BusinessHours();
+                                $businessHours = BeanFactory::newBean('AOBH_BusinessHours');
 
                                 $dateToUse = $params['value'][$key][0];
                                 $sign = $params['value'][$key][1];
@@ -302,14 +302,14 @@ class actionCreateRecord extends actionBase
                         switch ($params['value'][$key][0]) {
                             case 'security_group':
                                 require_once 'modules/SecurityGroups/SecurityGroup.php';
-                                $security_group = new SecurityGroup();
+                                $security_group = BeanFactory::newBean('SecurityGroups');
                                 $security_group->retrieve($params['value'][$key][1]);
                                 $group_users = $security_group->get_linked_beans('users', 'User');
                                 $users = array();
                                 $r_users = array();
                                 if ($params['value'][$key][2] != '') {
                                     require_once 'modules/ACLRoles/ACLRole.php';
-                                    $role = new ACLRole();
+                                    $role = BeanFactory::newBean('ACLRoles');
                                     $role->retrieve($params['value'][$key][2]);
                                     $role_users = $role->get_linked_beans('users', 'User');
                                     foreach ($role_users as $role_user) {
@@ -325,7 +325,7 @@ class actionCreateRecord extends actionBase
                                 break;
                             case 'role':
                                 require_once 'modules/ACLRoles/ACLRole.php';
-                                $role = new ACLRole();
+                                $role = BeanFactory::newBean('ACLRoles');
                                 $role->retrieve($params['value'][$key][2]);
                                 $role_users = $role->get_linked_beans('users', 'User');
                                 $users = array();

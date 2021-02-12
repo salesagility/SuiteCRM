@@ -154,7 +154,7 @@ class Task extends SugarBean
         global $app_strings;
 
         if (isset($this->contact_id)) {
-            $contact = new Contact();
+            $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($this->contact_id);
 
             if ($contact->id != "") {

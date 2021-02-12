@@ -55,7 +55,7 @@ global $app_strings;
 global $app_list_strings;
 global $sugar_version, $sugar_config;
 
-$focus = new Campaign();
+$focus = BeanFactory::newBean('Campaigns');
 
 $detailView = new DetailView();
 $offset = 0;
@@ -167,7 +167,7 @@ $campaign_id = $focus->id;
    $smarty->assign("COST_PER_CLICK_THROUGH", currency_format_number($cost_per_click_thru));
     
     
-        $currency  = new Currency();
+        $currency  = BeanFactory::newBean('Currencies');
     if (isset($focus->currency_id) && !empty($focus->currency_id)) {
         $currency->retrieve($focus->currency_id);
         if ($currency->deleted != 1) {

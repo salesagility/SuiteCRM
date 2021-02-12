@@ -45,7 +45,7 @@ echo getClassicModuleTitle('Administration', array($mod_strings['LBL_REBUILD_SCH
 
 if (isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true') {
     require_once('install/install_utils.php');
-    $focus = new Scheduler();
+    $focus = BeanFactory::newBean('Schedulers');
     $focus->rebuildDefaultSchedulers();
     
     $admin_mod_strings = return_module_language($current_language, 'Administration'); ?>
