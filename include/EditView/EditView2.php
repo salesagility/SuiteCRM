@@ -1123,7 +1123,9 @@ EOQ;
         }
 
         if ($showTitle) {
-            return $this->viewObject->getModuleTitle();
+            $title = $this->parseHeaderTitleTemplate() ?? '';
+
+            return $title . $this->viewObject->getModuleTitle();
         }
 
         return '';
@@ -1136,5 +1138,20 @@ EOQ;
     public function getTemplateHandler()
     {
         return new TemplateHandler();
+    }
+
+    /**
+     * @return string
+     */
+    protected function parseHeaderTitleTemplate(): string
+    {
+        $title = '';
+        $resource = 'include/'. $this->view .'/headerTitle.tpl';
+        $titleResource = $this->th->ss->getThemeResource($resource);
+        if (file_exists($titleResource)) {
+            $title = $this->ss->fetch($titleResource);
+        }
+
+        return $title;
     }
 }
