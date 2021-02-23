@@ -116,8 +116,7 @@ class DetailView2 extends EditView
                 global $app_strings;
                 $error = str_replace("[file]", "modules/$this->module/metadata/$metadataFileName.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
                 $GLOBALS['log']->fatal($error);
-                echo $error;
-                die();
+                throw new UnexpectedValueException($error);
             }
             require("modules/$this->module/metadata/$metadataFileName.php");
         }
