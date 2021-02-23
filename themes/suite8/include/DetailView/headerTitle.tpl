@@ -1,0 +1,1 @@
+<div class="header-module-title">{$MOD.LBL_MODULE_NAME}</div>

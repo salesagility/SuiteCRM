@@ -646,6 +646,7 @@ slot {
 #EditView > table {
   margin-bottom: 0;
   overflow: auto;
+  position: relative;
 }
 
 #EditView_tabs.yui-navset.yui-navset-top {
@@ -790,8 +791,8 @@ option[selected] {
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  top: 15px;
-  right: 9px;
+  bottom: 1em;
+  right: 0;
 }
 
 .actionbutton-footer {
@@ -4185,6 +4186,7 @@ hr {
 
 .pagecontent {
   border: 1px solid transparent;
+  position: relative;
 }
 
 .pagecontent > table td {
@@ -4524,7 +4526,6 @@ object {
 
 .favorite {
   margin-left: 5px;
-  margin-top: 15px;
   color: $link-color;
 }
 
@@ -5796,6 +5797,5 @@ table.subpanel-table .pagination li.single > #formprojects_project_tasks {
 }
 
 .edit-border-bottom {
-  margin-top: 2.5em;
   border-top: 1px solid $header-bottom-border;
 }

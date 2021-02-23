@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<div class="header-module-title">{$MOD.LBL_MODULE_NAME}</div>
 <div class="detail-border-bottom"></div>
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
@@ -218,7 +217,6 @@
                 </div>
                 {*display panels*}
                 <div class="panel-content">
-                    <div>&nbsp;</div>
                     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
                     {{counter name="panelCount" start=-1 print=false assign="panelCount"}}
                     {{foreach name=section from=$sectionPanels key=label item=panel}}

@@ -1146,7 +1146,7 @@ EOQ;
     protected function parseHeaderTitleTemplate(): string
     {
         $title = '';
-        $resource = 'include/'. $this->view .'/headerTitle.tpl';
+        $resource = 'include/' . $this->view . '/headerTitle.tpl';
         $titleResource = $this->th->ss->getThemeResource($resource);
         if (file_exists($titleResource)) {
             $title = $this->ss->fetch($titleResource);

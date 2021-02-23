@@ -1599,7 +1599,7 @@ EOHTML;
                             "</a>";
                         $params[] = '<span class="module-title-text-breadcrumbs">' . $GLOBALS['app_strings']['LBL_EDIT_BUTTON_LABEL'] . '</span>';
                     } else {
-                        $params[] = '<span class="module-title-text-breadcrumbs">' . $GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL'] . '</span>';
+                        $params[] = '<span class="module-title-text-breadcrumbs-create">' . $GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL'] . '</span>';
                     }
                     break;
                 case 'DetailView':

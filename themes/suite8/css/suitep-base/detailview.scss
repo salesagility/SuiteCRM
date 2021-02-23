@@ -27,8 +27,7 @@ p.msg {
 .moduleTitle .module-title-text {
   height: auto;
   line-height: 36px;
-  margin-bottom: $detail-view-module-title-space;
-  margin-top: $detail-view-module-title-top-space
+  margin-bottom: 0.2em;
 }
 
 .nav-tabs > li.tab-inline-pagination {
@@ -589,14 +588,11 @@ table.subpanel-table .pagination li.single > a {
 }
 
 .header-module-title {
-  position: absolute;
-  top: 0;
   color: #777777;
   font-size: 1.2em;
   font-weight: 300;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin: 0.6em 1.3em 1em 0;
 }
 
 .subpanel-table {

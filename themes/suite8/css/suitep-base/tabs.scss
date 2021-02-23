@@ -4,6 +4,7 @@
 
   .nav-tabs {
     border: hidden;
+    position: relative;
   }
 
   .dropdown-menu {
@@ -28,8 +29,8 @@
 
   .detail-view > .nav-tabs > #tab-actions {
     position: absolute;
-    right: 1.7em;
-    top: 3rem;
+    right: 0;
+    bottom: 6em;
   }
 
   .detail-view > .nav-tabs > #tab-actions > a {
@@ -257,6 +258,9 @@
     background-color: $tab-bg;
     padding-top: 1rem;
     padding-bottom: 2rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
   }
 }
 
