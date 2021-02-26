@@ -3808,4 +3808,5 @@ $app_strings['LBL_DEFAULT_TOTAL'] = 'Total number of records';
 $app_strings['AOS_Contracts'] = 'Contracts';
 $app_strings['AOS_Quotes'] = 'Quotes';
 $app_strings['AOS_Invoices'] = 'Invoices';
+$app_strings['LBL_PHOTO'] = 'Photo';
 $app_strings['LBL_CASE_UPDATES'] = 'Case Updates';

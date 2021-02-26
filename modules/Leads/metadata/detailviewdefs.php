@@ -149,7 +149,25 @@ array(
           ]
       ],
       'sidebarWidgets' => [
-          ['type' => 'history-timeline']
+          ['type' => 'history-timeline'],
+          ['type' => 'statistics',
+              'labelKey' => 'LBL_PHOTO',
+              'options' => [
+                  'sidebarStatistic' => [
+                      'rows' => [
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'icon' => 'person-icon',
+                                      'iconClass' => 'img-fluid',
+                                  ]
+                              ]
+                          ],
+                      ]
+                  ]
+              ]
+          ],
       ],
     'panels' =>
     array(
