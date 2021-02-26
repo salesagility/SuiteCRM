@@ -139,7 +139,24 @@ array(
                   ]
               ]
           ],
-          ['type' => 'history-timeline'],
+          ['type' => 'statistics',
+              'labelKey' => 'LBL_CASE_UPDATES',
+              'options' => [
+                  'sidebarStatistic' => [
+                      'rows' => [
+                          [
+                              'align' => 'start',
+                              'cols' => [
+                                  [
+                                      'icon' => 'CaseUpdate',
+                                      'iconClass' => 'img-fluid',
+                                  ]
+                              ]
+                          ],
+                      ]
+                  ]
+              ]
+          ],
       ],
     'panels' =>
     array(
