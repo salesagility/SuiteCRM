@@ -115,6 +115,7 @@ class CampaignLog extends SugarBean
                 $full_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name'], '');
                 $temp_array['RECIPIENT_NAME']=$full_name;
             }
+            $temp_array['RECIPIENT_NAME']="<a href='index.php?module={$temp_array['TARGET_TYPE']}&action=DetailView&record={$temp_array['TARGET_ID']}'>{$temp_array['RECIPIENT_NAME']}</a>";
         }
         $temp_array['RECIPIENT_EMAIL']=$this->retrieve_email_address($temp_array['TARGET_ID']);
 
