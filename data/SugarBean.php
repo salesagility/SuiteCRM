@@ -2452,8 +2452,10 @@ class SugarBean
                     $type .= $def['dbType'];
                 }
 
-                if (isset($def['type']) && ($def['type'] == 'html' || $def['type'] == 'longhtml')) {
-                    $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
+                if (isset($def['type']) && ($def['type'] == 'html' || $def['type'] == 'longhtml' || $def['type'] == 'longtext') ) {
+                    if (strpos($this->$key, 'pagebreak') === false) {
+                        $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
+                    }
                 } elseif (
                     (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
                     !empty($this->$key)
