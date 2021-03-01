@@ -47,7 +47,9 @@
 {assign var=date_value value={{sugarvar key='value' string=true}} }
 <input class="date_input" autocomplete="off" type="text" name="{{$idname}}" id="{{$idname}}" value="{$date_value}" title='{{$vardef.help}}' {{$displayParams.field}} tabindex='{{$tabindex}}' {{if !empty($displayParams.accesskey)}} accesskey='{{$displayParams.accesskey}}' {{/if}}   size="11" maxlength="10" >
 {{if !$displayParams.hiddeCalendar}}
-    <button type="button" id="{{$idname}}_trigger" class="btn btn-danger" onclick="return false;"><span class="suitepicon suitepicon-module-calendar" alt="{$APP.LBL_ENTER_DATE}"></span></button>
+    <span class="datetimeicon" id="{{$idname}}_trigger" onclick="return false;">        
+        {sugar_getimage name="calendar" attr='border="0" ' alt="$APP.LBL_ENTER_DATE"}        
+    </span>
 {{/if}}
 {{if $displayParams.showFormats}}
 &nbsp;(<span class="dateFormat">{$USER_DATEFORMAT}</span>)

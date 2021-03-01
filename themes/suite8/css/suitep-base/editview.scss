@@ -3471,17 +3471,15 @@ table legend {
   padding: 4px;
 }
 
-
 span.id-ff button {
-  padding: 0;
   margin: 5px 5px 5px 0;
   line-height: 0;
-  width: 32px;
-  height: 32px;
-}
-
-span.id-ff button:hover {
-  background-color: $danger-btn-bg-hover;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
 }
 
 span.id-ff button img {
@@ -3493,7 +3491,6 @@ span.id-ff button img {
 
 span.id-ff button:first-of-type img {
   content: src('../../../../index.php?entryPoint=getImage&themeName=suite8&imageName=id-ff-select.png');
-
 }
 
 span.id-ff button:last-of-type img {
@@ -3502,12 +3499,6 @@ span.id-ff button:last-of-type img {
 
 a.tabFormAdvLink {
   text-transform: uppercase;
-}
-
-input#ss_update {
-}
-
-input#ss_update:hover {
 }
 
 select#display_tabs {
@@ -5800,8 +5791,27 @@ table.subpanel-table .pagination li.single > #formprojects_project_tasks {
   border-top: 1px solid $header-bottom-border;
 }
 
-.edit-view-pagination, .edit-view-pagination-desktop {
-  position: absolute;
-  right: -0.7em;
-  top: -6em;
+.datetimeicon {
+  cursor: pointer;
+  opacity: 0.2;
+  vertical-align: middle;
+  margin-left: 1em;
+}
+
+.selectcrossbtn {
+  opacity: 0.3;
+  cursor: pointer;  
+  .lastChild {
+    svg {
+      width: 11px;
+    }    
+  } 
+}
+
+.edit-view-field {
+  select {
+    background: url($select-edit-background-url) no-repeat right;
+    background-size: 25px 11px;
+    border-color: $bright-grey;
+  }
 }
