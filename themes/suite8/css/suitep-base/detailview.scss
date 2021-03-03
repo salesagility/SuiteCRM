@@ -33,9 +33,10 @@ p.msg {
 .nav-tabs > li.tab-inline-pagination {
   float: right;
   line-height: $tab-height;
-  position: absolute;
-  right:0.9em;
-  top: 4.2em;
+  position: relative;
+  right: -0.9em;
+  bottom: 7.2em;
+  padding-top: 5px;
 }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {

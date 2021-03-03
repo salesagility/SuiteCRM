@@ -791,7 +791,7 @@ option[selected] {
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  bottom: 1em;
+  bottom: 0.2em;
   right: 0;
 }
 
@@ -4300,7 +4300,7 @@ tr:hover img.info {
 }
 
 #EditView .paginationWrapper {
-  padding-top: 4px;
+  padding-top: 5px;
 }
 
 .paginationWrapper span{
@@ -5798,4 +5798,10 @@ table.subpanel-table .pagination li.single > #formprojects_project_tasks {
 
 .edit-border-bottom {
   border-top: 1px solid $header-bottom-border;
+}
+
+.edit-view-pagination, .edit-view-pagination-desktop {
+  position: absolute;
+  right: -0.7em;
+  top: -6em;
 }
