@@ -4255,46 +4255,6 @@ function remove_linkedin_connector()
 }
 
 
-/**
- * Enable the InsideView connector for the four default modules.
- */
-function upgradeEnableInsideViewConnector($path='')
-{
-    logThis('Begin upgradeEnableInsideViewConnector', $path);
-
-    // Load up the existing mapping and hand it to the InsideView connector to have it setup the correct logic hooks
-    $mapFile = 'modules/Connectors/connectors/sources/ext/rest/insideview/mapping.php';
-    if (file_exists('custom/'.$mapFile)) {
-        logThis('Found CUSTOM mappings', $path);
-        require('custom/'.$mapFile);
-    } else {
-        logThis('Used default mapping', $path);
-        require($mapFile);
-    }
-
-    require_once('include/connectors/sources/SourceFactory.php');
-    $source = SourceFactory::getSource('ext_rest_insideview');
-
-    // $mapping is brought in from the mapping.php file above
-    $source->saveMappingHook($mapping);
-
-    require_once('include/connectors/utils/ConnectorUtils.php');
-    ConnectorUtils::installSource('ext_rest_insideview');
-
-    // Now time to set the various modules to active, because this part ignores the default config
-    require(CONNECTOR_DISPLAY_CONFIG_FILE);
-    // $modules_sources come from that config file
-    foreach ($source->allowedModuleList as $module) {
-        $modules_sources[$module]['ext_rest_insideview'] = 'ext_rest_insideview';
-    }
-    if (!write_array_to_file('modules_sources', $modules_sources, CONNECTOR_DISPLAY_CONFIG_FILE)) {
-        //Log error and return empty array
-        logThis("Cannot write \$modules_sources to " . CONNECTOR_DISPLAY_CONFIG_FILE, $path);
-    }
-
-    logThis('End upgradeEnableInsideViewConnector', $path);
-}
-
 function repair_long_relationship_names($path='')
 {
     logThis("Begin repair_long_relationship_names", $path);
