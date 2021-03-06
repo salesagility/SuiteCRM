@@ -813,7 +813,12 @@ table #dashletPanel {
         line-height: 9px;
         font-size: 13px;   
         letter-spacing: 1px;     
-      }      
+      }           
+    }
+    li.active {
+      a {
+        background: $dashboard-active-tab-bg;
+      }
     }
   }
   #tab-actions {
