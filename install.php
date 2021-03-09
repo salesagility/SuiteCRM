@@ -42,6 +42,16 @@ if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
 
+// Set Globals
+global $sugar_version;
+global $current_user, $sugar_config;
+global $beanFiles, $beanList;
+global $module, $action;
+global $disable_date_format;
+global $fill_in_rel_depth;
+global $layout_defs;
+global $dictionary, $buildingRelCache;
+
 require_once 'include/utils.php';
 @session_start();
 if (isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
@@ -96,6 +106,7 @@ $_REQUEST['root_directory'] = getcwd();
 $_REQUEST['js_rebuild_concat'] = 'rebuild';
 
 //Set whether the install is silent or not
+global $silentInstall;
 $silentInstall = true;
 
 //Todo, check if there is an instance where goto is not set, but a silent install is in place
@@ -104,14 +115,17 @@ if (isset($_REQUEST['goto']) && $_REQUEST['goto'] != 'SilentInstall') {
     $silentInstall = false;
 }
 
-
+global $timedate;
 $timedate = TimeDate::getInstance();
 // cn: set php.ini settings at entry points
 setPhpIniSettings();
+global $locale;
 $locale = new Localization();
 
 $GLOBALS['log'] = LoggerManager::getLogger();
+global $setup_sugar_version;
 $setup_sugar_version = $suitecrm_version;
+global $install_script;
 $install_script = true;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -141,9 +155,11 @@ function getSupportedInstallLanguages()
     }
     return $supportedLanguages;
 }
+global $supportedLanguages;
 $supportedLanguages = getSupportedInstallLanguages();
 
 // after install language is selected, use that pack
+global $default_lang;
 $default_lang = 'en_us';
 if (!isset($_POST['language']) && (!isset($_SESSION['language']) && empty($_SESSION['language']))) {
     if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && !empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
@@ -160,6 +176,7 @@ if (isset($_POST['language'])) {
     $_SESSION['language'] = str_replace('-', '_', $_POST['language']);
 }
 
+global $current_language;
 $current_language = isset($_SESSION['language']) ? $_SESSION['language'] : $default_lang;
 
 if (file_exists("install/language/{$current_language}.lang.php")) {
@@ -168,17 +185,21 @@ if (file_exists("install/language/{$current_language}.lang.php")) {
     require_once("install/language/{$default_lang}.lang.php");
 }
 
+global $mod_strings;
+
 if ($current_language != 'en_us') {
     $my_mod_strings = $mod_strings;
     include('install/language/en_us.lang.php');
     $mod_strings = sugarLangArrayMerge($mod_strings, $my_mod_strings);
 }
 
+global $app_list_strings;
 $app_list_strings = return_app_list_strings_language($current_language);
 ////	END INSTALLER LANGUAGE
 ///////////////////////////////////////////////////////////////////////////////
 
 //get the url for the helper link
+global $help_url;
 $help_url = get_help_button_url();
 
 if (isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
@@ -195,7 +216,7 @@ if (isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'
                 'installer_locked' => false,
             </pre>
             <p>{$mod_strings['LBL_DISABLED_DESCRIPTION_2']}</p>
-        
+
             <p>{$mod_strings['LBL_DISABLED_HELP_1']} <a href="{$mod_strings['LBL_DISABLED_HELP_LNK']}" target="_blank">{$mod_strings['LBL_DISABLED_HELP_2']}</a>.</p>
 EOQ;
 
@@ -320,6 +341,7 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
 
         if (!empty($sugar_config['dbconfig'])) {
             try {
+                global $db;
                 $db = DBManagerFactory::getInstance();
                 $db->disconnect();
             } catch (\Exception $e) {

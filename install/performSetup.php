@@ -73,9 +73,39 @@ require_once('install/install_utils.php');
 
 require_once('modules/TableDictionary.php');
 
+global $trackerManager;
 
 $trackerManager = TrackerManager::getInstance();
 $trackerManager->pause();
+
+global $cache_dir;
+global $line_entry_format;
+global $line_exit_format;
+global $rel_dictionary;
+global $render_table_close;
+global $render_table_open;
+global $setup_db_admin_password;
+global $setup_db_admin_user_name;
+global $setup_db_create_database;
+global $setup_db_create_sugarsales_user;
+global $setup_db_database_name;
+global $setup_db_drop_tables;
+global $setup_db_host_instance;
+global $setup_db_port_num;
+global $setup_db_host_name;
+global $demoData;
+global $setup_db_sugarsales_password;
+global $setup_db_sugarsales_user;
+global $setup_site_admin_user_name;
+global $setup_site_admin_password;
+global $setup_site_guid;
+global $setup_site_url;
+global $parsed_url;
+global $setup_site_host_name;
+global $setup_site_log_dir;
+global $setup_site_log_file;
+global $setup_site_session_path;
+global $setup_site_log_level;
 
 
 $cache_dir                          = sugar_cached("");
@@ -212,6 +242,18 @@ echo "<br>";
 if (is_file("config_override.php")) {
     require_once("config_override.php");
 }
+
+global $db;
+global $startTime;
+global $focus;
+global $processed_tables;
+global $db;
+global $empty;
+global $new_tables;
+global $new_config;
+global $new_report;
+global $nonStandardModules;
+
 
 $db                 = DBManagerFactory::getInstance();
 $startTime          = microtime(true);
@@ -651,6 +693,7 @@ installLog('saveConfig');
 $focus->saveConfig();
 
 installLog('new Configurator');
+global $configurator;
 $configurator = new Configurator();
 installLog('populateFromPost');
 $configurator->populateFromPost();
