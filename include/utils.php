@@ -747,6 +747,20 @@ function get_language_display($key)
 }
 
 /**
+ * Sets the currently active language.
+ * @param $language
+ * @return void
+ * @description Currently used by Suite8 - Front End - to translate
+ * the legacy language into the language selected by user
+ */
+function set_current_language(string $language): void
+{
+    if (!empty($language)) {
+        $_SESSION['authenticated_user_language'] = $language;
+    }
+}
+
+/**
  * Returns the currently active language string.
  *
  * @return string
@@ -2130,7 +2144,7 @@ function translate($string, $mod = '', $selectedValue = '')
 
 /**
  * Converts a number from '1,000' to '1000', and '1,50' (if using commas as a decimal separator) to '1.50'.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function unTranslateNum($num)
@@ -2583,7 +2597,7 @@ function securexss($value)
 
         return $new;
     }
-    
+
     static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
 
     $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
@@ -3183,7 +3197,7 @@ function display_notice($msg = false)
 
 /**
  * Checks if it is a number that at least has the plus at the beginning.
- * 
+ *
  * @deprecated No longer used, will be removed without replacement in SuiteCRM 7.12.
  */
 function skype_formatted($number)
@@ -3838,7 +3852,7 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
  * Translates php.ini memory values into bytes.
  * For example, an input value of '8M' will return 8388608.
  * 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
- * 
+ *
  * @param string $val A string like '8M'.
  * @return integer The number of bytes represented by that string.
  */
@@ -4210,10 +4224,10 @@ function string_format($format, $args, $escape = true)
             $args[$i] = implode("','", $values);
             $result = str_replace('{'.$i.'}', $args[$i], $result);
        }
-        else if ($escape){       
+        else if ($escape){
             $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
         }
-        else{       
+        else{
             $result = str_replace('{'.$i.'}', $args[$i], $result);
         }
     }
