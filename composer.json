@@ -15,9 +15,6 @@
   },
   "config": {
     "vendor-dir": "vendor",
-    "platform": {
-      "php": "5.5.9"
-    },
     "optimize-autoloader": true,
     "sort-packages": true
   },
