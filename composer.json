@@ -19,7 +19,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=5.5.9",
+    "php": "5.5.9 - 7.3",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-imap": "*",
