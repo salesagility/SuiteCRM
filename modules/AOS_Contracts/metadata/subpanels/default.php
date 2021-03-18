@@ -25,7 +25,7 @@ $subpanel_layout = array(
     ),
     'contract_account' =>
     array(
-      'type' => 'date',
+      'type' => 'relate',
       'vname' => 'LBL_CONTRACT_ACCOUNT',
       'width' => '20%',
       'default' => true,
@@ -40,7 +40,7 @@ $subpanel_layout = array(
     ),
     'status' =>
     array(
-      'type' => 'date',
+      'type' => 'enum',
       'vname' => 'LBL_STATUS',
       'width' => '15%',
       'default' => true,
