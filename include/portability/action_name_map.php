@@ -44,6 +44,7 @@ $action_name_map = [
     'RepairUploadFolder' => 'repair-upload-folder',
     'About' => 'about',
     'UnifiedSearch' => 'unified-search',
+    'ConvertLead' => 'convert-lead',
 ];
 
 if (file_exists('custom/application/Ext/ActionNameMap/action_name_map.ext.php')) {
