@@ -149,8 +149,8 @@ array(
           ]
       ],
       'sidebarWidgets' => [
-          ['type' => 'history-timeline'],
-          ['type' => 'statistics',
+          [
+              'type' => 'statistics',
               'labelKey' => 'LBL_PHOTO',
               'options' => [
                   'sidebarStatistic' => [
@@ -168,6 +168,7 @@ array(
                   ]
               ]
           ],
+          ['type' => 'history-timeline'],
       ],
     'panels' =>
     array(
