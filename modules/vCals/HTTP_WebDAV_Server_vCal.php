@@ -144,10 +144,6 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             } else {
                 $this->path = $this->_urldecode($_SERVER["PATH_INFO"]);
 
-                if (ini_get("magic_quotes_gpc")) {
-                    $this->path = stripslashes($this->path);
-                }
-
                 $query_str = preg_replace('/^\//', '', $this->path);
                 $query_arr =  array();
                 parse_str($query_str, $query_arr);

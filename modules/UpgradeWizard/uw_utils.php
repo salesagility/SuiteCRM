@@ -1184,15 +1184,6 @@ function checkSystemCompliance()
         $ret['error_found'] = false;
     }
 
-
-    // safe mode
-    if ('1' == ini_get('safe_mode')) {
-        $ret['safeModeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_SAFE_MODE']}</span></b>";
-        $ret['error_found'] = true;
-    } else {
-        $ret['safeModeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-    }
-
     // memory limit
     $ret['memory_msg']     = "";
     $memory_limit   = "-1";//ini_get('memory_limit');
