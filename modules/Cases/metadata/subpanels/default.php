@@ -83,7 +83,7 @@ $subpanel_layout = array(
                 'justify' => 'start',
                 'cols' => [
                     [
-                        'tooltipTitleKey' => '{{title_key}}',
+                        'descriptionKey' => '{{title_key}}_INSIGHT_DESCRIPTION',
                         'class' => 'sub-panel-banner-tooltip',
                     ]
                 ]
