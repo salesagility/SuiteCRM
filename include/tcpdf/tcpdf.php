@@ -5890,12 +5890,12 @@ if (!class_exists('TCPDF', false)) {
                     $font = file_get_contents($fontfile);
                     $compressed = (substr($file, -2) == '.z');
                     if ((!$compressed) and (isset($info['length2']))) {
-                        $header = (ord($font{0}) == 128);
+                        $header = (ord($font[0]) == 128);
                         if ($header) {
                             //Strip first binary header
                             $font = substr($font, 6);
                         }
-                        if ($header and (ord($font{$info['length1']}) == 128)) {
+                        if ($header and (ord($font[$info['length1']]) == 128)) {
                             //Strip second binary header
                             $font = substr($font, 0, $info['length1']).substr($font, ($info['length1'] + 6));
                         }
@@ -6876,7 +6876,7 @@ if (!class_exists('TCPDF', false)) {
                 $strarr = array();
                 $strlen = strlen($str);
                 for ($i=0; $i < $strlen; ++$i) {
-                    $strarr[] = ord($str{$i});
+                    $strarr[] = ord($str[$i]);
                 }
                 // insert new value on cache
                 $this->cache_UTF8StringToArray['_'.$str] = $strarr;
@@ -6888,7 +6888,7 @@ if (!class_exists('TCPDF', false)) {
             $str .= ''; // force $str to be a string
             $length = strlen($str);
             for ($i = 0; $i < $length; ++$i) {
-                $char = ord($str{$i}); // get one string character at time
+                $char = ord($str[$i]); // get one string character at time
                 if (count($bytes) == 0) { // get starting octect
                     if ($char <= 0x7F) {
                         $unicode[] = $char; // use the character "as is" because is ASCII
@@ -7136,7 +7136,7 @@ if (!class_exists('TCPDF', false)) {
          */
         public function addHtmlLink($url, $name, $fill=0, $firstline=false, $color='', $style=-1)
         {
-            if (!$this->empty_string($url) and ($url{0} == '#')) {
+            if (!$this->empty_string($url) and ($url[0] == '#')) {
                 // convert url to internal link
                 $page = (int)substr($url, 1);
                 $url = $this->AddLink();
@@ -7286,7 +7286,7 @@ if (!class_exists('TCPDF', false)) {
                 $j = 0;
                 for ($i = 0; $i < 256; ++$i) {
                     $t = $rc4[$i];
-                    $j = ($j + $t + ord($k{$i})) % 256;
+                    $j = ($j + $t + ord($k[$i])) % 256;
                     $rc4[$i] = $rc4[$j];
                     $rc4[$j] = $t;
                 }
@@ -7306,7 +7306,7 @@ if (!class_exists('TCPDF', false)) {
                 $rc4[$a] = $rc4[$b];
                 $rc4[$b] = $t;
                 $k = $rc4[($rc4[$a] + $rc4[$b]) % 256];
-                $out .= chr(ord($text{$i}) ^ $k);
+                $out .= chr(ord($text[$i]) ^ $k);
             }
             return $out;
         }
@@ -10501,7 +10501,7 @@ if (!class_exists('TCPDF', false)) {
             $cnt = count($lines);
             for ($i=0; $i < $cnt; ++$i) {
                 $line = $lines[$i];
-                if (($line == '') or ($line{0} == '%')) {
+                if (($line == '') or ($line[0] == '%')) {
                     continue;
                 }
                 $len = strlen($line);
@@ -10552,7 +10552,7 @@ if (!class_exists('TCPDF', false)) {
                     case 'V':
                     case 'L':
                     case 'C': {
-                        $line{$len-1} = strtolower($cmd);
+                        $line[$len-1] = strtolower($cmd);
                         $this->_out($line);
                         break;
                     }
@@ -11243,7 +11243,7 @@ if (!class_exists('TCPDF', false)) {
                     $tagname = strtolower($tag[1]);
                     // check if we are inside a table header
                     if ($tagname == 'thead') {
-                        if ($element{0} == '/') {
+                        if ($element[0] == '/') {
                             $thead = false;
                         } else {
                             $thead = true;
@@ -11253,7 +11253,7 @@ if (!class_exists('TCPDF', false)) {
                     }
                     $dom[$key]['tag'] = true;
                     $dom[$key]['value'] = $tagname;
-                    if ($element{0} == '/') {
+                    if ($element[0] == '/') {
                         // closing html tag
                         $dom[$key]['opening'] = false;
                         $dom[$key]['parent'] = end($level);
@@ -11396,10 +11396,10 @@ if (!class_exists('TCPDF', false)) {
                                 }
                             }
                             // font style
-                            if (isset($dom[$key]['style']['font-weight']) and (strtolower($dom[$key]['style']['font-weight']{0}) == 'b')) {
+                            if (isset($dom[$key]['style']['font-weight']) and (strtolower($dom[$key]['style']['font-weight'][0]) == 'b')) {
                                 $dom[$key]['fontstyle'] .= 'B';
                             }
-                            if (isset($dom[$key]['style']['font-style']) and (strtolower($dom[$key]['style']['font-style']{0}) == 'i')) {
+                            if (isset($dom[$key]['style']['font-style']) and (strtolower($dom[$key]['style']['font-style'][0]) == 'i')) {
                                 $dom[$key]['fontstyle'] .= '"I';
                             }
                             // font color
@@ -11416,9 +11416,9 @@ if (!class_exists('TCPDF', false)) {
                                 foreach ($decors as $dec) {
                                     $dec = trim($dec);
                                     if (!$this->empty_string($dec)) {
-                                        if ($dec{0} == 'u') {
+                                        if ($dec[0] == 'u') {
                                             $dom[$key]['fontstyle'] .= 'U';
-                                        } elseif ($dec{0} == 'l') {
+                                        } elseif ($dec[0] == 'l') {
                                             $dom[$key]['fontstyle'] .= 'D';
                                         }
                                     }
@@ -11434,7 +11434,7 @@ if (!class_exists('TCPDF', false)) {
                             }
                             // check for text alignment
                             if (isset($dom[$key]['style']['text-align'])) {
-                                $dom[$key]['align'] = strtoupper($dom[$key]['style']['text-align']{0});
+                                $dom[$key]['align'] = strtoupper($dom[$key]['style']['text-align'][0]);
                             }
                             // check for border attribute
                             if (isset($dom[$key]['style']['border'])) {
@@ -11457,10 +11457,10 @@ if (!class_exists('TCPDF', false)) {
                             // font size
                             if (isset($dom[$key]['attribute']['size'])) {
                                 if ($key > 0) {
-                                    if ($dom[$key]['attribute']['size']{0} == '+') {
+                                    if ($dom[$key]['attribute']['size'][0] == '+') {
                                         $dom[$key]['fontsize'] = $dom[($dom[$key]['parent'])]['fontsize'] + (int)substr($dom[$key]['attribute']['size'],
                                                 1);
-                                    } elseif ($dom[$key]['attribute']['size']{0} == '-') {
+                                    } elseif ($dom[$key]['attribute']['size'][0] == '-') {
                                         $dom[$key]['fontsize'] = $dom[($dom[$key]['parent'])]['fontsize'] - (int)substr($dom[$key]['attribute']['size'],
                                                 1);
                                     } else {
@@ -11498,8 +11498,8 @@ if (!class_exists('TCPDF', false)) {
                         if (($dom[$key]['value'] == 'pre') or ($dom[$key]['value'] == 'tt')) {
                             $dom[$key]['fontname'] = $this->default_monospaced_font;
                         }
-                        if (($dom[$key]['value']{0} == 'h') and ((int)$dom[$key]['value']{1} > 0) and ((int)$dom[$key]['value']{1} < 7)) {
-                            $headsize = (4 - (int)$dom[$key]['value']{1}) * 2;
+                        if (($dom[$key]['value'][0] == 'h') and ((int)$dom[$key]['value'][1] > 0) and ((int)$dom[$key]['value'][1] < 7)) {
+                            $headsize = (4 - (int)$dom[$key]['value'][1]) * 2;
                             $dom[$key]['fontsize'] = $dom[0]['fontsize'] + $headsize;
                             $dom[$key]['fontstyle'] .= 'B';
                         }
@@ -11547,7 +11547,7 @@ if (!class_exists('TCPDF', false)) {
                         }
                         // check for text alignment
                         if (isset($dom[$key]['attribute']['align']) and (!$this->empty_string($dom[$key]['attribute']['align'])) and ($dom[$key]['value'] !== 'img')) {
-                            $dom[$key]['align'] = strtoupper($dom[$key]['attribute']['align']{0});
+                            $dom[$key]['align'] = strtoupper($dom[$key]['attribute']['align'][0]);
                         }
                     } // end opening tag
                 } else {
@@ -12501,9 +12501,9 @@ if (!class_exists('TCPDF', false)) {
                             foreach ($decors as $dec) {
                                 $dec = trim($dec);
                                 if (!$this->empty_string($dec)) {
-                                    if ($dec{0} == 'u') {
+                                    if ($dec[0] == 'u') {
                                         $this->HREF['style'] .= 'U';
-                                    } elseif ($dec{0} == 'l') {
+                                    } elseif ($dec[0] == 'l') {
                                         $this->HREF['style'] .= 'D';
                                     }
                                 }
@@ -12565,7 +12565,7 @@ if (!class_exists('TCPDF', false)) {
                         $imglink = '';
                         if (isset($this->HREF['url']) and !$this->empty_string($this->HREF['url'])) {
                             $imglink = $this->HREF['url'];
-                            if ($imglink{0} == '#') {
+                            if ($imglink[0] == '#') {
                                 // convert url to internal link
                                 $page = (int)substr($imglink, 1);
                                 $imglink = $this->AddLink();

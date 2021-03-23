@@ -348,9 +348,9 @@ class parseCSV
 
         // walk specific depth finding possible delimiter characters
         for ($i=0; $i < $strlen; $i++) {
-            $ch = $data{$i};
-            $nch = (isset($data{$i+1})) ? $data{$i+1} : false ;
-            $pch = (isset($data{$i-1})) ? $data{$i-1} : false ;
+            $ch = $data[$i];
+            $nch = (isset($data[$i+1])) ? $data[$i+1] : false ;
+            $pch = (isset($data[$i-1])) ? $data[$i-1] : false ;
 
             // open and closing quotes
             if ($ch == $enclosure) {
@@ -452,9 +452,9 @@ class parseCSV
 
         // walk through each character
         for ($i=0; $i < $strlen; $i++) {
-            $ch = $data{$i};
-            $nch = (isset($data{$i+1})) ? $data{$i+1} : false ;
-            $pch = (isset($data{$i-1})) ? $data{$i-1} : false ;
+            $ch = $data[$i];
+            $nch = (isset($data[$i+1])) ? $data[$i+1] : false ;
+            $pch = (isset($data[$i-1])) ? $data[$i-1] : false ;
 
             // open/close quotes, and inline quotes
             if ($ch == $this->enclosure) {
@@ -481,9 +481,9 @@ class parseCSV
                     $current .= $ch;
                     $i++;
                 } elseif ($nch != $this->delimiter && $nch != "\r" && $nch != "\n") {
-                    for ($x=($i+1); isset($data{$x}) && ltrim($data{$x}, $white_spaces) == ''; $x++) {
+                    for ($x=($i+1); isset($data[$x]) && ltrim($data[$x], $white_spaces) == ''; $x++) {
                     }
-                    if ($data{$x} == $this->delimiter) {
+                    if ($data[$x] == $this->delimiter) {
                         $enclosed = false;
                         $i = $x;
                     } else {
@@ -776,7 +776,7 @@ class parseCSV
         if ($value !== null && $value != '') {
             $delimiter = preg_quote($this->delimiter, '/');
             $enclosure = preg_quote($this->enclosure, '/');
-            if (preg_match("/".$delimiter."|".$enclosure."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ')) {
+            if (preg_match("/".$delimiter."|".$enclosure."|\n|\r/i", $value) || ($value[0] == ' ' || substr($value, -1) == ' ')) {
                 $value = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $value);
                 $value = $this->enclosure.$value.$this->enclosure;
             }
