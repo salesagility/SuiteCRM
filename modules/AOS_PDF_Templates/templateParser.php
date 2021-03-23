@@ -49,7 +49,7 @@ class templateParser
         return $string;
     }
 
-    public function parse_template_bean($string, $key, &$focus)
+    public static function parse_template_bean($string, $key, &$focus)
     {
         global $app_strings, $sugar_config;
         $repl_arr = array();
@@ -58,6 +58,12 @@ class templateParser
         foreach ($focus->field_defs as $field_def) {
             if (isset($field_def['name']) && $field_def['name'] != '') {
                 $fieldName = $field_def['name'];
+
+                if (empty($focus->$fieldName)) {
+                    $repl_arr[$key . '_' . $fieldName] = '';
+                    continue;
+                }
+
                 if ($field_def['type'] == 'currency') {
                     $repl_arr[$key . "_" . $fieldName] = currency_format_number($focus->$fieldName, $params = array('currency_symbol' => false));
                 } elseif (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
@@ -106,7 +112,7 @@ class templateParser
 
         foreach ($repl_arr as $name => $value) {
             if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
-                if ($value !== '') {
+                if ($value !== '' && isset($repl_arr['aos_products_quotes_discount'])) {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_separators();
                         $value = rtrim(
@@ -130,8 +136,10 @@ class templateParser
                 $sep = get_number_separators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if ($focus->field_defs[$name]['dbType'] == 'datetime' &&
-                (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0)) {
+            if (!empty($focus->field_defs[$name]['dbType'])
+                && $focus->field_defs[$name]['dbType'] === 'datetime'
+                && (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0)
+            ) {
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
