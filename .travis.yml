@@ -7,8 +7,8 @@ matrix:
     - name: "PHP 5.6 / MySQL 5.7"
       php: "5.6"
       dist: xenial
-    - name: "PHP 7.3 / MySQL 5.7"
-      php: "7.3"
+    - name: "PHP 7.4 / MySQL 5.7"
+      php: "7.4"
       dist: xenial
     # Run composer validate to make sure the composer.json and composer.lock are in sync.
     - name: "composer validate"
@@ -102,9 +102,6 @@ script:
 
 after_script:
   - ./build/push_output.sh
-  - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
-  - curl -i -F file=@install.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   # ElasticSearch Indexing logs
   - cat search_index.log
   - sudo cat /var/log/apache2/error.log
