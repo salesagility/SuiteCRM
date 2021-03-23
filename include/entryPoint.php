@@ -82,7 +82,7 @@ if (empty($GLOBALS['installing']) && empty($sugar_config['dbconfig']['db_name'])
 }
 
 // make sure SugarConfig object is available
-$GLOBALS['sugar_config'] = $sugar_config;
+$GLOBALS['sugar_config'] = !empty($sugar_config) ? $sugar_config : [];
 require_once 'include/SugarObjects/SugarConfig.php';
 
 if (!empty($sugar_config['xhprof_config'])) {
