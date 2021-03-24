@@ -4,6 +4,12 @@ use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class UserTest extends SuitePHPUnitFrameworkTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Users');
+    }
+
     public function testgetSignatureButtons()
     {
         self::markTestIncomplete('environment dependency');
@@ -54,7 +60,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     public function testgetSystemUser()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $user = BeanFactory::newBean('Users');
 
         $result = $user->getSystemUser();

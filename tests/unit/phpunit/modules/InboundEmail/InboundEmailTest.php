@@ -30,6 +30,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
     // ------------------------------------------------->
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'InboundEmail');
+    }
 
     public function testConnectMailServerFolderInboundForceFirstMailbox()
     {
@@ -146,7 +152,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $ie = new InboundEmail($imap);
         $ret = $ie->connectMailserver(true);
-        $this->assertEquals(null, $ret);
+        $this->assertEquals('Login or Password Incorrect', $ret);
     }
 
     public function testConnectMailserverUseSsl()
@@ -180,7 +186,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $ie = new InboundEmail($imap);
         $ret = $ie->connectMailserver();
-        $this->assertEquals(null, $ret);
+        $this->assertEquals('Inbound Email <b>cannot</b> function without the IMAP c-client libraries enabled/compiled with the PHP module. Please contact your administrator to resolve this issue.', $ret);
     }
 
     public function testFindOptimumSettingsFalsePositive()
@@ -241,7 +247,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $exp = [
             'good' => [],
             'bad' => ['both-secure' => '{:/service=/notls/novalidate-cert/secure}'],
-            'err' => ['both-secure' => null],
+            'err' => ['both-secure' => 'Login or Password Incorrect'],
         ];
 
         $imap = new ImapHandlerFake($fake);
@@ -303,7 +309,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals([
             'good' => [],
             'bad' => [],
-            'err' => [null],
+            'err' => ['No IMAP libraries found. Please resolve this before continuing with Inbound Email'],
         ], $ret);
     }
 
@@ -2511,7 +2517,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test with test and force true
         $result = $inboundEmail->connectMailserver(true, true);
-        $this->assertEquals("Can't open mailbox {:/service=}: invalid remote specification<p><p><p>", $result);
+        $this->assertEquals("Can't open mailbox {:/service=}: invalid remote specification<p><p><p>Please check your settings and try again.", $result);
     }
 
     public function testcheckImap()
@@ -2565,12 +2571,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array(
                         'DELETED' => '0',
-                        'STATUS' => null,
+                        'STATUS' => 'Active',
                         'DELETE_SEEN' => '0',
                         'MAILBOX_TYPE' => 'INBOX',
                         'IS_PERSONAL' => '0',
                         'MAILBOX_TYPE_NAME' => null,
-                        'GLOBAL_PERSONAL_STRING' => null,
+                        'GLOBAL_PERSONAL_STRING' => 'group',
                     );
 
         $this->assertTrue(is_array($result));
