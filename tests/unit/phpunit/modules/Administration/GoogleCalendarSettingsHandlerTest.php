@@ -51,6 +51,12 @@ include_once __DIR__ . '/../../../../../include/utils/layout_utils.php';
         
 class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Administration');
+    }
+
     public function testFirst()
     {
         $this->assertEquals(true, true);

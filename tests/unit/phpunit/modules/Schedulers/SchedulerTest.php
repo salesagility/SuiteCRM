@@ -14,6 +14,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         global $current_user;
         get_sugar_config_defaults();
         $current_user = BeanFactory::newBean('Users');
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Schedulers');
     }
 
     public function test__construct()
@@ -106,11 +107,11 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         $scheduler = BeanFactory::newBean('Schedulers');
 
         //execute the method with different job intervals
-        $this->assertEquals('', $scheduler->handleIntervalType('0', '0', '2', '2'));
+        $this->assertEquals('On thehour', $scheduler->handleIntervalType('0', '0', '2', '2'));
         $this->assertEquals('00:02', $scheduler->handleIntervalType('1', '0', '2', '2'));
         $this->assertEquals('30th', $scheduler->handleIntervalType('2', '0', '2', '2'));
         $this->assertEquals('December', $scheduler->handleIntervalType('3', '0', '2', '2'));
-        $this->assertEquals('', $scheduler->handleIntervalType('4', '0', '2', '2'));
+        $this->assertEquals('Sunday', $scheduler->handleIntervalType('4', '0', '2', '2'));
     }
 
     public function testsetIntervalHumanReadable()
@@ -121,12 +122,12 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         $scheduler->job_interval = '0::3::3::*::*';
         $scheduler->parseInterval();
         $scheduler->setIntervalHumanReadable();
-        $this->assertEquals('03:00; 3rd', $scheduler->intervalHumanReadable);
+        $this->assertEquals('On thehour; 03:00; 3rd', $scheduler->intervalHumanReadable);
 
         $scheduler->job_interval = '0::3::3::3::3';
         $scheduler->parseInterval();
         $scheduler->setIntervalHumanReadable();
-        $this->assertEquals('03:00; 3rd; March', $scheduler->intervalHumanReadable);
+        $this->assertEquals('On thehour; 03:00; 3rd; March; '. date("l", mktime(0, 0, 0, 3, 3, date("Y"))), $scheduler->intervalHumanReadable);
     }
 
     public function testsetStandardArraysAttributes()

@@ -793,6 +793,7 @@ $mod_strings = array(
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC' => 'Provides access to Address Cache information. This is only cache.',
 
     // Google Calendar
+    'LBL_GOOGLE_AUTH_TITLE' => 'Google Sync Settings',
     'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE' => 'Google Calendar Settings',
     'LBL_GOOGLE_CALENDAR_SETTINGS_DESC' => 'Configuration settings to adjust your Google Calendar',
     'LBL_GOOGLE_CALENDAR_SETTINGS_JSON' => 'Upload Google API Credentials File',
