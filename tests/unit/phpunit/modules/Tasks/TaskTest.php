@@ -10,6 +10,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         global $current_user;
         get_sugar_config_defaults();
         $current_user = BeanFactory::newBean('Users');
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Tasks');
     }
 
     public function testTask()
@@ -76,21 +77,6 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
-    {
-        $task = BeanFactory::newBean('Tasks');
-
-        // Execute the method and test that it works and doesn't throw an exception.
-        try {
-            $task->fill_in_additional_list_fields();
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-        }
-
-        $this->markTestIncomplete('method has no implementation');
-    }
-
     public function testfill_in_additional_detail_fields()
     {
         $task = BeanFactory::newBean('Tasks');
@@ -146,7 +132,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
                 'PRIORITY' => 'Medium',
                 'PARENT_MODULE' => 'Accounts',
                 'SET_COMPLETE' => '<b><a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Tasks","","Completed","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a></b>',
-                'TITLE' => ": test\nAccount: test",
+                'TITLE' => "Contact: test\nAccount: test",
         );
 
         $actual = $task->get_list_view_data();

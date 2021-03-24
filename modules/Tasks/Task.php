@@ -268,7 +268,7 @@ class Task extends SugarBean
 
     public function get_list_view_data()
     {
-        global $action, $currentModule, $focus, $current_module_strings, $app_list_strings, $timedate;
+        global $mod_strings, $app_list_strings, $timedate;
 
         $override_date_for_subpanel = false;
         if (!empty($_REQUEST['module']) && $_REQUEST['module'] !='Calendar' && $_REQUEST['module'] !='Tasks' && $_REQUEST['module'] !='Home') {
@@ -323,7 +323,7 @@ class Task extends SugarBean
         $task_fields['CONTACT_PHONE']= $this->contact_phone;
         $task_fields['TITLE'] = '';
         if (!empty($task_fields['CONTACT_NAME'])) {
-            $task_fields['TITLE'] .= $current_module_strings['LBL_LIST_CONTACT'].": ".$task_fields['CONTACT_NAME'];
+            $task_fields['TITLE'] .= $mod_strings['LBL_LIST_CONTACT'].": ".$task_fields['CONTACT_NAME'];
         }
         if (!empty($this->parent_name)) {
             $task_fields['TITLE'] .= "\n".$app_list_strings['parent_type_display'][$this->parent_type].": ".$this->parent_name;
