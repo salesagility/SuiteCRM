@@ -57,6 +57,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         global $current_user;
         get_sugar_config_defaults();
         $current_user = BeanFactory::newBean('Users');
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Emails');
     }
 
     public function testSendSaveAndStoreInSentOk()
@@ -650,7 +651,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->to_addrs = 'to@email.com';
         $email->cc_addrs = 'cc@email.com';
 
-        $expected = '<br /><br />>  from test<br />>  2016-01-01<br />>  to@email.com<br />>  cc@email.com<br />>  test<br />> <br />';
+        $expected = '<br /><br />> From: from test<br />> Date Sent/Received: 2016-01-01<br />> To: to@email.com<br />> Cc: cc@email.com<br />> Subject: test<br />> <br />';
 
         $actual = $email->getForwardHeader();
         $this->assertSame($expected, $actual);
@@ -664,7 +665,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->time_start = '01:01:00';
         $email->date_start = '2016-01-01';
 
-        $expected = '<br> 2016-01-01, 01:01:00, from test ';
+        $expected = '<br>On 2016-01-01, 01:01:00, from test wrote:';
 
         $actual = $email->getReplyHeader();
         $this->assertSame($expected, $actual);
@@ -777,12 +778,12 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $email = BeanFactory::newBean('Emails');
 
-        $expected = "<div><input	title=\"\"
+        $expected = "<div><input	title=\"Take from Group\"
 						class=\"button\"
 						type=\"button\" name=\"button\"
 						onClick=\"window.location='index.php?module=Emails&action=Grab';\"
 						style=\"margin-bottom:2px\"
-						value=\"    \"></div>";
+						value=\"  Take from Group  \"></div>";
         $actual = $email->pickOneButton();
         $this->assertSame($expected, $actual);
     }
@@ -1189,22 +1190,22 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email = BeanFactory::newBean('Emails');
 
         //test with empty string
-        $expected = "<div><input	title=\"\"
+        $expected = "<div><input	title=\"Check For New Email\"
 						class=\"button\"
 						type=\"button\" name=\"button\"
 						onClick=\"window.location='index.php?module=Emails&action=Check&type=';\"
 						style=\"margin-bottom:2px\"
-						value=\"    \"></div>";
+						value=\"  Check Mail  \"></div>";
         $actual = $email->checkInbox('');
         $this->assertSame($expected, $actual);
 
         //test with valid string
-        $expected = "<div><input	title=\"\"
+        $expected = "<div><input	title=\"Check For New Email\"
 						class=\"button\"
 						type=\"button\" name=\"button\"
 						onClick=\"window.location='index.php?module=Emails&action=Check&type=test';\"
 						style=\"margin-bottom:2px\"
-						value=\"    \"></div>";
+						value=\"  Check Mail  \"></div>";
         $actual = $email->checkInbox('test');
         $this->assertSame($expected, $actual);
     }

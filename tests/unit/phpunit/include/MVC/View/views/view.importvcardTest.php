@@ -22,6 +22,7 @@ class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewImportvcard();
         $_REQUEST['module'] = 'Users';
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Contacts');
         $view->ss = new Sugar_Smarty();
 
         ob_start();

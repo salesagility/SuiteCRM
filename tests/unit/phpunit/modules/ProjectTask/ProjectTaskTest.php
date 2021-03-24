@@ -158,20 +158,6 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $this->assertEquals('Administrator', $projectTask->assigned_user_name);
     }
 
-    public function testfill_in_additional_list_fields()
-    {
-        $projectTask = BeanFactory::newBean('ProjectTask');
-
-        //test without setting assigned_user_id
-        $projectTask->fill_in_additional_list_fields();
-        $this->assertEquals('', $projectTask->assigned_user_name);
-
-        //test with assigned_user_id set
-        $projectTask->assigned_user_id = 1;
-        $projectTask->fill_in_additional_list_fields();
-        $this->assertEquals('Administrator', $projectTask->assigned_user_name);
-    }
-
     public function testget_summary_text()
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
@@ -222,32 +208,6 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         //test with valid string params
         $expected = "project_task.name like 'test%'";
         $actual = $projectTask->build_generic_where_clause('test');
-        $this->assertSame($expected, $actual);
-    }
-
-    public function testget_list_view_data()
-    {
-        $projectTask = BeanFactory::newBean('ProjectTask');
-
-        $projectTask->name = 'tes user';
-        $projectTask->description = 'test assigned user';
-        $projectTask->parent_type = 'Project';
-
-        $expected = array(
-                'NAME' => 'tes user',
-                'DESCRIPTION' => 'test assigned user',
-                'ORDER_NUMBER' => '1',
-                'DELETED' => 0,
-                'UTILIZATION' => 100,
-                'PARENT_MODULE' => 'Project',
-                'FIRST_NAME' => '',
-                'LAST_NAME' => '',
-                'CONTACT_NAME' => ' ',
-                'TITLE' => ':  ',
-        );
-
-        $actual = $projectTask->get_list_view_data();
-
         $this->assertSame($expected, $actual);
     }
 

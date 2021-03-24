@@ -6244,12 +6244,12 @@ class InboundEmail extends SugarBean
             $this->getImap()->setTimeout(3, 15);
 
             $opts = $this->findOptimumSettings($useSsl);
-            if (isset($opts['good']) && empty($opts['good'])) {
+            if (!empty($opts) && isset($opts['good']) && empty($opts['good'])) {
                 $ret = array_pop($opts['err']); // TODO: lost error info?
 
                 return $ret;
             }
-            if (is_array($opts['service'])) {
+            if (!empty($opts) && is_array($opts['service'])) {
                 $service = $opts['service'];
             } else {
                 $service = null;
