@@ -11,6 +11,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         global $current_user;
         get_sugar_config_defaults();
         $current_user = BeanFactory::newBean('Users');
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'EmailMan');
     }
 
     public function testtoString()
