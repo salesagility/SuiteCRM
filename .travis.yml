@@ -7,9 +7,18 @@ matrix:
     - name: "PHP 5.6 / MySQL 5.7"
       php: "5.6"
       dist: xenial
-    - name: "PHP 7.4 / MySQL 5.7"
+#    - name: "PHP 7.3 / MySQL 5.7"
+#      php: "7.3"
+#      dist: xenial
+#    - name: "PHP 7.4 / MySQL 5.7"
+#      php: "7.4"
+#      dist: xenial
+    - name: "PHP 7.4 / MySQL 8"
       php: "7.4"
-      dist: xenial
+      dist: focal
+    - name: "PHP 8 / MySQL 8"
+      php: "8.0"
+      dist: focal
 
 services:
   - mysql
@@ -43,14 +52,14 @@ before_script:
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   # Install apache - images with PHP 7 or above
   - sudo apt-get update
-  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  - sudo apt-get install apache2 libapache2-mod-php
   # Enable php-fpm  - images with PHP 7 or above
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf 2>/dev/null || true
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sudo a2enmod rewrite actions fastcgi alias
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
-  - sudo chown -R travis:travis /var/lib/apache2/fastcgi
+  #- sudo chown -R travis:travis /var/lib/apache2/fastcgi
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # Configure apache virtual hosts - images with PHP 7 or above
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf

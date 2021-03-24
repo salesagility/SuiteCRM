@@ -13,9 +13,11 @@ NC='\033[0m' # No Color
 function push_output {
 FILE=$1;
 # html extension is not supported
+echo "$IMGBB_API_KEY"
+echo " "
 echo -n "Error: ScreenShot $FILE: open ";
 echo -ne $BLUE;
-curl --location --request POST -F image=@$FILE "https://api.imgbb.com/1/upload?expiration=600&key=$IMGBB_API_KEY"
+curl --location --request POST -F image=@$FILE "https://api.imgbb.com/1/upload?expiration=600&key=0164e997a83a39d025e6ab4c2aead6f4"
 echo -en $NC;
 echo " in your favorite web browser";
 echo " "
