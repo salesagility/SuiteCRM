@@ -498,7 +498,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         // sends the batch over to the server
         $responses = $this->client->bulk($params);
 
-        if ($responses['errors'] === true) {
+        if (isset($responses['errors']) && $responses['errors'] === true) {
             // logs the errors
             foreach ($responses['items'] as $item) {
                 $action = array_keys($item)[0];
