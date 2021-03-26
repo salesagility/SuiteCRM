@@ -1,4 +1,29 @@
 <?php
+/**
+ * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
+ * Copyright (C) 2021 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SALESAGILITY, SALESAGILITY DISCLAIMS THE
+ * WARRANTY OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License
+ * version 3, these Appropriate Legal Notices must retain the display of the
+ * "Supercharged by SuiteCRM" logo. If the display of the logos is not reasonably
+ * feasible for technical reasons, the Appropriate Legal Notices must display
+ * the words "Supercharged by SuiteCRM".
+ */
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
@@ -23,7 +48,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             'google_auth_json' => $this->getFakeGoogleAuthJson($googleAuthJson),
         ];
     }
-    
+
     /**
      *
      * @param string $googleAuthJson
@@ -33,7 +58,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
     {
         return base64_encode($googleAuthJson);
     }
-    
+
     // GoogleSyncBase.php
 
     /**
@@ -44,7 +69,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
     {
 
         // Set up object for testing
-        
+
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
@@ -150,7 +175,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $this->assertEquals(GoogleSyncException::JSON_CORRUPT, $e->getCode(), 'It should throws an exception with code 0.');
             $this->assertEquals('google_auth_json not vaild json', $e->getMessage(), 'It should throws an exception with a proper message.');
         }
-        
+
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test","client_id":"testID"}'));
         try {
             $object->callMethod('getGoogleClient', [null]);
@@ -225,7 +250,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $meeting3->date_end = '2016-02-11 17:30:00';
         $meeting3->save();
 
-        
+
 
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -238,7 +263,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::INVALID_USER_ID, $e->getCode());
         }
-        
+
         $this->assertEquals(3, count($return_count));
     }
 
@@ -363,13 +388,13 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $sql1 = "UPDATE meetings SET gsync_id = 'valid_gsync_id' WHERE id = '{$meeting1_id}'";
         $res1 = $db->query($sql1);
         $this->assertEquals(true, $res1);
-        
+
         // --- separated test
         // Give meetings 2 and 3 a duplicate gsync_id
         $sql2 = "UPDATE meetings SET gsync_id = 'duplicate_gsync_id' WHERE id = '{$meeting2_id}' OR id = '{$meeting3_id}'";
         $res2 = $db->query($sql2);
         $this->assertEquals(true, $res2);
-        
+
         // --- separated test
         $meeting = $object->callMethod('getMeetingByEventId', ['valid_gsync_id']);
         $this->assertEquals($meeting1_id, $meeting->id);
@@ -495,7 +520,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
     public function testPullEvent()
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
-   
+
         try {
             $object->callMethod('pullEvent', [new Google_Service_Calendar_Event(), null]);
             $this->assertTrue(false, 'It should throws an exception.');
@@ -534,19 +559,19 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::NO_GSERVICE_SET, $e->getCode());
         }
-        
+
 
         // --- separated test
         $Google_Event = new Google_Service_Calendar_Event();
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
-        
+
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         $object->setProperty('gService', true);
-        
+
         try {
             $object->callMethod('delEvent', [new Google_Service_Calendar_Event(), null]);
-            
+
             $this->assertTrue(false, 'It should throw an exception.');
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::MEETING_ID_IS_EMPTY, $e->getCode());
@@ -774,8 +799,8 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::INVALID_ACTION, $e->getCode());
         }
-        
-        
+
+
         try {
             $object->callMethod('doAction', ['push']);
             $this->assertTrue(false, 'It should throws an exception.');
@@ -783,7 +808,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::pushEvent() should be an instance of meeting but this test implacate that it is null.');
         }
 
-        
+
         try {
             $object->callMethod('doAction', ['pull']);
             $this->assertTrue(false, 'It should throws an exception.');
@@ -796,7 +821,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $CRM_Meeting->name = 'Unit Test Event';
         $CRM_Meeting->description = 'Unit Test Event';
 
-        
+
         try {
             $object->callMethod('doAction', ['push_delete', $CRM_Meeting, null]);
             $this->assertTrue(false, 'It should throws an exception.');
@@ -804,7 +829,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::delEvent() should be an instance of Google_Service_Calendar_Event but this test implacate that it is null.');
         }
 
-        
+
         try {
             $object->callMethod('doAction', ['pull_delete']);
             $this->assertTrue(false, 'It should throws an exception.');
@@ -876,7 +901,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         // Test with just deleted Meeting. Should return 'skip'
         $CRM_Meeting->deleted = '1';
         $this->assertEquals('skip', $object->callMethod('pushPullSkip', [$CRM_Meeting, null]));
-        
+
 
         // Test with just an active Google Event. Should return 'pull'
         $this->assertEquals('pull', $object->callMethod('pushPullSkip', [null, $Google_Event]));
@@ -939,9 +964,9 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
     {
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
-        
-        
-        
+
+
+
         $query = "SELECT COUNT(*) AS cnt FROM users";
         $db = DBManagerFactory::getInstance();
         $results = $db->query($query);
@@ -961,8 +986,8 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $user1->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
-        
-        
+
+
         $query = "SELECT COUNT(*) AS cnt FROM users";
         $db = DBManagerFactory::getInstance();
         $results = $db->query($query);
@@ -981,9 +1006,9 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $user2->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user2->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user2->savePreferencesToDB();
-        
+
         $this->assertNotSame($id1, $id2);
-        
+
         $query = "SELECT COUNT(*) AS cnt FROM users";
         $db = DBManagerFactory::getInstance();
         $results = $db->query($query);

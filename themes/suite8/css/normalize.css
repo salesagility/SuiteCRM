@@ -242,7 +242,7 @@ sub {
 }
 
 ::selection {background: #F08377;color:#534d64;} /* Safari */
-::-moz-selection {background: #F08377;color:#534d64;} /* Firefox */ 
+::-moz-selection {background: #F08377;color:#534d64;} /* Firefox */
 
 
 /* =============================================================================
