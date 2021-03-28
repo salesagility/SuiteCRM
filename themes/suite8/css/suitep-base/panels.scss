@@ -111,7 +111,7 @@ div.panel-heading a.collapsed-override {
   border-bottom-right-radius: 2px;
   vertical-align: middle;
   margin: 0;
-  content: '\002B';
+  content: '\002B';  
 }
 
 .panel-heading a {
@@ -124,16 +124,28 @@ div.panel-heading a.collapsed-override {
 .panel-heading a:before {
   float: left;
   border: 1px solid $outline-border-light;
-  padding: 0.3em;  
-  @include border-radius (0.3rem);
+  @include border-radius (0.2rem);
   font-size: 13px;
-  text-align: center;
-  line-height: 1.2;
   content: "\2212";  
-  width: 2em;
+  width: 1.5em;
+  height: 1.5em;
   position: relative;
-  top: 0.3em;
+  top: 0.5em;
   font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.panel-heading a.collapsed:hover::before {
+  background: $white;
+  color: $midnight-blue;
+}
+
+.panel-heading a.in:hover::before {
+  background: $white;
+  color: $midnight-blue;
 }
 
 .panel-heading a div.edit-panel {
@@ -175,6 +187,7 @@ div.action_buttons .button:hover {
 
 div.sub-panel {
   margin-bottom: 1em;
+  margin-top: 0;
 }
 
 .subpanel-table tr:last-of-type td {
