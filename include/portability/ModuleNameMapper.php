@@ -75,8 +75,12 @@ class ModuleNameMapper
      */
     public function toLegacy(string $module): string
     {
+        global $log;
+
         if (empty($this->frontEndToLegacyMap[$module])) {
-            throw new InvalidArgumentException("No legacy mapping for $module");
+            $log->warn("ModuleNameMapper | toLegacy | '$module' not mapped");
+
+            return $module;
         }
 
         return $this->frontEndToLegacyMap[$module];
@@ -105,11 +109,14 @@ class ModuleNameMapper
      */
     protected function mapName(string $module, string $type)
     {
-
+        global $log;
         if (empty($this->map[$module]) || empty($this->map[$module][$type])) {
-            throw new InvalidArgumentException("No mapping for $module");
+            $log->warn("ModuleNameMapper | mapName | '$module' not mapped to '$type'");
+
+            return $module;
         }
 
         return $this->map[$module][$type];
     }
+
 }
