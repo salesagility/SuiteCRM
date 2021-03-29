@@ -58,17 +58,23 @@ array(
     'panels' =>
     array(
       'LBL_CONTACT_INFORMATION' =>
-      array(
-        0 =>
-        array(
+       array (
+         0 =>
+         array (
           0 =>
-          array(
-            'name' => 'first_name',
-            'customCode' => '{html_options name="salutation" id="salutation" options=$fields.salutation.options selected=$fields.salutation.value}&nbsp;<input name="first_name"  id="first_name" size="25" maxlength="25" type="text" value="{$fields.first_name.value}">',
+           array (
+             'name' => 'first_name',
+             'customCode' => '{html_options name="salutation" id="salutation" options=$fields.salutation.options selected=$fields.salutation.value}&nbsp;<input name="first_name"  id="first_name" size="25" maxlength="25" type="text" value="{$fields.first_name.value}">',
+           ),
+           1 => 'last_name',
           ),
-        ),
-        1 =>
-        array(
+          1 =>
+           array (
+              0 => '',
+              1 => 'phone_work',
+              ),
+              2 =>
+                  array(
           0 => 'last_name',
           1 => 'phone_work',
         ),
