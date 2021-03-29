@@ -3793,6 +3793,7 @@ $app_strings['LBL_SEARCHING'] = 'searching...';
 $app_strings['LBL_NOT_FOUND'] = 'Not found.';
 $app_strings['LBL_SEARCH_ERROR'] = 'Search error.';
 $app_strings['LBL_FOUND'] = 'Found';
+$app_strings['LBL_GET_RECORD_LIST_ERROR'] = 'Error occurred while retrieving records';
 $app_strings['LBL_NUMBER_OF_RECORDS'] = 'The Number of Records';
 $app_strings['LBL_FORWARD_SLASH'] = '/';
 $app_strings['LBL_CASES_INSIGHT'] = ' {{fields.cases.value}} ( {{fields.default.value}} )';
