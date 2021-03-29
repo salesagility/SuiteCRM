@@ -39,53 +39,17 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
-
-{*<!-- tab panel main div -->*}
-
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
-
-    {*row*}
-
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
-
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
-
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
-        </div>
-        {*<!-- /DIV column -->*}
-
-
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
-
-</div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}
+<li class="current-module-action-links">
+    <ul>
+        {if is_array($shortcutTopMenu.$module_name)
+            && count($shortcutTopMenu.$module_name) > 0}
+            {foreach from=$shortcutTopMenu.$module_name item=item}
+                {if $item.URL == "-"}
+                    {*<li><a></a><span>&nbsp;</span></li>*}
+                {else}
+                    <li><a href="{$item.URL}"><span class="topnav-fake-icon">{* fakes the space the icon takes *}</span><span aria-hidden="true">{$item.LABEL}</span></a></li>
+                {/if}
+            {/foreach}
+        {/if}
+    </ul>
+</li>

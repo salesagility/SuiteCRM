@@ -39,53 +39,15 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
-
-{*<!-- tab panel main div -->*}
-
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
-
-    {*row*}
-
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
-
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
-
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
-        </div>
-        {*<!-- /DIV column -->*}
-
-
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
-
-</div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}
+<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    {$APP.LBL_CREATE_BUTTON_LABEL}<span class="suitepicon suitepicon-action-caret"></span>
+</a>
+<ul class="dropdown-menu" role="menu">
+    <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a></li>
+    <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Contacts" label="LBL_MODULE_NAME"}</a></li>
+    <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Opportunities" label="LBL_MODULE_NAME"}</a></li>
+    <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Leads" label="LBL_MODULE_NAME"}</a></li>
+    <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Documents" label="LBL_MODULE_NAME"}</a></li>
+    <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Calls" label="LBL_MODULE_NAME"}</a></li>
+    <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Tasks" label="LBL_MODULE_NAME"}</a></li>
+</ul>

@@ -39,53 +39,30 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
+{*label*}
 
-{*<!-- tab panel main div -->*}
+{*<!-- LABEL -->*}
 
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
+{{if isset($colData.field.customLabel)}}
+    {{$colData.field.customLabel}}
+{{elseif isset($colData.field.label) && strpos($colData.field.label, '$')}}
+    {capture name="label" assign="label"}{{$colData.field.label}}{/capture}
+    {$label|strip_semicolon}:
+{{elseif isset($colData.field.label)}}
+    {capture name="label" assign="label"}{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}{/capture}
+    {$label|strip_semicolon}:
+{{elseif isset($fields[$colData.field.name])}}
+    {capture name="label" assign="label"}{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}{/capture}
+    {$label|strip_semicolon}:
+{{else}}
+    &nbsp;
+{{/if}}
 
-    {*row*}
-
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
-
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
-
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
-        </div>
-        {*<!-- /DIV column -->*}
-
-
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
-
-</div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}
+{{if isset($colData.field.popupHelp) || isset($fields[$colData.field.name]) && isset($fields[$colData.field.name].popupHelp) }}
+    {{if isset($colData.field.popupHelp) }}
+        {capture name="popupText" assign="popupText"}{sugar_translate label="{{$colData.field.popupHelp}}" module="{{$module}}"}{/capture}
+    {{elseif isset($fields[$colData.field.name].popupHelp)}}
+        {capture name="popupText" assign="popupText"}{sugar_translate label="{{$fields[$colData.field.name].popupHelp}}" module='{{$module}}'}{/capture}
+    {{/if}}
+    {sugar_help text=$popupText WIDTH=400}
+{{/if}}

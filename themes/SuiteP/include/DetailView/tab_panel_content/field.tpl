@@ -39,53 +39,37 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
+{{if $fieldCount < $smarty.foreach.colIteration.total && !empty($colData.field.name)}}
 
-{*<!-- tab panel main div -->*}
+    {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+        {*<!-- DIV inside - colspan != 3 -->*}
+        {{if $smarty.foreach.colIteration.index == 0}}
+        	<div class="col-xs-12 col-sm-4 label col-1-label">
+    	{{else}}
+        	<div class="col-xs-12 col-sm-4 label col-2-label">
+    	{{/if}}
+    {{else}}
+        {*<!-- DIV inside - colspan = 3 -->*}
+        <div class="col-xs-12 col-sm-2 label col-1-label">
+    {{/if}}
 
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
+        {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field/label.tpl'}}
 
-    {*row*}
+    </div>
+    {*<!-- /DIV inside  -->*}
 
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
+    {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+        {*<!-- phone (version 1) -->*}
+        <div class="col-xs-12 col-sm-8 detail-view-field{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}} inlineEdit{{/if}}{{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}} phone{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}}>
+    {{else}}
+        {*<!-- phone (version 2) -->*}
+        <div class="col-xs-12 col-sm-10 detail-view-field{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}} inlineEdit{{/if}}{{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}} phone{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}}>
+    {{/if}}
 
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
+    
+    {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field/value_detail.tpl'}}
 
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
+    </div>
+    {*<!-- /phone (version 1/2) -->*}
 
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
-        </div>
-        {*<!-- /DIV column -->*}
-
-
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
-
-</div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}
+{{/if}}

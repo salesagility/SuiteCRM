@@ -39,53 +39,25 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
-
-{*<!-- tab panel main div -->*}
-
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
-
-    {*row*}
-
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
-
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
-
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
-        </div>
-        {*<!-- /DIV column -->*}
-
-
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
-
-</div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}
+<ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
+    <li role="presentation">
+        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+            {$APP.LBL_PROFILE}
+        </a>
+    </li>
+    {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+        <li role="presentation">
+            <a id="{$gcl_key}_link"
+                href="{$GCL.URL}"
+                {if !empty($GCL.ONCLICK)} 
+                onclick="{$GCL.ONCLICK}"
+                {/if}
+                {if !empty($GCL.TARGET)} 
+                target="{$GCL.TARGET}"
+                {/if}
+                >{$GCL.LABEL}</a>
+        </li>
+    {/foreach}
+    <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
+                               class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+</ul>

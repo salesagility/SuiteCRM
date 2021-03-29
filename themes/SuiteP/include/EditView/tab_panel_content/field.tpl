@@ -39,53 +39,47 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
+{{if $fieldCount < $smarty.foreach.colIteration.total && $addressCount < 1 && !empty($colData.field.name) && empty($colData.field.hideIf)}}
+    {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
+    {*hide label*}
+    {{else}}
 
-{*<!-- tab panel main div -->*}
+    {*<!-- LABEL -->*}
+    {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
+        <div class="col-xs-12 col-sm-4 label" data-label="{{$fields[$colData.field.name].vname}}">
+    {{else}}
+         <div class="col-xs-12 col-sm-2 label" data-label="{{$fields[$colData.field.name].vname}}">
+    {{/if}}
 
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
-
-    {*row*}
-
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
-
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
-
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
+            {{include file='themes/SuiteP/include/EditView/tab_panel_content/field/label.tpl'}}
 
         </div>
-        {*<!-- /DIV column -->*}
+    {{/if}}
 
+    {*<!-- VALUE -->*}
+    {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true && $colData.colspan != 3}}
+        {{assign var="fieldClasses" value="col-xs-12 col-sm-12"}}
+    {{else}}
+        {{assign var="fieldClasses" value="col-xs-12 col-sm-8"}}
+    {{/if}}
 
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
+    <div class="{{$fieldClasses}} edit-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
 
-</div>
-{{/foreach}}
+        {{include file='themes/SuiteP/include/EditView/tab_panel_content/field/value_edit.tpl'}}
 
-{*<!-- /tab panel main div -->*}
+    </div>
+{{else}}
+
+{{/if}}
+
+{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}<div class="inlineEditIcon col-xs-1">
+    {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}
+    </div>
+{{/if}}
+
+{*Field Exceptions*}
+{{if !empty($colData.field.type)}}
+    {{if $colData.field.type == 'address'}}
+         {{counter name="addressCount" print=false}}
+    {{/if}}
+{{/if}}

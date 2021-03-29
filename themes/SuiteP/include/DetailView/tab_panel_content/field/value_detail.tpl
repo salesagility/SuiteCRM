@@ -37,55 +37,57 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
- *}
+*}
 
-{*<!-- tab_panel_content.tpl START -->*}
 
-{*<!-- tab panel main div -->*}
+{{if !empty($colData.field.name)}}
 
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
+{*<!-- simple hidden start -->*}
+{if !$fields.{{$colData.field.name}}.hidden}
 
-    {*row*}
+{{/if}}
 
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
+{{$colData.field.prefix}}
 
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
 
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
+{{if ($colData.field.customCode && !$colData.field.customCodeRenderField) || $colData.field.assign}}
+    {counter name="panelFieldCount" print=false}
+    <span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
+{{elseif $fields[$colData.field.name] && !empty($colData.field.fields) }}
 
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
+    {{foreach from=$colData.field.fields item=subField}}
+        {{if $fields[$subField]}}
+            {counter name="panelFieldCount" print=false}
+            {{sugar_field parentFieldArray='fields' tabindex=$tabIndex vardef=$fields[$subField] displayType='DetailView'}}&nbsp;
         {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
+            {counter name="panelFieldCount" print=false}
+            {{$subField}}
         {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
-        </div>
-        {*<!-- /DIV column -->*}
-
-
     {{/foreach}}
-    {{counter name="columnCount" print=false}}
 
+{{elseif $fields[$colData.field.name]}}
+    {counter name="panelFieldCount" print=false}
+    {{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] displayType='DetailView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type}}
+{{/if}}
+
+{{if !empty($colData.field.customCode) && $colData.field.customCodeRenderField}}
+    {counter name="panelFieldCount" print=false}
+    <span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
+{{/if}}
+
+{{$colData.field.suffix}}
+
+{{if !empty($colData.field.name)}}
+
+
+
+{/if}
+{*<!-- simple hidden finish -->*}
+
+{{/if}}
+
+{{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
+<div class="inlineEditIcon col-xs-hidden">
+    <span class="suitepicon suitepicon-action-edit"></span>
 </div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}
+{{/if}}

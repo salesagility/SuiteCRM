@@ -39,53 +39,21 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
-
-{*<!-- tab panel main div -->*}
-
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
-
-    {*row*}
-
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
-
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
-
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
+<button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
+</button>
+<div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+    <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+          onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+        <input type="hidden" class="form-control" name="module" value="Home">
+        <input type="hidden" class="form-control" name="search_form" value="false">
+        <input type="hidden" class="form-control" name="advanced" value="false">
+        <div class="input-group">
+            <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                   placeholder="{$APP.LBL_SEARCH_BUTTON}..." value="{$SEARCH}"/>
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+        </span>
         </div>
-        {*<!-- /DIV column -->*}
-
-
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
-
+    </form>
 </div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}

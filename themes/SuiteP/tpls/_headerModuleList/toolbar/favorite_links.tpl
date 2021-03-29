@@ -39,53 +39,34 @@
  */
  *}
 
-{*<!-- tab_panel_content.tpl START -->*}
-
-{*<!-- tab panel main div -->*}
-
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
-
-    {*row*}
-
-    {*<!-- ROW -->*}
-<div class="row detail-view-row">
-
-    {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
-    {{foreach name=colIteration from=$rowData key=col item=colData}}
-
-        {*column*}
-
-        {*<!-- COLUMN -->*}
-
-        {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-            {*<!-- DIV column - colspan != 3 -->*}
-            <div class="col-xs-12 col-sm-6 detail-view-row-item">
-        {{else}}
-            {*<!-- DIV column - colspan = 3 -->*}
-            <div class="col-xs-12 col-sm-12 detail-view-row-item">
-        {{/if}}
-
-
-        {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
-
-        {{foreach name=fieldIteration from=$colData key=field item=subField}}
-
-            {{if !(!isset($subField.name) || !$subField.name)}}
-                {{include file='themes/SuiteP/include/DetailView/tab_panel_content/field.tpl'}}
-                {{counter name="fieldCount" print=false}}
-            {{/if}}
-
-        {{/foreach}}
-
-        </div>
-        {*<!-- /DIV column -->*}
-
-
-    {{/foreach}}
-    {{counter name="columnCount" print=false}}
-
-</div>
-{{/foreach}}
-
-{*<!-- /tab panel main div -->*}
+{* when records are found for the current module show favorites header *}
+{counter start=0 name="moduleFavoriteRecordsTotal" assign="moduleFavoriteRecordsTotal"  print=false}
+{foreach from=$favoriteRecords item=item name=lastViewed}
+    {if $item.module_name == $module_name and $moduleFavoriteRecordsTotal == 0}
+        <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
+        {counter name="moduleFavoriteRecordsTotal" print=false}
+    {/if}
+{/foreach}
+<li class="current-module-favorite-links">
+    <ul>
+        {* when records are found for the current module show the first 3 records *}
+        {counter start=0 name="moduleFavoriteRecords" assign="moduleFavoriteRecords" print=false}
+        {foreach from=$favoriteRecords item=item name=lastViewed}
+            {if $item.module_name == $module_name and $moduleFavoriteRecords < 3}
+                <li class="favoritelinks" role="presentation">
+                    <a title="{$item.module_name}"
+                       accessKey="{$smarty.foreach.lastViewed.iteration}"
+                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
+                        <span class="suitepicon suitepicon-module-{$item.module_name|lower|replace:'_':'-'}"></span>
+                        <span aria-hidden="true">{$item.item_summary_short}</span>
+                    </a>
+                    {capture assign='access'}{suite_check_access module=$item.module_name action='edit' record=$item.item_id }{/capture}
+                    {if $access}
+                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                    {/if}
+                </li>
+                {counter name="moduleFavoriteRecords" print=false}
+            {/if}
+        {/foreach}
+    </ul>
+</li>
