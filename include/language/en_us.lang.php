@@ -2143,6 +2143,7 @@ $app_strings = array(
     'LBL_DELETE_REMINDER_CONFIRM' => 'Reminder doesn\'t include any invitees, do you want to remove the reminder?',
     'LBL_DELETE_REMINDER' => 'Delete Reminder',
     'LBL_OK' => 'Ok',
+    'LBL_PROCEED' => 'Proceed',
 
     'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
     'LBL_COLUMN_CHOOSER' => 'Column Chooser',
