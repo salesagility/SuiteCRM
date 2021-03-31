@@ -2067,16 +2067,40 @@ function getLicenseContents($filename)
 
 ///////////////////////////////////////////////////////////////////////////////
 ////    FROM POPULATE SEED DATA
+global $seed;
 $seed = array(
-    'qa',       'dev',          'beans',
-    'info',     'sales',        'support',
-    'kid',      'the',          'section',
-    'sugar',    'hr',           'im',
-    'kid',      'vegan',        'phone',
+    'qa',
+    'dev',
+    'beans',
+    'info',
+    'sales',
+    'support',
+    'kid',
+    'the',
+    'section',
+    'sugar',
+    'hr',
+    'im',
+    'kid',
+    'vegan',
+    'phone',
 );
+global $tlds;
 $tlds = array(
-    ".com", ".org", ".net", ".tv", ".cn", ".co.jp", ".us",
-    ".edu", ".tw", ".de", ".it", ".co.uk", ".info", ".biz",
+    ".com",
+    ".org",
+    ".net",
+    ".tv",
+    ".cn",
+    ".co.jp",
+    ".us",
+    ".edu",
+    ".tw",
+    ".de",
+    ".it",
+    ".co.uk",
+    ".info",
+    ".biz",
     ".name",
 );
 
