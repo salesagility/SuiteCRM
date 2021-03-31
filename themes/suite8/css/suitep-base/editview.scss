@@ -314,13 +314,14 @@ a#powered_by:hover {
 
 #copyright_data {
   padding-left: 1%;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .footer_right {
   padding-right: 1%;
   float: right;
   text-align: right;
-  width: 47%;
   text-transform: uppercase;
 }
 
@@ -4070,8 +4071,7 @@ select#sales_stage_advanced {
 .serverstats {
   padding: 0;
   margin: 0;
-  float: left;
-  width: 250px;
+  display: inline-block;
 }
 
 .dashboardTabList li a span {
@@ -5022,11 +5022,9 @@ object {
 
   }
 
-  .detail table
-  table.detail {
+  .detail table table.detail {
     font-size: 1em;
     background: none;
-
   }
 
   .edit h4 {
@@ -5114,12 +5112,8 @@ object {
 }
 
 @media (max-width: 750px) {
-  .footer_left {
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer_right {
+  .footer_left, .footer_right, .serverstats {
+    padding: 0;
     text-align: center;
     width: 100%;
   }
