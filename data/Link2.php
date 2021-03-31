@@ -577,27 +577,29 @@ class Link2
 
         foreach ($rel_keys as $key) {
             //We must use beans for LogicHooks and other business logic to fire correctly
-            if (!($key instanceof SugarBean)) {
-                $key = $this->getRelatedBean($key);
-                if (!($key instanceof SugarBean)) {
+            $keyBean = $key;
+            if (!($keyBean instanceof SugarBean)) {
+                $keyBean = $this->getRelatedBean($keyBean);
+                if (!($keyBean instanceof SugarBean)) {
                     $GLOBALS['log']->error('Unable to load related bean by id');
-
-                    return false;
+//                    Note these beans as failed and continue
+                    $failures[] = $key;
+                    continue;
                 }
             }
 
-            if (empty($key->id) || empty($this->focus->id)) {
+            if (empty($keyBean->id) || empty($this->focus->id)) {
                 return false;
             }
 
             if ($this->getSide() == REL_LHS) {
-                $success = $this->relationship->remove($this->focus, $key);
+                $success = $this->relationship->remove($this->focus, $keyBean);
             } else {
-                $success = $this->relationship->remove($key, $this->focus);
+                $success = $this->relationship->remove($keyBean, $this->focus);
             }
 
             if ($success == false) {
-                $failures[] = $key->id;
+                $failures[] = $keyBean->id;
             }
         }
 
