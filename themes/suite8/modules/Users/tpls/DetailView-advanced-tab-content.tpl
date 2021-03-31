@@ -1,3 +1,4 @@
+{*
 /**
 * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
 * Copyright (C) 2021 SalesAgility Ltd.
@@ -23,6 +24,7 @@
 * feasible for technical reasons, the Appropriate Legal Notices must display
 * the words "Supercharged by SuiteCRM".
 */
+*}
 {*
 advanced tab content goes here
 *}
