@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-include_once __DIR__ . '/../../../vendor/autoload.php';
+include_once __DIR__ . '/../../../../../vendor/autoload.php';
 
 // Prevent errors from being echoed out to the client
 // We MUST use the exceptions instead to pass the errors object
