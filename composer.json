@@ -81,9 +81,7 @@
   "scripts": {
     "post-install-cmd": [
       "rm -Rf vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests",
-      "mv vendor/google/apiclient-services/src/Google/Service/Calendar* vendor/google/apiclient-services/src/Google/",
-      "rm -Rf vendor/google/apiclient-services/src/Google/Service/*",
-      "mv vendor/google/apiclient-services/src/Google/Calendar* vendor/google/apiclient-services/src/Google/Service/"
+      "Google\\Task\\Composer::cleanup"
     ]
   },
   "prefer-stable": true,
@@ -121,7 +119,10 @@
       "merge-dev": true,
       "merge-extra": false,
       "merge-extra-deep": false,
-      "merge-scripts": false
+      "merge-scripts": false,
+      "google/apiclient-services": [
+        "Calendar"
+      ]
     }
   }
 }
