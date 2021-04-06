@@ -12,7 +12,6 @@ exclude_paths:
   - 'include/HTMLPurifier/**'
   - 'include/ytree/**'
   - 'include/php-sql-parser.php*'
-  - 'include/parsecsv.lib.php*'
   - 'modules/AOS_PDF_Templates/PDF_Lib/**'
   - 'Zend/**'
   - 'modules/AOD_Index/Lib/**'
