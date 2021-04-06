@@ -2197,6 +2197,14 @@ $app_strings = array(
     'LBL_CONTACT_HAS_NO_PRIMARY_EMAIL' => 'Confirm Opt In Email sending is not possible because the Contact has not Primary Email Address',
     'LBL_CONFIRM_EMAIL_SENDING_FAILED' => 'Confirm Opt In Email sending failed',
     'LBL_CONFIRM_EMAIL_SENT' => 'Confirm Opt In Email sent successfully',
+
+    //List View Column Selector Modal
+    'LBL_COLUMN_SELECTOR_DISPLAYED_COLS' => 'DISPLAYED',
+    'LBL_COLUMN_SELECTOR_HIDDEN_COLS' => 'HIDDEN',
+    'LBL_COLUMN_SELECTOR_CLOSE_BUTTON' => 'Close',
+    'LBL_COLUMN_SELECTOR_SAVE_BUTTON' => 'Save Changes',
+    'LBL_COLUMN_SELECTOR_MODAL_TITLE' => 'Choose Columns'
+
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
