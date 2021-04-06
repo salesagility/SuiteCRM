@@ -50,6 +50,7 @@
 <div id="testSettingsDiv"></div>
 <div id="selectFoldersDiv"></div>
 <!-- BEGIN: main -->
+<div class="header-module-title header-inbound-title">Inbound Email</div>
 {MODULE_TITLE}
 {ERROR_STRING}
 <script type='text/javascript' src='cache/include/javascript/sugar_grp_overlib.js?v={VERSION_MARK}'></script>
@@ -67,28 +68,28 @@
 	<input type="hidden" name="personal" value="{PERSONAL}">
 	<input type="hidden" name="searchField" value="">
 	<input type="hidden" id="mailbox_type" name="mailbox_type" value="{MAILBOX_TYPE}">
-
-	<table width="100%" cellpadding="0" cellspacing="0" border="0">
-		<tr>
-			<td>
-				<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='Save'; {CHOOSER_SCRIPT} this.form.return_id.value='{RETURN_ID}'; return checkformdata()" type="submit" name="button" id="button" value="  {APP.LBL_SAVE_BUTTON_LABEL}  " {IE_DISABLED}>
-				<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" id="emailCancel" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'; if(this.form.record.value == '' && this.form.origin_id.value != '') this.form.record.value=this.form.origin_id.value;" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  ">
-				<input title="{MOD.LBL_TEST_BUTTON_TITLE}"
-					type='button'
-					class="button"
-					id="emailTestSettings"
-					onClick='ie_test_open_popup_with_submit("InboundEmail", "Popup", "Popup", 400, 300, trim(this.form.server_url.value), this.form.protocol.value, trim(this.form.port.value), trim(this.form.email_user.value), Rot13.write(this.form.email_password.value), trim(this.form.mailbox.value), this.form.ssl.checked, this.form.personal.value, "EditView", this.form.origin_id.value?this.form.origin_id.value:this.form.record.value);'
-					name="button" value="  {MOD.LBL_TEST_SETTINGS}  " {IE_DISABLED}>
-			</td>
-			<td align="right" width="20%" NOWRAP><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
-			<td align='right'>{ADMIN_EDIT}</td>
-		</tr>
-	</table>
-
-    <div class="edit view">
+	<div class="inbound-emailbtn">
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td align="right" width="20%" NOWRAP style="padding-right: 1em;"><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+				<td>
+					<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='Save'; {CHOOSER_SCRIPT} this.form.return_id.value='{RETURN_ID}'; return checkformdata()" type="submit" name="button" id="button" value="  {APP.LBL_SAVE_BUTTON_LABEL}  " {IE_DISABLED}>
+					<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" id="emailCancel" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'; if(this.form.record.value == '' && this.form.origin_id.value != '') this.form.record.value=this.form.origin_id.value;" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  ">
+					<input title="{MOD.LBL_TEST_BUTTON_TITLE}"
+						type='button'
+						class="button"
+						id="emailTestSettings"
+						onClick='ie_test_open_popup_with_submit("InboundEmail", "Popup", "Popup", 400, 300, trim(this.form.server_url.value), this.form.protocol.value, trim(this.form.port.value), trim(this.form.email_user.value), Rot13.write(this.form.email_password.value), trim(this.form.mailbox.value), this.form.ssl.checked, this.form.personal.value, "EditView", this.form.origin_id.value?this.form.origin_id.value:this.form.record.value);'
+						name="button" value="  {MOD.LBL_TEST_SETTINGS}  " {IE_DISABLED}>
+				</td>				
+				<td align='right'>{ADMIN_EDIT}</td>
+			</tr>
+		</table>
+	</div>
+    <div class="edit view inboundemail">
 	<table width="100%" border=0 cellspacing="{GRIDLINE}" cellpadding="0">
 		<tr>
-		      <th align="left" scope="row" colspan="1"><h4>{MOD.LBL_BASIC}</h4></th>
+		      <th align="left" scope="row" colspan="4"><h4>{MOD.LBL_BASIC}</h4></th>
 		</tr>
 		<tr>
 		<td>&nbsp;</td>
@@ -97,7 +98,7 @@
 		<tr>
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				<span>{MOD.LBL_NAME}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
-			<td valign="top"  width="35%">
+			<td valign="top"  width="35%" class="border-right">
 				<span><input name='name' id='name' tabindex='10' size='30' maxlength='255' type="text" value="{NAME}" {IE_DISABLED}></span></td>
 			<td valign="top" scope="row">
 				<span>{MOD.LBL_STATUS}:&nbsp;</span></td>
@@ -107,7 +108,7 @@
 		<tr>
 			<td valign="top" scope="row">
 					<span>{MOD.LBL_SERVER_URL}: <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
-			<td valign="top"  width="35%">
+			<td valign="top"  width="35%" class="border-right">
 				<span><input id='server_url' name='server_url' tabindex='20' size='30' maxlength='100' type="text" value="{SERVER_URL}" {IE_DISABLED}></span></td>
 			<td valign="top" scope="row">
 				<span>{MOD.LBL_LOGIN}:
@@ -119,7 +120,7 @@
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				<span>{MOD.LBL_SERVER_TYPE}:
 				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
-			<td valign="top"  width="35%">
+			<td valign="top"  width="35%" class="border-right">
 				<span>
 				<select name='protocol' id="protocol" tabindex='30' onchange="toggle_monitored_folder(this); setPortDefault();" {IE_DISABLED}>{PROTOCOL}</select></span></td>
 			<td valign="top" scope="row">
@@ -135,7 +136,7 @@
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				<span>{MOD.LBL_PORT}:
 				<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
-			<td valign="top"  width="35%">
+			<td valign="top"  width="35%" class="border-right">
 				<span>
 				<input name='port' id='port' tabindex="40" value="{PORT}" size='10' {IE_DISABLED}>
 			<td valign="top" scope="row" width="15%" NOWRAP>
@@ -149,7 +150,7 @@
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				<span><span>{MOD.LBL_SSL}:&nbsp;{TIPS.LBL_SSL_DESC}</span></span>
 			</td>
-			<td valign="top"  width="35%">
+			<td valign="top"  width="35%" class="border-right">
 				<span>
 				<input name='ssl' id='ssl' tabindex='45' {CERT} value='1' type='checkbox' {SSL} onClick="setPortDefault();" {IE_DISABLED}>
 				</span>
@@ -165,7 +166,7 @@
 		<tr id="sentFolderRow">
 			<td valign="top" scope="row">
 				<span>&nbsp;</span></td>
-			<td valign="top"  width="35%"><span>
+			<td valign="top"  width="35%" class="border-right"><span>
 				&nbsp;</span></td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				<span>{MOD.LBL_SENT_FOLDER}:</span></td>
@@ -177,20 +178,15 @@
 		</tr>
 	</table>
 	</div>
-    <div class="edit view">
+    <div class="edit view inboundemail">
 	<table width="100%" border="0" cellspacing="{GRIDLINE}" cellpadding="0">
 		<tr>
-		<th align="left" scope="row" colspan="4"><h4>{EMAIL_OPTIONS}</h4></th>
+			<th align="left" scope="row" colspan="4"><h4>{EMAIL_OPTIONS}</h4></th>
 		</tr>
 		<tr>
-			<td valign="top" scope="row" width="15%" NOWRAP>
-				<span>
-				&nbsp;</span></td>
-
-			<td valign="top"  width="35%">
-				<span>
-				&nbsp;</span></td>
-			<td valign="top" scope="row" width="15%" NOWRAP>
+			<td valign="top" scope="row" width="15%"></td>
+			<td valign="top" scope="row" width="35%"></td>
+			<td valign="top" scope="row">
 				<span>{MOD.LBL_FROM_NAME}:<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="35%">
 				<span><input tabindex="300" name="from_name" id="from_name" value="{FROM_NAME}" {IE_DISABLED}>&nbsp;</span></td>
@@ -200,7 +196,7 @@
 			<span><span style="{AUTO_IMPORT_STYLE}">{MOD.LBL_ENABLE_AUTO_IMPORT}:&nbsp;{TIPS.LBL_ASSIGN_TO_GROUP_FOLDER_DESC}</span></span>&nbsp;
 			</td>
 			<td valign="top"  width="15%" NOWRAP>
-			 <input name='is_auto_import' style="{AUTO_IMPORT_STYLE}" id='is_auto_import' onclick="showWarningsIfChaningAutoImport();"tabindex='45' type='checkbox' {IS_AUTO_IMPORT}>
+			 <input class="checkboxmar"name='is_auto_import' style="{AUTO_IMPORT_STYLE}" id='is_auto_import' onclick="showWarningsIfChaningAutoImport();"tabindex='45' type='checkbox' {IS_AUTO_IMPORT}>
 			</td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				<span>{MOD.LBL_FROM_ADDR}:<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span>{TIPS.LBL_FROM_ADDR_DESC}</span></td>
@@ -211,7 +207,7 @@
 			<td valign="top" scope="row">
 				<slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_CREATE_CASE}:&nbsp;{TIPS.LBL_CREATE_CASE_HELP}</span></td>
 			<td valign="top"  width="35%"><slot style="{MAILBOX_TYPE_STYLE}">
-			     <input name='is_create_case' id='is_create_case' onclick="showCreateCaseRow();"tabindex='45' type='checkbox' {IS_CREATE_CASE} {IE_DISABLED}></span></td>
+			     <input class="checkboxmar" name='is_create_case' id='is_create_case' onclick="showCreateCaseRow();"tabindex='45' type='checkbox' {IS_CREATE_CASE} {IE_DISABLED}></span></td>
 			<td valign="top" scope="row" width="15%" NOWRAP>
 				{MOD.LBL_REPLY_TO_NAME}:&nbsp;
 			</td>

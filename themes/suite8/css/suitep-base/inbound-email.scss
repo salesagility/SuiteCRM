@@ -1,0 +1,53 @@
+/* Inbound email CSS code */
+
+div.content div.pagecontent form#EditView div.edit.view.inboundemail table tbody tr td {
+    padding: 0.3em 0.8em 1em 2em;
+}
+
+div.content div.pagecontent form#EditView div.edit.view.inboundemail table tbody tr td select {
+    border: 1px solid $bright-grey;
+}
+
+div.inboundemail {
+    .border-right {
+      border-right: 1px solid $base-border-color;
+    }
+    h4 {
+      font-weight: 600;
+      padding:0.8em;
+    }
+    input[type=text],input[type=password]{
+      background: $transparent-color;
+      border: 1px solid $bright-grey;
+    }
+    input:not([type]) {
+      background: $transparent-color;
+      border: 1px solid $bright-grey;
+    }
+    table tbody tr td {
+      padding: 0.3em 0.8em 1em 2em;
+    }
+    select {
+      background: url($select-edit-background-url) no-repeat right;
+      background-size: 25px 11px;
+      border-color: $bright-grey;
+    }
+    slot {
+      white-space: normal;
+    }
+    .checkboxmar {
+      margin-top: 1em;
+    }
+  }
+  
+  .header-inbound-title {
+    margin-bottom: 0.5em;
+  }
+  
+  .inbound-emailbtn {
+    margin-bottom: 1em;
+    position: absolute;
+    right: 0;
+    top: 6.2rem;
+    display: flex;
+  }

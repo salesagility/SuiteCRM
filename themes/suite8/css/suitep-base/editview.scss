@@ -5576,8 +5576,9 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td {
 }
 
 div.content div.pagecontent form#EditView div.edit.view table tbody tr td span {
-  display: block;
+  display: inline;
   float: none;
+  text-transform: uppercase;
 }
 
 div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"] {
@@ -5834,3 +5835,4 @@ table.subpanel-table .pagination li.single > #formprojects_project_tasks {
     border-color: $bright-grey;
   }
 }
+
