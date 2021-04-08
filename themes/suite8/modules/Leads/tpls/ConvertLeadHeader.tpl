@@ -147,5 +147,5 @@ type="submit" name="button" value="{sugar_translate label='LBL_CANCEL_BUTTON_LAB
 </tr>
 </table>
 <div class="panel panel-default panel-convert-lead">
-<div class="panel-heading">&nbsp</div>
+<div class="panel-heading"></div>
 <div class="panel-body">
