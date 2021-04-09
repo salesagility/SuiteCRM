@@ -8709,7 +8709,7 @@ class HTMLPurifier_URI
         // URI that we don't allow into one we do.  So instead, we just
         // check if the scheme can be dropped because there is no host
         // and it is our default scheme.
-        if (!is_null($this->scheme) && is_null($this->host) || $this->host === '') {
+        if ((!is_null($this->scheme) && is_null($this->host)) || $this->host === '') {
             // support for relative paths is pretty abysmal when the
             // scheme is present, so axe it when possible
             $def = $config->getDefinition('URI');
@@ -9242,9 +9242,9 @@ abstract class HTMLPurifier_URIScheme
         }
         // kludge: browsers do funny things when the scheme but not the
         // authority is set
-        if (!$this->may_omit_host &&
-            // if the scheme is present, a missing host is always in error
-            (!is_null($uri->scheme) && ($uri->host === '' || is_null($uri->host))) ||
+        if ((!$this->may_omit_host &&
+                // if the scheme is present, a missing host is always in error
+                (!is_null($uri->scheme) && ($uri->host === '' || is_null($uri->host)))) ||
             // if the scheme is not present, a *blank* host is in error,
             // since this translates into '///path' which most browsers
             // interpret as being 'http://path'.
@@ -15283,7 +15283,9 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
                 return false;
             }
             $old = umask(0000);
-            mkdir($directory, $chmod);
+            if (!mkdir($directory, $chmod) && !is_dir($directory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
+            }
             umask($old);
         } elseif (!$this->_testPermissions($directory, $chmod)) {
             return false;

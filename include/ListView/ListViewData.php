@@ -523,9 +523,9 @@ class ListViewData
 
         $queryString = '';
 
-        if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search" ||
-            isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "") ||
-            isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords") {
+        if ((isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search") ||
+            (isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "")) ||
+            (isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")) {
             $queryString = "-advanced_search";
         } elseif (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search") {
             if ($seed->module_dir == "Reports") {

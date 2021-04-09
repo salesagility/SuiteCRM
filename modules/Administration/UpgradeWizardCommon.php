@@ -236,7 +236,7 @@ function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_v
                     $needle = $unzip_dir;
                 }
                 $files_found = md5DirCompare($from.'/', $cp['to'].'/', array('.svn'), false);
-                if (count($files_found > 0)) {
+                if (count($files_found) > 0) {
                     foreach ($files_found as $key=>$value) {
                         $modified_files[] = str_replace($needle, '', $key);
                     }

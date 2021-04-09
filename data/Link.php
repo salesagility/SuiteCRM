@@ -739,9 +739,9 @@ class Link
                 $this->_add_many_to_many($additional_values);
 
                 //reverse will be set to true only for self-referencing many-to-many relationships.
-                if ($this->_is_self_relationship() && !empty($GLOBALS['dictionary'][$this->_relationship_name]) &&
-                    !empty($GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type']) &&
-                    $GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type'] == 'many-to-many' ||
+                if (($this->_is_self_relationship() && !empty($GLOBALS['dictionary'][$this->_relationship_name]) &&
+                        !empty($GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type']) &&
+                        $GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type'] == 'many-to-many') ||
                 (!empty($this->_relationship->reverse) && $this->_relationship->reverse == true)) {
                     //swap key values;
                     $temp=$additional_values[$this->_relationship->join_key_lhs];

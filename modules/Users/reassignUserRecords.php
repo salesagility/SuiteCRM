@@ -215,7 +215,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                 break;
             default:
                 //echo "Skipping field {$meta['name']} since the type is not supported<BR>";
-                continue;
+                continue 2;
         }
             echo "<$tag $size name=\"$name\" $multi>\n$extra";
             echo "<BR>\n";
@@ -329,7 +329,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                         break;
                     case "multiselect":
                         if (empty($nameQuoted)) {
-                            continue;
+                            continue 2;
                         }
                         $in_string = "";
                         $empty_check = "";
@@ -344,7 +344,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                         break;
                     default:
                         //echo "Skipping field {$meta['name']} since the type is not supported<BR>";
-                        continue;
+                        continue 2;
                         break;
                 }
             }

@@ -140,7 +140,8 @@ class ParserModifySubPanel extends ParserModifyListView
             foreach ($this->subPanelParentModule->field_defs as $key => $fieldDefinition) {
                 $fieldName = strtolower($key) ;
                 if (! isset($lowerFieldList [ $fieldName ])) { // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
-                    if ((empty($fieldDefinition [ 'source' ]) || $fieldDefinition [ 'source' ] == 'db' || $fieldDefinition [ 'source' ] == 'custom_fields') && $fieldDefinition [ 'type' ] != 'id' && strcmp($fieldName, 'deleted') != 0 || (isset($def [ 'name' ]) && strpos($def [ 'name' ], "_name") != false) || ! empty($def [ 'custom_type' ]) && (empty($fieldDefinition [ 'dbType' ]) || $fieldDefinition [ 'dbType' ] != 'id') && (empty($fieldDefinition [ 'dbtype' ]) || $fieldDefinition [ 'dbtype' ] != 'id') || (! empty($fieldDefinition [ 'studio' ]) && $fieldDefinition [ 'studio' ] == 'visible')) {
+                    if (((empty($fieldDefinition ['source']) || $fieldDefinition ['source'] == 'db' || $fieldDefinition ['source'] == 'custom_fields') && $fieldDefinition ['type'] != 'id' && strcmp($fieldName,
+                                'deleted') != 0) || (isset($def [ 'name' ]) && strpos($def [ 'name' ], "_name") != false) || (!empty($def ['custom_type']) && (empty($fieldDefinition ['dbType']) || $fieldDefinition ['dbType'] != 'id') && (empty($fieldDefinition ['dbtype']) || $fieldDefinition ['dbtype'] != 'id')) || (! empty($fieldDefinition [ 'studio' ]) && $fieldDefinition [ 'studio' ] == 'visible')) {
                         $label = (isset($fieldDefinition [ 'vname' ])) ? $fieldDefinition [ 'vname' ] : (isset($fieldDefinition [ 'label' ]) ? $fieldDefinition [ 'label' ] : $fieldDefinition [ 'name' ]) ;
                         $this->availableFields [ $fieldName ] = array( 'width' => '10' , 'label' => $label ) ;
                     }

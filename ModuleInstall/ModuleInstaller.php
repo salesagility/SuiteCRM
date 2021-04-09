@@ -1925,7 +1925,7 @@ class ModuleInstaller
             if (!file_exists("custom/Extension/application/Ext/Include")) {
                 mkdir_recursive("custom/Extension/application/Ext/Include", true);
             }
-            file_put_contents("custom/Extension/application/Ext/Include/{$this->id_name}.php", $str);
+            file_put_contents("custom/Extension/application/Ext/Include/{$this->id_name}.php", $str, LOCK_EX);
         }
     }
 

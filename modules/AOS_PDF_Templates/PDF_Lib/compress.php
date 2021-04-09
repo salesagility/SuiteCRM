@@ -153,7 +153,7 @@ foreach ($l as $k=>$ln) {
 }
 // mPDF 5.0
 if (function_exists('file_put_contents')) {
-    $check = file_put_contents('mpdf.php', $x);
+    $check = file_put_contents('mpdf.php', $x, LOCK_EX);
 } else {
     $f=fopen('mpdf.php', 'wb');
     $check = fwrite($f, $x);

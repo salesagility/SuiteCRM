@@ -626,7 +626,7 @@ function getModuleField(
         $fieldlist[$fieldname]['name'] = $aow_field;
     }
 
-    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime') {
+    if ((isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo') || $fieldlist[$fieldname]['type'] == 'datetime') {
         $fieldlist[$aow_field]['aliasId'] = createBracketVariableAlias($aow_field);
         $fieldlist[$aow_field]['originalId'] = $aow_field;
     }

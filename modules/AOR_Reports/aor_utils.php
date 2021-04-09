@@ -439,22 +439,22 @@ function calculateQuarters($offsetMonths = 0)
     if ($offsetMonths > 0) {
         $q1start->add(new DateInterval('P' . $offsetMonths . 'M'));
     }
-    $q1end = DateTime::createFromFormat(DATE_ISO8601, $q1start->format(DATE_ISO8601));
+    $q1end = DateTime::createFromFormat(DATE_ATOM, $q1start->format(DATE_ATOM));
     $q1end->add(new DateInterval('P2M'));
 
-    $q2start = DateTime::createFromFormat(DATE_ISO8601, $q1start->format(DATE_ISO8601));
+    $q2start = DateTime::createFromFormat(DATE_ATOM, $q1start->format(DATE_ATOM));
     $q2start->add(new DateInterval('P3M'));
-    $q2end = DateTime::createFromFormat(DATE_ISO8601, $q2start->format(DATE_ISO8601));
+    $q2end = DateTime::createFromFormat(DATE_ATOM, $q2start->format(DATE_ATOM));
     $q2end->add(new DateInterval('P2M'));
 
-    $q3start = DateTime::createFromFormat(DATE_ISO8601, $q2start->format(DATE_ISO8601));
+    $q3start = DateTime::createFromFormat(DATE_ATOM, $q2start->format(DATE_ATOM));
     $q3start->add(new DateInterval('P3M'));
-    $q3end = DateTime::createFromFormat(DATE_ISO8601, $q3start->format(DATE_ISO8601));
+    $q3end = DateTime::createFromFormat(DATE_ATOM, $q3start->format(DATE_ATOM));
     $q3end->add(new DateInterval('P2M'));
 
-    $q4start = DateTime::createFromFormat(DATE_ISO8601, $q3start->format(DATE_ISO8601));
+    $q4start = DateTime::createFromFormat(DATE_ATOM, $q3start->format(DATE_ATOM));
     $q4start->add(new DateInterval('P3M'));
-    $q4end = DateTime::createFromFormat(DATE_ISO8601, $q4start->format(DATE_ISO8601));
+    $q4end = DateTime::createFromFormat(DATE_ATOM, $q4start->format(DATE_ATOM));
     $q4end->add(new DateInterval('P2M'));
 
     // Assign quarter boundaries

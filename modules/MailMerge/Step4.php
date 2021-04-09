@@ -129,7 +129,7 @@ $xtpl->assign("MAILMERGE_SELECTED_OBJECTS", get_select_options_with_id($builtArr
 $xtpl->assign("MAILMERGE_SELECTED_OBJECTS_DEF", urlencode($selObjs));
 $step_num = 4;
 
-if (isset($_SESSION['MAILMERGE_SKIP_REL']) && $_SESSION['MAILMERGE_SKIP_REL'] || !isset($_SESSION['MAILMERGE_RELATED_CONTACTS']) || empty($_SESSION['MAILMERGE_RELATED_CONTACTS'])) {
+if ((isset($_SESSION['MAILMERGE_SKIP_REL']) && $_SESSION['MAILMERGE_SKIP_REL']) || !isset($_SESSION['MAILMERGE_RELATED_CONTACTS']) || empty($_SESSION['MAILMERGE_RELATED_CONTACTS'])) {
     $xtpl->assign("PREV_STEP", "2");
     $step_num = 3;
 } else {

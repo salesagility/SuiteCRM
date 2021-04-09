@@ -760,8 +760,8 @@ class SugarController
     protected function action_massupdate()
     {
         if (!empty($_REQUEST['massupdate']) && $_REQUEST['massupdate'] == 'true' && (!empty($_REQUEST['uid']) || !empty($_REQUEST['entire']))) {
-            if (!empty($_REQUEST['Delete']) && $_REQUEST['Delete'] == 'true' && !$this->bean->ACLAccess('delete')
-                || (empty($_REQUEST['Delete']) || $_REQUEST['Delete'] != 'true') && !$this->bean->ACLAccess('save')
+            if ((!empty($_REQUEST['Delete']) && $_REQUEST['Delete'] == 'true' && !$this->bean->ACLAccess('delete'))
+                || ((empty($_REQUEST['Delete']) || $_REQUEST['Delete'] != 'true') && !$this->bean->ACLAccess('save'))
             ) {
                 ACLController::displayNoAccess(true);
                 sugar_cleanup(true);

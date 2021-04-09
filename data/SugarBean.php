@@ -2116,16 +2116,16 @@ class SugarBean
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $key => $value_array) {
                 if ((isset($value_array['importable'])
-                        && (is_string($value_array['importable']) && $value_array['importable'] == 'false'
-                            || is_bool($value_array['importable']) && !$value_array['importable']))
+                        && ((is_string($value_array['importable']) && $value_array['importable'] == 'false')
+                            || (is_bool($value_array['importable']) && !$value_array['importable'])))
                     || (isset($value_array['type']) && $value_array['type'] == 'link')
                     || (isset($value_array['auto_increment'])
                         && ($value_array['type'] || $value_array['type'] == 'true'))
                 ) {
                     // only allow import if we force it
                     if (isset($value_array['importable'])
-                        && (is_string($value_array['importable']) && $value_array['importable'] == 'true'
-                            || is_bool($value_array['importable']) && $value_array['importable'])
+                        && ((is_string($value_array['importable']) && $value_array['importable'] == 'true')
+                            || (is_bool($value_array['importable']) && $value_array['importable']))
                     ) {
                         $importableFields[$key] = $value_array;
                     }
@@ -3141,8 +3141,8 @@ class SugarBean
      */
     private function _sendNotifications($check_notify)
     {
-        if ($check_notify || (isset($this->notify_inworkflow) && $this->notify_inworkflow)
-            && !$this->isOwner($this->created_by)
+        if ($check_notify || ((isset($this->notify_inworkflow) && $this->notify_inworkflow)
+                && !$this->isOwner($this->created_by))
         ) {
             // cn: bug 42727 no need to send email to owner (within workflow)
 

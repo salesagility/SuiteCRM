@@ -253,7 +253,7 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
             }
         }
         $out .= ");\n";
-        file_put_contents($writeFile, $out);
+        file_put_contents($writeFile, $out, LOCK_EX);
 
         //return back mod strings
         $GLOBALS['mod_strings'] = $oldModStrings;

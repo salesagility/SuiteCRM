@@ -1110,10 +1110,10 @@ class SugarEmailAddress extends SugarBean
                     if (
                         !empty($a) &&
                         (
-                            isset($a['invalid_email']) &&
-                            isset($addressMeta['invalid_email']) &&
-                            isset($addressMeta['opt_out']) &&
-                            $a['invalid_email'] != $addressMeta['invalid_email'] ||
+                            (isset($a['invalid_email']) &&
+                                isset($addressMeta['invalid_email']) &&
+                                isset($addressMeta['opt_out']) &&
+                                $a['invalid_email'] != $addressMeta['invalid_email']) ||
                             $a['opt_out'] != $addressMeta['opt_out']
                         )
                     ) {
@@ -1578,24 +1578,30 @@ class SugarEmailAddress extends SugarBean
         $this->smarty->assign('prefillEmailAddresses', $prefill);
         $this->smarty->assign('prefillData', $prefillData);
         $this->smarty->assign('tabindex', $tabindex);
-        //Set addDefaultAddress flag (do not add if it's from the Email module)
+        
+        // Set addDefaultAddress flag (do not add if it's from the Email module)
         $this->smarty->assign(
             'addDefaultAddress',
             (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') ? 'false' : 'true'
         );
         $form = $this->view;
 
-        //determine if this should be a quickcreate form, or a quick create form under subpanels
+        // Determine if this should be a quickcreate form, or a quick create form under subpanels
         if ($this->view == "QuickCreate") {
-            // Fixed #1120 - fixed email validation for: Accounts -> Contacts subpanel -> Select -> Create Contact -> Save.
             // If email is required it should highlight this field and show an error message.
             // It didnt because the form was named form_DCSubpanelQuickCreate_Contacts instead of expected form_SubpanelQuickCreate_Contacts
-            if ($this->object_name = 'EmailAddress' && $saveModule == 'Contacts') {
+            
+            if ($this->object_name == 'EmailAddress' && $saveModule == 'Contacts') {
                 $form = 'form_' . $this->view . '_' . $module;
             } else {
                 $form = 'form_DC' . $this->view . '_' . $module;
             }
-            if (isset($_REQUEST['action']) && (isset($_REQUEST['action']) && $_REQUEST['action'] == 'SubpanelCreates' || $_REQUEST['action'] == 'SubpanelEdits')) {
+            
+            if (
+                isset($_REQUEST['action']) && 
+                ((isset($_REQUEST['action']) && $_REQUEST['action'] == 'SubpanelCreates') || 
+                $_REQUEST['action'] == 'SubpanelEdits')
+            ) {
                 $form = 'form_Subpanel' . $this->view . '_' . $module;
             }
         }

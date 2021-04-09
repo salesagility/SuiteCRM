@@ -608,7 +608,7 @@ class User extends Person implements EmailInterface
         $smtp_error = $admin->checkSmtpError();
 
         // only admin user can change 2 factor authentication settings
-        if ($smtp_error || $isUpdate && !is_admin($current_user)) {
+        if ($smtp_error || ($isUpdate && !is_admin($current_user))) {
             $tmpUser = BeanFactory::getBean('Users', $this->id);
 
             if ($smtp_error) {

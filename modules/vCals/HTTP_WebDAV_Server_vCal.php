@@ -301,7 +301,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                (Not Implemented) response in such cases."
             */
             foreach ($_SERVER as $key => $val) {
-                if (strncmp($key, "HTTP_CONTENT", 11)) {
+                if (strncmp($key, "HTTP_CONTENT", 12)) {
                     continue;
                 }
                 switch ($key) {

@@ -155,7 +155,7 @@ class DynamicField
     public function buildCache($module = false, $saveCache = true)
     {
         //We can't build the cache while installing as the required database tables may not exist.
-        if (!empty($GLOBALS['installing']) && $GLOBALS['installing'] == true || empty($this->db)) {
+        if ((!empty($GLOBALS['installing']) && $GLOBALS['installing'] == true) || empty($this->db)) {
             return false;
         }
         if ($module == '../data') {

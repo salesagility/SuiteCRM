@@ -437,7 +437,7 @@ function removeLanguagePack()
             $errors[] = $mod_strings['ERR_LANG_MISSING_FILE'].$zipFile;
         }
     }
-    if (count($errors > 0)) {
+    if (count($errors) > 0) {
         echo "<p class='error'>";
         foreach ($errors as $error) {
             echo "{$error}<br>";
@@ -522,7 +522,7 @@ function getInstalledLangPacks($showButtons=true)
     $files = findAllFiles(sugar_cached("upload/upgrades"), $files);
 
     if (isset($_SESSION['INSTALLED_LANG_PACKS']) && !empty($_SESSION['INSTALLED_LANG_PACKS'])) {
-        if (count($_SESSION['INSTALLED_LANG_PACKS'] > 0)) {
+        if (count($_SESSION['INSTALLED_LANG_PACKS']) > 0) {
             foreach ($_SESSION['INSTALLED_LANG_PACKS'] as $file) {
                 // handle manifest.php
                 $target_manifest = remove_file_extension($file) . '-manifest.php';

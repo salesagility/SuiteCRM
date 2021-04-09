@@ -380,8 +380,8 @@ function export($type, $records = null, $members = false, $sample=false)
                     if (isset($relatedBean->field_defs['name']['source']) && $relatedBean->field_defs['name']['source'] == 'non-db') {
                         //$relatedLabel = 'NULL AS related_label, NULL AS related_label1';
                         if (
-                            !isset($relatedBean->field_defs['first_name']['source']) || $relatedBean->field_defs['first_name']['source'] != 'non-db' &&
-                            !isset($relatedBean->field_defs['last_name']['source']) || $relatedBean->field_defs['last_name']['source'] != 'non-db'
+                            !isset($relatedBean->field_defs['first_name']['source']) || ($relatedBean->field_defs['first_name']['source'] != 'non-db' &&
+                                !isset($relatedBean->field_defs['last_name']['source'])) || $relatedBean->field_defs['last_name']['source'] != 'non-db'
                         ) {
                             $relatedLabel = "$relatedTable.last_name AS related_label, $relatedTable.first_name AS related_label1";
                         }

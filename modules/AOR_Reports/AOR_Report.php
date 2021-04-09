@@ -1562,7 +1562,7 @@ class AOR_Report extends Basic
                         $condition_module = $new_field_module;
 
                         // Debugging: security groups conditions - It's a hack to just get the query working
-                        if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
+                        if ($condition_module->module_dir = ('SecurityGroups' && count($path) > 1)) {
                             $table_alias = $oldAlias . ':' . $rel;
                         }
                         $condition->field = 'id';
