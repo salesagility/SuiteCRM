@@ -730,7 +730,7 @@
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop">
                     <button id="with-label" class="dropdown-toggle user-menu-button" title="{$CURRENT_USER}"data-toggle="dropdown" aria-expanded="true">
                         <span class="suitepicon suitepicon-action-current-user"></span>
-                        <span>{$CURRENT_USER}</span>
+                        <span class="globallabel-user">{$CURRENT_USER}</span>
                         <span class="suitepicon suitepicon-action-caret"></span>
                     </button>
                     <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="with-label">
