@@ -694,7 +694,8 @@
 }
 
 .globalLinks-desktop .suitepicon-action-caret {
-  line-height: 30px;
+  line-height: 45px;
+  font-size: 0.6em;
 }
 
 .usermenu a .caret {
@@ -721,6 +722,9 @@
 .globalLinks-desktop .suitepicon-action-current-user {
   font-size: $navbar-toolbar-height - 2px;
   font-weight: 400;
+  position: relative;
+  top: 7px;
+  vertical-align: top;
 }
 
 .globalLinks-desktop:hover {
@@ -1774,6 +1778,7 @@
 
   .globalLinks-mobile .suitepicon-action-current-user {
     font-size: $navbar-toolbar-height;
+    line-height: 0;
   }
 
   .navbar-search {
@@ -2089,10 +2094,10 @@
     display: inline-block;
     visibility: visible;
     text-align: right;
-    width: 28%;
+    width: 30%;
     float:right;
     padding-right: 0.5%;
-    margin-top: 6px;
+    margin-top: 4px;
   }
 
   .desktop-toolbar .navbar-brand-container {
@@ -2113,7 +2118,7 @@
   }
 
   .desktop-bar > .toolbar > li > .btn {
-    margin: 0;
+    margin-top: 0.2em;
     height: $navbar-toolbar-height;
     width: $navbar-toolbar-height;
     padding: 0;
@@ -2155,7 +2160,7 @@
   }
 
   .desktop-bar > .toolbar > li.navbar-search.open .dropdown-menu {
-    top: 0;
+    top: 4px;
     right: $navbar-toolbar-height;
     bottom: auto;
     left: auto;
@@ -2377,6 +2382,18 @@
   }
 }
 
+.globallabel-user {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: sub;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+  white-space: nowrap;    
+}
+
+
 @media (min-width: 1561px) {
   .searchform button {
     display: block;
@@ -2397,7 +2414,6 @@
   }
   .desktop-bar {
     width: 39%;
-    padding-top: 4px;
   }
   .navbar-form.searchform .input-group-btn {
     background: $navbar-search-bg;
@@ -2785,3 +2801,5 @@
     max-height: inherit;
   }
 }
+
+
