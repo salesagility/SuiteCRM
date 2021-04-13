@@ -276,6 +276,13 @@ $dictionary['Note'] = array(
                 'source'=>'non-db',
                 'options'=> 'record_type_display_notes',
             ],
+        'show_preview' =>
+            [
+                'name' => 'show_preview',
+                'type' => 'bool',
+                'source' => 'non-db',
+                'reportable' => false
+            ],
 
          'contact_name'=>
             [

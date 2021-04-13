@@ -360,7 +360,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'relationship_type'=>'one-to-many',
     ),
 ),
-    'optimistic_lock'=>true,
+    'optimistic_locking'=>false,
 );
 require_once('include/SugarObjects/VardefManager.php');
 VardefManager::createVardef('AOS_Line_Item_Groups', 'AOS_Line_Item_Groups', array('basic','assignable'));

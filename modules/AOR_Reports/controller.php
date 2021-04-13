@@ -256,12 +256,12 @@ class AOR_ReportsController extends SugarController
         try {
             $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
             $pdf->SetAutoFont();
+            $pdf->setFooter('{PAGENO}');
             $pdf->WriteHTML($stylesheet, 1);
             $pdf->SetDefaultBodyCSS('background-color', '#FFFFFF');
             unset($pdf->cssmgr->CSS['INPUT']['FONT-SIZE']);
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
-            $pdf->setFooter('{PAGENO}');
             $pdf->Output($this->bean->name . '.pdf', "D");
         } catch (mPDF_exception $e) {
             echo $e;
@@ -363,8 +363,10 @@ class AOR_ReportsController extends SugarController
                 );
                 break;
             case 'enum':
-            case 'multienum':
                 $valid_opp = array('Equal_To', 'Not_Equal_To');
+                break;
+            case 'multienum':
+                $valid_opp = array('Equal_To', 'Not_Equal_To', 'Contains');
                 break;
             default:
                 $valid_opp = array('Equal_To', 'Not_Equal_To', 'Contains', 'Starts_With', 'Ends_With',);

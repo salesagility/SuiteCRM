@@ -772,12 +772,10 @@ function add_error_style(formname, input, txt, flash) {
     nomatchTxt = SUGAR.language.get('app_strings', 'ERR_SQS_NO_MATCH_FIELD');
     matchTxt = txt.replace(requiredTxt, '').replace(invalidTxt, '').replace(nomatchTxt, '');
 
-    YUI().use('node', function (Y) {
-      Y.one(inputHandle).get('parentNode').get('children').each(function (node, index, nodeList) {
-        if (node.hasClass('validation-message') && node.get('text').search(matchTxt)) {
-          raiseFlag = true;
-        }
-      });
+    $.each($(inputHandle).parent().children(), function( index, item ) {
+      if ($(item).hasClass('validation-message') && $(item).text.indexOf(matchTxt) >= 0) {
+        raiseFlag = true;
+      }
     });
 
     if (!raiseFlag) {
@@ -2973,7 +2971,9 @@ SUGAR.util = function () {
           // Change approach to handle javascripts included to body of ajax response.
           // To load & run javascripts and inline javascript in correct order load them as synchronous requests
           // JQuery library uses this approach to eval scripts
+
           if (result[1].indexOf("src=") > -1) {
+
             var srcRegex = /.*src=['"]([a-zA-Z0-9_\-\&\/\.\?=:-]*)['"].*/igm;
             var srcResult = result[1].replace(srcRegex, '$1');
 
@@ -2984,45 +2984,21 @@ SUGAR.util = function () {
               // try load script asynchronous by creating script element in the body
               // YUI 3.3 doesn't allow load scrips synchronously
               // YUI 3.5 do it
-              YUI().use('get', function (Y) {
-                var url = srcResult;
-                Y.Get.script(srcResult,
-                  {
-                    autopurge: false,
-                    onSuccess: function (o) {
-                    },
-                    onFailure: function (o) {
-                    },
-                    onTimeout: function (o) {
-                    }
-                  });
+
+              $.getScript(srcResult, function( data, textStatus, jqxhr ) {
+
               });
-              // TODO: for YUI 3.5 - load scripts as script object synchronous
-              /*
-               YUI().use('get', function (Y) {
-               var url = srcResult;
-               Y.Get.js([{url: url, async: false}], function (err) {});
-               });
-               */
-            }
-            else {
+            } else {
+
               // Bug #49205 : Subpanels fail to load when selecting subpanel tab
               // Create a YUI instance using the io-base module.
               (function (srcResult) {
-                YUI().use("io-base", function (Y) {
-                  var cfg, response;
-                  cfg = {
-                    method: 'GET',
-                    sync: true,
-                    on: {
-                      success: function (transactionid, response, arguments) {
-                        SUGAR.util.globalEval(response.responseText);
-                      }
-                    }
-                  };
-                  // Call synchronous request to load javascript content
-                  // restonse will be processed in success function
-                  response = Y.io(srcResult, cfg);
+                $.ajax({ 
+                  url: srcResult,
+                  async: false,
+                  method: 'GET'
+                }).done(function(responseText) {
+                  SUGAR.util.globalEval(responseText);
                 });
               })(srcResult);
             }

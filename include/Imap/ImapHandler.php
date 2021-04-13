@@ -351,7 +351,43 @@ class ImapHandler implements ImapHandlerInterface
 
         return $ret;
     }
-
+    
+    /**
+     * Execute callback and check IMAP errors for retry
+     * @param callback $callback
+     * @param string|null $charset
+     * @return array
+     */
+    protected function executeImapCmd($callback, $charset=null)
+    {
+      
+      // Default to class charset if none is specified
+        $emailCharset = !empty($charset) ? $charset : $this->charset;
+        
+        $ret = false;
+      
+        try {
+            $ret = $callback($emailCharset);
+            
+            // catch if we have BADCHARSET as exception is not thrown
+            if (empty($ret) || $ret === false){
+                $err = imap_last_error();
+                if (strpos($err, 'BADCHARSET')) {
+                    imap_errors();
+                    throw new Exception($err);
+                }
+            }
+        } catch (Exception $e) {
+            if (strpos($e, ' [BADCHARSET (US-ASCII)]')) {
+                LoggerManager::getLogger()->debug("Encoding changed dynamically from {$emailCharset} to US-ASCII");
+                $emailCharset = 'US-ASCII';
+                $this->charset = $emailCharset;
+                $ret = $callback($emailCharset);
+            }
+        }
+        
+        return $ret;
+    }    
 
     /**
      *
@@ -364,12 +400,19 @@ class ImapHandler implements ImapHandlerInterface
      */
     public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null)
     {
-        // Default to class charset if none is specified
-        $emailCharset = (!empty($charset)) ? $charset : $this->charset;
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_sort($this->getStream(), $criteria, $reverse, $options, $search_criteria, $emailCharset);
-        $this->logReturn(__FUNCTION__, $ret);
+        
+        $call = function($charset) use ($criteria, $reverse, $options, $search_criteria){
+          return imap_sort($this->getStream(), $criteria, $reverse, $options, $search_criteria, $charset);
+        };
+        
+        $ret = $this->executeImapCmd($call, $charset);
 
+        if (!$ret) {
+            $this->log('IMAP sort error');
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        
         return $ret;
     }
 
@@ -471,7 +514,7 @@ class ImapHandler implements ImapHandlerInterface
     public function expunge()
     {
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_append($this->getStream());
+        $ret = imap_expunge($this->getStream());
         if (!$ret) {
             $this->log('IMAP expunge error');
         }
@@ -751,22 +794,14 @@ class ImapHandler implements ImapHandlerInterface
      */
     public function search($criteria, $options = SE_FREE, $charset = null)
     {
-        // Default to class charset if none is specified
-        $emailCharset = !empty($charset) ? $charset : $this->charset;
-
         $this->logCall(__FUNCTION__, func_get_args());
-
-        try {
-            $ret = imap_search($this->getStream(), $criteria, $options, $emailCharset);
-        } catch (Exception $e) {
-            if (strpos($e, ' [BADCHARSET (US-ASCII)]')) {
-                LoggerManager::getLogger()->debug("Encoding changed dynamically from {$emailCharset} to US-ASCII");
-
-                $emailCharset = 'US-ASCII';
-                $ret = imap_search($this->getStream(), $criteria, $options, $emailCharset);
-            }
-        }
-
+        
+        $call = function($charset) use ($criteria, $options){
+          return imap_search($this->getStream(), $criteria, $options, $charset);
+        };
+        
+        $ret = $this->executeImapCmd($call, $charset);
+        
         if (!$ret) {
             $this->log('IMAP search error');
         }
@@ -858,4 +893,5 @@ class ImapHandler implements ImapHandlerInterface
 
         return $ret;
     }
+
 }

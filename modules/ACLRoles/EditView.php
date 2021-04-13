@@ -65,7 +65,7 @@ $role_name = '';
 $return= array('module'=>'ACLRoles', 'action'=>'index', 'record'=>'');
 if (!empty($_REQUEST['record'])) {
     $role->retrieve($_REQUEST['record']);
-    $categories = ACLRole::getRoleActions($_REQUEST['record']);
+    $categories = (new ACLRole())->getRoleActions($_REQUEST['record']);
     $role_name =  $role->name;
     if (!empty($_REQUEST['isDuplicate'])) {
         //role id is stripped here in duplicate so anything using role id after this will not have it
@@ -77,7 +77,7 @@ if (!empty($_REQUEST['record'])) {
         $return['action']='DetailView';
     }
 } else {
-    $categories = ACLRole::getRoleActions('');
+    $categories = (new ACLRole())->getRoleActions('');
 }
 $sugar_smarty->assign('ROLE', $role->toArray());
 $tdwidth = 10;

@@ -83,17 +83,13 @@ $skipDirs = [
  * @param RecursiveCallbackFilterIterator $iterator
  * @return bool
  */
-$fileCheck = function ($file, $key, $iterator) use ($baseDirectory, $skipDirs, $includeDirs, $isWindows) {
+$fileCheck = function ($file, $key, $iterator) use ($baseDirectory, $skipDirs, $includeDirs) {
     $subDir = explode(DIRECTORY_SEPARATOR, str_replace($baseDirectory . DIRECTORY_SEPARATOR, '', $key));
     if ($iterator->hasChildren() &&
         !in_array($file->getFilename(), $skipDirs, true) &&
         (empty($subDir) || in_array($subDir[0], $includeDirs, true))
     ) {
         return true;
-    }
-
-    if ($isWindows) {
-        return $file->isFile() && is_writable_windows($file->getPathname());
     }
 
     return $file->isFile() && !$file->isWritable();
@@ -110,50 +106,49 @@ $files = new RecursiveIteratorIterator(
     )
 );
 
+$i = 0;
+$filesOut = "
+<a href='javascript:void(0); toggleNwFiles(\"filesNw\");'>{$mod_strings['LBL_UW_SHOW_NW_FILES']}</a>
+<div id='filesNw' style='display:none;'>
+<table cellpadding='3' cellspacing='0' border='0'>
+<tr>
+    <th align='left'>{$mod_strings['LBL_UW_FILE']}</th>
+    <th align='left'>{$mod_strings['LBL_UW_FILE_PERMS']}</th>
+    <th align='left'>{$mod_strings['LBL_UW_FILE_OWNER']}</th>
+    <th align='left'>{$mod_strings['LBL_UW_FILE_GROUP']}</th>
+</tr>";
 
-if (!empty($files)) {
-    $i = 0;
-    $filesOut = "
-	<a href='javascript:void(0); toggleNwFiles(\"filesNw\");'>{$mod_strings['LBL_UW_SHOW_NW_FILES']}</a>
-	<div id='filesNw' style='display:none;'>
-	<table cellpadding='3' cellspacing='0' border='0'>
-	<tr>
-		<th align='left'>{$mod_strings['LBL_UW_FILE']}</th>
-		<th align='left'>{$mod_strings['LBL_UW_FILE_PERMS']}</th>
-		<th align='left'>{$mod_strings['LBL_UW_FILE_OWNER']}</th>
-		<th align='left'>{$mod_strings['LBL_UW_FILE_GROUP']}</th>
-	</tr>";
+foreach ($files as $file) {
+    logThis('File [' . $file->getPathname() . '] not writable - saving for display');
 
-    foreach ($files as $file) {
-        logThis('File [' . $file->getPathname() . '] not writable - saving for display');
-
-        $filesNotWritable[$i] = $file->getPathname();
-        $perms = substr(sprintf('%o', $file->getPerms()), -4);
-        $owner = $file->getOwner();
-        $group = $file->getGroup();
-        if (!$isWindows && function_exists('posix_getpwuid')) {
-            $ownerData = posix_getpwuid($owner);
-            $owner = !empty($ownerData) ? $ownerData['name'] : $owner;
-        }
-        if (!$isWindows && function_exists('posix_getgrgid')) {
-            $groupData = posix_getgrgid($group);
-            $group = !empty($groupData) ? $groupData['name'] : $group;
-        }
-        $filesOut .= "<tr>" .
-            "<td><span class='error'>{$file}</span></td>" .
-            "<td>{$perms}</td>" .
-            "<td>{$owner}</td>" .
-            "<td>{$group}</td>" .
-            "</tr>";
-
+    $filesNotWritable[$i] = $file->getPathname();
+    $perms = substr(sprintf('%o', $file->getPerms()), -4);
+    $owner = $file->getOwner();
+    $group = $file->getGroup();
+    if (!$isWindows && function_exists('posix_getpwuid')) {
+        $ownerData = posix_getpwuid($owner);
+        $owner = !empty($ownerData) ? $ownerData['name'] : $owner;
     }
-    $i++;
+    if (!$isWindows && function_exists('posix_getgrgid')) {
+        $groupData = posix_getgrgid($group);
+        $group = !empty($groupData) ? $groupData['name'] : $group;
+    }
+    $filesOut .= "<tr>" .
+        "<td><span class='error'>{$file->getFilename()}</span></td>" .
+        "<td>{$perms}</td>" .
+        "<td>{$owner}</td>" .
+        "<td>{$group}</td>" .
+        "</tr>";
 
-    $filesOut .= '</table></div>';
-    $errors['files']['filesNotWritable'] = true;
+    $i++;
 }
+
+$filesOut .= '</table></div>';
+$errors['files']['filesNotWritable'] = true;
+
 if (count($filesNotWritable) < 1) {
     $filesOut = "<b>{$mod_strings['LBL_UW_FILE_NO_ERRORS']}</b>";
+    $errors['files']['filesNotWritable'] = false;
 }
 
 logThis('Finished file permission check.');
@@ -207,7 +202,6 @@ $checks = array(
     'curlStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_CURL'],
     'imapStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_IMAP'],
     'mbstringStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING'],
-    'safeModeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_SAFEMODE'],
     'callTimeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_CALLTIME'],
     'memory_msg'				=> $mod_strings['LBL_UW_COMPLIANCE_MEMORY'],
     'stream_msg'                => $mod_strings['LBL_UW_COMPLIANCE_STREAM'],

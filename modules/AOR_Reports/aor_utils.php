@@ -340,7 +340,6 @@ function getPeriodEndDate($dateTimePeriodListSelected)
     
     switch ($dateTimePeriodListSelected) {
         case 'today':
-        case 'yesterday':
             $datetimePeriod = new DateTime();
             break;
         case 'yesterday':

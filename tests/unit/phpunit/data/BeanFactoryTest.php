@@ -154,7 +154,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $beanName = BeanFactory::getBeanName($moduleName);
         $this->assertNotEquals($refreshedConfig['customClassName'], $beanName);
 
-        return compact('moduleName','refreshedConfig');
+        $this->subTestGetCustomBeanName(compact('moduleName', 'refreshedConfig'));
     }
 
     /**
@@ -163,7 +163,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $meta
      * @return void
      */
-    public function testGetCustomBeanName($meta)
+    public function subTestGetCustomBeanName($meta)
     {
         $customBeanName = BeanFactory::getCustomBeanName($meta['moduleName']);
         $this->assertEquals($meta['refreshedConfig']['customClassName'], $customBeanName);
@@ -191,7 +191,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $objectName = BeanFactory::getObjectName($moduleName);
         $this->assertNotEquals($refreshedConfig['customObjectName'], $objectName);
 
-        return compact('moduleName','refreshedConfig');
+        $this->subTestGetCustomObjectName(compact('moduleName', 'refreshedConfig'));
     }
 
     /**
@@ -200,7 +200,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $meta
      * @return void
      */
-    public function testGetCustomObjectName($meta)
+    public function subTestGetCustomObjectName($meta)
     {
         $customObjectName = BeanFactory::getCustomObjectName($meta['moduleName']);
         $this->assertEquals($meta['refreshedConfig']['customObjectName'], $customObjectName);
@@ -229,7 +229,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $beanFile = BeanFactory::getBeanFile($moduleName);
         $this->assertNotEquals($refreshedConfig['customClassFile'], $beanFile);
 
-        return compact('moduleName','refreshedConfig');
+        $this->subTestGetCustomBeanFile(compact('moduleName', 'refreshedConfig'));
     }
 
     /**
@@ -238,7 +238,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $meta
      * @return void
      */
-    public function testGetCustomBeanFile($meta)
+    public function subTestGetCustomBeanFile($meta)
     {
         $customBeanFile = BeanFactory::getCustomBeanFile($meta['moduleName']);
         $this->assertEquals($meta['refreshedConfig']['customClassFile'], $customBeanFile);

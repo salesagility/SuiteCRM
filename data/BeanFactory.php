@@ -58,6 +58,11 @@ class BeanFactory
     protected static $loadedBeans = [];
 
     /**
+     * @var array
+     */
+    protected static $shallowBeans = [];
+
+    /**
      * @var int
      */
     protected static $maxLoaded = 10;
@@ -143,6 +148,37 @@ class BeanFactory
             return false;
         }
 
+        return $bean;
+    }
+
+    /**
+     * Shallow beans are created by SugarBean during the fill_in_relationship_fields method, and they differ from
+     * 'complete' bean in that they do not have their own relate fields completed.
+     *
+     * We can use these beans for filling relate fields, but we should not be caching them and serving them anywhere
+     * else.
+     *
+     * @param $module
+     * @param null $id
+     * @param array $params
+     * @param bool $deleted
+     * @return bool|mixed|SugarBean
+     */
+    public static function getShallowBean($module, $id = null, $params = array(), $deleted = true)
+    {
+        if (isset(self::$loadedBeans[$module][$id])) {
+            return self::getBean($module, $id, $params, $deleted);
+        }
+        $key = $module . $id;
+        if (isset(self::$shallowBeans[$key])) {
+            return self::$shallowBeans[$key];
+        }
+        if (count(self::$shallowBeans) > self::$maxLoaded) {
+            array_shift(self::$shallowBeans);
+        }
+        $bean = self::getBean($module, $id, $params, $deleted);
+        self::$shallowBeans[$key] = $bean;
+        self::unregisterBean($module, $id);
         return $bean;
     }
 
@@ -391,7 +427,7 @@ class BeanFactory
         $beanFile = self::getBeanFile($module);
 
         if (empty($beanFile)) {
-            $log->fatal('Cannot find bean file for module: ' . $module);
+            $log->warn('Cannot find bean file for module: ' . $module);
 
             return false;
         }

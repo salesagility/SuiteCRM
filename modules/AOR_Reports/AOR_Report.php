@@ -955,43 +955,21 @@ class AOR_Report extends Basic
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = "<thead class='fc-head'>";
-        $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
             }
 
-            $fieldTotal = null;
-            if (!isset($field['total'])) {
-                LoggerManager::getLogger()->warn('AOR_Report problem: field[total] is not set for getTotalHTML()');
-            } else {
-                $fieldTotal = $field['total'];
-            }
-
-            $appListStringsAorTotalOptionsFieldTotal = null;
-            if (!isset($app_list_strings['aor_total_options'][$fieldTotal])) {
-                LoggerManager::getLogger()->warn('AOR_Report problem: app_list_strings[aor_total_options][fieldTotal] is not set for getTotalHTML()');
-            } else {
-                $appListStringsAorTotalOptionsFieldTotal = $app_list_strings['aor_total_options'][$fieldTotal];
-            }
-
-
-            if ($fieldTotal) {
+            if (!empty($field['total'])) {
                 $showTotal = true;
-                $totalLabel = $field['label'] . ' ' . $appListStringsAorTotalOptionsFieldTotal;
-                $html .= "<th>{$totalLabel}</th>";
-            } else {
-                $html .= '<th></th>';
             }
         }
-        $html .= '</tr></thead>';
 
         if (!$showTotal) {
             return '';
         }
 
-        $html .= "<tbody><tr class='oddListRowS1'>";
+        $html = "<tr class='totalReportRow oddListRowS1'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
@@ -1023,7 +1001,6 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</tbody>';
 
         return $html;
     }
@@ -1044,7 +1021,7 @@ class AOR_Report extends Basic
 
     private function encloseForCSV($field)
     {
-        return '"' . $field . '"';
+        return '"' .  cleanCSV($field) . '"';
     }
 
     public function build_report_csv()

@@ -21,7 +21,7 @@
  *
  * @author SalesAgility <info@salesagility.com>
  */
- 
+
 require_once('include/MVC/Controller/SugarController.php');
 
 class AOS_QuotesController extends SugarController
@@ -32,41 +32,40 @@ class AOS_QuotesController extends SugarController
 
         $this->view = 'edit';
         $GLOBALS['view'] = $this->view;
-        
+
         if (isset($_REQUEST['aos_invoices_id'])) {
-            $query = "SELECT * FROM aos_invoices WHERE id = '{$_REQUEST['aos_invoices_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT * FROM aos_invoices WHERE id = '?'";
+            $result = $this->bean->db->pQuery($query, [$_REQUEST['aos_invoices_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->name = $row['name'];
-            
+
             if (isset($row['billing_account_id'])) {
                 $_REQUEST['account_id'] = $row['billing_account_id'];
             }
-                
+
             if (isset($row['billing_contact_id'])) {
                 $_REQUEST['contact_id'] = $row['billing_contact_id'];
             }
         }
-        
+
         if (isset($_REQUEST['aos_contracts_id'])) {
-            $query = "SELECT * FROM aos_contracts WHERE id = '{$_REQUEST['aos_contracts_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT * FROM aos_contracts WHERE id = '?'";
+            $result = $this->bean->db->pQuery($query, [$_REQUEST['aos_contracts_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->name = $row['name'];
-            
+
             if (isset($row['contract_account_id'])) {
                 $_REQUEST['account_id'] = $row['contract_account_id'];
             }
-                
+
             if (isset($row['opportunity_id'])) {
                 $_REQUEST['opportunity_id'] = $row['opportunity_id'];
             }
         }
 
-
         if (isset($_REQUEST['account_id'])) {
-            $query = "SELECT * FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT * FROM accounts WHERE id = '?'";
+            $result = $this->bean->db->pQuery($query, [$_REQUEST['account_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->billing_account_id = $row['id'];
             $this->bean->billing_account = $row['name'];
@@ -81,18 +80,18 @@ class AOS_QuotesController extends SugarController
             $this->bean->shipping_address_postalcode = $row['shipping_address_postalcode'];
             $this->bean->shipping_address_country = $row['shipping_address_country'];
         }
-        
+
         if (isset($_REQUEST['contact_id'])) {
-            $query = "SELECT id,first_name,last_name FROM contacts WHERE id = '{$_REQUEST['contact_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT id, first_name, last_name FROM contacts WHERE id = '?'";
+            $result = $this->bean->db->pQuery($query, [$_REQUEST['contact_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->billing_contact_id = $row['id'];
             $this->bean->billing_contact = $row['first_name'].' '.$row['last_name'];
         }
-        
+
         if (isset($_REQUEST['opportunity_id'])) {
-            $query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
-            $result = $this->bean->db->query($query, true);
+            $query = "SELECT id, name FROM opportunities WHERE id = '?'";
+            $result = $this->bean->db->pQuery($query, [$_REQUEST['opportunity_id']]);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->opportunity_id = $row['id'];
             $this->bean->opportunity = $row['name'];

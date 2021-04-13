@@ -96,6 +96,10 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
                 }
             }
 
+            if (empty($bean->email1)) {
+                $bean->email1 = '';
+            }
+
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
             $button = '<div type="hidden" onclick="$(document).openComposeViewModal(this);" data-module="'
@@ -117,7 +121,7 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         $client = $current_user->getEmailClient();
 
         if ($client == 'sugar') {
-            $button .= "<input class='button' type='button' id='$inputID' value='$this->form_value'>";
+            $button .= "<input class='button' onclick='return false;' type='button' id='$inputID' value='$this->form_value'>";
         }
 
         return $button;

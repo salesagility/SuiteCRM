@@ -120,7 +120,7 @@ class SugarFieldHandler
                     !is_dir('include/SugarFields/Fields/'.$field)) {
                     return null;
                 }
-                $file = 'include/SugarFields/Fields/Base/SugarFieldBase.php';
+                $file = get_custom_file_if_exists('include/SugarFields/Fields/Base/SugarFieldBase.php');
                 $type = 'Base';
             }
             require_once($file);

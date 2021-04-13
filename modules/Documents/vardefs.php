@@ -419,6 +419,13 @@ $dictionary['Document'] = array('table' => 'documents',
                 'reportable' => false,
                 'source' => 'non-db'
             ),
+        'filecontents' =>
+            array(
+                'name' => 'filecontents',
+                'vname' => 'LBL_FILE_CONTENTS',
+                'type' => 'varchar',
+                'source' => 'non-db',
+            ),
 //END fields used for contract documents subpanel.
         'aos_contracts' => array(
             'name' => 'aos_contracts',
@@ -427,6 +434,12 @@ $dictionary['Document'] = array('table' => 'documents',
             'relationship' => 'aos_contracts_documents',
             'source' => 'non-db',
             'module' => 'AOS_Contracts',
+        ),
+        'show_preview' => array(
+            'name' => 'show_preview',
+            'type' => 'bool',
+            'source' => 'non-db',
+            'reportable' => false
         ),
 
     ),

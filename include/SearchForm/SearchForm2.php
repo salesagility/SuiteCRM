@@ -533,7 +533,10 @@ class SearchForm
 
     public function displaySavedSearch($orderBySelectOnly = false)
     {
-        $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
+        $orderBy = !empty($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null;
+        $sortOrder = !empty($this->lv->data['pageData']['ordering']['sortOrder']) ? $this->lv->data['pageData']['ordering']['sortOrder'] : 'DESC';
+
+        $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $orderBy, $sortOrder);
         $ret = $savedSearch->getForm($this->module, false, $orderBySelectOnly);
         $this->lastTemplateGroupChooser = $savedSearch->lastTemplateGroupChooser;
 

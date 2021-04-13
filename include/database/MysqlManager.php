@@ -828,6 +828,9 @@ class MysqlManager extends DBManager
             $ref['default'] = '';
         }
 
+        // Quote the name column incase it has been reserved by dbms
+        $ref['name'] = $this->quoteIdentifier($ref['name']);
+
         if ($return_as_array) {
             return $ref;
         } else {

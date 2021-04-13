@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -49,6 +46,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class AccountFormBase
 {
     protected $db = null;
@@ -62,12 +63,11 @@ class AccountFormBase
     {
         require_once('include/formbase.php');
 
-        $focus = BeanFactory::newBean('Accounts');
         $query = '';
 
-        $name = $_POST[$prefix.'name'];
-        $shippingAddressCity = $_POST[$prefix.'shipping_address_city'];
-        $billingAddressCity = $_POST[$prefix.'billing_address_city'];
+        $name = !empty($_POST[$prefix . 'name']) ? $_POST[$prefix . 'name'] : '';
+        $shippingAddressCity = !empty($_POST[$prefix . 'shipping_address_city']) ? $_POST[$prefix . 'shipping_address_city'] : '';
+        $billingAddressCity = !empty($_POST[$prefix . 'billing_address_city']) ? $_POST[$prefix . 'billing_address_city'] : '';
 
         $baseQuery = 'SELECT id, name, website, billing_address_city FROM accounts WHERE deleted != 1 AND ';
 
@@ -81,14 +81,13 @@ class AccountFormBase
 
             if (!empty($billingAddressCity)) {
                 $billingAddressCityQuoted = $this->db->quoted($billingAddressCity . '%');
-                $tempQuery += (empty($temp_query)) ?: 'OR ';
-                $tempQuery = "billing_address_city LIKE " . $billingAddressCityQuoted;
+                $tempQuery .= "billing_address_city LIKE " . $billingAddressCityQuoted;
             }
 
             if (!empty($shippingAddressCity)) {
                 $shippingAddressCityQuoted = $this->db->quoted($shippingAddressCity . '%');
-                $tempQuery += (empty($temp_query)) ?: 'OR ';
-                $tempQuery = "shipping_address_city LIKE " . $shippingAddressCityQuoted;
+                $tempQuery .= (empty($tempQuery)) ?: ' OR ';
+                $tempQuery .= "shipping_address_city LIKE " . $shippingAddressCityQuoted;
             }
 
             $query .= (empty($query)) ? $baseQuery : ' AND ';

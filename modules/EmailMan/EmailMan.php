@@ -137,12 +137,12 @@ class EmailMan extends SugarBean
      *
      * @var bool
      */
-    private $optInWarn;
+    protected $optInWarn;
 
     /**
      * @var string
      */
-    private $targetId;
+    protected $targetId;
 
     /**
      * @return string
@@ -1404,7 +1404,7 @@ class EmailMan extends SugarBean
      * @param EmailAddress $emailAddress
      * @return boolean return true on success otherwise false
      */
-    private function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
+    protected function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
     {
         global $log;
         global $app_strings;
@@ -1509,7 +1509,7 @@ class EmailMan extends SugarBean
      * @param \Contact|\Account|\Prospect|\SugarBean $bean
      * @return bool true === block email from being sent
      */
-    private function shouldBlockEmail(SugarBean $bean)
+    protected function shouldBlockEmail(SugarBean $bean)
     {
         global $sugar_config;
 

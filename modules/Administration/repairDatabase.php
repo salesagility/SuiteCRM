@@ -71,7 +71,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             //jc:7347 - for whatever reason, html_entity_decode is choking on converting
             //the html entity &#039; to a single quote, so we will use str_replace
             //instead
-            $sql = str_replace('&#039;', "'", $_POST['sql']);
+            $sql = str_replace(array('&#039;', '&#96;'), array("'", "`"), $_POST['sql']);
             //echo html_entity_decode($_POST['sql']);
             echo $sql;
         } elseif (isset($_POST['raction']) && strtolower($_POST['raction']) == "execute") {
@@ -79,10 +79,12 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
                 array(
                     "\n",
                     '&#039;',
+                    '&#96;',
                 ),
                 array(
                     '',
                     "'",
+                    "`"
                 ),
                 preg_replace('#(/\*.+?\*/\n*)#', '', $_POST['sql'])
             );

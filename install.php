@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,9 +37,10 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
- if (!defined('sugarEntry')) {
-     define('sugarEntry', true);
- }
+
+if (!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 
 require_once 'include/utils.php';
 @session_start();
@@ -180,6 +181,39 @@ $app_list_strings = return_app_list_strings_language($current_language);
 //get the url for the helper link
 $help_url = get_help_button_url();
 
+if (isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
+    if (!empty($_POST['current_step']) && $_POST['current_step'] === '3' && !empty($_POST['goto']) && $_POST['goto'] === $mod_strings['LBL_NEXT']) {
+        session_unset();
+        $the_file = 'complete_install.php';
+    } else {
+        $the_file = 'installDisabled.php';
+        $disabled_title = $mod_strings['LBL_DISABLED_DESCRIPTION'];
+        $disabled_title_2 = $mod_strings['LBL_DISABLED_TITLE_2'];
+        $disabled_text = <<<EOQ
+            <p>{$mod_strings['LBL_DISABLED_DESCRIPTION']}</p>
+            <pre>
+                'installer_locked' => false,
+            </pre>
+            <p>{$mod_strings['LBL_DISABLED_DESCRIPTION_2']}</p>
+        
+            <p>{$mod_strings['LBL_DISABLED_HELP_1']} <a href="{$mod_strings['LBL_DISABLED_HELP_LNK']}" target="_blank">{$mod_strings['LBL_DISABLED_HELP_2']}</a>.</p>
+EOQ;
+
+    }
+    $the_file = 'install/' . clean_string($the_file, 'FILE');
+
+    if (is_file($the_file)) {
+        installerHook('pre_installFileRequire', ['the_file' => $the_file]);
+        require($the_file);
+        die();
+    }
+    LoggerManager::getLogger()->fatal('Install file not found: ' . $the_file);
+    die('SuiteCRM Installation has been Disabled');
+}
+
+
+
+
 //if this license print, then redirect and exit,
 if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint') {
     include('install/licensePrint.php');
@@ -260,7 +294,7 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
         // TODO--low: validate file size & image width/height and save, show status result to client js
 
         if (isset($_REQUEST['callback']) && $_REQUEST['callback'] === 'uploadLogoCallback') {
-            echo "<script>window.top.window.uploadLogoCallback" . json_encode($result) . ");</script>";
+            echo "<script>window.top.window.uploadLogoCallback(" . json_encode($result) . ");</script>";
         }
 
         return;
@@ -720,7 +754,7 @@ EOQ;
                 $sugar_config['unique_key'] = md5(create_guid());
             }
 
-            $validation_errors = validate_dbConfig('a');
+            $validation_errors = validate_dbConfig();
             if (count($validation_errors) > 0) {
                 $the_file = 'dbConfig_a.php';
                 $si_errors = true;

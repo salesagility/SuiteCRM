@@ -55,6 +55,7 @@ $layout_defs['FP_events'] = array(
             'subpanel_name' => 'delegates',   //this values is not associated with a physical file.
             'header_definition_from_subpanel'=> 'Contacts',
             'module'=>'Delegates',
+            'select_link_top'=>true,
 
             'top_buttons' => array(
                 array('widget_class' => 'SubPanelDelegatesSelectButton'),

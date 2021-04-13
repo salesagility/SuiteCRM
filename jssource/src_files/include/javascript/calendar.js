@@ -92,7 +92,6 @@ Calendar.getDateField = function (id, form)
 Calendar.setup = function (params) {
 
     YAHOO.util.Event.onDOMReady(function(){
-
         var Event = YAHOO.util.Event;
         var Dom = YAHOO.util.Dom;
         var dialog;
@@ -120,7 +119,6 @@ Calendar.setup = function (params) {
         Event.on(showButtonElement, "click", function() {
 
             if (!dialog) {
-                                  
                 dialog = new YAHOO.widget.SimpleDialog("container_" + showButtonElement.id, {
                     visible:false,
                     context:[showButton, "tl", "bl", ["beforeShow"], [-175,5]],

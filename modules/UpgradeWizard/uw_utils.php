@@ -1180,15 +1180,6 @@ function checkSystemCompliance()
         $ret['error_found'] = false;
     }
 
-
-    // safe mode
-    if ('1' == ini_get('safe_mode')) {
-        $ret['safeModeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_SAFE_MODE']}</span></b>";
-        $ret['error_found'] = true;
-    } else {
-        $ret['safeModeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-    }
-
     // memory limit
     $ret['memory_msg']     = "";
     $memory_limit   = "-1";//ini_get('memory_limit');
@@ -2706,35 +2697,26 @@ function checkFiles($files, $echo=false)
 
     $isWindows = is_windows();
     foreach ($files as $file) {
-        if ($isWindows) {
-            if (!is_writable_windows($file)) {
-                logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
-                // don't warn yet - we're going to use this to check against replacement files
-                // aw: commented out; it's a hack to allow upgrade wizard to continue on windows... will fix later
-                /*$filesNotWritable[$i] = $file;
-                $filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
-                $filesOut .= "<tr>".
-                                "<td><span class='error'>{$file}</span></td>".
-                                "<td>{$filesNWPerms[$i]}</td>".
-                                "<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
-                                "<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
-                              "</tr>";*/
+        if (!is_writable($file)) {
+            logThis('File ['.$file.'] not writable - saving for display');
+            $filesNotWritable[$i] = $file;
+            $perms = substr(sprintf('%o', fileperms($file)), -4);
+            $owner = fileowner($file);
+            $group = filegroup($file);
+            if (!$isWindows && function_exists('posix_getpwuid')) {
+                $ownerData = posix_getpwuid($owner);
+                $owner = !empty($ownerData) ? $ownerData['name'] : $owner;
             }
-        } else {
-            if (!is_writable($file)) {
-                logThis('File ['.$file.'] not writable - saving for display');
-                // don't warn yet - we're going to use this to check against replacement files
-                $filesNotWritable[$i] = $file;
-                $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
-                $owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_USER'];
-                $group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($file)) : $mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP'];
-                $filesOut .= "<tr>".
-                    "<td><span class='error'>{$file}</span></td>".
-                    "<td>{$filesNWPerms[$i]}</td>".
-                    "<td>".$owner['name']."</td>".
-                    "<td>".$group['name']."</td>".
-                    "</tr>";
+            if (!$isWindows && function_exists('posix_getgrgid')) {
+                $groupData = posix_getgrgid($group);
+                $group = !empty($groupData) ? $groupData['name'] : $group;
             }
+            $filesOut .= "<tr>" .
+                "<td><span class='error'>{$file}</span></td>" .
+                "<td>{$perms}</td>" .
+                "<td>{$owner}</td>" .
+                "<td>{$group}</td>" .
+                "</tr>";
         }
         $i++;
     }

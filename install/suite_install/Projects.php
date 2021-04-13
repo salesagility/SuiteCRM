@@ -45,7 +45,7 @@ function install_projects()
     $hooks = array(
         //Projects
         array(
-            'module' => 'Projects',
+            'module' => 'Project',
             'hook' => 'before_delete',
             'order' => 1,
             'description' => 'Delete Project Tasks',

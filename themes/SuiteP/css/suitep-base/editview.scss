@@ -297,13 +297,13 @@ a#powered_by:hover {
 #copyright_data {
   padding-left: 1%;
   display: inline-block;
+  vertical-align: top;
 }
 
 .footer_right {
   padding-right: 1%;
   float: right;
   text-align: right;
-  width: 47%;
   text-transform: uppercase;
 }
 
@@ -4010,7 +4010,6 @@ select#sales_stage_advanced {
   padding: 0;
   padding-left: 20px;
   margin: 0;
-  width: 250px;
   display: inline-block;
 }
 
@@ -4969,11 +4968,9 @@ object {
 
   }
 
-  .detail table
-  table.detail {
+  .detail table table.detail {
     font-size: 1em;
     background: none;
-
   }
 
   .edit h4 {
@@ -5061,12 +5058,8 @@ object {
 }
 
 @media (max-width: 750px) {
-  .footer_left {
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer_right {
+  .footer_left, .footer_right, .serverstats {
+    padding: 0;
     text-align: center;
     width: 100%;
   }
