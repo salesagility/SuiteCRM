@@ -44,7 +44,10 @@
  * PLACE ANY CUSTOMIZATIONS IN AOD_IndexEvent
  */
 
-
+/**
+ * @deprecated since v7.12.0
+ * Class AOD_IndexEvent_sugar
+ */
 class AOD_IndexEvent_sugar extends Basic
 {
     public $new_schema = true;
@@ -72,14 +75,20 @@ class AOD_IndexEvent_sugar extends Basic
     public $error;
     public $success;
 
+    /**
+     * @deprecated since v7.12.0
+     * AOD_IndexEvent_sugar constructor.
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
-
-
-
+    /**
+     * @deprecated since v7.12.0
+     * @param $interface
+     * @return bool
+     */
     public function bean_implements($interface)
     {
         switch ($interface) {
