@@ -714,6 +714,7 @@ function pollMonitoredInboxesAOP()
 
 /**
  * Scheduled job function to index any unindexed beans.
+ * @deprecated since v7.12.0
  * @return bool
  */
 function aodIndexUnindexed()
@@ -730,6 +731,10 @@ function aodIndexUnindexed()
     return true;
 }
 
+/**
+ * @deprecated since v7.12.0
+ * @return bool
+ */
 function aodOptimiseIndex()
 {
     $index = BeanFactory::getBean("AOD_Index")->getIndex();
@@ -737,12 +742,15 @@ function aodOptimiseIndex()
     return true;
 }
 
-
+/**
+ * @deprecated since v7.12.0
+ * @return int|void
+ */
 function performLuceneIndexing()
 {
     global $sugar_config;
     $db = DBManagerFactory::getInstance();
-    
+
     if (empty($sugar_config['aod']['enable_aod'])) {
         return;
     }
