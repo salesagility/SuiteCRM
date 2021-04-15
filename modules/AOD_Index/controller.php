@@ -26,14 +26,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * @deprecated since v7.12.0
+ * Class AOD_IndexController
+ */
 class AOD_IndexController extends SugarController
 {
     protected $action_remap = array('index'=>'indexdata');
 
+    /**
+     * @deprecated since v7.12.0
+     */
     public function action_indexdata()
     {
         $this->view = 'indexdata';
     }
+
+    /**
+     * @deprecated since v7.12.0
+     */
     public function action_optimise()
     {
         set_time_limit(6000);

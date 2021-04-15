@@ -42,12 +42,19 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOD_IndexEvent/AOD_IndexEvent_sugar.php');
+
+/**
+ * @deprecated since v7.12.0
+ * Class AOD_IndexEvent
+ */
 class AOD_IndexEvent extends AOD_IndexEvent_sugar
 {
+    /**
+     * @deprecated since v7.12.0
+     * AOD_IndexEvent constructor.
+     */
     public function __construct()
     {
         parent::__construct();
     }
-
-
 }
