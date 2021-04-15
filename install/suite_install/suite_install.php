@@ -28,9 +28,6 @@ install_aos();
 require_once('install/suite_install/AdvancedOpenPortal.php');
 install_aop();
 
-require_once('install/suite_install/AdvancedOpenDiscovery.php');
-install_aod();
-
 require_once('install/suite_install/AdvancedOpenEvents.php');
 install_aoe();
 

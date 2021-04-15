@@ -87,7 +87,7 @@ subpanel_dd[{$module}] = new ygDDList('whole_subpanel_' + {$module});
 subpanel_dd[{$module}].setHandleElId('div_' + {$module});
 subpanel_dd[{$module}].onMouseDown = GlobalSearchOnDrag;
 subpanel_dd[{$module}].afterEndDrag = GlobalSearchOnDrop;
-{/foreach}	
+{/foreach}
 
 YAHOO.util.DDM.mode = 1;
 {rdelim}

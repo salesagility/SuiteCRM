@@ -52,7 +52,6 @@ $mod_strings = array(
     'LBL_OOTB_PRUNE' => 'Prune Database on 1st of Month',
     'LBL_OOTB_TRACKER' => 'Prune Tracker Tables',
     'LBL_OOTB_SUITEFEEDS' => 'Prune SuiteCRM Feed Tables',
-    'LBL_OOTB_LUCENE_INDEX' => 'Perform Lucene Index',
     'LBL_OOTB_OPTIMISE_INDEX' => 'Optimise AOD Index',
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
     'LBL_OOTB_CLEANUP_QUEUE' => 'Clean Jobs Queue',

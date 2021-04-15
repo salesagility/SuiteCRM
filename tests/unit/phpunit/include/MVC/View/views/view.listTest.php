@@ -15,14 +15,6 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
 
     public function testlistViewProcess()
     {
-        $query = "SELECT * FROM aod_index";
-        $resource = DBManagerFactory::getInstance()->query($query);
-        $rows = [];
-        while ($row = $resource->fetch_assoc()) {
-            $rows[] = $row;
-        }
-        $tableAodIndex = $rows;
-
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
@@ -48,17 +40,6 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach ($tableEmailAddresses as $row) {
             $query = "INSERT email_addresses INTO (";
-            $query .= (implode(',', array_keys($row)) . ') VALUES (');
-            foreach ($row as $value) {
-                $quoteds[] = "'$value'";
-            }
-            $query .= (implode(', ', $quoteds)) . ')';
-            DBManagerFactory::getInstance()->query($query);
-        }
-
-        DBManagerFactory::getInstance()->query("DELETE FROM aod_index");
-        foreach ($tableAodIndex as $row) {
-            $query = "INSERT aod_index INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
                 $quoteds[] = "'$value'";

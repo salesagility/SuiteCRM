@@ -36,9 +36,6 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
             "DELETE FROM email_addresses WHERE email_address = 'test9@email.com'";
         $db->query($query);
         $query = /** @lang sql */
-            "DELETE FROM aod_indexevent WHERE record_id = 'test_contact_1'";
-        $db->query($query);
-        $query = /** @lang sql */
             "DELETE FROM contacts_cstm WHERE id_c = 'test_contact_1'";
         $db->query($query);
         $query = /** @lang sql */
@@ -470,7 +467,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -538,7 +535,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -598,7 +595,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -633,7 +630,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 2;
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_invalid_{$i}', 'InvalidClass', '0', '0')
         ";
         $db->query($q);
@@ -671,7 +668,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($ea_deleted == $bean_deleted);
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -850,7 +847,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -1199,8 +1196,8 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         // test
         $q = /** @lang sql */
             "
-          DELETE FROM email_addresses 
-            WHERE 
+          DELETE FROM email_addresses
+            WHERE
               email_address_caps = ''";
         $db->query($q);
 
@@ -1218,8 +1215,8 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         // test
         $q = /** @lang sql */
             "
-          DELETE FROM email_addresses 
-            WHERE 
+          DELETE FROM email_addresses
+            WHERE
               email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
 
@@ -1285,7 +1282,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -1329,7 +1326,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -1370,7 +1367,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -1432,7 +1429,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $query = /** @lang sql */
             "
             SELECT count(*) as cnt
-                FROM email_addresses ea 
+                FROM email_addresses ea
                 LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
                 WHERE ear.bean_module = '' AND ear.bean_id = '' AND ear.deleted = 0";
         $r = $db->query($query);
@@ -1501,7 +1498,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);
@@ -1703,7 +1700,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $i = 1;
         $q = /** @lang sql */
             "
-          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
+          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
           VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
         ";
         $db->query($q);

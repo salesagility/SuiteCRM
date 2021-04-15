@@ -13,9 +13,7 @@ custom/modulebuilder/*
 custom/working/*
 custom/modules/*/Ext/
 custom/modules/unified_search_modules_display.php
-# Ignore AOD indexes
-modules/AOD_Index/Index/*
-install/status.json
+
 # Configuration files should be ignored.
 /config.php
 /config_override.php

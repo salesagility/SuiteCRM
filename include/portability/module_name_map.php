@@ -338,14 +338,6 @@ $module_name_map = [
         'frontend' => 'address-cache',
         'core' => 'AddressCache'
     ],
-    'AOD_IndexEvent' => [
-        'frontend' => 'index-event',
-        'core' => 'IndexEvent'
-    ],
-    'AOD_Index' => [
-        'frontend' => 'index',
-        'core' => 'index'
-    ],
     'AOP_Case_Events' => [
         'frontend' => 'case-events',
         'core' => 'CaseEvents'

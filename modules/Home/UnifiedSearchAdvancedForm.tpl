@@ -84,7 +84,7 @@
 		    </tr>
 		    <tr>
 				<td width='1%'>
-					<div id="enabled_div"></div>	
+					<div id="enabled_div"></div>
 				</td>
 				<td>
 					<div id="disabled_div"></div>
@@ -104,21 +104,21 @@ function toggleInlineSearch()
     if (document.getElementById('inlineGlobalSearch').style.display == 'none')
     {
 		SUGAR.globalSearchEnabledTable.render();
-		SUGAR.globalSearchDisabledTable.render();    
-        document.getElementById('showGSDiv').value = 'yes'		
+		SUGAR.globalSearchDisabledTable.render();
+        document.getElementById('showGSDiv').value = 'yes'
         document.getElementById('inlineGlobalSearch').style.display = '';
 {/literal}
         document.getElementById('up_down_img').src='{sugar_getimagepath file="basic_search.gif"}';
         document.getElementById('up_down_img').setAttribute('alt',"{sugar_translate label='LBL_ALT_HIDE_OPTIONS'}");
 {literal}
     }else{
-{/literal}			
+{/literal}
         document.getElementById('up_down_img').src='{sugar_getimagepath file="advanced_search.gif"}';
         document.getElementById('up_down_img').setAttribute('alt',"{sugar_translate label='LBL_ALT_SHOW_OPTIONS'}");
-{literal}			
-        document.getElementById('showGSDiv').value = 'no';		
-        document.getElementById('inlineGlobalSearch').style.display = 'none';		
-    }    
+{literal}
+        document.getElementById('showGSDiv').value = 'no';
+        document.getElementById('inlineGlobalSearch').style.display = 'none';
+    }
 }
 {/literal}
 
@@ -152,7 +152,7 @@ SUGAR.globalSearchEnabledTable = new YAHOO.SUGAR.DragDropTable(
 	 {key:"module", label: lblEnabled, hidden:true}],
 	new YAHOO.util.LocalDataSource(enabled_modules, {
 		responseSchema: {fields : [{key : "module"}, {key : "label"}]}
-	}),  
+	}),
 	{height: "200px"}
 );
 

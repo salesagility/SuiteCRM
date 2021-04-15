@@ -63,8 +63,7 @@ class View extends MVC\View
         $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
         $this->smarty->assign('engines', [
             translate('LBL_LEGACY_SEARCH_ENGINES') => [
-                'BasicSearchEngine' => translate('LBL_BASIC_SEARCH_ENGINE'),
-                'BasicAndAodEngine' => translate('LBL_BASIC_AND_AOD_ENGINE'),
+                'BasicSearchEngine' => translate('LBL_BASIC_SEARCH_ENGINE')
             ],
             translate('LBL_SEARCH_WRAPPER_ENGINES') => $this->getEngines(),
         ]);

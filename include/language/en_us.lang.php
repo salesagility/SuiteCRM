@@ -2959,14 +2959,9 @@ $app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Select This Page';
 $app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Select All';
 $app_strings['LBL_LISTVIEW_NONE'] = 'Deselect All';
 
-//aod
-$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
-$app_list_strings['moduleList']['AOD_Index'] = 'Index';
-
 $app_list_strings['moduleList']['AOP_Case_Events'] = 'Case Events';
 $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Case Updates';
 $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
-
 
 //aop
 $app_list_strings['case_state_default_key'] = 'Open';
