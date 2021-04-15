@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * @deprecated since v7.12.0
  * Class PdfParser
  *
  * @author : Sebastien MALOT <sebastien@malot.fr>
@@ -17,6 +18,7 @@ class PdfParser
     /**
      * Parse PDF file
      *
+     * @deprecated since v7.12.0
      * @param string $filename
      * @return string
      */
@@ -30,6 +32,7 @@ class PdfParser
     /**
      * Parse PDF content
      *
+     * @deprecated since v7.12.0
      * @param string $content
      * @return string
      */
@@ -41,6 +44,7 @@ class PdfParser
     /**
      * Convert a PDF into text.
      *
+     * @deprecated since v7.12.0
      * @param string $filename The filename to extract the data from.
      * @return string The extracted text from the PDF
      */
@@ -112,6 +116,11 @@ class PdfParser
         }
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param $content
+     * @return string|string[]
+     */
     protected static function extractTextElements($content)
     {
         if (strpos($content, '/CIDInit') === 0) {
@@ -262,6 +271,7 @@ class PdfParser
     /**
      * Strip out the text from a small chunk of data.
      *
+     * @deprecated since v7.12.0
      * @param string $text
      * @param int $font_size Currently not used
      *
@@ -310,7 +320,7 @@ class PdfParser
 
     /**
      * Convert a section of data into an array, separated by the start and end words.
-     *
+     * @deprecated since v7.12.0
      * @param  string $data       The data.
      * @param  string $start_word The start of each section of data.
      * @param  string $end_word   The end of each section of data.
