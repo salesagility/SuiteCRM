@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,8 +44,16 @@
 require_once('modules/AOD_Index/AOD_Index_sugar.php');
 require_once('modules/AOD_Index/LuceneUtils.php');
 
+/**
+ * @deprecated since v7.12.0
+ * Class AOD_Index
+ */
 class AOD_Index extends AOD_Index_sugar
 {
+    /**
+     * @deprecated since v7.12.0
+     * AOD_Index constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -53,15 +61,21 @@ class AOD_Index extends AOD_Index_sugar
         Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive());
     }
 
-
-
-
+    /**
+     * @deprecated since v7.12.0
+     * @return bool
+     */
     public function isEnabled()
     {
         global $sugar_config;
         return !empty($sugar_config['aod']['enable_aod']);
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param $queryString
+     * @return mixed
+     */
     public function find($queryString)
     {
         $queryString = strtolower($queryString);
@@ -69,6 +83,9 @@ class AOD_Index extends AOD_Index_sugar
         return $hits;
     }
 
+    /**
+     * @deprecated since v7.12.0
+     */
     public function optimise()
     {
         if (!$this->isEnabled()) {
@@ -80,6 +97,10 @@ class AOD_Index extends AOD_Index_sugar
         $this->save();
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @return bool|SugarBean
+     */
     public function getIndex()
     {
         $index = BeanFactory::getBean('AOD_Index', 1);
@@ -96,6 +117,7 @@ class AOD_Index extends AOD_Index_sugar
     }
 
     /**
+     * @deprecated since v7.12.0
      * @param $revision
      * @return bool|Zend_Search_Lucene_Document
      */
@@ -149,6 +171,11 @@ class AOD_Index extends AOD_Index_sugar
         return array("error"=>false,"document"=>$document);
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param SugarBean $bean
+     * @return array|bool|string[]|Zend_Search_Lucene_Document
+     */
     public function getDocumentForBean(SugarBean $bean)
     {
         if ($bean->module_name == 'DocumentRevisions') {
@@ -210,6 +237,12 @@ class AOD_Index extends AOD_Index_sugar
         return $document;
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param $module
+     * @param $field
+     * @return float|int
+     */
     private function getBoost($module, $field)
     {
         $fieldBoosts = array('name' =>0.5, 'first_name' => 0.5, 'last_name' => 0.5);
@@ -224,6 +257,12 @@ class AOD_Index extends AOD_Index_sugar
         return $boost;
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param $module
+     * @param $beanId
+     * @return bool|SugarBean
+     */
     private function getIndexEvent($module, $beanId)
     {
         global $timedate;
@@ -260,6 +299,12 @@ class AOD_Index extends AOD_Index_sugar
         $this->getLuceneIndex()->commit();
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param $module
+     * @param $beanName
+     * @return bool
+     */
     public static function isModuleSearchable($module, $beanName)
     {
         $whiteList = array("DocumentRevisions","Cases");
@@ -278,12 +323,21 @@ class AOD_Index extends AOD_Index_sugar
         return true;
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param $module
+     * @param $beanId
+     * @return bool|void
+     */
     public function index($module, $beanId)
     {
         try {
             if (!$this->isEnabled()) {
                 return;
             }
+
+            LoggerManager::getLogger()->deprecated('AOD Lucene search is deprecated since v7.12.0');
+
             if (empty($GLOBALS['beanList'][$module])) {
                 return false;
             }
@@ -322,11 +376,23 @@ class AOD_Index extends AOD_Index_sugar
         }
         return true;
     }
+
+    /**
+     * @deprecated since v7.12.0
+     * @param $module
+     * @param $beanId
+     * @return string
+     */
     private function getIdForDoc($module, $beanId)
     {
         return $module . " " . $beanId;
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param $module
+     * @param $beanId
+     */
     public function remove($module, $beanId)
     {
         $term  = new Zend_Search_Lucene_Index_Term($module.' '.$beanId, 'aod_id');
@@ -339,6 +405,7 @@ class AOD_Index extends AOD_Index_sugar
 
     /**
      * Returns a handle on the actual lucene index.
+     * @deprecated since v7.12.0
      * @return Zend_Search_Lucene_Interface
      */
     private function getLuceneIndex()
@@ -355,7 +422,10 @@ class AOD_Index extends AOD_Index_sugar
         return $this->index;
     }
 
-
+    /**
+     * @deprecated since v7.12.0
+     * @return array
+     */
     public function getIndexableModules()
     {
         $modules = array();
