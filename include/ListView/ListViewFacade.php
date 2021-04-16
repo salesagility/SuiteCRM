@@ -48,169 +48,198 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
- require_once('include/ListView/ListViewSmarty.php');
+require_once('include/ListView/ListViewSmarty.php');
 
 
- /**
-  * A Facade to ListView and ListViewSmarty
-  */
- class ListViewFacade
- {
-     public $focus = null;
-     public $module = '';
-     public $type = 0;
+/**
+ * A Facade to ListView and ListViewSmarty
+ */
+class ListViewFacade
+{
+    public $focus = null;
+    public $module = '';
+    public $type = 0;
 
-     public $lv;
+    public $lv;
 
-     //ListView fields
-     public $template;
-     public $title;
-     public $where = '';
-     public $params = array();
-     public $offset = 0;
-     public $limit = -1;
-     public $filter_fields = array();
-     public $id_field = 'id';
-     public $prefix = '';
-     public $mod_strings = array();
+    //ListView fields
+    public $template;
+    public $title;
+    public $where = '';
+    public $params = array();
+    public $offset = 0;
+    public $limit = -1;
+    public $filter_fields = array();
+    public $id_field = 'id';
+    public $prefix = '';
+    public $mod_strings = array();
 
-     /**
-      * Constructor
-      * @param $focus - the bean
-      * @param $module - the module name
-      * @param - 0 = decide for me, 1 = ListView.html, 2 = ListViewSmarty
-      */
-     public function __construct($focus, $module, $type = 0)
-     {
-         $this->focus = $focus;
-         $this->module = $module;
-         $this->type = $type;
-         $this->build();
-     }
+    /**
+     * Constructor
+     * @param $focus - the bean
+     * @param $module - the module name
+     * @param - 0 = decide for me, 1 = ListView.html, 2 = ListViewSmarty
+     */
+    public function __construct($focus, $module, $type = 0)
+    {
+        $this->focus = $focus;
+        $this->module = $module;
+        $this->type = $type;
+        $this->build();
+    }
 
-     /**
-      * Retrieves display columns on list view of specified module
-      *
-      * @param string $module
-      * @param array $request
-      * @return array
-      */
-     public static function getDisplayColumns($module, $request = [])
-     {
-         $metadataFile = null;
-         $foundViewDefs = false;
-         if (file_exists('custom/modules/' . $module. '/metadata/listviewdefs.php')) {
-             $metadataFile = 'custom/modules/' .  $module . '/metadata/listviewdefs.php';
-             $foundViewDefs = true;
-         } else {
-             if (file_exists('custom/modules/'. $module.'/metadata/metafiles.php')) {
-                 require_once('custom/modules/'. $module.'/metadata/metafiles.php');
-                 if (!empty($metafiles[$module]['listviewdefs'])) {
-                     $metadataFile = $metafiles[$module]['listviewdefs'];
-                     $foundViewDefs = true;
-                 }
-             } elseif (file_exists('modules/'. $module.'/metadata/metafiles.php')) {
-                 require_once('modules/'. $module.'/metadata/metafiles.php');
-                 if (!empty($metafiles[$module]['listviewdefs'])) {
-                     $metadataFile = $metafiles[$module]['listviewdefs'];
-                     $foundViewDefs = true;
-                 }
-             }
-         }
-         if (!$foundViewDefs && file_exists('modules/'. $module.'/metadata/listviewdefs.php')) {
-             $metadataFile = 'modules/'. $module.'/metadata/listviewdefs.php';
-         }
-         
-         if ($metadataFile) {
-             if (!file_exists($metadataFile)) {
-                 throw new Exception("Metadata file '$metadataFile' not found for module '$module'.");
-             }
-             require_once($metadataFile);
-         }
+    /**
+     * Retrieves all columns on list view of specified module
+     *
+     * @param string $module
+     * @param array $request
+     * @return array
+     * @description Returns all columns(default and non-default) defined for a Module List View
+     */
+    public static function getAllColumns($module, $request = [])
+    {
+        $metadataFile = null;
+        $foundViewDefs = false;
+        if (file_exists('custom/modules/' . $module . '/metadata/listviewdefs.php')) {
+            $metadataFile = 'custom/modules/' . $module . '/metadata/listviewdefs.php';
+            $foundViewDefs = true;
+        } else {
+            if (file_exists('custom/modules/' . $module . '/metadata/metafiles.php')) {
+                require_once('custom/modules/' . $module . '/metadata/metafiles.php');
+                if (!empty($metafiles[$module]['listviewdefs'])) {
+                    $metadataFile = $metafiles[$module]['listviewdefs'];
+                    $foundViewDefs = true;
+                }
+            } elseif (file_exists('modules/' . $module . '/metadata/metafiles.php')) {
+                require_once('modules/' . $module . '/metadata/metafiles.php');
+                if (!empty($metafiles[$module]['listviewdefs'])) {
+                    $metadataFile = $metafiles[$module]['listviewdefs'];
+                    $foundViewDefs = true;
+                }
+            }
+        }
+        if (!$foundViewDefs && file_exists('modules/' . $module . '/metadata/listviewdefs.php')) {
+            $metadataFile = 'modules/' . $module . '/metadata/listviewdefs.php';
+        }
 
-         $displayColumns = array();
-         if (!empty($listViewDefs)) {
-             if (!empty($request['displayColumns'])) {
-                 foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-                     if (!empty($listViewDefs[$module][$col])) {
-                         $displayColumns[$col] = $listViewDefs[$module][$col];
-                     }
-                 }
-             } else {
-                 foreach ($listViewDefs[$module] as $col => $params) {
-                     if (!empty($params['default']) && $params['default']) {
-                         $displayColumns[$col] = $params;
-                     }
-                 }
-             }
-         } else {
-             throw new Exception("List view definition is not found for module '$module'");
-         }
-         return $displayColumns;
-     }
+        if ($metadataFile) {
+            if (!file_exists($metadataFile)) {
+                throw new Exception("Metadata file '$metadataFile' not found for module '$module'.");
+            }
+            require_once($metadataFile);
+        }
 
-     public function build()
-     {
-         //we will assume that if the ListView.html file exists we will want to use that one
-         if (file_exists('modules/'.$this->module.'/ListView.html')) {
-             $this->type = 1;
-             $this->lv = new ListView();
-             $this->template = 'modules/'.$this->module.'/ListView.html';
-         } else {
-             $this->lv = new ListViewSmarty();
-             $this->lv->displayColumns = self::getDisplayColumns($this->module, $_REQUEST);
-             $this->type = 2;
-             $this->template = 'include/ListView/ListViewGeneric.tpl';
-         }
-     }
+        $displayColumns = array();
+        if (!empty($listViewDefs)) {
+            if (!empty($request['displayColumns'])) {
+                foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
+                    if (!empty($listViewDefs[$module][$col])) {
+                        $displayColumns[$col] = $listViewDefs[$module][$col];
+                    }
+                }
+            } else {
+                foreach ($listViewDefs[$module] as $col => $params) {
+                    //if (!empty($params['default']) && $params['default']) {
+                    $displayColumns[$col] = $params;
+                    //}
+                }
+            }
+        } else {
+            throw new Exception("List view definition is not found for module '$module'");
+        }
+        return $displayColumns;
+    }
 
-     public function setup($template = '', $where = '', $params = array(), $mod_strings = array(), $offset = 0, $limit = -1, $orderBy = '', $prefix = '', $filter_fields = array(), $id_field = 'id')
-     {
-         if (!empty($template)) {
-             $this->template = $template;
-         }
+    /**
+     * Retrieves display columns on list view of specified module
+     *
+     * @param string $module
+     * @param array $request
+     * @return array
+     * @description Returns columns displayed by default in Module List View
+     */
+    public static function getDisplayColumns($module, $request = []): array
+    {
+        $displayColumns = [];
 
-         $this->mod_strings = $mod_strings;
+        try {
+            $allColumns = self::getAllColumns($module, $request);
+            // filter columns with default != false
+            foreach ($allColumns as $col => $params) {
+                if (!empty($params['default']) && $params['default']) {
+                    $displayColumns[$col] = $params;
+                }
+            }
+        } catch (Exception $e) {
+            $logMessage = "List view definition is not found for module '$module'" . $e->getMessage();
+            $GLOBALS['log']->fatal($logMessage);
+        }
 
-         if ($this->type == 1) {
-             $this->lv->initNewXTemplate($this->template, $this->mod_strings);
-             $this->prefix = $prefix;
-             $this->lv->setQuery($where, $limit, $orderBy, $prefix);
-             $this->lv->show_select_menu = false;
-             $this->lv->show_export_button = false;
-             $this->lv->show_delete_button = false;
-             $this->lv->show_mass_update = false;
-             $this->lv->show_mass_update_form = false;
-         } else {
-             $this->lv->export = false;
-             $this->lv->delete = false;
-             $this->lv->select = false;
-             $this->lv->mailMerge = false;
-             $this->lv->multiSelect = false;
-             $this->lv->setup($this->focus, $this->template, $where, $params, $offset, $limit, $filter_fields, $id_field);
-         }
-     }
+        return $displayColumns;
+    }
 
-     public function display($title = '', $section = 'main', $return = false)
-     {
-         if ($this->type == 1) {
-             ob_start();
-             $this->lv->setHeaderTitle($title);
-             $this->lv->processListView($this->focus, $section, $this->prefix);
-             $output = ob_get_contents();
-             ob_end_clean();
-         } else {
-             $output = get_form_header($title, '', false) . $this->lv->display();
-         }
-         if ($return) {
-             return $output;
-         } else {
-             echo $output;
-         }
-     }
+    public function build()
+    {
+        //we will assume that if the ListView.html file exists we will want to use that one
+        if (file_exists('modules/' . $this->module . '/ListView.html')) {
+            $this->type = 1;
+            $this->lv = new ListView();
+            $this->template = 'modules/' . $this->module . '/ListView.html';
+        } else {
+            $this->lv = new ListViewSmarty();
+            $this->lv->displayColumns = self::getDisplayColumns($this->module, $_REQUEST);
+            $this->type = 2;
+            $this->template = 'include/ListView/ListViewGeneric.tpl';
+        }
+    }
 
-     public function setTitle($title = '')
-     {
-         $this->title = $title;
-     }
- }
+    public function setup($template = '', $where = '', $params = array(), $mod_strings = array(), $offset = 0, $limit = -1, $orderBy = '', $prefix = '', $filter_fields = array(), $id_field = 'id')
+    {
+        if (!empty($template)) {
+            $this->template = $template;
+        }
+
+        $this->mod_strings = $mod_strings;
+
+        if ($this->type == 1) {
+            $this->lv->initNewXTemplate($this->template, $this->mod_strings);
+            $this->prefix = $prefix;
+            $this->lv->setQuery($where, $limit, $orderBy, $prefix);
+            $this->lv->show_select_menu = false;
+            $this->lv->show_export_button = false;
+            $this->lv->show_delete_button = false;
+            $this->lv->show_mass_update = false;
+            $this->lv->show_mass_update_form = false;
+        } else {
+            $this->lv->export = false;
+            $this->lv->delete = false;
+            $this->lv->select = false;
+            $this->lv->mailMerge = false;
+            $this->lv->multiSelect = false;
+            $this->lv->setup($this->focus, $this->template, $where, $params, $offset, $limit, $filter_fields, $id_field);
+        }
+    }
+
+    public function display($title = '', $section = 'main', $return = false)
+    {
+        if ($this->type == 1) {
+            ob_start();
+            $this->lv->setHeaderTitle($title);
+            $this->lv->processListView($this->focus, $section, $this->prefix);
+            $output = ob_get_contents();
+            ob_end_clean();
+        } else {
+            $output = get_form_header($title, '', false) . $this->lv->display();
+        }
+        if ($return) {
+            return $output;
+        } else {
+            echo $output;
+        }
+    }
+
+    public function setTitle($title = '')
+    {
+        $this->title = $title;
+    }
+}
