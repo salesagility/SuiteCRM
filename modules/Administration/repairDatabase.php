@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-global $current_user, $beanFiles;
+global $current_user, $beanFiles, $sugar_config;
 set_time_limit(3600);
 
 
@@ -55,6 +55,9 @@ $db = DBManagerFactory::getInstance();
 if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_module($current_user)) {
     isset($_REQUEST['execute'])? $execute=$_REQUEST['execute'] : $execute= false;
     $export = false;
+
+    $isElasticSearchEnabled = isset($sugar_config['search']['ElasticSearch']['enabled']) ?
+        $sugar_config['search']['ElasticSearch']['enabled'] : false;
 
     if (count($_POST) && isset($_POST['raction'])) {
         if (isset($_POST['raction']) && strtolower($_POST['raction']) == "export") {
@@ -99,7 +102,10 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             }
 
             echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
-            ElasticSearchIndexer::repairElasticsearchIndex();
+
+            if ($isElasticSearchEnabled === true) {
+                ElasticSearchIndexer::repairElasticsearchIndex();
+            }
         }
     } else {
         if (!$export && empty($_REQUEST['repair_silent'])) {
@@ -146,7 +152,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             if (!isset($meta['table']) || isset($repairedTables[$meta['table']])) {
                 continue;
             }
-            
+
             $tablename = $meta['table'];
             $fielddefs = $meta['fields'];
             $indices = $meta['indices'];
@@ -178,7 +184,10 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
                 echo $ss->fetch('modules/Administration/templates/RepairDatabase.tpl');
             } else {
                 echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
-                ElasticSearchIndexer::repairElasticsearchIndex();
+
+                if ($isElasticSearchEnabled === true) {
+                    ElasticSearchIndexer::repairElasticsearchIndex();
+                }
             }
         }
     }
