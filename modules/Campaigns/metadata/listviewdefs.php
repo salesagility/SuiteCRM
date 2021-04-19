@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,7 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $theme, $mod_strings;
 
@@ -50,38 +49,54 @@ $listViewDefs['Campaigns'] = array(
         'width' => '20',
         'label' => 'LBL_LIST_CAMPAIGN_NAME',
         'link' => true,
-        'default' => true),
+        'default' => true
+    ),
     'STATUS' => array(
         'width' => '10',
         'label' => 'LBL_LIST_STATUS',
-        'default' => true),
+        'default' => true
+    ),
     'CAMPAIGN_TYPE' => array(
         'width' => '10',
         'label' => 'LBL_LIST_TYPE',
-        'default' => true),
+        'default' => true
+    ),
     'END_DATE' => array(
         'width' => '10',
         'label' => 'LBL_LIST_END_DATE',
-        'default' => true),
-    'DATE_ENTERED' => array(
-        'width' => '10',
-        'label' => 'LBL_DATE_ENTERED',
-        'default' => true),
-
+        'default' => true
+    ),
     'ASSIGNED_USER_NAME' => array(
         'width' => '8',
         'label' => 'LBL_LIST_ASSIGNED_USER',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
+        'default' => true
+    ),
     'TRACK_CAMPAIGN' => array(
-        'width' => '0.01',
+        'width' => '1',
         'label' => '&nbsp;',
         'link' => true,
-        'customCode' => ' <a title="{$TRACK_CAMPAIGN_TITLE}" href="index.php?action=TrackDetailView&module=Campaigns&record={$ID}"><!--not_in_theme!--><span class="suitepicon suitepicon-action-view-status"></span></a> ',
+        'customCode' => ' <a title="{$TRACK_CAMPAIGN_TITLE}" href="index.php?action=TrackDetailView&module=Campaigns&record={$ID}"><!--not_in_theme!--><img border="0" src="{$TRACK_CAMPAIGN_IMAGE}" alt="{$TRACK_VIEW_ALT_TEXT}"></a> ',
         'default' => true,
         'studio' => false,
         'nowrap' => true,
-        'sortable' => false),
-
+        'sortable' => false
+    ),
+    'LAUNCH_WIZARD' => array(
+        'width' => '1',
+        'label' => '&nbsp;',
+        'link' => true,
+        'customCode' => ' <a title="{$LAUNCH_WIZARD_TITLE}" href="index.php?action=WizardHome&module=Campaigns&record={$ID}"><!--not_in_theme!--><img border="0" src="{$LAUNCH_WIZARD_IMAGE}"  alt="{$LAUNCH_WIZ_ALT_TEXT}"></a>  ',
+        'default' => true,
+        'studio' => false,
+        'nowrap' => true,
+        'sortable' => false
+    ),
+    'DATE_ENTERED' => array(
+        'width' => '10',
+        'label' => 'LBL_DATE_ENTERED',
+        'default' => true
+    ),
 );
+

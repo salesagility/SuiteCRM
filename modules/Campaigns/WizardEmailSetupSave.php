@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/formbase.php');
 
@@ -54,12 +54,12 @@ $camp_steps[] = 'wiz_step_';
 $camp_steps[] = 'wiz_step1_';
 $camp_steps[] = 'wiz_step2_';
 
-    //name is used as key in post, it is also used in creation of summary page for wizard,
-    //so let's clean up the posting so we can reuse the save functionality for inbound emails and
-    //from existing save.php's
-    foreach ($camp_steps as $step) {
-        clean_up_post($step);
-    }
+//name is used as key in post, it is also used in creation of summary page for wizard,
+//so let's clean up the posting so we can reuse the save functionality for inbound emails and
+//from existing save.php's
+foreach ($camp_steps as $step) {
+    clean_up_post($step);
+}
 /**************************** Save general Email Setup  *****************************/
 
 //we do not need to track location if location type is not set
@@ -81,12 +81,11 @@ if (!isset($_POST['mail_smtpssl'])) {
 $focus->saveConfig();
 
 
-
 /**************************** Add New Monitored Box  *****************************/
 //perform this if the option to create new mail box has been checked
-if (isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')) {
-    
-   //Populate the Request variables that inboundemail expects
+if (isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox'] == '1')) {
+
+    //Populate the Request variables that inboundemail expects
     $_REQUEST['mark_read'] = 1;
     $_REQUEST['only_since'] = 1;
     $_REQUEST['mailbox_type'] = 'bounce';
@@ -96,16 +95,16 @@ if (isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')) {
     //reuse save functionality for inbound email
     require_once('modules/InboundEmail/Save.php');
 }
-    if (!empty($_REQUEST['error'])) {
-        //an error was found during inbound save.  This means the save was allowed but the inbound box had problems, return user to wizard
-        //and display error message
-        $header_URL = "Location: index.php?action=WizardEmailSetup&module=Campaigns&error=true";
-        SugarApplication::headerRedirect($header_URL);
-    } else {
-        //set navigation details
-        $header_URL = "Location: index.php?action=index&module=Campaigns";
-        SugarApplication::headerRedirect($header_URL);
-    }
+if (!empty($_REQUEST['error'])) {
+    //an error was found during inbound save.  This means the save was allowed but the inbound box had problems, return user to wizard
+    //and display error message
+    $header_URL = "Location: index.php?action=WizardEmailSetup&module=Campaigns&error=true";
+    SugarApplication::headerRedirect($header_URL);
+} else {
+    //set navigation details
+    $header_URL = "Location: index.php?action=index&module=Campaigns";
+    SugarApplication::headerRedirect($header_URL);
+}
 
 /*
  * This function will re-add the post variables that exist with the specified prefix.
@@ -116,15 +115,15 @@ if (isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')) {
 function clean_up_post($prefix)
 {
     foreach ($_REQUEST as $key => $val) {
-        if ((strstr($key, $prefix)) && (strpos($key, $prefix)== 0)) {
-            $newkey  =substr($key, strlen($prefix)) ;
+        if ((strstr($key, $prefix)) && (strpos($key, $prefix) == 0)) {
+            $newkey = substr($key, strlen($prefix));
             $_REQUEST[$newkey] = $val;
         }
     }
 
     foreach ($_POST as $key => $val) {
-        if ((strstr($key, $prefix)) && (strpos($key, $prefix)== 0)) {
-            $newkey  =substr($key, strlen($prefix)) ;
+        if ((strstr($key, $prefix)) && (strpos($key, $prefix) == 0)) {
+            $newkey = substr($key, strlen($prefix));
             $_POST[$newkey] = $val;
         }
     }

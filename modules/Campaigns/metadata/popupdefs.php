@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 
 $popupMeta = array(
     'moduleMain' => 'Campaign',
@@ -55,25 +56,30 @@ $popupMeta = array(
             'width' => '20',
             'label' => 'LBL_LIST_CAMPAIGN_NAME',
             'link' => true,
-            'default' => true),
-         'CAMPAIGN_TYPE' => array(
+            'default' => true
+        ),
+        'CAMPAIGN_TYPE' => array(
             'width' => '10',
             'label' => 'LBL_LIST_TYPE',
-            'default' => true),
+            'default' => true
+        ),
         'STATUS' => array(
             'width' => '10',
             'label' => 'LBL_LIST_STATUS',
-            'default' => true),
+            'default' => true
+        ),
         'START_DATE' => array(
             'width' => '10',
             'label' => 'LBL_LIST_START_DATE',
-            'default' => true),
+            'default' => true
+        ),
         'END_DATE' => array(
             'width' => '10',
             'label' => 'LBL_LIST_END_DATE',
-            'default' => true),
+            'default' => true
+        ),
     ),
-    'searchdefs'   => array(
+    'searchdefs' => array(
         'name',
         'campaign_type',
         'status',

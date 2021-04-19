@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,27 +38,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-require_once('include/MVC/Controller/SugarController.php');
+require_once __DIR__ . '/../../include/MVC/Controller/SugarController.php';
+
+/**
+ * Class CampaignsController
+ */
 class CampaignsController extends SugarController
 {
-    public function action_newsletterlist()
+    public function action_newsletterlist(): void
     {
         $this->view = 'newsletterlist';
-    }
-
-    public function process()
-    {
-        if ($this->action == 'EditView' && empty($_REQUEST['record'])) {
-            $this->action = 'WizardHome';
-        } else {
-            if ($this->action == 'EditView' && !empty($_REQUEST['record'])) {
-                // Show Send Email and Summary
-                $this->action = 'WizardHome';
-                // modules/Campaigns/WizardHome.php isWizardSummary
-                $_REQUEST['action'] = 'WizardHome';
-            }
-        }
-        parent::process();
     }
 }

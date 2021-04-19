@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,14 +38,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-
-
-
-
-require_once('include/DetailView/DetailView.php');
-require_once('modules/Campaigns/Charts.php');
-
+require_once __DIR__ . '/../../include/DetailView/DetailView.php';
+require_once __DIR__ . '/../../modules/Campaigns/Charts.php';
 
 global $mod_strings;
 global $app_strings;
@@ -59,13 +54,13 @@ $focus = BeanFactory::newBean('Campaigns');
 
 $detailView = new DetailView();
 $offset = 0;
-$offset=0;
+$offset = 0;
 if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
     $result = $detailView->processSugarBean("CAMPAIGN", $focus, $offset);
     if ($result == null) {
         sugar_die($app_strings['ERROR_NO_RECORD']);
     }
-    $focus=$result;
+    $focus = $result;
 } else {
     $header_URL = "Location: index.php?module=Accounts&action=index";
     SugarApplication::headerRedirect($header_URL);
@@ -80,13 +75,13 @@ if(!$focus->campaign_type == "NewsLetter"){
 
 */
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->name), true);
-    
+
     $GLOBALS['log']->info("Campaign detail view");
-    
+
     $smarty = new Sugar_Smarty();
     $smarty->assign("MOD", $mod_strings);
     $smarty->assign("APP", $app_strings);
-    
+
     $smarty->assign("THEME", $theme);
     $smarty->assign("GRIDLINE", $gridline);
     $smarty->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
@@ -97,18 +92,18 @@ if(!$focus->campaign_type == "NewsLetter"){
     $smarty->assign("TYPE", $app_list_strings['campaign_type_dom'][$focus->campaign_type]);
     $smarty->assign("START_DATE", $focus->start_date);
     $smarty->assign("END_DATE", $focus->end_date);
-    
+
     $smarty->assign("BUDGET", $focus->budget);
     $smarty->assign("ACTUAL_COST", $focus->actual_cost);
     $smarty->assign("EXPECTED_COST", $focus->expected_cost);
     $smarty->assign("EXPECTED_REVENUE", $focus->expected_revenue);
-    
-    
+
+
     $smarty->assign("OBJECTIVE", nl2br($focus->objective));
     $smarty->assign("CONTENT", nl2br($focus->content));
     $smarty->assign("DATE_MODIFIED", $focus->date_modified);
     $smarty->assign("DATE_ENTERED", $focus->date_entered);
-    
+
     $smarty->assign("CREATED_BY", $focus->created_by_name);
     $smarty->assign("MODIFIED_BY", $focus->modified_by_name);
     $smarty->assign("TRACKER_URL", $sugar_config['site_url'] . '/campaign_tracker.php?track=' . $focus->tracker_key);
@@ -121,7 +116,7 @@ if(!$focus->campaign_type == "NewsLetter"){
    $roi_vals['actual_cost']= $focus->actual_cost;
    $roi_vals['Expected_Revenue']= $focus->expected_revenue;
    $roi_vals['Expected_Cost']= $focus->expected_cost;
-   
+
 //Query for opportunities won, clickthroughs
 $campaign_id = $focus->id;
             $opp_query1  = "select camp.name, count(*) opp_count,SUM(opp.amount) as Revenue, SUM(camp.actual_cost) as Investment, 
@@ -138,7 +133,7 @@ $campaign_id = $focus->id;
       }
 
      $smarty->assign("OPPORTUNITIES_WON", $opp_data1['opp_count']);
-          
+
             $camp_query1  = "select camp.name, count(*) click_thru_link";
             $camp_query1 .= " from campaign_log camp_log";
             $camp_query1 .= " right join campaigns camp on camp.id = camp_log.campaign_id";
@@ -147,7 +142,7 @@ $campaign_id = $focus->id;
             $opp_query1 .= " and deleted=0";
             $camp_result1=$focus->db->query($camp_query1);
             $camp_data1=$focus->db->fetchByAssoc($camp_result1);
-            
+
    if (unformat_number($focus->impressions) > 0) {
        $cost_per_impression= unformat_number($focus->actual_cost)/unformat_number($focus->impressions);
    } else {
@@ -158,15 +153,15 @@ $campaign_id = $focus->id;
        $camp_data1['click_thru_link']=0;
    }
    $click_thru_links = $camp_data1['click_thru_link'];
-   
+
    if ($click_thru_links >0) {
        $cost_per_click_thru= unformat_number($focus->actual_cost)/unformat_number($click_thru_links);
    } else {
        $cost_per_click_thru = format_number(0);
    }
    $smarty->assign("COST_PER_CLICK_THROUGH", currency_format_number($cost_per_click_thru));
-    
-    
+
+
         $currency  = BeanFactory::newBean('Currencies');
     if (isset($focus->currency_id) && !empty($focus->currency_id)) {
         $currency->retrieve($focus->currency_id);
@@ -182,17 +177,17 @@ $campaign_id = $focus->id;
     if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
         $smarty->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT'])."</a>");
     }
-    
+
     $detailView->processListNavigation($xtpl, "CAMPAIGN", $offset, $focus->is_AuditEnabled());
     // adding custom fields:
     global $xtpl;
     $xtpl = $smarty;
     require_once('modules/DynamicFields/templates/Files/DetailView.php');
-    
 
-    
-    
-    
+
+
+
+
     //add chart
     $seps				= array("-", "/");
     $dates				= array(date($GLOBALS['timedate']->dbDayFormat), $GLOBALS['timedate']->dbDayFormat);

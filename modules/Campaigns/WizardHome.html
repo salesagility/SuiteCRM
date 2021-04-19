@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -26,7 +26,7 @@
  *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *ew
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
@@ -37,59 +37,73 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-/**
-
- */
 -->
 <form id="wizform" name="wizform" method="POST" action="index.php">
-	<input type="hidden" id="module" name="module" value="Campaigns">
-	<input type="hidden" id="action" name="action" = "WizardHome">
-	<input type="hidden" id="process_form" name="process_form" value='false' >		
-	<input type="hidden" id="return_module" name="return_module" value="{$RETURN_MODULE}">
-	<input type="hidden" id="return_id" name="return_id" value="{$RETURN_ID}">
-	<input type="hidden" id="return_action" name="return_action" value="{$RETURN_ACTION}">
-	<input type="hidden" id="record" name="record" value="{$ID}">	
-	<input type="hidden" id="direct_step" name="direct_step" value="1">		
-	<input type="hidden" id="campaign_id" name="campaign_id" value="">			
-	<input type="hidden" id="wiz_mass" name="wiz_mass" value="">			
-	<input type="hidden" id="mode" name="mode" value="">					
+    <input type="hidden" id="module" name="module" value="Campaigns">
+    <input type="hidden" id="action" name="action" = "WizardHome">
+    <input type="hidden" id="process_form" name="process_form" value='false'>
+    <input type="hidden" id="return_module" name="return_module" value="{$RETURN_MODULE}">
+    <input type="hidden" id="return_id" name="return_id" value="{$RETURN_ID}">
+    <input type="hidden" id="return_action" name="return_action" value="{$RETURN_ACTION}">
+    <input type="hidden" id="record" name="record" value="{$ID}">
+    <input type="hidden" id="direct_step" name="direct_step" value="1">
+    <input type="hidden" id="campaign_id" name="campaign_id" value="">
+    <input type="hidden" id="wiz_mass" name="wiz_mass" value="">
+    <input type="hidden" id="mode" name="mode" value="">
 
 
+    <table class='other view' cellspacing="1">
+        <tr>
+            <td rowspan='2' width='10%' scope='row' style='vertical-align: top;'>
+                <div id='nav'>
+                    {$NAV_ITEMS}
 
-<table class='other view' cellspacing="1">
-<tr>
-<td rowspan='2' width='10%' scope='row' style='vertical-align: top;'>
-<div id='nav' >
-{$NAV_ITEMS}
+                </div>
 
-</div>
+            </td>
 
-</td>
+            <td class='edit view' rowspan='2' width='100%'>
+                {$CAMPAIGN_DIAGNOSTIC_LINK}
+                <p>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                        <tr>
+                            <td>
+                                <div id='campaign_summary'>{$CAMPAIGN_TBL}</div>
+                <p>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                <div id='campaign_trackers'>{$TRACKERS_TBL}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                <div id='campaign_targets'>{$TARGETS_TBL}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                <div id='campaign_marketing'>{$MARKETING_TBL}</div>
+            </td>
+        </tr>
+    </table>
 
-<td class='edit view' rowspan='2' width='100%'>
-{$CAMPAIGN_DIAGNOSTIC_LINK}<p>
-<table  width="100%" border="0" cellspacing="1" cellpadding="0" >
-	<tr><td>
-		<div id='campaign_summary'>{$CAMPAIGN_TBL}</div><p>
-	</td></tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr><td>
-		<p><div id='campaign_trackers'>{$TRACKERS_TBL}</div>
-	</td></tr>
-	<tr><td>&nbsp;</td></tr>			
-	<tr><td>
-		<p><div id='campaign_targets'>{$TARGETS_TBL}</div>
-	</td></tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr><td>
-		<p><div id='campaign_marketing'>{$MARKETING_TBL}</div>
-	</td></tr>
-</table>
-		
-</td></tr></table>
-<script>
-{$MSG_SCRIPT}
-</script>
+
+    </td></tr></table>
+    <script>
+      {$MSG_SCRIPT}
+    </script>
 </form>
-		

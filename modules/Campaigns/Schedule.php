@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,21 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
-
-
-
-
-
-
-    $test=false;
+$test = false;
 //account for case when called from marketing wizard
 if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] == 'WizardMarketing') {
     $_POST['return_module'] = $_REQUEST['return_module'];
@@ -65,7 +52,7 @@ if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] == 'WizardMa
 
 
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'test') {
-    $test=true;
+    $test = true;
     $_POST['mode'] = 'test';
 }
 
@@ -104,7 +91,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
         $where_clauses = array();
 
         if (!empty($campaign_id)) {
-            array_push($where_clauses, "campaign_id = '".DBManagerFactory::getInstance()->quote($campaign_id)."'");
+            array_push($where_clauses, "campaign_id = '" . DBManagerFactory::getInstance()->quote($campaign_id) . "'");
         }
 
         $where = "";
@@ -128,8 +115,8 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
     }
 
     //force multi-select popup
-    $ListView->process_for_popups=true;
-    $ListView->multi_select_popup=true;
+    $ListView->process_for_popups = true;
+    $ListView->multi_select_popup = true;
     //end
     $ListView->mergeduplicates = false;
     $ListView->show_export_button = false;
@@ -146,39 +133,39 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
         $ListView->xTemplateAssign("MODE", $_POST['mode']);
         //finds all marketing messages that have an association with prospect list of the test.
         //this query can be siplified using sub-selects.
-        $query="select distinct email_marketing.id email_marketing_id from email_marketing ";
-        $query.=" inner join email_marketing_prospect_lists empl on empl.email_marketing_id = email_marketing.id ";
-        $query.=" inner join prospect_lists on prospect_lists.id = empl.prospect_list_id ";
-        $query.=" inner join prospect_list_campaigns plc on plc.prospect_list_id = empl.prospect_list_id ";
-        $query.=" where empl.deleted=0  ";
-        $query.=" and prospect_lists.deleted=0 ";
-        $query.=" and prospect_lists.list_type='test' ";
-        $query.=" and plc.deleted=0 ";
-        $query.=" and plc.campaign_id='$campaign_id'";
-        $query.=" and email_marketing.campaign_id='$campaign_id'";
-        $query.=" and email_marketing.deleted=0 ";
-        $query.=" and email_marketing.all_prospect_lists=0 ";
+        $query = "select distinct email_marketing.id email_marketing_id from email_marketing ";
+        $query .= " inner join email_marketing_prospect_lists empl on empl.email_marketing_id = email_marketing.id ";
+        $query .= " inner join prospect_lists on prospect_lists.id = empl.prospect_list_id ";
+        $query .= " inner join prospect_list_campaigns plc on plc.prospect_list_id = empl.prospect_list_id ";
+        $query .= " where empl.deleted=0  ";
+        $query .= " and prospect_lists.deleted=0 ";
+        $query .= " and prospect_lists.list_type='test' ";
+        $query .= " and plc.deleted=0 ";
+        $query .= " and plc.campaign_id='$campaign_id'";
+        $query .= " and email_marketing.campaign_id='$campaign_id'";
+        $query .= " and email_marketing.deleted=0 ";
+        $query .= " and email_marketing.all_prospect_lists=0 ";
 
-        $seed=array();
+        $seed = array();
 
-        $result=$focus->db->query($query);
-        while (($row=$focus->db->fetchByAssoc($result)) != null) {
+        $result = $focus->db->query($query);
+        while (($row = $focus->db->fetchByAssoc($result)) != null) {
             $bean = BeanFactory::newBean('EmailMarketing');
             $bean->retrieve($row['email_marketing_id']);
-            $bean->mode='test';
-            $seed[]=$bean;
+            $bean->mode = 'test';
+            $seed[] = $bean;
         }
-        $query=" select email_marketing.id email_marketing_id from email_marketing ";
-        $query.=" WHERE email_marketing.campaign_id='$campaign_id'";
-        $query.=" and email_marketing.deleted=0 ";
-        $query.=" and email_marketing.all_prospect_lists=1 ";
+        $query = " select email_marketing.id email_marketing_id from email_marketing ";
+        $query .= " WHERE email_marketing.campaign_id='$campaign_id'";
+        $query .= " and email_marketing.deleted=0 ";
+        $query .= " and email_marketing.all_prospect_lists=1 ";
 
-        $result=$focus->db->query($query);
-        while (($row=$focus->db->fetchByAssoc($result)) != null) {
+        $result = $focus->db->query($query);
+        while (($row = $focus->db->fetchByAssoc($result)) != null) {
             $bean = BeanFactory::newBean('EmailMarketing');
             $bean->retrieve($row['email_marketing_id']);
-            $bean->mode='test';
-            $seed[]=$bean;
+            $bean->mode = 'test';
+            $seed[] = $bean;
         }
 
         $ListView->processListView($seed, "main", "EMAILMARKETING");

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,25 +40,31 @@
 
 
 $searchdefs['Campaigns'] = array(
-            'templateMeta' => array(
-                    'maxColumns' => '3',
-                    'maxColumnsBasic' => '4',
-                    'widths' => array('label' => '10', 'field' => '30'),
-                   ),
-            'layout' => array(
-                'basic_search' => array(
-                    'name',
-                    array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
-                    
-                ),
-                'advanced_search' => array(
-                    'name',
-                    array('name'=>'start_date', 'type'=>'date', 'displayParams'=>array('showFormats'=>true)),
-                    array('name'=>'end_date', 'type'=>'date', 'displayParams'=>array('showFormats'=>true)),
-                    'status',
-                    'campaign_type',
-                    array('name' => 'assigned_user_id', 'label'=>'LBL_ASSIGNED_TO', 'type' => 'enum', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
-                    
-                ),
+    'templateMeta' => array(
+        'maxColumns' => '3',
+        'maxColumnsBasic' => '4',
+        'widths' => array('label' => '10', 'field' => '30'),
+    ),
+    'layout' => array(
+        'basic_search' => array(
+            'name',
+            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+
+        ),
+        'advanced_search' => array(
+            'name',
+            array('name' => 'start_date', 'type' => 'date', 'displayParams' => array('showFormats' => true)),
+            array('name' => 'end_date', 'type' => 'date', 'displayParams' => array('showFormats' => true)),
+            'status',
+            'campaign_type',
+            array(
+                'name' => 'assigned_user_id',
+                'label' => 'LBL_ASSIGNED_TO',
+                'type' => 'enum',
+                'function' => array('name' => 'get_user_array', 'params' => array(false))
             ),
+
+        ),
+    ),
 );
+

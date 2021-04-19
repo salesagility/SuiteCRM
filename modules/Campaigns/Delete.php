@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 if (!isset($_REQUEST['record'])) {
@@ -50,7 +50,7 @@ if (!isset($_REQUEST['record'])) {
 $focus = BeanFactory::newBean('Campaigns');
 $focus->retrieve($_REQUEST['record']);
 
-if (isset($_REQUEST['mode']) and $_REQUEST['mode']=='Test') {
+if (isset($_REQUEST['mode']) and $_REQUEST['mode'] == 'Test') {
     //deletes all data associated with the test run.
     require_once('modules/Campaigns/DeleteTestCampaigns.php');
     $deleteTest = new DeleteTestCampaigns();
@@ -63,6 +63,6 @@ if (isset($_REQUEST['mode']) and $_REQUEST['mode']=='Test') {
     $focus->mark_deleted($_REQUEST['record']);
 }
 
-$return_id=!empty($_REQUEST['return_id'])?$_REQUEST['return_id']:$focus->id;
+$return_id = !empty($_REQUEST['return_id']) ? $_REQUEST['return_id'] : $focus->id;
 require_once('include/formbase.php');
 handleRedirect($return_id, $_REQUEST['return_module']);

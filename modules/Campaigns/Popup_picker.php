@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,19 +38,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 global $theme;
 
-
-
-
-
-
-
-
-
+/**
+ * Class Popup_Picker
+ */
 class Popup_Picker
 {
 
@@ -63,10 +57,8 @@ class Popup_Picker
      */
     public function __construct()
     {
+        ;
     }
-
-
-
 
     /*
      *
@@ -103,7 +95,6 @@ class Popup_Picker
         $where = $this->_get_where_clause();
 
 
-
         $name = empty($_REQUEST['name']) ? '' : $_REQUEST['name'];
         $status = empty($_REQUEST['status']) ? '' : $_REQUEST['status'];
         $campaign_type = empty($_REQUEST['campaign_type']) ? '' : $_REQUEST['campaign_type'];
@@ -111,25 +102,25 @@ class Popup_Picker
         $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 
-        $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
+        $button = "<form action='index.php' method='post' name='form' id='form'>\n";
         //START:FOR MULTI-SELECT
-        $multi_select=false;
+        $multi_select = false;
         if (!empty($_REQUEST['mode']) && strtoupper($_REQUEST['mode']) == 'MULTISELECT') {
-            $multi_select=true;
-            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('Prospects',document.MassUpdate,'mass[]','" .$app_strings['ERR_NOTHING_SELECTED']."');\" title='"
-                .$app_strings['LBL_SELECT_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
+            $multi_select = true;
+            $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('Prospects',document.MassUpdate,'mass[]','" . $app_strings['ERR_NOTHING_SELECTED'] . "');\" title='"
+                . $app_strings['LBL_SELECT_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_SELECT_BUTTON_LABEL'] . "  ' />\n";
         }
         //END:FOR MULTI-SELECT
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                . $app_strings['LBL_CLEAR_BUTTON_TITLE'] . "' value='  "
+                . $app_strings['LBL_CLEAR_BUTTON_LABEL'] . "  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-            .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            . $app_strings['LBL_CANCEL_BUTTON_TITLE'] . "' accesskey='"
+            . $app_strings['LBL_CANCEL_BUTTON_KEY'] . "' value='  "
+            . $app_strings['LBL_CANCEL_BUTTON_LABEL'] . "  ' />\n";
         $button .= "</form>\n";
 
         $form = new XTemplate('modules/Campaigns/Popup_picker.html');
@@ -160,7 +151,7 @@ class Popup_Picker
         $ListView->show_export_button = false;
         $ListView->process_for_popups = true;
         $ListView->setXTemplate($form);
-        $ListView->multi_select_popup=$multi_select;  //FOR MULTI-SELECT
+        $ListView->multi_select_popup = $multi_select;  //FOR MULTI-SELECT
         $ListView->xTemplate->assign("TAG_TYPE", "A"); //FOR MULTI-SELECT
         $ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE']); //FOR MULTI-SELECT
         $ListView->setHeaderText($button); //FOR MULTI-SELECT
@@ -174,6 +165,7 @@ class Popup_Picker
         ob_end_clean();
 
         $output_html .= insert_popup_footer();
+
         return $output_html;
     }
 } // end of class Popup_Picker

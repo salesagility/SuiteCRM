@@ -1,15 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,31 +38,35 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+require_once __DIR__ . '/../../../include/MVC/View/views/view.list.php';
+
 /**
+ * Class ViewNewsLetterList
  */
-
-
 class ViewNewsLetterList extends ViewList
 {
     public function processSearchForm()
     {
-        // we have a query
-        if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel
+        if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) {
             $this->searchForm->populateFromArray($this->storeQuery->query);
         } else {
             $this->searchForm->populateFromRequest();
         }
+
         $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
         $where_clauses[] = "campaigns.campaign_type in ('NewsLetter')";
-        if (count($where_clauses) > 0) {
-            $this->where = '('. implode(' ) AND ( ', $where_clauses) . ')';
+        if (!empty($where_clauses)) {
+            $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
         }
-        $GLOBALS['log']->info("List View Where Clause: $this->where");
-
+        LoggerManager::getLogger()->info("List View Where Clause: $this->where");
 
         echo $this->searchForm->display($this->headers);
     }
-    
+
     /**
      * @see SugarView::preDisplay()
      */
@@ -76,5 +76,6 @@ class ViewNewsLetterList extends ViewList
         $mod_strings['LBL_MODULE_TITLE'] = $mod_strings['LBL_NEWSLETTER_TITLE'];
         $mod_strings['LBL_LIST_FORM_TITLE'] = $mod_strings['LBL_NEWSLETTER_LIST_FORM_TITLE'];
         parent::preDisplay();
+
     }
 }

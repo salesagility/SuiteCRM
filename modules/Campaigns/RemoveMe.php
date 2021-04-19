@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,7 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once('modules/Campaigns/utils.php');
@@ -61,12 +60,12 @@ if (!empty($_REQUEST['identifier'])) {
         $current_user = BeanFactory::newBean('Users');
         $current_user->retrieve('1');
     }
-    
-    $keys=log_campaign_activity($_REQUEST['identifier'], 'removed');
+
+    $keys = log_campaign_activity($_REQUEST['identifier'], 'removed');
     global $current_language;
     $mod_strings = return_module_language($current_language, 'Campaigns');
 
-    
+
     if (!empty($keys) && $keys['target_type'] == 'Users') {
         //Users cannot opt out of receiving emails, print out warning message.
         echo $mod_strings['LBL_USERS_CANNOT_OPTOUT'];
@@ -77,6 +76,7 @@ if (!empty($_REQUEST['identifier'])) {
         $focus = new $beantype();
         $focus->retrieve($keys['target_id']);
         unsubscribe($keys['campaign_id'], $focus);
+
     } elseif (!empty($keys)) {
         $id = $keys['target_id'];
         $module = trim($keys['target_type']);
@@ -91,7 +91,7 @@ if (!empty($_REQUEST['identifier'])) {
         if (preg_match('/^[0-9A-Za-z\-]*$/', $id) && $module != 'Users') {
             //record this activity in the campaing log table..
             $query = "UPDATE email_addresses SET email_addresses.opt_out = 1 WHERE EXISTS(SELECT 1 FROM email_addr_bean_rel ear WHERE ear.bean_id = '$id' AND ear.deleted=0 AND email_addresses.id = ear.email_address_id)";
-            $status=$db->query($query);
+            $status = $db->query($query);
             if ($status) {
                 echo "*";
             }
@@ -99,5 +99,7 @@ if (!empty($_REQUEST['identifier'])) {
     }
     //Print Confirmation Message.
     echo $mod_strings['LBL_ELECTED_TO_OPTOUT'];
+
 }
 sugar_cleanup();
+

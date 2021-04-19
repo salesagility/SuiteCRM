@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,14 +38,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $gridline;
 global $theme;
 global $beanList;
 global $beanFiles;
-
 
 if (empty($_REQUEST['module'])) {
     die("'module' was not defined");
@@ -59,7 +56,7 @@ if (empty($_REQUEST['record'])) {
 }
 
 if (!isset($beanList[$_REQUEST['module']])) {
-    die("'".$_REQUEST['module']."' is not defined in \$beanList");
+    die("'" . $_REQUEST['module'] . "' is not defined in \$beanList");
 }
 
 $subpanel = $_REQUEST['subpanel'];
@@ -67,7 +64,7 @@ $record = $_REQUEST['record'];
 $module = $_REQUEST['module'];
 
 
-$image_path = 'themes/'.$theme.'/images/';
+$image_path = 'themes/' . $theme . '/images/';
 
 if (empty($_REQUEST['inline'])) {
     insert_popup_header($theme);
@@ -95,10 +92,11 @@ if (!empty($_REQUEST['mkt_id']) && $_REQUEST['mkt_id'] != 'all') {// bug 32910
 if (!empty($mkt_id)) {
     $subpanel_object->subpanel_defs->_instance_properties['function_parameters']['EMAIL_MARKETING_ID_VALUE'] = $mkt_id;
 }
-echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;
+echo (empty($_REQUEST['inline'])) ? $subpanel_object->get_buttons() : '';
 
 $subpanel_object->display();
 
 if (empty($_REQUEST['inline'])) {
     insert_popup_footer($theme);
 }
+
