@@ -1,0 +1,289 @@
+/* User Profile scss code */
+
+form.userprofile {
+    .userprofile-nav {
+        margin: 0;   
+        border-bottom: none; 
+        li.selected {
+            background: none;
+        }   
+          .selected {
+            a {
+                em {
+                    background-color: $midnight-blue;
+                    color: #ffffff;
+                    border-color: $midnight-blue;
+                }
+            }            
+        } 
+    li {
+        a {
+            height: auto;
+            border: none;
+            background: none;
+            em {
+                background-color: $geyser-blue;
+                border: none;
+                text-transform: uppercase;
+                font-size: 1em;
+                padding-left: 1em;
+                padding-right: 1em;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;  
+                top: 0;
+                margin-right: 0.1em;
+                font-weight: normal;
+            }
+        }
+    }   
+   }
+   .edit-view-row {
+    .edit-view-row-item {
+        padding: 0;
+    }
+    .edit-view-bordered {
+        &:nth-child(2n+0) {
+            border-right: none;
+            padding-left: 1em;
+        }
+    }
+}
+    #generate_password {
+    table {
+        margin-top: 0.3em;
+    }
+    table tr td {
+        padding: 0;
+    }
+    table tr table th {
+        padding: 0;
+    }
+    td {
+        input {
+            margin-left: 3em;
+        }
+    }
+    }     
+    
+    #EditView_tabs.yui-navset.yui-navset-top {
+    padding: 0;
+    }
+    .panel {
+        margin-top: 0.9em;
+    }
+    .panel-heading  {
+        height: 3.3rem;
+    } 
+    .email-address-line-container {
+        margin: 0;
+        padding: 0;
+        input[type=email] {
+            background-color:$transparent-color;
+            border: 1px solid $form-border-color;
+        }
+        .email-address-users-profile {
+            margin: 0;
+            padding: 0;
+            .email-address-input-group {
+                display: flex;
+                width: 95%;
+            }
+        }
+        .email-address-options-container {
+            position: relative;
+            bottom: 1em; 
+            margin-left: 3em;
+            input[type="checkbox"] {
+                margin: 0;
+            }       
+        }
+    }
+    #email_options {
+        .col-xs-12 {
+            padding: 0;
+        }
+        .email-address-add-button {
+            background: transparent;
+            color: grey;
+            border: 1px solid grey;
+            width: 28px;
+            height: 28px;
+            .suitepicon-action-plus {
+              font-size: 20px;
+            }
+          }
+          .email-address-remove-button {
+            background: transparent;
+            color: grey;
+            border: 1px solid grey;
+            padding: 0.3em;
+            height: 28px;
+            margin-top: 8px;
+            .suitepicon-action-minus {
+              font-size: 17px;
+            }
+          }
+          button:disabled {
+              width: 28px;
+          }
+    }  
+    input[type=text],input[type=password],input[type=email] {
+        background-color:$transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }           
+   .action_buttons {
+        bottom: 2.1em;
+   }
+   
+   .yui-navset .yui-content {
+        padding: 0.2em 1em;
+    }
+    .userprofile-email {
+        margin-top: 0.4em; 
+    }
+    h4 {
+        padding: 0;
+        line-height: 40px;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+    }     
+    .button {
+        padding: 0 10px;
+        margin: 4px;
+        margin: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1.1em;
+        padding: 0.3em 0.9em;
+        background-color: #93a4b3;
+        text-transform: capitalize;
+    }
+    #settings {
+        table tr td {
+            padding: 0;
+            white-space: nowrap;            
+        }
+        table tr td:nth-child(1){
+            width: 20%;
+        }
+        table tr td:nth-child(2){
+            width: 30%;
+        }
+        table tr td:nth-child(4){
+            vertical-align: middle;
+        }
+        table tr td {
+            slot {
+                input[type=checkbox] {
+                    margin-top: 1em !important;
+                }
+            }
+        }
+    }
+    #locale {
+        table tr td {
+            padding: 0;
+            white-space: nowrap;
+        }
+        table tr td:nth-child(1){
+            width: 20%;
+        }
+        table tr td:nth-child(2){
+            width: 30%;
+            vertical-align: middle;
+        }
+    }
+    #calendar_options {
+        table tr td {
+            padding: 0;
+            white-space: nowrap;
+        } 
+        table tr td:nth-child(1){
+            width: 20%;
+        }
+    }
+    #subthemes {
+        table tr td {
+            padding: 0;
+            white-space: nowrap;
+        }  
+    }
+    .subthemeslayout {
+        tr td table {
+            width: 100%;
+            tr td:nth-child(1){
+                width: 2%;
+            }
+            tr td:nth-child(2){
+                width: 11%;
+            }
+            tr td:nth-child(3){
+                width: 5%;
+            }
+            tr td:nth-child(4){
+                width: 5%;
+            }
+        }        
+    }
+    #settings > .edit [type="button"] {
+        padding: 0 10px;
+        margin: 4px;
+        margin: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1.1em;
+        padding: 0.3em 0.9em;
+        background-color: #93a4b3;
+        text-transform: capitalize;
+        border: none;
+    }
+    #settings > .edit [type="checkbox"] {
+        margin-top: 0;
+    }
+    .user-tab-content .edit tr td {
+        padding-left: 0.6em;
+        text-transform: uppercase;
+    }    
+    .email-address-reply-to-flag {
+        margin-top: 8px !important;
+    }
+    select#display_tabs::-webkit-scrollbar-track {
+        background: $dashboard-scrollbar-bg;
+    }
+    select#display_tabs::-webkit-scrollbar-thumb {
+        background-color: $dashboard-scroll; 
+        border-radius: 20px;
+    }
+    .subpanel-table {
+        margin-top: 2.5em;
+        margin-bottom: 2em;
+        .fancymenu {
+            position: absolute;
+            top: 6em;
+            right: 1em;
+            #EAPM_create_button {
+                background-color: #93a4b3; 
+            }
+        }
+    }
+    slot {
+        input[type=checkbox] {
+            margin-top: 17px;
+        }
+    }
+    select#display_tabs {
+        width: 100%;
+    }
+    input.subthemelayout_options_checkbox {
+        margin-top:12px !important;
+    }
+    input#sigDigitsExample {
+        background: lightgrey;
+    }
+}

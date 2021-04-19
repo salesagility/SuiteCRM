@@ -60,7 +60,7 @@ var emailAddressWidgetLoaded = false;
 	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
 		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','', false);"{/capture}
 		<button type="button" class="btn btn-danger email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD_EMAIL} " {$other_attributes}>
-			<span class="suitepicon suitepicon-action-plus"></span><span></span>
+			<span class="suitepicon suitepicon-action-plus"></span>			
 		</button>
 	</div>
 	<div class="col-xs-12 email-address-lines-container">

@@ -44,7 +44,7 @@
 <!-- include a closing div if the useTabs variable is set to true -->
 </div>
 {{/if}}
-<div id="email_options">
+<div id="email_options" class="userprofile-email">
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
         <tr>
             <th align="left" scope="row" colspan="4">
@@ -93,7 +93,7 @@
         <div id="generate_password">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
                 <tr>
-                    <td width='40%'>
+                    <td width='100%'>
                         <table width='100%' cellspacing='0' cellpadding='0' border='0'>
                             <tr>
                                 <th align="left" scope="row" colspan="4">
@@ -107,7 +107,7 @@
 
                             <table width='100%' cellspacing='0' cellpadding='0' border='0'>
                                 <tr>
-                                    <td width='35%' scope="row">
+                                    <td width='13%' scope="row">
                                         {$MOD.LBL_OLD_PASSWORD}
                                     </td>
                                     <td>
@@ -121,7 +121,7 @@
                         </div>
                         <table width='100%' cellspacing='0' cellpadding='0' border='0'>
                             <tr>
-                                <td width='35%' scope="row" snowrap>
+                                <td width='13%' scope="row" snowrap>
                                     {$MOD.LBL_NEW_PASSWORD}
                                     <span class="required"
                                           id="mandatory_pwd">{if ($REQUIRED_PASSWORD)}{$APP.LBL_REQUIRED_SYMBOL}{/if}</span>
@@ -135,7 +135,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td scope="row" width='35%'>
+                                <td scope="row" width='13%'>
                                     {$MOD.LBL_CONFIRM_PASSWORD}
                                 </td>
                                 <td class='dataField'>
@@ -497,7 +497,7 @@
 {/if}
 <div class="user-tab-content">
     <div id="subthemes" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
-        <table class="edit view" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <table class="edit view subthemeslayout" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tbody>
                 <tr>
                     <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_LAYOUT_OPTIONS}</h4></th>
@@ -525,7 +525,7 @@
                     <td colspan="4">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td scope="row" align="left" style="padding-bottom: 2em;">{$TAB_CHOOSER}</td>
+                                <td class="subtheme_layout" scope="row" align="left" style="width:100%;padding-bottom: 2em;">{$TAB_CHOOSER}</td>
                                 <td width="90%" valign="top"><BR>&nbsp;</td>
                             </tr>
                         </table>
@@ -535,19 +535,21 @@
                     <td width="17%" scope="row"><span>{$MOD.LBL_SORT_MODULES}
                             :</span>&nbsp;{sugar_help text=$MOD.LBL_SORT_MODULES_DESCRIPTION }</td>
                     <td width="83%" colspan="3">
-                        <input type="checkbox" name="sort_modules_by_name" {$SORT_MODULES_BY_NAME} tabindex='13'>
+                        <input class="subthemelayout_options_checkbox" type="checkbox" name="sort_modules_by_name" {$SORT_MODULES_BY_NAME} tabindex='13'>
                    </td>
                 </tr>
                 <tr>
                     <td width="17%" scope="row"><span>{$MOD.LBL_SUBPANEL_TABS}
                             :</span>&nbsp;{sugar_help text=$MOD.LBL_SUBPANEL_TABS_DESCRIPTION }</td>
-                    <td width="83%" colspan="3"><input type="checkbox" name="user_subpanel_tabs" {$SUBPANEL_TABS}
+                    <td width="83%" colspan="3">
+                    <input class="subthemelayout_options_checkbox" type="checkbox" name="user_subpanel_tabs" {$SUBPANEL_TABS}
                                                        tabindex='13'></td>
                 </tr>
                 <tr>
                     <td width="17%" scope="row"><span>{$MOD.LBL_COUNT_COLLAPSED_SUBPANELS}
                             :</span>&nbsp;{sugar_help text=$MOD.LBL_COUNT_COLLAPSED_SUBPANELS_DESCRIPTION }</td>
-                    <td width="83%" colspan="3"><input type="checkbox" name="user_count_collapsed_subpanels" {$COUNT_COLLAPSED_SUBPANELS}
+                    <td width="83%" colspan="3">
+                    <input class="subthemelayout_options_checkbox" type="checkbox" name="user_count_collapsed_subpanels" {$COUNT_COLLAPSED_SUBPANELS}
                                                        tabindex='13'></td>
                 </tr>
             </tbody>

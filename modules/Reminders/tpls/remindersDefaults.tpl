@@ -103,7 +103,6 @@
 				{html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
 			</select>
 			<br>
-			&nbsp;
 		{else}
 			{$REMINDER_TIME_OPTIONS.$REMINDER_TIME}
 		{/if}
@@ -121,7 +120,6 @@
 				{html_options options=$REMINDER_TIME_OPTIONS selected=$EMAIL_REMINDER_TIME}
 			</select>
 			<br>
-			&nbsp;
 		{else}
 			{$REMINDER_TIME_OPTIONS.$EMAIL_REMINDER_TIME}
 		{/if}
