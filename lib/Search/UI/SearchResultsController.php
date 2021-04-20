@@ -88,7 +88,7 @@ class SearchResultsController extends Controller
     public function display()
     {
         $headers = $this->getListViewHeaders();
-        
+
         $total = $this->results->getTotal();
         if ($total > 1) {
             $size = $this->query->getSize();
@@ -116,7 +116,7 @@ class SearchResultsController extends Controller
             }
         }
         $this->view->getTemplate()->assign('total', $total);
-        
+
         $this->view->getTemplate()->assign('headers', $headers);
         $this->view->getTemplate()->assign('results', $this->results);
         $this->view->getTemplate()->assign('resultsAsBean', $this->results->getHitsAsBeans());
@@ -187,7 +187,7 @@ class SearchResultsController extends Controller
         ];
         return $header;
     }
-    
+
     /**
      *
      * @param SugarBean $bean
@@ -203,7 +203,7 @@ class SearchResultsController extends Controller
                 null,
                 LangText::USING_ALL_STRINGS,
                 true,
-                true,
+                false,
                 $bean->module_name
             ) :
             null;
