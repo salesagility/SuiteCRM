@@ -33,6 +33,7 @@ require_once 'include/portability/ApiBeanMapper/TypeMappers/DateTimeMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/MultiEnumMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/BooleanMapper.php';
 require_once 'include/portability/ApiBeanMapper/ApiBeanModuleMappers.php';
+require_once 'include/portability/ApiBeanMapper/ModuleMappers/SavedSearch/SavedSearchMappers.php';
 
 class ApiBeanMapper
 {
@@ -61,6 +62,7 @@ class ApiBeanMapper
         $this->typeMappers[MultiEnumMapper::getType()] = new MultiEnumMapper();
         $this->typeMappers[BooleanMapper::getType()] = new BooleanMapper();
         $this->typeMappers['boolean'] = $this->typeMappers[BooleanMapper::getType()];
+        $this->moduleMappers[SavedSearchMappers::getModule()] = new SavedSearchMappers();
     }
 
     /**
@@ -242,8 +244,7 @@ class ApiBeanMapper
         array &$arr,
         array $definition,
         string $alternativeName = ''
-    ): void
-    {
+    ): void {
         $name = $field;
 
         if (!empty($alternativeName)) {
