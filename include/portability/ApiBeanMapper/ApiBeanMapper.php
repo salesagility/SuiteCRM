@@ -32,6 +32,7 @@ require_once 'include/portability/ApiBeanMapper/TypeMappers/DateMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/DateTimeMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/MultiEnumMapper.php';
 require_once 'include/portability/ApiBeanMapper/TypeMappers/BooleanMapper.php';
+require_once 'include/portability/ApiBeanMapper/ApiBeanModuleMappers.php';
 
 class ApiBeanMapper
 {
@@ -45,6 +46,11 @@ class ApiBeanMapper
      * @var TypeMapperInterface[]
      */
     protected $typeMappers = [];
+
+    /**
+     * @var ApiBeanModuleMappers[]
+     */
+    protected $moduleMappers = [];
 
     public function __construct()
     {
@@ -244,21 +250,53 @@ class ApiBeanMapper
             $name = $alternativeName;
         }
 
-        $fieldMapper = $this->fieldMappers[$field] ?? null;
-        if ($fieldMapper !== null) {
+        $fieldMapper = $this->getFieldMapper($bean->module_name, $field);
+        if (null !== $fieldMapper) {
             $fieldMapper->run($bean, $arr, $name);
 
             return;
         }
 
         $type = $definition['type'] ?? '';
-        $typeMapper = $this->typeMappers[$type] ?? null;
-        if ($typeMapper !== null) {
+        $typeMapper = $this->getTypeMappers($bean->module_name, $type);
+        if (null !== $typeMapper) {
             $typeMapper->run($bean, $arr, $field, $name);
 
             return;
         }
 
         $arr[$name] = html_entity_decode($bean->$field ?? '', ENT_QUOTES);
+    }
+
+    /**
+     * @param string $module
+     * @param string $field
+     * @return FieldMapperInterface
+     */
+    protected function getFieldMapper(string $module, string $field): ?FieldMapperInterface
+    {
+        $moduleMappers = $this->moduleMappers[$module] ?? null;
+
+        if ($moduleMappers !== null && $moduleMappers->hasFieldMapper($field)) {
+            return $moduleMappers->getFieldMappers()[$field];
+        }
+
+        return $this->fieldMappers[$field] ?? null;
+    }
+
+    /**
+     * @param string $module
+     * @param string $type
+     * @return TypeMapperInterface
+     */
+    protected function getTypeMappers(string $module, string $type): ?TypeMapperInterface
+    {
+        $moduleMappers = $this->moduleMappers[$module] ?? null;
+
+        if ($moduleMappers !== null && $moduleMappers->hasTypeMapper($type)) {
+            return $moduleMappers->getTypeMappers()[$type];
+        }
+
+        return $this->typeMappers[$type] ?? null;
     }
 }
