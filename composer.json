@@ -15,14 +15,11 @@
   },
   "config": {
     "vendor-dir": "vendor",
-    "platform": {
-      "php": "5.5.9"
-    },
     "optimize-autoloader": true,
     "sort-packages": true
   },
   "require": {
-    "php": ">=5.5.9",
+    "php": "5.5.9 - 7.3",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-imap": "*",
