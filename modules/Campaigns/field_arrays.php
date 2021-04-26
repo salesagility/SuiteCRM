@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,33 +38,58 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+/*********************************************************************************
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Campaign'] = array('column_fields' => array(
-                "id", "date_entered",
-                "date_modified", "modified_user_id",
-                "assigned_user_id", "created_by",
-                "name", "start_date",
-                "end_date", "status",
-                "budget", "expected_cost",
-                "actual_cost", "expected_revenue",
-                "campaign_type", "objective",
-                "content", "tracker_key","refer_url","tracker_text",
-                "tracker_count","currency_id","impressions",
-                "frequency",
+$fields_array['Campaign'] = array(
+    'column_fields' => array(
+        "id",
+        "date_entered",
+        "date_modified",
+        "modified_user_id",
+        "assigned_user_id",
+        "created_by",
+        "name",
+        "start_date",
+        "end_date",
+        "status",
+        "budget",
+        "expected_cost",
+        "actual_cost",
+        "expected_revenue",
+        "campaign_type",
+        "objective",
+        "content",
+        "tracker_key",
+        "refer_url",
+        "tracker_text",
+        "tracker_count",
+        "currency_id",
+        "impressions",
+        "frequency",
     ),
-        'list_fields' => array(
-                'id', 'name', 'status',
-                'campaign_type','assigned_user_id','assigned_user_name','end_date',
-                'refer_url',"currency_id",
+    'list_fields' => array(
+        'id',
+        'name',
+        'status',
+        'campaign_type',
+        'assigned_user_id',
+        'assigned_user_name',
+        'end_date',
+        'refer_url',
+        "currency_id",
     ),
-        'required_fields' => array(
-                'name'=>1, 'end_date'=>2,
-                'status'=>3, 'campaign_type'=>4
+    'required_fields' => array(
+        'name' => 1,
+        'end_date' => 2,
+        'status' => 3,
+        'campaign_type' => 4
     ),
 );

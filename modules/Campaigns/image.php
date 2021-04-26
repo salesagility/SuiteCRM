@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,13 +38,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once('modules/Campaigns/utils.php');
 
-$GLOBALS['log']->debug('identifier from the image request is'.$_REQUEST['identifier']);
+LoggerManager::getLogger()->debug('identifier from the image request is' . $_REQUEST['identifier']);
 if (!empty($_REQUEST['identifier'])) {
-    $keys=log_campaign_activity($_REQUEST['identifier'], 'viewed');
+    $keys = log_campaign_activity($_REQUEST['identifier'], 'viewed');
 }
 sugar_cleanup();
 Header("Content-Type: image/gif");
-$fn=sugar_fopen(SugarThemeRegistry::current()->getImageURL("blank.gif", false), "r");
+$fn = sugar_fopen(SugarThemeRegistry::current()->getImageURL("blank.gif", false), "r");
 fpassthru($fn);

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,18 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-/* * *******************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- * ****************************************************************************** */
-
 // logic will be added here at a later date to track campaigns
 // this script; currently forwards to site_URL variable of $sugar_config
 // redirect URL will also be added so specified redirect URL can be used
+
 // additionally, another script using fopen will be used to call this
 // script externally
 
@@ -93,3 +85,4 @@ if (preg_match('/^[0-9A-Za-z\-]*$/', $track)) {
     sugar_cleanup();
 }
 exit;
+

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,10 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-/**
-
- */
 *}
 <!-- BEGIN: main -->
 {$chartResources}
@@ -51,7 +47,7 @@
 <td>
 <form action="index.php" method="post" name="DetailView" id="form">
 			<input type="hidden" name="module" value="CampaignLog">
-			<input type="hidden" name="subpanel_parent_module" value="Campaigns">			
+			<input type="hidden" name="subpanel_parent_module" value="Campaigns">
 			<input type="hidden" name="record" value="{$ID}">
 			<input type="hidden" name="isDuplicate" value=false>
 			<input type="hidden" name="action">
@@ -60,11 +56,11 @@
 			<input type="hidden" name="return_id" >
 			<input type="hidden" name="campaign_id" value="{$ID}">
 			<input type="hidden" name="mode" value="">
-			
+
 			{$TRACK_DELETE_BUTTON}
 	</td>
 		<td align='right'></td>
-	<td align='right'>		    
+	<td align='right'>
 		<input type="button" class="button" id="launch_wizard_button" onclick="javascript:window.location='index.php?module=Campaigns&action=WizardHome&record={$ID}';" value="{$MOD.LBL_TO_WIZARD_TITLE}" />
 		<input type="button" class="button" id="view_details_button" onclick="javascript:window.location='index.php?module=Campaigns&action=DetailView&record={$ID}';" value="{$MOD.LBL_TODETAIL_BUTTON_LABEL}" />
 		<span style="{$DISABLE_LINK}"><input type="button" class="button" id="view_roi_button" onclick="javascript:window.location='index.php?module=Campaigns&action=RoiDetailView&record={$ID}';" value="{$MOD.LBL_TRACK_ROI_BUTTON_LABEL}" /></SPAN>{$ADMIN_EDIT}
@@ -140,10 +136,10 @@
 		<tr>
 			<td width="10%">{$FILTER_LABEL}</td>
 			<td width="70%">{$MKT_DROP_DOWN}</td>
-			<td width="20%">&nbsp;</td>			
+			<td width="20%">&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="3"><div class="reportChartContainer">{$MY_CHART}</div></td>				
+			<td colspan="3"><div class="reportChartContainer">{$MY_CHART}</div></td>
 		</tr>
 	</table>
 </form>
@@ -160,8 +156,8 @@ var toggle = 0;
 			toggle=1;
 			elem.style.display = '';
 		}else{
-			toggle=0;		
-			elem.style.display = 'none';			
+			toggle=0;
+			elem.style.display = 'none';
 		}
 	}
 {/literal}

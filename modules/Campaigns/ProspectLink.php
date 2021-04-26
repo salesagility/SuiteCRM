@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*
+/**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,29 +38,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
- * Description: Bug 40166. Need for return right join for campaign's target list relations.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-require_once 'data/Link2.php';
+require_once __DIR__ . '/../../data/Link2.php';
 
 /**
  * @brief Bug #40166. Campaign Log Report will not display Contact/Account Names
  */
 class ProspectLink extends Link2
 {
+
     /**
      * This method changes join of any item to campaign through target list
      * if you want to use this join method you should add code below to your vardef.php
      * 'link_class' => 'ProspectLink',
      * 'link_file' => 'modules/Campaigns/ProspectLink.php'.
      *
-     * @see Link::getJoin method
      * @param array $params
      * @param bool $return_array
      * @return array|string
+     * @see Link::getJoin method
      */
     public function getJoin($params, $return_array = false)
     {
@@ -86,23 +81,23 @@ class ProspectLink extends Link2
             $other_key = $this->_relationship->lhs_key;
             $alias_prefix = $table;
             if (!empty($params['join_table_alias'])) {
-                $table_with_alias = $table.' '.$params['join_table_alias'];
+                $table_with_alias = $table . ' ' . $params['join_table_alias'];
                 $table = $params['join_table_alias'];
                 $alias_prefix = $params['join_table_alias'];
             }
 
-            $join .= ' '.$join_type.' prospect_list_campaigns '.$alias_prefix.'_plc ON';
-            $join .= ' '.$alias_prefix.'_plc.'.$key.' = '.$other_table.'.'.$other_key."\n";
+            $join .= ' ' . $join_type . ' prospect_list_campaigns ' . $alias_prefix . '_plc ON';
+            $join .= ' ' . $alias_prefix . '_plc.' . $key . ' = ' . $other_table . '.' . $other_key . "\n";
 
             // join list targets
-            $join .= ' '.$join_type.' prospect_lists_prospects '.$alias_prefix.'_plp ON';
-            $join .= ' '.$alias_prefix.'_plp.prospect_list_id = '.$alias_prefix.'_plc.prospect_list_id AND';
-            $join .= ' '.$alias_prefix.'_plp.related_type = '.DBManagerFactory::getInstance()->quoted($module)."\n";
+            $join .= ' ' . $join_type . ' prospect_lists_prospects ' . $alias_prefix . '_plp ON';
+            $join .= ' ' . $alias_prefix . '_plp.prospect_list_id = ' . $alias_prefix . '_plc.prospect_list_id AND';
+            $join .= ' ' . $alias_prefix . '_plp.related_type = ' . DBManagerFactory::getInstance()->quoted($module) . "\n";
 
             // join target
-            $join .= ' '.$join_type.' '.$table_with_alias.' ON';
-            $join .= ' '.$table.'.id = '.$alias_prefix.'_plp.related_id AND';
-            $join .= ' '.$table.'.deleted=0'."\n";
+            $join .= ' ' . $join_type . ' ' . $table_with_alias . ' ON';
+            $join .= ' ' . $table . '.id = ' . $alias_prefix . '_plp.related_id AND';
+            $join .= ' ' . $table . '.deleted=0' . "\n";
 
             if ($return_array) {
                 $ret_arr = array();
@@ -118,8 +113,8 @@ class ProspectLink extends Link2
             }
 
             return $join;
-        } else {
-            return parent::getJoin($params, $return_array);
         }
+
+        return parent::getJoin($params, $return_array);
     }
 }

@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,32 +38,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 $GLOBALS['studioDefs']['Campaigns'] = array(
-    'LBL_DETAILVIEW'=>array(
-                'template'=>'xtpl',
-                'template_file'=>'modules/Campaigns/DetailView.html',
-                'php_file'=>'modules/Campaigns/DetailView.php',
-                'type'=>'DetailView',
-                ),
-    'LBL_EDITVIEW'=>array(
-                'template'=>'xtpl',
-                'template_file'=>'modules/Campaigns/EditView.html',
-                'php_file'=>'modules/Campaigns/EditView.php',
-                'type'=>'EditView',
-                ),
-    'LBL_LISTVIEW'=>array(
-                'template'=>'listview',
-                'meta_file'=>'modules/Campaigns/listviewdefs.php',
-                'type'=>'ListView',
-                ),
-    'LBL_SEARCHFORM'=>array(
-                'template'=>'xtpl',
-                'template_file'=>'modules/Campaigns/SearchForm.html',
-                'php_file'=>'modules/Campaigns/ListView.php',
-                'type'=>'SearchForm',
-                ),
+    'LBL_DETAILVIEW' => array(
+        'template' => 'xtpl',
+        'template_file' => 'modules/Campaigns/DetailView.html',
+        'php_file' => 'modules/Campaigns/DetailView.php',
+        'type' => 'DetailView',
+    ),
+    'LBL_EDITVIEW' => array(
+        'template' => 'xtpl',
+        'template_file' => 'modules/Campaigns/EditView.html',
+        'php_file' => 'modules/Campaigns/EditView.php',
+        'type' => 'EditView',
+    ),
+    'LBL_LISTVIEW' => array(
+        'template' => 'listview',
+        'meta_file' => 'modules/Campaigns/listviewdefs.php',
+        'type' => 'ListView',
+    ),
+    'LBL_SEARCHFORM' => array(
+        'template' => 'xtpl',
+        'template_file' => 'modules/Campaigns/SearchForm.html',
+        'php_file' => 'modules/Campaigns/ListView.php',
+        'type' => 'SearchForm',
+    ),
 
 );

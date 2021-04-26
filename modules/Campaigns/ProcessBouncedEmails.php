@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,10 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:
- */
+
 //find all mailboxes of type bounce.
 
 /**
@@ -89,25 +87,26 @@ function createBouncedCampaignLogEntry($row, $email, $email_description)
 {
     $GLOBALS['log']->debug("Creating bounced email campaign log");
     $bounce = BeanFactory::newBean('CampaignLog');
-    $bounce->campaign_id=$row['campaign_id'];
-    $bounce->target_tracker_key=$row['target_tracker_key'];
-    $bounce->target_id= $row['target_id'];
-    $bounce->target_type=$row['target_type'];
-    $bounce->list_id=$row['list_id'];
-    $bounce->marketing_id=$row['marketing_id'];
+    $bounce->campaign_id = $row['campaign_id'];
+    $bounce->target_tracker_key = $row['target_tracker_key'];
+    $bounce->target_id = $row['target_id'];
+    $bounce->target_type = $row['target_type'];
+    $bounce->list_id = $row['list_id'];
+    $bounce->marketing_id = $row['marketing_id'];
 
-    $bounce->activity_date=$email->date_created;
-    $bounce->related_type='Emails';
-    $bounce->related_id= $email->id;
+    $bounce->activity_date = $email->date_created;
+    $bounce->related_type = 'Emails';
+    $bounce->related_id = $email->id;
 
     if (checkBouncedEmailInvalid($email_description)) {
-        $bounce->activity_type='invalid email';
+        $bounce->activity_type = 'invalid email';
         markBounceEmailAddressInvalid($bounce);
     } else {
-        $bounce->activity_type='send error';
+        $bounce->activity_type = 'send error';
     }
-        
-    $return_id=$bounce->save();
+
+    $return_id = $bounce->save();
+
     return $return_id;
 }
 
@@ -124,7 +123,7 @@ function markBounceEmailAddressInvalid(CampaignLog $bounce)
         return;
     }
 
-    LoggerManager::getLogger()->info("Marking email address as invalid: ". $email_address);
+    LoggerManager::getLogger()->info("Marking email address as invalid: " . $email_address);
     markEmailAddressInvalid($email_address);
 }
 
@@ -193,11 +192,11 @@ function getExistingCampaignLogEntry($identifier)
 {
     $row = false;
     $targeted = BeanFactory::newBean('CampaignLog');
-    $where="campaign_log.activity_type='targeted' and campaign_log.target_tracker_key='{$identifier}'";
-    $query=$targeted->create_new_list_query('', $where);
-    $result=$targeted->db->query($query);
-    $row=$targeted->db->fetchByAssoc($result);
-    
+    $where = "campaign_log.activity_type='targeted' and campaign_log.target_tracker_key='{$identifier}'";
+    $query = $targeted->create_new_list_query('', $where);
+    $result = $targeted->db->query($query);
+    $row = $targeted->db->fetchByAssoc($result);
+
     return $row;
 }
 
@@ -217,14 +216,12 @@ function checkBouncedEmailForIdentifier($email_description)
         $identifiers = preg_split('/X-CampTrackID: /i', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
         $found = true;
         $GLOBALS['log']->debug("Found campaign identifier in header of email");
-    } else {
-        if (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
-            $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
-            $found = true;
-            $GLOBALS['log']->debug("Found campaign identifier in body of email");
-        }
+    } elseif (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
+        $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
+        $found = true;
+        $GLOBALS['log']->debug("Found campaign identifier in body of email");
     }
-    
+
     return array('found' => $found, 'matches' => $matches, 'identifiers' => $identifiers);
 }
 
@@ -237,7 +234,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
     $email_description .= retrieveErrorReportAttachment($email);
 
     if (preg_match('/MAILER-DAEMON|POSTMASTER/i', $emailFromAddress)) {
-        $matches=array();
+        $matches = array();
 
         //do we have the identifier tag in the email?
         $identifierScanResults = checkBouncedEmailForIdentifier($email_description);
@@ -256,32 +253,39 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                     //do not create another campaign_log record is we already have an
                     //invalid email or send error entry for this tracker key.
                     $query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'";
-                    $query_log .=" and (activity_type='invalid email' or activity_type='send error')";
+                    $query_log .= " and (activity_type='invalid email' or activity_type='send error')";
                     $targeted = BeanFactory::newBean('CampaignLog');
-                    $result_log=$targeted->db->query($query_log);
-                    $row_log=$targeted->db->fetchByAssoc($result_log);
+                    $result_log = $targeted->db->query($query_log);
+                    $row_log = $targeted->db->fetchByAssoc($result_log);
 
                     if (empty($row_log)) {
                         $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);
+
                         return true;
                     } else {
-                        $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
+                        LoggerManager::getLogger()->debug("Warning: campaign log entry already exists for identifier $identifier");
+
                         return false;
                     }
                 } else {
-                    $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
+                    LoggerManager::getLogger()->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: " . $identifier);
+
                     return false;
                 }
             } else {
-                $GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
+                LoggerManager::getLogger()->info("Warning: Empty identifier for campaign log.");
+
                 return false;
             }
         } else {
-            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
+            LoggerManager::getLogger()->info("Warning: skipping bounced email because it does not have the removeme link.");
+
             return false;
         }
     } else {
-        $GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
+        LoggerManager::getLogger()->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
+
         return false;
     }
 }
+

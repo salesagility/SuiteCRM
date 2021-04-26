@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,8 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+/*********************************************************************************
  * Description: Schedules email for delivery. emailman table holds emails for delivery.
  * A cron job polls the emailman table and delivers emails when intended send date time is reached.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
@@ -51,36 +51,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-
-
-
 global $timedate;
 global $current_user;
 global $mod_strings;
 
 $campaign = BeanFactory::newBean('Campaigns');
 $campaign->retrieve($_REQUEST['record']);
-$err_messages=array();
+$err_messages = array();
 
-$test=false;
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] =='test') {
-    $test=true;
+$test = false;
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'test') {
+    $test = true;
 }
 
 //this is to account for the case of sending directly from summary page in wizards
-$from_wiz =false;
+$from_wiz = false;
 if (isset($_REQUEST['wiz_mass'])) {
     $mass[] = $_REQUEST['wiz_mass'];
     $_POST['mass'] = $mass;
-    $from_wiz =true;
+    $from_wiz = true;
 }
 if (isset($_REQUEST['from_wiz'])) {
-    $from_wiz =true;
+    $from_wiz = true;
 }
 
 //if campaign status is 'sending' disallow this step.
 if (!empty($campaign->status) && $campaign->status == 'sending') {
-    $err_messages[]=$mod_strings['ERR_SENDING_NOW'];
+    $err_messages[] = $mod_strings['ERR_SENDING_NOW'];
 }
 $current_date = $campaign->db->now();
 
@@ -108,7 +105,7 @@ foreach ($_POST['mass'] as $message_id) {
 
 
     global $timedate;
-    $mergedvalue=$timedate->merge_date_time($marketing->date_start, $marketing->time_start);
+    $mergedvalue = $timedate->merge_date_time($marketing->date_start, $marketing->time_start);
     if ($test) {
         $send_date_time = $timedate->getNow()->get("-60 seconds")->asDb();
     } else {
@@ -118,47 +115,47 @@ foreach ($_POST['mass'] as $message_id) {
 
     //find all prospect lists associated with this email marketing message.
     if ($marketing->all_prospect_lists == 1) {
-        $query="SELECT prospect_lists.id prospect_list_id from prospect_lists ";
-        $query.=" INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = prospect_lists.id";
-        $query.=" WHERE plc.campaign_id='{$campaign->id}'";
-        $query.=" AND prospect_lists.deleted=0";
-        $query.=" AND plc.deleted=0";
+        $query = "SELECT prospect_lists.id prospect_list_id from prospect_lists ";
+        $query .= " INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = prospect_lists.id";
+        $query .= " WHERE plc.campaign_id='{$campaign->id}'";
+        $query .= " AND prospect_lists.deleted=0";
+        $query .= " AND plc.deleted=0";
         if ($test) {
-            $query.=" AND prospect_lists.list_type='test'";
+            $query .= " AND prospect_lists.list_type='test'";
         } else {
-            $query.=" AND prospect_lists.list_type!='test' AND prospect_lists.list_type not like 'exempt%'";
+            $query .= " AND prospect_lists.list_type!='test' AND prospect_lists.list_type not like 'exempt%'";
         }
     } else {
-        $query="select email_marketing_prospect_lists.* FROM email_marketing_prospect_lists ";
-        $query.=" inner join prospect_lists on prospect_lists.id = email_marketing_prospect_lists.prospect_list_id";
-        $query.=" WHERE prospect_lists.deleted=0 and email_marketing_id = '$message_id' and email_marketing_prospect_lists.deleted=0";
+        $query = "select email_marketing_prospect_lists.* FROM email_marketing_prospect_lists ";
+        $query .= " inner join prospect_lists on prospect_lists.id = email_marketing_prospect_lists.prospect_list_id";
+        $query .= " WHERE prospect_lists.deleted=0 and email_marketing_id = '$message_id' and email_marketing_prospect_lists.deleted=0";
 
         if ($test) {
-            $query.=" AND prospect_lists.list_type='test'";
+            $query .= " AND prospect_lists.list_type='test'";
         } else {
-            $query.=" AND prospect_lists.list_type!='test' AND prospect_lists.list_type not like 'exempt%'";
+            $query .= " AND prospect_lists.list_type!='test' AND prospect_lists.list_type not like 'exempt%'";
         }
     }
-    $result=$campaign->db->query($query);
-    while (($row=$campaign->db->fetchByAssoc($result))!=null) {
-        $prospect_list_id=$row['prospect_list_id'];
+    $result = $campaign->db->query($query);
+    while (($row = $campaign->db->fetchByAssoc($result)) != null) {
+        $prospect_list_id = $row['prospect_list_id'];
 
         //delete all messages for the current campaign and current email marketing message.
-        $delete_emailman_query="delete from emailman where campaign_id='{$campaign->id}' and marketing_id='{$message_id}' and list_id='{$prospect_list_id}'";
+        $delete_emailman_query = "delete from emailman where campaign_id='{$campaign->id}' and marketing_id='{$message_id}' and list_id='{$prospect_list_id}'";
         $campaign->db->query($delete_emailman_query);
         $auto = $campaign->db->getAutoIncrementSQL("emailman", "id");
 
-        $insert_query= "INSERT INTO emailman (date_entered, user_id, campaign_id, marketing_id,list_id, related_id, related_type, send_date_time";
-        $insert_query.= empty($auto)?"":",id";
-        $insert_query.=')';
-        $insert_query.= " SELECT $current_date,'{$current_user->id}',plc.campaign_id,'{$message_id}',plp.prospect_list_id, plp.related_id, plp.related_type,{$send_date_time}";
-        $insert_query.= empty($auto)?"":",$auto";
-        $insert_query.= " FROM prospect_lists_prospects plp ";
-        $insert_query.= "INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = plp.prospect_list_id ";
-        $insert_query.= "WHERE plp.prospect_list_id = '{$prospect_list_id}' ";
-        $insert_query.= "AND plp.deleted=0 ";
-        $insert_query.= "AND plc.deleted=0 ";
-        $insert_query.= "AND plc.campaign_id='{$campaign->id}'";
+        $insert_query = "INSERT INTO emailman (date_entered, user_id, campaign_id, marketing_id,list_id, related_id, related_type, send_date_time";
+        $insert_query .= empty($auto) ? "" : ",id";
+        $insert_query .= ')';
+        $insert_query .= " SELECT $current_date,'{$current_user->id}',plc.campaign_id,'{$message_id}',plp.prospect_list_id, plp.related_id, plp.related_type,{$send_date_time}";
+        $insert_query .= empty($auto) ? "" : ",$auto";
+        $insert_query .= " FROM prospect_lists_prospects plp ";
+        $insert_query .= "INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = plp.prospect_list_id ";
+        $insert_query .= "WHERE plp.prospect_list_id = '{$prospect_list_id}' ";
+        $insert_query .= "AND plp.deleted=0 ";
+        $insert_query .= "AND plc.deleted=0 ";
+        $insert_query .= "AND plc.campaign_id='{$campaign->id}'";
 
         $campaign->db->query($insert_query);
     }
@@ -167,7 +164,7 @@ foreach ($_POST['mass'] as $message_id) {
 //delete all entries from the emailman table that belong to the exempt list.
 //TODO:SM: may want to move this to query clause above instead
 if (!$test) {
-    $delete_query =  "
+    $delete_query = "
     DELETE FROM emailman WHERE id IN (
         SELECT em.id FROM (
             SELECT emailman.id id
@@ -185,9 +182,9 @@ if (!$test) {
     $campaign->db->query($delete_query);
 }
 
-$return_module=isset($_REQUEST['return_module'])?$_REQUEST['return_module']:'Campaigns';
-$return_action=isset($_REQUEST['return_action'])?$_REQUEST['return_action']:'DetailView';
-$return_id=$_REQUEST['record'];
+$return_module = isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : 'Campaigns';
+$return_action = isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : 'DetailView';
+$return_id = $_REQUEST['record'];
 
 if ($test) {
     //navigate to EmailManDelivery..
@@ -202,11 +199,7 @@ if ($test) {
         $header_URL .= "&from=send";
     }
 }
-if ($action=='WizardMarketingSave') {
-    $header_URL .= '&WizardMarketingSave=1&marketing_id=' . (isset($_POST['marketing_id']) && $_POST['marketing_id'] ?
-            $_POST['marketing_id'] : $_REQUEST['wiz_mass']);
-}
-$GLOBALS['log']->debug("about to post header URL of: $header_URL");
+LoggerManager::getLogger()->debug("about to post header URL of: $header_URL");
 
 if (preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
     $href = $matches[1];

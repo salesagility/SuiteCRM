@@ -1,15 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,30 +38,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description: This file is used to override the default Meta-data DetailView behavior
- * to provide customization specific to the Campaigns module.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+require_once __DIR__ . '/../../../include/json_config.php';
+require_once __DIR__ . '/../../../include/MVC/View/views/view.detail.php';
 
-require_once('include/json_config.php');
-
-
+/**
+ * Class CampaignsViewDetail
+ */
 class CampaignsViewDetail extends ViewDetail
 {
+    /**
+     * CampaignsViewDetail constructor.
+     */
     public function __construct()
     {
         parent::__construct();
-        //turn off normal display of subpanels
         $this->options['show_subpanels'] = false;
     }
-
-
-
-
 
     public function preDisplay()
     {
@@ -75,6 +67,7 @@ class CampaignsViewDetail extends ViewDetail
         }
         parent::preDisplay();
         $this->options['show_subpanels'] = false;
+
     }
 
     public function display()
@@ -82,17 +75,18 @@ class CampaignsViewDetail extends ViewDetail
         global $app_list_strings;
         $this->ss->assign('APP_LIST', $app_list_strings);
 
-        if (isset($_REQUEST['mode']) && $_REQUEST['mode']=='set_target') {
+        if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'set_target') {
             require_once('modules/Campaigns/utils.php');
             //call function to create campaign logs
             $mess = track_campaign_prospects($this->bean);
 
-            $confirm_msg = "var ajax_C_LOG_Status = new SUGAR.ajaxStatusClass();
-            window.setTimeout(\"ajax_C_LOG_Status.showStatus('".$mess."')\",1000);
-            window.setTimeout('ajax_C_LOG_Status.hideStatus()', 1500);
-            window.setTimeout(\"ajax_C_LOG_Status.showStatus('".$mess."')\",2000);
+            $confirm_msg = "var ajax_C_LOG_Status = new SUGAR.ajaxStatusClass(); 
+            window.setTimeout(\"ajax_C_LOG_Status.showStatus('" . $mess . "')\",1000); 
+            window.setTimeout('ajax_C_LOG_Status.hideStatus()', 1500); 
+            window.setTimeout(\"ajax_C_LOG_Status.showStatus('" . $mess . "')\",2000); 
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 5000); ";
             $this->ss->assign("MSG_SCRIPT", $confirm_msg);
+
         }
 
         if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter')) {
@@ -108,12 +102,13 @@ class CampaignsViewDetail extends ViewDetail
         if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
             $currency->retrieve($this->bean->currency_id);
             if ($currency->deleted != 1) {
-                $this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
+                $this->ss->assign('CURRENCY', $currency->iso4217 . ' ' . $currency->symbol);
             } else {
-                $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+                $this->ss->assign('CURRENCY',
+                    $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
             }
         } else {
-            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() . ' ' . $currency->getDefaultCurrencySymbol());
         }
 
         parent::display();
@@ -124,14 +119,14 @@ class CampaignsViewDetail extends ViewDetail
         require_once('include/SubPanel/SubPanelTiles.php');
         $subpanel = new SubPanelTiles($this->bean, $this->module);
         //get available list of subpanels
-        $alltabs=$subpanel->subpanel_definitions->get_available_tabs();
+        $alltabs = $subpanel->subpanel_definitions->get_available_tabs();
         if (!empty($alltabs)) {
             //iterate through list, and filter out all but 3 subpanels
-            foreach ($alltabs as $key=>$name) {
-                if ($name != 'prospectlists' && $name!='emailmarketing' && $name != 'tracked_urls' && $name != 'history'
-                /* BEGIN - SECURITY GROUPS */
+            foreach ($alltabs as $key => $name) {
+                if ($name != 'prospectlists' && $name != 'emailmarketing' && $name != 'tracked_urls' && $name != 'history'
+                    /* BEGIN - SECURITY GROUPS */
                     && $name != 'securitygroups'
-                /* END - SECURITY GROUPS */
+                    /* END - SECURITY GROUPS */
                 ) {
                     //exclude subpanels that are not prospectlists, emailmarketing, or tracked urls
                     $subpanel->subpanel_definitions->exclude_tab($name);

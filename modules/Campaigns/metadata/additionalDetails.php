@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function additionalDetailsCampaign($fields)
 {
@@ -49,36 +49,42 @@ function additionalDetailsCampaign($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Campaigns');
     }
-        
+
     $overlib_string = '';
-    
+
     if (!empty($fields['START_DATE'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_CAMPAIGN_START_DATE'] . '</b> ' . $fields['START_DATE'] . '<br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_CAMPAIGN_START_DATE'] . '</b> ' . $fields['START_DATE'] . '<br>';
     }
 
     if (!empty($fields['TRACKER_TEXT'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_TRACKER_TEXT'] . '</b> ' . $fields['TRACKER_TEXT'] . '<br>';
+        $overlib_string .= '<b>' . $mod_strings['LBL_TRACKER_TEXT'] . '</b> ' . $fields['TRACKER_TEXT'] . '<br>';
     }
     if (!empty($fields['REFER_URL'])) {
-        $overlib_string .= '<a target=_blank href='. $fields['REFER_URL'] . '>' . $fields['REFER_URL'] . '</a><br>';
+        $overlib_string .= '<a target=_blank href=' . $fields['REFER_URL'] . '>' . $fields['REFER_URL'] . '</a><br>';
     }
-    
+
     if (!empty($fields['OBJECTIVE'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_CAMPAIGN_OBJECTIVE'] . '</b> ' . substr($fields['OBJECTIVE'], 0, 300);
+        $overlib_string .= '<b>' . $mod_strings['LBL_CAMPAIGN_OBJECTIVE'] . '</b> ' . substr(
+                $fields['OBJECTIVE'],
+                0,
+                300
+            );
         if (strlen($fields['OBJECTIVE']) > 300) {
             $overlib_string .= '...';
         }
         $overlib_string .= '<br>';
     }
     if (!empty($fields['CONTENT'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_CAMPAIGN_CONTENT'] . '</b> ' . substr($fields['CONTENT'], 0, 300);
+        $overlib_string .= '<b>' . $mod_strings['LBL_CAMPAIGN_CONTENT'] . '</b> ' . substr($fields['CONTENT'], 0, 300);
         if (strlen($fields['CONTENT']) > 300) {
             $overlib_string .= '...';
         }
     }
-    
-    return array('fieldToAddTo' => 'NAME',
-                 'string' => $overlib_string,
-                 'editLink' => "index.php?action=EditView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}",
-                 'viewLink' => "index.php?action=DetailView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}");
+
+    return array(
+        'fieldToAddTo' => 'NAME',
+        'string' => $overlib_string,
+        'editLink' => "index.php?action=EditView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}",
+        'viewLink' => "index.php?action=DetailView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}"
+    );
 }

@@ -1,12 +1,11 @@
 {*
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,30 +37,25 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 *}
-
 
 <!-- BEGIN: main -->
 <graphData title="{GRAPHTITLE}">
 
-        <yData defaultAltText="{Y_DEFAULT_ALT_TEXT}">
-                <!-- BEGIN: row -->
-                <dataRow title="{Y_ROW_TITLE}" endLabel="{Y_ROW_ENDLABEl}">
-                        <!-- BEGIN: bar -->
-                        <bar id="{Y_BAR_ID}" totalSize="{Y_BAR_SIZE}" altText="{Y_BAR_ALTTEXT}" url="{Y_BAR_URL}"/>
-                        <!-- END: bar -->
-                </dataRow>
-                <!-- END: row -->
-        </yData>
-        <xData min="{XMIN}" max="{XMAX}" length="{XLENGTH}" kDelim="{XKDELIM}" prefix="{XPREFIX}" suffix="{XSUFFIX}"/>
-        <colorLegend status="on">
-                <mapping id="'.$outcome.'" name="'.$outcome_translation.'" color="'.$color.'"/>
-        </colorLegend>
-        <graphInfo><![CDATA[{GRAPH_DATA}]]></graphInfo>
-        <chartColors {COLOR_DEFS}/>
+    <yData defaultAltText="{Y_DEFAULT_ALT_TEXT}">
+        <!-- BEGIN: row -->
+        <dataRow title="{Y_ROW_TITLE}" endLabel="{Y_ROW_ENDLABEl}">
+            <!-- BEGIN: bar -->
+            <bar id="{Y_BAR_ID}" totalSize="{Y_BAR_SIZE}" altText="{Y_BAR_ALTTEXT}" url="{Y_BAR_URL}"/>
+            <!-- END: bar -->
+        </dataRow>
+        <!-- END: row -->
+    </yData>
+    <xData min="{XMIN}" max="{XMAX}" length="{XLENGTH}" kDelim="{XKDELIM}" prefix="{XPREFIX}" suffix="{XSUFFIX}"/>
+    <colorLegend status="on">
+        <mapping id="'.$outcome.'" name="'.$outcome_translation.'" color="'.$color.'"/>
+    </colorLegend>
+    <graphInfo><![CDATA[{GRAPH_DATA}]]></graphInfo>
+    <chartColors {COLOR_DEFS}/>
 </graphData>
 <!-- END: main -->

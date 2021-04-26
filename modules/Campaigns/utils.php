@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,8 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+/*********************************************************************************
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -133,34 +133,17 @@ function get_campaign_mailboxes_with_stored_options()
     while ($a = $db->fetchByAssoc($r)) {
         $ret[$a['id']] = unserialize(base64_decode($a['stored_options']));
     }
-    return $ret;
-}
 
-function get_campaign_mailboxes_with_stored_options_outbound()
-{
-    $ret = array();
-
-    if (!class_exists('OutboundEmail')) {
-        require('modules/OutboundEmail/OutboundEmail.php');
-    }
-
-    $q = "SELECT * FROM outbound_email WHERE deleted='0'";
-
-    $db = DBManagerFactory::getInstance();
-
-    $r = $db->query($q);
-
-    while ($a = $db->fetchByAssoc($r)) {
-        $ret[$a['id']] = $a;
-    }
     return $ret;
 }
 
 function log_campaign_activity($identifier, $activity, $update = true, $clicked_url_key = null)
 {
+
     $return_array = array();
 
     $db = DBManagerFactory::getInstance();
+
 
     //check to see if the identifier has been replaced with Banner string
     if ($identifier == 'BANNER' && isset($clicked_url_key) && !empty($clicked_url_key)) {
@@ -297,7 +280,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             //values for return array..
             $return_array['target_id'] = $row['target_id'];
             $return_array['target_type'] = $row['target_type'];
-            
+
             // quote variable first
             $dataArrayKeys = array_keys($data);
             $dataArrayKeysQuoted = array();
@@ -305,13 +288,13 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
                 $dataArrayKeysQuoted[] = $db->quote($dataArrayKey);
             }
             $dataArrayKeysQuotedImplode = implode(', ', $dataArrayKeysQuoted);
-            
+
             $insert_query = "INSERT into campaign_log (" . $dataArrayKeysQuotedImplode . ")";
-            
+
             $dataArrayValuesQuotedImplode = implode(', ', array_values($data));
-            
+
             $insert_query .= " VALUES  (" . $dataArrayValuesQuotedImplode . ")";
-            
+
             $db->query($insert_query);
         }
     } else {
@@ -322,6 +305,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
         $rowIdQuoted = $db->quote($row['id']);
         $query1 = "update campaign_log set hits=hits+1 where id='$rowIdQuoted'";
         $current = $db->query($query1);
+
     }
     //check to see if this is a removal action
     if ($row && $activity == 'removed') {
@@ -331,7 +315,6 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
         $rowCampaignIdQuoted = $db->quote($row['campaign_id']);
         $query = "SELECT campaigns.* FROM campaigns WHERE campaigns.id = '" . $rowCampaignIdQuoted . "' ";
         $result = $db->query($query);
-        
         if (!empty($result)) {
             $c_row = $db->fetchByAssoc($result);
 
@@ -341,6 +324,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             }
         }
     }
+
     return $return_array;
 }
 
@@ -379,9 +363,10 @@ function campaign_log_lead_or_contact_entry($campaign_id, $parent_bean, $child_b
 
 function get_campaign_urls($campaign_id)
 {
-    $return_array=array();
+    $return_array = array();
 
     if (!empty($campaign_id)) {
+
         $db = DBManagerFactory::getInstance();
 
         $campaign_id = $db->quote($campaign_id);
@@ -392,6 +377,7 @@ function get_campaign_urls($campaign_id)
             $return_array['{'.$row['tracker_name'].'}']=$row['tracker_name'] . ' : ' . $row['tracker_url'];
         }
     }
+
     return $return_array;
 }
 
@@ -419,11 +405,11 @@ function get_subscription_lists_query($focus, $additional_fields = null)
         global $current_user;
         $owner_where = $focus->getOwnerWhere($current_user->id);
         $group_where = SecurityGroup::getGroupWhere('c', 'Campaigns', $current_user->id);
-        $all_news_type_pl_query .= " AND ( c.assigned_user_id ='".$current_user->id."' or ".$group_where.") ";
+        $all_news_type_pl_query .= " AND ( c.assigned_user_id ='" . $current_user->id . "' or " . $group_where . ") ";
     }
     /* END - SECURITY GROUPS */
 
-    $all_news_type_list =$focus->db->query($all_news_type_pl_query);
+    $all_news_type_list = $focus->db->query($all_news_type_pl_query);
 
     //build array of all newsletter campaigns
     $news_type_list_arr = array();
@@ -435,7 +421,7 @@ function get_subscription_lists_query($focus, $additional_fields = null)
     $all_plp_current = "select prospect_list_id from prospect_lists_prospects where related_id = '$focus->id' and deleted = 0 ";
 
     //build array of prospect lists that this user belongs to
-    $current_plp =$focus->db->query($all_plp_current);
+    $current_plp = $focus->db->query($all_plp_current);
     $current_plp_arr = array();
     while ($row = $focus->db->fetchByAssoc($current_plp)) {
         $current_plp_arr[] = $row;
@@ -443,6 +429,7 @@ function get_subscription_lists_query($focus, $additional_fields = null)
 
     return array('current_plp_arr' => $current_plp_arr, 'news_type_list_arr' => $news_type_list_arr);
 }
+
 /*
  * This function takes in a bean from a lead, prospect, or contact and returns an array containing
  * all subscription lists that the bean is a part of, and all the subscriptions that the bean is not
@@ -472,7 +459,7 @@ function get_subscription_lists($focus, $descriptions = false)
             //compare current user list id against newsletter id
             if ($news_list['prospect_list_id'] == $current_list['prospect_list_id']) {
                 //if id's match, user is subscribed to this list, check to see if this is an exempt list,
-                if (strpos($news_list['list_type'], 'exempt')!== false) {
+                if (strpos($news_list['list_type'], 'exempt') !== false) {
                     //this is an exempt list, so process
                     if (array_key_exists($news_list['name'], $subs_arr)) {
                         //first, add to unsubscribed array
@@ -569,13 +556,14 @@ function get_subscription_lists_keyed($focus)
         if (($match == false) && ($news_list['list_type'] != 'exempt')) {
             $unsubs_arr[$news_list['name']] = $news_list_data;
         }
+
     }
 
     $return_array['unsubscribed'] = $unsubs_arr;
     $return_array['subscribed'] = $subs_arr;
+
     return $return_array;
 }
-
 
 
 /*
@@ -600,11 +588,12 @@ function process_subscriptions($subscription_string_to_parse)
         $subs_changes = trim($subs_changes);
         if (!empty($subs_changes)) {
             $ids_arr = explode("@", $subs_changes);
-            $subs_change[$ids_arr[0].$i] = $ids_arr[1];
-            $subs_change[$ids_arr[2].$i] = $ids_arr[3];
-            $i = $i+1;
+            $subs_change[$ids_arr[0] . $i] = $ids_arr[1];
+            $subs_change[$ids_arr[2] . $i] = $ids_arr[3];
+            $i = $i + 1;
         }
     }
+
     return $subs_change;
 }
 

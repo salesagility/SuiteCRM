@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 
 /**
  * DeleteTestCampaigns.php
@@ -51,12 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class DeleteTestCampaigns
 {
 
-/**
- * deleteTestRecords
- *
- * This method deletes the test records for a given Campaign instance
- * @param Campaign $focus The Campaign instance
- */
+    /**
+     * deleteTestRecords
+     *
+     * This method deletes the test records for a given Campaign instance
+     * @param Campaign $focus The Campaign instance
+     */
     public function deleteTestRecords($focus)
     {
         if (empty($focus) || empty($focus->id)) {
@@ -75,16 +76,19 @@ class DeleteTestCampaigns
         $test_list_ids = array_keys($test_list_ids);
         unset($res);
         if (!empty($test_ids)) {
-            $focus->db->query("UPDATE emails SET deleted=1 WHERE id IN ('".implode("','", $test_ids)."')");
+            $focus->db->query("UPDATE emails SET deleted=1 WHERE id IN ('" . implode("','", $test_ids) . "')");
         }
 
         if (!empty($test_list_ids)) {
-            $query = "DELETE FROM emailman WHERE campaign_id = '{$focus->id}' AND list_id IN ('".implode("','", $test_list_ids)."')";
+            $query = "DELETE FROM emailman WHERE campaign_id = '{$focus->id}' AND list_id IN ('" . implode("','",
+                    $test_list_ids) . "')";
             $focus->db->query($query);
 
-            $query = "UPDATE campaign_log SET deleted=1 WHERE campaign_id = '{$focus->id}' AND list_id IN ('".implode("','", $test_list_ids)."')";
+            $query = "UPDATE campaign_log SET deleted=1 WHERE campaign_id = '{$focus->id}' AND list_id IN ('" . implode("','",
+                    $test_list_ids) . "')";
 
             $focus->db->query($query);
         }
     }
+
 }

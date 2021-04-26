@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,7 +38,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['Campaign'] = array('audited' => true,
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$dictionary['Campaign'] = array(
+    'audited' => true,
     'comment' => 'Campaigns are a series of operations undertaken to accomplish a purpose, usually acquiring leads',
     'table' => 'campaigns',
     'unified_search' => true,
@@ -70,7 +72,7 @@ $dictionary['Campaign'] = array('audited' => true,
             'vname' => 'LBL_CAMPAIGN_NAME',
             'dbType' => 'varchar',
             'type' => 'name',
-            'len' => '255',
+            'len' => '50',
             'comment' => 'The name of the campaign',
             'importable' => 'required',
             'required' => true,
@@ -85,7 +87,12 @@ $dictionary['Campaign'] = array('audited' => true,
             'default' => 'http://',
             'comment' => 'The URL referenced in the tracker URL; no longer used as of 4.2 (see campaign_trkrs)'
         ),
-        'description' => array('name' => 'description', 'type' => 'none', 'comment' => 'inhertied but not used', 'source' => 'non-db'),
+        'description' => array(
+            'name' => 'description',
+            'type' => 'none',
+            'comment' => 'inhertied but not used',
+            'source' => 'non-db'
+        ),
         'tracker_text' => array(
             'name' => 'tracker_text',
             'vname' => 'LBL_TRACKER_TEXT',

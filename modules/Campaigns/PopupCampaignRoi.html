@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,34 +42,58 @@
 
 <!-- BEGIN: main -->
 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
-	<tr>
-		<td>
+    <tr>
+        <td>
 
-			<form action="index.php" method="post" name="popup_query_form" id="popup_query_form">
-<TABLE width="70%" border="1"
-          summary="This table gives some statistics about fruit
+            <form action="index.php" method="post" name="popup_query_form" id="popup_query_form">
+                <TABLE width="70%" border="1"
+                       summary="This table gives some statistics about fruit
                    flies: average height and weight, and percentage
                    with red eyes (for both males and females).">
-<td>
-<TABLE WIDTH="30%">
- <!--<CAPTION>ROI details for the Campaign</CAPTION> -->
-  <TR><TH ALIGN=LEFT>Planned Budget<TD><TH ALIGN=RIGHT>{PLANNED_BUDGET}{CURRENCY}<TD></BR>
-  <TR><TH ALIGN=LEFT>Actual Cost<TD><TH ALIGN=RIGHT>{ACTUAL_COST}{CURRENCY}<TD></BR>
-  <TR><TH ALIGN=LEFT>Expected Revenue<TD><TH ALIGN=RIGHT>{EXPECTED_REVENUE}{CURRENCY}<TD>
-  <TR><TH ALIGN=LEFT>Opportunities Closed<TD><TH ALIGN=RIGHT>{OPP_COUNT}<TD>
-  <TR><TH ALIGN=LEFT>Cost per Impression<TD><TH ALIGN=RIGHT>{COST_OF_IMPRESSION}<TD>
-  <TR><TH ALIGN=LEFT>Cost per Click Through<TD><TH ALIGN=RIGHT>{COST_PER_CLICK_THROUGH}<TD>
-</TABLE>
-</td>
-<td>
-<TABLE width="20%">
-  {MY_CHART_ROI}
-</TABLE>
-</td>
+                    <td>
+                        <TABLE WIDTH="30%">
+                            <!--<CAPTION>ROI details for the Campaign</CAPTION> -->
+                            <TR>
+                                <TH ALIGN=LEFT>Planned Budget
+                                <TD>
+                                <TH ALIGN=RIGHT>{PLANNED_BUDGET}{CURRENCY}
+                                <TD></BR>
+                            <TR>
+                                <TH ALIGN=LEFT>Actual Cost
+                                <TD>
+                                <TH ALIGN=RIGHT>{ACTUAL_COST}{CURRENCY}
+                                <TD></BR>
+                            <TR>
+                                <TH ALIGN=LEFT>Expected Revenue
+                                <TD>
+                                <TH ALIGN=RIGHT>{EXPECTED_REVENUE}{CURRENCY}
+                                <TD>
+                            <TR>
+                                <TH ALIGN=LEFT>Opportunities Closed
+                                <TD>
+                                <TH ALIGN=RIGHT>{OPP_COUNT}
+                                <TD>
+                            <TR>
+                                <TH ALIGN=LEFT>Cost per Impression
+                                <TD>
+                                <TH ALIGN=RIGHT>{COST_OF_IMPRESSION}
+                                <TD>
+                            <TR>
+                                <TH ALIGN=LEFT>Cost per Click Through
+                                <TD>
+                                <TH ALIGN=RIGHT>{COST_PER_CLICK_THROUGH}
+                                <TD>
+                        </TABLE>
+                    </td>
+                    <td>
+                        <TABLE width="20%">
+                            {MY_CHART_ROI}
+                        </TABLE>
+                    </td>
 
-</TABLE>
-</form>
-		</td>
-	</tr>
+                </TABLE>
+            </form>
+        </td>
+    </tr>
 </table>
 <!-- END: main -->
