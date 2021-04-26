@@ -113,7 +113,7 @@ EOQ;
      *
      * @return array
      */
-    protected function getEngines()
+    protected function getEngines(): array
     {
         $engines = [];
 
