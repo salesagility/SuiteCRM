@@ -61,12 +61,17 @@ class View extends MVC\View
 
         $this->smarty->assign('selectedController', SearchWrapper::getController());
         $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
+
+        $legacyEngines = [
+            'BasicSearchEngine' => translate('LBL_BASIC_SEARCH_ENGINE'),
+            'BasicAndAodEngine' => translate('LBL_BASIC_AND_AOD_ENGINE'),
+        ];
+
+        $engines = $this->getEngines();
+        $engines = array_merge($legacyEngines, $engines);
+
         $this->smarty->assign('engines', [
-            translate('LBL_LEGACY_SEARCH_ENGINES') => [
-                'BasicSearchEngine' => translate('LBL_BASIC_SEARCH_ENGINE'),
-                'BasicAndAodEngine' => translate('LBL_BASIC_AND_AOD_ENGINE'),
-            ],
-            translate('LBL_SEARCH_WRAPPER_ENGINES') => $this->getEngines(),
+            translate('LBL_SEARCH_WRAPPER_ENGINES') => $engines
         ]);
     }
 }
