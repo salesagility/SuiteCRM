@@ -48,10 +48,10 @@
 -->
 
 <!-- BEGIN: main -->
-<div class="list-view-rounded-corners">
+<div id="inboundlistview" class="list-view-rounded-corners">
 	<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive inbound-email">
-		<thead>
-			<tr height="20">
+		<thead>			
+		{PAGINATION}
 			<th scope='col'  nowrap width='2%'>
 			</th>
 			<th scope="col" width="5%" ><div>&nbsp;</div></th>
@@ -65,14 +65,10 @@
 				{MOD.LBL_LIST_SERVER_URL}{arrow_start}{server_url_arrow}{arrow_end}</a></div></th>
 			<th scope="col" width="11%" ><div><a href="{ORDER_BY}status" class="listViewThLinkS1">
 				{MOD.LBL_LIST_STATUS}{arrow_start}{status_arrow}{arrow_end}</a></div></th>
-			</tr>
-			<!-- BEGIN: list_nav_row -->
-			{PAGINATION}
+			
+			<!-- BEGIN: list_nav_row -->			
 			<!-- END: list_nav_row -->
 		</thead>
-
-
-
 
 		<tbody>
 		<!-- BEGIN: row -->

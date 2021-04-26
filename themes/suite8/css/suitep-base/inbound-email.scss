@@ -51,3 +51,89 @@ div.inboundemail {
     top: 6.2rem;
     display: flex;
   }
+
+/* Inbound List View table */
+
+div#inboundlistview {
+  border-top: 1px solid lightgrey;
+  padding-top: 1em;
+  #selectLink > li > label {
+    padding-top: 0.2em;
+    font-size: 1.2em;
+    .suitepicon-action-caret {
+      font-size: 0.7em;
+      margin-left: 0.5em;
+    }
+  }
+  .inbound-email {
+    tr td.inline-email-td {
+      svg {
+        vertical-align: middle;
+      }
+    }
+    #delete_button {
+      margin-top: 0.28em;
+    }
+    .subnav {
+      position: absolute;
+      top: 18em;
+    }
+    .pagination {
+      td {
+        table {
+          td:first-child {
+            color: $white;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+  .inbound-email tr.evenListRowS1 td.inline-email-td {
+    padding: 12px 10px;
+  }  
+  .inbound-email tr.oddListRowS1 td.inline-email-td {
+    padding: 12px 10px;
+  }  
+  ul#selectLink {
+    li.sugar_action_button {
+      background: $transparent-color;
+      border: 1px solid $white;
+      border-radius: 2px;
+      margin-top: 0.18em;
+    }
+  }
+  .listviewcount {
+    border: 0;
+    background: $transparent-color;
+    font-weight: 600;
+    color: $white;
+    vertical-align: middle;
+  }
+}
+
+.inboundmacroform {
+  table tr td {
+    vertical-align: middle;
+  }            
+} 
+
+table.inboundmacro {
+  tr td {
+    vertical-align: middle;
+  }
+  input[type=text] {
+    background: $transparent-color;
+    border: 1px solid $bright-grey;
+    width: 100%;
+  }
+  input[type=submit] {
+    margin: 0.2em;
+    font-weight: bold;
+    height: 2.2em;
+    line-height: 1.1em;
+    background-color: #93a4b3;
+    text-transform: capitalize;
+  }
+}
+

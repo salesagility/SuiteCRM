@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 global $mod_strings;
-echo getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_MODULE_TITLE'], $mod_strings['LBL_HOME']), true);
+echo getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_MODULE_TITLE']), true);
 
 //echo getClassicModuleTitle($mod_strings['LBL_MODULE_TITLE'], array($mod_strings['LBL_MODULE_TITLE'],$mod_strings['LBL_HOME']), true);
 require_once('modules/InboundEmail/ListView.php');
