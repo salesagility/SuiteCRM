@@ -297,10 +297,6 @@ temporary rendered events).
 .fc .fc-row .fc-content-skeleton table,
 .fc .fc-row .fc-content-skeleton td,
 .fc .fc-row .fc-helper-skeleton td {
-  /* see-through to the background below */
-  /* extra precedence to prevent theme-provided backgrounds */
-  background: none;
-  /* in case <td>s are globally styled */
   border-color: transparent; }
 
 .fc-row .fc-content-skeleton td,
@@ -611,9 +607,6 @@ TODO: more distinction between this file and common.css
 
 .fc-unthemed .fc-popover .fc-header .fc-close {
   color: #666; }
-
-.fc-unthemed td.fc-today {
-  background: #fcf8e3; }
 
 .fc-unthemed .fc-disabled-day {
   background: #d7d7d7;
