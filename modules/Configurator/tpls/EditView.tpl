@@ -380,6 +380,13 @@
 	<tr>
 		<td scope="row">{$MOD.LBL_LOGGER_LOG_LEVEL} </td>
 		<td > <select name="logger_level">{$log_levels}</select></td>
+		<td  scope="row">{$MOD.LBL_STACK_TRACE}: </td>
+		{if !empty($config.stackTrace)}
+			{assign var='stackTraceChecked' value='CHECKED'}
+		{else}
+			{assign var='stackTraceChecked' value=''}
+		{/if}
+		<td ><input type='hidden' name='stackTrace' value='false'><input name='stackTrace'  type="checkbox" value='true' {$stackTraceChecked}></td>
 		<td scope="row">{$MOD.LBL_LOGGER_MAX_LOGS} </td>
 		<td > <input name="logger_file_maxLogs" value="{$config.logger.file.maxLogs}"></td>
 	</tr>
