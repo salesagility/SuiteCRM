@@ -99,8 +99,8 @@ class Document extends File
         'contract_id' => 'contracts',
     );
 
-    public $authenticated = null;
-    public $show_preview = true;
+    public $authenticated;
+    public $show_preview = false;
 
     public function __construct()
     {
@@ -229,10 +229,7 @@ class Document extends File
 
     public function fill_in_additional_detail_fields()
     {
-        global $theme;
-        global $current_language;
-        global $timedate;
-        global $locale;
+        global $current_language, $timedate, $locale, $sugar_config;
 
         parent::fill_in_additional_detail_fields();
 
@@ -263,15 +260,14 @@ class Document extends File
 
             //image is selected based on the extension name <ext>_icon_inline, extension is stored in document_revisions.
             //if file is not found then default image file will be used.
-            global $img_name;
-            global $img_name_bare;
+            global $img_name, $img_name_bare;
 
             if (!empty($row['file_ext'])) {
                 $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . "_image_inline.gif");
                 $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
-            
-                if ($row['file_ext'] == 'svg') {
-                    $this->show_preview = false;
+
+                if (in_array($row['file_ext'], $sugar_config['allowed_preview'])) {
+                    $this->show_preview = true;
                 }
             }
         }
