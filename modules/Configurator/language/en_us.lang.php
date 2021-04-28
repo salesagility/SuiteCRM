@@ -189,6 +189,7 @@ $mod_strings = array(
     'LBL_LOGGER_FILENAME' => 'Log File Name',
     'LBL_LOGGER_FILE_EXTENSION' => 'Extension',
     'LBL_LOGGER_MAX_LOG_SIZE' => 'Maximum log size',
+    'LBL_STACK_TRACE' => 'Enable stack trace',
     'LBL_LOGGER_DEFAULT_DATE_FORMAT' => 'Default date format',
     'LBL_LOGGER_LOG_LEVEL' => 'Log Level',
     'LBL_LEAD_CONV_OPTION' => 'Lead Conversion Options',
