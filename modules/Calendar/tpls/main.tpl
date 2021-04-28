@@ -72,12 +72,10 @@
 	views = {
 		sharedMonth: {
 			type: 'month',
-			duration: { months: 1 },
 			buttonText: 'Shared Month'
 		},
 		sharedWeek: {
-			type: 'agenda',
-			duration: {days: 7},
+			type: 'agendaWeek',
 			buttonText: 'Shared Week'
 		}
 	};
