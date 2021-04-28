@@ -381,12 +381,21 @@ class SugarController
         }
     }
 
+    /**
+     * @param Exception $e
+     */
     protected function showException(Exception $e)
     {
-        $GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
-        $GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
+        global $sugar_config;
+
+        LoggerManager::getLogger()->fatal('Exception in Controller: ' . $e->getMessage());
+
+        if ($sugar_config['stackTrace']) {
+            LoggerManager::getLogger()->fatal("backtrace:\n" . $e->getTraceAsString());
+        }
+
         if ($prev = $e->getPrevious()) {
-            $GLOBALS['log']->fatal("Previous:\n");
+            LoggerManager::getLogger()->fatal("Previous:\n");
             $this->showException($prev);
         }
     }
@@ -1106,8 +1115,8 @@ class SugarController
             $this->do_action = $this->action;
         }
     }
-    
-        
+
+
     /**
      * action: Send Confirm Opt In Email to Contact/Lead/Account/Prospect
      *

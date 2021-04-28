@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,10 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once 'php_version.php';
-require_once 'include/SugarObjects/SugarConfig.php';
-require_once 'include/utils/security_utils.php';
+require_once __DIR__ . '/../php_version.php';
+require_once __DIR__ . '/../include/SugarObjects/SugarConfig.php';
+require_once __DIR__ . '/../include/utils/security_utils.php';
 
+use voku\helper\AntiXSS;
 
 /**
  * @param $sugar_config
@@ -212,6 +213,13 @@ function make_sugar_config(&$sugar_config)
         ) : $upload_badext,
         'upload_dir' => $upload_dir, // this must be set!!
         'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'import_max_execution_time' => empty($import_max_execution_time) ? 3600 : $import_max_execution_time,
         'lock_homepage' => false,
         'lock_subpanels' => false,
@@ -1408,7 +1416,7 @@ function return_mod_list_strings_language($language, $module)
  * This function retrieves a theme's language file and returns the array of strings included.
  *
  * @deprecated This function is unused and will be removed in a future release.
- * 
+ *
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -2071,7 +2079,7 @@ function translate($string, $mod = '', $selectedValue = '')
 
 /**
  * Converts a number from '1,000' to '1000', and '1,50' (if using commas as a decimal separator) to '1.50'.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function unTranslateNum($num)
@@ -2514,23 +2522,25 @@ function str_end($str, $end)
     return substr($str, strlen($str) - strlen($end)) == $end;
 }
 
-function securexss($value)
+/**
+ * @param $uncleanString
+ * @return array
+ */
+function securexss($uncleanString)
 {
-    if (is_array($value)) {
-        $new = array();
-        foreach ($value as $key => $val) {
+    if (is_array($uncleanString)) {
+        $new = [];
+        foreach ($uncleanString as $key => $val) {
             $new[$key] = securexss($val);
         }
 
         return $new;
     }
-    
-    static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
 
-    $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
-    $value = preg_replace('/javascript:/i', 'java script:', $value);
+    $antiXss = new AntiXSS();
+    $antiXss->removeEvilAttributes(['style']);
 
-    return str_replace(array_keys($xss_cleanup), array_values($xss_cleanup), $value);
+    return $antiXss->xss_clean($uncleanString);
 }
 
 function securexsskey($value, $die = true)
@@ -3124,7 +3134,7 @@ function display_notice($msg = false)
 
 /**
  * Checks if it is a number that at least has the plus at the beginning.
- * 
+ *
  * @deprecated No longer used, will be removed without replacement in SuiteCRM 7.12.
  */
 function skype_formatted($number)
@@ -3332,7 +3342,7 @@ function decodeJavascriptUTF8($str)
  * @param string $sys_php_version Version to check against, defaults to the current environment's.
  * @param string $min_php_version Minimum version to check against. Defaults to the SUITECRM_PHP_MIN_VERSION constant.
  * @param string $rec_php_version Recommended version. Defaults to the SUITECRM_PHP_REC_VERSION constant
- * 
+ *
  * @return integer 1 if version is greater than the recommended PHP version,
  *   0 if version is between minimun and recomended PHP versions,
  *   -1 otherwise (less than minimum or buggy version)
@@ -3779,7 +3789,7 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
  * Translates php.ini memory values into bytes.
  * For example, an input value of '8M' will return 8388608.
  * 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
- * 
+ *
  * @param string $val A string like '8M'.
  * @return integer The number of bytes represented by that string.
  */
@@ -4151,10 +4161,10 @@ function string_format($format, $args, $escape = true)
             $args[$i] = implode("','", $values);
             $result = str_replace('{'.$i.'}', $args[$i], $result);
        }
-        else if ($escape){       
+        else if ($escape){
             $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
         }
-        else{       
+        else{
             $result = str_replace('{'.$i.'}', $args[$i], $result);
         }
     }
@@ -4169,7 +4179,7 @@ function string_format($format, $args, $escape = true)
  * have the number be unique (since it is modified by the system_id.
  *
  * @deprecated This function is unused and will be removed in a future release.
- * 
+ *
  * @param   $num       of bean
  * @param   $system_id from system
  *
@@ -4621,7 +4631,7 @@ function getJavascriptSiteURL()
 /**
  * Works nicely with array_map() -- can be used to wrap single quotes around
  * each element in an array.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function add_squotes($str)
@@ -4852,7 +4862,7 @@ function chartColors()
 /**
  * This function is designed to set up the php enviroment
  * for AJAX requests.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function ajaxInit()
@@ -5018,7 +5028,7 @@ function sugar_ucfirst($string, $charset = 'UTF-8')
  * Given a multienum encoded as a string, convert it to an array of strings,
  * e.g. `"^Monday^,^Tuesday^,^Wednesday^,^Thursday^"` becomes
  * `["Monday", "Tuesday", "Wednesday", "Thursday"]`.
- * 
+ *
  * @param string|string[] $string The encoded multienum value. If this is already an array, the array will be returned unchanged.
  * @return string[] An array of strings representing the multienum's values.
  */
@@ -5447,7 +5457,7 @@ function getFTSBoostOptions($optionName)
  *
  * This function walks through an Array and recursively calls utf8_encode on the
  * values of each of the elements.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  *
  * @param $data Array of data to encode
