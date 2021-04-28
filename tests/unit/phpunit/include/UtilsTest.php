@@ -53,29 +53,29 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
     public function testGetAppString()
     {
         global $app_strings;
-        
+
         // setup: test works only if it is not exists
         $this->assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
-        
+
         // test if label is not set
-        
+
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
+
         // test if label is empty (bool:false)
-        
+
         $app_strings['TEST_NONEXISTS_LABEL'] = '';
-        
+
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
+
         // test if it founds
-        
+
         $app_strings['TEST_NONEXISTS_LABEL'] = 'Hello test';
-        
+
         $result = getAppString('TEST_NONEXISTS_LABEL');
         $this->assertEquals('Hello test', $result);
-        
+
 
         unset($app_strings['TEST_NONEXISTS_LABEL']);
     }
@@ -131,7 +131,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         // Returns false if no user object is passed.
         $this->assertFalse(is_admin(null));
     }
-  
+
     public function testcheck_php_version()
     {
         // These are used because the tests would fail if the supported
@@ -175,5 +175,13 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
 
         // Make sure it also understands strings with whitespace.
         $this->assertEquals(8192, return_bytes('  8K  '));
+    }
+
+    public function testSecureXSS()
+    {
+        $uncleanString = '<a href="javascript&colon;alert(document.cookie)">XSS</a>';
+        $result = securexss($uncleanString);
+
+        $this->assertEquals($result, '<a href="">XSS</a>');
     }
 }
