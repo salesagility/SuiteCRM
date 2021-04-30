@@ -3836,3 +3836,9 @@ $app_strings['LBL_GENERIC_CONFIRMATION'] = 'Do you want to proceed with action?'
 $app_list_strings['sort_order'] = [];
 $app_list_strings['sort_order']['asc'] = 'Ascending';
 $app_list_strings['sort_order']['desc'] = 'Descending';
+
+// Labels used by subpanel unlink relationship process
+$app_strings['LBL_UNLINK_RECORD'] = 'Unlink Record';
+$app_strings['LBL_UNLINK_RELATIONSHIP_CONFIRM'] = 'Are you sure you want to unlink this relationship? Only the relationship will be unlinked. The record will not be deleted.';
+$app_strings['LBL_UNLINK_RELATIONSHIP_SUCCESS'] = 'Relationship unlinked successfully.';
+$app_strings['LBL_UNLINK_RELATIONSHIP_FAILED'] = 'There was an error unlinking this Relationship.';
