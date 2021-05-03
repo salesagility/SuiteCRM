@@ -55,26 +55,45 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
   array(
     'name' => 'name',
     'type' => 'varchar',
-    'vname' => 'LBL_NAME',
-    'len' => 150,
+      'vname' => 'LBL_NAME',
+      'len' => 150,
   ),
-  'search_module' =>
-  array(
-    'name' => 'search_module',
-    'type' => 'varchar',
-    'vname' => 'LBL_MODULE',
-    'len' => 150,
-  ),
-  'deleted' =>
-  array(
-    'name' => 'deleted',
-    'vname' => 'LBL_CREATED_BY',
-    'type' => 'bool',
-    'required'=>true,
-    'reportable'=>false,
-  ),
-  'date_entered' =>
-  array(
+    'search_module' =>
+        array(
+            'name' => 'search_module',
+            'type' => 'varchar',
+            'vname' => 'LBL_MODULE',
+            'len' => 150,
+        ),
+    'orderBy' =>
+        array(
+            'name' => 'orderBy',
+            'type' => 'enum',
+            'displayType' => 'dropdown',
+            'vname' => 'LBL_ORDER_BY_COLUMNS',
+            'len' => 150,
+            'source' => 'non-db',
+        ),
+    'sortOrder' =>
+        array(
+            'name' => 'sortOrder',
+            'type' => 'enum',
+            'displayType' => 'radio',
+            'displayDirection' => 'row',
+            'options' => 'sort_order',
+            'vname' => 'LBL_DIRECTION',
+            'source' => 'non-db',
+        ),
+    'deleted' =>
+        array(
+            'name' => 'deleted',
+            'vname' => 'LBL_CREATED_BY',
+            'type' => 'bool',
+            'required' => true,
+            'reportable' => false,
+        ),
+    'date_entered' =>
+        array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
