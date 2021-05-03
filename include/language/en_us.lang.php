@@ -3828,4 +3828,11 @@ $app_strings['AOS_Invoices'] = 'Invoices';
 $app_strings['LBL_PHOTO'] = 'Photo';
 $app_strings['LBL_CASE_UPDATES'] = 'Case Updates';
 $app_strings['LBL_SUMMARY_DEFAULT'] = "{{fields.name.value}}";
-$app_strings['LBL_CREATE'] = "Create";
+$app_strings['LBL_CREATE'] = 'Create';
+$app_strings['LBL_SAVED_FILTER_SAVED'] = 'Filter successfully saved';
+$app_strings['LBL_FILTER_ID_NOT_DEFINED'] = 'Filter id not defined';
+$app_strings['LBL_GENERIC_CONFIRMATION'] = 'Do you want to proceed with action?';
+
+$app_list_strings['sort_order'] = [];
+$app_list_strings['sort_order']['asc'] = 'Ascending';
+$app_list_strings['sort_order']['desc'] = 'Descending';
