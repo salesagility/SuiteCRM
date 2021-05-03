@@ -25,15 +25,14 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-/* @noinspection PhpIncludeInspection */
-require_once 'include/portability/ApiBeanMapper/FieldMappers/AssignedUserMapper.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/FullNameMapper.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/DateMapper.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/DateTimeMapper.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/MultiEnumMapper.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/BooleanMapper.php';
-require_once 'include/portability/ApiBeanMapper/ApiBeanModuleMappers.php';
-require_once 'include/portability/ApiBeanMapper/ModuleMappers/SavedSearch/SavedSearchMappers.php';
+require_once __DIR__ . '/FieldMappers/AssignedUserMapper.php';
+require_once __DIR__ . '/TypeMappers/FullNameMapper.php';
+require_once __DIR__ . '/TypeMappers/DateMapper.php';
+require_once __DIR__ . '/TypeMappers/DateTimeMapper.php';
+require_once __DIR__ . '/TypeMappers/MultiEnumMapper.php';
+require_once __DIR__ . '/TypeMappers/BooleanMapper.php';
+require_once __DIR__ . '/ApiBeanModuleMappers.php';
+require_once __DIR__ . '/ModuleMappers/SavedSearch/SavedSearchMappers.php';
 
 class ApiBeanMapper
 {
@@ -69,7 +68,7 @@ class ApiBeanMapper
      * @param SugarBean $bean
      * @return array
      */
-    public function toArray(SugarBean $bean): array
+    public function toApi(SugarBean $bean): array
     {
         $arr = [];
 
@@ -77,7 +76,6 @@ class ApiBeanMapper
         $arr['object_name'] = $bean->object_name ?? '';
 
         foreach ($bean->field_defs as $field => $definition) {
-
             if ($this->isSensitiveField($definition)) {
                 continue;
             }
@@ -99,6 +97,59 @@ class ApiBeanMapper
         }
 
         return $arr;
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @return array
+     */
+    public function toBean(SugarBean $bean, array $values): void
+    {
+        require_once __DIR__ . '/../../../include/SugarFields/SugarFieldHandler.php';
+
+        foreach ($bean->field_defs as $field => $properties) {
+            if (!isset($values[$field])) {
+                continue;
+            }
+
+            $type = $properties['type'] ?? '';
+
+            if ($type === 'relate' && isset($bean->field_defs[$field])) {
+                $idName = $bean->field_defs[$field]['id_name'] ?? '';
+
+                if ($idName !== $field) {
+                    $rName = $bean->field_defs[$field]['rname'] ?? '';
+                    $value = $values[$field][$rName] ?? '';
+                    $values[$field] = $value;
+                }
+            }
+
+            if (!empty($properties['isMultiSelect']) || $type === 'multienum') {
+                $multiSelectValue = $values[$field];
+                if (!is_array($values[$field])) {
+                    $multiSelectValue = [];
+                }
+                $values[$field] = encodeMultienumValue($multiSelectValue);
+            }
+
+            $fieldMapper = $this->getFieldMapper($bean->module_name, $field);
+            if (null !== $fieldMapper) {
+                $fieldMapper->toBean($bean, $values, $field);
+            }
+
+            $typeMapper = $this->getTypeMappers($bean->module_name, $type);
+            if (null !== $typeMapper) {
+                $typeMapper->toBean($bean, $values, $field, $field);
+            }
+
+            $bean->$field = $values[$field];
+        }
+
+        foreach ($bean->relationship_fields as $field => $link) {
+            if (!empty($values[$field])) {
+                $bean->$field = $values[$field];
+            }
+        }
     }
 
     /**
@@ -253,7 +304,7 @@ class ApiBeanMapper
 
         $fieldMapper = $this->getFieldMapper($bean->module_name, $field);
         if (null !== $fieldMapper) {
-            $fieldMapper->run($bean, $arr, $name);
+            $fieldMapper->toApi($bean, $arr, $name);
 
             return;
         }
@@ -261,7 +312,7 @@ class ApiBeanMapper
         $type = $definition['type'] ?? '';
         $typeMapper = $this->getTypeMappers($bean->module_name, $type);
         if (null !== $typeMapper) {
-            $typeMapper->run($bean, $arr, $field, $name);
+            $typeMapper->toApi($bean, $arr, $field, $name);
 
             return;
         }

@@ -25,9 +25,8 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-/* @noinspection PhpIncludeInspection */
-require_once 'include/portability/ApiBeanMapper/TypeMappers/TypeMapperInterface.php';
-require_once 'include/portability/ApiBeanMapper/FieldMappers/FieldMapperInterface.php';
+require_once __DIR__. '/TypeMappers/TypeMapperInterface.php';
+require_once __DIR__. '/FieldMappers/FieldMapperInterface.php';
 
 class ApiBeanModuleMappers
 {

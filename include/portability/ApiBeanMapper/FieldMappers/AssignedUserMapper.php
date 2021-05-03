@@ -25,9 +25,7 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-/* @noinspection PhpIncludeInspection */
-require_once 'include/portability/ApiBeanMapper/FieldMappers/FieldMapperInterface.php';
-
+require_once __DIR__  .'/FieldMapperInterface.php';
 
 class AssignedUserMapper implements FieldMapperInterface
 {
@@ -44,7 +42,7 @@ class AssignedUserMapper implements FieldMapperInterface
     /**
      * @inheritDoc
      */
-    public function run(SugarBean $bean, array &$container, string $alternativeName = ''): void
+    public function toApi(SugarBean $bean, array &$container, string $alternativeName = ''): void
     {
         $name = self::FIELD_NAME;
 
@@ -59,5 +57,27 @@ class AssignedUserMapper implements FieldMapperInterface
         }
 
         $container[$name] = get_assigned_user_name($bean->assigned_user_id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toBean(SugarBean $bean, array &$container, string $alternativeName = ''): void
+    {
+        if (empty($container)) {
+            return;
+        }
+
+        $fieldName = self::getField();
+        if (!empty($alternativeName)) {
+            $fieldName = $alternativeName;
+        }
+
+        $assignedUserName = $container[$fieldName] ?? [];
+        if (is_string($assignedUserName)) {
+            $container[$alternativeName] = $assignedUserName;
+        }
+
+        $container[$alternativeName] = $assignedUserName['user_name'] ?? '';
     }
 }

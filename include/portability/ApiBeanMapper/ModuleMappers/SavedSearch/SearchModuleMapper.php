@@ -25,71 +25,69 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-require_once __DIR__  .'/TypeMapperInterface.php';
+require_once __DIR__  . '/../../../ApiBeanMapper/FieldMappers/FieldMapperInterface.php';
+require_once  __DIR__  . '/../../../ModuleNameMapper.php';
 
-class MultiEnumMapper implements TypeMapperInterface
+class SearchModuleMapper implements FieldMapperInterface
 {
+    public const FIELD_NAME = 'search_module';
+
+    /**
+     * @var ModuleNameMapper
+     */
+    protected $moduleNameMapper;
+
+    /**
+     * RouteConverter constructor.
+     */
+    public function __construct()
+    {
+        $this->moduleNameMapper = new ModuleNameMapper();
+    }
+
+
     /**
      * @inheritDoc
      */
-    public static function getType(): string
+    public static function getField(): string
     {
-        return 'multienum';
+        return self::FIELD_NAME;
     }
 
     /**
      * @inheritDoc
      */
-    public function toApi(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
+    public function toApi(SugarBean $bean, array &$container, string $alternativeName = ''): void
     {
-        $newName = $name;
+        $name = self::FIELD_NAME;
 
         if (!empty($alternativeName)) {
-            $newName = $alternativeName;
+            $name = $alternativeName;
         }
 
-        if (empty($bean->$name)) {
-            $container[$newName] = [];
+        if (empty($bean->search_module)) {
+            $container[$name] = '';
 
             return;
         }
 
-        $enumArray = $this->unEncodeMultiEnum($bean->$name);
-
-        if (empty($enumArray)) {
-            $container[$newName] = [];
-
-            return;
-        }
-
-        $container[$newName] = $enumArray;
-    }
-
-    /**
-     * @param $string
-     * @return array
-     */
-    public function unEncodeMultiEnum($string): array
-    {
-        if (is_array($string)) {
-            return $string;
-        }
-
-        if (strpos($string, '^') === 0) {
-            $string = substr($string, 1, strlen($string));
-        }
-
-        if (substr($string, -1) === '^') {
-            $string = substr($string, 0, -1);
-        }
-
-        return explode('^,^', $string);
+        $container[$name] = $this->moduleNameMapper->toFrontEnd($bean->search_module);
     }
 
     /**
      * @inheritDoc
      */
-    public function toBean(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
+    public function toBean(SugarBean $bean, array &$container, string $alternativeName = ''): void
     {
+        $name = self::getField();
+        if (!empty($alternativeName)) {
+            $name = $alternativeName;
+        }
+
+        if (empty($container[$name])) {
+            return;
+        }
+
+        $container[self::getField()] = $this->moduleNameMapper->toLegacy($container[$name]);
     }
 }

@@ -25,9 +25,9 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-/* @noinspection PhpIncludeInspection */
-require_once 'include/portability/ApiBeanMapper/ModuleMappers/SavedSearch/FilterContentMapper.php';
-require_once 'include/portability/ApiBeanMapper/ApiBeanModuleMappers.php';
+require_once __DIR__  . '/FilterContentMapper.php';
+require_once __DIR__  . '/SearchModuleMapper.php';
+require_once __DIR__  . '/../../ApiBeanModuleMappers.php';
 
 class SavedSearchMappers extends ApiBeanModuleMappers
 {
@@ -39,6 +39,7 @@ class SavedSearchMappers extends ApiBeanModuleMappers
     public function __construct()
     {
         $this->fieldMappers[FilterContentMapper::getField()] = new FilterContentMapper();
+        $this->fieldMappers[SearchModuleMapper::getField()] = new SearchModuleMapper();
     }
 
     /**

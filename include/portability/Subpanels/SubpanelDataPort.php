@@ -88,7 +88,7 @@ class SubpanelDataPort
         $mappedBeans = [];
 
         foreach ($beanList as $beanData) {
-            $mappedBeans[] = $this->apiBeanMapper->toArray($beanData);
+            $mappedBeans[] = $this->apiBeanMapper->toApi($beanData);
         }
 
         $row_count = $response['row_count'];

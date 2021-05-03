@@ -25,12 +25,25 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-/* @noinspection PhpIncludeInspection */
-require_once 'include/portability/ApiBeanMapper/FieldMappers/FieldMapperInterface.php';
+require_once __DIR__  .'/../../../ApiBeanMapper/FieldMappers/FieldMapperInterface.php';
+require_once __DIR__  .'/../../../ModuleNameMapper.php';
 
 class FilterContentMapper implements FieldMapperInterface
 {
     public const FIELD_NAME = 'contents';
+
+    /**
+     * @var ModuleNameMapper
+     */
+    protected $moduleNameMapper;
+
+    /**
+     * RouteConverter constructor.
+     */
+    public function __construct()
+    {
+        $this->moduleNameMapper = new ModuleNameMapper();
+    }
 
     /**
      * {@inheritDoc}
@@ -43,7 +56,7 @@ class FilterContentMapper implements FieldMapperInterface
     /**
      * {@inheritDoc}
      */
-    public function run(SugarBean $bean, array &$container, string $alternativeName = ''): void
+    public function toApi(SugarBean $bean, array &$container, string $alternativeName = ''): void
     {
         $name = self::FIELD_NAME;
 
@@ -63,7 +76,63 @@ class FilterContentMapper implements FieldMapperInterface
             return;
         }
 
-        $container[$name] = $this->parseContent($bean->name, $bean->contents);
+        $contents = $this->parseContent($bean->name, $bean->contents);
+        $container[$name] = $contents;
+        $container['orderBy'] = $contents['orderBy'] ?? '';
+        $container['sortOrder'] = $contents['sortOrder'] ?? '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toBean(SugarBean $bean, array &$container, string $alternativeName = ''): void
+    {
+        $contents = $container[self::getField()] ?? [];
+
+        $legacyContents = [
+            'searchFormTab' => 'advanced',
+            'query' => '',
+            'search_module' => '',
+            'saved_search_action' => '',
+            'displayColumns' => '',
+            'hideTabs' => '',
+            'orderBy' => '',
+            'sortOrder' => '',
+            'advanced' => ''
+        ];
+
+        if (!empty($bean->contents)) {
+            $legacyContents = unserialize(base64_decode($bean->contents), ['allowed_classes' => true]);
+        }
+
+        if (empty($contents) || empty($contents['filters'])) {
+            $container[self::getField()] = $this->encode($legacyContents);
+
+            return;
+        }
+
+        foreach ($contents['filters'] as $filter) {
+            $key = $filter['field'];
+            $legacyContents[$key . '_advanced'] = '';
+
+            if (!empty($filter['values']) && is_array($filter['values']) && count($filter['values']) === 1) {
+                $legacyContents[$key . '_advanced'] = array_pop($filter['values']);
+            }
+
+            if (!empty($filter['values']) && is_array($filter['values'])) {
+                $legacyContents[$key . '_advanced'] = $filter['values'];
+            }
+        }
+
+        $legacyContents['orderBy'] = strtoupper($contents['orderBy'] ?? '');
+        $legacyContents['sortOrder'] = strtoupper($contents['sortOrder'] ?? '');
+
+        $module = $contents['searchModule'] ?? ($container['search_module'] ?? '');
+        if (!empty($module)) {
+            $legacyContents['search_module'] = $this->moduleNameMapper->toLegacy($module);
+        }
+
+        $container[self::getField()] = $this->encode($legacyContents);
     }
 
     /**
@@ -75,6 +144,19 @@ class FilterContentMapper implements FieldMapperInterface
     public function parseContent(string $filterName, string $serializedContents): array
     {
         $contents = unserialize(base64_decode($serializedContents), ['allowed_classes' => true]);
+
+        $newContents = [
+            'name' => $filterName,
+            'filters' => [],
+            'searchModule' => '',
+            'orderBy' => strtolower($contents['orderBy'] ?? ''),
+            'sortOrder' => strtolower($contents['sortOrder'] ?? '')
+        ];
+
+        if (!empty($contents['search_module'])) {
+            $newContents['searchModule'] = $this->moduleNameMapper->toFrontEnd($contents['search_module']);
+        }
+
         unset(
             $contents['searchFormTab'],
             $contents['query'],
@@ -87,10 +169,7 @@ class FilterContentMapper implements FieldMapperInterface
             $contents['advanced']
         );
 
-        $newContents = [
-            'name' => $filterName,
-            'filters' => []
-        ];
+
         foreach ($contents as $key => $item) {
             if (empty($contents[$key])) {
                 continue;
@@ -111,5 +190,19 @@ class FilterContentMapper implements FieldMapperInterface
         }
 
         return $newContents;
+    }
+
+    /**
+     * Encode criteria
+     * @param array $content
+     * @return string
+     */
+    public function encode(array $content): string
+    {
+        if (empty($content)) {
+            return '';
+        }
+
+        return base64_encode(serialize($content));
     }
 }
