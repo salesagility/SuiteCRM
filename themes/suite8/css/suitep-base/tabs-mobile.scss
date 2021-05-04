@@ -1,0 +1,27 @@
+@media (max-width: 750px) {
+    #dashboard {
+        #tab-actions > ul.dropdown-menu  {        
+            left: 0;  
+            min-width: 131px;
+            border-top-right-radius: 4px;      
+        }
+        ul.nav-dashboard {
+            li {
+                margin-bottom: 0;
+                a.first-tab-xs {                
+                    background: $dashboard-titlt-bg !important;                
+                    padding: 11px;
+                }
+            }
+            li.active {
+                a {
+                  background: $dashboard-toolbar-bg; 
+                  padding: 11px;      
+                }
+              }
+            span.suitepicon-action-caret {
+                font-size: 8px;
+            }            
+        }
+    }       
+}
