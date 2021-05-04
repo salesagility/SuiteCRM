@@ -74,8 +74,6 @@ $template_type = empty($_REQUEST['template_type']) ? '' : $_REQUEST['template_ty
 $is_template = empty($_REQUEST['is_template']) ? '' : $_REQUEST['is_template'];
 $document_revision_id = empty($_REQUEST['document_revision_id']) ? '' : $_REQUEST['document_revision_id'];
 
-//$request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
-
 $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
 if (!$hide_clear_button) {

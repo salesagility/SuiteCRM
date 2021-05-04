@@ -194,7 +194,7 @@ EOQ;
             $searchInputs[$input] = empty($_REQUEST[$input]) ? '' : $_REQUEST[$input];
         }
 
-        $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+        $request_data = empty($_REQUEST['request_data']) ? '' : htmlspecialchars($_REQUEST['request_data'], ENT_QUOTES);
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) && empty($this->_hide_clear_button) ? false : true;
         $button = '<script>eval("var request_data = " + window.document.forms[\'popup_query_form\'].request_data.value);</script>';
 

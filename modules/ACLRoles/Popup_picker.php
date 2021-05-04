@@ -106,7 +106,7 @@ class Popup_Picker
         $where = $this->_get_where_clause();
 
         $name = empty($_REQUEST['name']) ? '' : $_REQUEST['name'];
-        $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+        $request_data = empty($_REQUEST['request_data']) ? '' : htmlspecialchars($_REQUEST['request_data'], ENT_QUOTES);
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 
         $button  = "<form action='index.php' method='post' name='form' id='form'>\n";

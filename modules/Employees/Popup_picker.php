@@ -119,7 +119,7 @@ class Popup_Picker
         $first_name = empty($_REQUEST['first_name']) ? '' : $_REQUEST['first_name'];
         $last_name = empty($_REQUEST['last_name']) ? '' : $_REQUEST['last_name'];
         $user_name = empty($_REQUEST['user_name']) ? '' : $_REQUEST['user_name'];
-        $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+        $request_data = empty($_REQUEST['request_data']) ? '' : htmlspecialchars($_REQUEST['request_data'], ENT_QUOTES);
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 
         $button  = "<form action='index.php' method='post' name='form' id='form'>\n";

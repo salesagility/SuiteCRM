@@ -120,7 +120,7 @@ class Popup_Picker
         $status = empty($_REQUEST['status']) ? '' : $_REQUEST['status'];
         $campaign_type = empty($_REQUEST['campaign_type']) ? '' : $_REQUEST['campaign_type'];
 
-        $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+        $request_data = empty($_REQUEST['request_data']) ? '' : htmlspecialchars($_REQUEST['request_data'], ENT_QUOTES);
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 
         $button  = "<form action='index.php' method='post' name='form' id='form'>\n";

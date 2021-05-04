@@ -88,7 +88,7 @@ class Popup_Picker
         $first_name = empty($_REQUEST['first_name']) ? '' : $_REQUEST['first_name'];
         $last_name = empty($_REQUEST['last_name']) ? '' : $_REQUEST['last_name'];
         $account_name = empty($_REQUEST['account_name']) ? '' : $_REQUEST['account_name'];
-        $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+        $request_data = empty($_REQUEST['request_data']) ? '' : htmlspecialchars($_REQUEST['request_data'], ENT_QUOTES);
         $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
         $lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
         $lbl_save_button_key = $app_strings['LBL_SAVE_BUTTON_KEY'];
@@ -282,7 +282,7 @@ EOJS;
         $form->assign('FIRST_NAME', $first_name);
         $form->assign('LAST_NAME', $last_name);
         $form->assign('ACCOUNT_NAME', $account_name);
-        $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+        $request_data = empty($_REQUEST['request_data']) ? '' : htmlspecialchars($_REQUEST['request_data'], ENT_QUOTES);
         $form->assign('request_data', $request_data);
 
         ob_start();
