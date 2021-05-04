@@ -61,8 +61,8 @@ array (
         array (
           0 => 
           array (
-            'name' => 'date_of_purchase',
-            'label' => 'LBL_DATE_OF_PURCHASE',
+            'name' => 'purchase_date',
+            'label' => 'LBL_PURCHASE_DATE',
           ),
           1 => 
           array (

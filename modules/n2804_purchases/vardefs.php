@@ -235,12 +235,12 @@ $dictionary['n2804_purchases'] = array(
     'enable_range_search' => false,
     'precision' => 6,
   ),
-  'date_of_purchase' => 
+  'purchase_date' => 
   array (
     'required' => true,
-    'name' => 'date_of_purchase',
-    'vname' => 'LBL_DATE_OF_PURCHASE',
-    'type' => 'datetimecombo',
+    'name' => 'purchase_date',
+    'vname' => 'LBL_PURCHASE_DATE',
+    'type' => 'date',
     'massupdate' => 0,
     'no_default' => false,
     'comments' => '',
@@ -255,7 +255,6 @@ $dictionary['n2804_purchases'] = array(
     'merge_filter' => 'disabled',
     'size' => '20',
     'enable_range_search' => false,
-    'dbType' => 'datetime',
   ),
 ),
     'relationships' => array (

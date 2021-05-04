@@ -40,13 +40,6 @@ array (
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'DATE_OF_PURCHASE' => 
-  array (
-    'type' => 'datetimecombo',
-    'label' => 'LBL_DATE_OF_PURCHASE',
-    'width' => '10%',
-    'default' => false,
-  ),
   'TOTAL_COST_EUR' => 
   array (
     'type' => 'currency',

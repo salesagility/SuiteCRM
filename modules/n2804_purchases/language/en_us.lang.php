@@ -81,4 +81,5 @@ $mod_strings = array (
   'LBL_TOTAL_COST_AUD' => 'Total Cost (AUD)',
   'LBL_TOTAL_COST_NZD' => 'Total Cost (NZD)',
   'LBL_DATE_OF_PURCHASE' => 'Date of purchase',
+  'LBL_PURCHASE_DATE' => 'Date of Purchase',
 );
