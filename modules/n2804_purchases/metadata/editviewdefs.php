@@ -56,9 +56,8 @@ array (
           ),
           1 => 
           array (
-            'name' => 'date_entered',
-            'comment' => 'Date record created',
-            'label' => 'LBL_DATE_ENTERED',
+            'name' => 'date_of_purchase',
+            'label' => 'LBL_DATE_OF_PURCHASE',
           ),
         ),
       ),

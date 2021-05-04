@@ -43,7 +43,7 @@ $mod_strings = array (
   'LBL_SECURITYGROUPS' => 'Security Groups',
   'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups',
   'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Purchased',
+  'LBL_DATE_ENTERED' => 'Entry Date',
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_MODIFIED' => 'Modified By',
   'LBL_MODIFIED_NAME' => 'Modified By Name',
@@ -80,4 +80,5 @@ $mod_strings = array (
   'LBL_TOTAL_COST_EUR' => 'Total Cost (EUR)',
   'LBL_TOTAL_COST_AUD' => 'Total Cost (AUD)',
   'LBL_TOTAL_COST_NZD' => 'Total Cost (NZD)',
+  'LBL_DATE_OF_PURCHASE' => 'Date of purchase',
 );

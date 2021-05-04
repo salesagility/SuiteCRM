@@ -2,13 +2,6 @@
 $module_name = 'n2804_purchases';
 $listViewDefs [$module_name] = 
 array (
-  'DATE_ENTERED' => 
-  array (
-    'type' => 'datetime',
-    'label' => 'LBL_DATE_ENTERED',
-    'width' => '10%',
-    'default' => true,
-  ),
   'QUANTITY' => 
   array (
     'type' => 'varchar',
@@ -46,6 +39,13 @@ array (
     'module' => 'Employees',
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
+  ),
+  'DATE_OF_PURCHASE' => 
+  array (
+    'type' => 'datetimecombo',
+    'label' => 'LBL_DATE_OF_PURCHASE',
+    'width' => '10%',
+    'default' => false,
   ),
   'TOTAL_COST_EUR' => 
   array (
