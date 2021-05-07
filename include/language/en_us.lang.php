@@ -3839,6 +3839,11 @@ $app_list_strings['sort_order']['desc'] = 'Descending';
 
 // Labels used by subpanel unlink relationship process
 $app_strings['LBL_UNLINK_RECORD'] = 'Unlink Record';
-$app_strings['LBL_UNLINK_RELATIONSHIP_CONFIRM'] = 'Are you sure you want to unlink this relationship? Only the relationship will be unlinked. The record will not be deleted.';
-$app_strings['LBL_UNLINK_RELATIONSHIP_SUCCESS'] = 'Relationship unlinked successfully.';
-$app_strings['LBL_UNLINK_RELATIONSHIP_FAILED'] = 'There was an error unlinking this Relationship.';
+$app_strings['LBL_UNLINK_RELATIONSHIP_CONFIRM'] = 'Are you sure you want to unlink this record? Only the relationship will be unlinked. The record will not be deleted.';
+$app_strings['LBL_UNLINK_RELATIONSHIP_SUCCESS'] = 'Record unlinked successfully.';
+$app_strings['LBL_UNLINK_RELATIONSHIP_FAILED'] = 'There was an error unlinking this record.';
+$app_strings['LBL_MODULE_NOT_FOUND'] = 'Module not found.';
+$app_strings['LBL_RECORD_NOT_FOUND'] = 'Unable to load record';
+$app_strings['LBL_RELATIONSHIP_LOAD_ERROR'] = 'Unable to load relationship';
+$app_strings['LBL_NOT_LINKED'] = 'Unable to unlink. Records are not linked';
+$app_strings['LBL_ACCESS_DENIED'] = 'Access Denied';
