@@ -3838,6 +3838,7 @@ $app_list_strings['sort_order']['asc'] = 'Ascending';
 $app_list_strings['sort_order']['desc'] = 'Descending';
 
 // Labels used by subpanel unlink relationship process
+$app_strings['LBL_LINK'] = 'Link';
 $app_strings['LBL_UNLINK_RECORD'] = 'Unlink Record';
 $app_strings['LBL_UNLINK_RELATIONSHIP_CONFIRM'] = 'Are you sure you want to unlink this record? Only the relationship will be unlinked. The record will not be deleted.';
 $app_strings['LBL_UNLINK_RELATIONSHIP_SUCCESS'] = 'Record unlinked successfully.';
