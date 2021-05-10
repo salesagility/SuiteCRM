@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23df735047fc953286396361ede86c86",
+    "content-hash": "3ace9c23fcf5f921d8916c52d0e6f39d",
     "packages": [
         {
             "name": "consolidation/annotated-command",
@@ -2363,16 +2363,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.1.8",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "917ab212fa00dc6eacbb26e8bc387ebe40993bc1"
+                "reference": "9256f12d8fb0cd0500f93b19e18c356906cbed3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/917ab212fa00dc6eacbb26e8bc387ebe40993bc1",
-                "reference": "917ab212fa00dc6eacbb26e8bc387ebe40993bc1",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/9256f12d8fb0cd0500f93b19e18c356906cbed3d",
+                "reference": "9256f12d8fb0cd0500f93b19e18c356906cbed3d",
                 "shasum": ""
             },
             "require": {
@@ -2382,12 +2382,15 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "doctrine/annotations": "^1.2",
-                "friendsofphp/php-cs-fixer": "^2.2",
-                "phpunit/phpunit": "^4.8 || ^5.7"
+                "phpcompatibility/php-compatibility": "^9.3.5",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^3.5.6",
+                "yoast/phpunit-polyfills": "^0.2.0"
             },
             "suggest": {
-                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
                 "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
                 "psr/log": "For optional PSR-3 debug logging",
@@ -2424,11 +2427,11 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "funding": [
                 {
-                    "url": "https://github.com/synchro",
+                    "url": "https://github.com/Synchro",
                     "type": "github"
                 }
             ],
-            "time": "2020-10-09T14:55:58+00:00"
+            "time": "2021-04-29T12:25:04+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -2497,16 +2500,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.29",
+            "version": "2.0.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "497856a8d997f640b4a516062f84228a772a48a8"
+                "reference": "233a920cb38636a43b18d428f9a8db1f0a1a08f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/497856a8d997f640b4a516062f84228a772a48a8",
-                "reference": "497856a8d997f640b4a516062f84228a772a48a8",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/233a920cb38636a43b18d428f9a8db1f0a1a08f4",
+                "reference": "233a920cb38636a43b18d428f9a8db1f0a1a08f4",
                 "shasum": ""
             },
             "require": {
@@ -2514,7 +2517,7 @@
             },
             "require-dev": {
                 "phing/phing": "~2.7",
-                "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
+                "phpunit/phpunit": "^4.8.35|^5.7|^6.0|^9.4",
                 "squizlabs/php_codesniffer": "~2.0"
             },
             "suggest": {
@@ -2598,7 +2601,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-08T04:24:43+00:00"
+            "time": "2021-04-06T13:56:45+00:00"
         },
         {
             "name": "pimple/pimple",
