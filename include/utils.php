@@ -2610,10 +2610,24 @@ function securexss($uncleanString)
         return $new;
     }
 
+    static $xss_cleanup = [
+        '&quot;' => '&#38;',
+        '"' => '&quot;',
+        "'" => '&#039;',
+        '<' => '&lt;',
+        '>' => '&gt;',
+        '`' => '&#96;'
+    ];
+
+    $uncleanString = preg_replace(array('/javascript:/i', '/\0/', '/javascript:/i'),
+        array('java script:', '', 'java script:'), $uncleanString);
+
+    $partialString = str_replace(array_keys($xss_cleanup), $xss_cleanup, $uncleanString);
+
     $antiXss = new AntiXSS();
     $antiXss->removeEvilAttributes(['style']);
 
-    return $antiXss->xss_clean($uncleanString);
+    return $antiXss->xss_clean($partialString);
 }
 
 function securexsskey($value, $die = true)
