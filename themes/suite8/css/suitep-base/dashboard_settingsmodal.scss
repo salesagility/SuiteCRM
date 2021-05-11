@@ -1,0 +1,49 @@
+body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow#dlg_c {
+    top :0;
+}
+
+#dlg_c {
+    .bd {
+        padding: 1em;
+        h2 {
+            margin-top:0;
+            font-size: 2rem;
+        } 
+        tr td {
+            width: 100%;
+        }       
+        tr td[scope=row] {
+            width: 20%;
+            line-height: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        input[type=text] {
+            background-color:$transparent-color;
+            border: 1px solid $form-border-color;
+          }
+          select {
+            background: url($select-edit-background-url) no-repeat right;
+            background-size: 25px 11px;
+            border-color: $bright-grey;
+        }    
+        tr td {
+            input.button {
+                margin: 0.2em;
+                font-weight: bold;
+                height: 2.2em;
+                line-height: 1.1em;
+                background-color: rgb(147, 164, 179);
+                text-transform: capitalize; 
+            }            
+        }
+        select::-webkit-scrollbar-track {
+            background: $dashboard-scrollbar-bg; 
+        }      
+        select::-webkit-scrollbar-thumb {
+            background-color: $dashboard-scroll;   
+            border-radius: 20px; 
+        }
+    }
+}
+
