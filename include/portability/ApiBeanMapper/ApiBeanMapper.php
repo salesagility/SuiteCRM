@@ -29,6 +29,7 @@ require_once __DIR__ . '/FieldMappers/AssignedUserMapper.php';
 require_once __DIR__ . '/TypeMappers/FullNameMapper.php';
 require_once __DIR__ . '/TypeMappers/DateMapper.php';
 require_once __DIR__ . '/TypeMappers/DateTimeMapper.php';
+require_once __DIR__ . '/TypeMappers/DateTimeComboMapper.php';
 require_once __DIR__ . '/TypeMappers/MultiEnumMapper.php';
 require_once __DIR__ . '/TypeMappers/BooleanMapper.php';
 require_once __DIR__ . '/ApiBeanModuleMappers.php';
@@ -62,6 +63,7 @@ class ApiBeanMapper
         $this->typeMappers[BooleanMapper::getType()] = new BooleanMapper();
         $this->typeMappers['boolean'] = $this->typeMappers[BooleanMapper::getType()];
         $this->moduleMappers[SavedSearchMappers::getModule()] = new SavedSearchMappers();
+        $this->typeMappers[DateTimeComboMapper::getType()] = new DateTimeMapper();
     }
 
     /**
