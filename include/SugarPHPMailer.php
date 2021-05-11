@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,13 +38,14 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once 'include/phpmailer/class.phpmailer.php';
-require_once 'include/phpmailer/class.smtp.php';
-require_once 'include/OutboundEmail/OutboundEmail.php';
+use PHPMailer\PHPMailer\PHPMailer;
+
+require_once __DIR__ . '/../include/OutboundEmail/OutboundEmail.php';
 
 /**
  * Sugar mailer
@@ -68,7 +69,7 @@ class SugarPHPMailer extends PHPMailer
      * @var string
      */
     public $Body_html;
-    
+
     private static $FromNameOrigin = null;
 
     /**
@@ -96,8 +97,7 @@ class SugarPHPMailer extends PHPMailer
         $this->oe = new OutboundEmail();
         $this->oe->getUserMailerSettings($current_user);
 
-        $this->setLanguage('en', 'include/phpmailer/language/');
-        $this->PluginDir = 'include/phpmailer/';
+        $this->setLanguage('en', 'vendor/phpmailer/phpmailer/language/');
         $this->Mailer = 'smtp';
         // cn: i18n
         $this->CharSet = $locale->getPrecedentPreference('default_email_charset');
@@ -235,9 +235,9 @@ class SugarPHPMailer extends PHPMailer
 eoq;
                 $this->Body = $head . $this->Body . '</body></html>';
             }
-            
+
             $fromName = $this->FromName;
-            
+
             // checking if username already set for phpmailer and
             // using that as username instead fromname
             if ($this->FromName == self::$FromNameOrigin && !empty($this->Username)) {
@@ -455,10 +455,10 @@ eoq;
         //$this->Sender   = 'me@here.com';
         //$this->Password = 'wrong';
         //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
-       
-        
+
+
         $ret = null;
-        
+
         $this->fullSmtpLog='';
         $phpMailerExceptionMsg='';
 

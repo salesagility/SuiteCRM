@@ -33,7 +33,6 @@ coverage:
     - include/SuiteGraphs/*
     - include/social/*
     - include/reCaptcha/*
-    - include/phpmailer/*
     - include/Pear/*
     - include/pclzip/*
     - include/nusoap/*

@@ -4,7 +4,6 @@ exclude_paths:
   - 'include/social/**'
   - 'include/Smarty/**'
   - 'include/reCaptcha/**'
-  - 'include/phpmailer/**'
   - 'include/Pear/**'
   - 'include/pclzip/**'
   - 'include/nusoap/**'
