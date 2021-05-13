@@ -606,6 +606,7 @@ class CaseUpdatesHook
     public function sendCaseUpdate(AOP_Case_Updates $caseUpdate)
     {
         global $current_user, $sugar_config;
+        /**@var $email_template EmailTemplate*/
         $email_template = BeanFactory::newBean('EmailTemplates');
 
         $module = null;
@@ -639,7 +640,8 @@ class CaseUpdatesHook
                 $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
                 $signature = $current_user->getDefaultSignature();
             }
-            if ($email_template->id) {
+
+            if ($email_template && $email_template->id) {
                 foreach ($caseUpdate->getContacts() as $contact) {
                     $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
                     $emails = [];
@@ -660,7 +662,8 @@ class CaseUpdatesHook
                 $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
             }
             $addDelimiter = false;
-            if ($emails && $email_template->id) {
+
+            if ($emails && $email_template && $email_template->id) {
                 LoggerManager::getLogger()->info('AOPCaseUpdates: Calling send email');
                 $caseUpdate->sendEmail(
                     $emails,
