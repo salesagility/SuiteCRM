@@ -3833,6 +3833,9 @@ $app_strings['LBL_CREATE'] = 'Create';
 $app_strings['LBL_SAVED_FILTER_SAVED'] = 'Filter successfully saved';
 $app_strings['LBL_FILTER_ID_NOT_DEFINED'] = 'Filter id not defined';
 $app_strings['LBL_GENERIC_CONFIRMATION'] = 'Do you want to proceed with action?';
+$app_strings['LBL_SHOW_MORE'] = 'Show more';
+$app_strings['LBL_SHOW_LESS'] = 'Show less';
+$app_strings['LBL_LOAD_MORE'] = 'Load more';
 
 $app_list_strings['sort_order'] = [];
 $app_list_strings['sort_order']['asc'] = 'Ascending';
