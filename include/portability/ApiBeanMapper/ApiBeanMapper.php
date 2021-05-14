@@ -34,6 +34,7 @@ require_once __DIR__ . '/TypeMappers/MultiEnumMapper.php';
 require_once __DIR__ . '/TypeMappers/BooleanMapper.php';
 require_once __DIR__ . '/ApiBeanModuleMappers.php';
 require_once __DIR__ . '/ModuleMappers/SavedSearch/SavedSearchMappers.php';
+require_once __DIR__ . '/ModuleMappers/AOP_Case_Updates/CaseUpdatesMappers.php';
 
 class ApiBeanMapper
 {
@@ -64,6 +65,7 @@ class ApiBeanMapper
         $this->typeMappers['boolean'] = $this->typeMappers[BooleanMapper::getType()];
         $this->moduleMappers[SavedSearchMappers::getModule()] = new SavedSearchMappers();
         $this->typeMappers[DateTimeComboMapper::getType()] = new DateTimeMapper();
+        $this->moduleMappers[CaseUpdatesMappers::getModule()] = new CaseUpdatesMappers();
     }
 
     /**
