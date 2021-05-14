@@ -105,6 +105,12 @@ $dictionary['AOP_Case_Updates'] = array(
                 'vname' => 'LBL_INTERNAL',
                 'type' => 'bool',
             ),
+        'author' => array(
+            'name' => 'author',
+            'type' => 'varchar',
+            'vname' => 'LBL_AUTHOR',
+            'source' => 'non-db'
+        ),
         'notes' => array(
                 'name' => 'notes',
                 'type' => 'link',
