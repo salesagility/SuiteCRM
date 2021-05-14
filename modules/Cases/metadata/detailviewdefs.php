@@ -76,11 +76,6 @@ array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
-        'LBL_AOP_CASE_UPDATES' =>
-        array(
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
       ),
     ),
       'topWidget' => [
@@ -321,18 +316,6 @@ array(
             'name' => 'date_modified',
             'label' => 'LBL_DATE_MODIFIED',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-          ),
-        ),
-      ),
-      'LBL_AOP_CASE_UPDATES' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'aop_case_updates_threaded',
-            'studio' => 'visible',
-            'label' => 'LBL_AOP_CASE_UPDATES_THREADED',
           ),
         ),
       ),
