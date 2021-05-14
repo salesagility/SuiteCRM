@@ -62,7 +62,7 @@ foreach ($ff as $f) {
     } elseif (strtolower(substr($f, -4, 4))=='.ttf' || strtolower(substr($f, -4, 4))=='.otf') {
         $ret[] = $ttf->extractCoreInfo($ttfdir.$f);
     }
-    for ($i=0; $i<count($ret); $i++) {
+    for ($i=0, $iMax = count($ret); $i< $iMax; $i++) {
         if (!is_array($ret[$i])) {
             if (!$pdf) {
                 echo $ret[$i].'<br />';

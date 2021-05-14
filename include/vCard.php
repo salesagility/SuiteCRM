@@ -191,7 +191,7 @@ class vCard
         $bean->assigned_user_id = $current_user->id;
         $email_suffix = 1;
 
-        for ($index = 0; $index < count($lines); $index++) {
+        for ($index = 0, $indexMax = count($lines); $index < $indexMax; $index++) {
             $line = $lines[$index];
 
             // check the encoding and change it if needed

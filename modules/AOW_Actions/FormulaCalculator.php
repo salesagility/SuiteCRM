@@ -179,7 +179,7 @@ class FormulaCalculator
         $hasChild = false;
 
         $currentText = "";
-        for ($i = 0; $i < count($characters); $i++) {
+        for ($i = 0, $iMax = count($characters); $i < $iMax; $i++) {
             $char = $characters[$i];
 
             if ($terminalLevel > 0) {
@@ -588,7 +588,7 @@ class FormulaCalculator
 
         $params = array();
         $currentParam = "";
-        for ($i = 0; $i < count($characters); $i++) {
+        for ($i = 0, $iMax = count($characters); $i < $iMax; $i++) {
             $char = $characters[$i];
 
             if ($char === FormulaCalculator::START_TERMINAL) {
@@ -681,13 +681,13 @@ class FormulaCalculator
         $evaluated = $leaf;
 
         if (preg_match("/{P[0-9]+}/i", $leaf)) {
-            for ($i = 0; $i < count($this->parameters); $i++) {
+            for ($i = 0, $iMax = count($this->parameters); $i < $iMax; $i++) {
                 $evaluated = str_replace("{P$i}", $this->parameters[$i], $evaluated);
                 $evaluated = str_replace("{p$i}", $this->parameters[$i], $evaluated);
             }
         } else {
             if (preg_match("/{R[0-9]+}/i", $leaf)) {
-                for ($i = 0; $i < count($this->relationParameters); $i++) {
+                for ($i = 0, $iMax = count($this->relationParameters); $i < $iMax; $i++) {
                     $evaluated = str_replace("{R$i}", $this->relationParameters[$i], $evaluated);
                     $evaluated = str_replace("{r$i}", $this->relationParameters[$i], $evaluated);
                 }

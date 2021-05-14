@@ -258,8 +258,8 @@ function print_graph($g, $pgwidth)
     }
     // PERCENT
     if ($percent && $type != 'pie' && $type != 'pie3d') {
-        for ($r=0;$r<count($data);$r++) {
-            for ($c=0;$c<count($data[$r]);$c++) {
+        for ($r=0, $rMax = count($data); $r< $rMax; $r++) {
+            for ($c=0, $cMax = count($data[$r]); $c< $cMax; $c++) {
                 $data[$r][$c] = $data[$r][$c]/$totals[$r]  * 100;
             }
         }

@@ -283,7 +283,7 @@ class SugarChart
     {
         $total = 0;
 
-        for ($i =0; $i < count($this->data_set); $i++) {
+        for ($i =0, $iMax = count($this->data_set); $i < $iMax; $i++) {
             if ($this->data_set[$i][$this->group_by[0]] == $group_by) {
                 $total += $this->data_set[$i]['total'];
             }
@@ -333,7 +333,7 @@ class SugarChart
 
         $prev_group_by = '';
 
-        for ($i =0; $i < count($this->data_set); $i++) {
+        for ($i =0, $iMax = count($this->data_set); $i < $iMax; $i++) {
             if ($this->data_set[$i][$group_by] != $prev_group_by) {
                 $prev_group_by = $this->data_set[$i][$group_by];
                 $data[$this->data_set[$i][$group_by]] = array();

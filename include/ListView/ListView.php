@@ -1892,7 +1892,7 @@ class ListView
         if (is_object($seed) && isset($seed->object_name) && $seed->object_name == 'WorkFlow') {
             $tab=array();
             $access = get_workflow_admin_modules_for_user($current_user);
-            for ($i = 0; $i < count($list); $i++) {
+            for ($i = 0, $iMax = count($list); $i < $iMax; $i++) {
                 if (!empty($access[$list[$i]->base_module])) {
                     $tab[]=$list[$i];
                 }
@@ -2055,7 +2055,7 @@ class ListView
     {
         $this->list_field_defs = $subpanel_fields;
 
-        for ($i=0;$i < count($this->list_field_defs);$i++) {
+        for ($i=0, $iMax = count($this->list_field_defs); $i < $iMax; $i++) {
             $list_field = $this->list_field_defs[$i];
             $field_def = null;
             $key = '';

@@ -138,7 +138,7 @@ class ViewAdminwizard extends SugarView
         //Start of scenario block
         require_once('install/suite_install/scenarios.php');
         if (isset($installation_scenarios)) {
-            for ($i = 0; $i < count($installation_scenarios); $i++) {
+            for ($i = 0, $iMax = count($installation_scenarios); $i < $iMax; $i++) {
                 $installation_scenarios[$i]['moduleOverview']='( '.implode(', ', $installation_scenarios[$i]['modules']).')';
             }
 

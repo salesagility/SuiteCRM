@@ -1814,7 +1814,7 @@ EOQ;
         $emailLink = '';
 
         $emailUI = new EmailUI();
-        for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
+        for ($i = 0, $iMax = count($focus->emailAddress->addresses); $i < $iMax; $i++) {
             $emailField = 'email' . (string) ($i + 1);
             $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
             if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {

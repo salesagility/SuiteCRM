@@ -668,7 +668,7 @@ class Sugarpdf extends TCPDF
                 $lastNum = 0;
                 $run = false;
 
-                for ($i=0; $i<count($words); $i++) {
+                for ($i=0, $iMax = count($words); $i< $iMax; $i++) {
                     if ($first) {
                         $wordBlock = $words[$i];
                     } else {

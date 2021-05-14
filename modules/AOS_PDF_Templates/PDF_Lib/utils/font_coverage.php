@@ -93,7 +93,7 @@ foreach ($ff as $f) {
     if (strtolower(substr($f, -4, 4))=='.ttf' || strtolower(substr($f, -4, 4))=='.otf') {
         $ret[] = $ttf->extractCoreInfo($ttfdir.$f);
     }
-    for ($i=0; $i<count($ret); $i++) {
+    for ($i=0, $iMax = count($ret); $i< $iMax; $i++) {
         if (is_array($ret[$i])) {
             $tfname = $ret[$i][0];
             $bold = $ret[$i][1];

@@ -365,7 +365,7 @@ if (true) {
         if (!isset($notes_list)) {
             $notes_list = array();
         }
-        for ($i = 0; $i < count($notes_list); $i++) {
+        for ($i = 0, $iMax = count($notes_list); $i < $iMax; $i++) {
             $the_note = $notes_list[$i];
             if (empty($the_note->filename)) {
                 continue;

@@ -322,7 +322,7 @@ class SugarFieldRelate extends SugarFieldBase
                 $names['f'] = $temp[0];
                 $names['l'] = $temp[1];
             }
-            for ($i = 0; $i < strlen($default_locale_name_format); $i++) {
+            for ($i = 0, $iMax = strlen($default_locale_name_format); $i < $iMax; $i++) {
                 $new_field .= array_key_exists(
                     $default_locale_name_format[$i],
                     $names

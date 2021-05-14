@@ -21,9 +21,9 @@ class grad
     $bpcd=65535; //16 BitsPerCoordinate
     $trans = false;
         $this->mpdf->gradients[$n]['stream']='';
-        for ($i=0;$i<count($patch_array);$i++) {
+        for ($i=0, $iMax = count($patch_array); $i< $iMax; $i++) {
             $this->mpdf->gradients[$n]['stream'].=chr($patch_array[$i]['f']); //start with the edge flag as 8 bit
-            for ($j=0;$j<count($patch_array[$i]['points']);$j++) {
+            for ($j=0, $jMax = count($patch_array[$i]['points']); $j< $jMax; $j++) {
                 //each point as 16 bit
             if (($j % 2) == 1) {	// Y coordinate (adjusted as input is From top left)
                 $patch_array[$i]['points'][$j]=(($patch_array[$i]['points'][$j]-$y_min)/($y_max-$y_min))*$bpcd;
@@ -40,7 +40,7 @@ class grad
                 $this->mpdf->gradients[$n]['stream'].=chr(floor($patch_array[$i]['points'][$j]/256));
                 $this->mpdf->gradients[$n]['stream'].=chr(floor($patch_array[$i]['points'][$j]%256));
             }
-            for ($j=0;$j<count($patch_array[$i]['colors']);$j++) {
+            for ($j=0, $jMax = count($patch_array[$i]['colors']); $j< $jMax; $j++) {
                 //each color component as 8 bit
                 if ($colspace=='RGB') {
                     $this->mpdf->gradients[$n]['stream'].=($patch_array[$i]['colors'][$j][1]);
@@ -68,14 +68,14 @@ class grad
         // TRANSPARENCY
         if ($trans) {
             $this->mpdf->gradients[$n]['stream_trans']='';
-            for ($i=0;$i<count($patch_array);$i++) {
+            for ($i=0, $iMax = count($patch_array); $i< $iMax; $i++) {
                 $this->mpdf->gradients[$n]['stream_trans'].=chr($patch_array[$i]['f']);
-                for ($j=0;$j<count($patch_array[$i]['points']);$j++) {
+                for ($j=0, $jMax = count($patch_array[$i]['points']); $j< $jMax; $j++) {
                     //each point as 16 bit
                     $this->mpdf->gradients[$n]['stream_trans'].=chr(floor($patch_array[$i]['points'][$j]/256));
                     $this->mpdf->gradients[$n]['stream_trans'].=chr(floor($patch_array[$i]['points'][$j]%256));
                 }
-                for ($j=0;$j<count($patch_array[$i]['colors']);$j++) {
+                for ($j=0, $jMax = count($patch_array[$i]['colors']); $j< $jMax; $j++) {
                     //each color component as 8 bit // OPACITY
                     if ($colspace=='RGB') {
                         $this->mpdf->gradients[$n]['stream_trans'].=chr((int)(ord($patch_array[$i]['colors'][$j][4]) * 2.55));
@@ -479,7 +479,7 @@ class grad
             $axis_length = $coords[4]*$usew;
         }	// Absolute lengths are meaningless for an ellipse - Firefox uses Width as reference
 
-        for ($i=0;$i<count($stops);$i++) {
+        for ($i=0, $iMax = count($stops); $i< $iMax; $i++) {
             if (isset($stops[$i]['offset']) && preg_match('/([0-9.]+(px|em|ex|pc|pt|cm|mm|in))/i', $stops[$i]['offset'], $m)) {
                 $tmp = $this->mpdf->ConvertSize($m[1], $this->mpdf->w, $this->mpdf->FontSize, false);
                 $stops[$i]['offset'] = $tmp/$axis_length;
@@ -502,7 +502,7 @@ class grad
             $stops[(count($stops)-1)]['offset'] = 1;
         }
 
-        for ($i=0;$i<count($stops);$i++) {
+        for ($i=0, $iMax = count($stops); $i< $iMax; $i++) {
             // mPDF 5.3.74
             if ($colorspace == 'CMYK') {
                 $this->mpdf->gradients[$n]['stops'][$i]['col'] = sprintf('%.3F %.3F %.3F %.3F', (ord($stops[$i]['col']{1})/100), (ord($stops[$i]['col']{2})/100), (ord($stops[$i]['col']{3})/100), (ord($stops[$i]['col']{4})/100));
@@ -525,7 +525,7 @@ class grad
                     if (isset($stops[$i-1]['offset']) && isset($stops[$i+1]['offset'])) {
                         $stops[$i]['offset'] = ($stops[$i-1]['offset']+$stops[$i+1]['offset'])/2;
                     } else {
-                        for ($j=($i+1);$j<count($stops);$j++) {
+                        for ($j=($i+1), $jMax = count($stops); $j< $jMax; $j++) {
                             if (isset($stops[$j]['offset'])) {
                                 break;
                             }
@@ -610,7 +610,7 @@ class grad
                 $v = preg_replace('/(\([^\)]*?)[ ]/', '\\1', $v);
             }
             $bgr = preg_split('/\s*,\s*/', $v);
-            for ($i=0;$i<count($bgr);$i++) {
+            for ($i=0, $iMax = count($bgr); $i< $iMax; $i++) {
                 $bgr[$i] = preg_replace('/@/', ',', $bgr[$i]);
             }
             // Is first part $bgr[0] a valid point/angle?
@@ -705,7 +705,7 @@ class grad
             }
             $g['coords'] = array($startx ,$starty ,$endx ,$endy, $angle, $repeat );
             $g['stops'] = array();
-            for ($i=$startStops;$i<count($bgr);$i++) {
+            for ($i=$startStops, $iMax = count($bgr); $i< $iMax; $i++) {
                 $stop = array();
                 // parse stops
                 $el = preg_split('/\s+/', trim($bgr[$i]));
@@ -762,7 +762,7 @@ class grad
                 $v = preg_replace('/(\([^\)]*?)[ ]/', '\\1', $v);
             }
             $bgr = preg_split('/\s*,\s*/', $v);
-            for ($i=0;$i<count($bgr);$i++) {
+            for ($i=0, $iMax = count($bgr); $i< $iMax; $i++) {
                 $bgr[$i] = preg_replace('/@/', ',', $bgr[$i]);
             }
 
@@ -886,7 +886,7 @@ class grad
             $g['coords'] = array($startx ,$starty ,$endx ,$endy, $radius, $angle, $shape, $size, $repeat );
 
             $g['stops'] = array();
-            for ($i=$startStops;$i<count($bgr);$i++) {
+            for ($i=$startStops, $iMax = count($bgr); $i< $iMax; $i++) {
                 $stop = array();
                 // parse stops
                 $el = preg_split('/\s+/', trim($bgr[$i]));

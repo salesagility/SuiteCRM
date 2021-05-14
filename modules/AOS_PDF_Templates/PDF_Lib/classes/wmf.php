@@ -136,7 +136,7 @@ class wmf
                             }
                             if (!empty($dashArray)) {
                                 $s = '[';
-                                for ($i=0; $i<count($dashArray);$i++) {
+                                for ($i=0, $iMax = count($dashArray); $i< $iMax; $i++) {
                                     $s .= $dashArray[$i] * $k;
                                     if ($i != count($dashArray)-1) {
                                         $s .= ' ';

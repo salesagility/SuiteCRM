@@ -85,7 +85,7 @@ class TemplateEnum extends TemplateText
             $dependencies = array() ;
 
             if (is_array($this->trigger) && is_array($this->action)) {
-                for ($i = 0 ; $i < count($this->action) ; $i++) {
+                for ($i = 0, $iMax = count($this->action); $i < $iMax; $i++) {
                     $dependencies [ $this->trigger [ $i ] ] = $this->action [ $i ] ;
                 }
                 $this->dependency = $dependencies ;

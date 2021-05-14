@@ -267,7 +267,7 @@ class quicksearchQuery
         $data['totalCount'] = count($results);
         $data['fields']     = array();
 
-        for ($i = 0; $i < count($results); $i++) {
+        for ($i = 0, $iMax = count($results); $i < $iMax; $i++) {
             $data['fields'][$i] = array();
             $data['fields'][$i]['module'] = $results[$i]->object_name;
 

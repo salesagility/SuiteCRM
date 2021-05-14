@@ -1463,7 +1463,7 @@ abstract class DBManager
         // get the entire sql
         $sql .= "(" . implode(",", $columns) . ") ";
         $sql .= "VALUES";
-        for ($i = 0; $i < count($row_array); $i++) {
+        for ($i = 0, $iMax = count($row_array); $i < $iMax; $i++) {
             $sql .= " (" . implode(",", $row_array[$i]) . ")";
             if ($i < (count($row_array) - 1)) {
                 $sql .= ", ";
@@ -1474,7 +1474,7 @@ abstract class DBManager
         $custom_sql .= "(" . implode(",", $cstm_columns) . ") ";
         $custom_sql .= "VALUES";
 
-        for ($i = 0; $i < count($cstm_row_array); $i++) {
+        for ($i = 0, $iMax = count($cstm_row_array); $i < $iMax; $i++) {
             $custom_sql .= " (" . implode(",", $cstm_row_array[$i]) . ")";
             if ($i < (count($cstm_row_array) - 1)) {
                 $custom_sql .= ", ";

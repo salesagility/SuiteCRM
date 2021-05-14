@@ -1125,7 +1125,7 @@ class nusoap_client extends nusoap_base
             $newName = $newCookie['name'];
 
             $found = false;
-            for ($i = 0; $i < count($this->cookies); $i++) {
+            for ($i = 0, $iMax = count($this->cookies); $i < $iMax; $i++) {
                 $cookie = $this->cookies[$i];
                 if (!is_array($cookie)) {
                     continue;

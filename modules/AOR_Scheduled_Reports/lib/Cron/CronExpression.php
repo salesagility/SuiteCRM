@@ -182,7 +182,7 @@ class CronExpression
     public function getMultipleRunDates($total, $currentTime = 'now', $invert = false, $allowCurrentDate = false)
     {
         $matches = array();
-        for ($i = 0; $i < max(0, $total); $i++) {
+        for ($i = 0, $iMax = max(0, $total); $i < $iMax; $i++) {
             $matches[] = $this->getRunDate($currentTime, $i, $invert, $allowCurrentDate);
         }
 

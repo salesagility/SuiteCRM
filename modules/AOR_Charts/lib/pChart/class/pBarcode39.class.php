@@ -89,7 +89,7 @@
      {
          $this->Result = "100101101101"."0";
          $TextString   = "";
-         for ($i=1;$i<=strlen($Value);$i++) {
+         for ($i=1, $iMax = strlen($Value); $i<= $iMax; $i++) {
              $CharCode = ord($this->mid($Value, $i, 1));
              if ($CharCode >= 97 && $CharCode <= 122) {
                  $CharCode = $CharCode - 32;
@@ -158,7 +158,7 @@
              $this->pChartObject->drawPolygon($Polygon, $Settings);
          }
 
-         for ($i=1;$i<=strlen($this->Result);$i++) {
+         for ($i=1, $iMax = strlen($this->Result); $i<= $iMax; $i++) {
              if ($this->mid($this->Result, $i, 1) == 1) {
                  $X1 = $X + cos($Angle * PI / 180) * $i;
                  $Y1 = $Y + sin($Angle * PI / 180) * $i;

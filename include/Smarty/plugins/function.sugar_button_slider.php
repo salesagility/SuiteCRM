@@ -55,7 +55,7 @@ function smarty_function_sugar_button_slider($params, &$smarty)
             }
             $str .= '</div></td>';
             $str .='<td align="right"> <div class="yui-bd">';
-            for ($i = 2; $i < count($buttons); $i++) {
+            for ($i = 2, $iMax = count($buttons); $i < $iMax; $i++) {
                 $button = $buttons[$i];
                 $str .= smarty_function_sugar_button(array('module' => $module, 'id' => $button, 'view' => $view), $smarty);
                 $str .= ' ';

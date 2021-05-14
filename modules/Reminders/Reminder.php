@@ -452,7 +452,7 @@ class Reminder extends Basic
     private static function unQuoteTime($timestr)
     {
         $ret = '';
-        for ($i = 0; $i < strlen($timestr); $i++) {
+        for ($i = 0, $iMax = strlen($timestr); $i < $iMax; $i++) {
             if ($timestr[$i] != "'") {
                 $ret .= $timestr[$i];
             }
