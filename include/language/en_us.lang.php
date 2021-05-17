@@ -3827,6 +3827,7 @@ $app_strings['AOS_Quotes'] = 'Quotes';
 $app_strings['AOS_Invoices'] = 'Invoices';
 $app_strings['LBL_PHOTO'] = 'Photo';
 $app_strings['LBL_CASE_UPDATES'] = 'Case Updates';
+$app_strings['LBL_CASE_UPDATE_SUBMITTED'] = 'Case Update Submitted';
 $app_strings['LBL_SUMMARY_DEFAULT'] = "{{fields.name.value}}";
 $app_strings['LBL_CREATE'] = 'Create';
 $app_strings['LBL_SAVED_FILTER_SAVED'] = 'Filter successfully saved';
