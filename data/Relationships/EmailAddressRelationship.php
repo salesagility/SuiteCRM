@@ -52,9 +52,10 @@ class EmailAddressRelationship extends M2MRelationship
 {
     /**
      * For Email Addresses, there is only a link from the left side, so we need a new add function that ignores rhs
-     * @param  $lhs SugarBean left side bean to add to the relationship.
-     * @param  $rhs SugarBean right side bean to add to the relationship.
-     * @param  $additionalFields key=>value pairs of fields to save on the relationship
+     *
+     * @param SugarBean $lhs left side bean to add to the relationship.
+     * @param SugarBean $rhs right side bean to add to the relationship.
+     * @param mixed $additionalFields key=>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())

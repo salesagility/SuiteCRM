@@ -409,9 +409,7 @@ class MBModule
                     if ($overwrite || ! file_exists($nto)) {
                         $contents = file_get_contents($nfrom) ;
                         $contents = str_replace($findArray, $replaceArray, $contents) ;
-                        $fw = sugar_fopen($nto, 'w') ;
-                        fwrite($fw, $contents) ;
-                        fclose($fw) ;
+                        sugar_file_put_contents($nto, $contents) ;
                     }
                 }
             }
@@ -491,22 +489,25 @@ class MBModule
         $smarty->assign('class', $class) ;
 
         if (! file_exists($path . '/' . $class [ 'name' ] . '.php')) {
-            $fp = sugar_fopen($path . '/' . $class ['name'] . '.php', 'w');
-            fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl'));
-            fclose($fp);
+            sugar_file_put_contents(
+                $path . '/' . $class ['name'] . '.php',
+                $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl')
+            );
         }
         //write vardefs
-        $fp = sugar_fopen($path . '/vardefs.php', 'w') ;
-        fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/vardef.tpl')) ;
-        fclose($fp) ;
+        sugar_file_put_contents(
+            $path . '/vardefs.php',
+            $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/vardef.tpl')
+        );
         
         if (! file_exists($path . '/metadata')) {
             mkdir_recursive($path . '/metadata') ;
         }
         if (! empty($this->config [ 'studio' ])) {
-            $fp = sugar_fopen($path . '/metadata/studio.php', 'w') ;
-            fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Studio.tpl')) ;
-            fclose($fp) ;
+            sugar_file_put_contents(
+                $path . '/metadata/studio.php',
+                $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Studio.tpl')
+            );
         } else {
             if (file_exists($path . '/metadata/studio.php')) {
                 unlink($path . '/metadata/studio.php') ;
@@ -521,9 +522,10 @@ class MBModule
         $smarty->assign('showvCard', in_array('person', array_keys($this->config[ 'templates' ]))) ;
         $smarty->assign('showimport', $this->config['importable']);
         //write sugar generated class
-        $fp = sugar_fopen($path . '/' . 'Menu.php', 'w') ;
-        fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Menu.tpl')) ;
-        fclose($fp) ;
+        sugar_file_put_contents(
+            $path . '/' . 'Menu.php',
+            $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Menu.tpl')
+        );
     }
 
     public function addInstallDefs(&$installDefs)
@@ -696,9 +698,7 @@ class MBModule
                         $contents = str_replace("'{$old_name}'", "'{$this->key_name}'", $contents) ;
                     }
                     
-                    $fp = sugar_fopen($new_dir . '/' . $e, 'w') ;
-                    fwrite($fp, $contents) ;
-                    fclose($fp) ;
+                    sugar_file_put_contents($new_dir . '/' . $e, $contents) ;
                 }
             }
         }
@@ -777,9 +777,7 @@ class MBModule
             $layout = "<?php\n" . '$module_name=\'' . $module_name . "';\n" . '$subpanel_layout = ' . var_export_helper($layout) . ";" ;
             $GLOBALS [ 'log' ]->debug("About to save this file to $filepath") ;
             $GLOBALS [ 'log' ]->debug($layout) ;
-            $fw = sugar_fopen($filepath, 'w') ;
-            fwrite($fw, $layout) ;
-            fclose($fw) ;
+            sugar_file_put_contents($filepath, $layout) ;
         }
     }
 
