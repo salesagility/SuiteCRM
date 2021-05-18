@@ -3837,6 +3837,9 @@ $app_strings['LBL_SHOW_MORE'] = 'Show more';
 $app_strings['LBL_SHOW_LESS'] = 'Show less';
 $app_strings['LBL_LOAD_MORE'] = 'Load more';
 
+
+$app_strings['LBL_ACTION_SUCCESS'] = 'Action successful';
+
 $app_list_strings['sort_order'] = [];
 $app_list_strings['sort_order']['asc'] = 'Ascending';
 $app_list_strings['sort_order']['desc'] = 'Descending';
