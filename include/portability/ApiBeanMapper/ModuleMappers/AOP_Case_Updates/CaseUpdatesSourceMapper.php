@@ -25,30 +25,64 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-require_once __DIR__ . '/CaseUpdatesDescriptionMapper.php';
-require_once __DIR__ . '/CaseUpdatesAuthorMapper.php';
-require_once __DIR__ . '/CaseUpdatesSourceMapper.php';
-require_once __DIR__ . '/../../ApiBeanModuleMappers.php';
+require_once __DIR__ . '/../../../ApiBeanMapper/FieldMappers/FieldMapperInterface.php';
+require_once __DIR__ . '/../../../ModuleNameMapper.php';
 
-class CaseUpdatesMappers extends ApiBeanModuleMappers
+class CaseUpdatesSourceMapper implements FieldMapperInterface
 {
-    /**
-     * @var string
-     */
-    public const MODULE = 'AOP_Case_Updates';
+    public const FIELD_NAME = 'source';
 
+    /**
+     * @var ModuleNameMapper
+     */
+    protected $moduleNameMapper;
+
+    /**
+     * RouteConverter constructor.
+     */
     public function __construct()
     {
-        $this->fieldMappers[CaseUpdatesDescriptionMapper::getField()] = new CaseUpdatesDescriptionMapper();
-        $this->fieldMappers[CaseUpdatesAuthorMapper::getField()] = new CaseUpdatesAuthorMapper();
-        $this->fieldMappers[CaseUpdatesSourceMapper::getField()] = new CaseUpdatesSourceMapper();
+        $this->moduleNameMapper = new ModuleNameMapper();
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    public static function getModule(): string
+    public static function getField(): string
     {
-        return self::MODULE;
+        return self::FIELD_NAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toApi(SugarBean $bean, array &$container, string $alternativeName = ''): void
+    {
+        $name = self::FIELD_NAME;
+
+        $contactId = $bean->contact_id ?? '';
+        if ($contactId !== '') {
+            $container[$name] = 'contact';
+
+            return;
+        }
+
+        $assignedUserId = $bean->assigned_user_id ?? '';
+        $assignedUserName = $bean->assigned_user_name ?? '';
+
+        if ($assignedUserId !== '' && $assignedUserName !== '') {
+            $container[$name] = 'internal';
+
+            return;
+        }
+
+        $container[$name] = 'external';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toBean(SugarBean $bean, array &$container, string $alternativeName = ''): void
+    {
     }
 }

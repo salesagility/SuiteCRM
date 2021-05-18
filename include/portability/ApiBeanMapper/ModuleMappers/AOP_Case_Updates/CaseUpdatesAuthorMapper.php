@@ -60,14 +60,25 @@ class CaseUpdatesAuthorMapper implements FieldMapperInterface
     {
         $name = self::FIELD_NAME;
 
-        if ($bean->contact_id) {
+        $contactId = $bean->contact_id ?? '';
+
+        if ($contactId !== '') {
             $contact = $bean->get_linked_beans('contact')[0];
             $container[$name] = $contact->name;
 
             return;
         }
 
-        $container[$name] = $bean->assigned_user_name;
+        $assignedUserId = $bean->assigned_user_id ?? '';
+        $assignedUserName = $bean->assigned_user_name ?? '';
+
+        if ($assignedUserId !== '' && $assignedUserName !== '') {
+            $container[$name] = $assignedUserName;
+
+            return;
+        }
+
+        $container[$name] = '[external]';
     }
 
     /**
