@@ -26,7 +26,7 @@
  */
 
 /**
- * Class DeleteRelationshipService
+ * Class UnlinkService
  * Port of include/generic/DeleteRelationship.php
  * Accessing the above file directly is not possible
  */
