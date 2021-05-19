@@ -108,9 +108,12 @@ class SugarCache
     /**
      * Try to reset any opcode caches we know about
      *
+     *  @param Bool $full_reset -- only reset the opcache on full reset,
+     *  for removing individual files from cache use the fine grained method cleanFile
+     *
      * @todo make it so developers can extend this somehow
      */
-    public static function cleanOpcodes()
+    public static function cleanOpcodes($full_reset = false)
     {
         // APC
         if (function_exists('apc_clear_cache') && ini_get('apc.stat') == 0) {
@@ -138,8 +141,14 @@ class SugarCache
             }
         }
         // Zend OPcache
-        if (function_exists('opcache_reset')) {
-            opcache_reset();
+        if (
+            extension_loaded('Zend OPcache') &&
+            ($opcache_status = opcache_get_status(false)) !== false &&
+            $opcache_status['opcache_enabled'] && $full_reset
+        ) {
+            if (!opcache_reset()) {
+                LoggerManager::getLogger()->error("OPCache - could not reset");
+            }
         }
     }
 
@@ -154,9 +163,35 @@ class SugarCache
         }
 
         // Zend OPcache
-        if (function_exists('opcache_invalidate'))
-        {
-            opcache_invalidate($file, true);
+        if (
+            extension_loaded('Zend OPcache') &&
+            ($opcache_status = opcache_get_status(false)) !== false &&
+            $opcache_status['opcache_enabled']
+        ) {
+            // three attempts incase concurrent opcache operations pose a lock
+            for ($i = 3; $i && !opcache_invalidate($file, true); --$i) {
+                sleep(0.2);
+            }
+
+            if (!$i) {
+                LoggerManager::getLogger()->warn("OPCache - could not invalidate file: $file");
+            }
+        }
+    }
+
+    /**
+     * cleanDir
+     * Call this function to remove files in a directory from cache
+     *
+     * @param string $dir - String value of the directory to remove from cache
+     *
+     */
+    public static function cleanDir($dir)
+    {
+        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $file) {
+            if ((new SplFileInfo($file))->getExtension() == 'php') {
+                sugarCache::cleanFile($file);
+            }
         }
     }
 }
@@ -215,7 +250,7 @@ function sugar_cache_reset()
 function sugar_cache_reset_full()
 {
     SugarCache::instance()->resetFull();
-    SugarCache::cleanOpcodes();
+    SugarCache::cleanOpcodes(true);
 }
 
 /**

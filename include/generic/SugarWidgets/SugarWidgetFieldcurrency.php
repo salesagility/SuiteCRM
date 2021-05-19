@@ -227,7 +227,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
     /**
      * Return currency for layout_def
-     * @param $layout_def mixed
+     * @param mixed $layout_def
      * @return array Array with currency symbol and currency ID
      */
     protected function getCurrency($layout_def)
