@@ -40,7 +40,6 @@
 *}
 
 
-<div>&nbsp;</div>
 {{assign var="selectRelation" value=$selectFields[$module]}}
 <span class="color">{$ERROR}</span>
 {{foreach name=section from=$sectionPanels key=label item=panel}}
@@ -94,9 +93,7 @@
                     {/if}
                     {/if}
                 </script>
-
-                {sugar_translate label='{{$label}}' module='Leads'}
-
+                <span>{sugar_translate label='{{$label}}' module='Leads'} </span>
                 {{if !empty($selectRelation)}}
                 {if !empty($def.select)}
                 {sugar_translate label='LNK_SELECT_{{$module|strtoupper}}' module='Leads'}
@@ -148,11 +145,11 @@
         {{foreach name=colIteration from=$rowData key=col item=colData}}
 
         {{if $smarty.foreach.colCount.total > 1}}
-        <div class="edit-view-field col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="edit-view-field col-xs-12 col-sm-12 col-md-6 col-lg-6 edit-view-bordered">
         {{else}}
-        <div class="edit-view-field col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="edit-view-field col-xs-12 col-sm-12 col-md-6 col-lg-6 edit-view-bordered">
         {{/if}}
-
+        <div class="edit-dotted-border"></div>
             {{counter name="colCount" print=false}}
             {{if count($rowData) == $colCount}}
             {{assign var="colCount" value=0}}
@@ -181,7 +178,7 @@
             </div>
             {{/if}}
             <div valign="top"
-                {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} class=" col-xs-12 col-sm-8 edit-view-field pad-bottom">
+                {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} class=" col-xs-12 col-sm-12 edit-view-field pad-bottom">
                 {{if $fields[$colData.field.name] && !empty($colData.field.fields) }}
                 {{foreach from=$colData.field.fields item=subField}}
                 {{if $fields[$subField.name]}}

@@ -76,11 +76,6 @@ array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
-        'LBL_AOP_CASE_UPDATES' =>
-        array(
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
       ),
     ),
       'topWidget' => [
@@ -96,6 +91,122 @@ array(
           ]
       ],
       'sidebarWidgets' => [
+          [
+              'type' => 'record-thread',
+              'labelKey' => 'LBL_CASE_UPDATES',
+              'options' => [
+                  'recordThread' => [
+                      'module' => 'case-updates',
+                      'class' => 'case-updates',
+                      'filters' => [
+                          'parentFilters' => [
+                              'id' => 'case_id'
+                          ],
+                          'orderBy' => 'date_entered',
+                          'sortOrder' => 'DESC'
+                      ],
+                      'item' => [
+                          'itemClass' => 'case-updates-item pt-2 pb-2',
+                          'collapsible' => true,
+                          'dynamicClass' => ['source', 'internal'],
+                          'layout' => [
+                              'header' => ['rows' => []],
+                              'body' =>[
+                                  'rows' => [
+                                      [
+                                          'align' => 'end',
+                                          'justify' => 'between',
+                                          'cols' => [
+                                              [
+                                                  'field' => 'author',
+                                                  'labelDisplay' => 'none',
+                                                  'hideIfEmpty' => true,
+                                                  'class' => 'font-weight-bold item-title'
+                                              ],
+                                              [
+                                                  'field' => 'internal',
+                                                  'labelDisplay' => 'inline',
+                                                  'labelClass' => 'm-0',
+                                                  'display' => 'none',
+                                                  'hideIfEmpty' => true,
+                                                  'class' => 'small ml-auto font-weight-light'
+                                              ],
+                                          ]
+                                      ],
+                                      [
+                                          'align' => 'start',
+                                          'justify' => 'start',
+                                          'class' => 'flex-grow-1 item-content',
+                                          'cols' => [
+                                              [
+                                                  'field' => [
+                                                      'name' => 'description',
+                                                      'type' => 'html',
+                                                  ],
+                                                  'labelDisplay' => 'none',
+                                              ]
+                                          ]
+                                      ],
+                                      [
+                                          'justify' => 'end',
+                                          'class' => 'flex-grow-1',
+                                          'cols' => [
+                                              [
+                                                  'field' => 'date_entered',
+                                                  'labelDisplay' => 'none',
+                                                  'hideIfEmpty' => true,
+                                                  'class' => 'small ml-auto font-weight-light'
+                                              ],
+                                          ]
+                                      ]
+                                  ]
+                              ]
+                          ],
+                      ],
+                      'create' => [
+                          'presetFields' => [
+                              'parentValues' => [
+                                  'id' => 'case_id'
+                              ],
+                          ],
+                          'layout' => [
+                              'header' => ['rows' => []],
+                              'body' =>[
+                                  'rows' => [
+                                      [
+                                          'justify' => 'start',
+                                          'class' => 'flex-grow-1',
+                                          'cols' => [
+                                              [
+                                                  'field' => [
+                                                      'name' => 'description',
+                                                      'metadata' => [
+                                                          'rows' => 3
+                                                      ]
+                                                  ],
+                                                  'labelDisplay' => 'top',
+                                                  'class' => 'flex-grow-1',
+                                              ]
+                                          ]
+                                      ],
+                                      [
+                                          'align' => 'end',
+                                          'justify' => 'start',
+                                          'class' => 'flex-grow-1',
+                                          'cols' => [
+                                              [
+                                                  'field' => 'internal',
+                                                  'labelDisplay' => 'inline',
+                                              ],
+                                          ]
+                                      ]
+                                  ]
+                              ]
+                          ],
+                      ]
+                  ]
+              ]
+          ],
           [
               'type' => 'statistics',
               'labelKey' => 'LBL_NUMBER_OF_CASES_PER_ACCOUNT',
@@ -133,24 +244,6 @@ array(
                                       'statistic' => 'get-account-date-entered',
                                       'size' => 'regular',
                                   ],
-                              ]
-                          ],
-                      ]
-                  ]
-              ]
-          ],
-          ['type' => 'statistics',
-              'labelKey' => 'LBL_CASE_UPDATES',
-              'options' => [
-                  'sidebarStatistic' => [
-                      'rows' => [
-                          [
-                              'align' => 'start',
-                              'cols' => [
-                                  [
-                                      'icon' => 'CaseUpdate',
-                                      'iconClass' => 'img-fluid',
-                                  ]
                               ]
                           ],
                       ]
@@ -222,18 +315,6 @@ array(
             'name' => 'date_modified',
             'label' => 'LBL_DATE_MODIFIED',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-          ),
-        ),
-      ),
-      'LBL_AOP_CASE_UPDATES' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'aop_case_updates_threaded',
-            'studio' => 'visible',
-            'label' => 'LBL_AOP_CASE_UPDATES_THREADED',
           ),
         ),
       ),

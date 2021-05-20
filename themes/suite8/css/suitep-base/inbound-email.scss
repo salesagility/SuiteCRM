@@ -1,0 +1,139 @@
+/* Inbound email CSS code */
+
+div.content div.pagecontent form#EditView div.edit.view.inboundemail table tbody tr td {
+    padding: 0.3em 0.8em 1em 2em;
+}
+
+div.content div.pagecontent form#EditView div.edit.view.inboundemail table tbody tr td select {
+    border: 1px solid $bright-grey;
+}
+
+div.inboundemail {
+    .border-right {
+      border-right: 1px solid $base-border-color;
+    }
+    h4 {
+      font-weight: 600;
+      padding:0.8em;
+    }
+    input[type=text],input[type=password]{
+      background: $transparent-color;
+      border: 1px solid $bright-grey;
+    }
+    input:not([type]) {
+      background: $transparent-color;
+      border: 1px solid $bright-grey;
+    }
+    table tbody tr td {
+      padding: 0.3em 0.8em 1em 2em;
+    }
+    select {
+      background: url($select-edit-background-url) no-repeat right;
+      background-size: 25px 11px;
+      border-color: $bright-grey;
+    }
+    slot {
+      white-space: normal;
+    }
+    .checkboxmar {
+      margin-top: 1em;
+    }
+  }
+  
+  .header-inbound-title {
+    margin-bottom: 0.5em;
+  }
+  
+  .inbound-emailbtn {
+    margin-bottom: 1em;
+    position: absolute;
+    right: 0;
+    top: 6.2rem;
+    display: flex;
+  }
+
+/* Inbound List View table */
+
+div#inboundlistview {
+  border-top: 1px solid lightgrey;
+  padding-top: 1em;
+  #selectLink > li > label {
+    padding-top: 0.2em;
+    font-size: 1.2em;
+    .suitepicon-action-caret {
+      font-size: 0.7em;
+      margin-left: 0.5em;
+    }
+  }
+  .inbound-email {
+    tr td.inline-email-td {
+      svg {
+        vertical-align: middle;
+      }
+    }
+    #delete_button {
+      margin-top: 0.28em;
+    }
+    .subnav {
+      position: absolute;
+      top: 18em;
+    }
+    .pagination {
+      td {
+        table {
+          td:first-child {
+            color: $white;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+  .inbound-email tr.evenListRowS1 td.inline-email-td {
+    padding: 12px 10px;
+  }  
+  .inbound-email tr.oddListRowS1 td.inline-email-td {
+    padding: 12px 10px;
+  }  
+  ul#selectLink {
+    li.sugar_action_button {
+      background: $transparent-color;
+      border: 1px solid $white;
+      border-radius: 2px;
+      margin-top: 0.18em;
+    }
+  }
+  .listviewcount {
+    border: 0;
+    background: $transparent-color;
+    font-weight: 600;
+    color: $white;
+    vertical-align: middle;
+  }
+}
+
+.inboundmacroform {
+  table tr td {
+    vertical-align: middle;
+  }            
+} 
+
+table.inboundmacro {
+  tr td {
+    vertical-align: middle;
+  }
+  input[type=text] {
+    background: $transparent-color;
+    border: 1px solid $bright-grey;
+    width: 100%;
+  }
+  input[type=submit] {
+    margin: 0.2em;
+    font-weight: bold;
+    height: 2.2em;
+    line-height: 1.1em;
+    background-color: #93a4b3;
+    text-transform: capitalize;
+  }
+}
+

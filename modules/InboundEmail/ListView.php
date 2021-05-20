@@ -70,7 +70,6 @@ $allowByOverride = true;
 
 $listView = new ListView();
 $listView->initNewXTemplate('modules/InboundEmail/ListView.html', $mod_strings);
-$listView->setHeaderTitle($mod_strings['LBL_MODULE_TITLE']);
 
 echo $focus->getSystemSettingsForm();
 $listView->show_export_button = false;

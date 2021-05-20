@@ -69,7 +69,7 @@ class SugarPHPMailer extends PHPMailer
      * @var string
      */
     public $Body_html;
-    
+
     private static $FromNameOrigin = null;
 
     /**
@@ -97,7 +97,7 @@ class SugarPHPMailer extends PHPMailer
         $this->oe = new OutboundEmail();
         $this->oe->getUserMailerSettings($current_user);
 
-        $this->setLanguage('en', 'vendor/phpmailer/phpmailer/language/');
+        $this->setLanguage('en', './../../vendor/phpmailer/phpmailer/language/');
         $this->Mailer = 'smtp';
         // cn: i18n
         $this->CharSet = $locale->getPrecedentPreference('default_email_charset');
@@ -221,9 +221,9 @@ class SugarPHPMailer extends PHPMailer
 eoq;
                 $this->Body = $head . $this->Body . '</body></html>';
             }
-            
+
             $fromName = $this->FromName;
-            
+
             // checking if username already set for phpmailer and
             // using that as username instead fromname
             if ($this->FromName == self::$FromNameOrigin && !empty($this->Username)) {
@@ -441,10 +441,10 @@ eoq;
         //$this->Sender   = 'me@here.com';
         //$this->Password = 'wrong';
         //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
-       
-        
+
+
         $ret = null;
-        
+
         $this->fullSmtpLog='';
         $phpMailerExceptionMsg='';
 

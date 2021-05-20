@@ -63,7 +63,7 @@ class SuiteMozaik
 
     public function __construct()
     {
-        $this->vendorPath = 'vendor/';
+        $this->vendorPath = './../../vendor/';
         if ($this->autoInsertThumbnails) {
             if (count($this->getThumbs())==0 || self::$devMode) {
                 $ord = 0;

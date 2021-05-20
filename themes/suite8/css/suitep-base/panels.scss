@@ -168,7 +168,7 @@ div.panel-heading a.collapsed-override {
   color: $midnight-blue;
 }
 
-.panel-heading a.in:hover::before {
+.panel-heading a:hover::before {
   background: $white;
   color: $midnight-blue;
 }
@@ -211,7 +211,7 @@ div.action_buttons .button:hover {
 }
 
 div.sub-panel {
-  margin-bottom: 1em;
+  margin-bottom: 0.8em;
   margin-top: 0;
 }
 
@@ -287,16 +287,16 @@ div.sub-panel {
 
 .subpanel-table ul.subpanel > a {
   background-color: $panel-button-bg;
-  padding: 0 ;
-  padding-right: 4px ;
+  padding: 0;
+  padding-right: 4px;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }
 
 .subpanel-table li.sugar_action_button {
   background-color: $panel-button-bg;
-  padding: 0 ;
-  padding-right: 4px ;
+  padding: 0;
+  padding-right: 4px;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
 }

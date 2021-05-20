@@ -25,9 +25,8 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-/* @noinspection PhpIncludeInspection */
-require_once 'include/portability/Services/DateTime/DateFormatService.php';
-require_once 'include/portability/ApiBeanMapper/TypeMappers/TypeMapperInterface.php';
+require_once __DIR__  .'/../../Services/DateTime/DateFormatService.php';
+require_once __DIR__  .'/TypeMapperInterface.php';
 
 class DateTimeMapper implements TypeMapperInterface
 {
@@ -53,7 +52,7 @@ class DateTimeMapper implements TypeMapperInterface
     /**
      * @inheritDoc
      */
-    public function run(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
+    public function toApi(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
     {
         $newName = $name;
 
@@ -76,5 +75,12 @@ class DateTimeMapper implements TypeMapperInterface
         }
 
         $container[$newName] = $dbDate;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toBean(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
+    {
     }
 }

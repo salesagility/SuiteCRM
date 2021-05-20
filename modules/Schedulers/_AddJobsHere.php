@@ -72,16 +72,14 @@ $job_strings = array(
     4 => 'trimTracker',
     5 => 'pollMonitoredInboxesForBouncedCampaignEmails',
     6 => 'pollMonitoredInboxesAOP',
-    7 => 'aodIndexUnindexed',
-    8 => 'aodOptimiseIndex',
-    9 => 'aorRunScheduledReports',
-    10 => 'processAOW_Workflow',
-    12 => 'sendEmailReminders',
-    14 => 'cleanJobQueue',
-    15 => 'removeDocumentsFromFS',
-    16 => 'trimSugarFeeds',
-    17 => 'syncGoogleCalendar',
-    18 => 'runElasticSearchIndexerScheduler',
+    7 => 'aorRunScheduledReports',
+    8 => 'processAOW_Workflow',
+    9 => 'sendEmailReminders',
+    10 => 'cleanJobQueue',
+    11 => 'removeDocumentsFromFS',
+    12 => 'trimSugarFeeds',
+    13 => 'syncGoogleCalendar',
+    14 => 'runElasticSearchIndexerScheduler',
 );
 
 /**
@@ -710,76 +708,6 @@ function pollMonitoredInboxesAOP()
         $aopInboundEmailX->getImap()->close(CL_EXPUNGE);
     } // while
     return true;
-}
-
-/**
- * Scheduled job function to index any unindexed beans.
- * @deprecated since v7.12.0
- * @return bool
- */
-function aodIndexUnindexed()
-{
-    $total = 1;
-    $sanityCount = 0;
-    while ($total > 0) {
-        $total = performLuceneIndexing();
-        $sanityCount++;
-        if ($sanityCount > 100) {
-            return true;
-        }
-    }
-    return true;
-}
-
-/**
- * @deprecated since v7.12.0
- * @return bool
- */
-function aodOptimiseIndex()
-{
-    $index = BeanFactory::getBean("AOD_Index")->getIndex();
-    $index->optimise();
-    return true;
-}
-
-/**
- * @deprecated since v7.12.0
- * @return int|void
- */
-function performLuceneIndexing()
-{
-    global $sugar_config;
-    $db = DBManagerFactory::getInstance();
-
-    if (empty($sugar_config['aod']['enable_aod'])) {
-        return;
-    }
-    $index = BeanFactory::getBean("AOD_Index")->getIndex();
-
-    $beanList = $index->getIndexableModules();
-    $total = 0;
-    foreach ($beanList as $beanModule => $beanName) {
-        $bean = BeanFactory::getBean($beanModule);
-        if (!$bean || !method_exists($bean, "getTableName") || !$bean->getTableName()) {
-            continue;
-        }
-        $query = "SELECT b.id FROM ".$bean->getTableName()." b LEFT JOIN aod_indexevent ie ON (ie.record_id = b.id AND ie.record_module = '".$beanModule."') WHERE b.deleted = 0 AND (ie.id IS NULL OR ie.date_modified < b.date_modified) ORDER BY b.date_modified ASC";
-        $res = $db->limitQuery($query, 0, 500);
-        $c = 0;
-        while ($row = $db->fetchByAssoc($res)) {
-            $suc = $index->index($beanModule, $row['id']);
-            if ($suc) {
-                $c++;
-                $total++;
-            }
-        }
-        if ($c) {
-            $index->commit();
-            $index->optimise();
-        }
-    }
-    $index->optimise();
-    return $total;
 }
 
 function aorRunScheduledReports()

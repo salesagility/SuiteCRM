@@ -10,8 +10,10 @@ abstract class BaseParam implements \JsonSerializable
 {
     /**
      * @var array
+     * @desc the access specifier is made public as it need to be accessed by external class
+     * e.g. $deleteRelationshipParams->parameters  = [$params_array]
      */
-    protected $parameters = [];
+    public $parameters = [];
 
     /**
      * @var ValidatorFactory

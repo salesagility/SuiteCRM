@@ -2197,6 +2197,14 @@ $app_strings = array(
     'LBL_CONTACT_HAS_NO_PRIMARY_EMAIL' => 'Confirm Opt In Email sending is not possible because the Contact has not Primary Email Address',
     'LBL_CONFIRM_EMAIL_SENDING_FAILED' => 'Confirm Opt In Email sending failed',
     'LBL_CONFIRM_EMAIL_SENT' => 'Confirm Opt In Email sent successfully',
+
+    //List View Column Selector Modal
+    'LBL_COLUMN_SELECTOR_DISPLAYED_COLS' => 'DISPLAYED',
+    'LBL_COLUMN_SELECTOR_HIDDEN_COLS' => 'HIDDEN',
+    'LBL_COLUMN_SELECTOR_CLOSE_BUTTON' => 'Close',
+    'LBL_COLUMN_SELECTOR_SAVE_BUTTON' => 'Save Changes',
+    'LBL_COLUMN_SELECTOR_MODAL_TITLE' => 'Choose Columns'
+
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -2951,14 +2959,9 @@ $app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Select This Page';
 $app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Select All';
 $app_strings['LBL_LISTVIEW_NONE'] = 'Deselect All';
 
-//aod
-$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
-$app_list_strings['moduleList']['AOD_Index'] = 'Index';
-
 $app_list_strings['moduleList']['AOP_Case_Events'] = 'Case Events';
 $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Case Updates';
 $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
-
 
 //aop
 $app_list_strings['case_state_default_key'] = 'Open';
@@ -3824,5 +3827,33 @@ $app_strings['AOS_Quotes'] = 'Quotes';
 $app_strings['AOS_Invoices'] = 'Invoices';
 $app_strings['LBL_PHOTO'] = 'Photo';
 $app_strings['LBL_CASE_UPDATES'] = 'Case Updates';
+$app_strings['LBL_CASE_UPDATE_SUBMITTED'] = 'Case Update Submitted';
 $app_strings['LBL_SUMMARY_DEFAULT'] = "{{fields.name.value}}";
-$app_strings['LBL_CREATE'] = "Create";
+$app_strings['LBL_CREATE'] = 'Create';
+$app_strings['LBL_SAVED_FILTER_SAVED'] = 'Filter successfully saved';
+$app_strings['LBL_FILTER_ID_NOT_DEFINED'] = 'Filter id not defined';
+$app_strings['LBL_GENERIC_CONFIRMATION'] = 'Do you want to proceed with action?';
+$app_strings['LBL_SHOW_MORE'] = 'Show more';
+$app_strings['LBL_SHOW_LESS'] = 'Show less';
+$app_strings['LBL_LOAD_MORE'] = 'Load more';
+
+
+$app_strings['LBL_ACTION_SUCCESS'] = 'Action successful';
+
+$app_list_strings['sort_order'] = [];
+$app_list_strings['sort_order']['asc'] = 'Ascending';
+$app_list_strings['sort_order']['desc'] = 'Descending';
+
+// Labels used by subpanel unlink relationship process
+$app_strings['LBL_LINK'] = 'Link';
+$app_strings['LBL_UNLINK_RECORD'] = 'Unlink Record';
+$app_strings['LBL_UNLINK_RELATIONSHIP_CONFIRM'] = 'Are you sure you want to unlink this record? Only the relationship will be unlinked. The record will not be deleted.';
+$app_strings['LBL_UNLINK_RELATIONSHIP_SUCCESS'] = 'Record unlinked successfully.';
+$app_strings['LBL_UNLINK_RELATIONSHIP_FAILED'] = 'There was an error unlinking this record.';
+$app_strings['LBL_LINK_RELATIONSHIP_SUCCESS'] = 'Relationship linked successfully.';
+$app_strings['LBL_LINK_RELATIONSHIP_FAILED'] = 'There was an error linking this Relationship.';
+$app_strings['LBL_MODULE_NOT_FOUND'] = 'Module not found.';
+$app_strings['LBL_RECORD_NOT_FOUND'] = 'Unable to load record';
+$app_strings['LBL_RELATIONSHIP_LOAD_ERROR'] = 'Unable to load relationship';
+$app_strings['LBL_NOT_LINKED'] = 'Unable to unlink. Records are not linked';
+$app_strings['LBL_ACCESS_DENIED'] = 'Access Denied';

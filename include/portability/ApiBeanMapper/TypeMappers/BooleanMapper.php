@@ -25,8 +25,7 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-/* @noinspection PhpIncludeInspection */
-require_once 'include/portability/ApiBeanMapper/TypeMappers/TypeMapperInterface.php';
+require_once __DIR__  .'/TypeMapperInterface.php';
 
 class BooleanMapper implements TypeMapperInterface
 {
@@ -41,7 +40,7 @@ class BooleanMapper implements TypeMapperInterface
     /**
      * @inheritDoc
      */
-    public function run(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
+    public function toApi(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
     {
         $newName = $name;
 
@@ -63,6 +62,13 @@ class BooleanMapper implements TypeMapperInterface
         }
 
         $container[$newName] = $value;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toBean(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void
+    {
     }
 
     /**

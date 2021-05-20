@@ -42,6 +42,15 @@ interface TypeMapperInterface
      * @param string $alternativeName
      * @return mixed
      */
-    public function run(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void;
+    public function toApi(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void;
 
+    /**
+     * Map the field to bean format and add it to the container
+     * @param SugarBean $bean
+     * @param array $container
+     * @param string $name
+     * @param string $alternativeName
+     * @return mixed
+     */
+    public function toBean(SugarBean $bean, array &$container, string $name, string $alternativeName = ''): void;
 }

@@ -1,0 +1,154 @@
+/* Convert lead scss */
+
+#ConvertLead {    
+    input[type=text] {
+      background-color:$transparent-color;
+      border: 1px solid $form-border-color;
+      margin-bottom: 0.5em;
+    }
+    input[type=email] {
+      background-color:$transparent-color;
+      border: 1px solid $form-border-color;
+    }
+    input[name="Meetingsduration_hours"] {
+      width: 10%;
+    }
+    input[name="Callsduration_hours"] {
+      width: 10%;
+    }
+    input[name="Contactsfirst_name"] {
+      width: 85%!important;
+    }
+    select {
+      margin-bottom: 0.5em;  
+      height: 32px;  
+    }
+    textarea {
+      background-color: $transparent-color;
+      border: 1px solid $form-border-color;
+      width: 98%;
+      margin-bottom: 0.8em;
+      height: 10em;
+      &:focus {
+        border-color :$input-border-focus;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+      }
+    }  
+    .edit-view-row-item  {
+      padding: 0.5em;     
+    }
+    .edit-view-bordered {      
+      border-right: $base-border-color solid 0.0625rem;
+      &:nth-child(2n+0) {
+        border-right: none;
+        padding-left: 1em;
+      }
+      @media only screen and (max-width: 750px) {
+        border-right: none;
+      }
+    }
+    .selectcrossbtn {
+      vertical-align: middle;
+    }
+    .edit-dotted-border {
+      height: 0.0625rem;
+      color: $dark-grey-line;
+      background-image: linear-gradient(to right, grey 10%, rgba(255, 255, 255, 0) 0%);
+      background-position: top;
+      background-size: 0.875rem 1.1875px;
+      background-repeat: repeat-x;
+      margin-right: 1rem;
+      margin-left: 0.2em;
+      clear: both;
+    }
+    .email-address-add-button {
+      background: transparent;
+      color: grey;
+      border: 1px solid grey;
+      width: 28px;
+      height: 28px;
+      .suitepicon-action-plus {
+        font-size: 20px;
+      }
+    }
+    .email-address-remove-button {
+      background: transparent;
+      color: grey;
+      border: 1px solid grey;
+      padding: 0.3em;
+      height: 28px;
+      margin-top: 3px;
+      .suitepicon-action-minus {
+        font-size: 17px;
+      }
+    }
+    .email-address-line-container {
+      padding: 0;
+      .email-address-input-container {
+        padding: 0;
+      }
+    }
+    .email-address-options-container {
+      bottom: 1.1em;
+    }
+    .calendarstart {
+      background: transparent;
+      color: grey;
+      border: none;
+      opacity: 0.2;
+    }
+    .dateTimeSection {
+      margin-left: 3em;
+      margin-top: 0.3em;
+    }  
+    #SAVE_HEADER,#CANCEL_HEADER,#SAVE_FOOTER,#CANCEL_FOOTER {
+      margin: 0.2em;
+      font-weight: bold;
+      height: 2.2em;
+      line-height: 1.1em;
+      padding: 0.3em 0.9em;
+      background-color: #93a4b3;
+      text-transform: capitalize;
+    }
+    td.buttons {
+      position: absolute;
+      right: 0;
+      top: 5em;
+    }
+  
+    #createContacts {
+      .edit-view-row-item {
+        padding: 0;
+        .edit-view-field {
+          padding-left: 0.6em;
+          input[type=text] {
+            background-color:$transparent-color;
+            border: 1px solid $form-border-color;
+            width: 98%;          
+            &:focus {
+              border-color :$input-border-focus;
+              outline: 0;
+              box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+            }
+          }
+        }
+      }
+    }
+  
+    .label {
+      font-size: 14px;
+      font-weight: 700;
+      width: 98%;
+      text-align: left;
+      padding: 0;
+      margin-top: 1.4rem;
+      margin-left: 0.4em;
+      text-transform: uppercase;
+      padding: 0.5em 0.5em 0.5em 0;
+    }
+    .panel-body {
+      padding: 10px;
+    }
+  }  
+  

@@ -878,7 +878,6 @@ $mod_strings = array(
     'LBL_AOS_PRODUCTS' => 'AOS Products',
     'LBL_AOS_DAYS' => 'days',
     'LBL_CHANGE_SETTINGS' => 'Change settings for Advanced OpenSales',
-    'LBL_CHANGE_SETTINGS_AOD' => 'Change settings for Advanced OpenDiscovery',
     'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Advanced OpenPortal',
 
     'LBL_MANAGE_SECURITYGROUPS_TITLE' => 'Security Suite Group Management',
@@ -969,7 +968,6 @@ $mod_strings = array(
     'LBL_LEGACY_SEARCH_ENGINES' => 'Legacy Search',
     'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines (new)',
     'LBL_BASIC_SEARCH_ENGINE' => 'Basic Search',
-    'LBL_BASIC_AND_AOD_ENGINE' => 'Basic + Advanced Search',
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
 

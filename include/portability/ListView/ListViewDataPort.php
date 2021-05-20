@@ -145,7 +145,7 @@ class ListViewDataPort extends ListViewData
                 $this->enforceAssignedUserId($temp);
                 $this->addTagInfo($id_field, $idIndex, $row, $dataIndex, $temp, $pageData);
 
-                $data[$dataIndex] = $this->apiBeanMapper->toArray($temp);
+                $data[$dataIndex] = $this->apiBeanMapper->toApi($temp);
 
                 $this->addACLInfo($temp, $pageData, $dataIndex);
             }

@@ -73,4 +73,6 @@ $mod_strings = array(
     'LBL_CONTACT_NAME' => 'Contact',
     'LBL_INTERNAL' => 'Internal Update',
     'LBL_AOP_CASE_ATTACHMENTS' => 'Attachments: ',
+    'LBL_AUTHOR' => 'Author',
+    'LBL_SOURCE' => 'Source'
 );

@@ -480,7 +480,8 @@ class SavedSearch extends SugarBean
     {
         global $app_list_strings;
         // Fill in the assigned_user_name
-        $this->search_module = $app_list_strings['moduleList'][$this->contents['search_module']];
+        $searchModule = $this->contents['search_module'] ?? '';
+        $this->search_module = $app_list_strings['moduleList'][$searchModule] ?? '';
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
     }
 

@@ -61,29 +61,8 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
             'AssignGroups',
             'popup_select'
         );
-        $hook_array['after_save'][] = array(
-            1,
-            'AOD Index Changes',
-            'modules/AOD_Index/AOD_LogicHooks.php',
-            'AOD_LogicHooks',
-            'saveModuleChanges'
-        );
         $hook_array['after_delete'] = array();
-        $hook_array['after_delete'][] = array(
-            1,
-            'AOD Index changes',
-            'modules/AOD_Index/AOD_LogicHooks.php',
-            'AOD_LogicHooks',
-            'saveModuleDelete'
-        );
         $hook_array['after_restore'] = array();
-        $hook_array['after_restore'][] = array(
-            1,
-            'AOD Index changes',
-            'modules/AOD_Index/AOD_LogicHooks.php',
-            'AOD_LogicHooks',
-            'saveModuleRestore'
-        );
 
         return $hook_array;
     }

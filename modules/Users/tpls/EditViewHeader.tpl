@@ -67,7 +67,7 @@ var ERR_REENTER_PASSWORDS = '{$MOD.ERR_REENTER_PASSWORDS}';
 	<input type="hidden" name="return_action" value="EditView">
 </form>
 
-<form name="EditView" enctype="multipart/form-data" id="EditView" method="POST" action="index.php">
+<form name="EditView" enctype="multipart/form-data" id="EditView" method="POST" action="index.php" class="userprofile">
 	<input type="hidden" name="display_tabs_def">
 	<input type="hidden" name="hide_tabs_def">
 	<input type="hidden" name="remove_tabs_def">
@@ -143,7 +143,7 @@ EditView_tabs.on('contentReady', function(e){
 </table>
 
 <div id="EditView_tabs" class="yui-navset">
-    <ul class="yui-nav">
+    <ul class="yui-nav userprofile-nav">
         <li class="selected"><a id="tab1" href="#tab1"><em>{$MOD.LBL_USER_INFORMATION}</em></a></li>
         <li {if $CHANGE_PWD == 0}style='display:none'{/if}><a id="tab2" href="#tab2"><em>{$MOD.LBL_CHANGE_PASSWORD_TITLE}</em></a></li>
         {if $SHOW_THEMES}
@@ -156,5 +156,5 @@ EditView_tabs.on('contentReady', function(e){
 		<li><a id="tab6" href="#tab6" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'><em>{$MOD.LBL_LAYOUT_OPTIONS}</em></a></li>
     </ul>
     <div class="yui-content user-tab-content">
-        <div>
+    <div>
 <!-- BEGIN METADATA GENERATED CONTENT -->

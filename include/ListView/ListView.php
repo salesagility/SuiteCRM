@@ -1480,7 +1480,7 @@ class ListView
                 $merge_link = "&nbsp;";
             }
 
-            $selected_objects_span = "&nbsp;|&nbsp;{$this->local_app_strings['LBL_LISTVIEW_SELECTED_OBJECTS']}<input  style='border: 0px; background: transparent; font-size: inherit; color: inherit' type='text' readonly name='selectCount[]' value='" . ((isset($_POST['mass'])) ? count($_POST['mass']): 0) . "' />";
+            $selected_objects_span = "&nbsp;&nbsp;{$this->local_app_strings['LBL_LISTVIEW_SELECTED_OBJECTS']}<input class='listviewcount' type='text' readonly name='selectCount[]' value='" . ((isset($_POST['mass'])) ? count($_POST['mass']): 0) . "' />";
 
             if ($_REQUEST['module'] == 'Home' || $this->local_current_module == 'Import'
                 || $this->show_export_button == false
