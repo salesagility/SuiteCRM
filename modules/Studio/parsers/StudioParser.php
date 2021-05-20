@@ -349,7 +349,6 @@ EOQ;
             $file = $this->curFile;
         }
 
-        $fp = sugar_fopen($file, 'w');
         $output = $contents ? $contents : $this->curText;
         if (strpos($file, 'SearchForm.html') > 0) {
             $fileparts = preg_split("'<!--\s*(BEGIN|END)\s*:\s*main\s*-->'", $output);
@@ -374,8 +373,7 @@ EOQ;
             }
         }
 
-        fwrite($fp, $output);
-        fclose($fp);
+        sugar_file_put_contents($file, $output);
     }
 
     public function handleSaveLabels($module_name, $language)
@@ -429,13 +427,11 @@ EOQ;
         } else {
             $file_cache = create_cache_directory('studio/'.$preview_file);
         }
-        $fp = sugar_fopen($file_cache, 'w');
         $view = $this->disableInputs($view);
         if (!$preview_file) {
             $view = $this->enableLabelEditor($view);
         }
-        fwrite($fp, $view);
-        fclose($fp);
+        sugar_file_put_contents($file_cache, $view);
         return $this->cacheXTPL($file, $file_cache, $preview_file);
     }
 
@@ -513,9 +509,7 @@ EOQ;
 
         $buffer = str_replace($form_string, '', $buffer);
         $buffer = $this->disableInputs($buffer);
-        $xtpl_fp_cache = sugar_fopen($xtpl_cache, 'w');
-        fwrite($xtpl_fp_cache, $buffer);
-        fclose($xtpl_fp_cache);
+        sugar_file_put_contents($xtpl_cache, $buffer);
         return $xtpl_cache;
     }
 

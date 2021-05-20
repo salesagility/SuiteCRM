@@ -59,15 +59,17 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testCreateSearchParams1()
     {
+        global $sugar_config;
+
         $engine = new ElasticSearchEngine();
-        $searchString = "hello search";
+        $searchString = "hello search*";
         $size = 30;
         $from = 5;
 
         $query = SearchQuery::fromString($searchString, $size, $from);
 
         $expectedParams = [
-            'index' => 'main',
+            'index' => $sugar_config['unique_key'],
             'body' => [
                 'stored_fields' => [],
                 'from' => $from,
@@ -91,14 +93,16 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testCreateSearchParams2()
     {
+        global $sugar_config;
+
         $engine = new ElasticSearchEngine();
-        $searchString = "test";
+        $searchString = "test*";
         $size = 30;
 
         $query = SearchQuery::fromString($searchString, $size);
 
         $expectedParams = [
-            'index' => 'main',
+            'index' => $sugar_config['unique_key'],
             'body' => [
                 'stored_fields' => [],
                 'from' => 0,
@@ -140,6 +144,8 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
      */
     private function getMockedHits()
     {
+        global $sugar_config;
+
         $mockedResults = [
             'took' => 5,
             'timed_out' => false,
@@ -158,21 +164,21 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
                         [
                             0 =>
                                 [
-                                    '_index' => 'main',
+                                    '_index' => $sugar_config['unique_key'],
                                     '_type' => 'Accounts',
                                     '_id' => 'id1',
                                     '_score' => 1.0,
                                 ],
                             1 =>
                                 [
-                                    '_index' => 'main',
+                                    '_index' => $sugar_config['unique_key'],
                                     '_type' => 'Accounts',
                                     '_id' => 'id2',
                                     '_score' => 1.0,
                                 ],
                             2 =>
                                 [
-                                    '_index' => 'main',
+                                    '_index' => $sugar_config['unique_key'],
                                     '_type' => 'Contacts',
                                     '_id' => 'id3',
                                     '_score' => 0.5,
@@ -281,9 +287,11 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testGetIndex()
     {
+        global $sugar_config;
+
         $engine = new ElasticSearchEngine();
 
-        self::assertEquals('main', $engine->getIndex());
+        self::assertEquals($sugar_config['unique_key'], $engine->getIndex());
 
         $expected = 'Foo';
         $engine->setIndex($expected);

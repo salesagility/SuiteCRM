@@ -47,7 +47,24 @@ class Configurator
     /** @var array */
     public $config = '';
     public $override = '';
-    public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
+    public $allow_undefined = [
+        'stack_trace_errors',
+        'export_delimiter',
+        'use_real_names',
+        'developerMode',
+        'default_module_favicon',
+        'authenticationClass',
+        'SAML_loginurl',
+        'SAML_logouturl',
+        'SAML_X509Cert',
+        'dashlet_auto_refresh_min',
+        'show_download_tab',
+        'enable_action_menu',
+        'enable_line_editing_list',
+        'enable_line_editing_detail',
+        'hide_subpanels',
+        'stackTrace'
+    ];
     public $errors = array('main' => '');
     public $logger = null;
     public $previous_sugar_override_config_array = array();
@@ -83,7 +100,8 @@ class Configurator
                 }
 
                 $trim_value = preg_replace('/.*\.([^\.]+)$/', '\1', $value);
-                if (in_array($trim_value, $this->config['upload_badext'])) {
+                $badext = array_map('strtolower', $this->config['upload_badext']);
+                if (in_array(strtolower($trim_value), $badext)) {
                     $GLOBALS['log']->security("Invalid log file extension: trying to use invalid file extension '$value'.");
                     continue;
                 }
@@ -225,9 +243,7 @@ class Configurator
             $GLOBALS['log']->fatal("Unable to write to the config_override.php file. Check the file permissions");
             return;
         }
-        $fp = sugar_fopen('config_override.php', 'w');
-        fwrite($fp, $override);
-        fclose($fp);
+        sugar_file_put_contents('config_override.php', $override);
     }
 
     public function overrideClearDuplicates($array_name, $key)

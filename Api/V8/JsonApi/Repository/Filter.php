@@ -10,6 +10,7 @@ class Filter
     const OP_GTE = '>=';
     const OP_LT = '<';
     const OP_LTE = '<=';
+    const OP_LIKE = 'LIKE';
 
     const OP_AND = 'AND';
     const OP_OR = 'OR';

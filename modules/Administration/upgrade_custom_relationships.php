@@ -86,7 +86,7 @@ function upgrade_custom_relationships($modules = array())
                                     '$dictionary["' . $module . '"]["fields"]["' . $relName . '"]=' . var_export_helper($rhsDef) . ";",
                                     $fileContents
                                 );
-                                file_put_contents($filePath, $out);
+                                sugar_file_put_contents($filePath, $out);
                             }
                         }
                     }
@@ -105,7 +105,7 @@ function upgrade_custom_relationships($modules = array())
                                     "'get_subpanel_data' => '{$def["join_key_lhs"]}',",
                                     $fileContents
                                 );
-                                file_put_contents($filePath, $out);
+                                sugar_file_put_contents($filePath, $out);
                             }
                         }
                     }

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,10 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once 'php_version.php';
-require_once 'include/SugarObjects/SugarConfig.php';
-require_once 'include/utils/security_utils.php';
+require_once __DIR__ . '/../php_version.php';
+require_once __DIR__ . '/../include/SugarObjects/SugarConfig.php';
+require_once __DIR__ . '/../include/utils/security_utils.php';
 
+use voku\helper\AntiXSS;
 
 /**
  * @param $sugar_config
@@ -214,6 +215,13 @@ function make_sugar_config(&$sugar_config)
         ) : $upload_badext,
         'upload_dir' => $upload_dir, // this must be set!!
         'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'import_max_execution_time' => empty($import_max_execution_time) ? 3600 : $import_max_execution_time,
         'lock_homepage' => false,
         'lock_subpanels' => false,
@@ -2587,23 +2595,39 @@ function str_end($str, $end)
     return substr($str, strlen($str) - strlen($end)) == $end;
 }
 
-function securexss($value)
+/**
+ * @param $uncleanString
+ * @return array
+ */
+function securexss($uncleanString)
 {
-    if (is_array($value)) {
-        $new = array();
-        foreach ($value as $key => $val) {
+    if (is_array($uncleanString)) {
+        $new = [];
+        foreach ($uncleanString as $key => $val) {
             $new[$key] = securexss($val);
         }
 
         return $new;
     }
 
-    static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
+    static $xss_cleanup = [
+        '&quot;' => '&#38;',
+        '"' => '&quot;',
+        "'" => '&#039;',
+        '<' => '&lt;',
+        '>' => '&gt;',
+        '`' => '&#96;'
+    ];
 
-    $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
-    $value = preg_replace('/javascript:/i', 'java script:', $value);
+    $uncleanString = preg_replace(array('/javascript:/i', '/\0/', '/javascript:/i'),
+        array('java script:', '', 'java script:'), $uncleanString);
 
-    return str_replace(array_keys($xss_cleanup), array_values($xss_cleanup), $value);
+    $partialString = str_replace(array_keys($xss_cleanup), $xss_cleanup, $uncleanString);
+
+    $antiXss = new AntiXSS();
+    $antiXss->removeEvilAttributes(['style']);
+
+    return $antiXss->xss_clean($partialString);
 }
 
 function securexsskey($value, $die = true)
