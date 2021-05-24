@@ -1,0 +1,87 @@
+.system-settings {
+    .btn-hide {
+        display: none;
+    }
+    table.actionsContainer {
+        .button {
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1.1em;
+            padding: 0.3em 0.9em;
+            background-color: #93a4b3;
+            text-transform: capitalize;
+        }
+        td {
+            position: absolute;
+            right: 0;
+            top: 4.2em;
+        }
+    }
+    table.table-system-settings {
+        h4 {
+            text-transform: uppercase;
+            padding-top: 0.5em;
+            padding-left: 0.4em;
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+        tr td {
+            padding: 0;
+            white-space: normal;  
+            text-transform: uppercase;
+            font-weight: 700;      
+            vertical-align: middle;    
+        }
+        tr td:nth-child(1){
+            width: 25%;
+            padding-left: 0.8em;
+        }
+        tr td:nth-child(2){
+            width: 25%;
+        }
+        tr td:nth-child(3){
+            width: 25%;
+        }
+        tr td:nth-child(4){
+            width: 25%;
+        }
+        input[type=text],input[type=password],input[type=email] {
+            background-color:$transparent-color;
+            border: 1px solid $form-border-color;
+        }
+        select {
+            background: url($select-edit-background-url) no-repeat right;
+            background-size: 25px 11px;
+            border-color: $bright-grey;
+        }
+    }
+    table.logger {
+        tr td {
+            padding: 0;
+            white-space: normal;  
+            text-transform: uppercase;
+            font-weight: 700;          
+        }
+        tr td:nth-child(1){
+            padding-left: 0.8em;
+        }
+        h4 {
+            text-transform: uppercase;
+            padding-top: 0.5em;
+            padding-left: 0.4em;
+        }
+        input[type=text],input[type=password],input[type=email] {
+            background-color:$transparent-color;
+            border: 1px solid $form-border-color;
+        }
+        select {
+            background: url($select-edit-background-url) no-repeat right;
+            background-size: 25px 11px;
+            border-color: $bright-grey;
+        }
+        input:not([type]) {
+            background-color:$transparent-color;
+            border: 1px solid $form-border-color;
+        }
+    }
+}
