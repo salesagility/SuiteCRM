@@ -789,7 +789,8 @@ class SubPanelDefinitions
 
         //use tab controller function to get module list with named keys
         require_once("modules/MySettings/TabController.php");
-        $modules_to_check = TabController::get_key_array($moduleList);
+        $tabController = new TabController();
+        $modules_to_check = $tabController->get_key_array($moduleList);
 
         //change case to match subpanel processing later on
         $modules_to_check = array_change_key_case($modules_to_check);
