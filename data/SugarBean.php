@@ -541,58 +541,57 @@ class SugarBean
 
     /**
      * @param bool $force
+     * @throws Exception
      */
     public function populateDefaultValues($force = false)
     {
-        if (!is_array($this->field_defs)) {
-            $GLOBALS['log']->fatal('SugarBean::populateDefaultValues $field_defs should be an array');
-            return;
-        }
-        foreach ($this->field_defs as $field => $value) {
-            if ((isset($value['default']) || !empty($value['display_default'])) && ($force || empty($this->$field))) {
-                if (!isset($value['type'])) {
-                    $GLOBALS['log']->warn('Undefined index: type');
-                    $type = null;
-                } else {
-                    $type = $value['type'];
-                }
+        if (is_array($this->field_defs)) {
+            foreach ($this->field_defs as $field => $value) {
+                if ((isset($value['default']) || !empty($value['display_default'])) && ($force || empty($this->$field))) {
+                    if (!isset($value['type'])) {
+                        $GLOBALS['log']->warn('Undefined index: type');
+                        $type = null;
+                    } else {
+                        $type = $value['type'];
+                    }
 
-                switch ($type) {
-                    case 'date':
-                        if (!empty($value['display_default'])) {
-                            $this->$field = $this->parseDateDefault($value['display_default']);
-                        }
-                        break;
-                    case 'datetime':
-                    case 'datetimecombo':
-                        if (!empty($value['display_default'])) {
-                            $this->$field = $this->parseDateDefault($value['display_default'], true);
-                        }
-                        break;
-                    case 'multienum':
-                        if (empty($value['default']) && !empty($value['display_default'])) {
-                            $this->$field = $value['display_default'];
-                        } else {
-                            $this->$field = $value['default'];
-                        }
-                        break;
-                    case 'bool':
-                        if (isset($this->$field)) {
+                    switch ($type) {
+                        case 'date':
+                            if (!empty($value['display_default'])) {
+                                $this->$field = $this->parseDateDefault($value['display_default']);
+                            }
                             break;
-                        }
+                        case 'datetime':
+                        case 'datetimecombo':
+                            if (!empty($value['display_default'])) {
+                                $this->$field = $this->parseDateDefault($value['display_default'], true);
+                            }
+                            break;
+                        case 'multienum':
+                            if (empty($value['default']) && !empty($value['display_default'])) {
+                                $this->$field = $value['display_default'];
+                            } else {
+                                $this->$field = $value['default'];
+                            }
+                            break;
+                        case 'bool':
+                            if (isset($this->$field)) {
+                                break;
+                            }
                         // no break
-                    default:
-                        if (isset($value['default']) && $value['default'] !== '') {
-                            $this->$field = htmlentities($value['default'], ENT_QUOTES, 'UTF-8');
-                        } else {
-                            $this->$field = '';
-                        }
-                } //switch
+                        default:
+                            if (isset($value['default']) && $value['default'] !== '') {
+                                $this->$field = htmlentities($value['default'], ENT_QUOTES, 'UTF-8');
+                            } else {
+                                $this->$field = '';
+                            }
+                    } //switch
+                }
+                // refact info:
+                // may we should htmlentities on field:
+                // $this->field = htmlentities($this->$field, ENT_QUOTES, 'UTF-8');
             }
-            // refact info:
-            // may we should htmlentities on field:
-            // $this->field = htmlentities($this->$field, ENT_QUOTES, 'UTF-8');
-        } //foreach
+        }//foreach
     }
 
     /**
