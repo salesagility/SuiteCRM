@@ -311,6 +311,7 @@ YAHOO.util.Event.onDOMReady(function(){
 <script src='{sugar_getjspath file="include/javascript/qtip/jquery.qtip.min.js"}'></script>
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lib/moment.min.js"}'></script>
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.min.js"}'></script>
+<script src='{sugar_getjspath file="modules/Calendar/fullcalendar/locale-all.js"}'></script>
 
 <div id='calendarContainer'></div>
 {sugar_getscript file="modules/Calendar/Cal.js"}
