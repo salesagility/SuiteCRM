@@ -1963,7 +1963,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
-        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
