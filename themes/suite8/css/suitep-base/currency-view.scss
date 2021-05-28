@@ -1,0 +1,53 @@
+.currency-view {
+    table.list {
+        tr td {
+            padding-left: 0;
+        }
+    }
+    table.view {
+        td {
+            padding: 0.5em;
+        }
+        input[type=text],input[type=password],input[type=email] {
+            background-color:$transparent-color;
+            border: 1px solid $form-border-color;
+        }
+        select {
+            background: url($select-edit-background-url) no-repeat right;
+            background-size: 25px 11px;
+            border-color: $bright-grey;
+        }
+        table tr td {
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    }
+    .formHeader {   
+        .button {
+            background-color: $nepal-grey;
+            text-transform: capitalize;
+            padding: 0.3em 1em;
+            height: 2.2em;
+            border-radius: 0.2em;
+            letter-spacing: 0.05em;
+            line-height: 1em;
+            font-weight: bold;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+        h3 {
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 0;
+            line-height: 3.5em;
+        }
+        form {
+            float: right;
+        }                
+    }
+    .h3Row {
+        border-top: 1px solid lightgray;
+        margin-top: 1.5em;
+    }     
+}

@@ -44,33 +44,35 @@
 -->
 
 <!-- BEGIN: main -->
+
 {PRETABLE}
+<hr class="spacer">
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 	
 	<tr height="20">
-	<td scope="col" width="1%" >{CHECKALL}</td>
+		<td scope="col" width="1%" >{CHECKALL}</td>
 		<td scope="col" width="20%"  nowrap><span>{MOD.LBL_LIST_NAME}</span></td>
 		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_ISO4217}</span></td>
 		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_SYMBOL}</span></td>
 		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_RATE}</span></td>
 		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_STATUS}</span></td>
 		<td scope="col" width="8%" ><span>&nbsp;</span></td>
-	  </tr>
+	</tr>
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-    			<td >{PREROW}&nbsp;</td>
-				<td scope='row'  valign=TOP><span>{CURRENCY.HIDE}<a href="{URL_PREFIX}index.php?action=index&module=Currencies&record={CURRENCY.ID}" >{CURRENCY.UNHIDE}{CURRENCY.NAME}{CURRENCY.HIDE}</a>{CURRENCY.UNHIDE}</span></td>
-    			<td valign=TOP><span>{CURRENCY.ISO4217}</span></td>
-    			<td valign=TOP><span>{CURRENCY.SYMBOL}</span></td>
-    			<td valign=TOP><span>{CURRENCY.CONVERSION_RATE}</span></td>
-    			<td valign=TOP><span>{CURRENCY.STATUS}</span></td>
-    			<td nowrap align="center" valign=TOP><span>{CURRENCY.HIDE}<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Currencies&record={CURRENCY.ID}&return_module=Currencies&return_action=index&return_id=">{DELETE_INLINE_PNG}&nbsp;{APP.LNK_DELETE}</a>{CURRENCY.UNHIDE}</span></td>
-
+	<td >{PREROW}&nbsp;</td>
+	<td scope='row'  valign=TOP><span>{CURRENCY.HIDE}<a href="{URL_PREFIX}index.php?action=index&module=Currencies&record={CURRENCY.ID}" >{CURRENCY.UNHIDE}{CURRENCY.NAME}{CURRENCY.HIDE}</a>{CURRENCY.UNHIDE}</span></td>
+    <td valign=TOP><span>{CURRENCY.ISO4217}</span></td>
+    <td valign=TOP><span>{CURRENCY.SYMBOL}</span></td>
+    <td valign=TOP><span>{CURRENCY.CONVERSION_RATE}</span></td>
+    <td valign=TOP><span>{CURRENCY.STATUS}</span></td>
+    <td nowrap align="center" valign=TOP><span>{CURRENCY.HIDE}<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Currencies&record={CURRENCY.ID}&return_module=Currencies&return_action=index&return_id=">{DELETE_INLINE_PNG}&nbsp;{APP.LNK_DELETE}</a>{CURRENCY.UNHIDE}</span></td>
 </tr>
 
 <!-- END: row -->
+</table>
 
-	</table>
-	{POSTTABLE}
+{POSTTABLE}
+
 <!-- END: main -->

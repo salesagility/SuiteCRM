@@ -56,6 +56,8 @@ global $app_list_strings;
 global $app_strings;
 global $current_user, $focus;
 
+echo '<div class="currency-view">';
+
 echo getClassicModuleTitle(
     "Administration",
     array(
@@ -197,3 +199,4 @@ EOQ;
 } else {
     echo 'Admin\'s Only';
 }
+echo '</div>';

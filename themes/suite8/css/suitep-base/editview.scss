@@ -1725,12 +1725,12 @@ div.confirmTable {
 
 .moduleTitle h2 {
   display: block;
-  font-size: 2em;
+  font-size: 1.8em;
   font-weight: 300;
   color: $module-title-color;
   margin: 0 0 $detail-view-module-title-space 0;
   float: left;
-  letter-spacing: 2px;
+  letter-spacing: 0.1em;
   text-transform: capitalize;
   .module-title-text-breadcrumbs {
     display: none;
