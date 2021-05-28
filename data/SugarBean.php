@@ -4525,7 +4525,7 @@ class SugarBean
             $query .= " AND $this->table_name.deleted=0";
         }
         $GLOBALS['log']->debug("Retrieve $this->object_name : " . $query);
-        $result = $this->db->limitQuery($query, 0, 1, true, "Retrieving record by id $this->table_name:$id found ");
+        $result = $this->db->limitQuery($query, 0, 1, false, "Retrieving record by id $this->table_name:$id found ");
         if (empty($result)) {
             return null;
         }
