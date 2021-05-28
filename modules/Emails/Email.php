@@ -1600,7 +1600,7 @@ class Email extends Basic
 
 
             $validator = new EmailFromValidator();
-            if (!$validator->isValid($this)) {
+            if (!defined('SUGARCRM_IS_INSTALLING') && !$validator->isValid($this)) {
                 $errors = $validator->getErrorsAsText();
                 $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}";
                 LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");
