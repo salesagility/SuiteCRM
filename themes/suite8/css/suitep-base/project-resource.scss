@@ -1,0 +1,51 @@
+table#header_table_chart {
+    margin-top: 0.5em;  
+    td[scope="row_label"] {
+        text-transform: uppercase;
+        padding: 5px 30px 5px 0px !important;
+    }  
+    input[type=text],input[type=password],input[type=email] {
+        background-color:$transparent-color;
+        border: 1px solid $form-border-color;
+        width: 30%;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    select::-webkit-scrollbar-track {
+        background: $dashboard-scrollbar-bg;
+    }
+    select::-webkit-scrollbar-thumb {
+        background-color: $dashboard-scroll; 
+        border-radius: 20px;
+    }
+    .utilsLink {        
+        background-color: $nepal-grey;
+        text-transform: capitalize;
+        font-size: 13px;
+        font-weight: bold;
+        color: $white;
+        cursor: pointer;
+        padding: 7px 20px 7px 20px;
+        margin: 0 0 0 0;
+        border: none;
+        border-radius: 3px;
+        text-decoration: none;
+    }
+}
+
+#gantt_chart::-webkit-scrollbar-track {
+    background: $dashboard-scrollbar-bg;
+}
+#gantt_chart::-webkit-scrollbar-thumb {
+    background-color: $dashboard-scroll; 
+    border-radius: 20px;
+} 
+
+hr.spacer {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-top: 1px solid lightgray;
+}

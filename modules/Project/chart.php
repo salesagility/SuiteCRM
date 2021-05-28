@@ -128,6 +128,7 @@ class chart
         //Generate main table and the first row containing the months
 
         echo '<div class="moduleTitle"><h2> ' . $mod_strings["LBL_RESOURCE_CHART"] . ' </h2></div>
+              <hr class="spacer">
               <table id="header_table_chart" border="0" cellpadding="0" cellspacing="0" width="100%">
                   <tr>
                       <td scope="row_label" nowrap="nowrap" >
@@ -205,7 +206,7 @@ class chart
             echo '<option '.$selected.' data-type="'.$contact->type.'" value="'.$contact->id.'">'.$contact_obj->full_name.'</option>';
         }
 
-        echo '</select><br /><br />';
+        echo '</select><br />';
 
         if (empty($contact_list)) {
             echo '<span style="color: red;">'.$mod_strings['LBL_RESOURCE_CHART_WARNING'].'</span><br /><br />';
@@ -231,7 +232,7 @@ class chart
               </td>
               <td scope="row_val" nowrap="nowrap" >
                   <input id="date_start" type="text" name="date_start" value="'.$start_date.'" size=8 readonly/>
-                  <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span>
+                  <span id="date_start_trigger" class="datetimeicon">' . SugarThemeRegistry::current()->getImage('calendar.svg') .  '</span>
               </td>
               <td scope="row_label" nowrap="nowrap" >
                   <label for="field_chart">&nbsp;</label>
