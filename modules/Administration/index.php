@@ -117,6 +117,7 @@ foreach ($admin_group_header as $key=>$values) {
             foreach ($mod as $link_idx =>$admin_option) {
                 if (!empty($GLOBALS['admin_access_control_links']) && in_array($link_idx,
                         $GLOBALS['admin_access_control_links'])) {
+                    unset($values_3_tab[$j][$link_idx]);
                     continue;
                 }
                 $colnum += 1;

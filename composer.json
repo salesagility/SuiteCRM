@@ -44,6 +44,7 @@
     "gymadarasz/ace": "^1.2",
     "gymadarasz/imagesloaded": "^4.1",
     "justinrainbow/json-schema": "^5.2",
+    "lcobucci/jwt": "3.3.3",
     "league/oauth2-server": "^5.1",
     "league/uri": "^4.2.3",
     "monolog/monolog": "^1.23",
