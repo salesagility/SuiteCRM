@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -59,7 +59,7 @@ abstract class SearchEngine
      *
      * @return SearchResults
      */
-    abstract public function search(SearchQuery $query);
+    abstract public function search(SearchQuery $query): SearchResults;
 
     /**
      * Performs a search using the given query and shows a search view.
@@ -68,7 +68,7 @@ abstract class SearchEngine
      *
      * @param SearchQuery $query
      */
-    public function searchAndDisplay(SearchQuery $query)
+    public function searchAndDisplay(SearchQuery $query): void
     {
         $this->validateQuery($query);
         $this->displayForm($query);
@@ -84,7 +84,7 @@ abstract class SearchEngine
      *
      * @param SearchQuery $query
      */
-    public function displayForm(SearchQuery $query)
+    public function displayForm(SearchQuery $query): void
     {
         $controller = new SearchFormController($query);
         $controller->display();
@@ -93,10 +93,10 @@ abstract class SearchEngine
     /**
      * Shows the default search results for the given search query and results.
      *
-     * @param SearchQuery   $query
+     * @param SearchQuery $query
      * @param SearchResults $results
      */
-    public function displayResults(SearchQuery $query, SearchResults $results)
+    public function displayResults(SearchQuery $query, SearchResults $results): void
     {
         $controller = new SearchResultsController($query, $results);
         $controller->display();
@@ -114,7 +114,7 @@ abstract class SearchEngine
      *
      * @throws SearchInvalidRequestException if the query is not valid
      */
-    protected function validateQuery(SearchQuery &$query)
+    protected function validateQuery(SearchQuery $query): void
     {
         $query->trim();
     }
