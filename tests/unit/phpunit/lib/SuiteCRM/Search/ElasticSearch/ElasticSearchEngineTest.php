@@ -39,12 +39,18 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
+use Elasticsearch\Client;
+use Mockery\MockInterface;
+use SuiteCRM\Search\ElasticSearch\ElasticSearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 /** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
+/**
+ * Class ElasticSearchEngineTest
+ */
 class ElasticSearchEngineTest extends SearchTestAbstract
 {
     public function testValidateQuery(): void
@@ -135,8 +141,8 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         $client = $this->getMockedClient($mockedResults);
 
         $engine = new ElasticSearchEngine($client);
-
-        $results = $params = $this->invokeMethod($engine, 'runElasticSearch', [$query]);
+        $searchQuery = $this->getSearchQuery($engine, $query);
+        $results = $this->invokeMethod($engine, 'runElasticSearch', [$searchQuery]);
 
         self::assertEquals($mockedResults, $results);
     }
@@ -192,11 +198,11 @@ class ElasticSearchEngineTest extends SearchTestAbstract
 
     /**
      * @param $mockedResults
-     * @return \Mockery\MockInterface
+     * @return MockInterface
      */
-    private function getMockedClient($mockedResults): \Mockery\MockInterface
+    private function getMockedClient($mockedResults): MockInterface
     {
-        $client = Mockery::mock('Elasticsearch\Client');
+        $client = Mockery::mock(Client::class);
 
         $client
             ->shouldReceive('search')
@@ -214,7 +220,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
 
         $expectedResults = $this->getExpectedResultsForMockedHits();
 
-        $results = $params = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
+        $results = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
 
         self::assertEquals($expectedResults, $results);
     }
@@ -243,7 +249,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
 
         $expectedResults = [];
 
-        $results = $params = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
+        $results = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
 
         self::assertEquals($expectedResults, $results);
     }
@@ -296,5 +302,18 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         $actual = $engine->getIndex();
 
         self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @param ElasticSearchEngine $engine
+     * @param SearchQuery $query
+     * @return array
+     * @throws ReflectionException
+     */
+    private function getSearchQuery(ElasticSearchEngine $engine, SearchQuery $query): array
+    {
+        $this->invokeMethod($engine, 'validateQuery', [&$query]);
+
+        return $this->invokeMethod($engine, 'createSearchParams', [&$query]);
     }
 }

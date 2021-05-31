@@ -37,6 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Search\ElasticSearch\ElasticSearchEngine;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
@@ -49,7 +50,7 @@ require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
 class ElasticSearchIntegrationTest extends SearchTestAbstract
 {
-    const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
+    public const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
     /** @var ElasticSearchIndexer */
     private $indexer;
     /** @var ElasticSearchEngine */

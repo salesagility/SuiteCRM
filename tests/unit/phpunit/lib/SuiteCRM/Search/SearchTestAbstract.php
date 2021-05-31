@@ -60,7 +60,7 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
      * @return mixed Method return.
      * @throws ReflectionException
      */
-    public function invokeMethod(&$object, $methodName, array $parameters = [])
+    public function invokeMethod(object $object, string $methodName, array $parameters = [])
     {
         $method = (new ReflectionClass(get_class($object)))->getMethod($methodName);
         $method->setAccessible(true);
@@ -76,7 +76,7 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
      * @param mixed $value value of the property.
      * @throws ReflectionException
      */
-    public function setValue(&$object, $property, $value): void
+    public function setValue(object $object, string $property, $value): void
     {
         $property = (new ReflectionClass(get_class($object)))->getProperty($property);
         $property->setAccessible(true);

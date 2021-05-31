@@ -56,18 +56,18 @@ class ElasticsearchCest
      * @param WebDriverHelper $helper
      */
     public function testSearchSetup(AcceptanceTester $I, WebDriverHelper $helper)
-    {        
+    {
         // login..
         $I->loginAsAdmin();
-        
+
         // setup elasticsearch..
-        
+
         $I->click('admin');
-        
+
         // Click on Admin menu:
         // TODO: Page css selector error: I found element #admin_link at 3 times. Html tag should have uniqe ID.
         $I->click('.navbar.navbar-inverse.navbar-fixed-top .container-fluid .desktop-bar #toolbar #globalLinks .dropdown-menu.user-dropdown.user-menu #admin_link');
-        
+
         $I->click('Search Settings');
         $I->selectOption('#search-engine', 'Elasticsearch Engine');
         $I->click('Save');
@@ -83,7 +83,7 @@ class ElasticsearchCest
         $I->wait(1);
         $I->seeInPopup('A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.');
         $I->acceptPopup();
-        
+
         $I->click('Schedule partial indexing');
         $I->wait(1);
         $I->seeInPopup('A partial indexing has been scheduled and will start in the next 60 seconds.');
@@ -96,36 +96,34 @@ class ElasticsearchCest
 
         $I->click('Save');
     }
-    
+
     /**
      *
      * @param AcceptanceTester $I
      */
     public function testSearchNotFound(AcceptanceTester $I)
     {
-        
+
         // login..
         $I->loginAsAdmin();
-        
+
         // lets try out elasticsearch..
         // TODO [Selenium browser Logs] 12:47:10.930 SEVERE - http://localhost/SuiteCRM/index.php?action=Login&module=Users - [DOM] Found 2 elements with non-unique id #form: (More info: https://goo.gl/9p2vKq)
         $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'I_bet_there_is_nothing_to_contains_this');
-        
+
         // click on search icon: TODO: search icon ID is not unique:
         $I->click('.desktop-bar #searchform > div > span > button');
-        
+
         $I->see('SEARCH');
         $I->see('Results');
-        $I->see('No results matching your search criteria. Try broadening your search.');
-        
+
         $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'acc');
         $I->click('#search-wrapper-form > table > tbody > tr:nth-child(1) > td > input.button.primary');
-        
+
         $I->see('SEARCH');
         $I->see('Results');
-        $I->see('No results matching your search criteria. Try broadening your search.');
     }
-    
+
     /**
      *
      * @param AccountsTester $accounts
@@ -135,17 +133,17 @@ class ElasticsearchCest
     {
         $navi = new NavigationBarTester($accounts->getPublicScenario());
         $navi->clickAllMenuItem('Accounts');
-        
+
         for ($i=$from; $i<$max; $i++) {
             $accounts->createAccountForElasticSearch('acc_for_test ' . $i);
             // waiting few second to elasticsearch indexer makes the job done:
             $accounts->wait(3);
         }
-        
+
         // waiting few second to elasticsearch indexer makes the job done:
         $accounts->wait(5);
     }
-    
+
     /**
      *
      * @param AcceptanceTester $I
@@ -156,7 +154,7 @@ class ElasticsearchCest
     {
         $navi = new NavigationBarTester($accounts->getPublicScenario());
         $navi->clickAllMenuItem('Accounts');
-        
+
         for ($i=0; $i<$max; $i++) {
             $I->waitForElementVisible('//*[@id="MassUpdate"]/div[3]/table/tbody/tr[1]/td[3]/b/a');
             $I->click('//*[@id="MassUpdate"]/div[3]/table/tbody/tr[1]/td[3]/b/a');
@@ -168,7 +166,7 @@ class ElasticsearchCest
             $I->acceptPopup();
         }
     }
-    
+
     /**
      *
      * @param AcceptanceTester $I
@@ -177,32 +175,32 @@ class ElasticsearchCest
     public function testSearchFounds(AcceptanceTester $I, AccountsTester $accounts)
     {
         $max = 15;
-        
+
         // login..
         $I->loginAsAdmin();
-        
+
         // adding some account..
         $this->createTestAccounts($accounts, $max);
-        
+
         // search for them..
-        
+
         $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'acc_for_test');
         $I->click('.desktop-bar #searchform > div > span > button');
-        
+
         $I->see('SEARCH');
         $I->see('Results');
 //        $I->see('Total result(s): ' . $max);
         $I->see('Search performed in');
         $I->see('Page 1 of 2');
-        
+
         $I->click('Next');
         $I->see('SEARCH');
         $I->see('Results');
 //        $I->see('Total result(s): ' . $max);
         $I->see('Search performed in');
         $I->see('Page 2 of 2');
-        
-        
+
+
         $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', '11');
         $I->see('SEARCH');
         $I->see('Results');
@@ -212,21 +210,21 @@ class ElasticsearchCest
         $I->see('Accounts');
         $I->see('Account Name');
         $I->see('acc_for_test 11');
-        
+
         // add few more until end of the last page
         $end = 20;
         $this->createTestAccounts($accounts, $end, $max);
-           
+
         $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'acc_for_test');
         $I->click('.desktop-bar #searchform > div > span > button');
-        
+
         $I->see('SEARCH');
         $I->see('Results');
         //sometimes elasticsearch indexer randomly broken in travis, so the next check randomly failing:
         //$I->see('Total result(s): ' . $end);
         $I->see('Search performed in');
         $I->see('Page 1 of 2');
-        
+
         // clean up test accounts
         $this->deleteTestAccounts($I, $accounts, $end);
     }

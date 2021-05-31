@@ -492,11 +492,11 @@ $app_list_strings = array(
         'ProjectTask' => 'Project Task',
 
         'Prospects' => 'Target',
-        
+
         'AOS_Contracts' => 'Contract',
         'AOS_Invoices' => 'Invoice',
         'AOS_Quotes' => 'Quote',
-        'AOS_Products' => 'Product',        
+        'AOS_Products' => 'Product',
 
     ),
     'parent_line_items' => array(
@@ -3714,3 +3714,5 @@ $app_strings['LBL_SEARCH_PREV'] = 'Previous';
 $app_strings['LBL_SEARCH_NEXT'] = 'Next';
 $app_strings['LBL_SEARCH_PAGE'] = 'Page ';
 $app_strings['LBL_SEARCH_OF'] = ' of ';
+$app_strings['LBL_USE_ADVANCED_SEARCH'] = 'Use Advanced Search';
+$app_strings['LBL_USE_BASIC_SEARCH'] = 'Use Basic Search';
