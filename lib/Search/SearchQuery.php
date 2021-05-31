@@ -288,7 +288,7 @@ class SearchQuery implements \JsonSerializable
      */
     public function convertEncoding()
     {
-        $this->query = mb_convert_encoding($this->query, 'UTF-8', 'HTML-ENTITIES');
+        $this->query = htmlspecialchars_decode(htmlentities($this->query, ENT_COMPAT, 'utf-8', false));
     }
 
     /** @inheritdoc */

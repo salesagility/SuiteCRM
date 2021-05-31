@@ -409,7 +409,7 @@ class ArrayMapper
     private function fixStringValue($value)
     {
         if (is_string($value)) {
-            $value = mb_convert_encoding($value, 'UTF-8', 'HTML-ENTITIES');
+            $value = htmlspecialchars_decode(htmlentities($value, ENT_COMPAT, 'utf-8', false));
             $value = trim($value);
         }
         return $value;
