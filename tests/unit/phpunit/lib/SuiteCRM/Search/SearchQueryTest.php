@@ -40,6 +40,9 @@
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
+/**
+ * Class SearchQueryTest
+ */
 class SearchQueryTest extends SearchTestAbstract
 {
     public function testFromString(): void
@@ -155,7 +158,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals('FOO', $query->getSearchString());
         self::assertEquals(10, $query->getSize());
         self::assertEquals(0, $query->getFrom());
-        self::assertNull($query->getEngine());
+        self::assertEquals('BasicSearchEngine', $query->getEngine());
         self::assertEquals(['foo' => 'bar'], $query->getOptions());
         self::assertEquals('bar', $query->getOption('foo'));
     }

@@ -55,7 +55,7 @@ class View extends MVC\View
         parent::__construct(__DIR__ . '/view.tpl');
     }
 
-    public function preDisplay()
+    public function preDisplay(): void
     {
         parent::preDisplay();
 

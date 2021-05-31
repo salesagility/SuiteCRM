@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,14 +37,14 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\Search\ElasticSearch;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\BadRequest400Exception;
-use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
-use SuiteCRM\Search\Exceptions\SearchInvalidRequestException;
+use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
@@ -67,7 +67,7 @@ class ElasticSearchEngine extends SearchEngine
     public function __construct(Client $client = null)
     {
         global $sugar_config;
-        $this->client = $client === null ? ElasticSearchClientBuilder::getClient() : $client;
+        $this->client = $client ?? ElasticSearchClientBuilder::getClient();
 
         if (!empty($sugar_config['search']['ElasticSearch']['index'])) {
             $this->index = $sugar_config['search']['ElasticSearch']['index'];
@@ -76,8 +76,9 @@ class ElasticSearchEngine extends SearchEngine
 
     /**
      * @inheritdoc
+     * @throws InvalidArgumentException
      */
-    public function search(SearchQuery $query)
+    public function search(SearchQuery $query): SearchResults
     {
         $this->validateQuery($query);
         $params = $this->createSearchParams($query);
@@ -91,25 +92,9 @@ class ElasticSearchEngine extends SearchEngine
     }
 
     /**
-     * @return string
-     */
-    public function getIndex()
-    {
-        return $this->index;
-    }
-
-    /**
-     * @param string $index
-     */
-    public function setIndex($index)
-    {
-        $this->index = $index;
-    }
-
-    /**
      * @param SearchQuery $query
      */
-    protected function validateQuery(SearchQuery &$query)
+    protected function validateQuery(SearchQuery $query): void
     {
         $query->trim();
         $query->convertEncoding();
@@ -122,7 +107,7 @@ class ElasticSearchEngine extends SearchEngine
      *
      * @return array
      */
-    private function createSearchParams($query)
+    private function createSearchParams(SearchQuery $query): array
     {
         $searchStr = $query->getSearchString();
 
@@ -174,15 +159,9 @@ class ElasticSearchEngine extends SearchEngine
      *
      * @return array
      */
-    private function runElasticSearch($params)
+    private function runElasticSearch(array $params): array
     {
-        try {
-            $results = $this->client->search($params);
-        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (BadRequest400Exception $exception) {
-            throw new SearchInvalidRequestException('The query was not valid.');
-        }
-
-        return $results;
+        return $this->client->search($params);
     }
 
     /**
@@ -193,7 +172,7 @@ class ElasticSearchEngine extends SearchEngine
      *
      * @return array
      */
-    private function parseHits($hits)
+    private function parseHits(array $hits): array
     {
         $hitsArray = $hits['hits']['hits'];
 
@@ -204,5 +183,21 @@ class ElasticSearchEngine extends SearchEngine
         }
 
         return $results;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIndex(): string
+    {
+        return $this->index;
+    }
+
+    /**
+     * @param string $index
+     */
+    public function setIndex(string $index): void
+    {
+        $this->index = $index;
     }
 }
