@@ -27,25 +27,41 @@
 
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchResults;
 
+/**
+ * Class MockSearch
+ */
 class MockSearch extends SearchEngine
 {
     /**
      * @param SearchQuery $query
-     * @return string[]
-     * @noinspection ReturnTypeCanBeDeclaredInspection
+     * @return SearchResults
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
      */
-    public function search(SearchQuery $query)
+    public function search(SearchQuery $query): SearchResults
     {
-        return ['foo'];
+        $start = microtime(true);
+        $results = [];
+        $hits = 0;
+
+        if ($query->getSearchString() === 'bar') {
+            $results = ['foo'];
+            $hits++;
+        }
+
+        $end = microtime(true);
+        $elapsed = $end - $start;
+
+        return new SearchResults($results, false, $elapsed, $hits);
     }
 
     /**
      * @param SearchQuery $query
-     * @noinspection ReturnTypeCanBeDeclaredInspection
+     * @throws \SuiteCRM\Exception\InvalidArgumentException
      */
-    public function searchAndDisplay(SearchQuery $query)
+    public function searchAndDisplay(SearchQuery $query): void
     {
-        echo $query->getSearchString();
+        echo $this->search($query)->getTotal();
     }
 }

@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,11 +39,11 @@
 
 namespace SuiteCRM\Search;
 
-use SugarBean;
 use BeanFactory;
 use LoggerManager;
-use RuntimeException;
+use SugarBean;
 use SuiteCRM\Exception\Exception;
+use SuiteCRM\Exception\InvalidArgumentException;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -72,15 +72,22 @@ class SearchResults
     /**
      * SearchResults constructor.
      *
-     * @param array $hits            Contains the results ids
-     * @param bool  $groupedByModule Flag specifying if the (nested) hits are grouped by the modules
-     * @param float $searchTime      The number of seconds it took to perform the search
-     * @param int   $total           The number of total hits (without pagination)
-     * @param array $scores          Contains the scores of each hit. This should match in structure with $hits
-     * @param array $options         Similar to scores, but customisable by the search engine
+     * @param array $hits Contains the results ids
+     * @param bool $groupedByModule Flag specifying if the (nested) hits are grouped by the modules
+     * @param float|null $searchTime The number of seconds it took to perform the search
+     * @param int|null $total The number of total hits (without pagination)
+     * @param array|null $scores Contains the scores of each hit. This should match in structure with $hits
+     * @param array|null $options Similar to scores, but customisable by the search engine
+     * @throws InvalidArgumentException
      */
-    public function __construct(array $hits, $groupedByModule = true, $searchTime = null, $total = null, array $scores = null, array $options = null)
-    {
+    public function __construct(
+        array $hits,
+        $groupedByModule = true,
+        float $searchTime = null,
+        int $total = null,
+        array $scores = null,
+        array $options = null
+    ) {
         $this->hits = $hits;
         $this->scores = $scores;
         $this->options = $options;
@@ -88,8 +95,8 @@ class SearchResults
         $this->searchTime = $searchTime;
         $this->total = $total;
 
-        if ($this->scores != null && count($hits) != count($scores)) {
-            throw new RuntimeException('The sizes of $hits and $scores must match.');
+        if ($this->scores !== null && count($hits) !== count($scores)) {
+            throw new InvalidArgumentException('The sizes of $hits and $scores must match.');
         }
     }
 
@@ -100,7 +107,7 @@ class SearchResults
      *
      * @return array
      */
-    public function getHits()
+    public function getHits(): array
     {
         return $this->hits;
     }
@@ -108,15 +115,16 @@ class SearchResults
     /**
      * Fetches the results (originally just module->id) as Beans.
      *
-     * @see getHits()
      * @return array
+     * @throws Exception
+     * @see getHits()
      */
-    public function getHitsAsBeans()
+    public function getHitsAsBeans(): array
     {
-        $hits = $this->hits;
+        $searchHits = $this->hits;
         $parsed = [];
 
-        foreach ($hits as $module => $beans) {
+        foreach ($searchHits as $module => $beans) {
             foreach ((array)$beans as $bean) {
                 $obj = BeanFactory::getBean($module, $bean);
 
@@ -129,12 +137,12 @@ class SearchResults
                 }
 
                 if (!$obj) {
-                    throw new Exception('Error retrieveing bean: ' . $module . ' [' . $bean . ']');
+                    throw new Exception('Error retrieving bean: ' . $module . ' [' . $bean . ']');
                 }
+
                 $obj->load_relationships();
                 $fieldDefs = $obj->getFieldDefinitions();
-                $objUpdatedLinks = $this->updateFieldDefLinks($obj, $fieldDefs);
-                $parsed[$module][] = $objUpdatedLinks;
+                $parsed[$module][] = $this->updateFieldDefLinks($obj, $fieldDefs);
             }
         }
 
@@ -147,13 +155,14 @@ class SearchResults
      * @param array $fieldDefs
      * @return SugarBean
      */
-    protected function updateFieldDefLinks(SugarBean $obj, $fieldDefs)
+    protected function updateFieldDefLinks(SugarBean $obj, array $fieldDefs): SugarBean
     {
-        foreach ($fieldDefs as &$fieldDef) {
+        foreach ($fieldDefs as $fieldDef) {
             if (isset($obj->{$fieldDef['name']})) {
                 $obj = $this->updateObjLinks($obj, $fieldDef);
             }
         }
+
         return $obj;
     }
 
@@ -164,35 +173,43 @@ class SearchResults
      * @param array $fieldDef
      * @return SugarBean
      */
-    protected function updateObjLinks(SugarBean $obj, &$fieldDef)
+    protected function updateObjLinks(SugarBean $obj, array $fieldDef): SugarBean
     {
-        if ($fieldDef['type'] == 'relate' && isset($fieldDef['link']) && isset($fieldDef['id_name']) && $fieldDef['id_name']) {
+        if (isset($fieldDef['link']) && !empty($fieldDef['id_name']) && $fieldDef['type'] === 'relate') {
             $relId = $this->getRelatedId($obj, $fieldDef['id_name'], $fieldDef['link']);
             if (!empty($relId)) {
-                $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId,
-                    'DetailView');
+                $obj->{$fieldDef['name']} = $this->getLink(
+                    $obj->{$fieldDef['name']},
+                    $fieldDef['module'],
+                    $relId,
+                    'DetailView'
+                );
             }
-        } elseif ($fieldDef['name'] == 'name') {
-            $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
+        } elseif ($fieldDef['name'] === 'name') {
+            $obj->{$fieldDef['name']} = $this->getLink(
+                $obj->{$fieldDef['name']},
+                $obj->module_name,
+                $obj->id,
+                'DetailView'
+            );
         }
+
         return $obj;
     }
 
     /**
      * resolve related record ID
      *
+     * @param SugarBean $obj
      * @param string $idName
      * @param string $link
      * @return null|string
      */
-    protected function getRelatedId(SugarBean $obj, $idName, $link)
+    protected function getRelatedId(SugarBean $obj, string $idName, string $link): string
     {
-        $relId = $obj->id;
         $relField = $idName;
         if (isset($obj->$link)) {
-            $link2 = $obj->$link;
-            $link2Focus = $link2->getFocus();
-            $relId = $link2Focus->$relField;
+            $relId = $obj->$link->getFocus()->$relField;
             if (is_object($relId)) {
                 if (method_exists($relId, "getFocus")) {
                     $relId = $relId->getFocus()->id;
@@ -204,25 +221,26 @@ class SearchResults
             $relId = $obj->$relField;
         } else {
             $relId = null;
-            LoggerManager::getLogger()->warn('Unresolved related ID for field: '. $relField);
+            LoggerManager::getLogger()->warn('Unresolved related ID for field: ' . $relField);
         }
+
         return $relId;
     }
 
     /**
      *
-     * @global array $sugar_config
      * @param string $label
      * @param string $module
      * @param string $record
      * @param string $action
      * @return string
+     * @global array $sugar_config
      */
-    protected function getLink($label, $module, $record, $action)
+    protected function getLink(string $label, string $module, string $record, string $action): string
     {
         global $sugar_config;
-        $link = "<a href=\"{$sugar_config['site_url']}/index.php?action={$action}&module={$module}&record={$record}&offset=1\"><span>{$label}</span></a>";
-        return $link;
+
+        return "<a href=\"{$sugar_config['site_url']}/index.php?action={$action}&module={$module}&record={$record}&offset=1\"><span>{$label}</span></a>";
     }
 
     /**
@@ -230,7 +248,7 @@ class SearchResults
      *
      * @return array
      */
-    public function getScores()
+    public function getScores(): ?array
     {
         return $this->scores;
     }
@@ -240,7 +258,7 @@ class SearchResults
      *
      * @return int
      */
-    public function getTotal()
+    public function getTotal(): ?int
     {
         return $this->total;
     }
@@ -248,7 +266,7 @@ class SearchResults
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): ?array
     {
         return $this->options;
     }
@@ -258,7 +276,7 @@ class SearchResults
      *
      * @return array
      */
-    public function getOption($key)
+    public function getOption(string $key): array
     {
         return $this->options[$key];
     }
@@ -268,7 +286,7 @@ class SearchResults
      *
      * @return float
      */
-    public function getSearchTime()
+    public function getSearchTime(): ?float
     {
         return $this->searchTime;
     }
@@ -276,7 +294,7 @@ class SearchResults
     /**
      * @return bool
      */
-    public function isGroupedByModule()
+    public function isGroupedByModule(): bool
     {
         return $this->groupedByModule;
     }

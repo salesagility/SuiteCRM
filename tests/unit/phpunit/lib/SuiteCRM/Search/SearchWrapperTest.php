@@ -26,11 +26,14 @@
  */
 
 /** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 
 namespace SuiteCRM\Tests\Unit\lib\SuiteCRM\Search;
 
 use Mockery;
 use ReflectionException;
+use SearchEngineMock;
+use SuiteCRM\Search\ElasticSearch\ElasticSearchEngine;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
@@ -43,13 +46,23 @@ use SuiteCRM\Search\SearchWrapper;
  */
 class SearchWrapperTest extends SearchTestAbstract
 {
+    /**
+     * @var string
+     */
+    private $customEngines = __DIR__ . '/TestCustomEngines/';
+
+    /**
+     * @var string
+     */
+    private $searchEngineMock = __DIR__ . '/SearchEngineMock.php';
+
     public function testFetchEngine(): void
     {
         $search = new SearchWrapper();
 
         try {
             $searchEngine = $this->invokeMethod($search, 'fetchEngine', ['ElasticSearchEngine']);
-            self::assertInstanceOf('ElasticSearchEngine', $searchEngine);
+            self::assertInstanceOf(ElasticSearchEngine::class, $searchEngine);
         } catch (ReflectionException $exception) {
             self::fail("Failed to use reflection!");
         }
@@ -58,7 +71,7 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testFetchEngineNonExisting(): void
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', $this->customEngines);
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['VeryFakeEngine']);
@@ -73,7 +86,7 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testFetchEngineCustom(): void
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', $this->customEngines);
 
         $engine = $this->invokeMethod($search, 'fetchEngine', ['MockSearch']);
 
@@ -83,7 +96,7 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testFetchEngineCustomBad(): void
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', $this->customEngines);
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['BadMockSearch']);
@@ -97,8 +110,13 @@ class SearchWrapperTest extends SearchTestAbstract
     {
         $expected = [
             0 => 'ElasticSearchEngine',
-            1 => 'BadMockSearch',
-            2 => 'MockSearch',
+            1 => 'BasicSearchEngine',
+            2 => 'LuceneSearchEngine',
+            3 => 'VeryFakeEngine',
+            4 => 'MockSearch',
+            5 => 'BadMockSearch',
+            6 => 'BadMockSearch',
+            7 => 'MockSearch',
         ];
         $actual = SearchWrapper::getEngines();
 
@@ -108,7 +126,7 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testSearchAndDisplayCustom(): void
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', $this->customEngines);
 
         $query = SearchQuery::fromString('bar', null, null, 'MockSearch');
 
@@ -116,12 +134,12 @@ class SearchWrapperTest extends SearchTestAbstract
         $search::searchAndDisplay($query);
         $output = ob_get_flush();
 
-        self::assertEquals('bar', $output);
+        self::assertEquals(1, $output);
     }
 
     public function testSearchAndDisplayBuiltIn(): void
     {
-        SearchWrapper::addEngine('SearchEngineMock', __DIR__ . '/SearchEngineMock.php');
+        SearchWrapper::addEngine('SearchEngineMock', $this->searchEngineMock, SearchEngineMock::class);
 
         $query = SearchQuery::fromString('foo', null, null, 'SearchEngineMock');
 
@@ -129,25 +147,28 @@ class SearchWrapperTest extends SearchTestAbstract
         SearchWrapper::searchAndDisplay($query);
         $output = ob_get_flush();
 
-        self::assertEquals('bar', $output);
+        self::assertEquals(1, $output);
     }
 
     public function testFakeSearch(): void
     {
-        SearchWrapper::addEngine('SearchEngineMock', __DIR__ . '/SearchEngineMock.php');
+        SearchWrapper::addEngine('SearchEngineMock', $this->searchEngineMock, SearchEngineMock::class);
 
         $result = SearchWrapper::search('SearchEngineMock', SearchQuery::fromString('foo'));
 
-        self::assertEquals('bar', $result, "Wrong mocked search result!");
+        $hits = $result->getHits();
+
+        self::assertEquals('bar', $hits[0]);
 
         $result = SearchWrapper::search('SearchEngineMock', SearchQuery::fromString('fooz'));
 
-        self::assertEquals('barz', $result, "Wrong mocked search result!");
+        $hits = $result->getHits();
+
+        self::assertEquals('barz', $hits[0]);
     }
 
-    public function testSearch2(): void
+    public function testSearchCustomEngine(): void
     {
-        // this time try passing a custom engine
         $mockEngine = Mockery::mock(SearchEngine::class);
         $query = SearchQuery::fromString("Test");
 
@@ -157,23 +178,6 @@ class SearchWrapperTest extends SearchTestAbstract
             ->with($query);
 
         SearchWrapper::search($mockEngine, $query);
-
-        Mockery::close();
-    }
-
-    public function testSearch3(): void
-    {
-        // this time check if the validation works
-
-        $mockEngine = Mockery::mock(SearchWrapper::class); // just an object that shouldn't be passed
-        $query = SearchQuery::fromString("Test");
-
-        try {
-            SearchWrapper::search($mockEngine, $query);
-            self::fail("Exception should have been thrown!");
-        } catch (SearchEngineNotFoundException $exception) {
-            // All good!
-        }
 
         Mockery::close();
     }

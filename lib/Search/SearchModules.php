@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,6 +39,8 @@
 
 namespace SuiteCRM\Search;
 
+use UnifiedSearchAdvanced;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -59,7 +61,7 @@ class SearchModules
      *
      * @return string[]
      */
-    public static function getModulesList()
+    public static function getModulesList(): array
     {
         $allModules = self::getAllModules();
         $allModules = array_merge($allModules['enabled'], $allModules['disabled']);
@@ -78,7 +80,7 @@ class SearchModules
      *
      * @return string[]
      */
-    public static function getEnabledModules()
+    public static function getEnabledModules(): array
     {
         $allModules = self::getAllModules();
         $enabledModules = $allModules['enabled'];
@@ -95,10 +97,8 @@ class SearchModules
     /**
      * @return array
      */
-    private static function getAllModules()
+    private static function getAllModules(): array
     {
-        $unifiedSearch = new \UnifiedSearchAdvanced();
-        $allModules = $unifiedSearch->retrieveEnabledAndDisabledModules();
-        return $allModules;
+        return (new UnifiedSearchAdvanced())->retrieveEnabledAndDisabledModules();
     }
 }
