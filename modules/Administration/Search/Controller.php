@@ -60,7 +60,7 @@ class Controller extends MVC\Controller
      *
      * If called from ajax it will return a json.
      */
-    public function doSave()
+    public function doSave(): void
     {
         $searchEngine = filter_input(INPUT_POST, 'search-engine', FILTER_SANITIZE_STRING);
 
