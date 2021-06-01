@@ -65,27 +65,34 @@ class AOS_Products extends AOS_Products_sugar
         return $uuid;
     }
 
+    /**
+     * @param bool $check_notify
+     * @return string
+     */
     public function save($check_notify = false)
     {
         global $sugar_config, $mod_strings;
 
-        if (isset($_POST['deleteAttachment']) && $_POST['deleteAttachment'] == '1') {
+        $maxFileSize = getMaxFileUploadSize();
+
+        if (isset($_POST['deleteAttachment']) && $_POST['deleteAttachment'] === '1') {
             $this->product_image = '';
         }
 
-        require_once('include/upload_file.php');
-        $GLOBALS['log']->debug('UPLOADING PRODUCT IMAGE');
+        require_once __DIR__ . '/../../include/upload_file.php';
+        LoggerManager::getLogger()->debug('UPLOADING PRODUCT IMAGE');
 
         if (!empty($_FILES['uploadimage']['tmp_name']) && verify_uploaded_image($_FILES['uploadimage']['tmp_name'])) {
-            if ($_FILES['uploadimage']['size'] > $sugar_config['upload_maxsize']) {
-                die($mod_strings['LBL_IMAGE_UPLOAD_FAIL'] . $sugar_config['upload_maxsize']);
+            if ($_FILES['uploadimage']['size'] > $maxFileSize) {
+                die($mod_strings['LBL_IMAGE_UPLOAD_FAIL'] . $maxFileSize);
             }
             $prefix_image = $this->getGUID() . '_';
             $this->product_image = $sugar_config['site_url'] . '/' . $sugar_config['upload_dir'] . $prefix_image . $_FILES['uploadimage']['name'];
-            move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'] . $prefix_image . $_FILES['uploadimage']['name']);
+            move_uploaded_file($_FILES['uploadimage']['tmp_name'],
+                $sugar_config['upload_dir'] . $prefix_image . $_FILES['uploadimage']['name']);
         }
 
-        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        require_once __DIR__ . '/../../modules/AOS_Products_Quotes/AOS_Utils.php';
 
         perform_aos_save($this);
 

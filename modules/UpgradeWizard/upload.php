@@ -84,12 +84,8 @@ switch ($run) {
             $base_filename = urldecode($tempFile);
         } else {
             $upload = new UploadFile('upgrade_zip');
-            /* Bug 51722 - Cannot Upload Upgrade File if System Settings Are Not Sufficient, Just Make sure that we can
-            upload no matter what, set the default to 60M */
             global $sugar_config;
-            $upload_maxsize_backup = $sugar_config['upload_maxsize'];
-            $sugar_config['upload_maxsize'] = 60000000;
-            /* End Bug 51722 */
+
             if (!$upload->confirm_upload()) {
                 logThis('ERROR: no file uploaded!');
                 echo $mod_strings['ERR_UW_NO_FILE_UPLOADED'];
@@ -110,9 +106,6 @@ switch ($run) {
                     $perform = true;
                 }
             }
-            /* Bug 51722 - Restore the upload size in the config */
-            $sugar_config['upload_maxsize'] = $upload_maxsize_backup;
-            /* End Bug 51722 */
         }
         if ($perform) {
             $manifest_file = extractManifest($tempFile);

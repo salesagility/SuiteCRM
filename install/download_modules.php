@@ -53,9 +53,11 @@ if (!isset($install_script) || !$install_script || empty($_SESSION['setup_db_adm
 if (empty($sugar_config['upload_dir'])) {
     $sugar_config['upload_dir'] = 'upload/';
 }
+
 if (empty($sugar_config['upload_maxsize'])) {
-    $sugar_config['upload_maxsize'] = 8192000;
+    $sugar_config['upload_maxsize'] = getMaxFileUploadSize();
 }
+
 if (empty($sugar_config['upload_badext'])) {
     $sugar_config['upload_badext'] = array('php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py', 'asp', 'cfm', 'js', 'vbs', 'html', 'htm');
 }
