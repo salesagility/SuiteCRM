@@ -154,7 +154,7 @@ $mod_strings = array(
     'LBL_LDAP_BIND_ATTRIBUTE' => 'Bind Attribute:',
     'LBL_LDAP_BIND_ATTRIBUTE_DESC' => 'For Binding the LDAP User Examples:[<b>AD:</b>&nbsp;userPrincipalName] [<b>openLDAP:</b>&nbsp;dn] [<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;uid] ',
     'LBL_LDAP_LOGIN_ATTRIBUTE_DESC' => 'For searching for the LDAP User Examples:[<b>AD:</b>&nbsp;userPrincipalName] [<b>openLDAP:</b>&nbsp;cn] [<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;dn] ',
-    'LBL_LDAP_SERVER_HOSTNAME_DESC' => 'Example: ldap.example.com or ldaps://ldap.example.com for SSL',
+    'LBL_LDAP_SERVER_HOSTNAME_DESC' => 'Example:<br>ldap://ldap.example.com:389 or<br>ldaps://ldap.example.com:636 for SSL<br>Separate multiple hosts with spaces.',
     'LBL_LDAP_SERVER_PORT_DESC' => 'Example: <em>389 or 636 for SSL</em>',
     'LBL_LDAP_GROUP_NAME' => 'Group Name:',
     'LBL_LDAP_GROUP_NAME_DESC' => 'Example <em>cn=suitecrm</em>',
