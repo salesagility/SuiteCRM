@@ -104,10 +104,10 @@ class ACLRole extends SugarBean
      * static  getUserRoles($user_id)
      * returns a list of ACLRoles for a given user id
      *
-     * @param GUID $user_id
-     * @return a list of ACLRole objects
+     * @param string $user_id GUID
+     * @return array a list of ACLRole objects
      */
-    public function getUserRoles($user_id, $getAsNameArray = true)
+    public static function getUserRoles($user_id, $getAsNameArray = true)
     {
 
         //if we don't have it loaded then lets check against the db
@@ -138,10 +138,10 @@ class ACLRole extends SugarBean
      * static  getUserRoleNames($user_id)
      * returns a list of Role names for a given user id
      *
-     * @param GUID $user_id
+     * @param string $user_id GUID
      * @return array a list of ACLRole Names
      */
-    public function getUserRoleNames($user_id)
+    public static function getUserRoleNames($user_id)
     {
         $user_roles = sugar_cache_retrieve("RoleMembershipNames_".$user_id);
 
@@ -172,9 +172,9 @@ class ACLRole extends SugarBean
      * static getAllRoles($returnAsArray = false)
      *
      * @param boolean $returnAsArray - should it return the results as an array of arrays or as an array of ACLRoles
-     * @return either an array of array representations of acl roles or an array of ACLRoles
+     * @return array either an array of array representations of acl roles or an array of ACLRoles
      */
-    public function getAllRoles($returnAsArray = false)
+    public static function getAllRoles($returnAsArray = false)
     {
         $db = DBManagerFactory::getInstance();
         $query = "SELECT acl_roles.* FROM acl_roles
@@ -200,10 +200,11 @@ class ACLRole extends SugarBean
      *
      * gets the actions of a given role
      *
-     * @param GUID $role_id
+     * @param string $role_id GUID
+     * @param string|null $type (Default:'module')
      * @return array of actions
      */
-    public function getRoleActions($role_id, $type='module')
+    public static function getRoleActions($role_id, $type='module')
     {
         global $beanList;
         //if we don't have it loaded then lets check against the db
