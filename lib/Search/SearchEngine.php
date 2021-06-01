@@ -33,8 +33,9 @@ abstract class SearchEngine
      */
     public function searchAndDisplay(SearchQuery $query)
     {
+        $plaintext = $query->getSearchString();
         $this->validateQuery($query);
-        $this->displayForm($query);
+        $this->displayForm($query, $plaintext);
 
         if (!$query->isEmpty()) {
             $results = $this->search($query);
@@ -46,10 +47,11 @@ abstract class SearchEngine
      * Shows the default search form (search bar and options) for a given search query.
      *
      * @param SearchQuery $query
+     * @param string $plaintext
      */
-    public function displayForm(SearchQuery $query)
+    public function displayForm(SearchQuery $query, $plaintext = '')
     {
-        $controller = new SearchFormController($query);
+        $controller = new SearchFormController($query, $plaintext);
         $controller->display();
     }
 

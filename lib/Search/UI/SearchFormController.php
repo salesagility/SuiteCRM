@@ -52,21 +52,24 @@ use SuiteCRM\Search\UI\MVC\Controller;
 class SearchFormController extends Controller
 {
     private $query;
+    private $plaintext;
 
     /**
      * SearchFormController constructor.
      *
      * @param SearchQuery $query
+     * @param $plaintext
      */
-    public function __construct($query)
+    public function __construct($query, $plaintext = '')
     {
         parent::__construct(new SearchFormView());
         $this->query = $query;
+        $this->plaintext = $plaintext;
     }
 
     public function display()
     {
-        $this->view->getTemplate()->assign('searchQueryString', htmlspecialchars($this->query->getSearchString(), ENT_COMPAT | ENT_XHTML, 'UTF-8'));
+        $this->view->getTemplate()->assign('searchQueryString', $this->plaintext);
         $this->view->getTemplate()->assign('searchQuerySize', $this->query->getSize());
         $this->view->getTemplate()->assign('searchQueryFrom', $this->query->getFrom());
         $this->view->getTemplate()->assign('searchQueryEngine', $this->query->getEngine());
