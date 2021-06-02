@@ -7,14 +7,13 @@ name_fields: &name_fields
   copy_to: named
   fields: *fields
 
-mappings:
-  _default_:
-    properties:
-      name:
-        properties:
-          name: *name_fields
-          first: *name_fields
-          last: *name_fields
-      named:
-        type: text
-        fields: *fields
+_default_:
+  properties:
+    name:
+      properties:
+        name: *name_fields
+        first: *name_fields
+        last: *name_fields
+    named:
+      type: text
+      fields: *fields
