@@ -108,6 +108,11 @@ $viewdefs ['AOW_WorkFlow'] =
                             'name' => 'multiple_runs',
                             'label' => 'LBL_MULTIPLE_RUNS',
                         ),
+                        1 =>
+                        array(
+                            'name' => 'dependent_actions',
+                            'label' => 'LBL_DEPENDENT_ACTIONS',
+                        ),
                     ),
                     4 =>
                     array(

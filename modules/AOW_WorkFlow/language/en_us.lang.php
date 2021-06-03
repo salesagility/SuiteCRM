@@ -76,5 +76,6 @@ $mod_strings = array(
     'LBL_ACTION_LINES' => 'Actions',
     'LBL_ADD_ACTION' => 'Add Action',
     'LBL_MULTIPLE_RUNS' => 'Repeated Runs',
+    'LBL_DEPENDENT_ACTIONS' => 'Dependent Actions',
     'LBL_RUN_WHEN' => 'Run'
 );
