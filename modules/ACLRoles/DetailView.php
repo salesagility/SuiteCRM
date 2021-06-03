@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+echo '<div class="role-manager">';
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -76,3 +78,5 @@ require_once __DIR__ . '/../../include/SubPanel/SubPanelTiles.php';
 $subPanel = new SubPanelTiles($role, 'ACLRoles');
 
 echo $subPanel->display();
+
+echo '</div>';

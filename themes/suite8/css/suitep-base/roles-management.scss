@@ -1,0 +1,37 @@
+.role-manager {
+    .action-button {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 0.5em;
+        margin-top: 0.8em;
+        .button {
+            background-color:$nepal-grey ;
+            font-size: 12px;
+            font-weight: 600;
+            height: 2.2em;
+            line-height: 16px;
+            padding: 0.3em 0.1em;
+        }     
+    }
+    .hidebtn {
+        display: none;
+    }
+    
+    .heading-text {
+        position: absolute;
+        top: 8.6%;
+    }
+    .action_buttons {
+        position: absolute;
+        top: 3.5em;  
+        bottom: auto;
+        .btn {
+            background-color: $nepal-grey;
+            font-size: 12px;
+            font-weight: 600;
+            height: 2.2em;
+            line-height: 16px;
+            padding: 0.3em 1.2em;
+        }      
+    }
+}
