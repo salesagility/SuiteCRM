@@ -2211,6 +2211,23 @@ class SugarBean
     }
 
     /**
+     * Return true if duplicate_merge is enabled for this object
+     * You would set the duplicate_merge flag in the implementing module's vardef file.
+     *
+     * @return bool
+     *
+     * Internal function, do not override.
+     */
+    public function is_DuplicateMergeEnabled(): bool
+    {
+        global $dictionary;
+        if (isset($dictionary[$this->getObjectName()]['duplicate_merge'])) {
+            return !empty($dictionary[$this->getObjectName()]['duplicate_merge']);
+        }
+        return false;
+    }
+
+    /**
      * Returns the name of the audit table.
      * Audit table's name is based on implementing class' table name.
      *

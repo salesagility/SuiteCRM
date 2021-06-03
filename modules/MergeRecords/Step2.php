@@ -159,6 +159,14 @@ $cancel_label=$app_strings['LBL_CANCEL_BUTTON_LABEL'];
 echo($ListView->display());
 
 $error_select=$current_module_strings['LBL_SELECT_ERROR'];
+$onCancelRedirectURL =
+    'index.php?' . http_build_query(
+        [
+            'module' => $focus->merge_module,
+            'action' => 'DetailView',
+            'record' => $return_id
+        ]
+    );
 $form_top = <<<EOQ
 
             <input type="hidden" id="selectCount" name="selectCount[]" value=0>
@@ -170,7 +178,7 @@ $form_top = <<<EOQ
 			<input title="$button_title" class="button" onclick="return verify_selection(this);" type="submit" name="button" value="  $button_label  " id="perform_merge_button">
             <input title="$cancel_title"
                    accessKey="$cancel_key"
-                   class="button" onclick="window.location.href='index.php?module=' . $focus->merge_module . '&action=DetailView&record='.$return_id;"
+                   class="button" onclick="window.location.href='. $onCancelRedirectURL '"
                    type="button"
                    name="button"
                    value="  $cancel_label  "
@@ -194,26 +202,26 @@ $form_top = <<<EOQ
                 if(typeof document.MassUpdate.massupdate != 'undefined') {
                    document.MassUpdate.massupdate.value = 'false';
                 }
-                
+
                 document.MassUpdate.return_module.value='';
                 document.MassUpdate.return_action.value='';
                 document.MassUpdate.submit();
-                
+
                 return !checks;
             }
 
             sugarListView.prototype.save_checks = function(offset, moduleString) {
                 checks = sugarListView.get_checks();
                 eval('document.MassUpdate.' + moduleString + '.value = offset');
-                
+
                 if(typeof document.MassUpdate.massupdate != 'undefined') {
                    document.MassUpdate.massupdate.value = 'false';
                 }
-                
+
                 document.MassUpdate.return_module.value='';
                 document.MassUpdate.return_action.value='';
                 document.MassUpdate.submit();
-                
+
                 return !checks;
             }
         </script>

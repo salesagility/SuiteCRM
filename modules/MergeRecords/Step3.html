@@ -55,7 +55,7 @@
 	<input type="hidden" name="remove_id" value="">
 	<input type="hidden" name="merged_links" value="{MERGED_LINKS}">
 	{MERGED_IDS}
-	
+
 	<table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td align="left" style="padding-bottom: 2px;"><input title="{MOD.LBL_SAVE_MERGED_RECORD_BUTTON_TITLE}" class="button" onclick="return merge_verify();" type="submit" name="button" value="  {MOD.LBL_SAVE_MERGED_RECORD_BUTTON_LABEL}  " id="save_merged_record_button" >&nbsp;
@@ -90,7 +90,7 @@
 	<table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td align="left" style="padding-bottom: 2px;"><input title="{MOD.LBL_SAVE_MERGED_RECORD_BUTTON_TITLE}" class="button" onclick="return merge_verify();" type="submit" name="button" value="  {MOD.LBL_SAVE_MERGED_RECORD_BUTTON_LABEL}  " >&nbsp;
-		<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "></td>
+		<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="window.location.href='index.php?module={RETURN_MODULE}&action={RETURN_ACTION}&record={RETURN_ID}';" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "></td>
 	</tr>
 	</table>
 </form>
@@ -145,14 +145,14 @@ function copy_value(json_array)
 		var teams = json_array['field_value2'];
 		var isFirstFieldEmpty = collection['EditView_team_name'].clean_up();
 		var index = 0;
-		
+
 		//expand the list
 		collection['EditView_team_name'].js_more();
 	    collection['EditView_team_name'].show_arrow_label(true);
 
 		for(team_id in teams) {
 			 if(teams[team_id]['id']) {
-				 var temp_array = []; 
+				 var temp_array = [];
 				 temp_array['name'] = teams[team_id]['display_name'];
 		         temp_array['id'] = teams[team_id]['id'];
 		         if(isFirstFieldEmpty && index == 0){
@@ -170,7 +170,7 @@ function copy_value(json_array)
 		 //Get hours and minutes and adjust as necessary
 	    var hrs = parseInt(dt.substring(11,13), 10);
 	    var mins = parseInt(dt.substring(14,16), 10);
-	
+
 	    //A safety scan to make sure hrs and minutes are formatted correctly
 		if (mins > 0 && mins < 15) {
 			mins = 15;
@@ -182,7 +182,7 @@ function copy_value(json_array)
 			hrs += 1;
 			mins = 0;
 		} //if-else
-		
+
 	    document.getElementById(json_array['field_name']+'_date').value=date;
 	    var hourObj = document.getElementById(json_array['field_name']+'_hours');
 	    for(var i=0; i< hourObj.length; i++){
@@ -191,15 +191,15 @@ function copy_value(json_array)
 	    	}
 	    }
 
-	    
+
 	    var minuteObj = document.getElementById(json_array['field_name']+'_minutes');
 	    for(var i=0; i< minuteObj.length; i++){
 	    	if(minuteObj.options[i].value == mins){
 	    		minuteObj.options[i].selected='checked';
 	    	}
 	    }
-	    
-		var hasMeridiem = /am|pm/i.test("{USER_DATEFORMAT}");		
+
+		var hasMeridiem = /am|pm/i.test("{USER_DATEFORMAT}");
 	    if(hasMeridiem){
 	    	meridiem = trim(dt.substring(16));
 		    var meridiemObj = document.getElementById(json_array['field_name'] + "_meridiem");
@@ -214,7 +214,7 @@ function copy_value(json_array)
 	else if(json_array['field_type'] == 'multienum'){
 	    var multienumObj = document.getElementById(json_array['field_name']);
 	    for(var i=0; i< multienumObj.length; i++){
-	        
+
             if ( json_array['field_value'].indexOf(multienumObj.options[i].value) != -1 ) {
                 multienumObj.options[i].selected='checked';
             }
@@ -226,7 +226,7 @@ function copy_value(json_array)
 	else
 	{
 		target_element.value = json_array['field_value'];
-	} 
+	}
 	return true;
 }
 
@@ -234,14 +234,14 @@ function change_primary(button, new_id) {
 	document.EditView.change_parent.value='1';
 	document.EditView.change_parent_id.value=new_id;
 	document.EditView.action.value='Step3';
-	
+
 	document.EditView.submit();
 }
 function remove_me(button, new_id) {
 	document.EditView.remove.value='1';
 	document.EditView.remove_id.value=new_id;
 	document.EditView.action.value='Step3';
-	
+
 	document.EditView.submit();
 }
 </script>
