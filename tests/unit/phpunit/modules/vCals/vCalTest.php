@@ -18,16 +18,16 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $vcal = BeanFactory::newBean('vCals');
 
-        $this->assertInstanceOf('vCal', $vcal);
-        $this->assertInstanceOf('SugarBean', $vcal);
+        self::assertInstanceOf('vCal', $vcal);
+        self::assertInstanceOf('SugarBean', $vcal);
 
-        $this->assertAttributeEquals('vcals', 'table_name', $vcal);
-        $this->assertAttributeEquals('vCals', 'module_dir', $vcal);
-        $this->assertAttributeEquals('vCal', 'object_name', $vcal);
+        self::assertAttributeEquals('vcals', 'table_name', $vcal);
+        self::assertAttributeEquals('vCals', 'module_dir', $vcal);
+        self::assertAttributeEquals('vCal', 'object_name', $vcal);
 
-        $this->assertAttributeEquals(true, 'new_schema', $vcal);
-        $this->assertAttributeEquals(false, 'tracker_visibility', $vcal);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $vcal);
+        self::assertAttributeEquals(true, 'new_schema', $vcal);
+        self::assertAttributeEquals(false, 'tracker_visibility', $vcal);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $vcal);
     }
 
     public function testget_summary_text()
@@ -35,11 +35,11 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $vcal = BeanFactory::newBean('vCals');
 
         //test without setting name
-        $this->assertEquals(null, $vcal->get_summary_text());
+        self::assertEquals(null, $vcal->get_summary_text());
 
         //test with name set
         $vcal->name = 'test';
-        $this->assertEquals('', $vcal->get_summary_text());
+        self::assertEquals('', $vcal->get_summary_text());
     }
 
     public function testfill_in_additional_list_fields()
@@ -49,12 +49,12 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->fill_in_additional_list_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->markTestIncomplete('method has no implementation');
+        self::markTestIncomplete('method has no implementation');
     }
 
     public function testfill_in_additional_detail_fields()
@@ -64,12 +64,12 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->fill_in_additional_detail_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->markTestIncomplete('method has no implementation');
+        self::markTestIncomplete('method has no implementation');
     }
 
     public function testget_list_view_data()
@@ -79,12 +79,12 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $vcal->get_list_view_data();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->markTestIncomplete('method has no implementation');
+        self::markTestIncomplete('method has no implementation');
     }
 
     public function testget_freebusy_lines_cache()
@@ -99,8 +99,8 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $vcal->get_freebusy_lines_cache($user_bean);
 
-        $this->assertStringStartsWith($expectedStart, $result);
-        $this->assertStringEndsWith($expectedEnd, $result);
+        self::assertStringStartsWith($expectedStart, $result);
+        self::assertStringEndsWith($expectedEnd, $result);
     }
 
     public function testcreate_sugar_freebusy()
@@ -115,7 +115,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $end_date_time = $now_date_time->get('tomorrow');
 
         $result = $vcal->create_sugar_freebusy($user_bean, $start_date_time, $end_date_time);
-        $this->assertGreaterThanOrEqual(0, strlen($result));
+        self::assertGreaterThanOrEqual(0, strlen($result));
     }
 
     public function testget_vcal_freebusy()
@@ -128,8 +128,8 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $vcal->get_vcal_freebusy($user_focus);
 
-        $this->assertStringStartsWith($expectedStart, $result);
-        $this->assertStringEndsWith($expectedEnd, $result);
+        self::assertStringStartsWith($expectedStart, $result);
+        self::assertStringEndsWith($expectedEnd, $result);
     }
 
     public function testcache_sugar_vcal()
@@ -139,10 +139,10 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
-            $vcal->cache_sugar_vcal($user_focus);
-            $this->assertTrue(true);
+            $vcal::cache_sugar_vcal($user_focus);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -153,10 +153,10 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
-            $vcal->cache_sugar_vcal_freebusy($user_focus);
-            $this->assertTrue(true);
+            $vcal::cache_sugar_vcal_freebusy($user_focus);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -164,12 +164,12 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
     {
         //test with short strings
         $result = vCal::fold_ical_lines('testkey', 'testvalue');
-        $this->assertEquals('testkey:testvalue', $result);
+        self::assertEquals('testkey:testvalue', $result);
 
         //test with longer strings
         $expected = "testkey11111111111111111111111111111111111111111111111111111111111111111111\r\n	11111111111111111111111111111111:testvalue11111111111111111111111111111111\r\n	11111111111111111111111111111111111111111111111111111111111111111111";
         $result = vCal::fold_ical_lines('testkey'.str_repeat('1', 100), 'testvalue'.str_repeat('1', 100));
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     public function testcreate_ical_array_from_string()
@@ -188,7 +188,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
                         array('END', 'VCALENDAR'),
                     );
         $actual = vCal::create_ical_array_from_string($iCalString);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testcreate_ical_string_from_array()
@@ -207,19 +207,19 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
                 array('END', 'VCALENDAR'),
         );
         $actual = vCal::create_ical_string_from_array($iCalArray);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testescape_ical_chars()
     {
-        $this->assertSame('', vCal::escape_ical_chars(''));
-        $this->assertSame('\;\,', vCal::escape_ical_chars(';,'));
+        self::assertSame('', vCal::escape_ical_chars(''));
+        self::assertSame('\;\,', vCal::escape_ical_chars(';,'));
     }
 
     public function testunescape_ical_chars()
     {
-        $this->assertSame('', vCal::unescape_ical_chars(''));
-        $this->assertSame('; , \\', vCal::unescape_ical_chars('\\; \\, \\\\'));
+        self::assertSame('', vCal::unescape_ical_chars(''));
+        self::assertSame('; , \\', vCal::unescape_ical_chars('\\; \\, \\\\'));
     }
 
     public function testget_ical_event()
@@ -239,7 +239,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
 
         $result = vCal::get_ical_event($meeting, $user);
 
-        $this->assertStringStartsWith($expectedStart, $result);
-        $this->assertStringEndsWith($expectedEnd, $result);
+        self::assertStringStartsWith($expectedStart, $result);
+        self::assertStringEndsWith($expectedEnd, $result);
     }
 }

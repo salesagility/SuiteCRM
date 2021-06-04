@@ -8,8 +8,8 @@ class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type
         $view = new ViewSerialized();
-        $this->assertInstanceOf('ViewSerialized', $view);
-        $this->assertInstanceOf('SugarView', $view);
+        self::assertInstanceOf('ViewSerialized', $view);
+        self::assertInstanceOf('SugarView', $view);
     }
 
     //Incomplete Test. method uses exit() so it cannot be tested.
@@ -29,6 +29,6 @@ class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0,strlen($renderedContent));
         */
 
-        $this->markTestIncomplete('Can Not be implemented');
+        self::markTestIncomplete('Can Not be implemented');
     }
 }

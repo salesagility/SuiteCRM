@@ -59,29 +59,29 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
     public function testSaveTestSettingsKeyInvalidKey()
     {
         $factory = new ImapHandlerFactory();
-        
+
         try {
             $factory->saveTestSettingsKey(null);
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            self::assertTrue(true);
         }
-        
+
         try {
             $factory->saveTestSettingsKey(123);
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            self::assertTrue(true);
         }
-        
+
         try {
             $factory->saveTestSettingsKey('');
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            self::assertTrue(true);
         }
     }
-    
+
     /**
      * FAIL: when key not found in calls settings file
      */
@@ -90,12 +90,12 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
         $factory = new ImapHandlerFactory();
         try {
             $factory->saveTestSettingsKey('foo');
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (ImapHandlerException $e) {
-            $this->assertEquals(ImapHandlerException::ERR_KEY_NOT_FOUND, $e->getCode());
+            self::assertEquals(ImapHandlerException::ERR_KEY_NOT_FOUND, $e->getCode());
         }
     }
-    
+
     /**
      * OK: should successfully saving a key
      */
@@ -104,14 +104,14 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
         $factory = new ImapHandlerFactory();
         $existsBefore = file_exists($settingsFile);
-        $this->assertFalse($existsBefore);
+        self::assertFalse($existsBefore);
         $results = $factory->saveTestSettingsKey('testCaseExample');
         $existsAfter = file_exists($settingsFile);
-        $this->assertTrue($existsAfter);
-        $this->assertTrue($results);
+        self::assertTrue($existsAfter);
+        self::assertTrue($results);
         $factory->deleteTestSettings();
     }
-    
+
     /**
      * OK: should retrieves an ImapHandler
      */
@@ -119,7 +119,7 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
     {
         $factory = new ImapHandlerFactory();
         $results = $factory->getImapHandler();
-        $this->assertInstanceOf(ImapHandlerInterface::class, $results);
+        self::assertInstanceOf(ImapHandlerInterface::class, $results);
         $factory->deleteTestSettings();
     }
 }

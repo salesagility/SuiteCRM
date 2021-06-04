@@ -17,17 +17,17 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowAction = BeanFactory::newBean('AOW_Actions');
-        $this->assertInstanceOf('AOW_Action', $aowAction);
-        $this->assertInstanceOf('Basic', $aowAction);
-        $this->assertInstanceOf('SugarBean', $aowAction);
+        self::assertInstanceOf('AOW_Action', $aowAction);
+        self::assertInstanceOf('Basic', $aowAction);
+        self::assertInstanceOf('SugarBean', $aowAction);
 
-        $this->assertAttributeEquals('AOW_Actions', 'module_dir', $aowAction);
-        $this->assertAttributeEquals('AOW_Action', 'object_name', $aowAction);
-        $this->assertAttributeEquals('aow_actions', 'table_name', $aowAction);
-        $this->assertAttributeEquals(true, 'new_schema', $aowAction);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aowAction);
-        $this->assertAttributeEquals(false, 'importable', $aowAction);
-        $this->assertAttributeEquals(false, 'tracker_visibility', $aowAction);
+        self::assertAttributeEquals('AOW_Actions', 'module_dir', $aowAction);
+        self::assertAttributeEquals('AOW_Action', 'object_name', $aowAction);
+        self::assertAttributeEquals('aow_actions', 'table_name', $aowAction);
+        self::assertAttributeEquals(true, 'new_schema', $aowAction);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $aowAction);
+        self::assertAttributeEquals(false, 'importable', $aowAction);
+        self::assertAttributeEquals(false, 'tracker_visibility', $aowAction);
     }
 
     public function testsave_lines()
@@ -48,7 +48,7 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
 
         //get the linked beans and verify if records created
         $aow_actions = $aowWorkFlow->get_linked_beans('aow_actions', $aowWorkFlow->object_name);
-        $this->assertEquals(count($post_data['action']), count($aow_actions));
+        self::assertEquals(count($post_data['action']), count($aow_actions));
 
         //cleanup afterwards
         foreach ($aow_actions as $lineItem) {
@@ -59,8 +59,8 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
     public function testbean_implements()
     {
         $aowAction = BeanFactory::newBean('AOW_Actions');
-        $this->assertEquals(false, $aowAction->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $aowAction->bean_implements('test')); //test with invalid value
-        $this->assertEquals(false, $aowAction->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $aowAction->bean_implements('')); //test with blank value
+        self::assertEquals(false, $aowAction->bean_implements('test')); //test with invalid value
+        self::assertEquals(false, $aowAction->bean_implements('ACL')); //test with valid value
     }
 }

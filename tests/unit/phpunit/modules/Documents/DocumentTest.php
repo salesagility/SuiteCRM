@@ -17,15 +17,15 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $document = BeanFactory::newBean('Documents');
-        $this->assertInstanceOf('Document', $document);
-        $this->assertInstanceOf('File', $document);
-        $this->assertInstanceOf('SugarBean', $document);
+        self::assertInstanceOf('Document', $document);
+        self::assertInstanceOf('File', $document);
+        self::assertInstanceOf('SugarBean', $document);
 
-        $this->assertAttributeEquals('Documents', 'module_dir', $document);
-        $this->assertAttributeEquals('Document', 'object_name', $document);
-        $this->assertAttributeEquals('documents', 'table_name', $document);
-        $this->assertAttributeEquals(true, 'new_schema', $document);
-        $this->assertAttributeEquals(false, 'disable_row_level_security', $document);
+        self::assertAttributeEquals('Documents', 'module_dir', $document);
+        self::assertAttributeEquals('Document', 'object_name', $document);
+        self::assertAttributeEquals('documents', 'table_name', $document);
+        self::assertAttributeEquals(true, 'new_schema', $document);
+        self::assertAttributeEquals(false, 'disable_row_level_security', $document);
     }
 
     public function testSaveAndGet_document_name()
@@ -43,17 +43,17 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $document->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($document->id));
-        $this->assertEquals(36, strlen($document->id));
+        self::assertTrue(isset($document->id));
+        self::assertEquals(36, strlen($document->id));
 
         //execute Get_document_name() method and verify it gets the name correctly
-        $this->assertEquals(null, $document->get_document_name(1));
-        $this->assertEquals('test', $document->get_document_name($document->id));
+        self::assertEquals(null, $document->get_document_name(1));
+        self::assertEquals('test', $document->get_document_name($document->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $document->mark_deleted($document->id);
         $result = $document->retrieve($document->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testget_summary_text()
@@ -61,11 +61,11 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $document = BeanFactory::newBean('Documents');
 
         //test without setting name
-        $this->assertEquals(null, $document->get_summary_text());
+        self::assertEquals(null, $document->get_summary_text());
 
         //test with name set
         $document->document_name = 'test';
-        $this->assertEquals('test', $document->get_summary_text());
+        self::assertEquals('test', $document->get_summary_text());
     }
 
     public function testis_authenticated()
@@ -73,11 +73,11 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $document = BeanFactory::newBean('Documents');
 
         //test without presetting attributes
-        $this->assertEquals(null, $document->is_authenticated());
+        self::assertEquals(null, $document->is_authenticated());
 
         //test with attributes preset
         $document->authenticated = true;
-        $this->assertEquals(true, $document->is_authenticated());
+        self::assertEquals(true, $document->is_authenticated());
     }
 
     public function testfill_in_additional_list_fields()
@@ -87,9 +87,9 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $document->fill_in_additional_list_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -104,9 +104,9 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $document->fill_in_additional_detail_fields();
 
         // test the urls instead of the a tag itself
-        $this->assertEquals('', $document->file_url, 'file url: [[' . $document->file_url . ']]');
+        self::assertEquals('', $document->file_url, 'file url: [[' . $document->file_url . ']]');
         //
-        $this->assertEquals('', $document->file_url_noimage, 'file url noimage: [[' . $document->file_url_noimage . ']]');
+        self::assertEquals('', $document->file_url_noimage, 'file url noimage: [[' . $document->file_url_noimage . ']]');
     }
 
     public function testlist_view_parse_additional_sections()
@@ -119,9 +119,9 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         try {
             $ss = new Sugar_Smarty();
             $document->list_view_parse_additional_sections($ss, $xTemplateSection);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -134,12 +134,12 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         //test with empty string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE  documents.deleted = 0 ORDER BY documents.document_name";
         $actual = $document->create_export_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with valid string parameters
         $expected = "SELECT\n						documents.* FROM documents  WHERE documents.document_name = \"\" AND  documents.deleted = 0 ORDER BY documents.id";
         $actual = $document->create_export_query('documents.id', 'documents.document_name = ""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testget_list_view_data()
@@ -180,9 +180,9 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $actual = $document->get_list_view_data();
         foreach ($expected as $expectedKey => $expectedVal) {
             if ($expectedKey == 'FILE_URL') {
-                $this->assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
+                self::assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
             } else {
-                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
+                self::assertSame($expected[$expectedKey], $actual[$expectedKey]);
             }
         }
     }
@@ -194,17 +194,17 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $document->mark_relationships_deleted(1);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
     public function testbean_implements()
     {
         $document = BeanFactory::newBean('Documents');
-        $this->assertEquals(false, $document->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $document->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $document->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $document->bean_implements('')); //test with blank value
+        self::assertEquals(false, $document->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $document->bean_implements('ACL')); //test with valid value
     }
 }

@@ -89,6 +89,6 @@ class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
         $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';
         $e = new LangException('Test message', 123, null, new LangText('LBL_LANG_TEST_LABEL', ['variable' => 'foo']));
         $langMessage = $e->getLangMessage();
-        $this->assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
+        self::assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
     }
 }

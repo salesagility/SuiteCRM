@@ -18,7 +18,7 @@ class ViewQuickeditTest extends SuitePHPUnitFrameworkTestCase
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickedit();
         $view->preDisplay();
-        $this->assertEquals(0, count($_REQUEST));
+        self::assertEquals(0, count($_REQUEST));
 
         //check with values preset but without a valid bean id, it sould not change Request parameters
         $_REQUEST['source_module'] = 'Users';
@@ -27,12 +27,12 @@ class ViewQuickeditTest extends SuitePHPUnitFrameworkTestCase
         $request = $_REQUEST;
 
         $view->preDisplay();
-        $this->assertSame($request, $_REQUEST);
+        self::assertSame($request, $_REQUEST);
 
         //check with values preset, it sould set some addiiotnal Request parameters
         $_REQUEST['record'] = 1;
         $view->preDisplay();
-        $this->assertNotSame($request, $_REQUEST);
+        self::assertNotSame($request, $_REQUEST);
 
         if (isset($_request)) {
             $_REQUEST = $_request;

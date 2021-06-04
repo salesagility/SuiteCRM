@@ -8,15 +8,15 @@ class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcardsave();
-        $this->assertInstanceOf('ViewImportvcardsave', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('save', 'type', $view);
+        self::assertInstanceOf('ViewImportvcardsave', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('save', 'type', $view);
     }
 
     //incomplete test. this method uses exit() so it cannot be tested.
     public function testdisplay()
     {
-        $this->markTestIncomplete('Cannot be implemented due to use of exit().');
+        self::markTestIncomplete('Cannot be implemented due to use of exit().');
 
         $view = new ViewImportvcardsave();
 

@@ -61,7 +61,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $actual = query_module_access_list($user);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testquery_user_has_roles()
@@ -73,7 +73,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = '0';
         $actual = query_user_has_roles('1');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testget_user_allowed_modules()
@@ -82,7 +82,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array();
         $actual = get_user_allowed_modules('1');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testget_user_disallowed_modules()
@@ -103,23 +103,23 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $allowed = query_module_access_list(new User('1'));
         $actual = get_user_disallowed_modules('1', $allowed);
 
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testquery_client_ip()
     {
         //test without setting any server parameters
-        $this->assertSame(null, query_client_ip());
+        self::assertSame(null, query_client_ip());
 
         //test with server params set
         $_SERVER['REMOTE_ADDR'] = '1.1.1.3';
-        $this->assertSame('1.1.1.3', query_client_ip());
+        self::assertSame('1.1.1.3', query_client_ip());
 
         $_SERVER['HTTP_FROM'] = '1.1.1.2';
-        $this->assertSame('1.1.1.2', query_client_ip());
+        self::assertSame('1.1.1.2', query_client_ip());
 
         $_SERVER['HTTP_CLIENT_IP'] = '1.1.1.1';
-        $this->assertSame('1.1.1.1', query_client_ip());
+        self::assertSame('1.1.1.1', query_client_ip());
     }
 
     public function testget_val_array()
@@ -128,6 +128,6 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $tempArray = array('key1' => 'val1', 'key2' => 'val2', 'key3' => 'val3');
         $expected = array('key1' => 'key1', 'key2' => 'key2', 'key3' => 'key3');
         $actual = get_val_array($tempArray);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 }

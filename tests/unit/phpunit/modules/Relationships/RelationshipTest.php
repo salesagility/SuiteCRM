@@ -9,14 +9,14 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $relationship = BeanFactory::newBean('Relationships');
 
-        $this->assertInstanceOf('Relationship', $relationship);
-        $this->assertInstanceOf('SugarBean', $relationship);
+        self::assertInstanceOf('Relationship', $relationship);
+        self::assertInstanceOf('SugarBean', $relationship);
 
-        $this->assertAttributeEquals('Relationships', 'module_dir', $relationship);
-        $this->assertAttributeEquals('Relationship', 'object_name', $relationship);
-        $this->assertAttributeEquals('relationships', 'table_name', $relationship);
+        self::assertAttributeEquals('Relationships', 'module_dir', $relationship);
+        self::assertAttributeEquals('Relationship', 'object_name', $relationship);
+        self::assertAttributeEquals('relationships', 'table_name', $relationship);
 
-        $this->assertAttributeEquals(true, 'new_schema', $relationship);
+        self::assertAttributeEquals(true, 'new_schema', $relationship);
     }
 
     public function testis_self_referencing()
@@ -25,7 +25,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $relationship = BeanFactory::newBean('Relationships');
 
         $result = $relationship->is_self_referencing();
-        $this->assertEquals(true, $result);
+        self::assertEquals(true, $result);
 
         //test with attributes set to different values
         $relationship = BeanFactory::newBean('Relationships');
@@ -36,7 +36,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $relationship->rhs_key = 'rhs_key';
 
         $result = $relationship->is_self_referencing();
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
         //test with attributes set to same values
         $relationship = BeanFactory::newBean('Relationships');
@@ -47,12 +47,12 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $relationship->rhs_key = 'key';
 
         $result = $relationship->is_self_referencing();
-        $this->assertEquals(true, $result);
+        self::assertEquals(true, $result);
     }
 
-    public function testexists()
+    public function testexists(): void
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        // Unset and reconnect Db to resolve mysqli fetch exception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -61,12 +61,12 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $relationship = BeanFactory::newBean('Relationships');
 
         //test with invalid relationship
-        $result = $relationship->exists('test_test', $db);
-        $this->assertEquals(false, $result);
+        $result = $relationship::exists('test_test', $db);
+        self::assertEquals(false, $result);
 
         //test with valid relationship
-        $result = $relationship->exists('roles_users', $db);
-        $this->assertEquals(true, $result);
+        $result = $relationship::exists('roles_users', $db);
+        self::assertEquals(true, $result);
     }
 
     public function testdelete()
@@ -76,9 +76,9 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             Relationship::delete('test_test', $db);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -94,16 +94,16 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
         //test with invalid relationship
         $result = $relationship->get_other_module('test_test', 'test', $db);
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
         //test with valid relationship
         $result = $relationship->get_other_module('roles_users', 'Roles', $db);
-        $this->assertEquals('Users', $result);
+        self::assertEquals('Users', $result);
     }
 
-    public function testretrieve_by_sides()
+    public function testRetrieveBySides(): void
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        // Unset and reconnect Db to resolve mysqli fetch exception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -111,23 +111,23 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
         $relationship = BeanFactory::newBean('Relationships');
 
-        //test with invalid relationship
+        // Test with invalid relationship
         $result = $relationship->retrieve_by_sides('test1', 'test2', $db);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
 
-        //test with valid relationship
+        // Test with valid relationship
         $result = $relationship->retrieve_by_sides('Roles', 'Users', $db);
 
-        $this->assertEquals('Users', $result['rhs_module']);
-        $this->assertEquals('Roles', $result['lhs_module']);
+        self::assertEquals('Users', $result['rhs_module']);
+        self::assertEquals('Roles', $result['lhs_module']);
 
-        $this->assertEquals('id', $result['rhs_key']);
-        $this->assertEquals('id', $result['lhs_key']);
+        self::assertEquals('id', $result['rhs_key']);
+        self::assertEquals('id', $result['lhs_key']);
 
-        $this->assertEquals('many-to-many', $result['relationship_type']);
+        self::assertEquals('many-to-many', $result['relationship_type']);
     }
 
-    public function testretrieve_by_modules()
+    public function testRetrieveByModules(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -137,17 +137,17 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
         $relationship = BeanFactory::newBean('Relationships');
 
-        //test with invalid relationship
-        $result = $relationship->retrieve_by_modules('test1', 'test2', $db);
-        $this->assertEquals(null, $result);
+        // Test with invalid relationship
+        $result = $relationship::retrieve_by_modules('test1', 'test2', $db);
+        self::assertEquals(null, $result);
 
-        //test with valid relationship but incorecct type
-        $result = $relationship->retrieve_by_modules('Roles', 'Users', $db, 'one-to-many');
-        $this->assertEquals(null, $result);
+        // Test with valid relationship but incorrect type
+        $result = $relationship::retrieve_by_modules('Roles', 'Users', $db, 'one-to-many');
+        self::assertEquals(null, $result);
 
-        //test with valid relationship and valid type
-        $result = $relationship->retrieve_by_modules('Roles', 'Users', $db, 'many-to-many');
-        $this->assertEquals('roles_users', $result);
+        // Test with valid relationship and valid type
+        $result = $relationship::retrieve_by_modules('Roles', 'Users', $db, 'many-to-many');
+        self::assertEquals('roles_users', $result);
     }
 
     public function testretrieve_by_name()
@@ -156,20 +156,20 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
         //test with invalid relationship
         $result = $relationship->retrieve_by_name('test_test');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
         //test with invalid relationship
         unset($result);
         $result = $relationship->retrieve_by_name('roles_users');
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
 
-        $this->assertEquals('Users', $relationship->rhs_module);
-        $this->assertEquals('Roles', $relationship->lhs_module);
+        self::assertEquals('Users', $relationship->rhs_module);
+        self::assertEquals('Roles', $relationship->lhs_module);
 
-        $this->assertEquals('id', $relationship->rhs_key);
-        $this->assertEquals('id', $relationship->lhs_key);
+        self::assertEquals('id', $relationship->rhs_key);
+        self::assertEquals('id', $relationship->lhs_key);
 
-        $this->assertEquals('many-to-many', $relationship->relationship_type);
+        self::assertEquals('many-to-many', $relationship->relationship_type);
     }
 
     public function testload_relationship_meta()
@@ -177,7 +177,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         $relationship = BeanFactory::newBean('Relationships');
 
         $relationship->load_relationship_meta();
-        $this->assertTrue(isset($GLOBALS['relationships']));
+        self::assertTrue(isset($GLOBALS['relationships']));
     }
 
     public function testbuild_relationship_cache()
@@ -187,22 +187,22 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $relationship->build_relationship_cache();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
     public function testcache_file_dir()
     {
         $result = Relationship::cache_file_dir();
-        $this->assertEquals('cache/modules/Relationships', $result);
+        self::assertEquals('cache/modules/Relationships', $result);
     }
 
     public function testcache_file_name_only()
     {
         $result = Relationship::cache_file_name_only();
-        $this->assertEquals('relationships.cache.php', $result);
+        self::assertEquals('relationships.cache.php', $result);
     }
 
     public function testdelete_cache()
@@ -210,9 +210,9 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             Relationship::delete_cache();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -220,6 +220,6 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
     {
         $relationship = BeanFactory::newBean('Relationships');
         $result = $relationship->trace_relationship_module('Roles', 'Users');
-        $this->assertInstanceOf('User', $result);
+        self::assertInstanceOf('User', $result);
     }
 }

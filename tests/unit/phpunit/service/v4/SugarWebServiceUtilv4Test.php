@@ -17,7 +17,7 @@ class SugarWebServiceUtilv4Test extends SuitePHPUnitFrameworkTestCase
         $module_name = 'Cases';
         $fields = array('status', 'state', 'name');
         $return = $helperObject->get_return_module_fields($seed, $module_name, $fields);
-        $this->assertEquals($return['module_fields']['status']['parentenum'], 'state');
-        $this->assertTrue(!isset($return['module_fields']['name']['parentenum']));
+        self::assertEquals($return['module_fields']['status']['parentenum'], 'state');
+        self::assertTrue(!isset($return['module_fields']['name']['parentenum']));
     }
 }
