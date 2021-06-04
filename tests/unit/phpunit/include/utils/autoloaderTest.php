@@ -10,15 +10,15 @@ class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
 
         // Test with an invalid class.
         $result = SugarAutoLoader::autoload('foo');
-        $this->assertFalse($result);
+        self::assertFalse($result);
 
         // Test with a valid class out of autoload mappings.
         $result = SugarAutoLoader::autoload('SugarArray');
-        $this->assertFalse($result);
+        self::assertFalse($result);
 
         // Test with a valid class registered in autoload mappings.
         $result = SugarAutoLoader::autoload('User');
-        $this->assertTrue($result);
+        self::assertTrue($result);
     }
 
     public function testloadAll()
@@ -27,9 +27,9 @@ class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
         // This method only includes file so there is no output to test.
         try {
             SugarAutoLoader::loadAll();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 }

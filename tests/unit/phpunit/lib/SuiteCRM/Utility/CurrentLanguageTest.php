@@ -26,6 +26,6 @@ class CurrentLanguageTest extends SuitePHPUnitFrameworkTestCase
     public function testGetCurrentLanguage()
     {
         $language = self::$language->getCurrentLanguage();
-        $this->assertNotEmpty($language);
+        self::assertNotEmpty($language);
     }
 }

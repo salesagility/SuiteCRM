@@ -8,9 +8,9 @@ class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewJson();
-        $this->assertInstanceOf('ViewJson', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('detail', 'type', $view);
+        self::assertInstanceOf('ViewJson', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('detail', 'type', $view);
     }
 
     //incomplete test. this method uses exit() so it cannot be tested.
@@ -33,6 +33,6 @@ class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
         $this->assertGreaterThan(0,strlen($renderedContent));
         $this->assertNotEquals(False,json_decode($renderedContent));
         */
-        $this->markTestIncomplete('Can Not be implemented');
+        self::markTestIncomplete('Can Not be implemented');
     }
 }

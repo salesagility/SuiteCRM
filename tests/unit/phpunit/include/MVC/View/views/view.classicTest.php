@@ -19,16 +19,16 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 
         //test with no parameters
         $view = new ViewClassic();
-        $this->assertInstanceOf('ViewClassic', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('', 'type', $view);
+        self::assertInstanceOf('ViewClassic', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('', 'type', $view);
 
         //test with bean parameter;
         $bean = BeanFactory::newBean('Users');
         $view = new ViewClassic($bean);
-        $this->assertInstanceOf('ViewClassic', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('', 'type', $view);
+        self::assertInstanceOf('ViewClassic', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('', 'type', $view);
     }
 
     public function testdisplay()
@@ -42,14 +42,14 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $view->module = 'Home';
         $view->action = '';
         $ret = $view->display();
-        $this->assertFalse($ret);
+        self::assertFalse($ret);
 
         //test with a valid module and uncustomized action. it should return true
         $view = new ViewClassic();
         $view->module = 'Home';
         $view->action = 'About';
 
-        $this->markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
+        self::markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
 
         //test with a valid module and customized action. it should return true
         $view = new ViewClassic();
@@ -60,8 +60,8 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $ret = $view->display();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
-        $this->assertTrue($ret);
+        self::assertGreaterThan(0, strlen($renderedContent));
+        self::assertTrue($ret);
 
 
         if (isset($session)) {

@@ -18,10 +18,10 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
         //execute the constructor and check for the Object type and type attribute
         $view = new ViewQuick();
 
-        $this->assertInstanceOf('ViewQuick', $view);
-        $this->assertInstanceOf('ViewDetail', $view);
-        $this->assertAttributeEquals('detail', 'type', $view);
-        $this->assertTrue(is_array($view->options));
+        self::assertInstanceOf('ViewQuick', $view);
+        self::assertInstanceOf('ViewDetail', $view);
+        self::assertAttributeEquals('detail', 'type', $view);
+        self::assertTrue(is_array($view->options));
     }
 
     public function testdisplay()

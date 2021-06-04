@@ -13,17 +13,17 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         //blank key and data
         $expected = '';
         $actual = sugarEncode('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //blank key and valid data
         $expected = 'RGF0YQ==';
         $actual = sugarEncode('', 'Data');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //valid key and data
         $expected = 'RGF0YQ==';
         $actual = sugarEncode('key', 'Data');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testsugarDecode()
@@ -34,17 +34,17 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         //blank key and data
         $expected = '';
         $actual = sugarDecode('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //blank key and valid data
         $expected = 'Data';
         $actual = sugarDecode('', 'RGF0YQ==');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //valid key and data
         $expected = 'Data';
         $actual = sugarDecode('key', 'RGF0YQ==');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testblowfishGetKey()
@@ -53,11 +53,11 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         //test key
         $actual = blowfishGetKey('test');
-        $this->assertGreaterThanOrEqual(36, strlen($actual));
+        self::assertGreaterThanOrEqual(36, strlen($actual));
 
         //default key
         $actual = blowfishGetKey('rapelcg_svryq');
-        $this->assertGreaterThanOrEqual(36, strlen($actual));
+        self::assertGreaterThanOrEqual(36, strlen($actual));
     }
 
     public function testblowfishEncode()
@@ -68,12 +68,12 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         //valid key and blank data
         $expected = '';
         $actual = blowfishEncode('test', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //valid key and valid data
         $expected = 'HI1/88NJJss=';
         $actual = blowfishEncode('test', 'Data');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testblowfishDecode()
@@ -84,11 +84,11 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         //valid key and blank data
         $expected = '';
         $actual = blowfishDecode('test', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //valid key and valid data
         $expected = 'Data';
         $actual = blowfishDecode('test', 'HI1/88NJJss=');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 }

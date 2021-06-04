@@ -23,29 +23,29 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $expected = '';
         $path = '';
         $actual = clean_path($path);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //a simple valid path
         $expected = '/SuiteCRM-develop/include/utils';
         $path = '\SuiteCRM-develop\include\utils';
         $actual = clean_path($path);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //valid network path
         $expected = '//SuiteCRM-develop/include/utils';
         $path = '\\\\/SuiteCRM-develop/include/utils';
         $actual = clean_path($path);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         $expected = '/SuiteCRM-develop/include/utils';
         $path = '/SuiteCRM-develop/./include/utils';
         $actual = clean_path($path);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         $expected = '/SuiteCRM-develop/include/utils';
         $path = '/SuiteCRM-develop//include/utils';
         $actual = clean_path($path);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testcreate_cache_directory()
@@ -60,7 +60,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $actual = create_cache_directory($file);
-        $this->assertFileExists($actual);
+        self::assertFileExists($actual);
 
         if ($this->rootFs->hasChild($file)  == true) {
             rmdir($cache_dir.'/'.$file);
@@ -194,7 +194,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $actual = get_module_dir_list();
         sort($actual);
         sort($expected);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testmk_temp_dir()
@@ -218,17 +218,17 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         //no file extension
         $expected = '';
         $actual = remove_file_extension('fileNoExt');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //simple file extension
         $expected = 'file1';
         $actual = remove_file_extension('file1.txt');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //complex filename
         $expected = 'file2.ext1';
         $actual = remove_file_extension('file2.ext1.ext2');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testwrite_array_to_file()
@@ -265,13 +265,13 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         //without filename
         $tempArray = array('filename' => 'soap_array.txt', 'md5' => '523ef67de860fc54794f27117dba4fac', 'data' => 'some soap data');
         $actual = write_encoded_file($tempArray, $cache_dir, '');
-        $this->assertFileExists($actual);
+        self::assertFileExists($actual);
         unlink($actual);
 
         //with filename
         $tempArray = array('md5' => '523ef67de860fc54794f27117dba4fac', 'data' => 'some soap data');
         $actual = write_encoded_file($tempArray, $cache_dir, 'soap_array.txt');
-        $this->assertFileExists($actual);
+        self::assertFileExists($actual);
         unlink($actual);
     }
 
@@ -287,7 +287,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $actual = create_custom_directory($file);
-        $this->assertFileExists($actual);
+        self::assertFileExists($actual);
 
         if ($vfs->hasChild($file)  == true) {
             rmdir('custom/'.$file);
@@ -322,7 +322,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $expected = array();
 
         $actual = md5DirCompare('include/MVC/', 'include/MVC/', array('views'));
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testgetFiles()
@@ -342,7 +342,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         getFiles($actual, 'include/MVC/Controller');
         sort($actual);
         sort($expected);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with pattern
         $expected = array(
@@ -379,7 +379,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         getFiles($actual, 'include/MVC', '@view@');
         sort($expected);
         sort($actual);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testreadfile_chunked()
@@ -394,8 +394,8 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
 
-        $this->assertTrue($actual);
-        $this->assertSame($expected, $renderedContent);
+        self::assertTrue($actual);
+        self::assertSame($expected, $renderedContent);
 
         //retbytes parameter true/default
         ob_start();
@@ -403,8 +403,8 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
 
-        $this->assertEquals($actual, strlen($renderedContent));
-        $this->assertSame($expected, $renderedContent);
+        self::assertEquals($actual, strlen($renderedContent));
+        self::assertSame($expected, $renderedContent);
     }
 
     public function testsugar_rename()
@@ -420,11 +420,11 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         //test with empty file names
         $actual = sugar_rename('', '');
-        $this->assertFalse($actual);
+        self::assertFalse($actual);
 
         //test with valid file names
         $actual = sugar_rename($dir.'/'.$file, $dir.'/'.'newtest.txt');
-        $this->assertTrue($actual);
+        self::assertTrue($actual);
 
         unlink($dir.'/'.'newtest.txt');
     }
@@ -440,14 +440,14 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         //test with empty filename string
         $expected = 'd41d8cd98f00b204e9800998ecf8427e';
         $hash = fileToHash('');
-        $this->assertSame($expected, $hash);
-        $this->assertSame('', $_SESSION['file2Hash'][$hash]);
+        self::assertSame($expected, $hash);
+        self::assertSame('', $_SESSION['file2Hash'][$hash]);
 
         //test with valid filename
         $expected = '9e5e2527d69c009a81b8ecd730f3957e';
         $hash = fileToHash('config.php');
-        $this->assertSame($expected, $hash);
-        $this->assertSame('config.php', $_SESSION['file2Hash'][$hash]);
+        self::assertSame($expected, $hash);
+        self::assertSame('config.php', $_SESSION['file2Hash'][$hash]);
 
         if (isset($_session)) {
             $_SESSION = $_session;
@@ -466,12 +466,12 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         //test with invalid hash.
         $actual = hashToFile('');
-        $this->assertFalse($actual);
+        self::assertFalse($actual);
 
         //test with a newly generated hash
         $hash = fileToHash('config.php');
         $actual = hashToFile($hash);
-        $this->assertSame('config.php', $actual);
+        self::assertSame('config.php', $actual);
 
         if (isset($_session)) {
             $_SESSION = $_session;
@@ -485,44 +485,44 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it returns expected values
 
         $file = ''; // Only variables should be passed by reference in php7
-        $this->assertSame('', get_file_extension($file));
+        self::assertSame('', get_file_extension($file));
 
         $file = 'test.txt'; // Only variables should be passed by reference in php7
-        $this->assertSame('txt', get_file_extension($file));
+        self::assertSame('txt', get_file_extension($file));
 
         $file = 'test.ext.Txt'; // Only variables should be passed by reference in php7
-        $this->assertSame('Txt', get_file_extension($file, false));
+        self::assertSame('Txt', get_file_extension($file, false));
 
         $file = 'test.ext.TXT'; // Only variables should be passed by reference in php7
-        $this->assertSame('txt', get_file_extension($file, true));
+        self::assertSame('txt', get_file_extension($file, true));
     }
 
     public function testget_mime_content_type_from_filename()
     {
         //execute the method and test if it returns expected values
 
-        $this->assertSame('', get_mime_content_type_from_filename(''));
-        $this->assertSame('application/octet-stream', get_mime_content_type_from_filename('file.tmp'));
-        $this->assertSame('text/plain', get_mime_content_type_from_filename('file.txt'));
-        $this->assertSame('application/x-shockwave-flash', get_mime_content_type_from_filename('file.swf'));
-        $this->assertSame('video/x-flv', get_mime_content_type_from_filename('file.flv'));
+        self::assertSame('', get_mime_content_type_from_filename(''));
+        self::assertSame('application/octet-stream', get_mime_content_type_from_filename('file.tmp'));
+        self::assertSame('text/plain', get_mime_content_type_from_filename('file.txt'));
+        self::assertSame('application/x-shockwave-flash', get_mime_content_type_from_filename('file.swf'));
+        self::assertSame('video/x-flv', get_mime_content_type_from_filename('file.flv'));
     }
 
     public function testcleanFileName()
     {
         //execute the method and test if it returns expected values
 
-        $this->assertSame('file.txt', cleanFileName('file<?>.txt'));
-        $this->assertSame('file_1.txt', cleanFileName('file_1<?>.txt'));
-        $this->assertSame('file.txt', cleanFileName('file.txt'));
+        self::assertSame('file.txt', cleanFileName('file<?>.txt'));
+        self::assertSame('file_1.txt', cleanFileName('file_1<?>.txt'));
+        self::assertSame('file.txt', cleanFileName('file.txt'));
     }
 
     public function testcleanDirName()
     {
         //execute the method and test if it returns expected values
 
-        $this->assertSame('testDir', cleanDirName('./testDir'));
-        $this->assertSame('testDir', cleanDirName('..\\testDir'));
-        $this->assertSame('testDir', cleanDirName('\\test/Dir/'));
+        self::assertSame('testDir', cleanDirName('./testDir'));
+        self::assertSame('testDir', cleanDirName('..\\testDir'));
+        self::assertSame('testDir', cleanDirName('\\test/Dir/'));
     }
 }

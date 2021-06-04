@@ -18,19 +18,19 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $savedSearch = BeanFactory::newBean('SavedSearch');
 
-        $this->assertInstanceOf('SavedSearch', $savedSearch);
-        $this->assertInstanceOf('SugarBean', $savedSearch);
+        self::assertInstanceOf('SavedSearch', $savedSearch);
+        self::assertInstanceOf('SugarBean', $savedSearch);
 
-        $this->assertAttributeEquals('saved_search', 'table_name', $savedSearch);
-        $this->assertAttributeEquals('SavedSearch', 'module_dir', $savedSearch);
-        $this->assertAttributeEquals('SavedSearch', 'object_name', $savedSearch);
+        self::assertAttributeEquals('saved_search', 'table_name', $savedSearch);
+        self::assertAttributeEquals('SavedSearch', 'module_dir', $savedSearch);
+        self::assertAttributeEquals('SavedSearch', 'object_name', $savedSearch);
 
         //test with parameters
         $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
 
-        $this->assertAttributeEquals(array('id', 'name'), 'columns', $savedSearch);
-        $this->assertAttributeEquals('id', 'orderBy', $savedSearch);
-        $this->assertAttributeEquals('ASC', 'sortOrder', $savedSearch);
+        self::assertAttributeEquals(array('id', 'name'), 'columns', $savedSearch);
+        self::assertAttributeEquals('id', 'orderBy', $savedSearch);
+        self::assertAttributeEquals('ASC', 'sortOrder', $savedSearch);
     }
 
     public function testgetForm()
@@ -38,7 +38,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
         $result = $savedSearch->getForm('Leads');
 
-        $this->assertGreaterThan(0, strlen($result));
+        self::assertGreaterThan(0, strlen($result));
     }
 
     public function testgetSelect()
@@ -46,7 +46,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
         $result = $savedSearch->getSelect('Leads');
 
-        $this->assertGreaterThan(0, strlen($result));
+        self::assertGreaterThan(0, strlen($result));
     }
 
 //    public function testMain()
@@ -94,7 +94,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and then retrieve back to verify contents attribute
         $savedSearch->handleSave('', false, false, $id, $searchModuleBean);
         $savedSearch->retrieveSavedSearch($id);
-        $this->assertSame($expected, $savedSearch->contents);
+        self::assertSame($expected, $savedSearch->contents);
     }
 
     public function handleDelete($id)
@@ -104,7 +104,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $savedSearch->handleDelete($id);
 
         $result = $savedSearch->retrieve($id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function returnSavedSearch($id)
@@ -114,9 +114,9 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $savedSearch->returnSavedSearch($id);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -127,9 +127,9 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $savedSearch->returnSavedSearchContents($id);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -140,7 +140,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $search_query = '&orderBy=&sortOrder=&query=&searchFormTab=&showSSDIV=';
 
         //$savedSearch->handleRedirect("Leads", $search_query, 1, 'true');
-        $this->markTestIncomplete('method uses die');
+        self::markTestIncomplete('method uses die');
     }
 
     public function testfill_in_additional_list_fields()
@@ -152,8 +152,8 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
         $savedSearch->fill_in_additional_list_fields();
 
-        $this->assertEquals('Leads', $savedSearch->search_module);
-        $this->assertEquals('Administrator', $savedSearch->assigned_user_name);
+        self::assertEquals('Leads', $savedSearch->search_module);
+        self::assertEquals('Administrator', $savedSearch->assigned_user_name);
     }
 
     public function testpopulateRequest()
@@ -168,8 +168,8 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $savedSearch->populateRequest();
 
         // verify that Request parameters are set
-        $this->assertEquals('Accounts', $_REQUEST['search_module']);
-        $this->assertEquals('test text', $_REQUEST['description']);
-        $this->assertEquals('some content', $_REQUEST['test_content']);
+        self::assertEquals('Accounts', $_REQUEST['search_module']);
+        self::assertEquals('test text', $_REQUEST['description']);
+        self::assertEquals('some content', $_REQUEST['test_content']);
     }
 }

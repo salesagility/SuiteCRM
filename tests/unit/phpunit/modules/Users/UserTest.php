@@ -13,7 +13,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     public function testgetSignatureButtons()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         global $mod_strings;
 
         $user = BeanFactory::newBean('Users');
@@ -28,14 +28,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:hidden;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;
 					</span>";
         $actual = $user->getSignatureButtons('');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with defaultDisplay true
         $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:inherit;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;
 					</span>";
         $actual = $user->getSignatureButtons('', true);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testUser()
@@ -43,18 +43,18 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $user = BeanFactory::newBean('Users');
 
-        $this->assertInstanceOf('User', $user);
-        $this->assertInstanceOf('Person', $user);
-        $this->assertInstanceOf('SugarBean', $user);
+        self::assertInstanceOf('User', $user);
+        self::assertInstanceOf('Person', $user);
+        self::assertInstanceOf('SugarBean', $user);
 
-        $this->assertAttributeEquals('Users', 'module_dir', $user);
-        $this->assertAttributeEquals('User', 'object_name', $user);
-        $this->assertAttributeEquals('users', 'table_name', $user);
+        self::assertAttributeEquals('Users', 'module_dir', $user);
+        self::assertAttributeEquals('User', 'object_name', $user);
+        self::assertAttributeEquals('users', 'table_name', $user);
 
-        $this->assertAttributeEquals(true, 'new_schema', $user);
-        $this->assertAttributeEquals(false, 'authenticated', $user);
-        $this->assertAttributeEquals(true, 'importable', $user);
-        $this->assertAttributeEquals(false, 'team_exists', $user);
+        self::assertAttributeEquals(true, 'new_schema', $user);
+        self::assertAttributeEquals(false, 'authenticated', $user);
+        self::assertAttributeEquals(true, 'importable', $user);
+        self::assertAttributeEquals(false, 'team_exists', $user);
     }
 
     public function testgetSystemUser()
@@ -65,8 +65,8 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $user->getSystemUser();
 
-        $this->assertInstanceOf('User', $result);
-        $this->assertEquals(1, $result->id);
+        self::assertInstanceOf('User', $result);
+        self::assertEquals(1, $result->id);
     }
 
     public function testgetDefaultSignature()
@@ -82,7 +82,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getDefaultSignature();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testgetSignature()
@@ -92,7 +92,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getSignature(1);
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
     }
 
     public function testgetSignaturesArray()
@@ -102,7 +102,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getSignaturesArray();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testgetSignatures()
@@ -113,8 +113,8 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = "<select onChange='setSigEditButtonVisibility();' id='signature_id' name='signature_id'>\n<OPTION selected value=''>--None--</OPTION>";
         $actual = $user->getSignatures();
-        $this->assertTrue(strpos($actual, $expected) === 0);
-        $this->assertEquals(preg_match('/\<\/select\>$/', $actual), 1);
+        self::assertTrue(strpos($actual, $expected) === 0);
+        self::assertEquals(preg_match('/\<\/select\>$/', $actual), 1);
     }
 
     public function testhasPersonalEmail()
@@ -124,13 +124,13 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(2);
 
         $result = $user->hasPersonalEmail();
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
     }
 
     public function testgetUserPrivGuid()
     {
         self::markTestIncomplete('environment dependency');
-                
+
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -142,18 +142,18 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         try {
             $result = $user->getUserPrivGuid();
-            $this->fail('This function sould throws an Exception.');
+            self::fail('This function sould throws an Exception.');
         } catch (Exception $e) {
         }
 
-        $this->assertTrue(isset($result));
-        $this->assertEquals(36, strlen($result));
+        self::assertTrue(isset($result));
+        self::assertEquals(36, strlen($result));
     }
 
     public function testsetUserPrivGuid()
     {
         self::markTestIncomplete('environment dependency');
-                
+
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -167,8 +167,8 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $user->getPreference('userPrivGuid', 'global', $user);
 
-        $this->assertTrue(isset($result));
-        $this->assertEquals(36, strlen($result));
+        self::assertTrue(isset($result));
+        self::assertEquals(36, strlen($result));
     }
 
     public function testSetAndGetAndResetPreference()
@@ -191,14 +191,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         //test getPreference method
         $result = $user->getPreference('userPrivGuid', 'global', $user);
-        $this->assertTrue(isset($result));
-        $this->assertEquals('someGuid', $result);
+        self::assertTrue(isset($result));
+        self::assertEquals('someGuid', $result);
 
 
         //test resetPreferences method and verify that created preference is no longer available
         $user->resetPreferences();
         $result = $user->getPreference('userPrivGuid', 'global', $user);
-        $this->assertFalse(isset($result));
+        self::assertFalse(isset($result));
     }
 
 
@@ -211,9 +211,9 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $user->savePreferencesToDB();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -231,11 +231,11 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $user->getUserDateTimePreferences();
 
-        $this->assertTrue(is_array($result));
-        $this->assertTrue(isset($result['date']));
-        $this->assertTrue(isset($result['time']));
-        $this->assertTrue(isset($result['userGmt']));
-        $this->assertTrue(isset($result['userGmtOffset']));
+        self::assertTrue(is_array($result));
+        self::assertTrue(isset($result['date']));
+        self::assertTrue(isset($result['time']));
+        self::assertTrue(isset($result['userGmt']));
+        self::assertTrue(isset($result['userGmtOffset']));
     }
 
     public function testGetETagSeedAndIncrementETag()
@@ -252,7 +252,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         //execute getETagSeed method, get Etag value
         $ETagInitial = $user->getETagSeed('test');
-        $this->assertGreaterThanOrEqual(0, $ETagInitial);
+        self::assertGreaterThanOrEqual(0, $ETagInitial);
 
 
         //execute incrementETag to increment
@@ -261,14 +261,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         //execute getETagSeed method again, get Etag final value and  compare final and initial values
         $ETagFinal = $user->getETagSeed('test');
-        $this->assertGreaterThan($ETagInitial, $ETagFinal);
+        self::assertGreaterThan($ETagInitial, $ETagFinal);
     }
 
     public function testgetLicensedUsersWhere()
     {
         $expected = "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND LENGTH(user_name)>0";
         $actual = User::getLicensedUsersWhere();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testget_summary_text()
@@ -276,20 +276,20 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         //test without setting name
-        $this->assertEquals(null, $user->get_summary_text());
+        self::assertEquals(null, $user->get_summary_text());
 
         //test with name set
         $user->name = "test";
-        $this->assertEquals('test', $user->get_summary_text());
+        self::assertEquals('test', $user->get_summary_text());
     }
 
     public function testbean_implements()
     {
         $user = BeanFactory::newBean('Users');
 
-        $this->assertEquals(false, $user->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $user->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $user->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $user->bean_implements('')); //test with blank value
+        self::assertEquals(false, $user->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $user->bean_implements('ACL')); //test with valid value
     }
 
     public function testcheck_role_membership()
@@ -303,10 +303,10 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         $result = $user->check_role_membership("test", '');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
         $result = $user->check_role_membership("test", '1');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
     }
 
     public function testsaveAndOthers()
@@ -333,8 +333,8 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $result = $user->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($user->id));
-        $this->assertEquals(36, strlen($user->id));
+        self::assertTrue(isset($user->id));
+        self::assertEquals(36, strlen($user->id));
 
 
         //test retrieve method
@@ -383,13 +383,13 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $user->retrieve($id);
 
-        $this->assertEquals("test", $user->user_name);
+        self::assertEquals("test", $user->user_name);
 
-        $this->assertEquals("firstn", $user->first_name);
-        $this->assertEquals("lastn", $user->last_name);
+        self::assertEquals("firstn", $user->first_name);
+        self::assertEquals("lastn", $user->last_name);
 
-        $this->assertEquals("one@email.com", $user->email1);
-        $this->assertEquals("two@email.com", $user->email2);
+        self::assertEquals("one@email.com", $user->email1);
+        self::assertEquals("two@email.com", $user->email2);
     }
 
     public function retrieve_by_email_address($id)
@@ -398,7 +398,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         //test with invalid email
         $user->retrieve_by_email_address("wrongone@email.com");
-        $this->assertEquals('', $user->id);
+        self::assertEquals('', $user->id);
 
 
         //test with valid email and test for record ID to verify that record is same
@@ -408,8 +408,8 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->email1 = $email;
         $user->save();
         $user->retrieve_by_email_address($email);
-        $this->assertTrue(isset($user->id));
-        $this->assertEquals($id, $user->id);
+        self::assertTrue(isset($user->id));
+        self::assertEquals($id, $user->id);
     }
 
     public function NewPasswordAndFindUserPassword($id)
@@ -437,7 +437,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
     // --- OK
- 
+
     public function authenticate_user($id)
     {
         $user = BeanFactory::newBean('Users');
@@ -446,12 +446,12 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         //test with invalid password
         $result = $user->authenticate_user(md5("pass"));
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
         //test with invalid password
 
         $result = $user->authenticate_user(md5("test1"));
-        $this->assertEquals(true, $result);
+        self::assertEquals(true, $result);
     }
 
     public function load_user($id)
@@ -462,7 +462,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $user->load_user("test1");
 
-        $this->assertEquals(true, $result->authenticated);
+        self::assertEquals(true, $result->authenticated);
     }
 
     public function change_password($id)
@@ -473,14 +473,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and verifh that it returns true
         $result = $user->change_password("test1", "testpass");
-        $this->assertEquals(true, $result);
+        self::assertEquals(true, $result);
 
 
         //find the user by new password
         $result = User::findUserPassword("test", md5("testpass"));
 
-        $this->assertTrue(isset($result['id']));
-        $this->assertEquals($id, $result['id']);
+        self::assertTrue(isset($result['id']));
+        self::assertEquals($id, $result['id']);
     }
 
     public function getPreferredEmail($id)
@@ -523,60 +523,60 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         $result = $user->encrypt_password("test");
-        $this->assertTrue(isset($result));
-        $this->assertGreaterThan(0, strlen($result));
+        self::assertTrue(isset($result));
+        self::assertGreaterThan(0, strlen($result));
     }
 
     public function testgetPasswordHash()
     {
         $result = User::getPasswordHash("test");
 
-        $this->assertTrue(isset($result));
-        $this->assertGreaterThan(0, strlen($result));
+        self::assertTrue(isset($result));
+        self::assertGreaterThan(0, strlen($result));
     }
 
     public function testcheckPassword()
     {
         //test with empty password and empty hash
         $result = User::checkPassword("", '');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
 
         //test with valid hash and empty password
         $result = User::checkPassword("", '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
 
         //test with valid password and invalid hash
         $result = User::checkPassword("test", '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la2');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
 
         //test with valid password and valid hash
         $result = User::checkPassword("test", '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
-        $this->assertEquals(true, $result);
+        self::assertEquals(true, $result);
     }
 
     public function testcheckPasswordMD5()
     {
         //test with empty password and empty hash
         $result = User::checkPasswordMD5(md5(""), '');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
 
         //test with valid hash and empty password
         $result = User::checkPasswordMD5(md5(""), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
 
         //test with valid password and invalid hash
         $result = User::checkPasswordMD5(md5("test"), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la2');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
 
         //test with valid password and valid hash
         $result = User::checkPasswordMD5(md5("test"), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
-        $this->assertEquals(true, $result);
+        self::assertEquals(true, $result);
     }
 
     public function testis_authenticated()
@@ -584,43 +584,43 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         //test without setting name
-        $this->assertEquals(false, $user->is_authenticated());
+        self::assertEquals(false, $user->is_authenticated());
 
         //test with name set
         $user->authenticated = true;
-        $this->assertEquals(true, $user->is_authenticated());
+        self::assertEquals(true, $user->is_authenticated());
     }
 
     public function testfill_in_additional_list_fields()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $user = BeanFactory::newBean('Users');
 
         $user->retrieve(1);
 
         $user->fill_in_additional_list_fields();
 
-        $this->assertEquals("Administrator", $user->full_name);
+        self::assertEquals("Administrator", $user->full_name);
     }
 
     public function testfill_in_additional_detail_fields()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $user = BeanFactory::newBean('Users');
 
         $user->retrieve(1);
 
         $user->fill_in_additional_detail_fields();
 
-        $this->assertEquals("Administrator", $user->full_name);
+        self::assertEquals("Administrator", $user->full_name);
     }
 
     public function testretrieve_user_id()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         $user = BeanFactory::newBean('Users');
 
         $result1 = $user->retrieve_user_id('admin');
@@ -642,12 +642,12 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         //test with default/true
         $result = $user->verify_data();
-        $this->assertEquals(true, $result);
+        self::assertEquals(true, $result);
 
 
         //test with false
         $result = $user->verify_data(false);
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
     }
 
     public function testget_list_view_data()
@@ -661,7 +661,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->get_list_view_data();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testlist_view_parse_additional_sections()
@@ -670,18 +670,18 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $list_form = array();
         $result = $user->list_view_parse_additional_sections($list_form);
-        $this->assertSame($list_form, $result);
+        self::assertSame($list_form, $result);
     }
 
     public function testGetAllUsersAndGetActiveUsers()
     {
         $all_users = User::getAllUsers();
-        $this->assertTrue(is_array($all_users));
+        self::assertTrue(is_array($all_users));
 
         $active_users = User::getActiveUsers();
-        $this->assertTrue(is_array($active_users));
+        self::assertTrue(is_array($active_users));
 
-        $this->assertGreaterThanOrEqual(count($active_users), count($all_users));
+        self::assertGreaterThanOrEqual(count($active_users), count($all_users));
     }
 
 
@@ -692,13 +692,13 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         //test with empty string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 AND users.is_admin=0 ORDER BY users.user_name";
         $actual = $user->create_export_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE user_name=\"\" AND  users.deleted = 0 AND users.is_admin=0 ORDER BY id";
         $actual = $user->create_export_query('id', 'user_name=""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
 
@@ -707,7 +707,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         $result = $user->get_meetings();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testget_calls()
@@ -717,7 +717,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         //$result = $user->get_calls();
         //$this->assertTrue(is_array($result));
 
-        $this->markTestIncomplete('Error:Only variables should be passed by reference');
+        self::markTestIncomplete('Error:Only variables should be passed by reference');
     }
 
     public function testdisplayEmailCounts()
@@ -735,7 +735,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame($expected, $renderedContent);
+        self::assertSame($expected, $renderedContent);
     }
 
     public function testgetSystemDefaultNameAndEmail()
@@ -744,7 +744,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array('email', 'name');
         $actual = array_keys($user->getSystemDefaultNameAndEmail());
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testsetDefaultsInConfig()
@@ -754,9 +754,9 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $user->setDefaultsInConfig();
 
-        $this->assertTrue(is_array($result));
-        $this->assertEquals('sugar', $result['email_default_client']);
-        $this->assertEquals('html', $result['email_default_editor']);
+        self::assertTrue(is_array($result));
+        self::assertEquals('sugar', $result['email_default_client']);
+        self::assertEquals('html', $result['email_default_editor']);
     }
 
 
@@ -783,7 +783,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
                     data-module-name="test" data-email-address="abc@email.com"
                 >abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $account);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with contacts module
@@ -802,13 +802,13 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
                     data-module-name="test" data-email-address="abc@email.com"
                 >abc@email.com</a>';
         $actual = $user->getEmailLink2("abc@email.com", $contact);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
 
     public function testgetEmailLink()
     {
-        $this->markTestIncomplete('Need to mock up user');
+        self::markTestIncomplete('Need to mock up user');
         $user = BeanFactory::newBean('Users');
 
         $user->retrieve(1);
@@ -822,7 +822,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
             . ' onclick=" $(document).openComposeViewModal(this);" data-module="Accounts"'
             . ' data-record-id="" data-module-name="test"  data-email-address=""></a>';
         $actual = $user->getEmailLink("name", $account);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with contacts module
@@ -835,7 +835,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
             . ' onclick="$(document).openComposeViewModal(this);" data-module="Contacts"'
             . ' data-record-id="" data-module-name="test" data-email-address=""></a>';
         $actual = $user->getEmailLink("name", $contact);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testgetLocaleFormatDesc()
@@ -843,8 +843,8 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         $result = $user->getLocaleFormatDesc();
-        $this->assertTrue(isset($result));
-        $this->assertGreaterThan(0, strlen($result));
+        self::assertTrue(isset($result));
+        self::assertGreaterThan(0, strlen($result));
     }
 
     public function testisAdmin()
@@ -852,11 +852,11 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         //test without setting attribute
-        $this->assertEquals(false, $user->isAdmin());
+        self::assertEquals(false, $user->isAdmin());
 
         //test with attribute set
         $user->is_admin = 1;
-        $this->assertEquals(true, $user->isAdmin());
+        self::assertEquals(true, $user->isAdmin());
     }
 
     public function testisDeveloperForAnyModule()
@@ -864,17 +864,17 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         //test without setting is_admin
-        $this->assertEquals(false, $user->isDeveloperForAnyModule());
+        self::assertEquals(false, $user->isDeveloperForAnyModule());
 
 
         //test with id set
         $user->id = 1;
-        $this->assertEquals(false, $user->isDeveloperForAnyModule());
+        self::assertEquals(false, $user->isDeveloperForAnyModule());
 
 
         //test with id and is_admin set
         $user->is_admin = 1;
-        $this->assertEquals(true, $user->isDeveloperForAnyModule());
+        self::assertEquals(true, $user->isDeveloperForAnyModule());
     }
 
     public function testgetDeveloperModules()
@@ -885,7 +885,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getDeveloperModules();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testisDeveloperForModule()
@@ -894,15 +894,15 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         //test without setting is_admin
-        $this->assertEquals(false, $user->isDeveloperForModule("Accounts"));
+        self::assertEquals(false, $user->isDeveloperForModule("Accounts"));
 
         //test with id set
         $user->id = 1;
-        $this->assertEquals(false, $user->isDeveloperForModule("Accounts"));
+        self::assertEquals(false, $user->isDeveloperForModule("Accounts"));
 
         //test with id and is_admin set
         $user->is_admin = 1;
-        $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
+        self::assertEquals(true, $user->isDeveloperForModule("Accounts"));
     }
 
     public function testgetAdminModules()
@@ -913,7 +913,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getAdminModules();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testisAdminForModule()
@@ -922,15 +922,15 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         //test without setting is_admin
-        $this->assertEquals(false, $user->isAdminForModule("Accounts"));
+        self::assertEquals(false, $user->isAdminForModule("Accounts"));
 
         //test with id set
         $user->id = 1;
-        $this->assertEquals(false, $user->isAdminForModule("Accounts"));
+        self::assertEquals(false, $user->isAdminForModule("Accounts"));
 
         //test with id and is_admin set
         $user->is_admin = 1;
-        $this->assertEquals(true, $user->isAdminForModule("Accounts"));
+        self::assertEquals(true, $user->isAdminForModule("Accounts"));
     }
 
     public function testshowLastNameFirst()
@@ -938,7 +938,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         $result = $user->showLastNameFirst();
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
     }
 
     /**
@@ -959,7 +959,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
             $actual = $user->create_new_list_query('id','user_name=""');
             $this->assertSame($expected,$actual);
         */
-        $this->assertTrue(true, "NEEDS FIXING!");
+        self::assertTrue(true, "NEEDS FIXING!");
     }
 
 
@@ -968,7 +968,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         $result = $user->get_first_day_of_week();
-        $this->assertTrue(is_numeric($result));
+        self::assertTrue(is_numeric($result));
     }
 
     public function testgeneratePassword()
@@ -976,12 +976,12 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         //generate apsswords and verify they are not same
 
         $password1 = User::generatePassword();
-        $this->assertGreaterThan(0, strlen($password1));
+        self::assertGreaterThan(0, strlen($password1));
 
         $password2 = User::generatePassword();
-        $this->assertGreaterThan(0, strlen($password2));
+        self::assertGreaterThan(0, strlen($password2));
 
-        $this->assertNotEquals($password1, $password2);
+        self::assertNotEquals($password1, $password2);
     }
 
 
@@ -992,7 +992,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $result = $user->sendEmailForPassword("1");
 
         //expected result is a array with template not found message.
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testafterImportSave()
@@ -1002,9 +1002,9 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $result = $user->afterImportSave();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
+            self::assertStringStartsWith('Cannot modify header information', $e->getMessage());
         }
     }
 
@@ -1013,47 +1013,47 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
 
         //test without user email
-        $this->assertEquals(false, $user->isPrimaryEmail("abc@abc.com"));
+        self::assertEquals(false, $user->isPrimaryEmail("abc@abc.com"));
 
 
         //test with non matching user email
         $user->email1 = "xyz@abc.com";
-        $this->assertEquals(false, $user->isPrimaryEmail("abc@abc.com"));
+        self::assertEquals(false, $user->isPrimaryEmail("abc@abc.com"));
 
 
         //test with matching user email
         $user->email1 = "abc@abc.com";
-        $this->assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
+        self::assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
     }
-    
+
     public function testError()
     {
         global $app_strings;
 
         // setup
-        $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
-        
+        self::assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
+
         // test if there is no error
-        
+
         ob_start();
         include __DIR__ . '/../../../../../modules/Users/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
-        $this->assertContains($expected, $contents);
-        
+        self::assertContains($expected, $contents);
+
         // test if there is an error
-        
+
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
         $request['error_string'] = 'TEST_ERROR_MESSAGE';
-        $this->assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
+        self::assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
         ob_start();
         include __DIR__ . '/../../../../../modules/Users/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n"  . $app_strings['NTC_CLICK_BACK'] . '</span>';
-        $this->assertContains($expected, $contents);
-        
+        self::assertContains($expected, $contents);
+
 
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }

@@ -17,8 +17,8 @@ class ViewAjaxTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and attributes
         $view = new ViewAjax();
-        $this->assertInstanceOf('ViewAjax', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertTrue(is_array($view->options));
+        self::assertInstanceOf('ViewAjax', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertTrue(is_array($view->options));
     }
 }

@@ -17,23 +17,23 @@ class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowProcessed = BeanFactory::newBean('AOW_Processed');
-        $this->assertInstanceOf('AOW_Processed', $aowProcessed);
-        $this->assertInstanceOf('Basic', $aowProcessed);
-        $this->assertInstanceOf('SugarBean', $aowProcessed);
+        self::assertInstanceOf('AOW_Processed', $aowProcessed);
+        self::assertInstanceOf('Basic', $aowProcessed);
+        self::assertInstanceOf('SugarBean', $aowProcessed);
 
-        $this->assertAttributeEquals('AOW_Processed', 'module_dir', $aowProcessed);
-        $this->assertAttributeEquals('AOW_Processed', 'object_name', $aowProcessed);
-        $this->assertAttributeEquals('aow_processed', 'table_name', $aowProcessed);
-        $this->assertAttributeEquals(true, 'new_schema', $aowProcessed);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aowProcessed);
-        $this->assertAttributeEquals(false, 'importable', $aowProcessed);
+        self::assertAttributeEquals('AOW_Processed', 'module_dir', $aowProcessed);
+        self::assertAttributeEquals('AOW_Processed', 'object_name', $aowProcessed);
+        self::assertAttributeEquals('aow_processed', 'table_name', $aowProcessed);
+        self::assertAttributeEquals(true, 'new_schema', $aowProcessed);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $aowProcessed);
+        self::assertAttributeEquals(false, 'importable', $aowProcessed);
     }
 
     public function testbean_implements()
     {
         $aowProcessed = BeanFactory::newBean('AOW_Processed');
-        $this->assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $aowProcessed->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $aowProcessed->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value
+        self::assertEquals(false, $aowProcessed->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $aowProcessed->bean_implements('ACL')); //test with valid value
     }
 }

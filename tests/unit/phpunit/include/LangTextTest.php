@@ -91,67 +91,67 @@ class LangTextTest extends SuitePHPUnitFrameworkTestCase
 
         $text = new LangText('LBL_TEST_APP_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_APP_STRINGS);
         $output = $text->getText();
-        $this->assertEquals('test app string bar baz', $output, 'Incorrect translation (1)');
+        self::assertEquals('test app string bar baz', $output, 'Incorrect translation (1)');
 
         try {
             $text = new LangText('LBL_TEST_MOD_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_APP_STRINGS);
             $output = $text->getText();
-            $this->assertTrue(false, 'Incorrect translation (2) - A language key should not found: [LBL_TEST_MOD_STRING] (1)');
+            self::assertTrue(false, 'Incorrect translation (2) - A language key should not found: [LBL_TEST_MOD_STRING] (1)');
         } catch (ErrorMessageException $e) {
-            $this->assertTrue(true, 'Incorrect translation (2) - A language key should not found: [LBL_TEST_MOD_STRING] (2)');
+            self::assertTrue(true, 'Incorrect translation (2) - A language key should not found: [LBL_TEST_MOD_STRING] (2)');
         }
 
         try {
             $text = new LangText('LBL_TEST_APP_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_MOD_STRINGS);
             $output = $text->getText();
-            $this->assertTrue(false, 'Incorrect translation (3) - A language key should not found: [LBL_TEST_APP_STRING] (1)');
+            self::assertTrue(false, 'Incorrect translation (3) - A language key should not found: [LBL_TEST_APP_STRING] (1)');
         } catch (ErrorMessageException $e) {
-            $this->assertTrue(true, 'Incorrect translation (3) - A language key should not found: [LBL_TEST_APP_STRING] (2)');
+            self::assertTrue(true, 'Incorrect translation (3) - A language key should not found: [LBL_TEST_APP_STRING] (2)');
         }
 
         $text = new LangText('LBL_TEST_MOD_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_MOD_STRINGS);
         $output = $text->getText();
-        $this->assertEquals('test mod string bar baz', $output, 'Incorrect translation (4)');
+        self::assertEquals('test mod string bar baz', $output, 'Incorrect translation (4)');
 
         $text = new LangText('LBL_TEST_APP_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_ALL_STRINGS);
         $output = $text->getText();
-        $this->assertEquals('test app string bar baz', $output, 'Incorrect translation (5)');
+        self::assertEquals('test app string bar baz', $output, 'Incorrect translation (5)');
 
         $text = new LangText('LBL_TEST_MOD_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_ALL_STRINGS);
         $output = $text->getText();
-        $this->assertEquals('test mod string bar baz', $output, 'Incorrect translation (6)');
+        self::assertEquals('test mod string bar baz', $output, 'Incorrect translation (6)');
 
 
         $text = new LangText();
         $output = $text->getText('LBL_TEST_APP_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_APP_STRINGS);
-        $this->assertEquals('test app string bar baz', $output, 'Incorrect translation (7)');
+        self::assertEquals('test app string bar baz', $output, 'Incorrect translation (7)');
 
         try {
             $text = new LangText();
             $output = $text->getText('LBL_TEST_MOD_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_APP_STRINGS);
-            $this->assertTrue(false, 'Incorrect translation (8) - A language key should not found: [LBL_TEST_MOD_STRING] (1)');
+            self::assertTrue(false, 'Incorrect translation (8) - A language key should not found: [LBL_TEST_MOD_STRING] (1)');
         } catch (ErrorMessageException $e) {
-            $this->assertTrue(true, 'Incorrect translation (8) - A language key should not found: [LBL_TEST_MOD_STRING] (2)');
+            self::assertTrue(true, 'Incorrect translation (8) - A language key should not found: [LBL_TEST_MOD_STRING] (2)');
         }
 
         try {
             $text = new LangText();
             $output = $text->getText('LBL_TEST_APP_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_MOD_STRINGS);
-            $this->assertTrue(false, 'Incorrect translation (9) - A language key should not found: [LBL_TEST_APP_STRING] (1)');
+            self::assertTrue(false, 'Incorrect translation (9) - A language key should not found: [LBL_TEST_APP_STRING] (1)');
         } catch (ErrorMessageException $e) {
-            $this->assertTrue(true, 'Incorrect translation (9) - A language key should not found: [LBL_TEST_APP_STRING] (2)');
+            self::assertTrue(true, 'Incorrect translation (9) - A language key should not found: [LBL_TEST_APP_STRING] (2)');
         }
 
         $text = new LangText();
         $output = $text->getText('LBL_TEST_MOD_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_MOD_STRINGS);
-        $this->assertEquals('test mod string bar baz', $output, 'Incorrect translation (10)');
+        self::assertEquals('test mod string bar baz', $output, 'Incorrect translation (10)');
 
         $text = new LangText();
         $output = $text->getText('LBL_TEST_APP_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_ALL_STRINGS);
-        $this->assertEquals('test app string bar baz', $output, 'Incorrect translation (11)');
+        self::assertEquals('test app string bar baz', $output, 'Incorrect translation (11)');
 
         $text = new LangText();
         $output = $text->getText('LBL_TEST_MOD_STRING', ['foo' => 'bar', 'bar' => 'baz'], LangText::USING_ALL_STRINGS);
-        $this->assertEquals('test mod string bar baz', $output, 'Incorrect translation (12)');
+        self::assertEquals('test mod string bar baz', $output, 'Incorrect translation (12)');
     }
 }

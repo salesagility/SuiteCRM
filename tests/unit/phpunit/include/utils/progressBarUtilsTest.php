@@ -11,9 +11,9 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         //this method uses flush so we cannot get and verify content printed
         try {
             progress_bar_flush(false);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -25,9 +25,9 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
             ob_start();
             display_flow_bar('test', 0, 200, false);
             ob_end_clean();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -39,9 +39,9 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
             ob_start();
             start_flow_bar('test', 1, false);
             ob_end_clean();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -53,9 +53,9 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
             ob_start();
             destroy_flow_bar('test', false);
             ob_end_clean();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -67,9 +67,9 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
             ob_start();
             display_progress_bar('test', 80, 100, false);
             ob_end_clean();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -81,9 +81,9 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
             ob_start();
             update_progress_bar('test', 80, 100, false);
             ob_end_clean();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 }

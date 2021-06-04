@@ -11,7 +11,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         $day = new SugarDateTime('2019-01-01');
         $actual = $day->get_day_begin();
         $expected = new SugarDateTime('2019-01-01 00:00:00');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testget_day_end()
@@ -21,7 +21,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         $day = new SugarDateTime('2019-01-01');
         $actual = $day->get_day_end();
         $expected = new SugarDateTime('2019-01-01 23:59:59');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testasDb()
@@ -31,7 +31,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         $day = new SugarDateTime('2019-1-1');
         $actual = $day->asDb();
         $expected = '2019-01-01 00:00:00';
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testasDbDate()
@@ -41,7 +41,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         $day = new SugarDateTime('2019-1-1');
         $actual = $day->asDbDate();
         $expected = '2019-01-01';
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testget_date_str()
@@ -51,7 +51,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         $day = new SugarDateTime('2019-1-1');
         $actual = $day->get_date_str();
         $expected = '&year=2019&month=1&day=1&hour=0';
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testget_day_by_index_this_month()
@@ -61,7 +61,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         $day = new SugarDateTime('2019-1-1');
         $actual = $day->get_day_by_index_this_month(28);
         $expected = new SugarDateTime('2019-01-29');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testget_day_by_index_this_monthWithExcessiveValue()
@@ -72,6 +72,6 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         $day = new SugarDateTime('2019-1-1');
         $actual = $day->get_day_by_index_this_month(32);
         $expected = new SugarDateTime('2019-02-02');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }
