@@ -200,7 +200,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
         $request['error_string'] = 'TEST_ERROR_MESSAGE';
-        self::assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
+        self::assertEquals('TEST_ERROR_MESSAGE', $request['error_string']);
         ob_start();
         include __DIR__ . '/../../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();

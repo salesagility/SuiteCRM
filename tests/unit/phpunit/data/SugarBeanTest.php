@@ -2374,7 +2374,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals($current_user->id, $bean->modified_user_id);
 
-        self::assertEquals($current_user->user_name, null);
+        self::assertEquals(null, $current_user->user_name);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
@@ -2414,7 +2414,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals($current_user->id, $bean->modified_user_id);
 
-        self::assertEquals($current_user->user_name, null);
+        self::assertEquals(null, $current_user->user_name);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
@@ -2455,7 +2455,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals($current_user->id, $bean->modified_user_id);
 
-        self::assertEquals($current_user->user_name, null);
+        self::assertEquals(null, $current_user->user_name);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));

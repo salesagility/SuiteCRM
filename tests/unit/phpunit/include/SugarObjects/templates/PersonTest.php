@@ -82,7 +82,7 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
 
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
-        self::assertEquals($person->lawful_basis, '^consent^');
+        self::assertEquals('^consent^', $person->lawful_basis);
 
         // Test when source is not a string
         try {
