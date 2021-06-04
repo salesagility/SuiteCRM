@@ -82,7 +82,7 @@ class SubpanelQuickCreate
                     $source = $base . 'editviewdefs.php';
                 }
             }
-        }
+        } 
 
         $this->ev = $this->getEditView();
         $this->ev->view = $this->viewType;
