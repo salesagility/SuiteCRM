@@ -88,7 +88,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $result = $this->indexer->ping();
 
         self::assertNotFalse($result);
-        self::assertTrue(is_numeric($result));
+        self::assertIsNumeric($result);
     }
 
     public function testWithoutSearchdefs()

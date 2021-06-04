@@ -17,7 +17,7 @@ class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
         $result = (new Popup_Picker())->process_page();
         $output = ob_get_contents();
         ob_end_clean();
-        self::assertTrue(is_null($result));
+        self::assertNull($result);
         self::assertNotEmpty($output);
         self::assertContains('<!DOCTYPE HTML>', $output);
         self::assertContains('<html lang=\'en_us\'>', $output);

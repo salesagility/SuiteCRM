@@ -109,7 +109,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
     public function testquery_client_ip()
     {
         //test without setting any server parameters
-        self::assertSame(null, query_client_ip());
+        self::assertNull(query_client_ip());
 
         //test with server params set
         $_SERVER['REMOTE_ADDR'] = '1.1.1.3';

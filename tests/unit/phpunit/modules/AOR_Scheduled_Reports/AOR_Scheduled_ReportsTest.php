@@ -33,7 +33,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $aorScheduledReports->retrieve($aorScheduledReports->id);
         $emails = $aorScheduledReports->get_email_recipients();
 
-        self::assertTrue(is_array($emails));
+        self::assertIsArray($emails);
         self::assertEquals('test@test.com', $emails[0]);
 
 

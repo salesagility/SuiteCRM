@@ -19,7 +19,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve('1');
 
         $result = (new UserPreference($user))->getUserDateTimePreferences();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testSetAndGetPreference()
