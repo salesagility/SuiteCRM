@@ -49,11 +49,20 @@
     {/literal}
 </script>
 {assign var='place' value="_FOOTER"} <!-- to be used for id for buttons with custom code in def files-->
-{{if empty($form.button_location) || $form.button_location == 'bottom'}}
-
+{if $config.enable_action_menu and $useTabs}
+<ul class="nav nav-tabs" style="margin: -22px 0 14px 0px;">
+    <li id="tab-actions" class="dropup">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style='border-radius: 0px 0px 4px 4px;background: url("index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_up_arrow.svg") no-repeat #f08377;background-position: right 14px top 10px;padding-right: 28px;line-height: 12px;'>{{$APP.LBL_LINK_SELECT}}</a>
+        {{include file="themes/SuiteP/include/EditView/actions_menu.tpl"}}
+    </li>
+</ul>
+{else}
+{* {{if empty($form.button_location) || $form.button_location == 'bottom'}} *}
 {{sugar_include type='smarty' file='include/EditView/actions_buttons.tpl'}}
+{* {{/if}} *}
 
-{{/if}}
+{/if}
+{*  <ul class="nav nav-tabs"> *}
 </form>
 {{if $externalJSFile}}
 {sugar_include include=$externalJSFile}
