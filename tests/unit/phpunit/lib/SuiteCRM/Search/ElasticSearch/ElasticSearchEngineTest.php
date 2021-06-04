@@ -278,7 +278,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         self::assertEquals($expectedResults, $results->getHits());
         self::assertEquals(258, $results->getTotal());
-        self::assertTrue(is_float($results->getSearchTime()));
+        self::assertIsFloat($results->getSearchTime());
         self::assertGreaterThan(0, $results->getSearchTime());
     }
 

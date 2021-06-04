@@ -30,7 +30,7 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and verify it returns an array
         $actual = BeanFactory::newBean('CampaignLog')->get_list_view_data();
-        self::assertTrue(is_array($actual));
+        self::assertIsArray($actual);
         self::assertSame(array(), $actual);
     }
 

@@ -38,7 +38,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method with parameters and verify that it returns true
         $hits = $aod_index->find('/');
-        self::assertTrue(is_array($hits));
+        self::assertIsArray($hits);
     }
 
     public function testoptimise()
@@ -73,7 +73,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         $result = BeanFactory::newBean('AOD_Index')->getDocumentForBean($user);
 
         //execute the method and verify that it returns an array
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //verify that returned array has a valid Zend_Search_Lucene_Document instance
         self::assertInstanceOf('Zend_Search_Lucene_Document', $result['document']);

@@ -165,7 +165,7 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
     public function testget_document_revisions()
     {
         $results = BeanFactory::newBean('DocumentRevisions')->get_document_revisions(1);
-        self::assertTrue(is_array($results));
+        self::assertIsArray($results);
     }
 
     public function testbean_implements()

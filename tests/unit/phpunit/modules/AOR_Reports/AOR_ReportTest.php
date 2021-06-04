@@ -86,7 +86,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and verify that it returns an array
         $result = BeanFactory::newBean('AOR_Reports')->getReportFields();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testbuild_report_chart()
@@ -230,7 +230,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method with parameters and verify that it returns an array.
         $actual = $aor_Report->build_report_query_select($query_array, 'name');
-        self::assertTrue(is_array($actual));
+        self::assertIsArray($actual);
     }
 
     public function testbuild_report_query_join()

@@ -55,7 +55,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         global $app_strings;
 
         // setup: test works only if it is not exists
-        self::assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
+        self::assertNotTrue(isset($app_strings['TEST_NONEXISTS_LABEL']));
 
         // test if label is not set
 

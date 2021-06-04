@@ -37,11 +37,11 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 
         //test with default params
         $result = $release->get_releases();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with custom params
         $result = $release->get_releases(true, 'Hidden', 'name is not null');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testfill_in_additional_list_fields()

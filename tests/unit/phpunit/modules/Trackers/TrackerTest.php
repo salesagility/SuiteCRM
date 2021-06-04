@@ -37,7 +37,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         $result = BeanFactory::newBean('Trackers')->get_recently_viewed(1);
 
         self::assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testmakeInvisibleForAll()

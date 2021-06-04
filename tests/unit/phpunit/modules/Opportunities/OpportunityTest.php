@@ -110,7 +110,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     public function testget_contacts()
     {
         $result = BeanFactory::newBean('Opportunities')->get_contacts();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testupdate_currency_id()
@@ -258,7 +258,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
     public function testget_account_detail()
     {
         $result = BeanFactory::newBean('Opportunities')->get_account_detail('1');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetCurrencyType()

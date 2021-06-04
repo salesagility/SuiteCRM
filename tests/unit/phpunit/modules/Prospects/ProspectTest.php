@@ -103,7 +103,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
     public function testretrieveTargetList()
     {
         $result = BeanFactory::newBean('Prospects')->retrieveTargetList('', array('id', 'first_name'), 0, 1, 1, 0, 'Accounts');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testretrieveTarget()

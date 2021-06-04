@@ -371,7 +371,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and check if it returns a array.
         $errorMessages = SugarApplication::getErrorMessages();
-        self::assertTrue(is_array($errorMessages));
+        self::assertIsArray($errorMessages);
     }
 
     public function testsetCookie()
@@ -409,7 +409,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test that it returns a array.
         $vars = (new SugarApplication())->getLoginVars();
-        self::assertTrue(is_array($vars));
+        self::assertIsArray($vars);
     }
 
     public function testgetLoginRedirect()
