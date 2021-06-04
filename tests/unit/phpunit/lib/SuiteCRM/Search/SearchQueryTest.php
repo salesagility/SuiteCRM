@@ -152,12 +152,12 @@ class SearchQueryTest extends SearchTestAbstract
 
         $query = SearchQuery::fromRequestArray($request);
 
-        self::assertEquals($query->getSearchString(), 'FOO');
-        self::assertEquals($query->getSize(), 10);
-        self::assertEquals($query->getFrom(), 0);
+        self::assertEquals('FOO', $query->getSearchString());
+        self::assertEquals(10, $query->getSize());
+        self::assertEquals(0, $query->getFrom());
         self::assertNull($query->getEngine());
-        self::assertEquals($query->getOptions(), ['foo' => 'bar']);
-        self::assertEquals($query->getOption('foo'), 'bar');
+        self::assertEquals(['foo' => 'bar'], $query->getOptions());
+        self::assertEquals('bar', $query->getOption('foo'));
     }
 
     public function testFromGetRequest()
@@ -192,11 +192,11 @@ class SearchQueryTest extends SearchTestAbstract
      */
     private function assertRequest(SearchQuery $query)
     {
-        self::assertEquals($query->getSearchString(), 'FOO');
-        self::assertEquals($query->getSize(), 123);
-        self::assertEquals($query->getFrom(), 3);
-        self::assertEquals($query->getEngine(), 'TestEngine');
-        self::assertEquals($query->getOptions(), ['foo' => 'bar']);
-        self::assertEquals($query->getOption('foo'), 'bar');
+        self::assertEquals('FOO', $query->getSearchString());
+        self::assertEquals(123, $query->getSize());
+        self::assertEquals(3, $query->getFrom());
+        self::assertEquals('TestEngine', $query->getEngine());
+        self::assertEquals(['foo' => 'bar'], $query->getOptions());
+        self::assertEquals('bar', $query->getOption('foo'));
     }
 }
