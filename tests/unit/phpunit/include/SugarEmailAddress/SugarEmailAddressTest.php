@@ -3,7 +3,6 @@
 use SuiteCRM\Test\TestLogger;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-/** @noinspection PhpUndefinedClassInspection */
 class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -1485,15 +1484,12 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
@@ -1765,15 +1761,12 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
@@ -1937,15 +1930,12 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }

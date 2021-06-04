@@ -37,8 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/** @noinspection PhpUnhandledExceptionInspection */
-
 use Monolog\Logger;
 use SuiteCRM\Log\CliLoggerHandler;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;

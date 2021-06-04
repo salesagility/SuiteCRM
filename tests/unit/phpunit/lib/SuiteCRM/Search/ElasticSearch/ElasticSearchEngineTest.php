@@ -1,11 +1,10 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,6 +36,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+/** @noinspection PhpUnhandledExceptionInspection */
 
 use SuiteCRM\Search\SearchQuery;
 
@@ -196,7 +197,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     {
         $client = Mockery::mock('Elasticsearch\Client');
 
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $client
             ->shouldReceive('search')
             ->once()
