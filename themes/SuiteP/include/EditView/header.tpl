@@ -90,19 +90,37 @@
 {{$field}}   
 {{/foreach}}
 {{/if}}
-{{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
+{* BizForce *}
+{if !$config.enable_action_menu or !$useTabs}
+
+            {{if $panelCount == 0}}
+            {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
+            {{if $SHOW_VCR_CONTROL}}
+            <div style="width:auto;float: right;vertical-align: bottom;display: inline-block;">
+            {$PAGINATION}
+            </div>
+            {{/if}}
+            {{counter name="panelCount" print=false}}
+            {{/if}}
+{* *}
+ {{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
+ {* BizForce *}
+{/if}
+{* *}
 
 </td>
-<td align='right' class="edit-view-pagination-desktop-container">
-{{$ADMIN_EDIT}}
-{{if $panelCount == 0}}
+{* BizForce *}
+{*<td align='right' class="edit-view-pagination-desktop-container">
+ {{$ADMIN_EDIT}}
+{{if $panelCount == 0}} *}
     {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
-	<div class="edit-view-pagination edit-view-pagination-desktop">
+{*	<div class="edit-view-pagination edit-view-pagination-desktop">
         {{if $SHOW_VCR_CONTROL}}
         {$PAGINATION}
         {{/if}}
     </div>
 {{/if}}
-</td>
+</td> *}
+{* *}
 </tr>
 </table>
