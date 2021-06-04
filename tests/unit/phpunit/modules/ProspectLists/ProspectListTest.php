@@ -23,7 +23,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
                                 users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
                                 ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
         $actual = $prospectList->create_export_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with valid string params
@@ -32,7 +32,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
                                 users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
                                 ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
         $actual = $prospectList->create_export_query('prospect_lists.id', 'users.user_name = ""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
 
@@ -44,14 +44,14 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
 					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
         $actual = $prospectList->create_list_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
 					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
         $actual = $prospectList->create_list_query('prospect_lists.id', 'users.user_name = ""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testProspectList()
@@ -59,14 +59,14 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $prospectList = BeanFactory::newBean('ProspectLists');
 
-        $this->assertInstanceOf('ProspectList', $prospectList);
-        $this->assertInstanceOf('SugarBean', $prospectList);
+        self::assertInstanceOf('ProspectList', $prospectList);
+        self::assertInstanceOf('SugarBean', $prospectList);
 
-        $this->assertAttributeEquals('prospect_lists', 'table_name', $prospectList);
-        $this->assertAttributeEquals('ProspectLists', 'module_dir', $prospectList);
-        $this->assertAttributeEquals('ProspectList', 'object_name', $prospectList);
+        self::assertAttributeEquals('prospect_lists', 'table_name', $prospectList);
+        self::assertAttributeEquals('ProspectLists', 'module_dir', $prospectList);
+        self::assertAttributeEquals('ProspectList', 'object_name', $prospectList);
 
-        $this->assertAttributeEquals("prospect_lists_prospects", 'rel_prospects_table', $prospectList);
+        self::assertAttributeEquals("prospect_lists_prospects", 'rel_prospects_table', $prospectList);
     }
 
     public function testget_summary_text()
@@ -74,11 +74,11 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $prospectList = BeanFactory::newBean('ProspectLists');
 
         //test without setting name
-        $this->assertEquals(null, $prospectList->get_summary_text());
+        self::assertEquals(null, $prospectList->get_summary_text());
 
         //test with name set
         $prospectList->name = "test";
-        $this->assertEquals('test', $prospectList->get_summary_text());
+        self::assertEquals('test', $prospectList->get_summary_text());
     }
 
     /**
@@ -94,7 +94,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
     	$actual = $prospectList->create_export_members_query('1');
     	$this->assertSame($expected,$actual);
         */
-        $this->assertTrue(true, "NEEDS FIXING!");
+        self::assertTrue(true, "NEEDS FIXING!");
     }
 
     public function testsave()
@@ -107,8 +107,8 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $result = $prospectList->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($prospectList->id));
-        $this->assertEquals(36, strlen($prospectList->id));
+        self::assertTrue(isset($prospectList->id));
+        self::assertEquals(36, strlen($prospectList->id));
 
 
         //test set_prospect_relationship method
@@ -122,12 +122,12 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $prospectList->mark_deleted($prospectList->id);
         $result = $prospectList->retrieve($prospectList->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testsave_relationship_changes()
     {
-        $this->markTestIncomplete('Error in query: columns mismatch | Error in methodd call params: 2nd param should be array but string given');
+        self::markTestIncomplete('Error in query: columns mismatch | Error in methodd call params: 2nd param should be array but string given');
     }
 
     public function set_prospect_relationship($id)
@@ -142,7 +142,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
         $expected_count = $prospectList->get_entry_count();
 
-        $this->assertEquals(2, $expected_count);
+        self::assertEquals(2, $expected_count);
 
 
         //test clear_prospect_relationship method with expected counts
@@ -159,7 +159,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
         $expected_count = $prospectList->get_entry_count();
 
-        $this->assertEquals(1, $expected_count);
+        self::assertEquals(1, $expected_count);
 
         $this->clear_prospect_relationship($id, '3');
     }
@@ -177,7 +177,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $prospectList->clear_prospect_relationship($id, $related_id, 'related');
 
         $expected_count = (int)$prospectList->get_entry_count();
-        $this->assertEquals($initial_count - 1, $expected_count);
+        self::assertEquals($initial_count - 1, $expected_count);
     }
 
     public function testmark_relationships_deleted()
@@ -187,12 +187,12 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->mark_relationships_deleted('');
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->markTestIncomplete('Method has no implementation');
+        self::markTestIncomplete('Method has no implementation');
     }
 
     public function testfill_in_additional_list_fields()
@@ -202,12 +202,12 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->fill_in_additional_list_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->markTestIncomplete('Method has no implementation');
+        self::markTestIncomplete('Method has no implementation');
     }
 
     public function testfill_in_additional_detail_fields()
@@ -215,7 +215,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $prospectList = BeanFactory::newBean('ProspectLists');
 
         $prospectList->fill_in_additional_detail_fields();
-        $this->assertEquals(0, $prospectList->entry_count);
+        self::assertEquals(0, $prospectList->entry_count);
     }
 
     public function testupdate_currency_id()
@@ -225,12 +225,12 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $prospectList->update_currency_id('', '');
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->markTestIncomplete('Method has no implementation');
+        self::markTestIncomplete('Method has no implementation');
     }
 
     public function testget_entry_count()
@@ -238,7 +238,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $prospectList = BeanFactory::newBean('ProspectLists');
 
         $result = $prospectList->get_entry_count();
-        $this->assertEquals(0, $result);
+        self::assertEquals(0, $result);
     }
 
     public function testget_list_view_data()
@@ -247,7 +247,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array( "DELETED"=> 0, "ENTRY_COUNT"=> '0' );
         $actual = $prospectList->get_list_view_data();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testbuild_generic_where_clause()
@@ -257,21 +257,21 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         //test with empty string params
         $expected = "prospect_lists.name like '%'";
         $actual = $prospectList->build_generic_where_clause('');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "prospect_lists.name like '1%'";
         $actual = $prospectList->build_generic_where_clause('1');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testbean_implements()
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
-        $this->assertEquals(false, $prospectList->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $prospectList->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $prospectList->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $prospectList->bean_implements('')); //test with blank value
+        self::assertEquals(false, $prospectList->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $prospectList->bean_implements('ACL')); //test with valid value
     }
 }

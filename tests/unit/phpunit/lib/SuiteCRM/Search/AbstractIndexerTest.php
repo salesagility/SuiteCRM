@@ -90,7 +90,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
         try {
             $indexer->setModulesToIndex(null);
-            $this->fail('Null should not be accepted');
+            self::fail('Null should not be accepted');
         } catch (Exception $throwable) {
             // All good!
         } catch (Throwable $throwable) {

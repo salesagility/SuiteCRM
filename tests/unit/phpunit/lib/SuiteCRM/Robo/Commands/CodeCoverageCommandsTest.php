@@ -33,7 +33,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $returnType = is_string($actual) || is_array($actual) || is_bool($actual);
-        $this->assertTrue($returnType);
+        self::assertTrue($returnType);
     }
 
     public function testGetCommitRangeForTravisCi()
@@ -47,7 +47,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $returnType = is_string($actual) || is_array($actual) || is_bool($actual);
-        $this->assertTrue($returnType);
+        self::assertTrue($returnType);
     }
 
     public function testGetCodeCoverageCommand()
@@ -62,6 +62,6 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
             self::$testClass
         );
 
-        $this->assertEquals($commandExpected, $actual);
+        self::assertEquals($commandExpected, $actual);
     }
 }

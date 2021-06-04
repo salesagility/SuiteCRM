@@ -61,8 +61,8 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
         $dieOk = $epMock->getDieOk();
         $exitString = $epMock->getExitString();
-        $this->assertTrue($dieOk);
-        $this->assertEquals('<html>
+        self::assertTrue($dieOk);
+        self::assertEquals('<html>
     <head>
         <title>SuiteCRM Google Sync - ERROR</title>
     </head>
@@ -85,7 +85,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
         $expected = "https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=UNIT_TEST_client_id&redirect_uri=http%3A%2F%2Fwww.example.com%2Findex.php%3FentryPoint%3DsaveGoogleApiKey&state&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&approval_prompt=force";
         $redirectString = $epMock->getRedirectUrl();
-        $this->assertEquals($expected, $redirectString);
+        self::assertEquals($expected, $redirectString);
     }
 
     public function testHandleRequestCode()
@@ -101,10 +101,10 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $request['code'] = '1234567890';
         try {
             $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
-            $this->assertTrue(false, "This should have thrown an exception");
+            self::assertTrue(false, "This should have thrown an exception");
         } catch (Exception $e) {
         }
-        $this->assertEquals(10, $e->getCode());
+        self::assertEquals(10, $e->getCode());
     }
 
     public function testHandleRequestSetInvalid()
@@ -121,7 +121,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
         $expected = "http://foo/bar.org/index.php?module=Users&action=EditView&record=" . $user->id;
         $redirectString = $epMock->getRedirectUrl();
-        $this->assertEquals($expected, $redirectString);
+        self::assertEquals($expected, $redirectString);
     }
 
 
@@ -138,6 +138,6 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
         $expected = "http://foo/bar.org/index.php?module=Users&action=EditView&record=" . $user->id;
         $redirectString = $epMock->getRedirectUrl();
-        $this->assertEquals($expected, $redirectString);
+        self::assertEquals($expected, $redirectString);
     }
 }

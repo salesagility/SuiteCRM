@@ -6,16 +6,16 @@ class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $fpEvents = BeanFactory::newBean('FP_events');
-        $this->assertInstanceOf('FP_events', $fpEvents);
-        $this->assertInstanceOf('Basic', $fpEvents);
-        $this->assertInstanceOf('SugarBean', $fpEvents);
+        self::assertInstanceOf('FP_events', $fpEvents);
+        self::assertInstanceOf('Basic', $fpEvents);
+        self::assertInstanceOf('SugarBean', $fpEvents);
 
-        $this->assertAttributeEquals('FP_events', 'module_dir', $fpEvents);
-        $this->assertAttributeEquals('FP_events', 'object_name', $fpEvents);
-        $this->assertAttributeEquals('fp_events', 'table_name', $fpEvents);
-        $this->assertAttributeEquals(true, 'new_schema', $fpEvents);
-        $this->assertAttributeEquals(true, 'importable', $fpEvents);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $fpEvents);
+        self::assertAttributeEquals('FP_events', 'module_dir', $fpEvents);
+        self::assertAttributeEquals('FP_events', 'object_name', $fpEvents);
+        self::assertAttributeEquals('fp_events', 'table_name', $fpEvents);
+        self::assertAttributeEquals(true, 'new_schema', $fpEvents);
+        self::assertAttributeEquals(true, 'importable', $fpEvents);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $fpEvents);
     }
 
     public function testemail_templates()
@@ -25,6 +25,6 @@ class FP_eventsTest extends SuiteCRM\Test\SuitePHPUnitFrameworkTestCase
         $fpEvents = BeanFactory::newBean('FP_events');
 
         $fpEvents->email_templates();
-        $this->assertInternalType('array', $app_list_strings['emailTemplates_type_list']);
+        self::assertInternalType('array', $app_list_strings['emailTemplates_type_list']);
     }
 }

@@ -17,25 +17,25 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowCondition = BeanFactory::newBean('AOW_Conditions');
-        $this->assertInstanceOf('AOW_Condition', $aowCondition);
-        $this->assertInstanceOf('Basic', $aowCondition);
-        $this->assertInstanceOf('SugarBean', $aowCondition);
+        self::assertInstanceOf('AOW_Condition', $aowCondition);
+        self::assertInstanceOf('Basic', $aowCondition);
+        self::assertInstanceOf('SugarBean', $aowCondition);
 
-        $this->assertAttributeEquals('AOW_Conditions', 'module_dir', $aowCondition);
-        $this->assertAttributeEquals('AOW_Condition', 'object_name', $aowCondition);
-        $this->assertAttributeEquals('aow_conditions', 'table_name', $aowCondition);
-        $this->assertAttributeEquals(true, 'new_schema', $aowCondition);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aowCondition);
-        $this->assertAttributeEquals(false, 'importable', $aowCondition);
-        $this->assertAttributeEquals(false, 'tracker_visibility', $aowCondition);
+        self::assertAttributeEquals('AOW_Conditions', 'module_dir', $aowCondition);
+        self::assertAttributeEquals('AOW_Condition', 'object_name', $aowCondition);
+        self::assertAttributeEquals('aow_conditions', 'table_name', $aowCondition);
+        self::assertAttributeEquals(true, 'new_schema', $aowCondition);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $aowCondition);
+        self::assertAttributeEquals(false, 'importable', $aowCondition);
+        self::assertAttributeEquals(false, 'tracker_visibility', $aowCondition);
     }
 
     public function testbean_implements()
     {
         $aowCondition = BeanFactory::newBean('AOW_Conditions');
-        $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $aowCondition->bean_implements('test')); //test with invalid value
-        $this->assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
+        self::assertEquals(false, $aowCondition->bean_implements('test')); //test with invalid value
+        self::assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
     }
 
     public function testsave_lines()
@@ -58,7 +58,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 
         //get the linked beans and verify if records created
         $aow_conditions = $aowWorkFlow->get_linked_beans('aow_conditions', $aowWorkFlow->object_name);
-        $this->assertEquals(count($post_data['field']), count($aow_conditions));
+        self::assertEquals(count($post_data['field']), count($aow_conditions));
 
         //cleanup afterwards
         foreach ($aow_conditions as $lineItem) {

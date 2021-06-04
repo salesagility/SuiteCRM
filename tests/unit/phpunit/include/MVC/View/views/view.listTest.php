@@ -42,7 +42,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->listViewProcess();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        self::assertGreaterThan(0, strlen($renderedContent));
 
 
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
@@ -72,9 +72,9 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewList();
-        $this->assertInstanceOf('ViewList', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('list', 'type', $view);
+        self::assertInstanceOf('ViewList', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('list', 'type', $view);
     }
 
     public function testlistViewPrepare()
@@ -87,7 +87,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->listViewPrepare();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertLessThanOrEqual(0, strlen($renderedContent));
+        self::assertLessThanOrEqual(0, strlen($renderedContent));
 
         //test with some REQUEST parameters preset. it should return some html and set the REQUEST key we provided in current_query_by_page REQUEST Param.
         $view = new ViewList();
@@ -101,8 +101,8 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->listViewPrepare();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
-        $this->assertEquals('value', $_REQUEST['key']);
+        self::assertGreaterThan(0, strlen($renderedContent));
+        self::assertEquals('value', $_REQUEST['key']);
     }
 
     public function testprepareSearchForm()
@@ -111,7 +111,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view1 = new ViewList();
         $view1->module = 'Users';
         $view1->prepareSearchForm();
-        $this->assertInstanceOf('SearchForm', $view1->searchForm);
+        self::assertInstanceOf('SearchForm', $view1->searchForm);
 
         //test with REQUEST parameters set. it will set searchform attribute to a searchform object.
         $view2 = new ViewList();
@@ -120,7 +120,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $_REQUEST['searchFormTab'] = 'advanced_search';
         $view2->prepareSearchForm();
 
-        $this->assertInstanceOf('SearchForm', $view2->searchForm);
+        self::assertInstanceOf('SearchForm', $view2->searchForm);
     }
 
     public function testprocessSearchForm()
@@ -133,7 +133,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->processSearchForm();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        self::assertGreaterThan(0, strlen($renderedContent));
 
         //test with use_old_search = true. there is a $view variable which is never set so it doesn't returns anything.
         $view = new ViewList();
@@ -144,7 +144,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->processSearchForm();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertEquals(0, strlen($renderedContent));
+        self::assertEquals(0, strlen($renderedContent));
     }
 
     public function testpreDisplay()
@@ -152,7 +152,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it sets the lv attribute to ListViewSmarty object.
         $view = new ViewList();
         $view->preDisplay();
-        $this->assertInstanceOf('ListViewSmarty', $view->lv);
+        self::assertInstanceOf('ListViewSmarty', $view->lv);
     }
 
     public function testdisplay()
@@ -172,7 +172,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->display();
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent1));
+        self::assertGreaterThan(0, strlen($renderedContent1));
 
         //test with bean, seed and other arrtibutes set. it shuold return html.
         $view->bean = BeanFactory::newBean('Users');
@@ -186,7 +186,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view->display();
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent2));
+        self::assertGreaterThan(0, strlen($renderedContent2));
 
 
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");

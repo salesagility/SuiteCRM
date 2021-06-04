@@ -86,12 +86,12 @@ class ErrorMessageTest extends SuitePHPUnitFrameworkTestCase
     {
         try {
             ErrorMessage::handler('A test error message', 'debug', true, 321);
-            $this->assertFalse(true, 'Error handler should throw an exception in this scenario.');
+            self::assertFalse(true, 'Error handler should throw an exception in this scenario.');
         } catch (ErrorMessageException $e) {
             $message = $e->getMessage();
             $code = $e->getCode();
-            $this->assertEquals('A test error message', $message, 'Incorrect exception message given.');
-            $this->assertEquals(321, $code, 'Incorrect exception code given.');
+            self::assertEquals('A test error message', $message, 'Incorrect exception message given.');
+            self::assertEquals(321, $code, 'Incorrect exception code given.');
         }
     }
 }

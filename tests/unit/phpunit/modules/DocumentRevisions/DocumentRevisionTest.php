@@ -17,13 +17,13 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
-        $this->assertInstanceOf('DocumentRevision', $documentRevision);
-        $this->assertInstanceOf('SugarBean', $documentRevision);
+        self::assertInstanceOf('DocumentRevision', $documentRevision);
+        self::assertInstanceOf('SugarBean', $documentRevision);
 
-        $this->assertAttributeEquals('DocumentRevisions', 'module_dir', $documentRevision);
-        $this->assertAttributeEquals('DocumentRevision', 'object_name', $documentRevision);
-        $this->assertAttributeEquals('document_revisions', 'table_name', $documentRevision);
-        $this->assertAttributeEquals(true, 'new_schema', $documentRevision);
+        self::assertAttributeEquals('DocumentRevisions', 'module_dir', $documentRevision);
+        self::assertAttributeEquals('DocumentRevision', 'object_name', $documentRevision);
+        self::assertAttributeEquals('document_revisions', 'table_name', $documentRevision);
+        self::assertAttributeEquals(true, 'new_schema', $documentRevision);
     }
 
     public function testSaveAndRetrieve()
@@ -39,21 +39,21 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         $documentRevision->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($documentRevision->id));
-        $this->assertEquals(36, strlen($documentRevision->id));
+        self::assertTrue(isset($documentRevision->id));
+        self::assertEquals(36, strlen($documentRevision->id));
 
         //test document retrieve method
         $docRev = $documentRevision->retrieve($documentRevision->id);
-        $this->assertEquals('1', $docRev->document_id);
-        $this->assertEquals('1', $docRev->doc_id);
-        $this->assertEquals('text', $docRev->doc_type);
-        $this->assertEquals('test', $docRev->filename);
-        $this->assertEquals('ext', $docRev->file_ext);
+        self::assertEquals('1', $docRev->document_id);
+        self::assertEquals('1', $docRev->doc_id);
+        self::assertEquals('text', $docRev->doc_type);
+        self::assertEquals('test', $docRev->filename);
+        self::assertEquals('ext', $docRev->file_ext);
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $docRev->mark_deleted($docRev->id);
         $result = $docRev->retrieve($docRev->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testget_summary_text()
@@ -61,11 +61,11 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //test without setting name
-        $this->assertEquals(null, $documentRevision->get_summary_text());
+        self::assertEquals(null, $documentRevision->get_summary_text());
 
         //test with name set
         $documentRevision->filename = 'test';
-        $this->assertEquals('test', $documentRevision->get_summary_text());
+        self::assertEquals('test', $documentRevision->get_summary_text());
     }
 
     public function testis_authenticated()
@@ -73,11 +73,11 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
 
         //test wihout setting attributes
-        $this->assertEquals(null, $documentRevision->is_authenticated());
+        self::assertEquals(null, $documentRevision->is_authenticated());
 
         //test with attributes preset
         $documentRevision->authenticated = true;
-        $this->assertEquals(true, $documentRevision->is_authenticated());
+        self::assertEquals(true, $documentRevision->is_authenticated());
     }
 
     public function testfill_in_additional_list_fields()
@@ -87,9 +87,9 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $documentRevision->fill_in_additional_list_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -100,9 +100,9 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $documentRevision->fill_in_additional_detail_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -112,13 +112,13 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
         //test wihout setting attributes
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
-        $this->assertEquals('.', $result);
+        self::assertEquals('.', $result);
 
         //test with attributes preset
         $documentRevision->filename = 'test.ext';
         $documentRevision->revision = 1;
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
-        $this->assertEquals('-Revision_1.ext', $result);
+        self::assertEquals('-Revision_1.ext', $result);
     }
 
     public function testfill_document_name_revision()
@@ -128,9 +128,9 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $documentRevision->fill_document_name_revision('dummy_id');
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -144,9 +144,9 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         try {
             $ss = new Sugar_Smarty();
             $documentRevision->list_view_parse_additional_sections($ss, $xTemplateSection);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -154,28 +154,28 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
     {
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $result = $documentRevision->get_list_view_data();
-        $this->assertEquals(array('DELETED' => 0), $result);
+        self::assertEquals(array('DELETED' => 0), $result);
     }
 
     public function testget_document_revision_name()
     {
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $result = $documentRevision->get_document_revision_name(1);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testget_document_revisions()
     {
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
         $results = $documentRevision->get_document_revisions(1);
-        $this->assertTrue(is_array($results));
+        self::assertTrue(is_array($results));
     }
 
     public function testbean_implements()
     {
         $documentRevision = BeanFactory::newBean('DocumentRevisions');
-        $this->assertEquals(false, $documentRevision->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $documentRevision->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value
+        self::assertEquals(false, $documentRevision->bean_implements('')); //test with blank value
+        self::assertEquals(false, $documentRevision->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value
     }
 }

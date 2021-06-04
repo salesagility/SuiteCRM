@@ -33,14 +33,14 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
         $loggerManager::setLevelMapping('test', 125);
 
         $loggerLevels = $loggerManager::getLoggerLevels();
-        $this->assertArrayHasKey('test', $loggerLevels);
+        self::assertArrayHasKey('test', $loggerLevels);
     }
 
     public function testGetLogLevel()
     {
         $loggerManager = self::$loggerManager;
         $logLevel = $loggerManager::getLogLevel();
-        $this->assertEquals('fatal', $logLevel);
+        self::assertEquals('fatal', $logLevel);
     }
 
     public function testGetAvailableLoggers()
@@ -48,7 +48,7 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
         $loggerManager = self::$loggerManager;
         $loggers = $loggerManager::getAvailableLoggers();
 
-        $this->assertContains('SugarLogger', $loggers);
+        self::assertContains('SugarLogger', $loggers);
     }
 
     public function testSetLoggerLevel()
@@ -57,6 +57,6 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
         $loggerManager->setLevel('debug');
         $logLevel = $loggerManager::getLogLevel();
 
-        $this->assertEquals('debug', $logLevel);
+        self::assertEquals('debug', $logLevel);
     }
 }

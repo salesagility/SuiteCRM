@@ -8,16 +8,16 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $email = BeanFactory::newBean('EmailAddresses');
-        $this->assertInstanceOf('EmailAddress', $email);
-        $this->assertInstanceOf('SugarEmailAddress', $email);
-        $this->assertInstanceOf('SugarBean', $email);
+        self::assertInstanceOf('EmailAddress', $email);
+        self::assertInstanceOf('SugarEmailAddress', $email);
+        self::assertInstanceOf('SugarBean', $email);
 
-        $this->assertAttributeEquals('EmailAddresses', 'module_dir', $email);
-        $this->assertAttributeEquals('EmailAddresses', 'module_name', $email);
-        $this->assertAttributeEquals('EmailAddress', 'object_name', $email);
-        $this->assertAttributeEquals('email_addresses', 'table_name', $email);
+        self::assertAttributeEquals('EmailAddresses', 'module_dir', $email);
+        self::assertAttributeEquals('EmailAddresses', 'module_name', $email);
+        self::assertAttributeEquals('EmailAddress', 'object_name', $email);
+        self::assertAttributeEquals('email_addresses', 'table_name', $email);
 
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $email);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $email);
     }
 
     public function testsave()
@@ -30,12 +30,12 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
         $email->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($email->id));
-        $this->assertEquals(36, strlen($email->id));
+        self::assertTrue(isset($email->id));
+        self::assertEquals(36, strlen($email->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $email->mark_deleted($email->id);
         $result = $email->retrieve($email->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 }

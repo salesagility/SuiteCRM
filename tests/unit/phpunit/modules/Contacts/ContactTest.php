@@ -17,29 +17,29 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $contact = BeanFactory::newBean('Contacts');
-        $this->assertInstanceOf('Contact', $contact);
-        $this->assertInstanceOf('Person', $contact);
-        $this->assertInstanceOf('SugarBean', $contact);
+        self::assertInstanceOf('Contact', $contact);
+        self::assertInstanceOf('Person', $contact);
+        self::assertInstanceOf('SugarBean', $contact);
 
-        $this->assertAttributeEquals('Contacts', 'module_dir', $contact);
-        $this->assertAttributeEquals('Contact', 'object_name', $contact);
-        $this->assertAttributeEquals('contacts', 'table_name', $contact);
-        $this->assertAttributeEquals('accounts_contacts', 'rel_account_table', $contact);
-        $this->assertAttributeEquals('opportunities_contacts', 'rel_opportunity_table', $contact);
-        $this->assertAttributeEquals(true, 'importable', $contact);
-        $this->assertAttributeEquals(true, 'new_schema', $contact);
+        self::assertAttributeEquals('Contacts', 'module_dir', $contact);
+        self::assertAttributeEquals('Contact', 'object_name', $contact);
+        self::assertAttributeEquals('contacts', 'table_name', $contact);
+        self::assertAttributeEquals('accounts_contacts', 'rel_account_table', $contact);
+        self::assertAttributeEquals('opportunities_contacts', 'rel_opportunity_table', $contact);
+        self::assertAttributeEquals(true, 'importable', $contact);
+        self::assertAttributeEquals(true, 'new_schema', $contact);
     }
 
     public function testadd_list_count_joins()
     {
-        $this->markTestIncomplete('Breaks on php 7.1');
+        self::markTestIncomplete('Breaks on php 7.1');
 
         $contact = BeanFactory::newBean('Contacts');
 
         //test with empty strings
         $query = "";
         $contact->add_list_count_joins($query, '');
-        $this->assertEquals(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
+        self::assertEquals(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
 
 
         //test with valid string
@@ -48,13 +48,13 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $contact->add_list_count_joins($query, 'accounts.name');
         $query = preg_replace('/\s+/', '', $query);
         $expected =preg_replace('/\s+/', '', $expected);
-        $this->assertSame($expected, $query);
+        self::assertSame($expected, $query);
 
         //test with valid string
         $query = "";
         $expected = "\n	            LEFT JOIN accounts_contacts\n	            ON contacts.id=accounts_contacts.contact_id\n	            LEFT JOIN accounts\n	            ON accounts_contacts.account_id=accounts.id\n	                 LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ";
         $contact->add_list_count_joins($query, 'contacts.name');
-        $this->assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
+        self::assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
     }
 
     public function testlistviewACLHelper()
@@ -66,7 +66,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
         $actual = $contact->listviewACLHelper();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
@@ -88,29 +88,29 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $actual = $contact->create_new_list_query("account.name","account.name is null");
         $this->assertSame($expected,$actual);
         */
-        $this->assertTrue(true, "NEEDS FIXING!");
+        self::assertTrue(true, "NEEDS FIXING!");
     }
 
     public function testaddress_popup_create_new_list_query()
     {
-        $this->markTestIncomplete('Breaks on php 7.1');
+        self::markTestIncomplete('Breaks on php 7.1');
         $contact = BeanFactory::newBean('Contacts');
 
         //test with empty string params
         $expected = "SELECT LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'',IFNULL(contacts.last_name,'')))) name, \n				contacts.*,\n                accounts.name as account_name,\n                accounts.id as account_id,\n                accounts.assigned_user_id account_id_owner,\n                users.user_name as assigned_user_name ,contacts_cstm.*\n                FROM contacts LEFT JOIN users\n	                    ON contacts.assigned_user_id=users.id\n	                    LEFT JOIN accounts_contacts\n	                    ON contacts.id=accounts_contacts.contact_id  and accounts_contacts.deleted = 0\n	                    LEFT JOIN accounts\n	                    ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = 'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c where  contacts.deleted=0 ";
         $actual = $contact->address_popup_create_new_list_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "SELECT LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'',IFNULL(contacts.last_name,'')))) name, \n				contacts.*,\n                accounts.name as account_name,\n                accounts.id as account_id,\n                accounts.assigned_user_id account_id_owner,\n                users.user_name as assigned_user_name ,contacts_cstm.*\n                FROM contacts LEFT JOIN users\n	                    ON contacts.assigned_user_id=users.id\n	                    LEFT JOIN accounts_contacts\n	                    ON contacts.id=accounts_contacts.contact_id  and accounts_contacts.deleted = 0\n	                    LEFT JOIN accounts\n	                    ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = 'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c where (contacts.name=\"\") AND  contacts.deleted=0 ";
         $actual = $contact->address_popup_create_new_list_query('contacts.id', 'contacts.name=""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testcreate_export_query()
     {
-        $this->markTestIncomplete('Refactor needed as field ording changes on different test environments');
+        self::markTestIncomplete('Refactor needed as field ording changes on different test environments');
     }
 
     public function testfill_in_additional_list_fields()
@@ -126,9 +126,9 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
         $contact->fill_in_additional_list_fields();
 
-        $this->assertEquals("firstn lastn", $contact->full_name);
-        $this->assertEquals("firstn lastn &lt;1@test.com&gt;", $contact->email_and_name1);
-        $this->assertEquals("firstn lastn &lt;2@test.com&gt;", $contact->email_and_name2);
+        self::assertEquals("firstn lastn", $contact->full_name);
+        self::assertEquals("firstn lastn &lt;1@test.com&gt;", $contact->email_and_name1);
+        self::assertEquals("firstn lastn &lt;2@test.com&gt;", $contact->email_and_name2);
     }
 
     public function testfill_in_additional_detail_fields()
@@ -140,9 +140,9 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
         $contact->fill_in_additional_detail_fields();
 
-        $this->assertEquals("", $contact->account_name);
-        $this->assertEquals("", $contact->account_id);
-        $this->assertEquals("", $contact->report_to_name);
+        self::assertEquals("", $contact->account_name);
+        self::assertEquals("", $contact->account_id);
+        self::assertEquals("", $contact->report_to_name);
     }
 
     public function testload_contacts_users_relationship()
@@ -152,9 +152,9 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->load_contacts_users_relationship();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -182,12 +182,12 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
         $actual = $contact->get_list_view_data();
 
-        $this->assertEquals($expected['NAME'], $actual['NAME']);
-        $this->assertEquals($expected['FIRST_NAME'], $actual['FIRST_NAME']);
-        $this->assertEquals($expected['LAST_NAME'], $actual['LAST_NAME']);
-        $this->assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
-        $this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
-        $this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
+        self::assertEquals($expected['NAME'], $actual['NAME']);
+        self::assertEquals($expected['FIRST_NAME'], $actual['FIRST_NAME']);
+        self::assertEquals($expected['LAST_NAME'], $actual['LAST_NAME']);
+        self::assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
+        self::assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
+        self::assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
     }
 
     public function testbuild_generic_where_clause()
@@ -197,13 +197,13 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         //test with string
         $expected = "contacts.last_name like 'test%' or contacts.first_name like 'test%' or accounts.name like 'test%' or contacts.assistant like 'test%' or ea.email_address like 'test%'";
         $actual = $contact->build_generic_where_clause('test');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with number
         $expected = "contacts.last_name like '1%' or contacts.first_name like '1%' or accounts.name like '1%' or contacts.assistant like '1%' or ea.email_address like '1%' or contacts.phone_home like '%1%' or contacts.phone_mobile like '%1%' or contacts.phone_work like '%1%' or contacts.phone_other like '%1%' or contacts.phone_fax like '%1%' or contacts.assistant_phone like '%1%'";
         $actual = $contact->build_generic_where_clause(1);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testset_notification_body()
@@ -218,8 +218,8 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $contact->set_notification_body(new Sugar_Smarty(), $contact);
 
-        $this->assertEquals($contact->full_name, $result->_tpl_vars['CONTACT_NAME']);
-        $this->assertEquals($contact->description, $result->_tpl_vars['CONTACT_DESCRIPTION']);
+        self::assertEquals($contact->full_name, $result->_tpl_vars['CONTACT_NAME']);
+        self::assertEquals($contact->description, $result->_tpl_vars['CONTACT_DESCRIPTION']);
     }
 
     public function testget_contact_id_by_email()
@@ -227,10 +227,10 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $contact = BeanFactory::newBean('Contacts');
 
         $result = $contact->get_contact_id_by_email("");
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
 
 
-        $this->markTestSkipped('Invalid Columns(email1,email2) in Query ');
+        self::markTestSkipped('Invalid Columns(email1,email2) in Query ');
     }
 
     public function testsave_relationship_changes()
@@ -241,18 +241,18 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         try {
             $contact->save_relationship_changes(true);
             $contact->save_relationship_changes(false);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
     public function testbean_implements()
     {
         $contact = BeanFactory::newBean('Contacts');
-        $this->assertEquals(false, $contact->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $contact->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $contact->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $contact->bean_implements('')); //test with blank value
+        self::assertEquals(false, $contact->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $contact->bean_implements('ACL')); //test with valid value
     }
 
     public function testget_unlinked_email_query()
@@ -268,7 +268,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 	(select eb.email_id from emails_beans eb where eb.bean_module ='Contacts' and eb.bean_id = '')
 	) derivedemails on derivedemails.email_id = emails.id";
         $actual = $contact->get_unlinked_email_query();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testprocess_sync_to_outlook()
@@ -278,17 +278,17 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->process_sync_to_outlook("all");
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $contact->process_sync_to_outlook("1");
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 }

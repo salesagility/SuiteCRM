@@ -8,9 +8,9 @@ class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcard();
-        $this->assertInstanceOf('ViewImportvcard', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('edit', 'type', $view);
+        self::assertInstanceOf('ViewImportvcard', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('edit', 'type', $view);
     }
 
     public function testdisplay()
@@ -29,10 +29,10 @@ class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
         $view->display();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
-         
+        self::assertGreaterThan(0, strlen($renderedContent));
+
         // cleanup
-        
+
         if (isset($request)) {
             $_REQUEST = $request;
         } else {

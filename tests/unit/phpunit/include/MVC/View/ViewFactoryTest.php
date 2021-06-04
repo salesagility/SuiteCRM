@@ -8,15 +8,15 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
     {
         //check with invalid input. must return sugaview instance
         $view = ViewFactory::loadView('default', '');
-        $this->assertInstanceOf('SugarView', $view);
+        self::assertInstanceOf('SugarView', $view);
 
         //check with a valid module without a specific view, must return sugarview instance
         $view = ViewFactory::loadView('default', 'Users');
-        $this->assertInstanceOf('SugarView', $view);
+        self::assertInstanceOf('SugarView', $view);
 
         //check with a valid module and specific view, must reutern speciifc view instance
         $view = ViewFactory::loadView('list', 'Users');
-        $this->assertInstanceOf('UsersViewList', $view);
+        self::assertInstanceOf('UsersViewList', $view);
     }
 
     public function test_loadConfig()
@@ -25,20 +25,20 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
         $view = ViewFactory::loadView('default', '');
         $options = $view->options;
         ViewFactory::_loadConfig($view, 'default');
-        $this->assertSame($options, $view->options);
+        self::assertSame($options, $view->options);
 
         //check with a valid module which does not implement it's own view config. method must not change the view options.
         $view = ViewFactory::loadView('detail', 'Users');
         $options = $view->options;
         ViewFactory::_loadConfig($view, 'detail');
-        $this->assertSame($options, $view->options);
+        self::assertSame($options, $view->options);
 
         //check with a valid module which implement it's own view config. method still must not change the view options because it needs.
         $view = ViewFactory::loadView('area_detail_map', 'jjwg_Areas');
         $view->module = 'jjwg_Areas';
         $options = $view->options;
         ViewFactory::_loadConfig($view, 'area_detail_map');
-        $this->assertSame($options, $view->options);
+        self::assertSame($options, $view->options);
     }
 
     public function test_buildFromFile()
@@ -48,24 +48,24 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
         $target_module = 'Users';
         $bean = null;
         $view = ViewFactory::_buildFromFile('modules/'.$target_module.'/views/view.'.$type.'.php', $bean, array(), $type, $target_module);
-        $this->assertInstanceOf('UsersViewList', $view);
+        self::assertInstanceOf('UsersViewList', $view);
 
         //check with valid values and test if it returns correct view instance
         $type = 'detail';
         $target_module = 'Users';
         $bean = null;
         $view = ViewFactory::_buildFromFile('modules/'.$target_module.'/views/view.'.$type.'.php', $bean, array(), $type, $target_module);
-        $this->assertInstanceOf('UsersViewDetail', $view);
+        self::assertInstanceOf('UsersViewDetail', $view);
     }
 
     public function test_buildClass()
     {
         //check with valid values and test if it returns correct view instance
         $view = ViewFactory::_buildClass('UsersViewList', null, array());
-        $this->assertInstanceOf('UsersViewList', $view);
+        self::assertInstanceOf('UsersViewList', $view);
 
         //check with valid values and test if it returns correct view instance
         $view = ViewFactory::_buildClass('UsersViewDetail', null, array());
-        $this->assertInstanceOf('UsersViewDetail', $view);
+        self::assertInstanceOf('UsersViewDetail', $view);
     }
 }
