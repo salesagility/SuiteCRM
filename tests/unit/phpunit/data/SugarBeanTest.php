@@ -7,7 +7,6 @@ include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTempl
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\SuiteValidator;
 
-/** @noinspection PhpUndefinedClassInspection */
 class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -1891,7 +1890,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->setLoadedRelationships(array('foo'));
         $clone = clone $bean;
         self::assertEquals('bar', $bean->foo);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertNotTrue(isset($clone->foo));
         unset($bean->foo);
         self::assertEquals($bean, $clone);
@@ -2004,7 +2002,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::newBean('Contacts');
         $bean->field_defs['testKey'] = array('type' => 'link');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(false, $results);
@@ -2021,7 +2018,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             'link_class' => 'testClass',
             'link_file' => 'testClass.php',
         );
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(false, $results);
@@ -2038,11 +2034,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             'link_class' => 'testClass',
             'link_file' => 'modules/Campaigns/ProspectLink.php',
         );
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(true, $results);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('testValue', $bean->testKey);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
@@ -2055,11 +2049,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             'link_class' => 'ProspectLink',
             'link_file' => 'modules/Campaigns/ProspectLink.php',
         );
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(true, $results);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('testValue', $bean->testKey);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
@@ -2074,7 +2066,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             'link_file' => 'modules/Campaigns/ProspectLink.php',
             'relationship' => 'campaign_leads',
         );
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(false, $results);
@@ -2118,7 +2109,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::newBean('Contacts');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = new ProspectLink('test', $bean);
         $results = $bean->get_linked_beans('testKey', 'Case', '', 0, 1);
         self::assertEquals(array(), $results);
@@ -2253,7 +2243,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
 
         self::assertEquals($bean, $bean->custom_fields->bean);
@@ -2279,7 +2268,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
@@ -2305,7 +2293,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
@@ -2331,9 +2318,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($current_user->id, $bean->modified_user_id);
 
         self::assertEquals(0, $bean->deleted);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
 
         $GLOBALS['sugar_config']['strict_id_validation'] = false;
@@ -2376,9 +2361,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals(null, $current_user->user_name);
         self::assertEquals(0, $bean->deleted);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
@@ -2398,9 +2381,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
                 'type' => 'email',
             ),
         );
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = null;
         try {
@@ -2416,9 +2397,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals(null, $current_user->user_name);
         self::assertEquals(0, $bean->deleted);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
@@ -2439,9 +2418,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
                 'type' => 'email',
             ),
         );
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = null;
         try {
@@ -2457,9 +2434,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals(null, $current_user->user_name);
         self::assertEquals(0, $bean->deleted);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
@@ -2482,9 +2457,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
                 'type' => 'email',
             ),
         ));
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->emailAddress = BeanFactory::newBean('EmailAddresses');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array('testbean1@email.com');
         $results = null;
         try {
@@ -2499,9 +2472,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse($isValidator->isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
@@ -2534,7 +2505,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField = '<p>test <b>html</b> value</p>';
         $bean->cleanBean();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('&lt;p&gt;test &lt;b&gt;html&lt;/b&gt; value&lt;/p&gt;', $bean->testField);
     }
 
@@ -2557,7 +2527,6 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'NULL';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
 
@@ -2566,10 +2535,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'datetime');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'invalid-format';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
 
@@ -2578,10 +2545,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'date');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'NULL';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
         // test
@@ -2589,10 +2554,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'date');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'invalid-format';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
 
@@ -2601,10 +2564,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'time');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'NULL';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
 
@@ -2613,10 +2574,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'time');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'invalid-format';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('invalid-format', $bean->testField1);
 
         // test
@@ -2624,10 +2583,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'time');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'am';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('am', $bean->testField1);
 
 
@@ -2636,10 +2593,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'float');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'NULL';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('NULL', $bean->testField1);
 
 
@@ -2648,10 +2603,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'int');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'NULL';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('NULL', $bean->testField1);
 
 
@@ -2660,10 +2613,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'int');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'a string here..';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals(0, $bean->testField1);
 
 
@@ -2672,12 +2623,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = true;
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
         // test
@@ -2685,12 +2633,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 1;
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
 
@@ -2699,12 +2644,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'true';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
         // test
@@ -2712,12 +2654,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'TRUE';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
 
@@ -2726,12 +2665,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'on';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
 
@@ -2740,12 +2676,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = false;
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertFalse($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
 
@@ -2754,12 +2687,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = '';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertFalse($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
         // test
@@ -2767,12 +2697,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 0;
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertFalse($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
 
@@ -2781,12 +2708,9 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = '0';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertFalse($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
 
@@ -2795,14 +2719,10 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = null;
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotFalse($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNull($bean->testField1);
 
 
@@ -2811,10 +2731,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'bool');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'NULL';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertTrue($bean->testField1);
 
 
@@ -2823,14 +2741,10 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'encrypt');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = '';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotFalse($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('', $bean->testField1);
 
         // test
@@ -2838,14 +2752,10 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->field_defs['testField1'] = array('type' => 'encrypt');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField1 = 'a test string value';
         $bean->fixUpFormatting();
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotTrue($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotFalse($bean->testField1);
-        /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotEquals('', $bean->testField1);
     }
 
