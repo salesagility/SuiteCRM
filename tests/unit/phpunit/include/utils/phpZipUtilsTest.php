@@ -20,9 +20,9 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $result = unzip($file, $cache_dir);
-        $this->assertTrue($result);
+        self::assertTrue($result);
 
-        $this->markTestIncomplete('File handling doesnt works in localy');
+        self::markTestIncomplete('File handling doesnt works in localy');
 //        $this->assertFileExists($cache_dir.'/config.php');
 //        $this->assertFileExists($cache_dir.'/config_override.php');
 
@@ -43,9 +43,9 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $result = unzip_file($file, null, $cache_dir);
-        $this->assertTrue($result);
+        self::assertTrue($result);
 
-        $this->markTestIncomplete("File handling doesn't work locally.");
+        self::markTestIncomplete("File handling doesn't work locally.");
 //        $this->assertFileExists($cache_dir.'/config.php');
 //        $this->assertFileExists($cache_dir.'/config_override.php');
 
@@ -65,7 +65,7 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         zip_dir($cache_dir.'/modules', $file);
 
-        $this->assertFileExists($file);
+        self::assertFileExists($file);
 
         unlink($file);
     }
@@ -83,8 +83,8 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $result = zip_files_list($file, $files_list);
 
-        $this->assertTrue($result);
-        $this->assertFileExists($file);
+        self::assertTrue($result);
+        self::assertFileExists($file);
 
         unlink($file);
     }

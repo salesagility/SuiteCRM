@@ -25,11 +25,11 @@ class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
             $view->display();
         } catch (Exception $e) {
             $msg = $e->getMessage();
-            $this->assertStringStartsWith('Cannot modify header information', $msg, $msg . "\nTrace:\n" . $e->getTraceAsString());
+            self::assertStringStartsWith('Cannot modify header information', $msg, $msg . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertInstanceOf('ViewVcard', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('detail', 'type', $view);
+        self::assertInstanceOf('ViewVcard', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('detail', 'type', $view);
     }
 }

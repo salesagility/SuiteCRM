@@ -54,13 +54,13 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $lead->save();
 
         $bean = BeanFactory::getBean($lead->module_dir, $lead->id);
-        $this->assertNotEmpty($bean);
+        self::assertNotEmpty($bean);
 
         // Don't return a cached result if the bean was deleted
         $lead->mark_deleted($lead->id);
-        $this->assertEmpty(BeanFactory::getBean($lead->module_dir, $lead->id));
+        self::assertEmpty(BeanFactory::getBean($lead->module_dir, $lead->id));
         // Unless explicitly specified
-        $this->assertNotEmpty(BeanFactory::getBean($lead->module_dir, $lead->id, [], false));
+        self::assertNotEmpty(BeanFactory::getBean($lead->module_dir, $lead->id, [], false));
     }
 
     protected function getModuleBean($module)

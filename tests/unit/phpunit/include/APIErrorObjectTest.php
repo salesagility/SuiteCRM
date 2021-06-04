@@ -98,7 +98,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
             'meta' => [],
         ];
         $actual = $error->export();
-        $this->assertEquals($expected, $actual, 'API Error Object constructor error: Incorrect default state.');
+        self::assertEquals($expected, $actual, 'API Error Object constructor error: Incorrect default state.');
 
         global $app_strings;
         $app_strings['LBL_TEST_LABEL_TITLE'] = 'A title';
@@ -116,7 +116,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
             'meta' => ['some' => 'meta info'],
         ];
         $actual = $error->export();
-        $this->assertEquals($expected, $actual, 'API Error Object constructor error: Incorrect state set.');
+        self::assertEquals($expected, $actual, 'API Error Object constructor error: Incorrect state set.');
     }
 
     public function testRetrieveFromException()
@@ -149,6 +149,6 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
             unset($actual['meta']['debug']);
         }
 
-        $this->assertEquals($expected, $actual, 'API Error Object retrive error from exception.');
+        self::assertEquals($expected, $actual, 'API Error Object retrive error from exception.');
     }
 }

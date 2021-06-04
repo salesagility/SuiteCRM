@@ -22,7 +22,7 @@ class ExceptionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetDetail()
     {
-        $this->assertEquals(
+        self::assertEquals(
             'SuiteCRM has encountered an exception which has not been handled',
             self::$exception->getDetail()
         );
@@ -30,7 +30,7 @@ class ExceptionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetLogLevel()
     {
-        $this->assertEquals(
+        self::assertEquals(
             LogLevel::CRITICAL,
             self::$exception->getLogLevel()
         );

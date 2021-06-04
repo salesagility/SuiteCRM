@@ -18,14 +18,14 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $mergeRecord = BeanFactory::newBean('MergeRecords');
 
-        $this->assertInstanceOf('MergeRecord', $mergeRecord);
-        $this->assertInstanceOf('SugarBean', $mergeRecord);
+        self::assertInstanceOf('MergeRecord', $mergeRecord);
+        self::assertInstanceOf('SugarBean', $mergeRecord);
 
-        $this->assertAttributeEquals('MergeRecords', 'module_dir', $mergeRecord);
-        $this->assertAttributeEquals('MergeRecord', 'object_name', $mergeRecord);
+        self::assertAttributeEquals('MergeRecords', 'module_dir', $mergeRecord);
+        self::assertAttributeEquals('MergeRecord', 'object_name', $mergeRecord);
 
-        $this->assertAttributeEquals(true, 'new_schema', $mergeRecord);
-        $this->assertAttributeEquals(true, 'acl_display_only', $mergeRecord);
+        self::assertAttributeEquals(true, 'new_schema', $mergeRecord);
+        self::assertAttributeEquals(true, 'acl_display_only', $mergeRecord);
     }
 
     public function testsave()
@@ -33,7 +33,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $mergeRecord = BeanFactory::newBean('MergeRecords');
         //$mergeRecord->save();
 
-        $this->markTestIncomplete('method has no implementation');
+        self::markTestIncomplete('method has no implementation');
     }
 
     public function testretrieve()
@@ -48,10 +48,10 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $mergeRecord->retrieve('1');
 
-        $this->markTestIncomplete('Merge bean is broken at the moment');
+        self::markTestIncomplete('Merge bean is broken at the moment');
         //$this->assertTrue(isset($mergeRecord->merge_bean->id));
 
-        $this->assertEquals(1, $mergeRecord->merge_bean->id);
+        self::assertEquals(1, $mergeRecord->merge_bean->id);
     }
 
     public function testload_merge_bean()
@@ -64,18 +64,18 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         //test without merge_id
         $mergeRecord->load_merge_bean('Contacts');
 
-        $this->assertAttributeEquals('Contacts', 'merge_module', $mergeRecord);
-        $this->assertAttributeEquals('Contact', 'merge_bean_class', $mergeRecord);
-        $this->assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path', $mergeRecord);
+        self::assertAttributeEquals('Contacts', 'merge_module', $mergeRecord);
+        self::assertAttributeEquals('Contact', 'merge_bean_class', $mergeRecord);
+        self::assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path', $mergeRecord);
 
         //test with merge_id
         $mergeRecord->load_merge_bean('Users', false, 1);
 
-        $this->assertAttributeEquals('Users', 'merge_module', $mergeRecord);
-        $this->assertAttributeEquals('User', 'merge_bean_class', $mergeRecord);
-        $this->assertAttributeEquals('modules/Users/User.php', 'merge_bean_file_path', $mergeRecord);
+        self::assertAttributeEquals('Users', 'merge_module', $mergeRecord);
+        self::assertAttributeEquals('User', 'merge_bean_class', $mergeRecord);
+        self::assertAttributeEquals('modules/Users/User.php', 'merge_bean_file_path', $mergeRecord);
 
-        $this->assertInstanceOf('User', $mergeRecord->merge_bean);
+        self::assertInstanceOf('User', $mergeRecord->merge_bean);
     }
 
     public function testload_merge_bean2()
@@ -85,18 +85,18 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         //test without merge_id
         $mergeRecord->load_merge_bean2('Contacts');
 
-        $this->assertAttributeEquals('Contacts', 'merge_module2', $mergeRecord);
-        $this->assertAttributeEquals('Contact', 'merge_bean_class2', $mergeRecord);
-        $this->assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path2', $mergeRecord);
+        self::assertAttributeEquals('Contacts', 'merge_module2', $mergeRecord);
+        self::assertAttributeEquals('Contact', 'merge_bean_class2', $mergeRecord);
+        self::assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path2', $mergeRecord);
 
         //test with merge_id
         $mergeRecord->load_merge_bean2('Users', false, 1);
 
-        $this->assertAttributeEquals('Users', 'merge_module2', $mergeRecord);
-        $this->assertAttributeEquals('User', 'merge_bean_class2', $mergeRecord);
-        $this->assertAttributeEquals('modules/Users/User.php', 'merge_bean_file_path2', $mergeRecord);
+        self::assertAttributeEquals('Users', 'merge_module2', $mergeRecord);
+        self::assertAttributeEquals('User', 'merge_bean_class2', $mergeRecord);
+        self::assertAttributeEquals('modules/Users/User.php', 'merge_bean_file_path2', $mergeRecord);
 
-        $this->assertInstanceOf('User', $mergeRecord->merge_bean2);
+        self::assertInstanceOf('User', $mergeRecord->merge_bean2);
     }
 
     public function testfill_in_additional_list_fields()
@@ -111,9 +111,9 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $mergeRecord->fill_in_additional_list_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -128,9 +128,9 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $mergeRecord->fill_in_additional_detail_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -143,11 +143,11 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $mergeRecord->load_merge_bean('Users');
 
         //test without setting name
-        $this->assertEquals(null, $mergeRecord->get_summary_text());
+        self::assertEquals(null, $mergeRecord->get_summary_text());
 
         //test with name set
         $mergeRecord->merge_bean->name = 'test';
-        $this->assertEquals('test', $mergeRecord->get_summary_text());
+        self::assertEquals('test', $mergeRecord->get_summary_text());
     }
 
     public function testget_list_view_data()
@@ -161,7 +161,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $mergeRecord->get_list_view_data();
 
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testbuild_generic_where_clause()
@@ -176,21 +176,21 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         //test with string
         $expected = "contacts.last_name like 'test%' or contacts.first_name like 'test%' or accounts.name like 'test%' or contacts.assistant like 'test%' or ea.email_address like 'test%'";
         $actual = $mergeRecord->build_generic_where_clause('test');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with number
         $expected = "contacts.last_name like '1%' or contacts.first_name like '1%' or accounts.name like '1%' or contacts.assistant like '1%' or ea.email_address like '1%' or contacts.phone_home like '%1%' or contacts.phone_mobile like '%1%' or contacts.phone_work like '%1%' or contacts.phone_other like '%1%' or contacts.phone_fax like '%1%' or contacts.assistant_phone like '%1%'";
         $actual = $mergeRecord->build_generic_where_clause(1);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testbean_implements()
     {
         $mergeRecord = BeanFactory::newBean('MergeRecords');
 
-        $this->assertEquals(false, $mergeRecord->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $mergeRecord->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $mergeRecord->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $mergeRecord->bean_implements('')); //test with blank value
+        self::assertEquals(false, $mergeRecord->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $mergeRecord->bean_implements('ACL')); //test with valid value
     }
 
     public function testACLAccess()
@@ -201,15 +201,15 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $mergeRecord = BeanFactory::newBean('MergeRecords');
 
         //test without loading merge bean
-        $this->assertEquals(true, $mergeRecord->ACLAccess('')); //test with valid value
+        self::assertEquals(true, $mergeRecord->ACLAccess('')); //test with valid value
 
         //test with merge bean loaded
         $mergeRecord->load_merge_bean('Meetings');
 
-        $this->assertEquals(true, $mergeRecord->ACLAccess('edit'));
-        $this->assertEquals(true, $mergeRecord->ACLAccess('save'));
-        $this->assertEquals(true, $mergeRecord->ACLAccess('editview'));
-        $this->assertEquals(true, $mergeRecord->ACLAccess('delete'));
+        self::assertEquals(true, $mergeRecord->ACLAccess('edit'));
+        self::assertEquals(true, $mergeRecord->ACLAccess('save'));
+        self::assertEquals(true, $mergeRecord->ACLAccess('editview'));
+        self::assertEquals(true, $mergeRecord->ACLAccess('delete'));
     }
 
     public function testpopulate_search_params()
@@ -228,7 +228,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $mergeRecord->populate_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
 
-        $this->assertSame($expected, $mergeRecord->field_search_params);
+        self::assertSame($expected, $mergeRecord->field_search_params);
     }
 
     public function testget_inputs_for_search_params()
@@ -244,7 +244,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $mergeRecord->get_inputs_for_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
 
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
     public function testemail_addresses_query()
@@ -261,7 +261,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $mergeRecord = BeanFactory::newBean('MergeRecords');
         $result = $mergeRecord->email_addresses_query($table, $module, $bean_id);
 
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
     public function testrelease_name_query()
@@ -270,11 +270,11 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         //test with type = like
         $result = $mergeRecord->release_name_query('like', 'test');
-        $this->assertSame('', $result);
+        self::assertSame('', $result);
 
         //test with type = start
         $result = $mergeRecord->release_name_query('start', 'test');
-        $this->assertSame('', $result);
+        self::assertSame('', $result);
     }
 
     public function testcreate_where_statement()
@@ -301,7 +301,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $actual = $mergeRecord->create_where_statement();
 
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testgenerate_where_statement()
@@ -313,7 +313,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $actual = $mergeRecord->generate_where_statement($clauses);
 
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         ////error_reporting(E_ALL);
     }

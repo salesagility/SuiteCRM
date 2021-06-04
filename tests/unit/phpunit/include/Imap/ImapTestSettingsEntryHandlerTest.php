@@ -53,7 +53,7 @@ require_once __DIR__ . '/../../../../../include/Imap/ImapTestSettingsEntryHandle
  */
 class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
-    
+
     /**
      * FAIL: sugar_config parameter does not contains imap_test
      */
@@ -62,12 +62,12 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
         $handler = new ImapTestSettingsEntryHandler();
         try {
             $handler->handleEntryPointRequest([], []);
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            self::assertTrue(true);
         }
     }
-    
+
     /**
      * FAIL: $_REQUEST does not contains imap_test_settings
      */
@@ -76,12 +76,12 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
         $handler = new ImapTestSettingsEntryHandler();
         try {
             $handler->handleEntryPointRequest(['imap_test' => 'foo'], []);
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            self::assertTrue(true);
         }
     }
-    
+
     /**
      * FAIL: Key not found.; key was: "bar"
      */
@@ -89,9 +89,9 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
     {
         $handler = new ImapTestSettingsEntryHandler();
         $results = $handler->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'bar']);
-        $this->assertEquals('ERROR: Key not found.; key was: "bar".', $results);
+        self::assertEquals('ERROR: Key not found.; key was: "bar".', $results);
     }
-    
+
     /**
      * OK: should returns a success output from entry point handling.
      */
@@ -100,7 +100,7 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
         $handler = new ImapTestSettingsEntryHandler();
         $results = $handler->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'testCaseExample']);
-        $this->assertEquals('OK: test settings changed to "testCaseExample"', $results);
-        $this->assertTrue(unlink($settingsFile));
+        self::assertEquals('OK: test settings changed to "testCaseExample"', $results);
+        self::assertTrue(unlink($settingsFile));
     }
 }

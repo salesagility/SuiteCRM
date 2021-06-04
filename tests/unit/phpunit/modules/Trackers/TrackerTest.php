@@ -18,18 +18,18 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $tracker = BeanFactory::newBean('Trackers');
 
-        $this->assertInstanceOf('Tracker', $tracker);
-        $this->assertInstanceOf('SugarBean', $tracker);
+        self::assertInstanceOf('Tracker', $tracker);
+        self::assertInstanceOf('SugarBean', $tracker);
 
-        $this->assertAttributeEquals('tracker', 'table_name', $tracker);
-        $this->assertAttributeEquals('Trackers', 'module_dir', $tracker);
-        $this->assertAttributeEquals('Tracker', 'object_name', $tracker);
+        self::assertAttributeEquals('tracker', 'table_name', $tracker);
+        self::assertAttributeEquals('Trackers', 'module_dir', $tracker);
+        self::assertAttributeEquals('Tracker', 'object_name', $tracker);
 
-        $this->assertAttributeEquals(true, 'disable_var_defs', $tracker);
+        self::assertAttributeEquals(true, 'disable_var_defs', $tracker);
 
-        $this->assertAttributeEquals('Tracker', 'acltype', $tracker);
-        $this->assertAttributeEquals('Trackers', 'acl_category', $tracker);
-        $this->assertAttributeEquals(true, 'disable_custom_fields', $tracker);
+        self::assertAttributeEquals('Tracker', 'acltype', $tracker);
+        self::assertAttributeEquals('Trackers', 'acl_category', $tracker);
+        self::assertAttributeEquals(true, 'disable_custom_fields', $tracker);
     }
 
     public function testget_recently_viewed()
@@ -38,8 +38,8 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $tracker->get_recently_viewed(1);
 
-        $this->assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
-        $this->assertTrue(is_array($result));
+        self::assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
+        self::assertTrue(is_array($result));
     }
 
     public function testmakeInvisibleForAll()
@@ -49,9 +49,9 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $tracker->makeInvisibleForAll(1);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -59,9 +59,9 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
     {
         $tracker = BeanFactory::newBean('Trackers');
 
-        $this->assertEquals(false, $tracker->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $tracker->bean_implements('test')); //test with invalid value
-        $this->assertEquals(false, $tracker->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $tracker->bean_implements('')); //test with blank value
+        self::assertEquals(false, $tracker->bean_implements('test')); //test with invalid value
+        self::assertEquals(false, $tracker->bean_implements('ACL')); //test with valid value
     }
 
     public function testlogPage()
@@ -70,12 +70,12 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
 
         //test without setting headerDisplayed
         Tracker::logPage();
-        $this->assertEquals(null, $_SESSION['lpage']);
+        self::assertEquals(null, $_SESSION['lpage']);
 
         //test with headerDisplayed set
         $GLOBALS['app']->headerDisplayed = 1;
         Tracker::logPage();
-        $this->assertEquals(time(), $_SESSION['lpage']);
+        self::assertEquals(time(), $_SESSION['lpage']);
 
         //$this->assertEquals(time(), null);
     }

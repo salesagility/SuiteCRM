@@ -26,8 +26,8 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $bean = BeanFactory::newBean($moduleName);
-        $this->assertNotFalse($bean, 'Unable to get core bean for module: ' . $moduleName);
-        $this->assertInstanceOf(
+        self::assertNotFalse($bean, 'Unable to get core bean for module: ' . $moduleName);
+        self::assertInstanceOf(
             $moduleConfig['className'],
             $bean,
             'Loaded bean not instance of core class: ' . $moduleConfig['className']
@@ -37,8 +37,8 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $customBean = BeanFactory::newBean($moduleName);
-        $this->assertNotFalse($customBean, 'Unable to get custom bean for module: ' . $moduleName);
-        $this->assertInstanceOf(
+        self::assertNotFalse($customBean, 'Unable to get custom bean for module: ' . $moduleName);
+        self::assertInstanceOf(
             $refreshedConfig['customClassName'],
             $customBean,
             'Loaded bean not instance of custom class: ' . $refreshedConfig['customClassName']
@@ -61,8 +61,8 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $bean = BeanFactory::getBean($moduleName);
-        $this->assertNotFalse($bean, 'Unable to get core test record bean for module: ' . $moduleName);
-        $this->assertInstanceOf(
+        self::assertNotFalse($bean, 'Unable to get core test record bean for module: ' . $moduleName);
+        self::assertInstanceOf(
             $moduleConfig['className'],
             $bean,
             'Loaded bean not instance of core class: ' . $moduleConfig['className']
@@ -72,8 +72,8 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $customBean = BeanFactory::getBean($moduleName);
-        $this->assertNotFalse($customBean, 'Unable to get custom test record bean for module: ' . $moduleName);
-        $this->assertInstanceOf(
+        self::assertNotFalse($customBean, 'Unable to get custom test record bean for module: ' . $moduleName);
+        self::assertInstanceOf(
             $refreshedConfig['customClassName'],
             $customBean,
             'Loaded bean not instance of custom class: ' . $refreshedConfig['customClassName']
@@ -94,19 +94,19 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $beanMeta = BeanFactory::getBeanMeta($moduleName);
-        $this->assertEquals($moduleConfig['className'], $beanMeta['beanName']);
-        $this->assertEquals($moduleConfig['className'], $beanMeta['beanClass']);
-        $this->assertEquals($moduleConfig['objectName'], $beanMeta['objectName']);
-        $this->assertEquals($moduleConfig['classFile'], $beanMeta['classFile']);
+        self::assertEquals($moduleConfig['className'], $beanMeta['beanName']);
+        self::assertEquals($moduleConfig['className'], $beanMeta['beanClass']);
+        self::assertEquals($moduleConfig['objectName'], $beanMeta['objectName']);
+        self::assertEquals($moduleConfig['classFile'], $beanMeta['classFile']);
 
         $this->addCoreModuleExtension($moduleName, $moduleConfig['className']);
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $customBeanMeta = BeanFactory::getBeanMeta($moduleName);
-        $this->assertEquals($refreshedConfig['customClassName'], $customBeanMeta['customBeanName']);
-        $this->assertEquals($refreshedConfig['customClassName'], $customBeanMeta['beanClass']);
-        $this->assertEquals($refreshedConfig['customObjectName'], $customBeanMeta['customObjectName']);
-        $this->assertEquals($refreshedConfig['customClassFile'], $customBeanMeta['customClassFile']);
+        self::assertEquals($refreshedConfig['customClassName'], $customBeanMeta['customBeanName']);
+        self::assertEquals($refreshedConfig['customClassName'], $customBeanMeta['beanClass']);
+        self::assertEquals($refreshedConfig['customObjectName'], $customBeanMeta['customObjectName']);
+        self::assertEquals($refreshedConfig['customClassFile'], $customBeanMeta['customClassFile']);
 
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
     }
@@ -123,13 +123,13 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $coreBeanClass = BeanFactory::getBeanClass($moduleName);
-        $this->assertEquals($moduleConfig['className'], $coreBeanClass);
+        self::assertEquals($moduleConfig['className'], $coreBeanClass);
 
         $this->addCoreModuleExtension($moduleName, $moduleConfig['className']);
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $customBeanClass = BeanFactory::getBeanClass($moduleName);
-        $this->assertEquals($refreshedConfig['customClassName'], $customBeanClass);
+        self::assertEquals($refreshedConfig['customClassName'], $customBeanClass);
 
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
     }
@@ -146,13 +146,13 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $beanName = BeanFactory::getBeanName($moduleName);
-        $this->assertEquals($moduleConfig['className'], $beanName);
+        self::assertEquals($moduleConfig['className'], $beanName);
 
         $this->addCoreModuleExtension($moduleName, $moduleConfig['className']);
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $beanName = BeanFactory::getBeanName($moduleName);
-        $this->assertNotEquals($refreshedConfig['customClassName'], $beanName);
+        self::assertNotEquals($refreshedConfig['customClassName'], $beanName);
 
         $this->subTestGetCustomBeanName(compact('moduleName', 'refreshedConfig'));
     }
@@ -166,7 +166,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
     public function subTestGetCustomBeanName($meta)
     {
         $customBeanName = BeanFactory::getCustomBeanName($meta['moduleName']);
-        $this->assertEquals($meta['refreshedConfig']['customClassName'], $customBeanName);
+        self::assertEquals($meta['refreshedConfig']['customClassName'], $customBeanName);
 
         $this->removeCoreModuleExtension($meta['moduleName'], $meta['refreshedConfig']['className']);
     }
@@ -183,13 +183,13 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $objectName = BeanFactory::getObjectName($moduleName);
-        $this->assertEquals($moduleConfig['objectName'], $objectName);
+        self::assertEquals($moduleConfig['objectName'], $objectName);
 
         $this->addCoreModuleExtension($moduleName, $moduleConfig['className']);
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $objectName = BeanFactory::getObjectName($moduleName);
-        $this->assertNotEquals($refreshedConfig['customObjectName'], $objectName);
+        self::assertNotEquals($refreshedConfig['customObjectName'], $objectName);
 
         $this->subTestGetCustomObjectName(compact('moduleName', 'refreshedConfig'));
     }
@@ -203,7 +203,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
     public function subTestGetCustomObjectName($meta)
     {
         $customObjectName = BeanFactory::getCustomObjectName($meta['moduleName']);
-        $this->assertEquals($meta['refreshedConfig']['customObjectName'], $customObjectName);
+        self::assertEquals($meta['refreshedConfig']['customObjectName'], $customObjectName);
 
         $this->removeCoreModuleExtension($meta['moduleName'], $meta['refreshedConfig']['className']);
     }
@@ -221,13 +221,13 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $beanFile = BeanFactory::getBeanFile($moduleName);
-        $this->assertEquals($moduleConfig['classFile'], $beanFile);
+        self::assertEquals($moduleConfig['classFile'], $beanFile);
 
         $this->addCoreModuleExtension($moduleName, $moduleConfig['className']);
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $beanFile = BeanFactory::getBeanFile($moduleName);
-        $this->assertNotEquals($refreshedConfig['customClassFile'], $beanFile);
+        self::assertNotEquals($refreshedConfig['customClassFile'], $beanFile);
 
         $this->subTestGetCustomBeanFile(compact('moduleName', 'refreshedConfig'));
     }
@@ -241,7 +241,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
     public function subTestGetCustomBeanFile($meta)
     {
         $customBeanFile = BeanFactory::getCustomBeanFile($meta['moduleName']);
-        $this->assertEquals($meta['refreshedConfig']['customClassFile'], $customBeanFile);
+        self::assertEquals($meta['refreshedConfig']['customClassFile'], $customBeanFile);
 
         $this->removeCoreModuleExtension($meta['moduleName'], $meta['refreshedConfig']['className']);
     }
@@ -257,15 +257,15 @@ class BeanFactoryTest extends BeanFactoryTestCase
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
         $coreFileLoaded = BeanFactory::loadBeanFile($moduleName);
-        $this->assertTrue($coreFileLoaded);
-        $this->assertTrue(class_exists($moduleConfig['className']));
+        self::assertTrue($coreFileLoaded);
+        self::assertTrue(class_exists($moduleConfig['className']));
 
         $this->addCoreModuleExtension($moduleName, $moduleConfig['className']);
         $refreshedConfig = $this->moduleConfigProvider()[$moduleName]['meta'];
 
         $customFileLoaded = BeanFactory::loadBeanFile($moduleName);
-        $this->assertTrue($customFileLoaded);
-        $this->assertTrue(class_exists($refreshedConfig['customClassName']));
+        self::assertTrue($customFileLoaded);
+        self::assertTrue(class_exists($refreshedConfig['customClassName']));
 
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
     }

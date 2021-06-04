@@ -26,7 +26,7 @@ class ModuleLanguageTest extends SuitePHPUnitFrameworkTestCase
     public function testGetCurrentLanguage()
     {
         $language = self::$language->getModuleLanguageStrings(new \SuiteCRM\Utility\CurrentLanguage(), 'Accounts');
-        $this->assertNotEmpty($language);
-        $this->assertArrayHasKey('LBL_MODULE_NAME', $language);
+        self::assertNotEmpty($language);
+        self::assertArrayHasKey('LBL_MODULE_NAME', $language);
     }
 }

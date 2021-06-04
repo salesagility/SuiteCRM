@@ -45,7 +45,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->emergency('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[EMERGENCY\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testLogAlert()
@@ -53,7 +53,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->alert('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[ALERT\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testLogCritical()
@@ -61,7 +61,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->critical('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[CRITICAL\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testLogError()
@@ -69,7 +69,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->error('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[ERROR\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testLogWarning()
@@ -77,7 +77,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->warning('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[WARNING\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testLogNotice()
@@ -85,7 +85,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->notice('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[NOTICE\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testLogInfo()
@@ -93,7 +93,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->info('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[INFO\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testLogDebug()
@@ -101,7 +101,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->debug('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[DEBUG\] test/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     public function testInterpolate()
@@ -109,7 +109,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::$logger->error('test {a}', ['a' => 'apple']);
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[ERROR\] test apple/', $lastLine, $matches);
-        $this->assertNotEmpty($matches);
+        self::assertNotEmpty($matches);
     }
 
     /**

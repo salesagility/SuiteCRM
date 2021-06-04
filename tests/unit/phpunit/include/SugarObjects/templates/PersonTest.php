@@ -56,58 +56,58 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
         // Test when  basis is not a string
         try {
             $person->setLawfulBasis(1, '');
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $ex) {
-            $this->assertEquals('basis must be a string', $ex->getMessage());
+            self::assertEquals('basis must be a string', $ex->getMessage());
         }
 
         // test when basis does not exist
         try {
             $person->setLawfulBasis('Test Invalid Basis', '');
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $ex) {
-            $this->assertEquals('invalid lawful basis', $ex->getMessage());
+            self::assertEquals('invalid lawful basis', $ex->getMessage());
         }
-        
+
         // test valid basis
-        $this->assertEquals(1, $person->setLawfulBasis('', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('consent', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('contract', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('legal_obligation', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('protection_of_interest', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('public_interest', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('legitimate_interest', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('withdrawn', ''));
+        self::assertEquals(1, $person->setLawfulBasis('', ''));
+        self::assertEquals(1, $person->setLawfulBasis('consent', ''));
+        self::assertEquals(1, $person->setLawfulBasis('contract', ''));
+        self::assertEquals(1, $person->setLawfulBasis('legal_obligation', ''));
+        self::assertEquals(1, $person->setLawfulBasis('protection_of_interest', ''));
+        self::assertEquals(1, $person->setLawfulBasis('public_interest', ''));
+        self::assertEquals(1, $person->setLawfulBasis('legitimate_interest', ''));
+        self::assertEquals(1, $person->setLawfulBasis('withdrawn', ''));
 
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
-        $this->assertEquals($person->lawful_basis, '^consent^');
-        
+        self::assertEquals($person->lawful_basis, '^consent^');
+
         // Test when source is not a string
         try {
             $person->setLawfulBasis('', 1);
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $ex) {
-            $this->assertEquals('source for lawful basis must be a string', $ex->getMessage());
+            self::assertEquals('source for lawful basis must be a string', $ex->getMessage());
         }
-        
+
         // test when source does not exist
         try {
             $person->setLawfulBasis('', 'Test Invalid Sources');
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (InvalidArgumentException $ex) {
-            $this->assertEquals('invalid lawful basis source', $ex->getMessage());
+            self::assertEquals('invalid lawful basis source', $ex->getMessage());
         }
 
         // test lawful sources
-        $this->assertEquals(true, $person->setLawfulBasis('', ''));
-        $this->assertEquals(true, $person->setLawfulBasis('', 'website'));
-        $this->assertEquals(true, $person->setLawfulBasis('', 'phone'));
-        $this->assertEquals(true, $person->setLawfulBasis('', 'given_to_user'));
-        $this->assertEquals(true, $person->setLawfulBasis('', 'email'));
-        $this->assertEquals(true, $person->setLawfulBasis('', 'third_party'));
+        self::assertEquals(true, $person->setLawfulBasis('', ''));
+        self::assertEquals(true, $person->setLawfulBasis('', 'website'));
+        self::assertEquals(true, $person->setLawfulBasis('', 'phone'));
+        self::assertEquals(true, $person->setLawfulBasis('', 'given_to_user'));
+        self::assertEquals(true, $person->setLawfulBasis('', 'email'));
+        self::assertEquals(true, $person->setLawfulBasis('', 'third_party'));
 
         // test that source is being set
-        $this->assertEquals('third_party', $person->lawful_basis_source);
+        self::assertEquals('third_party', $person->lawful_basis_source);
     }
 }

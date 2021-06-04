@@ -22,9 +22,9 @@ class SearchWrapperTest extends SearchTestAbstract
 
         try {
             $searchEngine = $this->invokeMethod($search, 'fetchEngine', ['ElasticSearchEngine']);
-            $this->assertInstanceOf('ElasticSearchEngine', $searchEngine);
+            self::assertInstanceOf('ElasticSearchEngine', $searchEngine);
         } catch (ReflectionException $exception) {
-            $this->fail("Failed to use reflection!");
+            self::fail("Failed to use reflection!");
         }
     }
 
@@ -35,9 +35,9 @@ class SearchWrapperTest extends SearchTestAbstract
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['VeryFakeEngine']);
-            $this->fail("Exception should be thrown here!");
+            self::fail("Exception should be thrown here!");
         } catch (ReflectionException $exception) {
-            $this->fail("Failed to use reflection!");
+            self::fail("Failed to use reflection!");
         } catch (SearchEngineNotFoundException $exception) {
             // All good!
         }
@@ -60,7 +60,7 @@ class SearchWrapperTest extends SearchTestAbstract
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['BadMockSearch']);
-            $this->fail("Exception should be thrown here!");
+            self::fail("Exception should be thrown here!");
         } catch (SearchEngineNotFoundException $exception) {
             echo $exception->getMessage();
         }

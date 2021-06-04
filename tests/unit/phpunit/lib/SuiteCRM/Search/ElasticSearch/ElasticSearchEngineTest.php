@@ -88,7 +88,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $params = $this->invokeMethod($engine, 'createSearchParams', [$query]);
 
-        $this->assertEquals($expectedParams, $params);
+        self::assertEquals($expectedParams, $params);
     }
 
     public function testCreateSearchParams2()
@@ -121,7 +121,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $params = $this->invokeMethod($engine, 'createSearchParams', [$query]);
 
-        $this->assertEquals($expectedParams, $params);
+        self::assertEquals($expectedParams, $params);
     }
 
     public function testRunElasticSearch()

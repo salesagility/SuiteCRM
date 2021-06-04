@@ -35,7 +35,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testdb_concat()
@@ -46,18 +46,18 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         $fields = array('Col1', 'Col2', 'Col3');
         $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),' ',IFNULL(Table1.Col2,''),' ',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testfrom_db_convert()
     {
         //execute the method and test if it returns expected values
 
-        $this->assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'date'));
-        $this->assertSame('19:32:29', from_db_convert('19:32:29', 'time'));
-        $this->assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'datetime'));
-        $this->assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'datetimecombo'));
-        $this->assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'timestamp'));
+        self::assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'date'));
+        self::assertSame('19:32:29', from_db_convert('19:32:29', 'time'));
+        self::assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'datetime'));
+        self::assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'datetimecombo'));
+        self::assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'timestamp'));
     }
 
     public function testto_html()
@@ -81,23 +81,23 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         $string = '';
         $expected = '';
         $actual = from_html($string);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         $string = '&#039;test&#039;&trial&lt;&quot;&gt;';
         $expected = "'test'&trial<\">";
         $actual = from_html($string);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testgetValidDBName()
     {
         $expected = '';
         $actual = getValidDBName('');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         $expected = 'col';
         $actual = getValidDBName('Col');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testisValidDBName()
@@ -105,11 +105,11 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         //valid value
         $expected = true;
         $actual = isValidDBName('suitecrmtest', 'mysql');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //invalid value
         $expected = false;
         $actual = isValidDBName('suite/crm.test', 'mysql');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 }

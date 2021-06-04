@@ -14,7 +14,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->displayCheckBoxes('test', $values);
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent1));
+        self::assertGreaterThan(0, strlen($renderedContent1));
 
         //check with prefilled values array. it should return html sting longer than earlier
         ob_start();
@@ -22,7 +22,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->displayCheckBoxes('test', $values);
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
+        self::assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
     }
 
     public function testdisplaySelect()
@@ -35,7 +35,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->displaySelect('test', $values);
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent1));
+        self::assertGreaterThan(0, strlen($renderedContent1));
 
         //check with prefilled values array. it should return html sting longer than earlier
         ob_start();
@@ -43,7 +43,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->displaySelect('test', $values);
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
+        self::assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
     }
 
     public function testdisplayTextBoxes()
@@ -56,7 +56,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->displayTextBoxes($values);
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent1));
+        self::assertGreaterThan(0, strlen($renderedContent1));
 
         //check with prefilled values array. it should return html sting longer than earlier
         ob_start();
@@ -64,7 +64,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->displayTextBoxes($values);
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
+        self::assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
     }
 
     public function testprintValue()
@@ -76,7 +76,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->printValue($values);
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        self::assertGreaterThan(0, strlen($renderedContent));
     }
 
     public function testdisplay()
@@ -84,12 +84,12 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $request = $_REQUEST;
         }
-        
 
-        
-        
-        
-        
+
+
+
+
+
 
         $view = new ViewMetadata();
 
@@ -98,7 +98,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->display();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        self::assertGreaterThan(0, strlen($renderedContent));
 
         //test with REQUEST parameters set
         $_REQUEST['modules'] = array('Calls', 'Meetings');
@@ -106,7 +106,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         $view->display();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        self::assertGreaterThan(0, strlen($renderedContent));
 
         if (isset($request)) {
             $_REQUEST = $request;
@@ -119,7 +119,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it returns a array.
         $modules = VardefBrowser::getModules();
-        $this->assertTrue(is_array($modules));
+        self::assertTrue(is_array($modules));
     }
 
     public function testfindFieldsWithAttributes()
@@ -127,22 +127,22 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         //check with emptty attributes array
         $attributes = array();
         $fields1 = VardefBrowser::findFieldsWithAttributes($attributes);
-        $this->assertTrue(is_array($fields1));
+        self::assertTrue(is_array($fields1));
 
         //check with a very common attribute
         $attributes = array('id');
         $fields2 = VardefBrowser::findFieldsWithAttributes($attributes);
-        $this->assertTrue(is_array($fields2));
+        self::assertTrue(is_array($fields2));
 
         //check with a very specific attribute
         $attributes = array('category');
         $fields3 = VardefBrowser::findFieldsWithAttributes($attributes);
-        $this->assertTrue(is_array($fields3));
+        self::assertTrue(is_array($fields3));
 
         //check that all three arrays returned, are not same.
-        $this->assertNotSame($fields1, $fields2);
-        $this->assertNotSame($fields1, $fields3);
-        $this->assertNotSame($fields2, $fields3);
+        self::assertNotSame($fields1, $fields2);
+        self::assertNotSame($fields1, $fields3);
+        self::assertNotSame($fields2, $fields3);
     }
 
     public function testfindVardefs()
@@ -150,15 +150,15 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         //check with empty modules array
         $modules = array();
         $defs1 = VardefBrowser::findVardefs($modules);
-        $this->assertTrue(is_array($defs1));
+        self::assertTrue(is_array($defs1));
 
         //check with modules array set.
         $modules = array('Calls');
         $defs2 = VardefBrowser::findVardefs($modules);
-        $this->assertTrue(is_array($defs2));
+        self::assertTrue(is_array($defs2));
 
         //check that two arrays returned, are not same.
-        $this->assertNotSame($defs1, $defs2);
+        self::assertNotSame($defs1, $defs2);
     }
 
     public function testfindFieldAttributes()
@@ -166,22 +166,22 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         //check with emptty attributes array
         $attributes = array();
         $fields1 = VardefBrowser::findFieldAttributes();
-        $this->assertTrue(is_array($fields1));
+        self::assertTrue(is_array($fields1));
 
         //check with emptty attributes array and prefilled modules array.
         $attributes = array();
         $modules = array('Users');
         $fields2 = VardefBrowser::findFieldAttributes($attributes, $modules, true, true);
-        $this->assertTrue(is_array($fields2));
+        self::assertTrue(is_array($fields2));
 
         //check with a very specific attribute and empty modules array.
         $attributes = array('category');
         $fields3 = VardefBrowser::findFieldAttributes($attributes);
-        $this->assertTrue(is_array($fields3));
+        self::assertTrue(is_array($fields3));
 
         //check that all three arrays returned, are not same.
-        $this->assertNotSame($fields1, $fields2);
-        $this->assertNotSame($fields1, $fields3);
-        $this->assertNotSame($fields2, $fields3);
+        self::assertNotSame($fields1, $fields2);
+        self::assertNotSame($fields1, $fields3);
+        self::assertNotSame($fields2, $fields3);
     }
 }

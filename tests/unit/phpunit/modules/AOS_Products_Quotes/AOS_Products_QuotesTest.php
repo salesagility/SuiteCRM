@@ -24,13 +24,13 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $aosProductsQuotes->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($aosProductsQuotes->id));
-        $this->assertEquals(36, strlen($aosProductsQuotes->id));
+        self::assertTrue(isset($aosProductsQuotes->id));
+        self::assertEquals(36, strlen($aosProductsQuotes->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aosProductsQuotes->mark_deleted($aosProductsQuotes->id);
         $result = $aosProductsQuotes->retrieve($aosProductsQuotes->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testsave_lines()
@@ -54,23 +54,23 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
 
         //get the linked beans and verify if records created
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
-        $this->assertEquals(count($post_data['name']), count($product_quote_lines));
+        self::assertEquals(count($post_data['name']), count($product_quote_lines));
     }
 
     public function testAOS_Products_Quotes()
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
-        $this->assertInstanceOf('AOS_Products_Quotes', $aosProductsQuotes);
-        $this->assertInstanceOf('Basic', $aosProductsQuotes);
-        $this->assertInstanceOf('SugarBean', $aosProductsQuotes);
+        self::assertInstanceOf('AOS_Products_Quotes', $aosProductsQuotes);
+        self::assertInstanceOf('Basic', $aosProductsQuotes);
+        self::assertInstanceOf('SugarBean', $aosProductsQuotes);
 
-        $this->assertAttributeEquals('AOS_Products_Quotes', 'module_dir', $aosProductsQuotes);
-        $this->assertAttributeEquals('AOS_Products_Quotes', 'object_name', $aosProductsQuotes);
-        $this->assertAttributeEquals('aos_products_quotes', 'table_name', $aosProductsQuotes);
-        $this->assertAttributeEquals(true, 'new_schema', $aosProductsQuotes);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProductsQuotes);
-        $this->assertAttributeEquals(true, 'importable', $aosProductsQuotes);
+        self::assertAttributeEquals('AOS_Products_Quotes', 'module_dir', $aosProductsQuotes);
+        self::assertAttributeEquals('AOS_Products_Quotes', 'object_name', $aosProductsQuotes);
+        self::assertAttributeEquals('aos_products_quotes', 'table_name', $aosProductsQuotes);
+        self::assertAttributeEquals(true, 'new_schema', $aosProductsQuotes);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $aosProductsQuotes);
+        self::assertAttributeEquals(true, 'importable', $aosProductsQuotes);
     }
 
     public function testmark_lines_deleted()
@@ -95,6 +95,6 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
         $actual = count($product_quote_lines);
 
-        $this->assertLessThanOrEqual($expected, $actual);
+        self::assertLessThanOrEqual($expected, $actual);
     }
 }

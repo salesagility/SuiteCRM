@@ -17,13 +17,13 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and attributes
         $view = new ViewEdit();
-        $this->assertInstanceOf('ViewEdit', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('edit', 'type', $view);
+        self::assertInstanceOf('ViewEdit', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('edit', 'type', $view);
 
-        $this->assertAttributeEquals(false, 'useForSubpanel', $view);
-        $this->assertAttributeEquals(false, 'useModuleQuickCreateTemplate', $view);
-        $this->assertAttributeEquals(true, 'showTitle', $view);
+        self::assertAttributeEquals(false, 'useForSubpanel', $view);
+        self::assertAttributeEquals(false, 'useModuleQuickCreateTemplate', $view);
+        self::assertAttributeEquals(true, 'showTitle', $view);
     }
 
     public function testpreDisplay()
@@ -37,14 +37,14 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
         $view->module = 'Users';
         $view->bean = BeanFactory::newBean('Users');
         $view->preDisplay();
-        $this->assertInstanceOf('EditView', $view->ev);
+        self::assertInstanceOf('EditView', $view->ev);
 
         //execute the method again for a different module with required attributes preset, it will initialize the ev(edit view) attribute.
         $view = new ViewEdit();
         $view->module = 'Meetings';
         $view->bean = BeanFactory::newBean('Meetings');
         $view->preDisplay();
-        $this->assertInstanceOf('EditView', $view->ev);
+        self::assertInstanceOf('EditView', $view->ev);
 
 
         if (isset($session)) {
@@ -67,6 +67,6 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
         $view->display();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        self::assertGreaterThan(0, strlen($renderedContent));
     }
 }
