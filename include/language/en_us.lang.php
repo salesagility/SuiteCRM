@@ -1416,6 +1416,8 @@ $app_strings = array(
     'ERR_NO_HEADER_ID' => 'This feature is unavailable in this theme.',
     'ERR_NOT_ADMIN' => 'Unauthorized access to administration.',
     'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field:',
+    // The message is using for required fields in edit view form with tabs
+    'ERR_MISSING_REQUIRED_FIELDS_TABS' => 'Required fields are missing, check all tabs',
     'ERR_INVALID_REQUIRED_FIELDS' => 'Invalid required field:',
     'ERR_INVALID_VALUE' => 'Invalid Value:',
     'ERR_NO_SUCH_FILE' => 'File does not exist on system',
