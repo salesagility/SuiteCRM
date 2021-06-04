@@ -289,7 +289,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     public function testemail2saveAttachment()
     {
         $result = BeanFactory::newBean('Emails')->email2saveAttachment();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testsafeAttachmentName()
@@ -512,10 +512,10 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         //retrieve and verify that email addresses were saved properly
         $email->retrieveEmailAddresses();
 
-        self::assertNotSame(false, strpos($email->from_addr, 'from_test@email.com'));
-        self::assertNotSame(false, strpos($email->to_addrs, 'to_test@email.com'));
-        self::assertNotSame(false, strpos($email->cc_addrs, 'cc_test@email.com'));
-        self::assertNotSame(false, strpos($email->bcc_addrs, 'bcc_test@email.com'));
+        self::assertNotFalse(strpos($email->from_addr, 'from_test@email.com'));
+        self::assertNotFalse(strpos($email->to_addrs, 'to_test@email.com'));
+        self::assertNotFalse(strpos($email->cc_addrs, 'cc_test@email.com'));
+        self::assertNotFalse(strpos($email->bcc_addrs, 'bcc_test@email.com'));
     }
 
     public function retrieveEmailAddresses($id)
@@ -573,7 +573,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
         $email->handleAttachments();
 
-        self::assertTrue(is_array($email->attachments));
+        self::assertIsArray($email->attachments);
     }
 
     public function delete($id)
@@ -601,7 +601,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test getNotes method and verify that it retrieves the created note.
         $email->getNotes($email->id);
-        self::assertTrue(is_array($email->attachments));
+        self::assertIsArray($email->attachments);
         foreach ($email->attachments as $note) {
             self::assertTrue(isset($note));
             self::assertInstanceOf('Note', $note);
@@ -1074,7 +1074,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     public function testsearchImportedEmails()
     {
         $actual = BeanFactory::newBean('Emails')->searchImportedEmails();
-        self::assertTrue(is_array($actual));
+        self::assertIsArray($actual);
     }
 
     public function test_genereateSearchImportedEmailsQuery()

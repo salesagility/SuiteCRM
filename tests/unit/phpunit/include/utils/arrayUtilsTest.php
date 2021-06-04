@@ -277,7 +277,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $index1 = fixIndexArrayFormat($index1);
         $index2 = fixIndexArrayFormat($index2);
-        self::assertTrue(array_map('strtolower', $index1) == array_map('strtolower', $index2));
+        self::assertEquals(array_map('strtolower', $index1), array_map('strtolower', $index2));
 
         $index3 = [
             'user_name',
@@ -299,6 +299,6 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $index3 = fixIndexArrayFormat($index3);
         $index4 = fixIndexArrayFormat($index4);
-        self::assertFalse(array_map('strtolower', $index3) == array_map('strtolower', $index4));
+        self::assertNotEquals(array_map('strtolower', $index3), array_map('strtolower', $index4));
     }
 }

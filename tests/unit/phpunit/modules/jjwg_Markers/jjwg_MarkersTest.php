@@ -29,7 +29,7 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         $jjwgMarkers->configuration();
 
         self::assertInstanceOf('jjwg_Maps', $jjwgMarkers->jjwg_Maps);
-        self::assertTrue(is_array($jjwgMarkers->settings));
+        self::assertIsArray($jjwgMarkers->settings);
         self::assertGreaterThan(0, count($jjwgMarkers->settings));
     }
 
@@ -40,8 +40,8 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         //test without pre settting attributes
         $result = $jjwgMarkers->define_loc(array());
         self::assertEquals('N/A', $result['name']);
-        self::assertTrue(is_numeric($result['lat']));
-        self::assertTrue(is_numeric($result['lng']));
+        self::assertIsNumeric($result['lat']);
+        self::assertIsNumeric($result['lng']);
         self::assertEquals('company', $result['image']);
 
         //test with required attributes preset

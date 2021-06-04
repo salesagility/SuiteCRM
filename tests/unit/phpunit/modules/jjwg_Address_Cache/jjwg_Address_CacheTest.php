@@ -27,7 +27,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $jjwgAddressCache->configuration();
 
         self::assertInstanceOf('jjwg_Maps', $jjwgAddressCache->jjwg_Maps);
-        self::assertTrue(is_array($jjwgAddressCache->settings));
+        self::assertIsArray($jjwgAddressCache->settings);
         self::assertGreaterThan(0, count($jjwgAddressCache->settings));
     }
 
@@ -54,7 +54,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         $jjwgAddressCache->settings['address_cache_get_enabled'] = 1;
         $ainfo = array('address' => 'test', 'lat' => '24.861462', 'lng' => '67.009939', 'description' => 'test description');
         $result = $jjwgAddressCache->getAddressCacheInfo($ainfo);
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test deleteAllAddressCache
         $jjwgAddressCache->deleteAllAddressCache();

@@ -34,7 +34,7 @@ class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test verify it returns true
         $result = ajaxBannedModules();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testajaxLink()

@@ -56,11 +56,11 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
     {
         $modules = (new ElasticSearchIndexer(null))->getModulesToIndex();
 
-        self::assertTrue(is_array($modules), "Result is not an array.");
+        self::assertIsArray($modules, "Result is not an array.");
 
         self::assertTrue(count($modules) > 0, "The array is empty.");
 
-        self::assertTrue(in_array('Contacts', $modules), "Contacts was not found in the list of modules to index");
+        self::assertContains('Contacts', $modules, "Contacts was not found in the list of modules to index");
     }
 
     public function testIndexBeans()
@@ -488,7 +488,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $actual = (new ElasticSearchIndexer($mockClient))->ping();
         self::assertNotFalse($actual);
-        self::assertTrue(is_numeric($actual));
+        self::assertIsNumeric($actual);
     }
 
     public function testPutMappings()

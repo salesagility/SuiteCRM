@@ -58,7 +58,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
 
         //get the linked beans and verify if records created
         $aow_conditions = $aowWorkFlow->get_linked_beans('aow_conditions', $aowWorkFlow->object_name);
-        self::assertEquals(count($post_data['field']), count($aow_conditions));
+        self::assertCount(count($post_data['field']), $aow_conditions);
 
         //cleanup afterwards
         foreach ($aow_conditions as $lineItem) {

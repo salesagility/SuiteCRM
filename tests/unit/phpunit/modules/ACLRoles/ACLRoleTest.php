@@ -70,11 +70,11 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         //test with default/true getAsNameArray param value
         $result = $aclRole->getUserRoles('1');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with flase getAsNameArray param value
         $result = $aclRole->getUserRoles('1', false);
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetUserRoleNames()
@@ -83,11 +83,11 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         //test with empty value
         $result = $aclRole->getUserRoleNames('');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with non empty but non existing role id value
         $result = $aclRole->getUserRoleNames('1');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetAllRoles()
@@ -96,11 +96,11 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         //test with returnAsArray default/flase
         $result = $aclRole->getAllRoles();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with returnAsArray true
         $result = $aclRole->getAllRoles(true);
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetRoleActions()
