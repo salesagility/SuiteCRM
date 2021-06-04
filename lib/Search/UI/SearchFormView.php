@@ -45,7 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use InvalidArgumentException;
 use LoggerManager;
+use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\UI\MVC\View;
+use SuiteCRM\Utility\StringUtils;
 
 /**
  * Class SearchFormView handles the search bar and form.
@@ -61,7 +63,14 @@ class SearchFormView extends View
     public function display(): void
     {
         $sizes = $this->makeSizesFromConfig();
+        $engines = [];
+
+        foreach (SearchWrapper::getEngines() as $engine) {
+            $engines[$engine] = StringUtils::camelToTranslation($engine);
+        }
+
         $this->smarty->assign('sizeOptions', $sizes);
+        $this->smarty->assign('engineOptions', $engines);
 
         parent::display();
     }
