@@ -182,6 +182,6 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         $uncleanString = '<a href="javascript&colon;alert(document.cookie)">XSS</a>';
         $result = securexss($uncleanString);
 
-        self::assertEquals($result, '<a href="">XSS</a>');
+        self::assertEquals('<a href="">XSS</a>', $result);
     }
 }

@@ -7,9 +7,9 @@ class SugarThemeTest extends SuitePHPUnitFrameworkTestCase
     public function testGetMimeType()
     {
         $theme = SugarThemeRegistry::current();
-        self::assertEquals($theme->getMimeType('svg'), 'image/svg+xml');
-        self::assertEquals($theme->getMimeType('gif'), 'image/gif');
-        self::assertEquals($theme->getMimeType('png'), 'image/png');
-        self::assertEquals($theme->getMimeType('notanextension'), null);
+        self::assertEquals('image/svg+xml', $theme->getMimeType('svg'));
+        self::assertEquals('image/gif', $theme->getMimeType('gif'));
+        self::assertEquals('image/png', $theme->getMimeType('png'));
+        self::assertEquals(null, $theme->getMimeType('notanextension'));
     }
 }
