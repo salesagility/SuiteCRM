@@ -21,8 +21,8 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $stmt = $db->prepareQuery($sql);
 
         self::assertEquals(
-            $db->createPreparedQuery($stmt, ["foo"]),
-            "SELECT foo FROM bar WHERE baz = 'foo';"
+            "SELECT foo FROM bar WHERE baz = 'foo';",
+            $db->createPreparedQuery($stmt, ["foo"])
         );
     }
 
@@ -37,8 +37,8 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $stmt = $db->prepareQuery($sql);
 
         self::assertEquals(
-            $db->createPreparedQuery($stmt, ["foo", "bar"]),
-            "SELECT foo FROM bar WHERE baz = 'foo' AND qux = 'bar';"
+            "SELECT foo FROM bar WHERE baz = 'foo' AND qux = 'bar';",
+            $db->createPreparedQuery($stmt, ["foo", "bar"])
         );
     }
 
@@ -53,8 +53,8 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $stmt = $db->prepareQuery($sql);
 
         self::assertEquals(
-            $db->createPreparedQuery($stmt, ["foo"]),
-            "SELECT foo FROM bar WHERE baz != 'foo';"
+            "SELECT foo FROM bar WHERE baz != 'foo';",
+            $db->createPreparedQuery($stmt, ["foo"])
         );
     }
 
@@ -70,8 +70,8 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
         $stmt = $db->prepareQuery($sql);
 
         self::assertEquals(
-            $db->createPreparedQuery($stmt, ["foo"]),
-            "SELECT foo FROM bar WHERE baz = 'foo?';"
+            "SELECT foo FROM bar WHERE baz = 'foo?';",
+            $db->createPreparedQuery($stmt, ["foo"])
         );
     }
 }

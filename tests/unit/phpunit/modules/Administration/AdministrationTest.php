@@ -68,7 +68,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and verify that it sets the correct config key
         $admin->saveConfig();
         $actual = $admin->settings['proxy_test'];
-        self::assertEquals($actual, 'test value');
+        self::assertEquals('test value', $actual);
     }
 
     public function testsaveSetting()
@@ -82,7 +82,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         $result = $admin->saveSetting('category', 'key', 'test value');
         $admin->retrieveSettings('category');
         $actual = $admin->settings['category_key'];
-        self::assertEquals($actual, 'test value');
+        self::assertEquals('test value', $actual);
     }
 
     public function testget_config_prefix()
