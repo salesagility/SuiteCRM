@@ -478,7 +478,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $result = BeanFactory::newBean('InboundEmail')->retrieveByGroupId($group_id);
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         foreach ($result as $ie) {
             self::assertInstanceOf('InboundEmail', $ie);
@@ -489,7 +489,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $result = BeanFactory::newBean('InboundEmail')->retrieveAllByGroupId($group_id);
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         foreach ($result as $ie) {
             self::assertInstanceOf('InboundEmail', $ie);
@@ -500,7 +500,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $result = BeanFactory::newBean('InboundEmail')->retrieveAllByGroupIdWithGroupAccounts($group_id);
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         foreach ($result as $ie) {
             self::assertInstanceOf('InboundEmail', $ie);
@@ -531,7 +531,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->search($id);
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
         self::assertEquals('Search Results', $result['mbox']);
         self::assertEquals($id, $result['ieId']);
     }
@@ -634,12 +634,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test for default/imap
         $result = $inboundEmail->getFormattedHeaders(1);
-        self::assertSame(null, $result);
+        self::assertNull($result);
 
         //test for pop3
         $inboundEmail->protocol = 'pop3';
         $result = $inboundEmail->getFormattedHeaders(1);
-        self::assertSame(null, $result);
+        self::assertNull($result);
     }
 
     public function testsetAndgetCacheTimestamp()
@@ -698,17 +698,17 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //test wih default protocol
         $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1, 2, 3, 4, 5));
 
-        self::assertTrue(is_array($result));
-        self::assertTrue(is_array($result['uids']));
-        self::assertTrue(is_array($result['retArr']));
+        self::assertIsArray($result);
+        self::assertIsArray($result['uids']);
+        self::assertIsArray($result['retArr']);
 
         //test wih pop3 protocol
         $inboundEmail->protocol = 'pop3';
         $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1, 2, 3, 4, 5));
 
-        self::assertTrue(is_array($result));
-        self::assertTrue(is_array($result['uids']));
-        self::assertTrue(is_array($result['retArr']));
+        self::assertIsArray($result);
+        self::assertIsArray($result['uids']);
+        self::assertIsArray($result['retArr']);
     }
 
     public function testgetCacheValue()
@@ -718,17 +718,17 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //test wih default protocol
         $result = $inboundEmail->getCacheValue('INBOX');
 
-        self::assertTrue(is_array($result));
-        self::assertTrue(is_array($result['uids']));
-        self::assertTrue(is_array($result['retArr']));
+        self::assertIsArray($result);
+        self::assertIsArray($result['uids']);
+        self::assertIsArray($result['retArr']);
 
         //test wih pop3 protocol
         $inboundEmail->protocol = 'pop3';
         $result = $inboundEmail->getCacheValue('INBOX');
 
-        self::assertTrue(is_array($result));
-        self::assertTrue(is_array($result['uids']));
-        self::assertTrue(is_array($result['retArr']));
+        self::assertIsArray($result);
+        self::assertIsArray($result['uids']);
+        self::assertIsArray($result['retArr']);
     }
 
     public function testValidCacheExists()
@@ -775,7 +775,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //use the cache values array as parameter and verify that it returns an array
         $result = $inboundEmail->displayFetchedSortedListXML($ret, 'INBOX');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetCacheUnreadCount()
@@ -1056,7 +1056,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail->emptyTrash();
 
         $result = $inboundEmail->getCacheValue('INBOX.Trash');
-        self::assertEquals(0, count($result['retArr']));
+        self::assertCount(0, $result['retArr']);
     }
 
     public function testdeleteCache()
@@ -1085,7 +1085,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $inboundEmail->deleteCache();
 
         $result = $inboundEmail->getCacheValue('INBOX');
-        self::assertEquals(0, count($result['retArr']));
+        self::assertCount(0, $result['retArr']);
     }
 
     public function testdeletePop3Cache()
@@ -1148,7 +1148,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->getPop3NewMessagesToDownload();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetPop3NewMessagesToDownloadForCron()
@@ -1159,7 +1159,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->getPop3NewMessagesToDownloadForCron();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testpop3_getUIDL()
@@ -1171,7 +1171,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->getPop3NewMessagesToDownloadForCron();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testpop3_checkPartialEmail()
@@ -1267,7 +1267,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->getCachedIMAPSearch('test');
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testcheckEmailIMAPPartial()
@@ -1278,7 +1278,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->checkEmailIMAPPartial();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testcheckEmail2_meta()
@@ -1289,7 +1289,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->checkEmail2_meta();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
         self::assertEquals(array('mailboxes' => array('INBOX' => 0), 'processCount' => 0), $result);
     }
 
@@ -1360,7 +1360,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $result = BeanFactory::newBean('InboundEmail')->getOverviewsFromCacheFile('1,2', 'INBOX');
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     /**
@@ -1592,13 +1592,13 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //test with invalid groupfolder id
         $result = $inboundEmail->retrieveByGroupFolderId('1');
 
-        self::assertTrue(is_array($result));
-        self::assertEquals(0, count($result));
+        self::assertIsArray($result);
+        self::assertCount(0, $result);
 
         //test with valid groupfolder id
         $result = $inboundEmail->retrieveByGroupFolderId('');
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
         foreach ($result as $ie) {
             self::assertInstanceOf('InboundEmail', $ie);
         }
@@ -1635,7 +1635,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetFoldersListForMailBox()
     {
         $result = BeanFactory::newBean('InboundEmail')->getFoldersListForMailBox();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testfindOptimumSettings()
@@ -2536,7 +2536,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
                         'GLOBAL_PERSONAL_STRING' => 'group',
                     );
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
         self::assertEquals($expected, $result);
 
         $result = $inboundEmail->get_list_view_data();

@@ -61,7 +61,7 @@ class AOP_Case_UpdatesTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and verify that it returns an array
         $result = BeanFactory::newBean('AOP_Case_Updates')->getContacts();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetUpdateContact()

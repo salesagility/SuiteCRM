@@ -119,7 +119,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it returns a array.
         $modules = VardefBrowser::getModules();
-        self::assertTrue(is_array($modules));
+        self::assertIsArray($modules);
     }
 
     public function testfindFieldsWithAttributes()
@@ -127,17 +127,17 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         //check with emptty attributes array
         $attributes = array();
         $fields1 = VardefBrowser::findFieldsWithAttributes($attributes);
-        self::assertTrue(is_array($fields1));
+        self::assertIsArray($fields1);
 
         //check with a very common attribute
         $attributes = array('id');
         $fields2 = VardefBrowser::findFieldsWithAttributes($attributes);
-        self::assertTrue(is_array($fields2));
+        self::assertIsArray($fields2);
 
         //check with a very specific attribute
         $attributes = array('category');
         $fields3 = VardefBrowser::findFieldsWithAttributes($attributes);
-        self::assertTrue(is_array($fields3));
+        self::assertIsArray($fields3);
 
         //check that all three arrays returned, are not same.
         self::assertNotSame($fields1, $fields2);
@@ -150,12 +150,12 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         //check with empty modules array
         $modules = array();
         $defs1 = VardefBrowser::findVardefs($modules);
-        self::assertTrue(is_array($defs1));
+        self::assertIsArray($defs1);
 
         //check with modules array set.
         $modules = array('Calls');
         $defs2 = VardefBrowser::findVardefs($modules);
-        self::assertTrue(is_array($defs2));
+        self::assertIsArray($defs2);
 
         //check that two arrays returned, are not same.
         self::assertNotSame($defs1, $defs2);
@@ -166,18 +166,18 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         //check with emptty attributes array
         $attributes = array();
         $fields1 = VardefBrowser::findFieldAttributes();
-        self::assertTrue(is_array($fields1));
+        self::assertIsArray($fields1);
 
         //check with emptty attributes array and prefilled modules array.
         $attributes = array();
         $modules = array('Users');
         $fields2 = VardefBrowser::findFieldAttributes($attributes, $modules, true, true);
-        self::assertTrue(is_array($fields2));
+        self::assertIsArray($fields2);
 
         //check with a very specific attribute and empty modules array.
         $attributes = array('category');
         $fields3 = VardefBrowser::findFieldAttributes($attributes);
-        self::assertTrue(is_array($fields3));
+        self::assertIsArray($fields3);
 
         //check that all three arrays returned, are not same.
         self::assertNotSame($fields1, $fields2);

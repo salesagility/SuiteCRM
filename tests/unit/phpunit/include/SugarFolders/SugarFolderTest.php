@@ -60,7 +60,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
     {
         $sugarfolder = new SugarFolder();
 
-        self::assertTrue(is_object($sugarfolder));
+        self::assertIsObject($sugarfolder);
     }
 
     public function testGenerateArchiveFolderQuery()
@@ -138,7 +138,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $subscriptions = $sugarfolder->getSubscriptions(null);
 
-        self::assertEquals(0, count($subscriptions));
+        self::assertCount(0, $subscriptions);
 
         // test the add subscription to group folder
         $sugarfolder->addSubscriptionsToGroupFolder();
@@ -204,11 +204,11 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $ret = $sugarfolder->getFoldersForSettings();
 
-        self::assertTrue(is_array($ret));
+        self::assertIsArray($ret);
 
         $ret = $childSugarFolder->getParentIDRecursive($childSugarFolder->id);
 
-        self::assertTrue(in_array($sugarfolder->id, $ret));
+        self::assertContains($sugarfolder->id, $ret);
     }
 
     public function testCrudFolder()
@@ -391,7 +391,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $results = $sugarFolder->getListItemsForEmailXML($sugarFolder->id);
-        self::assertTrue(is_array($results));
+        self::assertIsArray($results);
         $results = false;
 
         $dynamicSugarFolder = new SugarFolder($user);
@@ -412,7 +412,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $results = $dynamicSugarFolder->getListItemsForEmailXML($dynamicSugarFolder->id);
-        self::assertTrue(is_array($results));
+        self::assertIsArray($results);
     }
 
     public function testCountOfItems()
@@ -661,7 +661,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne->getUserFolders($rootNode, sugar_unserialize($folderOpenState), null, true);
 
-        self::assertTrue(is_object($rootNode));
+        self::assertIsObject($rootNode);
     }
 
     public function testSetSubscriptionWithNoUser()

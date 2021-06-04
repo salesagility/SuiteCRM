@@ -266,7 +266,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     public function testget_meeting_users()
     {
         $result = BeanFactory::newBean('Meetings')->get_meeting_users();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testget_invite_meetings()
@@ -275,7 +275,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
         $user = BeanFactory::newBean('Users');
         $result = $meeting->get_invite_meetings($user);
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testget_notification_recipients()
@@ -284,12 +284,12 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
         //test without special_notification
         $result = $meeting->get_notification_recipients();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with special_notification
         $meeting->special_notification = 1;
         $result = $meeting->get_notification_recipients();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testbean_implements()
@@ -368,6 +368,6 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         global $dictionary, $app_list_strings;
 
         $result = getMeetingTypeOptions($dictionary, $app_list_strings);
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 }

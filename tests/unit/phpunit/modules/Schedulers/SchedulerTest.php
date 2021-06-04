@@ -159,7 +159,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and verify related attributes
         $scheduler->parseInterval();
 
-        self::assertTrue(is_array($scheduler->intervalParsed));
+        self::assertIsArray($scheduler->intervalParsed);
         self::assertSame($expected, $scheduler->intervalParsed);
     }
 
@@ -297,6 +297,6 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('environment dependency');
 
         $result = Scheduler::getJobsList();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 }

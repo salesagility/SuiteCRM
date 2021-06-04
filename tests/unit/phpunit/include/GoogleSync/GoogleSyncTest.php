@@ -239,7 +239,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             self::assertEquals(GoogleSyncException::INVALID_USER_ID, $e->getCode());
         }
 
-        self::assertEquals(3, count($return_count));
+        self::assertCount(3, $return_count);
     }
 
     /**
@@ -632,7 +632,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 
         $return = $object->callMethod('createSuitecrmMeetingEvent', [$Google_Event]);
 
-        self::assertEquals('Meeting', get_class($return));
+        self::assertInstanceOf(\Meeting::class, $return);
         self::assertNotNull($return->id);
         self::assertEquals('0', $return->deleted);
         self::assertEquals('Unit Test Event', $return->name);
@@ -674,7 +674,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 
         $return = $object->callMethod('createGoogleCalendarEvent', [$CRM_Meeting]);
 
-        self::assertEquals('Google_Service_Calendar_Event', get_class($return));
+        self::assertInstanceOf(\Google_Service_Calendar_Event::class, $return);
         self::assertEquals('Unit Test Event', $return->getSummary());
         self::assertEquals('Unit Test Event', $return->getDescription());
         self::assertEquals('123 Sesame Street', $return->getLocation());

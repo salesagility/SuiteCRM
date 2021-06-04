@@ -54,7 +54,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
 
         //get the linked beans and verify if records created
         $product_quote_lines = $aosQuote->get_linked_beans('aos_products_quotes', $aosQuote->object_name);
-        self::assertEquals(count($post_data['name']), count($product_quote_lines));
+        self::assertCount(count($post_data['name']), $product_quote_lines);
     }
 
     public function testAOS_Products_Quotes()

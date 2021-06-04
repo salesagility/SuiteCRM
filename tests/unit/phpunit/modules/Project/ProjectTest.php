@@ -157,6 +157,6 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
         $project->id = 1;
         $result = $project->getAllProjectTasks();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 }

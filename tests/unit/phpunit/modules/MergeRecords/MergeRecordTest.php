@@ -161,7 +161,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $mergeRecord->get_list_view_data();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testbuild_generic_where_clause()

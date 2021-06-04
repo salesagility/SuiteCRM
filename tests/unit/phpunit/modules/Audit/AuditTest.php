@@ -128,7 +128,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and verify that it returns an array
         $result = BeanFactory::newBean('Audit')->get_audit_list();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetAssociatedFieldName()

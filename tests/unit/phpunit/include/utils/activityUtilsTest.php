@@ -23,11 +23,11 @@ class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
         $bean = BeanFactory::newBean('Users');
         $bean->rel_users_table = 'users_signatures';
         $list = build_related_list_by_user_id($bean, '1', '');
-        self::assertTrue(is_array($list));
+        self::assertIsArray($list);
 
         //with rel_users_table set by default
         $bean = BeanFactory::newBean('Meetings');
         $list = build_related_list_by_user_id($bean, '1', '');
-        self::assertTrue(is_array($list));
+        self::assertIsArray($list);
     }
 }

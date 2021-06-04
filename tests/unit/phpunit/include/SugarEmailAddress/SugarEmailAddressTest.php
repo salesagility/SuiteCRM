@@ -668,7 +668,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
     private function getBeansByEmailAddressDeletedLinksTest($db, $i, $ea_deleted, $bean_deleted) {
         // must have differing values
-        self::assertFalse($ea_deleted == $bean_deleted);
+        self::assertNotEquals($ea_deleted, $bean_deleted);
         $q = /** @lang sql */
             "
           INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted) 
@@ -1603,7 +1603,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
         // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Users');
 
-        self::assertTrue(is_string($result));
+        self::assertIsString($result);
 
         // test
         $_POST['return_id'] = 'test_contact_1';

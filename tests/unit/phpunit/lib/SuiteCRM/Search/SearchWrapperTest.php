@@ -155,7 +155,7 @@ class SearchWrapperTest extends SearchTestAbstract
     {
         $actual = SearchWrapper::getModules();
 
-        self::assertTrue(is_array($actual));
+        self::assertIsArray($actual);
         self::assertGreaterThan(1, count($actual));
     }
 

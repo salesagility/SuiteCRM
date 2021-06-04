@@ -214,6 +214,6 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $result = getReleaseDropDown();
 
         //execute the method and verify it returns an array
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 }

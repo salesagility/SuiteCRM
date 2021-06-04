@@ -249,7 +249,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $result = $securityGroup::retrieveDefaultGroups();
 
         //verify that default group is created
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
         self::assertGreaterThan(0, count($result));
 
         //execute removeDefaultGroup method for each default group
@@ -259,7 +259,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         //retrieve back and verify that default securith groups are deleted
         $result = $securityGroup::retrieveDefaultGroups();
-        self::assertEquals(0, count($result));
+        self::assertCount(0, $result);
 
         //delete the security group as well for cleanup
         $securityGroup->mark_deleted($securityGroup->id);
@@ -386,7 +386,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         $result = BeanFactory::newBean('SecurityGroups')::getUserSecurityGroups('1');
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetAllSecurityGroups()
@@ -399,7 +399,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         $result = BeanFactory::newBean('SecurityGroups')::getAllSecurityGroups();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetMembers()
@@ -412,7 +412,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
 
         $result = BeanFactory::newBean('SecurityGroups')->getMembers();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetPrimaryGroupID()
