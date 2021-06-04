@@ -58,8 +58,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreateJob()
     {
-        $scheduler = BeanFactory::newBean('Schedulers');
-        $result = $scheduler->createJob();
+        $result = BeanFactory::newBean('Schedulers')->createJob();
 
         self::assertInstanceOf('SchedulersJob', $result);
     }

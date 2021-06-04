@@ -20,10 +20,8 @@ class FavoritesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testdeleteFavorite()
     {
-        $favorites = BeanFactory::newBean('Favorites');
-
         //testing with an empty ID
-        $result = $favorites->deleteFavorite('');
+        $result = BeanFactory::newBean('Favorites')->deleteFavorite('');
         self::assertEquals(false, $result);
     }
 

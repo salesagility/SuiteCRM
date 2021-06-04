@@ -51,20 +51,16 @@ class AOP_Case_UpdatesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCase()
     {
-        $aopCaseUpdates = BeanFactory::newBean('AOP_Case_Updates');
-
         //execute the method and verify that it returns a Case object
-        $result = $aopCaseUpdates->getCase();
+        $result = BeanFactory::newBean('AOP_Case_Updates')->getCase();
 
         self::assertInstanceOf('aCase', $result);
     }
 
     public function testgetContacts()
     {
-        $aopCaseUpdates = BeanFactory::newBean('AOP_Case_Updates');
-
         //execute the method and verify that it returns an array
-        $result = $aopCaseUpdates->getContacts();
+        $result = BeanFactory::newBean('AOP_Case_Updates')->getContacts();
         self::assertTrue(is_array($result));
     }
 
@@ -84,19 +80,15 @@ class AOP_Case_UpdatesTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetUser()
     {
-        $aopCaseUpdates = BeanFactory::newBean('AOP_Case_Updates');
-
         //execute the method and verify that it returns an instance of User
-        $result = $aopCaseUpdates->getUser();
+        $result = BeanFactory::newBean('AOP_Case_Updates')->getUser();
         self::assertInstanceOf('User', $result);
     }
 
     public function testgetUpdateUser()
     {
-        $aopCaseUpdates = BeanFactory::newBean('AOP_Case_Updates');
-
         //execute the method and verify that it returns an instance of User
-        $result = $aopCaseUpdates->getUpdateUser();
+        $result = BeanFactory::newBean('AOP_Case_Updates')->getUpdateUser();
         self::assertInstanceOf('User', $result);
     }
 }

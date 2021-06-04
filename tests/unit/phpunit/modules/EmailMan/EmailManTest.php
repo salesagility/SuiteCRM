@@ -146,9 +146,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_indiv_email()
     {
-        $emailMan = BeanFactory::newBean('EmailMan');
-
-        $result = $emailMan->create_indiv_email(BeanFactory::newBean('Contacts'), BeanFactory::newBean('Emails'));
+        $result = BeanFactory::newBean('EmailMan')->create_indiv_email(BeanFactory::newBean('Contacts'), BeanFactory::newBean('Emails'));
 
         //test for record ID to verify that record is saved
         self::assertEquals(36, strlen($result));
@@ -160,8 +158,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
     public function testverify_campaign()
     {
         // test
-        $emailMan = BeanFactory::newBean('EmailMan');
-        $result = $emailMan->verify_campaign('');
+        $result = BeanFactory::newBean('EmailMan')->verify_campaign('');
         self::assertEquals(false, $result);
     }
 

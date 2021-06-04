@@ -38,15 +38,13 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetLogLevel()
     {
-        $loggerManager = self::$loggerManager;
-        $logLevel = $loggerManager::getLogLevel();
+        $logLevel = self::$loggerManager::getLogLevel();
         self::assertEquals('fatal', $logLevel);
     }
 
     public function testGetAvailableLoggers()
     {
-        $loggerManager = self::$loggerManager;
-        $loggers = $loggerManager::getAvailableLoggers();
+        $loggers = self::$loggerManager::getAvailableLoggers();
 
         self::assertContains('SugarLogger', $loggers);
     }

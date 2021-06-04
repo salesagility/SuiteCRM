@@ -18,9 +18,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
 
-        $userPreference = new UserPreference($user);
-
-        $result = $userPreference->getUserDateTimePreferences();
+        $result = (new UserPreference($user))->getUserDateTimePreferences();
         self::assertTrue(is_array($result));
     }
 

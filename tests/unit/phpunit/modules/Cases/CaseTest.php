@@ -107,8 +107,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_contacts()
     {
-        $aCase = BeanFactory::newBean('Cases');
-        $result = $aCase->get_contacts();
+        $result = BeanFactory::newBean('Cases')->get_contacts();
         self::assertFalse(is_array($result));
         self::assertEquals(false, $result);
     }
@@ -230,15 +229,13 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetEmailSubjectMacro()
     {
-        $aCase = BeanFactory::newBean('Cases');
-        $result = $aCase->getEmailSubjectMacro();
+        $result = BeanFactory::newBean('Cases')->getEmailSubjectMacro();
         self::assertEquals('[CASE:%1]', $result);
     }
 
     public function testgetAccount()
     {
-        $aCase = BeanFactory::newBean('Cases');
-        $result = $aCase->getAccount(1);
+        $result = BeanFactory::newBean('Cases')->getAccount(1);
         self::assertTrue(is_array($result));
         self::assertEquals(array('account_name' => '', 'account_id' => ''), $result);
     }

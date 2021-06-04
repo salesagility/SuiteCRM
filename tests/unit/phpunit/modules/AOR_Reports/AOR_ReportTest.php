@@ -85,8 +85,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     public function testgetReportFields()
     {
         //execute the method and verify that it returns an array
-        $aor_Report = BeanFactory::newBean('AOR_Reports');
-        $result = $aor_Report->getReportFields();
+        $result = BeanFactory::newBean('AOR_Reports')->getReportFields();
         self::assertTrue(is_array($result));
     }
 

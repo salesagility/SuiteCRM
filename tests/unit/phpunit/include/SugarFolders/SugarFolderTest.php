@@ -68,8 +68,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
 
-        $sugarfolder = new SugarFolder($user);
-        $sql = $sugarfolder->generateArchiveFolderQuery();
+        $sql = (new SugarFolder($user))->generateArchiveFolderQuery();
 
         $expected = "SELECT emails.id , emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id JOIN emails_email_addr_rel eear ON eear.email_id = emails.id "
             . "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft') AND emails.status NOT IN ('sent', 'draft') AND eabr.bean_id = '1' AND eabr.bean_module = 'Users' AND eear.deleted=0 GROUP BY id";
@@ -272,9 +271,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
     public function testCheckFalseIdForDelete()
     {
-        $sugarfolder = new SugarFolder();
-
-        $ret = $sugarfolder->delete();
+        $ret = (new SugarFolder())->delete();
 
         self::assertFalse($ret);
     }

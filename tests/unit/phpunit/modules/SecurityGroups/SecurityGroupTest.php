@@ -410,9 +410,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $securityGroup = BeanFactory::newBean('SecurityGroups');
-
-        $result = $securityGroup->getMembers();
+        $result = BeanFactory::newBean('SecurityGroups')->getMembers();
 
         self::assertTrue(is_array($result));
     }

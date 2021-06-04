@@ -59,10 +59,8 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency: curl_setopt(): CURLOPT_DNS_USE_GLOBAL_CACHE cannot be activated when thread safety is enabled ');
 
-        $schedulersJob = BeanFactory::newBean('SchedulersJobs');
-
         //test with invalid param
-        $result = $schedulersJob->fireUrl('');
+        $result = BeanFactory::newBean('SchedulersJobs')->fireUrl('');
         self::assertEquals(false, $result);
 
         //test with valid param

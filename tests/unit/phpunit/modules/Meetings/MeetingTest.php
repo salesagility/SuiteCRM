@@ -58,8 +58,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhasIntegratedMeeting()
     {
-        $meeting = BeanFactory::newBean('Meetings');
-        $result = $meeting->hasIntegratedMeeting();
+        $result = BeanFactory::newBean('Meetings')->hasIntegratedMeeting();
         self::assertEquals(false, $result);
     }
 
@@ -266,9 +265,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_meeting_users()
     {
-        $meeting = BeanFactory::newBean('Meetings');
-
-        $result = $meeting->get_meeting_users();
+        $result = BeanFactory::newBean('Meetings')->get_meeting_users();
         self::assertTrue(is_array($result));
     }
 
@@ -355,8 +352,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetDefaultStatus()
     {
-        $meeting = BeanFactory::newBean('Meetings');
-        $result = $meeting->getDefaultStatus();
+        $result = BeanFactory::newBean('Meetings')->getDefaultStatus();
         self::assertEquals('Planned', $result);
     }
 

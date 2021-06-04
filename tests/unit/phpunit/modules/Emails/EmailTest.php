@@ -142,8 +142,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     {
         // mailbox is not set
         $mailer = new SugarPHPMailerMock();
-        $ie = BeanFactory::newBean('InboundEmail');
-        $ieId = $ie->save();
+        $ieId = BeanFactory::newBean('InboundEmail')->save();
         self::assertTrue((bool)$ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
         $email = new EmailMock();
@@ -289,8 +288,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testemail2saveAttachment()
     {
-        $email = BeanFactory::newBean('Emails');
-        $result = $email->email2saveAttachment();
+        $result = BeanFactory::newBean('Emails')->email2saveAttachment();
         self::assertTrue(is_array($result));
     }
 
@@ -335,10 +333,8 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testemail2GetMime()
     {
-        $email = BeanFactory::newBean('Emails');
-
         //test with a filename
-        $result = $email->email2GetMime('config.php');
+        $result = BeanFactory::newBean('Emails')->email2GetMime('config.php');
         self::assertEquals('text/x-php', $result);
     }
 
@@ -371,9 +367,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetNamePlusEmailAddressesForCompose()
     {
-        $email = BeanFactory::newBean('Emails');
-
-        $result = $email->getNamePlusEmailAddressesForCompose('Users', array(1));
+        $result = BeanFactory::newBean('Emails')->getNamePlusEmailAddressesForCompose('Users', array(1));
         self::assertGreaterThanOrEqual(0, strlen($result));
     }
 
@@ -489,9 +483,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieve($id)
     {
-        $email = BeanFactory::newBean('Emails');
-
-        $result = $email->retrieve($id);
+        $result = BeanFactory::newBean('Emails')->retrieve($id);
 
         self::assertTrue(isset($result->id));
         self::assertEquals(36, strlen($result->id));
@@ -744,9 +736,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testjs_set_archived()
     {
-        $email = BeanFactory::newBean('Emails');
-
-        $actual = $email->js_set_archived();
+        $actual = BeanFactory::newBean('Emails')->js_set_archived();
         self::assertGreaterThan(0, strlen($actual));
     }
 
@@ -790,9 +780,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetUserEditorPreference()
     {
-        $email = BeanFactory::newBean('Emails');
-
-        $result = $email->getUserEditorPreference();
+        $result = BeanFactory::newBean('Emails')->getUserEditorPreference();
         self::assertEquals('html', $result);
     }
 
@@ -900,9 +888,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetMailer()
     {
-        $email = BeanFactory::newBean('Emails');
-
-        $result = $email->setMailer(new SugarPHPMailer(), '', '');
+        $result = BeanFactory::newBean('Emails')->setMailer(new SugarPHPMailer(), '', '');
 
         self::assertInstanceOf('SugarPHPMailer', $result);
         self::assertInstanceOf('OutboundEmail', $result->oe);
@@ -1087,9 +1073,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsearchImportedEmails()
     {
-        $email = BeanFactory::newBean('Emails');
-
-        $actual = $email->searchImportedEmails();
+        $actual = BeanFactory::newBean('Emails')->searchImportedEmails();
         self::assertTrue(is_array($actual));
     }
 
@@ -1179,9 +1163,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testuserSelectTable()
     {
-        $email = BeanFactory::newBean('Emails');
-
-        $result = $email->userSelectTable();
+        $result = BeanFactory::newBean('Emails')->userSelectTable();
         self::assertGreaterThan(0, strlen($result));
     }
 

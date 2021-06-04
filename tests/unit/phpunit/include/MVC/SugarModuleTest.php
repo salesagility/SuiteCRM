@@ -31,8 +31,7 @@ class SugarModuleTest extends SuitePHPUnitFrameworkTestCase
     public function testmoduleImplements()
     {
         //test for invalid input
-        $sugarmodule = new SugarModule('');
-        $result = $sugarmodule->moduleImplements('Basic');
+        $result = (new SugarModule(''))->moduleImplements('Basic');
         self::assertEquals(false, $result);
 
         //test for invalid input
@@ -49,13 +48,11 @@ class SugarModuleTest extends SuitePHPUnitFrameworkTestCase
     public function testloadBean()
     {
         //test for invalid input
-        $sugarmodule = new SugarModule('');
-        $result = $sugarmodule->loadBean();
+        $result = (new SugarModule(''))->loadBean();
         self::assertFalse($result);
 
         //test for valid input
-        $sugarmodule_user = new SugarModule('Users');
-        $result = $sugarmodule_user->loadBean();
+        $result = (new SugarModule('Users'))->loadBean();
         self::assertInstanceOf('User', $result);
     }
 }

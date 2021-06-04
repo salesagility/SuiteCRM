@@ -33,8 +33,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     protected function fieldDefsStore($key = 'base')
     {
-        $object = BeanFactory::newBean('Contacts');
-        $this->fieldDefsStore[$key]['Contact'] = $object->field_defs;
+        $this->fieldDefsStore[$key]['Contact'] = BeanFactory::newBean('Contacts')->field_defs;
     }
 
     /**
@@ -584,10 +583,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testBeanImplements()
     {
-        $bean = BeanFactory::getBean('Users');
-
         // test
-        $results = $bean->bean_implements('test');
+        $results = BeanFactory::getBean('Users')->bean_implements('test');
         self::assertEquals(false, $results);
     }
 
@@ -1559,8 +1556,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     {
         // test
         $GLOBALS['log']->reset();
-        $bean = BeanFactory::newBean('Contacts');
-        $result = $bean->get_custom_table_name();
+        $result = BeanFactory::newBean('Contacts')->get_custom_table_name();
         self::assertEquals('contacts_cstm', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
@@ -2209,8 +2205,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     public function testGetAuditTableNames()
     {
         // test
-        $bean = BeanFactory::newBean('Contacts');
-        $results = $bean->get_audit_table_name();
+        $results = BeanFactory::newBean('Contacts')->get_audit_table_name();
         self::assertEquals('contacts_audit', $results);
     }
 
@@ -2224,9 +2219,8 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $this->db->query($query);
 
         // test
-        $bean = BeanFactory::newBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
-        $results = $bean->create_audit_table();
+        $results = BeanFactory::newBean('Contacts')->create_audit_table();
         self::assertEquals(null, $results);
     }
 
@@ -2873,8 +2867,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetEncryptKey()
     {
-        $bean = new SugarBeanMock();
-        $results = $bean->getEncryptKeyPublic();
+        $results = (new SugarBeanMock())->getEncryptKeyPublic();
         self::assertEquals(blowfishGetKey('encrypt_field'), $results);
     }
 
