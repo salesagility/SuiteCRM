@@ -70,7 +70,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and verify if it returns an array
         $result = $call->get_contacts();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testget_summary_text()
@@ -205,7 +205,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and verify it returns an array
         $result = $call->get_call_users();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testget_invite_calls()
@@ -215,7 +215,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and verify it returns an array
         $result = $call->get_invite_calls($user);
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testset_accept_status()
@@ -230,7 +230,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $call->set_accept_status($user, 'test');
 
         $call_users = $call->get_linked_beans('users', $call->object_name);
-        self::assertEquals(1, count($call_users));
+        self::assertCount(1, $call_users);
 
         $call->delete_linked($call->id);
     }
@@ -241,13 +241,13 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
         //test without setting any user list
         $result = $call->get_notification_recipients();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with a user in notofication list set
         $call->users_arr = array(1);
         $result = $call->get_notification_recipients();
-        self::assertTrue(is_array($result));
-        self::assertEquals(1, count($result));
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
     }
 
     public function testbean_implements()

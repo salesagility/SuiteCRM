@@ -12,7 +12,7 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
         //test with a vaid module. it will return an array
         if (file_exists("custom/modules/Accounts/logic_hooks.php")) {
             $AccountsHooks = get_hook_array('Accounts');
-            self::assertTrue(is_array($AccountsHooks));
+            self::assertIsArray($AccountsHooks);
         }
 
         //test with an invalid array. it will throw an file include exception.
@@ -22,7 +22,7 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
         }
 
-        self::assertFalse(is_array($BugsHooks));
+        self::assertIsNotArray($BugsHooks);
     }
 
     private function getTestHook()

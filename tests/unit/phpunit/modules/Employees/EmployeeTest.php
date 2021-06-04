@@ -185,7 +185,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         global $app_strings;
 
         // setup
-        self::assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
+        self::assertNotTrue(isset($app_strings['TEST_ERROR_MESSAGE']));
 
         // test if there is no error
 

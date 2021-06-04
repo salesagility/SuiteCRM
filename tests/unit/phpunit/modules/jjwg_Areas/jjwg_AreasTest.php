@@ -33,7 +33,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         $jjwgAreas->configuration();
 
         self::assertInstanceOf('jjwg_Maps', $jjwgAreas->jjwg_Maps);
-        self::assertTrue(is_array($jjwgAreas->settings));
+        self::assertIsArray($jjwgAreas->settings);
         self::assertGreaterThan(0, count($jjwgAreas->settings));
     }
 
@@ -91,8 +91,8 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         //test without pre settting attributes
         $result = $jjwgAreas->define_area_loc();
         self::assertEquals('N/A', $result['name']);
-        self::assertTrue(is_numeric($result['lat']));
-        self::assertTrue(is_numeric($result['lng']));
+        self::assertIsNumeric($result['lat']);
+        self::assertIsNumeric($result['lng']);
 
         //test with required attributes preset
         $jjwgAreas->name = 'test';
@@ -143,8 +143,8 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         //test without pre settting attributes
         $result = $jjwgAreas->define_loc(array());
         self::assertEquals('N/A', $result['name']);
-        self::assertTrue(is_numeric($result['lat']));
-        self::assertTrue(is_numeric($result['lng']));
+        self::assertIsNumeric($result['lat']);
+        self::assertIsNumeric($result['lng']);
 
         //test with required attributes preset
         $marker = array('name' => 'test', 'lat' => 50, 'lng' => 100);

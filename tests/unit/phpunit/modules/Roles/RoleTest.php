@@ -85,7 +85,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
         //get related records count and verify that records are removed
         $result = $role->query_modules();
-        self::assertEquals(0, count((array)$result));
+        self::assertCount(0, (array)$result);
     }
 
     public function testSet_user_relationshipAndCheck_user_role_count()
@@ -122,20 +122,20 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $role->id = $id;
         $result = $role->get_users();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function clear_user_relationship($role_id, $user_id)
     {
         //get related records count and verify that records are removed
         $result = BeanFactory::newBean('Roles')->clear_user_relationship($role_id, $user_id);
-        self::assertEquals(0, count((array)$result));
+        self::assertCount(0, (array)$result);
     }
 
     public function testquery_user_allowed_modules()
     {
         $result = BeanFactory::newBean('Roles')->query_user_allowed_modules('1');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testquery_user_disallowed_modules()
@@ -145,6 +145,6 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $allowed = array('Accounts' => 'Accounts', 'Leads' => 'Leads');
         $result = $role->query_user_disallowed_modules(null, $allowed);
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 }

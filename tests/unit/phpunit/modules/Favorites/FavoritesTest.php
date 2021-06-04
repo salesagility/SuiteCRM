@@ -44,10 +44,10 @@ class FavoritesTest extends SuitePHPUnitFrameworkTestCase
 
         //test with empty string parameter
         $result = $favorites->getCurrentUserSidebarFavorites();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with string
         $result = $favorites->getCurrentUserSidebarFavorites('1');
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 }

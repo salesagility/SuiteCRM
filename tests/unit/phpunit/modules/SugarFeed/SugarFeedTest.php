@@ -179,7 +179,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
     public function testget_list_view_data()
     {
         $result = BeanFactory::newBean('SugarFeed')->get_list_view_data();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetTimeLapse()

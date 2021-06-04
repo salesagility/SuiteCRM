@@ -80,7 +80,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getDefaultSignature();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetSignature()
@@ -100,7 +100,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getSignaturesArray();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testgetSignatures()
@@ -111,8 +111,8 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = "<select onChange='setSigEditButtonVisibility();' id='signature_id' name='signature_id'>\n<OPTION selected value=''>--None--</OPTION>";
         $actual = $user->getSignatures();
-        self::assertTrue(strpos($actual, $expected) === 0);
-        self::assertEquals(preg_match('/\<\/select\>$/', $actual), 1);
+        self::assertSame(strpos($actual, $expected), 0);
+        self::assertRegExp('/\<\/select\>$/', $actual);
     }
 
     public function testhasPersonalEmail()
@@ -229,7 +229,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $user->getUserDateTimePreferences();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
         self::assertTrue(isset($result['date']));
         self::assertTrue(isset($result['time']));
         self::assertTrue(isset($result['userGmt']));
@@ -491,7 +491,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertEquals('firstn lastn', $actual['name']);
         $preg = preg_match('/^one\d{0,}\@email\.com$/', $actual['email'], $matches);
-        self::assertEquals(1, count($matches));
+        self::assertCount(1, $matches);
     }
 
     public function getUsersNameAndEmail($id)
@@ -503,7 +503,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $actual = $user->getUsersNameAndEmail();
 
         self::assertEquals('firstn lastn', $actual['name']);
-        self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
+        self::assertRegExp('/^one\d{0,}\@email\.com$/', $actual['email']);
     }
 
     public function getEmailInfo($id)
@@ -511,7 +511,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $actual = BeanFactory::newBean('Users')->getEmailInfo($id);
 
         self::assertEquals('firstn lastn', $actual['name']);
-        self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
+        self::assertRegExp('/^one\d{0,}\@email\.com$/', $actual['email']);
     }
 
     public function testencrypt_password()
@@ -655,7 +655,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->get_list_view_data();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testlist_view_parse_additional_sections()
@@ -670,10 +670,10 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     public function testGetAllUsersAndGetActiveUsers()
     {
         $all_users = User::getAllUsers();
-        self::assertTrue(is_array($all_users));
+        self::assertIsArray($all_users);
 
         $active_users = User::getActiveUsers();
-        self::assertTrue(is_array($active_users));
+        self::assertIsArray($active_users);
 
         self::assertGreaterThanOrEqual(count($active_users), count($all_users));
     }
@@ -699,7 +699,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     public function testget_meetings()
     {
         $result = BeanFactory::newBean('Users')->get_meetings();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testget_calls()
@@ -744,7 +744,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "filesys::/var/www/html/SuiteCRM/config.php".');
         $result = BeanFactory::newBean('Users')->setDefaultsInConfig();
 
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
         self::assertEquals('sugar', $result['email_default_client']);
         self::assertEquals('html', $result['email_default_editor']);
     }
@@ -873,7 +873,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getDeveloperModules();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testisDeveloperForModule()
@@ -901,7 +901,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->retrieve(1);
 
         $result = $user->getAdminModules();
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testisAdminForModule()
@@ -952,7 +952,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     public function testget_first_day_of_week()
     {
         $result = BeanFactory::newBean('Users')->get_first_day_of_week();
-        self::assertTrue(is_numeric($result));
+        self::assertIsNumeric($result);
     }
 
     public function testgeneratePassword()
@@ -974,7 +974,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $result = BeanFactory::newBean('Users')->sendEmailForPassword("1");
 
         //expected result is a array with template not found message.
-        self::assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
     public function testafterImportSave()
@@ -1013,7 +1013,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         global $app_strings;
 
         // setup
-        self::assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
+        self::assertNotTrue(isset($app_strings['TEST_ERROR_MESSAGE']));
 
         // test if there is no error
 
@@ -1028,7 +1028,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
         $request['error_string'] = 'TEST_ERROR_MESSAGE';
-        self::assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
+        self::assertEquals('TEST_ERROR_MESSAGE', $request['error_string']);
         ob_start();
         include __DIR__ . '/../../../../../modules/Users/Error.php';
         $contents = ob_get_contents();

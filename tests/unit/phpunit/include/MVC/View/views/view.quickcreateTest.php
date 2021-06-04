@@ -22,7 +22,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickcreate();
         $view->preDisplay();
-        self::assertEquals(0, count($_REQUEST));
+        self::assertCount(0, $_REQUEST);
 
         //check with values preset but without a valid bean id, it sould not change Request parameters
         $_REQUEST['source_module'] = 'Users';
