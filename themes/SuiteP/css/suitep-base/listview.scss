@@ -1761,18 +1761,19 @@ div.qtip.qtip-default {
 }
 
 .templateGroupChooser {
-  width: 150px;
+  width:auto;
+  max-width:400px;
 }
 
 /* search form (and popup search form) */
 
 .modal-content .search_form .view {
   background-color: initial;
+  position: relative;
 }
 
 #search_form label {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .modal-content #search_form label {
@@ -1830,7 +1831,7 @@ div.qtip.qtip-default {
 
 .search_form .view .col-xs-12 input[type="text"],
 .search_form .view .col-xs-12 textarea {
-  width: 80%;
+  width: 70%;
 }
 
 .search_form .view .col-xs-12 input[type="text"].dateRangeInput,
@@ -3536,7 +3537,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
 }
 
 .content .modal-search .nav-tabs {
-  margin: 16px 0 28px 0;
+  margin: 16px 0 0px 0;
 }
 
 .list .pagination-unique td table.paginationTable td.paginationActionButtons:first-child {
