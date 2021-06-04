@@ -42,42 +42,98 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $mod_strings, $app_strings;
+use League\OAuth2\Server\RequestTypes\AuthorizationRequest;
 
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewPassword&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_PASSWORD_CLIENT'],
-        "Create"
-    ];
-}
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewCredentials&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_CREDENTIALS_CLIENT'],
-        "Create"
-    ];
-}
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewAuthorizationCode&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_AUTHORIZATION_CLIENT'],
-        "Create"
-    ];
-}
+/**
+ * Class OAuth2AuthCodes
+ */
+class OAuth2AuthCodes extends SugarBean
+{
+    /**
+     * @var string
+     */
+    public $table_name = 'oauth2authcodes';
 
-if (ACLController::checkAccess('OAuth2Clients', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=index&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_CLIENT_LIST'],
-        "List"
-    ];
-}
+    /**
+     * @var string
+     */
+    public $object_name = 'OAuth2AuthCodes';
 
-if (ACLController::checkAccess('OAuth2Tokens', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Tokens&action=index&return_module=OAuth2Tokens&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_TOKEN_LIST'],
-        "List"
-    ];
+    /**
+     * @var string
+     */
+    public $module_dir = 'OAuth2AuthCodes';
+
+    /**
+     * @var bool
+     */
+    public $disable_row_level_security = true;
+
+    /**
+     * @var bool
+     */
+    public $auth_code_is_revoked;
+
+    /**
+     * @var string
+     */
+    public $auth_code_expires;
+
+    /**
+     * @var string
+     */
+    public $auth_code;
+
+    /**
+     * @var string
+     */
+    public $scopes;
+
+    /**
+     * @var string
+     */
+    public $state;
+
+    /**
+     * @var string
+     */
+    public $client;
+
+    /**
+     * @see SugarBean::get_summary_text()
+     */
+    public function get_summary_text()
+    {
+        return substr($this->id, 0, 10) . '...';
+    }
+
+    /**
+     * @return boolean
+     * @throws Exception
+     */
+    public function is_revoked()
+    {
+        return $this->id === null || $this->auth_code_is_revoked === '1' || new \DateTime() > new \DateTime($this->auth_code_expires);
+    }
+
+    /**
+     * @param AuthorizationRequest $authRequest
+     * @return boolean
+     */
+    public function is_scope_authorized(AuthorizationRequest $authRequest)
+    {
+        $this->retrieve_by_string_fields([
+            'client' => $authRequest->getClient()->getIdentifier(),
+            'assigned_user_id' => $authRequest->getUser()->getIdentifier(),
+            'auto_authorize' => '1',
+        ]);
+
+        // Check for scope changes here in future
+
+        if($this->id === null){
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -109,6 +109,7 @@ $app_list_strings = array(
         'OAuthTokens' => 'OAuth Tokens',
         'OAuth2Clients' => 'OAuth Clients',
         'OAuth2Tokens' => 'OAuth Tokens',
+        'OAuth2AuthCodes' => 'OAuth Authorization Codes',
     ),
 
     'moduleListSingular' => array(
@@ -491,11 +492,11 @@ $app_list_strings = array(
         'ProjectTask' => 'Project Task',
 
         'Prospects' => 'Target',
-        
+
         'AOS_Contracts' => 'Contract',
         'AOS_Invoices' => 'Invoice',
         'AOS_Quotes' => 'Quote',
-        'AOS_Products' => 'Product',        
+        'AOS_Products' => 'Product',
 
     ),
     'parent_line_items' => array(

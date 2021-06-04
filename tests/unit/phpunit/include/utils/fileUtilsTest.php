@@ -153,6 +153,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
                 'ModuleBuilder' => 'ModuleBuilder',
                 'MySettings' => 'MySettings',
                 'Notes' => 'Notes',
+                'OAuth2AuthCodes' => 'OAuth2AuthCodes',
                 'OAuth2Clients' => 'OAuth2Clients',
                 'OAuth2Tokens' => 'OAuth2Tokens',
                 'OAuthKeys' => 'OAuthKeys',
@@ -297,7 +298,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
     public function testgenerateMD5array()
     {
         self::markTestIncomplete('environment dependency');
-        
+
         //execute the method and test if it returns expected values
 
         $expected = array(
@@ -434,7 +435,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
-        
+
         //execute the method and test if it returns expected values
 
         //test with empty filename string
@@ -461,7 +462,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
-        
+
         //execute the method and test if it returns expected values
 
         //test with invalid hash.
@@ -486,13 +487,13 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 
         $file = ''; // Only variables should be passed by reference in php7
         $this->assertSame('', get_file_extension($file));
-        
+
         $file = 'test.txt'; // Only variables should be passed by reference in php7
         $this->assertSame('txt', get_file_extension($file));
-        
+
         $file = 'test.ext.Txt'; // Only variables should be passed by reference in php7
         $this->assertSame('Txt', get_file_extension($file, false));
-        
+
         $file = 'test.ext.TXT'; // Only variables should be passed by reference in php7
         $this->assertSame('txt', get_file_extension($file, true));
     }
