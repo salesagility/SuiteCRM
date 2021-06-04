@@ -602,7 +602,8 @@ EOJAVASCRIPT;
         $ss = new Sugar_Smarty();
         $display_msg = '';
         foreach ($message as $m) {
-            $display_msg .= '<p>'.htmlentities($m, ENT_QUOTES).'</p><br>';
+            // This is the additional parameter used for correct message in different languages
+            $display_msg .= '<p>'.htmlentities($m, ENT_QUOTES, $encoding = 'UTF-8').'</p><br>';
         }
         global $mod_strings;
 
