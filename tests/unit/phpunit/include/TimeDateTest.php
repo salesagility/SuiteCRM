@@ -12,8 +12,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('datef', 'Y-m-d');
 
-        $timeDate = new TimeDate($user);
-        $actual = $timeDate->get_date_format();
+        $actual = (new TimeDate($user))->get_date_format();
         $expected = 'Y-m-d';
         self::assertEquals($expected, $actual);
     }
@@ -26,8 +25,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('timef', 'H:i:s');
 
-        $timeDate = new TimeDate($user);
-        $actual = $timeDate->get_time_format();
+        $actual = (new TimeDate($user))->get_time_format();
         $expected = 'H:i:s';
         self::assertEquals($expected, $actual);
     }
@@ -41,8 +39,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $userPreference->setPreference('datef', 'Y-m-d');
         $userPreference->setPreference('timef', 'H:i:s');
 
-        $timeDate = new TimeDate($user);
-        $actual = $timeDate->get_date_time_format();
+        $actual = (new TimeDate($user))->get_date_time_format();
         $expected = 'Y-m-d H:i:s';
         self::assertEquals($expected, $actual);
     }
@@ -56,8 +53,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('fdow', 1);
 
-        $timeDate = new TimeDate($user);
-        $actual = $timeDate->get_first_day_of_week();
+        $actual = (new TimeDate($user))->get_first_day_of_week();
         $expected = 1;
         self::assertEquals($expected, $actual);
     }
@@ -66,8 +62,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
     {
         // When no user is specified for the TimeDate,
         // it defaults to 0 aka Sunday.
-        $timeDate = new TimeDate();
-        $actual = $timeDate->get_first_day_of_week();
+        $actual = (new TimeDate())->get_first_day_of_week();
         $expected = 0;
         self::assertEquals($expected, $actual);
     }
@@ -76,8 +71,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
     {
         // Merges the date and time formats given two strings.
         // Literally just puts a space in between them.
-        $timeDate = new TimeDate();
-        $actual = $timeDate->merge_date_time('Y-m-d', 'H:i:s');
+        $actual = (new TimeDate())->merge_date_time('Y-m-d', 'H:i:s');
         $expected = 'Y-m-d H:i:s';
         self::assertEquals($expected, $actual);
     }
@@ -131,9 +125,7 @@ class TimeDateTest extends SuitePHPUnitFrameworkTestCase
         $userPreference = new UserPreference($user);
         $userPreference->setPreference('datef', 'Y-m-d');
         $userPreference->setPreference('timef', 'H:i:s');
-        $timeDate = new TimeDate($user);
-
-        $actual = $timeDate->to_db_date_time('2019-01-01', '11:00:00');
+        $actual = (new TimeDate($user))->to_db_date_time('2019-01-01', '11:00:00');
         $expected = ['2019-01-01', '11:00:00'];
         self::assertEquals($expected, $actual);
     }

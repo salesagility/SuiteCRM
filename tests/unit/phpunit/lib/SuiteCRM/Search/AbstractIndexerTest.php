@@ -159,7 +159,6 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
      */
     private function getIndexerMock()
     {
-        $indexer = m::mock(AbstractIndexer::class)->makePartial();
-        return $indexer;
+        return m::mock(AbstractIndexer::class)->makePartial();
     }
 }

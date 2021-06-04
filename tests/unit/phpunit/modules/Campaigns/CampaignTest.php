@@ -463,8 +463,7 @@ WHERE  emailman.campaign_id = ''
 
     public function testgetDeletedCampaignLogLeadsCount()
     {
-        $campaign = BeanFactory::newBean('Campaigns');
-        $result = $campaign->getDeletedCampaignLogLeadsCount();
+        $result = BeanFactory::newBean('Campaigns')->getDeletedCampaignLogLeadsCount();
         self::assertEquals(0, $result);
     }
 }

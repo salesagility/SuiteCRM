@@ -34,9 +34,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_recently_viewed()
     {
-        $tracker = BeanFactory::newBean('Trackers');
-
-        $result = $tracker->get_recently_viewed(1);
+        $result = BeanFactory::newBean('Trackers')->get_recently_viewed(1);
 
         self::assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
         self::assertTrue(is_array($result));

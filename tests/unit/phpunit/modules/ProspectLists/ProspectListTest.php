@@ -235,9 +235,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_entry_count()
     {
-        $prospectList = BeanFactory::newBean('ProspectLists');
-
-        $result = $prospectList->get_entry_count();
+        $result = BeanFactory::newBean('ProspectLists')->get_entry_count();
         self::assertEquals(0, $result);
     }
 
