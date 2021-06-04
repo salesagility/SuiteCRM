@@ -2550,10 +2550,10 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->fill_in_additional_list_fields();
 
-        self::assertEquals($inboundEmail->tls, 'tls');
-        self::assertEquals($inboundEmail->ca, 'ca');
-        self::assertEquals($inboundEmail->ssl, 'ssl');
-        self::assertEquals($inboundEmail->protocol, 'protocol');
+        self::assertEquals('tls', $inboundEmail->tls);
+        self::assertEquals('ca', $inboundEmail->ca);
+        self::assertEquals('ssl', $inboundEmail->ssl);
+        self::assertEquals('protocol', $inboundEmail->protocol);
     }
 
     public function testfill_in_additional_detail_fields()
@@ -2564,10 +2564,10 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $inboundEmail->fill_in_additional_detail_fields();
 
-        self::assertEquals($inboundEmail->tls, 'tls');
-        self::assertEquals($inboundEmail->ca, 'ca');
-        self::assertEquals($inboundEmail->ssl, 'ssl');
-        self::assertEquals($inboundEmail->protocol, 'protocol');
+        self::assertEquals('tls', $inboundEmail->tls);
+        self::assertEquals('ca', $inboundEmail->ca);
+        self::assertEquals('ssl', $inboundEmail->ssl);
+        self::assertEquals('protocol', $inboundEmail->protocol);
     }
 
     public function testisAutoImport()
