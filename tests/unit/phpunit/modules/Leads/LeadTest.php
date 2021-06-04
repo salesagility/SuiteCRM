@@ -234,7 +234,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
             'SecurityGroups',
         );
         $actual = $lead->get_linked_fields();
-        self::assertTrue(is_array($actual));
+        self::assertIsArray($actual);
         sort($expected);
         $actualKeys = array_keys($actual);
         sort($actualKeys);

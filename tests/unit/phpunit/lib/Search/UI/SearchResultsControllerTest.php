@@ -65,7 +65,7 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
             self::assertTrue((bool)$ok);
             $ids[] = $account->id;
         }
-        self::assertEquals(15, count($ids));
+        self::assertCount(15, $ids);
 
         $request = [
             'search-query-string' => 'test account',
@@ -100,7 +100,7 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
             self::assertTrue((bool)$ok);
             $ids[] = $account->id;
         }
-        self::assertEquals(20, count($ids));
+        self::assertCount(20, $ids);
 
         $request = [
             'search-query-string' => 'test account',

@@ -52,8 +52,8 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Account', $Account);
         self::assertInstanceOf('Company', $Account);
         self::assertInstanceOf('SugarBean', $Account);
-        self::assertTrue(is_array($Account->field_name_map));
-        self::assertTrue(is_array($Account->field_defs));
+        self::assertIsArray($Account->field_name_map);
+        self::assertIsArray($Account->field_defs);
     }
 
     public function testget_summary_text()
@@ -73,7 +73,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and verify that it returns an array
         $contacts = (new Account(''))->get_contacts();
-        self::assertTrue(is_array($contacts));
+        self::assertIsArray($contacts);
     }
 
     public function testclear_account_case_relationship()

@@ -211,7 +211,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         //check with valid value and check if it returns an array.
         $menu = (new SugarView())->getMenu('Users');
-        self::assertTrue(is_array($menu));
+        self::assertIsArray($menu);
     }
 
     public function testgetModuleTitle()

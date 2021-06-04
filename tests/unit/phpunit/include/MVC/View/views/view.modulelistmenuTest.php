@@ -11,7 +11,7 @@ class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertInstanceOf('ViewModulelistmenu', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertTrue(is_array($view->options));
+        self::assertIsArray($view->options);
     }
 
     public function testdisplay()

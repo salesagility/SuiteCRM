@@ -44,14 +44,14 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it returns true
         $hook_map = (new LogicHook())->getHooksMap();
-        self::assertTrue(is_array($hook_map));
+        self::assertIsArray($hook_map);
     }
 
     public function testgetHooksList()
     {
         //execute the method and test if it returns true
         $hookscan = (new LogicHook())->getHooksList();
-        self::assertTrue(is_array($hookscan));
+        self::assertIsArray($hookscan);
     }
 
     public function testscanHooksDir()
@@ -154,8 +154,8 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
             self::assertSame($expected_hook_map, $hook_map);
             self::assertSame($expected_hookscan, $hookscan);
         } else {
-            self::assertTrue(empty($hook_map));
-            self::assertTrue(empty($hookscan));
+            self::assertEmpty($hook_map);
+            self::assertEmpty($hookscan);
         }
     }
 
@@ -282,7 +282,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         ) {
             self::assertSame($expected_accounts, $accounts_hooks);
         } else {
-            self::assertTrue(empty($accounts_hooks));
+            self::assertEmpty($accounts_hooks);
         }
 
         //test with an invalid module, it will get the application hooks
@@ -293,7 +293,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         ) {
             //$this->assertSame($expected_default, $default_hooks);
         } else {
-            self::assertTrue(empty($default_hooks));
+            self::assertEmpty($default_hooks);
         }
     }
 
@@ -444,7 +444,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         ) {
             self::assertEquals($expected, $hooks);
         } else {
-            self::assertTrue(empty($hooks));
+            self::assertEmpty($hooks);
         }
 
         //test wit hrefresh true
@@ -455,7 +455,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         ) {
             self::assertSame($expected, $hooks);
         } else {
-            self::assertTrue(empty($hooks));
+            self::assertEmpty($hooks);
         }
     }
 
