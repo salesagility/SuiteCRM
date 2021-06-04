@@ -101,6 +101,11 @@
     background-repeat: no-repeat;
     padding-right: $tab-height;
     border-bottom: none;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: $active-tab-bg;
   }
 
   #first-tab-menu-xs.dropdown-menu > li > a {
@@ -116,18 +121,25 @@
   }
 
   #first-tab-menu-xs.dropdown-menu {
-    background-color: $active-tab-bg;
+/*    background-color: $active-tab-bg; */
+    background-color: $default-tab-bg;
   }
 
   #first-tab-menu-xs.dropdown-menu > li {
-    background-color: $active-tab-bg;
+/*    background-color: $active-tab-bg; */
+    background-color: $default-tab-bg;
   }
 
   #first-tab-menu-xs.dropdown-menu > li > a {
+/*    background-color: $active-tab-bg; */
+    background-color: $default-tab-bg;
+  }
+  #first-tab-menu-xs.dropdown-menu > li:hover {
     background-color: $active-tab-bg;
   }
-
-  /*Override bootstrap (needs to be stacked)*/
+  #first-tab-menu-xs.dropdown-menu > li > a:hover {
+    background-color: $active-tab-bg;
+  }
   .dropdown-menu > li > a,
   .dropdown-menu > li > a:focus,
   .dropdown-menu > li > a:hover {
@@ -141,6 +153,7 @@
     color: $action-tab-color;
     cursor: pointer;
     border-color: $action-tab-bg;
+    border-bottom: $action-tab-seperator;
   }
 
   #tab-actions > a .suitepicon-action-caret {
@@ -163,7 +176,7 @@
 
   #tab-actions > .dropdown-menu {
     left: auto;
-    right: 0;
+/*    right: 0; */
     background-color: $action-tab-bg;
     margin-right: 2px;
     border-top-left-radius: 4px;
@@ -221,7 +234,7 @@
     margin-bottom: $tab-margin-bottom;
     border: 1px solid transparent;
     border-top-right-radius: 4px;
-    border-bottom-left-radius: 4px;
+/*    border-bottom-left-radius: 4px; */
     border-bottom-right-radius: 4px;
   }
 
