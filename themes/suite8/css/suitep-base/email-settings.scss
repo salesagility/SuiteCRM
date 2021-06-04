@@ -1,0 +1,39 @@
+.email-settings {
+    input[type=text],input[type=password],input[type=email] {
+        background-color:$transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    .btn-hide {
+        display: none;
+    }
+    #smtpButtonGroup {
+        button.btn-danger {
+            background: $nepal-grey;
+            border: none;
+        }
+    }   
+    .action-btn-top {
+        position: absolute;
+        right: 0;
+        bottom: 2%;
+    }
+    .required-text {
+        position:absolute;
+        right: 0;
+    }
+    .panel-heading a:before {
+        display: none;
+    }
+    .panel-heading a div {
+        line-height: 40px;
+    }
+    #EditView_tabs .edit [type="button"] {
+        background: $nepal-grey;
+        border: none;
+    }
+}

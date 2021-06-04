@@ -40,6 +40,7 @@
 -->
 
 <!-- BEGIN: main -->
+<div class="email-settings">
 <script type="text/javascript" src="{sugar_getjspath file='modules/Users/User.js'}"></script>
 <script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 {literal}
@@ -68,12 +69,13 @@ function change_state(radiobutton) {
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
-
-		<td>
+		<td class="action-btn-top">
 			<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="this.form.action.value='Save';return verify_data(this);" type="submit" name="button" id="btn_save" value=" {$APP.LBL_SAVE_BUTTON_LABEL} ">
 			<input title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{$RETURN_ACTION}'; this.form.module.value='{$RETURN_MODULE}';" type="submit" name="button" value=" {$APP.LBL_CANCEL_BUTTON_LABEL} ">
-		</td>
-		<td align="right" nowrap>
+		</td>		
+	</tr>
+	<tr>
+		<td nowrap class="required-text">
 			<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span> {$APP.NTC_REQUIRED}
 		</td>
 	</tr>
@@ -508,7 +510,7 @@ function change_state(radiobutton) {
 	</div>
 </div>
 
-<div style="padding-top:2px;">
+<div class="btn-hide">
 			<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="this.form.action.value='Save';return verify_data(this);" type="submit" name="button" value=" {$APP.LBL_SAVE_BUTTON_LABEL} ">
 			<input title="{$APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.action.value='{$RETURN_ACTION}'; this.form.module.value='{$RETURN_MODULE}';" type="submit" name="button" value=" {$APP.LBL_CANCEL_BUTTON_LABEL} ">
 </div>
@@ -804,3 +806,5 @@ changeEmailScreenDisplay("{/literal}{$mail_smtptype}{literal}", false);
 -->
 </script>
 {/literal}
+
+</div>
