@@ -152,22 +152,19 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
-        $result = $documentRevision->get_list_view_data();
+        $result = BeanFactory::newBean('DocumentRevisions')->get_list_view_data();
         self::assertEquals(array('DELETED' => 0), $result);
     }
 
     public function testget_document_revision_name()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
-        $result = $documentRevision->get_document_revision_name(1);
+        $result = BeanFactory::newBean('DocumentRevisions')->get_document_revision_name(1);
         self::assertEquals(null, $result);
     }
 
     public function testget_document_revisions()
     {
-        $documentRevision = BeanFactory::newBean('DocumentRevisions');
-        $results = $documentRevision->get_document_revisions(1);
+        $results = BeanFactory::newBean('DocumentRevisions')->get_document_revisions(1);
         self::assertTrue(is_array($results));
     }
 

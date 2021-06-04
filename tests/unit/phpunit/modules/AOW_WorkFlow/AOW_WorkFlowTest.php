@@ -97,9 +97,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
     public function testrun_flows()
     {
-        $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
-
-        $result = $aowWorkFlow->run_flows();
+        $result = BeanFactory::newBean('AOW_WorkFlow')->run_flows();
         self::assertTrue($result);
     }
 

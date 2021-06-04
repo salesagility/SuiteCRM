@@ -218,8 +218,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 
     public function testtrace_relationship_module()
     {
-        $relationship = BeanFactory::newBean('Relationships');
-        $result = $relationship->trace_relationship_module('Roles', 'Users');
+        $result = BeanFactory::newBean('Relationships')->trace_relationship_module('Roles', 'Users');
         self::assertInstanceOf('User', $result);
     }
 }

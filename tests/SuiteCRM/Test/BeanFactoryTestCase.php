@@ -256,9 +256,7 @@ EOT;
      */
     public function removeCoreModuleAllExtension()
     {
-        $modulesConfig = $this->moduleConfigProvider();
-
-        foreach ($modulesConfig as $moduleName => $moduleConfig) {
+        foreach ($this->moduleConfigProvider() as $moduleName => $moduleConfig) {
             if (file_exists("custom/Extension/application/Ext/Include/ZzzTestCustom$moduleName.php")) {
                 unlink("custom/Extension/application/Ext/Include/ZzzTestCustom$moduleName.php");
             }

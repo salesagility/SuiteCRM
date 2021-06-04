@@ -54,9 +54,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 {
     public function testGetModulesToIndex()
     {
-        $indexer = new ElasticSearchIndexer(null);
-
-        $modules = $indexer->getModulesToIndex();
+        $modules = (new ElasticSearchIndexer(null))->getModulesToIndex();
 
         self::assertTrue(is_array($modules), "Result is not an array.");
 
@@ -172,12 +170,11 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
     {
         global $sugar_config;
 
-        $expected = [
+        return [
             'index' => $sugar_config['unique_key'],
             'type' => 'Contacts',
             'id' => '00000000-0000-0000-0000-000000000000',
         ];
-        return $expected;
     }
 
     /**
@@ -185,7 +182,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
      */
     private function getExpectedBody()
     {
-        $expected = [
+        return [
             'meta' =>
                 [
                     'created' =>
@@ -244,7 +241,6 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
                     0 => 'kid79@example.co.jp',
                 ],
         ];
-        return $expected;
     }
 
     public function testMakeIndexParamsBodyFromBean1()
@@ -476,8 +472,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->once()
             ->andReturnFalse();
 
-        $indexer = new ElasticSearchIndexer($mockClient);
-        $actual = $indexer->ping();
+        $actual = (new ElasticSearchIndexer($mockClient))->ping();
         self::assertFalse($actual);
     }
 
@@ -491,8 +486,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->once()
             ->andReturnTrue();
 
-        $indexer = new ElasticSearchIndexer($mockClient);
-        $actual = $indexer->ping();
+        $actual = (new ElasticSearchIndexer($mockClient))->ping();
         self::assertNotFalse($actual);
         self::assertTrue(is_numeric($actual));
     }

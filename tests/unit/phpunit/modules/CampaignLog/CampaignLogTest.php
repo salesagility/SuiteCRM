@@ -28,18 +28,15 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $campaignLog = BeanFactory::newBean('CampaignLog');
-
         //execute the method and verify it returns an array
-        $actual = $campaignLog->get_list_view_data();
+        $actual = BeanFactory::newBean('CampaignLog')->get_list_view_data();
         self::assertTrue(is_array($actual));
         self::assertSame(array(), $actual);
     }
 
     public function testretrieve_email_address()
     {
-        $campaignLog = BeanFactory::newBean('CampaignLog');
-        $actual = $campaignLog->retrieve_email_address();
+        $actual = BeanFactory::newBean('CampaignLog')->retrieve_email_address();
         self::assertGreaterThanOrEqual('', $actual);
     }
 

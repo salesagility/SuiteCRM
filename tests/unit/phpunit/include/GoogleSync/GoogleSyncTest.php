@@ -258,9 +258,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetSuiteCRMCalendar()
     {
-        $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
-
-        $result = $object->callMethod('getSuiteCRMCalendar', [new Google_Service_Calendar_CalendarList()]);
+        $result = (new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}')))->callMethod('getSuiteCRMCalendar', [new Google_Service_Calendar_CalendarList()]);
         self::assertEquals(null, $result);
     }
 
@@ -688,8 +686,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('2018-01-01T13:00:00+00:00', $end->getDateTime());
         self::assertEquals('Etc/UTC', $end->getTimeZone());
 
-        $props = $return->getExtendedProperties();
-        $private = $props->getPrivate();
+        $private = $return->getExtendedProperties()->getPrivate();
         self::assertEquals($testid, $private['suitecrm_id']);
         self::assertEquals('Meeting', $private['suitecrm_type']);
     }
@@ -1024,8 +1021,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testSyncAllUsers()
     {
-        $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
-        $ret = $object->syncAllUsers();
+        $ret = (new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}')))->syncAllUsers();
         // TODO: it needs more test
         self::assertEquals(true, $ret);
     }
@@ -1038,9 +1034,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testSingleEventAction()
     {
-        $helper = new GoogleSyncHelper;
-
-        $ret1 = $helper->singleEventAction(null, null);
+        $ret1 = (new GoogleSyncHelper)->singleEventAction(null, null);
         self::assertEquals(false, $ret1);
         // The rest of this method is tested by testPushPullSkip
     }

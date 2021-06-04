@@ -109,9 +109,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_contacts()
     {
-        $opportunity = BeanFactory::newBean('Opportunities');
-
-        $result = $opportunity->get_contacts();
+        $result = BeanFactory::newBean('Opportunities')->get_contacts();
         self::assertTrue(is_array($result));
     }
 
@@ -259,9 +257,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_account_detail()
     {
-        $opportunity = BeanFactory::newBean('Opportunities');
-
-        $result = $opportunity->get_account_detail('1');
+        $result = BeanFactory::newBean('Opportunities')->get_account_detail('1');
         self::assertTrue(is_array($result));
     }
 

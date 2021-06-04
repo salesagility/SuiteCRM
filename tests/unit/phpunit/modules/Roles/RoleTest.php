@@ -127,18 +127,14 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function clear_user_relationship($role_id, $user_id)
     {
-        $role = BeanFactory::newBean('Roles');
-
         //get related records count and verify that records are removed
-        $result = $role->clear_user_relationship($role_id, $user_id);
+        $result = BeanFactory::newBean('Roles')->clear_user_relationship($role_id, $user_id);
         self::assertEquals(0, count((array)$result));
     }
 
     public function testquery_user_allowed_modules()
     {
-        $role = BeanFactory::newBean('Roles');
-
-        $result = $role->query_user_allowed_modules('1');
+        $result = BeanFactory::newBean('Roles')->query_user_allowed_modules('1');
         self::assertTrue(is_array($result));
     }
 

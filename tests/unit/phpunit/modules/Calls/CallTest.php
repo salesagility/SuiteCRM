@@ -282,8 +282,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetDefaultStatus()
     {
-        $call = BeanFactory::newBean('Calls');
-        $result = $call->getDefaultStatus();
+        $result = BeanFactory::newBean('Calls')->getDefaultStatus();
         self::assertEquals('Planned', $result);
     }
 }

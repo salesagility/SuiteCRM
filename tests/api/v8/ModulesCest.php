@@ -416,8 +416,7 @@ class ModulesCest
 
         $document_name = $faker->name();
         // Publish date
-        $active_datetime = new \DateTime();
-        $active_date = $active_datetime->format(DATE_ATOM);
+        $active_date = (new \DateTime())->format(DATE_ATOM);
 
         $payload = json_encode(
             array(
