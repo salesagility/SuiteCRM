@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,22 +38,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-
-
-
+/**
+ * @deprecated since v7.12.0
+ * Class UnifiedSearchAdvanced
+ */
 class UnifiedSearchAdvanced
 {
     public $query_string = '';
-    
+
     /* path to search form */
     public $searchFormPath = 'include/SearchForm/SearchForm2.php';
 
     /*search form class name*/
     public $searchFormClass = 'SearchForm';
 
+    /**
+     * @deprecated since v7.12.0
+     * UnifiedSearchAdvanced constructor.
+     */
     public function __construct()
     {
+        LoggerManager::getLogger()->deprecated(
+            'UnifiedSearchAdvanced is deprecated since v7.12.0, please use Search.php instead'
+        );
+
         if (!empty($_REQUEST['query_string'])) {
             $query_string = trim($_REQUEST['query_string']);
             if (!empty($query_string)) {
@@ -67,6 +76,11 @@ class UnifiedSearchAdvanced
         $this->cache_display = sugar_cached('modules/unified_search_modules_display.php');
     }
 
+    /**
+     * @deprecated since v7.12.0
+     * @param string $tpl
+     * @return string
+     */
     public function getDropDownDiv($tpl = 'modules/Home/UnifiedSearchAdvanced.tpl')
     {
         global $app_list_strings, $app_strings;
@@ -153,6 +167,7 @@ class UnifiedSearchAdvanced
 
 
     /**
+     * @deprecated since v7.12.0
      * search
      *
      * Search function run when user goes to Show All and runs a search again.  This outputs the search results
@@ -281,7 +296,7 @@ class UnifiedSearchAdvanced
                  */
                 require_once $beanFiles[$beanName] ;
                 $seed = new $beanName();
-                
+
                 require_once $this->searchFormPath;
                 $searchForm = new $this->searchFormClass($seed, $moduleName) ;
 
@@ -359,6 +374,9 @@ class UnifiedSearchAdvanced
         }
     }
 
+    /**
+     * @deprecated since v7.12.0
+     */
     public function buildCache()
     {
         global $beanList, $beanFiles, $dictionary;
@@ -449,6 +467,7 @@ class UnifiedSearchAdvanced
     }
 
     /**
+     * @deprecated since v7.12.0
      * Retrieve the enabled and disabled modules used for global search.
      *
      * @return array
@@ -494,6 +513,7 @@ class UnifiedSearchAdvanced
 
 
     /**
+     * @deprecated since v7.12.0
      * saveGlobalSearchSettings
      * This method handles the administrator's request to save the searchable modules selected and stores
      * the results in the unified_search_modules_display.php file
@@ -520,7 +540,9 @@ class UnifiedSearchAdvanced
         }
     }
 
-
+    /**
+     * @deprecated since v7.12.0
+     */
     public static function unlinkUnifiedSearchModulesFile()
     {
         //clear the unified_search_module.php file
@@ -530,9 +552,10 @@ class UnifiedSearchAdvanced
             unlink($cache_search);
         }
     }
-    
+
 
     /**
+     * @deprecated since v7.12.0
      * getUnifiedSearchModules
      *
      * Returns the value of the $unified_search_modules variable based on the module's vardefs.php file
@@ -560,6 +583,7 @@ class UnifiedSearchAdvanced
 
 
     /**
+     * @deprecated since v7.12.0
      * getUnifiedSearchModulesDisplay
      *
      * Returns the value of the $unified_search_modules_display variable which is based on the $unified_search_modules
@@ -587,7 +611,8 @@ class UnifiedSearchAdvanced
         return $unified_search_modules_display;
     }
 
-    /*
+    /**
+     * @deprecated since v7.12.0
      * writeUnifiedSearchModulesDisplayFile
      * Private method to handle writing the unified_search_modules_display value to file
      *
@@ -613,10 +638,15 @@ class UnifiedSearchAdvanced
     }
 }
 
-
+/**
+ * @deprecated since v7.12.0
+ * @param $a
+ * @param $b
+ * @return int
+ */
 function unified_search_modules_cmp($a, $b)
 {
-    if (!isset($a['translated']) || !isset($b['translated'])) {
+    if (!isset($a['translated'], $b['translated'])) {
         return 0;
     }
 
