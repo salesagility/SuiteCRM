@@ -17,17 +17,17 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosLineItemGroup = BeanFactory::newBean('AOS_Line_Item_Groups');
-        $this->assertInstanceOf('AOS_Line_Item_Groups', $aosLineItemGroup);
-        $this->assertInstanceOf('Basic', $aosLineItemGroup);
-        $this->assertInstanceOf('SugarBean', $aosLineItemGroup);
+        self::assertInstanceOf('AOS_Line_Item_Groups', $aosLineItemGroup);
+        self::assertInstanceOf('Basic', $aosLineItemGroup);
+        self::assertInstanceOf('SugarBean', $aosLineItemGroup);
 
-        $this->assertAttributeEquals('AOS_Line_Item_Groups', 'module_dir', $aosLineItemGroup);
-        $this->assertAttributeEquals('AOS_Line_Item_Groups', 'object_name', $aosLineItemGroup);
-        $this->assertAttributeEquals('aos_line_item_groups', 'table_name', $aosLineItemGroup);
-        $this->assertAttributeEquals(true, 'new_schema', $aosLineItemGroup);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aosLineItemGroup);
-        $this->assertAttributeEquals(true, 'importable', $aosLineItemGroup);
-        $this->assertAttributeEquals(false, 'tracker_visibility', $aosLineItemGroup);
+        self::assertAttributeEquals('AOS_Line_Item_Groups', 'module_dir', $aosLineItemGroup);
+        self::assertAttributeEquals('AOS_Line_Item_Groups', 'object_name', $aosLineItemGroup);
+        self::assertAttributeEquals('aos_line_item_groups', 'table_name', $aosLineItemGroup);
+        self::assertAttributeEquals(true, 'new_schema', $aosLineItemGroup);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $aosLineItemGroup);
+        self::assertAttributeEquals(true, 'importable', $aosLineItemGroup);
+        self::assertAttributeEquals(false, 'tracker_visibility', $aosLineItemGroup);
     }
 
     public function testsave_groups()
@@ -66,12 +66,12 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
         $aosLineItemGroup->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($aosLineItemGroup->id));
-        $this->assertEquals(36, strlen($aosLineItemGroup->id));
+        self::assertTrue(isset($aosLineItemGroup->id));
+        self::assertEquals(36, strlen($aosLineItemGroup->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aosLineItemGroup->mark_deleted($aosLineItemGroup->id);
         $result = $aosLineItemGroup->retrieve($aosLineItemGroup->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 }

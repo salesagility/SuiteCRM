@@ -8,25 +8,25 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $aor_Report = BeanFactory::newBean('AOR_Reports');
-        $this->assertInstanceOf('AOR_Report', $aor_Report);
-        $this->assertInstanceOf('Basic', $aor_Report);
-        $this->assertInstanceOf('SugarBean', $aor_Report);
+        self::assertInstanceOf('AOR_Report', $aor_Report);
+        self::assertInstanceOf('Basic', $aor_Report);
+        self::assertInstanceOf('SugarBean', $aor_Report);
 
-        $this->assertAttributeEquals('AOR_Reports', 'module_dir', $aor_Report);
-        $this->assertAttributeEquals('AOR_Report', 'object_name', $aor_Report);
-        $this->assertAttributeEquals('aor_reports', 'table_name', $aor_Report);
-        $this->assertAttributeEquals(true, 'new_schema', $aor_Report);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aor_Report);
-        $this->assertAttributeEquals(true, 'importable', $aor_Report);
+        self::assertAttributeEquals('AOR_Reports', 'module_dir', $aor_Report);
+        self::assertAttributeEquals('AOR_Report', 'object_name', $aor_Report);
+        self::assertAttributeEquals('aor_reports', 'table_name', $aor_Report);
+        self::assertAttributeEquals(true, 'new_schema', $aor_Report);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $aor_Report);
+        self::assertAttributeEquals(true, 'importable', $aor_Report);
     }
 
     public function testbean_implements()
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
 
-        $this->assertEquals(false, $aor_Report->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $aor_Report->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $aor_Report->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $aor_Report->bean_implements('')); //test with blank value
+        self::assertEquals(false, $aor_Report->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $aor_Report->bean_implements('ACL')); //test with valid value
     }
 
     public function testsave()
@@ -60,8 +60,8 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $aor_Report->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($aor_Report->id));
-        $this->assertEquals(36, strlen($aor_Report->id));
+        self::assertTrue(isset($aor_Report->id));
+        self::assertEquals(36, strlen($aor_Report->id));
 
         //mark the record as deleted for cleanup
         $aor_Report->mark_deleted($aor_Report->id);
@@ -76,9 +76,9 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aor_Report->load_report_beans();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -87,7 +87,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and verify that it returns an array
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $result = $aor_Report->getReportFields();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testbuild_report_chart()
@@ -101,7 +101,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
         $result = $aor_Report->build_report_chart();
         foreach ($charts as $chart) {
-            $this->assertContains($chart->id, $result);
+            self::assertContains($chart->id, $result);
         }
 
         unset($GLOBALS['_SESSION']);
@@ -123,20 +123,20 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method without any parameters and verify it returns html string
         $html1 = $aor_Report->build_group_report();
-        $this->assertGreaterThan(0, strlen($html1));
+        self::assertGreaterThan(0, strlen($html1));
 
         //execute the method wit offset parameter and verify it returns html string
         $html2 = $aor_Report->build_group_report(1);
-        $this->assertGreaterThan(0, strlen($html2));
+        self::assertGreaterThan(0, strlen($html2));
 
         //execute the method with both parameters and verify it returns html string
         $html3 = $aor_Report->build_group_report(0, false);
-        $this->assertGreaterThan(0, strlen($html3));
+        self::assertGreaterThan(0, strlen($html3));
 
         //verify that all three html strings are different.
-        $this->assertNotEquals($html1, $html2);
-        $this->assertNotEquals($html1, $html3);
-        $this->assertNotEquals($html2, $html3);
+        self::assertNotEquals($html1, $html2);
+        self::assertNotEquals($html1, $html3);
+        self::assertNotEquals($html2, $html3);
     }
 
     public function testbuild_report_html()
@@ -146,19 +146,19 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method without any parameters and verify it returns html string
         $html1 = $aor_Report->build_report_html();
-        $this->assertGreaterThan(0, strlen($html1));
+        self::assertGreaterThan(0, strlen($html1));
 
         //execute the method with both parameters and verify it returns html string
         $html2 = $aor_Report->build_report_html(0, false);
-        $this->assertGreaterThan(0, strlen($html2));
+        self::assertGreaterThan(0, strlen($html2));
 
         //execute the method with group and identifier parameters and verify it returns html string
         $html3 = $aor_Report->build_report_html(1, false, 'grouptest', 'testidentifier');
-        $this->assertGreaterThan(0, strlen($html3));
+        self::assertGreaterThan(0, strlen($html3));
 
         //verify that group and identifier exist in the strings
-        $this->assertContains('grouptest', $html3);
-        $this->assertContains('testidentifier', $html3);
+        self::assertContains('grouptest', $html3);
+        self::assertContains('testidentifier', $html3);
     }
 
     public function testGetTotalHTML()
@@ -180,8 +180,8 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $reportBean = BeanFactory::newBean('AOR_Reports');
         $actual = $reportBean->getTotalHTML($fields, $totals);
 
-        $this->assertContains('sugar_field', $actual);
-        $this->assertContains('duration_hours', $actual);
+        self::assertContains('sugar_field', $actual);
+        self::assertContains('duration_hours', $actual);
     }
 
     public function testcalculateTotal()
@@ -191,10 +191,10 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         $aor_Report = BeanFactory::newBean('AOR_Reports');
 
-        $this->assertEquals('', $aor_Report->calculateTotal('', $totals));
-        $this->assertEquals(60, $aor_Report->calculateTotal('SUM', $totals));
-        $this->assertEquals(3, $aor_Report->calculateTotal('COUNT', $totals));
-        $this->assertEquals(20, $aor_Report->calculateTotal('AVG', $totals));
+        self::assertEquals('', $aor_Report->calculateTotal('', $totals));
+        self::assertEquals(60, $aor_Report->calculateTotal('SUM', $totals));
+        self::assertEquals(3, $aor_Report->calculateTotal('COUNT', $totals));
+        self::assertEquals(20, $aor_Report->calculateTotal('AVG', $totals));
     }
 
     public function testbuild_report_csv()
@@ -206,7 +206,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $aor_Report->build_report_csv();
         */
 
-        $this->markTestIncomplete('Can Not be implemented');
+        self::markTestIncomplete('Can Not be implemented');
     }
 
     public function testbuild_report_query()
@@ -216,11 +216,11 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method without any parameters and verify that it returns a non empty string
         $actual = $aor_Report->build_report_query();
-        $this->assertGreaterThanOrEqual(0, strlen($actual));
+        self::assertGreaterThanOrEqual(0, strlen($actual));
 
         //execute the method with parameter and verify that it returns a non empty string
         $actual = $aor_Report->build_report_query('name');
-        $this->assertGreaterThanOrEqual(0, strlen($actual));
+        self::assertGreaterThanOrEqual(0, strlen($actual));
     }
 
     public function testbuild_report_query_select()
@@ -231,7 +231,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method with parameters and verify that it returns an array.
         $actual = $aor_Report->build_report_query_select($query_array, 'name');
-        $this->assertTrue(is_array($actual));
+        self::assertTrue(is_array($actual));
     }
 
     public function testbuild_report_query_join()
@@ -249,7 +249,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             'custom',
             array()
         );
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
         $expected = array(
@@ -265,7 +265,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
             'relationship',
             array()
         );
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testbuild_report_access_query()
@@ -274,11 +274,11 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //test without alias and verify that it retunrs expected results
         $result = $aor_Report->build_report_access_query(BeanFactory::newBean('AOR_Reports'), '');
-        $this->assertEquals('', $result);
+        self::assertEquals('', $result);
 
         //test with alias and verify that it retunrs expected results
         $result = $aor_Report->build_report_access_query(BeanFactory::newBean('AOR_Reports'), 'rep');
-        $this->assertEquals('', $result);
+        self::assertEquals('', $result);
     }
 
     public function testbuild_report_query_where()
@@ -289,6 +289,6 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and verify that it retunrs expected results
         $expected = array('where' => array('accounts.deleted = 0 '));
         $actual = $aor_Report->build_report_query_where();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 }

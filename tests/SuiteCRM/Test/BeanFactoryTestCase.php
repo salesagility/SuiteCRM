@@ -154,7 +154,7 @@ class BeanFactoryTestCase extends SuitePHPUnitFrameworkTestCase
             mkdir_recursive($compiledIncludePath, true);
         }
 
-        $this->assertTrue(is_writable($compiledIncludePath), 'Not writable: ' . $compiledIncludePath);
+        self::assertTrue(is_writable($compiledIncludePath), 'Not writable: ' . $compiledIncludePath);
 
         if (is_writable($compiledIncludePath) && !$noExtensions) {
             file_put_contents("$compiledIncludePath/modules.ext.php", $extensionContents);
@@ -214,7 +214,7 @@ EOT;
             mkdir_recursive($extIncludePath, true);
         }
 
-        $this->assertTrue(is_writable($extIncludePath), 'Directory not writable: ' . $extIncludePath);
+        self::assertTrue(is_writable($extIncludePath), 'Directory not writable: ' . $extIncludePath);
 
         if (is_writable($extIncludePath)) {
             file_put_contents("$extIncludePath/ZzzTestCustom$moduleName.php", $extIncludeContents);
@@ -224,7 +224,7 @@ EOT;
             mkdir_recursive($customClassPath, true);
         }
 
-        $this->assertTrue(is_writable($customClassPath), 'Directory not writable: ' . $customClassPath);
+        self::assertTrue(is_writable($customClassPath), 'Directory not writable: ' . $customClassPath);
 
         if (is_writable($customClassPath)) {
             file_put_contents("$customClassPath/TestCustom$className.php", $classContents);

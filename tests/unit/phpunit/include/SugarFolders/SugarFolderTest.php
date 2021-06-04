@@ -60,7 +60,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
     {
         $sugarfolder = new SugarFolder();
 
-        $this->assertTrue(is_object($sugarfolder));
+        self::assertTrue(is_object($sugarfolder));
     }
 
     public function testGenerateArchiveFolderQuery()
@@ -74,7 +74,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $expected = "SELECT emails.id , emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id JOIN emails_email_addr_rel eear ON eear.email_id = emails.id "
             . "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft') AND emails.status NOT IN ('sent', 'draft') AND eabr.bean_id = '1' AND eabr.bean_module = 'Users' AND eear.deleted=0 GROUP BY id";
 
-        $this->assertEquals($expected, $sql);
+        self::assertEquals($expected, $sql);
     }
 
     public function testGenerateSugarsDynamicFolderQuery()
@@ -90,7 +90,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $expected = "SELECT emails.id , emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id JOIN emails_email_addr_rel eear ON eear.email_id = emails.id "
             . "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft') AND emails.status NOT IN ('sent', 'draft') AND eabr.bean_id = '1' AND eabr.bean_module = 'Users' AND eear.deleted=0 GROUP BY id";
 
-        $this->assertEquals($sql, $expected);
+        self::assertEquals($sql, $expected);
 
         $sugarfolder->folder_type = 'sent';
 
@@ -98,7 +98,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = "SELECT emails.id, emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id WHERE (type = 'out' OR status = 'sent') AND assigned_user_id = '1' AND emails.deleted = 0 AND emails.status NOT IN ('archived') AND emails.type NOT IN ('archived')";
 
-        $this->assertEquals($sql, $expected);
+        self::assertEquals($sql, $expected);
 
         $sugarfolder->folder_type = 'inbound';
 
@@ -106,7 +106,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = "SELECT emails.id, emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id WHERE (type = 'inbound' OR status = 'inbound') AND assigned_user_id = '1' AND emails.deleted = 0 AND emails.status NOT IN ('sent', 'archived', 'draft') AND emails.type NOT IN ('out', 'archived', 'draft')";
 
-        $this->assertEquals($sql, $expected);
+        self::assertEquals($sql, $expected);
     }
 
     public function testFolderSubscriptions()
@@ -123,13 +123,13 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $sugarfolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $sugarfolder->insertFolderSubscription($sugarfolder->id, $user->id);
 
         $subscriptions = $sugarfolder->getSubscriptions($user);
 
-        $this->assertTrue((count($subscriptions) > 0));
+        self::assertTrue((count($subscriptions) > 0));
 
         // Access clear with user
         $sugarfolder->clearSubscriptions($user);
@@ -139,7 +139,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $subscriptions = $sugarfolder->getSubscriptions(null);
 
-        $this->assertEquals(0, count($subscriptions));
+        self::assertEquals(0, count($subscriptions));
 
         // test the add subscription to group folder
         $sugarfolder->addSubscriptionsToGroupFolder();
@@ -165,7 +165,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $sugarfolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $sugarfolder->insertFolderSubscription($sugarfolder->id, $user->id);
 
@@ -186,7 +186,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $sugarfolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $saved = false;
 
@@ -199,17 +199,17 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $childSugarFolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $sugarfolder->has_child = 1;
 
         $ret = $sugarfolder->getFoldersForSettings();
 
-        $this->assertTrue(is_array($ret));
+        self::assertTrue(is_array($ret));
 
         $ret = $childSugarFolder->getParentIDRecursive($childSugarFolder->id);
 
-        $this->assertTrue(in_array($sugarfolder->id, $ret));
+        self::assertTrue(in_array($sugarfolder->id, $ret));
     }
 
     public function testCrudFolder()
@@ -226,7 +226,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $sugarfolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $saved = false;
 
@@ -239,7 +239,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $childSugarFolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $sugarfolder->has_child = 1;
 
@@ -251,7 +251,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $ret = $sugarfolder->updateFolder($update);
 
-        $this->assertEquals('done', $ret['status']);
+        self::assertEquals('done', $ret['status']);
 
         // Try to update the child with parent
 
@@ -263,11 +263,11 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $ret = $sugarfolder->updateFolder($update);
 
-        $this->assertEquals('failed', $ret['status']);
+        self::assertEquals('failed', $ret['status']);
 
         $deleted = $sugarfolder->delete();
 
-        $this->assertTrue($deleted);
+        self::assertTrue($deleted);
     }
 
     public function testCheckFalseIdForDelete()
@@ -276,7 +276,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $ret = $sugarfolder->delete();
 
-        $this->assertFalse($ret);
+        self::assertFalse($ret);
     }
 
     public function testCopyBean()
@@ -293,7 +293,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderOne->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         // reset saved
         $saved = false;
@@ -307,7 +307,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderTwo->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $bean = BeanFactory::newBean('Emails');
         $bean->save();
@@ -319,9 +319,9 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $existInFolderOne = $parentFolderOne->checkEmailExistForFolder($bean->id);
         $existInFolderTwo = $parentFolderTwo->checkEmailExistForFolder($bean->id);
 
-        $this->assertTrue($existInFolderOne);
+        self::assertTrue($existInFolderOne);
 
-        $this->assertTrue($existInFolderTwo);
+        self::assertTrue($existInFolderTwo);
     }
 
 
@@ -339,7 +339,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderOne->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         // reset saved
         $saved = false;
@@ -353,7 +353,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderTwo->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         // reset saved
         $saved = false;
@@ -367,11 +367,11 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $childFolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $success = $parentFolderOne->move($parentFolderOne->id, $parentFolderTwo->id, $childFolder->id);
 
-        $this->assertTrue($success);
+        self::assertTrue($success);
     }
 
     public function testGetListItemsForEmailXML()
@@ -383,7 +383,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $sugarFolder->name = 'Parent Folder';
         $saved = $sugarFolder->save();
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
         $saved = false;
 
         for ($i = 0; $i < 10; $i++) {
@@ -394,7 +394,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $results = $sugarFolder->getListItemsForEmailXML($sugarFolder->id);
-        $this->assertTrue(is_array($results));
+        self::assertTrue(is_array($results));
         $results = false;
 
         $dynamicSugarFolder = new SugarFolder($user);
@@ -405,7 +405,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $dynamicSugarFolder->hrSortLocal = array();
 
         $saved = $dynamicSugarFolder->save();
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         for ($i = 0; $i < 10; $i++) {
             $arrayOfEmailBeans[$i] = BeanFactory::newBean('Emails');
@@ -415,7 +415,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $results = $dynamicSugarFolder->getListItemsForEmailXML($dynamicSugarFolder->id);
-        $this->assertTrue(is_array($results));
+        self::assertTrue(is_array($results));
     }
 
     public function testCountOfItems()
@@ -431,7 +431,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $saved = $parentFolder->setFolder($fields);
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $saved = false;
 
@@ -449,14 +449,14 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $count = $parentFolder->getCountItems($parentFolder->id);
 
-        $this->assertEquals(10, $count);
+        self::assertEquals(10, $count);
 
         // Test getCountNewItems
         $count = $parentFolder->getCountNewItems($parentFolder->id, false, false);
-        $this->assertEquals(0, $count);
+        self::assertEquals(0, $count);
 
         $count = $parentFolder->getCountUnread($parentFolder->id);
-        $this->assertEquals(0, $count);
+        self::assertEquals(0, $count);
 
 
         // non-existent folder
@@ -479,7 +479,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolder->save();
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
         $saved = false;
 
         $arrayOfEmailBeans = array();
@@ -492,10 +492,10 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         }
 
         $count = $parentFolder->getCountItems($parentFolder->id);
-        $this->assertEquals(0, $count);
+        self::assertEquals(0, $count);
 
         $count = $parentFolder->getCountUnread($parentFolder->id);
-        $this->assertEquals(0, $count);
+        self::assertEquals(0, $count);
     }
 
     public function testNonExistingRetrieve()
@@ -509,7 +509,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $ret = $parentFolder->retrieve($randomGuid);
 
-        $this->assertFalse($ret);
+        self::assertFalse($ret);
     }
 
     public function testDeleteEmailsFromFolder()
@@ -526,7 +526,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolder->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $bean = BeanFactory::newBean('Emails');
         $bean->save();
@@ -535,7 +535,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $count = $parentFolder->getCountItems($parentFolder->id);
 
-        $this->assertEquals(1, $count);
+        self::assertEquals(1, $count);
 
         $parentFolder->deleteEmailFromFolder($bean->id);
     }
@@ -555,7 +555,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderOne->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         // reset saved
         $saved = false;
@@ -569,7 +569,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderTwo->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $bean = BeanFactory::newBean('Emails');
         $bean->save();
@@ -581,21 +581,21 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $existInFolderOne = $parentFolderOne->checkEmailExistForFolder($bean->id);
         $existInFolderTwo = $parentFolderTwo->checkEmailExistForFolder($bean->id);
 
-        $this->assertTrue($existInFolderOne);
-        $this->assertTrue($existInFolderTwo);
+        self::assertTrue($existInFolderOne);
+        self::assertTrue($existInFolderTwo);
 
         $parentFolderOne->deleteEmailFromAllFolder($bean->id);
 
         $existInFolderOne = $parentFolderOne->checkEmailExistForFolder($bean->id);
         $existInFolderTwo = $parentFolderTwo->checkEmailExistForFolder($bean->id);
 
-        $this->assertFalse($existInFolderOne);
-        $this->assertFalse($existInFolderTwo);
+        self::assertFalse($existInFolderOne);
+        self::assertFalse($existInFolderTwo);
     }
 
     public function testGetUserFolders()
     {
-        $this->markTestIncomplete(
+        self::markTestIncomplete(
             'This test requires a review'
         );
 
@@ -609,7 +609,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderOne->save();
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $arrayOfEmailBeans = array();
 
@@ -664,7 +664,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $parentFolderOne->getUserFolders($rootNode, sugar_unserialize($folderOpenState), null, true);
 
-        $this->assertTrue(is_object($rootNode));
+        self::assertTrue(is_object($rootNode));
     }
 
     public function testSetSubscriptionWithNoUser()
@@ -681,13 +681,13 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderOne->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $subs = array($parentFolderOne->id);
 
         $ret = $parentFolderOne->setSubscriptions($subs, 0);
 
-        $this->assertFalse($ret);
+        self::assertFalse($ret);
     }
 
     public function testUpdateSave()
@@ -704,7 +704,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $saved = $parentFolderOne->setFolder($fields);
 
-        $this->assertTrue($saved);
+        self::assertTrue($saved);
 
         $parentFolderOne->new_with_id = true;
         $parentFolderOne->save();

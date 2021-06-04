@@ -18,15 +18,15 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $oauthKey = BeanFactory::newBean('OAuthKeys');
 
-        $this->assertInstanceOf('OAuthKey', $oauthKey);
-        $this->assertInstanceOf('Basic', $oauthKey);
-        $this->assertInstanceOf('SugarBean', $oauthKey);
+        self::assertInstanceOf('OAuthKey', $oauthKey);
+        self::assertInstanceOf('Basic', $oauthKey);
+        self::assertInstanceOf('SugarBean', $oauthKey);
 
-        $this->assertAttributeEquals('OAuthKeys', 'module_dir', $oauthKey);
-        $this->assertAttributeEquals('OAuthKey', 'object_name', $oauthKey);
-        $this->assertAttributeEquals('oauth_consumer', 'table_name', $oauthKey);
+        self::assertAttributeEquals('OAuthKeys', 'module_dir', $oauthKey);
+        self::assertAttributeEquals('OAuthKey', 'object_name', $oauthKey);
+        self::assertAttributeEquals('oauth_consumer', 'table_name', $oauthKey);
 
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $oauthKey);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $oauthKey);
     }
 
     public function testMain()
@@ -57,22 +57,22 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
         //test with a invalid id
         $result = $oauthKey->getByKey('');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
         //test with a valid id
         $result = $oauthKey->getByKey($key);
-        $this->assertInstanceOf('OAuthKey', $result);
+        self::assertInstanceOf('OAuthKey', $result);
     }
 
     public function fetchKey($key)
     {
         //test with a invalid id
         $result = OAuthKey::fetchKey('');
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
 
         //test with a valid id
         $result = OAuthKey::fetchKey($key);
-        $this->assertInstanceOf('OAuthKey', $result);
+        self::assertInstanceOf('OAuthKey', $result);
     }
 
     public function mark_deleted($id)
@@ -83,6 +83,6 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
 
         //verify that record is deleted
         $result = $oauthKey->getByKey($id);
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
     }
 }

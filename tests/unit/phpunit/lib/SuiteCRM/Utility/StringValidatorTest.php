@@ -13,14 +13,14 @@ class StringValidatorTest extends SuitePHPUnitFrameworkTestCase
     public function testStartsWith()
     {
         $testString = 'foobarbaz';
-        $this->assertTrue(StringValidator::startsWith($testString, 'foo'));
-        $this->assertFalse(StringValidator::startsWith($testString, 'bar'));
+        self::assertTrue(StringValidator::startsWith($testString, 'foo'));
+        self::assertFalse(StringValidator::startsWith($testString, 'bar'));
     }
 
     public function testEndsWith()
     {
         $testString = 'foobarbaz';
-        $this->assertTrue(StringValidator::endsWith($testString, 'baz'));
-        $this->assertFalse(StringValidator::endsWith($testString, 'bar'));
+        self::assertTrue(StringValidator::endsWith($testString, 'baz'));
+        self::assertFalse(StringValidator::endsWith($testString, 'bar'));
     }
 }

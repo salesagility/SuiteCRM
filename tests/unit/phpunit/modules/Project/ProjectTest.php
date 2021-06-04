@@ -18,15 +18,15 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $project = BeanFactory::newBean('Project');
 
-        $this->assertInstanceOf('Project', $project);
-        $this->assertInstanceOf('SugarBean', $project);
+        self::assertInstanceOf('Project', $project);
+        self::assertInstanceOf('SugarBean', $project);
 
 
-        $this->assertAttributeEquals('project', 'table_name', $project);
-        $this->assertAttributeEquals('Project', 'module_dir', $project);
-        $this->assertAttributeEquals('Project', 'object_name', $project);
+        self::assertAttributeEquals('project', 'table_name', $project);
+        self::assertAttributeEquals('Project', 'module_dir', $project);
+        self::assertAttributeEquals('Project', 'object_name', $project);
 
-        $this->assertAttributeEquals(true, 'new_schema', $project);
+        self::assertAttributeEquals(true, 'new_schema', $project);
     }
 
     public function testfill_in_additional_detail_fields()
@@ -35,12 +35,12 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
         //test without setting assigned_user_id
         $project->fill_in_additional_detail_fields();
-        $this->assertEquals("", $project->assigned_user_name);
+        self::assertEquals("", $project->assigned_user_name);
 
         //test with assigned_user_id set
         $project->assigned_user_id = 1;
         $project->fill_in_additional_detail_fields();
-        $this->assertEquals("Administrator", $project->assigned_user_name);
+        self::assertEquals("Administrator", $project->assigned_user_name);
     }
 
     public function testfill_in_additional_list_fields()
@@ -49,12 +49,12 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
         //test without setting assigned_user_id
         $project->fill_in_additional_list_fields();
-        $this->assertEquals("", $project->assigned_user_name);
+        self::assertEquals("", $project->assigned_user_name);
 
         //test with assigned_user_id set
         $project->assigned_user_id = 1;
         $project->fill_in_additional_list_fields();
-        $this->assertEquals("Administrator", $project->assigned_user_name);
+        self::assertEquals("Administrator", $project->assigned_user_name);
     }
 
     public function testsave_relationship_changes()
@@ -68,9 +68,9 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $project->save_relationship_changes(true);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -90,11 +90,11 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         $project = BeanFactory::newBean('Project');
 
         //test without setting name
-        $this->assertEquals(null, $project->get_summary_text());
+        self::assertEquals(null, $project->get_summary_text());
 
         //test with name set
         $project->name = "test";
-        $this->assertEquals('test', $project->get_summary_text());
+        self::assertEquals('test', $project->get_summary_text());
     }
 
     public function testbuild_generic_where_clause()
@@ -104,13 +104,13 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         //test with empty string params
         $expected = "project.name LIKE '%%'";
         $actual = $project->build_generic_where_clause('');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "project.name LIKE '%test%'";
         $actual = $project->build_generic_where_clause('test');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
@@ -134,16 +134,16 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
         $this->assertSame($expected, $actual);
         */
-        $this->assertTrue(true, "NEEDS FIXING!");
+        self::assertTrue(true, "NEEDS FIXING!");
     }
 
     public function testbean_implements()
     {
         $project = BeanFactory::newBean('Project');
 
-        $this->assertEquals(false, $project->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $project->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $project->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $project->bean_implements('')); //test with blank value
+        self::assertEquals(false, $project->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $project->bean_implements('ACL')); //test with valid value
     }
 
     public function testcreate_export_query()
@@ -157,6 +157,6 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
 
         $project->id = 1;
         $result = $project->getAllProjectTasks();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 }

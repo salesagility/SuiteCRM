@@ -17,26 +17,26 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $aCase = BeanFactory::newBean('Cases');
-        $this->assertInstanceOf('aCase', $aCase);
-        $this->assertInstanceOf('Basic', $aCase);
-        $this->assertInstanceOf('SugarBean', $aCase);
+        self::assertInstanceOf('aCase', $aCase);
+        self::assertInstanceOf('Basic', $aCase);
+        self::assertInstanceOf('SugarBean', $aCase);
 
-        $this->assertAttributeEquals('Cases', 'module_dir', $aCase);
-        $this->assertAttributeEquals('Case', 'object_name', $aCase);
-        $this->assertAttributeEquals('cases', 'table_name', $aCase);
-        $this->assertAttributeEquals('accounts_cases', 'rel_account_table', $aCase);
-        $this->assertAttributeEquals('contacts_cases', 'rel_contact_table', $aCase);
-        $this->assertAttributeEquals(true, 'importable', $aCase);
-        $this->assertAttributeEquals(true, 'new_schema', $aCase);
+        self::assertAttributeEquals('Cases', 'module_dir', $aCase);
+        self::assertAttributeEquals('Case', 'object_name', $aCase);
+        self::assertAttributeEquals('cases', 'table_name', $aCase);
+        self::assertAttributeEquals('accounts_cases', 'rel_account_table', $aCase);
+        self::assertAttributeEquals('contacts_cases', 'rel_contact_table', $aCase);
+        self::assertAttributeEquals(true, 'importable', $aCase);
+        self::assertAttributeEquals(true, 'new_schema', $aCase);
     }
 
     public function testget_summary_text()
     {
         $aCase = BeanFactory::newBean('Cases');
-        $this->assertEquals(null, $aCase->get_summary_text());
+        self::assertEquals(null, $aCase->get_summary_text());
 
         $aCase->name = 'test';
-        $this->assertEquals('test', $aCase->get_summary_text());
+        self::assertEquals('test', $aCase->get_summary_text());
     }
 
     public function testlistviewACLHelper()
@@ -47,7 +47,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $aCase = BeanFactory::newBean('Cases');
         $expected = array('MAIN' => 'span', 'ACCOUNT' => 'span');
         $actual = $aCase->listviewACLHelper();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testsave_relationship_changes()
@@ -59,9 +59,9 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
             $aCase->save_relationship_changes(true);
             $aCase->save_relationship_changes(false);
 
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -72,9 +72,9 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->set_case_contact_relationship(1);
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -85,9 +85,9 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $aCase->fill_in_additional_list_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -100,17 +100,17 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
         $aCase->fill_in_additional_detail_fields();
 
-        $this->assertEquals('Administrator', $aCase->assigned_user_name);
-        $this->assertEquals('Administrator', $aCase->created_by_name);
-        $this->assertEquals('Administrator', $aCase->modified_by_name);
+        self::assertEquals('Administrator', $aCase->assigned_user_name);
+        self::assertEquals('Administrator', $aCase->created_by_name);
+        self::assertEquals('Administrator', $aCase->modified_by_name);
     }
 
     public function testget_contacts()
     {
         $aCase = BeanFactory::newBean('Cases');
         $result = $aCase->get_contacts();
-        $this->assertFalse(is_array($result));
-        $this->assertEquals(false, $result);
+        self::assertFalse(is_array($result));
+        self::assertEquals(false, $result);
     }
 
     public function testget_list_view_data()
@@ -136,11 +136,11 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
         $actual = $aCase->get_list_view_data();
         //$this->assertSame($expected ,$actual);
-        $this->assertEquals($expected['STATE'], $actual['STATE']);
-        $this->assertEquals($expected['UPDATE_TEXT'], $actual['UPDATE_TEXT']);
-        $this->assertEquals($expected['NAME'], $actual['NAME']);
-        $this->assertEquals($expected['PRIORITY'], $actual['PRIORITY']);
-        $this->assertRegExp($expected['SET_COMPLETE'], $actual['SET_COMPLETE']);
+        self::assertEquals($expected['STATE'], $actual['STATE']);
+        self::assertEquals($expected['UPDATE_TEXT'], $actual['UPDATE_TEXT']);
+        self::assertEquals($expected['NAME'], $actual['NAME']);
+        self::assertEquals($expected['PRIORITY'], $actual['PRIORITY']);
+        self::assertRegExp($expected['SET_COMPLETE'], $actual['SET_COMPLETE']);
 
         //test with attributes preset
         $aCase->name = 'test';
@@ -162,11 +162,11 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
         $actual = $aCase->get_list_view_data();
         //$this->assertSame($expected ,$actual);
-        $this->assertEquals($expected['NAME'], $actual['NAME']);
-        $this->assertEquals($expected['CASE_NUMBER'], $actual['CASE_NUMBER']);
-        $this->assertEquals($expected['STATUS'], $actual['STATUS']);
-        $this->assertEquals($expected['PRIORITY'], $actual['PRIORITY']);
-        $this->assertEquals($expected['STATE'], $actual['STATE']);
+        self::assertEquals($expected['NAME'], $actual['NAME']);
+        self::assertEquals($expected['CASE_NUMBER'], $actual['CASE_NUMBER']);
+        self::assertEquals($expected['STATUS'], $actual['STATUS']);
+        self::assertEquals($expected['PRIORITY'], $actual['PRIORITY']);
+        self::assertEquals($expected['STATE'], $actual['STATE']);
     }
 
     public function testbuild_generic_where_clause()
@@ -176,12 +176,12 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         //test with string
         $expected = "(cases.name like 'test%' or accounts.name like 'test%')";
         $actual = $aCase->build_generic_where_clause('test');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with number
         $expected = "(cases.name like '1%' or accounts.name like '1%' or cases.case_number like '1%')";
         $actual = $aCase->build_generic_where_clause(1);
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testset_notification_body()
@@ -195,18 +195,18 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $aCase->set_notification_body(new Sugar_Smarty(), $aCase);
 
-        $this->assertEquals($aCase->name, $result->_tpl_vars['CASE_SUBJECT']);
-        $this->assertEquals('High', $result->_tpl_vars['CASE_PRIORITY']);
-        $this->assertEquals('New', $result->_tpl_vars['CASE_STATUS']);
-        $this->assertEquals($aCase->description, $result->_tpl_vars['CASE_DESCRIPTION']);
+        self::assertEquals($aCase->name, $result->_tpl_vars['CASE_SUBJECT']);
+        self::assertEquals('High', $result->_tpl_vars['CASE_PRIORITY']);
+        self::assertEquals('New', $result->_tpl_vars['CASE_STATUS']);
+        self::assertEquals($aCase->description, $result->_tpl_vars['CASE_DESCRIPTION']);
     }
 
     public function testbean_implements()
     {
         $aCase = BeanFactory::newBean('Cases');
-        $this->assertEquals(false, $aCase->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $aCase->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $aCase->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $aCase->bean_implements('')); //test with blank value
+        self::assertEquals(false, $aCase->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $aCase->bean_implements('ACL')); //test with valid value
     }
 
     public function testsave()
@@ -219,27 +219,27 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $aCase->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($aCase->id));
-        $this->assertEquals(36, strlen($aCase->id));
+        self::assertTrue(isset($aCase->id));
+        self::assertEquals(36, strlen($aCase->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aCase->mark_deleted($aCase->id);
         $result = $aCase->retrieve($aCase->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testgetEmailSubjectMacro()
     {
         $aCase = BeanFactory::newBean('Cases');
         $result = $aCase->getEmailSubjectMacro();
-        $this->assertEquals('[CASE:%1]', $result);
+        self::assertEquals('[CASE:%1]', $result);
     }
 
     public function testgetAccount()
     {
         $aCase = BeanFactory::newBean('Cases');
         $result = $aCase->getAccount(1);
-        $this->assertTrue(is_array($result));
-        $this->assertEquals(array('account_name' => '', 'account_id' => ''), $result);
+        self::assertTrue(is_array($result));
+        self::assertEquals(array('account_name' => '', 'account_id' => ''), $result);
     }
 }

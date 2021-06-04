@@ -8,9 +8,9 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewXML();
-        $this->assertInstanceOf('ViewXML', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('detail', 'type', $view);
+        self::assertInstanceOf('ViewXML', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('detail', 'type', $view);
     }
 
     public function testdisplay()
@@ -26,9 +26,9 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
             $renderedContent = ob_get_contents();
             ob_end_clean();
 
-            $this->assertGreaterThan(0, strlen($renderedContent));
+            self::assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 }
