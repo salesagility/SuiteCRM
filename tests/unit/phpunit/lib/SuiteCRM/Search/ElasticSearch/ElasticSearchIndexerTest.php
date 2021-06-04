@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpMethodParametersCountMismatchInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 
 /**

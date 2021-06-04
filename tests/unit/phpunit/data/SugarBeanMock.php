@@ -8,7 +8,6 @@ class SugarBeanMock extends SugarBean
      */
     public $foo;
 
-    /** @noinspection SenselessMethodDuplicationInspection */
     /** @noinspection PhpMissingParentConstructorInspection */
     /** @noinspection MagicMethodsValidityInspection */
 
@@ -40,14 +39,12 @@ class SugarBeanMock extends SugarBean
             }
 
             //setup custom fields
-            /** @noinspection UnSafeIsSetOverArrayInspection */
             if (!isset($this->custom_fields) &&
                 empty($this->disable_custom_fields)
             ) {
                 $this->setupCustomFields($this->module_dir);
             }
 
-            /** @noinspection NotOptimalIfConditionsInspection */
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
                 $this->field_name_map = $dictionary[$this->object_name]['fields'];
                 $this->field_defs = $dictionary[$this->object_name]['fields'];
@@ -69,7 +66,6 @@ class SugarBeanMock extends SugarBean
             $this->field_defs =& $loaded_definitions[$this->object_name]['field_defs'];
             $this->added_custom_field_defs = true;
 
-            /** @noinspection UnSafeIsSetOverArrayInspection */
             if (!isset($this->custom_fields) &&
                 empty($this->disable_custom_fields)
             ) {
