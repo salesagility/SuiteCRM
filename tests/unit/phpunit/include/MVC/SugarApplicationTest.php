@@ -15,7 +15,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testexecute()
     {
-        $this->markTestIncomplete('Cannot be implemented');
+        self::markTestIncomplete('Cannot be implemented');
 
         // execute the method and test if it works and does not throw an exception other than headers output exception.
         //    $SugarApplication = new SugarApplication();
@@ -29,7 +29,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testloadUser()
     {
-        $this->markTestIncomplete('Cannot be implemented because the method uses die.');
+        self::markTestIncomplete('Cannot be implemented because the method uses die.');
 
         //cannot test this method as it uses die which stops execution of php unit as well
         /*
@@ -61,10 +61,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->ACLFilter();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
 
         if (isset($session)) {
             $_SESSION = $session;
@@ -81,17 +81,17 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->setupResourceManagement('');
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         //execute the method with valid input and test if it works and does not throws an exception.
         try {
             $SugarApplication->setupResourceManagement('Users');
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testsetupPrint()
@@ -102,10 +102,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->setupPrint();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testpreProcess()
@@ -121,10 +121,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->preProcess();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
 
         if (isset($session)) {
             $_SESSION = $session;
@@ -141,10 +141,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->handleOfflineClient();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testhandleAccessControl()
@@ -155,10 +155,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $result = $SugarApplication->handleAccessControl();
 
         //check that it returns Null
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
 
         //check that controller->hasAccess is true i-e default setting.
-        $this->assertEquals(true, $SugarApplication->controller->hasAccess);
+        self::assertEquals(true, $SugarApplication->controller->hasAccess);
     }
 
     public function testpreLoadLanguages()
@@ -167,12 +167,12 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
             SugarApplication::preLoadLanguages();
 
             //check that method call got the current_language global variable set.
-            $this->assertTrue(isset($GLOBALS['current_language']));
+            self::assertTrue(isset($GLOBALS['current_language']));
 
             //check that method call got the app_strings global variable set.
-            $this->assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
+            self::assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -185,18 +185,18 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
             $SugarApplication->loadLanguages();
 
             //check that method call got the current_language global variable set.
-            $this->assertTrue(isset($GLOBALS['current_language']));
+            self::assertTrue(isset($GLOBALS['current_language']));
 
             //check that method call got the app_strings global variable set.
-            $this->assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
+            self::assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
 
             //check that method call got the app_list_strings global variable set.
-            $this->assertTrue(is_array($GLOBALS['app_list_strings']) && count($GLOBALS['app_list_strings']) > 0);
+            self::assertTrue(is_array($GLOBALS['app_list_strings']) && count($GLOBALS['app_list_strings']) > 0);
 
             //check that method call got the mod_strings global variable set.
-            $this->assertTrue(is_array($GLOBALS['mod_strings']) && count($GLOBALS['mod_strings']) > 0);
+            self::assertTrue(is_array($GLOBALS['mod_strings']) && count($GLOBALS['mod_strings']) > 0);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -214,7 +214,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
         $GLOBALS['sugar_db_version'] = $sugar_db_version;
         $result = $SugarApplication->checkDatabaseVersion(false);
-        $this->assertTrue($result);
+        self::assertTrue($result);
     }
 
     public function testloadDisplaySettings()
@@ -225,10 +225,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->loadDisplaySettings();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testloadLicense()
@@ -239,10 +239,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->loadLicense();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testloadGlobals()
@@ -258,10 +258,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarApplication->loadGlobals();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
 
 
         if (isset($request)) {
@@ -291,10 +291,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $err = $e->getMessage() . ' ' . $e->getCode() . ' ' . $e->getFile() . ' ' . $e->getLine() . ' ' . $e->getTraceAsString();
             var_dump($err);
-            $this->fail($err);
+            self::fail($err);
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
 
         // cleanup
         if (isset($session)) {
@@ -317,15 +317,15 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         } catch (Exception $e) {
             $err = $e->getMessage() . ' ' . $e->getCode() . ' ' . $e->getFile() . ' ' . $e->getLine() . ' ' . $e->getTraceAsString();
             var_dump($err);
-            $this->fail($err);
+            self::fail($err);
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testredirect()
     {
-        $this->markTestIncomplete('Cannot be implemented due to use of exit().');
+        self::markTestIncomplete('Cannot be implemented due to use of exit().');
         //this method uses exit() which stops execution of phpunit as well so it cannot be tested without additional --process-isolation commandline parameter.
         /*
         $SugarApplication = new SugarApplication();
@@ -357,7 +357,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $_SESSION['user_error_message'] = [];
         $user_error_message_count = count($_SESSION['user_error_message']);
         SugarApplication::appendErrorMessage('some error');
-        $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
+        self::assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
 
         // cleanup
         if (isset($session)) {
@@ -371,7 +371,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and check if it returns a array.
         $errorMessages = SugarApplication::getErrorMessages();
-        $this->assertTrue(is_array($errorMessages));
+        self::assertTrue(is_array($errorMessages));
     }
 
     public function testsetCookie()
@@ -381,7 +381,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
         //execute the method and check that the method adds the key value pair to cookies array.
         SugarApplication::setCookie('key', 'value');
-        $this->assertEquals('value', $_COOKIE['key']);
+        self::assertEquals('value', $_COOKIE['key']);
 
         // cleanup
         if (isset($cookie)) {
@@ -399,10 +399,10 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         try {
             $vars = $SugarApplication->createLoginVars();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testgetLoginVars()
@@ -411,7 +411,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and test that it returns a array.
         $vars = $SugarApplication->getLoginVars();
-        $this->assertTrue(is_array($vars));
+        self::assertTrue(is_array($vars));
     }
 
     public function testgetLoginRedirect()
@@ -420,6 +420,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method and test that it returns a plus length string
         $redirect = $SugarApplication->getLoginRedirect();
-        $this->assertGreaterThan(0, strlen($redirect));
+        self::assertGreaterThan(0, strlen($redirect));
     }
 }

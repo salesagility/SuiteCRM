@@ -10,7 +10,7 @@ class sugar_file_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsugar_dosomething()
     {
-        $this->assertTrue(true, "Needs checking!");
+        self::assertTrue(true, "Needs checking!");
     }
 
     /*

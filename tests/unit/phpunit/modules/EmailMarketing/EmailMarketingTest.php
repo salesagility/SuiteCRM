@@ -9,14 +9,14 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         // execute the constructor and check for the Object type and attributes
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
 
-        $this->assertInstanceOf('EmailMarketing', $emailMarketing);
-        $this->assertInstanceOf('SugarBean', $emailMarketing);
+        self::assertInstanceOf('EmailMarketing', $emailMarketing);
+        self::assertInstanceOf('SugarBean', $emailMarketing);
 
-        $this->assertAttributeEquals('EmailMarketing', 'module_dir', $emailMarketing);
-        $this->assertAttributeEquals('EmailMarketing', 'object_name', $emailMarketing);
-        $this->assertAttributeEquals('email_marketing', 'table_name', $emailMarketing);
+        self::assertAttributeEquals('EmailMarketing', 'module_dir', $emailMarketing);
+        self::assertAttributeEquals('EmailMarketing', 'object_name', $emailMarketing);
+        self::assertAttributeEquals('email_marketing', 'table_name', $emailMarketing);
 
-        $this->assertAttributeEquals(true, 'new_schema', $emailMarketing);
+        self::assertAttributeEquals(true, 'new_schema', $emailMarketing);
     }
 
     public function testretrieve()
@@ -24,7 +24,7 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
 
         $result = $emailMarketing->retrieve();
-        $this->assertInstanceOf('EmailMarketing', $result);
+        self::assertInstanceOf('EmailMarketing', $result);
     }
 
     public function testget_summary_text()
@@ -32,11 +32,11 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
 
         // test without setting name
-        $this->assertEquals(null, $emailMarketing->get_summary_text());
+        self::assertEquals(null, $emailMarketing->get_summary_text());
 
         // test with name set
         $emailMarketing->name = 'test';
-        $this->assertEquals('test', $emailMarketing->get_summary_text());
+        self::assertEquals('test', $emailMarketing->get_summary_text());
     }
 
     public function testcreate_export_query()
@@ -46,12 +46,12 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         //test with empty string params
         $expected = " SELECT  email_marketing.*  , jt0.name template_name , jt0.assigned_user_id template_name_owner  , 'EmailTemplates' template_name_mod FROM email_marketing   LEFT JOIN  email_templates jt0 ON email_marketing.template_id=jt0.id AND jt0.deleted=0\n\n AND jt0.deleted=0 where email_marketing.deleted=0";
         $actual = $emailMarketing->create_export_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with valid string params
         $expected = " SELECT  email_marketing.*  , jt0.name template_name , jt0.assigned_user_id template_name_owner  , 'EmailTemplates' template_name_mod FROM email_marketing   LEFT JOIN  email_templates jt0 ON email_marketing.template_id=jt0.id AND jt0.deleted=0\n\n AND jt0.deleted=0 where (email_marketing.name=\"\") AND email_marketing.deleted=0";
         $actual = $emailMarketing->create_export_query('email_marketing.id', 'email_marketing.name=""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testget_list_view_data()
@@ -64,15 +64,15 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $actual = $emailMarketing->get_list_view_data();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testbean_implements()
     {
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
-        $this->assertEquals(false, $emailMarketing->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $emailMarketing->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $emailMarketing->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $emailMarketing->bean_implements('')); //test with blank value
+        self::assertEquals(false, $emailMarketing->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $emailMarketing->bean_implements('ACL')); //test with valid value
     }
 
     public function testget_all_prospect_lists()
@@ -82,6 +82,6 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and verify that it retunrs expected results
         $expected = "select prospect_lists.* from prospect_lists  left join prospect_list_campaigns on prospect_list_campaigns.prospect_list_id=prospect_lists.id where prospect_list_campaigns.deleted=0 and prospect_list_campaigns.campaign_id='' and prospect_lists.deleted=0 and prospect_lists.list_type not like 'exempt%'";
         $actual = $emailMarketing->get_all_prospect_lists();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 }

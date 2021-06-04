@@ -21,9 +21,9 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewDetail();
-        $this->assertInstanceOf('ViewDetail', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('detail', 'type', $view);
+        self::assertInstanceOf('ViewDetail', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('detail', 'type', $view);
     }
 
     public function testpreDisplay()
@@ -34,8 +34,8 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         $view->bean = BeanFactory::newBean('Users');
         $view->ss = new Sugar_Smarty();
         $view->preDisplay();
-        $this->assertInstanceOf('DetailView2', $view->dv);
-        $this->asserttrue(is_array($view->dv->defs));
+        self::assertInstanceOf('DetailView2', $view->dv);
+        self::asserttrue(is_array($view->dv->defs));
 
         //execute the method again for a different module with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
@@ -43,8 +43,8 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         $view->bean = BeanFactory::newBean('Meetings');
         $view->ss = new Sugar_Smarty();
         $view->preDisplay();
-        $this->assertInstanceOf('DetailView2', $view->dv);
-        $this->asserttrue(is_array($view->dv->defs));
+        self::assertInstanceOf('DetailView2', $view->dv);
+        self::asserttrue(is_array($view->dv->defs));
     }
 
     public function testdisplay()
@@ -61,6 +61,6 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         $view->display();
         $renderedContent = ob_get_contents();
         ob_end_clean();
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        self::assertGreaterThan(0, strlen($renderedContent));
     }
 }

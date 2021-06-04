@@ -17,9 +17,9 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewPopup();
-        $this->assertInstanceOf('ViewPopup', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertAttributeEquals('list', 'type', $view);
+        self::assertInstanceOf('ViewPopup', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertAttributeEquals('list', 'type', $view);
 
         unset($view);
     }
@@ -59,11 +59,11 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         // test no custom module Popup picker
         // test module Popup picker exists
 
-        $this->assertFileNotExists($customPath);
+        self::assertFileNotExists($customPath);
 
         $result = get_custom_file_if_exists($modulePath);
 
-        $this->assertSame($modulePath, $result);
+        self::assertSame($modulePath, $result);
 
         // Now add a custom module Popup picker
 
@@ -77,11 +77,11 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
 
         file_put_contents($customPath, '');
 
-        $this->assertFileExists($customPath);
+        self::assertFileExists($customPath);
 
         $result = get_custom_file_if_exists($modulePath);
 
-        $this->assertSame($customPath, $result);
+        self::assertSame($customPath, $result);
 
         // Cleanup
         unlink($customPath);
@@ -104,14 +104,14 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         $result1 = get_custom_file_if_exists($modulePath);
         $result2 = file_exists($result1);
 
-        $this->assertFalse($result2);
+        self::assertFalse($result2);
 
-        $this->assertFileNotExists($customPath);
-        $this->assertFileExists($defaultPath);
+        self::assertFileNotExists($customPath);
+        self::assertFileExists($defaultPath);
 
         $result = get_custom_file_if_exists($defaultPath);
 
-        $this->assertSame($defaultPath, $result);
+        self::assertSame($defaultPath, $result);
 
         // Now add a custom Popup picker
 
@@ -125,11 +125,11 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
 
         file_put_contents($customPath, '');
 
-        $this->assertFileExists($customPath);
+        self::assertFileExists($customPath);
 
         $result = get_custom_file_if_exists($defaultPath);
 
-        $this->assertSame($customPath, $result);
+        self::assertSame($customPath, $result);
 
         // Cleanup
         unlink($customPath);

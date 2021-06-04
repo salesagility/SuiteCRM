@@ -63,7 +63,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
         $count = $counter->getSubPanelRowCount($subPanelDefs);
 
-        $this->assertEquals(-1, $count);
+        self::assertEquals(-1, $count);
     }
 
     public function testSelectQueryToCountQuery()
@@ -75,19 +75,19 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         $count = $counter->selectQueryToCountQuery($select);
         $expected = 'SELECT COUNT(id) FROM table LIMIT 1';
 
-        $this->assertEquals($expected, $count);
+        self::assertEquals($expected, $count);
 
         $selectAlias = 'SELECT contact_id id FROM table';
         $countAlias = $counter->selectQueryToCountQuery($selectAlias);
         $expectedAlias = 'SELECT COUNT(contact_id) FROM table LIMIT 1';
 
-        $this->assertEquals($expectedAlias, $countAlias);
+        self::assertEquals($expectedAlias, $countAlias);
 
         $selectAs = 'SELECT contact_id as id FROM table';
         $countAs = $counter->selectQueryToCountQuery($selectAs);
         $expectedAs = 'SELECT COUNT(contact_id) FROM table LIMIT 1';
 
-        $this->assertEquals($expectedAs, $countAs);
+        self::assertEquals($expectedAs, $countAs);
     }
 
     public function testMakeFunctionCountQuery()
@@ -96,11 +96,11 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         $counter = new SubPanelRowCounter($bean);
 
         $nonExistantQuery = $counter->makeFunctionCountQuery('');
-        $this->assertEquals('', $nonExistantQuery);
+        self::assertEquals('', $nonExistantQuery);
 
         $existantQuery = $counter->makeFunctionCountQuery('function:getProductsServicesPurchasedQuery');
         $expectedQueryStart = 'SELECT COUNT(aos_products_quotes.id)';
-        $this->assertContains($expectedQueryStart, $existantQuery);
+        self::assertContains($expectedQueryStart, $existantQuery);
     }
 
     public function testMakeSubPanelRowCountQuery()
@@ -113,6 +113,6 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         $query  = $counter->makeSubPanelRowCountQuery();
         $expectedQueryStart = 'SELECT COUNT(account_id) FROM accounts_contacts';
 
-        $this->assertContains($expectedQueryStart, $query);
+        self::assertContains($expectedQueryStart, $query);
     }
 }

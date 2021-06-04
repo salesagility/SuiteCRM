@@ -53,6 +53,6 @@ class BaseHandlerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testFirst()
     {
-        $this->assertEquals(true, true);
+        self::assertEquals(true, true);
     }
 }

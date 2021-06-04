@@ -24,13 +24,13 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 
         //first test with empty parameter and check for default values being used
         $SugarController->setup('');
-        $this->assertAttributeEquals($default_module, 'module', $SugarController);
-        $this->assertAttributeEquals(null, 'target_module', $SugarController);
+        self::assertAttributeEquals($default_module, 'module', $SugarController);
+        self::assertAttributeEquals(null, 'target_module', $SugarController);
 
         //secondly test with module name and check for correct assignment.
         $SugarController->setup('Users');
-        $this->assertAttributeEquals('Users', 'module', $SugarController);
-        $this->assertAttributeEquals(null, 'target_module', $SugarController);
+        self::assertAttributeEquals('Users', 'module', $SugarController);
+        self::assertAttributeEquals(null, 'target_module', $SugarController);
     }
 
     public function testsetModule()
@@ -39,11 +39,11 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 
         //first test with empty parameter
         $SugarController->setModule('');
-        $this->assertAttributeEquals('', 'module', $SugarController);
+        self::assertAttributeEquals('', 'module', $SugarController);
 
         //secondly test with module name and check for correct assignment.
         $SugarController->setModule('Users');
-        $this->assertAttributeEquals('Users', 'module', $SugarController);
+        self::assertAttributeEquals('Users', 'module', $SugarController);
     }
 
     public function testloadBean()
@@ -53,12 +53,12 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         //first test with empty parameter and check for null. Default is Home but Home has no bean
         $SugarController->setModule('');
         $SugarController->loadBean();
-        $this->assertEquals(null, $SugarController->bean);
+        self::assertEquals(null, $SugarController->bean);
 
         //secondly test with module name and check for correct bean class loaded.
         $SugarController->setModule('Users');
         $SugarController->loadBean();
-        $this->assertInstanceOf('User', $SugarController->bean);
+        self::assertInstanceOf('User', $SugarController->bean);
     }
 
     public function testexecute()
@@ -77,7 +77,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarController->execute();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         // change back to original logger
@@ -85,7 +85,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['log'] = $logger;
 
         // exam log
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testprocess()
@@ -96,10 +96,10 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarController->process();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testpre_save()
@@ -125,10 +125,10 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarController->pre_save();
         } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::assertStringStartsWith('mysqli_query()', $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
 
         // cleanup
         if (isset($session)) {
@@ -162,12 +162,12 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         //Fail if it throws any other exception.
         try {
             $SugarController->action_save();
-            $this->assertTrue(false);
+            self::assertTrue(false);
         } catch (Exception $e) {
-            $this->assertTrue(true);
+            self::assertTrue(true);
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
 
         // cleanup
         if (isset($session)) {
@@ -185,22 +185,22 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         $SugarController = new SugarController();
 
         // check with default value of attribute
-        $this->assertAttributeEquals('classic', 'view', $SugarController);
+        self::assertAttributeEquals('classic', 'view', $SugarController);
 
         // check for attribute value change on method execution.
         $SugarController->action_spot();
-        $this->assertAttributeEquals('spot', 'view', $SugarController);
+        self::assertAttributeEquals('spot', 'view', $SugarController);
     }
 
     public function testgetActionFilename()
     {
         // check with an invalid value
         $action = SugarController::getActionFilename('');
-        $this->assertEquals('', $action);
+        self::assertEquals('', $action);
 
         // check with a valid value
         $action = SugarController::getActionFilename('editview');
-        $this->assertEquals('EditView', $action);
+        self::assertEquals('EditView', $action);
     }
 
     public function testcheckEntryPointRequiresAuth()
@@ -209,14 +209,14 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 
         // check with a invalid value
         $result = $SugarController->checkEntryPointRequiresAuth('');
-        $this->assertTrue($result);
+        self::assertTrue($result);
 
         // check with a valid True value
         $result = $SugarController->checkEntryPointRequiresAuth('download');
-        $this->assertTrue($result);
+        self::assertTrue($result);
 
         // check with a valid False value
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
-        $this->assertFalse($result);
+        self::assertFalse($result);
     }
 }

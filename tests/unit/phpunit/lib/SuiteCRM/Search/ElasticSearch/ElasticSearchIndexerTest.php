@@ -160,7 +160,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $indexer = new ElasticSearchIndexer(null);
 
-        $actual = self::invokeMethod($indexer, 'makeIndexParamsFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeIndexParamsFromBean', [$bean]);
 
         self::assertEquals($expected, $actual);
     }
@@ -253,7 +253,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $indexer = new ElasticSearchIndexer(null);
         $expected = $this->getExpectedBody();
 
-        $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
         self::assertEquals($expected, $actual);
     }
 
@@ -305,7 +305,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             'lead_source' => 'Web Site',
         ];
 
-        $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
 
         self::assertEquals($expected, $actual);
     }
@@ -380,7 +380,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $indexer = new ElasticSearchIndexer(null);
 
-        $actual = self::invokeMethod($indexer, 'makeParamsHeaderFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeParamsHeaderFromBean', [$bean]);
 
         self::assertEquals($expected, $actual);
     }

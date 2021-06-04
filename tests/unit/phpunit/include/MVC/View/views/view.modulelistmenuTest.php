@@ -9,9 +9,9 @@ class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and options attribute
         $view = new ViewModulelistmenu();
 
-        $this->assertInstanceOf('ViewModulelistmenu', $view);
-        $this->assertInstanceOf('SugarView', $view);
-        $this->assertTrue(is_array($view->options));
+        self::assertInstanceOf('ViewModulelistmenu', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertTrue(is_array($view->options));
     }
 
     public function testdisplay()
@@ -29,9 +29,9 @@ class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
 
-        $this->assertGreaterThan(0, strlen($renderedContent));
-        $this->assertEquals(false, is_array($renderedContent));
-        
+        self::assertGreaterThan(0, strlen($renderedContent));
+        self::assertEquals(false, is_array($renderedContent));
+
         if (isset($session)) {
             $_SESSION = $session;
         } else {

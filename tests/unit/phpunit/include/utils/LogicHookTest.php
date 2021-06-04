@@ -18,7 +18,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     {
         //execute the method and test if it returns correct class instances
         $LogicHook = LogicHook::initialize();
-        $this->assertInstanceOf('LogicHook', $LogicHook);
+        self::assertInstanceOf('LogicHook', $LogicHook);
     }
 
     public function testLogicHook()
@@ -26,9 +26,9 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it doesn't throw an exception
         try {
             $LogicHook = new LogicHook();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -37,8 +37,8 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it returns correct class instances
         $LogicHook = new LogicHook();
         $result = $LogicHook->setBean(BeanFactory::newBean('Users'));
-        $this->assertInstanceOf('LogicHook', $result);
-        $this->assertInstanceOf('User', $result->bean);
+        self::assertInstanceOf('LogicHook', $result);
+        self::assertInstanceOf('User', $result->bean);
     }
 
     public function testgetHooksMap()
@@ -46,7 +46,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it returns true
         $LogicHook = new LogicHook();
         $hook_map = $LogicHook->getHooksMap();
-        $this->assertTrue(is_array($hook_map));
+        self::assertTrue(is_array($hook_map));
     }
 
     public function testgetHooksList()
@@ -54,7 +54,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it returns true
         $LogicHook = new LogicHook();
         $hookscan = $LogicHook->getHooksList();
-        $this->assertTrue(is_array($hookscan));
+        self::assertTrue(is_array($hookscan));
     }
 
     public function testscanHooksDir()
@@ -154,11 +154,11 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 
 
         if (file_exists('custom/modules/Accounts') && is_dir('custom/modules/Accounts')) {
-            $this->assertSame($expected_hook_map, $hook_map);
-            $this->assertSame($expected_hookscan, $hookscan);
+            self::assertSame($expected_hook_map, $hook_map);
+            self::assertSame($expected_hookscan, $hookscan);
         } else {
-            $this->assertTrue(empty($hook_map));
-            $this->assertTrue(empty($hookscan));
+            self::assertTrue(empty($hook_map));
+            self::assertTrue(empty($hookscan));
         }
     }
 
@@ -167,9 +167,9 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and test if it doesn't throws an exception
         try {
             LogicHook::refreshHooks();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -283,9 +283,9 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
             file_exists("custom/modules/Accounts/logic_hooks.php") ||
             file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
         ) {
-            $this->assertSame($expected_accounts, $accounts_hooks);
+            self::assertSame($expected_accounts, $accounts_hooks);
         } else {
-            $this->assertTrue(empty($accounts_hooks));
+            self::assertTrue(empty($accounts_hooks));
         }
 
         //test with an invalid module, it will get the application hooks
@@ -296,7 +296,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         ) {
             //$this->assertSame($expected_default, $default_hooks);
         } else {
-            $this->assertTrue(empty($default_hooks));
+            self::assertTrue(empty($default_hooks));
         }
     }
 
@@ -445,9 +445,9 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
             file_exists("custom/modules/Accounts/logic_hooks.php") ||
             file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
         ) {
-            $this->assertEquals($expected, $hooks);
+            self::assertEquals($expected, $hooks);
         } else {
-            $this->assertTrue(empty($hooks));
+            self::assertTrue(empty($hooks));
         }
 
         //test wit hrefresh true
@@ -456,9 +456,9 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
             file_exists("custom/modules/Accounts/logic_hooks.php") ||
             file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
         ) {
-            $this->assertSame($expected, $hooks);
+            self::assertSame($expected, $hooks);
         } else {
-            $this->assertTrue(empty($hooks));
+            self::assertTrue(empty($hooks));
         }
     }
 
@@ -470,9 +470,9 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 
         try {
             $LogicHook->call_custom_logic('', 'after_ui_footer');
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -485,9 +485,9 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 
         try {
             $LogicHook->process_hooks($hooks, 'after_ui_footer', array());
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 }

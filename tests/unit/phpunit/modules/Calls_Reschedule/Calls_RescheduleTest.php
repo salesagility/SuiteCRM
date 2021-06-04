@@ -17,16 +17,16 @@ class Calls_RescheduleTest extends SuitePHPUnitFrameworkTestCase
     {
         // Execute the constructor and check for the Object type and  attributes
         $callsReschedule = BeanFactory::newBean('Calls_Reschedule');
-        $this->assertInstanceOf('Calls_Reschedule', $callsReschedule);
-        $this->assertInstanceOf('Basic', $callsReschedule);
-        $this->assertInstanceOf('SugarBean', $callsReschedule);
+        self::assertInstanceOf('Calls_Reschedule', $callsReschedule);
+        self::assertInstanceOf('Basic', $callsReschedule);
+        self::assertInstanceOf('SugarBean', $callsReschedule);
 
-        $this->assertAttributeEquals('Calls_Reschedule', 'module_dir', $callsReschedule);
-        $this->assertAttributeEquals('Calls_Reschedule', 'object_name', $callsReschedule);
-        $this->assertAttributeEquals('calls_reschedule', 'table_name', $callsReschedule);
-        $this->assertAttributeEquals(true, 'new_schema', $callsReschedule);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $callsReschedule);
-        $this->assertAttributeEquals(true, 'importable', $callsReschedule);
-        $this->assertAttributeEquals(false, 'tracker_visibility', $callsReschedule);
+        self::assertAttributeEquals('Calls_Reschedule', 'module_dir', $callsReschedule);
+        self::assertAttributeEquals('Calls_Reschedule', 'object_name', $callsReschedule);
+        self::assertAttributeEquals('calls_reschedule', 'table_name', $callsReschedule);
+        self::assertAttributeEquals(true, 'new_schema', $callsReschedule);
+        self::assertAttributeEquals(true, 'disable_row_level_security', $callsReschedule);
+        self::assertAttributeEquals(true, 'importable', $callsReschedule);
+        self::assertAttributeEquals(false, 'tracker_visibility', $callsReschedule);
     }
 }

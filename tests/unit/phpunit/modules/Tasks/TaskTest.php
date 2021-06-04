@@ -18,15 +18,15 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $task = BeanFactory::newBean('Tasks');
 
-        $this->assertInstanceOf('Task', $task);
-        $this->assertInstanceOf('SugarBean', $task);
+        self::assertInstanceOf('Task', $task);
+        self::assertInstanceOf('SugarBean', $task);
 
-        $this->assertAttributeEquals('tasks', 'table_name', $task);
-        $this->assertAttributeEquals('Tasks', 'module_dir', $task);
-        $this->assertAttributeEquals('Task', 'object_name', $task);
+        self::assertAttributeEquals('tasks', 'table_name', $task);
+        self::assertAttributeEquals('Tasks', 'module_dir', $task);
+        self::assertAttributeEquals('Task', 'object_name', $task);
 
-        $this->assertAttributeEquals(true, 'new_schema', $task);
-        $this->assertAttributeEquals(true, 'importable', $task);
+        self::assertAttributeEquals(true, 'new_schema', $task);
+        self::assertAttributeEquals(true, 'importable', $task);
     }
 
     public function testsave()
@@ -41,13 +41,13 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $result = $task->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($task->id));
-        $this->assertEquals(36, strlen($task->id));
+        self::assertTrue(isset($task->id));
+        self::assertEquals(36, strlen($task->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $task->mark_deleted($task->id);
         $result = $task->retrieve($task->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function testget_summary_text()
@@ -55,11 +55,11 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task = BeanFactory::newBean('Tasks');
 
         //test without setting name
-        $this->assertEquals(null, $task->get_summary_text());
+        self::assertEquals(null, $task->get_summary_text());
 
         //test with name set
         $task->name = 'test';
-        $this->assertEquals('test', $task->get_summary_text());
+        self::assertEquals('test', $task->get_summary_text());
     }
 
     public function testcreate_export_query()
@@ -69,12 +69,12 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         //test with empty string params
         $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where tasks.deleted=0 ORDER BY tasks.name';
         $actual = $task->create_export_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with valid string params
         $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where users.user_name = "" AND tasks.deleted=0 ORDER BY tasks.name';
         $actual = $task->create_export_query('tasks.id', 'users.user_name = ""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testfill_in_additional_detail_fields()
@@ -85,9 +85,9 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_detail_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -100,9 +100,9 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $task->fill_in_additional_parent_fields();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -136,7 +136,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $actual = $task->get_list_view_data();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testset_notification_body()
@@ -155,20 +155,20 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $task->set_notification_body(new Sugar_Smarty(), $task);
 
-        $this->assertEquals($task->name, $result->_tpl_vars['TASK_SUBJECT']);
-        $this->assertEquals($task->status, $result->_tpl_vars['TASK_STATUS']);
-        $this->assertEquals($task->priority, $result->_tpl_vars['TASK_PRIORITY']);
-        $this->assertEquals('02/11/2016 17:30 UTC(+00:00)', $result->_tpl_vars['TASK_DUEDATE']);
-        $this->assertEquals($task->description, $result->_tpl_vars['TASK_DESCRIPTION']);
+        self::assertEquals($task->name, $result->_tpl_vars['TASK_SUBJECT']);
+        self::assertEquals($task->status, $result->_tpl_vars['TASK_STATUS']);
+        self::assertEquals($task->priority, $result->_tpl_vars['TASK_PRIORITY']);
+        self::assertEquals('02/11/2016 17:30 UTC(+00:00)', $result->_tpl_vars['TASK_DUEDATE']);
+        self::assertEquals($task->description, $result->_tpl_vars['TASK_DESCRIPTION']);
     }
 
     public function testbean_implements()
     {
         $task = BeanFactory::newBean('Tasks');
 
-        $this->assertEquals(false, $task->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $task->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $task->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $task->bean_implements('')); //test with blank value
+        self::assertEquals(false, $task->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $task->bean_implements('ACL')); //test with valid value
     }
 
     public function testlistviewACLHelper()
@@ -177,7 +177,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $task->listviewACLHelper();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testgetDefaultStatus()
@@ -185,6 +185,6 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $task = BeanFactory::newBean('Tasks');
 
         $result = $task->getDefaultStatus();
-        $this->assertEquals('Not Started', $result);
+        self::assertEquals('Not Started', $result);
     }
 }

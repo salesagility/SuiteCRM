@@ -22,10 +22,10 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarView->init();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testprocess()
@@ -45,9 +45,9 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
             $renderedContent = ob_get_contents();
             ob_end_clean();
 
-            $this->assertGreaterThan(0, strlen($renderedContent));
+            self::assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -58,12 +58,12 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         //execute the method and check if it works and doesn't throws an exception
         try {
             $errors = $SugarView->displayErrors();
-            $this->assertEmpty($errors, print_r($SugarView, true));
+            self::assertEmpty($errors, print_r($SugarView, true));
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testpreDisplay()
@@ -74,10 +74,10 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarView->preDisplay();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testdisplay()
@@ -88,10 +88,10 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarView->display();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testdisplayHeader()
@@ -110,9 +110,9 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
             $renderedContent = ob_get_contents();
             ob_end_clean();
 
-            $this->assertGreaterThan(0, strlen($renderedContent));
+            self::assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -124,10 +124,10 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarView->getModuleMenuHTML();
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testincludeClassicFile()
@@ -139,17 +139,17 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         try {
             $SugarView->includeClassicFile('config.php');
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
     public function testgetJavascriptValidation()
     {
         //check if it returns any text i-e JS code
         $js = SugarView::getJavascriptValidation();
-        $this->assertGreaterThan(0, strlen($js));
+        self::assertGreaterThan(0, strlen($js));
     }
 
     public function testdisplayFooter()
@@ -166,9 +166,9 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
             $renderedContent = ob_get_contents();
             ob_end_clean();
 
-            $this->assertGreaterThan(0, strlen($renderedContent));
+            self::assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -186,9 +186,9 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
             $renderedContent = ob_get_contents();
             ob_end_clean();
 
-            $this->assertGreaterThan(0, strlen($renderedContent));
+            self::assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -213,7 +213,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         //check with valid value and check if it returns an array.
         $menu = $SugarView->getMenu('Users');
-        $this->assertTrue(is_array($menu));
+        self::assertTrue(is_array($menu));
     }
 
     public function testgetModuleTitle()
@@ -222,15 +222,15 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         //first execute the method with default value
         $moduleTitle = $SugarView->getModuleTitle();
-        $this->assertGreaterThan(0, strlen($moduleTitle));
+        self::assertGreaterThan(0, strlen($moduleTitle));
 
         //second execute the method with true value
         $moduleTitle = $SugarView->getModuleTitle(true);
-        $this->assertGreaterThan(0, strlen($moduleTitle));
+        self::assertGreaterThan(0, strlen($moduleTitle));
 
         //third execute the method with false value
         $moduleTitle = $SugarView->getModuleTitle(false);
-        $this->assertGreaterThan(0, strlen($moduleTitle));
+        self::assertGreaterThan(0, strlen($moduleTitle));
     }
 
     public function testgetMetaDataFile()
@@ -239,14 +239,14 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         //first execute the method with missing attributes. it should return Null.
         $metaDataFile = $SugarView->getMetaDataFile();
-        $this->assertEquals(null, $metaDataFile);
+        self::assertEquals(null, $metaDataFile);
 
         //second execute the method with valid attributes set. it should return a file path string.
         $SugarView->type = 'detail';
         $SugarView->module = 'Users';
 
         $metaDataFile = $SugarView->getMetaDataFile();
-        $this->assertGreaterThan(0, strlen($metaDataFile));
+        self::assertGreaterThan(0, strlen($metaDataFile));
     }
 
     public function testgetBrowserTitle()
@@ -255,7 +255,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method. it should return a title string.
         $browserTitle = $SugarView->getBrowserTitle();
-        $this->assertGreaterThan(0, strlen($browserTitle));
+        self::assertGreaterThan(0, strlen($browserTitle));
     }
 
     public function testgetBreadCrumbSymbol()
@@ -264,7 +264,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method. it should return a string.
         $breadCrumbSymbol = $SugarView->getBreadCrumbSymbol();
-        $this->assertGreaterThan(0, strlen($breadCrumbSymbol));
+        self::assertGreaterThan(0, strlen($breadCrumbSymbol));
     }
 
     public function testcheckPostMaxSizeError()
@@ -273,6 +273,6 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method. it should return False because Request parameters are not available.
         $postMaxSizeError = $SugarView->checkPostMaxSizeError();
-        $this->assertFalse($postMaxSizeError);
+        self::assertFalse($postMaxSizeError);
     }
 }

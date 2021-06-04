@@ -23,7 +23,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
                 users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
                    	ON project_task.assigned_user_id=users.id where  project_task.deleted=0 ";
         $actual = $projectTask->create_export_query('', '');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with valid string params
         $expected = "SELECT
@@ -31,7 +31,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
                 users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
                    	ON project_task.assigned_user_id=users.id where (users.user_name= \"\") AND  project_task.deleted=0  ORDER BY project_task.id";
         $actual = $projectTask->create_export_query('project_task.id', 'users.user_name= ""');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testProjectTask()
@@ -39,17 +39,17 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         // Execute the constructor and check for the Object type and  attributes
         $projectTask = BeanFactory::newBean('ProjectTask');
 
-        $this->assertInstanceOf('ProjectTask', $projectTask);
-        $this->assertInstanceOf('SugarBean', $projectTask);
+        self::assertInstanceOf('ProjectTask', $projectTask);
+        self::assertInstanceOf('SugarBean', $projectTask);
 
-        $this->assertAttributeEquals('project_task', 'table_name', $projectTask);
-        $this->assertAttributeEquals('ProjectTask', 'module_dir', $projectTask);
-        $this->assertAttributeEquals('ProjectTask', 'object_name', $projectTask);
+        self::assertAttributeEquals('project_task', 'table_name', $projectTask);
+        self::assertAttributeEquals('ProjectTask', 'module_dir', $projectTask);
+        self::assertAttributeEquals('ProjectTask', 'object_name', $projectTask);
 
-        $this->assertAttributeEquals(true, 'new_schema', $projectTask);
-        $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
+        self::assertAttributeEquals(true, 'new_schema', $projectTask);
+        self::assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
 
-        $this->assertAttributeEquals(100, 'utilization', $projectTask);
+        self::assertAttributeEquals(100, 'utilization', $projectTask);
     }
 
     public function testskipParentUpdate()
@@ -58,11 +58,11 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         //test with default parameter value
         $projectTask->skipParentUpdate();
-        $this->assertAttributeEquals(true, '_skipParentUpdate', $projectTask);
+        self::assertAttributeEquals(true, '_skipParentUpdate', $projectTask);
 
         //test with parameter value  = true
         $projectTask->skipParentUpdate(false);
-        $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
+        self::assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
     }
 
     public function testsave()
@@ -78,8 +78,8 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $projectTask->save();
 
         //test for record ID to verify that record is saved
-        $this->assertTrue(isset($projectTask->id));
-        $this->assertEquals(36, strlen($projectTask->id));
+        self::assertTrue(isset($projectTask->id));
+        self::assertEquals(36, strlen($projectTask->id));
 
         //test _get_depends_on_name method
         $this->_get_depends_on_name($projectTask->id);
@@ -87,7 +87,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
-        $this->assertEquals(null, $result);
+        self::assertEquals(null, $result);
     }
 
     public function _get_depends_on_name($id)
@@ -96,9 +96,9 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $projectTask->_get_depends_on_name($id);
 
-        $this->assertEquals('1', $projectTask->depends_on_name_owner);
-        $this->assertEquals('ProjectTask', $projectTask->depends_on_name_mod);
-        $this->assertEquals('test', $result);
+        self::assertEquals('1', $projectTask->depends_on_name_owner);
+        self::assertEquals('ProjectTask', $projectTask->depends_on_name_mod);
+        self::assertEquals('test', $result);
     }
 
     public function testupdateParentProjectTaskPercentage()
@@ -108,9 +108,9 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $projectTask->updateParentProjectTaskPercentage();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -120,7 +120,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         $projectTask->parent_task_id = 1;
         $result = $projectTask->getProjectTaskParent();
-        $this->assertEquals(false, $result);
+        self::assertEquals(false, $result);
     }
 
     public function testgetAllSubProjectTasks()
@@ -128,7 +128,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $projectTask = BeanFactory::newBean('ProjectTask');
 
         $result = $projectTask->getAllSubProjectTasks();
-        $this->assertTrue(is_array($result));
+        self::assertTrue(is_array($result));
     }
 
     public function testupdateStatistic()
@@ -138,9 +138,9 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         // Execute the method and test that it works and doesn't throw an exception.
         try {
             $projectTask->updateStatistic();
-            $this->assertTrue(true);
+            self::assertTrue(true);
         } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
     }
 
@@ -150,12 +150,12 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         //test without setting assigned_user_id
         $projectTask->fill_in_additional_detail_fields();
-        $this->assertEquals('', $projectTask->assigned_user_name);
+        self::assertEquals('', $projectTask->assigned_user_name);
 
         //test with assigned_user_id set
         $projectTask->assigned_user_id = 1;
         $projectTask->fill_in_additional_detail_fields();
-        $this->assertEquals('Administrator', $projectTask->assigned_user_name);
+        self::assertEquals('Administrator', $projectTask->assigned_user_name);
     }
 
     public function testget_summary_text()
@@ -163,11 +163,11 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $projectTask = BeanFactory::newBean('ProjectTask');
 
         //test without setting name
-        $this->assertEquals(null, $projectTask->get_summary_text());
+        self::assertEquals(null, $projectTask->get_summary_text());
 
         //test with name set
         $projectTask->name = 'test';
-        $this->assertEquals('test', $projectTask->get_summary_text());
+        self::assertEquals('test', $projectTask->get_summary_text());
     }
 
     public function test_get_project_name()
@@ -176,11 +176,11 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         //test with a empty string
         $result = $projectTask->_get_project_name('');
-        $this->assertEquals('', $result);
+        self::assertEquals('', $result);
 
         //test with a non empty invalid id
         $result = $projectTask->_get_project_name('1');
-        $this->assertEquals('', $result);
+        self::assertEquals('', $result);
     }
 
     public function test_get_parent_name()
@@ -189,11 +189,11 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         //test with a empty string
         $result = $projectTask->_get_parent_name('');
-        $this->assertEquals('', $result);
+        self::assertEquals('', $result);
 
         //test with a non empty invalid id
         $result = $projectTask->_get_parent_name('1');
-        $this->assertEquals('', $result);
+        self::assertEquals('', $result);
     }
 
     public function testbuild_generic_where_clause()
@@ -203,21 +203,21 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         //test with empty string params
         $expected = "project_task.name like '%'";
         $actual = $projectTask->build_generic_where_clause('');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //test with valid string params
         $expected = "project_task.name like 'test%'";
         $actual = $projectTask->build_generic_where_clause('test');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testbean_implements()
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
-        $this->assertEquals(false, $projectTask->bean_implements('')); //test with blank value
-        $this->assertEquals(false, $projectTask->bean_implements('test')); //test with invalid value
-        $this->assertEquals(true, $projectTask->bean_implements('ACL')); //test with valid value
+        self::assertEquals(false, $projectTask->bean_implements('')); //test with blank value
+        self::assertEquals(false, $projectTask->bean_implements('test')); //test with invalid value
+        self::assertEquals(true, $projectTask->bean_implements('ACL')); //test with valid value
     }
 
     public function testlistviewACLHelper()
@@ -226,7 +226,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
         $actual = $projectTask->listviewACLHelper();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     public function testgetUtilizationDropdown()
@@ -235,6 +235,6 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = "<select name=\"utilization\">\n<OPTION value='0'>none</OPTION>\n<OPTION value='25'>25</OPTION>\n<OPTION value='50'>50</OPTION>\n<OPTION value='75'>75</OPTION>\n<OPTION value='100'>100</OPTION></select>";
         $actual = getUtilizationDropdown($projectTask, 'utilization', '0', 'EditView');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 }
