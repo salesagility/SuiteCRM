@@ -150,8 +150,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $_REQUEST['ssl'] = 1;
 
-        $ie = new InboundEmail($imap);
-        $ret = $ie->connectMailserver(true);
+        $ret = (new InboundEmail($imap))->connectMailserver(true);
         self::assertEquals('Login or Password Incorrect', $ret);
     }
 
@@ -173,8 +172,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $_REQUEST['ssl'] = 1;
 
-        $ie = new InboundEmail($imap);
-        $ret = $ie->connectMailserver();
+        $ret = (new InboundEmail($imap))->connectMailserver();
         self::assertEquals('true', $ret);
     }
 
@@ -184,8 +182,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('isAvailable', null, [false]);
         $imap = new ImapHandlerFake($fake);
 
-        $ie = new InboundEmail($imap);
-        $ret = $ie->connectMailserver();
+        $ret = (new InboundEmail($imap))->connectMailserver();
         self::assertEquals('Inbound Email <b>cannot</b> function without the IMAP c-client libraries enabled/compiled with the PHP module. Please contact your administrator to resolve this issue.', $ret);
     }
 
@@ -290,8 +287,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('close', null, [null]);
 
         $imap = new ImapHandlerFake($fake);
-        $inboundEmail = new InboundEmail($imap);
-        $ret = $inboundEmail->findOptimumSettings();
+        $ret = (new InboundEmail($imap))->findOptimumSettings();
         self::assertEquals([
             'serial' => '::::::::novalidate-cert::notls::secure',
             'service' => 'foo/notls/novalidate-cert/secure',
@@ -304,8 +300,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('isAvailable', null, [false]);
         $imap = new ImapHandlerFake($fake);
 
-        $ie = new InboundEmail($imap);
-        $ret = $ie->findOptimumSettings();
+        $ret = (new InboundEmail($imap))->findOptimumSettings();
         self::assertEquals([
             'good' => [],
             'bad' => [],
@@ -336,8 +331,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $_REQUEST['ssl'] = 1;
 
-        $ie = new InboundEmail($imap);
-        $ret = $ie->findOptimumSettings();
+        $ret = (new InboundEmail($imap))->findOptimumSettings();
         self::assertEquals([
             'serial' => 'tls::::ssl::::::::secure',
             'service' => 'foo/ssl/tls/validate-cert/secure',
@@ -482,9 +476,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieveByGroupId($group_id)
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->retrieveByGroupId($group_id);
+        $result = BeanFactory::newBean('InboundEmail')->retrieveByGroupId($group_id);
 
         self::assertTrue(is_array($result));
 
@@ -495,9 +487,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieveAllByGroupId($group_id)
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->retrieveAllByGroupId($group_id);
+        $result = BeanFactory::newBean('InboundEmail')->retrieveAllByGroupId($group_id);
 
         self::assertTrue(is_array($result));
 
@@ -508,9 +498,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function retrieveAllByGroupIdWithGroupAccounts($group_id)
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->retrieveAllByGroupIdWithGroupAccounts($group_id);
+        $result = BeanFactory::newBean('InboundEmail')->retrieveAllByGroupIdWithGroupAccounts($group_id);
 
         self::assertTrue(is_array($result));
 
@@ -598,9 +586,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcustomGetMessageText()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->customGetMessageText('some message');
+        $result = BeanFactory::newBean('InboundEmail')->customGetMessageText('some message');
         self::assertEquals('some message', $result);
     }
 
@@ -638,8 +624,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testconvertToUtf8()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-        $result = $inboundEmail->convertToUtf8('some text with non UTF8 chars');
+        $result = BeanFactory::newBean('InboundEmail')->convertToUtf8('some text with non UTF8 chars');
         self::assertSame('some text with non UTF8 chars', $result);
     }
 
@@ -699,10 +684,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetCacheValue()
     {
-        $inboundEmail = $this->setDummyCacheValue();
-
         //retrieve back to verify the records created
-        $result = $inboundEmail->getCacheValue('INBOX');
+        $result = $this->setDummyCacheValue()->getCacheValue('INBOX');
 
         self::assertGreaterThan(0, count((array)$result['retArr'][0]));
         self::assertEquals(1, $result['retArr'][0]->message_id);
@@ -1312,9 +1295,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetMailboxProcessCount()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->getMailboxProcessCount('INBOX');
+        $result = BeanFactory::newBean('InboundEmail')->getMailboxProcessCount('INBOX');
 
         self::assertEquals(0, $result);
     }
@@ -1377,9 +1358,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetOverviewsFromCacheFile()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->getOverviewsFromCacheFile('1,2', 'INBOX');
+        $result = BeanFactory::newBean('InboundEmail')->getOverviewsFromCacheFile('1,2', 'INBOX');
 
         self::assertTrue(is_array($result));
     }
@@ -1493,9 +1472,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsaveNewFolder()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->saveNewFolder('TEST', 'INBOX');
+        $result = BeanFactory::newBean('InboundEmail')->saveNewFolder('TEST', 'INBOX');
 
         self::assertEquals(false, $result);
     }
@@ -1657,9 +1634,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetFoldersListForMailBox()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->getFoldersListForMailBox();
+        $result = BeanFactory::newBean('InboundEmail')->getFoldersListForMailBox();
         self::assertTrue(is_array($result));
     }
 
@@ -1693,9 +1668,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetSessionConnectionString()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->setSessionConnectionString('mail.google.com', 'test', 22, 'IMAP', 'test connection');
+        $result = BeanFactory::newBean('InboundEmail')->setSessionConnectionString('mail.google.com', 'test', 22, 'IMAP', 'test connection');
         self::assertEquals('test connection', $_SESSION['mail.google.comtest22IMAP']);
     }
 
@@ -1715,9 +1688,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetSessionInboundDelimiterString()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->setSessionInboundDelimiterString('mail.google.com', 'test', 22, 'IMAP', 'test string');
+        $result = BeanFactory::newBean('InboundEmail')->setSessionInboundDelimiterString('mail.google.com', 'test', 22, 'IMAP', 'test string');
         self::assertEquals('test string', $_SESSION['mail.google.comtest22IMAPdelimiter']);
     }
 
@@ -1737,9 +1708,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsetSessionInboundFoldersString()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->setSessionInboundFoldersString('mail.google.com', 'test', 22, 'IMAP', 'foldersList string');
+        $result = BeanFactory::newBean('InboundEmail')->setSessionInboundFoldersString('mail.google.com', 'test', 22, 'IMAP', 'foldersList string');
         self::assertEquals('foldersList string', $_SESSION['mail.google.comtest22IMAPfoldersList']);
     }
 
@@ -2099,9 +2068,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         unset($db->database);
         $db->checkConnection();
 
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->handleEncodedFilename('attachment1.pdf');
+        $result = BeanFactory::newBean('InboundEmail')->handleEncodedFilename('attachment1.pdf');
         self::assertEquals('attachment1.pdf', $result);
     }
 
@@ -2139,9 +2106,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetNoteBeanForAttachment()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->getNoteBeanForAttachment('1');
+        $result = BeanFactory::newBean('InboundEmail')->getNoteBeanForAttachment('1');
 
         self::assertInstanceOf('Note', $result);
         self::assertAttributeEquals('1', 'parent_id', $result);
@@ -2222,18 +2187,14 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleMimeHeaderDecode()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->handleMimeHeaderDecode('Subject: article: How to Trace a Email');
+        $result = BeanFactory::newBean('InboundEmail')->handleMimeHeaderDecode('Subject: article: How to Trace a Email');
 
         self::assertEquals('Subject: article: How to Trace a Email', $result);
     }
 
     public function testgetUnixHeaderDate()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->handleMimeHeaderDecode('Date: January 25, 2011 3:30:58 PM PDT');
+        $result = BeanFactory::newBean('InboundEmail')->handleMimeHeaderDecode('Date: January 25, 2011 3:30:58 PM PDT');
 
         self::assertEquals('Date: January 25, 2011 3:30:58 PM PDT', $result);
     }
@@ -2429,9 +2390,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetCaseIdFromCaseNumber()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->getCaseIdFromCaseNumber('test', BeanFactory::newBean('Cases'));
+        $result = BeanFactory::newBean('InboundEmail')->getCaseIdFromCaseNumber('test', BeanFactory::newBean('Cases'));
         self::assertEquals(false, $result);
     }
 
@@ -2478,9 +2437,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetNewMessageIds()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->getNewMessageIds();
+        $result = BeanFactory::newBean('InboundEmail')->getNewMessageIds();
 
         self::assertEquals(null, $result);
     }
@@ -2939,9 +2896,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieveDelimiter()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->retrieveDelimiter();
+        $result = BeanFactory::newBean('InboundEmail')->retrieveDelimiter();
 
         self::assertEquals('.', $result);
     }
@@ -2985,9 +2940,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsortMailboxes()
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
-
-        $result = $inboundEmail->sortMailboxes('INBOX.TRASH', array());
+        $result = BeanFactory::newBean('InboundEmail')->sortMailboxes('INBOX.TRASH', array());
 
         $expected = array('INBOX' => array('TRASH' => 'TRASH'));
 

@@ -35,16 +35,14 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetForm()
     {
-        $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
-        $result = $savedSearch->getForm('Leads');
+        $result = (new SavedSearch(array('id', 'name'), 'id', 'ASC'))->getForm('Leads');
 
         self::assertGreaterThan(0, strlen($result));
     }
 
     public function testgetSelect()
     {
-        $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
-        $result = $savedSearch->getSelect('Leads');
+        $result = (new SavedSearch(array('id', 'name'), 'id', 'ASC'))->getSelect('Leads');
 
         self::assertGreaterThan(0, strlen($result));
     }

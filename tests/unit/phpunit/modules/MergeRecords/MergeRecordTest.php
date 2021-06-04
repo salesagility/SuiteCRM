@@ -258,8 +258,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
                                 AND ear.bean_id != '{$bean_id}'
                                 AND ear.deleted = 0";
 
-        $mergeRecord = BeanFactory::newBean('MergeRecords');
-        $result = $mergeRecord->email_addresses_query($table, $module, $bean_id);
+        $result = BeanFactory::newBean('MergeRecords')->email_addresses_query($table, $module, $bean_id);
 
         self::assertSame($expected, $result);
     }

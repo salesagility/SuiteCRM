@@ -146,7 +146,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     {
         global $sugar_config;
 
-        $mockedResults = [
+        return [
             'took' => 5,
             'timed_out' => false,
             '_shards' =>
@@ -186,7 +186,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
                         ]
                 ],
         ];
-        return $mockedResults;
     }
 
     /**
@@ -224,7 +223,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
      */
     private function getExpectedResultsForMockedHits()
     {
-        $expectedResults = [
+        return [
             'Accounts' => [
                 'id1',
                 'id2'
@@ -233,8 +232,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
                 'id3',
             ]
         ];
-
-        return $expectedResults;
     }
 
     public function testParseEmptyHits()

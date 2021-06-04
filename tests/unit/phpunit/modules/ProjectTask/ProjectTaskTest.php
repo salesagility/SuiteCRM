@@ -125,9 +125,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetAllSubProjectTasks()
     {
-        $projectTask = BeanFactory::newBean('ProjectTask');
-
-        $result = $projectTask->getAllSubProjectTasks();
+        $result = BeanFactory::newBean('ProjectTask')->getAllSubProjectTasks();
         self::assertTrue(is_array($result));
     }
 

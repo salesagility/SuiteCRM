@@ -13,7 +13,7 @@ class GoogleSyncMock extends GoogleSync
     {
         $this->$key = $value;
     }
-    
+
     public function getProperty($key)
     {
         if (!isset($this->$key)) {
@@ -24,13 +24,13 @@ class GoogleSyncMock extends GoogleSync
         }
         return $this->$key;
     }
-    
+
     public function callMethod($name, $params = [])
     {
         if (!method_exists($this, $name)) {
             throw new Exception('Method is not exists: ' . $name);
         }
-        $ret = call_user_func_array([$this, $name], (array)$params);
-        return $ret;
+
+        return call_user_func_array([$this, $name], (array)$params);
     }
 }

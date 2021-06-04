@@ -178,14 +178,13 @@ class SearchQueryTest extends SearchTestAbstract
      */
     private function getRequest()
     {
-        $request = [
+        return [
             'search-query-string' => 'FOO',
             'search-query-size' => '123',
             'search-query-from' => 3,
             'search-engine' => 'TestEngine',
             'foo' => 'bar',
         ];
-        return $request;
     }
 
     /**
