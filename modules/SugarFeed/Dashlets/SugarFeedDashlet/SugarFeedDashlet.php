@@ -357,7 +357,8 @@ class SugarFeedDashlet extends DashletGeneric
 
                     $modStringSingular = $GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']];
                     $modString = string_format($modString, array($modStringSingular));
-                    $this->lvs->data['data'][$row]['NAME'] = preg_replace('/' . $modStringMatches[0] . '/', strtolower($modString), $this->lvs->data['data'][$row]['NAME']);
+                    // This is the additional parameter used for correct message in different languages
+                    $this->lvs->data['data'][$row]['NAME'] = preg_replace('/' . $modStringMatches[0] . '/', strtolower($modString,"UTF-8"), $this->lvs->data['data'][$row]['NAME']);
                 }
                 //if social then unless the user is the assigned user it wont show. IJD1986
                 if (($data['RELATED_MODULE'] == "facebook" || $data['RELATED_MODULE'] == "twitter") && $data['ASSIGNED_USER_ID'] != $current_user->id) {
