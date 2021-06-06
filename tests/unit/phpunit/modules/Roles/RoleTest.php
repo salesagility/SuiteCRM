@@ -21,13 +21,13 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Role', $role);
         self::assertInstanceOf('SugarBean', $role);
 
-        self::assertAttributeEquals('roles', 'table_name', $role);
-        self::assertAttributeEquals('roles_modules', 'rel_module_table', $role);
-        self::assertAttributeEquals('Roles', 'module_dir', $role);
-        self::assertAttributeEquals('Role', 'object_name', $role);
+        self::assertEquals('roles', $role->table_name);
+        self::assertEquals('roles_modules', $role->rel_module_table);
+        self::assertEquals('Roles', $role->module_dir);
+        self::assertEquals('Role', $role->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $role);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $role);
+        self::assertEquals(true, $role->new_schema);
+        self::assertEquals(true, $role->disable_row_level_security);
     }
 
     public function testget_summary_text(): void

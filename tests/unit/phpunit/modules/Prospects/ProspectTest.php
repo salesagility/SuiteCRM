@@ -22,12 +22,12 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Person', $prospect);
         self::assertInstanceOf('SugarBean', $prospect);
 
-        self::assertAttributeEquals('prospects', 'table_name', $prospect);
-        self::assertAttributeEquals('Prospects', 'module_dir', $prospect);
-        self::assertAttributeEquals('Prospect', 'object_name', $prospect);
+        self::assertEquals('prospects', $prospect->table_name);
+        self::assertEquals('Prospects', $prospect->module_dir);
+        self::assertEquals('Prospect', $prospect->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $prospect);
-        self::assertAttributeEquals(true, 'importable', $prospect);
+        self::assertEquals(true, $prospect->new_schema);
+        self::assertEquals(true, $prospect->importable);
     }
 
     public function testfill_in_additional_list_fields(): void
@@ -42,8 +42,8 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
 
         $prospect->fill_in_additional_list_fields();
 
-        self::assertAttributeEquals('last', 'full_name', $prospect);
-        self::assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
+        self::assertEquals('last', $prospect->full_name);
+        self::assertEquals('last &lt;email1@test.com&gt;', $prospect->email_and_name1);
     }
 
     public function testfill_in_additional_detail_fields(): void
@@ -58,7 +58,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
 
         $prospect->fill_in_additional_detail_fields();
 
-        self::assertAttributeEquals('last', 'full_name', $prospect);
+        self::assertEquals('last', $prospect->full_name);
     }
 
     public function testbuild_generic_where_clause(): void

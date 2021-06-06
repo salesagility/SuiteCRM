@@ -21,13 +21,13 @@ class AOS_QuotesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aosQuotes);
         self::assertInstanceOf('SugarBean', $aosQuotes);
 
-        self::assertAttributeEquals('AOS_Quotes', 'module_dir', $aosQuotes);
-        self::assertAttributeEquals('AOS_Quotes', 'object_name', $aosQuotes);
-        self::assertAttributeEquals('aos_quotes', 'table_name', $aosQuotes);
-        self::assertAttributeEquals(true, 'new_schema', $aosQuotes);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aosQuotes);
-        self::assertAttributeEquals(true, 'importable', $aosQuotes);
-        self::assertAttributeEquals(true, 'lineItems', $aosQuotes);
+        self::assertEquals('AOS_Quotes', $aosQuotes->module_dir);
+        self::assertEquals('AOS_Quotes', $aosQuotes->object_name);
+        self::assertEquals('aos_quotes', $aosQuotes->table_name);
+        self::assertEquals(true, $aosQuotes->new_schema);
+        self::assertEquals(true, $aosQuotes->disable_row_level_security);
+        self::assertEquals(true, $aosQuotes->importable);
+        self::assertEquals(true, $aosQuotes->lineItems);
     }
 
     public function testSaveAndMark_deleted(): void

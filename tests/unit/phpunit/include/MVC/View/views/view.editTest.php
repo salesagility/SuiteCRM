@@ -19,11 +19,11 @@ class ViewEditTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewEdit();
         self::assertInstanceOf('ViewEdit', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('edit', 'type', $view);
+        self::assertEquals('edit', $view->type);
 
-        self::assertAttributeEquals(false, 'useForSubpanel', $view);
-        self::assertAttributeEquals(false, 'useModuleQuickCreateTemplate', $view);
-        self::assertAttributeEquals(true, 'showTitle', $view);
+        self::assertEquals(false, $view->useForSubpanel);
+        self::assertEquals(false, $view->useModuleQuickCreateTemplate);
+        self::assertEquals(true, $view->showTitle);
     }
 
     public function testpreDisplay(): void

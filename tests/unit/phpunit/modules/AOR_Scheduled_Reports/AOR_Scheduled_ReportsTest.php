@@ -49,12 +49,12 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aorScheduledReports);
         self::assertInstanceOf('SugarBean', $aorScheduledReports);
 
-        self::assertAttributeEquals('AOR_Scheduled_Reports', 'module_dir', $aorScheduledReports);
-        self::assertAttributeEquals('AOR_Scheduled_Reports', 'object_name', $aorScheduledReports);
-        self::assertAttributeEquals('aor_scheduled_reports', 'table_name', $aorScheduledReports);
-        self::assertAttributeEquals(true, 'new_schema', $aorScheduledReports);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aorScheduledReports);
-        self::assertAttributeEquals(false, 'importable', $aorScheduledReports);
+        self::assertEquals('AOR_Scheduled_Reports', $aorScheduledReports->module_dir);
+        self::assertEquals('AOR_Scheduled_Reports', $aorScheduledReports->object_name);
+        self::assertEquals('aor_scheduled_reports', $aorScheduledReports->table_name);
+        self::assertEquals(true, $aorScheduledReports->new_schema);
+        self::assertEquals(true, $aorScheduledReports->disable_row_level_security);
+        self::assertEquals(false, $aorScheduledReports->importable);
     }
 
     public function test_ReportRelation(): void

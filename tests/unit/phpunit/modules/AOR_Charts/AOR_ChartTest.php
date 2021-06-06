@@ -14,12 +14,12 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aorChart);
         self::assertInstanceOf('SugarBean', $aorChart);
 
-        self::assertAttributeEquals('AOR_Charts', 'module_dir', $aorChart);
-        self::assertAttributeEquals('AOR_Chart', 'object_name', $aorChart);
-        self::assertAttributeEquals('aor_charts', 'table_name', $aorChart);
-        self::assertAttributeEquals(true, 'new_schema', $aorChart);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aorChart);
-        self::assertAttributeEquals(true, 'importable', $aorChart);
+        self::assertEquals('AOR_Charts', $aorChart->module_dir);
+        self::assertEquals('AOR_Chart', $aorChart->object_name);
+        self::assertEquals('aor_charts', $aorChart->table_name);
+        self::assertEquals(true, $aorChart->new_schema);
+        self::assertEquals(true, $aorChart->disable_row_level_security);
+        self::assertEquals(true, $aorChart->importable);
     }
 
     public function testsave_lines(): void

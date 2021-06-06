@@ -89,8 +89,8 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();
-        self::assertContains('Total result(s): 15', $content);
-        self::assertContains('Page 1 of 2', $content);
+        self::assertStringContainsString('Total result(s): 15', $content);
+        self::assertStringContainsString('Page 1 of 2', $content);
 
         // add 5 more..
         for ($i=15; $i<20; $i++) {
@@ -124,8 +124,8 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();
-        self::assertContains('Total result(s): 20', $content);
-        self::assertContains('Page 2 of 2', $content);
+        self::assertStringContainsString('Total result(s): 20', $content);
+        self::assertStringContainsString('Page 2 of 2', $content);
     }
 
     public function testDisplayFoundOne(): void
@@ -157,7 +157,7 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();
-        self::assertContains('test account 1', $content);
+        self::assertStringContainsString('test account 1', $content);
     }
 
     public function testDisplayNotFound(): void
@@ -182,6 +182,6 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         $searchResultsController->display();
         $content = ob_get_contents();
         ob_end_clean();
-        self::assertContains('No results matching your search criteria. Try broadening your search.', $content);
+        self::assertStringContainsString('No results matching your search criteria. Try broadening your search.', $content);
     }
 }

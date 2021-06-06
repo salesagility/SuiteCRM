@@ -21,11 +21,11 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('File', $document);
         self::assertInstanceOf('SugarBean', $document);
 
-        self::assertAttributeEquals('Documents', 'module_dir', $document);
-        self::assertAttributeEquals('Document', 'object_name', $document);
-        self::assertAttributeEquals('documents', 'table_name', $document);
-        self::assertAttributeEquals(true, 'new_schema', $document);
-        self::assertAttributeEquals(false, 'disable_row_level_security', $document);
+        self::assertEquals('Documents', $document->module_dir);
+        self::assertEquals('Document', $document->object_name);
+        self::assertEquals('documents', $document->table_name);
+        self::assertEquals(true, $document->new_schema);
+        self::assertEquals(false, $document->disable_row_level_security);
     }
 
     public function testSaveAndGet_document_name(): void

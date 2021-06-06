@@ -44,11 +44,10 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('EmailMan', $emailMan);
         self::assertInstanceOf('SugarBean', $emailMan);
 
-        self::assertAttributeEquals('EmailMan', 'module_dir', $emailMan);
-        self::assertAttributeEquals('EmailMan', 'object_name', $emailMan);
-        self::assertAttributeEquals('emailman', 'table_name', $emailMan);
-
-        self::assertAttributeEquals(false, 'test', $emailMan);
+        self::assertEquals('EmailMan', $emailMan->module_dir);
+        self::assertEquals('EmailMan', $emailMan->object_name);
+        self::assertEquals('emailman', $emailMan->table_name);
+        self::assertEquals(false, $emailMan->test);
     }
 
     public function testcreate_new_list_query(): void

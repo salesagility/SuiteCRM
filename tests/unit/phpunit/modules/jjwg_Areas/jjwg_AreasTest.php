@@ -13,18 +13,18 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $jjwgAreas);
         self::assertInstanceOf('SugarBean', $jjwgAreas);
 
-        self::assertAttributeEquals('jjwg_Areas', 'module_dir', $jjwgAreas);
-        self::assertAttributeEquals('jjwg_Areas', 'object_name', $jjwgAreas);
-        self::assertAttributeEquals('jjwg_areas', 'table_name', $jjwgAreas);
+        self::assertEquals('jjwg_Areas', $jjwgAreas->module_dir);
+        self::assertEquals('jjwg_Areas', $jjwgAreas->object_name);
+        self::assertEquals('jjwg_areas', $jjwgAreas->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $jjwgAreas);
-        self::assertAttributeEquals(true, 'importable', $jjwgAreas);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $jjwgAreas);
+        self::assertEquals(true, $jjwgAreas->new_schema);
+        self::assertEquals(true, $jjwgAreas->importable);
+        self::assertEquals(true, $jjwgAreas->disable_row_level_security);
 
-        self::assertAttributeEquals(null, 'polygon', $jjwgAreas);
-        self::assertAttributeEquals(true, 'point_on_vertex', $jjwgAreas);
-        self::assertAttributeEquals(0, 'area', $jjwgAreas);
-        self::assertAttributeEquals(null, 'centroid', $jjwgAreas);
+        self::assertEquals(null, $jjwgAreas->polygon);
+        self::assertEquals(true, $jjwgAreas->point_on_vertex);
+        self::assertEquals(0, $jjwgAreas->area);
+        self::assertEquals(null, $jjwgAreas->centroid);
     }
 
     public function testconfiguration(): void

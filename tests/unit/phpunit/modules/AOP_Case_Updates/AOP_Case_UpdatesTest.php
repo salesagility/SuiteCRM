@@ -21,13 +21,13 @@ class AOP_Case_UpdatesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aopCaseUpdates);
         self::assertInstanceOf('SugarBean', $aopCaseUpdates);
 
-        self::assertAttributeEquals('AOP_Case_Updates', 'module_dir', $aopCaseUpdates);
-        self::assertAttributeEquals('AOP_Case_Updates', 'object_name', $aopCaseUpdates);
-        self::assertAttributeEquals('aop_case_updates', 'table_name', $aopCaseUpdates);
-        self::assertAttributeEquals(true, 'new_schema', $aopCaseUpdates);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aopCaseUpdates);
-        self::assertAttributeEquals(false, 'importable', $aopCaseUpdates);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aopCaseUpdates);
+        self::assertEquals('AOP_Case_Updates', $aopCaseUpdates->module_dir);
+        self::assertEquals('AOP_Case_Updates', $aopCaseUpdates->object_name);
+        self::assertEquals('aop_case_updates', $aopCaseUpdates->table_name);
+        self::assertEquals(true, $aopCaseUpdates->new_schema);
+        self::assertEquals(true, $aopCaseUpdates->disable_row_level_security);
+        self::assertEquals(false, $aopCaseUpdates->importable);
+        self::assertEquals(false, $aopCaseUpdates->tracker_visibility);
     }
 
     public function testsave(): void

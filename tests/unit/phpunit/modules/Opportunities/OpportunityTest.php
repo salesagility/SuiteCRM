@@ -21,14 +21,14 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Opportunity', $opportunity);
         self::assertInstanceOf('SugarBean', $opportunity);
 
-        self::assertAttributeEquals('opportunities', 'table_name', $opportunity);
-        self::assertAttributeEquals('accounts_opportunities', 'rel_account_table', $opportunity);
-        self::assertAttributeEquals('opportunities_contacts', 'rel_contact_table', $opportunity);
-        self::assertAttributeEquals('Opportunities', 'module_dir', $opportunity);
-        self::assertAttributeEquals('Opportunity', 'object_name', $opportunity);
+        self::assertEquals('opportunities', $opportunity->table_name);
+        self::assertEquals('accounts_opportunities', $opportunity->rel_account_table);
+        self::assertEquals('opportunities_contacts', $opportunity->rel_contact_table);
+        self::assertEquals('Opportunities', $opportunity->module_dir);
+        self::assertEquals('Opportunity', $opportunity->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $opportunity);
-        self::assertAttributeEquals(true, 'importable', $opportunity);
+        self::assertEquals(true, $opportunity->new_schema);
+        self::assertEquals(true, $opportunity->importable);
     }
 
     public function testget_summary_text(): void

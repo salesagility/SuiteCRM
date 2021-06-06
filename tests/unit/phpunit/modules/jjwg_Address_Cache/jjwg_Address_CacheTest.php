@@ -12,13 +12,13 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $jjwgAddressCache);
         self::assertInstanceOf('SugarBean', $jjwgAddressCache);
 
-        self::assertAttributeEquals('jjwg_Address_Cache', 'module_dir', $jjwgAddressCache);
-        self::assertAttributeEquals('jjwg_Address_Cache', 'object_name', $jjwgAddressCache);
-        self::assertAttributeEquals('jjwg_address_cache', 'table_name', $jjwgAddressCache);
+        self::assertEquals('jjwg_Address_Cache', $jjwgAddressCache->module_dir);
+        self::assertEquals('jjwg_Address_Cache', $jjwgAddressCache->object_name);
+        self::assertEquals('jjwg_address_cache', $jjwgAddressCache->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $jjwgAddressCache);
-        self::assertAttributeEquals(true, 'importable', $jjwgAddressCache);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $jjwgAddressCache);
+        self::assertEquals(true, $jjwgAddressCache->new_schema);
+        self::assertEquals(true, $jjwgAddressCache->importable);
+        self::assertEquals(true, $jjwgAddressCache->disable_row_level_security);
     }
 
     public function testconfiguration(): void

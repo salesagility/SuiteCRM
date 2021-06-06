@@ -12,11 +12,11 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Relationship', $relationship);
         self::assertInstanceOf('SugarBean', $relationship);
 
-        self::assertAttributeEquals('Relationships', 'module_dir', $relationship);
-        self::assertAttributeEquals('Relationship', 'object_name', $relationship);
-        self::assertAttributeEquals('relationships', 'table_name', $relationship);
+        self::assertEquals('Relationships', $relationship->module_dir);
+        self::assertEquals('Relationship', $relationship->object_name);
+        self::assertEquals('relationships', $relationship->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $relationship);
+        self::assertEquals(true, $relationship->new_schema);
     }
 
     public function testis_self_referencing(): void

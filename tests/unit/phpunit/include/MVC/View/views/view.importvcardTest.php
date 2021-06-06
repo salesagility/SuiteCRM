@@ -10,7 +10,7 @@ class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewImportvcard();
         self::assertInstanceOf('ViewImportvcard', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('edit', 'type', $view);
+        self::assertEquals('edit', $view->type);
     }
 
     public function testdisplay(): void
