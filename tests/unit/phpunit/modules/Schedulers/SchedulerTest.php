@@ -17,7 +17,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Schedulers');
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $scheduler = BeanFactory::newBean('Schedulers');
@@ -33,13 +33,13 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'process_save_dates', $scheduler);
     }
 
-    public function testinitUser()
+    public function testinitUser(): void
     {
         $user = Scheduler::initUser();
         self::assertInstanceOf('User', $user);
     }
 
-    public function testfireQualified()
+    public function testfireQualified(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -56,14 +56,14 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function testcreateJob()
+    public function testcreateJob(): void
     {
         $result = BeanFactory::newBean('Schedulers')->createJob();
 
         self::assertInstanceOf('SchedulersJob', $result);
     }
 
-    public function testcheckPendingJobs()
+    public function testcheckPendingJobs(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -76,7 +76,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testderiveDBDateTimes()
+    public function testderiveDBDateTimes(): void
     {
         self::markTestIncomplete('Need to implement!');
 
@@ -101,7 +101,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertEquals(false, (bool)$result);
     }
 
-    public function testhandleIntervalType()
+    public function testhandleIntervalType(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -113,7 +113,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Sunday', $scheduler->handleIntervalType('4', '0', '2', '2'));
     }
 
-    public function testsetIntervalHumanReadable()
+    public function testsetIntervalHumanReadable(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -129,7 +129,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('On thehour; 03:00; 3rd; March; '. date("l", mktime(0, 0, 0, 3, 3, date("Y"))), $scheduler->intervalHumanReadable);
     }
 
-    public function testsetStandardArraysAttributes()
+    public function testsetStandardArraysAttributes(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -144,7 +144,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(array(' every ', '', ' thru ', ' and '), $scheduler->metricsVal);
     }
 
-    public function testparseInterval()
+    public function testparseInterval(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -163,7 +163,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $scheduler->intervalParsed);
     }
 
-    public function testcheckCurl()
+    public function testcheckCurl(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -176,7 +176,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplayCronInstructions()
+    public function testdisplayCronInstructions(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -191,7 +191,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThanOrEqual(0, strlen($renderedContent));
     }
 
-    public function testrebuildDefaultSchedulers()
+    public function testrebuildDefaultSchedulers(): void
     {
         self::markTestIncomplete('enviroment dependency');
 
@@ -206,7 +206,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         self::markTestIncomplete('environment dependency');
         $scheduler = BeanFactory::newBean('Schedulers');
@@ -222,7 +222,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         self::markTestIncomplete('environment dependency');
         $scheduler = BeanFactory::newBean('Schedulers');
@@ -236,7 +236,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $scheduler = BeanFactory::newBean('Schedulers');
 
@@ -251,7 +251,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         self::markTestIncomplete('environment dependency');
         $scheduler = BeanFactory::newBean('Schedulers');
@@ -279,7 +279,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         self::markTestIncomplete('environment dependency');
         $scheduler = BeanFactory::newBean('Schedulers');
@@ -292,7 +292,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $scheduler->get_summary_text());
     }
 
-    public function testgetJobsList()
+    public function testgetJobsList(): void
     {
         self::markTestIncomplete('environment dependency');
 

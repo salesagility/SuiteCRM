@@ -53,13 +53,13 @@ use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
  */
 class AbstractIndexerTest extends SearchTestAbstract
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $indexer = $this->getIndexerMock();
         self::assertInstanceOf(AbstractIndexer::class, $indexer);
     }
 
-    public function testGettersAndSetters()
+    public function testGettersAndSetters(): void
     {
         $differential = true;
         $doc = new SearchDefsDocumentifier();
@@ -99,7 +99,7 @@ class AbstractIndexerTest extends SearchTestAbstract
         }
     }
 
-    public function testAddModulesToIndex()
+    public function testAddModulesToIndex(): void
     {
         $indexer = $this->getIndexerMock();
         $indexer->addModulesToIndex('Foo');
@@ -121,7 +121,7 @@ class AbstractIndexerTest extends SearchTestAbstract
         }
     }
 
-    public function testGetDocumentifierName()
+    public function testGetDocumentifierName(): void
     {
         $indexer = $this->getIndexerMock();
         $doc1 = new JsonSerializerDocumentifier();
@@ -136,7 +136,7 @@ class AbstractIndexerTest extends SearchTestAbstract
         self::assertEquals($doc2Exp, $indexer->getDocumentifierName());
     }
 
-    public function testGetIndexerName()
+    public function testGetIndexerName(): void
     {
         $indexer = $this->getIndexerMock();
 
@@ -146,7 +146,7 @@ class AbstractIndexerTest extends SearchTestAbstract
         self::assertEquals($expected, $actual, "Indexer name does not match");
     }
 
-    public function testLogger()
+    public function testLogger(): void
     {
         $indexer = $this->getIndexerMock();
 

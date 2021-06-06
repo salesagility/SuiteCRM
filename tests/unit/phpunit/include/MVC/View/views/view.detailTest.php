@@ -17,7 +17,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testViewDetail()
+    public function testViewDetail(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewDetail();
@@ -26,7 +26,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('detail', 'type', $view);
     }
 
-    public function testpreDisplay()
+    public function testpreDisplay(): void
     {
         //execute the method with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
@@ -47,7 +47,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         self::asserttrue(is_array($view->dv->defs));
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewDetail();

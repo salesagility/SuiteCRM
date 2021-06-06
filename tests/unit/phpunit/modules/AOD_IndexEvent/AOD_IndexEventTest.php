@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOD_IndexEventTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOD_IndexEvent()
+    public function testAOD_IndexEvent(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $aod_indexEvent = BeanFactory::newBean('AOD_IndexEvent');

@@ -13,7 +13,7 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testCampaignLog()
+    public function testCampaignLog(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $campaignLog = BeanFactory::newBean('CampaignLog');
@@ -26,7 +26,7 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $campaignLog);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         //execute the method and verify it returns an array
         $actual = BeanFactory::newBean('CampaignLog')->get_list_view_data();
@@ -34,7 +34,7 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame(array(), $actual);
     }
 
-    public function testretrieve_email_address()
+    public function testretrieve_email_address(): void
     {
         $actual = BeanFactory::newBean('CampaignLog')->retrieve_email_address();
         self::assertGreaterThanOrEqual('', $actual);

@@ -13,7 +13,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testEmployee()
+    public function testEmployee(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $employee = BeanFactory::newBean('Employees');
@@ -27,7 +27,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $employee);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $employee = BeanFactory::newBean('Employees');
 
@@ -39,7 +39,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Administrator', $employee->get_summary_text());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $employee = BeanFactory::newBean('Employees');
 
@@ -52,7 +52,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $employee = BeanFactory::newBean('Employees');
 
@@ -67,7 +67,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("", $employee->reports_to_name);
     }
 
-    public function testretrieve_employee_id()
+    public function testretrieve_employee_id(): void
     {
         $employee = BeanFactory::newBean('Employees');
         //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
@@ -75,13 +75,13 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
 
-    public function testverify_data()
+    public function testverify_data(): void
     {
         $employee = BeanFactory::newBean('Employees');
         self::assertEquals(true, $employee->verify_data());
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $employee = BeanFactory::newBean('Employees');
 
@@ -110,7 +110,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlist_view_parse_additional_sections(): void
     {
         $employee = BeanFactory::newBean('Employees');
 
@@ -124,7 +124,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $employee = BeanFactory::newBean('Employees');
 
@@ -139,7 +139,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testpreprocess_fields_on_save()
+    public function testpreprocess_fields_on_save(): void
     {
         $employee = BeanFactory::newBean('Employees');
 
@@ -155,7 +155,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_new_list_query()
+    public function testcreate_new_list_query(): void
     {
         /*
     	$employee = BeanFactory::newBean('Employees');
@@ -174,13 +174,13 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete();
     }
 
-    public function testhasCustomFields()
+    public function testhasCustomFields(): void
     {
         $result = BeanFactory::newBean('Employees')->hasCustomFields();
         self::assertEquals(false, $result);
     }
 
-    public function testError()
+    public function testError(): void
     {
         global $app_strings;
 

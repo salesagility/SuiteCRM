@@ -42,7 +42,7 @@ use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 class ElasticSearchClientBuilderTest extends SearchTestAbstract
 {
-    public function testGetClient()
+    public function testGetClient(): void
     {
         $client = ElasticSearchClientBuilder::getClient();
 
@@ -81,7 +81,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         self::assertEquals($expected, $config);
     }
 
-    public function testLoadSugarConfig()
+    public function testLoadSugarConfig(): void
     {
         global $sugar_config;
 
@@ -101,7 +101,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         self::assertEquals($expected, $actual);
     }
 
-    public function testLoadSugarConfig2()
+    public function testLoadSugarConfig2(): void
     {
         global $sugar_config;
 
@@ -123,7 +123,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
 
     }
 
-    public function testLoadSugarConfig3()
+    public function testLoadSugarConfig3(): void
     {
         global $sugar_config;
 
@@ -154,7 +154,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         return $this->invokeMethod($builder, 'sanitizeHost', [$host]);
     }
 
-    public function testUrlParser1()
+    public function testUrlParser1(): void
     {
         $data = [
             'host' => 'www.example.com'
@@ -169,7 +169,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         self::assertEquals($expected, $actual);
     }
 
-    public function testUrlParser2()
+    public function testUrlParser2(): void
     {
         $data = [
             'host' => 'https://www.example.com',
@@ -187,7 +187,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         self::assertEquals($expected, $actual);
     }
 
-    public function testUrlParser3()
+    public function testUrlParser3(): void
     {
         $data = [
             'host' => 'https://www.example.com:42',
@@ -208,7 +208,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         self::assertEquals($expected, $actual);
     }
 
-    public function testUrlParser4()
+    public function testUrlParser4(): void
     {
         $data = [
             'host' => 'bar:pass@mydomain.server.com:9201',
@@ -227,7 +227,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         self::assertEquals($expected, $actual);
     }
 
-    public function testUrlParser5()
+    public function testUrlParser5(): void
     {
         $data = [
             'user' => 'foo',
@@ -242,7 +242,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         self::fail('Exception not thrown!');
     }
 
-    public function testUrlParser6()
+    public function testUrlParser6(): void
     {
         $data = [
             'host' => 0.5,
@@ -256,7 +256,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         }
     }
 
-    public function testUrlParserBadUrls()
+    public function testUrlParserBadUrls(): void
     {
         $url1 = ['host' => 'http:///example.com'];
         $url2 = ['host' => 'http://:80'];

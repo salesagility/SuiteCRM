@@ -41,7 +41,7 @@ use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 class SearchInstallTest extends SearchTestAbstract
 {
-    public function testConfiguredSuccessfully()
+    public function testConfiguredSuccessfully(): void
     {
         global $sugar_config;
 

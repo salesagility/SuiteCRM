@@ -13,7 +13,7 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOS_Invoices()
+    public function testAOS_Invoices(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosInvoices = BeanFactory::newBean('AOS_Invoices');
@@ -29,7 +29,7 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $aosInvoices);
     }
 
-    public function testSaveAndMark_deleted()
+    public function testSaveAndMark_deleted(): void
     {
         $aosInvoices = BeanFactory::newBean('AOS_Invoices');
         $aosInvoices->name = 'test';

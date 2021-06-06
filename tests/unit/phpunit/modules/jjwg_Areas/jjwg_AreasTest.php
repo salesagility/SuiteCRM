@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testjjwg_Areas()
+    public function testjjwg_Areas(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
@@ -27,7 +27,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(null, 'centroid', $jjwgAreas);
     }
 
-    public function testconfiguration()
+    public function testconfiguration(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
         $jjwgAreas->configuration();
@@ -37,7 +37,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, count($jjwgAreas->settings));
     }
 
-    public function testretrieve()
+    public function testretrieve(): void
     {
         self::markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
@@ -65,7 +65,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected_centroid, $jjwgAreas->centroid);
     }
 
-    public function testdefine_polygon()
+    public function testdefine_polygon(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -84,7 +84,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($actual, $expected);
     }
 
-    public function testdefine_area_loc()
+    public function testdefine_area_loc(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -103,7 +103,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $result);
     }
 
-    public function testdefine_centroid()
+    public function testdefine_centroid(): void
     {
         self::markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
@@ -120,7 +120,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $result);
     }
 
-    public function testdefine_area()
+    public function testdefine_area(): void
     {
         self::markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
@@ -136,7 +136,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(20, $result);
     }
 
-    public function testdefine_loc()
+    public function testdefine_loc(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -152,7 +152,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($marker, $result);
     }
 
-    public function testis_valid_lng()
+    public function testis_valid_lng(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -166,7 +166,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $jjwgAreas->is_valid_lng(-180));
     }
 
-    public function testis_valid_lat()
+    public function testis_valid_lat(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -180,7 +180,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $jjwgAreas->is_valid_lat(-90));
     }
 
-    public function testis_marker_in_area()
+    public function testis_marker_in_area(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -194,7 +194,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $jjwgAreas->is_marker_in_area($marker));
     }
 
-    public function testis_point_in_area()
+    public function testis_point_in_area(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -207,7 +207,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $jjwgAreas->is_point_in_area(100, 40));
     }
 
-    public function testpoint_in_polygon()
+    public function testpoint_in_polygon(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -219,7 +219,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $jjwgAreas->point_in_polygon('100,40,0.0'));
     }
 
-    public function testpoint_on_vertex()
+    public function testpoint_on_vertex(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 
@@ -228,7 +228,7 @@ class jjwg_AreasTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $jjwgAreas->point_on_vertex('100,40,10', $vertices));
     }
 
-    public function testpoint_string_to_coordinates()
+    public function testpoint_string_to_coordinates(): void
     {
         $jjwgAreas = BeanFactory::newBean('jjwg_Areas');
 

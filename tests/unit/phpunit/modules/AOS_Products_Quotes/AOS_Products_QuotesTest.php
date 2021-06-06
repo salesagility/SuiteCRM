@@ -13,7 +13,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
 
@@ -33,7 +33,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testsave_lines()
+    public function testsave_lines(): void
     {
         DBManagerFactory::getInstance()->query('DELETE FROM aos_products_quotes');
 
@@ -57,7 +57,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(count($post_data['name']), $product_quote_lines);
     }
 
-    public function testAOS_Products_Quotes()
+    public function testAOS_Products_Quotes(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
@@ -73,7 +73,7 @@ class AOS_Products_QuotesTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $aosProductsQuotes);
     }
 
-    public function testmark_lines_deleted()
+    public function testmark_lines_deleted(): void
     {
         $aosProductsQuotes = BeanFactory::newBean('AOS_Products_Quotes');
 

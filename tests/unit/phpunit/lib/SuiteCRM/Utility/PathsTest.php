@@ -31,21 +31,21 @@ class PathsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testGetProjectPath()
+    public function testGetProjectPath(): void
     {
         $expected =  self::$projectPath;
         $actual = self::$paths->getProjectPath();
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetLibraryPath()
+    public function testGetLibraryPath(): void
     {
         $expected =  self::$projectPath.'/lib';
         $actual = self::$paths->getLibraryPath();
         self::assertEquals($expected, $actual);
     }
 
-    public function testGetContainersPath()
+    public function testGetContainersPath(): void
     {
         $expected =  self::$projectPath.'/lib/API/core/containers.php';
         $actual = self::$paths->getContainersFilePath();

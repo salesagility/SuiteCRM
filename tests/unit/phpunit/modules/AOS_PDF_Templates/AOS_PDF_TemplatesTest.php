@@ -13,7 +13,7 @@ class AOS_PDF_TemplatesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOS_PDF_Templates()
+    public function testAOS_PDF_Templates(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosPdfTemplates = BeanFactory::newBean('AOS_PDF_Templates');

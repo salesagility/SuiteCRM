@@ -13,7 +13,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testMergeRecord()
+    public function testMergeRecord(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $mergeRecord = BeanFactory::newBean('MergeRecords');
@@ -28,7 +28,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'acl_display_only', $mergeRecord);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $mergeRecord = BeanFactory::newBean('MergeRecords');
         //$mergeRecord->save();
@@ -36,7 +36,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testretrieve()
+    public function testretrieve(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -54,7 +54,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(1, $mergeRecord->merge_bean->id);
     }
 
-    public function testload_merge_bean()
+    public function testload_merge_bean(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -78,7 +78,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('User', $mergeRecord->merge_bean);
     }
 
-    public function testload_merge_bean2()
+    public function testload_merge_bean2(): void
     {
         $mergeRecord = BeanFactory::newBean('MergeRecords');
 
@@ -99,7 +99,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('User', $mergeRecord->merge_bean2);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -117,7 +117,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -134,7 +134,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -150,7 +150,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $mergeRecord->get_summary_text());
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -164,7 +164,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -184,7 +184,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $mergeRecord = BeanFactory::newBean('MergeRecords');
 
@@ -193,7 +193,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $mergeRecord->bean_implements('ACL')); //test with valid value
     }
 
-    public function testACLAccess()
+    public function testACLAccess(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -212,7 +212,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $mergeRecord->ACLAccess('delete'));
     }
 
-    public function testpopulate_search_params()
+    public function testpopulate_search_params(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -231,7 +231,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $mergeRecord->field_search_params);
     }
 
-    public function testget_inputs_for_search_params()
+    public function testget_inputs_for_search_params(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -247,7 +247,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $result);
     }
 
-    public function testemail_addresses_query()
+    public function testemail_addresses_query(): void
     {
         $table = 'accounts';
         $module = 'Accounts';
@@ -263,7 +263,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $result);
     }
 
-    public function testrelease_name_query()
+    public function testrelease_name_query(): void
     {
         $mergeRecord = BeanFactory::newBean('MergeRecords');
 
@@ -276,7 +276,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('', $result);
     }
 
-    public function testcreate_where_statement()
+    public function testcreate_where_statement(): void
     {
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
@@ -303,7 +303,7 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgenerate_where_statement()
+    public function testgenerate_where_statement(): void
     {
         $mergeRecord = BeanFactory::newBean('MergeRecords');
 

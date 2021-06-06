@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOP_Case_EventsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOP_Case_Events()
+    public function testAOP_Case_Events(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $aopCaseEvents = BeanFactory::newBean('AOP_Case_Events');

@@ -51,7 +51,7 @@ class CliLoggerHandlerTest extends SuitePHPUnitFrameworkTestCase
     /** @var Logger */
     private $logger;
 
-    public function testLogging()
+    public function testLogging(): void
     {
         $this->logger->debug("\n");
         $this->logger->debug('DEBUG');

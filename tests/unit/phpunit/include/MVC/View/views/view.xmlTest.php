@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testViewXML()
+    public function testViewXML(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewXML();
@@ -13,7 +13,7 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('detail', 'type', $view);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         //execute the method and check for rexcetions. it should return some html.
         $view = new ViewXML();

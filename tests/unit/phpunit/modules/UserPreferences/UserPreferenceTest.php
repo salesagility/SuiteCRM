@@ -13,7 +13,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testgetUserDateTimePreferences()
+    public function testgetUserDateTimePreferences(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->retrieve('1');
@@ -22,7 +22,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testSetAndGetPreference()
+    public function testSetAndGetPreference(): void
     {
         self::markTestIncomplete('state is incorrect');
 
@@ -54,7 +54,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($sugar_config['chartEngine'], $result);
     }
 
-    public function testgetDefaultPreference()
+    public function testgetDefaultPreference(): void
     {
         global $sugar_config;
         $userPreference = BeanFactory::newBean('UserPreferences');
@@ -81,7 +81,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($email_link_type, $result);
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         // execute the constructor and check for the Object type and  attributes
         $userPreference = BeanFactory::newBean('UserPreferences');
@@ -97,7 +97,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
     }
 
-    public function testSavePreferencesToDBAndResetPreferences()
+    public function testSavePreferencesToDBAndResetPreferences(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -127,7 +127,7 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testupdateAllUserPrefs()
+    public function testupdateAllUserPrefs(): void
     {
         global $current_user;
 

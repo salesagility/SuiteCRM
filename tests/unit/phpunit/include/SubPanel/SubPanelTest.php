@@ -55,7 +55,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testFaultySubpanelDef()
+    public function testFaultySubpanelDef(): void
     {
         $bean = BeanFactory::newBean('Contacts');
         $counter = new SubPanelRowCounter($bean);
@@ -66,7 +66,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(-1, $count);
     }
 
-    public function testSelectQueryToCountQuery()
+    public function testSelectQueryToCountQuery(): void
     {
         $bean = BeanFactory::newBean('Contacts');
         $counter = new SubPanelRowCounter($bean);
@@ -90,7 +90,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expectedAs, $countAs);
     }
 
-    public function testMakeFunctionCountQuery()
+    public function testMakeFunctionCountQuery(): void
     {
         $bean = BeanFactory::newBean('Accounts');
         $counter = new SubPanelRowCounter($bean);
@@ -103,7 +103,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains($expectedQueryStart, $existantQuery);
     }
 
-    public function testMakeSubPanelRowCountQuery()
+    public function testMakeSubPanelRowCountQuery(): void
     {
         $bean = BeanFactory::newBean('Contacts');
         $counter = new SubPanelRowCounter($bean);

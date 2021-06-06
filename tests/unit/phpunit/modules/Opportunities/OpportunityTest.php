@@ -13,7 +13,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testOpportunity()
+    public function testOpportunity(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $opportunity = BeanFactory::newBean('Opportunities');
@@ -31,7 +31,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $opportunity);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -43,7 +43,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $opportunity->get_summary_text());
     }
 
-    public function testcreate_list_query()
+    public function testcreate_list_query(): void
     {
         self::markTestIncomplete('Breaks on php 7.1');
         $opportunity = BeanFactory::newBean('Opportunities');
@@ -59,7 +59,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         self::markTestIncomplete('Breaks on php 7.1');
         $opportunity = BeanFactory::newBean('Opportunities');
@@ -75,7 +75,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -94,7 +94,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -107,13 +107,13 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_contacts()
+    public function testget_contacts(): void
     {
         $result = BeanFactory::newBean('Opportunities')->get_contacts();
         self::assertIsArray($result);
     }
 
-    public function testupdate_currency_id()
+    public function testupdate_currency_id(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -126,7 +126,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -147,7 +147,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
     }
 
-    public function testget_currency_symbol()
+    public function testget_currency_symbol(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -159,7 +159,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $opportunity->get_currency_symbol());
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -169,7 +169,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -191,7 +191,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testsave_relationship_changes()
+    public function testsave_relationship_changes(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
         $opportunity->account_id = 1;
@@ -204,7 +204,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testset_opportunity_contact_relationship()
+    public function testset_opportunity_contact_relationship(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -216,7 +216,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -237,7 +237,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($opportunity->description, $result->_tpl_vars['OPPORTUNITY_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -246,7 +246,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $opportunity->bean_implements('ACL')); //test with valid value
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         $opportunity = BeanFactory::newBean('Opportunities');
 
@@ -255,13 +255,13 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_account_detail()
+    public function testget_account_detail(): void
     {
         $result = BeanFactory::newBean('Opportunities')->get_account_detail('1');
         self::assertIsArray($result);
     }
 
-    public function testgetCurrencyType()
+    public function testgetCurrencyType(): void
     {
         // Execute the method and test that it works and doesn't throw an exception.
         try {

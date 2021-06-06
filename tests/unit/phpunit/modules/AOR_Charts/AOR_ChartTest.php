@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Chart()
+    public function testAOR_Chart(): void
     {
         self::markTestSkipped('Skipping AOR Charts Tests');
         // Execute the constructor and check for the Object type and  attributes
@@ -22,7 +22,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $aorChart);
     }
 
-    public function testsave_lines()
+    public function testsave_lines(): void
     {
         self::markTestSkipped('Skipping AOR Charts Tests');
 
@@ -49,7 +49,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbuildChartImageBar()
+    public function testbuildChartImageBar(): void
     {
         self::markTestSkipped('Skipping AOR Charts Tests');
 
@@ -73,7 +73,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         unset($chartPicture);
     }
 
-    public function testbuildChartImagePie()
+    public function testbuildChartImagePie(): void
     {
         self::markTestSkipped('Skipping AOR Charts Tests');
 
@@ -97,7 +97,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         unset($chartPicture);
     }
 
-    public function testbuildChartImageLine()
+    public function testbuildChartImageLine(): void
     {
         self::markTestSkipped('Skipping AOR Charts Tests');
 
@@ -121,7 +121,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         unset($chartPicture);
     }
 
-    public function testbuildChartImageRadar()
+    public function testbuildChartImageRadar(): void
     {
         self::markTestSkipped('Skipping AOR Charts Tests');
 
@@ -157,7 +157,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         unset($chartPicture);
     }
 
-    public function testbuildChartImage()
+    public function testbuildChartImage(): void
     {
         self::markTestSkipped('Skipping testing chart image');
 
@@ -199,7 +199,7 @@ class AOR_ChartTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('data:image/png;base64,', $result);
     }
 
-    public function testbuildChartHTML()
+    public function testbuildChartHTML(): void
     {
         self::markTestSkipped('Skipping testing chart HTML');
         $aorChart = BeanFactory::newBean('AOR_Charts');

@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewNoaccessTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testdisplay()
+    public function testdisplay(): void
     {
         //execute the method and check for default attributes and check that it returns some html.
         $view = new ViewNoaccess();

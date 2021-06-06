@@ -13,7 +13,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testinit()
+    public function testinit(): void
     {
         //error_reporting(E_ERROR | E_WARNING | E_PARSE);
         $SugarView = new SugarView();
@@ -28,7 +28,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testprocess()
+    public function testprocess(): void
     {
         // test
         $SugarView = new SugarView();
@@ -51,7 +51,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplayErrors()
+    public function testdisplayErrors(): void
     {
         $SugarView = new SugarView();
 
@@ -66,7 +66,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testpreDisplay()
+    public function testpreDisplay(): void
     {
         $SugarView = new SugarView();
 
@@ -80,7 +80,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         $SugarView = new SugarView();
 
@@ -94,7 +94,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testdisplayHeader()
+    public function testdisplayHeader(): void
     {
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
@@ -116,7 +116,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetModuleMenuHTML()
+    public function testgetModuleMenuHTML(): void
     {
         $SugarView = new SugarView();
 
@@ -130,7 +130,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testincludeClassicFile()
+    public function testincludeClassicFile(): void
     {
         $SugarView = new SugarView();
 
@@ -145,14 +145,14 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testgetJavascriptValidation()
+    public function testgetJavascriptValidation(): void
     {
         //check if it returns any text i-e JS code
         $js = SugarView::getJavascriptValidation();
         self::assertGreaterThan(0, strlen($js));
     }
 
-    public function testdisplayFooter()
+    public function testdisplayFooter(): void
     {
         $SugarView = new SugarView();
 
@@ -172,7 +172,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testrenderJavascript()
+    public function testrenderJavascript(): void
     {
         $SugarView = new SugarView();
 
@@ -192,7 +192,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetMenu()
+    public function testgetMenu(): void
     {
         ////error_reporting(E_ALL);
 
@@ -214,7 +214,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($menu);
     }
 
-    public function testgetModuleTitle()
+    public function testgetModuleTitle(): void
     {
         $SugarView = new SugarView();
 
@@ -231,7 +231,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($moduleTitle));
     }
 
-    public function testgetMetaDataFile()
+    public function testgetMetaDataFile(): void
     {
         $SugarView = new SugarView();
 
@@ -247,21 +247,21 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($metaDataFile));
     }
 
-    public function testgetBrowserTitle()
+    public function testgetBrowserTitle(): void
     {
         //execute the method. it should return a title string.
         $browserTitle = (new SugarView())->getBrowserTitle();
         self::assertGreaterThan(0, strlen($browserTitle));
     }
 
-    public function testgetBreadCrumbSymbol()
+    public function testgetBreadCrumbSymbol(): void
     {
         //execute the method. it should return a string.
         $breadCrumbSymbol = (new SugarView())->getBreadCrumbSymbol();
         self::assertGreaterThan(0, strlen($breadCrumbSymbol));
     }
 
-    public function testcheckPostMaxSizeError()
+    public function testcheckPostMaxSizeError(): void
     {
         //execute the method. it should return False because Request parameters are not available.
         $postMaxSizeError = (new SugarView())->checkPostMaxSizeError();

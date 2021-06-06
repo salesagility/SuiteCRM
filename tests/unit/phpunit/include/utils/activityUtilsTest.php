@@ -15,7 +15,7 @@ class activity_utilsTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
     }
 
-    public function testbuild_related_list_by_user_id()
+    public function testbuild_related_list_by_user_id(): void
     {
         //execute the method and test if it returns true
 

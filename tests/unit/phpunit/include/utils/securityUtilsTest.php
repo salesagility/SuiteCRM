@@ -14,7 +14,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testquery_module_access_list()
+    public function testquery_module_access_list(): void
     {
         self::markTestIncomplete('Test fails only in travis and php 7, Test has environment specific issue.');
 
@@ -64,7 +64,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testquery_user_has_roles()
+    public function testquery_user_has_roles(): void
     {
         // execute the method and test it returns 1 role
         // if the test suite run runs RolesTest first.
@@ -76,7 +76,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_user_allowed_modules()
+    public function testget_user_allowed_modules(): void
     {
         //execute the method and test it it returns expected contents
 
@@ -85,7 +85,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_user_disallowed_modules()
+    public function testget_user_disallowed_modules(): void
     {
         self::markTestIncomplete('Test fails only in travis and php7, Test has environment specific issue.');
 
@@ -106,7 +106,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testquery_client_ip()
+    public function testquery_client_ip(): void
     {
         //test without setting any server parameters
         self::assertNull(query_client_ip());
@@ -122,7 +122,7 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('1.1.1.1', query_client_ip());
     }
 
-    public function testget_val_array()
+    public function testget_val_array(): void
     {
         //execute the method and test it it returns expected contents
         $tempArray = array('key1' => 'val1', 'key2' => 'val2', 'key3' => 'val3');

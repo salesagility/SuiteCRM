@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../../../../include/GoogleSync/GoogleSync.php';
  */
 class GoogleSyncMock extends GoogleSync
 {
-    public function setProperty($key, $value)
+    public function setProperty($key, $value): void
     {
         $this->$key = $value;
     }

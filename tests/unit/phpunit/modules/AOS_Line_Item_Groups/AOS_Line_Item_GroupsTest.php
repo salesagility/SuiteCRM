@@ -13,7 +13,7 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOS_Line_Item_Groups()
+    public function testAOS_Line_Item_Groups(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosLineItemGroup = BeanFactory::newBean('AOS_Line_Item_Groups');
@@ -30,7 +30,7 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'tracker_visibility', $aosLineItemGroup);
     }
 
-    public function testsave_groups()
+    public function testsave_groups(): void
     {
         $aosLineItemGroup = BeanFactory::newBean('AOS_Line_Item_Groups');
 
@@ -56,7 +56,7 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $aosLineItemGroup = BeanFactory::newBean('AOS_Line_Item_Groups');
         $aosLineItemGroup->name = 'test';

@@ -13,7 +13,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testOAuthKey()
+    public function testOAuthKey(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $oauthKey = BeanFactory::newBean('OAuthKeys');
@@ -29,7 +29,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $oauthKey);
     }
 
-    public function testMain()
+    public function testMain(): void
     {
         // test
         $oauthKey = BeanFactory::newBean('OAuthKeys');
@@ -51,7 +51,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         $this->mark_deleted($oauthKey->id);
     }
 
-    public function getByKey($key)
+    public function getByKey($key): void
     {
         $oauthKey = BeanFactory::newBean('OAuthKeys');
 
@@ -64,7 +64,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('OAuthKey', $result);
     }
 
-    public function fetchKey($key)
+    public function fetchKey($key): void
     {
         //test with a invalid id
         $result = OAuthKey::fetchKey('');
@@ -75,7 +75,7 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('OAuthKey', $result);
     }
 
-    public function mark_deleted($id)
+    public function mark_deleted($id): void
     {
         $oauthKey = BeanFactory::newBean('OAuthKeys');
 
