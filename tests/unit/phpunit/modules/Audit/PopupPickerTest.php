@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/Audit/Popup_picker.php';
 

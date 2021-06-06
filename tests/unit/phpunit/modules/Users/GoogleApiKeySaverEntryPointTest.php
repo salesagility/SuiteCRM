@@ -47,7 +47,7 @@ include_once __DIR__ . '/GoogleApiKeySaverEntryPointMock.php';
  */
 
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
 {

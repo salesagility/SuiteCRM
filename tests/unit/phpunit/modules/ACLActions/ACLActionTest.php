@@ -1,6 +1,6 @@
 <?php /** @noinspection ALL */
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ACLActionTest extends SuitePHPUnitFrameworkTestCase
 {

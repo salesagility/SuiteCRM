@@ -1,7 +1,7 @@
 <?php
 
-use SuiteCRM\Test\TestLogger;
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\TestLogger;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {

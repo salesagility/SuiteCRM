@@ -39,7 +39,7 @@
 
 use Monolog\Logger;
 use SuiteCRM\Log\CliLoggerHandler;
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * Class CliLoggerHandlerTest test for CliLoggerHandler.

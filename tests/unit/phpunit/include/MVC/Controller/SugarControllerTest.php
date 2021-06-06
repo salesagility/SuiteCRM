@@ -1,7 +1,7 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
-use SuiteCRM\Test\TestLogger;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\TestLogger;
 
 class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 {

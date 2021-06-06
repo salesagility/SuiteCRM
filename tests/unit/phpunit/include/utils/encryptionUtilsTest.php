@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/encryption_utils.php';
 class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
