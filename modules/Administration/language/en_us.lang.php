@@ -860,10 +860,6 @@ $mod_strings = array(
     'LBL_AOP_ADD_STATUS' => 'Add',
     'LBL_AOP_REMOVE_STATUS' => 'Remove',
 
-    'LBL_AOD_ADMIN_MANAGE_AOD' => 'Advanced OpenDiscovery Settings',
-    'LBL_AOD_ENABLE' => 'Enable AOD',
-    'LBL_AOD_SETTINGS' => 'AOD Settings',
-
     'LBL_AOS_ADMIN_CONTRACT_SETTINGS' => 'Contract Settings',
     'LBL_AOS_ADMIN_CONTRACT_RENEWAL_REMINDER' => 'Renewal Reminder period',
     'LBL_AOS_ADMIN_MANAGE_AOS' => 'Advanced OpenSales Settings',
@@ -961,6 +957,7 @@ $mod_strings = array(
     'LBL_SEARCH_ENGINE' => 'Search Engine',
     'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search.',
     'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
+    'LBL_SEARCH_GENERAL' => 'General',
 
     'LBL_SEARCH_MODULES' => 'Search Modules',
     'LBL_SEARCH_MODULES_HELP' => 'Select the module(s) that users will be able to search against using the Global Search.',
