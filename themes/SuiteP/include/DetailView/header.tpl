@@ -70,7 +70,7 @@
                     {{$field}}
                     {{/foreach}}
                     {{/if}}
-                    {if !$config.enable_action_menu}
+                    {if !$config.enable_action_menu or !$useTabs}
                         {{include file="themes/SuiteP/include/DetailView/actions_buttons.tpl"}}
                     {/if}
                 </form>
