@@ -74,17 +74,6 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-
-    public function test_get_total_estimated_effort(): void
-    {
-//        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
-    }
-
-    public function test_get_total_actual_effort(): void
-    {
-//        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
-    }
-
     public function testget_summary_text(): void
     {
         $project = BeanFactory::newBean('Project');
@@ -144,11 +133,6 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $project->bean_implements('')); //test with blank value
         self::assertEquals(false, $project->bean_implements('test')); //test with invalid value
         self::assertEquals(true, $project->bean_implements('ACL')); //test with valid value
-    }
-
-    public function testcreate_export_query(): void
-    {
-//        $this->markTestIncomplete('Refactor exporter: productes SQL that has different field ordering in SELECT');
     }
 
     public function testgetAllProjectTasks(): void

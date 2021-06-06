@@ -46,37 +46,6 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($result));
     }
 
-//    public function testMain()
-//    {
-//        $savedSearch = BeanFactory::newBean('SavedSearch');
-//
-//        $savedSearch->name = 'test';
-//        $savedSearch->search_module = 'Leads';
-//        $savedSearch->save();
-//
-//        //test for record ID to verify that record is saved
-//        $this->assertTrue(isset($savedSearch->id));
-//        $this->assertEquals(36, strlen($savedSearch->id));
-//
-//
-//        // Where is the unit test?
-//        // Where is the main method?
-//        // Why is this combined?
-//        // TODO: TASK: UNDEFINED - build the tests for the following methods.
-//        $this->markTestIncomplete('');
-    ////        //test handleSave method
-    ////        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
-    ////
-    ////        //test returnSavedSearch method
-    ////        $this->returnSavedSearch($savedSearch->id);
-    ////
-    ////        //test returnSavedSearchContents method
-    ////        $this->returnSavedSearchContents($savedSearch->id);
-    ////
-    ////        //test handleDelete method
-    ////        $this->handleDelete($savedSearch->id);
-//    }
-
     public function handleSaveAndRetrieveSavedSearch($id): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
