@@ -95,17 +95,36 @@ class SubpanelQuickCreate
         if (!empty($_REQUEST['record'])) {
             $bean->retrieve($_REQUEST['record']);
         }
-        $this->ev->setup($module, $bean, $source);
+        // Use special form for create record in subpanel or popup
+        if (($_REQUEST['tpl'] == 'QuickCreate.tpl'&& $_REQUEST['action'] = 'SubpanelCreates') || $_REQUEST['action'] = 'Popup') {
+            $this->ev->setup($module, $bean, $source, 'include/EditView/QuickCreate.tpl'); 
+        } else {
+            $this->ev->setup($module, $bean, $source);
+        }
         unset($bean);
 
 
         // Bug 49219 - Check empty before set defaults, or the settings from viewdefs above will be overridden.
         if (!isset($this->ev->defs['templateMeta']['form']['headerTpl'])) {
-            $this->ev->defs['templateMeta']['form']['headerTpl'] = 'include/EditView/header.tpl';
+            // Use special header form with fixed buttons without tabs for create record in subpanel or popup 
+            if (($_REQUEST['tpl'] == 'QuickCreate.tpl'&& $_REQUEST['action'] = 'SubpanelCreates') || $_REQUEST['action'] = 'Popup')
+            {
+                $this->ev->defs['templateMeta']['form']['headerTpl'] = 'include/EditView/header_quickcreate.tpl';
+            }else
+            {
+                $this->ev->defs['templateMeta']['form']['headerTpl'] = 'include/EditView/header.tpl';
+            }
         }
 
         if (!isset($this->ev->defs['templateMeta']['form']['footerTpl'])) {
-            $this->ev->defs['templateMeta']['form']['footerTpl'] = 'include/EditView/footer.tpl';
+            if (($_REQUEST['tpl'] == 'QuickCreate.tpl'&& $_REQUEST['action'] = 'SubpanelCreates') || $_REQUEST['action'] = 'Popup')
+            // Use special footer form with fixed buttons without tabs for create record in subpanel or popup 
+            {
+                $this->ev->defs['templateMeta']['form']['footerTpl'] = 'include/EditView/footer_quickcreate.tpl';
+            } else
+            {
+                $this->ev->defs['templateMeta']['form']['footerTpl'] = 'include/EditView/footer.tpl';
+            }
         }
         // Comment below, breaks many out of the box viewdefs
         /*if (empty($this->ev->defs['templateMeta']['form']['buttons'])) $this->ev->defs['templateMeta']['form']['buttons'] = array('SUBPANELSAVE', 'SUBPANELCANCEL', 'SUBPANELFULLFORM');*/
