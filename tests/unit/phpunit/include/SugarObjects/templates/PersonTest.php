@@ -48,7 +48,7 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
      */
     protected $tester;
 
-    public function testSetLawfulBasis()
+    public function testSetLawfulBasis(): void
     {
         $person = BeanFactory::newBean('Contacts');
         $person->last_name = 'Smith';

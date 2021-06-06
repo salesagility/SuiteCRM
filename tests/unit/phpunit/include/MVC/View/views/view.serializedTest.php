@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testViewSerialized()
+    public function testViewSerialized(): void
     {
         // Execute the constructor and check for the Object type
         $view = new ViewSerialized();
@@ -13,7 +13,7 @@ class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
     }
 
     //Incomplete Test. method uses exit() so it cannot be tested.
-    public function testdisplay()
+    public function testdisplay(): void
     {
         /* //this method call uses exit() so it cannot be tested as it forces the PHP unit to quite as well
         $view = new ViewSerialized();

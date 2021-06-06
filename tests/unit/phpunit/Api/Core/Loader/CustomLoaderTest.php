@@ -49,7 +49,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
  */
 class CustomLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testArrayMerge()
+    public function testArrayMerge(): void
     {
         $result = CustomLoader::arrayMerge([
             ['first' => ['one.1', 'one.2', 'one.3'], 'second' => 'two', 'third' => 'three'],
@@ -63,7 +63,7 @@ class CustomLoaderTest extends SuitePHPUnitFrameworkTestCase
         ], $result);
     }
 
-    public function testMergeCustomArray()
+    public function testMergeCustomArray(): void
     {
         $result = CustomLoader::mergeCustomArray(['one', 'two', 'three'], 'testCustom.php');
         self::assertEquals(CustomLoader::ERR_FILE_NOT_FOUND, CustomLoader::getLastError());
@@ -85,7 +85,7 @@ class CustomLoaderTest extends SuitePHPUnitFrameworkTestCase
         CustomLoader::setCustomPath();
     }
 
-    public function testLoadCustomRoutes()
+    public function testLoadCustomRoutes(): void
     {
         $app = new App();
 

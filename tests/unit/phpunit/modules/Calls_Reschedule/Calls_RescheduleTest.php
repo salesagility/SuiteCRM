@@ -13,7 +13,7 @@ class Calls_RescheduleTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testCalls_Reschedule()
+    public function testCalls_Reschedule(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $callsReschedule = BeanFactory::newBean('Calls_Reschedule');

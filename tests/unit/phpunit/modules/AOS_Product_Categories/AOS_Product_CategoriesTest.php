@@ -13,7 +13,7 @@ class AOS_Product_CategoriesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOS_Product_Categories()
+    public function testAOS_Product_Categories(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosProductCategories = BeanFactory::newBean('AOS_Product_Categories');
@@ -29,7 +29,7 @@ class AOS_Product_CategoriesTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $aosProductCategories);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $aosProductCategories = BeanFactory::newBean('AOS_Product_Categories');
         $aosProductCategories->name = 'test';

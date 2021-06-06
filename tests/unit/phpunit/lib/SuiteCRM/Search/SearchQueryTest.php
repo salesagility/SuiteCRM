@@ -42,7 +42,7 @@ use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 class SearchQueryTest extends SearchTestAbstract
 {
-    public function testFromString()
+    public function testFromString(): void
     {
         $searchString = 'hello test';
         $size = 20;
@@ -60,7 +60,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals('bar', $query->getOption('foo'));
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $nonEmptyQuery = SearchQuery::fromString('foo');
         $emptyQuery = SearchQuery::fromString('');
@@ -69,7 +69,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertTrue($emptyQuery->isEmpty());
     }
 
-    public function testTrim()
+    public function testTrim(): void
     {
         $string = ' hello test world    ';
         $query = SearchQuery::fromString($string);
@@ -79,7 +79,7 @@ class SearchQueryTest extends SearchTestAbstract
     }
 
 
-    public function testToLowerCase()
+    public function testToLowerCase(): void
     {
         $string = ' HelLo tEsT WorLD    ';
         $expected = ' hello test world    ';
@@ -90,7 +90,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals($expected, $query->getSearchString());
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         $string = '-HELLO_WOR-LD-';
         $expString = 'HELLO_WORLD';
@@ -101,7 +101,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals($expString, $query->getSearchString());
     }
 
-    public function testStripSlashes()
+    public function testStripSlashes(): void
     {
         $string = "Is your name O\'reilly? :\\\\";
         $expected = "Is your name O'reilly? :\\";
@@ -112,7 +112,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals($expected, $query->getSearchString());
     }
 
-    public function testEscapeRegex()
+    public function testEscapeRegex(): void
     {
         $string = '$40 for a g3/400';
         $expected = '\$40 for a g3\/400';
@@ -123,7 +123,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals($expected, $query->getSearchString());
     }
 
-    public function testConvertEncoding()
+    public function testConvertEncoding(): void
     {
         $string = 'Foo &#xA9; bar &#x1D306; baz &#x2603; qux';
         $expected = 'Foo © bar 𝌆 baz ☃ qux';
@@ -134,7 +134,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals($expected, $query->getSearchString());
     }
 
-    public function testFromRequestArray()
+    public function testFromRequestArray(): void
     {
         $request = $this->getRequest();
 
@@ -143,7 +143,7 @@ class SearchQueryTest extends SearchTestAbstract
         $this->assertRequest($query);
     }
 
-    public function testFromRequestArray2()
+    public function testFromRequestArray2(): void
     {
         $request = [
             'query_string' => 'FOO',
@@ -160,7 +160,7 @@ class SearchQueryTest extends SearchTestAbstract
         self::assertEquals('bar', $query->getOption('foo'));
     }
 
-    public function testFromGetRequest()
+    public function testFromGetRequest(): void
     {
         $old = $_GET;
 
@@ -176,7 +176,7 @@ class SearchQueryTest extends SearchTestAbstract
     /**
      * @return array
      */
-    private function getRequest()
+    private function getRequest(): array
     {
         return [
             'search-query-string' => 'FOO',
@@ -190,7 +190,7 @@ class SearchQueryTest extends SearchTestAbstract
     /**
      * @param SearchQuery $query
      */
-    private function assertRequest(SearchQuery $query)
+    private function assertRequest(SearchQuery $query): void
     {
         self::assertEquals('FOO', $query->getSearchString());
         self::assertEquals(123, $query->getSize());

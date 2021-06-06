@@ -14,7 +14,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Leads');
     }
 
-    public function testLead()
+    public function testLead(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $lead = BeanFactory::getBean('Leads');
@@ -32,7 +32,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $lead);
     }
 
-    public function testget_account()
+    public function testget_account(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -47,7 +47,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testget_opportunity()
+    public function testget_opportunity(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -62,7 +62,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testget_contact()
+    public function testget_contact(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -77,7 +77,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testcreate_list_query()
+    public function testcreate_list_query(): void
     {
         self::markTestIncomplete('Breaks on php 7.1');
         $lead = BeanFactory::getBean('Leads');
@@ -97,7 +97,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_new_list_query()
+    public function testcreate_new_list_query(): void
     {
         /*
         $lead = BeanFactory::getBean('Leads');
@@ -116,7 +116,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true, "NEEDS FIXING!");
     }
 
-    public function testSaveAndConverted_lead()
+    public function testSaveAndConverted_lead(): void
     {
         self::markTestSkipped("converted_lead: Error in query, id's not properly escaped ");
 
@@ -152,7 +152,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $lead = BeanFactory::newBean('Leads');
 
@@ -164,7 +164,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("firstn lastn", $lead->name);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -176,7 +176,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("firstn lastn", $lead->name);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -206,7 +206,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
     }
 
-    public function testget_linked_fields()
+    public function testget_linked_fields(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -241,7 +241,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actualKeys);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         self::markTestSkipped('State dependecy');
 
@@ -259,7 +259,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -280,7 +280,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($lead->description, $result->_tpl_vars['LEAD_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -289,7 +289,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $lead->bean_implements('ACL')); //test with valid value
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -298,7 +298,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testconvertCustomFieldsForm()
+    public function testconvertCustomFieldsForm(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -312,7 +312,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertgreaterThanOrEqual("", $form); //no filed with source = custom_fields
     }
 
-    public function testget_unlinked_email_query()
+    public function testget_unlinked_email_query(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -327,7 +327,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_old_related_calls()
+    public function testget_old_related_calls(): void
     {
         $lead = BeanFactory::getBean('Leads');
 
@@ -352,7 +352,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_old_related_meetings()
+    public function testget_old_related_meetings(): void
     {
         $lead = BeanFactory::getBean('Leads');
 

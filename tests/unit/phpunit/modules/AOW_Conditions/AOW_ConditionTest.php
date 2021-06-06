@@ -13,7 +13,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOW_Condition()
+    public function testAOW_Condition(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowCondition = BeanFactory::newBean('AOW_Conditions');
@@ -30,7 +30,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'tracker_visibility', $aowCondition);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $aowCondition = BeanFactory::newBean('AOW_Conditions');
         self::assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
@@ -38,7 +38,7 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
     }
 
-    public function testsave_lines()
+    public function testsave_lines(): void
     {
         $aowCondition = BeanFactory::newBean('AOW_Conditions');
 

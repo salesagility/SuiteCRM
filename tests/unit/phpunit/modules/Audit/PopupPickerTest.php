@@ -6,7 +6,7 @@ require_once 'modules/Audit/Popup_picker.php';
 
 class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testProcessPage()
+    public function testProcessPage(): void
     {
         global $focus;
         $focus = BeanFactory::getBean('Contacts');

@@ -13,7 +13,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testSugarFeed()
+    public function testSugarFeed(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $sugarFeed = BeanFactory::newBean('SugarFeed');
@@ -30,7 +30,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'importable', $sugarFeed);
     }
 
-    public function testactivateAndDisableModuleFeed()
+    public function testactivateAndDisableModuleFeed(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -47,7 +47,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(0, $admin->settings['sugarfeed_module_Accounts']);
     }
 
-    public function testflushBackendCache()
+    public function testflushBackendCache(): void
     {
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -58,7 +58,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetModuleFeedFiles()
+    public function testgetModuleFeedFiles(): void
     {
         //test with invalid module
         $expected = array();
@@ -71,7 +71,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function testgetActiveFeedModules()
+    public function testgetActiveFeedModules(): void
     {
         $result = SugarFeed::getActiveFeedModules();
 
@@ -86,7 +86,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function testgetAllFeedModules()
+    public function testgetAllFeedModules(): void
     {
         $result = SugarFeed::getAllFeedModules();
         $expected = array(
@@ -100,7 +100,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function testpushFeed2()
+    public function testpushFeed2(): void
     {
         $lead = BeanFactory::newBean('Leads');
         $lead->id = 1;
@@ -120,7 +120,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         $sugarFeed->mark_deleted($sugarFeed->id);
     }
 
-    public function testpushFeed()
+    public function testpushFeed(): void
     {
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 
@@ -139,13 +139,13 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         $sugarFeed->mark_deleted($sugarFeed->id);
     }
 
-    public function fetchReplies()
+    public function fetchReplies(): void
     {
         $actual = BeanFactory::newBean('SugarFeed')->fetchReplies(array('ID' => '1'));
         self::assertGreaterThan(0, strlen($actual));
     }
 
-    public function testgetLinkTypes()
+    public function testgetLinkTypes(): void
     {
         $result = SugarFeed::getLinkTypes();
 
@@ -157,7 +157,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function testgetLinkClass()
+    public function testgetLinkClass(): void
     {
         //test with invalid LinkType
         $result = SugarFeed::getLinkClass('test');
@@ -176,20 +176,20 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('FeedLinkHandlerYoutube', $result);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $result = BeanFactory::newBean('SugarFeed')->get_list_view_data();
         self::assertIsArray($result);
     }
 
-    public function testgetTimeLapse()
+    public function testgetTimeLapse(): void
     {
         $result = SugarFeed::getTimeLapse('2016-01-15 11:16:02');
         self::assertTrue(isset($result));
         self::assertGreaterThanOrEqual(0, strlen($result));
     }
 
-    public function testparseMessage()
+    public function testparseMessage(): void
     {
         // test with a string with no links
         $html = 'some text with no urls';

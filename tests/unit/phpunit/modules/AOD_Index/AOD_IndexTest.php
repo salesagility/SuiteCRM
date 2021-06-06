@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOD_Index()
+    public function testAOD_Index(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $aod_index = BeanFactory::newBean('AOD_Index');
@@ -21,14 +21,14 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'tracker_visibility', $aod_index);
     }
 
-    public function testisEnabled()
+    public function testisEnabled(): void
     {
         // execute the method and verify that it returns true
         $result = BeanFactory::newBean('AOD_Index')->isEnabled();
         self::assertTrue($result);
     }
 
-    public function testfind()
+    public function testfind(): void
     {
         self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
         $aod_index = BeanFactory::newBean('AOD_Index');
@@ -41,7 +41,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($hits);
     }
 
-    public function testoptimise()
+    public function testoptimise(): void
     {
         self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
 
@@ -56,7 +56,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan($last_optimized, $aod_index->last_optimised);
     }
 
-    public function testgetIndex()
+    public function testgetIndex(): void
     {
         $aod_index = BeanFactory::newBean('AOD_Index');
         $result = $aod_index->getIndex();
@@ -66,7 +66,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotSame($aod_index, $result);
     }
 
-    public function testgetDocumentForBean()
+    public function testgetDocumentForBean(): void
     {
         $user = new User(1);
 
@@ -79,7 +79,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Zend_Search_Lucene_Document', $result['document']);
     }
 
-    public function testcommit()
+    public function testcommit(): void
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
 
@@ -96,7 +96,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testisModuleSearchable()
+    public function testisModuleSearchable(): void
     {
         //test with an invalid module
         self::assertFalse(AOD_Index::isModuleSearchable('', ''));
@@ -116,7 +116,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse(AOD_Index::isModuleSearchable('Users', 'User'));
     }
 
-    public function testindex()
+    public function testindex(): void
     {
         $aod_index = BeanFactory::newBean('AOD_Index');
         $aod_index->id = 1;
@@ -131,7 +131,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testremove()
+    public function testremove(): void
     {
         self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
 
@@ -148,7 +148,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetIndexableModules()
+    public function testgetIndexableModules(): void
     {
         $expected = array(
             'AM_ProjectTemplates' => 'AM_ProjectTemplates',

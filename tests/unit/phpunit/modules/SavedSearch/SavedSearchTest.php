@@ -13,7 +13,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testSavedSearch()
+    public function testSavedSearch(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $savedSearch = BeanFactory::newBean('SavedSearch');
@@ -33,14 +33,14 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('ASC', 'sortOrder', $savedSearch);
     }
 
-    public function testgetForm()
+    public function testgetForm(): void
     {
         $result = (new SavedSearch(array('id', 'name'), 'id', 'ASC'))->getForm('Leads');
 
         self::assertGreaterThan(0, strlen($result));
     }
 
-    public function testgetSelect()
+    public function testgetSelect(): void
     {
         $result = (new SavedSearch(array('id', 'name'), 'id', 'ASC'))->getSelect('Leads');
 
@@ -78,7 +78,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
     ////        $this->handleDelete($savedSearch->id);
 //    }
 
-    public function handleSaveAndRetrieveSavedSearch($id)
+    public function handleSaveAndRetrieveSavedSearch($id): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
         $searchModuleBean = BeanFactory::newBean('Leads');
@@ -95,7 +95,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $savedSearch->contents);
     }
 
-    public function handleDelete($id)
+    public function handleDelete($id): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
 
@@ -105,7 +105,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function returnSavedSearch($id)
+    public function returnSavedSearch($id): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
 
@@ -118,7 +118,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function returnSavedSearchContents($id)
+    public function returnSavedSearchContents($id): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
 
@@ -131,7 +131,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testhandleRedirect()
+    public function testhandleRedirect(): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
 
@@ -141,7 +141,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method uses die');
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
 
@@ -154,7 +154,7 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Administrator', $savedSearch->assigned_user_name);
     }
 
-    public function testpopulateRequest()
+    public function testpopulateRequest(): void
     {
         $savedSearch = BeanFactory::newBean('SavedSearch');
 

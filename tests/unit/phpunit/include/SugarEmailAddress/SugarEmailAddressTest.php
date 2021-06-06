@@ -50,7 +50,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for save() method.
      */
-    public function testSave()
+    public function testSave(): void
     {
         $query = "SELECT * FROM email_addr_bean_rel";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -86,7 +86,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Tests for constructor.
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         // test
         $ea = new SugarEmailAddress();
@@ -102,7 +102,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Tests old constructor.
      */
-    public function testSugarEmailAddress()
+    public function testSugarEmailAddress(): void
     {
         // test
         $ea = new SugarEmailAddress();
@@ -118,7 +118,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for handleLegacySave() method.
      */
-    public function testHandleLegacySave()
+    public function testHandleLegacySave(): void
     {
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
@@ -170,7 +170,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for handleLegacyRetrieve() method.
      */
-    public function testHandleLegacyRetrieve()
+    public function testHandleLegacyRetrieve(): void
     {
         $c = BeanFactory::newBean('Contacts');
 
@@ -189,7 +189,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for populateLegacyFields() method.
      */
-    public function testPopulateLegacyFields()
+    public function testPopulateLegacyFields(): void
     {
         $c = BeanFactory::newBean('Contacts');
 
@@ -221,7 +221,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for saveEmail() method.
      */
-    public function testSaveEmail()
+    public function testSaveEmail(): void
     {
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
@@ -437,7 +437,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getCountEmailAddressByBean() method.
      */
-    public function testGetCountEmailAddressByBean()
+    public function testGetCountEmailAddressByBean(): void
     {
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -515,7 +515,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getRelatedId() method.
      */
-    public function testGetRelatedId()
+    public function testGetRelatedId(): void
     {
         // test
         $results = $this->ea->getRelatedId('test@email.com', 'Contacts');
@@ -565,7 +565,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getBeansByEmailAddress() method.
      */
-    public function testGetBeansByEmailAddress()
+    public function testGetBeansByEmailAddress(): void
     {
         global $locale, $current_user;
 
@@ -665,7 +665,8 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
 
     }
 
-    private function getBeansByEmailAddressDeletedLinksTest($db, $i, $ea_deleted, $bean_deleted) {
+    private function getBeansByEmailAddressDeletedLinksTest($db, $i, $ea_deleted, $bean_deleted): void
+    {
         // must have differing values
         self::assertNotEquals($ea_deleted, $bean_deleted);
         $q = /** @lang sql */
@@ -698,7 +699,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for populateAddresses() method.
      */
-    public function testPopulateAddresses()
+    public function testPopulateAddresses(): void
     {
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
@@ -921,7 +922,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for addAddress() method.
      */
-    public function testAddAddress()
+    public function testAddAddress(): void
     {
         $query = "SELECT * FROM email_addr_bean_rel";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -1010,7 +1011,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for updateFlags() method.
      */
-    public function testUpdateFlags()
+    public function testUpdateFlags(): void
     {
         self::markTestIncomplete('testUpdateFlags');
 //        // test
@@ -1070,7 +1071,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for splitEmailAddress() method.
      */
-    public function testSplitEmailAddress()
+    public function testSplitEmailAddress(): void
     {
         $result = $this->ea->splitEmailAddress(null);
         self::assertSame(array(
@@ -1148,7 +1149,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for _cleanAddress() method.
      */
-    public function testCleanAddress()
+    public function testCleanAddress(): void
     {
         $result = $this->ea->_cleanAddress(null);
         self::assertEquals('', $result);
@@ -1163,7 +1164,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getEmailGUID() method.
      */
-    public function testGetEmailGUID()
+    public function testGetEmailGUID(): void
     {
         $isValidator = new \SuiteCRM\Utility\SuiteValidator();
 
@@ -1266,7 +1267,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for AddUpdateEmailAddress() method.
      */
-    public function testAddUpdateEmailAddress()
+    public function testAddUpdateEmailAddress(): void
     {
         // test
         $db = DBManagerFactory::getInstance();
@@ -1313,7 +1314,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getPrimaryAddress() method.
      */
-    public function testGetPrimaryAddress()
+    public function testGetPrimaryAddress(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -1358,7 +1359,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getReplyToAddress() method.
      */
-    public function testGetReplyToAddress()
+    public function testGetReplyToAddress(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -1420,7 +1421,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getAddressesByGUID() method.
      */
-    public function testGetAddressesByGUID()
+    public function testGetAddressesByGUID(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -1467,7 +1468,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getEmailAddressWidgetEditView() method.
      */
-    public function testGetEmailAddressWidgetEditView()
+    public function testGetEmailAddressWidgetEditView(): void
     {
         $query = "SELECT * FROM accounts_cstm";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -1692,7 +1693,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getEmailAddressWidgetDetailView() method.
      */
-    public function testGetEmailAddressWidgetDetailView()
+    public function testGetEmailAddressWidgetDetailView(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -1753,7 +1754,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getEmailAddressWidgetDuplicatesView() method.
      */
-    public function testGetEmailAddressWidgetDuplicatesView()
+    public function testGetEmailAddressWidgetDuplicatesView(): void
     {
         self::markTestIncomplete('environment dependecy in test');
 
@@ -1923,7 +1924,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getFormBaseURL() method.
      */
-    public function testGetFormBaseURL()
+    public function testGetFormBaseURL(): void
     {
         // test
         $logger = $GLOBALS['log'];
@@ -2016,7 +2017,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for setView() method.
      */
-    public function testSetView()
+    public function testSetView(): void
     {
         $before = $this->ea->view;
         $this->ea->setView('afterView');
@@ -2028,7 +2029,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getCorrectedModule() method.
      */
-    public function testGetCorrectedModule()
+    public function testGetCorrectedModule(): void
     {
         // test
         $module = null;
@@ -2059,7 +2060,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for stash() method.
      */
-    public function testStash()
+    public function testStash(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -2076,7 +2077,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     /**
      * Test for getEmailAddressWidget() function.
      */
-    public function testGetEmailAddressWidget()
+    public function testGetEmailAddressWidget(): void
     {
         self::markTestIncomplete('environment dependecy in test');
 
@@ -2152,7 +2153,7 @@ class SugarEmailAddressTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testGetOptInStatus()
+    public function testGetOptInStatus(): void
     {
         self::markTestIncomplete('COI_STAT_CONFIRMED_OPT_IN');
 

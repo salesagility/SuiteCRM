@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcard();
@@ -13,7 +13,7 @@ class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('edit', 'type', $view);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         if (isset($_REQUEST)) {
             $request = $_REQUEST;

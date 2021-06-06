@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmailTextTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testEmailText()
+    public function testEmailText(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $emailText = BeanFactory::newBean('EmailText');

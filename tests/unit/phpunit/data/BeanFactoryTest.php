@@ -21,7 +21,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $moduleConfig
      * @return void
      */
-    public function testNewBean($moduleName, $moduleConfig)
+    public function testNewBean($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
@@ -56,7 +56,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $moduleConfig
      * @return void
      */
-    public function testGetBean($moduleName, $moduleConfig)
+    public function testGetBean($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
@@ -89,7 +89,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $moduleConfig
      * @return void
      */
-    public function testGetBeanMeta($moduleName, $moduleConfig)
+    public function testGetBeanMeta($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
@@ -118,7 +118,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $moduleConfig
      * @return void
      */
-    public function testGetBeanClass($moduleName, $moduleConfig)
+    public function testGetBeanClass($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
@@ -139,9 +139,9 @@ class BeanFactoryTest extends BeanFactoryTestCase
      *
      * @param string $moduleName
      * @param array $moduleConfig
-     * @return array
+     * @return void
      */
-    public function testGetBeanName($moduleName, $moduleConfig)
+    public function testGetBeanName($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
@@ -163,7 +163,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $meta
      * @return void
      */
-    public function subTestGetCustomBeanName($meta)
+    public function subTestGetCustomBeanName($meta): void
     {
         $customBeanName = BeanFactory::getCustomBeanName($meta['moduleName']);
         self::assertEquals($meta['refreshedConfig']['customClassName'], $customBeanName);
@@ -176,9 +176,9 @@ class BeanFactoryTest extends BeanFactoryTestCase
      *
      * @param string $moduleName
      * @param array $moduleConfig
-     * @return array
+     * @return void
      */
-    public function testGetObjectName($moduleName, $moduleConfig)
+    public function testGetObjectName($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
@@ -200,7 +200,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $meta
      * @return void
      */
-    public function subTestGetCustomObjectName($meta)
+    public function subTestGetCustomObjectName($meta): void
     {
         $customObjectName = BeanFactory::getCustomObjectName($meta['moduleName']);
         self::assertEquals($meta['refreshedConfig']['customObjectName'], $customObjectName);
@@ -214,9 +214,9 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param string $moduleName
      * @param array $moduleConfig
      *
-     * @return array
+     * @return void
      */
-    public function testGetBeanFile($moduleName, $moduleConfig)
+    public function testGetBeanFile($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 
@@ -238,7 +238,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param array $meta
      * @return void
      */
-    public function subTestGetCustomBeanFile($meta)
+    public function subTestGetCustomBeanFile($meta): void
     {
         $customBeanFile = BeanFactory::getCustomBeanFile($meta['moduleName']);
         self::assertEquals($meta['refreshedConfig']['customClassFile'], $customBeanFile);
@@ -252,7 +252,7 @@ class BeanFactoryTest extends BeanFactoryTestCase
      * @param string $moduleName
      * @param array $moduleConfig
      */
-    public function testLoadBeanFile($moduleName, $moduleConfig)
+    public function testLoadBeanFile($moduleName, $moduleConfig): void
     {
         $this->removeCoreModuleExtension($moduleName, $moduleConfig['className']);
 

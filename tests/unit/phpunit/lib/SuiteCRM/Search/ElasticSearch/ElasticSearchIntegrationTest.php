@@ -78,12 +78,12 @@ class ElasticSearchIntegrationTest extends SearchTestAbstract
         parent::tearDown();
     }
 
-    private function restore()
+    private function restore(): void
     {
         $this->indexer->removeIndex('test');
     }
 
-    public function testPing()
+    public function testPing(): void
     {
         $result = $this->indexer->ping();
 
@@ -91,7 +91,7 @@ class ElasticSearchIntegrationTest extends SearchTestAbstract
         self::assertIsNumeric($result);
     }
 
-    public function testWithoutSearchdefs()
+    public function testWithoutSearchdefs(): void
     {
         $this->indexer->setDocumentifier(new JsonSerializerDocumentifier());
         $this->indexRunner();
@@ -100,7 +100,7 @@ class ElasticSearchIntegrationTest extends SearchTestAbstract
     /**
      * Starts indexing using the indexer stored as a field.
      */
-    private function indexRunner()
+    private function indexRunner(): void
     {
         /** @var Contact $bean */
         $bean = BeanFactory::newBean('Contacts');
@@ -213,19 +213,19 @@ class ElasticSearchIntegrationTest extends SearchTestAbstract
      * The indexing on Elasticsearch is scheduled each second.
      * No results will be available before that time.
      **/
-    private function waitForIndexing()
+    private function waitForIndexing(): void
     {
         sleep(1);
     }
 
-    public function testWithSearchdefs()
+    public function testWithSearchdefs(): void
     {
         $this->indexer->setDocumentifier(new SearchDefsDocumentifier());
 
         $this->indexRunner();
     }
 
-    public function testDifferentialIndexing()
+    public function testDifferentialIndexing(): void
     {
         global $timedate;
         $timedate->allow_cache = false;
@@ -327,7 +327,7 @@ class ElasticSearchIntegrationTest extends SearchTestAbstract
         self::assertEmpty($results->getHits(), 'There should be no search results, as the record was deleted');
     }
 
-    private function populateContactsTable()
+    private function populateContactsTable(): void
     {
         /** @var Contact $bean */
         $bean = BeanFactory::newBean('Contacts');
@@ -340,7 +340,7 @@ class ElasticSearchIntegrationTest extends SearchTestAbstract
         $bean->save();
     }
 
-    public function testMeta()
+    public function testMeta(): void
     {
         $module = "TestModule";
         $meta1 = ['foo' => 'baz'];

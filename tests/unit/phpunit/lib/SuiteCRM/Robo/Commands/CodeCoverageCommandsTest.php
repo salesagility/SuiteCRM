@@ -22,7 +22,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testIsEnvironmentTravisCI()
+    public function testIsEnvironmentTravisCI(): void
     {
         $method = (new ReflectionClass(CodeCoverageCommands::class))->getMethod('isEnvironmentTravisCI');
         $method->setAccessible(true);
@@ -35,7 +35,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($returnType);
     }
 
-    public function testGetCommitRangeForTravisCi()
+    public function testGetCommitRangeForTravisCi(): void
     {
         $method = (new ReflectionClass(CodeCoverageCommands::class))->getMethod('getCommitRangeForTravisCi');
         $method->setAccessible(true);
@@ -48,7 +48,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($returnType);
     }
 
-    public function testGetCodeCoverageCommand()
+    public function testGetCodeCoverageCommand(): void
     {
         $commandExpected = './vendor/bin/phpunit --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
         // Run tests

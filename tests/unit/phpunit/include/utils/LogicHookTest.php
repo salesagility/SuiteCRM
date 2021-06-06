@@ -14,14 +14,14 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testinitialize()
+    public function testinitialize(): void
     {
         //execute the method and test if it returns correct class instances
         $LogicHook = LogicHook::initialize();
         self::assertInstanceOf('LogicHook', $LogicHook);
     }
 
-    public function testLogicHook()
+    public function testLogicHook(): void
     {
         //execute the method and test if it doesn't throw an exception
         try {
@@ -32,7 +32,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testsetBean()
+    public function testsetBean(): void
     {
         //execute the method and test if it returns correct class instances
         $result = (new LogicHook())->setBean(BeanFactory::newBean('Users'));
@@ -40,21 +40,21 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('User', $result->bean);
     }
 
-    public function testgetHooksMap()
+    public function testgetHooksMap(): void
     {
         //execute the method and test if it returns true
         $hook_map = (new LogicHook())->getHooksMap();
         self::assertIsArray($hook_map);
     }
 
-    public function testgetHooksList()
+    public function testgetHooksList(): void
     {
         //execute the method and test if it returns true
         $hookscan = (new LogicHook())->getHooksList();
         self::assertIsArray($hookscan);
     }
 
-    public function testscanHooksDir()
+    public function testscanHooksDir(): void
     {
         //execute the method and test if it returns expected contents
         $expected_hook_map = array(
@@ -159,7 +159,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testrefreshHooks()
+    public function testrefreshHooks(): void
     {
         //execute the method and test if it doesn't throws an exception
         try {
@@ -170,7 +170,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testloadHooks()
+    public function testloadHooks(): void
     {
         //execute the method and test if it returns expected contents
         $expected_accounts = array(
@@ -365,7 +365,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
 
     }
 */
-    public function testgetHooks()
+    public function testgetHooks(): void
     {
         //execute the method and test if it returns expected contents
 
@@ -459,7 +459,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcall_custom_logic()
+    public function testcall_custom_logic(): void
     {
         //execute the method and test if it doesn't throws an exception
         $LogicHook = new LogicHook();
@@ -473,7 +473,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testprocess_hooks()
+    public function testprocess_hooks(): void
     {
         // execute the method and test if it doesn't throws an exception
         $LogicHook = new LogicHook();

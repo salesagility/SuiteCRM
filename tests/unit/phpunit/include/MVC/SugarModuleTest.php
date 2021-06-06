@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarModuleTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testconstructor()
+    public function testconstructor(): void
     {
         //test for invalid input
         $sugarmodule = new SugarModule('');
@@ -15,7 +15,7 @@ class SugarModuleTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('User', '_moduleName', $sugarmodule_user);
     }
 
-    public function testget()
+    public function testget(): void
     {
         //test for invalid input
         $sugarmodule = SugarModule::get('');
@@ -28,7 +28,7 @@ class SugarModuleTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('User', '_moduleName', $sugarmodule_user);
     }
 
-    public function testmoduleImplements()
+    public function testmoduleImplements(): void
     {
         //test for invalid input
         $result = (new SugarModule(''))->moduleImplements('Basic');
@@ -45,7 +45,7 @@ class SugarModuleTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function testloadBean()
+    public function testloadBean(): void
     {
         //test for invalid input
         $result = (new SugarModule(''))->loadBean();

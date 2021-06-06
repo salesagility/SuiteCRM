@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewAjaxUITest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewAjaxUI();
@@ -13,7 +13,7 @@ class ViewAjaxUITest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($view->options);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
 //        $view = new ViewAjaxUI();
 //

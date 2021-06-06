@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AM_TaskTemplatesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAM_TaskTemplates()
+    public function testAM_TaskTemplates(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $am_taskTemplates = BeanFactory::newBean('AM_TaskTemplates');

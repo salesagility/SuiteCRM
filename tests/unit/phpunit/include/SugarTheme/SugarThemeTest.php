@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarThemeTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testGetMimeType()
+    public function testGetMimeType(): void
     {
         $theme = SugarThemeRegistry::current();
         self::assertEquals('image/svg+xml', $theme->getMimeType('svg'));

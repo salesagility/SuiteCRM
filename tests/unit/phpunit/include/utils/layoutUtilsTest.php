@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/layout_utils.php';
 class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testget_form_header()
+    public function testget_form_header(): void
     {
         //execute the method and test if it returns html and contains the values provided in parameters
 
@@ -23,7 +23,7 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(strlen($html2), strlen($html1));
     }
 
-    public function testget_module_title()
+    public function testget_module_title(): void
     {
         //execute the method and test if it returns html and contains the values provided in parameters
 
@@ -49,7 +49,7 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(strlen($html3), strlen($html1));
     }
 
-    public function testgetClassicModuleTitle()
+    public function testgetClassicModuleTitle(): void
     {
         //execute the method and test if it returns html and contains the values provided in parameters
 
@@ -65,7 +65,7 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(strlen($html1), strlen($html2));
     }
 
-    public function testinsert_popup_header()
+    public function testinsert_popup_header(): void
     {
         //execute the method and test if it returns html/JS
 
@@ -86,7 +86,7 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(strlen($renderedContent2), strlen($renderedContent1));
     }
 
-    public function testinsert_popup_footer()
+    public function testinsert_popup_footer(): void
     {
         //execute the method and test if it returns html
 

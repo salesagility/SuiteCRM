@@ -13,7 +13,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testSchedulersJob()
+    public function testSchedulersJob(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
@@ -32,7 +32,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'job_done', $schedulersJob);
     }
 
-    public function testcheck_date_relationships_load()
+    public function testcheck_date_relationships_load(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
         $schedulersJob->execute_time = '2015-01-01 00:00:00';
@@ -42,7 +42,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('2015-01-01 00:00:00', $schedulersJob->execute_time_db);
     }
 
-    public function testhandleDateFormat()
+    public function testhandleDateFormat(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -55,7 +55,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('2015-01-01 00:00:00', $result);
     }
 
-    public function testfireUrl()
+    public function testfireUrl(): void
     {
         self::markTestIncomplete('environment dependency: curl_setopt(): CURLOPT_DNS_USE_GLOBAL_CACHE cannot be activated when thread safety is enabled ');
 
@@ -69,7 +69,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         //$this->assertEquals(true, $result);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -88,7 +88,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -101,7 +101,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfailJob()
+    public function testfailJob(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -118,7 +118,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
     }
 
-    public function testsucceedJob()
+    public function testsucceedJob(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -135,7 +135,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
     }
 
-    public function testonFailureRetry()
+    public function testonFailureRetry(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -150,7 +150,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation: logic hooks not defined');
     }
 
-    public function testOnFinalFailure()
+    public function testOnFinalFailure(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -165,7 +165,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation: logic hooks not defined');
     }
 
-    public function testresolveJob()
+    public function testresolveJob(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -190,7 +190,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
     }
 
-    public function testpostponeJobAndMark_deleted()
+    public function testpostponeJobAndMark_deleted(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -211,7 +211,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testunexpectedExit()
+    public function testunexpectedExit(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -230,7 +230,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
     }
 
-    public function testrunJobId()
+    public function testrunJobId(): void
     {
         //test with invalid job id
         $result = SchedulersJob::runJobId('1', '');
@@ -256,7 +256,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
     }
 
-    public function testerrorHandler()
+    public function testerrorHandler(): void
     {
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');
 
@@ -278,7 +278,7 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("Recoverable Error [4096]: test err in testfile on line 1\n", $schedulersJob->errors);
     }
 
-    public function testrunJob()
+    public function testrunJob(): void
     {
         //test without a valid user
         $schedulersJob = BeanFactory::newBean('SchedulersJobs');

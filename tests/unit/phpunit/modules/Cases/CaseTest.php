@@ -13,7 +13,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testaCase()
+    public function testaCase(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aCase = BeanFactory::newBean('Cases');
@@ -30,7 +30,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $aCase);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $aCase = BeanFactory::newBean('Cases');
         self::assertEquals(null, $aCase->get_summary_text());
@@ -39,7 +39,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $aCase->get_summary_text());
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -50,7 +50,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsave_relationship_changes()
+    public function testsave_relationship_changes(): void
     {
         $aCase = BeanFactory::newBean('Cases');
 
@@ -65,7 +65,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testset_case_contact_relationship()
+    public function testset_case_contact_relationship(): void
     {
         $aCase = BeanFactory::newBean('Cases');
 
@@ -78,7 +78,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $aCase = BeanFactory::newBean('Cases');
 
@@ -91,7 +91,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $aCase = BeanFactory::newBean('Cases');
         $aCase->assigned_user_id = 1;
@@ -105,14 +105,14 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Administrator', $aCase->modified_by_name);
     }
 
-    public function testget_contacts()
+    public function testget_contacts(): void
     {
         $result = BeanFactory::newBean('Cases')->get_contacts();
         self::assertIsNotArray($result);
         self::assertEquals(false, $result);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $aCase = BeanFactory::newBean('Cases');
         $current_theme = SugarThemeRegistry::current();
@@ -168,7 +168,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected['STATE'], $actual['STATE']);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $aCase = BeanFactory::newBean('Cases');
 
@@ -183,7 +183,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $aCase = BeanFactory::newBean('Cases');
 
@@ -200,7 +200,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($aCase->description, $result->_tpl_vars['CASE_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $aCase = BeanFactory::newBean('Cases');
         self::assertEquals(false, $aCase->bean_implements('')); //test with blank value
@@ -208,7 +208,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $aCase->bean_implements('ACL')); //test with valid value
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $aCase = BeanFactory::newBean('Cases');
         $aCase->name = 'test';
@@ -227,13 +227,13 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testgetEmailSubjectMacro()
+    public function testgetEmailSubjectMacro(): void
     {
         $result = BeanFactory::newBean('Cases')->getEmailSubjectMacro();
         self::assertEquals('[CASE:%1]', $result);
     }
 
-    public function testgetAccount()
+    public function testgetAccount(): void
     {
         $result = BeanFactory::newBean('Cases')->getAccount(1);
         self::assertIsArray($result);

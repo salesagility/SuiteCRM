@@ -84,7 +84,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $error = new JsonApiErrorObject();
         $expected = [
@@ -119,7 +119,7 @@ class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual, 'API Error Object constructor error: Incorrect state set.');
     }
 
-    public function testRetrieveFromException()
+    public function testRetrieveFromException(): void
     {
         $error = new JsonApiErrorObject();
 

@@ -13,7 +13,7 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOS_Contracts()
+    public function testAOS_Contracts(): void
     {
         // Execute the constructor and check for the Object type and attributes
         $aosContracts = BeanFactory::newBean('AOS_Contracts');
@@ -31,7 +31,7 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(isset($aosContracts->renewal_reminder_date));
     }
 
-    public function testsaveAndDelete()
+    public function testsaveAndDelete(): void
     {
         $aosContracts = BeanFactory::newBean('AOS_Contracts');
         $aosContracts->name = 'test';
@@ -48,7 +48,7 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testCreateReminderAndCreateLinkAndDeleteCall()
+    public function testCreateReminderAndCreateLinkAndDeleteCall(): void
     {
         $call = new call();
 
