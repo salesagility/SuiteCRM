@@ -47,6 +47,8 @@
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="nav nav-tabs">
         {{if $useTabs}}
+ 
+            
         {{counter name="isection" start=0 print=false assign="isection"}}
         {{foreach name=section from=$sectionPanels key=label item=panel}}
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
@@ -55,11 +57,25 @@
         {*if tab display*}
         {{counter name="tabCount" print=false}}
         {{if $tabCount == '0'}}
-        <li role="presentation" class="active">
-            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+        <li role="presentation" class="hidden-xs active">
+            <a id="tab{{$tabCount}}" data-toggle="tab">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
 
+
+        </li>
+        {{else}}
+        <li role="presentation" class="hidden-xs">
+            <a id="tab{{$tabCount}}" data-toggle="tab">
+                {sugar_translate label='{{$label}}' module='{{$module}}'}
+            </a>
+        </li>
+        {{/if}}
+        {{else}}
+        {* if panel skip*}
+        {{/if}}
+        {{/foreach}}
+        <li>
             {* Count Tabs *}
             {{counter name="tabCountOnlyXS" start=-1 print=false assign="tabCountOnlyXS"}}
             {{foreach name=sectionOnlyXS from=$sectionPanels key=labelOnly item=panelOnlyXS}}
@@ -74,17 +90,24 @@
                 * There is more than one tab set
                 * When Acton Menu's are enabled
             *}
-            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab{{if $tabCountOnlyXS > 0}}-xs{{/if}} dropdown-toggle" data-toggle="dropdown">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
+            {{counter name="tabCountOnlyXS" start=0 print=false assign="tabCountOnlyXS"}}
+            {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
+                {{if $tabCountOnlyXS== 0}}
+                    <a id="headxstab{{$tabCountOnlyXS}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                        <span class="suitepicon suitepicon-action-caret">{sugar_translate label='{{$label}}' module='{{$module}}'}</span>
+                    </a>
+                    {{counter name="tabCountOnlyXS" print=false}}
+                {{/if}}
+            {{/foreach}}
+            {{counter name="tabCountOnlyXS" print=false}}
             {{if $tabCountOnlyXS > 0}}
             <ul id="first-tab-menu-xs" class="dropdown-menu">
-                {{counter name="tabCountXS" start=1 print=false assign="tabCountXS"}}
+                {{counter name="tabCountXS" start=0 print=false assign="tabCountXS"}}
                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
                 {{capture name=label_upper_xs assign=label_upper_xs}}{{$label|upper}}{{/capture}}
                 {{if (isset($tabDefs[$label_upper_xs].newTab) && $tabDefs[$label_upper_xs].newTab == true)}}
-                <li role="presentation">
-                    <a id="tab{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                <li role="presentation" class="dropdown-item" type="button" {{if $tabCountXS==0}}style="display:none"{{/if}}>
+                    <a id="xstab{{$tabCountXS}}" onclick="changeFirstTab(this, '{{$tabCountXS}}');">
                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </a>
                 </li>
@@ -93,19 +116,7 @@
                 {{/foreach}}
             </ul>
             {{/if}}
-
-        </li>
-        {{else}}
-        <li role="presentation" class="hidden-xs">
-            <a id="tab{{$tabCount}}" data-toggle="tab">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-        </li>
-        {{/if}}
-        {{else}}
-        {* if panel skip*}
-        {{/if}}
-        {{/foreach}}
+            </li>
         {{else}}
         {*
             Since: SuieCRM 7.8
@@ -113,6 +124,7 @@
             make the first panel a tab so that the action menu looks correct. This is regardless of what the
             meta/studio defines the first panel should always be tab.
         *}
+{*
         {if $config.enable_action_menu and $config.enable_action_menu != false}
             {{foreach name=section from=$sectionPanels key=label item=panel}}
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
@@ -126,15 +138,20 @@
                     {sugar_translate label='{{$label}}' module='{{$module}}'}
                 </a>
             </li>
-            {{else}}
+            {{else}} 
+            *}
             {* if panel skip *}
+{*
             {{/if}}
         {{/foreach}}
         {/if}
+            *}
         {{/if}}
-        {if $config.enable_action_menu and $config.enable_action_menu != false}
+        {if $config.enable_action_menu and $config.enable_action_menu != false and $useTabs}
         <li id="tab-actions" class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}<span class="suitepicon suitepicon-action-caret"></span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" >{{$APP.LBL_LINK_SELECT}}
+                <span class="suitepicon suitepicon-action-caret"></span>
+            </a>
             {{include file="themes/SuiteP/include/DetailView/actions_menu.tpl"}}
         </li>
         <li class="tab-inline-pagination">
@@ -146,8 +163,9 @@
             {{counter name="panelCount" print=false}}
             {{/if}}
         </li>
-        {/if}
     </ul>
+        {else}
+        {/if}
     {{counter name="tabCount" start=0 print=false assign="tabCount"}}
     <div class="clearfix"></div>
     {{if $useTabs}}
@@ -160,18 +178,13 @@
            make the first panel a tab so that the action menu looks correct. This is regardless of what the
            meta/studio defines the first panel should always be tab.
        *}
-        {if $config.enable_action_menu and $config.enable_action_menu != false}
-        {{if $tabCount == 0}}
+        {{if $useTabs }}
         {*<!-- TAB CONTENT USE TABS -->*}
         <div class="tab-content">
             {{else}}
             {*<!-- TAB CONTENT DOESN'T USE TABS -->*}
             <div class="tab-content" style="padding: 0; border: 0;">
                 {{/if}}
-                {else}
-                {*<!-- TAB CONTENT DOESN'T USE TABS -->*}
-                <div class="tab-content" style="padding: 0; border: 0;">
-                    {/if}
                     {{/if}}
                     {* Loop through all top level panels first *}
                     {{if $useTabs}}
@@ -191,28 +204,9 @@
                     {{counter name="tabCount" print=false}}
                     {{/foreach}}
                     {{else}}
-                    {*
-                       Since: SuieCRM 7.8
-                       When action menus are enabled and When there are only panels and there are not any tabs,
-                       make the first panel a tab so that the action menu looks correct. This is regardless of what the
-                       meta/studio defines the first panel should always be tab.
-                   *}
-                    {if $config.enable_action_menu and $config.enable_action_menu != false}
-                        {{foreach name=section from=$sectionPanels key=label item=panel}}
-                        {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
-                        {{if $tabCount == '0'}}
-                        <div class="tab-pane-NOBOOTSTRAPTOGGLER active fade in" id='tab-content-{{$tabCount}}'>
-                            {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
-                        </div>
-                        {{else}}
 
-                        {{/if}}
-                    {{counter name="tabCount" print=false}}
-                    {{/foreach}}
-                    {else}
                     {*<!-- TAB CONTENT DOESN'T USE TABS -->*}
                     <div class="tab-pane-NOBOOTSTRAPTOGGLER panel-collapse"></div>
-                    {/if}
                     {{/if}}
                 </div>
                 {*display panels*}
@@ -248,43 +242,6 @@
                     {{assign var='panelId' value="LBL_AOP_CASE_UPDATES"}}
                     {{/if}}
 
-                    {*
-                       Since: SuieCRM 7.8
-                       When action menus are enabled and When there are only panels and there are not any tabs,
-                       make the first panel a tab so that the action menu looks correct. This is regardless of what the
-                       meta/studio defines the first panel should always be tab.
-                    *}
-                    {if $config.enable_action_menu and $config.enable_action_menu != false}
-                        {{if $panelCount == -1}}
-                        {* skip panel as it has been converted to a tab*}
-                        {{else}}
-                        {* display panels as they have always been displayed *}
-                        {{if $useTabs}}
-                            {{if $tabCount == 0}}
-                                <div class="panel panel-default tab-panel-{{$tabCount}}" style="display: block;">
-                            {{else}}
-                                <div class="panel panel-default tab-panel-{{$tabCount}}" style="display: none;">
-                            {{/if}}
-                        {{else}}
-                            <div class="panel panel-default">
-                        {{/if}}
-                            <div class="panel-heading {{$panelHeadingCollapse}}">
-                                <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
-                                    <div class="col-xs-10 col-sm-11 col-md-11">
-                                        {sugar_translate label='{{$label}}' module='{{$module}}'}
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="panel-body {{$collapse}} panelContainer" id="{{$panelId}}"  data-id="{{$label_upper}}">
-                                <div class="tab-content">
-                                    <!-- TAB CONTENT -->
-                                    {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
-                                </div>
-                            </div>
-                        </div>
-                        {{/if}}
-                    {else}
-                    {* display panels as they have always been displayed *}
                     {{if $useTabs}}
                             {{if $tabCount == 0}}
                                 <div class="panel panel-default tab-panel-{{$tabCount}}" style="display: block;">
@@ -309,7 +266,6 @@
                             </div>
                         </div>
                     </div>
-                    {/if}
 
 
                     {{/if}}
@@ -356,6 +312,11 @@
                                 selectTabDetailView(tab);
                             }
                         });
+                    });
+                    $('.nav-tabs > .hidden-xs').on('click', function(){
+                        $('#headxstab0 > span').html($(this).children('a').html());
+                        $('#first-tab-menu-xs > li').show();
+                        $('#xs'+$(this).children('a').attr('id')).parent().hide();
                     });
 
                 </script>
