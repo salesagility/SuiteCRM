@@ -52,7 +52,7 @@ use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 use VardefManager;
-
+use SuiteCRM\Search\SearchModules;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -68,12 +68,6 @@ class BasicSearchEngine extends SearchEngine
 
     /*search form class name*/
     public $searchFormClass = 'SearchForm';
-
-    public function __construct()
-    {
-        $this->cache_search = sugar_cached('modules/unified_search_modules.php');
-        $this->cache_display = sugar_cached('modules/unified_search_modules_display.php');
-    }
 
     /**
      * Search function run when user goes to Show All and runs a search again.  This outputs the search results
@@ -103,7 +97,7 @@ class BasicSearchEngine extends SearchEngine
      */
     protected function getSearchModules(): array
     {
-        $unifiedSearchModuleDisplay = $this->getUnifiedSearchModulesDisplay();
+        $unifiedSearchModuleDisplay = SearchModules::getUnifiedSearchModulesDisplay();
 
         require_once 'include/ListView/ListViewSmarty.php';
 
@@ -144,7 +138,7 @@ class BasicSearchEngine extends SearchEngine
     {
         global $beanFiles;
 
-        $unifiedSearchModules = $this->getUnifiedSearchModules();
+        $unifiedSearchModules = SearchModules::getUnifiedSearchModules();
 
         $moduleResults = [];
         $moduleCounts = [];
@@ -249,264 +243,5 @@ class BasicSearchEngine extends SearchEngine
             'hits' => $moduleCounts,
             'modules' => $moduleResults
         ];
-    }
-
-    /** @noinspection PhpIncludeInspection */
-    public function buildCache(): void
-    {
-        global $beanList, $beanFiles, $dictionary;
-
-        $supportedModules = [];
-        $metafiles = [];
-        $searchFields = [];
-
-        foreach ($beanList as $moduleName => $beanName) {
-            if (!isset($beanFiles[$beanName])) {
-                continue;
-            }
-
-            $beanName = BeanFactory::getObjectName($moduleName);
-            VardefManager::loadVardef($moduleName, $beanName);
-
-            // Obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
-            if (file_exists('custom/modules/' . $moduleName . '/metadata/metafiles.php')) {
-                require('custom/modules/' . $moduleName . '/metadata/metafiles.php');
-            } elseif (file_exists('modules/' . $moduleName . '/metadata/metafiles.php')) {
-                require('modules/' . $moduleName . '/metadata/metafiles.php');
-            }
-
-
-            if (!empty($metafiles[$moduleName]['searchfields'])) {
-                /** @noinspection PhpIncludeInspection */
-                require $metafiles[$moduleName]['searchfields'];
-            } elseif (is_file("modules/{$moduleName}/metadata/SearchFields.php")) {
-                require "modules/{$moduleName}/metadata/SearchFields.php";
-            }
-
-            // Load custom SearchFields.php if it exists
-            if (is_file("custom/modules/{$moduleName}/metadata/SearchFields.php")) {
-                require "custom/modules/{$moduleName}/metadata/SearchFields.php";
-            }
-
-            // If there are $searchFields are empty, just continue, there are no search fields defined for the module
-            if (empty($searchFields[$moduleName])) {
-                continue;
-            }
-
-            $isCustomModule = preg_match('/^([a-z0-9]{1,5})_([a-z0-9_]+)$/i', $moduleName);
-
-            // If the bean supports unified search or if it's a custom module bean and unified search is not defined
-            if (!empty($dictionary[$beanName]['unified_search']) || $isCustomModule) {
-                $fields = [];
-                foreach ($dictionary [$beanName]['fields'] as $field => $def) {
-                    // We cannot enable or disable unified_search for email in the vardefs as we don't actually have a vardef entry for 'email'
-                    // the searchFields entry for 'email' doesn't correspond to any vardef entry. Instead it contains SQL to directly perform the search.
-                    // So as a proxy we allow any field in the vardefs that has a name starting with 'email...' to be tagged with the 'unified_search' parameter
-
-                    if (str_contains($field, 'email')) {
-                        $field = 'email';
-                    }
-
-                    if (str_contains($field, 'phone')) {
-                        $field = 'phone';
-                    }
-
-                    if (!empty($def['unified_search']) && isset($searchFields [$moduleName] [$field])) {
-                        $fields [$field] = $searchFields [$moduleName] [$field];
-                    }
-                }
-
-                foreach ($searchFields[$moduleName] as $field => $def) {
-                    if (!empty($def['force_unifiedsearch'])) {
-                        $fields[$field] = $def;
-                    }
-                }
-
-                if (!empty($fields)) {
-                    $supportedModules[$moduleName]['fields'] = $fields;
-                    if (isset($dictionary[$beanName]['unified_search_default_enabled']) && $dictionary[$beanName]['unified_search_default_enabled'] === true) {
-                        $supportedModules[$moduleName]['default'] = true;
-                    } else {
-                        $supportedModules[$moduleName]['default'] = false;
-                    }
-                }
-            }
-        }
-
-        ksort($supportedModules);
-        write_array_to_file('unified_search_modules', $supportedModules, $this->cache_search);
-    }
-
-    /**
-     * Retrieve the enabled and disabled modules used for global search.
-     *
-     * @return array
-     */
-    public function retrieveEnabledAndDisabledModules(): array
-    {
-        global $app_list_strings;
-
-        $unified_search_modules = [];
-        $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
-
-        // Add the translated attribute for display label
-        $json_enabled = [];
-        $json_disabled = [];
-        foreach ($unified_search_modules_display as $module => $data) {
-            $label = $app_list_strings['moduleList'][$module] ?? $module;
-            if ($data['visible'] === true) {
-                $json_enabled[] = ["module" => $module, 'label' => $label];
-            } else {
-                $json_disabled[] = ["module" => $module, 'label' => $label];
-            }
-        }
-
-        // If the file doesn't exist
-        if (!file_exists($this->cache_search)) {
-            $this->buildCache();
-        }
-
-        /** @noinspection PhpIncludeInspection */
-        include($this->cache_search);
-
-        // Now add any new modules that may have since been added to unified_search_modules.php
-        foreach ($unified_search_modules as $module => $data) {
-            if (!isset($unified_search_modules_display[$module])) {
-                $label = $app_list_strings['moduleList'][$module] ?? $module;
-                if ($data['default']) {
-                    $json_enabled[] = array("module" => $module, 'label' => $label);
-                } else {
-                    $json_disabled[] = array("module" => $module, 'label' => $label);
-                }
-            }
-        }
-
-        return array('enabled' => $json_enabled, 'disabled' => $json_disabled);
-    }
-
-
-    /**
-     * saveGlobalSearchSettings
-     * This method handles the administrator's request to save the searchable modules selected and stores
-     * the results in the unified_search_modules_display.php file
-     *
-     */
-    public function saveGlobalSearchSettings(): void
-    {
-        if (isset($_REQUEST['enabled_modules'])) {
-            $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
-
-            $new_unified_search_modules_display = [];
-
-            foreach (explode(',', $_REQUEST['enabled_modules']) as $module) {
-                $new_unified_search_modules_display[$module]['visible'] = true;
-            }
-
-            foreach ($unified_search_modules_display as $module => $data) {
-                if (!isset($new_unified_search_modules_display[$module])) {
-                    $new_unified_search_modules_display[$module]['visible'] = false;
-                }
-            }
-
-            $this->writeUnifiedSearchModulesDisplayFile($new_unified_search_modules_display);
-        }
-    }
-
-    public static function unlinkUnifiedSearchModulesFile(): void
-    {
-        // Clear the unified_search_module.php file
-        $cache_search = sugar_cached('modules/unified_search_modules.php');
-        if (is_file($cache_search)) {
-            LoggerManager::getLogger()->info("unlink {$cache_search}");
-            unlink($cache_search);
-        }
-    }
-
-
-    /**
-     * getUnifiedSearchModules
-     *
-     * Returns the value of the $unified_search_modules variable based on the module's vardefs.php file
-     * and which fields are marked with the unified_search attribute.
-     *
-     * @return array metadata module definitions along with their fields
-     */
-    public function getUnifiedSearchModules(): array
-    {
-        // Make directory if it doesn't exist
-        $cachedir = sugar_cached('modules');
-        if (!file_exists($cachedir)) {
-            mkdir_recursive($cachedir);
-        }
-
-        $unified_search_modules = [];
-
-        // Load unified_search_modules.php file
-        $cachedFile = sugar_cached('modules/unified_search_modules.php');
-        if (!is_file($cachedFile)) {
-            $this->buildCache();
-        }
-
-        /** @noinspection PhpIncludeInspection */
-        include $cachedFile;
-
-        return $unified_search_modules;
-    }
-
-
-    /**
-     * getUnifiedSearchModulesDisplay
-     *
-     * Returns the value of the $unified_search_modules_display variable which is based on the $unified_search_modules
-     * entries that have been selected to be allowed for searching.
-     *
-     * @return array $unified_search_modules_display Array value of modules that have enabled for searching
-     */
-    public function getUnifiedSearchModulesDisplay(): array
-    {
-        $unified_search_modules_display = [];
-
-        if (!file_exists(__DIR__ . '/../../../custom/modules/unified_search_modules_display.php')) {
-            $unified_search_modules = $this->getUnifiedSearchModules();
-
-            if (!empty($unified_search_modules)) {
-                foreach ($unified_search_modules as $module => $data) {
-                    $unified_search_modules_display[$module]['visible'] = (!empty($data['default']));
-                }
-            }
-
-            $this->writeUnifiedSearchModulesDisplayFile($unified_search_modules_display);
-        }
-
-        include(__DIR__ . '/../../../custom/modules/unified_search_modules_display.php');
-
-        return $unified_search_modules_display;
-    }
-
-    /**
-     * writeUnifiedSearchModulesDisplayFile
-     * Private method to handle writing the unified_search_modules_display value to file
-     *
-     * @param mixed $unified_search_modules_display The array of the unified search modules and their display attributes
-     * @return bool value indication whether or not file was successfully written
-     */
-    private function writeUnifiedSearchModulesDisplayFile($unified_search_modules_display): bool
-    {
-        if (is_null($unified_search_modules_display) || empty($unified_search_modules_display)) {
-            return false;
-        }
-
-        if (!write_array_to_file(
-            'unified_search_modules_display',
-            $unified_search_modules_display,
-            'custom/modules/unified_search_modules_display.php'
-        )) {
-            global $app_strings;
-            $msg = string_format($app_strings['ERR_FILE_WRITE'], ['custom/modules/unified_search_modules_display.php']);
-            LoggerManager::getLogger()->error($msg);
-            throw new RuntimeException($msg);
-        }
-
-        return true;
     }
 }
