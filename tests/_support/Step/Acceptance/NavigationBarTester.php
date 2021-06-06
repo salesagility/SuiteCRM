@@ -29,14 +29,14 @@ namespace Step\Acceptance;
 
 use \AcceptanceTester as Tester;
 use Page\Design;
-use SuiteCRM\Enumerator\DesignBreakPoint;
+use SuiteCRM\Tests\SuiteCRM\Enumerator\DesignBreakPoint;
 
 class NavigationBarTester extends Tester
 {
     /**
      * Click on the home buton / navbar brand
      */
-    public function clickHome()
+    public function clickHome(): void
     {
         $I = $this;
         $breakpoint = (new Design($I))->getBreakpointString();
@@ -66,7 +66,7 @@ class NavigationBarTester extends Tester
      * $I->clickUserMenuItem('Admin')
      * $I->clickUserMenuItem('#admin_link')
      */
-    public function clickUserMenuItem($link)
+    public function clickUserMenuItem($link): void
     {
         $I = $this;
         $breakpoint = (new Design($I))->getBreakpointString();
@@ -103,7 +103,7 @@ class NavigationBarTester extends Tester
      * Also:
      * the non filter navigation is not supported by this method
      */
-    public function clickAllMenuItem($link)
+    public function clickAllMenuItem($link): void
     {
         $I = $this;
         $breakpoint = (new Design($I))->getBreakpointString();
@@ -156,7 +156,7 @@ class NavigationBarTester extends Tester
      * Also:
      * the non filter navigation is not supported by this method
      */
-    public function clickCurrentMenuItem($link)
+    public function clickCurrentMenuItem($link): void
     {
         $I = $this;
         $breakpoint = (new Design($I))->getBreakpointString();

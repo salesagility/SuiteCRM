@@ -25,13 +25,17 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search;
+namespace SuiteCRM\Tests\Unit\lib\SuiteCRM\Search;
 
 use Mockery;
 use ReflectionClass;
 use ReflectionException;
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * Class SearchTestAbstract
+ * @package SuiteCRM\Tests\Unit\lib\SuiteCRM\Search
+ */
 abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
 {
     /**
@@ -44,7 +48,7 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
      * @return mixed Method return.
      * @throws ReflectionException
      */
-    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    public function invokeMethod(&$object, $methodName, array $parameters = [])
     {
         $method = (new ReflectionClass(get_class($object)))->getMethod($methodName);
         $method->setAccessible(true);
@@ -60,7 +64,7 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
      * @param mixed $value value of the property.
      * @throws ReflectionException
      */
-    public function setValue(&$object, $property, $value)
+    public function setValue(&$object, $property, $value): void
     {
         $property = (new ReflectionClass(get_class($object)))->getProperty($property);
         $property->setAccessible(true);

@@ -37,49 +37,24 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Utility\BeanJsonSerializer;
-use SuiteCRM\Tests\Unit\lib\SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
+namespace SuiteCRM\Tests\Unit;
+
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-class BeanJsonSerializerTest extends SuitePHPUnitFrameworkTestCase
+/**
+ * Class ConfigTest
+ * @package SuiteCRM\Tests\unit\phpunit
+ */
+class ConfigTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testToArrayContact()
+    public function test_config(): void
     {
-        $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
-        $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.expected.json'), true);
-        $actual = BeanJsonSerializer::make()->toArray($mockBean, false);
-
-        self::assertEquals($expected, $actual);
+        global $sugar_config;
+        self::assertNotEmpty($sugar_config, 'SuiteCRM config is empty');
     }
 
-    public function testToArrayAccount()
+    public function testFoo(): void
     {
-        $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
-        $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.expected.json'), true);
-        $actual = BeanJsonSerializer::make()->toArray($mockBean, false);
-
-        self::assertEquals($expected, $actual);
-    }
-
-    public function testSerializeContact()
-    {
-        $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
-        $actual = BeanJsonSerializer::make()->serialize($mockBean, false, true);
-
-        self::assertJsonStringEqualsJsonFile(
-            __DIR__ . '/BeanJsonSerializerTestData/ContactBean.expected.json',
-            $actual
-        );
-    }
-
-    public function testSerializeAccount()
-    {
-        $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
-        $actual = BeanJsonSerializer::make()->serialize($mockBean, false, true);
-
-        self::assertJsonStringEqualsJsonFile(
-            __DIR__ . '/BeanJsonSerializerTestData/AccountBean.expected.json',
-            $actual
-        );
+        self::assertTrue(true);
     }
 }

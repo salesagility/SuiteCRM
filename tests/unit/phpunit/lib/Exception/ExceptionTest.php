@@ -25,14 +25,19 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Exception;
+namespace SuiteCRM\Tests\Unit\lib\Exception;
 
 use Psr\Log\LogLevel;
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Exception\Exception;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
+/**
+ * Class ExceptionTest
+ * @package SuiteCRM\Tests\Unit\lib\Exception
+ */
 class ExceptionTest extends SuitePHPUnitFrameworkTestCase
 {
-    /**#
+    /**
      * @var Exception $exception
      */
     private static $exception;
@@ -45,7 +50,7 @@ class ExceptionTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testGetDetail()
+    public function testGetDetail(): void
     {
         self::assertEquals(
             'SuiteCRM has encountered an exception which has not been handled',
@@ -53,7 +58,7 @@ class ExceptionTest extends SuitePHPUnitFrameworkTestCase
         );
     }
 
-    public function testGetLogLevel()
+    public function testGetLogLevel(): void
     {
         self::assertEquals(
             LogLevel::CRITICAL,

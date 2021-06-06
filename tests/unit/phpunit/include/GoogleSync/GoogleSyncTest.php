@@ -25,7 +25,7 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 use SuiteCRM\Utility\SuiteValidator;
 

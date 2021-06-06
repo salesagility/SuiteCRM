@@ -40,7 +40,7 @@
 
 use Api\Core\Loader\CustomLoader;
 use Slim\App;
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * CustomLoaderTest
