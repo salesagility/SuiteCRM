@@ -69,7 +69,6 @@
   "require-dev": {
     "consolidation/robo": "^1.4",
     "browserstack/browserstack-local": "^1.1",
-    "codeception/codeception": "^3.0",
     "filp/whoops": "^2.3",
     "flow/jsonpath": "^0.4",
     "friendsofphp/php-cs-fixer": "^2.15",
