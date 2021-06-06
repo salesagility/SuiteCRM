@@ -13,7 +13,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -34,7 +34,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testProjectTask()
+    public function testProjectTask(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $projectTask = BeanFactory::newBean('ProjectTask');
@@ -52,7 +52,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(100, 'utilization', $projectTask);
     }
 
-    public function testskipParentUpdate()
+    public function testskipParentUpdate(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -65,7 +65,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -90,7 +90,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function _get_depends_on_name($id)
+    public function _get_depends_on_name($id): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -101,7 +101,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $result);
     }
 
-    public function testupdateParentProjectTaskPercentage()
+    public function testupdateParentProjectTaskPercentage(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -114,7 +114,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetProjectTaskParent()
+    public function testgetProjectTaskParent(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -123,13 +123,13 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testgetAllSubProjectTasks()
+    public function testgetAllSubProjectTasks(): void
     {
         $result = BeanFactory::newBean('ProjectTask')->getAllSubProjectTasks();
         self::assertIsArray($result);
     }
 
-    public function testupdateStatistic()
+    public function testupdateStatistic(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -142,7 +142,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -156,7 +156,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Administrator', $projectTask->assigned_user_name);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -168,7 +168,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $projectTask->get_summary_text());
     }
 
-    public function test_get_project_name()
+    public function test_get_project_name(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -181,7 +181,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $result);
     }
 
-    public function test_get_parent_name()
+    public function test_get_parent_name(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -194,7 +194,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $result);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -209,7 +209,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -218,7 +218,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $projectTask->bean_implements('ACL')); //test with valid value
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 
@@ -227,7 +227,7 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetUtilizationDropdown()
+    public function testgetUtilizationDropdown(): void
     {
         $projectTask = BeanFactory::newBean('ProjectTask');
 

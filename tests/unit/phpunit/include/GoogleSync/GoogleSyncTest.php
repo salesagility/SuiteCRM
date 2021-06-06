@@ -54,7 +54,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      * @param string $googleAuthJson
      * @return string
      */
-    protected function getFakeGoogleAuthJson($googleAuthJson)
+    protected function getFakeGoogleAuthJson($googleAuthJson): string
     {
         return base64_encode($googleAuthJson);
     }
@@ -65,7 +65,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function test__construct()
+    public function test__construct(): void
     {
 
         // Set up object for testing
@@ -103,7 +103,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetAuthJson()
+    public function testGetAuthJson(): void
     {
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
@@ -140,7 +140,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSetClient()
+    public function testSetClient(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         try {
@@ -151,7 +151,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testGetClient()
+    public function testGetClient(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         try {
@@ -166,7 +166,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetGoogleClient()
+    public function testGetGoogleClient(): void
     {
         try {
             $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test","client_id":"testID"'));
@@ -190,7 +190,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testInitUserService()
+    public function testInitUserService(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         try {
@@ -205,7 +205,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetUserMeetings()
+    public function testGetUserMeetings(): void
     {
         // Create a User
         $user = BeanFactory::getBean('Users');
@@ -271,7 +271,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSetUsersGoogleCalendar()
+    public function testSetUsersGoogleCalendar(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         self::assertEquals(false, $object->callMethod('setUsersGoogleCalendar'));
@@ -281,7 +281,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetSuiteCRMCalendar()
+    public function testGetSuiteCRMCalendar(): void
     {
         $result = (new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}')))->callMethod('getSuiteCRMCalendar', [new Google_Service_Calendar_CalendarList()]);
         self::assertEquals(null, $result);
@@ -291,7 +291,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetUserGoogleEvents()
+    public function testGetUserGoogleEvents(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         self::assertEquals(false, $object->callMethod('getUserGoogleEvents'));
@@ -301,7 +301,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testIsServiceExists()
+    public function testIsServiceExists(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         self::assertEquals(false, $object->callMethod('isServiceExists'));
@@ -311,7 +311,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testIsCalendarExists()
+    public function testIsCalendarExists(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         self::assertEquals(false, $object->callMethod('isCalendarExists'));
@@ -321,7 +321,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetGoogleEventById()
+    public function testGetGoogleEventById(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         try {
@@ -337,7 +337,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetMeetingByEventId()
+    public function testGetMeetingByEventId(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -415,7 +415,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSetGService()
+    public function testSetGService(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         try {
@@ -431,7 +431,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testPushEvent()
+    public function testPushEvent(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -447,7 +447,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testReturnExtendedProperties()
+    public function testReturnExtendedProperties(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -515,7 +515,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testPullEvent()
+    public function testPullEvent(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -531,7 +531,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testDelMeeting()
+    public function testDelMeeting(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -547,7 +547,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testDelEvent()
+    public function testDelEvent(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -587,7 +587,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testClearPopups()
+    public function testClearPopups(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         try {
@@ -604,7 +604,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testCreateSuitecrmMeetingEvent()
+    public function testCreateSuitecrmMeetingEvent(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -674,7 +674,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testCreateGoogleCalendarEvent()
+    public function testCreateGoogleCalendarEvent(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -720,7 +720,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSetTimezone()
+    public function testSetTimezone(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         $property = $object->getProperty('timezone');
@@ -740,7 +740,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSetLastSync()
+    public function testSetLastSync(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -758,7 +758,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -786,7 +786,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testDoAction()
+    public function testDoAction(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -842,7 +842,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testDoSync()
+    public function testDoSync(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         try {
@@ -857,7 +857,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testAddUser()
+    public function testAddUser(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         $return = $object->callMethod('addUser', ['ABC123', 'End User']);
@@ -870,7 +870,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testPushPullSkip()
+    public function testPushPullSkip(): void
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
@@ -957,7 +957,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSetSyncUsers()
+    public function testSetSyncUsers(): void
     {
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
@@ -1044,7 +1044,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSyncAllUsers()
+    public function testSyncAllUsers(): void
     {
         $ret = (new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}')))->syncAllUsers();
         // TODO: it needs more test
@@ -1057,7 +1057,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSingleEventAction()
+    public function testSingleEventAction(): void
     {
         $ret1 = (new GoogleSyncHelper)->singleEventAction(null, null);
         self::assertEquals(false, $ret1);
@@ -1068,7 +1068,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetTimeStrings()
+    public function testGetTimeStrings(): void
     {
         $helper = new GoogleSyncHelper;
 
@@ -1105,7 +1105,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetNewestMeetingResponse()
+    public function testGetNewestMeetingResponse(): void
     {
 //        $this->markTestIncomplete('TODO: Implement Tests');
     }
@@ -1114,7 +1114,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testCreateSuitecrmReminders()
+    public function testCreateSuitecrmReminders(): void
     {
 //        $this->markTestIncomplete('TODO: Implement Tests');
     }
@@ -1123,7 +1123,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testWipeLocalSyncData()
+    public function testWipeLocalSyncData(): void
     {
         // Create a User
         $user = BeanFactory::getBean('Users');

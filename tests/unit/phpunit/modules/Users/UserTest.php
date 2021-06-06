@@ -10,7 +10,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Users');
     }
 
-    public function testgetSignatureButtons()
+    public function testgetSignatureButtons(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -38,7 +38,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testUser()
+    public function testUser(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $user = BeanFactory::newBean('Users');
@@ -57,7 +57,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'team_exists', $user);
     }
 
-    public function testgetSystemUser()
+    public function testgetSystemUser(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -67,7 +67,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(1, $result->id);
     }
 
-    public function testgetDefaultSignature()
+    public function testgetDefaultSignature(): void
     {
         // test
         $db = DBManagerFactory::getInstance();
@@ -83,7 +83,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetSignature()
+    public function testgetSignature(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -93,7 +93,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testgetSignaturesArray()
+    public function testgetSignaturesArray(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -103,7 +103,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetSignatures()
+    public function testgetSignatures(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -115,7 +115,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertRegExp('/\<\/select\>$/', $actual);
     }
 
-    public function testhasPersonalEmail()
+    public function testhasPersonalEmail(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -125,7 +125,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testgetUserPrivGuid()
+    public function testgetUserPrivGuid(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -148,7 +148,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(36, strlen($result));
     }
 
-    public function testsetUserPrivGuid()
+    public function testsetUserPrivGuid(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -169,7 +169,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(36, strlen($result));
     }
 
-    public function testSetAndGetAndResetPreference()
+    public function testSetAndGetAndResetPreference(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -200,7 +200,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testsavePreferencesToDB()
+    public function testsavePreferencesToDB(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -215,7 +215,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetUserDateTimePreferences()
+    public function testgetUserDateTimePreferences(): void
     {
         self::markTestIncomplete('environment dependency');
         $db = DBManagerFactory::getInstance();
@@ -236,7 +236,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(isset($result['userGmtOffset']));
     }
 
-    public function testGetETagSeedAndIncrementETag()
+    public function testGetETagSeedAndIncrementETag(): void
     {
         self::markTestIncomplete('environment dependency');
         $db = DBManagerFactory::getInstance();
@@ -262,14 +262,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan($ETagInitial, $ETagFinal);
     }
 
-    public function testgetLicensedUsersWhere()
+    public function testgetLicensedUsersWhere(): void
     {
         $expected = "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND LENGTH(user_name)>0";
         $actual = User::getLicensedUsersWhere();
         self::assertSame($expected, $actual);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -281,7 +281,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $user->get_summary_text());
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -290,7 +290,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $user->bean_implements('ACL')); //test with valid value
     }
 
-    public function testcheck_role_membership()
+    public function testcheck_role_membership(): void
     {
         self::markTestIncomplete('environment dependency');
         $db = DBManagerFactory::getInstance();
@@ -307,7 +307,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testsaveAndOthers()
+    public function testsaveAndOthers(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -375,7 +375,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $user->mark_deleted($user->id);
     }
 
-    public function retrieve($id)
+    public function retrieve($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -390,7 +390,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("two@email.com", $user->email2);
     }
 
-    public function retrieve_by_email_address($id)
+    public function retrieve_by_email_address($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -410,7 +410,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($id, $user->id);
     }
 
-    public function NewPasswordAndFindUserPassword($id)
+    public function NewPasswordAndFindUserPassword($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -436,7 +436,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     // --- OK
 
-    public function authenticate_user($id)
+    public function authenticate_user($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -452,7 +452,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function load_user($id)
+    public function load_user($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -463,7 +463,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result->authenticated);
     }
 
-    public function change_password($id)
+    public function change_password($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -481,7 +481,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($id, $result['id']);
     }
 
-    public function getPreferredEmail($id)
+    public function getPreferredEmail($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -494,7 +494,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(1, $matches);
     }
 
-    public function getUsersNameAndEmail($id)
+    public function getUsersNameAndEmail($id): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -506,7 +506,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertRegExp('/^one\d{0,}\@email\.com$/', $actual['email']);
     }
 
-    public function getEmailInfo($id)
+    public function getEmailInfo($id): void
     {
         $actual = BeanFactory::newBean('Users')->getEmailInfo($id);
 
@@ -514,14 +514,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertRegExp('/^one\d{0,}\@email\.com$/', $actual['email']);
     }
 
-    public function testencrypt_password()
+    public function testencrypt_password(): void
     {
         $result = BeanFactory::newBean('Users')->encrypt_password("test");
         self::assertTrue(isset($result));
         self::assertGreaterThan(0, strlen($result));
     }
 
-    public function testgetPasswordHash()
+    public function testgetPasswordHash(): void
     {
         $result = User::getPasswordHash("test");
 
@@ -529,7 +529,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($result));
     }
 
-    public function testcheckPassword()
+    public function testcheckPassword(): void
     {
         //test with empty password and empty hash
         $result = User::checkPassword("", '');
@@ -551,7 +551,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function testcheckPasswordMD5()
+    public function testcheckPasswordMD5(): void
     {
         //test with empty password and empty hash
         $result = User::checkPasswordMD5(md5(""), '');
@@ -573,7 +573,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function testis_authenticated()
+    public function testis_authenticated(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -585,7 +585,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $user->is_authenticated());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -598,7 +598,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("Administrator", $user->full_name);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -611,7 +611,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("Administrator", $user->full_name);
     }
 
-    public function testretrieve_user_id()
+    public function testretrieve_user_id(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -623,7 +623,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         static::assertTrue($result1 == '1' || $result2 == '1');
     }
 
-    public function testverify_data()
+    public function testverify_data(): void
     {
         global $mod_strings;
         include __DIR__ . '/../../../../../modules/Users/language/en_us.lang.php';
@@ -644,7 +644,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         // test
         global $mod_strings;
@@ -658,7 +658,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlist_view_parse_additional_sections(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -667,7 +667,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($list_form, $result);
     }
 
-    public function testGetAllUsersAndGetActiveUsers()
+    public function testGetAllUsersAndGetActiveUsers(): void
     {
         $all_users = User::getAllUsers();
         self::assertIsArray($all_users);
@@ -679,7 +679,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -696,13 +696,13 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testget_meetings()
+    public function testget_meetings(): void
     {
         $result = BeanFactory::newBean('Users')->get_meetings();
         self::assertIsArray($result);
     }
 
-    public function testget_calls()
+    public function testget_calls(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -712,7 +712,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Error:Only variables should be passed by reference');
     }
 
-    public function testdisplayEmailCounts()
+    public function testdisplayEmailCounts(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -730,7 +730,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $renderedContent);
     }
 
-    public function testgetSystemDefaultNameAndEmail()
+    public function testgetSystemDefaultNameAndEmail(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -739,7 +739,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsetDefaultsInConfig()
+    public function testsetDefaultsInConfig(): void
     {
         self::markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "filesys::/var/www/html/SuiteCRM/config.php".');
         $result = BeanFactory::newBean('Users')->setDefaultsInConfig();
@@ -750,7 +750,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testgetEmailLink2()
+    public function testgetEmailLink2(): void
     {
         // test
         $user = BeanFactory::newBean('Users');
@@ -796,7 +796,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testgetEmailLink()
+    public function testgetEmailLink(): void
     {
         self::markTestIncomplete('Need to mock up user');
         $user = BeanFactory::newBean('Users');
@@ -828,14 +828,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetLocaleFormatDesc()
+    public function testgetLocaleFormatDesc(): void
     {
         $result = BeanFactory::newBean('Users')->getLocaleFormatDesc();
         self::assertTrue(isset($result));
         self::assertGreaterThan(0, strlen($result));
     }
 
-    public function testisAdmin()
+    public function testisAdmin(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -847,7 +847,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $user->isAdmin());
     }
 
-    public function testisDeveloperForAnyModule()
+    public function testisDeveloperForAnyModule(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -865,7 +865,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $user->isDeveloperForAnyModule());
     }
 
-    public function testgetDeveloperModules()
+    public function testgetDeveloperModules(): void
     {
         // test
         $user = BeanFactory::newBean('Users');
@@ -876,7 +876,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testisDeveloperForModule()
+    public function testisDeveloperForModule(): void
     {
         // test
         $user = BeanFactory::newBean('Users');
@@ -893,7 +893,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $user->isDeveloperForModule("Accounts"));
     }
 
-    public function testgetAdminModules()
+    public function testgetAdminModules(): void
     {
         // test
         $user = BeanFactory::newBean('Users');
@@ -904,7 +904,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testisAdminForModule()
+    public function testisAdminForModule(): void
     {
         // test
         $user = BeanFactory::newBean('Users');
@@ -921,7 +921,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $user->isAdminForModule("Accounts"));
     }
 
-    public function testshowLastNameFirst()
+    public function testshowLastNameFirst(): void
     {
         $result = BeanFactory::newBean('Users')->showLastNameFirst();
         self::assertEquals(false, $result);
@@ -930,7 +930,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_new_list_query()
+    public function testcreate_new_list_query(): void
     {
         /*
             $user = BeanFactory::newBean('Users');
@@ -949,13 +949,13 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testget_first_day_of_week()
+    public function testget_first_day_of_week(): void
     {
         $result = BeanFactory::newBean('Users')->get_first_day_of_week();
         self::assertIsNumeric($result);
     }
 
-    public function testgeneratePassword()
+    public function testgeneratePassword(): void
     {
         //generate apsswords and verify they are not same
 
@@ -969,7 +969,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testsendEmailForPassword()
+    public function testsendEmailForPassword(): void
     {
         $result = BeanFactory::newBean('Users')->sendEmailForPassword("1");
 
@@ -977,7 +977,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testafterImportSave()
+    public function testafterImportSave(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -990,7 +990,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testisPrimaryEmail()
+    public function testisPrimaryEmail(): void
     {
         $user = BeanFactory::newBean('Users');
 
@@ -1008,7 +1008,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
     }
 
-    public function testError()
+    public function testError(): void
     {
         global $app_strings;
 

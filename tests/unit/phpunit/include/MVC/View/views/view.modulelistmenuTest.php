@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         // Execute the constructor and check for the Object type and options attribute
         $view = new ViewModulelistmenu();
@@ -14,7 +14,7 @@ class ViewModulelistmenuTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($view->options);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;

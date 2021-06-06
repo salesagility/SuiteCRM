@@ -13,7 +13,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testCurrency()
+    public function testCurrency(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $currency = BeanFactory::newBean('Currencies');
@@ -27,7 +27,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $currency);
     }
 
-    public function testconvertToDollar()
+    public function testconvertToDollar(): void
     {
         $currency = BeanFactory::newBean('Currencies');
 
@@ -39,7 +39,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(62.5, $currency->convertToDollar(100, 2));
     }
 
-    public function testconvertFromDollar()
+    public function testconvertFromDollar(): void
     {
         $currency = BeanFactory::newBean('Currencies');
 
@@ -51,32 +51,32 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(160, $currency->convertFromDollar(100, 2));
     }
 
-    public function testgetDefaultCurrencyName()
+    public function testgetDefaultCurrencyName(): void
     {
         $currency = BeanFactory::newBean('Currencies');
         self::assertEquals('US Dollars', $currency->getDefaultCurrencyName());
     }
 
-    public function testgetDefaultCurrencySymbol()
+    public function testgetDefaultCurrencySymbol(): void
     {
         $currency = BeanFactory::newBean('Currencies');
         self::assertEquals('$', $currency->getDefaultCurrencySymbol());
     }
 
-    public function testgetDefaultISO4217()
+    public function testgetDefaultISO4217(): void
     {
         $currency = BeanFactory::newBean('Currencies');
         self::assertEquals('USD', $currency->getDefaultISO4217());
     }
 
-    public function testretrieveIDBySymbol()
+    public function testretrieveIDBySymbol(): void
     {
         $currency = BeanFactory::newBean('Currencies');
         self::assertEquals('', $currency->retrieveIDBySymbol(''));
         self::assertEquals('', $currency->retrieveIDBySymbol('\$'));
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlist_view_parse_additional_sections(): void
     {
         global $isMerge;
 
@@ -94,14 +94,14 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('<input name="mergecur[]" type="checkbox" value="">', $result->_tpl_vars['PREROW']);
     }
 
-    public function testretrieve_id_by_name()
+    public function testretrieve_id_by_name(): void
     {
         $currency = BeanFactory::newBean('Currencies');
         self::assertEquals('', $currency->retrieve_id_by_name(''));
         self::assertEquals('', $currency->retrieve_id_by_name('US Dollars'));
     }
 
-    public function testretrieve()
+    public function testretrieve(): void
     {
         $currency = BeanFactory::newBean('Currencies');
 
@@ -119,7 +119,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('-->', $currency->unhide);
     }
 
-    public function testgetPdfCurrencySymbol()
+    public function testgetPdfCurrencySymbol(): void
     {
         $currency = BeanFactory::newBean('Currencies');
 
@@ -131,7 +131,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('�', $currency->getPdfCurrencySymbol());
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $currency = BeanFactory::newBean('Currencies');
 
@@ -146,7 +146,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $currency = BeanFactory::newBean('Currencies');
         $currency->name = 'Rand';
@@ -166,56 +166,56 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(-99, $result->id);
     }
 
-    public function testcurrency_format_number()
+    public function testcurrency_format_number(): void
     {
         self::assertEquals('$100.00', currency_format_number(100));
         self::assertEquals('$100.0', currency_format_number(100, array('round' => 1, 'decimals' => 1)));
     }
 
-    public function testformat_number()
+    public function testformat_number(): void
     {
         self::assertEquals('100.00', format_number(100));
         self::assertEquals('100.1', format_number(100.09, 1, 1));
         self::assertEquals('$100.1', format_number(100.09, 1, 1, array('convert' => 1, 'currency_symbol' => 'R')));
     }
 
-    public function testformat_place_symbol()
+    public function testformat_place_symbol(): void
     {
         self::assertEquals('R&nbsp;100', format_place_symbol(100, 'R', true));
         self::assertEquals('R100', format_place_symbol(100, 'R', false));
         self::assertEquals('100', format_place_symbol(100, '', false));
     }
 
-    public function testunformat_number()
+    public function testunformat_number(): void
     {
         self::assertEquals('100', unformat_number('$100'));
         self::assertEquals('100', unformat_number(100));
     }
 
-    public function testformat_money()
+    public function testformat_money(): void
     {
         self::assertEquals('100.00', format_money('100'));
         self::assertEquals('100.00', format_money('100', false));
     }
 
-    public function testget_number_separators()
+    public function testget_number_separators(): void
     {
         self::assertEquals([',', '.'], get_number_separators());
         self::assertEquals([',', '.'], get_number_separators(false));
     }
 
-    public function testget_number_seperators()
+    public function testget_number_seperators(): void
     {
         self::assertEquals(null, get_number_seperators(false));
     }
 
-    public function testtoString()
+    public function testtoString(): void
     {
         $expected = "\$m_currency_round= \n\$m_currency_decimal= \n\$m_currency_symbol= \n\$m_currency_iso= \n\$m_currency_name= \n";
         self::assertSame($expected, toString(false));
     }
 
-    public function testgetCurrencyDropDown()
+    public function testgetCurrencyDropDown(): void
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
         //test with view = Default / DetailView
@@ -227,7 +227,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetCurrencyNameDropDown()
+    public function testgetCurrencyNameDropDown(): void
     {
         //test with view = Default / DetailView
         self::assertEquals('US Dollars', getCurrencyNameDropDown(null));
@@ -238,7 +238,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetCurrencySymbolDropDown()
+    public function testgetCurrencySymbolDropDown(): void
     {
         //test with view = Default / DetailView
         self::assertEquals('US Dollars', getCurrencySymbolDropDown(null));

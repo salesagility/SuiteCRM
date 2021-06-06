@@ -12,7 +12,7 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
 {
     // Make sure createPreparedQuery returns the correct SQL query when given
     // a simple query.
-    public function testcreatePreparedQueryWithSimpleQuery()
+    public function testcreatePreparedQueryWithSimpleQuery(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -28,7 +28,7 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
 
     // Make sure createPreparedQuery returns the correct SQL query when given
     // a slightly more complex query.
-    public function testcreatePreparedQueryWithMoreComplexQuery()
+    public function testcreatePreparedQueryWithMoreComplexQuery(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -44,7 +44,7 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
 
     // Make sure createPreparedQuery returns the correct SQL query when
     // using '!=' in the input.
-    public function testcreatePreparedQueryWithNegation()
+    public function testcreatePreparedQueryWithNegation(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -60,7 +60,7 @@ class DBManagerTest extends SuitePHPUnitFrameworkTestCase
 
     // Make sure createPreparedQuery returns the correct SQL query when
     // using '\?' in the input.
-    public function testcreatePreparedQueryWithEscapedToken()
+    public function testcreatePreparedQueryWithEscapedToken(): void
     {
         $db = DBManagerFactory::getInstance();
 

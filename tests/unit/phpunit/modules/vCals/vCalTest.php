@@ -13,7 +13,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testvCal()
+    public function testvCal(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $vcal = BeanFactory::newBean('vCals');
@@ -30,7 +30,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $vcal);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $vcal = BeanFactory::newBean('vCals');
 
@@ -42,7 +42,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $vcal->get_summary_text());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $vcal = BeanFactory::newBean('vCals');
 
@@ -57,7 +57,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $vcal = BeanFactory::newBean('vCals');
 
@@ -72,7 +72,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $vcal = BeanFactory::newBean('vCals');
 
@@ -87,7 +87,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testget_freebusy_lines_cache()
+    public function testget_freebusy_lines_cache(): void
     {
         self::markTestIncomplete('Asserting String Start Width is imposible if expected is empty srting');
 
@@ -103,7 +103,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertStringEndsWith($expectedEnd, $result);
     }
 
-    public function testcreate_sugar_freebusy()
+    public function testcreate_sugar_freebusy(): void
     {
         global $locale, $timedate;
 
@@ -118,7 +118,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThanOrEqual(0, strlen($result));
     }
 
-    public function testget_vcal_freebusy()
+    public function testget_vcal_freebusy(): void
     {
         $vcal = BeanFactory::newBean('vCals');
         $user_focus = new User('1');
@@ -132,7 +132,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertStringEndsWith($expectedEnd, $result);
     }
 
-    public function testcache_sugar_vcal()
+    public function testcache_sugar_vcal(): void
     {
         $vcal = BeanFactory::newBean('vCals');
         $user_focus = new User('1');
@@ -146,7 +146,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcache_sugar_vcal_freebusy()
+    public function testcache_sugar_vcal_freebusy(): void
     {
         $vcal = BeanFactory::newBean('vCals');
         $user_focus = new User('1');
@@ -160,7 +160,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfold_ical_lines()
+    public function testfold_ical_lines(): void
     {
         //test with short strings
         $result = vCal::fold_ical_lines('testkey', 'testvalue');
@@ -172,7 +172,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function testcreate_ical_array_from_string()
+    public function testcreate_ical_array_from_string(): void
     {
         $iCalString = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VFREEBUSY\r\nORGANIZER;CN= :VFREEBUSY\r\nDTSTART:2016-01-09 00:00:00\r\nDTEND:2016-03-09 00:00:00\r\nDTSTAMP:2016-01-10 11:07:15\r\nEND:VFREEBUSY\r\nEND:VCALENDAR\r\n";
         $expected = array(
@@ -191,7 +191,7 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_ical_string_from_array()
+    public function testcreate_ical_string_from_array(): void
     {
         $expected = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VFREEBUSY\r\nORGANIZER;CN= :VFREEBUSY\r\nDTSTART:2016-01-09 00:00:00\r\nDTEND:2016-03-09 00:00:00\r\nDTSTAMP:2016-01-10 11:07:15\r\nEND:VFREEBUSY\r\nEND:VCALENDAR\r\n";
         $iCalArray = array(
@@ -210,19 +210,19 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testescape_ical_chars()
+    public function testescape_ical_chars(): void
     {
         self::assertSame('', vCal::escape_ical_chars(''));
         self::assertSame('\;\,', vCal::escape_ical_chars(';,'));
     }
 
-    public function testunescape_ical_chars()
+    public function testunescape_ical_chars(): void
     {
         self::assertSame('', vCal::unescape_ical_chars(''));
         self::assertSame('; , \\', vCal::unescape_ical_chars('\\; \\, \\\\'));
     }
 
-    public function testget_ical_event()
+    public function testget_ical_event(): void
     {
         $user = new User(1);
         $meeting = BeanFactory::newBean('Meetings');

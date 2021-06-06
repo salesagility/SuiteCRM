@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOR_ConditionTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Condition()
+    public function testAOR_Condition(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aor_Condition = BeanFactory::newBean('AOR_Conditions');
@@ -21,7 +21,7 @@ class AOR_ConditionTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'tracker_visibility', $aor_Condition);
     }
 
-    public function testsave_lines()
+    public function testsave_lines(): void
     {
         $aor_Condition = BeanFactory::newBean('AOR_Conditions');
 

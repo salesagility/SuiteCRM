@@ -13,7 +13,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testProject()
+    public function testProject(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $project = BeanFactory::newBean('Project');
@@ -29,7 +29,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $project);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $project = BeanFactory::newBean('Project');
 
@@ -43,7 +43,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("Administrator", $project->assigned_user_name);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $project = BeanFactory::newBean('Project');
 
@@ -57,7 +57,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("Administrator", $project->assigned_user_name);
     }
 
-    public function testsave_relationship_changes()
+    public function testsave_relationship_changes(): void
     {
         $project = BeanFactory::newBean('Project');
 
@@ -75,17 +75,17 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function test_get_total_estimated_effort()
+    public function test_get_total_estimated_effort(): void
     {
 //        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
     }
 
-    public function test_get_total_actual_effort()
+    public function test_get_total_actual_effort(): void
     {
 //        $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $project = BeanFactory::newBean('Project');
 
@@ -97,7 +97,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $project->get_summary_text());
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $project = BeanFactory::newBean('Project');
 
@@ -116,7 +116,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         /*
         $project = BeanFactory::newBean('Project');
@@ -137,7 +137,7 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true, "NEEDS FIXING!");
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $project = BeanFactory::newBean('Project');
 
@@ -146,12 +146,12 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $project->bean_implements('ACL')); //test with valid value
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
 //        $this->markTestIncomplete('Refactor exporter: productes SQL that has different field ordering in SELECT');
     }
 
-    public function testgetAllProjectTasks()
+    public function testgetAllProjectTasks(): void
     {
         $project = BeanFactory::newBean('Project');
 

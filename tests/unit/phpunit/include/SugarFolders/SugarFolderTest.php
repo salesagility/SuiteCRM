@@ -56,14 +56,14 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
      *
      * @return void
      */
-    public function testCanGetSugarFolderObject()
+    public function testCanGetSugarFolderObject(): void
     {
         $sugarfolder = new SugarFolder();
 
         self::assertIsObject($sugarfolder);
     }
 
-    public function testGenerateArchiveFolderQuery()
+    public function testGenerateArchiveFolderQuery(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -76,7 +76,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $sql);
     }
 
-    public function testGenerateSugarsDynamicFolderQuery()
+    public function testGenerateSugarsDynamicFolderQuery(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -108,7 +108,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($sql, $expected);
     }
 
-    public function testFolderSubscriptions()
+    public function testFolderSubscriptions(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -150,7 +150,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         // $sugarfolder->clearSubscriptions($user = null)
     }
 
-    public function testClearSubscriptionsForFolder()
+    public function testClearSubscriptionsForFolder(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -171,7 +171,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $sugarfolder->clearSubscriptionsForFolder($sugarfolder->id);
     }
 
-    public function testGetFoldersForSettings()
+    public function testGetFoldersForSettings(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -211,7 +211,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains($sugarfolder->id, $ret);
     }
 
-    public function testCrudFolder()
+    public function testCrudFolder(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -269,14 +269,14 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($deleted);
     }
 
-    public function testCheckFalseIdForDelete()
+    public function testCheckFalseIdForDelete(): void
     {
         $ret = (new SugarFolder())->delete();
 
         self::assertFalse($ret);
     }
 
-    public function testCopyBean()
+    public function testCopyBean(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -322,7 +322,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testMoveFolder()
+    public function testMoveFolder(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -371,7 +371,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($success);
     }
 
-    public function testGetListItemsForEmailXML()
+    public function testGetListItemsForEmailXML(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -415,7 +415,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($results);
     }
 
-    public function testCountOfItems()
+    public function testCountOfItems(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -495,7 +495,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(0, $count);
     }
 
-    public function testNonExistingRetrieve()
+    public function testNonExistingRetrieve(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -509,7 +509,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($ret);
     }
 
-    public function testDeleteEmailsFromFolder()
+    public function testDeleteEmailsFromFolder(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -538,7 +538,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testDeleteEmailsFromAllFolders()
+    public function testDeleteEmailsFromAllFolders(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -590,7 +590,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($existInFolderTwo);
     }
 
-    public function testGetUserFolders()
+    public function testGetUserFolders(): void
     {
         self::markTestIncomplete(
             'This test requires a review'
@@ -664,7 +664,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsObject($rootNode);
     }
 
-    public function testSetSubscriptionWithNoUser()
+    public function testSetSubscriptionWithNoUser(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;
@@ -687,7 +687,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($ret);
     }
 
-    public function testUpdateSave()
+    public function testUpdateSave(): void
     {
         $user = BeanFactory::newBean('Users');
         $user->id = 1;

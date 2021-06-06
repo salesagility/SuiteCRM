@@ -13,7 +13,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOW_WorkFlow()
+    public function testAOW_WorkFlow(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
@@ -29,7 +29,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'importable', $aowWorkFlow);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
         self::assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value
@@ -37,7 +37,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
     }
 
-    public function testmark_delete_related()
+    public function testmark_delete_related(): void
     {
         // Create a workflow and a related condition
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
@@ -63,7 +63,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertEmpty($cond);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -82,7 +82,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testload_flow_beans()
+    public function testload_flow_beans(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -95,13 +95,13 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testrun_flows()
+    public function testrun_flows(): void
     {
         $result = BeanFactory::newBean('AOW_WorkFlow')->run_flows();
         self::assertTrue($result);
     }
 
-    public function testrun_flow()
+    public function testrun_flow(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -114,7 +114,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testrun_bean_flows()
+    public function testrun_bean_flows(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -127,7 +127,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($result);
     }
 
-    public function testget_flow_beans()
+    public function testget_flow_beans(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -137,7 +137,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThanOrEqual(0, count((array)$result));
     }
 
-    public function testbuild_flow_query_join()
+    public function testbuild_flow_query_join(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
         $query = array();
@@ -156,7 +156,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $result);
     }
 
-    public function testbuild_flow_query_where()
+    public function testbuild_flow_query_where(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -185,7 +185,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $query);
     }
 
-    public function testbuild_query_where()
+    public function testbuild_query_where(): void
     {
         self::markTestIncomplete('[PHPUnit_Framework_Exception] unserialize(): Error at offset 0 of 5 bytes');
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
@@ -251,7 +251,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $query);
     }
 
-    public function testcheck_valid_bean()
+    public function testcheck_valid_bean(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
         $aowWorkFlow->flow_run_on = 'New_Records';
@@ -262,7 +262,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($result);
     }
 
-    public function testcompare_condition()
+    public function testcompare_condition(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -289,7 +289,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(4, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
     }
 
-    public function testcheck_in_group()
+    public function testcheck_in_group(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 
@@ -298,7 +298,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($aowWorkFlow->check_in_group(1, 'Calls', 1));
     }
 
-    public function testrun_actions()
+    public function testrun_actions(): void
     {
         $aowWorkFlow = BeanFactory::newBean('AOW_WorkFlow');
 

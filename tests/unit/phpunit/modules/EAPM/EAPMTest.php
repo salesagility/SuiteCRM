@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EAPMTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testEAPM()
+    public function testEAPM(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $eapm = BeanFactory::newBean('EAPM');
@@ -21,7 +21,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $eapm);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $eapm = BeanFactory::newBean('EAPM');
         self::assertEquals(false, $eapm->bean_implements('')); //test with blank value
@@ -41,7 +41,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testcreate_new_list_query()
+    public function testcreate_new_list_query(): void
     {
         $eapm = BeanFactory::newBean('EAPM');
 
@@ -56,7 +56,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsaveAndMarkDeletedAndValidated()
+    public function testsaveAndMarkDeletedAndValidated(): void
     {
         self::markTestIncomplete('eapm table fails');
         $eapm = BeanFactory::newBean('EAPM');
@@ -88,7 +88,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $eapm = BeanFactory::newBean('EAPM');
 
@@ -101,7 +101,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $eapm = BeanFactory::newBean('EAPM');
 
@@ -114,7 +114,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testsave_cleanup()
+    public function testsave_cleanup(): void
     {
         $eapm = BeanFactory::newBean('EAPM');
 
@@ -126,7 +126,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $eapm->api_data);
     }
 
-    public function testdelete_user_accounts()
+    public function testdelete_user_accounts(): void
     {
         $eapm = BeanFactory::newBean('EAPM');
 
@@ -139,7 +139,7 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetEAPMExternalApiDropDown()
+    public function testgetEAPMExternalApiDropDown(): void
     {
         $result = getEAPMExternalApiDropDown();
         self::assertEquals(array('' => ''), $result);

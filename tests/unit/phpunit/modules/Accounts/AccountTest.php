@@ -13,7 +13,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testgetProductsServicesPurchasedQuery()
+    public function testgetProductsServicesPurchasedQuery(): void
     {
         $Account = BeanFactory::newBean('Accounts');
 
@@ -45,7 +45,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testAccount()
+    public function testAccount(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $Account = BeanFactory::newBean('Accounts');
@@ -56,7 +56,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($Account->field_defs);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         //test without name setting attribute
         $Account = BeanFactory::newBean('Accounts');
@@ -69,14 +69,14 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test account', $name);
     }
 
-    public function testget_contacts()
+    public function testget_contacts(): void
     {
         //execute the method and verify that it returns an array
         $contacts = (new Account(''))->get_contacts();
         self::assertIsArray($contacts);
     }
 
-    public function testclear_account_case_relationship()
+    public function testclear_account_case_relationship(): void
     {
         self::markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
         //This method cannot be tested because Query has a wrong column name which makes the function to die.
@@ -85,7 +85,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $Account->clear_account_case_relationship('','');*/
     }
 
-    public function testremove_redundant_http()
+    public function testremove_redundant_http(): void
     {
         $Account = BeanFactory::newBean('Accounts');
 
@@ -98,7 +98,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $Account = new Account('');
 
@@ -111,7 +111,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $Account = new Account('');
 
@@ -124,7 +124,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         self::markTestIncomplete('Breaks on php 7.1');
         $this->
@@ -152,7 +152,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $Account = BeanFactory::newBean('Accounts');
 
@@ -167,7 +167,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         self::markTestIncomplete('Needs to clearify');
 
@@ -186,7 +186,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         //execute the method and test if populates provided sugar_smarty
         $result = BeanFactory::newBean('Accounts')->set_notification_body(new Sugar_Smarty(), BeanFactory::newBean('Accounts'));
@@ -194,7 +194,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEquals(new Sugar_Smarty(), $result);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $Account = BeanFactory::newBean('Accounts');
 
@@ -203,7 +203,7 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($Account->bean_implements('Basic'));//test with invalid value
     }
 
-    public function testget_unlinked_email_query()
+    public function testget_unlinked_email_query(): void
     {
         $Account = BeanFactory::newBean('Accounts');
 

@@ -12,7 +12,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
         $current_user = BeanFactory::newBean('Users');
     }
-    public function testSecurityGroup()
+    public function testSecurityGroup(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $securityGroup = BeanFactory::newBean('SecurityGroups');
@@ -60,7 +60,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetGroupUsersWhere()
+    public function testgetGroupUsersWhere(): void
     {
         $securityGroup = BeanFactory::newBean('SecurityGroups');
 
@@ -75,7 +75,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetGroupJoin()
+    public function testgetGroupJoin(): void
     {
         $securityGroup = BeanFactory::newBean('SecurityGroups');
 
@@ -100,7 +100,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetGroupUsersJoin()
+    public function testgetGroupUsersJoin(): void
     {
         $securityGroup = BeanFactory::newBean('SecurityGroups');
 
@@ -114,7 +114,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgroupHasAccess()
+    public function testgroupHasAccess(): void
     {
         //test for listview
         $result = SecurityGroup::groupHasAccess('', '[SELECT_ID_LIST]');
@@ -129,7 +129,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testinherit()
+    public function testinherit(): void
     {
         $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
@@ -145,7 +145,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testassign_default_groups()
+    public function testassign_default_groups(): void
     {
         $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
@@ -159,7 +159,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_creator()
+    public function testinherit_creator(): void
     {
         $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
@@ -173,7 +173,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_assigned()
+    public function testinherit_assigned(): void
     {
         $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
@@ -188,7 +188,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_parent()
+    public function testinherit_parent(): void
     {
         $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
@@ -202,7 +202,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testinherit_parentQuery()
+    public function testinherit_parentQuery(): void
     {
         $account = BeanFactory::newBean('Accounts');
         $account->id = 1;
@@ -265,7 +265,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         $securityGroup->mark_deleted($securityGroup->id);
     }
 
-    public function testgetSecurityModules()
+    public function testgetSecurityModules(): void
     {
         $securityGroup = BeanFactory::newBean('SecurityGroups');
 
@@ -338,7 +338,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('aclroles', $result);
     }
 
-    public function testaddGroupToRecord()
+    public function testaddGroupToRecord(): void
     {
         // unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -357,7 +357,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testremoveGroupFromRecord()
+    public function testremoveGroupFromRecord(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -376,7 +376,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetUserSecurityGroups()
+    public function testgetUserSecurityGroups(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -389,7 +389,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetAllSecurityGroups()
+    public function testgetAllSecurityGroups(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -402,7 +402,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetMembers()
+    public function testgetMembers(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -415,7 +415,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetPrimaryGroupID()
+    public function testgetPrimaryGroupID(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();

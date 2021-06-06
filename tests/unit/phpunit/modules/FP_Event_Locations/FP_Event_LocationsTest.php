@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class FP_Event_LocationsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testFP_Event_Locations()
+    public function testFP_Event_Locations(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $fpEventLoc = BeanFactory::newBean('FP_Event_Locations');

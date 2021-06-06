@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testViewJson()
+    public function testViewJson(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewJson();
@@ -14,7 +14,7 @@ class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
     }
 
     //incomplete test. this method uses exit() so it cannot be tested.
-    public function testdisplay()
+    public function testdisplay(): void
     {
         /*
         setup required paramerers and execute the method.

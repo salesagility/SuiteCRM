@@ -27,7 +27,7 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testLoggerLevels()
+    public function testLoggerLevels(): void
     {
         $loggerManager = self::$loggerManager;
         $loggerManager::setLevelMapping('test', 125);
@@ -36,20 +36,20 @@ class LoggerManagerTest extends SuitePHPUnitFrameworkTestCase
         self::assertArrayHasKey('test', $loggerLevels);
     }
 
-    public function testGetLogLevel()
+    public function testGetLogLevel(): void
     {
         $logLevel = self::$loggerManager::getLogLevel();
         self::assertEquals('fatal', $logLevel);
     }
 
-    public function testGetAvailableLoggers()
+    public function testGetAvailableLoggers(): void
     {
         $loggers = self::$loggerManager::getAvailableLoggers();
 
         self::assertContains('SugarLogger', $loggers);
     }
 
-    public function testSetLoggerLevel()
+    public function testSetLoggerLevel(): void
     {
         $loggerManager = self::$loggerManager;
         $loggerManager->setLevel('debug');

@@ -14,7 +14,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAudit()
+    public function testAudit(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $audit = BeanFactory::newBean('Audit');
@@ -24,7 +24,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('Audit', 'object_name', $audit);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $audit = BeanFactory::newBean('Audit');
 
@@ -36,7 +36,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $audit->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $audit = BeanFactory::newBean('Audit');
 
@@ -51,7 +51,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $audit = BeanFactory::newBean('Audit');
         // Execute the method and test that it works and doesn't throw an exception.
@@ -65,7 +65,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $audit = BeanFactory::newBean('Audit');
         // Execute the method and test that it works and doesn't throw an exception.
@@ -79,7 +79,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testfill_in_additional_parent_fields()
+    public function testfill_in_additional_parent_fields(): void
     {
         $audit = BeanFactory::newBean('Audit');
         // Execute the method and test that it works and doesn't throw an exception.
@@ -93,7 +93,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $audit = BeanFactory::newBean('Audit');
         // Execute the method and test that it works and doesn't throw an exception.
@@ -107,7 +107,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testget_audit_link()
+    public function testget_audit_link(): void
     {
         $audit = BeanFactory::newBean('Audit');
         // Execute the method and test that it works and doesn't throw an exception.
@@ -121,7 +121,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('method has no implementation');
     }
 
-    public function testget_audit_list()
+    public function testget_audit_list(): void
     {
         global $focus;
         $focus = BeanFactory::newBean('Accounts'); //use audit enabbled module object
@@ -131,7 +131,7 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetAssociatedFieldName()
+    public function testgetAssociatedFieldName(): void
     {
         global $focus;
         $focus = BeanFactory::newBean('Accounts'); //use audit enabbled module object

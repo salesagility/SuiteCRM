@@ -53,7 +53,7 @@ require_once __DIR__ . '/InboundEmailMock.php';
  */
 class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testClearLastError()
+    public function testClearLastError(): void
     {
         $handler = new NonGmailSentFolderHandler();
         $handler->clearLastError();
@@ -61,7 +61,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNull($err);
     }
 
-    public function testSetLastErrorNoInt()
+    public function testSetLastErrorNoInt(): void
     {
         $handler = new NonGmailSentFolderHandler();
 
@@ -73,7 +73,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function storeInSentFolderNoIEIsNull()
+    public function storeInSentFolderNoIEIsNull(): void
     {
         $handler = new NonGmailSentFolderHandler();
         $ret = $handler->storeInSentFolder(null, null);
@@ -81,7 +81,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(NonGmailSentFolderHandler::ERR_NO_IE_FOUND, $handler->getLastError());
     }
 
-    public function storeInSentFolderNoIE()
+    public function storeInSentFolderNoIE(): void
     {
         $handler = new NonGmailSentFolderHandler();
         $ret = $handler->storeInSentFolder(BeanFactory::newBean('InboundEmail'), null);
@@ -89,7 +89,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(NonGmailSentFolderHandler::ERR_NO_IE_FOUND, $handler->getLastError());
     }
 
-    public function storeInSentFolderIsPop3()
+    public function storeInSentFolderIsPop3(): void
     {
         $handler = new NonGmailSentFolderHandler();
         $ie = BeanFactory::newBean('InboundEmail');
@@ -100,7 +100,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(NonGmailSentFolderHandler::ERR_IS_POP3, $handler->getLastError());
     }
 
-    public function storeInSentFolderIsGmail()
+    public function storeInSentFolderIsGmail(): void
     {
         $handler = new NonGmailSentFolderHandler();
         $ie = BeanFactory::newBean('InboundEmail');
@@ -113,7 +113,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(NonGmailSentFolderHandler::ERR_IS_GMAIL, $handler->getLastError());
     }
 
-    public function storeInSentFolderOk()
+    public function storeInSentFolderOk(): void
     {
         $handler = new NonGmailSentFolderHandler();
         $ie = BeanFactory::newBean('InboundEmail');
@@ -126,7 +126,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(NonGmailSentFolderHandler::NO_ERROR, $handler->getLastError());
     }
 
-    public function testGetProblemOfStoringInNonGmailSentFolderNoIEID()
+    public function testGetProblemOfStoringInNonGmailSentFolderNoIEID(): void
     {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = BeanFactory::newBean('InboundEmail');
@@ -136,7 +136,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('IE ID is not set.', $ret);
     }
 
-    public function testGetProblemOfStoringInNonGmailSentFolderNoIEIDValue()
+    public function testGetProblemOfStoringInNonGmailSentFolderNoIEIDValue(): void
     {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = BeanFactory::newBean('InboundEmail');
@@ -146,7 +146,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('IE ID is set but no value.', $ret);
     }
 
-    public function testGetProblemOfStoringInNonGmailSentFolderIsPop3()
+    public function testGetProblemOfStoringInNonGmailSentFolderIsPop3(): void
     {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = BeanFactory::newBean('InboundEmail');
@@ -157,7 +157,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('It is a pop3 protocoll.', $ret);
     }
 
-    public function testGetProblemOfStoringInNonGmailSentFolderIsGmail()
+    public function testGetProblemOfStoringInNonGmailSentFolderIsGmail(): void
     {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = BeanFactory::newBean('InboundEmail');
@@ -169,7 +169,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('It is a gmail.', $ret);
     }
 
-    public function testConnectToNonGmailServer()
+    public function testConnectToNonGmailServer(): void
     {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = BeanFactory::newBean('InboundEmail');

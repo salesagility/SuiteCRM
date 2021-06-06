@@ -83,7 +83,7 @@ class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testGetLangMessage()
+    public function testGetLangMessage(): void
     {
         global $app_strings;
         $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';

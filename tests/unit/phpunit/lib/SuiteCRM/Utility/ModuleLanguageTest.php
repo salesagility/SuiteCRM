@@ -23,7 +23,7 @@ class ModuleLanguageTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testGetCurrentLanguage()
+    public function testGetCurrentLanguage(): void
     {
         $language = self::$language->getModuleLanguageStrings(new \SuiteCRM\Utility\CurrentLanguage(), 'Accounts');
         self::assertNotEmpty($language);

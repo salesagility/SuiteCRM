@@ -47,7 +47,7 @@ require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
 class ElasticSearchEngineTest extends SearchTestAbstract
 {
-    public function testValidateQuery()
+    public function testValidateQuery(): void
     {
         $engine = new ElasticSearchEngine();
         $str = " test AND test2 OR t-test3 ";
@@ -59,7 +59,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         self::assertEquals($exp, $query->getSearchString());
     }
 
-    public function testCreateSearchParams1()
+    public function testCreateSearchParams1(): void
     {
         global $sugar_config;
 
@@ -93,7 +93,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         self::assertEquals($expectedParams, $params);
     }
 
-    public function testCreateSearchParams2()
+    public function testCreateSearchParams2(): void
     {
         global $sugar_config;
 
@@ -126,7 +126,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         self::assertEquals($expectedParams, $params);
     }
 
-    public function testRunElasticSearch()
+    public function testRunElasticSearch(): void
     {
         $query = SearchQuery::fromString("a");
 
@@ -144,7 +144,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
     /**
      * @return array
      */
-    private function getMockedHits()
+    private function getMockedHits(): array
     {
         global $sugar_config;
 
@@ -194,7 +194,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
      * @param $mockedResults
      * @return \Mockery\MockInterface
      */
-    private function getMockedClient($mockedResults)
+    private function getMockedClient($mockedResults): \Mockery\MockInterface
     {
         $client = Mockery::mock('Elasticsearch\Client');
 
@@ -206,7 +206,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         return $client;
     }
 
-    public function testParseHits()
+    public function testParseHits(): void
     {
         $engine = new ElasticSearchEngine();
 
@@ -222,7 +222,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
     /**
      * @return array
      */
-    private function getExpectedResultsForMockedHits()
+    private function getExpectedResultsForMockedHits(): array
     {
         return [
             'Accounts' => [
@@ -235,7 +235,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         ];
     }
 
-    public function testParseEmptyHits()
+    public function testParseEmptyHits(): void
     {
         $engine = new ElasticSearchEngine();
 
@@ -248,7 +248,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         self::assertEquals($expectedResults, $results);
     }
 
-    private function getMockedHitsEmpty()
+    private function getMockedHitsEmpty(): array
     {
         return [
             'took' => 1,
@@ -268,7 +268,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         ];
     }
 
-    public function testSearch()
+    public function testSearch(): void
     {
         $mockedClient = $this->getMockedClient($this->getMockedHits());
         $engine = new ElasticSearchEngine($mockedClient);
@@ -283,7 +283,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
         self::assertGreaterThan(0, $results->getSearchTime());
     }
 
-    public function testGetIndex()
+    public function testGetIndex(): void
     {
         global $sugar_config;
 

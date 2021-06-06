@@ -30,7 +30,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      * Store static field_defs per modules
      * @param string $key
      */
-    protected function fieldDefsStore($key = 'base')
+    protected function fieldDefsStore($key = 'base'): void
     {
         $this->fieldDefsStore[$key]['Contact'] = BeanFactory::newBean('Contacts')->field_defs;
     }
@@ -39,13 +39,13 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      * Restore static field_defs per modules
      * @param string $key
      */
-    protected function fieldDefsRestore($key = 'base')
+    protected function fieldDefsRestore($key = 'base'): void
     {
         $object = BeanFactory::newBean('Contacts');
         $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
     }
 
-    public function testFactoryGetCachedDeleted()
+    public function testFactoryGetCachedDeleted(): void
     {
         // Create a lead and cache it
         $lead = BeanFactory::newBean('Leads');
@@ -75,7 +75,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::__construct()
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         global $dictionary;
 
@@ -564,7 +564,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::setupCustomFields()
      */
-    public function testSetupCustomFields()
+    public function testSetupCustomFields(): void
     {
         $bean = BeanFactory::getBean('Users');
 
@@ -580,7 +580,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::bean_implements()
      */
-    public function testBeanImplements()
+    public function testBeanImplements(): void
     {
         // test
         $results = BeanFactory::getBean('Users')->bean_implements('test');
@@ -590,7 +590,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::populateDefaultValues()
      */
-    public function testPopulateDefaultValues()
+    public function testPopulateDefaultValues(): void
     {
         $testBean1 = BeanFactory::getBean('Users');
         $origFieldDefs = $testBean1->field_defs;
@@ -668,7 +668,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::parseDateDefault()
      */
-    public function testParseDateDefault()
+    public function testParseDateDefault(): void
     {
         $bean = new SugarBeanMock();
 
@@ -694,7 +694,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::removeRelationshipMeta()
      */
-    public function testRemoveRelationshipMeta()
+    public function testRemoveRelationshipMeta(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -724,7 +724,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::createRelationshipMeta()
      */
-    public function testCreateRelationshipMeta()
+    public function testCreateRelationshipMeta(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -766,7 +766,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
      * @see SugarBean::get_union_related_list()
      * @todo need more test coverage and less function complexity
      */
-    public function testGetUnionRelatedList()
+    public function testGetUnionRelatedList(): void
     {
         $request = $_REQUEST;
         self::assertFalse(isset($_SESSION));
@@ -849,7 +849,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::build_sub_queries_for_union()
      */
-    public function testBuildSubQueriesForUnion()
+    public function testBuildSubQueriesForUnion(): void
     {
         // test
         $bean = new SugarBeanMock();
@@ -920,7 +920,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::process_union_list_query()
      */
-    public function testProcessUnionListQuery()
+    public function testProcessUnionListQuery(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -1258,7 +1258,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::retrieve_parent_fields()
      */
-    public function testRetrieveParentFields()
+    public function testRetrieveParentFields(): void
     {
         $GLOBALS['log']->reset();
 
@@ -1382,7 +1382,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getAuditEnabledFieldDefinitions()
      */
-    public function testGetAuditEnabledFieldDefinitions()
+    public function testGetAuditEnabledFieldDefinitions(): void
     {
         $GLOBALS['log']->reset();
 
@@ -1479,7 +1479,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::isOwner()
      */
-    public function testIsOwner()
+    public function testIsOwner(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1551,7 +1551,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::get_custom_table_name()
      */
-    public function testGetCustomTableName()
+    public function testGetCustomTableName(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1563,7 +1563,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getTableName()
      */
-    public function testGetTableName()
+    public function testGetTableName(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1589,7 +1589,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getObjectName()
      */
-    public function testGetObjectName()
+    public function testGetObjectName(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1627,7 +1627,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getIndices()
      */
-    public function testGetIndices()
+    public function testGetIndices(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1705,7 +1705,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getPrimaryFieldDefinition()
      */
-    public function testGetPrimaryFieldDefinition()
+    public function testGetPrimaryFieldDefinition(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1753,7 +1753,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getFieldDefinition()
      */
-    public function testGetFieldDefinition()
+    public function testGetFieldDefinition(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1803,7 +1803,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getFieldValue()
      */
-    public function testGetFieldValue()
+    public function testGetFieldValue(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1841,7 +1841,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::unPopulateDefaultValues()
      */
-    public function testUnPopulateDefaultValues()
+    public function testUnPopulateDefaultValues(): void
     {
         // test
         $bean = BeanFactory::newBean('Contacts');
@@ -1872,7 +1872,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::__clone()
      */
-    public function testClone()
+    public function testClone(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1898,7 +1898,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::get_linked_fields()
      */
-    public function testGetLinkedFields()
+    public function testGetLinkedFields(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1944,7 +1944,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getFieldDefinitions()
      */
-    public function testGetFieldDefinitions()
+    public function testGetFieldDefinitions(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -1958,7 +1958,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::load_relationship()
      */
-    public function testLoadRelationship()
+    public function testLoadRelationship(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -2077,7 +2077,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::get_linked_beans()
      */
-    public function testGetLinkedBeans()
+    public function testGetLinkedBeans(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -2118,7 +2118,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::get_import_required_fields()
      */
-    public function testGetImportRequiredFields()
+    public function testGetImportRequiredFields(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -2133,7 +2133,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::get_importable_fields()
      */
-    public function testGetImportableFields()
+    public function testGetImportableFields(): void
     {
         // test
         $GLOBALS['log']->reset();
@@ -2148,7 +2148,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::create_tables()
      */
-    public function testCreateTables()
+    public function testCreateTables(): void
     {
         // test
         $bean = BeanFactory::newBean('Contacts');
@@ -2165,7 +2165,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getACLCategory()
      */
-    public function testGetACLCategory()
+    public function testGetACLCategory(): void
     {
         // test
         $bean = BeanFactory::newBean('Contacts');
@@ -2176,7 +2176,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::is_AuditEnabled()
      */
-    public function testIsAuditEnabled()
+    public function testIsAuditEnabled(): void
     {
         // test
         $bean = new SugarBeanMock();
@@ -2192,7 +2192,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::get_audit_table_name()
      */
-    public function testGetAuditTableNames()
+    public function testGetAuditTableNames(): void
     {
         // test
         $results = BeanFactory::newBean('Contacts')->get_audit_table_name();
@@ -2202,7 +2202,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::create_audit_table()
      */
-    public function testCreateAuditTable()
+    public function testCreateAuditTable(): void
     {
         $query = /** @lang sql */
             'DROP TABLE contacts_audit;';
@@ -2217,7 +2217,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::save()
      */
-    public function testSave()
+    public function testSave(): void
     {
         $userFieldDefs = BeanFactory::getBean('Users')->field_defs;
         $contactFieldDefs = BeanFactory::getBean('Contacts')->field_defs;
@@ -2496,7 +2496,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::cleanBean()
      */
-    public function testCleanBean()
+    public function testCleanBean(): void
     {
         // test
         $bean = BeanFactory::newBean('Contacts');
@@ -2510,7 +2510,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::fixUpFormatting()
      */
-    public function testFixUpFormatting()
+    public function testFixUpFormatting(): void
     {
         // test
         $bean = BeanFactory::newBean('Contacts');
@@ -2761,7 +2761,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::encrpyt_before_save()
      */
-    public function testEncrpytBeforeSave()
+    public function testEncrpytBeforeSave(): void
     {
         $bean = BeanFactory::newBean('Contacts');
 
@@ -2774,7 +2774,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::getEncryptKey()
      */
-    public function testGetEncryptKey()
+    public function testGetEncryptKey(): void
     {
         $results = (new SugarBeanMock())->getEncryptKeyPublic();
         self::assertEquals(blowfishGetKey('encrypt_field'), $results);
@@ -2783,7 +2783,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @see SugarBean::has_been_modified_since()
      */
-    public function testHasBeenModifiedSince()
+    public function testHasBeenModifiedSince(): void
     {
         // test
         $bean = BeanFactory::newBean('Contacts');

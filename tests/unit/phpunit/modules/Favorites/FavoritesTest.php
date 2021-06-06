@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class FavoritesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testFavorites()
+    public function testFavorites(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $favorites = BeanFactory::newBean('Favorites');
@@ -18,14 +18,14 @@ class FavoritesTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $favorites);
     }
 
-    public function testdeleteFavorite()
+    public function testdeleteFavorite(): void
     {
         //testing with an empty ID
         $result = BeanFactory::newBean('Favorites')->deleteFavorite('');
         self::assertEquals(false, $result);
     }
 
-    public function testgetFavoriteID()
+    public function testgetFavoriteID(): void
     {
         $favorites = BeanFactory::newBean('Favorites');
 
@@ -38,7 +38,7 @@ class FavoritesTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testgetCurrentUserSidebarFavorites()
+    public function testgetCurrentUserSidebarFavorites(): void
     {
         $favorites = BeanFactory::newBean('Favorites');
 

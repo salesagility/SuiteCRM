@@ -13,7 +13,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testACLRole()
+    public function testACLRole(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $aclRole = BeanFactory::newBean('ACLRoles');
@@ -29,7 +29,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(array('user_id' => 'users'), 'relationship_fields', $aclRole);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -40,7 +40,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test role', $name);
     }
 
-    public function testsetAction()
+    public function testsetAction(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -52,7 +52,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
     }
 
-    public function testmark_relationships_deleted()
+    public function testmark_relationships_deleted(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -64,7 +64,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
     }
 
-    public function testgetUserRoles()
+    public function testgetUserRoles(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -77,7 +77,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetUserRoleNames()
+    public function testgetUserRoleNames(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -90,7 +90,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetAllRoles()
+    public function testgetAllRoles(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -103,7 +103,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testgetRoleActions()
+    public function testgetRoleActions(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -176,7 +176,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($exp, array_keys($result));
     }
 
-    public function testtoArray()
+    public function testtoArray(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -195,7 +195,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfromArray()
+    public function testfromArray(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
