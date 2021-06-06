@@ -12,11 +12,11 @@ class FP_Event_LocationsTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $fpEventLoc);
         self::assertInstanceOf('SugarBean', $fpEventLoc);
 
-        self::assertAttributeEquals('FP_Event_Locations', 'module_dir', $fpEventLoc);
-        self::assertAttributeEquals('FP_Event_Locations', 'object_name', $fpEventLoc);
-        self::assertAttributeEquals('fp_event_locations', 'table_name', $fpEventLoc);
-        self::assertAttributeEquals(true, 'new_schema', $fpEventLoc);
-        self::assertAttributeEquals(false, 'importable', $fpEventLoc);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $fpEventLoc);
+        self::assertEquals('FP_Event_Locations', $fpEventLoc->module_dir);
+        self::assertEquals('FP_Event_Locations', $fpEventLoc->object_name);
+        self::assertEquals('fp_event_locations', $fpEventLoc->table_name);
+        self::assertEquals(true, $fpEventLoc->new_schema);
+        self::assertEquals(false, $fpEventLoc->importable);
+        self::assertEquals(true, $fpEventLoc->disable_row_level_security);
     }
 }

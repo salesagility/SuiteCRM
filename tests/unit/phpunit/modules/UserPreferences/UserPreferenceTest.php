@@ -89,12 +89,12 @@ class UserPreferenceTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('UserPreference', $userPreference);
         self::assertInstanceOf('SugarBean', $userPreference);
 
-        self::assertAttributeEquals('user_preferences', 'table_name', $userPreference);
-        self::assertAttributeEquals('UserPreferences', 'module_dir', $userPreference);
-        self::assertAttributeEquals('UserPreference', 'object_name', $userPreference);
+        self::assertEquals('user_preferences', $userPreference->table_name);
+        self::assertEquals('UserPreferences', $userPreference->module_dir);
+        self::assertEquals('UserPreference', $userPreference->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $userPreference);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
+        self::assertEquals(true, $userPreference->new_schema);
+        self::assertEquals(true, $userPreference->disable_row_level_security);
     }
 
     public function testSavePreferencesToDBAndResetPreferences(): void

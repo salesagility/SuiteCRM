@@ -21,12 +21,12 @@ class Calls_RescheduleTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $callsReschedule);
         self::assertInstanceOf('SugarBean', $callsReschedule);
 
-        self::assertAttributeEquals('Calls_Reschedule', 'module_dir', $callsReschedule);
-        self::assertAttributeEquals('Calls_Reschedule', 'object_name', $callsReschedule);
-        self::assertAttributeEquals('calls_reschedule', 'table_name', $callsReschedule);
-        self::assertAttributeEquals(true, 'new_schema', $callsReschedule);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $callsReschedule);
-        self::assertAttributeEquals(true, 'importable', $callsReschedule);
-        self::assertAttributeEquals(false, 'tracker_visibility', $callsReschedule);
+        self::assertEquals('Calls_Reschedule', $callsReschedule->module_dir);
+        self::assertEquals('Calls_Reschedule', $callsReschedule->object_name);
+        self::assertEquals('calls_reschedule', $callsReschedule->table_name);
+        self::assertEquals(true, $callsReschedule->new_schema);
+        self::assertEquals(true, $callsReschedule->disable_row_level_security);
+        self::assertEquals(true, $callsReschedule->importable);
+        self::assertEquals(false, $callsReschedule->tracker_visibility);
     }
 }

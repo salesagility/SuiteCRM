@@ -12,13 +12,13 @@ class AOR_ConditionTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aor_Condition);
         self::assertInstanceOf('SugarBean', $aor_Condition);
 
-        self::assertAttributeEquals('AOR_Conditions', 'module_dir', $aor_Condition);
-        self::assertAttributeEquals('AOR_Condition', 'object_name', $aor_Condition);
-        self::assertAttributeEquals('aor_conditions', 'table_name', $aor_Condition);
-        self::assertAttributeEquals(true, 'new_schema', $aor_Condition);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aor_Condition);
-        self::assertAttributeEquals(true, 'importable', $aor_Condition);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aor_Condition);
+        self::assertEquals('AOR_Conditions', $aor_Condition->module_dir);
+        self::assertEquals('AOR_Condition', $aor_Condition->object_name);
+        self::assertEquals('aor_conditions', $aor_Condition->table_name);
+        self::assertEquals(true, $aor_Condition->new_schema);
+        self::assertEquals(true, $aor_Condition->disable_row_level_security);
+        self::assertEquals(true, $aor_Condition->importable);
+        self::assertEquals(false, $aor_Condition->tracker_visibility);
     }
 
     public function testsave_lines(): void

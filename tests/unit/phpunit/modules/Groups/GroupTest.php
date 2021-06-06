@@ -21,9 +21,9 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('User', $group);
         self::assertInstanceOf('SugarBean', $group);
 
-        self::assertAttributeEquals('Group', 'status', $group);
-        self::assertAttributeEquals('', 'password', $group);
-        self::assertAttributeEquals(false, 'importable', $group);
+        self::assertEquals('Group', $group->status);
+        self::assertEquals('', $group->password);
+        self::assertEquals(false, $group->importable);
     }
 
     public function testmark_deleted(): void

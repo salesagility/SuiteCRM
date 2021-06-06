@@ -21,12 +21,12 @@ class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aowProcessed);
         self::assertInstanceOf('SugarBean', $aowProcessed);
 
-        self::assertAttributeEquals('AOW_Processed', 'module_dir', $aowProcessed);
-        self::assertAttributeEquals('AOW_Processed', 'object_name', $aowProcessed);
-        self::assertAttributeEquals('aow_processed', 'table_name', $aowProcessed);
-        self::assertAttributeEquals(true, 'new_schema', $aowProcessed);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aowProcessed);
-        self::assertAttributeEquals(false, 'importable', $aowProcessed);
+        self::assertEquals('AOW_Processed', $aowProcessed->module_dir);
+        self::assertEquals('AOW_Processed', $aowProcessed->object_name);
+        self::assertEquals('aow_processed', $aowProcessed->table_name);
+        self::assertEquals(true, $aowProcessed->new_schema);
+        self::assertEquals(true, $aowProcessed->disable_row_level_security);
+        self::assertEquals(false, $aowProcessed->importable);
     }
 
     public function testbean_implements(): void

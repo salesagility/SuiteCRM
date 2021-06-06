@@ -21,13 +21,13 @@ class AOW_ConditionTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aowCondition);
         self::assertInstanceOf('SugarBean', $aowCondition);
 
-        self::assertAttributeEquals('AOW_Conditions', 'module_dir', $aowCondition);
-        self::assertAttributeEquals('AOW_Condition', 'object_name', $aowCondition);
-        self::assertAttributeEquals('aow_conditions', 'table_name', $aowCondition);
-        self::assertAttributeEquals(true, 'new_schema', $aowCondition);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aowCondition);
-        self::assertAttributeEquals(false, 'importable', $aowCondition);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aowCondition);
+        self::assertEquals('AOW_Conditions', $aowCondition->module_dir);
+        self::assertEquals('AOW_Condition', $aowCondition->object_name);
+        self::assertEquals('aow_conditions', $aowCondition->table_name);
+        self::assertEquals(true, $aowCondition->new_schema);
+        self::assertEquals(true, $aowCondition->disable_row_level_security);
+        self::assertEquals(false, $aowCondition->importable);
+        self::assertEquals(false, $aowCondition->tracker_visibility);
     }
 
     public function testbean_implements(): void

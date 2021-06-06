@@ -10,7 +10,7 @@ class ViewMultieditTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewMultiedit();
         self::assertInstanceOf('ViewMultiedit', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('edit', 'type', $view);
+        self::assertEquals('edit', $view->type);
     }
 
     public function testdisplay(): void

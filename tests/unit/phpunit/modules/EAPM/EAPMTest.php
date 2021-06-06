@@ -12,13 +12,13 @@ class EAPMTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $eapm);
         self::assertInstanceOf('SugarBean', $eapm);
 
-        self::assertAttributeEquals('EAPM', 'module_dir', $eapm);
-        self::assertAttributeEquals('EAPM', 'object_name', $eapm);
-        self::assertAttributeEquals('eapm', 'table_name', $eapm);
-        self::assertAttributeEquals(true, 'new_schema', $eapm);
-        self::assertAttributeEquals(false, 'importable', $eapm);
-        self::assertAttributeEquals(false, 'validated', $eapm);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $eapm);
+        self::assertEquals('EAPM', $eapm->module_dir);
+        self::assertEquals('EAPM', $eapm->object_name);
+        self::assertEquals('eapm', $eapm->table_name);
+        self::assertEquals(true, $eapm->new_schema);
+        self::assertEquals(false, $eapm->importable);
+        self::assertEquals(false, $eapm->validated);
+        self::assertEquals(true, $eapm->disable_row_level_security);
     }
 
     public function testbean_implements(): void

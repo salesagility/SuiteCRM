@@ -10,7 +10,7 @@ class ViewJsonTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewJson();
         self::assertInstanceOf('ViewJson', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('detail', 'type', $view);
+        self::assertEquals('detail', $view->type);
     }
 
     //incomplete test. this method uses exit() so it cannot be tested.

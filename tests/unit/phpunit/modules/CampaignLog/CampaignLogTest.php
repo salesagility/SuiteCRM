@@ -20,10 +20,10 @@ class CampaignLogTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('CampaignLog', $campaignLog);
         self::assertInstanceOf('SugarBean', $campaignLog);
 
-        self::assertAttributeEquals('CampaignLog', 'module_dir', $campaignLog);
-        self::assertAttributeEquals('CampaignLog', 'object_name', $campaignLog);
-        self::assertAttributeEquals('campaign_log', 'table_name', $campaignLog);
-        self::assertAttributeEquals(true, 'new_schema', $campaignLog);
+        self::assertEquals('CampaignLog', $campaignLog->module_dir);
+        self::assertEquals('CampaignLog', $campaignLog->object_name);
+        self::assertEquals('campaign_log', $campaignLog->table_name);
+        self::assertEquals(true, $campaignLog->new_schema);
     }
 
     public function testget_list_view_data(): void

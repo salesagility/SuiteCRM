@@ -20,10 +20,10 @@ class DocumentRevisionTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('DocumentRevision', $documentRevision);
         self::assertInstanceOf('SugarBean', $documentRevision);
 
-        self::assertAttributeEquals('DocumentRevisions', 'module_dir', $documentRevision);
-        self::assertAttributeEquals('DocumentRevision', 'object_name', $documentRevision);
-        self::assertAttributeEquals('document_revisions', 'table_name', $documentRevision);
-        self::assertAttributeEquals(true, 'new_schema', $documentRevision);
+        self::assertEquals('DocumentRevisions', $documentRevision->module_dir);
+        self::assertEquals('DocumentRevision', $documentRevision->object_name);
+        self::assertEquals('document_revisions', $documentRevision->table_name);
+        self::assertEquals(true, $documentRevision->new_schema);
     }
 
     public function testSaveAndRetrieve(): void

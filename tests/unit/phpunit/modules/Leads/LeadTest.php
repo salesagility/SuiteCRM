@@ -23,13 +23,13 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Person', $lead);
         self::assertInstanceOf('SugarBean', $lead);
 
-        self::assertAttributeEquals('Leads', 'module_dir', $lead);
-        self::assertAttributeEquals('Lead', 'object_name', $lead);
-        self::assertAttributeEquals('Leads', 'object_names', $lead);
-        self::assertAttributeEquals('leads', 'table_name', $lead);
+        self::assertEquals('Leads', $lead->module_dir);
+        self::assertEquals('Lead', $lead->object_name);
+        self::assertEquals('Leads', $lead->object_names);
+        self::assertEquals('leads', $lead->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $lead);
-        self::assertAttributeEquals(true, 'importable', $lead);
+        self::assertEquals(true, $lead->new_schema);
+        self::assertEquals(true, $lead->importable);
     }
 
     public function testget_account(): void

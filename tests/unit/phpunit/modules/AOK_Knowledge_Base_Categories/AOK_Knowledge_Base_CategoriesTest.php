@@ -12,11 +12,11 @@ class AOK_Knowledge_Base_CategoriesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aok_KBCategories);
         self::assertInstanceOf('SugarBean', $aok_KBCategories);
 
-        self::assertAttributeEquals('AOK_Knowledge_Base_Categories', 'module_dir', $aok_KBCategories);
-        self::assertAttributeEquals('AOK_Knowledge_Base_Categories', 'object_name', $aok_KBCategories);
-        self::assertAttributeEquals('aok_knowledge_base_categories', 'table_name', $aok_KBCategories);
-        self::assertAttributeEquals(true, 'new_schema', $aok_KBCategories);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aok_KBCategories);
-        self::assertAttributeEquals(false, 'importable', $aok_KBCategories);
+        self::assertEquals('AOK_Knowledge_Base_Categories', $aok_KBCategories->module_dir);
+        self::assertEquals('AOK_Knowledge_Base_Categories', $aok_KBCategories->object_name);
+        self::assertEquals('aok_knowledge_base_categories', $aok_KBCategories->table_name);
+        self::assertEquals(true, $aok_KBCategories->new_schema);
+        self::assertEquals(true, $aok_KBCategories->disable_row_level_security);
+        self::assertEquals(false, $aok_KBCategories->importable);
     }
 }
