@@ -13,7 +13,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testSaveAndGet_email_recipients()
+    public function testSaveAndGet_email_recipients(): void
     {
         $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $aorScheduledReports->name = "test";
@@ -41,7 +41,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         unset($aorScheduledReports);
     }
 
-    public function testAOR_Scheduled_Reports()
+    public function testAOR_Scheduled_Reports(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
@@ -57,7 +57,8 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'importable', $aorScheduledReports);
     }
 
-    public function test_ReportRelation() {
+    public function test_ReportRelation(): void
+    {
         $_POST['aor_fields_field'] = [];
         $report = BeanFactory::newBean('AOR_Reports');
         $report->name = "Foobar";
@@ -72,7 +73,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($report->id, $aorScheduledReports->aor_report_id);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         self::assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
@@ -80,7 +81,7 @@ class AOR_Scheduled_ReportsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
     }
 
-    public function testshouldRun()
+    public function testshouldRun(): void
     {
         $aorScheduledReports = BeanFactory::newBean('AOR_Scheduled_Reports');
         $aorScheduledReports->schedule = " 8 * * * *";

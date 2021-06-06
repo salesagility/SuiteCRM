@@ -13,7 +13,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         // Execute the constructor and check for the Object type and type attribute
 
@@ -31,7 +31,7 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('', 'type', $view);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;

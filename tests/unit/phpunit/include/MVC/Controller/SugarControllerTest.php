@@ -17,7 +17,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testsetup()
+    public function testsetup(): void
     {
         $SugarController = new SugarController();
         $default_module = $SugarController->module;
@@ -33,7 +33,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(null, 'target_module', $SugarController);
     }
 
-    public function testsetModule()
+    public function testsetModule(): void
     {
         $SugarController = new SugarController();
 
@@ -46,7 +46,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('Users', 'module', $SugarController);
     }
 
-    public function testloadBean()
+    public function testloadBean(): void
     {
         $SugarController = new SugarController();
 
@@ -61,7 +61,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('User', $SugarController->bean);
     }
 
-    public function testexecute()
+    public function testexecute(): void
     {
         // suppress output during the test
         $this->setOutputCallback(function () {});
@@ -88,7 +88,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testprocess()
+    public function testprocess(): void
     {
         $SugarController = new SugarController();
 
@@ -102,7 +102,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testpre_save()
+    public function testpre_save(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -140,7 +140,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         DBManagerFactory::getInstance()->query($query);
     }
 
-    public function testaction_save()
+    public function testaction_save(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -178,7 +178,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         DBManagerFactory::getInstance()->query($query);
     }
 
-    public function testaction_spot()
+    public function testaction_spot(): void
     {
         $SugarController = new SugarController();
 
@@ -190,7 +190,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('spot', 'view', $SugarController);
     }
 
-    public function testgetActionFilename()
+    public function testgetActionFilename(): void
     {
         // check with an invalid value
         $action = SugarController::getActionFilename('');
@@ -201,7 +201,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('EditView', $action);
     }
 
-    public function testcheckEntryPointRequiresAuth()
+    public function testcheckEntryPointRequiresAuth(): void
     {
         $SugarController = new SugarController();
 

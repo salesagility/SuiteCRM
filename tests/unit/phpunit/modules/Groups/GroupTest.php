@@ -13,7 +13,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
         get_sugar_config_defaults();
     }
 
-    public function testGroup()
+    public function testGroup(): void
     {
         //execute the constructor and check for the Object type and attributes
         $group = BeanFactory::newBean('Groups');
@@ -26,7 +26,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'importable', $group);
     }
 
-    public function testmark_deleted()
+    public function testmark_deleted(): void
     {
         self::markTestIncomplete('environment dependency (php7: Incorrect state hash: Hash doesn\'t match at key "database::users".)');
 
@@ -41,7 +41,7 @@ class GroupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $group = BeanFactory::newBean('Groups');
 

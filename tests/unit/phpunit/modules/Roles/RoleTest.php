@@ -13,7 +13,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testRole()
+    public function testRole(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $role = BeanFactory::newBean('Roles');
@@ -30,7 +30,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $role);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $role = BeanFactory::newBean('Roles');
 
@@ -42,7 +42,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $role->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $role = BeanFactory::newBean('Roles');
 
@@ -57,7 +57,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testSet_module_relationshipAndQuery_modules()
+    public function testSet_module_relationshipAndQuery_modules(): void
     {
         $role = BeanFactory::newBean('Roles');
 
@@ -76,7 +76,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $this->clear_module_relationship($role->id);
     }
 
-    public function clear_module_relationship($id)
+    public function clear_module_relationship($id): void
     {
         $role = BeanFactory::newBean('Roles');
 
@@ -88,7 +88,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(0, (array)$result);
     }
 
-    public function testSet_user_relationshipAndCheck_user_role_count()
+    public function testSet_user_relationshipAndCheck_user_role_count(): void
     {
         // test
         $role = BeanFactory::newBean('Roles');
@@ -115,7 +115,7 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         $this->clear_user_relationship($role->id, '2');
     }
 
-    public function get_users($id)
+    public function get_users($id): void
     {
         $role = BeanFactory::newBean('Roles');
 
@@ -125,20 +125,20 @@ class RoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function clear_user_relationship($role_id, $user_id)
+    public function clear_user_relationship($role_id, $user_id): void
     {
         //get related records count and verify that records are removed
         $result = BeanFactory::newBean('Roles')->clear_user_relationship($role_id, $user_id);
         self::assertCount(0, (array)$result);
     }
 
-    public function testquery_user_allowed_modules()
+    public function testquery_user_allowed_modules(): void
     {
         $result = BeanFactory::newBean('Roles')->query_user_allowed_modules('1');
         self::assertIsArray($result);
     }
 
-    public function testquery_user_disallowed_modules()
+    public function testquery_user_disallowed_modules(): void
     {
         $role = BeanFactory::newBean('Roles');
 

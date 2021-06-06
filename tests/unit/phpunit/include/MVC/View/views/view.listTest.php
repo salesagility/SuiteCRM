@@ -13,7 +13,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testlistViewProcess()
+    public function testlistViewProcess(): void
     {
         $query = "SELECT * FROM aod_index";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -68,7 +68,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testViewList()
+    public function testViewList(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewList();
@@ -77,7 +77,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('list', 'type', $view);
     }
 
-    public function testlistViewPrepare()
+    public function testlistViewPrepare(): void
     {
         //test without setting parameters. it should return some html
         $view = new ViewList();
@@ -105,7 +105,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('value', $_REQUEST['key']);
     }
 
-    public function testprepareSearchForm()
+    public function testprepareSearchForm(): void
     {
         //test without any REQUEST parameters set. it will set searchform attribute to a searchform object.
         $view1 = new ViewList();
@@ -123,7 +123,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('SearchForm', $view2->searchForm);
     }
 
-    public function testprocessSearchForm()
+    public function testprocessSearchForm(): void
     {
         //test without use_old_search. it should return html.
         $view = new ViewList();
@@ -147,7 +147,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(0, strlen($renderedContent));
     }
 
-    public function testpreDisplay()
+    public function testpreDisplay(): void
     {
         //execute the method and test if it sets the lv attribute to ListViewSmarty object.
         $view = new ViewList();
@@ -155,7 +155,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('ListViewSmarty', $view->lv);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);

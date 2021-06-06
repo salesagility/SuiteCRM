@@ -59,6 +59,9 @@ class BeanMock extends \SugarBean
         }
     }
 
+    /**
+     * @noinspection ReturnTypeCanBeDeclaredInspection
+     */
     public function load_relationships()
     {
         echo "load_relationships() has been called on the mocked class!";

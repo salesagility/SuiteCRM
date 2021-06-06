@@ -13,7 +13,7 @@ class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testViewHtml()
+    public function testViewHtml(): void
     {
         // Execute the constructor and check for the Object type
         $view = new ViewHtml();
@@ -21,7 +21,7 @@ class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('SugarView', $view);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         $view = new ViewHtml();
 

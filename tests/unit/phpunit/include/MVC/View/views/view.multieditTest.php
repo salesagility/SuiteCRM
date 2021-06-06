@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewMultieditTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testViewMultiedit()
+    public function testViewMultiedit(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewMultiedit();
@@ -13,7 +13,7 @@ class ViewMultieditTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('edit', 'type', $view);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         //test without action value and modules list in REQUEST object
         $view = new ViewMultiedit();

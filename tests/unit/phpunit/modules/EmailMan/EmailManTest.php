@@ -14,7 +14,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'EmailMan');
     }
 
-    public function testtoString()
+    public function testtoString(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -37,7 +37,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testEmailMan()
+    public function testEmailMan(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $emailMan = BeanFactory::newBean('EmailMan');
@@ -51,7 +51,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'test', $emailMan);
     }
 
-    public function testcreate_new_list_query()
+    public function testcreate_new_list_query(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -66,7 +66,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_queue_items_query()
+    public function testcreate_queue_items_query(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -86,7 +86,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_list_query()
+    public function testcreate_list_query(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -101,7 +101,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -121,7 +121,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testset_as_sent()
+    public function testset_as_sent(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -144,7 +144,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_indiv_email()
+    public function testcreate_indiv_email(): void
     {
         $result = BeanFactory::newBean('EmailMan')->create_indiv_email(BeanFactory::newBean('Contacts'), BeanFactory::newBean('Emails'));
 
@@ -155,14 +155,14 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         $email->mark_deleted($result);
     }
 
-    public function testverify_campaign()
+    public function testverify_campaign(): void
     {
         // test
         $result = BeanFactory::newBean('EmailMan')->verify_campaign('');
         self::assertEquals(false, $result);
     }
 
-    public function testsendEmail()
+    public function testsendEmail(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -177,7 +177,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function testvalid_email_address()
+    public function testvalid_email_address(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -186,7 +186,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $emailMan->valid_email_address('test@test.com'));
     }
 
-    public function testis_primary_email_address()
+    public function testis_primary_email_address(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -196,7 +196,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $emailMan->is_primary_email_address($bean));
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -211,7 +211,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testmark_deleted()
+    public function testmark_deleted(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
 
@@ -224,7 +224,7 @@ class EmailManTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_ref_email()
+    public function testcreate_ref_email(): void
     {
         $emailMan = BeanFactory::newBean('EmailMan');
         $emailMan->test = true;

@@ -13,7 +13,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAdministration()
+    public function testAdministration(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $admin = BeanFactory::newBean('Administration');
@@ -29,7 +29,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(array('notify_send_by_default', 'mail_smtpauth_req', 'notify_on', 'portal_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on'), 'checkbox_fields', $admin);
     }
 
-    public function testretrieveSettings()
+    public function testretrieveSettings(): void
     {
         $admin = BeanFactory::newBean('Administration');
 
@@ -56,7 +56,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($admin, $result);
     }
 
-    public function testsaveConfig()
+    public function testsaveConfig(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -71,7 +71,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test value', $actual);
     }
 
-    public function testsaveSetting()
+    public function testsaveSetting(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -85,7 +85,7 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test value', $actual);
     }
 
-    public function testget_config_prefix()
+    public function testget_config_prefix(): void
     {
         $admin = BeanFactory::newBean('Administration');
 

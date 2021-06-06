@@ -13,7 +13,7 @@ class ViewAjaxTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testViewAjax()
+    public function testViewAjax(): void
     {
         // Execute the constructor and check for the Object type and attributes
         $view = new ViewAjax();

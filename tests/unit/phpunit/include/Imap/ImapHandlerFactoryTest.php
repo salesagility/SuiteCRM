@@ -56,7 +56,7 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
     /**
      * FAIL: invalid key argument for save test settings key
      */
-    public function testSaveTestSettingsKeyInvalidKey()
+    public function testSaveTestSettingsKeyInvalidKey(): void
     {
         $factory = new ImapHandlerFactory();
 
@@ -85,7 +85,7 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
     /**
      * FAIL: when key not found in calls settings file
      */
-    public function testSaveTestSettingsKeyKeyNotFound()
+    public function testSaveTestSettingsKeyKeyNotFound(): void
     {
         $factory = new ImapHandlerFactory();
         try {
@@ -99,7 +99,7 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
     /**
      * OK: should successfully saving a key
      */
-    public function testSaveTestSettingsKeyOK()
+    public function testSaveTestSettingsKeyOK(): void
     {
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
         $factory = new ImapHandlerFactory();
@@ -115,7 +115,7 @@ class ImapHandlerFactoryTest extends SuitePHPUnitFrameworkTestCase
     /**
      * OK: should retrieves an ImapHandler
      */
-    public function testGetImapHandlerOk()
+    public function testGetImapHandlerOk(): void
     {
         $factory = new ImapHandlerFactory();
         $results = $factory->getImapHandler();

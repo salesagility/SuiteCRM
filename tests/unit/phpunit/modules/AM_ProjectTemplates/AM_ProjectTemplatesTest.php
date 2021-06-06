@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AM_ProjectTemplatesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAM_ProjectTemplates()
+    public function testAM_ProjectTemplates(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $am_projectTemplate = BeanFactory::newBean('AM_ProjectTemplates');

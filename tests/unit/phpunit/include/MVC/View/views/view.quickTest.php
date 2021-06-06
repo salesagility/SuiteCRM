@@ -13,7 +13,7 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testViewQuick()
+    public function testViewQuick(): void
     {
         //execute the constructor and check for the Object type and type attribute
         $view = new ViewQuick();
@@ -24,7 +24,7 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($view->options);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;

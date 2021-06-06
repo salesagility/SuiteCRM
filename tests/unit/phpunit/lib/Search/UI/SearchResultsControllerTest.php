@@ -55,7 +55,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testDisplayFoundOnePage()
+    public function testDisplayFoundOnePage(): void
     {
         $ids = [];
         for ($i=0; $i<15; $i++) {
@@ -128,7 +128,7 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('Page 2 of 2', $content);
     }
 
-    public function testDisplayFoundOne()
+    public function testDisplayFoundOne(): void
     {
         $account = BeanFactory::getBean('Accounts');
         $account->name = 'test account 1';
@@ -160,7 +160,7 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('test account 1', $content);
     }
 
-    public function testDisplayNotFound()
+    public function testDisplayNotFound(): void
     {
         $request = [
             'search-query-string' => 'test query string (not found)',

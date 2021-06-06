@@ -41,7 +41,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testFP_events()
+    public function testFP_events(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $fpEvents = BeanFactory::newBean('FP_events');
@@ -57,7 +57,7 @@ class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $fpEvents);
     }
 
-    public function testemail_templates()
+    public function testemail_templates(): void
     {
         global $app_list_strings;
 

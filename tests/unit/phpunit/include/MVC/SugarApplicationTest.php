@@ -13,7 +13,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testexecute()
+    public function testexecute(): void
     {
         self::markTestIncomplete('Cannot be implemented');
 
@@ -27,7 +27,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         //    }
     }
 
-    public function testloadUser()
+    public function testloadUser(): void
     {
         self::markTestIncomplete('Cannot be implemented because the method uses die.');
 
@@ -49,7 +49,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         */
     }
 
-    public function testACLFilter()
+    public function testACLFilter(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -73,7 +73,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testsetupResourceManagement()
+    public function testsetupResourceManagement(): void
     {
         $SugarApplication = new SugarApplication();
 
@@ -94,7 +94,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testsetupPrint()
+    public function testsetupPrint(): void
     {
         $SugarApplication = new SugarApplication();
 
@@ -108,7 +108,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testpreProcess()
+    public function testpreProcess(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -133,7 +133,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testhandleOfflineClient()
+    public function testhandleOfflineClient(): void
     {
         $SugarApplication = new SugarApplication();
 
@@ -147,7 +147,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testhandleAccessControl()
+    public function testhandleAccessControl(): void
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
@@ -161,7 +161,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $SugarApplication->controller->hasAccess);
     }
 
-    public function testpreLoadLanguages()
+    public function testpreLoadLanguages(): void
     {
         try {
             SugarApplication::preLoadLanguages();
@@ -176,7 +176,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testloadLanguages()
+    public function testloadLanguages(): void
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
@@ -200,7 +200,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcheckDatabaseVersion()
+    public function testcheckDatabaseVersion(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -217,7 +217,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($result);
     }
 
-    public function testloadDisplaySettings()
+    public function testloadDisplaySettings(): void
     {
         $SugarApplication = new SugarApplication();
 
@@ -231,7 +231,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testloadLicense()
+    public function testloadLicense(): void
     {
         $SugarApplication = new SugarApplication();
 
@@ -245,7 +245,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testloadGlobals()
+    public function testloadGlobals(): void
     {
         if (isset($_REQUEST)) {
             $request = $_REQUEST;
@@ -273,7 +273,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
     protected $sessionStartedOk = false;
 
-    public function teststartSession()
+    public function teststartSession(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -304,7 +304,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testendSession()
+    public function testendSession(): void
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
@@ -323,7 +323,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testredirect()
+    public function testredirect(): void
     {
         self::markTestIncomplete('Cannot be implemented due to use of exit().');
         //this method uses exit() which stops execution of phpunit as well so it cannot be tested without additional --process-isolation commandline parameter.
@@ -346,7 +346,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         */
     }
 
-    public function testappendErrorMessage()
+    public function testappendErrorMessage(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -367,14 +367,14 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetErrorMessages()
+    public function testgetErrorMessages(): void
     {
         //execute the method and check if it returns a array.
         $errorMessages = SugarApplication::getErrorMessages();
         self::assertIsArray($errorMessages);
     }
 
-    public function testsetCookie()
+    public function testsetCookie(): void
     {
         if (isset($_COOKIE)) {
             $cookie = $_COOKIE;
@@ -391,7 +391,7 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreateLoginVars()
+    public function testcreateLoginVars(): void
     {
         $SugarApplication = new SugarApplication();
 
@@ -405,14 +405,14 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true);
     }
 
-    public function testgetLoginVars()
+    public function testgetLoginVars(): void
     {
         //execute the method and test that it returns a array.
         $vars = (new SugarApplication())->getLoginVars();
         self::assertIsArray($vars);
     }
 
-    public function testgetLoginRedirect()
+    public function testgetLoginRedirect(): void
     {
         //execute the method and test that it returns a plus length string
         $redirect = (new SugarApplication())->getLoginRedirect();

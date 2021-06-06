@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testautoload()
+    public function testautoload(): void
     {
         // Execute the method and test that it returns expected values
 
@@ -21,7 +21,7 @@ class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($result);
     }
 
-    public function testloadAll()
+    public function testloadAll(): void
     {
         // Execute the method and check that it works and doesn't throw an exception.
         // This method only includes file so there is no output to test.

@@ -13,7 +13,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testTracker()
+    public function testTracker(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $tracker = BeanFactory::newBean('Trackers');
@@ -32,7 +32,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_custom_fields', $tracker);
     }
 
-    public function testget_recently_viewed()
+    public function testget_recently_viewed(): void
     {
         $result = BeanFactory::newBean('Trackers')->get_recently_viewed(1);
 
@@ -40,7 +40,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testmakeInvisibleForAll()
+    public function testmakeInvisibleForAll(): void
     {
         $tracker = BeanFactory::newBean('Trackers');
 
@@ -53,7 +53,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $tracker = BeanFactory::newBean('Trackers');
 
@@ -62,7 +62,7 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $tracker->bean_implements('ACL')); //test with valid value
     }
 
-    public function testlogPage()
+    public function testlogPage(): void
     {
         self::markTestIncomplete('Test parameters and local variables are not set');
 

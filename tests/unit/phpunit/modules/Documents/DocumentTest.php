@@ -13,7 +13,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testDocument()
+    public function testDocument(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $document = BeanFactory::newBean('Documents');
@@ -28,7 +28,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'disable_row_level_security', $document);
     }
 
-    public function testSaveAndGet_document_name()
+    public function testSaveAndGet_document_name(): void
     {
         $document = BeanFactory::newBean('Documents');
 
@@ -56,7 +56,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $document = BeanFactory::newBean('Documents');
 
@@ -68,7 +68,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $document->get_summary_text());
     }
 
-    public function testis_authenticated()
+    public function testis_authenticated(): void
     {
         $document = BeanFactory::newBean('Documents');
 
@@ -80,7 +80,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $document->is_authenticated());
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $document = BeanFactory::newBean('Documents');
 
@@ -93,7 +93,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         self::markTestIncomplete('environment dependency (random generated token in url)');
 
@@ -109,7 +109,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $document->file_url_noimage, 'file url noimage: [[' . $document->file_url_noimage . ']]');
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlist_view_parse_additional_sections(): void
     {
         $document = BeanFactory::newBean('Documents');
 
@@ -125,7 +125,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -142,7 +142,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         self::markTestIncomplete();
 
@@ -187,7 +187,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testmark_relationships_deleted()
+    public function testmark_relationships_deleted(): void
     {
         $document = BeanFactory::newBean('Documents');
 
@@ -200,7 +200,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $document = BeanFactory::newBean('Documents');
         self::assertEquals(false, $document->bean_implements('')); //test with blank value

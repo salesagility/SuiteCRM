@@ -51,7 +51,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testHandleRequestError()
+    public function testHandleRequestError(): void
     {
         $user = BeanFactory::getBean('Users');
         $cfg['site_url'] = 'http://foo/bar.org';
@@ -75,7 +75,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
 </html>', $exitString);
     }
 
-    public function testHandleRequestGetnew()
+    public function testHandleRequestGetnew(): void
     {
         $user = BeanFactory::getBean('Users');
         $cfg['site_url'] = 'http://foo/bar.org';
@@ -88,7 +88,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $redirectString);
     }
 
-    public function testHandleRequestCode()
+    public function testHandleRequestCode(): void
     {
         $user = BeanFactory::getBean('Users');
         $user->last_name = 'UNIT_TESTS';
@@ -107,7 +107,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(10, $e->getCode());
     }
 
-    public function testHandleRequestSetInvalid()
+    public function testHandleRequestSetInvalid(): void
     {
         $user = BeanFactory::getBean('Users');
         $user->last_name = 'UNIT_TESTS';
@@ -125,7 +125,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testHandleRequestUnknown()
+    public function testHandleRequestUnknown(): void
     {
         $user = BeanFactory::getBean('Users');
         $user->last_name = 'UNIT_TESTS';

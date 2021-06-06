@@ -13,7 +13,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testCall()
+    public function testCall(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $call = BeanFactory::newBean('Calls');
@@ -33,7 +33,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(array(0 => '00', 15 => '15', 30 => '30', 45 => '45'), 'minutes_values', $call);
     }
 
-    public function testACLAccess()
+    public function testACLAccess(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -46,7 +46,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse($call->ACLAccess('edit'));
     }
 
-    public function testSaveAndMarkDeleted()
+    public function testSaveAndMarkDeleted(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -63,7 +63,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testget_contacts()
+    public function testget_contacts(): void
     {
         $call = BeanFactory::newBean('Calls');
         $call->id = 1;
@@ -73,7 +73,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -85,7 +85,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $call->get_summary_text());
     }
 
-    public function testcreate_list_query()
+    public function testcreate_list_query(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -102,7 +102,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -118,7 +118,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -134,7 +134,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Accounts', $call->parent_type);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         self::markTestIncomplete('environment dependency (php5/php7)');
 
@@ -172,7 +172,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Administrator', $call->modified_by_name);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -198,7 +198,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($call->description, $result->_tpl_vars['CALL_DESCRIPTION']);
     }
 
-    public function testget_call_users()
+    public function testget_call_users(): void
     {
         $call = BeanFactory::newBean('Calls');
         $call->id = 1;
@@ -208,7 +208,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testget_invite_calls()
+    public function testget_invite_calls(): void
     {
         $call = BeanFactory::newBean('Calls');
         $user = new User(1);
@@ -218,7 +218,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testset_accept_status()
+    public function testset_accept_status(): void
     {
         $call = BeanFactory::newBean('Calls');
         $call->id = 1;
@@ -235,7 +235,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         $call->delete_linked($call->id);
     }
 
-    public function testget_notification_recipients()
+    public function testget_notification_recipients(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -250,7 +250,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertCount(1, $result);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $call = BeanFactory::newBean('Calls');
         self::assertEquals(false, $call->bean_implements('')); //test with blank value
@@ -258,7 +258,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $call->bean_implements('ACL')); //test with valid value
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         self::markTestIncomplete('environment dependency');
         $call = BeanFactory::newBean('Calls');
@@ -267,7 +267,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsave_relationship_changes()
+    public function testsave_relationship_changes(): void
     {
         $call = BeanFactory::newBean('Calls');
 
@@ -280,7 +280,7 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetDefaultStatus()
+    public function testgetDefaultStatus(): void
     {
         $result = BeanFactory::newBean('Calls')->getDefaultStatus();
         self::assertEquals('Planned', $result);
