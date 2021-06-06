@@ -225,13 +225,6 @@ $admin_option_defs['Administration']['aos'] = array(
     'aos-settings'
 );
 
-$admin_option_defs['Administration']['aod'] = array(
-    'AOD',
-    'LBL_AOD_SETTINGS',
-    'LBL_CHANGE_SETTINGS_AOD',
-    './index.php?module=Administration&action=AODAdmin',
-    'aod-settings'
-);
 $admin_option_defs['Administration']['aop'] = array(
     'AOP',
     'LBL_AOP_SETTINGS',
@@ -264,14 +257,6 @@ $admin_option_defs['Administration']['search_wrapper'] = [
     'LBL_SEARCH_WRAPPER',
     'LBL_SEARCH_WRAPPER_DESC',
     './index.php?module=Administration&action=SearchSettings',
-    'global-search'
-];
-
-$admin_option_defs['Administration']['global_search'] = [
-    'icon_SearchForm',
-    'LBL_SEARCH_MODULES',
-    'LBL_SEARCH_MODULES_HELP',
-    './index.php?module=Administration&action=GlobalSearchSettings',
     'global-search'
 ];
 
