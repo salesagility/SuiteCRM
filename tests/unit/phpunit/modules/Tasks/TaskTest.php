@@ -21,12 +21,12 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Task', $task);
         self::assertInstanceOf('SugarBean', $task);
 
-        self::assertAttributeEquals('tasks', 'table_name', $task);
-        self::assertAttributeEquals('Tasks', 'module_dir', $task);
-        self::assertAttributeEquals('Task', 'object_name', $task);
+        self::assertEquals('tasks', $task->table_name);
+        self::assertEquals('Tasks', $task->module_dir);
+        self::assertEquals('Task', $task->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $task);
-        self::assertAttributeEquals(true, 'importable', $task);
+        self::assertEquals(true, $task->new_schema);
+        self::assertEquals(true, $task->importable);
     }
 
     public function testsave(): void

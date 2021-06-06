@@ -20,11 +20,11 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Currency', $currency);
         self::assertInstanceOf('SugarBean', $currency);
 
-        self::assertAttributeEquals('Currencies', 'module_dir', $currency);
-        self::assertAttributeEquals('Currency', 'object_name', $currency);
-        self::assertAttributeEquals('currencies', 'table_name', $currency);
-        self::assertAttributeEquals(true, 'disable_num_format', $currency);
-        self::assertAttributeEquals(true, 'new_schema', $currency);
+        self::assertEquals('Currencies', $currency->module_dir);
+        self::assertEquals('Currency', $currency->object_name);
+        self::assertEquals('currencies', $currency->table_name);
+        self::assertEquals(true, $currency->disable_num_format);
+        self::assertEquals(true, $currency->new_schema);
     }
 
     public function testconvertToDollar(): void

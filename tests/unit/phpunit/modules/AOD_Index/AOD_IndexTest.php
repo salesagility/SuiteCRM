@@ -12,13 +12,13 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aod_index);
         self::assertInstanceOf('SugarBean', $aod_index);
 
-        self::assertAttributeEquals('AOD_Index', 'module_dir', $aod_index);
-        self::assertAttributeEquals('AOD_Index', 'object_name', $aod_index);
-        self::assertAttributeEquals('aod_index', 'table_name', $aod_index);
-        self::assertAttributeEquals(true, 'new_schema', $aod_index);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aod_index);
-        self::assertAttributeEquals(false, 'importable', $aod_index);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aod_index);
+        self::assertEquals('AOD_Index', $aod_index->module_dir);
+        self::assertEquals('AOD_Index', $aod_index->object_name);
+        self::assertEquals('aod_index', $aod_index->table_name);
+        self::assertEquals(true, $aod_index->new_schema);
+        self::assertEquals(true, $aod_index->disable_row_level_security);
+        self::assertEquals(false, $aod_index->importable);
+        self::assertEquals(false, $aod_index->tracker_visibility);
     }
 
     public function testisEnabled(): void

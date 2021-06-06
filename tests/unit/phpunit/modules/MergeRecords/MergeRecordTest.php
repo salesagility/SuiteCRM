@@ -21,11 +21,11 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('MergeRecord', $mergeRecord);
         self::assertInstanceOf('SugarBean', $mergeRecord);
 
-        self::assertAttributeEquals('MergeRecords', 'module_dir', $mergeRecord);
-        self::assertAttributeEquals('MergeRecord', 'object_name', $mergeRecord);
+        self::assertEquals('MergeRecords', $mergeRecord->module_dir);
+        self::assertEquals('MergeRecord', $mergeRecord->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $mergeRecord);
-        self::assertAttributeEquals(true, 'acl_display_only', $mergeRecord);
+        self::assertEquals(true, $mergeRecord->new_schema);
+        self::assertEquals(true, $mergeRecord->acl_display_only);
     }
 
     public function testsave(): void
@@ -64,16 +64,16 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         //test without merge_id
         $mergeRecord->load_merge_bean('Contacts');
 
-        self::assertAttributeEquals('Contacts', 'merge_module', $mergeRecord);
-        self::assertAttributeEquals('Contact', 'merge_bean_class', $mergeRecord);
-        self::assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path', $mergeRecord);
+        self::assertEquals('Contacts', $mergeRecord->merge_module);
+        self::assertEquals('Contact', $mergeRecord->merge_bean_class);
+        self::assertEquals('modules/Contacts/Contact.php', $mergeRecord->merge_bean_file_path);
 
         //test with merge_id
         $mergeRecord->load_merge_bean('Users', false, 1);
 
-        self::assertAttributeEquals('Users', 'merge_module', $mergeRecord);
-        self::assertAttributeEquals('User', 'merge_bean_class', $mergeRecord);
-        self::assertAttributeEquals('modules/Users/User.php', 'merge_bean_file_path', $mergeRecord);
+        self::assertEquals('Users', $mergeRecord->merge_module);
+        self::assertEquals('User', $mergeRecord->merge_bean_class);
+        self::assertEquals('modules/Users/User.php', $mergeRecord->merge_bean_file_path);
 
         self::assertInstanceOf('User', $mergeRecord->merge_bean);
     }
@@ -85,16 +85,16 @@ class MergeRecordTest extends SuitePHPUnitFrameworkTestCase
         //test without merge_id
         $mergeRecord->load_merge_bean2('Contacts');
 
-        self::assertAttributeEquals('Contacts', 'merge_module2', $mergeRecord);
-        self::assertAttributeEquals('Contact', 'merge_bean_class2', $mergeRecord);
-        self::assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path2', $mergeRecord);
+        self::assertEquals('Contacts', $mergeRecord->merge_module2);
+        self::assertEquals('Contact', $mergeRecord->merge_bean_class2);
+        self::assertEquals('modules/Contacts/Contact.php', $mergeRecord->merge_bean_file_path2);
 
         //test with merge_id
         $mergeRecord->load_merge_bean2('Users', false, 1);
 
-        self::assertAttributeEquals('Users', 'merge_module2', $mergeRecord);
-        self::assertAttributeEquals('User', 'merge_bean_class2', $mergeRecord);
-        self::assertAttributeEquals('modules/Users/User.php', 'merge_bean_file_path2', $mergeRecord);
+        self::assertEquals('Users', $mergeRecord->merge_module2);
+        self::assertEquals('User', $mergeRecord->merge_bean_class2);
+        self::assertEquals('modules/Users/User.php', $mergeRecord->merge_bean_file_path2);
 
         self::assertInstanceOf('User', $mergeRecord->merge_bean2);
     }

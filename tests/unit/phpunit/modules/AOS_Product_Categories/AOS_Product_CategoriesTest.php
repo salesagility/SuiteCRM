@@ -21,12 +21,12 @@ class AOS_Product_CategoriesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aosProductCategories);
         self::assertInstanceOf('SugarBean', $aosProductCategories);
 
-        self::assertAttributeEquals('AOS_Product_Categories', 'module_dir', $aosProductCategories);
-        self::assertAttributeEquals('AOS_Product_Categories', 'object_name', $aosProductCategories);
-        self::assertAttributeEquals('aos_product_categories', 'table_name', $aosProductCategories);
-        self::assertAttributeEquals(true, 'new_schema', $aosProductCategories);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aosProductCategories);
-        self::assertAttributeEquals(true, 'importable', $aosProductCategories);
+        self::assertEquals('AOS_Product_Categories', $aosProductCategories->module_dir);
+        self::assertEquals('AOS_Product_Categories', $aosProductCategories->object_name);
+        self::assertEquals('aos_product_categories', $aosProductCategories->table_name);
+        self::assertEquals(true, $aosProductCategories->new_schema);
+        self::assertEquals(true, $aosProductCategories->disable_row_level_security);
+        self::assertEquals(true, $aosProductCategories->importable);
     }
 
     public function testsave(): void

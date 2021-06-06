@@ -74,7 +74,7 @@ class ViewListTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewList();
         self::assertInstanceOf('ViewList', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('list', 'type', $view);
+        self::assertEquals('list', $view->type);
     }
 
     public function testlistViewPrepare(): void

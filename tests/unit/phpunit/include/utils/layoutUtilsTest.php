@@ -12,14 +12,14 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         //help param true
         $html1 = get_form_header('test Header', 'test subheader', true);
         self::assertGreaterThan(0, strlen($html1));
-        self::assertContains('test Header', $html1);
-        self::assertContains('test subheader', $html1);
+        self::assertStringContainsString('test Header', $html1);
+        self::assertStringContainsString('test subheader', $html1);
 
         // help param false
         $html2 = get_form_header('new test Header', 'new test subheader', false);
         self::assertGreaterThan(0, strlen($html2));
-        self::assertContains('new test Header', $html2);
-        self::assertContains('new test subheader', $html2);
+        self::assertStringContainsString('new test Header', $html2);
+        self::assertStringContainsString('new test subheader', $html2);
         self::assertGreaterThan(strlen($html2), strlen($html1));
     }
 
@@ -30,21 +30,21 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         //with show_create true, generates more html
         $html1 = get_module_title('Users', 'Users Home', true);
         self::assertGreaterThan(0, strlen($html1));
-        self::assertContains('Users', $html1);
-        self::assertContains('Users Home', $html1);
+        self::assertStringContainsString('Users', $html1);
+        self::assertStringContainsString('Users Home', $html1);
 
         //with show_create false, generates less html
         $html2 = get_module_title('Users', 'Users Home', false);
         self::assertGreaterThan(0, strlen($html2));
-        self::assertContains('Users', $html2);
-        self::assertContains('Users Home', $html2);
+        self::assertStringContainsString('Users', $html2);
+        self::assertStringContainsString('Users Home', $html2);
         self::assertGreaterThan(strlen($html2), strlen($html1));
 
         //with show_create flase and count > 1, generates more html compared to count =0
         $html3 = get_module_title('Users', 'Users Home', false, 2);
         self::assertGreaterThan(0, strlen($html3));
-        self::assertContains('Users', $html3);
-        self::assertContains('Users Home', $html3);
+        self::assertStringContainsString('Users', $html3);
+        self::assertStringContainsString('Users Home', $html3);
         self::assertGreaterThan(strlen($html2), strlen($html3));
         self::assertGreaterThan(strlen($html3), strlen($html1));
     }
@@ -56,12 +56,12 @@ class layout_utilsTest extends SuitePHPUnitFrameworkTestCase
         //with show_create false, generates less html
         $html1 = getClassicModuleTitle('users', array('Users Home'));
         self::assertGreaterThan(0, strlen($html1));
-        self::assertContains('Users Home', $html1);
+        self::assertStringContainsString('Users Home', $html1);
 
         //with show_create true, generates more html
         $html2 = getClassicModuleTitle('users', array('Users Home'), true);
         self::assertGreaterThan(0, strlen($html2));
-        self::assertContains('Users Home', $html2);
+        self::assertStringContainsString('Users Home', $html2);
         self::assertGreaterThan(strlen($html1), strlen($html2));
     }
 

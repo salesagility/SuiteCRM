@@ -20,8 +20,8 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         $audit = BeanFactory::newBean('Audit');
         self::assertInstanceOf('Audit', $audit);
         self::assertInstanceOf('SugarBean', $audit);
-        self::assertAttributeEquals('Audit', 'module_dir', $audit);
-        self::assertAttributeEquals('Audit', 'object_name', $audit);
+        self::assertEquals('Audit', $audit->module_dir);
+        self::assertEquals('Audit', $audit->object_name);
     }
 
     public function testget_summary_text(): void

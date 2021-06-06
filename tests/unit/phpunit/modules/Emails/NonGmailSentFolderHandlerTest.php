@@ -133,7 +133,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         $mail = new SugarPHPMailer();
         unset($ie->id);
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
-        self::assertContains('IE ID is not set.', $ret);
+        self::assertStringContainsString('IE ID is not set.', $ret);
     }
 
     public function testGetProblemOfStoringInNonGmailSentFolderNoIEIDValue(): void
@@ -143,7 +143,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         $mail = new SugarPHPMailer();
         $ie->id = '';
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
-        self::assertContains('IE ID is set but no value.', $ret);
+        self::assertStringContainsString('IE ID is set but no value.', $ret);
     }
 
     public function testGetProblemOfStoringInNonGmailSentFolderIsPop3(): void
@@ -154,7 +154,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         $ie->id = 123;
         $ie->protocol = 'pop3';
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
-        self::assertContains('It is a pop3 protocoll.', $ret);
+        self::assertStringContainsString('It is a pop3 protocoll.', $ret);
     }
 
     public function testGetProblemOfStoringInNonGmailSentFolderIsGmail(): void
@@ -166,7 +166,7 @@ class NonGmailSentFolderHandlerTest extends SuitePHPUnitFrameworkTestCase
         $ie->protocol = 'pop3';
         $mail->oe->mail_smtptype = 'gmail';
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
-        self::assertContains('It is a gmail.', $ret);
+        self::assertStringContainsString('It is a gmail.', $ret);
     }
 
     public function testConnectToNonGmailServer(): void

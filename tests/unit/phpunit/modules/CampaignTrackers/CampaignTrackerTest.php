@@ -20,10 +20,10 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('CampaignTracker', $campaignTracker);
         self::assertInstanceOf('SugarBean', $campaignTracker);
 
-        self::assertAttributeEquals('CampaignTrackers', 'module_dir', $campaignTracker);
-        self::assertAttributeEquals('CampaignTracker', 'object_name', $campaignTracker);
-        self::assertAttributeEquals('campaign_trkrs', 'table_name', $campaignTracker);
-        self::assertAttributeEquals(true, 'new_schema', $campaignTracker);
+        self::assertEquals('CampaignTrackers', $campaignTracker->module_dir);
+        self::assertEquals('CampaignTracker', $campaignTracker->object_name);
+        self::assertEquals('campaign_trkrs', $campaignTracker->table_name);
+        self::assertEquals(true, $campaignTracker->new_schema);
     }
 
     public function testsave(): void

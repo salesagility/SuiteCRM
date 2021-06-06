@@ -12,11 +12,11 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Release', $release);
         self::assertInstanceOf('SugarBean', $release);
 
-        self::assertAttributeEquals('releases', 'table_name', $release);
-        self::assertAttributeEquals('Releases', 'module_dir', $release);
-        self::assertAttributeEquals('Release', 'object_name', $release);
+        self::assertEquals('releases', $release->table_name);
+        self::assertEquals('Releases', $release->module_dir);
+        self::assertEquals('Release', $release->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $release);
+        self::assertEquals(true, $release->new_schema);
     }
 
     public function testget_summary_text(): void

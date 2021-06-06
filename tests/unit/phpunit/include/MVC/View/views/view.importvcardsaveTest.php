@@ -10,7 +10,7 @@ class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewImportvcardsave();
         self::assertInstanceOf('ViewImportvcardsave', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('save', 'type', $view);
+        self::assertEquals('save', $view->type);
     }
 
     //incomplete test. this method uses exit() so it cannot be tested.

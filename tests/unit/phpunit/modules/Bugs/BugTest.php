@@ -20,13 +20,13 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Bug', $bug);
         self::assertInstanceOf('SugarBean', $bug);
 
-        self::assertAttributeEquals('Bugs', 'module_dir', $bug);
-        self::assertAttributeEquals('Bug', 'object_name', $bug);
-        self::assertAttributeEquals('bugs', 'table_name', $bug);
-        self::assertAttributeEquals('accounts_bugs', 'rel_account_table', $bug);
-        self::assertAttributeEquals('contacts_bugs', 'rel_contact_table', $bug);
-        self::assertAttributeEquals('cases_bugs', 'rel_case_table', $bug);
-        self::assertAttributeEquals(true, 'new_schema', $bug);
+        self::assertEquals('Bugs', $bug->module_dir);
+        self::assertEquals('Bug', $bug->object_name);
+        self::assertEquals('bugs', $bug->table_name);
+        self::assertEquals('accounts_bugs', $bug->rel_account_table);
+        self::assertEquals('contacts_bugs', $bug->rel_contact_table);
+        self::assertEquals('cases_bugs', $bug->rel_case_table);
+        self::assertEquals(true, $bug->new_schema);
     }
 
     public function testget_summary_text(): void

@@ -22,11 +22,11 @@ class ProjectTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('SugarBean', $project);
 
 
-        self::assertAttributeEquals('project', 'table_name', $project);
-        self::assertAttributeEquals('Project', 'module_dir', $project);
-        self::assertAttributeEquals('Project', 'object_name', $project);
+        self::assertEquals('project', $project->table_name);
+        self::assertEquals('Project', $project->module_dir);
+        self::assertEquals('Project', $project->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $project);
+        self::assertEquals(true, $project->new_schema);
     }
 
     public function testfill_in_additional_detail_fields(): void

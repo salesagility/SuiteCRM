@@ -12,12 +12,12 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aor_Report);
         self::assertInstanceOf('SugarBean', $aor_Report);
 
-        self::assertAttributeEquals('AOR_Reports', 'module_dir', $aor_Report);
-        self::assertAttributeEquals('AOR_Report', 'object_name', $aor_Report);
-        self::assertAttributeEquals('aor_reports', 'table_name', $aor_Report);
-        self::assertAttributeEquals(true, 'new_schema', $aor_Report);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aor_Report);
-        self::assertAttributeEquals(true, 'importable', $aor_Report);
+        self::assertEquals('AOR_Reports', $aor_Report->module_dir);
+        self::assertEquals('AOR_Report', $aor_Report->object_name);
+        self::assertEquals('aor_reports', $aor_Report->table_name);
+        self::assertEquals(true, $aor_Report->new_schema);
+        self::assertEquals(true, $aor_Report->disable_row_level_security);
+        self::assertEquals(true, $aor_Report->importable);
     }
 
     public function testbean_implements(): void
@@ -156,8 +156,8 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($html3));
 
         //verify that group and identifier exist in the strings
-        self::assertContains('grouptest', $html3);
-        self::assertContains('testidentifier', $html3);
+        self::assertStringContainsString('grouptest', $html3);
+        self::assertStringContainsString('testidentifier', $html3);
     }
 
     public function testGetTotalHTML(): void
@@ -179,8 +179,8 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         $reportBean = BeanFactory::newBean('AOR_Reports');
         $actual = $reportBean->getTotalHTML($fields, $totals);
 
-        self::assertContains('sugar_field', $actual);
-        self::assertContains('duration_hours', $actual);
+        self::assertStringContainsString('sugar_field', $actual);
+        self::assertStringContainsString('duration_hours', $actual);
     }
 
     public function testcalculateTotal(): void

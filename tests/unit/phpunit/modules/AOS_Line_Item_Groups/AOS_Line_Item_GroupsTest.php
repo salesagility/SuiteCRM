@@ -21,13 +21,13 @@ class AOS_Line_Item_GroupsTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aosLineItemGroup);
         self::assertInstanceOf('SugarBean', $aosLineItemGroup);
 
-        self::assertAttributeEquals('AOS_Line_Item_Groups', 'module_dir', $aosLineItemGroup);
-        self::assertAttributeEquals('AOS_Line_Item_Groups', 'object_name', $aosLineItemGroup);
-        self::assertAttributeEquals('aos_line_item_groups', 'table_name', $aosLineItemGroup);
-        self::assertAttributeEquals(true, 'new_schema', $aosLineItemGroup);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aosLineItemGroup);
-        self::assertAttributeEquals(true, 'importable', $aosLineItemGroup);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aosLineItemGroup);
+        self::assertEquals('AOS_Line_Item_Groups', $aosLineItemGroup->module_dir);
+        self::assertEquals('AOS_Line_Item_Groups', $aosLineItemGroup->object_name);
+        self::assertEquals('aos_line_item_groups', $aosLineItemGroup->table_name);
+        self::assertEquals(true, $aosLineItemGroup->new_schema);
+        self::assertEquals(true, $aosLineItemGroup->disable_row_level_security);
+        self::assertEquals(true, $aosLineItemGroup->importable);
+        self::assertEquals(false, $aosLineItemGroup->tracker_visibility);
     }
 
     public function testsave_groups(): void

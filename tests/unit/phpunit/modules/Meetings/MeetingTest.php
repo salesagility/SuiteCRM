@@ -21,21 +21,21 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Meeting', $meeting);
         self::assertInstanceOf('SugarBean', $meeting);
 
-        self::assertAttributeEquals('Meetings', 'module_dir', $meeting);
-        self::assertAttributeEquals('Meeting', 'object_name', $meeting);
-        self::assertAttributeEquals('meetings', 'table_name', $meeting);
+        self::assertEquals('Meetings', $meeting->module_dir);
+        self::assertEquals('Meeting', $meeting->object_name);
+        self::assertEquals('meetings', $meeting->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $meeting);
-        self::assertAttributeEquals(true, 'importable', $meeting);
-        self::assertAttributeEquals(false, 'syncing', $meeting);
-        self::assertAttributeEquals(true, 'update_vcal', $meeting);
+        self::assertEquals(true, $meeting->new_schema);
+        self::assertEquals(true, $meeting->importable);
+        self::assertEquals(false, $meeting->syncing);
+        self::assertEquals(true, $meeting->update_vcal);
 
-        self::assertAttributeEquals('meetings_users', 'rel_users_table', $meeting);
-        self::assertAttributeEquals('meetings_contacts', 'rel_contacts_table', $meeting);
-        self::assertAttributeEquals('meetings_leads', 'rel_leads_table', $meeting);
+        self::assertEquals('meetings_users', $meeting->rel_users_table);
+        self::assertEquals('meetings_contacts', $meeting->rel_contacts_table);
+        self::assertEquals('meetings_leads', $meeting->rel_leads_table);
 
-        self::assertAttributeEquals(null, 'cached_get_users', $meeting);
-        self::assertAttributeEquals(false, 'date_changed', $meeting);
+        self::assertEquals(null, $meeting->cached_get_users);
+        self::assertEquals(false, $meeting->date_changed);
     }
 
     public function testACLAccess(): void
