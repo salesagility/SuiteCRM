@@ -702,16 +702,6 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testget_calls(): void
-    {
-        $user = BeanFactory::newBean('Users');
-
-        //$result = $user->get_calls();
-        //$this->assertTrue(is_array($result));
-
-        self::markTestIncomplete('Error:Only variables should be passed by reference');
-    }
-
     public function testdisplayEmailCounts(): void
     {
         $user = BeanFactory::newBean('Users');

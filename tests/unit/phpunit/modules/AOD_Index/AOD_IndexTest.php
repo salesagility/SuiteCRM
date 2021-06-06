@@ -28,34 +28,6 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($result);
     }
 
-    public function testfind(): void
-    {
-        self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-        $aod_index = BeanFactory::newBean('AOD_Index');
-
-        $aod_index->id = 1;
-        $aod_index->location = 'modules/AOD_Index/Index/Index';
-
-        //execute the method with parameters and verify that it returns true
-        $hits = $aod_index->find('/');
-        self::assertIsArray($hits);
-    }
-
-    public function testoptimise(): void
-    {
-        self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-
-        // test
-        $aod_index = BeanFactory::newBean('AOD_Index');
-        $aod_index->id = 1;
-        $aod_index->location = 'modules/AOD_Index/Index/Index';
-        $last_optimized = $aod_index->last_optimised;
-
-        //execute the method and test if the last optimized date is changed to a later date/time.
-        $aod_index->optimise();
-        self::assertGreaterThan($last_optimized, $aod_index->last_optimised);
-    }
-
     public function testgetIndex(): void
     {
         $aod_index = BeanFactory::newBean('AOD_Index');
@@ -77,23 +49,6 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
         //verify that returned array has a valid Zend_Search_Lucene_Document instance
         self::assertInstanceOf('Zend_Search_Lucene_Document', $result['document']);
-    }
-
-    public function testcommit(): void
-    {
-        self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-
-        $aod_index = BeanFactory::newBean('AOD_Index');
-        $aod_index->id = 1;
-        $aod_index->location = 'modules/AOD_Index/Index/Index';
-
-        // Execute the method and test that it works and doesn't throw an exception.
-        try {
-            $aod_index->commit();
-            self::assertTrue(true);
-        } catch (Exception $e) {
-            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-        }
     }
 
     public function testisModuleSearchable(): void
@@ -129,23 +84,6 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
         //test with a searchable module but invalid bean id, it will still index it
         $result = $aod_index->index('Accounts', 1);
         self::assertEquals(null, $result);
-    }
-
-    public function testremove(): void
-    {
-        self::markTestIncomplete('File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-
-        $aod_index = BeanFactory::newBean('AOD_Index');
-        $aod_index->id = 1;
-        $aod_index->location = 'modules/AOD_Index/Index/Index';
-
-        // Execute the method and test that it works and doesn't throw an exception.
-        try {
-            $aod_index->remove('Accounts', 1);
-            self::assertTrue(true);
-        } catch (Exception $e) {
-            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-        }
     }
 
     public function testgetIndexableModules(): void
