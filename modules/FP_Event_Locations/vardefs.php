@@ -219,9 +219,10 @@ $dictionary['FP_Event_Locations'] = array(
                     'rhs_key' => 'assigned_user_id',
                     'relationship_type' => 'one-to-many',
                 ),
-            'optimistic_locking' => true,
-            'unified_search' => true,
         ),
+    // The parameters moved to correct array
+    'optimistic_locking' => true,
+    'unified_search' => true,
 );
 
 if (!class_exists('VardefManager')) {
