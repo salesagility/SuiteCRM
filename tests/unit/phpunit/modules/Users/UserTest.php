@@ -47,14 +47,14 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Person', $user);
         self::assertInstanceOf('SugarBean', $user);
 
-        self::assertAttributeEquals('Users', 'module_dir', $user);
-        self::assertAttributeEquals('User', 'object_name', $user);
-        self::assertAttributeEquals('users', 'table_name', $user);
+        self::assertEquals('Users', $user->module_dir);
+        self::assertEquals('User', $user->object_name);
+        self::assertEquals('users', $user->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $user);
-        self::assertAttributeEquals(false, 'authenticated', $user);
-        self::assertAttributeEquals(true, 'importable', $user);
-        self::assertAttributeEquals(false, 'team_exists', $user);
+        self::assertEquals(true, $user->new_schema);
+        self::assertEquals(false, $user->authenticated);
+        self::assertEquals(true, $user->importable);
+        self::assertEquals(false, $user->team_exists);
     }
 
     public function testgetSystemUser(): void
@@ -1022,7 +1022,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
-        self::assertContains($expected, $contents);
+        self::assertStringContainsStringIgnoringCase($expected, $contents);
 
         // test if there is an error
 
@@ -1034,7 +1034,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n"  . $app_strings['NTC_CLICK_BACK'] . '</span>';
-        self::assertContains($expected, $contents);
+        self::assertStringContainsStringIgnoringCase($expected, $contents);
 
 
         unset($app_strings['TEST_ERROR_MESSAGE']);

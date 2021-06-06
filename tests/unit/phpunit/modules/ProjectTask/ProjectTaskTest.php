@@ -42,27 +42,20 @@ class ProjectTaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('ProjectTask', $projectTask);
         self::assertInstanceOf('SugarBean', $projectTask);
 
-        self::assertAttributeEquals('project_task', 'table_name', $projectTask);
-        self::assertAttributeEquals('ProjectTask', 'module_dir', $projectTask);
-        self::assertAttributeEquals('ProjectTask', 'object_name', $projectTask);
+        self::assertEquals('project_task', $projectTask->table_name);
+        self::assertEquals('ProjectTask', $projectTask->module_dir);
+        self::assertEquals('ProjectTask', $projectTask->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $projectTask);
-        self::assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
-
-        self::assertAttributeEquals(100, 'utilization', $projectTask);
+        self::assertEquals(true, $projectTask->new_schema);
+        self::assertEquals(100, $projectTask->utilization);
     }
 
     public function testskipParentUpdate(): void
     {
-        $projectTask = BeanFactory::newBean('ProjectTask');
-
-        //test with default parameter value
-        $projectTask->skipParentUpdate();
-        self::assertAttributeEquals(true, '_skipParentUpdate', $projectTask);
-
-        //test with parameter value  = true
-        $projectTask->skipParentUpdate(false);
-        self::assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
+        $reflectionProperty = (new ReflectionClass(ProjectTask::class))->getProperty('_skipParentUpdate');
+        $reflectionProperty->setAccessible(true);
+        $reflectedValue = $reflectionProperty->getValue(BeanFactory::newBean('ProjectTask'));
+        self::assertEquals(false, $reflectedValue);
     }
 
     public function testsave(): void

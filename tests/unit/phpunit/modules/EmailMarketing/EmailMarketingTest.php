@@ -12,11 +12,10 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('EmailMarketing', $emailMarketing);
         self::assertInstanceOf('SugarBean', $emailMarketing);
 
-        self::assertAttributeEquals('EmailMarketing', 'module_dir', $emailMarketing);
-        self::assertAttributeEquals('EmailMarketing', 'object_name', $emailMarketing);
-        self::assertAttributeEquals('email_marketing', 'table_name', $emailMarketing);
-
-        self::assertAttributeEquals(true, 'new_schema', $emailMarketing);
+        self::assertEquals('EmailMarketing', $emailMarketing->module_dir);
+        self::assertEquals('EmailMarketing', $emailMarketing->object_name);
+        self::assertEquals('email_marketing', $emailMarketing->table_name);
+        self::assertEquals(true, $emailMarketing->new_schema);
     }
 
     public function testretrieve(): void

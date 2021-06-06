@@ -16,7 +16,7 @@ class ViewNoaccessTest extends SuitePHPUnitFrameworkTestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
 
-        self::assertAttributeEquals('noaccess', 'type', $view);
+        self::assertEquals('noaccess', $view->type);
         self::assertGreaterThan(0, strlen($renderedContent));
 
         self::assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json.

@@ -21,12 +21,12 @@ class AOS_InvoicesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aosInvoices);
         self::assertInstanceOf('SugarBean', $aosInvoices);
 
-        self::assertAttributeEquals('AOS_Invoices', 'module_dir', $aosInvoices);
-        self::assertAttributeEquals('AOS_Invoices', 'object_name', $aosInvoices);
-        self::assertAttributeEquals('aos_invoices', 'table_name', $aosInvoices);
-        self::assertAttributeEquals(true, 'new_schema', $aosInvoices);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aosInvoices);
-        self::assertAttributeEquals(true, 'importable', $aosInvoices);
+        self::assertEquals('AOS_Invoices', $aosInvoices->module_dir);
+        self::assertEquals('AOS_Invoices', $aosInvoices->object_name);
+        self::assertEquals('aos_invoices', $aosInvoices->table_name);
+        self::assertEquals(true, $aosInvoices->new_schema);
+        self::assertEquals(true, $aosInvoices->disable_row_level_security);
+        self::assertEquals(true, $aosInvoices->importable);
     }
 
     public function testSaveAndMark_deleted(): void

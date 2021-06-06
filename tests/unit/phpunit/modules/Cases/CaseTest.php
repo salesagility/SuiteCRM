@@ -21,13 +21,13 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aCase);
         self::assertInstanceOf('SugarBean', $aCase);
 
-        self::assertAttributeEquals('Cases', 'module_dir', $aCase);
-        self::assertAttributeEquals('Case', 'object_name', $aCase);
-        self::assertAttributeEquals('cases', 'table_name', $aCase);
-        self::assertAttributeEquals('accounts_cases', 'rel_account_table', $aCase);
-        self::assertAttributeEquals('contacts_cases', 'rel_contact_table', $aCase);
-        self::assertAttributeEquals(true, 'importable', $aCase);
-        self::assertAttributeEquals(true, 'new_schema', $aCase);
+        self::assertEquals('Cases', $aCase->module_dir);
+        self::assertEquals('Case', $aCase->object_name);
+        self::assertEquals('cases', $aCase->table_name);
+        self::assertEquals('accounts_cases', $aCase->rel_account_table);
+        self::assertEquals('contacts_cases', $aCase->rel_contact_table);
+        self::assertEquals(true, $aCase->importable);
+        self::assertEquals(true, $aCase->new_schema);
     }
 
     public function testget_summary_text(): void

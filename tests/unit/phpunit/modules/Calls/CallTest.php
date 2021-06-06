@@ -20,17 +20,16 @@ class CallTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Call', $call);
         self::assertInstanceOf('SugarBean', $call);
 
-        self::assertAttributeEquals('Calls', 'module_dir', $call);
-        self::assertAttributeEquals('Call', 'object_name', $call);
-        self::assertAttributeEquals('calls', 'table_name', $call);
-        self::assertAttributeEquals('calls_users', 'rel_users_table', $call);
-        self::assertAttributeEquals('calls_contacts', 'rel_contacts_table', $call);
-        self::assertAttributeEquals('calls_leads', 'rel_leads_table', $call);
-        self::assertAttributeEquals(true, 'new_schema', $call);
-        self::assertAttributeEquals(true, 'importable', $call);
-        self::assertAttributeEquals(false, 'syncing', $call);
-        self::assertAttributeEquals(true, 'update_vcal', $call);
-        self::assertAttributeEquals(array(0 => '00', 15 => '15', 30 => '30', 45 => '45'), 'minutes_values', $call);
+        self::assertEquals('Calls', $call->module_dir);
+        self::assertEquals('Call', $call->object_name);
+        self::assertEquals('calls', $call->table_name);
+        self::assertEquals('calls_users', $call->rel_users_table);
+        self::assertEquals('calls_contacts', $call->rel_contacts_table);
+        self::assertEquals('calls_leads', $call->rel_leads_table);
+        self::assertEquals(true, $call->new_schema);
+        self::assertEquals(true, $call->importable);
+        self::assertEquals(false, $call->syncing);
+        self::assertEquals(true, $call->update_vcal);
     }
 
     public function testACLAccess(): void

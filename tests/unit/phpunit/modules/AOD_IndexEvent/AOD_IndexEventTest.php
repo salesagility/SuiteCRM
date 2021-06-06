@@ -12,12 +12,12 @@ class AOD_IndexEventTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aod_indexEvent);
         self::assertInstanceOf('SugarBean', $aod_indexEvent);
 
-        self::assertAttributeEquals('AOD_IndexEvent', 'module_dir', $aod_indexEvent);
-        self::assertAttributeEquals('AOD_IndexEvent', 'object_name', $aod_indexEvent);
-        self::assertAttributeEquals('aod_indexevent', 'table_name', $aod_indexEvent);
-        self::assertAttributeEquals(true, 'new_schema', $aod_indexEvent);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aod_indexEvent);
-        self::assertAttributeEquals(false, 'importable', $aod_indexEvent);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aod_indexEvent);
+        self::assertEquals('AOD_IndexEvent', $aod_indexEvent->module_dir);
+        self::assertEquals('AOD_IndexEvent', $aod_indexEvent->object_name);
+        self::assertEquals('aod_indexevent', $aod_indexEvent->table_name);
+        self::assertEquals(true, $aod_indexEvent->new_schema);
+        self::assertEquals(true, $aod_indexEvent->disable_row_level_security);
+        self::assertEquals(false, $aod_indexEvent->importable);
+        self::assertEquals(false, $aod_indexEvent->tracker_visibility);
     }
 }

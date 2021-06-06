@@ -22,14 +22,13 @@ class SchedulersJobTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $schedulersJob);
         self::assertInstanceOf('SugarBean', $schedulersJob);
 
-        self::assertAttributeEquals('job_queue', 'table_name', $schedulersJob);
-        self::assertAttributeEquals('SchedulersJobs', 'module_dir', $schedulersJob);
-        self::assertAttributeEquals('SchedulersJob', 'object_name', $schedulersJob);
+        self::assertEquals('job_queue', $schedulersJob->table_name);
+        self::assertEquals('SchedulersJobs', $schedulersJob->module_dir);
+        self::assertEquals('SchedulersJob', $schedulersJob->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $schedulersJob);
-        self::assertAttributeEquals(true, 'process_save_dates', $schedulersJob);
-        self::assertAttributeEquals(30, 'min_interval', $schedulersJob);
-        self::assertAttributeEquals(true, 'job_done', $schedulersJob);
+        self::assertEquals(true, $schedulersJob->new_schema);
+        self::assertEquals(true, $schedulersJob->process_save_dates);
+        self::assertEquals(30, $schedulersJob->min_interval);
     }
 
     public function testcheck_date_relationships_load(): void

@@ -20,13 +20,12 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('ACLRole', $aclRole);
         self::assertInstanceOf('SugarBean', $aclRole);
 
-        self::assertAttributeEquals('ACLRoles', 'module_dir', $aclRole);
-        self::assertAttributeEquals('ACLRole', 'object_name', $aclRole);
-        self::assertAttributeEquals('acl_roles', 'table_name', $aclRole);
-        self::assertAttributeEquals(true, 'new_schema', $aclRole);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aclRole);
-        self::assertAttributeEquals(true, 'disable_custom_fields', $aclRole);
-        self::assertAttributeEquals(array('user_id' => 'users'), 'relationship_fields', $aclRole);
+        self::assertEquals('ACLRoles', $aclRole->module_dir);
+        self::assertEquals('ACLRole', $aclRole->object_name);
+        self::assertEquals('acl_roles', $aclRole->table_name);
+        self::assertEquals(true, $aclRole->new_schema);
+        self::assertEquals(true, $aclRole->disable_row_level_security);
+        self::assertEquals(true, $aclRole->disable_custom_fields);
     }
 
     public function testget_summary_text(): void
@@ -109,7 +108,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         //test with empty value
         $result = $aclRole->getRoleActions('');
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         $exp = [
           'Accounts',
           'Alerts',
@@ -172,7 +171,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         //test with non empty but non existing role id value, initially no roles exist.
         $result = $aclRole->getRoleActions('1');
-        self::assertInternalType('array', $result);
+        self::assertIsArray($result);
         self::assertEquals($exp, array_keys($result));
     }
 

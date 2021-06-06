@@ -13,13 +13,13 @@ class jjwg_MapsTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $jjwgMaps);
         self::assertInstanceOf('SugarBean', $jjwgMaps);
 
-        self::assertAttributeEquals('jjwg_Maps', 'module_dir', $jjwgMaps);
-        self::assertAttributeEquals('jjwg_Maps', 'object_name', $jjwgMaps);
-        self::assertAttributeEquals('jjwg_maps', 'table_name', $jjwgMaps);
+        self::assertEquals('jjwg_Maps', $jjwgMaps->module_dir);
+        self::assertEquals('jjwg_Maps', $jjwgMaps->object_name);
+        self::assertEquals('jjwg_maps', $jjwgMaps->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $jjwgMaps);
-        self::assertAttributeEquals(true, 'importable', $jjwgMaps);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $jjwgMaps);
+        self::assertEquals(true, $jjwgMaps->new_schema);
+        self::assertEquals(true, $jjwgMaps->importable);
+        self::assertEquals(true, $jjwgMaps->disable_row_level_security);
     }
 
     public function testconfiguration(): void

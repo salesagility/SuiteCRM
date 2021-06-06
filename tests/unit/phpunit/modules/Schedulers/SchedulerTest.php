@@ -25,12 +25,12 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Scheduler', $scheduler);
         self::assertInstanceOf('SugarBean', $scheduler);
 
-        self::assertAttributeEquals('schedulers', 'table_name', $scheduler);
-        self::assertAttributeEquals('Schedulers', 'module_dir', $scheduler);
-        self::assertAttributeEquals('Scheduler', 'object_name', $scheduler);
+        self::assertEquals('schedulers', $scheduler->table_name);
+        self::assertEquals('Schedulers', $scheduler->module_dir);
+        self::assertEquals('Scheduler', $scheduler->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $scheduler);
-        self::assertAttributeEquals(true, 'process_save_dates', $scheduler);
+        self::assertEquals(true, $scheduler->new_schema);
+        self::assertEquals(true, $scheduler->process_save_dates);
     }
 
     public function testinitUser(): void

@@ -21,15 +21,15 @@ class TrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Tracker', $tracker);
         self::assertInstanceOf('SugarBean', $tracker);
 
-        self::assertAttributeEquals('tracker', 'table_name', $tracker);
-        self::assertAttributeEquals('Trackers', 'module_dir', $tracker);
-        self::assertAttributeEquals('Tracker', 'object_name', $tracker);
+        self::assertEquals('tracker', $tracker->table_name);
+        self::assertEquals('Trackers', $tracker->module_dir);
+        self::assertEquals('Tracker', $tracker->object_name);
 
-        self::assertAttributeEquals(true, 'disable_var_defs', $tracker);
+        self::assertEquals(true, $tracker->disable_var_defs);
 
-        self::assertAttributeEquals('Tracker', 'acltype', $tracker);
-        self::assertAttributeEquals('Trackers', 'acl_category', $tracker);
-        self::assertAttributeEquals(true, 'disable_custom_fields', $tracker);
+        self::assertEquals('Tracker', $tracker->acltype);
+        self::assertEquals('Trackers', $tracker->acl_category);
+        self::assertEquals(true, $tracker->disable_custom_fields);
     }
 
     public function testget_recently_viewed(): void

@@ -12,10 +12,10 @@ class FavoritesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $favorites);
         self::assertInstanceOf('SugarBean', $favorites);
 
-        self::assertAttributeEquals('Favorites', 'module_dir', $favorites);
-        self::assertAttributeEquals('Favorites', 'object_name', $favorites);
-        self::assertAttributeEquals('favorites', 'table_name', $favorites);
-        self::assertAttributeEquals(true, 'new_schema', $favorites);
+        self::assertEquals('Favorites', $favorites->module_dir);
+        self::assertEquals('Favorites', $favorites->object_name);
+        self::assertEquals('favorites', $favorites->table_name);
+        self::assertEquals(true, $favorites->new_schema);
     }
 
     public function testdeleteFavorite(): void

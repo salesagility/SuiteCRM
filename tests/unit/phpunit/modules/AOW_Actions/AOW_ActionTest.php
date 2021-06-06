@@ -21,13 +21,13 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aowAction);
         self::assertInstanceOf('SugarBean', $aowAction);
 
-        self::assertAttributeEquals('AOW_Actions', 'module_dir', $aowAction);
-        self::assertAttributeEquals('AOW_Action', 'object_name', $aowAction);
-        self::assertAttributeEquals('aow_actions', 'table_name', $aowAction);
-        self::assertAttributeEquals(true, 'new_schema', $aowAction);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aowAction);
-        self::assertAttributeEquals(false, 'importable', $aowAction);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aowAction);
+        self::assertEquals('AOW_Actions', $aowAction->module_dir);
+        self::assertEquals('AOW_Action', $aowAction->object_name);
+        self::assertEquals('aow_actions', $aowAction->table_name);
+        self::assertEquals(true, $aowAction->new_schema);
+        self::assertEquals(true, $aowAction->disable_row_level_security);
+        self::assertEquals(false, $aowAction->importable);
+        self::assertEquals(false, $aowAction->tracker_visibility);
     }
 
     public function testsave_lines(): void

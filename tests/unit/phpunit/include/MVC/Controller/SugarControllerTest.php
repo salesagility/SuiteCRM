@@ -24,13 +24,13 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 
         //first test with empty parameter and check for default values being used
         $SugarController->setup('');
-        self::assertAttributeEquals($default_module, 'module', $SugarController);
-        self::assertAttributeEquals(null, 'target_module', $SugarController);
+        self::assertEquals($default_module, $SugarController->module);
+        self::assertEquals(null, $SugarController->target_module);
 
         //secondly test with module name and check for correct assignment.
         $SugarController->setup('Users');
-        self::assertAttributeEquals('Users', 'module', $SugarController);
-        self::assertAttributeEquals(null, 'target_module', $SugarController);
+        self::assertEquals('Users', $SugarController->module);
+        self::assertEquals(null, $SugarController->target_module);
     }
 
     public function testsetModule(): void
@@ -39,11 +39,11 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 
         //first test with empty parameter
         $SugarController->setModule('');
-        self::assertAttributeEquals('', 'module', $SugarController);
+        self::assertEquals('', $SugarController->module);
 
         //secondly test with module name and check for correct assignment.
         $SugarController->setModule('Users');
-        self::assertAttributeEquals('Users', 'module', $SugarController);
+        self::assertEquals('Users', $SugarController->module);
     }
 
     public function testloadBean(): void
@@ -183,11 +183,11 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         $SugarController = new SugarController();
 
         // check with default value of attribute
-        self::assertAttributeEquals('classic', 'view', $SugarController);
+        self::assertEquals('classic', $SugarController->view);
 
         // check for attribute value change on method execution.
         $SugarController->action_spot();
-        self::assertAttributeEquals('spot', 'view', $SugarController);
+        self::assertEquals('spot', $SugarController->view);
     }
 
     public function testgetActionFilename(): void
