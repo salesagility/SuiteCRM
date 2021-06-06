@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Test\BeanFactoryTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\BeanFactoryTestCase;
 
 /**
  * Class BeanFactoryTest

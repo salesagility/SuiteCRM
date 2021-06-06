@@ -1,47 +1,61 @@
 <?php
 /**
- * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
- * Copyright (C) 2021 SalesAgility Ltd.
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SALESAGILITY, SALESAGILITY DISCLAIMS THE
- * WARRANTY OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses.
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
  *
- * In accordance with Section 7(b) of the GNU Affero General Public License
- * version 3, these Appropriate Legal Notices must retain the display of the
- * "Supercharged by SuiteCRM" logo. If the display of the logos is not reasonably
- * feasible for technical reasons, the Appropriate Legal Notices must display
- * the words "Supercharged by SuiteCRM".
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
-namespace SuiteCRM\Search;
+namespace SuiteCRM\Tests\Unit\lib\SuiteCRM\Search;
 
 use Mockery;
 use ReflectionException;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
-
+use SuiteCRM\Search\SearchEngine;
+use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchWrapper;
 
 /**
  * Class SearchWrapperTest
- *
+ * @package SuiteCRM\Tests\Unit\lib\SuiteCRM\Search
  * @see SearchWrapper
  */
 class SearchWrapperTest extends SearchTestAbstract
 {
-    public function testFetchEngine()
+    public function testFetchEngine(): void
     {
         $search = new SearchWrapper();
 
@@ -53,7 +67,7 @@ class SearchWrapperTest extends SearchTestAbstract
         }
     }
 
-    public function testFetchEngineNonExisting()
+    public function testFetchEngineNonExisting(): void
     {
         $search = new SearchWrapper();
         $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
@@ -68,7 +82,7 @@ class SearchWrapperTest extends SearchTestAbstract
         }
     }
 
-    public function testFetchEngineCustom()
+    public function testFetchEngineCustom(): void
     {
         $search = new SearchWrapper();
         $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
@@ -78,7 +92,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertInstanceOf(SearchEngine::class, $engine);
     }
 
-    public function testFetchEngineCustomBad()
+    public function testFetchEngineCustomBad(): void
     {
         $search = new SearchWrapper();
         $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
@@ -91,7 +105,7 @@ class SearchWrapperTest extends SearchTestAbstract
         }
     }
 
-    public function testGetEngines()
+    public function testGetEngines(): void
     {
         $expected = [
             0 => 'ElasticSearchEngine',
@@ -103,7 +117,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertEquals($actual, $expected);
     }
 
-    public function testSearchAndDisplayCustom()
+    public function testSearchAndDisplayCustom(): void
     {
         $search = new SearchWrapper();
         $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
@@ -117,7 +131,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertEquals('bar', $output);
     }
 
-    public function testSearchAndDisplayBuiltIn()
+    public function testSearchAndDisplayBuiltIn(): void
     {
         SearchWrapper::addEngine('SearchEngineMock', __DIR__ . '/SearchEngineMock.php');
 
@@ -130,7 +144,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertEquals('bar', $output);
     }
 
-    public function testFakeSearch()
+    public function testFakeSearch(): void
     {
         SearchWrapper::addEngine('SearchEngineMock', __DIR__ . '/SearchEngineMock.php');
 
@@ -143,7 +157,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertEquals('barz', $result, "Wrong mocked search result!");
     }
 
-    public function testSearch2()
+    public function testSearch2(): void
     {
         // this time try passing a custom engine
         $mockEngine = Mockery::mock(SearchEngine::class);
@@ -159,7 +173,7 @@ class SearchWrapperTest extends SearchTestAbstract
         Mockery::close();
     }
 
-    public function testSearch3()
+    public function testSearch3(): void
     {
         // this time check if the validation works
 
@@ -176,7 +190,7 @@ class SearchWrapperTest extends SearchTestAbstract
         Mockery::close();
     }
 
-    public function testGetModules()
+    public function testGetModules(): void
     {
         $actual = SearchWrapper::getModules();
 
@@ -184,7 +198,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertGreaterThan(1, count($actual));
     }
 
-    public function testGetDefaultEngine()
+    public function testGetDefaultEngine(): void
     {
         global $sugar_config;
 
@@ -193,7 +207,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertEquals('foo', SearchWrapper::getDefaultEngine());
     }
 
-    public function testGetController()
+    public function testGetController(): void
     {
         global $sugar_config;
 

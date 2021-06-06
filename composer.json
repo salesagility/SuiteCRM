@@ -98,6 +98,13 @@
         "tests/SuiteCRM/",
         "tests/unit/phpunit/lib/SuiteCRM/"
       ],
+      "SuiteCRM\\Tests\\": [
+        "tests/"
+      ],
+      "SuiteCRM\\Tests\\Unit\\": [
+        "tests/unit/phpunit/",
+        "tests/unit/phpunit/include"
+      ],
       "SuiteCRM\\Custom\\": [
         "custom/lib"
       ],
