@@ -1,0 +1,54 @@
+#sugarMsgWindow_c {
+    #sugarMsgWindow {
+        border-radius: 0.3em;
+    }
+    .container-close {
+        color: $black;
+        margin-top: 0.1em;
+    }
+    .bd {
+        padding-top: 0.5em;
+        padding-bottom: 1em;
+        border-bottom: 1px solid lightgrey;
+    }
+    .ft {
+        padding-top: 1em;
+        .button-group {
+            button {
+                background: $midnight-blue;
+                color: $white;
+                border: none;
+                border-radius: 0.3em;
+                padding: 0.3em 0.5em 0.3em 0.5em;
+            }
+        }
+    }
+    .hd {
+        background: $white;
+        color: $black;
+    }
+}
+
+#testOutboundDialog {
+    border-radius: 0.3em;
+    .container-close {
+        color: $black;
+        margin-top: 0.1em;
+    }
+    .hd {
+        background: $white;
+        color: $black;
+    }
+    #testOutbound {
+        table.edit 
+        {
+            tr td {
+                padding: 0.5em;
+            }
+        }
+    }
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+}
