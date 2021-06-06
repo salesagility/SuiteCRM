@@ -13,7 +13,7 @@ class AlertTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAlert()
+    public function testAlert(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $alert = BeanFactory::newBean('Alerts');
@@ -29,7 +29,7 @@ class AlertTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'importable', $alert);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $alert = BeanFactory::newBean('Alerts');
 

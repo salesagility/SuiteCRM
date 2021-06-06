@@ -13,7 +13,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Tasks');
     }
 
-    public function testTask()
+    public function testTask(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $task = BeanFactory::newBean('Tasks');
@@ -29,7 +29,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $task);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $task = BeanFactory::newBean('Tasks');
 
@@ -50,7 +50,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $task = BeanFactory::newBean('Tasks');
 
@@ -62,7 +62,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $task->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $task = BeanFactory::newBean('Tasks');
 
@@ -77,7 +77,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $task = BeanFactory::newBean('Tasks');
         $task->contact_id = 1;
@@ -91,7 +91,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_parent_fields()
+    public function testfill_in_additional_parent_fields(): void
     {
         $task = BeanFactory::newBean('Tasks');
         $task->parent_type = 'Accounts';
@@ -106,7 +106,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $task = BeanFactory::newBean('Tasks');
         $current_theme = SugarThemeRegistry::current();
@@ -139,7 +139,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $task = BeanFactory::newBean('Tasks');
 
@@ -162,7 +162,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($task->description, $result->_tpl_vars['TASK_DESCRIPTION']);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $task = BeanFactory::newBean('Tasks');
 
@@ -171,7 +171,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $task->bean_implements('ACL')); //test with valid value
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         $task = BeanFactory::newBean('Tasks');
 
@@ -180,7 +180,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetDefaultStatus()
+    public function testgetDefaultStatus(): void
     {
         $result = BeanFactory::newBean('Tasks')->getDefaultStatus();
         self::assertEquals('Not Started', $result);

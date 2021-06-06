@@ -13,7 +13,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testCampaignTracker()
+    public function testCampaignTracker(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $campaignTracker = BeanFactory::newBean('CampaignTrackers');
@@ -26,7 +26,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $campaignTracker);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $campaignTracker = BeanFactory::newBean('CampaignTrackers');
 
@@ -45,7 +45,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $campaignTracker = BeanFactory::newBean('CampaignTrackers');
 
@@ -57,7 +57,7 @@ class CampaignTrackerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $campaignTracker->get_summary_text());
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $campaignTracker = BeanFactory::newBean('CampaignTrackers');
 

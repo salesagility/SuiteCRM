@@ -9,7 +9,7 @@ class ViewQuickeditTest extends SuitePHPUnitFrameworkTestCase
         parent::setUp();
     }
 
-    public function testpreDisplay()
+    public function testpreDisplay(): void
     {
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;

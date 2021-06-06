@@ -13,7 +13,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testNote()
+    public function testNote(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $note = BeanFactory::newBean('Notes');
@@ -29,7 +29,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $note);
     }
 
-    public function testsafeAttachmentName()
+    public function testsafeAttachmentName(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -45,7 +45,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test.php.txt', $note->filename);
     }
 
-    public function testmark_deleted()
+    public function testmark_deleted(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -58,7 +58,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdeleteAttachment()
+    public function testdeleteAttachment(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -67,7 +67,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -79,7 +79,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $note->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -94,7 +94,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -107,7 +107,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -120,7 +120,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $note = BeanFactory::newBean('Notes');
         $id = 'abcdef12345';
@@ -146,7 +146,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         $note = BeanFactory::newBean('Notes');
 
@@ -155,7 +155,7 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $note = BeanFactory::newBean('Notes');
 

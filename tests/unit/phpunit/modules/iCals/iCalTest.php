@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'modules/iCals/iCal.php';
 class iCalTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         self::markTestIncomplete('environment dependency');
 

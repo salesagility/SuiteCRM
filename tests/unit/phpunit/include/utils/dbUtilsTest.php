@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/db_utils.php';
 class db_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function db_convertProvider()
+    public function db_convertProvider(): array
     {
         //array containing all possible types supported by db_convert
         return array(
@@ -31,14 +31,14 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @dataProvider db_convertProvider
      */
-    public function testdb_convert($string, $type, $params, $expected)
+    public function testdb_convert($string, $type, $params, $expected): void
     {
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         self::assertSame($expected, $actual);
     }
 
-    public function testdb_concat()
+    public function testdb_concat(): void
     {
         //execute the method and test if it returns expected values
 
@@ -49,7 +49,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfrom_db_convert()
+    public function testfrom_db_convert(): void
     {
         //execute the method and test if it returns expected values
 
@@ -60,7 +60,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'timestamp'));
     }
 
-    public function testto_html()
+    public function testto_html(): void
     {
 //        $this->markTestIncomplete('PHPUnit and codeception results are in conflict');
 //        //execute the method and test if it returns expected values
@@ -76,7 +76,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertSame($expected, $actual);
     }
 
-    public function testfrom_html()
+    public function testfrom_html(): void
     {
         $string = '';
         $expected = '';
@@ -89,7 +89,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetValidDBName()
+    public function testgetValidDBName(): void
     {
         $expected = '';
         $actual = getValidDBName('');
@@ -100,7 +100,7 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testisValidDBName()
+    public function testisValidDBName(): void
     {
         //valid value
         $expected = true;

@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testEmailMarketing()
+    public function testEmailMarketing(): void
     {
         // execute the constructor and check for the Object type and attributes
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
@@ -19,13 +19,13 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $emailMarketing);
     }
 
-    public function testretrieve()
+    public function testretrieve(): void
     {
         $result = BeanFactory::newBean('EmailMarketing')->retrieve();
         self::assertInstanceOf('EmailMarketing', $result);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
 
@@ -37,7 +37,7 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $emailMarketing->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
 
@@ -52,7 +52,7 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
 
@@ -65,7 +65,7 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
         self::assertEquals(false, $emailMarketing->bean_implements('')); //test with blank value
@@ -73,7 +73,7 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $emailMarketing->bean_implements('ACL')); //test with valid value
     }
 
-    public function testget_all_prospect_lists()
+    public function testget_all_prospect_lists(): void
     {
         $emailMarketing = BeanFactory::newBean('EmailMarketing');
 

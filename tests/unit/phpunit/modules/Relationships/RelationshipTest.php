@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class RelationshipTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testRelationship()
+    public function testRelationship(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $relationship = BeanFactory::newBean('Relationships');
@@ -19,7 +19,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $relationship);
     }
 
-    public function testis_self_referencing()
+    public function testis_self_referencing(): void
     {
         //test without setting any attributes
         $relationship = BeanFactory::newBean('Relationships');
@@ -69,7 +69,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $result);
     }
 
-    public function testdelete()
+    public function testdelete(): void
     {
         $db = DBManagerFactory::getInstance();
 
@@ -82,7 +82,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_other_module()
+    public function testget_other_module(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -150,7 +150,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('roles_users', $result);
     }
 
-    public function testretrieve_by_name()
+    public function testretrieve_by_name(): void
     {
         $relationship = BeanFactory::newBean('Relationships');
 
@@ -172,7 +172,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('many-to-many', $relationship->relationship_type);
     }
 
-    public function testload_relationship_meta()
+    public function testload_relationship_meta(): void
     {
         $relationship = BeanFactory::newBean('Relationships');
 
@@ -180,7 +180,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(isset($GLOBALS['relationships']));
     }
 
-    public function testbuild_relationship_cache()
+    public function testbuild_relationship_cache(): void
     {
         $relationship = BeanFactory::newBean('Relationships');
 
@@ -193,19 +193,19 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcache_file_dir()
+    public function testcache_file_dir(): void
     {
         $result = Relationship::cache_file_dir();
         self::assertEquals('cache/modules/Relationships', $result);
     }
 
-    public function testcache_file_name_only()
+    public function testcache_file_name_only(): void
     {
         $result = Relationship::cache_file_name_only();
         self::assertEquals('relationships.cache.php', $result);
     }
 
-    public function testdelete_cache()
+    public function testdelete_cache(): void
     {
         // Execute the method and test that it works and doesn't throw an exception.
         try {
@@ -216,7 +216,7 @@ class RelationshipTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testtrace_relationship_module()
+    public function testtrace_relationship_module(): void
     {
         $result = BeanFactory::newBean('Relationships')->trace_relationship_module('Roles', 'Users');
         self::assertInstanceOf('User', $result);

@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/encryption_utils.php';
 class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testsugarEncode()
+    public function testsugarEncode(): void
     {
         //execute the method and test if it returns expected values
         //key param does nothing currently.
@@ -26,7 +26,7 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsugarDecode()
+    public function testsugarDecode(): void
     {
         //execute the method and test if it returns expected values
         //key param does nothing currently.
@@ -47,7 +47,7 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testblowfishGetKey()
+    public function testblowfishGetKey(): void
     {
         //execute the method and test if it returns expected length string
 
@@ -60,7 +60,7 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThanOrEqual(36, strlen($actual));
     }
 
-    public function testblowfishEncode()
+    public function testblowfishEncode(): void
     {
         //execute the method and test if it returns expected values
         //it won't work with blank key, will throw an error
@@ -76,7 +76,7 @@ class encryption_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testblowfishDecode()
+    public function testblowfishDecode(): void
     {
         //execute the method and test if it returns expected values
         //it won't work with blank key, will throw an error.

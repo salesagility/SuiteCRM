@@ -51,7 +51,7 @@ class BaseHandlerTest extends SuitePHPUnitFrameworkTestCase
         parent::setUp();
     }
 
-    public function testFirst()
+    public function testFirst(): void
     {
         self::assertEquals(true, true);
     }

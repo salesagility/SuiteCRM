@@ -13,7 +13,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testViewPopup()
+    public function testViewPopup(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewPopup();
@@ -24,7 +24,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         unset($view);
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         if (isset($_SESSION)) {
             $session = $_SESSION;
@@ -48,7 +48,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplayGetModulePopupPickerIfNoListviewsSearchDefs()
+    public function testdisplayGetModulePopupPickerIfNoListviewsSearchDefs(): void
     {
         $view = new ViewPopup();
         $view->module = 'Audit'; // Confirms has no listview/searchdefs
@@ -88,7 +88,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         rmdir($dirname);
     }
 
-    public function testdisplayGetCustomDefaultPopupPickerIdNoModulePopupPicker()
+    public function testdisplayGetCustomDefaultPopupPickerIdNoModulePopupPicker(): void
     {
         $view = new ViewPopup();
         $view->module = 'Accounts'; // Confirms has no Popup_picker

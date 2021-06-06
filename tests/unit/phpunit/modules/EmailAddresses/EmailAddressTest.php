@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testEmailAddress()
+    public function testEmailAddress(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $email = BeanFactory::newBean('EmailAddresses');
@@ -20,7 +20,7 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $email);
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $email = BeanFactory::newBean('EmailAddresses');
 

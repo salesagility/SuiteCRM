@@ -13,7 +13,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -36,7 +36,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
     }
 
 
-    public function testcreate_list_query()
+    public function testcreate_list_query(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -54,7 +54,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testProspectList()
+    public function testProspectList(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $prospectList = BeanFactory::newBean('ProspectLists');
@@ -69,7 +69,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals("prospect_lists_prospects", 'rel_prospects_table', $prospectList);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -84,7 +84,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_export_members_query()
+    public function testcreate_export_members_query(): void
     {
         /*
     	$prospectList = BeanFactory::newBean('ProspectLists');
@@ -97,7 +97,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true, "NEEDS FIXING!");
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -125,12 +125,12 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testsave_relationship_changes()
+    public function testsave_relationship_changes(): void
     {
         self::markTestIncomplete('Error in query: columns mismatch | Error in methodd call params: 2nd param should be array but string given');
     }
 
-    public function set_prospect_relationship($id)
+    public function set_prospect_relationship($id): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -150,7 +150,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->clear_prospect_relationship($id, '2');
     }
 
-    public function set_prospect_relationship_single($id)
+    public function set_prospect_relationship_single($id): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -164,7 +164,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         $this->clear_prospect_relationship($id, '3');
     }
 
-    public function clear_prospect_relationship($id, $related_id)
+    public function clear_prospect_relationship($id, $related_id): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -180,7 +180,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($initial_count - 1, $expected_count);
     }
 
-    public function testmark_relationships_deleted()
+    public function testmark_relationships_deleted(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -195,7 +195,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Method has no implementation');
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -210,7 +210,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Method has no implementation');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -218,7 +218,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(0, $prospectList->entry_count);
     }
 
-    public function testupdate_currency_id()
+    public function testupdate_currency_id(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -233,13 +233,13 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Method has no implementation');
     }
 
-    public function testget_entry_count()
+    public function testget_entry_count(): void
     {
         $result = BeanFactory::newBean('ProspectLists')->get_entry_count();
         self::assertEquals(0, $result);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -248,7 +248,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 
@@ -264,7 +264,7 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $prospectList = BeanFactory::newBean('ProspectLists');
 

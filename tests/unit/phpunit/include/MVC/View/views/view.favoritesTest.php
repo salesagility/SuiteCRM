@@ -8,12 +8,12 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewFavoritesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
 //        $this->markTestIncomplete('Can Not be implemented');
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
 //        $this->markTestIncomplete('Can Not be implemented');
     }

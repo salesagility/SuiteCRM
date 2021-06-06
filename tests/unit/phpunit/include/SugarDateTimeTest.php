@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testget_day_begin()
+    public function testget_day_begin(): void
     {
         // Test that the get_day_begin function creates a SugarDateTime
         // object where the time is 00:00:00.
@@ -13,7 +13,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testget_day_end()
+    public function testget_day_end(): void
     {
         // Test that the get_day_begin function creates a SugarDateTime
         // object where the time is 23:59:59.
@@ -22,7 +22,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testasDb()
+    public function testasDb(): void
     {
         // Test that the asDb function returns a string formatted for use in
         // the database.
@@ -31,7 +31,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testasDbDate()
+    public function testasDbDate(): void
     {
         // Test that the asDbDate function returns a string formatted for use
         // in the database.
@@ -40,7 +40,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testget_date_str()
+    public function testget_date_str(): void
     {
         // Test that the get_date_str function returns a string for use in
         // URL parameters.
@@ -49,7 +49,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testget_day_by_index_this_month()
+    public function testget_day_by_index_this_month(): void
     {
         // Test that the get_day_by_index_this_month function returns a
         // SugarDateTime representing the correct day of the month.
@@ -58,7 +58,7 @@ class SugarDateTimeTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testget_day_by_index_this_monthWithExcessiveValue()
+    public function testget_day_by_index_this_monthWithExcessiveValue(): void
     {
         // Test that the get_day_by_index_this_month function returns a
         // SugarDateTime representing the correct day of the month, even when

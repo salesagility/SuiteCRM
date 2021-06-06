@@ -15,7 +15,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testSubscribeUnsubscribeFromNewsLetterCampaign()
+    public function testSubscribeUnsubscribeFromNewsLetterCampaign(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
         $campaign->name = create_guid();
@@ -56,7 +56,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($default_list->id, $keyed['unsubscribed'][$campaign->name]['prospect_list_id']);
     }
 
-    public function testCampaign()
+    public function testCampaign(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $campaign = BeanFactory::newBean('Campaigns');
@@ -70,7 +70,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $campaign);
     }
 
-    public function testlist_view_parse_additional_sections()
+    public function testlist_view_parse_additional_sections(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -80,7 +80,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', isset($tpl->_tpl_vars['ASSIGNED_USER_NAME']) ? $tpl->_tpl_vars['ASSIGNED_USER_NAME'] : null);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -92,7 +92,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $campaign->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
         $campaign = BeanFactory::newBean('Campaigns');
@@ -108,7 +108,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testclear_campaign_prospect_list_relationship()
+    public function testclear_campaign_prospect_list_relationship(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -122,7 +122,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testmark_relationships_deleted()
+    public function testmark_relationships_deleted(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -136,7 +136,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -149,7 +149,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -162,7 +162,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testupdate_currency_id()
+    public function testupdate_currency_id(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -175,7 +175,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -206,7 +206,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -221,7 +221,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testSaveAndMarkDeleted()
+    public function testSaveAndMarkDeleted(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
         $campaign->name = 'test';
@@ -239,7 +239,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -259,7 +259,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($campaign->content, $result->_tpl_vars['CAMPAIGN_DESCRIPTION']);
     }
 
-    public function testtrack_log_leads()
+    public function testtrack_log_leads(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -268,7 +268,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testtrack_log_entries()
+    public function testtrack_log_entries(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -283,7 +283,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_queue_items()
+    public function testget_queue_items(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -433,7 +433,7 @@ WHERE  emailman.campaign_id = ''
         self::assertSame($expected, $actual);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
         self::assertEquals(false, $campaign->bean_implements('')); //test with blank value
@@ -441,7 +441,7 @@ WHERE  emailman.campaign_id = ''
         self::assertEquals(true, $campaign->bean_implements('ACL')); //test with valid value
     }
 
-    public function testcreate_list_count_query()
+    public function testcreate_list_count_query(): void
     {
         $campaign = BeanFactory::newBean('Campaigns');
 
@@ -461,7 +461,7 @@ WHERE  emailman.campaign_id = ''
         self::assertSame($expected, $actual);
     }
 
-    public function testgetDeletedCampaignLogLeadsCount()
+    public function testgetDeletedCampaignLogLeadsCount(): void
     {
         $result = BeanFactory::newBean('Campaigns')->getDeletedCampaignLogLeadsCount();
         self::assertEquals(0, $result);

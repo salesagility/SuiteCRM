@@ -13,7 +13,7 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOW_Action()
+    public function testAOW_Action(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowAction = BeanFactory::newBean('AOW_Actions');
@@ -30,7 +30,7 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'tracker_visibility', $aowAction);
     }
 
-    public function testsave_lines()
+    public function testsave_lines(): void
     {
         $aowAction = BeanFactory::newBean('AOW_Actions');
 
@@ -56,7 +56,7 @@ class AOW_ActionTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $aowAction = BeanFactory::newBean('AOW_Actions');
         self::assertEquals(false, $aowAction->bean_implements('')); //test with blank value

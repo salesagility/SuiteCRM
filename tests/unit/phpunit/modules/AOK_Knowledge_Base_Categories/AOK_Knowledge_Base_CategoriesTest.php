@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOK_Knowledge_Base_CategoriesTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOK_Knowledge_Base_Categories()
+    public function testAOK_Knowledge_Base_Categories(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $aok_KBCategories = BeanFactory::newBean('AOK_Knowledge_Base_Categories');

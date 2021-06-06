@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/progress_bar_utils.php';
 class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testprogress_bar_flush()
+    public function testprogress_bar_flush(): void
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -17,7 +17,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplay_flow_bar()
+    public function testdisplay_flow_bar(): void
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -31,7 +31,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function teststart_flow_bar()
+    public function teststart_flow_bar(): void
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -45,7 +45,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdestroy_flow_bar()
+    public function testdestroy_flow_bar(): void
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -59,7 +59,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplay_progress_bar()
+    public function testdisplay_progress_bar(): void
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed
@@ -73,7 +73,7 @@ class progress_bar_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testupdate_progress_bar()
+    public function testupdate_progress_bar(): void
     {
         //execute the method and test if it doesn't throw an exception.
         //this method uses flush so we cannot get and verify content printed

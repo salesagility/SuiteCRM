@@ -15,7 +15,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         $this->rootFs->addChild(org\bovigo\vfs\vfsStream::newFile('test.txt')->withContent('Hello world!'));
     }
 
-    public function testclean_path()
+    public function testclean_path(): void
     {
         //execute the method and test if it returns expected values
 
@@ -48,7 +48,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_cache_directory()
+    public function testcreate_cache_directory(): void
     {
         //execute the method and test if it created file/dir exists
 
@@ -67,7 +67,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_module_dir_list()
+    public function testget_module_dir_list(): void
     {
         //execute the method and test if it returns expected values
 
@@ -197,7 +197,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testmk_temp_dir()
+    public function testmk_temp_dir(): void
     {
 //        self::markTestIncomplete('Test failing in php 7.1 and 7.2: tempnam(): file created in the system\'s temporary directory');
 //        //execute the method and test if created dir/file exists
@@ -211,7 +211,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertFileExists($actual);
     }
 
-    public function testremove_file_extension()
+    public function testremove_file_extension(): void
     {
         //execute the method and test if it returns expected values
 
@@ -231,7 +231,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testwrite_array_to_file()
+    public function testwrite_array_to_file(): void
     {
 //        $this->markTestSkipped('write_array_to_file cannot be tested with vfsStream');
 //        //execute the method and test if it returns true and verify contents
@@ -256,7 +256,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 //        unlink($cache_dir.'\tempArray.txt');
     }
 
-    public function testwrite_encoded_file()
+    public function testwrite_encoded_file(): void
     {
         //execute the method and test if it created file exists
 
@@ -275,7 +275,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         unlink($actual);
     }
 
-    public function testcreate_custom_directory()
+    public function testcreate_custom_directory(): void
     {
         //execute the method and test if it created file/dir exists
 
@@ -294,7 +294,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgenerateMD5array()
+    public function testgenerateMD5array(): void
     {
 //        self::markTestIncomplete('environment dependency');
 //
@@ -315,7 +315,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertSame($expected, $actual);
     }
 
-    public function testmd5DirCompare()
+    public function testmd5DirCompare(): void
     {
         //execute the method and test if it returns expected values
 
@@ -325,7 +325,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetFiles()
+    public function testgetFiles(): void
     {
         //execute the method and test if it returns expected values
 
@@ -382,7 +382,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testreadfile_chunked()
+    public function testreadfile_chunked(): void
     {
         //execute the method and test if it returns expected values
 
@@ -407,7 +407,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $renderedContent);
     }
 
-    public function testsugar_rename()
+    public function testsugar_rename(): void
     {
         //execute the method and test if it returns true/success
 
@@ -429,7 +429,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         unlink($dir.'/'.'newtest.txt');
     }
 
-    public function testfileToHash()
+    public function testfileToHash(): void
     {
         if (isset($_SESSION)) {
             $_session = $_SESSION;
@@ -456,7 +456,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testhashToFile()
+    public function testhashToFile(): void
     {
         if (isset($_SESSION)) {
             $_session = $_SESSION;
@@ -480,7 +480,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_file_extension()
+    public function testget_file_extension(): void
     {
         //execute the method and test if it returns expected values
 
@@ -497,7 +497,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('txt', get_file_extension($file, true));
     }
 
-    public function testget_mime_content_type_from_filename()
+    public function testget_mime_content_type_from_filename(): void
     {
         //execute the method and test if it returns expected values
 
@@ -508,7 +508,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('video/x-flv', get_mime_content_type_from_filename('file.flv'));
     }
 
-    public function testcleanFileName()
+    public function testcleanFileName(): void
     {
         //execute the method and test if it returns expected values
 
@@ -517,7 +517,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame('file.txt', cleanFileName('file.txt'));
     }
 
-    public function testcleanDirName()
+    public function testcleanDirName(): void
     {
         //execute the method and test if it returns expected values
 

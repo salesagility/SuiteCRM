@@ -13,7 +13,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testProspect()
+    public function testProspect(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $prospect = BeanFactory::newBean('Prospects');
@@ -30,7 +30,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $prospect);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $prospect = BeanFactory::newBean('Prospects');
 
@@ -46,7 +46,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $prospect = BeanFactory::newBean('Prospects');
 
@@ -61,7 +61,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('last', 'full_name', $prospect);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $prospect = BeanFactory::newBean('Prospects');
 
@@ -76,7 +76,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testconverted_prospect()
+    public function testconverted_prospect(): void
     {
         $prospect = BeanFactory::newBean('Prospects');
 
@@ -91,7 +91,7 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Multiple errors in query');
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $prospect = BeanFactory::newBean('Prospects');
 
@@ -100,19 +100,19 @@ class ProspectTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $prospect->bean_implements('ACL')); //test with valid value
     }
 
-    public function testretrieveTargetList()
+    public function testretrieveTargetList(): void
     {
         $result = BeanFactory::newBean('Prospects')->retrieveTargetList('', array('id', 'first_name'), 0, 1, 1, 0, 'Accounts');
         self::assertIsArray($result);
     }
 
-    public function testretrieveTarget()
+    public function testretrieveTarget(): void
     {
         $result = BeanFactory::newBean('Prospects')->retrieveTarget('');
         self::assertEquals(null, $result);
     }
 
-    public function testget_unlinked_email_query()
+    public function testget_unlinked_email_query(): void
     {
         self::markTestIncomplete('environment dependency (CRLF2)');
 

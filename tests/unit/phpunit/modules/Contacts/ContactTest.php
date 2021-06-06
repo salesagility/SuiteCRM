@@ -13,7 +13,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testContact()
+    public function testContact(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $contact = BeanFactory::newBean('Contacts');
@@ -30,7 +30,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $contact);
     }
 
-    public function testadd_list_count_joins()
+    public function testadd_list_count_joins(): void
     {
         self::markTestIncomplete('Breaks on php 7.1');
 
@@ -57,7 +57,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         self::markTestIncomplete('environment dependency');
 
@@ -72,7 +72,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @todo: NEEDS FIXING!
      */
-    public function testcreate_new_list_query()
+    public function testcreate_new_list_query(): void
     {
         /*
         $contact = BeanFactory::newBean('Contacts');
@@ -91,7 +91,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(true, "NEEDS FIXING!");
     }
 
-    public function testaddress_popup_create_new_list_query()
+    public function testaddress_popup_create_new_list_query(): void
     {
         self::markTestIncomplete('Breaks on php 7.1');
         $contact = BeanFactory::newBean('Contacts');
@@ -108,12 +108,12 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         self::markTestIncomplete('Refactor needed as field ording changes on different test environments');
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -131,7 +131,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("firstn lastn &lt;2@test.com&gt;", $contact->email_and_name2);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -145,7 +145,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("", $contact->report_to_name);
     }
 
-    public function testload_contacts_users_relationship()
+    public function testload_contacts_users_relationship(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -158,7 +158,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -190,7 +190,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -206,7 +206,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -222,7 +222,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($contact->description, $result->_tpl_vars['CONTACT_DESCRIPTION']);
     }
 
-    public function testget_contact_id_by_email()
+    public function testget_contact_id_by_email(): void
     {
         $result = BeanFactory::newBean('Contacts')->get_contact_id_by_email("");
         self::assertEquals(null, $result);
@@ -231,7 +231,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::markTestSkipped('Invalid Columns(email1,email2) in Query ');
     }
 
-    public function testsave_relationship_changes()
+    public function testsave_relationship_changes(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -245,7 +245,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $contact = BeanFactory::newBean('Contacts');
         self::assertEquals(false, $contact->bean_implements('')); //test with blank value
@@ -253,7 +253,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $contact->bean_implements('ACL')); //test with valid value
     }
 
-    public function testget_unlinked_email_query()
+    public function testget_unlinked_email_query(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 
@@ -269,7 +269,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testprocess_sync_to_outlook()
+    public function testprocess_sync_to_outlook(): void
     {
         $contact = BeanFactory::newBean('Contacts');
 

@@ -15,7 +15,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testEmailTemplateParser()
+    public function testEmailTemplateParser(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
         $emailTemplate->body_html = to_html('<h1>Hello $contact_name</h1>');
@@ -34,7 +34,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testEmailTemplateParserUser()
+    public function testEmailTemplateParserUser(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
         $emailTemplate->body = 'Hello $contact_user_full_name';
@@ -49,7 +49,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Hello foo bar', $result['body']);
     }
 
-    public function testcreateCopyTemplate()
+    public function testcreateCopyTemplate(): void
     {
         global $current_user;
 
@@ -72,7 +72,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($current_user->id, $template->assigned_user_id);
     }
 
-    public function testaddDomainToRelativeImagesSrc()
+    public function testaddDomainToRelativeImagesSrc(): void
     {
         global $sugar_config;
 
@@ -87,7 +87,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('src="https://foobar.com/public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png"', $result);
     }
 
-    public function testrepairEntryPointImages()
+    public function testrepairEntryPointImages(): void
     {
         global $sugar_config;
 
@@ -118,7 +118,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, from_html($template->body_html));
     }
 
-    public function testEmailTemplate()
+    public function testEmailTemplate(): void
     {
         // Execute the constructor and check for the Object type and attributes
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
@@ -133,7 +133,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $emailTemplate);
     }
 
-    public function testgenerateFieldDefsJS()
+    public function testgenerateFieldDefsJS(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -145,7 +145,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($actual));
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -157,7 +157,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $emailTemplate->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -172,7 +172,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -185,7 +185,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -203,7 +203,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('some html text', $emailTemplate->body);
     }
 
-    public function testfill_in_additional_detail_fields_body_to_text()
+    public function testfill_in_additional_detail_fields_body_to_text(): void
     {
         // simple examples
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
@@ -242,7 +242,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("\xc3\xa4", $emailTemplate->body);
     }
 
-    public function testfill_in_additional_parent_fields()
+    public function testfill_in_additional_parent_fields(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -255,7 +255,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -268,7 +268,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testparse_email_templateAndParse_tracker_urls()
+    public function testparse_email_templateAndParse_tracker_urls(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -291,7 +291,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $result);
     }
 
-    public function test_convertToType()
+    public function test_convertToType(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -308,7 +308,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
      *  contact_user_deleted, contact_user_portal_only, contact_user_show_on_employees
      *
      */
-    public function test_parseUserValues()
+    public function test_parseUserValues(): void
     {
         /*
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
@@ -389,7 +389,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete("Different values for php5 and php7");
     }
 
-    public function testparse_template_bean()
+    public function testparse_template_bean(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
         $contact = BeanFactory::newBean('Contacts');
@@ -412,7 +412,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $actual);
     }
 
-    public function testparse_template()
+    public function testparse_template(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
         $bean_arr = array('Users' => 1, 'Leads' => 1);
@@ -426,7 +426,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('some value', $result);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -438,7 +438,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $emailTemplate->bean_implements('ACL'));
     }
 
-    public function testgetTypeOptionsForSearch()
+    public function testgetTypeOptionsForSearch(): void
     {
         // execute the method and verify that it returns expected results
         $expected = [
@@ -451,7 +451,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testis_used_by_email_marketing()
+    public function testis_used_by_email_marketing(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 
@@ -463,7 +463,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $emailTemplate->is_used_by_email_marketing());
     }
 
-    public function testcleanBean()
+    public function testcleanBean(): void
     {
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
 

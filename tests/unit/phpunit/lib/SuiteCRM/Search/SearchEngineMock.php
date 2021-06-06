@@ -55,6 +55,10 @@ class SearchEngineMock extends SearchEngine
         return false;
     }
 
+    /**
+     * @param SearchQuery $query
+     * @noinspection ReturnTypeCanBeDeclaredInspection
+     */
     public function searchAndDisplay(SearchQuery $query)
     {
         echo $this->search($query);

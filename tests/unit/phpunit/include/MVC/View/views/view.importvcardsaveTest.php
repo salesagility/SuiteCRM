@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $view = new ViewImportvcardsave();
@@ -14,7 +14,7 @@ class ViewImportvcardsaveTest extends SuitePHPUnitFrameworkTestCase
     }
 
     //incomplete test. this method uses exit() so it cannot be tested.
-    public function testdisplay()
+    public function testdisplay(): void
     {
         self::markTestIncomplete('Cannot be implemented due to use of exit().');
 

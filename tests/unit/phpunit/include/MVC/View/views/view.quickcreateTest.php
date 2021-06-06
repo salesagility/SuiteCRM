@@ -13,7 +13,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testpreDisplay()
+    public function testpreDisplay(): void
     {
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
@@ -45,7 +45,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         if (isset($_SESSION)) {
             $_session = $_SESSION;

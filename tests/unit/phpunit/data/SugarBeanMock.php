@@ -89,7 +89,7 @@ class SugarBeanMock extends SugarBean
      * @return string
      * @throws \Exception
      */
-    public function publicParseDateDefault($value, $time = false)
+    public function publicParseDateDefault($value, $time = false): string
     {
         return $this->parseDateDefault($value, $time);
     }/** @noinspection MoreThanThreeArgumentsInspection */
@@ -101,7 +101,7 @@ class SugarBeanMock extends SugarBean
      * @param string $order_by
      * @return array
      */
-    public static function publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by)
+    public static function publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by): array
     {
         return self::build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by);
     }
@@ -109,12 +109,12 @@ class SugarBeanMock extends SugarBean
     /**
      * @param mixed $testValue
      */
-    public function setLoadedRelationships($testValue)
+    public function setLoadedRelationships($testValue): void
     {
         $this->loaded_relationships = $testValue;
     }
 
-    public function getEncryptKeyPublic()
+    public function getEncryptKeyPublic(): string
     {
         return parent::getEncryptKey();
     }

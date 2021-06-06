@@ -7,7 +7,7 @@ require_once 'include/utils/logic_utils.php';
 
 class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testget_hook_array()
+    public function testget_hook_array(): void
     {
         //test with a vaid module. it will return an array
         if (file_exists("custom/modules/Accounts/logic_hooks.php")) {
@@ -25,7 +25,7 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsNotArray($BugsHooks);
     }
 
-    private function getTestHook()
+    private function getTestHook(): array
     {
         //array containing hooks array to test
 
@@ -88,7 +88,7 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
         return $hook_array;
     }
 
-    public function check_existing_elementProvider()
+    public function check_existing_elementProvider(): array
     {
         //provide test cases dataset to validate
 
@@ -104,13 +104,13 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @dataProvider check_existing_elementProvider
      */
-    public function testcheck_existing_element($hook_array, $event, $action_array, $expected)
+    public function testcheck_existing_element($hook_array, $event, $action_array, $expected): void
     {
         //test with dataset containing valid and invalid cases
         self::assertSame(check_existing_element($hook_array, $event, $action_array), $expected);
     }
 
-    public function testreplace_or_add_logic_type()
+    public function testreplace_or_add_logic_type(): void
     {
         //execute the method and test if it returns expected values
 
@@ -119,7 +119,7 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, replace_or_add_logic_type($hook_array));
     }
 
-    public function testwrite_logic_file()
+    public function testwrite_logic_file(): void
     {
         //execute the method and test if it returns expected values,
         //check if file is created and contains expected contents
@@ -149,7 +149,7 @@ class logic_utilsTest extends SuitePHPUnitFrameworkTestCase
         rmdir('custom/modules/TEST_Test');
     }
 
-    public function testbuild_logic_file()
+    public function testbuild_logic_file(): void
     {
         //execute the method and test if it returns expected values
 
