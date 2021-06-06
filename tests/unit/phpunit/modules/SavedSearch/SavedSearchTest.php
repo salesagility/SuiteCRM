@@ -21,16 +21,15 @@ class SavedSearchTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('SavedSearch', $savedSearch);
         self::assertInstanceOf('SugarBean', $savedSearch);
 
-        self::assertAttributeEquals('saved_search', 'table_name', $savedSearch);
-        self::assertAttributeEquals('SavedSearch', 'module_dir', $savedSearch);
-        self::assertAttributeEquals('SavedSearch', 'object_name', $savedSearch);
+        self::assertEquals('saved_search', $savedSearch->table_name);
+        self::assertEquals('SavedSearch', $savedSearch->module_dir);
+        self::assertEquals('SavedSearch', $savedSearch->object_name);
 
         //test with parameters
-        $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
+        $savedSearch = new SavedSearch(['id', 'name'], 'id', 'ASC');
 
-        self::assertAttributeEquals(array('id', 'name'), 'columns', $savedSearch);
-        self::assertAttributeEquals('id', 'orderBy', $savedSearch);
-        self::assertAttributeEquals('ASC', 'sortOrder', $savedSearch);
+        self::assertEquals('id', $savedSearch->orderBy);
+        self::assertEquals('ASC', $savedSearch->sortOrder);
     }
 
     public function testgetForm(): void

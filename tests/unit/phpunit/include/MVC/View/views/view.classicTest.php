@@ -21,14 +21,14 @@ class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewClassic();
         self::assertInstanceOf('ViewClassic', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('', 'type', $view);
+        self::assertEquals('', $view->type);
 
         //test with bean parameter;
         $bean = BeanFactory::newBean('Users');
         $view = new ViewClassic($bean);
         self::assertInstanceOf('ViewClassic', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('', 'type', $view);
+        self::assertEquals('', $view->type);
     }
 
     public function testdisplay(): void

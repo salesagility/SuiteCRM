@@ -12,11 +12,11 @@ class AOK_KnowledgeBaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aok_KnowledgeBase);
         self::assertInstanceOf('SugarBean', $aok_KnowledgeBase);
 
-        self::assertAttributeEquals('AOK_KnowledgeBase', 'module_dir', $aok_KnowledgeBase);
-        self::assertAttributeEquals('AOK_KnowledgeBase', 'object_name', $aok_KnowledgeBase);
-        self::assertAttributeEquals('aok_knowledgebase', 'table_name', $aok_KnowledgeBase);
-        self::assertAttributeEquals(true, 'new_schema', $aok_KnowledgeBase);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aok_KnowledgeBase);
-        self::assertAttributeEquals(false, 'importable', $aok_KnowledgeBase);
+        self::assertEquals('AOK_KnowledgeBase', $aok_KnowledgeBase->module_dir);
+        self::assertEquals('AOK_KnowledgeBase', $aok_KnowledgeBase->object_name);
+        self::assertEquals('aok_knowledgebase', $aok_KnowledgeBase->table_name);
+        self::assertEquals(true, $aok_KnowledgeBase->new_schema);
+        self::assertEquals(true, $aok_KnowledgeBase->disable_row_level_security);
+        self::assertEquals(false, $aok_KnowledgeBase->importable);
     }
 }

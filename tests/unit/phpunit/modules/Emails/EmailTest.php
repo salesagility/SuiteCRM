@@ -262,13 +262,12 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Email', $email);
         self::assertInstanceOf('SugarBean', $email);
 
-        self::assertAttributeEquals('Emails', 'module_dir', $email);
-        self::assertAttributeEquals('Email', 'object_name', $email);
-        self::assertAttributeEquals('emails', 'table_name', $email);
-        self::assertAttributeEquals('Emails', 'module_name', $email);
-
-        self::assertAttributeEquals(true, 'new_schema', $email);
-        self::assertAttributeEquals('archived', 'type', $email);
+        self::assertEquals('Emails', $email->module_dir);
+        self::assertEquals('Email', $email->object_name);
+        self::assertEquals('emails', $email->table_name);
+        self::assertEquals('Emails', $email->module_name);
+        self::assertEquals(true, $email->new_schema);
+        self::assertEquals('archived', $email->type);
     }
 
     public function testemail2init(): void

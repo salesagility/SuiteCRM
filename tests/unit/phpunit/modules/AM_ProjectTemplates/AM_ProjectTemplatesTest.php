@@ -12,11 +12,11 @@ class AM_ProjectTemplatesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $am_projectTemplate);
         self::assertInstanceOf('SugarBean', $am_projectTemplate);
 
-        self::assertAttributeEquals('AM_ProjectTemplates', 'module_dir', $am_projectTemplate);
-        self::assertAttributeEquals('AM_ProjectTemplates', 'object_name', $am_projectTemplate);
-        self::assertAttributeEquals('am_projecttemplates', 'table_name', $am_projectTemplate);
-        self::assertAttributeEquals(true, 'new_schema', $am_projectTemplate);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $am_projectTemplate);
-        self::assertAttributeEquals(true, 'importable', $am_projectTemplate);
+        self::assertEquals('AM_ProjectTemplates', $am_projectTemplate->module_dir);
+        self::assertEquals('AM_ProjectTemplates', $am_projectTemplate->object_name);
+        self::assertEquals('am_projecttemplates', $am_projectTemplate->table_name);
+        self::assertEquals(true, $am_projectTemplate->new_schema);
+        self::assertEquals(true, $am_projectTemplate->disable_row_level_security);
+        self::assertEquals(true, $am_projectTemplate->importable);
     }
 }

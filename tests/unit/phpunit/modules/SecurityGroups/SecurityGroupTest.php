@@ -21,9 +21,9 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $securityGroup);
         self::assertInstanceOf('SugarBean', $securityGroup);
 
-        self::assertAttributeEquals('securitygroups', 'table_name', $securityGroup);
-        self::assertAttributeEquals('SecurityGroups', 'module_dir', $securityGroup);
-        self::assertAttributeEquals('SecurityGroup', 'object_name', $securityGroup);
+        self::assertEquals('securitygroups', $securityGroup->table_name);
+        self::assertEquals('SecurityGroups', $securityGroup->module_dir);
+        self::assertEquals('SecurityGroup', $securityGroup->object_name);
     }
 
     public function testgetGroupWhere(): void

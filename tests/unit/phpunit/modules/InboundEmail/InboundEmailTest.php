@@ -350,28 +350,23 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('InboundEmail', $inboundEmail);
         self::assertInstanceOf('SugarBean', $inboundEmail);
 
-        self::assertAttributeEquals('InboundEmail', 'module_dir', $inboundEmail);
-        self::assertAttributeEquals('InboundEmail', 'object_name', $inboundEmail);
-        self::assertAttributeEquals('inbound_email', 'table_name', $inboundEmail);
-
-        self::assertAttributeEquals(true, 'new_schema', $inboundEmail);
-        self::assertAttributeEquals(true, 'process_save_dates', $inboundEmail);
-
-        self::assertAttributeEquals('defaultIEAccount', 'keyForUsersDefaultIEAccount', $inboundEmail);
-        self::assertAttributeEquals(10, 'defaultEmailNumAutoreplies24Hours', $inboundEmail);
-        self::assertAttributeEquals(10, 'maxEmailNumAutoreplies24Hours', $inboundEmail);
-
-        self::assertAttributeEquals('InboundEmail.cache.php', 'InboundEmailCacheFile', $inboundEmail);
-
-        self::assertAttributeEquals('date', 'defaultSort', $inboundEmail);
-        self::assertAttributeEquals('DESC', 'defaultDirection', $inboundEmail);
-        self::assertAttributeEquals('F', 'iconFlagged', $inboundEmail);
-        self::assertAttributeEquals('D', 'iconDraft', $inboundEmail);
-        self::assertAttributeEquals('A', 'iconAnswered', $inboundEmail);
-        self::assertAttributeEquals('del', 'iconDeleted', $inboundEmail);
-        self::assertAttributeEquals(false, 'isAutoImport', $inboundEmail);
-
-        self::assertAttributeEquals(0, 'attachmentCount', $inboundEmail);
+        self::assertEquals('InboundEmail', $inboundEmail->module_dir);
+        self::assertEquals('InboundEmail', $inboundEmail->object_name);
+        self::assertEquals('inbound_email', $inboundEmail->table_name);
+        self::assertEquals(true, $inboundEmail->new_schema);
+        self::assertEquals(true, $inboundEmail->process_save_dates);
+        self::assertEquals('defaultIEAccount', $inboundEmail->keyForUsersDefaultIEAccount);
+        self::assertEquals(10, $inboundEmail->defaultEmailNumAutoreplies24Hours);
+        self::assertEquals(10, $inboundEmail->maxEmailNumAutoreplies24Hours);
+        self::assertEquals('InboundEmail.cache.php', $inboundEmail->InboundEmailCacheFile);
+        self::assertEquals('date', $inboundEmail->defaultSort);
+        self::assertEquals('DESC', $inboundEmail->defaultDirection);
+        self::assertEquals('F', $inboundEmail->iconFlagged);
+        self::assertEquals('D', $inboundEmail->iconDraft);
+        self::assertEquals('A', $inboundEmail->iconAnswered);
+        self::assertEquals('del', $inboundEmail->iconDeleted);
+        self::assertEquals(false, $inboundEmail->isAutoImport);
+        self::assertEquals(0, $inboundEmail->attachmentCount);
     }
 
     public function testsaveAndOthers(): void
@@ -2109,8 +2104,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $result = BeanFactory::newBean('InboundEmail')->getNoteBeanForAttachment('1');
 
         self::assertInstanceOf('Note', $result);
-        self::assertAttributeEquals('1', 'parent_id', $result);
-        self::assertAttributeEquals('Emails', 'parent_type', $result);
+        self::assertEquals('1', $result->parent_id);
+        self::assertEquals('Emails', $result->parent_type);
     }
 
     public function testretrieveAttachmentNameFromStructure(): void

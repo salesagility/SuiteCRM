@@ -21,10 +21,10 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Person', $employee);
         self::assertInstanceOf('SugarBean', $employee);
 
-        self::assertAttributeEquals('Employees', 'module_dir', $employee);
-        self::assertAttributeEquals('Employee', 'object_name', $employee);
-        self::assertAttributeEquals('users', 'table_name', $employee);
-        self::assertAttributeEquals(true, 'new_schema', $employee);
+        self::assertEquals('Employees', $employee->module_dir);
+        self::assertEquals('Employee', $employee->object_name);
+        self::assertEquals('users', $employee->table_name);
+        self::assertEquals(true, $employee->new_schema);
     }
 
     public function testget_summary_text(): void
@@ -194,7 +194,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
-        self::assertContains($expected, $contents);
+        self::assertStringContainsStringIgnoringCase($expected, $contents);
 
         // test if there is an error
 
@@ -206,7 +206,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
-        self::assertContains($expected, $contents);
+        self::assertStringContainsStringIgnoringCase($expected, $contents);
 
         unset($app_strings['TEST_ERROR_MESSAGE']);
     }

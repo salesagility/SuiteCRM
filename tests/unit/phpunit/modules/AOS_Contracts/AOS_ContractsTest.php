@@ -21,12 +21,12 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aosContracts);
         self::assertInstanceOf('SugarBean', $aosContracts);
 
-        self::assertAttributeEquals('AOS_Contracts', 'module_dir', $aosContracts);
-        self::assertAttributeEquals('AOS_Contracts', 'object_name', $aosContracts);
-        self::assertAttributeEquals('aos_contracts', 'table_name', $aosContracts);
-        self::assertAttributeEquals(true, 'new_schema', $aosContracts);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aosContracts);
-        self::assertAttributeEquals(true, 'importable', $aosContracts);
+        self::assertEquals('AOS_Contracts', $aosContracts->module_dir);
+        self::assertEquals('AOS_Contracts', $aosContracts->object_name);
+        self::assertEquals('aos_contracts', $aosContracts->table_name);
+        self::assertEquals(true, $aosContracts->new_schema);
+        self::assertEquals(true, $aosContracts->disable_row_level_security);
+        self::assertEquals(true, $aosContracts->importable);
 
         self::assertTrue(isset($aosContracts->renewal_reminder_date));
     }
@@ -64,12 +64,12 @@ class AOS_ContractsTest extends SuitePHPUnitFrameworkTestCase
 
         //verify the parent_type value set by createReminder()
         $call->retrieve($aosContracts->call_id);
-        self::assertAttributeEquals('AOS_Contracts', 'parent_type', $call);
+        self::assertEquals('AOS_Contracts', $call->parent_type);
 
         //test createLink() and verify the parent_type value
         $aosContracts->createLink();
         $call->retrieve($aosContracts->call_id);
-        self::assertAttributeEquals('Accounts', 'parent_type', $call);
+        self::assertEquals('Accounts', $call->parent_type);
 
         //delete the call and verify that this record cannot be retrieved anymore.
         $aosContracts->deleteCall();

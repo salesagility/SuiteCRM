@@ -23,7 +23,7 @@ class ViewDetailTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewDetail();
         self::assertInstanceOf('ViewDetail', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('detail', 'type', $view);
+        self::assertEquals('detail', $view->type);
     }
 
     public function testpreDisplay(): void

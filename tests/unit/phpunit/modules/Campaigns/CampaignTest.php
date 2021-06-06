@@ -63,11 +63,11 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Campaign', $campaign);
         self::assertInstanceOf('SugarBean', $campaign);
 
-        self::assertAttributeEquals('Campaigns', 'module_dir', $campaign);
-        self::assertAttributeEquals('Campaign', 'object_name', $campaign);
-        self::assertAttributeEquals('campaigns', 'table_name', $campaign);
-        self::assertAttributeEquals(true, 'new_schema', $campaign);
-        self::assertAttributeEquals(true, 'importable', $campaign);
+        self::assertEquals('Campaigns', $campaign->module_dir);
+        self::assertEquals('Campaign', $campaign->object_name);
+        self::assertEquals('campaigns', $campaign->table_name);
+        self::assertEquals(true, $campaign->new_schema);
+        self::assertEquals(true, $campaign->importable);
     }
 
     public function testlist_view_parse_additional_sections(): void

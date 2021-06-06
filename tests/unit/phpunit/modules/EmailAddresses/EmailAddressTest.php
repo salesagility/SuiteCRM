@@ -12,12 +12,11 @@ class EmailAddressTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('SugarEmailAddress', $email);
         self::assertInstanceOf('SugarBean', $email);
 
-        self::assertAttributeEquals('EmailAddresses', 'module_dir', $email);
-        self::assertAttributeEquals('EmailAddresses', 'module_name', $email);
-        self::assertAttributeEquals('EmailAddress', 'object_name', $email);
-        self::assertAttributeEquals('email_addresses', 'table_name', $email);
-
-        self::assertAttributeEquals(true, 'disable_row_level_security', $email);
+        self::assertEquals('EmailAddresses', $email->module_dir);
+        self::assertEquals('EmailAddresses', $email->module_name);
+        self::assertEquals('EmailAddress', $email->object_name);
+        self::assertEquals('email_addresses', $email->table_name);
+        self::assertEquals(true, $email->disable_row_level_security);
     }
 
     public function testsave(): void

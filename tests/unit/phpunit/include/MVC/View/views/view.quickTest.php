@@ -20,7 +20,7 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertInstanceOf('ViewQuick', $view);
         self::assertInstanceOf('ViewDetail', $view);
-        self::assertAttributeEquals('detail', 'type', $view);
+        self::assertEquals('detail', $view->type);
         self::assertIsArray($view->options);
     }
 

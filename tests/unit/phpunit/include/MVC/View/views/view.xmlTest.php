@@ -10,7 +10,7 @@ class ViewXMLTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewXML();
         self::assertInstanceOf('ViewXML', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('detail', 'type', $view);
+        self::assertEquals('detail', $view->type);
     }
 
     public function testdisplay(): void

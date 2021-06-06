@@ -34,9 +34,9 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
         $view->module = 'Users';
         self::assertInstanceOf('ViewSugarpdf', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('sugarpdf', 'type', $view);
-        self::assertAttributeEquals('someValue', 'sugarpdf', $view);
-        self::assertAttributeEquals(null, 'sugarpdfBean', $view);
+        self::assertEquals('sugarpdf', $view->type);
+        self::assertEquals('someValue', $view->sugarpdf);
+        self::assertEquals(null, $view->sugarpdfBean);
 
         if (isset($_request)) {
             $_REQUEST = $_request;

@@ -21,13 +21,13 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Person', $contact);
         self::assertInstanceOf('SugarBean', $contact);
 
-        self::assertAttributeEquals('Contacts', 'module_dir', $contact);
-        self::assertAttributeEquals('Contact', 'object_name', $contact);
-        self::assertAttributeEquals('contacts', 'table_name', $contact);
-        self::assertAttributeEquals('accounts_contacts', 'rel_account_table', $contact);
-        self::assertAttributeEquals('opportunities_contacts', 'rel_opportunity_table', $contact);
-        self::assertAttributeEquals(true, 'importable', $contact);
-        self::assertAttributeEquals(true, 'new_schema', $contact);
+        self::assertEquals('Contacts', $contact->module_dir);
+        self::assertEquals('Contact', $contact->object_name);
+        self::assertEquals('contacts', $contact->table_name);
+        self::assertEquals('accounts_contacts', $contact->rel_account_table);
+        self::assertEquals('opportunities_contacts', $contact->rel_opportunity_table);
+        self::assertEquals(true, $contact->importable);
+        self::assertEquals(true, $contact->new_schema);
     }
 
     public function testadd_list_count_joins(): void

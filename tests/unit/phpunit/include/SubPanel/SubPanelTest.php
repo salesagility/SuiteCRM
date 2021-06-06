@@ -100,7 +100,7 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
 
         $existantQuery = $counter->makeFunctionCountQuery('function:getProductsServicesPurchasedQuery');
         $expectedQueryStart = 'SELECT COUNT(aos_products_quotes.id)';
-        self::assertContains($expectedQueryStart, $existantQuery);
+        self::assertStringContainsString($expectedQueryStart, $existantQuery);
     }
 
     public function testMakeSubPanelRowCountQuery(): void
@@ -113,6 +113,6 @@ class SubPanelTest extends SuitePHPUnitFrameworkTestCase
         $query  = $counter->makeSubPanelRowCountQuery();
         $expectedQueryStart = 'SELECT COUNT(account_id) FROM accounts_contacts';
 
-        self::assertContains($expectedQueryStart, $query);
+        self::assertStringContainsString($expectedQueryStart, $query);
     }
 }

@@ -62,11 +62,11 @@ class ProspectListTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('ProspectList', $prospectList);
         self::assertInstanceOf('SugarBean', $prospectList);
 
-        self::assertAttributeEquals('prospect_lists', 'table_name', $prospectList);
-        self::assertAttributeEquals('ProspectLists', 'module_dir', $prospectList);
-        self::assertAttributeEquals('ProspectList', 'object_name', $prospectList);
+        self::assertEquals('prospect_lists', $prospectList->table_name);
+        self::assertEquals('ProspectLists', $prospectList->module_dir);
+        self::assertEquals('ProspectList', $prospectList->object_name);
 
-        self::assertAttributeEquals("prospect_lists_prospects", 'rel_prospects_table', $prospectList);
+        self::assertEquals("prospect_lists_prospects", $prospectList->rel_prospects_table);
     }
 
     public function testget_summary_text(): void
