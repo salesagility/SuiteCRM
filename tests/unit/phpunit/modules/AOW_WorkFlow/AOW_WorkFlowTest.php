@@ -21,12 +21,12 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aowWorkFlow);
         self::assertInstanceOf('SugarBean', $aowWorkFlow);
 
-        self::assertAttributeEquals('AOW_WorkFlow', 'module_dir', $aowWorkFlow);
-        self::assertAttributeEquals('AOW_WorkFlow', 'object_name', $aowWorkFlow);
-        self::assertAttributeEquals('aow_workflow', 'table_name', $aowWorkFlow);
-        self::assertAttributeEquals(true, 'new_schema', $aowWorkFlow);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aowWorkFlow);
-        self::assertAttributeEquals(false, 'importable', $aowWorkFlow);
+        self::assertEquals('AOW_WorkFlow', $aowWorkFlow->module_dir);
+        self::assertEquals('AOW_WorkFlow', $aowWorkFlow->object_name);
+        self::assertEquals('aow_workflow', $aowWorkFlow->table_name);
+        self::assertEquals(true, $aowWorkFlow->new_schema);
+        self::assertEquals(true, $aowWorkFlow->disable_row_level_security);
+        self::assertEquals(false, $aowWorkFlow->importable);
     }
 
     public function testbean_implements(): void

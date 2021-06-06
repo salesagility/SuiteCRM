@@ -84,7 +84,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $template->addDomainToRelativeImagesSrc();
 
         $result = from_html($template->body_html);
-        self::assertContains('src="https://foobar.com/public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png"', $result);
+        self::assertStringContainsString('src="https://foobar.com/public/c1270a2d-a083-495e-7c61-5c8a9046ec0d.png" alt="c1270a2d-a083-495e-7c61-5c8a9046ec0d.png"', $result);
     }
 
     public function testrepairEntryPointImages(): void
@@ -126,11 +126,10 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('EmailTemplate', $emailTemplate);
         self::assertInstanceOf('SugarBean', $emailTemplate);
 
-        self::assertAttributeEquals('EmailTemplates', 'module_dir', $emailTemplate);
-        self::assertAttributeEquals('EmailTemplate', 'object_name', $emailTemplate);
-        self::assertAttributeEquals('email_templates', 'table_name', $emailTemplate);
-
-        self::assertAttributeEquals(true, 'new_schema', $emailTemplate);
+        self::assertEquals('EmailTemplates', $emailTemplate->module_dir);
+        self::assertEquals('EmailTemplate', $emailTemplate->object_name);
+        self::assertEquals('email_templates', $emailTemplate->table_name);
+        self::assertEquals(true, $emailTemplate->new_schema);
     }
 
     public function testgenerateFieldDefsJS(): void

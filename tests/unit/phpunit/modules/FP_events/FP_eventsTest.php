@@ -49,12 +49,12 @@ class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $fpEvents);
         self::assertInstanceOf('SugarBean', $fpEvents);
 
-        self::assertAttributeEquals('FP_events', 'module_dir', $fpEvents);
-        self::assertAttributeEquals('FP_events', 'object_name', $fpEvents);
-        self::assertAttributeEquals('fp_events', 'table_name', $fpEvents);
-        self::assertAttributeEquals(true, 'new_schema', $fpEvents);
-        self::assertAttributeEquals(true, 'importable', $fpEvents);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $fpEvents);
+        self::assertEquals('FP_events', $fpEvents->module_dir);
+        self::assertEquals('FP_events', $fpEvents->object_name);
+        self::assertEquals('fp_events', $fpEvents->table_name);
+        self::assertEquals(true, $fpEvents->new_schema);
+        self::assertEquals(true, $fpEvents->importable);
+        self::assertEquals(true, $fpEvents->disable_row_level_security);
     }
 
     public function testemail_templates(): void
@@ -64,6 +64,6 @@ class FP_eventsTest extends SuitePHPUnitFrameworkTestCase
         $fpEvents = BeanFactory::newBean('FP_events');
 
         $fpEvents->email_templates();
-        self::assertInternalType('array', $app_list_strings['emailTemplates_type_list']);
+        self::assertIsArray($app_list_strings['emailTemplates_type_list']);
     }
 }

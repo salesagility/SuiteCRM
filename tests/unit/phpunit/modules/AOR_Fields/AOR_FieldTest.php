@@ -12,13 +12,13 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aor_Field);
         self::assertInstanceOf('SugarBean', $aor_Field);
 
-        self::assertAttributeEquals('AOR_Fields', 'module_dir', $aor_Field);
-        self::assertAttributeEquals('AOR_Field', 'object_name', $aor_Field);
-        self::assertAttributeEquals('aor_fields', 'table_name', $aor_Field);
-        self::assertAttributeEquals(true, 'new_schema', $aor_Field);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aor_Field);
-        self::assertAttributeEquals(true, 'importable', $aor_Field);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aor_Field);
+        self::assertEquals('AOR_Fields', $aor_Field->module_dir);
+        self::assertEquals('AOR_Field', $aor_Field->object_name);
+        self::assertEquals('aor_fields', $aor_Field->table_name);
+        self::assertEquals(true, $aor_Field->new_schema);
+        self::assertEquals(true, $aor_Field->disable_row_level_security);
+        self::assertEquals(true, $aor_Field->importable);
+        self::assertEquals(false, $aor_Field->tracker_visibility);
     }
 
     public function testsave_lines(): void

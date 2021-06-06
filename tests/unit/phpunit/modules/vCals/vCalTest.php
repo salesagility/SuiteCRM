@@ -21,13 +21,13 @@ class vCalTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('vCal', $vcal);
         self::assertInstanceOf('SugarBean', $vcal);
 
-        self::assertAttributeEquals('vcals', 'table_name', $vcal);
-        self::assertAttributeEquals('vCals', 'module_dir', $vcal);
-        self::assertAttributeEquals('vCal', 'object_name', $vcal);
+        self::assertEquals('vcals', $vcal->table_name);
+        self::assertEquals('vCals', $vcal->module_dir);
+        self::assertEquals('vCal', $vcal->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $vcal);
-        self::assertAttributeEquals(false, 'tracker_visibility', $vcal);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $vcal);
+        self::assertEquals(true, $vcal->new_schema);
+        self::assertEquals(false, $vcal->tracker_visibility);
+        self::assertEquals(true, $vcal->disable_row_level_security);
     }
 
     public function testget_summary_text(): void

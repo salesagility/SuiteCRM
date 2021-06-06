@@ -22,11 +22,11 @@ class OAuthKeyTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $oauthKey);
         self::assertInstanceOf('SugarBean', $oauthKey);
 
-        self::assertAttributeEquals('OAuthKeys', 'module_dir', $oauthKey);
-        self::assertAttributeEquals('OAuthKey', 'object_name', $oauthKey);
-        self::assertAttributeEquals('oauth_consumer', 'table_name', $oauthKey);
+        self::assertEquals('OAuthKeys', $oauthKey->module_dir);
+        self::assertEquals('OAuthKey', $oauthKey->object_name);
+        self::assertEquals('oauth_consumer', $oauthKey->table_name);
 
-        self::assertAttributeEquals(true, 'disable_row_level_security', $oauthKey);
+        self::assertEquals(true, $oauthKey->disable_row_level_security);
     }
 
     public function testMain(): void

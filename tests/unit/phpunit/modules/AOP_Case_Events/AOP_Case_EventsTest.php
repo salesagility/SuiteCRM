@@ -12,12 +12,12 @@ class AOP_Case_EventsTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aopCaseEvents);
         self::assertInstanceOf('SugarBean', $aopCaseEvents);
 
-        self::assertAttributeEquals('AOP_Case_Events', 'module_dir', $aopCaseEvents);
-        self::assertAttributeEquals('AOP_Case_Events', 'object_name', $aopCaseEvents);
-        self::assertAttributeEquals('aop_case_events', 'table_name', $aopCaseEvents);
-        self::assertAttributeEquals(true, 'new_schema', $aopCaseEvents);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aopCaseEvents);
-        self::assertAttributeEquals(false, 'importable', $aopCaseEvents);
-        self::assertAttributeEquals(false, 'tracker_visibility', $aopCaseEvents);
+        self::assertEquals('AOP_Case_Events', $aopCaseEvents->module_dir);
+        self::assertEquals('AOP_Case_Events', $aopCaseEvents->object_name);
+        self::assertEquals('aop_case_events', $aopCaseEvents->table_name);
+        self::assertEquals(true, $aopCaseEvents->new_schema);
+        self::assertEquals(true, $aopCaseEvents->disable_row_level_security);
+        self::assertEquals(false, $aopCaseEvents->importable);
+        self::assertEquals(false, $aopCaseEvents->tracker_visibility);
     }
 }

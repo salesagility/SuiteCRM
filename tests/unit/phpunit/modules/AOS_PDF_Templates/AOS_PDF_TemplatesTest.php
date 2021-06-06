@@ -21,11 +21,11 @@ class AOS_PDF_TemplatesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $aosPdfTemplates);
         self::assertInstanceOf('SugarBean', $aosPdfTemplates);
 
-        self::assertAttributeEquals('AOS_PDF_Templates', 'module_dir', $aosPdfTemplates);
-        self::assertAttributeEquals('AOS_PDF_Templates', 'object_name', $aosPdfTemplates);
-        self::assertAttributeEquals('aos_pdf_templates', 'table_name', $aosPdfTemplates);
-        self::assertAttributeEquals(true, 'new_schema', $aosPdfTemplates);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $aosPdfTemplates);
-        self::assertAttributeEquals(true, 'importable', $aosPdfTemplates);
+        self::assertEquals('AOS_PDF_Templates', $aosPdfTemplates->module_dir);
+        self::assertEquals('AOS_PDF_Templates', $aosPdfTemplates->object_name);
+        self::assertEquals('aos_pdf_templates', $aosPdfTemplates->table_name);
+        self::assertEquals(true, $aosPdfTemplates->new_schema);
+        self::assertEquals(true, $aosPdfTemplates->disable_row_level_security);
+        self::assertEquals(true, $aosPdfTemplates->importable);
     }
 }

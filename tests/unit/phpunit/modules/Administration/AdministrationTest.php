@@ -20,13 +20,11 @@ class AdministrationTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Administration', $admin);
         self::assertInstanceOf('SugarBean', $admin);
 
-        self::assertAttributeEquals('Administration', 'module_dir', $admin);
-        self::assertAttributeEquals('Administration', 'object_name', $admin);
-        self::assertAttributeEquals('config', 'table_name', $admin);
-        self::assertAttributeEquals(true, 'new_schema', $admin);
-        self::assertAttributeEquals(true, 'disable_custom_fields', $admin);
-        self::assertAttributeEquals(array('disclosure', 'notify', 'system', 'portal', 'proxy', 'massemailer', 'ldap', 'captcha', 'sugarpdf'), 'config_categories', $admin);
-        self::assertAttributeEquals(array('notify_send_by_default', 'mail_smtpauth_req', 'notify_on', 'portal_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled', 'captcha_on'), 'checkbox_fields', $admin);
+        self::assertEquals('Administration', $admin->module_dir);
+        self::assertEquals('Administration', $admin->object_name);
+        self::assertEquals('config', $admin->table_name);
+        self::assertEquals(true, $admin->new_schema);
+        self::assertEquals(true, $admin->disable_custom_fields);
     }
 
     public function testretrieveSettings(): void

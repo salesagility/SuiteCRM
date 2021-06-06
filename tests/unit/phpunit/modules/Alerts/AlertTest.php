@@ -21,12 +21,12 @@ class AlertTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $alert);
         self::assertInstanceOf('SugarBean', $alert);
 
-        self::assertAttributeEquals('Alerts', 'module_dir', $alert);
-        self::assertAttributeEquals('Alert', 'object_name', $alert);
-        self::assertAttributeEquals('alerts', 'table_name', $alert);
-        self::assertAttributeEquals(true, 'new_schema', $alert);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $alert);
-        self::assertAttributeEquals(false, 'importable', $alert);
+        self::assertEquals('Alerts', $alert->module_dir);
+        self::assertEquals('Alert', $alert->object_name);
+        self::assertEquals('alerts', $alert->table_name);
+        self::assertEquals(true, $alert->new_schema);
+        self::assertEquals(true, $alert->disable_row_level_security);
+        self::assertEquals(false, $alert->importable);
     }
 
     public function testbean_implements(): void

@@ -22,12 +22,12 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $sugarFeed);
         self::assertInstanceOf('SugarBean', $sugarFeed);
 
-        self::assertAttributeEquals('sugarfeed', 'table_name', $sugarFeed);
-        self::assertAttributeEquals('SugarFeed', 'module_dir', $sugarFeed);
-        self::assertAttributeEquals('SugarFeed', 'object_name', $sugarFeed);
+        self::assertEquals('sugarfeed', $sugarFeed->table_name);
+        self::assertEquals('SugarFeed', $sugarFeed->module_dir);
+        self::assertEquals('SugarFeed', $sugarFeed->object_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $sugarFeed);
-        self::assertAttributeEquals(false, 'importable', $sugarFeed);
+        self::assertEquals(true, $sugarFeed->new_schema);
+        self::assertEquals(false, $sugarFeed->importable);
     }
 
     public function testactivateAndDisableModuleFeed(): void

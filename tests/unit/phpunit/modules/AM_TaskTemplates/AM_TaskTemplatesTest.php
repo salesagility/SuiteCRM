@@ -12,11 +12,11 @@ class AM_TaskTemplatesTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Basic', $am_taskTemplates);
         self::assertInstanceOf('SugarBean', $am_taskTemplates);
 
-        self::assertAttributeEquals('AM_TaskTemplates', 'module_dir', $am_taskTemplates);
-        self::assertAttributeEquals('AM_TaskTemplates', 'object_name', $am_taskTemplates);
-        self::assertAttributeEquals('am_tasktemplates', 'table_name', $am_taskTemplates);
-        self::assertAttributeEquals(true, 'new_schema', $am_taskTemplates);
-        self::assertAttributeEquals(true, 'disable_row_level_security', $am_taskTemplates);
-        self::assertAttributeEquals(false, 'importable', $am_taskTemplates);
+        self::assertEquals('AM_TaskTemplates', $am_taskTemplates->module_dir);
+        self::assertEquals('AM_TaskTemplates', $am_taskTemplates->object_name);
+        self::assertEquals('am_tasktemplates', $am_taskTemplates->table_name);
+        self::assertEquals(true, $am_taskTemplates->new_schema);
+        self::assertEquals(true, $am_taskTemplates->disable_row_level_security);
+        self::assertEquals(false, $am_taskTemplates->importable);
     }
 }

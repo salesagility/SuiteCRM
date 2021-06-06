@@ -21,12 +21,12 @@ class NoteTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('Note', $note);
         self::assertInstanceOf('SugarBean', $note);
 
-        self::assertAttributeEquals('Notes', 'module_dir', $note);
-        self::assertAttributeEquals('Note', 'object_name', $note);
-        self::assertAttributeEquals('notes', 'table_name', $note);
+        self::assertEquals('Notes', $note->module_dir);
+        self::assertEquals('Note', $note->object_name);
+        self::assertEquals('notes', $note->table_name);
 
-        self::assertAttributeEquals(true, 'new_schema', $note);
-        self::assertAttributeEquals(true, 'importable', $note);
+        self::assertEquals(true, $note->new_schema);
+        self::assertEquals(true, $note->importable);
     }
 
     public function testsafeAttachmentName(): void

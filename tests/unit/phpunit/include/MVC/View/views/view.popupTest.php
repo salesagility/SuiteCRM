@@ -19,7 +19,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         $view = new ViewPopup();
         self::assertInstanceOf('ViewPopup', $view);
         self::assertInstanceOf('SugarView', $view);
-        self::assertAttributeEquals('list', 'type', $view);
+        self::assertEquals('list', $view->type);
 
         unset($view);
     }

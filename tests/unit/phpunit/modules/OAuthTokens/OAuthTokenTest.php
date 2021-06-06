@@ -21,11 +21,11 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('OAuthToken', $oauthToken);
         self::assertInstanceOf('SugarBean', $oauthToken);
 
-        self::assertAttributeEquals('OAuthTokens', 'module_dir', $oauthToken);
-        self::assertAttributeEquals('OAuthToken', 'object_name', $oauthToken);
-        self::assertAttributeEquals('oauth_tokens', 'table_name', $oauthToken);
+        self::assertEquals('OAuthTokens', $oauthToken->module_dir);
+        self::assertEquals('OAuthToken', $oauthToken->object_name);
+        self::assertEquals('oauth_tokens', $oauthToken->table_name);
 
-        self::assertAttributeEquals(true, 'disable_row_level_security', $oauthToken);
+        self::assertEquals(true, $oauthToken->disable_row_level_security);
     }
 
     public function testsetState(): void
