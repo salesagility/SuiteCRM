@@ -1105,24 +1105,6 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetNewestMeetingResponse(): void
-    {
-//        $this->markTestIncomplete('TODO: Implement Tests');
-    }
-
-    /**
-     *
-     *
-     */
-    public function testCreateSuitecrmReminders(): void
-    {
-//        $this->markTestIncomplete('TODO: Implement Tests');
-    }
-
-    /**
-     *
-     *
-     */
     public function testWipeLocalSyncData(): void
     {
         // Create a User

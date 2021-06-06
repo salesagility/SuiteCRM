@@ -196,18 +196,6 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(20, $aor_Report->calculateTotal('AVG', $totals));
     }
 
-    public function testbuild_report_csv(): void
-    {
-        //this method uses exit so it cannot be tested
-
-        /*$aor_Report = BeanFactory::newBean('AOR_Reports');
-        $aor_Report->report_module = "Accounts";
-        $aor_Report->build_report_csv();
-        */
-
-        self::markTestIncomplete('Can Not be implemented');
-    }
-
     public function testbuild_report_query(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');

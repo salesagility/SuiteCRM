@@ -13,42 +13,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testexecute(): void
-    {
-        self::markTestIncomplete('Cannot be implemented');
-
-        // execute the method and test if it works and does not throw an exception other than headers output exception.
-        //    $SugarApplication = new SugarApplication();
-        //    try {
-        //        $SugarApplication->execute();
-        //    } catch (Exception $e) {
-        //        print_r($e->getMessage());
-        //        $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
-        //    }
-    }
-
-    public function testloadUser(): void
-    {
-        self::markTestIncomplete('Cannot be implemented because the method uses die.');
-
-        //cannot test this method as it uses die which stops execution of php unit as well
-        /*
-        //error_reporting(E_ERROR | E_PARSE);
-
-        $SugarApplication = new SugarApplication();
-        $SugarApplication->controller = new SugarController();
-
-        try {
-            $SugarApplication->loadUser();
-        }
-        catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-        }
-
-        $this->assertTrue(TRUE);
-        */
-    }
-
     public function testACLFilter(): void
     {
         if (isset($_SESSION)) {
@@ -321,29 +285,6 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
         }
 
         self::assertTrue(true);
-    }
-
-    public function testredirect(): void
-    {
-        self::markTestIncomplete('Cannot be implemented due to use of exit().');
-        //this method uses exit() which stops execution of phpunit as well so it cannot be tested without additional --process-isolation commandline parameter.
-        /*
-        $SugarApplication = new SugarApplication();
-
-        //execute the method and check if it works and doesn't throws an exception
-        try {
-            ob_start();
-
-            $SugarApplication->redirect();
-
-            $renderedContent = ob_get_contents();
-            ob_end_clean();
-            $this->assertGreaterThan(0,strlen($renderedContent));
-
-        } catch (Exception $e) {
-            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-        }
-        */
     }
 
     public function testappendErrorMessage(): void

@@ -76,15 +76,6 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($contacts);
     }
 
-    public function testclear_account_case_relationship(): void
-    {
-        self::markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
-        //This method cannot be tested because Query has a wrong column name which makes the function to die.
-
-        /*$Account = BeanFactory::newBean('Accounts');
-        $Account->clear_account_case_relationship('','');*/
-    }
-
     public function testremove_redundant_http(): void
     {
         $Account = BeanFactory::newBean('Accounts');
@@ -165,25 +156,6 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
         $expected = "accounts.name like '1234%' or accounts.phone_alternate like '%1234%' or accounts.phone_fax like '%1234%' or accounts.phone_office like '%1234%'";
         $actual = $Account->build_generic_where_clause('1234');
         self::assertSame($expected, $actual);
-    }
-
-    public function testcreate_export_query(): void
-    {
-        self::markTestIncomplete('Needs to clearify');
-
-//        $Account = BeanFactory::newBean('Accounts');
-//
-//        // execute the method with empty strings and verify that it retunrs expected results
-//        $expected = "SELECT
-//                                accounts.*,
-//                                email_addresses.email_address email_address,
-//                                '' email_addresses_non_primary, accounts.name as account_name,
-//                                users.user_name as assigned_user_name ,accounts_cstm.jjwg_maps_address_c,accounts_cstm.jjwg_maps_geocode_status_c,accounts_cstm.jjwg_maps_lat_c,accounts_cstm.jjwg_maps_lng_c FROM accounts LEFT JOIN users
-//	                                ON accounts.assigned_user_id=users.id  LEFT JOIN  email_addr_bean_rel on accounts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module='Accounts' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1  LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id  LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c where ( accounts.deleted IS NULL OR accounts.deleted=0 )";
-//
-//        $actual = $Account->create_export_query('', '');
-//
-//        $this->assertSame($expected, $actual);
     }
 
     public function testset_notification_body(): void

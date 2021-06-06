@@ -62,18 +62,15 @@ class db_utilsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testto_html(): void
     {
-//        $this->markTestIncomplete('PHPUnit and codeception results are in conflict');
-//        //execute the method and test if it returns expected values
-//
-//        $string = '';
-//        $expected = '';
-//        $actual = to_html($string);
-//        $this->assertSame($expected, $actual);
-//
-//        $string = "'test'&trial<\">";
-//        $expected = '&#039;test&#039;&amp;trial&lt;&quot;&gt;';
-//        $actual = to_html($string, true);
-//        $this->assertSame($expected, $actual);
+        $string = '';
+        $expected = '';
+        $actual = to_html($string);
+        self::assertSame($expected, $actual);
+
+        $string = "'test'&trial<\">";
+        $expected = '&#039;test&#039;&trial&lt;&quot;&gt;';
+        $actual = to_html($string);
+        self::assertSame($expected, $actual);
     }
 
     public function testfrom_html(): void

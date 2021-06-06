@@ -44,16 +44,4 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
             unset($_REQUEST);
         }
     }
-
-    //Incomplete test. SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
-    public function testpreDisplay(): void
-    {
-//        $this->markTestIncomplete('Can Not be implemented');
-    }
-
-    //Incomplete test.  SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
-    public function testdisplay(): void
-    {
-//        $this->markTestIncomplete('Can Not be implemented');
-    }
 }

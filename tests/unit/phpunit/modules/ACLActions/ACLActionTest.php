@@ -77,19 +77,6 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetUserActions()
-    {
-        self::markTestIncomplete('Need to implement: verify that all three results returned are different.');
-        // $result1 = ACLAction::getUserActions('1');
-        // $result2 = ACLAction::getUserActions('1', false, 'Accounts');
-        // $result3 = ACLAction::getUserActions('1', false, 'Accounts', 'list');
-
-        //verify that all three results returned are different
-        //$this->assertNotSame($result1, $result2);
-        //$this->assertNotSame($result1, $result3);
-        //$this->assertNotSame($result2, $result3);
-    }
-
     public function testhasAccess()
     {
         $this->assertFalse(ACLAction::hasAccess()); //check with defaults
@@ -106,51 +93,6 @@ class ACLActionTest extends SuitePHPUnitFrameworkTestCase
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts',
             'list')); //test with valid module and action
-    }
-
-    public function testuserHasAccess()
-    {
-        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
-
-        // Test with empty module and action
-        $this->assertFalse(ACLAction::userHasAccess('', '', ''));
-        // Test with empty user and valid module and action
-        $this->assertTrue(ACLAction::userHasAccess('', 'Accounts',
-            'list'));
-        // Test with valid User, module and action
-        $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list'));
-        // Test with valid User, module and action
-        $this->assertTrue(ACLAction::userHasAccess('1', 'SecurityGroups',
-            'list'));
-        // Test with valid User, module and action
-        $this->assertTrue(ACLAction::userHasAccess('1', 'Users', 'list'));
-    }
-
-    public function testgetUserAccessLevel()
-    {
-        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
-
-        //tes for accoounts module with two different actions
-        $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Accounts', 'list'));
-        $this->assertEquals(89, ACLAction::getUserAccessLevel('1', 'Accounts', 'access'));
-
-        //tes for users module with two different actions
-        $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Users', 'list'));
-        $this->assertEquals(89, ACLAction::getUserAccessLevel('1', 'Users', 'access'));
-    }
-
-    public function testuserNeedsOwnership()
-    {
-        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
-
-        //test with invalid values
-        $this->assertFalse(ACLAction::userNeedsOwnership('', '', ''));
-
-        //test with valid values for different module and action combination
-        $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Accounts', 'list'));
-        $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Accounts', 'delete'));
-        $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Users', 'delete'));
-        $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Users', 'list'));
     }
 
     public function testsetupCategoriesMatrix()

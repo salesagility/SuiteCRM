@@ -197,20 +197,6 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testmk_temp_dir(): void
-    {
-//        self::markTestIncomplete('Test failing in php 7.1 and 7.2: tempnam(): file created in the system\'s temporary directory');
-//        //execute the method and test if created dir/file exists
-//
-//        //without prefix
-//        $actual = mk_temp_dir('vfs://root', '');
-//        $this->assertFileExists($actual);
-//
-//        //with prefix
-//        $actual = mk_temp_dir('vfs://root', 'pfx');
-//        $this->assertFileExists($actual);
-    }
-
     public function testremove_file_extension(): void
     {
         //execute the method and test if it returns expected values
@@ -292,27 +278,6 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
         if ($vfs->hasChild($file)  == true) {
             rmdir('custom/'.$file);
         }
-    }
-
-    public function testgenerateMD5array(): void
-    {
-//        self::markTestIncomplete('environment dependency');
-//
-//        //execute the method and test if it returns expected values
-//
-//        $expected = array(
-//            'data/Relationships/EmailAddressRelationship.php' => '2f04780ddd15f7b65a35c75c303ed5d7',
-//            'data/Relationships/M2MRelationship.php' => 'd892195344955fe5b344fd48c3f0290a',
-//            'data/Relationships/One2MBeanRelationship.php' => '687f93e57b8a8acdd9bb911bc153598d',
-//            'data/Relationships/One2MRelationship.php' => '8a2fbfed8d6b74faf2851eb0a6c6bad3',
-//            'data/Relationships/One2OneBeanRelationship.php' => '765b8785d5ca576a8530db99bdf4d411',
-//            'data/Relationships/One2OneRelationship.php' => '0385f7577687a402d9603ef26984257e',
-//            'data/Relationships/RelationshipFactory.php' => '3bf18f0ff637fb3700d3ac0b75a0fb1b',
-//            'data/Relationships/SugarRelationship.php' => '87e9151907a03823b1045402d46f022c',
-//        );
-//
-//        $actual = generateMD5array('data/Relationships/');
-//        $this->assertSame($expected, $actual);
     }
 
     public function testmd5DirCompare(): void
