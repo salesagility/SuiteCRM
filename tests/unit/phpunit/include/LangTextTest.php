@@ -83,7 +83,7 @@ class LangTextTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         global $app_strings, $mod_strings;
         $app_strings['LBL_TEST_APP_STRING'] = 'test app string {foo} {bar}';

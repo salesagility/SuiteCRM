@@ -13,7 +13,7 @@ class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOW_Processed()
+    public function testAOW_Processed(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aowProcessed = BeanFactory::newBean('AOW_Processed');
@@ -29,7 +29,7 @@ class AOW_ProcessedTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'importable', $aowProcessed);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $aowProcessed = BeanFactory::newBean('AOW_Processed');
         self::assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value

@@ -13,7 +13,7 @@ class AOS_QuotesTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testAOS_Quotes()
+    public function testAOS_Quotes(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aosQuotes = BeanFactory::newBean('AOS_Quotes');
@@ -30,7 +30,7 @@ class AOS_QuotesTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'lineItems', $aosQuotes);
     }
 
-    public function testSaveAndMark_deleted()
+    public function testSaveAndMark_deleted(): void
     {
         $aosQuotes = BeanFactory::newBean('AOS_Quotes');
 

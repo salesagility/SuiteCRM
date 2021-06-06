@@ -40,7 +40,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testLogEmergency()
+    public function testLogEmergency(): void
     {
         self::$logger->emergency('test');
         $lastLine = $this->getLastLogMessage();
@@ -48,7 +48,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testLogAlert()
+    public function testLogAlert(): void
     {
         self::$logger->alert('test');
         $lastLine = $this->getLastLogMessage();
@@ -56,7 +56,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testLogCritical()
+    public function testLogCritical(): void
     {
         self::$logger->critical('test');
         $lastLine = $this->getLastLogMessage();
@@ -64,7 +64,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testLogError()
+    public function testLogError(): void
     {
         self::$logger->error('test');
         $lastLine = $this->getLastLogMessage();
@@ -72,7 +72,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testLogWarning()
+    public function testLogWarning(): void
     {
         self::$logger->warning('test');
         $lastLine = $this->getLastLogMessage();
@@ -80,7 +80,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testLogNotice()
+    public function testLogNotice(): void
     {
         self::$logger->notice('test');
         $lastLine = $this->getLastLogMessage();
@@ -88,7 +88,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testLogInfo()
+    public function testLogInfo(): void
     {
         self::$logger->info('test');
         $lastLine = $this->getLastLogMessage();
@@ -96,7 +96,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testLogDebug()
+    public function testLogDebug(): void
     {
         self::$logger->debug('test');
         $lastLine = $this->getLastLogMessage();
@@ -104,7 +104,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEmpty($matches);
     }
 
-    public function testInterpolate()
+    public function testInterpolate(): void
     {
         self::$logger->error('test {a}', ['a' => 'apple']);
         $lastLine = $this->getLastLogMessage();
@@ -115,7 +115,7 @@ class SuiteLoggerTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testInvalidLevel()
+    public function testInvalidLevel(): void
     {
         self::$logger->log('invalid', 'test');
     }

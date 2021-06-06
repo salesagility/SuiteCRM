@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Field()
+    public function testAOR_Field(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aor_Field = BeanFactory::newBean('AOR_Fields');
@@ -21,7 +21,7 @@ class AOR_FieldTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'tracker_visibility', $aor_Field);
     }
 
-    public function testsave_lines()
+    public function testsave_lines(): void
     {
         $aor_Field = BeanFactory::newBean('AOR_Fields');
 

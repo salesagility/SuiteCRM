@@ -13,7 +13,7 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testViewSugarpdf()
+    public function testViewSugarpdf(): void
     {
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
@@ -46,13 +46,13 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
     }
 
     //Incomplete test. SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
-    public function testpreDisplay()
+    public function testpreDisplay(): void
     {
 //        $this->markTestIncomplete('Can Not be implemented');
     }
 
     //Incomplete test.  SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
-    public function testdisplay()
+    public function testdisplay(): void
     {
 //        $this->markTestIncomplete('Can Not be implemented');
     }

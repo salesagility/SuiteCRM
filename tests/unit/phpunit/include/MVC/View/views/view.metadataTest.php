@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testdisplayCheckBoxes()
+    public function testdisplayCheckBoxes(): void
     {
         $view = new ViewMetadata();
 
@@ -25,7 +25,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
     }
 
-    public function testdisplaySelect()
+    public function testdisplaySelect(): void
     {
         $view = new ViewMetadata();
 
@@ -46,7 +46,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
     }
 
-    public function testdisplayTextBoxes()
+    public function testdisplayTextBoxes(): void
     {
         $view = new ViewMetadata();
 
@@ -67,7 +67,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
     }
 
-    public function testprintValue()
+    public function testprintValue(): void
     {
         $view = new ViewMetadata();
 
@@ -79,7 +79,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($renderedContent));
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         if (isset($_REQUEST)) {
             $request = $_REQUEST;
@@ -115,14 +115,14 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetModules()
+    public function testgetModules(): void
     {
         //execute the method and test if it returns a array.
         $modules = VardefBrowser::getModules();
         self::assertIsArray($modules);
     }
 
-    public function testfindFieldsWithAttributes()
+    public function testfindFieldsWithAttributes(): void
     {
         //check with emptty attributes array
         $attributes = array();
@@ -145,7 +145,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotSame($fields2, $fields3);
     }
 
-    public function testfindVardefs()
+    public function testfindVardefs(): void
     {
         //check with empty modules array
         $modules = array();
@@ -161,7 +161,7 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotSame($defs1, $defs2);
     }
 
-    public function testfindFieldAttributes()
+    public function testfindFieldAttributes(): void
     {
         //check with emptty attributes array
         $attributes = array();

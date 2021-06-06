@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testloadView()
+    public function testloadView(): void
     {
         //check with invalid input. must return sugaview instance
         $view = ViewFactory::loadView('default', '');
@@ -19,7 +19,7 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('UsersViewList', $view);
     }
 
-    public function test_loadConfig()
+    public function test_loadConfig(): void
     {
         //check with a invalid module, method must not change the view options.
         $view = ViewFactory::loadView('default', '');
@@ -41,7 +41,7 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($options, $view->options);
     }
 
-    public function test_buildFromFile()
+    public function test_buildFromFile(): void
     {
         //check with valid values and test if it returns correct view instance
         $type = 'list';
@@ -58,7 +58,7 @@ class ViewFactoryTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('UsersViewDetail', $view);
     }
 
-    public function test_buildClass()
+    public function test_buildClass(): void
     {
         //check with valid values and test if it returns correct view instance
         $view = ViewFactory::_buildClass('UsersViewList', null, array());

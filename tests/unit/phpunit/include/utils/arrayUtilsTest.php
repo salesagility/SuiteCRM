@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/array_utils.php';
 class array_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testvar_export_helper()
+    public function testvar_export_helper(): void
     {
         //execute the method and test if it returns expected values
         $tempArray = array('Key1' => 'value1', 'Key2' => 'value2');
@@ -15,7 +15,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testoverride_value_to_string()
+    public function testoverride_value_to_string(): void
     {
         //execute the method and test if it returns expected values
         $expected = "\$array_name['value_name'] = 'value';";
@@ -23,7 +23,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testadd_blank_option()
+    public function testadd_blank_option(): void
     {
         //execute the method with array not having any blank key value pair. function will return an array with blank key value pair added.
         $tempArray = array('Key1' => 'value1', 'Key2' => 'value2');
@@ -40,7 +40,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testoverride_value_to_string_recursive()
+    public function testoverride_value_to_string_recursive(): void
     {
         //execute the method and test if it returns expected values
 
@@ -59,7 +59,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testoverride_recursive_helper()
+    public function testoverride_recursive_helper(): void
     {
         //execute the method and test if it returns expected values
 
@@ -77,7 +77,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testoverride_value_to_string_recursive2()
+    public function testoverride_value_to_string_recursive2(): void
     {
         //execute the method and test if it returns expected values
 
@@ -100,7 +100,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testobject_to_array_recursive()
+    public function testobject_to_array_recursive(): void
     {
         //execute the method and test if it returns expected values
 
@@ -118,7 +118,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testdeepArrayDiff()
+    public function testdeepArrayDiff(): void
     {
         //execute the method and test if it returns expected values
 
@@ -158,7 +158,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsetDeepArrayValue()
+    public function testsetDeepArrayValue(): void
     {
         //execute the method and test if it returns expected values
 
@@ -176,7 +176,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($tempArray, $expected);
     }
 
-    public function testarray_merge_values()
+    public function testarray_merge_values(): void
     {
         //execute the method and test if it returns expected values
 
@@ -194,7 +194,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testarray_search_insensitive()
+    public function testarray_search_insensitive(): void
     {
         //execute the method and test if it returns expected value
 
@@ -214,7 +214,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($actual);
     }
 
-    public function testget()
+    public function testget(): void
     {
         //execute the method and test if it returns expected values
 
@@ -231,7 +231,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function teststaticGet()
+    public function teststaticGet(): void
     {
         //execute the method and test if it returns expected values
 
@@ -255,7 +255,7 @@ class array_utilsTest extends SuitePHPUnitFrameworkTestCase
      * After applying fixIndexArrayFormat() to both arrays we compare it as compareVarDefs() function does:
      *
      */
-    public function testfixIndexArrayFormat()
+    public function testfixIndexArrayFormat(): void
     {
         $index1 = [
             'user_name',

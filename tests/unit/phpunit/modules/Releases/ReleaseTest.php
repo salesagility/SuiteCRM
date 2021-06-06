@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ReleaseTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testRelease()
+    public function testRelease(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $release = BeanFactory::newBean('Releases');
@@ -19,7 +19,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $release);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $release = BeanFactory::newBean('Releases');
 
@@ -31,7 +31,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $release->get_summary_text());
     }
 
-    public function testget_releases()
+    public function testget_releases(): void
     {
         $release = BeanFactory::newBean('Releases');
 
@@ -44,7 +44,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $release = BeanFactory::newBean('Releases');
 
@@ -57,7 +57,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $release = BeanFactory::newBean('Releases');
 
@@ -70,7 +70,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $release = BeanFactory::newBean('Releases');
 
@@ -89,7 +89,7 @@ class ReleaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $release = BeanFactory::newBean('Releases');
 

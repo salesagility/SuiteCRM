@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class ControllerFactoryTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testgetController()
+    public function testgetController(): void
     {
         //execute the method with invalid input
         $controller = ControllerFactory::getController('');

@@ -57,7 +57,7 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
     /**
      * FAIL: sugar_config parameter does not contains imap_test
      */
-    public function testHandleEntryPointRequestWrongConfig()
+    public function testHandleEntryPointRequestWrongConfig(): void
     {
         $handler = new ImapTestSettingsEntryHandler();
         try {
@@ -71,7 +71,7 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
     /**
      * FAIL: $_REQUEST does not contains imap_test_settings
      */
-    public function testHandleEntryPointRequestWrongRequest()
+    public function testHandleEntryPointRequestWrongRequest(): void
     {
         $handler = new ImapTestSettingsEntryHandler();
         try {
@@ -85,7 +85,7 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
     /**
      * FAIL: Key not found.; key was: "bar"
      */
-    public function testHandleEntryPointRequestWrongKey()
+    public function testHandleEntryPointRequestWrongKey(): void
     {
         $results = (new ImapTestSettingsEntryHandler())->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'bar']);
         self::assertEquals('ERROR: Key not found.; key was: "bar".', $results);
@@ -94,7 +94,7 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
     /**
      * OK: should returns a success output from entry point handling.
      */
-    public function testHandleEntryPointRequest()
+    public function testHandleEntryPointRequest(): void
     {
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
         $results = (new ImapTestSettingsEntryHandler())->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'testCaseExample']);

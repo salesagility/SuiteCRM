@@ -13,7 +13,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testMeeting()
+    public function testMeeting(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $meeting = BeanFactory::newBean('Meetings');
@@ -38,7 +38,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(false, 'date_changed', $meeting);
     }
 
-    public function testACLAccess()
+    public function testACLAccess(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -56,13 +56,13 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $meeting->ACLAccess('delete'));
     }
 
-    public function testhasIntegratedMeeting()
+    public function testhasIntegratedMeeting(): void
     {
         $result = BeanFactory::newBean('Meetings')->hasIntegratedMeeting();
         self::assertEquals(false, $result);
     }
 
-    public function testSaveAndMarkdeletedAndSetAcceptStatus()
+    public function testSaveAndMarkdeletedAndSetAcceptStatus(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -104,7 +104,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -116,12 +116,12 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $meeting->get_summary_text());
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
 //        $this->markTestIncomplete('export query produces queries which fields chagne order in different enironments');
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -150,7 +150,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Accounts', $meeting->parent_type);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
         $current_theme = SugarThemeRegistry::current();
@@ -197,7 +197,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected['PARENT_MODULE'], $actual['PARENT_MODULE']);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         global $current_user;
         $current_user = new User(1);
@@ -224,7 +224,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($meeting->description, $result->_tpl_vars['MEETING_DESCRIPTION']);
     }
 
-    public function testcreate_notification_email()
+    public function testcreate_notification_email(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -240,7 +240,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('SugarPHPMailer', $result);
     }
 
-    public function testsend_assignment_notifications()
+    public function testsend_assignment_notifications(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -262,13 +262,13 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testget_meeting_users()
+    public function testget_meeting_users(): void
     {
         $result = BeanFactory::newBean('Meetings')->get_meeting_users();
         self::assertIsArray($result);
     }
 
-    public function testget_invite_meetings()
+    public function testget_invite_meetings(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -277,7 +277,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testget_notification_recipients()
+    public function testget_notification_recipients(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -291,7 +291,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -300,7 +300,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $meeting->bean_implements('ACL')); //test with valid value
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -309,7 +309,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsave_relationship_changes()
+    public function testsave_relationship_changes(): void
     {
         $meeting = BeanFactory::newBean('Meetings');
 
@@ -325,7 +325,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     /**
      * This will throw FATAL error on php7
      */
-    public function testafterImportSave()
+    public function testafterImportSave(): void
     {
         require_once 'data/Link.php';
 
@@ -349,20 +349,20 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetDefaultStatus()
+    public function testgetDefaultStatus(): void
     {
         $result = BeanFactory::newBean('Meetings')->getDefaultStatus();
         self::assertEquals('Planned', $result);
     }
 
-    public function testgetMeetingsExternalApiDropDown()
+    public function testgetMeetingsExternalApiDropDown(): void
     {
         $actual = getMeetingsExternalApiDropDown();
         $expected = array('Sugar' => 'SuiteCRM');
         self::assertSame($expected, $actual);
     }
 
-    public function testgetMeetingTypeOptions()
+    public function testgetMeetingTypeOptions(): void
     {
         global $dictionary, $app_list_strings;
 

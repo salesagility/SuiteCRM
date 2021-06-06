@@ -13,7 +13,7 @@ class ViewVcardTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testdisplay()
+    public function testdisplay(): void
     {
         //execute the method with required child objects preset and check for the Object type and type attribute
         $view = new ViewVcard();

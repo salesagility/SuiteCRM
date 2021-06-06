@@ -6,7 +6,7 @@ require_once 'include/upload_file.php';
 require_once 'include/utils/php_zip_utils.php';
 class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testunzip()
+    public function testunzip(): void
     {
         //execute the method and test if it returns true and verify the if unzipped files exist
 
@@ -30,7 +30,7 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
         unlink($cache_dir.'/config_override.php');
     }
 
-    public function testunzip_file()
+    public function testunzip_file(): void
     {
         // execute the method and test if it returns true and verify the if unzipped files exist
         $cache_dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
@@ -53,7 +53,7 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
         unlink($cache_dir.'/config_override.php');
     }
 
-    public function testzip_dir()
+    public function testzip_dir(): void
     {
         //execute the method and verify the if zipped file exist
         $cache_dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
@@ -70,7 +70,7 @@ class php_zip_utilsTest extends SuitePHPUnitFrameworkTestCase
         unlink($file);
     }
 
-    public function testzip_files_list()
+    public function testzip_files_list(): void
     {
         //execute the method and verify the if zipped file exist
         $cache_dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');

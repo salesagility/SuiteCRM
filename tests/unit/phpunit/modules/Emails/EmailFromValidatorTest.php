@@ -54,7 +54,7 @@ require_once __DIR__ . '/../../../../../modules/Emails/EmailFromValidator.php';
 class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
 {
     // TODO: !@# Needs more test...
-    public function testValidateWrongFromAddr()
+    public function testValidateWrongFromAddr(): void
     {
         $email = BeanFactory::newBean('Emails');
         $validator = new EmailFromValidator();
@@ -107,7 +107,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
         ], $errors);
     }
 
-    public function testValidateWrongFrom()
+    public function testValidateWrongFrom(): void
     {
         $email = BeanFactory::newBean('Emails');
         $validator = new EmailFromValidator();
@@ -160,7 +160,7 @@ class EmailFromValidatorTest extends SuitePHPUnitFrameworkTestCase
         ], $errors);
     }
 
-    public function testValidateOk()
+    public function testValidateOk(): void
     {
         $email = BeanFactory::newBean('Emails');
         $validator = new EmailFromValidator();

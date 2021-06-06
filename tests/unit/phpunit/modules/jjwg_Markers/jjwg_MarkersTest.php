@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testjjwg_Markers()
+    public function testjjwg_Markers(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
@@ -22,7 +22,7 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $jjwgMarkers);
     }
 
-    public function testconfiguration()
+    public function testconfiguration(): void
     {
         $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
@@ -33,7 +33,7 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, count($jjwgMarkers->settings));
     }
 
-    public function testdefine_loc()
+    public function testdefine_loc(): void
     {
         $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
@@ -50,7 +50,7 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($marker, $result);
     }
 
-    public function testis_valid_lng()
+    public function testis_valid_lng(): void
     {
         $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 
@@ -64,7 +64,7 @@ class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $jjwgMarkers->is_valid_lng(-180));
     }
 
-    public function testis_valid_lat()
+    public function testis_valid_lat(): void
     {
         $jjwgMarkers = BeanFactory::newBean('jjwg_Markers');
 

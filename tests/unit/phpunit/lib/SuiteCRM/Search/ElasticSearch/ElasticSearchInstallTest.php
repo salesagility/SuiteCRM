@@ -47,7 +47,7 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     /**
      * Asserts if the after_save and after_delete logic hooks for ElasticSearchIndexer are correctly loaded.
      */
-    public function testHooksPresent()
+    public function testHooksPresent(): void
     {
         $default_hooks = (new LogicHook())->loadHooks('');
 
@@ -86,7 +86,7 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     /**
      * Asserts if the ElasticSearchIndexer scheduler is correctly loaded
      */
-    public function testSchedulerPresent()
+    public function testSchedulerPresent(): void
     {
 //        self::markTestIncomplete('environment dependency');
 //
@@ -100,7 +100,7 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     /**
      * Asserts that the configuration for the ElasticSearch are present in the global config array.
      */
-    public function testConfigPresent()
+    public function testConfigPresent(): void
     {
         global $sugar_config;
 

@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testAOR_Report()
+    public function testAOR_Report(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $aor_Report = BeanFactory::newBean('AOR_Reports');
@@ -20,7 +20,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'importable', $aor_Report);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
 
@@ -29,7 +29,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $aor_Report->bean_implements('ACL')); //test with valid value
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
 
@@ -69,7 +69,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         unset($aor_Report);
     }
 
-    public function testload_report_beans()
+    public function testload_report_beans(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
 
@@ -82,14 +82,14 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetReportFields()
+    public function testgetReportFields(): void
     {
         //execute the method and verify that it returns an array
         $result = BeanFactory::newBean('AOR_Reports')->getReportFields();
         self::assertIsArray($result);
     }
 
-    public function testbuild_report_chart()
+    public function testbuild_report_chart(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
@@ -114,7 +114,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         unset($GLOBALS['currentModule']);
     }
 
-    public function testbuild_group_report()
+    public function testbuild_group_report(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
@@ -138,7 +138,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotEquals($html2, $html3);
     }
 
-    public function testbuild_report_html()
+    public function testbuild_report_html(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
@@ -160,7 +160,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('testidentifier', $html3);
     }
 
-    public function testGetTotalHTML()
+    public function testGetTotalHTML(): void
     {
         //execute the method with required data preset and verify it returns expected result
         $fields = [
@@ -183,7 +183,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertContains('duration_hours', $actual);
     }
 
-    public function testcalculateTotal()
+    public function testcalculateTotal(): void
     {
         //execute the method with data preset and verify it returns expected result
         $totals = array(10, 20, 30);
@@ -196,7 +196,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(20, $aor_Report->calculateTotal('AVG', $totals));
     }
 
-    public function testbuild_report_csv()
+    public function testbuild_report_csv(): void
     {
         //this method uses exit so it cannot be tested
 
@@ -208,7 +208,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Can Not be implemented');
     }
 
-    public function testbuild_report_query()
+    public function testbuild_report_query(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
@@ -222,7 +222,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThanOrEqual(0, strlen($actual));
     }
 
-    public function testbuild_report_query_select()
+    public function testbuild_report_query_select(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
@@ -233,7 +233,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($actual);
     }
 
-    public function testbuild_report_query_join()
+    public function testbuild_report_query_join(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';
@@ -267,7 +267,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbuild_report_access_query()
+    public function testbuild_report_access_query(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
 
@@ -280,7 +280,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $result);
     }
 
-    public function testbuild_report_query_where()
+    public function testbuild_report_query_where(): void
     {
         $aor_Report = BeanFactory::newBean('AOR_Reports');
         $aor_Report->report_module = 'Accounts';

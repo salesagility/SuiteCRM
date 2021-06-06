@@ -5,7 +5,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 require_once 'include/utils/mvc_utils.php';
 class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testloadParentView()
+    public function testloadParentView(): void
     {
         //execute the method and test if it doesn't throws an exception
         try {
@@ -16,7 +16,7 @@ class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testgetPrintLink()
+    public function testgetPrintLink(): void
     {
         //test without setting REQUEST param
         $expected = "javascript:void window.open('index.php?','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
@@ -30,14 +30,14 @@ class mvc_utilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testajaxBannedModules()
+    public function testajaxBannedModules(): void
     {
         //execute the method and test verify it returns true
         $result = ajaxBannedModules();
         self::assertIsArray($result);
     }
 
-    public function testajaxLink()
+    public function testajaxLink(): void
     {
         global $sugar_config;
         $ajaxUIDisabled = isset($sugar_config['disableAjaxUI']) && $sugar_config['disableAjaxUI'];

@@ -43,7 +43,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class BeanJsonSerializerTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testToArrayContact()
+    public function testToArrayContact(): void
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
         $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.expected.json'), true);
@@ -52,7 +52,7 @@ class BeanJsonSerializerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testToArrayAccount()
+    public function testToArrayAccount(): void
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
         $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.expected.json'), true);
@@ -61,7 +61,7 @@ class BeanJsonSerializerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testSerializeContact()
+    public function testSerializeContact(): void
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
         $actual = BeanJsonSerializer::make()->serialize($mockBean, false, true);
@@ -72,7 +72,7 @@ class BeanJsonSerializerTest extends SuitePHPUnitFrameworkTestCase
         );
     }
 
-    public function testSerializeAccount()
+    public function testSerializeAccount(): void
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
         $actual = BeanJsonSerializer::make()->serialize($mockBean, false, true);

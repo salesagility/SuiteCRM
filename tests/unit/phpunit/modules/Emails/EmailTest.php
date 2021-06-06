@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2019 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -60,7 +60,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Emails');
     }
 
-    public function testSendSaveAndStoreInSentOk()
+    public function testSendSaveAndStoreInSentOk(): void
     {
         // handle non-gmail sent folder (mailbox is set)
         $mailer = new SugarPHPMailerMock();
@@ -86,7 +86,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
     }
 
-    public function testSendSaveAndStoreInSentOkButIEDoesntMatch()
+    public function testSendSaveAndStoreInSentOkButIEDoesntMatch(): void
     {
         // handle non-gmail sent folder (mailbox is set)
         $mailer = new SugarPHPMailerMock();
@@ -112,7 +112,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
     }
 
-    public function testSendSaveAndStoreInSentNoSentFolder()
+    public function testSendSaveAndStoreInSentNoSentFolder(): void
     {
         // handle non-gmail sent folder (mailbox is set but no ie stored option: sentFolder)
         $mailer = new SugarPHPMailerMock();
@@ -138,7 +138,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         );
     }
 
-    public function testSendSaveAndStoreInSentNoMailbox()
+    public function testSendSaveAndStoreInSentNoMailbox(): void
     {
         // mailbox is not set
         $mailer = new SugarPHPMailerMock();
@@ -158,7 +158,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(NonGmailSentFolderHandler::ERR_EMPTY_MAILBOX, $email->getTempEmailAtSend()->getNonGmailSentFolderHandler()->getLastError());
     }
 
-    public function testSendSaveAndStoreInSentNoIE()
+    public function testSendSaveAndStoreInSentNoIE(): void
     {
         // no IE
         $mailer = new SugarPHPMailerMock();
@@ -175,7 +175,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertNull($email->getTempEmailAtSend()->getNonGmailSentFolderHandler());
     }
 
-    public function testSendSaveAndStoreInSentSendFailedButItsOk()
+    public function testSendSaveAndStoreInSentSendFailedButItsOk(): void
     {
         // should send successfully
         $mailer = new SugarPHPMailerMock();
@@ -190,7 +190,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertNull($email->getTempEmailAtSend());
     }
 
-    public function testSendSaveAndStoreInSentSendFailed()
+    public function testSendSaveAndStoreInSentSendFailed(): void
     {
         // sending should failing
         $email = BeanFactory::newBean('Emails');
@@ -204,7 +204,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertNull($email->getTempEmailAtSend());
     }
 
-    public function testSendSaveAndStoreInSentSendNoAttachment()
+    public function testSendSaveAndStoreInSentSendNoAttachment(): void
     {
         // attachenemt error
         $email = BeanFactory::newBean('Emails');
@@ -217,7 +217,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertNull($email->getTempEmailAtSend());
     }
 
-    public function testSendSaveAndStoreInSentSendNoTo()
+    public function testSendSaveAndStoreInSentSendNoTo(): void
     {
         // "to" array is required
         $email = BeanFactory::newBean('Emails');
@@ -229,7 +229,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertNull($email->getTempEmailAtSend());
     }
 
-    public function testSetLastSaveAndStoreInSentErrorNo()
+    public function testSetLastSaveAndStoreInSentErrorNo(): void
     {
         $email = new EmailMock();
         try {
@@ -237,10 +237,12 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
             self::assertTrue(false);
         } catch (InvalidArgumentException $e) {
             self::assertEquals(Email::ERR_CODE_SHOULD_BE_INT, $e->getCode());
+        } catch (EmailException $e) {
+            self::assertEquals(Email::UNHANDLED_LAST_ERROR, $e->getCode());
         }
     }
 
-    public function testSaveAndStoreInSentFolderIfNoGmailWithNoIE()
+    public function testSaveAndStoreInSentFolderIfNoGmailWithNoIE(): void
     {
         $email = BeanFactory::newBean('Emails');
         $ie = BeanFactory::newBean('InboundEmail');
@@ -253,7 +255,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(Email::ERR_IE_RETRIEVE, $email->getLastSaveAndStoreInSentError());
     }
 
-    public function testEmail()
+    public function testEmail(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $email = BeanFactory::newBean('Emails');
@@ -269,7 +271,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals('archived', 'type', $email);
     }
 
-    public function testemail2init()
+    public function testemail2init(): void
     {
         $email = BeanFactory::newBean('Emails');
         $email->email2init();
@@ -277,7 +279,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('EmailUI', $email->et);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         // test
         $email = BeanFactory::newBean('Emails');
@@ -286,13 +288,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $email->bean_implements('ACL')); //test with valid value
     }
 
-    public function testemail2saveAttachment()
+    public function testemail2saveAttachment(): void
     {
         $result = BeanFactory::newBean('Emails')->email2saveAttachment();
         self::assertIsArray($result);
     }
 
-    public function testsafeAttachmentName()
+    public function testsafeAttachmentName(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -301,7 +303,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $email->safeAttachmentName('test.cgi'));
     }
 
-    public function testemail2ParseAddresses()
+    public function testemail2ParseAddresses(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -316,7 +318,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $result);
     }
 
-    public function testemail2ParseAddressesForAddressesOnly()
+    public function testemail2ParseAddressesForAddressesOnly(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -331,14 +333,14 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(array('abc@xyz.com', 'xyz@abc.com'), $result);
     }
 
-    public function testemail2GetMime()
+    public function testemail2GetMime(): void
     {
         //test with a filename
         $result = BeanFactory::newBean('Emails')->email2GetMime('config.php');
         self::assertEquals('text/x-php', $result);
     }
 
-    public function testdecodeDuringSend()
+    public function testdecodeDuringSend(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -349,7 +351,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         );
     }
 
-    public function testisDraftEmail()
+    public function testisDraftEmail(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -365,13 +367,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $email->isDraftEmail(array()));
     }
 
-    public function testgetNamePlusEmailAddressesForCompose()
+    public function testgetNamePlusEmailAddressesForCompose(): void
     {
         $result = BeanFactory::newBean('Emails')->getNamePlusEmailAddressesForCompose('Users', array(1));
         self::assertGreaterThanOrEqual(0, strlen($result));
     }
 
-    public function test_arrayToDelimitedString()
+    public function test_arrayToDelimitedString(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -384,7 +386,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('value1,value2', $result);
     }
 
-    public function testsendEmailTest()
+    public function testsendEmailTest(): void
     {
         self::markTestIncomplete('Not testing sending email currently');
         /*
@@ -397,7 +399,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     	*/
     }
 
-    public function testemail2Send()
+    public function testemail2Send(): void
     {
         self::markTestIncomplete('Not testing sending email currently');
         /*	$email = BeanFactory::newBean('Emails');
@@ -415,7 +417,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         */
     }
 
-    public function testsend()
+    public function testsend(): void
     {
         self::markTestIncomplete('Not testing sending email currently');
         /*
@@ -434,7 +436,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     	*/
     }
 
-    public function testsaveAndOthers()
+    public function testsaveAndOthers(): void
     {
         // test
         $email = BeanFactory::newBean('Emails');
@@ -481,7 +483,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $this->delete($email->id);
     }
 
-    public function retrieve($id)
+    public function retrieve($id): void
     {
         $result = BeanFactory::newBean('Emails')->retrieve($id);
 
@@ -497,7 +499,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(isset($result->description_html));
     }
 
-    public function saveEmailAddresses($id)
+    public function saveEmailAddresses($id): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -518,7 +520,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertNotFalse(strpos($email->bcc_addrs, 'bcc_test@email.com'));
     }
 
-    public function retrieveEmailAddresses($id)
+    public function retrieveEmailAddresses($id): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -531,7 +533,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(isset($email->bcc_addrs_names));
     }
 
-    public function linkEmailToAddress($id)
+    public function linkEmailToAddress($id): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -543,7 +545,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(36, strlen($result));
     }
 
-    public function retrieveEmailText($id)
+    public function retrieveEmailText($id): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -561,7 +563,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue(isset($email->description_html));
     }
 
-    public function handleAttachments($id)
+    public function handleAttachments($id): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -576,7 +578,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($email->attachments);
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -586,7 +588,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testSaveTempNoteAttachmentsAndGetNotesAndDoesImportedEmailHaveAttachment()
+    public function testSaveTempNoteAttachmentsAndGetNotesAndDoesImportedEmailHaveAttachment(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -611,14 +613,14 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $email->delete($email->id);
     }
 
-    public function testgetNotesSqlEscape()
+    public function testgetNotesSqlEscape(): void
     {
         $email = BeanFactory::newBean('Emails');
         $email->getNotes("'=");
         self::assertFalse(DBManagerFactory::getInstance()->lastError());
     }
 
-    public function testcleanEmails()
+    public function testcleanEmails(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -633,7 +635,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('abc <abc@xyz.com>, xyz <xyz@abc.com>', $result);
     }
 
-    public function testgetForwardHeader()
+    public function testgetForwardHeader(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -649,7 +651,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetReplyHeader()
+    public function testgetReplyHeader(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -663,7 +665,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testquotePlainTextEmail()
+    public function testquotePlainTextEmail(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -678,7 +680,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testquoteHtmlEmail()
+    public function testquoteHtmlEmail(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -698,7 +700,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testquoteHtmlEmailForNewEmailUI()
+    public function testquoteHtmlEmailForNewEmailUI(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -718,7 +720,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcheck_email_settings()
+    public function testcheck_email_settings(): void
     {
         global $current_user;
 
@@ -734,13 +736,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testjs_set_archived()
+    public function testjs_set_archived(): void
     {
         $actual = BeanFactory::newBean('Emails')->js_set_archived();
         self::assertGreaterThan(0, strlen($actual));
     }
 
-    public function testu_get_clear_form_js()
+    public function testu_get_clear_form_js(): void
     {
         self::markTestIncomplete('environment dependency (CRLF?)');
         $email = BeanFactory::newBean('Emails');
@@ -764,7 +766,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
     }
 
-    public function testpickOneButton()
+    public function testpickOneButton(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -778,13 +780,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetUserEditorPreference()
+    public function testgetUserEditorPreference(): void
     {
         $result = BeanFactory::newBean('Emails')->getUserEditorPreference();
         self::assertEquals('html', $result);
     }
 
-    public function testparse_addrs()
+    public function testparse_addrs(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -803,7 +805,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testremove_empty_fields()
+    public function testremove_empty_fields(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -820,7 +822,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testhasSignatureInBody()
+    public function testhasSignatureInBody(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -838,7 +840,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testremoveAllNewlines()
+    public function testremoveAllNewlines(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -849,7 +851,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('some text', $email->removeAllNewlines("some\r\n text\r\n"));
     }
 
-    public function testgetStartPage()
+    public function testgetStartPage(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -886,7 +888,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testsetMailer()
+    public function testsetMailer(): void
     {
         $result = BeanFactory::newBean('Emails')->setMailer(new SugarPHPMailer(), '', '');
 
@@ -894,7 +896,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('OutboundEmail', $result->oe);
     }
 
-    public function testhandleBody()
+    public function testhandleBody(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -922,7 +924,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertInstanceOf('SugarPHPMailer', $result);
     }
 
-    public function testhandleBodyInHTMLformat()
+    public function testhandleBodyInHTMLformat(): void
     {
         // TODO: TASK: UNDEFINED - Refactor html body
 //        $email = BeanFactory::newBean('Emails');
@@ -936,7 +938,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 //        $this->assertEquals("some email description containing email text & ' <br> ", $mailer->Body);
     }
 
-    public function testlistviewACLHelper()
+    public function testlistviewACLHelper(): void
     {
         self::markTestIncomplete('environment dependency (span os a?)');
 
@@ -949,7 +951,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testgetSystemDefaultEmail()
+    public function testgetSystemDefaultEmail(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -959,7 +961,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_new_list_query()
+    public function testcreate_new_list_query(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -974,7 +976,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -988,7 +990,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $email->attachment_image);
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1006,7 +1008,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('DetailView', $email->link_action);
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1021,7 +1023,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         // TODO: TASK: UNDEFINED - Update to handle new list view
 //        $email = BeanFactory::newBean('Emails');
@@ -1061,7 +1063,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::markTestIncomplete('Need to be updated');
     }
 
-    public function testquickCreateForm()
+    public function testquickCreateForm(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1071,13 +1073,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertRegExp($expected, $actual);
     }
 
-    public function testsearchImportedEmails()
+    public function testsearchImportedEmails(): void
     {
         $actual = BeanFactory::newBean('Emails')->searchImportedEmails();
         self::assertIsArray($actual);
     }
 
-    public function test_genereateSearchImportedEmailsQuery()
+    public function test_genereateSearchImportedEmailsQuery(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1087,7 +1089,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function test_generateSearchImportWhereClause()
+    public function test_generateSearchImportWhereClause(): void
     {
         // test
         $email = BeanFactory::newBean('Emails');
@@ -1119,7 +1121,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testtrimLongTo()
+    public function testtrimLongTo(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1134,7 +1136,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         );//test with ; separator
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1146,7 +1148,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $email->get_summary_text());
     }
 
-    public function testdistributionForm()
+    public function testdistributionForm(): void
     {
         // test
         require_once 'include/utils/layout_utils.php';
@@ -1161,13 +1163,13 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, strlen($result));
     }
 
-    public function testuserSelectTable()
+    public function testuserSelectTable(): void
     {
         $result = BeanFactory::newBean('Emails')->userSelectTable();
         self::assertGreaterThan(0, strlen($result));
     }
 
-    public function testcheckInbox()
+    public function testcheckInbox(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1192,7 +1194,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfillPrimaryParentFields()
+    public function testfillPrimaryParentFields(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1205,7 +1207,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcid2Link()
+    public function testcid2Link(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1221,7 +1223,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcids2Links()
+    public function testcids2Links(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1237,7 +1239,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testsetFieldNullable()
+    public function testsetFieldNullable(): void
     {
         $email = BeanFactory::newBean('Emails');
 
@@ -1250,7 +1252,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testrevertFieldNullable()
+    public function testrevertFieldNullable(): void
     {
         $email = BeanFactory::newBean('Emails');
 

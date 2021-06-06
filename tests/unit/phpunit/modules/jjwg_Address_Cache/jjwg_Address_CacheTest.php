@@ -4,7 +4,7 @@ use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testjjwg_Address_Cache()
+    public function testjjwg_Address_Cache(): void
     {
         // execute the constructor and check for the Object type and attributes
         $jjwgAddressCache = BeanFactory::newBean('jjwg_Address_Cache');
@@ -21,7 +21,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'disable_row_level_security', $jjwgAddressCache);
     }
 
-    public function testconfiguration()
+    public function testconfiguration(): void
     {
         $jjwgAddressCache = BeanFactory::newBean('jjwg_Address_Cache');
         $jjwgAddressCache->configuration();
@@ -31,7 +31,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         self::assertGreaterThan(0, count($jjwgAddressCache->settings));
     }
 
-    public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache()
+    public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache(): void
     {
         $jjwgAddressCache = BeanFactory::newBean('jjwg_Address_Cache');
 
@@ -64,7 +64,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(false, $result);
     }
 
-    public function testis_valid_lng()
+    public function testis_valid_lng(): void
     {
         $jjwgAddressCache = BeanFactory::newBean('jjwg_Address_Cache');
 
@@ -78,7 +78,7 @@ class jjwg_Address_CacheTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $jjwgAddressCache->is_valid_lng(-180));
     }
 
-    public function testis_valid_lat()
+    public function testis_valid_lat(): void
     {
         self::markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "database::email_addresses".');
 

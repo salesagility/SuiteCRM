@@ -57,12 +57,12 @@ class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Administration');
     }
 
-    public function testFirst()
+    public function testFirst(): void
     {
         self::assertEquals(true, true);
     }
 
-    public function testDoAction()
+    public function testDoAction(): void
     {
         global $current_user;
         global $mod_strings;
@@ -86,7 +86,7 @@ class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('index.php?module=Administration&action=index', $gcsHandler->getRedirectUrl());
     }
 
-    public function testNoDoAction()
+    public function testNoDoAction(): void
     {
         global $current_user;
         global $mod_strings;
@@ -110,7 +110,7 @@ class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $gcsHandler->getRedirectUrl());
     }
 
-    public function testHandleDisplay()
+    public function testHandleDisplay(): void
     {
         global $current_user;
         global $mod_strings;

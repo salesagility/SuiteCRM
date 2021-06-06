@@ -82,7 +82,7 @@ class ErrorMessageTest extends SuitePHPUnitFrameworkTestCase
         parent::tearDown();
     }
 
-    public function testLog()
+    public function testLog(): void
     {
         try {
             ErrorMessage::handler('A test error message', 'debug', true, 321);

@@ -13,7 +13,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testBug()
+    public function testBug(): void
     {
         // Execute the constructor and check for the Object type and  attributes
         $bug = BeanFactory::newBean('Bugs');
@@ -29,7 +29,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertAttributeEquals(true, 'new_schema', $bug);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $bug = BeanFactory::newBean('Bugs');
 
@@ -41,7 +41,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $bug->get_summary_text());
     }
 
-    public function testcreate_list_query()
+    public function testcreate_list_query(): void
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
         $bug = BeanFactory::newBean('Bugs');
@@ -57,7 +57,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testcreate_export_query()
+    public function testcreate_export_query(): void
     {
         self::markTestIncomplete('#Warning: Strings contain different line endings!');
         $bug = BeanFactory::newBean('Bugs');
@@ -73,7 +73,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testfill_in_additional_list_fields()
+    public function testfill_in_additional_list_fields(): void
     {
         $bug = BeanFactory::newBean('Bugs');
 
@@ -86,7 +86,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testfill_in_additional_detail_fields()
+    public function testfill_in_additional_detail_fields(): void
     {
         $bug = BeanFactory::newBean('Bugs');
         $bug->assigned_user_id = 1;
@@ -101,7 +101,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('Administrator', $bug->modified_by_name);
     }
 
-    public function testset_release()
+    public function testset_release(): void
     {
         $bug = BeanFactory::newBean('Bugs');
         $bug->found_in_release = '1';
@@ -111,7 +111,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $bug->release_name);
     }
 
-    public function testset_fixed_in_release()
+    public function testset_fixed_in_release(): void
     {
         $bug = BeanFactory::newBean('Bugs');
         $bug->found_in_release = '1';
@@ -121,7 +121,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('', $bug->fixed_in_release_name);
     }
 
-    public function testget_list_view_data()
+    public function testget_list_view_data(): void
     {
         $bug = BeanFactory::newBean('Bugs');
 
@@ -141,7 +141,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testbuild_generic_where_clause()
+    public function testbuild_generic_where_clause(): void
     {
         $bug = BeanFactory::newBean('Bugs');
 
@@ -156,7 +156,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame($expected, $actual);
     }
 
-    public function testset_notification_body()
+    public function testset_notification_body(): void
     {
         $bug = BeanFactory::newBean('Bugs');
 
@@ -178,7 +178,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($bug->bug_number, $result->_tpl_vars['BUG_BUG_NUMBER']);
     }
 
-    public function testbean_implements()
+    public function testbean_implements(): void
     {
         $bug = BeanFactory::newBean('Bugs');
         self::assertEquals(false, $bug->bean_implements('')); //test with blank value
@@ -186,7 +186,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(true, $bug->bean_implements('ACL')); //test with valid value
     }
 
-    public function testsave()
+    public function testsave(): void
     {
         $bug = BeanFactory::newBean('Bugs');
 
@@ -209,7 +209,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(null, $result);
     }
 
-    public function testgetReleaseDropDown()
+    public function testgetReleaseDropDown(): void
     {
         $result = getReleaseDropDown();
 
