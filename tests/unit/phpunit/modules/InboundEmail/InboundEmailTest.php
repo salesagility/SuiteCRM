@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFakeData.php';
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFake.php';

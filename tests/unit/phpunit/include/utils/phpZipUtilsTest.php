@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/upload_file.php';
 require_once 'include/utils/php_zip_utils.php';

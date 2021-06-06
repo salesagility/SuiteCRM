@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'include/utils/array_utils.php';
 class array_utilsTest extends SuitePHPUnitFrameworkTestCase

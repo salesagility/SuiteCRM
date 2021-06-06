@@ -7,7 +7,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,13 +44,14 @@ use Mockery as m;
 use SuiteCRM\Search\Index\AbstractIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 /**
  * Class AbstractIndexerTest
  *
  * @see AbstractIndexer
  */
-class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
+class AbstractIndexerTest extends SearchTestAbstract
 {
     public function testConstruct()
     {
