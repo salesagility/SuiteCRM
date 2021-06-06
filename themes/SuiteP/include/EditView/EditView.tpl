@@ -47,6 +47,9 @@
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="nav nav-tabs">
         {{if $useTabs}}
+
+            
+        {{counter name="isection" start=0 print=false assign="isection"}}
         {{foreach name=section from=$sectionPanels key=label item=panel}}
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
         {* if tab *}
@@ -54,48 +57,16 @@
         {*if tab display*}
         {{counter name="tabCount" print=false}}
         {{if $tabCount == '0'}}
-        <li role="presentation" class="active">
-            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+        <li role="presentation" class="hidden-xs active">
+            <a id="tab{{$tabCount}}" data-toggle="tab">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
-            {* Count Tabs *}
-            {{counter name="tabCountOnlyXS" start=-1 print=false assign="tabCountOnlyXS"}}
-            {{foreach name=sectionOnlyXS from=$sectionPanels key=labelOnly item=panelOnlyXS}}
-            {{capture name=label_upper_count_only assign=label_upper_count_only}}{{$labelOnly|upper}}{{/capture}}
-            {{if (isset($tabDefs[$label_upper_count_only].newTab) && $tabDefs[$label_upper_count_only].newTab == true)}}
-                {{counter name="tabCountOnlyXS" print=false}}
-            {{/if}}
-            {{/foreach}}
 
-            {*
-                For the mobile view, only show the first tab has a drop down when:
-                * There is more than one tab set
-                * When Acton Menu's are enabled
-            *}
-            <!-- Counting Tabs {{$tabCountOnlyXS}}-->
-            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab{{if $tabCountOnlyXS > 0}}-xs{{/if}} dropdown-toggle" data-toggle="dropdown">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-            {{if $tabCountOnlyXS > 0}}
-            <ul id="first-tab-menu-xs" class="dropdown-menu">
-                {{counter name="tabCountXS" start=0 print=false assign="tabCountXS"}}
-                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
-                {{capture name=label_upper_xs assign=label_upper_xs}}{{$label|upper}}{{/capture}}
-                {{if (isset($tabDefs[$label_upper_xs].newTab) && $tabDefs[$label_upper_xs].newTab == true)}}
-                <li role="presentation">
-                    <a id="tab{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
-                        {sugar_translate label='{{$label}}' module='{{$module}}'}
-                    </a>
-                </li>
-                {{counter name="tabCountXS" print=false}}
-                {{/if}}
-                {{/foreach}}
-            </ul>
-            {{/if}}
+
         </li>
         {{else}}
         <li role="presentation" class="hidden-xs">
-            <a id="tab{{$tabCount}}"  data-toggle="tab">
+            <a id="tab{{$tabCount}}" data-toggle="tab">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
         </li>
@@ -104,10 +75,69 @@
         {* if panel skip*}
         {{/if}}
         {{/foreach}}
+        <li>
+            {* Count Tabs *}
+            {{counter name="tabCountOnlyXS" start=-1 print=false assign="tabCountOnlyXS"}}
+            {{foreach name=sectionOnlyXS from=$sectionPanels key=labelOnly item=panelOnlyXS}}
+            {{capture name=label_upper_count_only assign=label_upper_count_only}}{{$labelOnly|upper}}{{/capture}}
+            {{if (isset($tabDefs[$label_upper_count_only].newTab) && $tabDefs[$label_upper_count_only].newTab == true)}}
+            {{counter name="tabCountOnlyXS" print=false}}
+            {{/if}}
+            {{/foreach}}
+
+            {*
+                For the mobile view, only show the first tab has a drop down when:
+                * There is more than one tab set
+                * When Acton Menu's are enabled
+            *}
+            {{counter name="tabCountOnlyXS" start=0 print=false assign="tabCountOnlyXS"}}
+            {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
+                {{if $tabCountOnlyXS== 0}}
+                    <a id="headxstab{{$tabCountOnlyXS}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                        <span class="suitepicon suitepicon-action-caret">{sugar_translate label='{{$label}}' module='{{$module}}'}</span>
+                    </a>
+                    {{counter name="tabCountOnlyXS" print=false}}
+                {{/if}}
+            {{/foreach}}
+            {{counter name="tabCountOnlyXS" print=false}}
+            {{if $tabCountOnlyXS > 0}}
+            <ul id="first-tab-menu-xs" class="dropdown-menu">
+                {{counter name="tabCountXS" start=0 print=false assign="tabCountXS"}}
+                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
+                {{capture name=label_upper_xs assign=label_upper_xs}}{{$label|upper}}{{/capture}}
+                {{if (isset($tabDefs[$label_upper_xs].newTab) && $tabDefs[$label_upper_xs].newTab == true)}}
+                <li role="presentation" class="dropdown-item" type="button" {{if $tabCountXS==0}}style="display:none"{{/if}}>
+                    <a id="xstab{{$tabCountXS}}" onclick="changeFirstTab(this, '{{$tabCountXS}}');">
+                        {sugar_translate label='{{$label}}' module='{{$module}}'}
+                    </a>
+                </li>
+                {{/if}}
+                {{counter name="tabCountXS" print=false}}
+                {{/foreach}}
+            </ul>
+            {{/if}}
+            </li>
         {{/if}}
-
+        {if $config.enable_action_menu and $config.enable_action_menu != false and $useTabs}
+        <li id="tab-actions" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" >{{$APP.LBL_LINK_SELECT}}
+                <span class="suitepicon suitepicon-action-caret"></span>
+            </a>
+            {{include file="themes/SuiteP/include/EditView/actions_menu.tpl"}}
+        </li>
+        <li class="tab-inline-pagination">
+            {{if $panelCount == 0}}
+            {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
+            {{if $SHOW_VCR_CONTROL}}
+            {$PAGINATION}
+            {{/if}}
+            {{counter name="panelCount" print=false}}
+            {{/if}}
+        </li>
     </ul>
+        {else}
 
+        {/if}
     <div class="clearfix"></div>
     {{if $useTabs}}
     <div class="tab-content">
@@ -137,7 +167,9 @@
             {{/if}}
         </div>
         {*display panels*}
+
         <div class="panel-content">
+
             <div>&nbsp;</div>
             {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
             {{counter name="panelCount" start=-1 print=false assign="panelCount"}}
@@ -194,7 +226,7 @@
         </div>
 {{sugar_include type='smarty' file=$footerTpl}}
 
-
+{*  
 {{if $useTabs}}
 {sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
 <script type="text/javascript">
@@ -202,6 +234,7 @@ var {{$form_name}}_tabs = new YAHOO.widget.TabView("{{$form_name}}_tabs");
 {{$form_name}}_tabs.selectTab(0);
 </script>
 {{/if}}
+ *}
 <script type="text/javascript">
 YAHOO.util.Event.onContentReady("{{$form_name}}",
     function () {ldelim} initEditView(document.forms.{{$form_name}}) {rdelim});
@@ -270,6 +303,11 @@ $(document).ready(function() {ldelim}
             }
         });
     });
+        $('.nav-tabs > .hidden-xs').on('click', function(){
+            $('#headxstab0 > span').html($(this).children('a').html());
+            $('#first-tab-menu-xs > li').show();
+            $('#xs'+$(this).children('a').attr('id')).parent().hide();
+        });
 
     </script>
 
