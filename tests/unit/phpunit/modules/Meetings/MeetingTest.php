@@ -116,11 +116,6 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test', $meeting->get_summary_text());
     }
 
-    public function testcreate_export_query(): void
-    {
-//        $this->markTestIncomplete('export query produces queries which fields chagne order in different enironments');
-    }
-
     public function testfill_in_additional_detail_fields(): void
     {
         $meeting = BeanFactory::newBean('Meetings');

@@ -979,52 +979,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(array('1' => '1'), $result);
     }
 
-    /**
-     * @todo: NEEDS REVISION
-     */
-    public function testsetStatuses(): void
-    {
-//        $this->markTestIncomplete("Different results for php5 and php7");
-//        /*
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $inboundEmail->id = 1;
-//        $inboundEmail->mailbox = 'INBOX';
-//
-//        //execute the method
-//        $inboundEmail->setStatuses('1', 'message_id', '123');
-//
-//        //retrieve back to verify the records created
-//        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1));
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertEquals('123', $result['retArr'][0]->message_id);
-//        */
-    }
-
-    /**
-     * @todo: NEEDS REVISION
-     */
-    public function testdeleteMessageFromCache(): void
-    {
-//        $this->markTestIncomplete("Unable to test until testsetStatuses is re-enabled");
-//        /*
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $inboundEmail->id = 1;
-//        $inboundEmail->mailbox = 'INBOX';
-//        $inboundEmail->protocol = 'pop3';
-//
-//        $inboundEmail->deleteMessageFromCache('123');
-//
-//        //retrieve back to verify the records deleted
-//        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1));
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertEquals(0, count($result['retArr']));
-//        */
-    }
-
     public function testemptyTrash(): void
     {
         $inboundEmail = BeanFactory::newBean('InboundEmail');
@@ -1231,18 +1185,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcheckEmailOneMailbox(): void
-    {
-//        $this->markTestIncomplete('this test failing only on php 7.2');
-//
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->checkEmailOneMailbox('INBOX');
-//        $this->assertEquals(1, $result);
-    }
-
     public function testcheckEmailOneMailboxPartial(): void
     {
         $inboundEmail = BeanFactory::newBean('InboundEmail');
@@ -1358,49 +1300,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($result);
     }
 
-    /**
-     * @todo: NEEDS REVISION
-     */
-    public function testupdateOverviewCacheFile(): void
-    {
-//        $this->markTestIncomplete("Different results for php5 and php7");
-//        /*
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $inboundEmail->id = 1;
-//        $inboundEmail->mailbox = 'INBOX';
-//
-//        $overview = new Overview();
-//        $overview->subject = 'subject 1';
-//        $overview->size = '10001';
-//        $overview->uid = '1';
-//
-//        $overviews = array($overview);
-//
-//        $inboundEmail->updateOverviewCacheFile($overviews);
-//
-//        //retrieve back to verify the records created
-//        $result = $inboundEmail->getCacheValue('INBOX');
-//        $this->assertGreaterThan(0, count($result['retArr'][0]));
-//        $this->assertEquals('subject 1', $result['retArr'][0]->subject);
-//        */
-    }
-
-    public function testsetReadFlagOnFolderCache(): void
-    {
-//        $this->markTestIncomplete('Undefined offset: 0');
-////
-////        $inboundEmail = BeanFactory::newBean('InboundEmail');
-////
-////        $inboundEmail->id = 1;
-////
-////        $inboundEmail->setReadFlagOnFolderCache('INBOX', '1');
-////
-////        //retrieve back to verify the records updated
-////        $result = $inboundEmail->getCacheValue('INBOX');
-////        $this->assertEquals(0, $result['retArr'][0]->seen);
-    }
-
     public function testfetchCheckedEmails(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -1498,24 +1397,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $result = $inboundEmail->repairAccount();
 
         self::assertEquals(false, $result);
-    }
-
-    public function testgetTeamSetIdForTeams(): void
-    {
-//        $this->markTestIncomplete("Fatal error: Class 'Team' not found");
-////
-////        //unset and reconnect Db to resolve mysqli fetch exeception
-////        $db = DBManagerFactory::getInstance();
-////        unset($db->database);
-////        $db->checkConnection();
-////
-////        $inboundEmail = BeanFactory::newBean('InboundEmail');
-////
-////        //$result = $inboundEmail->getTeamSetIdForTeams("1");
-////
-////        //test for record ID to verify that record is saved
-////        //$this->assertTrue(isset($result));
-////        //$this->assertEquals(36, strlen($result));
     }
 
     public function testsavePersonalEmailAccountAndOthers(): void
@@ -1866,26 +1747,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($email->from_addr, $result);
     }
 
-    public function testgetEncodingFromBreadCrumb(): void
-    {
-//        $this->markTestIncomplete('errors in method');
-////
-////        //unset and reconnect Db to resolve mysqli fetch exeception
-////        $db = DBManagerFactory::getInstance();
-////        unset($db->database);
-////        $db->checkConnection();
-////
-////        $inboundEmail = BeanFactory::newBean('InboundEmail');
-////
-////        $parts = array(
-////                    (Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => 'dummy parts 2'))))),
-////                );
-////
-////        //$result = $inboundEmail->getEncodingFromBreadCrumb("1.2.3", $parts);
-////
-////        //$this->assertEqilas('utf-8', $result);
-    }
-
     public function testgetCharsetFromBreadCrumb(): void
     {
         $inboundEmail = BeanFactory::newBean('InboundEmail');
@@ -1897,26 +1758,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $result = $inboundEmail->getCharsetFromBreadCrumb('1.2.3', $parts);
 
         self::assertEquals('default', $result);
-    }
-
-    public function testgetMessageTextFromSingleMimePart(): void
-    {
-//        $this->markTestIncomplete('Exception: PHPUnit_Framework_Error_Notice: Undefined variable: structure');
-////
-////        //unset and reconnect Db to resolve mysqli fetch exeception
-////        $db = DBManagerFactory::getInstance();
-////        unset($db->database);
-////        $db->checkConnection();
-////
-////        $inboundEmail = BeanFactory::newBean('InboundEmail');
-////
-////        // Execute the method and test that it works and doesn't throw an exception.
-////        try {
-////            $result = $inboundEmail->getMessageTextFromSingleMimePart(1, 1, $structure);
-////            $this->assertTrue(true);
-////        } catch (Exception $e) {
-////            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-////        }
     }
 
     public function testaddBreadCrumbOffset(): void
@@ -1939,27 +1780,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         //test with shorter bread crumb string
         $result = $inboundEmail->addBreadCrumbOffset('1.1.1', '2.2.2.2');
         self::assertEquals('3.3.3.2', $result);
-    }
-
-    public function testgetMessageText(): void
-    {
-//        $this->markTestIncomplete('Exception: PHPUnit_Framework_Error_Notice: Undefined variable: structure');
-//
-////
-////        //unset and reconnect Db to resolve mysqli fetch exeception
-////        $db = DBManagerFactory::getInstance();
-////        unset($db->database);
-////        $db->checkConnection();
-////
-////        $inboundEmail = BeanFactory::newBean('InboundEmail');
-////
-////        // Execute the method and test that it works and doesn't throw an exception.
-////        try {
-////            $result = $inboundEmail->getMessageText(1, 'PLAIN', $structure, $fullHeader);
-////            $this->assertTrue(true);
-////        } catch (Exception $e) {
-////            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-////        }
     }
 
     public function testdecodeHeader(): void
@@ -2248,25 +2068,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals("\n".$raw, $result);
     }
 
-    public function testhandleUUDecode(): void
-    {
-//        $this->markTestIncomplete('Uncaught require_once(include/PHP_Compat/convert_uudecode.php)');
-//        /*
-//        //unset and reconnect Db to resolve mysqli fetch exeception
-//        $db = DBManagerFactory::getInstance();
-//        unset ($db->database);
-//        $db->checkConnection();
-//
-//
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $raw = "\nMessage Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.";
-//
-//        $inboundEmail->handleUUDecode("1", "handleUUDecode_test", $raw);
-//
-//        */
-    }
-
     public function testcheckFilterDomain(): void
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2333,56 +2134,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('test_macro', $sugar_config['inbound_email_test_subject_macro']);
     }
 
-    public function testgetSystemSettingsForm(): void
-    {
-//        $this->markTestIncomplete("It should be an acceptance test");
-//
-//
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\">
-//    <input type=\"hidden\" name=\"module\" value=\"InboundEmail\">
-//    <input type=\"hidden\" name=\"action\" value=\"ListView\">
-//    <input type=\"hidden\" name=\"save\" value=\"true\">
-//
-//    <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">
-//        <tr>
-//            <td>
-//                <input title=\"Save\"
-//                          accessKey=\"a\"
-//                          class=\"button\"
-//                          onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"
-//                          type=\"submit\" name=\"Edit\" value=\"Save\">
-//            </td>
-//        </tr>
-//    </table>
-//
-//    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\">
-//        <tr>
-//            <td valign=\"top\" width='10%' NOWRAP scope=\"row\">
-//                <span>
-//                    <b>:</b>
-//                </span>
-//            </td>
-//            <td valign=\"top\" width='20%'>
-//                <span>
-//                    <input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\">
-//                </span>
-//            </td>
-//            <td valign=\"top\" width='70%'>
-//                <span>
-//                    <br />
-//                    <i></i>
-//                </span>
-//            </td>
-//        </tr>
-//    </table>
-//</form>";
-//        $result = $inboundEmail->getSystemSettingsForm();
-//
-//        $this->assertSame($expected, $result);
-    }
-
     public function testgetCaseIdFromCaseNumber(): void
     {
         $result = BeanFactory::newBean('InboundEmail')->getCaseIdFromCaseNumber('test', BeanFactory::newBean('Cases'));
@@ -2412,22 +2163,15 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetRelatedId(): void
     {
-//        $this->markTestIncomplete('Undefined variable: result');
-////
-////        //unset and reconnect Db to resolve mysqli fetch exeception
-////        $db = DBManagerFactory::getInstance();
-////        unset($db->database);
-////        $db->checkConnection();
-////
-////        $inboundEmail = BeanFactory::newBean('InboundEmail');
-////
-////        //test with Users module
-////        $inboundEmail->getRelatedId('getRelatedId@email.com', 'Users');
-////        $this->assertEquals(false, $result);
-////
-////        //test with Contacts module
-////        $inboundEmail->getRelatedId('getRelatedId@email.com', 'Contacts');
-////        $this->assertEquals(false, $result);
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
+
+        // Test with Users module
+        $result = $inboundEmail->getRelatedId('getRelatedId@email.com', 'Users');
+        self::assertEquals(false, $result);
+
+        // Test with Contacts module
+        $result = $inboundEmail->getRelatedId('getRelatedId@email.com', 'Contacts');
+        self::assertEquals(false, $result);
     }
 
     public function testgetNewMessageIds(): void
@@ -2594,67 +2338,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcopyEmails(): void
-    {
-//        $this->markTestIncomplete('Propably an error level changed in the code?');
-//
-//
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $inboundEmail->id = 1;
-//
-//        // Execute the method and test that it works and doesn't throw an exception.
-//        try {
-//            $result = $inboundEmail->copyEmails(1, 'INBOX', 1, 'TRASH', array(1));
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-//        }
-    }
-
-    public function testmoveEmails(): void
-    {
-//        $this->markTestIncomplete('Propably an error level changed in the code?');
-//
-//
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $inboundEmail->id = 1;
-//
-//        $result = $inboundEmail->moveEmails(1, 'INBOX', 1, 'TRASH', array(1));
-//        $this->assertEquals(false, $result);
-//
-//        $result = $inboundEmail->moveEmails(1, 'INBOX', 2, 'TRASH', array(1));
-//        $this->assertEquals(false, $result);
-    }
-
-    public function testgetTempFilename(): void
-    {
-//        $this->markTestIncomplete('Propably an error level changed in the code?');
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $inboundEmail->compoundMessageId = 'cmid';
-//
-//        //test with default false
-//        $result = $inboundEmail->getTempFilename();
-//        $this->assertEquals('cmid0', $result);
-//
-//        //test with true
-//        $result = $inboundEmail->getTempFilename(true);
-//        $this->assertEquals('cmid', $result);
-    }
-
-    public function testdeleteMessageOnMailServer(): void
-    {
-//        $this->markTestIncomplete('Deprecated way to check imap');
-//
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $result = $inboundEmail->deleteMessageOnMailServer('1');
-//
-//        $this->assertEquals(false, $result);
-    }
-
     public function testdeleteMessageOnMailServerForPop3(): void
     {
         $inboundEmail = BeanFactory::newBean('InboundEmail');
@@ -2695,25 +2378,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $isValidator = new SuiteCRM\Utility\SuiteValidator();
 
         self::assertTrue($isValidator->isValidId($result));
-    }
-
-    public function testsetEmailForDisplay(): void
-    {
-//        $this->markTestIncomplete('Deprecated pop3 test');
-//
-//        $inboundEmail = BeanFactory::newBean('InboundEmail');
-//
-//        $result = $inboundEmail->setEmailForDisplay('');
-//        $this->assertEquals('NOOP', $result);
-//
-//        //test with pop3 protocol and default parameters
-//        $inboundEmail->protocol = 'pop3';
-//        $result = $inboundEmail->setEmailForDisplay('1');
-//        $this->assertEquals('error', $result);
-//
-//        //test with pop3 protocol and all parameters true
-//        $result = $inboundEmail->setEmailForDisplay('1', true, true, true);
-//        $this->assertEquals('error', $result);
     }
 
     public function testdisplayOneEmail(): void
@@ -2796,24 +2460,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $result = $inboundEmail->displayFolderContents('INBOX', 'false', 1);
 
         self::assertEquals($expected, $result);
-    }
-
-    public function testcreateUserSubscriptionsForGroupAccount(): void
-    {
-//        $this->markTestIncomplete("Fatal error: Class 'Team' not found");
-//
-////
-////
-////        //unset and reconnect Db to resolve mysqli fetch exeception
-////        $db = DBManagerFactory::getInstance();
-////        unset($db->database);
-////        $db->checkConnection();
-////
-////        $inboundEmail = BeanFactory::newBean('InboundEmail');
-////
-////        //$inboundEmail->createUserSubscriptionsForGroupAccount();
-////
-////
     }
 
     public function testcreateAutoImportSugarFolder(): void
@@ -2983,15 +2629,10 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testOverview(): void
     {
-//        $this->markTestIncomplete('Fatal error: Class \'Overview\' not found');
-////
-////
-////        // Execute the constructor and check for the Object type and  attributes
-////        $overview = new Overview();
-////
-////        $this->assertInstanceOf('Overview', $overview);
-////
-////        $this->assertTrue(is_array($overview->fieldDefs));
-////        $this->assertTrue(is_array($overview->indices));
+        $overview = new Overview();
+
+        self::assertInstanceOf('Overview', $overview);
+        self::assertIsArray($overview->fieldDefs);
+        self::assertIsArray($overview->indices);
     }
 }

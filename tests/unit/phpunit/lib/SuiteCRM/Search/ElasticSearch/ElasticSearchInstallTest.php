@@ -84,20 +84,6 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     }
 
     /**
-     * Asserts if the ElasticSearchIndexer scheduler is correctly loaded
-     */
-    public function testSchedulerPresent(): void
-    {
-//        self::markTestIncomplete('environment dependency');
-//
-//        $scheduler = new Scheduler();
-//
-//        $jobs = $scheduler->getJobsList();
-//
-//        self::assertArrayHasKey('function::runElasticSearchIndexerScheduler', $jobs);
-    }
-
-    /**
      * Asserts that the configuration for the ElasticSearch are present in the global config array.
      */
     public function testConfigPresent(): void
