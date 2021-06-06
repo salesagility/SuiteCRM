@@ -27,9 +27,14 @@
 
 namespace Step\Acceptance;
 
-use InvalidArgumentException;
+use AcceptanceTester;
+use Codeception\Scenario;
 
-class AccountsTester extends \AcceptanceTester
+/**
+ * Class AccountsTester
+ * @package Step\Acceptance
+ */
+class AccountsTester extends AcceptanceTester
 {
     /**
      * Create an account
@@ -37,7 +42,7 @@ class AccountsTester extends \AcceptanceTester
      * @param string $name
      * @return string Account ID
      */
-    public function createAccount($name)
+    public function createAccount(string $name): string
     {
         global $db;
         $id = create_guid();
@@ -49,14 +54,15 @@ class AccountsTester extends \AcceptanceTester
             $accountType,
             date('Y-m-d H:i:s')
         ));
+
         return $id;
     }
 
     /**
      * Creates accounts that can be indexed by elasticsearch
-     * @param $name
+     * @param string $name
      */
-    public function createAccountForElasticSearch($name)
+    public function createAccountForElasticSearch(string $name): void
     {
         $I = new EditView($this->getScenario());
         $DetailView = new DetailView($this->getScenario());
@@ -76,10 +82,9 @@ class AccountsTester extends \AcceptanceTester
     }
 
     /**
-     *
      * @return Scenario
      */
-    public function getPublicScenario()
+    public function getPublicScenario(): Scenario
     {
         return $this->getScenario();
     }
