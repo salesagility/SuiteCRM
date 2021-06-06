@@ -11,24 +11,4 @@ class ViewSerializedTest extends SuitePHPUnitFrameworkTestCase
         self::assertInstanceOf('ViewSerialized', $view);
         self::assertInstanceOf('SugarView', $view);
     }
-
-    //Incomplete Test. method uses exit() so it cannot be tested.
-    public function testdisplay(): void
-    {
-        /* //this method call uses exit() so it cannot be tested as it forces the PHP unit to quite as well
-        $view = new ViewSerialized();
-        $view->bean = BeanFactory::newBean('Users');
-
-        ob_start();
-
-        $view->display();
-
-        $renderedContent = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertGreaterThan(0,strlen($renderedContent));
-        */
-
-        self::markTestIncomplete('Can Not be implemented');
-    }
 }
