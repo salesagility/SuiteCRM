@@ -36,8 +36,8 @@
   &.in .modal-dialog { @include translate(0, 0) }
 }
 .modal-open .modal {
-  overflow-x: hidden;
-  overflow-y: auto;
+/*  overflow-x: hidden;
+  overflow-y: auto; */
 }
 
 // Shell div to position the modal with bottom padding
@@ -97,6 +97,8 @@
 .modal-body {
   position: relative;
   padding: $modal-inner-padding;
+  overflow-y: scroll;
+  height: 800px;
 }
 
 // Footer (for actions)
@@ -147,4 +149,20 @@
 
 @media (min-width: $screen-md-min) {
   .modal-lg { width: $modal-lg; }
+}
+
+@media (max-height: 420px) {
+    .modal-body {
+      height: 200px;
+    }
+}
+@media (min-height: 421px) and (max-height: 767px) {
+    .modal-body {
+      height: 300px;
+    }
+}
+@media (min-height: 768px) and (max-height: 980px) {
+    .modal-body {
+      height: 600px;
+    }
 }
