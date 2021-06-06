@@ -40,11 +40,12 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 /** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
-class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
+class ElasticSearchEngineTest extends SearchTestAbstract
 {
     public function testValidateQuery()
     {
