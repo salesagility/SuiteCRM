@@ -190,13 +190,6 @@ class OAuthTokenTest extends SuitePHPUnitFrameworkTestCase
         }
     }
 
-    public function testcheckNonce(): void
-    {
-//        self::markTestIncomplete('wrong test');
-//        $result = OAuthToken::checkNonce('test', 'test', 123);
-//        $this->assertEquals(1, $result);
-    }
-
     public function testdeleteByConsumer(): void
     {
         // Execute the method and test that it works and doesn't throw an exception.

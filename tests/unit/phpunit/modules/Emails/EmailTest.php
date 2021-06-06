@@ -385,56 +385,6 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('value1,value2', $result);
     }
 
-    public function testsendEmailTest(): void
-    {
-        self::markTestIncomplete('Not testing sending email currently');
-        /*
-    	$email = BeanFactory::newBean('Emails');
-
-    	$result = $email->sendEmailTest('mail.someserver.com', 25, 425, false, '', '', 'admin@email.com', 'abc@email.com', 'smtp', 'admin');
-
-    	$expected = array( "status"=>false, "errorMessage"=> "Error:SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting");
-    	$this->assertSame($expected, $result);
-    	*/
-    }
-
-    public function testemail2Send(): void
-    {
-        self::markTestIncomplete('Not testing sending email currently');
-        /*	$email = BeanFactory::newBean('Emails');
-
-            $_REQUEST['sendSubject'] = "test subject";
-            $_REQUEST['sendDescription'] = "test text";
-            $_REQUEST['fromAccount'] = "from@email.com";
-            $_REQUEST['setEditor']  = 1;
-            $_REQUEST['description_html']  = "test html";
-            $_REQUEST['sendTo'] = "abc@email.com";
-
-            $result = $email->email2Send($_REQUEST);
-
-            $this->assertEquals(false, $result);
-        */
-    }
-
-    public function testsend(): void
-    {
-        self::markTestIncomplete('Not testing sending email currently');
-        /*
-    	$email = BeanFactory::newBean('Emails');
-
-    	$email->to_addrs_arr = array('email' =>'abc@xyz.com', 'display' => 'abc');
-    	$email->cc_addrs_arr = array('email' =>'abc@xyz.com', 'display' => 'abc');
-    	$email->bcc_addrs_arr = array('email' =>'abc@xyz.com', 'display' => 'abc');
-
-    	$email->from_addr = "abc@xyz.com";
-    	$email->from_name = "abc";
-    	$email->reply_to_name = "xyz";
-
-    	$result = $email->send();
-    	$this->assertEquals(false, $result);
-    	*/
-    }
-
     public function testsaveAndOthers(): void
     {
         // test
