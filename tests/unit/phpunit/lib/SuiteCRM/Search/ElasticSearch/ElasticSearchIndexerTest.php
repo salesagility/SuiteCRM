@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,8 +43,8 @@ use Mockery as m;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer as i;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-use SuiteCRM\Search\SearchTestAbstract;
-use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 
 include_once __DIR__ . '/../../Utility/BeanJsonSerializerTestData/BeanMock.php';
 include_once __DIR__ . '/../SearchTestAbstract.php';

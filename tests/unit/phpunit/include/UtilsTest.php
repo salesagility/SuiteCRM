@@ -1,11 +1,10 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,19 +37,23 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM;
+namespace SuiteCRM\Tests\Unit;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 include_once __DIR__ . '/../../../../include/utils.php';
 
+/**
+ * Class UtilsTest
+ * @package SuiteCRM\Tests\Unit
+ */
 class UtilsTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testGetAppString()
+    public function testGetAppString(): void
     {
         global $app_strings;
 
@@ -80,14 +83,14 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         unset($app_strings['TEST_NONEXISTS_LABEL']);
     }
 
-    public function testencodeMultienumValue()
+    public function testencodeMultienumValue(): void
     {
         self::assertEquals('', encodeMultienumValue(array()));
         self::assertEquals('^foo^', encodeMultienumValue(array('foo')));
         self::assertEquals('^foo^,^bar^', encodeMultienumValue(array('foo', 'bar')));
     }
 
-    public function testunencodeMultienum()
+    public function testunencodeMultienum(): void
     {
         self::assertEquals(array('foo'), unencodeMultienum('^foo^'));
         self::assertEquals(array('foo', 'bar'), unencodeMultienum('^foo^,^bar^'));
@@ -95,14 +98,14 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(array('foo', 'bar'), unencodeMultienum(['foo', 'bar']));
     }
 
-    public function testget_languages()
+    public function testget_languages(): void
     {
         self::assertEquals(['en_us' => 'English (US)'], get_languages());
         self::assertEquals(['en_us' => 'English (US)'], get_all_languages());
         self::assertEquals('English (US)', get_language_display('en_us'));
     }
 
-    public function testget_current_language()
+    public function testget_current_language(): void
     {
         global $sugar_config;
 
@@ -116,7 +119,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals('bar', get_current_language());
     }
 
-    public function testis_admin()
+    public function testis_admin(): void
     {
         // Returns true if the user is an admin.
         $user = new \User();
@@ -132,7 +135,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertFalse(is_admin(null));
     }
 
-    public function testcheck_php_version()
+    public function testcheck_php_version(): void
     {
         // These are used because the tests would fail if the supported
         // versions changed, and the constants can't be redefined. So we
@@ -155,7 +158,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(1, check_php_version("7.4.0-dev", $minimumVersion, $recommendedVersion));
     }
 
-    public function testreturn_bytes()
+    public function testreturn_bytes(): void
     {
         // Test bytes. If you input just '8', it'll output 8.
         self::assertEquals(8, return_bytes('8'));
@@ -177,7 +180,7 @@ class UtilsTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(8192, return_bytes('  8K  '));
     }
 
-    public function testSecureXSS()
+    public function testSecureXSS(): void
     {
         $uncleanString = '<a href="javascript&colon;alert(document.cookie)">XSS</a>';
         $result = securexss($uncleanString);
