@@ -294,12 +294,6 @@ fieldset[disabled] .btn-primary.active {
   width: 100%;
 }
 
-[field="condition_lines"].col-sm-10 {
-  display: block;
-  width: 100%;
-  background-color: $body-bg;
-}
-
 #conditionLines {
   display: block;
 }
@@ -1240,8 +1234,8 @@ input[type="button"][disabled] {
   border: none;
   border-radius: 3px;
   letter-spacing: 1px;
-  line-height: $input-line-height;
-  height: $input-line-height;
+  line-height: $button-line-height;
+  height: $button-line-height;
   text-transform: uppercase;
   //padding: 0 20px 0 20px;
 }
@@ -1359,6 +1353,13 @@ input[type=text] {
   border-radius: $border-radius-base;
 }
 
+input[type=file] {
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+  display: inline-block;
+  text-align: center;
+}
 input[type=number] {
   background: $input-bg;
   padding: 5px;
@@ -1399,6 +1400,10 @@ input[type=text] {
   min-height: $input-line-height;
 }
 
+input[type=file] {
+  line-height: $input-line-height;
+  min-height: $input-line-height;
+}
 input[type=number] {
   line-height: $input-line-height;
   min-height: $input-line-height;
@@ -1430,7 +1435,7 @@ select[size] {
   background-size: 52px 52px;
   overflow-y: hidden;
   color: $main-font-color;
-  padding: 0 52px 0 5px;
+  padding: 0 5px 0 5px;
   border-color: $input-select-bg;
   border-style: solid;
   border-radius: $border-radius-base;
@@ -1700,7 +1705,6 @@ div.col-sm-6 #email1_span td.email-address-add-button {
   display: inline-block;
   font-size: 14px;
   border: none;
-  line-height: 40px;
 }
 
 .email-address-input-group .form-control:focus  {
@@ -1843,9 +1847,8 @@ font[color=red] {
   .edit-view-row-item .col-sm-2 {
     width: 33.333333%;
   }
-
   .dateTime input[type="text"] {
-    width: 400px;
+    width: auto;
   }
 
 }
