@@ -1,6 +1,6 @@
 <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
         backupGlobals="true"
         backupStaticAttributes="false"
         colors="true"
@@ -18,19 +18,27 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+
+    <coverage cacheDirectory="./_output"
+              includeUncoveredFiles="true"
+              processUncoveredFiles="true"
+              pathCoverage="false"
+              ignoreDeprecatedCodeUnits="true"
+              disableCodeCoverageIgnore="false">
+
+        <include>
             <directory suffix=".php">../</directory>
-            <exclude>
-                <directory>../.git</directory>
-                <directory>../.github</directory>
-                <directory>../XTemplate</directory>
-                <directory>../cache</directory>
-                <directory>../vendor</directory>
-                <directory>../tests</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+        </include>
+
+        <exclude>
+            <directory>../.git</directory>
+            <directory>../.github</directory>
+            <directory>../XTemplate</directory>
+            <directory>../cache</directory>
+            <directory>../vendor</directory>
+            <directory>../tests</directory>
+        </exclude>
+    </coverage>
 
     <php>
         <ini name="display_errors" value="true"/>
