@@ -38,9 +38,71 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+namespace SuiteCRM\Utility;
 
-require_once __DIR__ . '/../lib/Utility/AntiMalware/AntiMalwareTrait.php';
-require_once __DIR__ . '/../include/UploadFile.php';
+use ArrayAccess;
+use SuiteCRM\Exception\Exception;
+
+/**
+ * Class Configuration
+ * @package SuiteCRM\Utility
+ */
+class Configuration implements ArrayAccess
+{
+
+    private $container;
+
+    /**
+     * Configuration constructor.
+     */
+    public function __construct()
+    {
+        global $sugar_config;
+        require_once 'modules/Configurator/Configurator.php';
+        $this->container = (new \Configurator())->config;
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws Exception
+     */
+    public function offsetSet($offset, $value)
+    {
+        if (is_null($offset)) {
+            throw new Exception('[Configuration][missing offset]');
+        }
+
+        if (!isset($this->container[$offset])) {
+            throw new Exception('[Configuration][not found]');
+        }
+
+        $this->container[$offset] = $value;
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->container[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->container[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed|null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->container[$offset] ?? null;
+    }
+}
