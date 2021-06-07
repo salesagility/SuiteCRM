@@ -144,6 +144,14 @@ $dictionary['AOW_WorkFlow'] = array(
                 'default' => '0',
                 'reportable' => false,
             ),
+        'limit_beans' =>
+            array(
+                'name' => 'limit_beans',
+                'vname' => 'LBL_LIMIT_BEANS',
+                'type' => 'int',
+                'default' => '0',
+                'reportable' => false,
+            ),
         'condition_lines' =>
             array(
                 'required' => false,
