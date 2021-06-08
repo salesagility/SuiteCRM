@@ -1134,6 +1134,9 @@ class SearchForm
 
                         if ($type == 'datetime' || $type == 'datetimecombo') {
                             try {
+                                if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$field_value)) {
+                                    $field_value = $timedate->to_db_date($field_value, false);
+                                }
                                 if ($operator == '=' || $operator == 'between') {
                                     // FG - bug45287 - If User asked for a range, takes edges from it.
                                     $placeholderPos = strpos($field_value, "<>");
