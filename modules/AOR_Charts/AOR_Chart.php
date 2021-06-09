@@ -659,7 +659,7 @@ EOF;
     private function getShortenedLabel($label, $maxLabelSize = 20)
     {
         if (strlen($label) > $maxLabelSize) {
-            return substr($label, 0, $maxLabelSize).'...';
+            return mb_substr($label, 0, $maxLabelSize).'...';
         }
         return $label;
     }
