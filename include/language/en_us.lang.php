@@ -627,6 +627,7 @@ $app_list_strings = array(
         'Radio' => 'Radio',
         'Television' => 'Television',
         'NewsLetter' => 'Newsletter',
+        'Survey' => 'Survey',
     ),
 
     'newsletter_frequency_dom' => array(
