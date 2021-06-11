@@ -40,13 +40,13 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
+use Robo\Tasks;
+use RuntimeException;
 use SuiteCRM\Utility\OperatingSystem;
 use SuiteCRM\Robo\Traits\RoboTrait;
-use Robo\Task\Base\loadTasks;
 
-class CodeCoverageCommands extends \Robo\Tasks
+class CodeCoverageCommands extends Tasks
 {
-    use loadTasks;
     use RoboTrait;
 
     /**
@@ -63,7 +63,7 @@ class CodeCoverageCommands extends \Robo\Tasks
             if ($this->isEnvironmentTravisCI()) {
                 $range = $this->getCommitRangeForTravisCi();
             } else {
-                throw new \RuntimeException('Unable to detect continuous integration environment');
+                throw new RuntimeException('Unable to detect continuous integration environment');
             }
         }
         $this->generateCodeCoverageFile();
