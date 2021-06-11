@@ -4,8 +4,11 @@
   "homepage": "https://suitecrm.com",
   "type": "project",
   "license": "GPL-3.0",
-  "authors": [],
-  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "SalesAgility Ltd"
+    }
+  ],
   "support": {
     "issues": "https://github.com/salesagility/SuiteCRM/issues",
     "wiki": "https://docs.suitecrm.com",
@@ -24,6 +27,8 @@
       "elasticsearch/elasticsearch": "dist"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "php": ">=7.3.0",
     "ext-curl": "*",
@@ -85,13 +90,6 @@
     "mockery/mockery": "^1.1.0",
     "phpunit/phpunit": "^9.5"
   },
-  "scripts": {
-    "post-install-cmd": [
-      "rm -Rf vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests",
-      "Google\\Task\\Composer::cleanup"
-    ]
-  },
-  "prefer-stable": true,
   "autoload": {
     "files": [
       "deprecated.php"
@@ -103,13 +101,6 @@
         "tests/SuiteCRM/",
         "tests/unit/phpunit/lib/SuiteCRM/"
       ],
-      "SuiteCRM\\Tests\\": [
-        "tests/"
-      ],
-      "SuiteCRM\\Tests\\Unit\\": [
-        "tests/unit/phpunit/",
-        "tests/unit/phpunit/include"
-      ],
       "SuiteCRM\\Custom\\": [
         "custom/lib"
       ],
@@ -119,6 +110,23 @@
     },
     "classmap": [
       "Api/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SuiteCRM\\Tests\\": [
+        "tests/"
+      ],
+      "SuiteCRM\\Tests\\Unit\\": [
+        "tests/unit/phpunit/",
+        "tests/unit/phpunit/include/"
+      ]
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "rm -Rf vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests",
+      "Google\\Task\\Composer::cleanup"
     ]
   },
   "extra": {
