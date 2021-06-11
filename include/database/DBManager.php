@@ -4114,4 +4114,10 @@ abstract class DBManager
     {
         return trim(str_replace(array("\r", "\n"), " ", $sql));
     }
+	
+    /**
+     * begin database transaction
+     */
+    abstract public function beginTransaction();
+
 }
