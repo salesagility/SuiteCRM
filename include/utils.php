@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2020 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -269,18 +269,15 @@ function make_sugar_config(&$sugar_config)
 }
 
 /**
+ * Used for getting base values for array style config.php
  * @return array
+ * @throws Exception
  */
-function get_sugar_config_defaults()
+function get_sugar_config_defaults(): array
 {
     global $locale;
-    /*
-     * used for getting base values for array style config.php.  used by the
-     * installer and to fill in new entries on upgrades.  see also:
-     * sugar_config_union
-     */
 
-    $sugar_config_defaults = array(
+    $sugar_config_defaults = [
         'disableAjaxUI' => true,
         'admin_export_only' => false,
         'export_delimiter' => ',',
@@ -289,7 +286,7 @@ function get_sugar_config_defaults()
         'calculate_response_time' => true,
         'create_default_user' => false,
         'chartEngine' => 'Jit',
-        'date_formats' => array(
+        'date_formats' => [
             'Y-m-d' => '2010-12-23',
             'm-d-Y' => '12-23-2010',
             'd-m-Y' => '23-12-2010',
@@ -299,8 +296,8 @@ function get_sugar_config_defaults()
             'Y.m.d' => '2010.12.23',
             'd.m.Y' => '23.12.2010',
             'm.d.Y' => '12.23.2010',
-        ),
-        'name_formats' => array(
+        ],
+        'name_formats' => [
             's f l' => 's f l',
             'f l' => 'f l',
             's l' => 's l',
@@ -309,20 +306,22 @@ function get_sugar_config_defaults()
             's l, f' => 's l, f',
             'l s f' => 'l s f',
             'l f s' => 'l f s',
-        ),
-        'dbconfigoption' => array(
+        ],
+        'dbconfigoption' => [
             'persistent' => true,
             'autofree' => false,
             'debug' => 0,
             'ssl' => false,
-        ),
+        ],
         'default_action' => 'index',
         'default_charset' => return_session_value_or_default('default_charset', 'UTF-8'),
         'default_currency_name' => return_session_value_or_default('default_currency_name', 'US Dollar'),
         'default_currency_symbol' => return_session_value_or_default('default_currency_symbol', '$'),
         'default_currency_iso4217' => return_session_value_or_default('default_currency_iso4217', 'USD'),
-        'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits', 2),
-        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator', ','),
+        'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits',
+            2),
+        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator',
+            ','),
         'default_decimal_seperator' => return_session_value_or_default('default_decimal_seperator', '.'),
         'default_date_format' => 'm/d/Y',
         'default_locale_name_format' => 's f l',
@@ -330,18 +329,23 @@ function get_sugar_config_defaults()
         'default_language' => return_session_value_or_default('default_language', 'en_us'),
         'default_module' => 'Home',
         'default_password' => '',
-        'default_permissions' => array(
+        'default_permissions' => [
             'dir_mode' => 02770,
             'file_mode' => 0755,
             'user' => '',
             'group' => '',
-        ),
+        ],
         'default_theme' => return_session_value_or_default('site_default_theme', 'SuiteP'),
         'default_time_format' => 'h:ia',
         'default_user_is_admin' => false,
         'default_user_name' => '',
         'disable_export' => false,
-        'disable_persistent_connections' => return_session_value_or_default('disable_persistent_connections', 'false'),
+        'disable_persistent_connections' => return_session_value_or_default('disable_persistent_connections', false),
+        'default_module_favicon' => false,
+        'dashlet_auto_refresh_min' => 30,
+        'stack_trace_errors' => false,
+        'developerMode' => false,
+        'stackTrace' => false,
         'display_email_template_variable_chooser' => false,
         'display_inbound_email_buttons' => false,
         'dump_slow_queries' => false,
@@ -352,8 +356,8 @@ function get_sugar_config_defaults()
         'email_warning_notifications' => true,
         'email_enable_auto_send_opt_in' => false,
         'email_enable_confirm_opt_in' => SugarEmailAddress::COI_STAT_DISABLED,
-        'filter_module_fields' => array(
-            'Users' => array(
+        'filter_module_fields' => [
+            'Users' => [
                 'show_on_employees',
                 'portal_only',
                 'is_group',
@@ -368,8 +372,8 @@ function get_sugar_config_defaults()
                 'password',
                 'last_login',
                 'oauth_tokens',
-            ),
-            'Employees' => array(
+            ],
+            'Employees' => [
                 'show_on_employees',
                 'portal_only',
                 'is_group',
@@ -384,14 +388,14 @@ function get_sugar_config_defaults()
                 'password',
                 'last_login',
                 'oauth_tokens',
-            )
-        ),
+            ]
+        ],
         'google_auth_json' => '',
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,
         'import_max_records_total_limit' => '',
-        'languages' => array('en_us' => 'English (US)'),
+        'languages' => ['en_us' => 'English (US)'],
         'large_scale_test' => false,
         'list_max_entries_per_page' => 20,
         'list_max_entries_per_subpanel' => 10,
@@ -399,11 +403,11 @@ function get_sugar_config_defaults()
         'log_memory_usage' => false,
         'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
-        'resource_management' => array(
+        'resource_management' => [
             'special_query_limit' => 50000,
-            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => ['AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'],
             'default_limit' => 1000,
-        ),
+        ],
         'require_accounts' => true,
         'rss_cache_time' => return_session_value_or_default('rss_cache_time', '10800'),
         'save_query' => 'all',
@@ -411,7 +415,7 @@ function get_sugar_config_defaults()
         'showThemePicker' => true,
         'slow_query_time_msec' => '100',
         'sugarbeet' => true,
-        'time_formats' => array(
+        'time_formats' => [
             'H:i' => '23:00',
             'h:ia' => '11:00pm',
             'h:iA' => '11:00PM',
@@ -422,10 +426,10 @@ function get_sugar_config_defaults()
             'h.iA' => '11.00PM',
             'h.i a' => '11.00 pm',
             'h.i A' => '11.00 PM',
-        ),
+        ],
         'tracker_max_display_length' => 15,
         'translation_string_prefix' => return_session_value_or_default('translation_string_prefix', false),
-        'upload_badext' => array(
+        'upload_badext' => [
             'php',
             'php3',
             'php4',
@@ -440,7 +444,7 @@ function get_sugar_config_defaults()
             'html',
             'htm',
             'phtml',
-        ),
+        ],
         'upload_maxsize' => 30000000,
         'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
@@ -452,7 +456,7 @@ function get_sugar_config_defaults()
         'lock_subpanels' => false,
         'max_dashlets_homepage' => '15',
         'default_max_tabs' => 8,
-        'dashlet_display_row_options' => array('1', '3', '5', '10'),
+        'dashlet_display_row_options' => ['1', '3', '5', '10'],
         'default_subpanel_tabs' => true,
         'default_subpanel_links' => false,
         'default_swap_last_viewed' => false,
@@ -462,7 +466,7 @@ function get_sugar_config_defaults()
         'use_common_ml_dir' => false,
         'common_ml_dir' => '',
         'vcal_time' => '2',
-        'calendar' => array(
+        'calendar' => [
             'default_view' => 'week',
             'show_calls_by_default' => true,
             'show_tasks_by_default' => true,
@@ -475,8 +479,8 @@ function get_sugar_config_defaults()
             'items_resizable' => true,
             'enable_repeat' => true,
             'max_repeat_count' => 1000,
-        ),
-        'passwordsetting' => empty($passwordsetting) ? array(
+        ],
+        'passwordsetting' => empty($passwordsetting) ? [
             'SystemGeneratedPasswordON' => '',
             'generatepasswordtmpl' => '',
             'lostpasswordtmpl' => '',
@@ -489,22 +493,22 @@ function get_sugar_config_defaults()
             'systexpirationtime' => '7',
             'systexpirationtype' => '1',
             'systexpirationlogin' => '',
-        ) : $passwordsetting,
+        ] : $passwordsetting,
         'use_real_names' => true,
         'search_wildcard_infront' => false,
         'search_wildcard_char' => '%',
-        'jobs' => array(
+        'jobs' => [
             'min_retry_interval' => 30, // 30 seconds minimal job retry
             'max_retries' => 5, // how many times to retry the job
             'timeout' => 86400, // how long a job may spend as running before being force-failed
-        ),
-        'cron' => array(
+        ],
+        'cron' => [
             'max_cron_jobs' => 10, // max jobs per cron schedule run
             'max_cron_runtime' => 30, // max runtime for cron jobs
             'min_cron_interval' => 30, // minimal interval between cron jobs
-        ),
+        ],
         'strict_id_validation' => false,
-    );
+    ];
 
     if (!is_object($locale)) {
         $locale = new Localization();
