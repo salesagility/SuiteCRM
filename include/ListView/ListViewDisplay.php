@@ -416,6 +416,8 @@ class ListViewDisplay
             if (
                 $this->delete
                 && !$this->show_action_dropdown_as_delete
+                    // Add the delete button if a user have access for delete records
+                && ACLController::checkAccess($this->seed->module_dir, 'delete', true)
             ) {
                 $menuItems[] = $this->buildDeleteLink($location);
             }

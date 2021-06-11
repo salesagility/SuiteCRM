@@ -1207,6 +1207,11 @@ function validate_form(formname, startsWith) {
       }
     }
   }
+  /* The message show for required fields in edit view form with tabs */
+  if (isError) {
+    requiredTxttabs = SUGAR.language.get('app_strings', 'ERR_MISSING_REQUIRED_FIELDS_TABS');
+    ajaxStatus.flashStatus(requiredTxttabs,10000);
+  }
   /*	nsingh: BUG#15102
    Check min max default field logic.
    Can work with float values as well, but as of 10/8/07 decimal values in MB and studio don't have min and max value constraints.*/

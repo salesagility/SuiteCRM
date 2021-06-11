@@ -38,4 +38,56 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-{{include file="/include/EditView/EditView.tpl"}}
+{* {{include file="/include/EditView/EditView.tpl"}} *}
+{{sugar_include type="smarty" file=$headerTpl}}
+{sugar_include include=$includes}
+<div id="QuickCreate_tabs">
+    {*display tabs*}
+    {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
+
+    <div class="clearfix"></div>
+        <div class="panel-content">
+            <div>&nbsp;</div>
+            {{counter name="panelCount" start=-1 print=false assign="panelCount"}}
+            {{foreach name=section from=$sectionPanels key=label item=panel}}
+            {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+            {* if tab *}
+            {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true && $useTabs)}}
+            {*if tab skip*}
+            {{else}}
+            {* if panel display*}
+            {*if panel collasped*}
+            {{if (isset($tabDefs[$label_upper].panelDefault) && $tabDefs[$label_upper].panelDefault == "collapsed")}}
+            {*collapse panel*}
+            {{assign var='collapse' value="panel-collapse collapse"}}
+            {{assign var='collapsed' value="collapsed"}}
+            {{assign var='collapseIcon' value="glyphicon glyphicon-plus"}}
+            {{assign var='panelHeadingCollapse' value="panel-heading-collapse"}}
+            {{else}}
+            {*expand panel*}
+            {{assign var='collapse' value="panel-collapse collapse in"}}
+            {{assign var='collapseIcon' value="glyphicon glyphicon-minus"}}
+            {{assign var='panelHeadingCollapse' value=""}}
+            {{/if}}
+
+            <div class="panel panel-default">
+                <div class="panel-heading {{$panelHeadingCollapse}}">
+                    <a class="{{$collapsed}}" role="button" data-toggle="collapse-edit" aria-expanded="false">
+                        <div class="col-xs-10 col-sm-11 col-md-11">
+                            {sugar_translate label='{{$label}}' module='{{$module}}'}
+                        </div>
+                    </a>
+
+                </div>
+                <div class="panel-body {{$collapse}}" id="detailpanel_{{$panelCount}}">
+                    <div class="tab-content">
+                        {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
+                    </div>
+                </div>
+            </div>
+
+            {{/if}}
+            {{counter name="panelCount" print=false}}
+            {{/foreach}}
+        </div>
+{{sugar_include type='smarty' file=$footerTpl}}

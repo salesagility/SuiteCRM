@@ -359,13 +359,24 @@ $(document).ready(function () {
 function selectTab(tab) {
   $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
   $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+  $('#content div.panel-content > div').hide();
+  $('#content div.panel-content div.tab-panel-'+tab).show();
 };
 
-function changeFirstTab(src) {
-  var selected = $(src).attr('id');
-  var selectedHtml = $(selected.context).html();
-  $('#xstab0').html(selectedHtml);
+/* function changeFirstTab(src) { */
+function changeFirstTab(src, n) {
+/*  var selected = $(src).attr('id');*/
 
+/*  
+    var selectedHtml = $(selected.context).html(); 
+    $('#xstab0').html(selectedHtml);
+ */
+  var selectedHtml = $('#'+$(src).attr('id')).html();
+  $('#'+$(src).attr('id')).parent().parent().children().show();
+  $('#'+$(src).attr('id')).parent().hide();
+  $('#headxstab0').children().last().html(selectedHtml);
+  $('.nav-tabs > .hidden-xs').removeClass('active');
+  $('.nav-tabs li #tab'+n).parent().addClass('active');
     var i = $(src).parents('li').index();
     selectTab(parseInt(i));
     return true;

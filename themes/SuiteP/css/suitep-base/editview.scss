@@ -787,7 +787,6 @@ option[selected] {
 }
 
 #EditView input[type="button"] {
-  padding: 0 10px;
   margin: 4px;
 }
 
@@ -1936,13 +1935,12 @@ a.tabFormAdvLink:visited {
 
 #ajaxStatusDiv {
   position: fixed;
-  top: 7px;
-  background: $panel-bg;
+  top: 70px;
+  background: $component-active-color;
   color: $danger;
   padding: 5px;
   border: 1px solid $panel-default-border;
   filter: alpha(opacity=80);
-  opacity: .8;
   z-index: 20;
 
 }
@@ -3541,6 +3539,14 @@ select#sales_stage_advanced {
     width: 100%;
   }
 
+  .col-sm-8 .edit-view-field input[type="file"] {
+    width: 100%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="file"] {
+    width: 100%;
+  }
+  
   .col-sm-6 .edit-view-field input[type="text"].date_input {
       width: auto;
   }
@@ -3661,7 +3667,7 @@ select#sales_stage_advanced {
   }
 
   [type="date"] input[type="text"] {
-    width: 90%;
+    width: auto;
   }
 
   [type="date"] img {
@@ -3768,7 +3774,7 @@ select#sales_stage_advanced {
   }
 
   [type="date"] input[type="text"] {
-    width: 90%;
+    width: auto;
   }
 
   [type="date"] img {
@@ -3807,9 +3813,13 @@ select#sales_stage_advanced {
   }
 
   .col-sm-12 .edit-view-field input[type="text"] {
-    width: 90%;
+    width: 100%;
   }
-
+  
+  .col-sm-12 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+  
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 90%;
   }
@@ -3872,7 +3882,11 @@ select#sales_stage_advanced {
   .col-sm-12 [type=varchar].col-sm-8.edit-view-field input[type="text"] {
     width: 45.0%;
   }
-
+  
+  .col-sm-12 .edit-view-field input[type="text"].date_input {
+      width: auto;
+  }
+  
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 90%;
   }
@@ -3881,6 +3895,10 @@ select#sales_stage_advanced {
       width: auto;
   }
 
+  .col-sm-6 .edit-view-field input[type="file"] {
+    width: 90%;
+  }
+  
   #BILLING_address_fieldset input[type=text] {
     width: 90%;
   }
@@ -4252,10 +4270,6 @@ tr:hover img.info {
   padding: 0;
   margin: 0;
   float: right;
-}
-
-#EditView .paginationWrapper {
-  padding-top: 4px;
 }
 
 .paginationWrapper span{
