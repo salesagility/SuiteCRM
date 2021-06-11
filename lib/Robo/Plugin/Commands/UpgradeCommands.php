@@ -40,12 +40,11 @@
 
 namespace SuiteCRM\Robo\Plugin\Commands;
 
-use Robo\Task\Base\loadTasks;
+use Robo\Tasks;
 use SuiteCRM\Robo\Traits\RoboTrait;
 
-class UpgradeCommands extends \Robo\Tasks
+class UpgradeCommands extends Tasks
 {
-    use loadTasks;
     use RoboTrait;
 
     /**
