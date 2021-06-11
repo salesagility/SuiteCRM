@@ -87,10 +87,10 @@
     "friendsofphp/php-cs-fixer": "^2.15",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
-    "leafo/scssphp": "^0.8.4",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.5",
+    "scssphp/scssphp": "^1.5"
   },
   "autoload": {
     "files": [
