@@ -42,6 +42,7 @@ namespace SuiteCRM\Tests\Unit\MVC\View\views;
 
 use BeanFactory;
 use DetailView2;
+use Exception;
 use Sugar_Smarty;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use ViewQuick;
@@ -77,13 +78,20 @@ class ViewQuickTest extends SuitePHPUnitFrameworkTestCase
         $view->dv->module = 'Users';
         $view->bean = BeanFactory::newBean('Users');
         $view->bean->id = 1;
-        $view->dv->setup('Users', $view->bean);
+
+        try {
+            $view->dv->setup('Users', $view->bean);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
 
         if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
         }
+
+        self::assertTrue(true);
     }
 
     protected function setUp(): void
