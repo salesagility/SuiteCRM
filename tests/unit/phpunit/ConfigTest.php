@@ -39,7 +39,7 @@
 
 namespace SuiteCRM\Tests\Unit;
 
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * Class ConfigTest

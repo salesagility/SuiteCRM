@@ -1,6 +1,6 @@
 <?php
 
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once 'modules/iCals/iCal.php';
 class iCalTest extends SuitePHPUnitFrameworkTestCase

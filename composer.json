@@ -99,9 +99,7 @@
     "psr-4": {
       "SuiteCRM\\": [
         "lib/",
-        "include/",
-        "tests/SuiteCRM/",
-        "tests/unit/phpunit/lib/SuiteCRM/"
+        "include/"
       ],
       "SuiteCRM\\Custom\\": [
         "custom/lib"
@@ -116,12 +114,12 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SuiteCRM\\Tests\\": [
-        "tests/"
+      "SuiteCRM\\": [
+        "tests/SuiteCRM/",
+        "tests/unit/phpunit/lib/SuiteCRM/"
       ],
       "SuiteCRM\\Tests\\Unit\\": [
-        "tests/unit/phpunit/",
-        "tests/unit/phpunit/include/"
+        "tests/unit/phpunit/"
       ]
     }
   },
