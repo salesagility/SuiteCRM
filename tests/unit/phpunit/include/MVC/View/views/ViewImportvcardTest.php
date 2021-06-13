@@ -38,52 +38,51 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Tests\Unit;
+namespace SuiteCRM\Tests\Unit\MVC\View\views;
 
-use SuiteCRM\LangException;
-use SuiteCRM\LangText;
+use Sugar_Smarty;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use ViewImportvcard;
 
 /**
- * Class LangExceptionTest
- * @package SuiteCRM\Tests\Unit
+ * Class ViewImportvcardTest
+ * @package SuiteCRM\Tests\Unit\MVC\View\views
  */
-class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
+class ViewImportvcardTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp(): void
+    public function test__construct(): void
     {
-        parent::setUp();
-        if (!defined('sugarEntry')) {
-            define('sugarEntry', true);
-        }
-
-        global $app_strings, $mod_strings;
-
-        include_once __DIR__ . '/../../../../include/utils.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarTheme.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarThemeRegistry.php';
-        include __DIR__ . '/../../../../include/language/en_us.lang.php';
-        include_once __DIR__ . '/../../../../include/SugarObjects/SugarConfig.php';
-        include_once __DIR__ . '/../../../../include/SugarLogger/LoggerManager.php';
-
-        include_once __DIR__ . '/../../../../include/ErrorMessageException.php';
-        include_once __DIR__ . '/../../../../include/ErrorMessage.php';
-        include_once __DIR__ . '/../../../../include/LangText.php';
-        include_once __DIR__ . '/../../../../include/JsonApiErrorObject.php';
-        include_once __DIR__ . '/../../../../include/LangExceptionInterface.php';
-        include_once __DIR__ . '/../../../../include/LangException.php';
+        // Execute the constructor and check for the Object type and type attribute
+        $view = new ViewImportvcard();
+        self::assertInstanceOf('ViewImportvcard', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertEquals('edit', $view->type);
     }
 
-    public function testGetLangMessage(): void
+    public function testdisplay(): void
     {
-        global $app_strings;
-        $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';
-        $e = new LangException('Test message', 123, null, new LangText('LBL_LANG_TEST_LABEL', ['variable' => 'foo']));
-        $langMessage = $e->getLangMessage();
-        self::assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
+        if (isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+
+        //execute the method with essential parameters set. it should return some html.
+        $view = new ViewImportvcard();
+        $_REQUEST['module'] = 'Users';
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Contacts');
+        $view->ss = new Sugar_Smarty();
+
+        ob_start();
+        $view->display();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        self::assertGreaterThan(0, strlen($renderedContent));
+
+        // cleanup
+
+        if (isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 }

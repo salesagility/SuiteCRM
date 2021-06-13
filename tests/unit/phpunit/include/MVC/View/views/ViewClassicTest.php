@@ -38,66 +38,82 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Tests\Unit\modules\Users;
+namespace SuiteCRM\Tests\Unit\MVC\View\views;
 
-use Exception;
-use SugarController;
+use BeanFactory;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
-
-require_once __DIR__ . '/../../../../../modules/Users/authentication/SAML2Authenticate/SAML2Authenticate.php';
+use ViewClassic;
 
 /**
- * Class SAML2AuthenticateTest
- * @package SuiteCRM\Tests\Unit\modules\Users
+ * Class ViewClassicTest
+ * @package SuiteCRM\Tests\Unit\MVC\View\views
  */
-class SAML2AuthenticateTest extends SuitePHPUnitFrameworkTestCase
+class ViewClassicTest extends SuitePHPUnitFrameworkTestCase
 {
-    public function testEntryPointNoAuth(): void
+    public function test__construct(): void
     {
-        $result = (new SugarController())->checkEntryPointRequiresAuth('SAML2Metadata');
-        self::assertFalse($result);
+        // Execute the constructor and check for the Object type and type attribute
+
+        //test with no parameters
+        $view = new ViewClassic();
+        self::assertInstanceOf('ViewClassic', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertEquals('', $view->type);
+
+        //test with bean parameter;
+        $bean = BeanFactory::newBean('Users');
+        $view = new ViewClassic($bean);
+        self::assertInstanceOf('ViewClassic', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertEquals('', $view->type);
     }
 
-    public function testIncompleteSettings(): void
+    public function testdisplay(): void
     {
-        // php-saml triggers deprecation warnings, so disable temporarily
-        error_reporting(E_ALL & ~E_DEPRECATED);
+        self::markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
 
-        $failed = false;
-        $settings = ['sp' => [], 'idp' => []];
-        try {
-            getSAML2Metadata($settings);
-        } catch (Exception $e) {
-            $failed = true;
+        if (isset($_SESSION)) {
+            $session = $_SESSION;
         }
 
-        self::assertTrue($failed);
+        //test with a valid module but invalid action. it should return false.
+        $view = new ViewClassic();
+        $view->module = 'Home';
+        $view->action = '';
+        $ret = $view->display();
+        self::assertFalse($ret);
+
+        //test with a valid module and uncustomized action. it should return true
+        $view = new ViewClassic();
+        $view->module = 'Home';
+        $view->action = 'About';
+
+        //test with a valid module and customized action. it should return true
+        $view = new ViewClassic();
+        $view->module = 'Home';
+        $view->action = 'index';
+
+        ob_start();
+        $ret = $view->display();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        self::assertGreaterThan(0, strlen($renderedContent));
+        self::assertTrue($ret);
+
+
+        if (isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
     }
 
-    public function testMinimalValidExample(): void
+    protected function setUp(): void
     {
-        $settings = [
-            'sp' => [
-                'entityId' => 'someid',
-                'assertionConsumerService' => [
-                    'url' => 'https://someurl',
-                ],
-            ],
-            'idp' => [
-                'entityId' => 'someotherid',
-                'singleSignOnService' => [
-                    'url' => 'https://localhost/foo',
-                ],
-                'x509cert' => 'test',
-            ],
-        ];
+        parent::setUp();
 
-        // php-saml triggers deprecation warnings, so disable temporarily
-        error_reporting(E_ALL & ~E_DEPRECATED);
-        $xml = getSAML2Metadata($settings);
-        self::assertNotEmpty($xml);
-        self::assertRegexp('/someid/', $xml);
-        self::assertRegexp('/someurl/', $xml);
-        self::assertNotFalse(simplexml_load_string($xml));
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = BeanFactory::newBean('Users');
     }
 }

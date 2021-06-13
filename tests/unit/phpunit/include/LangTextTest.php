@@ -1,12 +1,11 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\Tests\Unit;
+
 use SuiteCRM\ErrorMessageException;
 use SuiteCRM\LangText;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
@@ -48,9 +49,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * LangTextTest
- *
- * @author gyula
+ * Class LangTextTest
+ * @package SuiteCRM\Tests\Unit
  */
 class LangTextTest extends SuitePHPUnitFrameworkTestCase
 {
@@ -76,11 +76,6 @@ class LangTextTest extends SuitePHPUnitFrameworkTestCase
         include_once __DIR__ . '/../../../../include/JsonApiErrorObject.php';
         include_once __DIR__ . '/../../../../include/LangExceptionInterface.php';
         include_once __DIR__ . '/../../../../include/LangException.php';
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
     }
 
     public function testConstruct(): void

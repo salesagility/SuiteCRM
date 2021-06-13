@@ -40,6 +40,8 @@
 
 namespace SuiteCRM\Tests\Unit;
 
+use SuiteCRM\Exception\Exception;
+use SuiteCRM\JsonApiErrorObject;
 use SuiteCRM\LangException;
 use SuiteCRM\LangText;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
@@ -49,10 +51,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Class LangExceptionTest
+ * Class JsonApiErrorObjectTest
  * @package SuiteCRM\Tests\Unit
  */
-class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
+class JsonApiErrorObjectTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp(): void
     {
@@ -78,12 +80,71 @@ class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
         include_once __DIR__ . '/../../../../include/LangException.php';
     }
 
-    public function testGetLangMessage(): void
+    public function testConstruct(): void
     {
+        $error = new JsonApiErrorObject();
+        $expected = [
+            'id' => '1',
+            'links' => ['about' => null],
+            'status' => '200',
+            'code' => '1',
+            'title' => 'JSON API Error',
+            'detail' => 'JSON API Error occurred.',
+            'source' => ['pointer' => null, 'parameter' => null],
+            'meta' => [],
+        ];
+        $actual = $error->export();
+        self::assertEquals($expected, $actual, 'API Error Object constructor error: Incorrect default state.');
+
         global $app_strings;
-        $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';
-        $e = new LangException('Test message', 123, null, new LangText('LBL_LANG_TEST_LABEL', ['variable' => 'foo']));
-        $langMessage = $e->getLangMessage();
-        self::assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
+        $app_strings['LBL_TEST_LABEL_TITLE'] = 'A title';
+        $app_strings['LBL_TEST_LABEL_DETAIL'] = 'A detail';
+
+        $error = new JsonApiErrorObject(new LangText('LBL_TEST_LABEL_TITLE'), new LangText('LBL_TEST_LABEL_DETAIL'), 123, 234, 345, ['about' => 'test123'], ['pointer' => '/test/foo/bar', 'parameter' => 'wrong'], ['some' => 'meta info']);
+        $expected = [
+            'id' => '123',
+            'links' => ['about' => 'test123'],
+            'status' => '345',
+            'code' => '234',
+            'title' => 'A title',
+            'detail' => 'A detail',
+            'source' => ['pointer' => '/test/foo/bar', 'parameter' => 'wrong'],
+            'meta' => ['some' => 'meta info'],
+        ];
+        $actual = $error->export();
+        self::assertEquals($expected, $actual, 'API Error Object constructor error: Incorrect state set.');
+    }
+
+    public function testRetrieveFromException(): void
+    {
+        $error = new JsonApiErrorObject();
+
+        global $app_strings;
+        $app_strings['LBL_TEST_LANG_TEXT'] = 'Test text with variable {foo}.';
+
+        $prev = new Exception('Test basic exception', 555);
+        $error->retrieveFromException(new LangException('test exception message', 123, $prev, new LangText('LBL_TEST_LANG_TEXT', ['foo' => 'bar'])));
+        $expected = [
+            'id' => '1',
+            'links' => ['about' => null],
+            'status' => '200',
+            'title' => 'JSON API Error',
+            'detail' => 'JSON API Error occurred.',
+            'source' => ['pointer' => null, 'parameter' => null],
+            'meta' => [
+                'about' => 'Exception',
+                'class' => 'SuiteCRM\\LangException',
+                'code' => 123,
+                'langMessage' => 'Test text with variable bar.',
+            ],
+            'code' => 123,
+        ];
+        $actual = $error->export();
+
+        if (inDeveloperMode()) {
+            unset($actual['meta']['debug']);
+        }
+
+        self::assertEquals($expected, $actual, 'API Error Object retrive error from exception.');
     }
 }
