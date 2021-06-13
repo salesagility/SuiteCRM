@@ -41,7 +41,7 @@ namespace SuiteCRM\Tests\Unit\service\v4;
 
 use BeanFactory;
 use SugarWebServiceUtilv4_1;
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * Class SugarWebServiceUtilv4Test

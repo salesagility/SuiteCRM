@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Tests\SuiteCRM\Enumerator;
+namespace SuiteCRM\Enumerator;
 
 /**
  * Class DatabaseDriver

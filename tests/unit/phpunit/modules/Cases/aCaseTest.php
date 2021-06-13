@@ -44,7 +44,7 @@ use BeanFactory;
 use Exception;
 use Sugar_Smarty;
 use SugarThemeRegistry;
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * Class aCaseTest

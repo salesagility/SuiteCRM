@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class jjwg_MarkersTest extends SuitePHPUnitFrameworkTestCase
 {

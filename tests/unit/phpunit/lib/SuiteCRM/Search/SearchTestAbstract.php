@@ -42,7 +42,7 @@ namespace SuiteCRM\Tests\Unit\lib\SuiteCRM\Search;
 use Mockery;
 use ReflectionClass;
 use ReflectionException;
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * Class SearchTestAbstract
