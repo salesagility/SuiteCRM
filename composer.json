@@ -64,7 +64,7 @@
     "tuupola/slim-jwt-auth": "^2.0",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^2.3",
-    "wikimedia/composer-merge-plugin": "^1.4",
+    "wikimedia/composer-merge-plugin": "^2.0",
     "zbateson/mail-mime-parser": "^1.1",
     "zf1/zend-gdata": "^1.12",
     "zf1/zend-loader": "^1.12",
