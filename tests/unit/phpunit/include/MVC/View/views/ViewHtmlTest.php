@@ -53,7 +53,6 @@ class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
 {
     public function testViewHtml(): void
     {
-        // Execute the constructor and check for the Object type
         $view = new ViewHtml();
         self::assertInstanceOf('ViewHtml', $view);
         self::assertInstanceOf('SugarView', $view);
@@ -63,12 +62,13 @@ class ViewHtmlTest extends SuitePHPUnitFrameworkTestCase
     {
         $view = new ViewHtml();
 
-        // Execute the method and test that it works and doesn't throw an exception.
         try {
             $view->display();
         } catch (Exception $e) {
             self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+
+        self::assertTrue(true);
     }
 
     protected function setUp(): void

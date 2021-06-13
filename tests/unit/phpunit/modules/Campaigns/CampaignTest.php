@@ -199,7 +199,7 @@ class CampaignTest extends SuitePHPUnitFrameworkTestCase
         $actual = $campaign->get_list_view_data();
         foreach ($expected as $expectedKey => $expectedVal) {
             if ($expectedKey == 'LAUNCH_WIZARD_IMAGE' || $expectedKey == 'TRACK_CAMPAIGN_IMAGE') {
-                self::assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
+                self::assertMatchesRegularExpression($expected[$expectedKey], $actual[$expectedKey]);
             } else {
                 self::assertSame($expected[$expectedKey], $actual[$expectedKey]);
             }

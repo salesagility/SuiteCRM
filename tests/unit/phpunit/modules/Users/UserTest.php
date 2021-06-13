@@ -112,7 +112,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $expected = "<select onChange='setSigEditButtonVisibility();' id='signature_id' name='signature_id'>\n<OPTION selected value=''>--None--</OPTION>";
         $actual = $user->getSignatures();
         self::assertSame(strpos($actual, $expected), 0);
-        self::assertRegExp('/\<\/select\>$/', $actual);
+        self::assertMatchesRegularExpression('/\<\/select\>$/', $actual);
     }
 
     public function testhasPersonalEmail(): void
@@ -503,7 +503,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $actual = $user->getUsersNameAndEmail();
 
         self::assertEquals('firstn lastn', $actual['name']);
-        self::assertRegExp('/^one\d{0,}\@email\.com$/', $actual['email']);
+        self::assertMatchesRegularExpression('/^one\d{0,}\@email\.com$/', $actual['email']);
     }
 
     public function getEmailInfo($id): void
@@ -511,7 +511,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
         $actual = BeanFactory::newBean('Users')->getEmailInfo($id);
 
         self::assertEquals('firstn lastn', $actual['name']);
-        self::assertRegExp('/^one\d{0,}\@email\.com$/', $actual['email']);
+        self::assertMatchesRegularExpression('/^one\d{0,}\@email\.com$/', $actual['email']);
     }
 
     public function testencrypt_password(): void

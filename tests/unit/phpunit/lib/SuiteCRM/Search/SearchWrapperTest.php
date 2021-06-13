@@ -85,14 +85,8 @@ class SearchWrapperTest extends SearchTestAbstract
         $search = new SearchWrapper();
         $this->setValue($search, 'customEnginePath', $this->customEngines);
 
-        try {
-            $this->invokeMethod($search, 'fetchEngine', ['VeryFakeEngine']);
-            self::fail("Exception should be thrown here!");
-        } catch (ReflectionException $exception) {
-            self::fail("Failed to use reflection!");
-        } catch (SearchEngineNotFoundException $exception) {
-            // All good!
-        }
+        $this->expectException(SearchEngineNotFoundException::class);
+        $this->invokeMethod($search, 'fetchEngine', ['VeryFakeEngine']);
     }
 
     public function testFetchEngineCustom(): void
@@ -110,12 +104,8 @@ class SearchWrapperTest extends SearchTestAbstract
         $search = new SearchWrapper();
         $this->setValue($search, 'customEnginePath', $this->customEngines);
 
-        try {
-            $this->invokeMethod($search, 'fetchEngine', ['BadMockSearch']);
-            self::fail("Exception should be thrown here!");
-        } catch (SearchEngineNotFoundException $exception) {
-            echo $exception->getMessage();
-        }
+        $this->expectException(SearchEngineNotFoundException::class);
+        $this->invokeMethod($search, 'fetchEngine', ['BadMockSearch']);
     }
 
     public function testGetEngines(): void
@@ -189,7 +179,12 @@ class SearchWrapperTest extends SearchTestAbstract
             ->once()
             ->with($query);
 
-        SearchWrapper::search($mockEngine, $query);
+        try {
+            SearchWrapper::search($mockEngine, $query);
+            self::assertTrue(true);
+        } catch (SearchEngineNotFoundException $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
 
         Mockery::close();
     }

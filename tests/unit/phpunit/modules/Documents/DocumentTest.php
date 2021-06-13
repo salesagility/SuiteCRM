@@ -180,7 +180,7 @@ class DocumentTest extends SuitePHPUnitFrameworkTestCase
         $actual = $document->get_list_view_data();
         foreach ($expected as $expectedKey => $expectedVal) {
             if ($expectedKey == 'FILE_URL') {
-                self::assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
+                self::assertMatchesRegularExpression($expected[$expectedKey], $actual[$expectedKey]);
             } else {
                 self::assertSame($expected[$expectedKey], $actual[$expectedKey]);
             }

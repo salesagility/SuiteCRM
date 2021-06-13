@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -53,7 +53,7 @@ class CliLoggerHandlerTest extends SuitePHPUnitFrameworkTestCase
 
     public function testLogging(): void
     {
-        $this->logger->debug("\n");
+        $output = $this->logger->debug("\n");
         $this->logger->debug('DEBUG');
         $this->logger->info("INFO");
         $this->logger->notice('NOTICE');
@@ -62,7 +62,7 @@ class CliLoggerHandlerTest extends SuitePHPUnitFrameworkTestCase
         $this->logger->critical('CRITICAL');
         $this->logger->emergency('EMERGENCY');
 
-        $this->logger->emergency(new RuntimeException("Exception!"));
+        self::assertTrue($output);
     }
 
     protected function setUp(): void
