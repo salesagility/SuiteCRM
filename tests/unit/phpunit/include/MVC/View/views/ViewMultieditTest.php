@@ -38,52 +38,60 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Tests\Unit;
+namespace SuiteCRM\Tests\Unit\MVC\View\views;
 
-use SuiteCRM\LangException;
-use SuiteCRM\LangText;
+use BeanFactory;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use ViewMultiedit;
 
 /**
- * Class LangExceptionTest
- * @package SuiteCRM\Tests\Unit
+ * Class ViewMultieditTest
+ * @package SuiteCRM\Tests\Unit\MVC\View\views
  */
-class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
+class ViewMultieditTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp(): void
+    public function testViewMultiedit(): void
     {
-        parent::setUp();
-        if (!defined('sugarEntry')) {
-            define('sugarEntry', true);
-        }
-
-        global $app_strings, $mod_strings;
-
-        include_once __DIR__ . '/../../../../include/utils.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarTheme.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarThemeRegistry.php';
-        include __DIR__ . '/../../../../include/language/en_us.lang.php';
-        include_once __DIR__ . '/../../../../include/SugarObjects/SugarConfig.php';
-        include_once __DIR__ . '/../../../../include/SugarLogger/LoggerManager.php';
-
-        include_once __DIR__ . '/../../../../include/ErrorMessageException.php';
-        include_once __DIR__ . '/../../../../include/ErrorMessage.php';
-        include_once __DIR__ . '/../../../../include/LangText.php';
-        include_once __DIR__ . '/../../../../include/JsonApiErrorObject.php';
-        include_once __DIR__ . '/../../../../include/LangExceptionInterface.php';
-        include_once __DIR__ . '/../../../../include/LangException.php';
+        // Execute the constructor and check for the Object type and type attribute
+        $view = new ViewMultiedit();
+        self::assertInstanceOf('ViewMultiedit', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertEquals('edit', $view->type);
     }
 
-    public function testGetLangMessage(): void
+    public function testdisplay(): void
     {
-        global $app_strings;
-        $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';
-        $e = new LangException('Test message', 123, null, new LangText('LBL_LANG_TEST_LABEL', ['variable' => 'foo']));
-        $langMessage = $e->getLangMessage();
-        self::assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
+        //test without action value and modules list in REQUEST object
+        $view = new ViewMultiedit();
+        ob_start();
+        $view->display();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        self::assertEquals(0, strlen($renderedContent));
+
+        //test with valid action value to get link in return
+        $view = new ViewMultiedit();
+        $view->action = 'AjaxFormSave';
+        $view->module = 'Users';
+        $view->bean = BeanFactory::newBean('Users');
+        $view->bean->id = 1;
+        ob_start();
+        $view->display();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        self::assertGreaterThan(0, strlen($renderedContent));
+
+        //Fails with a fatal error, method creates editview without properly setting it up causing fatal errors.
+        /*
+        //test only with modules list in REQUEST object
+        $view = new ViewMultiedit();
+        $GLOBALS['current_language']= 'en_us';
+        $_REQUEST['modules']= Array('Calls','Accounts');
+        ob_start();
+        $view->display();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        $this->assertGreaterThan(0,strlen($renderedContent));
+        */
     }
 }
