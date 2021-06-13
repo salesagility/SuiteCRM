@@ -7,8 +7,8 @@ namespace Helper;
 
 use Codeception\Exception\ModuleException;
 use Codeception\Module;
+use SuiteCRM\Enumerator\DatabaseDriver;
 use SuiteCRM\Test\Driver\WebDriver;
-use SuiteCRM\Tests\SuiteCRM\Enumerator\DatabaseDriver;
 
 /**
  * Class WebDriverHelper

@@ -42,7 +42,7 @@ namespace SuiteCRM\Tests\Unit\modules\Users;
 
 use Exception;
 use SugarController;
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 require_once __DIR__ . '/../../../../../modules/Users/authentication/SAML2Authenticate/SAML2Authenticate.php';
 

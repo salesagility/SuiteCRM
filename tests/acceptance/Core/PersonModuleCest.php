@@ -38,8 +38,8 @@
  */
 
 use Faker\Generator;
-use SuiteCRM\Tests\SuiteCRM\Enumerator\SugarObjectType;
 use JeroenDesloovere\VCard\VCard;
+use SuiteCRM\Enumerator\SugarObjectType;
 
 class PersonModuleCest
 {
