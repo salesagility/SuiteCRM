@@ -1019,7 +1019,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $expected = '~/images/advanced_search~';
 
         $actual = $email->quickCreateForm();
-        self::assertRegExp($expected, $actual);
+        self::assertMatchesRegularExpression($expected, $actual);
     }
 
     public function testsearchImportedEmails(): void
