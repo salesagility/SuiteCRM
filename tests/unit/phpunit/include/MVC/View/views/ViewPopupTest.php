@@ -97,7 +97,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
         // test no custom module Popup picker
         // test module Popup picker exists
 
-        self::assertFileNotExists($customPath);
+        self::assertFileDoesNotExist($customPath);
 
         $result = get_custom_file_if_exists($modulePath);
 
@@ -144,7 +144,7 @@ class ViewPopupTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertFalse($result2);
 
-        self::assertFileNotExists($customPath);
+        self::assertFileDoesNotExist($customPath);
         self::assertFileExists($defaultPath);
 
         $result = get_custom_file_if_exists($defaultPath);

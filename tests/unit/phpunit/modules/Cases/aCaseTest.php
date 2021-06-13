@@ -187,7 +187,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals($expected['UPDATE_TEXT'], $actual['UPDATE_TEXT']);
         self::assertEquals($expected['NAME'], $actual['NAME']);
         self::assertEquals($expected['PRIORITY'], $actual['PRIORITY']);
-        self::assertRegExp($expected['SET_COMPLETE'], $actual['SET_COMPLETE']);
+        self::assertMatchesRegularExpression($expected['SET_COMPLETE'], $actual['SET_COMPLETE']);
 
         //test with attributes preset
         $aCase->name = 'test';
