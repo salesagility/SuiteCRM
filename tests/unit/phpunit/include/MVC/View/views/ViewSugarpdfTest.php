@@ -38,52 +38,58 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Tests\Unit;
+namespace SuiteCRM\Tests\Unit\MVC\View\views;
 
-use SuiteCRM\LangException;
-use SuiteCRM\LangText;
+use BeanFactory;
+use Exception;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use ViewSugarpdf;
 
 /**
- * Class LangExceptionTest
- * @package SuiteCRM\Tests\Unit
+ * Class ViewSugarpdfTest
+ * @package SuiteCRM\Tests\Unit\MVC\View\views
  */
-class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
+class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
 {
+    public function testViewSugarpdf(): void
+    {
+        if (isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
+
+        //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
+        try {
+            $view = new ViewSugarpdf();
+            self::assertEmpty("", $view);
+        } catch (Exception $e) {
+            $msg = $e->getMessage();
+            self::assertStringStartsWith('Cannot modify header information', $msg,
+                'Cannot modify header information? : ' . $msg . "\nTrace\n" . $e->getTraceAsString());
+        }
+
+        //execute the method with request parameters and test if it works.
+        $_REQUEST['sugarpdf'] = 'someValue';
+        $view = new ViewSugarpdf();
+        $view->module = 'Users';
+        self::assertInstanceOf('ViewSugarpdf', $view);
+        self::assertInstanceOf('SugarView', $view);
+        self::assertEquals('sugarpdf', $view->type);
+        self::assertEquals('someValue', $view->sugarpdf);
+        self::assertEquals(null, $view->sugarpdfBean);
+
+        if (isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
-        if (!defined('sugarEntry')) {
-            define('sugarEntry', true);
-        }
 
-        global $app_strings, $mod_strings;
-
-        include_once __DIR__ . '/../../../../include/utils.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarTheme.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarThemeRegistry.php';
-        include __DIR__ . '/../../../../include/language/en_us.lang.php';
-        include_once __DIR__ . '/../../../../include/SugarObjects/SugarConfig.php';
-        include_once __DIR__ . '/../../../../include/SugarLogger/LoggerManager.php';
-
-        include_once __DIR__ . '/../../../../include/ErrorMessageException.php';
-        include_once __DIR__ . '/../../../../include/ErrorMessage.php';
-        include_once __DIR__ . '/../../../../include/LangText.php';
-        include_once __DIR__ . '/../../../../include/JsonApiErrorObject.php';
-        include_once __DIR__ . '/../../../../include/LangExceptionInterface.php';
-        include_once __DIR__ . '/../../../../include/LangException.php';
-    }
-
-    public function testGetLangMessage(): void
-    {
-        global $app_strings;
-        $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';
-        $e = new LangException('Test message', 123, null, new LangText('LBL_LANG_TEST_LABEL', ['variable' => 'foo']));
-        $langMessage = $e->getLangMessage();
-        self::assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = BeanFactory::newBean('Users');
     }
 }
