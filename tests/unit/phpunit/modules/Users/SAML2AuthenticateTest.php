@@ -96,8 +96,8 @@ class SAML2AuthenticateTest extends SuitePHPUnitFrameworkTestCase
         error_reporting(E_ALL & ~E_DEPRECATED);
         $xml = getSAML2Metadata($settings);
         self::assertNotEmpty($xml);
-        self::assertRegexp('/someid/', $xml);
-        self::assertRegexp('/someurl/', $xml);
+        self::assertMatchesRegularExpression('/someid/', $xml);
+        self::assertMatchesRegularExpression('/someurl/', $xml);
         self::assertNotFalse(simplexml_load_string($xml));
     }
 }

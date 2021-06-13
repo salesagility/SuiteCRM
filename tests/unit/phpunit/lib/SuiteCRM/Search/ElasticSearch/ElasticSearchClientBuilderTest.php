@@ -1,4 +1,5 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
+
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,6 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use Elasticsearch\Client;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
@@ -46,7 +48,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
     {
         $client = ElasticSearchClientBuilder::getClient();
 
-        self::assertInstanceOf(\Elasticsearch\Client::class, $client);
+        self::assertInstanceOf(Client::class, $client);
     }
 
     public function testLoadConfig(): void
@@ -145,12 +147,14 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
     private function loadFromSugarConfig()
     {
         $builder = new ElasticSearchClientBuilder();
+
         return $this->invokeMethod($builder, 'loadFromSugarConfig');
     }
 
     private function sanitizeHost(array $host)
     {
         $builder = new ElasticSearchClientBuilder();
+
         return $this->invokeMethod($builder, 'sanitizeHost', [$host]);
     }
 
@@ -233,13 +237,8 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
             'user' => 'foo',
         ];
 
-        try {
-            $this->sanitizeHost($data);
-        } catch (InvalidArgumentException $e) {
-            return;
-        }
-
-        self::fail('Exception not thrown!');
+        $this->expectException(InvalidArgumentException::class);
+        $this->sanitizeHost($data);
     }
 
     public function testUrlParser6(): void
@@ -249,11 +248,8 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
             'user' => 'foo',
         ];
 
-        try {
-            $this->sanitizeHost($data);
-        } catch (InvalidArgumentException $e) {
-            return;
-        }
+        $this->expectException(InvalidArgumentException::class);
+        $this->sanitizeHost($data);
     }
 
     public function testUrlParserBadUrls(): void
@@ -262,22 +258,13 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         $url2 = ['host' => 'http://:80'];
         $url3 = ['host' => 'http://user@:80'];
 
-        try {
-            $this->sanitizeHost($url1);
-            self::fail('Exception not thrown!');
-        } catch (InvalidArgumentException $e) {
-        }
+        $this->expectException(InvalidArgumentException::class);
+        $this->sanitizeHost($url1);
 
-        try {
-            $this->sanitizeHost($url2);
-            self::fail('Exception not thrown!');
-        } catch (InvalidArgumentException $e) {
-        }
+        $this->expectException(InvalidArgumentException::class);
+        $this->sanitizeHost($url2);
 
-        try {
-            $this->sanitizeHost($url3);
-            self::fail('Exception not thrown!');
-        } catch (InvalidArgumentException $e) {
-        }
+        $this->expectException(InvalidArgumentException::class);
+        $this->sanitizeHost($url3);
     }
 }
