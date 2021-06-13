@@ -38,7 +38,7 @@
  */
 
 use Faker\Generator;
-use SuiteCRM\Tests\SuiteCRM\Enumerator\SugarObjectType;
+use SuiteCRM\Enumerator\SugarObjectType;
 
 class FileModuleCest
 {

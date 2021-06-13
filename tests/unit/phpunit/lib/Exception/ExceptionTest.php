@@ -29,7 +29,7 @@ namespace SuiteCRM\Tests\Unit\lib\Exception;
 
 use Psr\Log\LogLevel;
 use SuiteCRM\Exception\Exception;
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
  * Class ExceptionTest

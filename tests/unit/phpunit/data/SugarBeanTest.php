@@ -4,7 +4,7 @@ include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 include_once __DIR__ . '/../../../../modules/Campaigns/ProspectLink.php';
 include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
 
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 use SuiteCRM\Utility\SuiteValidator;
 
 class SugarBeanTest extends SuitePHPUnitFrameworkTestCase

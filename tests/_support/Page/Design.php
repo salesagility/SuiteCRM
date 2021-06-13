@@ -41,7 +41,7 @@ namespace Page;
 
 use AcceptanceTester as Tester;
 use Codeception\Module;
-use SuiteCRM\Tests\SuiteCRM\Enumerator\DesignBreakPoint;
+use SuiteCRM\Enumerator\DesignBreakPoint;
 
 class Design extends Module
 {

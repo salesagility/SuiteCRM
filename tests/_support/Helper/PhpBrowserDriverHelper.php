@@ -41,7 +41,7 @@ namespace Helper;
 
 use Codeception\Exception\ModuleException;
 use Codeception\Module;
-use SuiteCRM\Tests\SuiteCRM\Enumerator\DatabaseDriver;
+use SuiteCRM\Enumerator\DatabaseDriver;
 
 /**
  * Class PhpBrowserDriverHelper
