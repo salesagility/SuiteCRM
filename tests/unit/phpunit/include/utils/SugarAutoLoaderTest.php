@@ -38,52 +38,44 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Tests\Unit;
+namespace SuiteCRM\Tests\Unit\utils;
 
-use SuiteCRM\LangException;
-use SuiteCRM\LangText;
+use Exception;
+use SugarAutoLoader;
 use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 /**
- * Class LangExceptionTest
- * @package SuiteCRM\Tests\Unit
+ * Class SugarAutoLoaderTest
+ * @package SuiteCRM\Tests\Unit\utils
  */
-class LangExceptionTest extends SuitePHPUnitFrameworkTestCase
+class SugarAutoLoaderTest extends SuitePHPUnitFrameworkTestCase
 {
-    protected function setUp(): void
+    public function testautoload(): void
     {
-        parent::setUp();
-        if (!defined('sugarEntry')) {
-            define('sugarEntry', true);
-        }
+        // Execute the method and test that it returns expected values
 
-        global $app_strings, $mod_strings;
+        // Test with an invalid class.
+        $result = SugarAutoLoader::autoload('foo');
+        self::assertFalse($result);
 
-        include_once __DIR__ . '/../../../../include/utils.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarTheme.php';
-        include_once __DIR__ . '/../../../../include/SugarTheme/SugarThemeRegistry.php';
-        include __DIR__ . '/../../../../include/language/en_us.lang.php';
-        include_once __DIR__ . '/../../../../include/SugarObjects/SugarConfig.php';
-        include_once __DIR__ . '/../../../../include/SugarLogger/LoggerManager.php';
+        // Test with a valid class out of autoload mappings.
+        $result = SugarAutoLoader::autoload('SugarArray');
+        self::assertFalse($result);
 
-        include_once __DIR__ . '/../../../../include/ErrorMessageException.php';
-        include_once __DIR__ . '/../../../../include/ErrorMessage.php';
-        include_once __DIR__ . '/../../../../include/LangText.php';
-        include_once __DIR__ . '/../../../../include/JsonApiErrorObject.php';
-        include_once __DIR__ . '/../../../../include/LangExceptionInterface.php';
-        include_once __DIR__ . '/../../../../include/LangException.php';
+        // Test with a valid class registered in autoload mappings.
+        $result = SugarAutoLoader::autoload('User');
+        self::assertTrue($result);
     }
 
-    public function testGetLangMessage(): void
+    public function testloadAll(): void
     {
-        global $app_strings;
-        $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';
-        $e = new LangException('Test message', 123, null, new LangText('LBL_LANG_TEST_LABEL', ['variable' => 'foo']));
-        $langMessage = $e->getLangMessage();
-        self::assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
+        // Execute the method and check that it works and doesn't throw an exception.
+        // This method only includes file so there is no output to test.
+        try {
+            SugarAutoLoader::loadAll();
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 }
