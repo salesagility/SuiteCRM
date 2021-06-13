@@ -40,7 +40,7 @@
 use Codeception\Actor;
 use Codeception\Lib\Friend;
 use Helper\WebDriverHelper;
-use SuiteCRM\Tests\SuiteCRM\Enumerator\DatabaseDriver;
+use SuiteCRM\Enumerator\DatabaseDriver;
 
 
 /**
