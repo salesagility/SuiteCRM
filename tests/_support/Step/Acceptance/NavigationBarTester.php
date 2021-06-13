@@ -39,9 +39,9 @@
 
 namespace Step\Acceptance;
 
-use \AcceptanceTester as Tester;
+use AcceptanceTester as Tester;
 use Page\Design;
-use SuiteCRM\Tests\SuiteCRM\Enumerator\DesignBreakPoint;
+use SuiteCRM\Enumerator\DesignBreakPoint;
 
 class NavigationBarTester extends Tester
 {

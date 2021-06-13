@@ -39,7 +39,7 @@
 
 use SuiteCRM\Utility\BeanJsonSerializer;
 use SuiteCRM\Tests\Unit\lib\SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
-use SuiteCRM\Tests\SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 class BeanJsonSerializerTest extends SuitePHPUnitFrameworkTestCase
 {
