@@ -4,11 +4,10 @@ class grad
 {
     public $mpdf = null;
 
-var $mpdf = null;
-
-function __construct(&$mpdf) {
-	$this->mpdf = $mpdf;
-}
+    public function __construct(&$mpdf)
+    {
+        $this->mpdf = $mpdf;
+    }
 
     // mPDF 5.3.A1
     public function CoonsPatchMesh($x, $y, $w, $h, $patch_array=array(), $x_min=0, $x_max=1, $y_min=0, $y_max=1, $colspace='RGB', $return=false)

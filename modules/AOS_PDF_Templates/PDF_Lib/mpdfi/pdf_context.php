@@ -28,7 +28,7 @@ class pdf_context
 
     // Constructor
 
-	function __construct($f) {
+	public function __construct($f) {
 		$this->file = $f;
 		$this->reset();
 	}

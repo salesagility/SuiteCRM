@@ -4,12 +4,10 @@ class bmp
 {
     public $mpdf = null;
 
-var $mpdf = null;
-
-function __construct(&$mpdf) {
-	$this->mpdf = $mpdf;
-}
-
+    public function __construct(&$mpdf)
+    {
+        $this->mpdf = $mpdf;
+    }
 
     public function _getBMPimage($data, $file)
     {
