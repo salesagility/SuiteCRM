@@ -52,7 +52,8 @@ function set_focus(){
 }
 {/literal}
 </script>
-
+<div class="role-manager-create">
+{$TITLE}
 <form method='POST' name='EditView' action='index.php'>
 <TABLE width='100%' border='0' cellpadding=0 cellspacing = 0 class="actionsContainer">
 <tbody>
@@ -64,7 +65,7 @@ function set_focus(){
 <input type='hidden' name='isduplicate' value='{$ISDUPLICATE}'>
 <input type='hidden' name='return_record' value='{$RETURN.record}'>
 <input type='hidden' name='return_action' value='{$RETURN.action}'>
-<input type='hidden' name='return_module' value='{$RETURN.module}'> &nbsp;
+<input type='hidden' name='return_module' value='{$RETURN.module}'> &nbsp;	
 {sugar_action_menu id="roleEditActions" class="clickMenu fancymenu" buttons=$ACTION_MENU flat=true}
 </td>
 </tr>
@@ -83,6 +84,7 @@ function set_focus(){
 </table>
 
 </form>
+</div>
 <script type="text/javascript">
 addToValidate('EditView', 'name', 'varchar', true, '{$MOD.LBL_NAME}');
 </script>

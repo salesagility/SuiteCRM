@@ -1,0 +1,45 @@
+.role-manager-create {
+    position: relative;
+    .moduleTitle {
+        border-bottom: 1px solid lightgrey;
+    }
+    form {
+        table.actionsContainer {
+            .action_buttons {
+                position: absolute;
+                top: 0;
+                right: 0;
+                .button {
+                    background-color: $nepal-grey;
+                    border-radius: 0.2em;
+                    font-weight: bold;
+                    height: 2.2em;
+                    line-height: 1em;
+                    letter-spacing: 0.05em;
+                    padding: 0.3em 1em;
+                    text-transform: capitalize;
+                    margin-right: 0.5em;
+                    &:hover {
+                        background: $pale-blue;
+                    }
+                }
+            }
+            
+        }
+        table.view {
+            tr td {
+                text-transform: uppercase;
+                font-weight: 600;
+                padding: 1em;
+            }
+        }
+    }
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    textarea {
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+}
