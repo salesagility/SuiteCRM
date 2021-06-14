@@ -2129,4 +2129,26 @@ EOQ;
     {
         return 'NEWID()';
     }
+    
+    /**
+     * begin database transaction
+     */
+    public function beginTransaction() {
+        mssql_query("BEGIN TRAN", $this->database);
+    }
+
+    /**
+     * Commit a transaction
+     */
+    public function commit() {
+        mssql_query("COMMIT", $this->database);
+    }
+
+    /**
+     * rollback database transaction
+     */
+    public function rollback() {
+        mssql_query("ROLLBACK", $this->database);
+    }
+
 }
