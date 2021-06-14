@@ -42,6 +42,8 @@ if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
 
+// Test Travis
+
 include 'include/MVC/preDispatch.php';
 $startTime = microtime(true);
 require_once 'include/entryPoint.php';
