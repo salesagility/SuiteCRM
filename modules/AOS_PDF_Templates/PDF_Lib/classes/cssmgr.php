@@ -12,16 +12,16 @@ class cssmgr
     public $listCSSlvl;
 
 
-
-function __construct(&$mpdf) {
-	$this->mpdf = $mpdf;
-	$this->tablecascadeCSS = array();
-	$this->listcascadeCSS = array();
-	$this->CSS=array();
-	$this->cascadeCSS = array();
-	$this->tbCSSlvl = 0;
-	$this->listCSSlvl = 0;
-}
+    public function __construct(&$mpdf)
+    {
+        $this->mpdf = $mpdf;
+        $this->tablecascadeCSS = array();
+        $this->listcascadeCSS = array();
+        $this->CSS = array();
+        $this->cascadeCSS = array();
+        $this->tbCSSlvl = 0;
+        $this->listCSSlvl = 0;
+    }
 
 
     public function ReadDefaultCSS($CSSstr)

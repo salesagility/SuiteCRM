@@ -2,9 +2,10 @@
 
 class indic {
 
-function __construct() {
+    public function __construct()
+    {
 
-}
+    }
 
 
     public function substituteIndic($earr, $lang, $font)
