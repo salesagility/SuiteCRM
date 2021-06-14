@@ -254,6 +254,7 @@ class AOR_ReportsController extends SugarController
         $stylesheet = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css', false));
         ob_clean();
         try {
+            ob_start();
             $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
             $pdf->SetAutoFont();
             $pdf->setFooter('{PAGENO}');
@@ -262,6 +263,7 @@ class AOR_ReportsController extends SugarController
             unset($pdf->cssmgr->CSS['INPUT']['FONT-SIZE']);
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
+            ob_end_clean();
             $pdf->Output($this->bean->name . '.pdf', "D");
         } catch (mPDF_exception $e) {
             echo $e;
