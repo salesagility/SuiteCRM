@@ -94,7 +94,7 @@ class pdf_parser
      *
      * @param string $filename  Source-Filename
      */
-	function __construct($filename) {
+	public function __construct($filename) {
         $this->filename = $filename;
         // mPDF 4.0
         $this->success = true;

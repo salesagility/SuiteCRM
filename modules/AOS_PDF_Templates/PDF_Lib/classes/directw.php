@@ -4,11 +4,10 @@ class directw
 {
     public $mpdf = null;
 
-var $mpdf = null;
-
-function __construct(&$mpdf) {
-	$this->mpdf = $mpdf;
-}
+    public function __construct(&$mpdf)
+    {
+        $this->mpdf = $mpdf;
+    }
 
 
     public function Write($h, $txt, $currentx=0, $link='', $directionality='ltr', $align='')

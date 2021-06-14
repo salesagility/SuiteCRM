@@ -5,12 +5,10 @@ class wmf
     public $mpdf = null;
     public $gdiObjectArray;
 
-var $mpdf = null;
-var $gdiObjectArray;
-
-function __construct(&$mpdf) {
-	$this->mpdf = $mpdf;
-}
+    public function __construct(&$mpdf)
+    {
+        $this->mpdf = $mpdf;
+    }
 
 
     public function _getWMFimage($data)

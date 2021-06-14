@@ -31,25 +31,7 @@ class SVG
     public $kp;		// mPDF 4.4.003  convert pixels to PDF units
     public $pathBBox;	// mPDF 5.0.039
 
-	var $svg_gradient;	//	array - contient les infos sur les gradient fill du svg class� par id du svg
-	var $svg_shadinglist;	//	array - contient les ids des objet shading
-	var $svg_info;		//	array contenant les infos du svg voulue par l'utilisateur
-	var $svg_attribs;		//	array - holds all attributes of root <svg> tag
-	var $svg_style;		//	array contenant les style de groupes du svg
-	var $svg_string;		//	String contenant le tracage du svg en lui m�me.
-	var $txt_data;		//    array - holds string info to write txt to image
-	var $txt_style;		// 	array - current text style
-	var $mpdf_ref;
-	var $xbase;		// mPDF 4.4.003
-	var $ybase;		// mPDF 4.4.003
-	var $svg_error;	// mPDF 4.4.003
-	var $subPathInit;	// mPDF 4.4.003
-	var $spxstart;	// mPDF 4.4.003
-	var $spystart;	// mPDF 4.4.003
-	var $kp;		// mPDF 4.4.003  convert pixels to PDF units
-	var $pathBBox;	// mPDF 5.0.039
-
-	function __construct(&$mpdf){
+	public function __construct(&$mpdf){
 		$this->svg_gradient = array();
 		$this->svg_shadinglist = array();
 		$this->txt_data = array();
