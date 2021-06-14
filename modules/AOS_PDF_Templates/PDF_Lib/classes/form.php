@@ -49,7 +49,7 @@ class form
     // FORMS
     public $textarea_lineheight;
 
-function __construct(&$mpdf) {
+public function __construct(&$mpdf) {
 	$this->mpdf = $mpdf;
 
         // ACTIVE FORMS

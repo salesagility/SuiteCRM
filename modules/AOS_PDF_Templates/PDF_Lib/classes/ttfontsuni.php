@@ -83,48 +83,7 @@ class TTFontFile
     public $maxUniChar;
     public $kerninfo;
 
-var $unAGlyphs;	// mPDF 5.4.05
-var $panose;
-var $maxUni;
-var $sFamilyClass;
-var $sFamilySubClass;
-var $sipset;
-var $smpset;
-var $_pos;
-var $numTables;
-var $searchRange;
-var $entrySelector;
-var $rangeShift;
-var $tables;
-var $otables;
-var $filename;
-var $fh;
-var $glyphPos;
-var $charToGlyph;
-var $ascent;
-var $descent;
-var $name;
-var $familyName;
-var $styleName;
-var $fullName;
-var $uniqueFontID;
-var $unitsPerEm;
-var $bbox;
-var $capHeight;
-var $stemV;
-var $italicAngle;
-var $flags;
-var $underlinePosition;
-var $underlineThickness;
-var $charWidths;
-var $defaultWidth;
-var $maxStrLenRead;
-var $numTTCFonts;
-var $TTCFonts;
-var $maxUniChar;
-var $kerninfo;
-
-	function __construct() {
+	public function __construct() {
 		$this->maxStrLenRead = 200000;	// Maximum size of glyf table to read in as string (otherwise reads each glyph from file)
 	}
 
