@@ -51,6 +51,9 @@ function get_hook_array($module_name)
     // This will load an array of the hooks to process
     $file = "custom/modules/$module_name/logic_hooks.php";
     if (file_exists($file)) {
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($file); // will reset OPcache
+        }
         include($file);
     } else {
         LoggerManager::getLogger()->warn('File not found: ' . $file);
