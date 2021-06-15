@@ -972,6 +972,13 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @see DBManager::ifNull()
+     */
+    public function ifNull($field, $valueIfNull) {
+        return "COALESCE(" . $this->quote($field) . ", ".$this->quoted($valueIfNull) .")";
+    }
+
+    /**
      * @see DBManager::quoteIdentifier()
      */
     public function quoteIdentifier($string)

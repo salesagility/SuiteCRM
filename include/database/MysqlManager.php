@@ -494,6 +494,13 @@ class MysqlManager extends DBManager
     }
 
     /**
+     * @see DBManager::ifNull()
+     */
+    public function ifNull($field, $valueIfNull) {
+        return "IFNULL(" . $this->quote($field) . ", ".$this->quoted($valueIfNull) .")";
+    }
+
+    /**
      * @see DBManager::quoteIdentifier()
      */
     public function quoteIdentifier($string)
