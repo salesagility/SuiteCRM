@@ -43,9 +43,6 @@
  */
 -->
 <!-- BEGIN: main -->
-<style>
-	#subjectfield { height: 27px; }
-</style>
 {JAVASCRIPT}
 <script type="text/javascript" language="Javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
 <script type="text/javascript" language="Javascript" src="modules/EmailTemplates/EmailTemplate.js?v={VERSION_MARK}"></script>
@@ -66,7 +63,7 @@
 	<input type="hidden" name="old_id" value="{OLD_ID}">
     <input type="hidden" name="type" value="campaign">
 
-	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<table width="100%" cellpadding="0" cellspacing="0" border="0" class="action-btn">
 		<tr>
 			<td>
 				<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accesskey="{APP.LBL_SAVE_BUTTON_KEY}" class="button primary"
@@ -125,12 +122,7 @@
 						<td colspan="3" >
 							<textarea name='description' tabindex='0' cols="90" rows="1" style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" id="description">{DESCRIPTION}</textarea>
 						</td>
-					</tr>
-					<tr>
-						<td colspan="4">
-							&nbsp;
-						</td>
-					</tr>
+					</tr>					
 <!-- BEGIN: NoInbound -->
 					<tr>
 						<td width="15%" scope="row" align='left'>

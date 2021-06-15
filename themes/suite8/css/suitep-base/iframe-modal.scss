@@ -1,0 +1,73 @@
+body.popupBody {
+    input[type=checkbox] {
+        margin-top: 0;
+        margin-left: 0;
+    }
+    .moduleTitle {
+        position: relative;
+        top: 3em;
+    }    
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+        width: auto;
+    }
+    textarea {
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    .action-btn {
+        display: flex;
+        justify-content: flex-end;        
+    }
+    .view {
+        table tr td {
+            padding-left: 1em;
+            padding-top: 0.5em;
+            text-transform: uppercase;
+            input [type=checkbox] {
+                margin-top: 0;
+                margin-left: 0;
+            }
+        }
+    }
+    .button {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        margin-right: 0.5em;
+        &:hover {
+            background: $pale-blue;
+        }
+    }  
+    select::-webkit-scrollbar-track {
+        background: $dashboard-scrollbar-bg; 
+    }      
+    select::-webkit-scrollbar-thumb {
+        background-color: $dashboard-scroll;   
+        border-radius: 20px; 
+    }      
+    .mozaik-thumbs::-webkit-scrollbar-track {
+        background: $dashboard-scrollbar-bg; 
+    }      
+    .mozaik-thumbs::-webkit-scrollbar-thumb {
+        background-color: $dashboard-scroll;   
+        border-radius: 20px; 
+    }
+    .mozaik-list::-webkit-scrollbar-track {
+        background: $dashboard-scrollbar-bg; 
+    }
+    .mozaik-list::-webkit-scrollbar-thumb {
+        background: $dashboard-scrollbar-bg; 
+    }     
+}
