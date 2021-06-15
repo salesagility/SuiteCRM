@@ -88,7 +88,7 @@ class SubpanelQuickCreate
         $this->ev->view = $this->viewType;
         $this->ev->showVCRControl = false;
         $this->ev->ss = new Sugar_Smarty();
-        //$_REQUEST['return_action'] = 'SubPanelViewer';
+        $_REQUEST['return_action'] = 'SubPanelViewer';
 
         $class = $GLOBALS['beanList'][$module];
         $bean = new $class();
