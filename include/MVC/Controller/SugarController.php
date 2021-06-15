@@ -705,11 +705,15 @@ class SugarController
      */
     protected function post_save()
     {
-        $module = (!empty($this->return_module) ? $this->return_module : $this->module);
-        $action = (!empty($this->return_action) ? $this->return_action : 'DetailView');
-        $id = (!empty($this->return_id) ? $this->return_id : $this->bean->id);
+        if ($this->return_action == "SubPanelViewer") {
+            $url = '';
+        } else {
+            $module = (!empty($this->return_module) ? $this->return_module : $this->module);
+            $action = (!empty($this->return_action) ? $this->return_action : 'DetailView');
+            $id = (!empty($this->return_id) ? $this->return_id : $this->bean->id);
 
-        $url = "index.php?module=" . $module . "&action=" . $action . "&record=" . $id;
+            $url = "index.php?module=" . $module . "&action=" . $action . "&record=" . $id;
+        }
         $this->set_redirect($url);
     }
 
