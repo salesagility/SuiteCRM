@@ -40,7 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
+echo '<div class="admin-locale">';
 global $current_user, $sugar_config;
 if (!is_admin($current_user)) {
     sugar_die("Unauthorized access to administration.");
@@ -118,3 +118,4 @@ if ($locale->invalidLocaleNameFormatUpgrade()) {
 $sugar_smarty->assign('getNameJs', $locale->getNameJs());
 
 $sugar_smarty->display('modules/Administration/Locale.tpl');
+echo '</div>';
