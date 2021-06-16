@@ -1,0 +1,50 @@
+.business-hours {
+    position: relative;
+    .moduleTitle {
+        border-bottom: 1px solid lightgrey;
+    }
+    .hide-btn {
+        display: none;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    table.actionsContainer {
+        .action-button {
+            position: absolute;
+            top: 0;
+            right:0;
+            .button {
+                background-color: $nepal-grey;
+                border-radius: 0.2em;
+                font-weight: bold;
+                height: 2.2em;
+                line-height: 1em;
+                letter-spacing: 0.05em;
+                padding: 0.3em 1em;
+                text-transform: capitalize;
+                &:hover {
+                    background: $pale-blue;
+                }
+            }
+        }
+    }
+    table.view {
+        tr td {           
+            text-transform: uppercase;
+            font-weight: 600;            
+            vertical-align: initial;
+            padding-left: 1.8em;
+            line-height: 2.5em;
+        }
+        margin-top: 1em;
+        h4 {
+            margin-top: 1em;
+            margin-left: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }  
+    }
+}

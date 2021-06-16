@@ -2,7 +2,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
+echo '<div class="business-hours">';
 global $current_user, $sugar_config;
 global $mod_strings;
 global $app_list_strings;
@@ -106,3 +106,4 @@ $(document).ready(function(){
 });
 </script>
 EOF;
+echo '</div>';
