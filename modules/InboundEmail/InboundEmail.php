@@ -4327,21 +4327,18 @@ class InboundEmail extends SugarBean
     {
         $imapDecode = $this->getImap()->mimeHeaderDecode($name);
         /******************************
-         * $imapDecode => stdClass Object
-         * (
-         * [charset] => utf-8
-         * [text] => w�hlen.php
-         * )
-         *
-         * OR
-         *
-         * $imapDecode => stdClass Object
-         * (
-         * [charset] => default
-         * [text] => UTF-8''%E3%83%8F%E3%82%99%E3%82%A4%E3%82%AA%E3%82%AF%E3%82%99%E3%83%A9%E3%83%95%E3%82%A3%E3%83%BC.txt
-         * )
+         * $imapDecode => [
+         *   [
+         *     [charset] => utf-8
+         *     [text] => w�hlen.php
+         *   ],
+         *   [
+         *     [charset] => default
+         *     [text] => UTF-8''%E3%83%8F%E3%82%99%E3%82%A4%E3%82%AA%E3%82%AF%E3%82%99%E3%83%A9%E3%83%95%E3%82%A3%E3%83%BC.txt
+         *   ]
+         * ];
          *******************************/
-        if ($imapDecode[0]->charset != 'default') { // mime-header encoded charset
+        if (!empty($imapDecode) && $imapDecode[0]->charset != 'default') { // mime-header encoded charset
             $encoding = $imapDecode[0]->charset;
             $name = $imapDecode[0]->text; // encoded in that charset
         } else {
@@ -4724,7 +4721,7 @@ class InboundEmail extends SugarBean
      */
     public function handleMimeHeaderDecode($subject)
     {
-        $subjectDecoded = $this->getImap()->MimeHeaderDecode($subject);
+        $subjectDecoded = $this->getImap()->mimeHeaderDecode($subject);
 
         $ret = '';
         foreach ($subjectDecoded as $object) {
@@ -5473,19 +5470,6 @@ class InboundEmail extends SugarBean
             // only log if not POP3; pop3 iterates through ALL mail
             if ($this->protocol != 'pop3') {
                 $GLOBALS['log']->info('InboundEmail found a duplicate email: ' . $message_id);
-                //echo "This email has already been imported";
-            }
-
-            if (!empty($this->compoundMessageId)) {
-                // return email
-                $result = $this->db->query(
-                    'SELECT id from emails WHERE message_id ="' . $this->compoundMessageId . '"' .
-                    'AND mailbox_id = "' . $this->id . '"'
-                );
-                $row = $this->db->fetchRow($result);
-                if (!empty($row['id'])) {
-                    return $row['id'];
-                }
             }
 
             return false;
