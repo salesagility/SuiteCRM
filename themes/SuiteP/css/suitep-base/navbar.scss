@@ -225,6 +225,22 @@
     }
   }
 
+  .navbar-inverse .nav > .topnav > span.notCurrentTab > a:hover {
+    color: $navigation-hover-color;
+  }
+
+  .navbar-inverse .nav > .topnav > span.currentModule.notCurrentTab > a {
+    background-color: $color-86;
+    color: $color-81;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .navbar-inverse .nav > .topnav > span.currentModule.notCurrentTab > a:hover {
+    background-color: $color-86;
+    color: $color-81;
+  }
+
   .navbar-right {
     .dropdown-menu {
       border-top-left-radius: 3px;
@@ -251,13 +267,13 @@
     border-color: transparent;
   }
   .headerlinks a:link {
-    color: $default-btn-color;
+    color: $navbar-link-color;
     padding: 0;
     width: 100%;
   }
 
   .headerlinks a:visited {
-    color: $default-btn-color;
+    color: $navbar-link-color;
     padding: 0;
     width: 100%;
   }
@@ -2350,7 +2366,7 @@
   .globalLinks-desktop .dropdown-toggle {
     margin-left: 0;
     border: none;
-    width: auto;
+    width: 48px;
     height: 48px;
   }
 }
