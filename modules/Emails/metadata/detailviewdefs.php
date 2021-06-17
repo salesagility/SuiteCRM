@@ -102,6 +102,13 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'label' => 'LBL_OPT_IN',
                 ),
             ),
+            [
+                'date_sent_received' => [
+                    'name' => 'date_sent_received',
+                    'vname' => 'date_sent_received',
+                    'label' => 'LBL_DATE_SENT_RECEIVED',
+                ],
+            ],
             array(
                 'from_addr_name' => array(
                     'name' => 'from_addr_name',
@@ -138,9 +145,9 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'label' => 'LBL_BODY'
                 ),
             ),
-            array(
+            [
                 'parent_name'
-            ),
+            ],
             [
                 'date_entered' => [
                     'name' => 'date_entered',
@@ -148,10 +155,12 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'label' => 'LBL_DATE_ENTERED',
                 ]
             ],
-            'date_sent_received' => [
-                'name' => 'date_sent_received',
-                'vname' => 'date_sent_received',
-                'label' => 'LBL_DATE_SENT_RECEIVED',
+            [
+                'date_modified' => [
+                    'name' => 'date_modified',
+                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                    'label' => 'LBL_DATE_MODIFIED',
+                ]
             ],
             [
                 'category_id',
