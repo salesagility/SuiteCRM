@@ -862,11 +862,11 @@ class AOR_Report extends Basic
                                             $(e).toggle();
                                         }
                                     });
-                                    if($(elem).find('img').first().attr('src') == '".$currentTheme->getImagePath('basic_search.gif')."') {
-                                        $(elem).find('img').first().attr('src', '".$currentTheme->getImagePath('advanced_search.gif')."');
+                                    if($(elem).find('img').first().attr('src') == '" . $currentTheme->getImageURL('basic_search.gif') . "') {
+                                        $(elem).find('img').first().attr('src', '" . $currentTheme->getImageURL('advanced_search.gif') . "');
                                     }
                                     else {
-                                        $(elem).find('img').first().attr('src', '".$currentTheme->getImagePath('basic_search.gif')."');
+                                        $(elem).find('img').first().attr('src', '" . $currentTheme->getImageURL('basic_search.gif') . "');
                                     }
                                 }
 
