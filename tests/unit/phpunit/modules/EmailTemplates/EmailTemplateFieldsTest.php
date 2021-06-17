@@ -2,7 +2,7 @@
 
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
-require_once 'modules/EmailTemplates/templateFields.php';
+require_once __DIR__ . '/../../../../../modules/EmailTemplates/templateFields.php';
 
 class EmailTemplateFieldsTest extends SuitePHPUnitFrameworkTestCase
 {
