@@ -58,3 +58,16 @@ if (!class_exists(Provider::class)) {
     /** @deprecated this is an alias for Zend_Oauth_Provider */
     class Provider {}
 }
+
+
+/**
+ * Backwards compatibility for BlowFish
+ */
+class_alias('phpseclib\\Crypt\\Blowfish', 'Crypt_Blowfish');
+
+if (!class_exists(Crypt_Blowfish::class)) {
+    /** @deprecated */
+    class Crypt_Blowfish {}
+    /** @deprecated */
+    class Crypt_Blowfish_DefaultKey {}
+}
