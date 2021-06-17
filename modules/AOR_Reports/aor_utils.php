@@ -414,9 +414,7 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             break;
     }
     
-    $datetimePeriod = $timedate->tzGMT($datetimePeriod);
-
-    return $datetimePeriod;
+   return $timedate->tzGMT($datetimePeriod);
 }
 
 /**
