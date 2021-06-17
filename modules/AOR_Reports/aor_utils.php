@@ -412,6 +412,10 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             $datetimePeriod = new DateTime("last year last day of december");
             setMaxTime($datetimePeriod);
             break;
+        default:
+            throw new InvalidArgumentException(
+                $dateTimePeriodListSelected . ' is not a valid date time period'
+            );
     }
     
    return $timedate->tzGMT($datetimePeriod);
@@ -568,6 +572,10 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
             break;
+        default:
+            throw new InvalidArgumentException(
+                $user_dateformat . ' is not a valid date format'
+            );
     }
 
     $formattedValue .= ' 00:00:00';
