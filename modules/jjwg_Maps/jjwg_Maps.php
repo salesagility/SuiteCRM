@@ -627,7 +627,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
         $bean_data = get_object_vars($bean);
         $aInfo = $this->defineMapsAddress($bean->object_name, $bean_data);
         $GLOBALS['log']->debug(__METHOD__.' $bean_data: '.print_r($bean_data, true));
-        $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.$aInfo);
+        $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.print_r($aInfo,true));
 
         // If needed, check the Address Cache Module for Geocode Info
         if (!is_object($this->jjwg_Address_Cache)) {
