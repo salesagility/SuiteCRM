@@ -2107,6 +2107,7 @@ $app_strings = array(
     'LBL_ACTION_ERROR' => 'Unexpected error when calling action',
     'LBL_BULK_ACTION_ERROR' => 'Unexpected error when calling Bulk Action',
     'LBL_BULK_ACTION_DELETE_SUCCESS' => 'Record(s) deleted successfully',
+    'LBL_BULK_ACTION_MASS_UPDATE_CONFIRMATION' => 'Are you sure you want to update the selected record(s)?',
     'LBL_RECORD_DELETE_SUCCESS' => 'Record deleted successfully',
     'LBL_ERROR_SAVING' => 'Error occurred while saving record',
     'LBL_SAVE_BUTTON_KEY' => 'a',
@@ -3837,6 +3838,7 @@ $app_strings['LBL_GENERIC_CONFIRMATION'] = 'Do you want to proceed with action?'
 $app_strings['LBL_SHOW_MORE'] = 'Show more';
 $app_strings['LBL_SHOW_LESS'] = 'Show less';
 $app_strings['LBL_LOAD_MORE'] = 'Load more';
+$app_strings['LBL_EMPTY'] = '-- Empty -- ';
 
 
 $app_strings['LBL_ACTION_SUCCESS'] = 'Action successful';
