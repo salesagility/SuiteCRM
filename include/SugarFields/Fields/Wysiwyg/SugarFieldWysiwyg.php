@@ -83,7 +83,8 @@ class SugarFieldWysiwyg extends SugarFieldBase {
         $config['elements'] = "#{$form_name} "."#".$vardef['name'];
         $config['selector'] = "#{$form_name} "."#".$vardef['name'];
         $config['content_css'] = 'vendor/tinymce/tinymce/skins/lightgray/content.min.css';
-        $config['toolbar1'] = 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat';
+        $config['toolbar1'] = 'formatselect | fontselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat';
+        $config['font_formats'] = 'Lato=lato; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva;';
         $config['theme'] = 'modern';
 
         $jsConfig = $json->encode($config);
