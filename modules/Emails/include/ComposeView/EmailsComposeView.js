@@ -1236,7 +1236,9 @@
       "url": 'index.php?module=Emails&action=GetDraftAttachmentData&id=' + id
     }).done(function (jsonResponse) {
       var response = JSON.parse(jsonResponse);
-      if (typeof response.data !== "undefined") {
+      var urlParams = new URLSearchParams(window.location.search);
+	    var act = urlParams.get('action');
+      if (typeof response.data !== "undefined" && act !== "ReplyTo" && act !== "ReplyToAll") {
         $('.file-attachments').empty();
         $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
       }
