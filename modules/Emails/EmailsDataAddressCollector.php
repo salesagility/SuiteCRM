@@ -678,10 +678,12 @@ class EmailsDataAddressCollector
     protected function fillDataAddressFromPersonal($dataAddresses)
     {
         foreach ($dataAddresses as $address => $userAddress) {
-            if ($userAddress['type'] !== 'system') {
+            if (($userAddress['type'] !== 'system')
+             && ($userAddress['type'] !== 'personal'))
+            {
                 $emailInfo = $userAddress['attributes'];
-                $fromString = $emailInfo['from'];
-                $replyString = $emailInfo['reply_to'];
+                $fromString = $this->addCurrentUserToEmailString($emailInfo['from']);
+                $replyString = $this->addCurrentUserToEmailString($emailInfo['reply_to']);
 
                 $dataAddresses[$address]['attributes'] = [
                     'from' => $fromString,
