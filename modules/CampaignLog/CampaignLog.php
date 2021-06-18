@@ -85,6 +85,19 @@ class CampaignLog extends SugarBean
         self::__construct();
     }
 
+    /**
+     * @param $interface
+     * @return bool
+     */
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
+
+        return false;
+    }
 
     public function get_list_view_data()
     {

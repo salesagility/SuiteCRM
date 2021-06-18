@@ -116,6 +116,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
           'Bugs',
           'Calls',
           'Calls_Reschedule',
+            'CampaignLog',
           'Campaigns',
           'AOP_Case_Events',
           'AOP_Case_Updates',
