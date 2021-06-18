@@ -7,7 +7,7 @@
 
     <table width="100%" cellpadding="0" cellspacing="1" border="0" class="actionsContainer">
         <tr>
-            <td>
+            <td class="action-button">
                 {$BUTTONS}
             </td>
         </tr>
@@ -74,7 +74,7 @@
         </tr>
     </table>
 
-    <div style="padding-top: 2px;">
+    <div class="hide-btn">
         {$BUTTONS}
     </div>
     {$JAVASCRIPT}

@@ -53,7 +53,7 @@ if (!is_admin($current_user)) {
 }
 
 require_once('modules/Configurator/Configurator.php');
-
+echo '<div class="aos-settings">';
 
 echo getClassicModuleTitle(
     "Administration",
@@ -112,8 +112,12 @@ $sugar_smarty->display('modules/Administration/AOSAdmin.tpl');
 $javascript = new javascript();
 $javascript->setFormName('ConfigureSettings');
 echo $javascript->getScript();
+echo '</div>';
 ?>
 <script language="Javascript" type="text/javascript">
     addToValidateLessThan('ConfigureSettings', 'aos_invoices_initialNumber', 'int', false, "", 9999999999,"Initial Invoice number cannot be bigger than 9999999999");
 </script>
+
+
+
 
