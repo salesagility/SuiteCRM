@@ -78,6 +78,10 @@
       return false;
     },//isIE
 
+
+
+    
+
     prefillEmailAddresses: function (tableId, o) {
       for (i = 0; i < o.length; i++) {
         o[i].email_address = o[i].email_address.replace('&#039;', "'");
@@ -232,22 +236,19 @@
         address = "";
       }
 
-      // Clone from hidden template on the page
+    // Clone from hidden template on the page
       var lineContainer = $('.template.email-address-line-container').clone();
       lineContainer.removeClass('template');
       lineContainer.removeClass('hidden');
       lineContainer.attr('id', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
       lineContainer.attr('name', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
-      // Add line item to lines container
-      $(lineContainer).appendTo('.email-address-lines-container');
-
-      // Set up line item
-      // use the value if the tabindex value for email has been passed in from metadata (defined in include/EditView/EditView.tpl
-      // else default to 0
       var tabIndexCount = 0;
       if (typeof(SUGAR.TabFields) != 'undefined' && typeof(SUGAR.TabFields['email1']) != 'undefined') {
-        tabIndexCount = SUGAR.TabFields['email1'];
+          tabIndexCount = SUGAR.TabFields['email1'];
       }
+
+
+
 
 
       // Email Field
@@ -285,6 +286,16 @@
       recordId.attr('enabled', "true");
 
 
+
+
+
+
+
+
+
+
+
+
       // Primary checkbox
       var primaryCheckbox = lineContainer.find('input#email-address-primary-flag');
       primaryCheckbox.attr('name', _eaw.module + '0emailAddressPrimaryFlag');
@@ -297,6 +308,26 @@
       if (_eaw.totalEmailAddresses == 0 && primaryFlag != '1') {
         primaryCheckbox.prop("checked", true);
       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       // Prevent users from removing their primary email address
