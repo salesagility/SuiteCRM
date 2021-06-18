@@ -69,8 +69,13 @@ class LeadsController extends SugarController
                 if ($key == 'id' or $key=='deleted') {
                     continue;
                 }
-                if (isset($this->bean->field_defs[$key])) {
-                    $this->bean->$key = $prospect->$key;
+                //check for matches from custom fields to non-custom fields
+                elseif(substr($key, strlen($key)-2) == '_c')
+                {
+                    $standardfield_c = substr($key, 0, -2);
+                    if(isset($this->bean->field_defs[$standardfield_c])){
+                        $this->bean->$standardfield_c = $prospect->$key;
+                    }
                 }
             }
             $_POST['is_converted']=true;
