@@ -376,7 +376,9 @@ class DashletGeneric extends Dashlet
                     default:
                         $widgetDef['input_name0'] = $params;
                         if (is_array($params) && !empty($params)) { // handle array query
-                            array_push($returnArray, $widgetClass->queryFilterone_of($widgetDef, false));
+                            if(method_exists($widgetClass,'queryFilterone_of') ){
+                                array_push($returnArray, $widgetClass->queryFilterone_of($widgetDef, false));
+                            }
                         } else {
                             array_push($returnArray, $widgetClass->queryFilterStarts_With($widgetDef, true));
                         }
