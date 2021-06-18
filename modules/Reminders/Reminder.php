@@ -278,7 +278,6 @@ class Reminder extends Basic
      * @global ??? $current_user
      * @global ??? $timedate
      * @global ??? $app_list_strings
-     * @global ??? $db
      * @global ??? $sugar_config
      * @global ??? $app_strings
      * @param jsAlerts $alert caller jsAlerts object
@@ -287,7 +286,8 @@ class Reminder extends Basic
      */
     public static function addNotifications(jsAlerts $alert, $checkDecline = true)
     {
-        global $current_user, $timedate, $app_list_strings, $db, $sugar_config, $app_strings;
+        global $current_user, $timedate, $app_list_strings, $sugar_config, $app_strings;
+        $db = DBManagerFactory::getInstance();
 
         if (empty($current_user->id)) {
             return;

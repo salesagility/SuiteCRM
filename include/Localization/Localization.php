@@ -203,12 +203,11 @@ class Localization
     public function loadCurrencies()
     {
         // doing it dirty here
-        global $db;
         global $sugar_config;
-
-        if (empty($db)) {
+        if (empty($sugar_config['dbconfig'])) {
             return array();
         }
+        $db = DBManagerFactory::getInstance();
 
         $load = sugar_cache_retrieve('currency_list');
         if (!is_array($load)) {

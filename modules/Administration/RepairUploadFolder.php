@@ -48,7 +48,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @var SugarBean $bean
  * @var DBManager $db
  */
-global $beanList, $current_user, $db, $mod_strings;
+global $beanList, $current_user, $mod_strings;
+$db = DBManagerFactory::getInstance();
 $validBeans = array();
 if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);

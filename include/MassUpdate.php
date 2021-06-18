@@ -177,7 +177,8 @@ eoq;
     public function handleMassUpdate()
     {
         require_once('include/formbase.php');
-        global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
+        global $current_user, $disable_date_format, $timedate, $app_list_strings;
+        $db = DBManagerFactory::getInstance();
 
         foreach ($_POST as $post => $value) {
             if (is_array($value)) {

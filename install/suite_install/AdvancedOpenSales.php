@@ -28,7 +28,8 @@ function install_aos()
 
 function upgrade_aos()
 {
-    global $sugar_config, $db;
+    global $sugar_config;
+    $db = DBManagerFactory::getInstance();
     if (!isset($sugar_config['aos']['version']) || $sugar_config['aos']['version'] < 5.2) {
         $db->query("UPDATE  aos_pdf_templates SET type = 'AOS_Quotes' WHERE type = 'Quotes'");
         $db->query("UPDATE  aos_pdf_templates SET type = 'AOS_Invoices' WHERE type = 'Invoices'");

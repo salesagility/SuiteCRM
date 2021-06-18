@@ -48,7 +48,6 @@ require_once('modules/Configurator/Configurator.php');
 function UWrebuild()
 {
     global $log;
-    $db = DBManagerFactory::getInstance();
     $log->info('Deleting Relationship Cache. Relationships will automatically refresh.');
 
     echo "
@@ -101,7 +100,7 @@ function UWrebuild()
 unset($_SESSION['rebuild_relationships']);
 unset($_SESSION['rebuild_extensions']);
 
-global $log, $db;
+global $log;
 
 // process commands
 if (!isset($_REQUEST['mode']) || ($_REQUEST['mode'] == "")) {

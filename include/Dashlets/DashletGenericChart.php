@@ -379,7 +379,7 @@ abstract class DashletGenericChart extends Dashlet
     //Added as the rgraph charts do not use SugarCharts and this is where this method was previously
     public function getChartData($query)
     {
-        global $app_list_strings, $db;
+        $db = DBManagerFactory::getInstance();
         $dataSet = array();
         $result = $db->query($query);
 

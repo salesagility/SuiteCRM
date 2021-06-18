@@ -259,7 +259,8 @@ EOD;
     public function getChartData(
         $query
     ) {
-        global $app_list_strings, $db;
+        global $app_list_strings;
+        $db = DBManagerFactory::getInstance();
 
         $data = array();
         $temp_data = array();

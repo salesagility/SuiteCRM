@@ -113,7 +113,7 @@ class SubPanelRowCounter
      */
     public function getSingleSubPanelRowCount()
     {
-        global $db;
+        $db = \DBManagerFactory::getInstance();
 
         $query = $this->makeSubPanelRowCountQuery();
         if (!$query) {
