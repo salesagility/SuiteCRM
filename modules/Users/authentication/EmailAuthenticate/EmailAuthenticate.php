@@ -50,11 +50,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * based on the users validation
  *
  */
-require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
+require_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . AuthenticationController::DEFAULT_TYPE . DIRECTORY_SEPARATOR . AuthenticationController::DEFAULT_TYPE . '.php'
+);
+
 class EmailAuthenticate extends SugarAuthenticate
 {
+    const EMAIL_AUTHENTICATE_DIRECTORY = 'EmailAuthenticate';
+
     public $userAuthenticateClass = 'EmailAuthenticateUser';
-    public $authenticationDir = 'EmailAuthenticate';
+    public $authenticationDir = self::EMAIL_AUTHENTICATE_DIRECTORY;
     /**
      * Constructs EmailAuthenticate
      * This will load the user authentication class

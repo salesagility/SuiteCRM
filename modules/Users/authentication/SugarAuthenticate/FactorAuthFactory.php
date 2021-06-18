@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-include_once __DIR__ . '/../../../../include/Exceptions/SuiteException.php';
+include_once get_custom_file_if_exists('include/Exceptions/SuiteException.php');
 
 class FactorAuthFactory
 {

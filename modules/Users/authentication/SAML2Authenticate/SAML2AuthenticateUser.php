@@ -42,7 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../../../modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUser.php';
+require_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY . '/SugarAuthenticateUser.php'
+);
 
 /**
  * Class SAML2AuthenticateUser
