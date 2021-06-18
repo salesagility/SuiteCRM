@@ -51,7 +51,7 @@ function getEmailAddressWidget($focus, $field, $value, $view, $tabindex = '0')
     $sea = new SugarEmailAddress();
     $sea->setView($view);
 
-    if ($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
+    if ($view == 'EditView' || $view == 'QuickCreate' || strpos($view, 'ConvertLead') !== false) {
         $module = $focus->module_dir;
         if ($view == 'ConvertLead' && $module == "Contacts") {
             $module = "Leads";
