@@ -71,9 +71,7 @@ $mod_strings = array(
     'LBL_FILTER_DOMAIN' => 'No Auto-Reply to this Domain',
     'LBL_FIND_SSL_WARN' => '<br>Testing SSL may take a long time. Please be patient.<br>',
     'LBL_FROM_ADDR' => '"From" Address',
-    // as long as XTemplate doesn't support output escaping, transform
-    // quotes to html-entities right here (bug #48913)
-    'LBL_FROM_ADDR_DESC' => "The email address provided here might not appear in the &quot;From&quot; address section of the email sent due to restrictions imposed by the mail service provider. In these circumstances, the email address defined in the outgoing mail server will be used.",
+    'LBL_FROM_ADDR_DESC' => 'The email address provided here might not appear in the &quot;From&quot; address section of the email sent due to restrictions imposed by the mail service provider. In these circumstances, the email address defined in the outgoing mail server will be used.', // as long as XTemplate doesn't support output escaping, transform quotes to html-entities right here (bug #48913)
     'LBL_FROM_NAME' => '"From" Name',
     'LBL_GROUP_QUEUE' => 'Assign To Group',
     'LBL_HOME' => 'Home',
