@@ -115,6 +115,7 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
         $_REQUEST['joomla_account_creation_email_template_id'];
     $cfg->config['aop']['support_from_address'] = $_REQUEST['support_from_address'];
     $cfg->config['aop']['support_from_name'] = $_REQUEST['support_from_name'];
+    $cfg->config['aop']['meeting_response_url'] = $_REQUEST['meeting_response_url'];
     /*
      * We save the case_status_changes array as json since the way config changes are persisted to config.php
      * means that removing entries is tricky. json simplifies this.
