@@ -99,4 +99,11 @@ class CustomLoaderTest extends SuitePHPUnitFrameworkTestCase
         // restore custom route
         CustomLoader::setCustomPath();
     }
+
+    public function testGetCustomPath()
+    {
+        $actual = CustomLoader::getCustomPath();
+
+        $this->assertEquals('custom/application/Ext/Api/V8/', $actual);
+    }
 }
