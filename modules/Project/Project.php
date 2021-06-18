@@ -76,6 +76,8 @@ class Project extends SugarBean
     public $new_schema = true;
     public $table_name = 'project';
 
+    public $importable = true;
+
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array(
         'account_id',
