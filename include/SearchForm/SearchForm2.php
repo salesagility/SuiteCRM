@@ -429,6 +429,9 @@ class SearchForm
                         }
                         $value = implode(', ', $values);
                     }
+                    else if (isset($defs['options']) && isset($defs['options'][$value]) && $defs['options'][$value]) {
+                        $value = $defs['options'][$value];
+                    }
                     $data[$labelText] = $type == 'bool' ? '&#10004' : $value;
                 }
             }
