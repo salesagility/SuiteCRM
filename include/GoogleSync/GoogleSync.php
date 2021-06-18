@@ -296,9 +296,10 @@ class GoogleSync extends GoogleSyncBase
                     $this->doSync($key);
                 } catch (Exception $e) { // We need to catch any exception here, otherwise the foreach loop cannot continue to the next user.
                     // FUTURE: We'll inform the user that the sync failed.
-                    $this->logger->fatal('Caught Exception While Syncing User:' . $key);
-                    $this->logger->error($e->getTraceAsString());
+                    $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Caught Exception While Syncing User:' . $key);
+                    $this->logger->error('EXCEPTION TRACE:' . PHP_EOL . $e->getTraceAsString());
                     $failures++;
+                    $this->exceptionHandle($e, $key);
                 }
             }
         }
@@ -307,5 +308,54 @@ class GoogleSync extends GoogleSyncBase
         }
         $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $failures . ' failure(s) found at syncAllUsers method.');
         return false;
+    }
+
+    /**
+     * Handle exceptions for users
+     *
+     * When the sync produces an exception, this function is called to handle any actions to take with it.
+     *
+     * @param Exception $e The exception to process
+     * @param String $user_id The id of the user the exception was produced by
+     *
+     * @return null
+     */
+    protected function exceptionHandle(Exception $excp, $user_id) {
+
+        global $app_strings;
+
+        $e_code = $excp->getCode();
+        switch ($e_code) {
+            case GoogleSyncException::GCAL_SUITECRM_MULTIOWNER:
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Calendar for user: ' . $user_id . ' has too many owners!');
+                $alert = BeanFactory::newBean('Alerts');
+                $alert->name = $app_strings['LBL_GOOGLESYNC_FAILURE_ALERT_SUBJECT'];
+                $alert->description = $app_strings['LBL_GOOGLESYNC_TOO_MANY_OWNERS_ERROR'];
+                $alert->assigned_user_id = $user_id;
+                $alert->type = 'warning';
+                $alert->is_read = 0;
+                $alert->save();
+                break;
+            case GoogleSyncException::JSON_KEY_MISSING_USER:
+            case GoogleSyncException::ACCESS_TOKEN_PARAMETER_MISSING:
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'GoogleApiToken missing access_token key for user: ' . $user_id);
+                $alert = BeanFactory::newBean('Alerts');
+                $alert->name = $app_strings['LBL_GOOGLESYNC_FAILURE_ALERT_SUBJECT'];
+                $alert->description = $app_strings['LBL_GOOGLESYNC_JSON_ACCESS_TOKEN_ERROR'];
+                $alert->assigned_user_id = $user_id;
+                $alert->type = 'warning';
+                $alert->is_read = 0;
+                $alert->save();
+                break;
+            default:
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Caught Exception While Syncing User:' . $user_id);
+                $alert = BeanFactory::newBean('Alerts');
+                $alert->name = $app_strings['LBL_GOOGLESYNC_FAILURE_ALERT_SUBJECT'];
+                $alert->description = $app_strings['LBL_GOOGLESYNC_GENERIC_ERROR'];
+                $alert->assigned_user_id = $user_id;
+                $alert->type = 'warning';
+                $alert->is_read = 0;
+                $alert->save();
+        }
     }
 }

@@ -180,7 +180,7 @@ class GoogleSyncBase
         $accessToken = json_decode(base64_decode($this->workingUser->getPreference('GoogleApiToken', 'GoogleSync')), true);
         if (!array_key_exists('access_token', $accessToken)) {
             // The Token is invalid JSON or missing
-            throw new GoogleSyncException('GoogleApiToken missing access_token key', GoogleSyncException::JSON_KEY_MISSING);
+            throw new GoogleSyncException('GoogleApiToken missing access_token key', GoogleSyncException::JSON_KEY_MISSING_USER);
         }
 
         // The refresh token is only provided once, on first authentication. It must be added afterwards.
@@ -208,7 +208,7 @@ class GoogleSyncBase
     protected function getGoogleClient($accessToken)
     {
         if (empty($accessToken)) {
-            throw new GoogleSyncException('Access Token Parameter Missing', GoogleSyncException::ACCSESS_TOKEN_PARAMETER_MISSING);
+            throw new GoogleSyncException('Access Token Parameter Missing', GoogleSyncException::ACCESS_TOKEN_PARAMETER_MISSING);
         }
 
         // New Google Client
@@ -338,8 +338,13 @@ class GoogleSyncBase
             throw new GoogleSyncException('Invalid ID requested in setUsersGoogleCalendar', GoogleSyncException::INVALID_USER_ID);
         }
 
-        // get list of users calendars
-        $calendarList = $this->gService->calendarList->listCalendarList();
+        // get list of users calendars w/ full owner rights
+        $optParams = array(
+            'maxResults' => 250,
+            'minAccessRole' => 'owner',
+            'showHidden' => true,
+        );
+        $calendarList = $this->gService->calendarList->listCalendarList($optParams);
 
         // find the id of the 'SuiteCRM' calendar ... in the future, this will set the calendar of the users choosing.
         $this->calendarId = $this->getSuiteCRMCalendar($calendarList);
@@ -373,13 +378,74 @@ class GoogleSyncBase
      */
     protected function getSuiteCRMCalendar(Google_Service_Calendar_CalendarList $calendarList)
     {
+
         foreach ($calendarList->getItems() as $calendarListEntry) {
-            if ($calendarListEntry->getSummary() == 'SuiteCRM') {
-                return $calendarListEntry->getId();
-                break;
+            if ($calendarListEntry->getSummary() === 'SuiteCRM') {
+                if ($this->checkCalendarAcl($calendarListEntry) === true) {
+                    return $calendarListEntry->getId();
+                    break;
+                }
             }
         }
         return null;
+    }
+
+    /**
+     * Check to make sure only one user has 'owner' privledges for the calendar, and it's the user we're syncing
+     *
+     * @param Google_Service_Calendar_CalendarListEntry $calendarEntry
+     *
+     * @return bool True if 1 owner and owned by user, False if not owned by user.
+     * @throws GoogleSyncException if more then one owner, and the user is one of them.
+     */
+    protected function checkCalendarAcl(Google_Service_Calendar_CalendarListEntry $calendarEntry)
+    {
+        // Find the user's primary google calendar. The ID of this calendar is the users google email address. Convenient! /s
+        $usersEmail = $this->gService->calendarList->get('primary')->getId();
+        $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Users email address is: ' . $usersEmail);
+
+        // Start a count of owners...
+        $count = 0;
+
+        // Did we find the current user as an owner?
+        $isowner = false;
+
+        // Get the ACL for this calendar
+        $acl = $this->gService->acl->listAcl($calendarEntry->getId());
+
+        // Itterate though the rules
+        foreach ($acl->getItems() as $rule) {
+            // With non-primary calendars there's always an 'owner' rule with the id user:*@group.calendar.google.com which we should skip
+            if ( preg_match("/@group.calendar.google.com$/", $rule->getId()) === 0 ) {
+                // Check if this is an 'owner' rule
+                if ($rule->getRole() === 'owner') {
+                    // We got an owner... count it.
+                    $count++;
+                    //Is this owner our user?
+                    if ($rule->getId() === 'user:' . $usersEmail) {
+                        $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $usersEmail . ' is an owner of calendar id: ' . $calendarEntry->getId());
+                        $isowner = true;
+                    }
+                }
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found Rule: Id=' . $rule->getId() . ' Role=' . $rule->getRole());
+            }
+        }
+        $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Counted ' . $count . ' owners for calendar ' . $calendarEntry->getId());
+
+        // If more than one owner, and this user is an owner, log and throw exception.
+        if ($count > 1 && $isowner === true) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Users SuiteCRM Google Calendar has too many owners!');
+            throw new GoogleSyncException('Google SuiteCRM calendar has too many owners!', GoogleSyncException::GCAL_SUITECRM_MULTIOWNER);
+        }
+
+        // If we're not an owner of this calendar, return false
+        if ($isowner === false) {
+            return false;
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $usersEmail . ' is *NOT* an owner of calendar id: ' . $calendarEntry->getId());
+        }
+
+        // If we get here, then this is the calendar to sync with.
+        return true;
     }
 
     /**
