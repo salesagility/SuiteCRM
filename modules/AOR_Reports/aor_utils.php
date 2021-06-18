@@ -593,7 +593,7 @@ function convertToDateTime($value)
 }
 
 function setMinTime(DateTime $dt){
-    if (version_compare(PHP_VERSION, '7.1.0') >= 0) {
+    if (PHP_VERSION_ID >= 70100) {
         $dt->setTime(0, 0, 0, 0);
     } else {
         $dt->setTime(0, 0, 0);
@@ -601,7 +601,7 @@ function setMinTime(DateTime $dt){
 }
 
 function setMaxTime(DateTime $dt){
-    if (version_compare(PHP_VERSION, '7.1.0') >= 0) {
+    if (PHP_VERSION_ID >= 70100) {
         $dt->setTime(23, 59, 59, 999999);
     } else {
         $dt->setTime(23, 59, 59);
