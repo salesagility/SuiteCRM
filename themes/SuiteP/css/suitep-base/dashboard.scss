@@ -570,7 +570,9 @@ td.dashlet-title > h3 > span {
   box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
   margin: 0 auto;
   border: none;
+  max-height: 650px;
   max-width: 900px;
+  overflow-y: auto;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .container-close {
