@@ -507,7 +507,7 @@ class="yui-navset detailview_tabs"
                             <slot>{$MOD.LBL_GOOGLE_API_TOKEN}:</slot>&nbsp;{sugar_help text=$MOD.LBL_GOOGLE_API_TOKEN_HELP}
                         </td>
                             <td width="20%">
-                            Current API Token is: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span>
+                            {$MOD.LBL_GOOGLE_API_TOKEN_TEXT}: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span>
                         </td>
                         <td width="63%">
                             <slot>&nbsp;</slot>

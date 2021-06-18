@@ -97,7 +97,7 @@
         				};
     				{/literal}
     			</script>
-    			JSON file is: <span style="color:{$GOOGLE_JSON_CONF.color}">{$GOOGLE_JSON_CONF.status}</span><input type="file" accept="text/plain" onchange="openGoogleJson(event)">
+    			{$MOD.LBL_GOOGLE_CALENDAR_JSON_TEXT} <span style="color:{$GOOGLE_JSON_CONF.color}">{$GOOGLE_JSON_CONF.status}</span><input type="file" accept="text/plain" onchange="openGoogleJson(event)">
     		</td>
     	</tr>
         <tr>
