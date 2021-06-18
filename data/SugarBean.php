@@ -6226,7 +6226,7 @@ class SugarBean
      */
     public function auditBean($isUpdate)
     {
-        if ($this->is_AuditEnabled() && $isUpdate) {
+        if ($this->is_AuditEnabled() && $isUpdate && !$this->createdAuditRecords) {
             $auditDataChanges = $this->db->getAuditDataChanges($this);
 
             if (!empty($auditDataChanges)) {
@@ -6249,5 +6249,6 @@ class SugarBean
             $this->db->save_audit_records($this, $change);
             $this->fetched_row[$change['field_name']] = $change['after'];
         }
+        $this->createdAuditRecords = true;
     }
 }
