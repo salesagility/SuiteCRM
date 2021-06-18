@@ -43,3 +43,14 @@
 <script>SUGAR.util.doWhen("document.getElementById('form') != null",
         function(){ldelim}SUGAR.util.buildAccessKeyLabels();{rdelim});
 </script>
+
+{{if $externalJSFile}}
+{sugar_include include=$externalJSFile}
+{{/if}}
+
+{{if isset($scriptBlocks)}}
+<!-- Begin Meta-Data Javascript -->
+{{$scriptBlocks}}
+<!-- End Meta-Data Javascript -->
+{{/if}}
+
