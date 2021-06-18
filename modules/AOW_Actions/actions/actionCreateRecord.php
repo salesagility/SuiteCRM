@@ -376,6 +376,10 @@ class actionCreateRecord extends actionBase
         } else {
             $check_notify = $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
         }
+        if ($record->hadAssignmentNotification) {
+            $check_notify = false;
+        }
+        $record->hadAssignmentNotification = true;
 
         $record->process_save_dates =false;
         $record->new_with_id = false;

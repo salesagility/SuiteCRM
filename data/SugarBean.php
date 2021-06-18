@@ -414,6 +414,12 @@ class SugarBean
      */
     public $old_modified_by_name;
 
+    /**
+     * Tracks whether a bean has had their assignment notification sent on save
+     *
+     * @var bool
+     */
+    public $hadAssignmentNotification =  false;
 
     /**
      * SugarBean constructor.
@@ -3168,6 +3174,7 @@ class SugarBean
                     $this->send_assignment_notifications($notify_user, $admin);
                 }
             }
+            $this->hadAssignmentNotification = true;
         }
     }
 
