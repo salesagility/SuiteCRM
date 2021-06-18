@@ -539,6 +539,7 @@ eoq;
                             $newhtml .= $this->addParent($displayname, $field);
                             break;
                         case "int":
+                        case "currency":
                             if (!empty($field['massupdate']) && empty($field['auto_increment'])) {
                                 $even = !$even;
                                 $newhtml .= $this->addInputType($displayname, $field['name']);
