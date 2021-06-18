@@ -39,7 +39,7 @@
  */
 
 *}
-</form>
+
 
 {{if $externalJSFile}}
 	require_once("'".$externalJSFile."'");
@@ -116,7 +116,6 @@ YAHOO.util.Event.onContentReady("{/literal}{{$form_name}}{literal}",function() {
 });
 {/literal}
 </script>
-</form>
 <div class="buttons">
 {{if !empty($form) && !empty($form.buttons)}}
    {{foreach from=$form.buttons key=val item=button}}
