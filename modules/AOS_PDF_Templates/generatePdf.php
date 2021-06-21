@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,17 +38,16 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\PDF\Exceptions\PDFException;
+use SuiteCRM\PDF\PDFWrapper;
+
 if (!isset($_REQUEST['uid']) || empty($_REQUEST['uid']) || !isset($_REQUEST['templateID']) || empty($_REQUEST['templateID'])) {
     die('Error retrieving record. This record may be deleted or you may not be authorized to view it.');
 }
 
-$errorLevelStored = error_reporting();
-error_reporting(0);
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/sendEmail.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
-error_reporting($errorLevelStored);
 
 global $mod_strings, $sugar_config;
 
@@ -139,28 +138,39 @@ $footer = templateParser::parse_template($footer, $object_arr);
 
 $printable = str_replace("\n", "<br />", $converted);
 
-if ($task == 'pdf' || $task == 'emailpdf') {
+if ($task === 'pdf' || $task === 'emailpdf') {
     $file_name = $mod_strings['LBL_PDF_NAME'] . "_" . str_replace(" ", "_", $bean->name) . ".pdf";
 
-    ob_clean();
     try {
-        $orientation = ($template->orientation == "Landscape") ? "-L" : "";
-        $pdf = new mPDF('en', $template->page_size . $orientation, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
-        $pdf->SetAutoFont();
-        $pdf->SetHTMLHeader($header);
-        $pdf->SetHTMLFooter($footer);
-        $pdf->WriteHTML($printable);
-        if ($task == 'pdf') {
-            $pdf->Output($file_name, "D");
+        $pdf = PDFWrapper::getPDFEngine();
+        $pdf->configurePDF([
+            'mode' => 'en',
+            'page_size' => $template->page_size,
+            'font' => 'DejaVuSansCondensed',
+            'mgl' => $template->margin_left,
+            'mgr' => $template->margin_right,
+            'mgt' => $template->margin_top,
+            'mgb' => $template->margin_bottom,
+            'mgh' => $template->margin_header,
+            'mgf' => $template->margin_footer,
+            'orientation' => $template->orientation
+        ]);
+
+        $pdf->writeHeader($header);
+        $pdf->writeFooter($footer);
+        $pdf->writeHTML($printable);
+
+        if ($task === 'pdf') {
+            $pdf->outputPDF($file_name, "D");
         } else {
             $fp = fopen($sugar_config['upload_dir'] . 'attachfile.pdf', 'wb');
             fclose($fp);
-            $pdf->Output($sugar_config['upload_dir'] . 'attachfile.pdf', 'F');
+            $pdf->outputPDF($sugar_config['upload_dir'] . 'attachfile.pdf', 'F');
             $sendEmail = new sendEmail();
             $sendEmail->send_email($bean, $bean->module_dir, '', $file_name, true);
         }
-    } catch (mPDF_exception $e) {
-        echo $e;
+    } catch (PDFException $e) {
+        LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
     }
 } elseif ($task == 'email') {
     $sendEmail = new sendEmail();
